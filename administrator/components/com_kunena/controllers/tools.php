@@ -281,6 +281,37 @@ class KunenaAdminControllerTools extends KunenaController {
 		}
 	}
 
+	public function cleanupIP() {
+		if (!JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
+		}
+
+		$cleanup_days = JRequest::getInt('cleanup_ip_days', 365);
+		$where ='';
+		if ( $days ) {
+			$clean_date = JFactory::getDate()->toUnix() - ($cleanup_days * 86400);
+			$where = ' time < '.$clean_date;
+		}
+
+		$db	= JFactory::getDBO();
+		$query = "UPDATE #__kunena_messages SET ip=NULL {$where};";
+		$db->setQuery ( $query );
+		$db->Query ();
+		KunenaError::checkDatabaseError();
+
+		$count = $db->getAffectedRows ();
+
+		if ( $count > 0 ) {
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count ) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		} else {
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED') );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+	}
+
 	protected function checkTimeout($stop = false) {
 		static $start = null;
 		if ($stop) $start = 0;

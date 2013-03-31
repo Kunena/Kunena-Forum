@@ -384,4 +384,32 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
+
+	public function batch_moderators() {
+		if (! JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$catids = JRequest::getVar ( 'catid', array (), 'post', 'array' );
+
+		if ( empty($userids) ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_USERS_SELECTED' ) );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		if ( empty($catids) ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_CATEGORIES_SELECTED' ) );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		foreach($catids as $catid) {
+			$category = KunenaForumCategoryHelper::get ( intval ( $catid ) );
+			$category->addModerators($userids);
+		}
+
+		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_SET_MODERATORS_DONE' ) );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+	}
 }

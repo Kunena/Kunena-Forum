@@ -156,7 +156,7 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 							</thead>
 							<tfoot>
 								<tr>
-									<td colspan="9">
+									<td colspan="10">
 										<div class="pagination">
 											<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->navigation->getLimitBox (); ?></div>
 											<?php echo $this->navigation->getPagesLinks (); ?>
@@ -240,7 +240,7 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 										</a>
 									</td>
 									<?php if ($category->isSection()) : ?>
-										<td class="center hidden-phone" colspan="2">
+										<td class="center hidden-phone" colspan="3">
 											<?php echo JText::_('COM_KUNENA_SECTION'); ?>
 										</td>
 									<?php else : ?>
@@ -250,7 +250,7 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 											</a>
 										</td>
 										<td class="center">
-											<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny':'allow').'_polls'; ?>')">
+											<a class="jgrid" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny':'allow').'_polls'; ?>')">
 												<?php echo ($category->allow_polls == 1 ? $img_yes : $img_no); ?>
 											</a>
 										</td>

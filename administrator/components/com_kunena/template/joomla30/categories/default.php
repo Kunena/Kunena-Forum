@@ -60,7 +60,7 @@ if ($this->saveOrder) {
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-					<?php echo $this->navigation->getListFooter(); ?>
+					<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -171,7 +171,7 @@ if ($this->saveOrder) {
 				<tfoot>
 					<tr>
 						<td colspan="10">
-							<?php echo $this->navigation->getListFooter(); ?>
+							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 						</td>
 					</tr>
 				</tfoot>

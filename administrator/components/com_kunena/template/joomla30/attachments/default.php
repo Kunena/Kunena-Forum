@@ -41,7 +41,6 @@ JHtml::_('dropdown.init');
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=attachments') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<input type="hidden" name="limitstart" value="<?php echo intval($this->pagination->limitstart); ?>" />
 			<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>" />
 			<?php echo JHtml::_( 'form.token' ); ?>
@@ -57,7 +56,7 @@ JHtml::_('dropdown.init');
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-					<?php echo $this->pagination->getLimitBox (); ?>
+					<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -124,9 +123,7 @@ JHtml::_('dropdown.init');
 				<tfoot>
 					<tr>
 						<td colspan="8">
-							<div class="pagination">
-								<?php echo $this->pagination->getListFooter(); ?>
-							</div>
+							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 						</td>
 					</tr>
 				</tfoot>

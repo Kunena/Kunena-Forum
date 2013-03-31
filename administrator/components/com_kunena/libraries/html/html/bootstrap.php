@@ -12,13 +12,13 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.html.html');
 
 /**
- * Utility class for Bootstrap elements.
+ * Utility class for Bootstrap elements (written in Mootools).
  *
  * @package     Joomla.Libraries
  * @subpackage  HTML
  * @since       3.0
  */
-abstract class JHtmlMooBootstrap
+abstract class JHtmlBootstrap
 {
 	/**
 	 * @var    array  Array containing information for loaded files
@@ -153,7 +153,7 @@ abstract class JHtmlMooBootstrap
 		}
 
 		// Load Mootools
-		JHtml::_('behavior.framework');
+		JHtml::_('behavior.framework', true);
 
 		// If no debugging value is set, use the configuration setting
 		if ($debug === null)

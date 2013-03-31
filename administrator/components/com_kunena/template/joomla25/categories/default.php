@@ -59,10 +59,20 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 								<button class="btn tip" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
+								<?php echo $this->navigation->getLimitBox (); ?>
+							</div>
+							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 								<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
 									<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+								</select>
+							</div>
+							<div class="btn-group pull-right">
+								<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+								<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+									<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+									<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 								</select>
 							</div>
 							<div class="clearfix"></div>

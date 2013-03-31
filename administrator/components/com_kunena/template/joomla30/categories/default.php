@@ -261,7 +261,7 @@ if ($this->saveOrder) {
 							</a>
 						</td>
 						<?php if ($item->isSection()) : ?>
-						<td class="center hidden-phone" colspan="2">
+						<td class="center hidden-phone" colspan="3">
 							<?php echo JText::_('COM_KUNENA_SECTION'); ?>
 						</td>
 						<?php else : ?>

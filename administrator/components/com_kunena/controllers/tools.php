@@ -126,7 +126,7 @@ class KunenaAdminControllerTools extends KunenaController {
 					WHERE b.userid IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_ADD') . ' ' . $db->getAffectedRows () );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_ADD_DONE',$db->getAffectedRows ()) );
 		}
 		if ($userdel) {
 			$db->setQuery ( "DELETE a
@@ -135,7 +135,7 @@ class KunenaAdminControllerTools extends KunenaController {
 					WHERE b.username IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_DEL') . ' ' . $db->getAffectedRows () );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE',$db->getAffectedRows ()) );
 		}
 		if ($userrename) {
 			$queryName = $this->config->username ? "username" : "name";
@@ -148,7 +148,7 @@ class KunenaAdminControllerTools extends KunenaController {
 			$db->query();
 			if (KunenaError::checkDatabaseError()) return;
 
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_RENAME') . $db->getAffectedRows() );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()) );
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -277,6 +277,37 @@ class KunenaAdminControllerTools extends KunenaController {
 			}
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MENU_RE_PURGE_FORGOT_STATEMENT') );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+	}
+
+	public function cleanupIP() {
+		if (!JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
+		}
+
+		$cleanup_days = JRequest::getInt('cleanup_ip_days', 365);
+		$where ='';
+		if ( $days ) {
+			$clean_date = JFactory::getDate()->toUnix() - ($cleanup_days * 86400);
+			$where = ' time < '.$clean_date;
+		}
+
+		$db	= JFactory::getDBO();
+		$query = "UPDATE #__kunena_messages SET ip=NULL {$where};";
+		$db->setQuery ( $query );
+		$db->Query ();
+		KunenaError::checkDatabaseError();
+
+		$count = $db->getAffectedRows ();
+
+		if ( $count > 0 ) {
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count ) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		} else {
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED') );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 	}

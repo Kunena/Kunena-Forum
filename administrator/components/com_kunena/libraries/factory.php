@@ -34,6 +34,27 @@ abstract class KunenaFactory {
 		return KunenaTemplate::getInstance($name);
 	}
 
+
+	/**
+	 * Get a Kunena template object
+	 *
+	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaTemplate
+	 */
+	public static function getAdminTemplate() {
+		if (version_compare(JVERSION, '3.0', '>')) {
+			// Joomla 3.0+ template:
+			require_once KPATH_ADMIN.'/template/joomla30/template.php';
+			$template = new KunenaAdminTemplate30;
+		} else {
+			// Joomla 2.5 template:
+			require_once KPATH_ADMIN.'/template/joomla25/template.php';
+			$template = new KunenaAdminTemplate25;
+		}
+		return $template;
+	}
+
 	/**
 	 * Get Kunena user object
 	 *
@@ -130,13 +151,13 @@ abstract class KunenaFactory {
 			$english = false;
 			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
 					&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')) {
-				$lang->load($file, $lookup2, 'en-GB', true, false);
+				$lang->load($file, $lookup2, 'en-GB', true, false, false);
 				$english = true;
 			}
-			$loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
-				|| $lang->load($file, $lookup2, null, $english, false)
-				|| $lang->load($file, $lookup1, $lang->getDefault(), $english, false)
-				|| $lang->load($file, $lookup2, $lang->getDefault(), $english, false);
+			$loaded[$file] = $lang->load($file, $lookup1, null, $english, false, false)
+				|| $lang->load($file, $lookup2, null, $english, false, false)
+				|| $lang->load($file, $lookup1, $lang->getDefault(), $english, false, false)
+				|| $lang->load($file, $lookup2, $lang->getDefault(), $english, false, false);
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $loaded[$file];

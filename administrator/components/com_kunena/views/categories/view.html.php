@@ -31,7 +31,7 @@ class KunenaAdminViewCategories extends KunenaView {
 
 	function displayDefault() {
 		$this->categories = $this->get ( 'AdminCategories' );
-		$this->navigation = $this->get ( 'AdminNavigation' );
+		$this->pagination = $this->get ( 'AdminNavigation' );
 
 		// Preprocess the list of items to find ordering divisions.
 		$this->ordering = array();
@@ -52,6 +52,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		$this->filterAccess = $this->escape($this->state->get('filter.access'));
 		$this->filterLocked = $this->escape($this->state->get('filter.locked'));
 		$this->filterReview = $this->escape($this->state->get('filter.review'));
+		$this->filterAllow_polls = $this->escape($this->state->get('filter.allow_polls'));
 		$this->filterAnonymous = $this->escape($this->state->get('filter.anonymous'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
@@ -126,6 +127,15 @@ class KunenaAdminViewCategories extends KunenaView {
 		return $options;
 	}
 
+	public function allowpollsOptions() {
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+
+		return $options;
+	}
+
 	/**
 	 * Returns an array of type filter options.
 	 *
@@ -144,8 +154,10 @@ class KunenaAdminViewCategories extends KunenaView {
 		$sortFields = array();
 		$sortFields[] = JHtml::_('select.option', 'p.published', JText::_('JSTATUS'));
 		$sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
-		$sortFields[] = JHtml::_('select.option', 'p.type', JText::_('COM_KUNENA_CATEGORIES_LABEL_TYPE'));
 		$sortFields[] = JHtml::_('select.option', 'p.access', JText::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
+		$sortFields[] = JHtml::_('select.option', 'p.locked', JText::_('COM_KUNENA_LOCKED'));
+		$sortFields[] = JHtml::_('select.option', 'p.review', JText::_('COM_KUNENA_REVIEW'));
+		$sortFields[] = JHtml::_('select.option', 'p.anonymous', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
 		$sortFields[] = JHtml::_('select.option', 'p.id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;

@@ -41,4 +41,8 @@ class KunenaPrivateUddeIM extends KunenaPrivate {
 		if (!$text) $text = JText::_('COM_KUNENA_PMS_INBOX');
 		return '<a href="'. JRoute::_($this->uddeim->getLinkToBox('inbox',false)).'" rel="follow">'. $text.'</a>';
 	}
+
+	public function getInboxURL () {
+		return JRoute::_($this->uddeim->getLinkToBox('inbox',false));
+	}
 }

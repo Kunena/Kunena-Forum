@@ -165,3 +165,6 @@
 #kunena.admin.override .icon-22-support { background-image: url("../../icons/small/support.png"); }
 #kunena.admin.override .icon-22-editcss { background-image: url("../../icons/small/css.png"); }
 #kunena.admin.override .icon-22-pluginsmanager { background-image: url("../../icons/small/pluginsmanager.png"); }
+#kunena.admin.override label {
+    display: inline !important;
+}

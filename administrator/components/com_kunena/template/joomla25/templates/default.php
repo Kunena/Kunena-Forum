@@ -28,6 +28,11 @@ JHtml::_('behavior.tooltip');
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHtml::_( 'form.token' ); ?>
 
+						<div class="btn-group pull-right hidden-phone">
+							<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+							<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+						</div>
+
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -43,11 +48,7 @@ JHtml::_('behavior.tooltip');
 							<tfoot>
 								<tr>
 									<td colspan="7">
-										<div class="pagination">
-											<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY')?><?php echo $this->pagination->getLimitBox (); ?></div>
-											<?php echo $this->pagination->getPagesLinks (); ?>
-											<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
-										</div>
+										<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 									</td>
 								</tr>
 							</tfoot>

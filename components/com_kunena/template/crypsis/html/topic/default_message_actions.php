@@ -45,6 +45,9 @@ if ($this->message->modified_time) {
 						<ul class="dropdown-menu">
 							<li><?php echo $this->messageButtons->get('moderate'); ?></li>
 							<li><?php echo $this->messageButtons->get('delete'); ?></li>
+							<li><?php echo $this->messageButtons->get('undelete'); ?></li>
+							<li><?php echo $this->messageButtons->get('permdelete'); ?></li>
+							<li><?php echo $this->messageButtons->get('publish'); ?></li>
 							<li><?php echo $this->messageButtons->get('spam'); ?></li>
 						</ul>
 					</div>

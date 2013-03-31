@@ -431,6 +431,21 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * Add multiple users to category moderators
+	 *
+	 * @param array $user
+	 * @example if ($category->authorise('admin')) $category->addModerator($user);
+	 **/
+	public function addModerators($users = array()) {
+		if ( empty($users) ) return;
+
+		foreach($users as $user) {
+			$user_inst = KunenaUserHelper::get($user);
+			$this->setModerator($user_inst, true);
+		}
+	}
+
+	/**
 	 * Remove user from category moderators
 	 *
 	 * @param $user

@@ -11,6 +11,20 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
+<script type="text/javascript">
+	Joomla.orderTable = function() {
+		table = document.getElementById("sortTable");
+		direction = document.getElementById("directionTable");
+		order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $this->listOrdering; ?>') {
+			dirn = 'asc';
+		} else {
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}
+</script>
+
 <div id="kunena" class="admin override">
 	<div class="container-fluid">
 		<div class="row-fluid">
@@ -26,7 +40,6 @@ defined ( '_JEXEC' ) or die ();
 						<input type="hidden" name="task" value="" />
 						<input type="hidden" name="filter_order" value="<?php echo $this->escape ( $this->state->get('list.ordering') ) ?>" />
 						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-						<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHtml::_( 'form.token' ); ?>
 
@@ -40,10 +53,21 @@ defined ( '_JEXEC' ) or die ();
 								<button class="btn tip" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
+								<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+								<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+							</div>
+							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 								<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
 									<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+								</select>
+							</div>
+							<div class="btn-group pull-right">
+								<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+								<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+									<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+									<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 								</select>
 							</div>
 							<div class="clearfix"></div>
@@ -103,11 +127,7 @@ defined ( '_JEXEC' ) or die ();
 							<tfoot>
 								<tr>
 									<td colspan="11">
-										<div class="pagination">
-											<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->pagination->getLimitBox (); ?></div>
-											<?php echo $this->pagination->getPagesLinks (); ?>
-											<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
-										</div>
+										<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 									</td>
 								</tr>
 							</tfoot>
@@ -183,6 +203,8 @@ defined ( '_JEXEC' ) or die ();
 							<?php } ?>
 							</tbody>
 						</table>
+						<?php //Load the batch processing form. ?>
+						<?php echo $this->loadTemplateFile('moderators'); ?>
 					</form>
 				</div>
 				<div class="pull-right small">

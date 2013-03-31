@@ -45,6 +45,9 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 		return $top;
 	}
 
-	public function showProfile($view, &$params) {
+	public function showProfile($view, &$params) {}
+
+	public function getEditProfileURL($userid, $xhtml = true) {
+		return $this->getProfileURL($userid, $task = '', $xhtml = true);
 	}
 }

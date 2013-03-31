@@ -67,8 +67,16 @@ class KunenaController extends JControllerLegacy {
 		// Set the name for the controller and instantiate it.
 		if ($app->isAdmin()) {
 			$class = $prefix . 'AdminController' . ucfirst ( $view );
+			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
+			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+
 		} else {
 			$class = $prefix . 'Controller' . ucfirst ( $view );
+			KunenaFactory::loadLanguage('com_kunena.controllers');
+			KunenaFactory::loadLanguage('com_kunena.models');
+			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+
 		}
 		if (class_exists ( $class )) {
 			$instance = new $class ();
@@ -99,10 +107,7 @@ class KunenaController extends JControllerLegacy {
 
 		if ($this->app->isAdmin()) {
 			// Load admin language files
-			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
-			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
-			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena', 'site');
@@ -117,11 +122,8 @@ class KunenaController extends JControllerLegacy {
 			}
 		} else {
 			// Load site language files
-			KunenaFactory::loadLanguage('com_kunena.controllers');
-			KunenaFactory::loadLanguage('com_kunena.models');
 			KunenaFactory::loadLanguage('com_kunena.views');
 			KunenaFactory::loadLanguage('com_kunena.templates');
-			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena');
 

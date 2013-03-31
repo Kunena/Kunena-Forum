@@ -244,7 +244,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 
 	public function getPagination($limitstart=0, $limit=6, $display=4, $prefix='') {
 		if (!$this->_pagination) {
-			$this->_pagination = new KunenaHtmlPagination($this->posts, $limitstart, $limit, $prefix);
+			$this->_pagination = new JPagination($this->posts, $limitstart, $limit, $prefix);
 			$this->_pagination->setDisplay($display, "index.php?option=com_kunena&view=topic&catid={$this->category_id}&id={$this->id}");
 		}
 		return $this->_pagination;
@@ -1105,7 +1105,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		if ($this->locked ) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_TOPIC_LOCKED' );
 		}
-		if ($poll->getTimeToLive() < JFactory::getDate()->toUnix() ) {
+		if ($poll->polltimetolive!='0000-00-00 00:00:00' && $poll->getTimeToLive() < JFactory::getDate()->toUnix() ) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED' );
 		}
 	}

@@ -95,7 +95,8 @@ class KunenaAdminModelUser extends KunenaModel {
 		$modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
 		if (empty($modCatList)) $modCatList[] = 0;
 
-		$categoryList = array(JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));
+		$categoryList = array();
+		if ($this->me->isAdmin()) $categoryList[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		$params = array (
 			'sections' => false,
 			'action' => 'read');

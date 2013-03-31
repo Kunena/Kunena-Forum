@@ -384,4 +384,40 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
+
+	public function batch_moderators() {
+		if (! JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$catids = JRequest::getVar ( 'catid', array (), 'post', 'array' );
+
+		if ( empty($userids) ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_USERS_SELECTED' ) );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		if ( empty($catids) ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_CATEGORIES_SELECTED' ) );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		// Update moderator rights
+		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+		$users = KunenaUserHelper::loadUsers($userids);
+		foreach ($users as $user) {
+			foreach ($categories as $category) {
+				if (in_array($category->id, $catids)) $category->setModerator($user, true);
+			}
+			// Global moderator is a special case
+			if ($this->me->isAdmin() && in_array(0, $catids)) {
+				KunenaAccess::getInstance()->setModerator(0, $user, true);
+			}
+		}
+
+		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_SET_MODERATORS_DONE' ) );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+	}
 }

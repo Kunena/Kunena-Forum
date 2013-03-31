@@ -31,7 +31,7 @@ class KunenaAdminViewCategories extends KunenaView {
 
 	function displayDefault() {
 		$this->categories = $this->get ( 'AdminCategories' );
-		$this->navigation = $this->get ( 'AdminNavigation' );
+		$this->pagination = $this->get ( 'AdminNavigation' );
 
 		// Preprocess the list of items to find ordering divisions.
 		$this->ordering = array();

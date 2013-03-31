@@ -112,32 +112,4 @@ class KunenaAdminModelSmilies extends JModelList {
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
-
-	/**
-	 * KPagination override.
-	 *
-	 * @return  KPagination Object
-	 *
-	 * @since   3.0
-	 */
-	public function getPagination()
-	{
-		// Get a storage key.
-		$store = $this->getStoreId('getPagination');
-
-		// Try to load the data from internal storage.
-		if (isset($this->cache[$store]))
-		{
-			return $this->cache[$store];
-		}
-
-		// Create the pagination object.
-		$limit = (int) $this->getState('list.limit') - (int) $this->getState('list.links');
-		$page = new KunenaHtmlPagination($this->getTotal(), $this->getStart(), $limit);
-
-		// Add the object to the internal cache.
-		$this->cache[$store] = $page;
-
-		return $this->cache[$store];
-	}
 }

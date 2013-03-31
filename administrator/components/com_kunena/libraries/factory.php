@@ -34,6 +34,27 @@ abstract class KunenaFactory {
 		return KunenaTemplate::getInstance($name);
 	}
 
+
+	/**
+	 * Get a Kunena template object
+	 *
+	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaTemplate
+	 */
+	public static function getAdminTemplate() {
+		if (version_compare(JVERSION, '3.0', '>')) {
+			// Joomla 3.0+ template:
+			require_once KPATH_ADMIN.'/template/joomla30/template.php';
+			$template = new KunenaAdminTemplate30;
+		} else {
+			// Joomla 2.5 template:
+			require_once KPATH_ADMIN.'/template/joomla25/template.php';
+			$template = new KunenaAdminTemplate25;
+		}
+		return $template;
+	}
+
 	/**
 	 * Get Kunena user object
 	 *

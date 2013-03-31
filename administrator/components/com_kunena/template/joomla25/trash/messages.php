@@ -40,7 +40,6 @@ defined ( '_JEXEC' ) or die ();
 						<input type="hidden" name="layout" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
 						<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-						<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 						<input type="hidden" name="view" value="trash" />
 						<input type="hidden" name="task" value="" />
 						<input type="hidden" name="boxchecked" value="0" />
@@ -57,6 +56,10 @@ defined ( '_JEXEC' ) or die ();
 							<div class="btn-group pull-left">
 								<button class="btn tip" type="submit" ><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
 								<button class="btn tip" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
+							</div>
+							<div class="btn-group pull-right hidden-phone">
+								<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+								<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -130,11 +133,7 @@ defined ( '_JEXEC' ) or die ();
 							<tfoot>
 								<tr>
 									<td colspan="9">
-										<div class="pagination">
-											<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $this->navigation->getLimitBox (); ?></div>
-											<?php echo $this->navigation->getPagesLinks (); ?>
-											<div class="limit"><?php echo $this->navigation->getResultsCounter (); ?></div>
-										</div>
+										<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 									</td>
 								</tr>
 							</tfoot>

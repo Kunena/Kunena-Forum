@@ -40,7 +40,6 @@ defined ( '_JEXEC' ) or die ();
 						<input type="hidden" name="task" value="" />
 						<input type="hidden" name="filter_order" value="<?php echo $this->escape ( $this->state->get('list.ordering') ) ?>" />
 						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-						<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHtml::_( 'form.token' ); ?>
 
@@ -55,7 +54,7 @@ defined ( '_JEXEC' ) or die ();
 							</div>
 							<div class="btn-group pull-right hidden-phone">
 								<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-								<?php echo $this->pagination->getLimitBox(); ?>
+								<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -128,11 +127,7 @@ defined ( '_JEXEC' ) or die ();
 							<tfoot>
 								<tr>
 									<td colspan="11">
-										<div class="pagination">
-											<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->pagination->getLimitBox (); ?></div>
-											<?php echo $this->pagination->getPagesLinks (); ?>
-											<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
-										</div>
+										<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 									</td>
 								</tr>
 							</tfoot>

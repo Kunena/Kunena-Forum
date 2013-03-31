@@ -76,19 +76,22 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$this->user = JFactory::getUser();
+		$avatar_success = $this->saveAvatar();
 		$success = $this->saveUser();
 		if (!$success) {
 			$this->app->enqueueMessage($this->user->getError(), 'notice');
+		} elseif (!$avatar_success) {
+			$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_AVATAR_NOT_SAVED' ), 'error' );
 		} else {
 			$this->saveProfile();
-			$this->saveAvatar();
 			$this->saveSettings();
 			if (!$this->me->save()) {
 				$this->app->enqueueMessage($this->me->getError(), 'notice');
+			} else {
+				$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_SAVED' ) );
 			}
 		}
 
-		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
 		$this->setRedirect ( $this->me->getUrl(false), $msg );
 	}
 
@@ -376,6 +379,7 @@ class KunenaControllerUser extends KunenaController {
 
 	protected function saveAvatar() {
 		$action = JRequest::getString('avatar', 'keep');
+		$actual_avatar = $this->me->avatar;
 
 		require_once (KPATH_SITE.'/lib/kunena.upload.class.php');
 		$upload = new CKunenaUpload();
@@ -406,15 +410,21 @@ class KunenaControllerUser extends KunenaController {
 			if ($fileinfo['ready'] === true) {
 				$this->me->avatar = 'users/'.$fileinfo['name'];
 			}
-			if (!$fileinfo['status']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
-			else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
-
+			if (!$fileinfo['status']) {
+				$this->me->avatar = $actual_avatar;
+				if (!$fileinfo['not_valid_img_ext']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'), 'error' );
+				else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
+				return false;
+			} else {
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
+			}
 		} else if ( $action == 'delete' ) {
 			//set default avatar
 			$this->me->avatar = '';
 		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false) {
 			$this->me->avatar = $action;
 		}
+		return true;
 	}
 
 	protected function saveSettings() {

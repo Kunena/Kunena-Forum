@@ -37,6 +37,8 @@ class KunenaAdminViewUsers extends KunenaView {
 	}
 
 	protected function setToolbar() {
+		// Get the toolbar object instance
+		$bar = JToolBar::getInstance('toolbar');
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_USER_MANAGER'), 'users' );
 		JToolBarHelper::spacer();
@@ -51,18 +53,22 @@ class KunenaAdminViewUsers extends KunenaView {
 		JToolBarHelper::custom('delete','delete.png','delete_f2.png', 'COM_KUNENA_USER_DELETE');
 		JToolBarHelper::spacer();
 		if (version_compare(JVERSION, '3.0', '>')) {
-			// Get the toolbar object instance
-			$bar = JToolBar::getInstance('toolbar');
+
 			JHtml::_('bootstrap.modal', 'moderateModal');
 			$title = JText::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
-			$dhtml = <<<EOS
-<button data-toggle="modal" data-target="#moderateModal" class="btn btn-small">
-	<i class="icon-checkbox-partial" title="{$title}"> </i> {$title}
-</button>
-EOS;
+			$dhtml = "<button data-toggle=\"modal\" data-target=\"#moderateModal\" class=\"btn btn-small\">
+						<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
+							$title</button>";
 			$bar->appendButton('Custom', $dhtml, 'batch');
-			JToolBarHelper::spacer();
+		} else {
+			JHtml::_('bootstrap.modal', 'collapseModal');
+			$title = JText::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
+			$dhtml = "<a data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"toolbar\" href=\"#\">
+						<span class=\"icon-32-restore\" title=\"$title\"></span>
+							$title</a>";
+			$bar->appendButton('Custom', $dhtml, 'batch');
 		}
+
 	}
 
 	/**

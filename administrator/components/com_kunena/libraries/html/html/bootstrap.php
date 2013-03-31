@@ -85,7 +85,7 @@ abstract class JHtmlBootstrap
 			$opt['interval'] = (isset($params['interval']) && ($params['interval'])) ? (int) $params['interval'] : 5000;
 			$opt['pause'] = (isset($params['pause']) && ($params['pause'])) ? $params['pause'] : 'hover';
 
-			$options = self::_getJSObject($opt);
+			$options = self::getJSObject($opt);
 
 			// Attach the carousel to document
 			JFactory::getDocument()->addScriptDeclaration(
@@ -197,7 +197,7 @@ abstract class JHtmlBootstrap
 			$opt['show']     = (isset($params['show']) && ($params['show'])) ? (boolean) $params['show'] : true;
 			$opt['remote']   = (isset($params['remote']) && ($params['remote'])) ? (boolean) $params['remote'] : '';
 
-			$options = JHtml::getJSObject($opt);
+			$options = self::getJSObject($opt);
 
 			// Attach the modal to document
 			JFactory::getDocument()->addScriptDeclaration(
@@ -291,11 +291,11 @@ abstract class JHtmlBootstrap
 		$opt['content']   = isset($params['content']) ? $params['content'] : null;
 		$opt['delay']     = isset($params['delay']) ? $params['delay'] : null;
 
-		$options = JHtml::getJSObject($opt);
+		$options = self::getJSObject($opt);
 
 		// Attach the popover to the document
 		JFactory::getDocument()->addScriptDeclaration(
-			"$(document).ready(function()
+			"window.addEvent('domready',function()
 			{
 				$('" . $selector . "').popover(" . $options . ");
 			});"
@@ -329,7 +329,7 @@ abstract class JHtmlBootstrap
 			// Setup options object
 			$opt['offset'] = (isset($params['offset']) && ($params['offset'])) ? (int) $params['offset'] : 10;
 
-			$options = JHtml::getJSObject($opt);
+			$options = self::getJSObject($opt);
 
 			// Attach ScrollSpy to document
 			JFactory::getDocument()->addScriptDeclaration(
@@ -385,11 +385,11 @@ abstract class JHtmlBootstrap
 			$opt['trigger']   = (isset($params['trigger']) && ($params['trigger'])) ? (string) $params['trigger'] : null;
 			$opt['delay']     = (isset($params['delay']) && ($params['delay'])) ? (int) $params['delay'] : null;
 
-			$options = JHtml::getJSObject($opt);
+			$options = self::getJSObject($opt);
 
 			// Attach tooltips to document
 			JFactory::getDocument()->addScriptDeclaration(
-				"$(document).ready(function()
+				"window.addEvent('domready', function()
 				{
 					jQuery('" . $selector . "').tooltip(" . $options . ");
 				});"
@@ -430,7 +430,7 @@ abstract class JHtmlBootstrap
 			$opt['toggle'] = (isset($params['toggle']) && ($params['toggle'])) ? (boolean) $params['toggle'] : true;
 			$opt['active'] = (isset($params['active']) && ($params['active'])) ? (string) $params['active'] : '';
 
-			$options = JHtml::getJSObject($opt);
+			$options = self::getJSObject($opt);
 
 			// Attach accordion to document
 			JFactory::getDocument()->addScriptDeclaration(
@@ -472,7 +472,7 @@ abstract class JHtmlBootstrap
 	 */
 	public static function addSlide($selector, $text, $id)
 	{
-		$in = (self::$loaded['JHtmlBootstrap::startAccordion']['active'] == $id) ? ' in' : '';
+		$in = (self::$loaded['self::startAccordion']['active'] == $id) ? ' in' : '';
 
 		$html = '<div class="accordion-group">'
 				. '<div class="accordion-heading">'
@@ -519,7 +519,7 @@ abstract class JHtmlBootstrap
 			// Setup options object
 			$opt['active'] = (isset($params['active']) && ($params['active'])) ? (string) $params['active'] : '';
 
-			$options = JHtml::getJSObject($opt);
+			$options = self::getJSObject($opt);
 
 			// Attach tooltips to document
 			JFactory::getDocument()->addScriptDeclaration(
@@ -564,7 +564,7 @@ abstract class JHtmlBootstrap
 	 */
 	public static function addPanel($selector, $id)
 	{
-		$active = (self::$loaded['JHtmlBootstrap::startPane'][$selector]['active'] == $id) ? ' active' : '';
+		$active = (self::$loaded['self::startPane'][$selector]['active'] == $id) ? ' active' : '';
 
 		return '<div id="' . $id . '" class="tab-pane' . $active . '">';
 	}
@@ -605,5 +605,56 @@ abstract class JHtmlBootstrap
 		{
 			JHtml::_('stylesheet', 'media/jui/css/bootstrap-rtl.css', $attribs, false);
 		}*/
+	}
+
+	/**
+	 * This is an internal method to JHtml that is not included in 11.1 Platform.
+	 *
+	 * Internal method to get a JavaScript object notation string from an array
+	 *
+	 * @param   array  $array  The array to convert to JavaScript object notation
+	 *
+	 * @return  string  JavaScript object notation representation of the array
+	 *
+	 * @since   12.2
+	 */
+	public static function getJSObject(array $array = array())
+	{
+		$object = '{';
+
+		// Iterate over array to build objects
+		foreach ((array) $array as $k => $v)
+		{
+			if (is_null($v))
+			{
+				continue;
+			}
+
+			if (is_bool($v))
+			{
+				$object .= ' ' . $k . ': ';
+				$object .= ($v) ? 'true' : 'false';
+				$object .= ',';
+			}
+			elseif (!is_array($v) && !is_object($v))
+			{
+				$object .= ' ' . $k . ': ';
+				$object .= (is_numeric($v) || strpos($v, '\\') === 0) ? (is_numeric($v)) ? $v : substr($v, 1) : "'" . str_replace("'", "\\'", trim($v, "'")) . "'";
+				$object .= ',';
+			}
+			else
+			{
+				$object .= ' ' . $k . ': ' . self::getJSObject($v) . ',';
+			}
+		}
+
+		if (substr($object, -1) == ',')
+		{
+			$object = substr($object, 0, -1);
+		}
+
+		$object .= '}';
+
+		return $object;
 	}
 }

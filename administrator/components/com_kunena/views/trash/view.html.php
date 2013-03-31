@@ -17,7 +17,7 @@ class KunenaAdminViewTrash extends KunenaView {
 	function displayDefault() {
 		$this->setLayout($this->state->get('layout'));
 		$this->trash_items = $this->get('Trashitems');
-		$this->navigation = $this->get ( 'Navigation' );
+		$this->pagination = $this->get ( 'Navigation' );
 		$this->view_options_list = $this->get ( 'ViewOptions' );
 
 		$this->sortFields = $this->getSortFields();

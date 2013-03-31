@@ -32,21 +32,21 @@ class KunenaHtmlPagination extends JPagination
 
 	public function setDisplay($displayedPages = 7, $uri = null) {
 		$this->_uri = $uri;
-		// From Joomla 1.6:
+		// From Joomla 3.0:
 		// Set the pagination iteration loop values.
-		$this->set('pages.start', $this->get('pages.current') - intval($displayedPages / 2));
-		if ($this->get('pages.start') < 1) {
-			$this->set('pages.start', 1);
+		$this->pagesStart = $this->pagesCurrent - (int) ($displayedPages / 2);
+		if ($this->pagesStart < 1) {
+			$this->pagesStart = 1;
 		}
-		if (($this->get('pages.start') + $displayedPages) > $this->get('pages.total')) {
-			$this->set('pages.stop', $this->get('pages.total'));
-			if ($this->get('pages.total') < $displayedPages) {
-				$this->set('pages.start', 1);
+		if ($this->pagesStart + $displayedPages > $this->pagesTotal) {
+			$this->pagesStop = $this->pagesTotal;
+			if ($this->pagesTotal < $displayedPages) {
+				$this->pagesStart = 1;
 			} else {
-				$this->set('pages.start', $this->get('pages.total') - $displayedPages + 1);
+				$this->pagesStart = $this->pagesTotal - $displayedPages + 1;
 			}
 		} else {
-			$this->set('pages.stop', ($this->get('pages.start') + $displayedPages - 1));
+			$this->pagesStop = $this->pagesStart + $displayedPages - 1;
 		}
 	}
 

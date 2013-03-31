@@ -244,7 +244,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 
 	public function getPagination($limitstart=0, $limit=6, $display=4, $prefix='') {
 		if (!$this->_pagination) {
-			$this->_pagination = new KunenaHtmlPagination($this->posts, $limitstart, $limit, $prefix);
+			$this->_pagination = new JPagination($this->posts, $limitstart, $limit, $prefix);
 			$this->_pagination->setDisplay($display, "index.php?option=com_kunena&view=topic&catid={$this->category_id}&id={$this->id}");
 		}
 		return $this->_pagination;

@@ -12,7 +12,7 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<div class="modal hide fade" id="collapseModal">
+<div class="modal hide fade" id="moderateModal">
 	<div class="modal-header">
 		<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
 		<h3><?php echo JText::_('COM_KUNENA_BATCH_USERS_OPTIONS');?></h3>

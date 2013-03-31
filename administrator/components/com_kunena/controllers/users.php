@@ -404,9 +404,17 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		foreach($catids as $catid) {
-			$category = KunenaForumCategoryHelper::get ( intval ( $catid ) );
-			$category->addModerators($userids);
+		// Update moderator rights
+		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+		$users = KunenaUserHelper::loadUsers($userids);
+		foreach ($users as $user) {
+			foreach ($categories as $category) {
+				if (in_array($category->id, $catids)) $category->setModerator($user, true);
+			}
+			// Global moderator is a special case
+			if ($this->me->isAdmin() && in_array(0, $catids)) {
+				KunenaAccess::getInstance()->setModerator(0, $user, true);
+			}
 		}
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_SET_MODERATORS_DONE' ) );

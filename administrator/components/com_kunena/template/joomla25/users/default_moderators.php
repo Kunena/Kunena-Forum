@@ -14,9 +14,8 @@ defined('_JEXEC') or die;
 ?>
 <fieldset class="batch">
 	<legend><?php echo JText::_('COM_KUNENA_BATCH_USERS_OPTIONS');?></legend>
-	<p><?php echo JText::_('COM_KUNENA_BATCH_USERS_TIP'); ?></p>
 	<label id="batch-choose-action-lbl" for="batch-category-id">
-	<?php echo JText::_('COM_KUNENA_BATCH_CATEGORY_LABEL'); ?>
+		<?php echo JText::_('COM_KUNENA_BATCH_USERS_TIP'); ?>
 	</label>
 	<fieldset id="batch-choose-action" class="combo">
 		<?php echo $this->modcatlist; ?>
@@ -25,7 +24,7 @@ defined('_JEXEC') or die;
 	<button type="submit" onclick="Joomla.submitbutton('batch_moderators');">
 	<?php echo JText::_('COM_KUNENA_USERS_LABEL_BATCH_PROCESS'); ?>
 	</button>
-	<button type="button" onclick="document.id('catid').value='';">
-	<?php echo JText::_('COM_KUNENA_FILTER_CLEAR'); ?>
+	<button type="button" onclick="document.getElements('#catid > option').removeProperty('selected', '')">
+	<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 	</button>
 </fieldset>

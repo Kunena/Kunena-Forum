@@ -136,9 +136,6 @@ defined ( '_JEXEC' ) or die ();
 										<?php echo $this->escape($row->subject); ?>
 									</td>
 									<td>
-										<?php echo $this->escape($row->getTopic()->subject); ?>
-									</td>
-									<td>
 										<?php echo $this->escape($row->getCategory()->name); ?>
 									</td>
 									<td>

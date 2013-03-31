@@ -1105,7 +1105,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		if ($this->locked ) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_TOPIC_LOCKED' );
 		}
-		if ($poll->getTimeToLive() < JFactory::getDate()->toUnix() ) {
+		if ($poll->polltimetolive!='0000-00-00 00:00:00' && $poll->getTimeToLive() < JFactory::getDate()->toUnix() ) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED' );
 		}
 	}

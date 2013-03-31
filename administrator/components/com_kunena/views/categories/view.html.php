@@ -52,6 +52,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		$this->filterAccess = $this->escape($this->state->get('filter.access'));
 		$this->filterLocked = $this->escape($this->state->get('filter.locked'));
 		$this->filterReview = $this->escape($this->state->get('filter.review'));
+		$this->filterAllow_polls = $this->escape($this->state->get('filter.allow_polls'));
 		$this->filterAnonymous = $this->escape($this->state->get('filter.anonymous'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
@@ -118,6 +119,15 @@ class KunenaAdminViewCategories extends KunenaView {
 	 * @return	string	The HTML code for the select tag
 	 */
 	public function reviewOptions() {
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+
+		return $options;
+	}
+
+	public function allowpollsOptions() {
 		// Build the active state filter options.
 		$options	= array();
 		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));

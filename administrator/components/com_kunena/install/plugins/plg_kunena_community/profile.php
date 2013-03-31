@@ -17,21 +17,16 @@ class KunenaProfileCommunity extends KunenaProfile {
 		$this->params = $params;
 	}
 
-	public function getUserListURL($action='', $xhtml = true)
-	{
+	public function getUserListURL($action='', $xhtml = true) {
 		$config = KunenaFactory::getConfig ();
 		$my = JFactory::getUser();
 		if ( $config->userlist_allowed == 1 && $my->id == 0  ) return false;
 		return CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
 	}
 
-	public function getProfileURL($userid, $task='', $xhtml = true)
-	{
-		if ($userid == 0) return false;
-		// Get CUser object
-		$user = CFactory::getUser($userid);
-		if($user === null) return false;
-		return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid, $xhtml);
+	public function getProfileURL($userid, $task='', $xhtml = true) {
+		$do = $task ? '&task='.$task : '';
+		return CRoute::_('index.php?option=com_community&view=profile'.$do, $xhtml);
 	}
 
 	public function _getTopHits($limit=0) {
@@ -44,4 +39,8 @@ class KunenaProfileCommunity extends KunenaProfile {
 	}
 
 	public function showProfile($view, &$params) {}
+
+	public function getEditProfileURL($userid, $xhtml = true) {
+		return $this->getProfileURL($userid, 'edit', $xhtml = true);
+	}
 }

@@ -34,8 +34,7 @@ class KunenaHtmlPagination extends JPagination
 		$this->_uri = $uri;
 		// From Joomla 3.0:
 		// Set the pagination iteration loop values.
-		$displayedPages = 10;
-		$this->pagesStart = $this->pagesCurrent - ($displayedPages / 2);
+		$this->pagesStart = $this->pagesCurrent - (int) ($displayedPages / 2);
 		if ($this->pagesStart < 1) {
 			$this->pagesStart = 1;
 		}

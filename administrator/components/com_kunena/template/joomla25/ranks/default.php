@@ -9,22 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
-JHtml::_('kunenatabs.start');
-
-$paneOptions = array(
-		'onActive' => 'function(title, description){
-		description.setStyle("display", "block");
-		title.addClass("open").removeClass("closed");
-}',
-		'onBackground' => 'function(title, description){
-		description.setStyle("display", "none");
-		title.addClass("closed").removeClass("open");
-}',
-		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
-		'useCookie' => true, // this must not be a string. Don't use quotes.
-);
 ?>
 
 <script type="text/javascript">
@@ -32,7 +16,7 @@ $paneOptions = array(
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrdering; ?>') {
+		if (order != '<?php echo $this->listOrdering;; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;

@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
-JHtml::_('kunenatabs.start');
-
 
 $document = JFactory::getDocument();
 $errormsg = JText::_('COM_KUNENA_ERROR1', true);

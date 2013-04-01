@@ -12,7 +12,6 @@ defined ( '_JEXEC' ) or die ();
 
 
 JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
-JHtml::_('kunenatabs.start');
 $db = JFactory::getDBO();
 $document = JFactory::getDocument();
 $document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'

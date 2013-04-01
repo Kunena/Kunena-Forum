@@ -162,6 +162,14 @@ abstract class JHtmlBootstrap
 			$debug  = (boolean) $config->get('debug');
 		}
 
+		//we need to inject a generic class otherwise we cannot reference things outside the scope of component
+		JFactory::getDocument()->addScriptDeclaration(
+			"window.addEvent('domready',function()
+			{
+				$(document.body).addClass('bootstrap');
+			});"
+		);
+
 		JHtml::_('script', KPATH_MEDIA.'/kunena/js/bootstrap/moobootstrap.js' , false, true);
 		self::$loaded[__METHOD__] = true;
 

@@ -23,6 +23,6 @@ class KunenaHtmlPagination extends KunenaPagination
 {
 	public function setDisplay($displayedPages = 7, $uri = null) {
 		$this->setDisplayedPages($displayedPages);
-		if ($uri) $this->setUri($uri);
+		if ($uri instanceof JUri) $this->setUri($uri);
 	}
 }

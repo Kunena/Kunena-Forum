@@ -107,7 +107,8 @@ class KunenaModelInstall extends JModelLegacy {
 	 */
 	public function uninstall() {
 		// Put back file that was removed during installation.
-		JFile::write(KPATH_ADMIN.'/install.php', '');
+		$contents = '';
+		JFile::write(KPATH_ADMIN.'/install.php', $contents);
 
 		// Uninstall all plugins.
 		$this->uninstallPlugin('kunena', 'alphauserpoints');

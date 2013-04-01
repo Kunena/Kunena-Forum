@@ -129,14 +129,14 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	protected function getSortFields() {
 		$sortFields = array();
-		$sortFields[] = JHtml::_('select.option', 'a.username', JText::_('COM_KUNENA_USRL_USERNAME'));
-		//$sortFields[] = JHtml::_('select.option', 'a.name', JText::_('COM_KUNENA_USRL_REALNAME'));
-		$sortFields[] = JHtml::_('select.option', 'a.email', JText::_('COM_KUNENA_USRL_EMAIL'));
-		$sortFields[] = JHtml::_('select.option', 'ku.signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
-		$sortFields[] = JHtml::_('select.option', 'a.block', JText::_('COM_KUNENA_USRL_ENABLED'));
-		$sortFields[] = JHtml::_('select.option', 'ku.banned', JText::_('COM_KUNENA_USRL_BANNED'));
-		$sortFields[] = JHtml::_('select.option', 'ku.moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
-		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
+		//$sortFields[] = JHtml::_('select.option', 'name', JText::_('COM_KUNENA_USRL_REALNAME'));
+		$sortFields[] = JHtml::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = JHtml::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
+		$sortFields[] = JHtml::_('select.option', 'enabled', JText::_('COM_KUNENA_USRL_ENABLED'));
+		$sortFields[] = JHtml::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));
+		$sortFields[] = JHtml::_('select.option', 'moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}

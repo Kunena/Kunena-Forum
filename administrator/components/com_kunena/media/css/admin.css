@@ -27,7 +27,7 @@ display: block !important;
 /** end Joomla 1.6 backend fix **/
 
 div.icon-48-kunena {
-	background-image:url(../icons/kunena-logo-48-white.png);
+	background-image:url(../icons/kunena-logo-48-black.png);
 }
 
 .hideable {
@@ -98,7 +98,7 @@ a.icon-editcss-sm { background: url(../icons/small/css.png) 5px 5px no-repeat; }
 a.icon-pluginsmanager-sm { background: url(../icons/small/pluginsmanager.png) 5px 5px no-repeat; }
 
 /* Large icons */
-div.kadmin-functitle.icon-cpanel { background: url(../icons/kunena-logo-48-white.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-cpanel { background: url(../icons/kunena-logo-48-black.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-config { background: url(../icons/large/config.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-adminforum { background: url(../icons/large/categories.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-profiles { background: url(../icons/large/users.png) 5px 5px no-repeat; }

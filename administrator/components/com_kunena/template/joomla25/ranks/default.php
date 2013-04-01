@@ -12,17 +12,17 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <script type="text/javascript">
-	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $this->listOrdering;; ?>') {
-			dirn = 'asc';
-		} else {
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
+    Joomla.orderTable = function() {
+        var table = document.getElementById("sortTable");
+        var direction = document.getElementById("directionTable");
+        var order = table.options[table.selectedIndex].value;
+        if (order != '<?php echo $this->listOrdering; ?>') {
+            var dirn = 'asc';
+        } else {
+            var dirn = direction.options[direction.selectedIndex].value;
+        }
+        Joomla.tableOrdering(order, dirn, '');
+    }
 </script>
 
 <div id="kunena" class="admin override">
@@ -63,7 +63,7 @@ defined ( '_JEXEC' ) or die ();
 										<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 										<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-											<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+											<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->escape($this->listDirection));?>
 										</select>
 									</div>
 									<div class="btn-group pull-right">
@@ -86,16 +86,16 @@ defined ( '_JEXEC' ) or die ();
 												<?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?>
 											</th>
 											<th width="58%" class="nowrap">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->listDirection, $this->listOrdering ); ?>
 											</th>
 											<th  width="10%" class="center nowrap">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->listDirection, $this->listOrdering ); ?>
 											</th>
 											<th width="10%" class="center nowrap">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->listDirection, $this->listOrdering ); ?>
 											</th>
 											<th width="1%" class="center nowrap">
-												<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+												<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
 											</th>
 										</tr>
 										<tr>

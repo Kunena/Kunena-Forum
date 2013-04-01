@@ -201,11 +201,11 @@ HTML;
 		return $html;
 	}
 
-	public function getPaginationItemActive(&$item) {
+	public function getPaginationItemActive($item) {
 		return '<a title="'.$item->text.'" href="'.$item->link.'" class="pagenav">'.$item->text.'</a>';
 	}
 
-	public function getPaginationItemInactive(&$item) {
+	public function getPaginationItemInactive($item) {
 		return '<span class="pagenav">'.$item->text.'</span>';
 	}
 

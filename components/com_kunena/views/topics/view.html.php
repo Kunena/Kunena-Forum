@@ -255,8 +255,8 @@ class KunenaViewTopics extends KunenaView {
 	}
 
 	function getPagination($maxpages) {
-		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$pagination->setDisplay($maxpages);
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
 		return $pagination->getPagesLinks();
 	}
 

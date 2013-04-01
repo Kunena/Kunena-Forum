@@ -29,7 +29,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('JCANCEL'); ?>
 			</button>
 			<button class="btn btn-primary" type="submit" onclick="document.getElementById('settingFormModal').submit();">
-				<?php echo JText::_('COM_KUNENA_CONFIG_MODAL_VALIDATE'); ?>
+				<?php echo JText::_('JSUBMIT'); ?>
 			</button>
 		</div>
 	</div>

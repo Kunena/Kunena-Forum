@@ -30,7 +30,7 @@ defined('_JEXEC') or die;
 		<?php echo JText::_('JCANCEL'); ?>
 		</button>
 		<button class="btn btn-primary" type="submit" onclick="Joomla.submitbutton('batch_moderators');">
-		<?php echo JText::_('COM_KUNENA_USERS_LABEL_BATCH_PROCESS'); ?>
+		<?php echo JText::_('JSUBMIT'); ?>
 		</button>
 	</div>
 </div>

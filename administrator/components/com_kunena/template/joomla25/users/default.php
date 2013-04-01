@@ -203,6 +203,8 @@ defined ( '_JEXEC' ) or die ();
 							<?php } ?>
 							</tbody>
 						</table>
+						<?php //Load the batch processing form. ?>
+						<?php echo $this->loadTemplateFile('moderators'); ?>
 					</form>
 				</div>
 				<div class="pull-right small">

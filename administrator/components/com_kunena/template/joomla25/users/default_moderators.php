@@ -12,19 +12,25 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<fieldset class="batch">
-	<legend><?php echo JText::_('COM_KUNENA_BATCH_USERS_OPTIONS');?></legend>
-	<label id="batch-choose-action-lbl" for="batch-category-id">
-		<?php echo JText::_('COM_KUNENA_BATCH_USERS_TIP'); ?>
-	</label>
-	<fieldset id="batch-choose-action" class="combo">
-		<?php echo $this->modcatlist; ?>
-	</fieldset>
-
-	<button type="submit" onclick="Joomla.submitbutton('batch_moderators');">
-	<?php echo JText::_('COM_KUNENA_USERS_LABEL_BATCH_PROCESS'); ?>
-	</button>
-	<button type="button" onclick="document.getElements('#catid > option').removeProperty('selected', '')">
-	<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
-	</button>
-</fieldset>
+<div class="modal hide fade" id="moderateModal">
+	<div class="modal-header">
+		<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
+		<h3><?php echo JText::_('COM_KUNENA_BATCH_USERS_OPTIONS');?></h3>
+	</div>
+	<div class="modal-body">
+		<p><?php echo JText::_('COM_KUNENA_BATCH_USERS_TIP'); ?></p>
+		<div class="control-group">
+			<div class="controls">
+				<?php echo $this->modcatlist; ?>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" type="button" onclick="document.id('catid').value='';" data-dismiss="modal">
+			<?php echo JText::_('JCANCEL'); ?>
+		</button>
+		<button class="btn btn-primary" type="submit" onclick="Joomla.submitbutton('batch_moderators');">
+			<?php echo JText::_('COM_KUNENA_USERS_LABEL_BATCH_PROCESS'); ?>
+		</button>
+	</div>
+</div>

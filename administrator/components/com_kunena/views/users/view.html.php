@@ -61,9 +61,9 @@ class KunenaAdminViewUsers extends KunenaView {
 							$title</button>";
 			$bar->appendButton('Custom', $dhtml, 'batch');
 		} else {
-			JHtml::_('bootstrap.modal', 'collapseModal');
+			JHtml::_('bootstrap.modal', 'moderateModal');
 			$title = JText::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
-			$dhtml = "<a data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"toolbar\" href=\"#\">
+			$dhtml = "<a data-toggle=\"modal\" data-target=\"#moderateModal\" class=\"toolbar\">
 						<span class=\"icon-32-restore\" title=\"$title\"></span>
 							$title</a>";
 			$bar->appendButton('Custom', $dhtml, 'batch');

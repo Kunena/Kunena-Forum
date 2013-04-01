@@ -13,13 +13,13 @@ defined ( '_JEXEC' ) or die ();
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrdering; ?>') {
-			dirn = 'asc';
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $this->listOrdering; ?>') {
+			var dirn = 'asc';
 		} else {
-			dirn = direction.options[direction.selectedIndex].value;
+			var dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
 	}
@@ -38,8 +38,8 @@ defined ( '_JEXEC' ) or die ();
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>" method="post" id="adminForm" name="adminForm">
 						<input type="hidden" name="type" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
 						<input type="hidden" name="layout" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
-						<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
-						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
+						<input type="hidden" name="filter_order" value="<?php echo intval ( $this->listOrdering ) ?>" />
+						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->listDirection) ?>" />
 						<input type="hidden" name="view" value="trash" />
 						<input type="hidden" name="task" value="" />
 						<input type="hidden" name="boxchecked" value="0" />
@@ -65,9 +65,16 @@ defined ( '_JEXEC' ) or die ();
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 								<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-									<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+									<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->escape($this->listDirection));?>
 								</select>
 							</div>
+                            <div class="btn-group pull-right">
+                                <label for="sortTable" class="element-invisible"><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></label>
+                                <select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+                                    <option value=""><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></option>
+                                    <?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
+                                </select>
+                            </div>
 							<div class="clearfix"></div>
 						</div>
 
@@ -78,19 +85,19 @@ defined ( '_JEXEC' ) or die ();
 										<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->trash_items ); ?>);" />
 									</th>
 									<th class="nowrap">
-										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th class="nowrap">
-										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'category', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th class="nowrap">
-										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th class="nowrap">
-										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th class="nowrap" width="1%">
-										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->listDirection, $this->listOrdering); ?>
 									</th>
 								</tr>
 								<tr>

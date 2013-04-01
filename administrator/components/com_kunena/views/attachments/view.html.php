@@ -51,10 +51,12 @@ class KunenaAdminViewAttachments extends KunenaView {
 
 	protected function getSortFields() {
 		$sortFields = array();
-		$sortFields[] = JHtml::_('select.option', 'a.filename', JText::_('COM_KUNENA_FILENAME'));
-		$sortFields[] = JHtml::_('select.option', 'a.filetype', JText::_('COM_KUNENA_ATTACHMENTS_FILETYPE'));
-		$sortFields[] = JHtml::_('select.option', 'a.size', JText::_('COM_KUNENA_FILESIZE'));
-		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = JHtml::_('select.option', 'filename', JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE'));
+		$sortFields[] = JHtml::_('select.option', 'filetype', JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE'));
+		$sortFields[] = JHtml::_('select.option', 'size', JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE'));
+        $sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_ATTACHMENTS_USERNAME'));
+        $sortFields[] = JHtml::_('select.option', 'post', JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE'));
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}

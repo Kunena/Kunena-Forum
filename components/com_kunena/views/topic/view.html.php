@@ -918,6 +918,7 @@ class KunenaViewTopic extends KunenaView {
 			$description = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 182);
 			$description = preg_replace('/\s+/', ' ', $description); // remove newlines
 			$description = preg_replace('/^[^\w0-9]+/', '', $description); // remove characters at the beginning that are not letters or numbers
+			$description = JFilterOutput::cleanText($description);
 			$description = trim($description); // Remove trailing spaces and beginning
 			if ($page) {
 				$description .= ' - ' . $page . '/' . $pages;  //avoid the "duplicate meta description" error in google webmaster tools

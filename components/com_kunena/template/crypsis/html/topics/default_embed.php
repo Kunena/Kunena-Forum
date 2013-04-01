@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 										<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 										<?php if ($this->actionMove) :
 											$options = array (JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
-											echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+											echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 										endif;?>
 										<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 									<?php endif; ?>

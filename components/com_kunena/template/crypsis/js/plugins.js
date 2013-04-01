@@ -17,6 +17,15 @@ function hideMessage() {
 	div.style.display = "none";
 }
 
+jQuery(document).ready(function() {
+	jQuery('#kchecktask').change(function() {
+		var task = jQuery("select#kchecktask").val();
+		if (task=='move') {
+			jQuery("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
+		}
+	});
+});
+
 window.addEvent('domready', function(){	
 	$$('.kspoiler').each(function(el){
 		var contentElement = el.getElement('.kspoiler-content');

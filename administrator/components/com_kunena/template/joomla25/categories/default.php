@@ -14,18 +14,18 @@ $user = JFactory::getUser();
 $me = KunenaUserHelper::getMyself();
 $userId	= $user->get('id');
 
-$changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state->get('list.direction') == 'asc');
+$changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'asc');
 ?>
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>') {
-			dirn = 'asc';
+			var dirn = 'asc';
 		} else {
-			dirn = direction.options[direction.selectedIndex].value;
+			var dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
 	}
@@ -43,8 +43,8 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
 						<input type="hidden" name="task" value="" />
-						<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
-						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
+						<input type="hidden" name="filter_order" value="<?php echo intval ( $this->listOrdering ) ?>" />
+						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->listDirection) ?>" />
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHtml::_( 'form.token' ); ?>
 
@@ -83,35 +83,35 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 									<th width="5%" class="nowrap">
 										<small>
 											<?php  if ($changeOrder) echo JHtml::_('grid.order',  $this->categories, 'filesave.png', 'saveorder' ); ?>
-											<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+											<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->listDirection, $this->listOrdering ); ?>
 										</small>
 									</th>
 									<th width="1$" class="nowrap">
 										<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->categories ); ?>);" />
 									</th>
 									<th width="5%" class="nowrap">
-										<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th class="nowrap">
-										<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="24%" class="nowrap center">
-										<?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="5%" class="nowrap center">
-										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="5%" class="nowrap center">
-										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="5%" class="center">
-										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="5%" class="nowrap center">
-										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="1%" class="nowrap center">
-										<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+										<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->listDirection, $this->listOrdering); ?>
 									</th>
 								</tr>
 								<tr>

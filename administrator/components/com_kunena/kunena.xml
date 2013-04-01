@@ -24,14 +24,17 @@
 		<folder>views</folder>
 	</files>
 	<administration>
-		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA</menu>
+		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-black.png">COM_KUNENA</menu>
 		<submenu>
-			<menu view="config" img="components/com_kunena/media/icons/favicons/kunena-config.png">COM_KUNENA_CONFIGURATION</menu>
+            <menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA_DASHBOARD</menu>
 			<menu view="categories" img="components/com_kunena/media/icons/favicons/kunena-categories.png">COM_KUNENA_CATEGORY_MANAGER</menu>
 			<menu view="users" img="components/com_kunena/media/icons/favicons/kunena-users.png">COM_KUNENA_USER_MANAGER</menu>
-			<menu view="templates" img="components/com_kunena/media/icons/favicons/kunena-templates.png">COM_KUNENA_TEMPLATE_MANAGER</menu>
+            <menu view="attachments">COM_KUNENA_FILE_MANAGER</menu>
 			<menu view="smilies" img="components/com_kunena/media/icons/favicons/kunena-smileys.png">COM_KUNENA_EMOTICON_MANAGER</menu>
 			<menu view="ranks" img="components/com_kunena/media/icons/favicons/kunena-ranks.png">COM_KUNENA_RANK_MANAGER</menu>
+            <menu view="templates" img="components/com_kunena/media/icons/favicons/kunena-templates.png">COM_KUNENA_TEMPLATE_MANAGER</menu>
+            <menu view="config" img="components/com_kunena/media/icons/favicons/kunena-config.png">COM_KUNENA_CONFIGURATION</menu>
+            <menu view="tools">COM_KUNENA_FORUM_TOOLS</menu>
 			<menu view="trash" img="components/com_kunena/media/icons/favicons/kunena-trash.png">COM_KUNENA_TRASH_MANAGER</menu>
 		</submenu>
 		<files>

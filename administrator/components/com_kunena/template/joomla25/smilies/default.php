@@ -12,17 +12,17 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <script type="text/javascript">
-	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrdering; ?>') {
-			dirn = 'asc';
-		} else {
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
+    Joomla.orderTable = function() {
+        var table = document.getElementById("sortTable");
+        var direction = document.getElementById("directionTable");
+        var order = table.options[table.selectedIndex].value;
+        if (order != '<?php echo $this->listOrdering; ?>') {
+            var dirn = 'asc';
+        } else {
+            var dirn = direction.options[direction.selectedIndex].value;
+        }
+        Joomla.tableOrdering(order, dirn, '');
+    }
 </script>
 
 <div id="kunena" class="admin override">
@@ -63,7 +63,7 @@ defined ( '_JEXEC' ) or die ();
 										<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 										<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-											<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+											<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->escape($this->listDirection));?>
 										</select>
 									</div>
 									<div class="btn-group pull-right">
@@ -81,10 +81,10 @@ defined ( '_JEXEC' ) or die ();
 										<tr>
 											<th class="nowrap center" width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
 											<th class="nowrap center" width="5%"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
-											<th class="nowrap" width="8%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-											<th class="nowrap"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+											<th class="nowrap" width="8%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->listDirection, $this->listOrdering ); ?></th>
+											<th class="nowrap"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->listDirection, $this->listOrdering ); ?></th>
 											<th class="nowrap nowrap" width="1%">
-												<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+												<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
 											</th>
 										</tr>
 										<tr>

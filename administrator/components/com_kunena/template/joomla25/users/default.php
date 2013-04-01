@@ -9,6 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+JHtml::_('behavior.tooltip');
+
 ?>
 
 <script type="text/javascript">
@@ -154,7 +156,7 @@ defined ( '_JEXEC' ) or die ();
 												<?php echo JHtml::_('grid.id', $i, intval($user->id)) ?>
 											</td>
 											<td>
-												<span class="editlinktip hasTip" title="<?php echo $this->escape($user->username. '::'.$kunena_user->getAvatarImage('kavatar', 128, 128)); ?> ">
+												<span class="editlinktip hasTip" title="<?php echo $this->escape($user->username.'::'.$kunena_user->getAvatarImage('kavatar', 128, 128)); ?>">
 													<?php echo $kunena_user->getAvatarImage('kavatar', 24, 24); ?>
 													<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->username); ?></a>
 													<small>

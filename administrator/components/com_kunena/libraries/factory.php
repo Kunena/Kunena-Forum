@@ -151,13 +151,11 @@ abstract class KunenaFactory {
 			$english = false;
 			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
 					&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')) {
-				$lang->load($file, $lookup2, 'en-GB', true, false, false);
+				$lang->load($file, $lookup2, 'en-GB', true, false);
 				$english = true;
 			}
-			$loaded[$file] = $lang->load($file, $lookup1, null, $english, false, false)
-				|| $lang->load($file, $lookup2, null, $english, false, false)
-				|| $lang->load($file, $lookup1, $lang->getDefault(), $english, false, false)
-				|| $lang->load($file, $lookup2, $lang->getDefault(), $english, false, false);
+			$loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
+				|| $lang->load($file, $lookup2, null, $english, false);
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $loaded[$file];

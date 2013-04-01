@@ -60,13 +60,13 @@ defined ( '_JEXEC' ) or die ();
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 								<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-									<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+									<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
 								</select>
 							</div>
 							<div class="btn-group pull-right">
-								<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+								<label for="sortTable" class="element-invisible"><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></label>
 								<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-									<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+									<option value=""><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></option>
 									<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 								</select>
 							</div>

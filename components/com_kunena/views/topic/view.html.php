@@ -816,8 +816,8 @@ class KunenaViewTopic extends KunenaView {
 	function getPagination($maxpages) {
 		$uri = KunenaRoute::normalize(null, true);
 		if ($uri) $uri->delVar('mesid');
-		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$pagination->setDisplay($maxpages, $uri);
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages)->setUri($uri);
 		return $pagination->getPagesLinks();
 	}
 

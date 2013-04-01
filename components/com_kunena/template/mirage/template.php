@@ -127,7 +127,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	 * (non-PHPdoc)
 	 * @see KunenaTemplate::getPaginationItemActive()
 	 */
-	public function getPaginationItemActive(&$item) {
+	public function getPaginationItemActive($item) {
 		return '<li class="page-item"><a title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></a></li>';
 	}
 
@@ -135,7 +135,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	 * (non-PHPdoc)
 	 * @see KunenaTemplate::getPaginationItemInactive()
 	 */
-	public function getPaginationItemInactive(&$item) {
+	public function getPaginationItemInactive($item) {
 		return '<li class="page-item page-active"><a class="active" title="'.$item->text.'"><span>'.$item->text.'</span></a></li>';
 	}
 }

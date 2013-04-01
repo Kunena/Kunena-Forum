@@ -51,8 +51,8 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function getPagination($maxpages) {
-		$pagination = new KunenaHtmlPagination ( $this->count, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$pagination->setDisplay($maxpages);
+		$pagination = new KunenaPagination($this->count, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
 		return $pagination->getPagesLinks();
 	}
 

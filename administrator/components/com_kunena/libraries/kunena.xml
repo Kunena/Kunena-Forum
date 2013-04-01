@@ -23,6 +23,7 @@
 		<folder>keyword</folder>
 		<folder>layout</folder>
 		<folder>menu</folder>
+		<folder>pagination</folder>
 		<folder>request</folder>
 		<folder>route</folder>
 		<folder>spam</folder>

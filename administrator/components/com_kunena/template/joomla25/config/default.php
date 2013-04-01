@@ -47,9 +47,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -123,9 +123,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -143,9 +143,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -170,9 +170,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -349,9 +349,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -381,9 +381,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -470,9 +470,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -527,9 +527,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -606,9 +606,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -645,9 +645,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -667,9 +667,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -704,9 +704,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -779,9 +779,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -822,9 +822,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -849,9 +849,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -944,9 +944,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -1026,9 +1026,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -1090,9 +1090,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -1159,9 +1159,9 @@ defined ( '_JEXEC' ) or die ();
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>

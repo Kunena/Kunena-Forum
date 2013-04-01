@@ -13,7 +13,6 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-//JHtml::_('formbehavior.chosen', 'select');
 ?>
 
 <script type="text/javascript">
@@ -60,7 +59,7 @@ JHtml::_('dropdown.init');
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-						<<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>

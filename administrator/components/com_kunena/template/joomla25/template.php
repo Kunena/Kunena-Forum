@@ -9,18 +9,25 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport('joomla.html.html');
+
 class KunenaAdminTemplate25 {
 
 	public function initialize() {
-		// Include MooTools framework
-		JHtml::_('behavior.framework', true);
+
+		JHtml::addIncludePath(JUri::root(true).'/libraries/html/html');
+
+		// Add JavaScript Frameworks
+		JHtml::_('bootstrap.framework');
 
 		$this->compileLess("kunena.less","bootstrap-custom.css");
 		$document = JFactory::getDocument();
 		$document->addStyleSheet ( JUri::root(true).'/media/kunena/css/joomla25/bootstrap-custom.css' );
 		$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/joomla25/layout.css' );
 		$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/joomla25/styles.css' );
-		$document->addScript ( JUri::root(true).'/media/kunena/js/tabs.js' );
+
+		$document->addScript ( JUri::root(true).'/media/kunena/js/bootstrap/moobootstrap.js' );
+		//$document->addScript ( JUri::root(true).'/media/kunena/js/tabs.js' );
 	}
 
 	public function compileLess($inputFile, $outputFile) {

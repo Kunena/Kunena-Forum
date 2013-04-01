@@ -212,6 +212,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		foreach ( $cids as $userid ) {
 			$my = JFactory::getUser();
+			$user = JFactory::getUser($userid);
 			$groups = JUserHelper::getUserGroups($userid);
 			$error = false;
 
@@ -220,7 +221,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 				$error = true;
 			}
 
-			if ( $my->authorise('core.admin') )  {
+			if ( $user->authorise('core.admin') )  {
 				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'));
 				$error = true;
 			}

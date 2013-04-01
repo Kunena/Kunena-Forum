@@ -60,10 +60,10 @@ class KunenaAdminViewRanks extends KunenaView {
 
 	protected function getSortFields() {
 		$sortFields = array();
-		$sortFields[] = JHtml::_('select.option', 'a.title', JText::_('JGLOBAL_TITLE'));
-		$sortFields[] = JHtml::_('select.option', 'a.special', JText::_('COM_KUNENA_RANKS_SPECIAL'));
-		$sortFields[] = JHtml::_('select.option', 'a.min', JText::_('COM_KUNENA_RANKSMIN'));
-		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = JHtml::_('select.option', 'title', JText::_('JGLOBAL_TITLE'));
+		$sortFields[] = JHtml::_('select.option', 'special', JText::_('COM_KUNENA_RANKS_SPECIAL'));
+		$sortFields[] = JHtml::_('select.option', 'min', JText::_('COM_KUNENA_RANKSMIN'));
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}

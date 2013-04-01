@@ -45,9 +45,9 @@ class KunenaAdminViewSmilies extends KunenaView {
 
 	protected function getSortFields() {
 		$sortFields = array();
-		$sortFields[] = JHtml::_('select.option', 'a.code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
-		$sortFields[] = JHtml::_('select.option', 'a.location', JText::_('COM_KUNENA_EMOTICONS_URL'));
-		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
+		$sortFields[] = JHtml::_('select.option', 'code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
+		$sortFields[] = JHtml::_('select.option', 'location', JText::_('COM_KUNENA_EMOTICONS_URL'));
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
 
 		return $sortFields;
 	}

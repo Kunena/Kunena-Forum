@@ -163,11 +163,14 @@ class KunenaAdminViewCategories extends KunenaView {
 		return $sortFields;
 	}
 
-	protected function getSortDirectionFields() {
-		$sortDirection = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+    protected function getSortDirectionFields() {
+        $sortDirection = array();
+//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+        // TODO: remove it when J2.5 support is dropped
+        $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+        $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
-		return $sortDirection;
-	}
+        return $sortDirection;
+    }
 }

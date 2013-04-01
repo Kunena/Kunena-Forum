@@ -45,6 +45,15 @@
     float: none;
 }
 
+#kunena.admin.override fieldset input,
+#kunena.admin.override fieldset textarea,
+#kunena.admin.override fieldset select,
+#kunena.admin.override fieldset img,
+#kunena.admin.override fieldset button {
+    float: none;
+    margin: 0;
+}
+
 #kunena.admin.override img {
     border: 0 none;
     height: auto;

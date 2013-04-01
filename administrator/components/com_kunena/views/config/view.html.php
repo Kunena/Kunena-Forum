@@ -34,16 +34,16 @@ class KunenaAdminViewConfig extends KunenaView {
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
 		if (version_compare(JVERSION, '3.0', '>')) {
-			JHtml::_('bootstrap.modal', 'collapseModal');
+			JHtml::_('bootstrap.modal', 'settingModal');
 			$title = JText::_('COM_KUNENA_RESET_CONFIG');
-			$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
+			$dhtml = "<button data-toggle=\"modal\" data-target=\"#settingModal\" class=\"btn btn-small\">
 						<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 						$title</button>";
 			$bar->appendButton('Custom', $dhtml, 'restore');
 		} else {
-			JHtml::_('bootstrap.modal', 'collapseModal');
+			JHtml::_('bootstrap.modal', 'settingModal');
 			$title = JText::_('COM_KUNENA_RESET_CONFIG');
-			$dhtml = "<a data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"toolbar\" href=\"#\">
+			$dhtml = "<a data-toggle=\"modal\" data-target=\"#settingModal\" class=\"toolbar\">
 						<span class=\"icon-32-restore\" title=\"$title\"></span>
 							$title</a>";
 			$bar->appendButton('Custom', $dhtml, 'restore');

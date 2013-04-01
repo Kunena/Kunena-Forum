@@ -1203,6 +1203,8 @@ defined ( '_JEXEC' ) or die ();
 							</div>
 						</div>
 					</form>
+					<?php //Load the setting comfirmation box form. ?>
+					<?php echo $this->loadTemplateFile('setting'); ?>
 				</div>
 				<div class="pull-right small">
 					<?php echo KunenaVersion::getLongVersionHTML(); ?>

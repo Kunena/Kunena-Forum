@@ -139,8 +139,9 @@
 			</fileset>
 		</copy>
 		
-		<!-- Remove Mirage template -->
+		<!-- Remove Mirage & Crypsis template -->
 		<delete dir="${tmp_dir}/packages/com_kunena/site/template/mirage" />
+        <delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsis" />
 
 		<!-- Move libraries -->
 		<move todir="${tmp_dir}/libraries">

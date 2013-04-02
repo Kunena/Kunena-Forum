@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 	<h2 class="page-header kcenter"><span><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span></h2>
 		<div class="row-fluid column-row">
 			<div class="span12 column-item">
-				<div class="kcreditsheader kcenter"> <img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-black.png');?>" alt="Kunena" style="margin: 18px;" /> </div>
+				<div class="kcreditsheader kcenter"> <img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-white.png');?>" alt="Kunena" style="margin: 18px;" /> </div>
 				<div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div>
 				<div class="kcredits-language">
 					<ul class="kteam">

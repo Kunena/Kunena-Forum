@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
 	<div class="kcontainer">
 		<div class="kbody">
 			<div class="kcreditsheader">
-				<img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-black.png');?>" alt="Kunena" class="fltlft" style="margin: 18px;" />
+				<img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-white.png');?>" alt="Kunena" class="fltlft" style="margin: 18px;" />
 				<div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div>
 			</div>
 			<div class="kcredits-language">

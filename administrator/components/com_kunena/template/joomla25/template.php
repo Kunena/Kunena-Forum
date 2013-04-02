@@ -18,7 +18,7 @@ class KunenaAdminTemplate25 {
 		JHtml::addIncludePath(JUri::root(true).'/libraries/html/html');
 
 		// Add JavaScript Frameworks
-		JHtml::_('bootstrap.framework');
+		JHtml::_('moobootstrap.framework');
 
 		$this->compileLess("kunena.less","bootstrap-custom.css");
 		$document = JFactory::getDocument();

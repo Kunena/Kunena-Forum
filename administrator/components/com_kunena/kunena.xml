@@ -24,7 +24,7 @@
 		<folder>views</folder>
 	</files>
 	<administration>
-		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-black.png">COM_KUNENA</menu>
+		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA</menu>
 		<submenu>
             <menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA_DASHBOARD</menu>
 			<menu view="categories" img="components/com_kunena/media/icons/favicons/kunena-categories.png">COM_KUNENA_CATEGORY_MANAGER</menu>

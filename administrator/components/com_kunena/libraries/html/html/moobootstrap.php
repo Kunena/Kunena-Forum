@@ -18,7 +18,7 @@ jimport('joomla.html.html');
  * @subpackage  HTML
  * @since       3.0
  */
-abstract class JHtmlBootstrap
+abstract class JHtmlMooBootstrap
 {
 	/**
 	 * @var    array  Array containing information for loaded files

@@ -41,7 +41,7 @@ class KunenaAdminViewConfig extends KunenaView {
 						$title</button>";
 			$bar->appendButton('Custom', $dhtml, 'restore');
 		} else {
-			JHtml::_('bootstrap.modal', 'settingModal');
+			JHtml::_('moobootstrap.modal', 'settingModal');
 			$title = JText::_('COM_KUNENA_RESET_CONFIG');
 			$dhtml = "<a data-toggle=\"modal\" data-target=\"#settingModal\" class=\"toolbar\">
 						<span class=\"icon-32-restore\" title=\"$title\"></span>

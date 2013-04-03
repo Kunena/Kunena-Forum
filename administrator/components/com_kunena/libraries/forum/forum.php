@@ -11,6 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
+ * class KunenaForum
+ *
  * Main class for Kunena Forum which is always present if Kunena framework has been installed.
  *
  * This class can be used to detect and initialize Kunena framework and to make sure that your extension
@@ -265,10 +267,10 @@ abstract class KunenaForum {
 	 *
 	 * </code>
 	 *
-	 * @param unknown_type $viewName Name of the view.
-	 * @param unknown_type $layout Name of the layout.
-	 * @param unknown_type $template Name of the template file.
-	 * @param unknown_type $params Extra parameters to control the model.
+	 * @param string $viewName Name of the view.
+	 * @param string $layout Name of the layout.
+	 * @param null|string $template Name of the template file.
+	 * @param array|JRegistry $params Extra parameters to control the model.
 	 */
 	public static function display($viewName, $layout='default', $template=null, $params = array()) {
 		// Filter input
@@ -300,6 +302,7 @@ abstract class KunenaForum {
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
+		/** @var KunenaView $view */
 
 		if ($params instanceof JRegistry) {
 			// Do nothing
@@ -309,7 +312,8 @@ abstract class KunenaForum {
 
 		$params->set('layout', $layout);
 		// Push the model into the view (as default).
-		$model = new $model ();
+		$model = new $model();
+		/** @var KunenaModel $model */
 		$model->initialize($params);
 		$view->setModel ( $model, true );
 

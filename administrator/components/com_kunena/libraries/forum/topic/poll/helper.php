@@ -11,18 +11,18 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Topic Poll Helper Class
+ * Class KunenaForumTopicPollHelper
  */
 abstract class KunenaForumTopicPollHelper {
 	protected static $_instances = array();
 
 	/**
-	 * Returns KunenaForumTopic object
+	 * Returns KunenaForumTopic object.
 	 *
-	 * @access	public
-	 * @param	identifier		The poll to load - Can be only an integer.
-	 * @return	KunenaForumTopicPoll		The poll object.
-	 * @since	2.0
+	 * @param int  $identifier	The poll to load - Can be only an integer.
+	 * @param bool $reload
+	 *
+	 * @return KunenaForumTopicPoll
 	 */
 	static public function get($identifier = null, $reload = false) {
 		if ($identifier instanceof KunenaForumTopicPoll) {

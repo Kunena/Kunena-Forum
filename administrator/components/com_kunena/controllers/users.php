@@ -189,8 +189,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$options = array();
-		$options['clientid'][] = 0; // site
+		$options = array('clientid'=>0); // Just logout from site
 		$this->app->logout( (int) $id, $options);
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USER_LOGOUT_DONE'));

@@ -4,29 +4,28 @@
  * @package Kunena.Framework
  * @subpackage Forum.Announcement
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Announcement Helper Class
+ * Class KunenaForumAnnouncementHelper
  */
-class KunenaForumAnnouncementHelper {
-	// Global for every instance
+abstract class KunenaForumAnnouncementHelper {
+	/**
+	 * @var KunenaForumAnnouncement[]
+	 */
 	public static $_instances = false;
-
-	// Static class
-	private function __construct() {}
 
 	/**
 	 * Returns the global KunenaForumAnnouncement object, only creating it if it doesn't already exist.
 	 *
-	 * @access	public
-	 * @param	int	$id		The Announcement to load - Can be only an integer.
-	 * @return	Announcement	The Announcement object.
-	 * @since	1.6
+	 * @param int $identifier	Announcement to load - Can be only an integer.
+	 * @param bool $reload
+	 *
+	 * @return KunenaForumAnnouncement
 	 */
 	static public function get($identifier = null, $reload = false) {
 		if ($identifier instanceof KunenaForumAnnouncement) {
@@ -47,17 +46,35 @@ class KunenaForumAnnouncementHelper {
 		return self::$_instances [$id];
 	}
 
+	/**
+	 * @param string $layout
+	 * @param bool $xhtml
+	 *
+	 * @return string
+	 */
 	static public function getUrl($layout = null, $xhtml = true) {
 		$uri = self::getUri($layout);
 		return KunenaRoute::_($uri, $xhtml);
 	}
 
+	/**
+	 * @param string $layout
+	 *
+	 * @return JUri
+	 */
 	static public function getUri($layout = null) {
 		$uri = new JUri('index.php?option=com_kunena&view=announcement');
 		if ($layout) $uri->setVar('layout', $layout);
 		return $uri;
 	}
 
+	/**
+	 * @param int  $start
+	 * @param int  $limit
+	 * @param bool $filter
+	 *
+	 * @return KunenaForumAnnouncement[]
+	 */
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true) {
 		$db = JFactory::getDBO ();
 		$where = $filter ? "WHERE published=1" : '';
@@ -79,6 +96,11 @@ class KunenaForumAnnouncementHelper {
 		return $list;
 	}
 
+	/**
+	 * @param bool $filter
+	 *
+	 * @return int
+	 */
 	static public function getCount($filter = true) {
 		$db = JFactory::getDBO ();
 		$where = $filter ? "WHERE published=1" : '';

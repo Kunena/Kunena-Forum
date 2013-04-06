@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Templates
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -34,7 +34,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<td width="220"><span class="componentheading">&nbsp;</span></td>
 		</tr>
 		</table>
-		<table class="adminlist table table-striped">
+		<table class="table table-striped">
 		<tr>
 			<th width="1%" align="left"> </th>
 			<th width="85%" align="left"><?php echo $this->escape($this->dir); ?></th>

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Lib
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -39,6 +39,7 @@ class CKunenaUpload {
 	protected $ready = false;
 	protected $status = true;
 	protected $error = false;
+	protected $not_valid_img_ext = true;
 
 	protected $validImageExts = array();
 	protected $validFileExts = array();
@@ -289,6 +290,7 @@ class CKunenaUpload {
 			else if ($imglist && !$filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', $this->_config->filetypes ));
 			else if (!$imglist && $filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_IMAGE', $this->_config->imagetypes ));
 			else $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_NOT_ALLOWED', $filelist ));
+			$this->not_valid_img_ext = false;
 			return false;
 		}
 

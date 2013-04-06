@@ -4,8 +4,6 @@
 	<layout title="COM_KUNENA_MENU_TOPICS_MYRECENT">
 		<message>COM_KUNENA_MENU_TOPICS_MYRECENT_DESC</message>
 	</layout>
-
-
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
 		<fieldset name="request">
@@ -15,10 +13,12 @@
 				<option value="started">COM_KUNENA_TOPICS_MODE_OPTION_STARTED</option>
 				<option value="subscriptions">COM_KUNENA_TOPICS_MODE_OPTION_MYSUBSCRIPTIONS</option>
 				<option value="favorites">COM_KUNENA_TOPICS_MODE_OPTION_MYFAVORITES</option>
+				<option value="plugin">COM_KUNENA_TOPICS_MODE_OPTION_PLUGIN</option>
 			</field>
+			<field name="modetype" type="text" default="" label="COM_KUNENA_TOPICS_MODETYPE_DESC"/>
 		</fieldset>
 	</fields>
-	<fields name="params" addfieldpath="/administrator/components/com_kunena/libraries/form/fields">
+	<fields name="params">
 		<fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
 			<field name="header" type="text" default="" label="COM_KUNENA_MENU_HEADER"/>
 			<field name="topics_catselection" type="radio" default="1" label="COM_KUNENA_COM_A_LATESTCATEGORY_IN" description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">

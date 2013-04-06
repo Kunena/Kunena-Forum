@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Blue_Eagle
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -865,12 +865,39 @@ window.addEvent('domready', function(){
 		});
 	}
 	
-	if ( document.id('kunena_url_avatargallery') != undefined ) {
+	if ( document.id('avatar_category_select') != undefined ) { 
 		document.id('avatar_category_select').addEvent('change', function(e){
+			// we getting the name of gallery selected in drop-down by user 
 			var avatar_selected= document.id('avatar_category_select').getSelected();
-			var url = "";
-			var urlreg = new  RegExp("_GALLERY_","g");
-			location.href=url.replace(urlreg, avatar_selected.get('value'));
+			
+			var td_avatar = document.id('kgallery_avatar_list');
+			
+			// we remove avatar which exist in td tag to allow us to put new one items
+			document.id('kgallery_avatar_list').empty(); 
+			// we getting from hidden input the url of kunena image gallery
+			var url_gallery_main = document.id('Kunena_Image_Gallery_URL').get('value');
+			var id_to_select = document.id('Kunena_'+avatar_selected.get('value'));
+			var name_to_select = id_to_select.getProperty('name');
+			// Convert JSON to object
+			var image_object = JSON.decode(id_to_select.get('value'));
+			
+			// Re-create all HTML items with avatars images from gallery selected by user
+			for(var i = 0, len = image_object.length; i < len; ++i) {
+				var SpanElement  = new Element('span');
+				var LabelElement = new Element('label');
+				LabelElement.setProperty('for','kavatar'+i);
+				if ( name_to_select != 'default' ) {
+					var ImageElement = new Element('img', {src: url_gallery_main+'/'+name_to_select+'/'+image_object[i], alt: ''});
+					var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+name_to_select+'/'+image_object[i]});
+				} else {
+					var ImageElement = new Element('img', {src: url_gallery_main+'/'+image_object[i], alt: ''});
+					var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+image_object[i]});
+				}
+				SpanElement.inject(td_avatar);
+				LabelElement.inject(SpanElement);
+				ImageElement.inject(LabelElement);
+				InputElement.inject(SpanElement);
+			}
 		});
 	}
 	
@@ -890,4 +917,7 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
+	
+	/* For profile tabs */
+	$$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); });
 });

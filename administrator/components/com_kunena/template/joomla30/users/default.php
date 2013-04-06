@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Users
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,13 +17,13 @@ JHtml::_('dropdown.init');
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>') {
-			dirn = 'asc';
+			var dirn = 'asc';
 		} else {
-			dirn = direction.options[direction.selectedIndex].value;
+			var dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
 	}
@@ -55,7 +55,7 @@ JHtml::_('dropdown.init');
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-					<?php echo $this->pagination->getListFooter(); ?>
+					<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -74,7 +74,7 @@ JHtml::_('dropdown.init');
 				<div class="clearfix"></div>
 			</div>
 
-			<table class="table table-striped adminlist" id="userList">
+			<table class="table table-striped" id="userList">
 				<thead>
 					<tr>
 						<th width="1%" class="nowrap center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
@@ -132,7 +132,7 @@ JHtml::_('dropdown.init');
 				<tfoot>
 					<tr>
 						<td colspan="8">
-							<?php echo $this->pagination->getListFooter(); ?>
+							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 						</td>
 					</tr>
 				</tfoot>
@@ -162,7 +162,13 @@ JHtml::_('dropdown.init');
 					</td>
 					<td class="hidden-phone"><?php echo $this->escape($item->email); ?></td>
 					<td class="center hidden-phone hidden-tablet">
-						<?php echo $this->escape ( $kunena_user->signature ); ?>
+						<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
+							<?php if ($kunena_user->signature) { ?>
+								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
+							<?php } else { ?>
+								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
+							<?php } ?>
+						</span>
 					</td>
 					<td class="center hidden-phone">
 						<a class ="btn btn-micro <?php echo (!$item->block ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
@@ -188,6 +194,8 @@ JHtml::_('dropdown.init');
 			<?php endif; ?>
 				</tbody>
 			</table>
+			<?php //Load the batch processing form. ?>
+			<?php echo $this->loadTemplateFile('moderators'); ?>
 		</form>
 	</div>
 	<div class="pull-right small">

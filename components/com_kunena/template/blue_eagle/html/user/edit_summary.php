@@ -4,19 +4,11 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$private = KunenaFactory::getPrivateMessaging();
-if ($this->me->userid == $this->user->id) {
-	$PMCount = $private->getUnreadCount($this->me->userid);
-	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
-} else {
-	$PMlink = $this->profile->profileIcon('private');
-}
 ?>
 <?php if ($this->avatarlink) : ?>
 <div class="kavatar-lg"><?php echo $this->avatarlink; ?></div>
@@ -37,9 +29,9 @@ if ($this->me->userid == $this->user->id) {
 	<?php if (!empty($this->usermedals)) : ?><li><?php foreach ( $this->usermedals as $medal ) : echo $medal,' '; endforeach ?></li><?php endif ?>
 	<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW'); ?>:</strong> <?php echo intval($this->profile->uhits); ?></li>
 	<li><?php echo $this->displayKarma(); ?></li>
-	<?php if ($PMlink) {
+	<?php if ($this->PMlink) {
 			?>
-	<li><?php echo $PMlink; ?></li>
+	<li><?php echo $this->PMlink; ?></li>
 	<?php  } ?>
 	<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo KunenaHtmlParser::parseText($this->personalText); ?></li><?php } ?>
 </ul>

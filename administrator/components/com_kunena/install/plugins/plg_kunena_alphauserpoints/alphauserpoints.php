@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage AlphaUserPoints
  *
- * @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,8 +23,6 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 		parent::__construct ( $subject, $config );
 
 		$this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', KPATH_ADMIN );
-
-		$this->path = dirname ( __FILE__ );
 	}
 
 	/*
@@ -35,7 +33,7 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 	public function onKunenaGetAvatar() {
 		if (!$this->params->get('avatar', 1)) return;
 
-		require_once "{$this->path}/avatar.php";
+		require_once __DIR__ . "/avatar.php";
 		return new KunenaAvatarAlphaUserPoints($this->params);
 	}
 
@@ -47,7 +45,7 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 	public function onKunenaGetProfile() {
 		if (!$this->params->get('profile', 1)) return;
 
-		require_once "{$this->path}/profile.php";
+		require_once __DIR__ . "/profile.php";
 		return new KunenaProfileAlphaUserPoints($this->params);
 	}
 
@@ -59,7 +57,7 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 	public function onKunenaGetActivity() {
 		if (!$this->params->get('activity', 1)) return;
 
-		require_once "{$this->path}/activity.php";
+		require_once __DIR__ . "/activity.php";
 		return new KunenaActivityAlphaUserPoints($this->params);
 	}
 }

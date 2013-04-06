@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Administrator.Joomla30
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -34,11 +34,24 @@
 .pagetitle.icon-48-pluginsmanager { background-image:url("../../icons/large/pluginsmanager.png"); }
 
 
+#kunena.admin.override {
+    font-size: 13px;
+}
+
 /*Kunena Classes*/
 #kunena.admin.override .current .adminlist input,
 #kunena.admin.override .current .adminlist textarea,
 #kunena.admin.override .current .adminlist select {
     float: none;
+}
+
+#kunena.admin.override fieldset input,
+#kunena.admin.override fieldset textarea,
+#kunena.admin.override fieldset select,
+#kunena.admin.override fieldset img,
+#kunena.admin.override fieldset button {
+    float: none;
+    margin: 0;
 }
 
 #kunena.admin.override img {
@@ -161,3 +174,6 @@
 #kunena.admin.override .icon-22-support { background-image: url("../../icons/small/support.png"); }
 #kunena.admin.override .icon-22-editcss { background-image: url("../../icons/small/css.png"); }
 #kunena.admin.override .icon-22-pluginsmanager { background-image: url("../../icons/small/pluginsmanager.png"); }
+#kunena.admin.override label {
+    display: inline !important;
+}

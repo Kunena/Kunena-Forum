@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Users
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -26,11 +26,20 @@ defined ( '_JEXEC' ) or die ();
 
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></legend>
-				<table class="adminform">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th width="25%">Ttitle</th>
+							<th width="25%">Opiton</th>
+							<th>Description</th>
+						</tr>
+					</thead>
 					<tbody>
 						<tr>
 							<td>
-								<strong><?php echo JText::_('COM_KUNENA_CATEGORY_TARGET'); ?></strong>
+								<?php echo JText::_('COM_KUNENA_CATEGORY_TARGET'); ?>
+							</td>
+							<td>
 								<?php
 									echo $this->catslist;
 								?>

@@ -4,14 +4,19 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.Poll
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Topic Poll Class
+ * Class KunenaForumTopicPoll
+ *
+ * @property int $id
+ * @property string $title
+ * @property int $threadid
+ * @property string $polltimetolive
  */
 class KunenaForumTopicPoll extends JObject {
 	protected $_exists = false;
@@ -24,9 +29,7 @@ class KunenaForumTopicPoll extends JObject {
 	protected $mytime = array();
 
 	/**
-	 * Constructor
-	 *
-	 * @access	protected
+	 * @param int $identifier
 	 */
 	public function __construct($identifier = 0) {
 		// Always load the topic -- if poll does not exist: fill empty data
@@ -35,17 +38,22 @@ class KunenaForumTopicPoll extends JObject {
 	}
 
 	/**
-	 * Returns KunenaForumTopicPoll object
+	 * Returns KunenaForumTopicPoll object.
 	 *
-	 * @access	public
-	 * @param	identifier		The poll to load - Can be only an integer.
-	 * @return	KunenaForumTopicPoll		The poll object.
-	 * @since	2.0
+	 * @param mixed $identifier	Poll to load - Can be only an integer.
+	 * @param bool  $reset
+	 *
+	 * @return KunenaForumTopicPoll
 	 */
 	static public function getInstance($identifier = null, $reset = false) {
 		return KunenaForumTopicPollHelper::get($identifier, $reset);
 	}
 
+	/**
+	 * @param null|bool $exists
+	 *
+	 * @return bool
+	 */
 	public function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) {
@@ -54,7 +62,9 @@ class KunenaForumTopicPoll extends JObject {
 		return $return;
 	}
 
-	// $options is array(id=>name, id=>name)
+	/**
+	 * @param array $options	array(id=>name, id=>name)
+	 */
 	public function setOptions($options) {
 		if (!is_array($options)) return;
 		foreach ($options as $key => &$value) {
@@ -67,6 +77,9 @@ class KunenaForumTopicPoll extends JObject {
 		$this->newOptions = $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getOptions() {
 		if ($this->options === false) {
 			$query = "SELECT *
@@ -80,6 +93,9 @@ class KunenaForumTopicPoll extends JObject {
 		return $this->options;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotal() {
 		static $total = false;
 		if ($total === false) {
@@ -92,6 +108,9 @@ class KunenaForumTopicPoll extends JObject {
 		return $total;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getUserCount() {
 		if ($this->usercount === false) {
 			$query = "SELECT COUNT(*)
@@ -104,6 +123,12 @@ class KunenaForumTopicPoll extends JObject {
 		return $this->usercount;
 	}
 
+	/**
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function getUsers($start=0, $limit=0) {
 		if ($this->users === false) {
 			$query = "SELECT *
@@ -116,6 +141,11 @@ class KunenaForumTopicPoll extends JObject {
 		return $this->users;
 	}
 
+	/**
+	 * @param mixed $user
+	 *
+	 * @return int
+	 */
 	public function getMyVotes($user = null) {
 		$user = KunenaFactory::getUser($user);
 		if (!isset($this->myvotes[$user->userid])) {
@@ -129,6 +159,11 @@ class KunenaForumTopicPoll extends JObject {
 		return $this->myvotes[$user->userid];
 	}
 
+	/**
+	 * @param mixed $user
+	 *
+	 * @return int
+	 */
 	public function getLastVoteId($user = null) {
 		$user = KunenaFactory::getUser($user);
 		$query = "SELECT lastvote
@@ -141,6 +176,11 @@ class KunenaForumTopicPoll extends JObject {
 		return $this->mylastvoteId;
 	}
 
+	/**
+	 * @param mixed $user
+	 *
+	 * @return int
+	 */
 	public function getMyTime($user = null) {
 		$user = KunenaFactory::getUser($user);
 		if (!isset($this->mytime[$user->userid])) {
@@ -154,6 +194,13 @@ class KunenaForumTopicPoll extends JObject {
 		return $this->mytime[$user->userid];
 	}
 
+	/**
+	 * @param int   $option
+	 * @param bool  $change
+	 * @param mixed $user
+	 *
+	 * @return bool
+	 */
 	public function vote($option, $change = false, $user = null) {
 		if (!$this->exists()) {
 			$this->setError( JText::_ ( 'COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST' ) );
@@ -232,6 +279,12 @@ class KunenaForumTopicPoll extends JObject {
 		return true;
 	}
 
+	/**
+	 * @param int  $option
+	 * @param int  $delta
+	 *
+	 * @return bool
+	 */
 	protected function changeOptionVotes($option, $delta) {
 		if (!isset($this->options[$option]->votes)) {
 			// Ignore non-existent options
@@ -252,17 +305,12 @@ class KunenaForumTopicPoll extends JObject {
 	}
 
 	/**
-	 * Method to get the polls table object
+	 * Method to get the polls table object.
 	 *
-	 * This function uses a static variable to store the table name of the user table to
-	 * it instantiates. You can call this function statically to set the table name if
-	 * needed.
+	 * @param string $type		Polls table name to be used.
+	 * @param string $prefix	Polls table prefix to be used.
 	 *
-	 * @access	public
-	 * @param	string	The polls table name to be used
-	 * @param	string	The polls table prefix to be used
-	 * @return	object	The polls table object
-	 * @since	2.0
+	 * @return KunenaTable|TableKunenaPolls
 	 */
 	public function getTable($type = 'KunenaPolls', $prefix = 'Table') {
 		static $tabletype = null;
@@ -277,18 +325,21 @@ class KunenaForumTopicPoll extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
-	public function bind($data, $allow = array()) {
+	/**
+	 * @param array $data
+	 * @param array $allow
+	 */
+	public function bind(array $data, array $allow = array()) {
 		if (!empty($allow)) $data = array_intersect_key($data, array_flip($allow));
 		$this->setProperties ( $data );
 	}
 
 	/**
-	 * Method to load a KunenaForumTopicPoll object by id
+	 * Method to load a KunenaForumTopicPoll object by id.
 	 *
-	 * @access	public
-	 * @param	mixed	$id The poll id to be loaded
-	 * @return	boolean			True on success
-	 * @since 2.0
+	 * @param int $id	The poll id to be loaded.
+	 *
+	 * @return bool
 	 */
 	public function load($id) {
 		// Create the table object
@@ -304,11 +355,9 @@ class KunenaForumTopicPoll extends JObject {
 	}
 
 	/**
-	 * Method to delete the KunenaForumTopicPoll object from the database
+	 * Method to delete the KunenaForumTopicPoll object from the database.
 	 *
-	 * @access	public
-	 * @return	boolean	True on success
-	 * @since 2.0
+	 * @return bool	True on success.
 	 */
 	public function delete() {
 		if (!$this->exists()) {
@@ -351,12 +400,22 @@ class KunenaForumTopicPoll extends JObject {
 	}
 
 	/**
-	 * Method to save the KunenaForumTopicPoll object to the database
+	 * Method to get the poll time to live.
 	 *
-	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new poll
-	 * @return	boolean True on success
-	 * @since 2.0
+	 * @return int
+	 *
+	 * @since 3.0
+	 */
+	public function getTimeToLive() {
+		return JFactory::getDate($this->polltimetolive)->toUnix();
+	}
+
+	/**
+	 * Method to save the KunenaForumTopicPoll object to the database.
+	 *
+	 * @param bool $updateOnly	Save the object only if not a new poll.
+	 *
+	 * @return bool	True on success.
 	 */
 	public function save($updateOnly = false) {
 		//are we creating a new poll

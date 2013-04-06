@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage UddeIM
  *
- * @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,8 +27,6 @@ class plgKunenaUddeIM extends JPlugin {
 		parent::__construct ( $subject, $config );
 
 		$this->loadLanguage ( 'plg_kunena_uddeim.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_uddeim.sys', KPATH_ADMIN );
-
-		$this->path = dirname ( __FILE__ );
 	}
 
 	/*
@@ -39,7 +37,7 @@ class plgKunenaUddeIM extends JPlugin {
 	public function onKunenaGetPrivate() {
 		if (!$this->params->get('private', 1)) return;
 
-		require_once "{$this->path}/private.php";
+		require_once __DIR__ . "/private.php";
 		return new KunenaPrivateUddeIM($this->params);
 	}
 }

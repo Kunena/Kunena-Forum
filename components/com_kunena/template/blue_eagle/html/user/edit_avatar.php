@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -51,7 +51,6 @@ $i=0;
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
-			<input id="kunena_url_avatargallery" type="hidden" value="<?php echo $this->me->getUrl(true, 'edit') ?>" />
 		</td>
 		<td class="kcol-mid">
 			<table class="kblocktable" id ="kforumua_gal">
@@ -59,7 +58,7 @@ $i=0;
 					<td class="kuadesc"><?php echo $this->galleries; ?></td>
 				</tr>
 				<tr>
-					<td class="kuadesc">
+					<td id="kgallery_avatar_list" class="kuadesc">
 					<?php
 					$kid = 0;
 					foreach ($this->galleryimg as $avatarimg) : ?>
@@ -73,6 +72,12 @@ $i=0;
 			</table>
 		</td>
 	</tr>
+	<div>
+		<?php foreach($this->galleryImagesList as $name=>$gallery): ?>
+			<input type="hidden" id="Kunena_<?php echo $name ?>" name="<?php echo $name ?>" value='<?php echo $gallery ?>' />
+		<?php endforeach; ?>
+		<input type="hidden" id="Kunena_Image_Gallery_URL" name="Kunena_Image_Gallery_URL" value="<?php echo JURI::root().'media/kunena/avatars/gallery' ?>" />
+	</div>
 <?php endif; ?>
 </table>
 		</div>

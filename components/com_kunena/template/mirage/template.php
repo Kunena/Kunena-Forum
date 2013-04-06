@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Template.Mirage
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -127,7 +127,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	 * (non-PHPdoc)
 	 * @see KunenaTemplate::getPaginationItemActive()
 	 */
-	public function getPaginationItemActive(&$item) {
+	public function getPaginationItemActive($item) {
 		return '<li class="page-item"><a title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></a></li>';
 	}
 
@@ -135,7 +135,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	 * (non-PHPdoc)
 	 * @see KunenaTemplate::getPaginationItemInactive()
 	 */
-	public function getPaginationItemInactive(&$item) {
+	public function getPaginationItemInactive($item) {
 		return '<li class="page-item page-active"><a class="active" title="'.$item->text.'"><span>'.$item->text.'</span></a></li>';
 	}
 }

@@ -163,9 +163,3 @@ file_filter = administrator/components/com_kunena/language/<lang>/<lang>.plg_qui
 source_file = administrator/components/com_kunena/language/en-GB/en-GB.plg_quickicon_kunena.sys.ini
 source_lang = en-GB
 minimum_perc = 80
-
-[Kunena.liveupdate]
-file_filter = administrator/components/com_kunena/liveupdate/language/<lang>/<lang>.liveupdate.ini
-source_file = administrator/components/com_kunena/liveupdate/language/en-GB/en-GB.liveupdate.ini
-source_lang = en-GB
-minimum_perc = 80

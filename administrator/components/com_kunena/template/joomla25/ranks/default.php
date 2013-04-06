@@ -4,41 +4,25 @@
  * @package Kunena.Administrator.Template
  * @subpackage Ranks
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
-JHtml::_('kunenatabs.start');
-
-$paneOptions = array(
-		'onActive' => 'function(title, description){
-		description.setStyle("display", "block");
-		title.addClass("open").removeClass("closed");
-}',
-		'onBackground' => 'function(title, description){
-		description.setStyle("display", "none");
-		title.addClass("closed").removeClass("open");
-}',
-		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
-		'useCookie' => true, // this must not be a string. Don't use quotes.
-);
 ?>
 
 <script type="text/javascript">
-	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrdering; ?>') {
-			dirn = 'asc';
-		} else {
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
+    Joomla.orderTable = function() {
+        var table = document.getElementById("sortTable");
+        var direction = document.getElementById("directionTable");
+        var order = table.options[table.selectedIndex].value;
+        if (order != '<?php echo $this->listOrdering; ?>') {
+            var dirn = 'asc';
+        } else {
+            var dirn = direction.options[direction.selectedIndex].value;
+        }
+        Joomla.tableOrdering(order, dirn, '');
+    }
 </script>
 
 <div id="kunena" class="admin override">
@@ -61,7 +45,6 @@ $paneOptions = array(
 								<input type="hidden" name="view" value="ranks" />
 								<input type="hidden" name="task" value="" />
 								<input type="hidden" name="boxchecked" value="0" />
-								<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 								<?php echo JHtml::_( 'form.token' ); ?>
 
 								<div id="filter-bar" class="btn-toolbar">
@@ -74,16 +57,26 @@ $paneOptions = array(
 										<button class="btn tip" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 									</div>
 									<div class="btn-group pull-right hidden-phone">
+										<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+									</div>
+									<div class="btn-group pull-right hidden-phone">
 										<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 										<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-											<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+											<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->escape($this->listDirection));?>
+										</select>
+									</div>
+									<div class="btn-group pull-right">
+										<label for="sortTable" class="element-invisible"><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></label>
+										<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+											<option value=""><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></option>
+											<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 										</select>
 									</div>
 									<div class="clearfix"></div>
 								</div>
 
-								<table class="adminlist table table-striped">
+								<table class="table table-striped">
 									<thead>
 										<tr>
 											<th width="5%" class="nowrap">
@@ -93,16 +86,16 @@ $paneOptions = array(
 												<?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?>
 											</th>
 											<th width="58%" class="nowrap">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->listDirection, $this->listOrdering ); ?>
 											</th>
 											<th  width="10%" class="center nowrap">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->listDirection, $this->listOrdering ); ?>
 											</th>
 											<th width="10%" class="center nowrap">
-												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+												<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->listDirection, $this->listOrdering ); ?>
 											</th>
 											<th width="1%" class="center nowrap">
-												<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+												<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
 											</th>
 										</tr>
 										<tr>
@@ -131,11 +124,7 @@ $paneOptions = array(
 									<tfoot>
 										<tr>
 											<td colspan="6">
-												<div class="pagination">
-													<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY')?><?php echo $this->pagination->getLimitBox (); ?></div>
-													<?php echo $this->pagination->getPagesLinks (); ?>
-													<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
-												</div>
+												<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 											</td>
 										</tr>
 									</tfoot>
@@ -186,14 +175,8 @@ $paneOptions = array(
 								<input type="hidden" name="boxchecked" value="0" />
 								<?php echo JHtml::_( 'form.token' ); ?>
 
-								<div style="padding:10px;">
-									<input type="file" id="file-upload" name="Filedata" />
-									<input type="submit" id="file-upload-submit" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
-									<span id="upload-clear"></span>
-								</div>
-								<ul class="upload-queue" id="upload-queue">
-									<li style="display: none" />
-								</ul>
+								<input type="file" id="file-upload" name="Filedata" />
+								<button type="submit" id="file-upload-submit" class="btn"><?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?></button>
 							</form>
 						</div>
 					</div>

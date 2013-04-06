@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -189,8 +189,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$options = array();
-		$options['clientid'][] = 0; // site
+		$options = array('clientid'=>0); // Just logout from site
 		$this->app->logout( (int) $id, $options);
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USER_LOGOUT_DONE'));
@@ -211,11 +210,33 @@ class KunenaAdminControllerUsers extends KunenaController {
 		}
 
 		foreach ( $cids as $userid ) {
-			$user = KunenaUserHelper::get($userid);
-			$user->delete();
+			$my = JFactory::getUser();
+			$user = JFactory::getUser($userid);
+			$groups = JUserHelper::getUserGroups($userid);
+			$error = false;
+
+			if ( $my->id == $userid ) {
+				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_YOURSELF'));
+				$error = true;
+			}
+
+			if ( $user->authorise('core.admin') )  {
+				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'));
+				$error = true;
+			}
+
+			if ( !$error ) {
+				$user = KunenaUserHelper::get($userid);
+				$user->delete();
+
+				// Delete the user too from Joomla!
+				$instance = JUser::getInstance($userid);
+				$instance->delete();
+
+				$this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE', $userid));
+			}
 		}
 
-		$this->app->enqueueMessage (JText::_('COM_KUNENA_A_USER_DELETE_DONE'));
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
@@ -361,6 +382,42 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->enqueueMessage ( $message );
 		}
 
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+	}
+
+	public function batch_moderators() {
+		if (! JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$catids = JRequest::getVar ( 'catid', array (), 'post', 'array' );
+
+		if ( empty($userids) ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_USERS_SELECTED' ) );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		if ( empty($catids) ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_CATEGORIES_SELECTED' ) );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		// Update moderator rights
+		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+		$users = KunenaUserHelper::loadUsers($userids);
+		foreach ($users as $user) {
+			foreach ($categories as $category) {
+				if (in_array($category->id, $catids)) $category->setModerator($user, true);
+			}
+			// Global moderator is a special case
+			if ($this->me->isAdmin() && in_array(0, $catids)) {
+				KunenaAccess::getInstance()->setModerator(0, $user, true);
+			}
+		}
+
+		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_SET_MODERATORS_DONE' ) );
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 }

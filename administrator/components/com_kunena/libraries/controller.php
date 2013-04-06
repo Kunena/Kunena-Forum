@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -30,8 +30,13 @@ class KunenaController extends JControllerLegacy {
 		parent::__construct ();
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication();
-		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
+		$this->me = KunenaUserHelper::getMyself();
+
+		// Save user profile if it didn't exist.
+		if (!$this->me->userid && !$this->me->exists()) {
+			$this->me->save();
+		}
 	}
 
 	/**
@@ -48,7 +53,8 @@ class KunenaController extends JControllerLegacy {
 			return $instance;
 		}
 
-		$view = strtolower ( JRequest::getWord ( 'view', 'home' ) );
+		$app = JFactory::getApplication();
+		$view = strtolower ( JRequest::getWord ( 'view', $app->isAdmin() ? 'cpanel' : 'home' ) );
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
@@ -59,10 +65,18 @@ class KunenaController extends JControllerLegacy {
 		}
 
 		// Set the name for the controller and instantiate it.
-		if (JFactory::getApplication()->isAdmin()) {
+		if ($app->isAdmin()) {
 			$class = $prefix . 'AdminController' . ucfirst ( $view );
+			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
+			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+
 		} else {
 			$class = $prefix . 'Controller' . ucfirst ( $view );
+			KunenaFactory::loadLanguage('com_kunena.controllers');
+			KunenaFactory::loadLanguage('com_kunena.models');
+			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+
 		}
 		if (class_exists ( $class )) {
 			$instance = new $class ();
@@ -82,43 +96,53 @@ class KunenaController extends JControllerLegacy {
 	public function display($cachable = false, $urlparams = false) {
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		$app = JFactory::getApplication();
 
 		// Get the document object.
 		$document = JFactory::getDocument ();
 
 		// Set the default view name and format from the Request.
-		$vName = JRequest::getWord ( 'view', 'home' );
+		$vName = JRequest::getWord ( 'view', $this->app->isAdmin() ? 'cpanel' : 'home' );
 		$lName = JRequest::getWord ( 'layout', 'default' );
 		$vFormat = $document->getType ();
 
-		if ($app->isAdmin()) {
+		if ($this->app->isAdmin()) {
+			// Load admin language files
+			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
+			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
+			// Load last to get deprecated language files to work
+			KunenaFactory::loadLanguage('com_kunena', 'site');
+			KunenaFactory::loadLanguage('com_kunena', 'admin');
+
 			// Version warning
 			require_once KPATH_ADMIN . '/install/version.php';
 			$version = new KunenaVersion();
 			$version_warning = $version->getVersionWarning();
 			if (! empty ( $version_warning )) {
-				$app->enqueueMessage ( $version_warning, 'notice' );
+				$this->app->enqueueMessage ( $version_warning, 'notice' );
 			}
 		} else {
-			$menu = $app->getMenu ();
+			// Load site language files
+			KunenaFactory::loadLanguage('com_kunena.views');
+			KunenaFactory::loadLanguage('com_kunena.templates');
+			// Load last to get deprecated language files to work
+			KunenaFactory::loadLanguage('com_kunena');
+
+			$menu = $this->app->getMenu ();
 			$active = $menu->getActive ();
+			if (!$active) {
+				JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			}
 
 			// Check if menu item was correctly routed
 			$routed = $menu->getItem ( KunenaRoute::getItemID() );
-/*
-			if (!$active) {
-				// FIXME: we may want to resctrict access only to menu items
-				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			}
-*/
+
 			if ($vFormat=='html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
 				// Routing has been changed, redirect
 				// FIXME: check possible redirect loops!
 				$route = KunenaRoute::_(null, false);
 				$activeId = !empty($active->id) ? $active->id : 0;
 				JLog::add("Redirect from ".JUri::getInstance()->toString(array('path', 'query'))." ({$activeId}) to {$route} ($routed->id)", JLog::DEBUG, 'kunena');
-				$app->redirect ($route);
+				$this->app->redirect ($route);
 			}
 
 			// Joomla 2.5+ multi-language support
@@ -136,7 +160,7 @@ class KunenaController extends JControllerLegacy {
 
 		$view = $this->getView ( $vName, $vFormat );
 		if ($view) {
-			if ($app->isSite() && $vFormat=='html') {
+			if ($this->app->isSite() && $vFormat=='html') {
 				$common = $this->getView ( 'common', $vFormat );
 				$model = $this->getModel ( 'common' );
 				$common->setModel ( $model, true );

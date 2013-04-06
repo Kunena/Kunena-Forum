@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,17 +14,19 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Message Helper Class
  */
 abstract class KunenaForumMessageHelper {
-	// Global for every instance
+	/**
+	 * @var KunenaForumMessage[]
+	 */
 	protected static $_instances = array();
 	protected static $_location = array();
 
 	/**
-	 * Returns KunenaForumMessage object
+	 * Returns KunenaForumMessage object.
 	 *
-	 * @access	public
-	 * @param	identifier		The message to load - Can be only an integer.
-	 * @return	KunenaForumMessage		The message object.
-	 * @since	1.7
+	 * @param null $identifier	The message to load - Can be only an integer.
+	 * @param bool $reload
+	 *
+	 * @return KunenaForumMessage	The message object.
 	 */
 	static public function get($identifier = null, $reload = false) {
 		if ($identifier instanceof KunenaForumMessage) {
@@ -44,6 +46,12 @@ abstract class KunenaForumMessageHelper {
 		return self::$_instances [$id];
 	}
 
+	/**
+	 * @param bool|array|int   $ids
+	 * @param string $authorise
+	 *
+	 * @return KunenaForumTopic[]
+	 */
 	static public function getMessages($ids = false, $authorise='read') {
 		if ($ids === false) {
 			return self::$_instances;
@@ -65,6 +73,16 @@ abstract class KunenaForumMessageHelper {
 		return $list;
 	}
 
+	/**
+	 * @param mixed  $topic
+	 * @param int    $start
+	 * @param int    $limit
+	 * @param string $ordering
+	 * @param int    $hold
+	 * @param bool   $orderbyid
+	 *
+	 * @return KunenaForumTopic[]
+	 */
 	static public function getMessagesByTopic($topic, $start=0, $limit=0, $ordering='ASC', $hold=0, $orderbyid = false) {
 		$topic = KunenaForumTopicHelper::get($topic);
 		if (!$topic->exists())
@@ -85,6 +103,14 @@ abstract class KunenaForumMessageHelper {
 		return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold, $orderbyid);
 	}
 
+	/**
+	 * @param bool|array|int  $categories
+	 * @param int   $limitstart
+	 * @param int   $limit
+	 * @param array $params
+	 *
+	 * @return array
+	 */
 	static public function getLatestMessages($categories=false, $limitstart=0, $limit=0, $params=array()) {
 		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'm.time DESC';
@@ -186,6 +212,13 @@ abstract class KunenaForumMessageHelper {
 		return array($total, $messages);
 	}
 
+	/**
+	 * @param int $mesid
+	 * @param null|string $direction
+	 * @param null|array $hold
+	 *
+	 * @return int
+	 */
 	public static function getLocation($mesid, $direction = null, $hold = null) {
 		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!$hold) {
@@ -207,6 +240,9 @@ abstract class KunenaForumMessageHelper {
 		return $count;
 	}
 
+	/**
+	 * @param array|string $mesids
+	 */
 	public static function loadLocation($mesids) {
 		// NOTE: if you already know the location using this code just takes resources
 		if (!is_array($mesids)) $mesids = explode ( ',', $mesids );
@@ -256,6 +292,11 @@ abstract class KunenaForumMessageHelper {
 		self::$_location = array();
 	}
 
+	/**
+	 * @param bool|array|int $topicids
+	 *
+	 * @return bool|int
+	 */
 	public static function recount($topicids=false) {
 		$db = JFactory::getDBO ();
 
@@ -280,7 +321,10 @@ abstract class KunenaForumMessageHelper {
 
 	// Internal functions
 
-	static protected function loadMessages($ids) {
+	/**
+	 * @param array $ids
+	 */
+	static protected function loadMessages(array $ids) {
 		foreach ($ids as $i=>$id) {
 			$id = intval($id);
 			if (!$id || isset(self::$_instances [$id]))
@@ -308,6 +352,16 @@ abstract class KunenaForumMessageHelper {
 		unset ($results);
 	}
 
+	/**
+	 * @param int    $topic_id
+	 * @param int    $start
+	 * @param int    $limit
+	 * @param string $ordering
+	 * @param int    $hold
+	 * @param bool   $orderbyid
+	 *
+	 * @return array
+	 */
 	static protected function loadMessagesByTopic($topic_id, $start=0, $limit=0, $ordering='ASC', $hold=0, $orderbyid = false) {
 		$db = JFactory::getDBO ();
 		$query = "SELECT m.*, t.message

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -51,8 +51,8 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function getPagination($maxpages) {
-		$pagination = new KunenaHtmlPagination ( $this->count, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$pagination->setDisplay($maxpages);
+		$pagination = new KunenaPagination($this->count, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
 		return $pagination->getPagesLinks();
 	}
 
@@ -438,8 +438,33 @@ class KunenaViewUser extends KunenaView {
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 
+		$this->galleryImagesList = $this->getAllImagesInGallery();
+
 		$this->row(true);
 		echo $this->loadTemplateFile('avatar');
+	}
+
+	function getAllImagesInGallery() {
+		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
+		$galleryFolders = JFolder::folders($path);
+		$files_list = array();
+		$defaultGallery = JFolder::files($path);
+		$newdefaultGallery = array();
+
+		foreach($defaultGallery as $image) {
+			if( $image != 'index.html' ) $newdefaultGallery[] = $image;
+		}
+		$files_list['default'] = json_encode($newdefaultGallery);
+
+		foreach($galleryFolders as $folder) {
+			$tmp = JFolder::files($path. '/' .$folder);
+			$newgalleryFolders = array();
+			foreach($tmp as $img) {
+				if( $img != 'index.html' )$newgalleryFolders[] = $img;
+			}
+			$files_list[$folder] = json_encode($newgalleryFolders);
+		}
+		return $files_list;
 	}
 
 	function displayEditSettings() {

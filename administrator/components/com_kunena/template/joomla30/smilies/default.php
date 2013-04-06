@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Smilies
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -57,7 +57,7 @@ JHtml::_('dropdown.init');
 							<button class="btn tip" type="button" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
-							<?php echo $this->pagination->getLimitBox (); ?>
+							<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -75,7 +75,7 @@ JHtml::_('dropdown.init');
 						</div>
 					</div>
 
-					<table class="table table-striped adminlist" id="smileyList">
+					<table class="table table-striped" id="smileyList">
 						<thead>
 							<tr>
 								<th width="1%" class="center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
@@ -106,7 +106,7 @@ JHtml::_('dropdown.init');
 						<tfoot>
 							<tr>
 								<td colspan="5">
-									<?php echo $this->pagination->getListFooter(); ?>
+									<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 								</td>
 							</tr>
 						</tfoot>

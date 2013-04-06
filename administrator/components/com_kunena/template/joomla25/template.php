@@ -9,23 +9,30 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport('joomla.html.html');
+
 class KunenaAdminTemplate25 {
 
 	public function initialize() {
-		// Include MooTools framework
-		JHtml::_('behavior.framework', true);
+
+		JHtml::addIncludePath(JUri::root(true).'/libraries/html/html');
+
+		// Add JavaScript Frameworks
+		JHtml::_('moobootstrap.framework');
 
 		$this->compileLess("kunena.less","bootstrap-custom.css");
 		$document = JFactory::getDocument();
 		$document->addStyleSheet ( JUri::root(true).'/media/kunena/css/joomla25/bootstrap-custom.css' );
 		$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/joomla25/layout.css' );
 		$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/joomla25/styles.css' );
-		$document->addScript ( JUri::root(true).'/media/kunena/js/tabs.js' );
+
+		$document->addScript ( JUri::root(true).'/media/kunena/js/bootstrap/moobootstrap.js' );
+		//$document->addScript ( JUri::root(true).'/media/kunena/js/tabs.js' );
 	}
 
 	public function compileLess($inputFile, $outputFile) {
 		if ( !class_exists( 'lessc' ) ) {
-			require_once KPATH_ADMIN . '/libraries/external/lessc/lessc.php';
+			require_once KPATH_FRAMEWORK . '/external/lessc/lessc.php';
 		}
 
 		// Load the cache.
@@ -47,4 +54,57 @@ class KunenaAdminTemplate25 {
 		}
 	}
 
+	public function getTemplatePaths($path = '', $fullpath = false) {
+		if ($path) $path = JPath::clean("/$path");
+		$array = array();
+		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE).'/template/joomla25'.$path;
+
+		return $array;
+	}
+
+	/**
+	 * Renders an item in the pagination block
+	 *
+	 * @param   JPaginationObject  $item  The current pagination object
+	 *
+	 * @return  string  HTML markup for active item
+	 *
+	 * @since   3.0
+	 */
+	public function paginationItem(JPaginationObject $item)
+	{
+		// Special cases for "Start", "Prev", "Next", "End".
+		switch ($item->text) {
+			case JText::_('JLIB_HTML_START') :
+				$display = '[<';
+				break;
+			case JText::_('JPREV') :
+				$display = '<';
+				break;
+			case JText::_('JNEXT') :
+				$display = '>';
+				break;
+			case JText::_('JLIB_HTML_END') :
+				$display = '>]';
+				break;
+			default:
+				$display = $item->text;
+		}
+		$display = htmlspecialchars($display, ENT_COMPAT, 'UTF-8');
+
+		// Check if the item can be clicked.
+		if (!is_null($item->base)) {
+			$limit = 'limitstart.value=' . (int) $item->base;
+
+			return '<li><a href="#" title="' . $item->text . '" onclick="document.adminForm.' . $item->prefix . $limit . '; Joomla.submitform();return false;">' . $display . '</a></li>';
+		}
+
+		// Check if the item is the active (or current) page.
+		if (!empty($item->active)) {
+			return '<li class="active"><a>' . $display . '</a></li>';
+		}
+
+		// Doesn't match any other condition, render disabled item.
+		return '<li class="disabled"><a>' . $display . '</a></li>';
+	}
 }

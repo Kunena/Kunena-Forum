@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage CPanel
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -46,8 +46,12 @@ defined ( '_JEXEC' ) or die ();
 									<img src="components/com_kunena/media/icons/large/purgerestatements.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>" /><br />
 									<span><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></span>
 								</a>
+								<a class="btn" href="index.php?option=com_kunena&view=tools&layout=cleanupip">
+									<img src="components/com_kunena/media/icons/large/cleanupip.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP') ?>" /><br />
+									<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?></span>
+								</a>
 								<?php if (KunenaForum::isDev()) { ?>
-									<a class="btn" href="index.php?option=com_kunena&view=install&task=prepare&start=1&<?php echo JSession::getFormToken().'=1'; ?>">
+									<a class="btn" href="index.php?option=com_kunena&view=install">
 										<img src="components/com_kunena/media/icons/large/install.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>" /><br />
 										<span><?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?></span>
 									</a>

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -40,4 +40,6 @@ class KunenaProfile
 	public function getProfileURL($user, $task='', $xhtml = true) {}
 	public function showProfile($view, &$params) {}
 	protected function _getTopHits($limit=0) { return array(); }
+
+	public function getEditProfileURL($userid, $xhtml = true) {}
 }

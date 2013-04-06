@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,8 +23,6 @@ class plgKunenaCommunity extends JPlugin {
 		parent::__construct ( $subject, $config );
 
 		$this->loadLanguage ( 'plg_kunena_community.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_community.sys', KPATH_ADMIN );
-
-		$this->path = dirname ( __FILE__ );
 	}
 
 	/*
@@ -35,7 +33,7 @@ class plgKunenaCommunity extends JPlugin {
 	public function onKunenaGetAccessControl() {
 		if (!$this->params->get('access', 1)) return;
 
-		require_once "{$this->path}/access.php";
+		require_once __DIR__ . "/access.php";
 		return new KunenaAccessCommunity($this->params);
 	}
 
@@ -47,7 +45,7 @@ class plgKunenaCommunity extends JPlugin {
 	public function onKunenaGetLogin() {
 		if (!$this->params->get('login', 1)) return;
 
-		require_once "{$this->path}/login.php";
+		require_once __DIR__ . "/login.php";
 		return new KunenaLoginCommunity($this->params);
 	}
 
@@ -59,7 +57,7 @@ class plgKunenaCommunity extends JPlugin {
 	public function onKunenaGetAvatar() {
 		if (!$this->params->get('avatar', 1)) return;
 
-		require_once "{$this->path}/avatar.php";
+		require_once __DIR__ . "/avatar.php";
 		return new KunenaAvatarCommunity($this->params);
 	}
 
@@ -71,7 +69,7 @@ class plgKunenaCommunity extends JPlugin {
 	public function onKunenaGetProfile() {
 		if (!$this->params->get('profile', 1)) return;
 
-		require_once "{$this->path}/profile.php";
+		require_once __DIR__ . "/profile.php";
 		return new KunenaProfileCommunity($this->params);
 	}
 
@@ -83,7 +81,7 @@ class plgKunenaCommunity extends JPlugin {
 	public function onKunenaGetPrivate() {
 		if (!$this->params->get('private', 1)) return;
 
-		require_once "{$this->path}/private.php";
+		require_once __DIR__ . "/private.php";
 		return new KunenaPrivateCommunity($this->params);
 	}
 
@@ -95,7 +93,7 @@ class plgKunenaCommunity extends JPlugin {
 	public function onKunenaGetActivity() {
 		if (!$this->params->get('activity', 1)) return;
 
-		require_once "{$this->path}/activity.php";
+		require_once __DIR__ . "/activity.php";
 		return new KunenaActivityCommunity($this->params);
 	}
 }

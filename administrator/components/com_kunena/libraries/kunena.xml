@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension type="library" version="2.5" method="upgrade">
+	<name>Kunena Framework</name>
+	<libraryname>kunena</libraryname>
+	<version>@kunenaversion@</version>
+	<versionname>@kunenaversionname@</versionname>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>(C) 2008 - 2013 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>Kunena Framework.</description>
+	<files>
+		<folder>bbcode</folder>
+		<folder>database</folder>
+		<folder>external</folder>
+		<folder>form</folder>
+		<folder>forum</folder>
+		<folder>html</folder>
+		<folder>integration</folder>
+		<folder>keyword</folder>
+		<folder>layout</folder>
+		<folder>menu</folder>
+		<folder>pagination</folder>
+		<folder>request</folder>
+		<folder>route</folder>
+		<folder>spam</folder>
+		<folder>tables</folder>
+		<folder>template</folder>
+		<folder>upload</folder>
+		<folder>user</folder>
+		<filename>index.html</filename>
+		<filename>access.php</filename>
+		<filename>bootstrap.php</filename>
+		<filename>config.php</filename>
+		<filename>controller.php</filename>
+		<filename>date.php</filename>
+		<filename>error.php</filename>
+		<filename>exception.php</filename>
+		<filename>factory.php</filename>
+		<filename>installer.php</filename>
+		<filename>login.php</filename>
+		<filename>model.php</filename>
+		<filename>profiler.php</filename>
+		<filename>session.php</filename>
+		<filename>tree.php</filename>
+		<filename>view.php</filename>
+	</files>
+</extension>

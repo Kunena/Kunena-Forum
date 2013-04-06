@@ -4,13 +4,15 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
+ * class KunenaForum
+ *
  * Main class for Kunena Forum which is always present if Kunena framework has been installed.
  *
  * This class can be used to detect and initialize Kunena framework and to make sure that your extension
@@ -42,8 +44,8 @@ abstract class KunenaForum {
 	 *
 	 * <code>
 	 *	// Check if Kunena Forum has been installed and compatible with your code
-	 *	if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0-BETA2')) {
-	 *		// Initialize the framework (new in 2.0.0-BETA2)
+	 *	if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0')) {
+	 *		// Initialize the framework (new in 2.0.0)
 	 *		KunenaForum::setup();
 	 *		// Start using the framework
 	 *	}
@@ -53,10 +55,10 @@ abstract class KunenaForum {
 	 * @see KunenaForum::isCompatible()
 	 * @see KunenaForum::setup()
 	 *
-	 * @return boolean True.
+	 * @return boolean True if Kunena has been fully installed.
 	 */
 	public static function installed() {
-		return true;
+		return !is_file(KPATH_ADMIN . '/install.php');
 	}
 
 	/**
@@ -74,8 +76,8 @@ abstract class KunenaForum {
 	 *
 	 * <code>
 	 * // Check if Kunena Forum has been installed, online and compatible with your code
-	 *	if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0-BETA2')) {
-	 *		// Initialize the framework (new in 2.0.0-BETA2)
+	 *	if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0')) {
+	 *		// Initialize the framework (new in 2.0.0)
 	 *		KunenaForum::setup();
 	 *		// It's now safe to display something or to save Kunena objects
 	 *}
@@ -110,7 +112,7 @@ abstract class KunenaForum {
 	 * <code>
 	 *	// We have already checked that Kunena 2.0+ has been installed and is online
 	 *
-	 *	if (KunenaForum::isCompatible('2.0.0-BETA2')) {
+	 *	if (KunenaForum::isCompatible('2.0.0')) {
 	 *		KunenaForum::setup();
 	 *	} else {
 	 *		KunenaFactory::loadLanguage();
@@ -265,10 +267,10 @@ abstract class KunenaForum {
 	 *
 	 * </code>
 	 *
-	 * @param unknown_type $viewName Name of the view.
-	 * @param unknown_type $layout Name of the layout.
-	 * @param unknown_type $template Name of the template file.
-	 * @param unknown_type $params Extra parameters to control the model.
+	 * @param string $viewName Name of the view.
+	 * @param string $layout Name of the layout.
+	 * @param null|string $template Name of the template file.
+	 * @param array|JRegistry $params Extra parameters to control the model.
 	 */
 	public static function display($viewName, $layout='default', $template=null, $params = array()) {
 		// Filter input
@@ -300,6 +302,7 @@ abstract class KunenaForum {
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
+		/** @var KunenaView $view */
 
 		if ($params instanceof JRegistry) {
 			// Do nothing
@@ -309,7 +312,8 @@ abstract class KunenaForum {
 
 		$params->set('layout', $layout);
 		// Push the model into the view (as default).
-		$model = new $model ();
+		$model = new $model();
+		/** @var KunenaModel $model */
 		$model->initialize($params);
 		$view->setModel ( $model, true );
 

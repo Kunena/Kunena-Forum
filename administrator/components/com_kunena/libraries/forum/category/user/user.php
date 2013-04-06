@@ -4,23 +4,32 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category.User
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Category User Class
+ * Class KunenaForumCategoryUser
+ *
+ * @property int $user_id
+ * @property int $category_id
+ * @property int $role
+ * @property string $allreadtime
+ * @property int $subscribed
+ * @property string $params
+ *
  */
 class KunenaForumCategoryUser extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
 
 	/**
-	 * Constructor
+	 * @param int  $category
+	 * @param mixed $user
 	 *
-	 * @access	protected
+	 * @internal
 	 */
 	public function __construct($category = 0, $user = null) {
 		// Always fill empty data
@@ -36,14 +45,29 @@ class KunenaForumCategoryUser extends JObject {
 		$this->user_id = KunenaUserHelper::get($user)->userid;
 	}
 
+	/**
+	 * @param null|int $id
+	 * @param mixed $user
+	 * @param bool $reload
+	 *
+	 * @return KunenaForumCategoryUser
+	 */
 	static public function getInstance($id = null, $user = null, $reload = false) {
 		return KunenaForumCategoryUserHelper::get($id, $user, $reload);
 	}
 
+	/**
+	 * @return KunenaForumCategory
+	 */
 	public function getCategory() {
 		return KunenaForumCategoryHelper::get($this->category_id);
 	}
 
+	/**
+	 * @param null|bool $exists		True/false will change the state of the object.
+	 *
+	 * @return bool
+	 */
 	function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
@@ -57,11 +81,10 @@ class KunenaForumCategoryUser extends JObject {
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @access	public
-	 * @param	string	The categories table name to be used
-	 * @param	string	The categories table prefix to be used
-	 * @return	object	The categories table object
-	 * @since	1.6
+	 * @param string $type		The categories table name to be used
+	 * @param string $prefix	The categories table prefix to be used
+	 *
+	 * @return JTable|TableKunenaUserCategories		The categories table object
 	 */
 	public function getTable($type = 'KunenaUserCategories', $prefix = 'Table') {
 		static $tabletype = null;
@@ -76,18 +99,22 @@ class KunenaForumCategoryUser extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
+	/**
+	 * @param array $data
+	 * @param array $ignore
+	 */
 	public function bind($data, $ignore = array()) {
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
 	}
 
 	/**
-	 * Method to load a KunenaForumCategoryUser object by id
+	 * Method to load a KunenaForumCategoryUser object by id.
 	 *
-	 * @access	public
-	 * @param	mixed	$id The category id to be loaded
-	 * @return	boolean			True on success
-	 * @since 1.6
+	 * @param null|int	$category_id		The category id to be loaded.
+	 * @param mixed		$user				The user to be loaded.
+	 *
+	 * @return bool
 	 */
 	public function load($category_id = null, $user = null) {
 		if ($category_id === null) {
@@ -110,12 +137,11 @@ class KunenaForumCategoryUser extends JObject {
 	}
 
 	/**
-	 * Method to save the KunenaForumCategoryUser object to the database
+	 * Method to save the KunenaForumCategoryUser object to the database.
 	 *
-	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new category
-	 * @return	boolean True on success
-	 * @since 1.6
+	 * @param bool $updateOnly	Save the object only if not a new category.
+	 *
+	 * @return bool	True on success
 	 */
 	public function save($updateOnly = false) {
 		// Create the categories table object
@@ -151,11 +177,9 @@ class KunenaForumCategoryUser extends JObject {
 	}
 
 	/**
-	 * Method to delete the KunenaForumCategoryUser object from the database
+	 * Method to delete the KunenaForumCategoryUser object from the database.
 	 *
-	 * @access	public
-	 * @return	boolean	True on success
-	 * @since 1.6
+	 * @return bool	True on success
 	 */
 	public function delete() {
 		if (!$this->exists()) {

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -814,11 +814,16 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function getPagination($maxpages) {
-		$uri = KunenaRoute::normalize(null, true);
-		if ($uri) $uri->delVar('mesid');
-		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$pagination->setDisplay($maxpages, $uri);
-		return $pagination->getPagesLinks();
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
+
+        $uri = KunenaRoute::normalize(null, true);
+        if ($uri) {
+            $uri->delVar('mesid');
+            $pagination->setUri($uri);
+        }
+
+        return $pagination->getPagesLinks();
 	}
 
 	// Helper functions
@@ -916,11 +921,10 @@ class KunenaViewTopic extends KunenaView {
 			// Create Meta Description form the content of the first message
 			// better for search results display but NOT for search ranking!
 			$description = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 182);
-			$description = preg_replace('/\s+/', ' ', $description); // remove newlines
-			$description = preg_replace('/^[^\w0-9]+/', '', $description); // remove characters at the beginning that are not letters or numbers
+            $description = preg_replace('/\s+/', ' ', $description); // remove newlines
 			$description = trim($description); // Remove trailing spaces and beginning
 			if ($page) {
-				$description .= ' - ' . $page . '/' . $pages;  //avoid the "duplicate meta description" error in google webmaster tools
+				$description .= " ({$page}/{$pages})";  //avoid the "duplicate meta description" error in google webmaster tools
 			}
 			$this->setDescription ( $description );
 

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Trash
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,6 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-//JHtml::_('formbehavior.chosen', 'select');
 ?>
 
 <script type="text/javascript">
@@ -42,7 +41,6 @@ JHtml::_('dropdown.init');
 			<input type="hidden" name="layout" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
 			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<?php echo JHtml::_( 'form.token' ); ?>
@@ -61,7 +59,7 @@ JHtml::_('dropdown.init');
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-						<?php echo $this->navigation->getLimitBox(); ?>
+						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -144,7 +142,7 @@ JHtml::_('dropdown.init');
 					<tfoot>
 						<tr>
 							<td colspan="8">
-								<?php echo $this->navigation->getListFooter(); ?>
+								<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 							</td>
 						</tr>
 					</tfoot>

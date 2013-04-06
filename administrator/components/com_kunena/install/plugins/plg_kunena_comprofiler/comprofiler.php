@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -37,8 +37,7 @@ class plgKunenaComprofiler extends JPlugin {
 
 		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_comprofiler.sys', KPATH_ADMIN );
 
-		$this->path = dirname ( __FILE__ );
-		require_once "{$this->path}/integration.php";
+		require_once __DIR__ . "/integration.php";
 
 		if ($app->isAdmin() && (! isset ( $ueConfig ['version'] ) || version_compare ( $ueConfig ['version'], $this->minCBVersion ) < 0)) {
 			$app->enqueueMessage ( JText::sprintf ( 'PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion ), 'notice' );
@@ -72,7 +71,7 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetAccessControl() {
 		if (!$this->params->get('access', 1)) return;
 
-		require_once "{$this->path}/access.php";
+		require_once __DIR__ . "/access.php";
 		return new KunenaAccessComprofiler($this->params);
 	}
 
@@ -84,7 +83,7 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetLogin() {
 		if (!$this->params->get('login', 1)) return;
 
-		require_once "{$this->path}/login.php";
+		require_once __DIR__ . "/login.php";
 		return new KunenaLoginComprofiler($this->params);
 	}
 
@@ -96,7 +95,7 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetAvatar() {
 		if (!$this->params->get('avatar', 1)) return;
 
-		require_once "{$this->path}/avatar.php";
+		require_once __DIR__ . "/avatar.php";
 		return new KunenaAvatarComprofiler($this->params);
 	}
 
@@ -108,7 +107,7 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetProfile() {
 		if (!$this->params->get('profile', 1)) return;
 
-		require_once "{$this->path}/profile.php";
+		require_once __DIR__ . "/profile.php";
 		return new KunenaProfileComprofiler($this->params);
 	}
 
@@ -120,7 +119,7 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetPrivate() {
 		if (!$this->params->get('private', 1)) return;
 
-		require_once "{$this->path}/private.php";
+		require_once __DIR__ . "/private.php";
 		return new KunenaPrivateComprofiler($this->params);
 	}
 
@@ -132,7 +131,7 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetActivity() {
 		if (!$this->params->get('activity', 1)) return;
 
-		require_once "{$this->path}/activity.php";
+		require_once __DIR__ . "/activity.php";
 		return new KunenaActivityComprofiler($this->params);
 	}
 }

@@ -4,14 +4,14 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Statistics Class
+ * Class KunenaForumStatistics
  */
 class KunenaForumStatistics {
 	protected static $_instance = null;
@@ -42,6 +42,9 @@ class KunenaForumStatistics {
 	public $showpoppollstats = false;
 	public $showpopthankyoustats = false;
 
+	/**
+	 *
+	 */
 	public function __construct() {
 		$this->_db = JFactory::getDBO ();
 		$this->_config = KunenaFactory::getConfig ();
@@ -56,6 +59,9 @@ class KunenaForumStatistics {
 		}
 	}
 
+	/**
+	 * @return KunenaForumStatistics
+	 */
 	public static function getInstance() {
 		if (self::$_instance === null) {
 			self::$_instance = new KunenaForumStatistics();
@@ -64,6 +70,9 @@ class KunenaForumStatistics {
 		return self::$_instance;
 	}
 
+	/**
+	 * @param bool $force
+	 */
 	public function loadAll($force=false) {
 		$this->top = array();
 		$this->loadGeneral($force);
@@ -71,6 +80,9 @@ class KunenaForumStatistics {
 		$this->loadUserStats($force);
 	}
 
+	/**
+	 * @param bool $force
+	 */
 	public function loadGeneral($force=false) {
 		if (! $this->showgenstats && ! $force)
 			return;
@@ -81,6 +93,9 @@ class KunenaForumStatistics {
 		$this->loadLastDays($force);
 	}
 
+	/**
+	 * @param bool $override
+	 */
 	public function loadUserStats($override=false) {
 		if ($this->showpopuserstats || $override) {
 			$this->top[] = $this->loadTopPosters();
@@ -95,6 +110,9 @@ class KunenaForumStatistics {
 
 	}
 
+	/**
+	 * @param bool $override
+	 */
 	public function loadTopicStats($override=false) {
 		if ($this->showpopsubjectstats || $override) {
 			$this->top[] = $this->loadTopTopics();
@@ -160,6 +178,11 @@ class KunenaForumStatistics {
 		}
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function loadTopTopics($limit=0) {
 		$limit = $limit ? $limit : $this->_config->popsubjectcount;
 		if (count($this->topTopics) < $limit) {
@@ -182,6 +205,11 @@ class KunenaForumStatistics {
 		return array_slice($this->topTopics, 0, $limit);
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function loadTopPosters($limit=0) {
 		$limit = $limit ? $limit : $this->_config->popusercount;
 		if (count($this->topPosters) < $limit) {
@@ -202,6 +230,11 @@ class KunenaForumStatistics {
 		return array_slice($this->topPosters, 0, $limit);
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function loadTopProfiles($limit=0) {
 		$limit = $limit ? $limit : $this->_config->popusercount;
 		if (count($this->topProfiles) < $limit) {
@@ -222,6 +255,11 @@ class KunenaForumStatistics {
 		return array_slice($this->topProfiles, 0, $limit);
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function loadTopPolls($limit=0) {
 		$limit = $limit ? $limit : $this->_config->poppollscount;
 		if (count($this->topPolls) < $limit) {
@@ -253,6 +291,11 @@ class KunenaForumStatistics {
 		return array_slice($this->topPolls, 0, $limit);
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function loadTopThankyous($limit=0) {
 		$limit = $limit ? $limit : $this->_config->popthankscount;
 		if (count($this->topThanks) < $limit) {

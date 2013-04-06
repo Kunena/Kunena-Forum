@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -53,6 +53,8 @@ class KunenaPrivate
 	}
 
 	public function getInboxLink($text) {}
+
+	public function getInboxURL() {}
 
 	public function getUnreadCount($userid) {}
 }

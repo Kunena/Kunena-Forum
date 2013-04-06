@@ -39,6 +39,7 @@ class KunenaAdminModelUsers extends JModelList {
 					'moderator'
 			);
 		}
+		$this->me = KunenaUserHelper::getMyself();
 
 		parent::__construct($config);
 	}
@@ -212,5 +213,17 @@ class KunenaAdminModelUsers extends JModelList {
 
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
+	}
+
+	/**
+	 * Method to get html list of Kunena categories
+	 *
+	 * @return  html list
+	 * @since  3.0
+	 */
+	public function getModcatslist() {
+		$options = array();
+		if ($this->me->isAdmin()) $options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
+		return JHtml::_('kunenaforum.categorylist', 'catid[]', 0, $options, array('action'=>'admin'), 'class="inputbox" multiple="multiple" size="5"', 'value', 'text', 0);
 	}
 }

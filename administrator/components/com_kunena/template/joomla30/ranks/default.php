@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Ranks
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -52,12 +52,16 @@ JHtml::_('dropdown.init');
 					<?php echo JHtml::_( 'form.token' ); ?>
 
 					<div id="filter-bar" class="btn-toolbar">
+						<div class="filter-search btn-group pull-left">
+							<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
+							<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
+						</div>
 						<div class="btn-group pull-left">
 							<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?></button>
 							<button class="btn tip" type="button" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
-							<?php echo $this->pagination->getLimitBox (); ?>
+							<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 						</div>
 						<div class="btn-group pull-right hidden-phone">
 							<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -73,9 +77,10 @@ JHtml::_('dropdown.init');
 								<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 							</select>
 						</div>
+						<div class="clearfix"></div>
 					</div>
 
-					<table class="table table-striped adminlist" id="rankList">
+					<table class="table table-striped" id="rankList">
 						<thead>
 							<tr>
 								<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
@@ -114,7 +119,7 @@ JHtml::_('dropdown.init');
 						<tfoot>
 							<tr>
 								<td colspan="6">
-									<?php echo $this->pagination->getListFooter(); ?>
+									<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 								</td>
 							</tr>
 						</tfoot>

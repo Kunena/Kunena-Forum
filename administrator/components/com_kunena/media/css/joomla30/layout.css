@@ -2,15 +2,28 @@
  * Kunena Component
  * @package Kunena.Administrator.Joomla30
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
+
+#kunena.admin.override {
+    font-size: 13px;
+}
 
 #kunena.admin.override select,
 #kunena.admin.override input[type="file"] {
     height: auto;
     line-height: 30px;
+}
+
+#kunena.admin.override fieldset input,
+#kunena.admin.override fieldset textarea,
+#kunena.admin.override fieldset select,
+#kunena.admin.override fieldset img,
+#kunena.admin.override fieldset button {
+    float: none;
+    margin: 0;
 }
 
 #kunena.admin.override .center {
@@ -37,4 +50,7 @@
     min-height: 64px;
     min-width: 64px;
     overflow: hidden;
+}
+#kunena.admin.override label {
+    display: inline !important;
 }

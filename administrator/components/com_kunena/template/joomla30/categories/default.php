@@ -60,7 +60,7 @@ if ($this->saveOrder) {
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-					<?php echo $this->navigation->getListFooter(); ?>
+					<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -79,7 +79,7 @@ if ($this->saveOrder) {
 				<div class="clearfix"></div>
 			</div>
 
-			<table class="table table-striped adminlist" id="categoryList">
+			<table class="table table-striped" id="categoryList">
 				<thead>
 					<tr>
 						<th width="1%" class="nowrap center hidden-phone">
@@ -102,6 +102,9 @@ if ($this->saveOrder) {
 						</th>
 						<th width="5%" class="nowrap center">
 							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
+						</th>
+						<th width="5%" class="center">
+							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th width="5%" class="nowrap center">
 							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
@@ -148,6 +151,13 @@ if ($this->saveOrder) {
 							</select>
 						</td>
 						<td class="nowrap center">
+							<label for="filter_allow_polls" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
+							<select name="filter_allow_polls" id="filter_allow_polls" class="select-filter filter" onchange="Joomla.orderTable()">
+								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+								<?php echo JHtml::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
+							</select>
+						</td>
+						<td class="nowrap center">
 							<label for="filter_anonymous" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
 							<select name="filter_anonymous" id="filter_anonymous" class="select-filter filter" onchange="Joomla.orderTable()">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
@@ -161,7 +171,7 @@ if ($this->saveOrder) {
 				<tfoot>
 					<tr>
 						<td colspan="10">
-							<?php echo $this->navigation->getListFooter(); ?>
+							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 						</td>
 					</tr>
 				</tfoot>
@@ -251,13 +261,18 @@ if ($this->saveOrder) {
 							</a>
 						</td>
 						<?php if ($item->isSection()) : ?>
-						<td class="center hidden-phone" colspan="2">
+						<td class="center hidden-phone" colspan="3">
 							<?php echo JText::_('COM_KUNENA_SECTION'); ?>
 						</td>
 						<?php else : ?>
 						<td class="center hidden-phone">
 							<a class ="btn btn-micro <?php echo ($item->review ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un':'').'review'; ?>')">
 								<?php echo ($item->review == 1 ? $img_yes : $img_no); ?>
+							</a>
+						</td>
+						<td class="center hidden-phone">
+							<a class ="btn btn-micro <?php echo ($item->allow_polls ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny':'allow').'_polls'; ?>')">
+								<?php echo ($item->allow_polls == 1 ? $img_yes : $img_no); ?>
 							</a>
 						</td>
 						<td class="center hidden-phone">

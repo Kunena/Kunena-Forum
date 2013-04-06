@@ -29,9 +29,9 @@ class KunenaAdminViewSmilies extends KunenaView {
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
 
-		$this->sortDirectionOrdering = $this->getSortDirectionOrdering();
 		return parent::display($tpl);
 	}
+
 	protected function setToolbar() {
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'smilies' );
 		JToolBarHelper::spacer();
@@ -45,27 +45,21 @@ class KunenaAdminViewSmilies extends KunenaView {
 
 	protected function getSortFields() {
 		$sortFields = array();
-		$sortFields[] = JHtml::_('select.option', 'a.code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
-		$sortFields[] = JHtml::_('select.option', 'a.location', JText::_('COM_KUNENA_EMOTICONS_URL'));
-		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
+		$sortFields[] = JHtml::_('select.option', 'code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
+		$sortFields[] = JHtml::_('select.option', 'location', JText::_('COM_KUNENA_EMOTICONS_URL'));
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
 
 		return $sortFields;
 	}
 
-	protected function getSortDirectionFields() {
-		$sortDirection = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+    protected function getSortDirectionFields() {
+        $sortDirection = array();
+//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+        // TODO: remove it when J2.5 support is dropped
+        $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+        $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
-		return $sortDirection;
-	}
-
-	// TODO: remove it when J2.5 support is dropped
-	protected function getSortDirectionOrdering() {
-		$sortDirection = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
-
-		return $sortDirection;
-	}
+        return $sortDirection;
+    }
 }

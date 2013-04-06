@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -201,11 +201,11 @@ HTML;
 		return $html;
 	}
 
-	public function getPaginationItemActive(&$item) {
+	public function getPaginationItemActive($item) {
 		return '<a title="'.$item->text.'" href="'.$item->link.'" class="pagenav">'.$item->text.'</a>';
 	}
 
-	public function getPaginationItemInactive(&$item) {
+	public function getPaginationItemInactive($item) {
 		return '<span class="pagenav">'.$item->text.'</span>';
 	}
 
@@ -442,7 +442,7 @@ HTML;
 
 	function compileLess($inputFile, $outputFile) {
 		if ( !class_exists( 'lessc' ) ) {
-			require_once KPATH_ADMIN . '/libraries/external/lessc/lessc.php';
+			require_once KPATH_FRAMEWORK . '/external/lessc/lessc.php';
 		}
 
 		// Load the cache.

@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -44,6 +44,16 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 
 	public function getInboxLink ($text) {
 		if (!$text) $text = JText::_('COM_KUNENA_PMS_INBOX');
+
+		$userid = $this->getCBUserid();
+		if($userid === null) return;
+
+		$itemid = getCBprofileItemid();
+
+		return '<a href="'. cbSef ('index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid).'" rel="follow">'. $text.'</a>';
+	}
+
+	protected function getCBUserid() {
 		global $_CB_framework;
 
 		$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
@@ -55,8 +65,15 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 		$cbUser = CBuser::getInstance( (int) $userid );
 		if($cbUser === null) return;
 
+		return $userid;
+	}
+
+	public function getInboxURL () {
+		$userid = $this->getCBUserid();
+		if($userid === null) return;
+
 		$itemid = getCBprofileItemid();
 
-		return '<a href="'. cbSef ('index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid).'" rel="follow">'. $text.'</a>';
+		return cbSef ('index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid);
 	}
 }

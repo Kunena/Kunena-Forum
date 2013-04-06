@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -442,9 +442,20 @@ function getTopicClass($prefix='k', $class='topic') {
 	}
 
 	function getPagination($maxpages) {
-		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$pagination->setDisplay($maxpages);
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
 		return $pagination->getPagesLinks();
+	}
+
+	public function getMarkReadButtonURL($category_id, $numTopics) {
+		// Is user allowed to mark forums as read?
+		if ($this->me->exists() && $numTopics) {
+			$token = '&' . JSession::getFormToken() . '=1';
+
+			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$category_id}{$token}");
+
+			return $url;
+		}
 	}
 
 	public function getCategoryRSSURL($catid, $xhtml = true) {

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -32,6 +32,27 @@ abstract class KunenaFactory {
 	 */
 	public static function getTemplate($name = null) {
 		return KunenaTemplate::getInstance($name);
+	}
+
+
+	/**
+	 * Get a Kunena template object
+	 *
+	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaTemplate
+	 */
+	public static function getAdminTemplate() {
+		if (version_compare(JVERSION, '3.0', '>')) {
+			// Joomla 3.0+ template:
+			require_once KPATH_ADMIN.'/template/joomla30/template.php';
+			$template = new KunenaAdminTemplate30;
+		} else {
+			// Joomla 2.5 template:
+			require_once KPATH_ADMIN.'/template/joomla25/template.php';
+			$template = new KunenaAdminTemplate25;
+		}
+		return $template;
 	}
 
 	/**
@@ -70,7 +91,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaAvatar
 	 */
 	public static function getAvatarIntegration() {
-		require_once KPATH_ADMIN . '/libraries/integration/avatar.php';
 		return KunenaAvatar::getInstance();
 	}
 
@@ -82,7 +102,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaPrivate
 	 */
 	public static function getPrivateMessaging() {
-		require_once KPATH_ADMIN . '/libraries/integration/private.php';
 		return KunenaPrivate::getInstance();
 	}
 
@@ -94,7 +113,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaActivity
 	 */
 	public static function getActivityIntegration() {
-		require_once KPATH_ADMIN . '/libraries/integration/activity.php';
 		return KunenaActivity::getInstance();
 	}
 
@@ -106,7 +124,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaProfile
 	 */
 	public static function getProfile() {
-		require_once KPATH_ADMIN . '/libraries/integration/profile.php';
 		return KunenaProfile::getInstance();
 	}
 
@@ -138,9 +155,7 @@ abstract class KunenaFactory {
 				$english = true;
 			}
 			$loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
-				|| $lang->load($file, $lookup2, null, $english, false)
-				|| $lang->load($file, $lookup1, $lang->getDefault(), $english, false)
-				|| $lang->load($file, $lookup2, $lang->getDefault(), $english, false);
+				|| $lang->load($file, $lookup2, null, $english, false);
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $loaded[$file];

@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 			<h3><?php echo JText::_('COM_KUNENA_CONFIG_MODAL_TITLE');?></h3>
 		</div>
 		<div class="modal-body">
-			<p><?php echo JText::_('need to add description string'); ?></p>
+			<p><?php echo JText::_('COM_KUNENA_CONFIG_MODAL_DESCRIPTION'); ?></p>
 		</div>
 		<div class="modal-footer">
 			<button class="btn" type="button" data-dismiss="modal">

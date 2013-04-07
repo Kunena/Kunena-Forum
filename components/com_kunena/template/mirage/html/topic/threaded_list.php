@@ -69,7 +69,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 					</ul>
 					<ul class="list-unstyled topic_threaded_tree-list">
-						<?php foreach ( $this->messages as $id=>$message ) $this->displayMessage($id, $message, 'row') ?>
+						<?php foreach ($this->messages as $id=>$message) { $this->displayMessage($id, $message, 'row'); } ?>
 					</ul>
 				</div>
 			</div>

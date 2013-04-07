@@ -90,7 +90,7 @@ class KunenaControllerUser extends KunenaController {
 			}
 		}
 
-		$this->setRedirect ( $this->me->getUrl(false), $msg );
+		$this->setRedirect($this->me->getUrl(false));
 	}
 
 	function ban() {
@@ -154,9 +154,9 @@ class KunenaControllerUser extends KunenaController {
 			jimport ( 'joomla.filesystem.file' );
 			$avatar_deleted = '';
 			// Delete avatar from file system
-			if (JFile::exists ( JPATH_ROOT . '/media/kunena/avatars/' . $userprofile->avatar ) && !stristr($userprofile->avatar,'gallery/')) {
-				JFile::delete ( JPATH_ROOT . '/media/kunena/avatars/' . $userprofile->avatar );
-				$avatar_deleted = $this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM') );
+			if (JFile::exists ( JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar ) && !stristr($user->avatar,'gallery/')) {
+				JFile::delete ( JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar );
+				$avatar_deleted = JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
 			}
 			$user->avatar = '';
 			$user->save();

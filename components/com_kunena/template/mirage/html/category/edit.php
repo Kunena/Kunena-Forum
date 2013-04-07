@@ -88,7 +88,7 @@ JHtml::_('behavior.formvalidation');
 				</div>
 			</li>
 			<?php foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) foreach ($accesslist as $accessinput) : ?>
-			<li class="kpostcategory-row krow-even kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
+			<li class="kpostcategory-row krow-even kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
 				<div class="kform-label">
 					<label for="locked"><?php echo $accessinput['title'] ?></label>
 				</div>

@@ -629,7 +629,7 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
-		$this->app->redirect ( $url );
+		if (isset($url)) $this->app->redirect($url);
 	}
 
 	public function approve() {
@@ -679,6 +679,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$error = null;
+		$targetobject = null;
 		if (!$object->authorise ( 'move' )) {
 			$error = $object->getError();
 		} elseif (!$target->authorise ( 'read' )) {

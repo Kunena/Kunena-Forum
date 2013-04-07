@@ -30,7 +30,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 		// Administrator state
 		if ($layout == 'manage' || $layout == 'create' || $layout == 'edit') {
-			return parent::populateState();
+			parent::populateState();
+			return;
 		}
 
 		$active = $this->app->getMenu ()->getActive ();
@@ -212,6 +213,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			if ($this->total > 0) {
 				// collect user ids for avatar prefetch when integrated
 				$userlist = array();
+				$lastpostlist = array();
 				foreach ( $this->topics as $topic ) {
 					$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
 					$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);

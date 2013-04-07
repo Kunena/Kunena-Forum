@@ -61,7 +61,7 @@ $this->category_rowclass = array ("even", "odd" );
 							</li>
 						</ul>
 						<ul class="category-list">
-							<?php foreach ( $this->categories [$this->section->id] as $category ) $this->displayCategory($category) ?>
+							<?php foreach ($this->categories[$this->section->id] as $category) { $this->displayCategory($category); } ?>
 						</ul>
 					</div>
 				</div>

@@ -349,7 +349,13 @@ class KunenaView extends JViewLegacy {
 
 		if ($template) $template = '_'.$template;
 		$file = "{$layout}{$template}.php";
-		$file = JPath::find($this->_path['template_'.$view], $file);
+		$app = JFactory::getApplication();
+		$path = JPATH_THEMES.'/'.$app->getTemplate().'/html/com_kunena/'.$view.'/'.$file;
+		if(file_exists($path)) {
+			$file = $path;
+		} else {
+			$file = JPath::find($this->_path['template_'.$view], $file);
+		}
 		if (!file_exists($file)) JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
 
 		ob_start();
@@ -384,9 +390,16 @@ class KunenaView extends JViewLegacy {
 			$tpl  = isset($tpl)? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
 
 			// Load the template script
-			jimport('joomla.filesystem.path');
-			$filetofind	= $this->_createFileName('template', array('name' => $file));
-			$this->templatefiles[$file] = JPath::find($this->_path['template'], $filetofind);
+			$app = JFactory::getApplication();
+			$view = $this->getName();
+			$path = JPATH_THEMES.'/'.$app->getTemplate().'/html/com_kunena/'.$view.'/'.$file.'.php';
+			if(file_exists($path)) {
+				$this->templatefiles[$file] = $path;
+			} else {
+				jimport('joomla.filesystem.path');
+				$filetofind	= $this->_createFileName('template', array('name' => $file));
+				$this->templatefiles[$file] = JPath::find($this->_path['template'], $filetofind);
+			}
 		}
 		$this->_template = $this->templatefiles[$file];
 

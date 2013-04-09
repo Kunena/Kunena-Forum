@@ -145,16 +145,16 @@ class KunenaControllerInstall extends JControllerLegacy {
 	}
 
 	static public function exceptionHandler($exception) {
-		self::$error('', 'Uncaught Exception: '.$exception->getMessage());
+		self::error('', 'Uncaught Exception: '.$exception->getMessage());
 		return true;
 	}
 
 	static public function errorHandler($errno, $errstr, $errfile, $errline) {
-		//self::$error('', "Fatal Error: $errstr in $errfile on line $errline");
+		//self::error('', "Fatal Error: $errstr in $errfile on line $errline");
 		switch ($errno) {
 			case E_ERROR:
 			case E_USER_ERROR:
-				self::$error('', "Fatal Error: $errstr in $errfile on line $errline");
+				self::error('', "Fatal Error: $errstr in $errfile on line $errline");
 				return true;
 		}
 		return false;

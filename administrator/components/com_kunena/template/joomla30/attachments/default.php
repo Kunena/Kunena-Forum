@@ -10,11 +10,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewAttachments $this */
+
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
-
 ?>
 
 <script type="text/javascript">

@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewCategories $this */
+
 $user = JFactory::getUser();
 $me = KunenaUserHelper::getMyself();
 $userId	= $user->get('id');

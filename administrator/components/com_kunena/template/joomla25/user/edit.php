@@ -10,6 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewUser $this */
 
 JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
 $db = JFactory::getDBO();

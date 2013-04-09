@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewTemplates $this */
+
 JHtml::_('behavior.tooltip');
 ?>
 <div id="kunena" class="admin override">

@@ -125,6 +125,6 @@ class KunenaForumTopicUserTest extends PHPUnit_Framework_TestCase {
 	public function testDelete(KunenaForumTopicUser $topicuser) {
 		$this->assertTrue($topicuser->delete());
 		$this->assertFalse($topicuser->exists());
-		self::$topic == null;
+		self::$topic = null;
 	}
 }

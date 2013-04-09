@@ -15,7 +15,7 @@ class pkg_kunena_languagesInstallerScript {
 		// Remove languages.
 		$languages = JFactory::getLanguage()->getKnownLanguages();
 		foreach ($languages as $language) {
-			echo $this->uninstallLanguage($language['tag'], $language['name']);
+			$this->uninstallLanguage($language['tag'], $language['name']);
 		}
 	}
 

@@ -14,8 +14,13 @@ defined ( '_JEXEC' ) or die ();
  * About view for Kunena backend
  */
 class KunenaAdminViewCategories extends KunenaView {
+	/**
+	 * @var array|KunenaForumCategory[]
+	 */
+	public $categories = array();
+
 	function displayCreate() {
-		return $this->displayEdit();
+		$this->displayEdit();
 	}
 
 	function displayEdit() {

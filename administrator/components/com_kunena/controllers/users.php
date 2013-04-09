@@ -144,6 +144,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$catid = JRequest::getInt('catid');
 		$uids = (array) $this->app->getUserState ( 'kunena.usermove.userids' );
 
+		$error = null;
 		if ($uids) {
 			foreach($uids as $id) {
 				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $id));

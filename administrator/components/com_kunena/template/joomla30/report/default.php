@@ -23,8 +23,6 @@ window.addEvent('domready', function(){
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
-JHtml::_('formbehavior.chosen', 'select');
 ?>
 
 <div id="kunena" class="admin override">
@@ -45,7 +43,7 @@ JHtml::_('formbehavior.chosen', 'select');
 						<td>
 							<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?></p>
 							<p><a href="#" id="link_sel_all" ><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a></p>
-							<textarea id="report_final" class="input-xxlarge" name="report_final" cols="80" rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
+							<textarea id="report_final" class="input-block-level" name="report_final" cols="80" rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 						</td>
 					</tr>
 				</table>

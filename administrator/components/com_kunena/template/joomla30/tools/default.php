@@ -23,7 +23,13 @@ defined ( '_JEXEC' ) or die ();
 		<div class="well well-small">
 			<div class="module-title nav-header"><?php echo JText::_('Forum Tools') ?></div>
 			<hr class="hr-condensed">
+			<?php //TODO: Need to change all alt text eventually to appropriate descriptions when we redo languages. ?>
 			<div id="dashboard-icons" class="btn-group">
+				<?php //TODO: Move report to tools, using old view. ?>
+				<a class="btn" href="index.php?option=com_kunena&view=report">
+					<img src="components/com_kunena/media/icons/large/report.png" alt="<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM') ?>" /><br />
+					<span><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></span>
+				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=prune">
 					<img src="components/com_kunena/media/icons/large/prune.png" alt="<?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?>" /><br />
 					<span><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></span>

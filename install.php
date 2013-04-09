@@ -55,6 +55,7 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function preflight($type, $parent) {
+		/** @var JInstallerComponent $parent */
 		$manifest = $parent->getParent()->getManifest();
 
 		// Prevent installation if requirements are not met.
@@ -112,6 +113,7 @@ EOS;
 	protected function checkVersion($name, $version) {
 		$app = JFactory::getApplication();
 
+		$minor = 'unknown';
 		foreach ($this->versions[$name] as $major=>$minor) {
 			if (!$major || version_compare ( $version, $major, "<" )) continue;
 			if (version_compare ( $version, $minor, ">=" )) return true;

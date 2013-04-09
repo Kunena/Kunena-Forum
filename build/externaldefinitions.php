@@ -13,7 +13,12 @@ die();
 
 // dummy definitions of external classes and functions to avoid zend studio warnings and errors
 
-class Kunena {}
+class Kunena {
+	/**
+	 * @return bool
+	 */
+	function isSvn() {}
+}
 
 // Community Builder dummies
 function cbimport($var) {}
@@ -32,6 +37,7 @@ class CRoute {}
 class CMessaging {}
 class CActivityStream {}
 class CUserPoints {}
+define('COMMUNITY_GROUP_ADMIN', 1);
 
 // AlphaUserPoints
 class AlphaUserPointsHelper {}

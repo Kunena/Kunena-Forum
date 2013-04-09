@@ -92,6 +92,7 @@ class Com_KunenaInstallerScript {
 	protected function checkVersion($name, $version) {
 		$app = JFactory::getApplication();
 
+		$minor = '';
 		foreach ($this->versions[$name] as $major=>$minor) {
 			if (!$major || version_compare($version, $major, '<')) continue;
 			if (version_compare($version, $minor, '>=')) return true;

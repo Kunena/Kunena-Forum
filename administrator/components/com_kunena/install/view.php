@@ -19,7 +19,7 @@ class KunenaViewInstall extends JViewLegacy
 	/**
 	 * Method to display the view.
 	 *
-	 * @param	string	A template file to load.
+	 * @param	string	$tpl	A template file to load.
 	 * @return	mixed	JError object on failure, void on success.
 	 * @throws	object	JError
 	 * @since	1.6

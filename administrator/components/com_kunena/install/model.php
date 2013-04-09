@@ -141,8 +141,8 @@ class KunenaModelInstall extends JModelLegacy {
 	/**
 	 * Overridden method to get model state variables.
 	 *
-	 * @param	string	Optional parameter name.
-	 * @param	mixed	The default value to use if no state property exists by name.
+	 * @param	string	$property	Optional parameter name.
+	 * @param	mixed	$default	The default value to use if no state property exists by name.
 	 * @return	object	The property where specified, the state object where omitted.
 	 * @since	1.6
 	 */
@@ -705,9 +705,11 @@ class KunenaModelInstall extends JModelLegacy {
 			$file = JPATH_ADMINISTRATOR . '/components/com_fireboard/fireboard_config.php';
 			if (is_file($file)) {
 				require_once $file;
-				$fbConfig = (array)$fbConfig;
-				$config->bind($fbConfig);
-				$config->id = 1;
+				if (isset($fbConfig)) {
+					$fbConfig = (array)$fbConfig;
+					$config->bind($fbConfig);
+					$config->id = 1;
+				}
 			}
 		}
 		// Migrate configuration from FB 1.0.5 and Kunena 1.0-1.7
@@ -1065,6 +1067,7 @@ class KunenaModelInstall extends JModelLegacy {
 				}
 			}
 			$success = false;
+			$destfile = null;
 			if ($file) {
 				$file = JPath::clean ( $file, '/' );
 				$destfile = "{$destpath}/{$lastpath}/{$attachment->filename}";
@@ -1084,7 +1087,7 @@ class KunenaModelInstall extends JModelLegacy {
 				// $this->addStatus ( "Attachment file was not found: {$file}", true );
 				$stats->missing++;
 			}
-			if ($success) {
+			if ($success && $destfile) {
 				clearstatcache();
 				$stat = stat($destfile);
 				$size = (int)$stat['size'];

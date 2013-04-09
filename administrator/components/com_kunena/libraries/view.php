@@ -83,7 +83,7 @@ class KunenaView extends JViewLegacy {
 		} else {
 			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
 			include JPATH_SITE .'/'. $this->ktemplate->getFile ('html/display.php');
-			if ($this->config->get('credits', 1)) echo $this->poweredBy();
+			if ($this->config->get('credits', 1)) $this->poweredBy();
 		}
 	}
 
@@ -115,7 +115,7 @@ class KunenaView extends JViewLegacy {
 				return;
 			} elseif (!method_exists($this, $layoutFunction) && !file_exists(KPATH_SITE."/views/{$view}/{$layout}.php")) {
 				// Layout was not found (don't allow Joomla to raise an error)
-				echo $this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
+				$this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			}
@@ -366,7 +366,7 @@ class KunenaView extends JViewLegacy {
 	/**
 	 * Load a template file -- first look in the templates folder for an override
 	 *
-	 * @param   string   The name of the template source file ...
+	 * @param   string  $tpl	The name of the template source file ...
 	 * 					automatically searches the template paths and compiles as needed.
 	 * @return  string   The output of the the template script.
 	 */

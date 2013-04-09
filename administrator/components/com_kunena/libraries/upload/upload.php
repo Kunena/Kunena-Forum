@@ -121,6 +121,8 @@ class KunenaUpload extends JObject {
 		}
 		if (isset($_SERVER["CONTENT_TYPE"])) {
 			$contentType = $_SERVER["CONTENT_TYPE"];
+		} else {
+			$contentType = '';
 		}
 
 		if ($chunks && $chunk >= $chunks) {

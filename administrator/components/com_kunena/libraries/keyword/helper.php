@@ -14,6 +14,9 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Keyword Helper Class
  */
 class KunenaKeywordHelper {
+	/**
+	 * @var array|KunenaKeyword[]
+	 */
 	protected static $_instances = array();
 	protected static $_topics = array();
 	protected static $_users = array();
@@ -24,7 +27,7 @@ class KunenaKeywordHelper {
 	 * Returns KunenaKeyword object
 	 *
 	 * @access	public
-	 * @param	identifier		The keywords to load - by ID
+	 * @param	int	$identifier		The keywords to load - by ID
 	 * @return	KunenaKeyword		The keyword object.
 	 * @since	1.7
 	 */

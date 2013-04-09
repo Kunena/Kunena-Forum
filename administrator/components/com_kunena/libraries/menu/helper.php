@@ -36,6 +36,7 @@ abstract class KunenaMenuHelper {
 		$key = 'menu_items'.$params.implode(',', $levels).'.'.$active->id;
 		$cache = JFactory::getCache('com_kunena.menu', '');
 		// FIXME: enable caching after fixing the issues
+		$items = array();
 		if (true) { // !($items = $cache->get($key))) {
 			// Initialise variables.
 			$list		= array();

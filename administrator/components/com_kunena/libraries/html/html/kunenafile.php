@@ -20,12 +20,7 @@ defined ( '_JEXEC' ) or die ();
 abstract class JHtmlKunenaFile
 {
 	/**
-	 * Display a boolean setting widget.
-	 *
-	 * @param   integer  The row index.
-	 * @param   integer  The value of the boolean field.
-	 * @param   string   Task to turn the boolean setting on.
-	 * @param   string   Task to turn the boolean setting off.
+	 * @param   string  $name
 	 *
 	 * @return  string   The boolean setting widget.
 	 */

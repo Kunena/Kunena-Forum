@@ -564,9 +564,9 @@ abstract class KunenaForumCategoryHelper {
 	 *
 	 * @return bool
 	 */
-	static public function getAlias($category_id, $alias) {
+	static public function getSimilarsAliases($category_id, $alias) {
 		$db = JFactory::getDbo();
-		$query = "SELECT * FROM #__kunena_categories WHERE id = {$db->quote($category_id)} AND alias = {$db->quote($alias)}";
+		$query = "SELECT * FROM #__kunena_aliases WHERE type='catid' AND alias LIKE '%{$alias}%'";
 		$db->setQuery($query);
 		$category_items = $db->loadAssoc();
 

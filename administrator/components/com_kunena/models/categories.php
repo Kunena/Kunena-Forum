@@ -289,6 +289,26 @@ class KunenaAdminModelCategories extends KunenaModel {
 		return $moderators;
 	}
 
+	/**
+	 * Method to get a html list of categories to perform the batch process.
+	 *
+	 * @return	html list
+	 * @since	3.0.0
+	 */
+	function getBatchCategories() {
+		$categories = $this->getAdminCategories();
+
+		$batch_categories = array ();
+		$batch_categories [] = JHtml::_ ( 'select.option', 'select', JText::_('JSELECT') );
+
+		foreach($categories as $category) {
+			$batch_categories [] = JHtml::_ ( 'select.option', $category->id, str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name );
+		}
+
+		$list = JHtml::_ ( 'select.genericlist', $batch_categories, 'batch_category_id', 'class="inputbox" size="1"', 'value', 'text', 'select' );
+		return $list;
+	}
+
 	protected function getReorderConditions($table) {
 		$condition = array();
 		$condition[] = 'parent_id = '.(int) $table->parent_id;

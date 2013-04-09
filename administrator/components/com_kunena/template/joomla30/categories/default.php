@@ -285,10 +285,13 @@ if ($this->saveOrder) {
 						<td class="center hidden-phone">
 							<?php echo (int) $item->id; ?>
 						</td>
-					</tr>
-				<?php $i++; endforeach; ?>
-				</tbody>
-			</table>
+				</tr>
+			<?php $i++; endforeach; ?>
+			</tbody>
+		</table>
+		<?php //Load the batch processing form. ?>
+		<?php echo $this->loadTemplate('batch'); ?>
+
 		</form>
 	</div>
 	<div class="pull-right small">

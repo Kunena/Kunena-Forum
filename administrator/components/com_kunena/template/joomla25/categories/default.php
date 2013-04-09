@@ -276,6 +276,8 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 									?>
 							</tbody>
 						</table>
+						<?php //Load the batch processing form. ?>
+						<?php echo $this->loadTemplate('batch'); ?>
 					</form>
 				</div>
 				<div class="pull-right small">

@@ -350,7 +350,7 @@ class KunenaAdminModelReport extends KunenaModel {
 	/**
 	 * Tries to find the extension manifest file and returns version
 	 *
-	 * @param  $path Path to extension directory
+	 * @param  $path $path	Path to extension directory
 	 * @return  string  Version number
 	 */
 	public function findExtensionVersion($path) {
@@ -391,8 +391,8 @@ class KunenaAdminModelReport extends KunenaModel {
 			$pluginParams = new JRegistry($plugin->params);
 			$params = $pluginParams->toArray();
 			$plugin_final[] = '[b]'.$desc.'[/b] Enabled: ';
-			foreach ($params as $name=>$value) {
-				$plugin_final[] = "{$name}={$value} ";
+			foreach ($params as $param=>$value) {
+				$plugin_final[] = "{$param}={$value} ";
 			}
 			$plugin_final[] = "\n";
 		} else {

@@ -67,22 +67,25 @@ class KunenaAdminModelPlugins extends JModelList
 			$this->context .= '.'.$layout;
 		}
 
+		$filter_active = '';
+
 		// Load the filter state.
-		$value = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $value !== '' ? $value : null);
 
-		$value = $this->getUserStateFromRequest($this->context . '.filter.enabled', 'filter_enabled', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.enabled', 'filter_enabled', '', 'string');
 		$this->setState('filter.enabled', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.title', 'filter_title', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.title', 'filter_title', '', 'string' );
 		$this->setState ( 'filter.title', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_element', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_element', '', 'string');
 		$this->setState('filter.element', $value !== '' ? $value : null);
 
-		$value = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', '', 'string');
 		$this->setState('filter.access', $value !== '' ? (int) $value : null );
 
+		$this->setState ( 'filter.active',!empty($filter_active));
 
 		// List state information.
 		parent::populateState('name', 'asc');

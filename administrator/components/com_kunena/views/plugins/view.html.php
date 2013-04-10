@@ -35,6 +35,7 @@ class KunenaAdminViewPlugins extends KunenaView {
 		$this->filterTitle = $this->escape($this->state->get('filter.title'));
 		$this->filterElement = $this->escape($this->state->get('filter.element'));
 		$this->filterAccess = $this->escape($this->state->get('filter.access'));
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
 

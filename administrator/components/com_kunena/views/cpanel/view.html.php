@@ -18,7 +18,9 @@ class KunenaAdminViewCpanel extends KunenaView {
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_DASHBOARD'), 'cp' );
 
 		if (JFactory::getUser()->authorise('core.admin', 'com_kunena')) {
+			JToolBarHelper::spacer();
 			JToolBarHelper::preferences('com_kunena');
+			JToolBarHelper::spacer();
 		}
 		$this->display ();
 	}

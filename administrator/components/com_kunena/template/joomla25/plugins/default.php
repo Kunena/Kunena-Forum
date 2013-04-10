@@ -137,40 +137,62 @@ $user = JFactory::getUser();
 							</tfoot>
 							<tbody>
 								<?php
+								$i = 0;
+								$k = 0;
+								if($this->pagination->total > 0) :
 								foreach ($this->items as $i => $item) :
 								$canEdit    = $user->authorise('core.edit', 'com_plugins');
 								$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;
 								$canChange  = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
 								?>
-								<tr>
-									<td class="center hidden-phone">
-										<?php echo JHtml::_('grid.id', $i, $item->extension_id); ?>
-									</td>
-									<td class="center">
-										<?php echo JHtml::_('jgrid.published', $item->enabled, $i, 'plugins.', $canChange); ?>
-									</td>
-									<td>
-										<?php if ($item->checked_out) : ?>
-											<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'plugins.', $canCheckin); ?>
-										<?php endif; ?>
-										<?php if ($canEdit) : ?>
-											<a href="<?php echo JRoute::_('index.php?option=com_plugins&task=plugin.edit&extension_id='.(int) $item->extension_id); ?>">
-												<?php echo $item->name; ?></a>
-										<?php else : ?>
-												<?php echo $item->name; ?>
-										<?php endif; ?>
-									</td>
-									<td class="nowrap small hidden-phone">
-										<?php echo $this->escape($item->element);?>
-									</td>
-									<td class="small hidden-phone center">
-										<?php echo $this->escape($item->access_level); ?>
-									</td>
-									<td class="center hidden-phone">
-										<?php echo (int) $item->extension_id;?>
-									</td>
-								</tr>
-							<?php endforeach; ?>
+									<tr>
+										<td class="center hidden-phone">
+											<?php echo JHtml::_('grid.id', $i, $item->extension_id); ?>
+										</td>
+										<td class="center">
+											<?php echo JHtml::_('jgrid.published', $item->enabled, $i, 'plugins.', $canChange); ?>
+										</td>
+										<td>
+											<?php if ($item->checked_out) : ?>
+												<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'plugins.', $canCheckin); ?>
+											<?php endif; ?>
+											<?php if ($canEdit) : ?>
+												<a href="<?php echo JRoute::_('index.php?option=com_plugins&task=plugin.edit&extension_id='.(int) $item->extension_id); ?>">
+													<?php echo $item->name; ?></a>
+											<?php else : ?>
+													<?php echo $item->name; ?>
+											<?php endif; ?>
+										</td>
+										<td class="nowrap small hidden-phone">
+											<?php echo $this->escape($item->element);?>
+										</td>
+										<td class="small hidden-phone center">
+											<?php echo $this->escape($item->access_level); ?>
+										</td>
+										<td class="center hidden-phone">
+											<?php echo (int) $item->extension_id;?>
+										</td>
+									</tr>
+								<?php
+								$i++;
+								$k = 1 - $k;
+								endforeach;
+								else : ?>
+									<tr>
+										<td colspan="10">
+											<div class="well center filter-state">
+												<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+													<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+													<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+													<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+													<?php else : ?>
+														<?php //Currently no default state, might change later. ?>
+													<?php endif; ?>
+												</span>
+											</div>
+										</td>
+									</tr>
+								<?php endif; ?>
 							</tbody>
 						</table>
 					</form>

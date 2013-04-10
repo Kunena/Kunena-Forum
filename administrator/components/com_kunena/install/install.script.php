@@ -60,8 +60,15 @@ class Com_KunenaInstallerScript {
 		// Prevent installation if requirements are not met.
 		if (!$this->checkRequirements($manifest->version)) return false;
 
-		if (is_dir($parent->getPath('extension_administrator').'/install')) {
-			JFolder::delete($parent->getPath('extension_administrator').'/install');
+		// FIXME: need to improve this one:
+		$adminPath = $parent->getPath('extension_administrator');
+		$elements = array('install', 'libraries', 'admin.kunena.php');
+		foreach ($elements as $file) {
+			if (is_dir($adminPath.'/'.$file)) {
+				JFolder::delete($adminPath.'/'.$file);
+			} elseif (is_file($adminPath.'/'.$file)) {
+				JFile::delete($adminPath.'/'.$file);
+			}
 		}
 
 		return true;

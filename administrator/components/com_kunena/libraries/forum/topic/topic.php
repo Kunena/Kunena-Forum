@@ -733,6 +733,8 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			}
 		}
 
+		$categoryFrom = $this->getCategory();
+
 		// Find out where we are moving the messages
 		if (!$target || !$target->exists()) {
 			$this->setError(JText::printf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
@@ -770,7 +772,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 
 			// Save category information for later use
 			$categoryTarget = $target;
-			$categoryFrom = $this->getCategory();
 
 			if ($this->moved_id) {
 				// Move shadow topic and we are done

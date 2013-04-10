@@ -22,7 +22,7 @@ class KunenaAdminModelUsers extends JModelList {
 	/**
 	 * Constructor.
 	 *
-	 * @param	array	An optional associative array of configuration settings.
+	 * @param	array	$config	An optional associative array of configuration settings.
 	 * @see		JController
 	 */
 	public function __construct($config = array())
@@ -210,6 +210,7 @@ class KunenaAdminModelUsers extends JModelList {
 				break;
 			case 'name':
 				$query->order('a.name ' . $direction);
+				break;
 			case 'username':
 			default:
 				$query->order('a.username ' . $direction);
@@ -222,7 +223,7 @@ class KunenaAdminModelUsers extends JModelList {
 	/**
 	 * Method to get html list of Kunena categories
 	 *
-	 * @return  html list
+	 * @return  string
 	 * @since  3.0
 	 */
 	//TODO: Move this to view.

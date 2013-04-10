@@ -33,7 +33,8 @@ class TableKunenaUserCategories extends KunenaTable {
 		if (!$user->exists()) {
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_USER_INVALID', (int) $user->userid ) );
 		}
-		if ($this->category_id && !KunenaForumCategoryHelper::get($this->category_id)->exists()) {
+		$category = KunenaForumCategoryHelper::get($this->category_id);
+		if ($this->category_id && !$category->exists()) {
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERCATEGORIES_ERROR_CATEGORY_INVALID', (int) $category->id ) );
 		}
 		return ($this->getError () == '');

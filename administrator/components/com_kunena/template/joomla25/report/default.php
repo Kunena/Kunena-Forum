@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewReport $this */
+
 $document = JFactory::getDocument();
 $document->addScriptDeclaration("
 window.addEvent('domready', function(){

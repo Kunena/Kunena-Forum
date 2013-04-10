@@ -28,18 +28,6 @@ Nawte
 Copyright:	2008 Jean-Nicolas Jolivet (www.silverscripting.com)
 License:	MIT license; http://www.opensource.org/licenses/mit-license.php
 
-CssMin
-------
-Copyright:	2008 - 2011 Joe Scylla <joe.scylla@gmail.com>
-License		MIT license; http://www.opensource.org/licenses/mit-license.php
-
-JSMin
------
-Copyright:	2002 Douglas Crockford <douglas@crockford.com> (jsmin.c)
-			2008 Ryan Grove <ryan@wonko.com> (PHP port)
-			2012 Adam Goforth <aag@adamgoforth.com> (Updates)
-License:	MIT license; http://www.opensource.org/licenses/mit-license.php
-
 NBBC
 ----
 Copyright:	2008-2009, the Phantom Inker.  All rights reserved.

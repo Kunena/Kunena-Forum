@@ -17,19 +17,20 @@ jimport('joomla.utilities.string');
 // [hide], [confidential], [spoiler], [attachment], [code]
 
 /**
- * Kunena BBCode Class
+ * Class KunenaBbcode
  *
- * @version		2.0
+ * @since   2.0
  */
 class KunenaBbcode extends NBBC_BBCode {
 	public $autolink_disable = 0;
 
-	/**
-	 * Object Constructor
-	 *
-	 * @return	void
-	 */
-	function __construct($relative = true) {
+    /**
+     * Use KunenaBbcode::getInstance() instead.
+     *
+     * @param bool $relative
+     * @internal
+     */
+    public function __construct($relative = true) {
 		parent::__construct ();
 
 		$this->defaults = new KunenaBbcodeLibrary;
@@ -55,7 +56,13 @@ class KunenaBbcode extends NBBC_BBCode {
 	 * @return	KunenaBbcode
 	 * @since	1.7
 	 */
-	public static function getInstance($relative = true) {
+    /**
+     * Get global instance from BBCode parser.
+     *
+     * @param bool $relative
+     * @return mixed
+     */
+    public static function getInstance($relative = true) {
 		static $instance = false;
 		if (!isset($instance[intval($relative)])) {
 			$instance[intval($relative)] = new KunenaBbcode ($relative);
@@ -64,7 +71,11 @@ class KunenaBbcode extends NBBC_BBCode {
 		return $instance[intval($relative)];
 	}
 
-	public function parseUrl($params) {
+    /**
+     * @param $params
+     * @return string
+     */
+    public function parseUrl($params) {
 		$url = $params['url'];
 		$text = $params['text'];
 
@@ -146,7 +157,11 @@ class KunenaBbcode extends NBBC_BBCode {
 		return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
 	}
 
-	function Internal_AutoDetectURLs($string) {
+    /**
+     * @param $string
+     * @return array
+     */
+    function Internal_AutoDetectURLs($string) {
 		$search = preg_split('/(?xi)
 		\b
 		(
@@ -834,6 +849,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$target = " target=\"" . htmlspecialchars ( $params ['target'] ) . "\"";
 			elseif ($bbcode->url_target !== false)
 				$target = " target=\"" . htmlspecialchars ( $bbcode->url_target ) . "\"";
+			else
+				$target = '';
 			return '<a href="' . htmlspecialchars ( $url ) . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
 		}
 		return htmlspecialchars ( $params ['_tag'] ) . $content . htmlspecialchars ( $params ['_endtag'] );
@@ -892,12 +909,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Choose a list element (<ul> or <ol>) and a style.
+		$type = '';
+		$elem = 'ul';
 		if (! is_string ( $default ) || strlen ( $default ) == "") {
 			$elem = 'ul';
-			$type = '';
 		} else if ($default == '1') {
 			$elem = 'ol';
-			$type = '';
 		} else if (isset ( $list_styles [$default] )) {
 			$elem = 'ol';
 			$type = $list_styles [$default];

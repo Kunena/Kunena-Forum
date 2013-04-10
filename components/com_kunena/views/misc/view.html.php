@@ -25,7 +25,7 @@ class KunenaViewMisc extends KunenaView {
 
 		$this->header = $this->escape($this->header);
 		if ($format == 'html') {
-			$this->body = $this->body;
+			$this->body = trim($this->body);
 		} elseif ($format == 'text') {
 			$this->body = $this->escape($this->body);
 		} else {

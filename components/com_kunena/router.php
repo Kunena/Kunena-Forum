@@ -26,7 +26,7 @@ jimport('joomla.error.profiler');
  * NOTE! Only major variables are using SEF segments
  *
  * @param $query
- * @return segments
+ * @return array Segments
  */
 function KunenaBuildRoute(&$query) {
 	$segments = array ();
@@ -39,6 +39,7 @@ function KunenaBuildRoute(&$query) {
 	KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__FUNCTION__.'()') : null;
 
 	// Get menu item
+	$menuitem = null;
 	if (isset ( $query ['Itemid'] )) {
 		static $menuitems = array();
 		$Itemid = $query ['Itemid'] = (int) $query ['Itemid'];
@@ -53,7 +54,7 @@ function KunenaBuildRoute(&$query) {
 	}
 
 	// Safety check: we need view in order to create SEF URLs
-	if (!isset ( $menuitem->query ['view'] ) && empty ( $query ['view'] )) {
+	if (!isset($menuitem->query['view']) && empty($query ['view'])) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;
 		return $segments;
 	}

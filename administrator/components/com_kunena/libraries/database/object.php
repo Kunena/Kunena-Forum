@@ -11,10 +11,11 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Database Object Class
- * @since 2.0
+ * Class KunenaDatabaseObject
  */
 abstract class KunenaDatabaseObject extends JObject {
+	public $id = null;
+
 	protected $_name = null;
 	protected $_table = null;
 	protected $_exists = false;
@@ -41,7 +42,6 @@ abstract class KunenaDatabaseObject extends JObject {
 		if ($exists !== null) $this->_exists = (bool) $exists;
 		return $return;
 	}
-
 
 	/**
 	 * Method to bind an associative array to the instance.
@@ -224,7 +224,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	/**
 	 * Method to get the table object.
 	 *
-	 * @return  object  The table object.
+	 * @return  JTable  The table object.
 	 */
 	protected function getTable() {
 		return JTable::getInstance ( $this->_table, 'Table' );
@@ -238,4 +238,4 @@ abstract class KunenaDatabaseObject extends JObject {
 	protected function saveInternal() {
 		return true;
 	}
-	}
+}

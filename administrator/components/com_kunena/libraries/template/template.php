@@ -337,27 +337,27 @@ HTML;
 			$xmlfile = JPATH_ROOT.'/media/kunena/topicicons/default/topicicons.xml';
 			if (file_exists($xmlfile)) {
 				$xml = simplexml_load_file($xmlfile);
-			}
-			if (isset($xml->icons)) {
-				foreach($xml->icons as $icons) {
-					$type = (string) $icons->attributes()->type;
-					$width = (int) $icons->attributes()->width;
-					$height = (int) $icons->attributes()->height;
-					foreach($icons->icon as $icon) {
-						$attributes = $icon->attributes();
-						$icon = new stdClass();
-						$icon->id = (int) $attributes->id;
-						$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
-						$icon->name = (string) $attributes->name;
-						if ($icon->type != 'user') {
-							$icon->id = $icon->type.'_'.$icon->name;
+				if (isset($xml->icons)) {
+					foreach($xml->icons as $icons) {
+						$type = (string) $icons->attributes()->type;
+						$width = (int) $icons->attributes()->width;
+						$height = (int) $icons->attributes()->height;
+						foreach($icons->icon as $icon) {
+							$attributes = $icon->attributes();
+							$icon = new stdClass();
+							$icon->id = (int) $attributes->id;
+							$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
+							$icon->name = (string) $attributes->name;
+							if ($icon->type != 'user') {
+								$icon->id = $icon->type.'_'.$icon->name;
+							}
+							$icon->published = (int) $attributes->published;
+							$icon->title = (string) $attributes->title;
+							$icon->filename = (string) $attributes->src;
+							$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
+							$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
+							$this->topicIcons[$icon->id] = $icon;
 						}
-						$icon->published = (int) $attributes->published;
-						$icon->title = (string) $attributes->title;
-						$icon->filename = (string) $attributes->src;
-						$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
-						$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
-						$this->topicIcons[$icon->id] = $icon;
 					}
 				}
 			}

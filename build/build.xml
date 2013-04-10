@@ -191,7 +191,6 @@
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/com_kunena/site" todir="${tmp_dir}/packages/com_kunena/site">
 			<include name="**/*.js" />
 			<include name="**/*.css" />
-			<exclude name="**/plupload.js" />
 			<exclude name="template/mirage/css/*.css" />
 		</yui-compressor>
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/media/js" todir="${tmp_dir}/media/js">

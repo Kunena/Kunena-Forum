@@ -46,7 +46,7 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 		<thead>
 			<tr>
 				<th class="kcenter" width="5">#</th>
-				<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo $this->state->get('list.count.admin'); ?>);" /></th>
+				<th width="5"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" /></th>
 				<th class="title"><?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 				<th><small><?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
 				<th width="100" class="center nowrap"><small>

@@ -48,7 +48,7 @@ jimport( 'joomla.html.html.grid' );
 						<tr>
 							<th class="kcenter span1">#</th>
 							<th class="span1">
-								<input type="checkbox" name="toggle" onclick="checkAll(<?php echo $this->state->get('list.count.admin'); ?>);" />
+								<input type="checkbox" name="toggle" onclick="Joomla.checkAll(this); ?>);" />
 							</th>
 							<th class="span1"><?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 							<th class="span1"><small><?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>

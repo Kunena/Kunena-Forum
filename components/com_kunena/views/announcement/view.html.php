@@ -29,7 +29,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->display();
@@ -48,7 +49,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->display();
@@ -67,7 +69,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->display();
@@ -89,7 +92,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->display();

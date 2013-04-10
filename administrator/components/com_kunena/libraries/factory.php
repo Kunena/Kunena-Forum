@@ -73,7 +73,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
-	 * @param array An array containing session options
+	 * @param array $update	An array containing session options
 	 * @return object KunenaSession
 	 */
 	public static function getSession($update = false) {

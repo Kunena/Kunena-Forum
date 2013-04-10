@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewSmiley $this */
+
 $document = JFactory::getDocument();
 $iconPath = json_encode(JUri::root(true) . '/');
 $document->addScriptDeclaration("function update_smiley(newimage) {

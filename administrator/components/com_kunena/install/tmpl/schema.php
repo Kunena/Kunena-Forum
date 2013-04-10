@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaViewInstall $this */
+
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/install/media/install.css' );
 ?>
 <div id="right">

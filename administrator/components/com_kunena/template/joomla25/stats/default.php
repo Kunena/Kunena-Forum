@@ -9,6 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewStats $this */
 ?>
 <div id="kadmin">
 	<div class="kadmin-left">

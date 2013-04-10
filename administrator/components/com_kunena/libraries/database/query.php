@@ -305,7 +305,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	A string or array of table names.
+	 * @param	mixed	$tables	A string or array of table names.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6

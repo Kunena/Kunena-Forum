@@ -12,9 +12,7 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.application.component.helper' );
 
 /**
- * Base controller class for Kunena.
- *
- * @since		2.0
+ * Class KunenaController
  */
 class KunenaController extends JControllerLegacy {
 	public $app = null;
@@ -42,8 +40,7 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @return	object	Kunena Controller
-	 * @since	1.6
+	 * @return	KunenaController
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array()) {
 		static $instance = null;
@@ -90,8 +87,8 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Method to display a view.
 	 *
-	 * @return	void
-	 * @since	1.6
+	 * @param bool $cachable
+	 * @param mixed $urlparams
 	 */
 	public function display($cachable = false, $urlparams = false) {
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
@@ -200,8 +197,9 @@ class KunenaController extends JControllerLegacy {
 	 *
 	 * If escaping mechanism is one of htmlspecialchars or htmlentities.
 	 *
-	 * @param  mixed $var The output to escape.
-	 * @return mixed The escaped value.
+	 * @param  string $var The output to escape.
+	 *
+	 * @return string The escaped value.
 	 */
 	public function escape($var) {
 		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
@@ -219,16 +217,30 @@ class KunenaController extends JControllerLegacy {
 		$this->_escape = $spec;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getRedirect() {
 		return $this->_redirect;
 	}
+
+	/**
+	 * @return string
+	 */
 	public function getMessage() {
 		return $this->_message;
 	}
+
+	/**
+	 * @return string
+	 */
 	public function getMessageType() {
 		return $this->_messageType;
 	}
 
+	/**
+	 * @param string $fragment
+	 */
 	protected function redirectBack($fragment = '') {
 		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
 		JFactory::getApplication ()->redirect ( $httpReferer.($fragment ? '#'.$fragment : '') );

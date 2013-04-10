@@ -217,7 +217,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 		$this->class = $class;
 	}
 
-	public static function parseXML($xml) {
+	public static function parseXML(SimpleXMLElement $xml) {
 		$obj = new KunenaBbcodeEditorButton((string)$xml['name'], (string)$xml['class'], (string)$xml['tag'], (string)$xml['title'], (string)$xml['alt']);
 
 		foreach ($xml as $xml_item) {

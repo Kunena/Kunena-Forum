@@ -17,6 +17,8 @@ class KunenaKeyword extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
 
+	public $public_count = 0;
+
 	/**
 	 * Constructor
 	 *
@@ -34,7 +36,7 @@ class KunenaKeyword extends JObject {
 	 * Returns KunenaKeyword object
 	 *
 	 * @access	public
-	 * @param	identifier		The keyword to load - Can be either string or integer
+	 * @param	int	$identifier		The keyword to load - Can be either string or integer
 	 * @return	KunenaKeyword		The topic object.
 	 * @since	1.7
 	 */
@@ -82,8 +84,8 @@ class KunenaKeyword extends JObject {
 	 * needed.
 	 *
 	 * @access	public
-	 * @param	string	The keywords table name to be used
-	 * @param	string	The keywords table prefix to be used
+	 * @param	string	$type	The keywords table name to be used
+	 * @param	string	$prefix	The keywords table prefix to be used
 	 * @return	object	The keywords table object
 	 * @since	1.6
 	 */

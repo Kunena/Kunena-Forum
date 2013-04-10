@@ -88,6 +88,8 @@ class KunenaModelSearch extends KunenaModel {
 
 	protected function buildWhere() {
 		$db = JFactory::getDBO ();
+		$querystrings = array();
+
 		foreach ( $this->getSearchWords() as $searchword ) {
 			$searchword = $db->escape ( JString::trim ( $searchword ) );
 			if (empty ( $searchword ))

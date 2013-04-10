@@ -10,6 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewTrash $this */
 ?>
 
 <div id="kunena" class="admin override">

@@ -107,7 +107,7 @@ class KunenaTree implements Iterator {
 		return isset($this->_levels [$id]) ? $this->_levels [$id] : false;
 	}
 
-	public static function getTree($parent = 0) {
+	public function getTree($parent = 0) {
 		if ($parent === false) {
 			return $this->_tree;
 		}

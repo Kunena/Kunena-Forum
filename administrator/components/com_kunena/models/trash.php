@@ -323,7 +323,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 	/**
 	 * Method to hash datas.
 	 *
-	 * @return	hash
+	 * @return	string Hashed value.
 	 * @since	1.6
 	 */
 	public function getMd5() {

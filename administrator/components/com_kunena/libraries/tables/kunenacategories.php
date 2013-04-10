@@ -64,6 +64,8 @@ class TableKunenaCategories extends KunenaTable {
 			} elseif (is_array($array['params'])) {
 				$registry = new JRegistry;
 				$registry->loadArray($array['params']);
+			} else {
+				$registry = new JRegistry;
 			}
 			// TODO: convert to J!2.5: (string) $registry
 			$array['params'] = $registry->toString();

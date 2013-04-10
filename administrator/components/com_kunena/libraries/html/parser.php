@@ -17,7 +17,7 @@ abstract class KunenaHtmlParser {
 	public static function getEmoticons($grayscale = false, $emoticonbar = false) {
 		$db = JFactory::getDBO ();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
-		$sql = "SELECT code, `$column` as file FROM #__kunena_smileys";
+		$sql = "SELECT code, {$db->quoteName($column)} AS file FROM #__kunena_smileys";
 
 		if ($emoticonbar == true)
 			$sql .= " WHERE emoticonbar='1'";

@@ -13,10 +13,16 @@ defined ( '_JEXEC' ) or die ();
 KunenaUserHelper::initialize();
 
 /**
- * Kunena User Helper Class
+ * Class KunenaUserHelper
  */
 abstract class KunenaUserHelper {
+	/**
+	 * @var array|KunenaUser[]
+	 */
 	protected static $_instances = array ();
+	/**
+	 * @var array|KunenaUser[]
+	 */
 	protected static $_instances_name = array ();
 	protected static $_online = null;
 	protected static $_lastid = null;
@@ -28,13 +34,14 @@ abstract class KunenaUserHelper {
 		$id = JFactory::getUser()->id;
 		self::$_me = self::$_instances [$id] = new KunenaUser ( $id );
 	}
+
 	/**
-	 * Returns the global KunenaUserHelper object, only creating it if it doesn't already exist.
+	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
-	 * @access	public
-	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-	 * @return	JUser			The User object.
-	 * @since	1.6
+	 * @param mixed $identifier	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 * @param bool $reload		Reload user from database.
+	 *
+	 * @return KunenaUser
 	 */
 	public static function get($identifier = null, $reload = false) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -69,6 +76,12 @@ abstract class KunenaUserHelper {
 		return self::$_instances [$id];
 	}
 
+	/**
+	 * @param int $id
+	 * @param string $name
+	 *
+	 * @return KunenaUser
+	 */
 	public static function getAuthor($id, $name) {
 		$id = (int) $id;
 		if ($id && !empty ( self::$_instances [$id] )) {
@@ -92,6 +105,11 @@ abstract class KunenaUserHelper {
 		return self::$_me;
 	}
 
+	/**
+	 * @param array $userids
+	 *
+	 * @return array
+	 */
 	public static function loadUsers(array $userids = array()) {
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
@@ -132,6 +150,9 @@ abstract class KunenaUserHelper {
 		return $list;
 	}
 
+	/**
+	 * @return int
+	 */
 	public static function getLastId() {
 		if (self::$_lastid === null) {
 			self::getTotalCount();
@@ -139,6 +160,9 @@ abstract class KunenaUserHelper {
 		return (int) self::$_lastid;
 	}
 
+	/**
+	 * @return int
+	 */
 	public static function getTotalCount() {
 		if (self::$_total === null) {
 			$db = JFactory::getDBO ();
@@ -154,6 +178,11 @@ abstract class KunenaUserHelper {
 		return (int) self::$_total;
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public static function getTopPosters($limit=0) {
 		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
 		if (count(self::$_topposters) < $limit) {
@@ -166,6 +195,9 @@ abstract class KunenaUserHelper {
 		return self::$_topposters;
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getOnlineUsers() {
 		if (self::$_online === null) {
 			$db = JFactory::getDBO ();
@@ -182,14 +214,19 @@ abstract class KunenaUserHelper {
 		return self::$_online;
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getOnlineCount() {
 		static $count = null;
+
+		// FIXME: does this really work (returns $result, not $count)?
+		$result = array ();
 		if ($count === null) {
 			$kunena_config = KunenaFactory::getConfig ();
 			$kunena_app = JFactory::getApplication ();
 			$db = JFactory::getDBO ();
 
-			$result = array ();
 			$user_array = 0;
 			$guest_array = 0;
 
@@ -234,6 +271,13 @@ abstract class KunenaUserHelper {
 		return $result;
 	}
 
+	/**
+	 * @param mixed  $user
+	 * @param bool|string   $yes
+	 * @param string $no
+	 *
+	 * @return bool|string
+	 */
 	public static function isOnline($user, $yes = false, $no = 'offline') {
 		$user = self::get($user);
 		if (!$user->showOnline && !self::getMyself()->isModerator()) return $yes ? $no : false;

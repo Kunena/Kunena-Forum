@@ -15,9 +15,12 @@ defined ( '_JEXEC' ) or die ();
  */
 abstract class KunenaForumTopicUserHelper {
 	/**
-	 * @var KunenaForumTopicUser[]
+	 * @var array|KunenaForumTopicUser[]
 	 */
 	protected static $_instances = array();
+	/**
+	 * @var array
+	 */
 	protected static $_topics = array();
 
 	/**

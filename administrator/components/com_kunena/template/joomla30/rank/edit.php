@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewRank $this */
+
 $iconPath = json_encode(JUri::root(true).'/');
 $this->document->addScriptDeclaration("function update_rank(newimage) {
 	document.rank_image.src = {$iconPath} + newimage;

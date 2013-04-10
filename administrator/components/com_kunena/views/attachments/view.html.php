@@ -24,14 +24,15 @@ class KunenaAdminViewAttachments extends KunenaView {
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		$this->filterSearch	= $this->escape($this->state->get('list.search'));
-		$this->filterTitle	= $this->escape($this->state->get('filter.title'));
-		$this->filterType	= $this->escape($this->state->get('filter.type'));
-		$this->filterSize	= $this->escape($this->state->get('filter.size'));
+		$this->filterTitle = $this->escape($this->state->get('filter.title'));
+		$this->filterType = $this->escape($this->state->get('filter.type'));
+		$this->filterSize = $this->escape($this->state->get('filter.size'));
 		$this->filterDimensions	= $this->escape($this->state->get('filter.dims'));
 		$this->filterUsername = $this->escape($this->state->get('filter.username'));
-		$this->filterPost	= $this->escape($this->state->get('filter.post'));
+		$this->filterPost = $this->escape($this->state->get('filter.post'));
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering	= $this->escape($this->state->get('list.ordering'));
-		$this->listDirection	= $this->escape($this->state->get('list.direction'));
+		$this->listDirection = $this->escape($this->state->get('list.direction'));
 
 		return parent::display($tpl);
 

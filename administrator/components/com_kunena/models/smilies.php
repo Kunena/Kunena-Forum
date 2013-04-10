@@ -47,11 +47,18 @@ class KunenaAdminModelSmilies extends JModelList {
 			$this->context .= '.'.$layout;
 		}
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.code', 'filter_code', '', 'string' );
+		$filter_active = '';
+
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
+		$this->setState ( 'filter.search', $value );
+
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.code', 'filter_code', '', 'string' );
 		$this->setState ( 'filter.code', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.location', 'filter_location', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.location', 'filter_location', '', 'string' );
 		$this->setState ( 'filter.location', $value !== '' ? $value : null );
+
+		$this->setState ( 'filter.active',!empty($filter_active));
 
 		// List state information.
 		parent::populateState('id', 'asc');

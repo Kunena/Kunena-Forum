@@ -84,10 +84,18 @@ JHtml::_('dropdown.init');
 						<thead>
 							<tr>
 								<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
-								<th width="10%"><?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?></th>
-								<th width="58%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->listDirection, $this->listOrdering ); ?></th>
-								<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->listDirection, $this->listOrdering ); ?></th>
-								<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->listDirection, $this->listOrdering ); ?></th>
+								<th width="10%">
+									<?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?>
+								</th>
+								<th width="58%">
+									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->listDirection, $this->listOrdering ); ?>
+								</th>
+								<th width="10%" class="nowrap center">
+									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->listDirection, $this->listOrdering ); ?>
+								</th>
+								<th width="10%" class="nowrap center">
+									<?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->listDirection, $this->listOrdering ); ?>
+								</th>
 								<th width="1%" class="nowrap center hidden-phone">
 									<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
 								</th>
@@ -123,32 +131,55 @@ JHtml::_('dropdown.init');
 								</td>
 							</tr>
 						</tfoot>
-						<?php $i = 0; foreach ( $this->items as $id => $row ) : ?>
-						<tr>
-							<td>
-								<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->rank_id); ?>" onclick="Joomla.isChecked(this.checked);" />
-							</td>
-							<td>
-								<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
-									<img src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>" alt="<?php echo $this->escape($row->rank_image); ?>" />
-								</a>
-							</td>
-							<td class="nowrap">
-								<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
-									<?php echo $this->escape($row->rank_title); ?>
-								</a>
-							</td>
-							<td class="nowrap center">
-								<?php echo $row->rank_special == 1 ? JText::_('COM_KUNENA_YES') : JText::_('COM_KUNENA_NO'); ?>
-							</td>
-							<td class="nowrap center">
-								<?php echo $this->escape($row->rank_min); ?>
-							</td>
-							<td class="nowrap center">
-								<?php echo $this->escape($row->rank_id); ?>
-							</td>
-						</tr>
-						<?php endforeach; ?>
+						<tbody>
+						<?php
+						$i = 0;
+						if($this->pagination->total > 0) :
+						foreach ($this->items as $id => $row) :
+						?>
+							<tr>
+								<td>
+									<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->rank_id); ?>" onclick="Joomla.isChecked(this.checked);" />
+								</td>
+								<td>
+									<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+										<img src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>" alt="<?php echo $this->escape($row->rank_image); ?>" />
+									</a>
+								</td>
+								<td class="nowrap">
+									<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+										<?php echo $this->escape($row->rank_title); ?>
+									</a>
+								</td>
+								<td class="nowrap center">
+									<?php echo $row->rank_special == 1 ? JText::_('COM_KUNENA_YES') : JText::_('COM_KUNENA_NO'); ?>
+								</td>
+								<td class="nowrap center">
+									<?php echo $this->escape($row->rank_min); ?>
+								</td>
+								<td class="nowrap center">
+									<?php echo $this->escape($row->rank_id); ?>
+								</td>
+							</tr>
+						<?php
+						endforeach;
+						else : ?>
+							<tr>
+								<td colspan="10">
+									<div class="well center filter-state">
+									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+									<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+									<?php if($this->filterActive) : ?>
+										<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+										<?php else : ?>
+										<button class="btn btn-success" type="button"  onclick="Joomla.submitbutton('add');"><?php echo JText::_('New Category'); ?></button>
+										<?php endif; ?>
+									</span>
+									</div>
+								</td>
+							</tr>
+						<?php endif; ?>
+						</tbody>
 					</table>
 				</form>
 			</div>

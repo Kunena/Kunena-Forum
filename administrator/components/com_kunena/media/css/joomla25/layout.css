@@ -101,7 +101,7 @@
 #kunena.admin.override #dashboard-icons .btn {
     border-radius: 3px;
     min-height: 64px;
-    min-width: 64px;
+    min-width: 72px;
     overflow: hidden;
 }
 
@@ -142,6 +142,27 @@
     float: none;
 }
 
+/*All wells in tables should not have margin*/
+#kunena.admin.override table .well {
+    margin-bottom: 0;
+}
+
+/*All buttons in tables should not have padding, margin, or specialized font size*/
+#kunena.admin.override .filter-state {
+    font-size: 150%;
+}
+
+#kunena.admin.override .filter-state .btn {
+    padding: 0 6px;
+    vertical-align: inherit;
+    font-size: inherit;
+    line-height: 150%
+}
+
+#kunena.admin.override .fixed-width {
+    float: left !important;
+    width: 100% !important;
+}
 
 #kunena.admin.override [class^="icon-22-"],
 [class*=" icon-22-"] {

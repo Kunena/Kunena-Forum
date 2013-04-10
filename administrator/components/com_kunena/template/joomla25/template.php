@@ -76,16 +76,16 @@ class KunenaAdminTemplate25 {
 		// Special cases for "Start", "Prev", "Next", "End".
 		switch ($item->text) {
 			case JText::_('JLIB_HTML_START') :
-				$display = '[<';
+				$display = JText::_('JLIB_HTML_START') ;
 				break;
 			case JText::_('JPREV') :
-				$display = '<';
+				$display = JText::_('JPREV');
 				break;
 			case JText::_('JNEXT') :
-				$display = '>';
+				$display = JText::_('JNEXT');
 				break;
 			case JText::_('JLIB_HTML_END') :
-				$display = '>]';
+				$display = JText::_('JLIB_HTML_END');
 				break;
 			default:
 				$display = $item->text;

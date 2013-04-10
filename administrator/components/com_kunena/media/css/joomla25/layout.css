@@ -164,6 +164,14 @@
     width: 100% !important;
 }
 
+#kunena.admin.override .pagination-toolbar {
+    margin: 0;
+}
+
+#kunena.admin.override .pagination-toolbar a {
+    line-height: 26px;
+}
+
 #kunena.admin.override [class^="icon-22-"],
 [class*=" icon-22-"] {
     display: inline-block;

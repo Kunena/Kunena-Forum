@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewCategories $this */
+
 JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
 
 $document = JFactory::getDocument();

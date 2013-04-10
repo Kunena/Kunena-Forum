@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewSmiley $this */
+
 $iconPath = json_encode(JUri::root(true) . '/');
 $this->document->addScriptDeclaration("function update_smiley(newimage) {
 	document.smiley_image.src = {$iconPath} + newimage;

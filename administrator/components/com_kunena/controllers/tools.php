@@ -290,7 +290,7 @@ class KunenaAdminControllerTools extends KunenaController {
 
 		$cleanup_days = JRequest::getInt('cleanup_ip_days', 365);
 		$where ='';
-		if ( $days ) {
+		if ($cleanup_days) {
 			$clean_date = JFactory::getDate()->toUnix() - ($cleanup_days * 86400);
 			$where = ' time < '.$clean_date;
 		}

@@ -55,6 +55,7 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function preflight($type, $parent) {
+		/** @var JInstallerComponent $parent */
 		$manifest = $parent->getParent()->getManifest();
 
 		// Prevent installation if requirements are not met.
@@ -68,6 +69,15 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function postflight($type, $parent) {
+		// Clear Joomla system cache.
+		$cache = JFactory::getCache();
+		$cache->clean('_system');
+
+		// Remove all compiled files from APC cache.
+		if (function_exists('apc_clear_cache')) {
+			@apc_clear_cache();
+		}
+
 		if ($type == 'uninstall') return true;
 
 		$this->enablePlugin('system', 'kunena');
@@ -112,6 +122,7 @@ EOS;
 	protected function checkVersion($name, $version) {
 		$app = JFactory::getApplication();
 
+		$minor = 'unknown';
 		foreach ($this->versions[$name] as $major=>$minor) {
 			if (!$major || version_compare ( $version, $major, "<" )) continue;
 			if (version_compare ( $version, $minor, ">=" )) return true;

@@ -34,8 +34,8 @@ class KunenaAvatar {
 	}
 
 	public function load($userlist) {}
-	public function getEditURL() {}
-	protected function _getURL($user, $sizex, $sizey) {}
+	public function getEditURL() { return ''; }
+	protected function _getURL($user, $sizex, $sizey) { return ''; }
 
 	public function getSize($sizex=90, $sizey=90) {
 		$size = new StdClass();

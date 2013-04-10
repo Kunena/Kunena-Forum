@@ -16,7 +16,13 @@ class KunenaProfiler extends JProfiler {
 	protected $_kstart = array();
 	protected $_heap = array();
 
-	// FIXME: override getInstance() and fix the function into Joomla
+	/**
+	 * @param string $prefix
+	 *
+	 * @return KunenaProfiler
+	 *
+	 * @fixme override getInstance() and fix the function into Joomla
+	 */
 	public static function instance($prefix = 'Kunena')
 	{
 		if (empty(self::$_instances[$prefix])) {

@@ -10,6 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewTools $this */
 ?>
 <div id="kunena" class="admin override">
 	<div class="container-fluid">

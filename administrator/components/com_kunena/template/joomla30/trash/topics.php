@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewTrash $this */
+
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
@@ -134,16 +136,36 @@ JHtml::_('dropdown.init');
 							</td>
 						</tr>
 					</tfoot>
-					<?php $i=0; foreach ( $this->trash_items as $id => $row ) : ?>
-					<tr>
-						<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
-						<td><?php echo $this->escape($row->subject); ?></td>
-						<td><?php echo $this->escape($row->getCategory()->name); ?></td>
-						<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
-						<td><?php echo strftime('%Y-%m-%d %H:%M:%S',$row->last_post_time); ?></td>
-						<td><?php echo intval($row->id); ?></td>
-					</tr>
-					<?php endforeach; ?>
+					<?php
+					$i = 0;
+					if($this->pagination->total > 0) :
+					foreach ( $this->trash_items as $id => $row ) : ?>
+						<tr>
+							<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
+							<td><?php echo $this->escape($row->subject); ?></td>
+							<td><?php echo $this->escape($row->getCategory()->name); ?></td>
+							<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
+							<td><?php echo strftime('%Y-%m-%d %H:%M:%S',$row->last_post_time); ?></td>
+							<td><?php echo intval($row->id); ?></td>
+						</tr>
+					<?php
+					endforeach;
+					else : ?>
+						<tr>
+							<td colspan="10">
+								<div class="well center filter-state">
+									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+										<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+										<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+										<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+										<?php else : ?>
+											<?php //Currently no default state, might change later. ?>
+										<?php endif; ?>
+									</span>
+								</div>
+							</td>
+						</tr>
+					<?php endif; ?>
 				</table>
 			</fieldset>
 		</form>

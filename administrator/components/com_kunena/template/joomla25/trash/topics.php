@@ -9,17 +9,20 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewTrash $this */
 ?>
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
+		var dirn = '';
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>') {
-			var dirn = 'asc';
+			dirn = 'asc';
 		} else {
-			var dirn = direction.options[direction.selectedIndex].value;
+			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
 	}
@@ -105,19 +108,19 @@ defined ( '_JEXEC' ) or die ();
 									</td>
 									<td>
 										<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
-										<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+										<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td>
 										<label for="filter_category" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
-										<input class="input-block-level input-filter" type="text" name="filter_category" id="filter_category" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterCategory; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+										<input class="input-block-level input-filter filter" type="text" name="filter_category" id="filter_category" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterCategory; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="nowrap center">
 										<label for="filter_author" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
-										<input class="input-block-level input-filter" type="text" name="filter_author" id="filter_author" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterAuthor; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+										<input class="input-block-level input-filter filter" type="text" name="filter_author" id="filter_author" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterAuthor; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="nowrap center">
 										<label for="filter_time" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
-										<input class="input-block-level input-filter" type="text" name="filter_time" id="filter_time" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterDate; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+										<input class="input-block-level input-filter filter" type="text" name="filter_time" id="filter_time" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterDate; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="nowrap center">
 									</td>
@@ -132,11 +135,11 @@ defined ( '_JEXEC' ) or die ();
 							</tfoot>
 							<tbody>
 								<?php
-									$k = 0;
-									$i = 0;
-									foreach ( $this->trash_items as $id => $row ) :
-										$k = 1 - $k;
-										?>
+								$k = 0;
+								$i = 0;
+								if($this->pagination->total > 0) :
+								foreach ( $this->trash_items as $id => $row ) :
+								?>
 								<tr class="row<?php echo $k; ?>">
 									<td align="center"><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
 									<td>
@@ -155,7 +158,26 @@ defined ( '_JEXEC' ) or die ();
 										<?php echo intval($row->id) ?>
 									</td>
 								</tr>
-								<?php endforeach; ?>
+								<?php
+								$i++;
+								$k = 1 - $k;
+								endforeach;
+								else : ?>
+								<tr>
+									<td colspan="10">
+										<div class="well center filter-state">
+											<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+												<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+												<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+												<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+												<?php else : ?>
+													<?php //Currently no default state, might change later. ?>
+												<?php endif; ?>
+											</span>
+										</div>
+									</td>
+								</tr>
+								<?php endif; ?>
 							</tbody>
 						</table>
 						</fieldset>

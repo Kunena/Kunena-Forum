@@ -773,7 +773,7 @@ class KunenaPagination
 				$data->pages[$i]->base = $offset;
 				$data->pages[$i]->link = JRoute::_((string) $this->uri);
 			}
-			elseif ($i = $this->pagesCurrent)
+			elseif ($i == $this->pagesCurrent)
 			{
 				$data->pages[$i]->active = true;
 			}

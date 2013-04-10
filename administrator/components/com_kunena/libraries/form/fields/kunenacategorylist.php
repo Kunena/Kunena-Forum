@@ -13,13 +13,19 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
+/**
+ * Class JFormFieldKunenaCategoryList
+ */
 class JFormFieldKunenaCategoryList extends JFormField {
 	protected $type = 'KunenaCategoryList';
 
-	protected function getInput() {
+    /**
+     * @return string
+     */
+    protected function getInput() {
 		if (!class_exists('KunenaForum') || !KunenaForum::installed()) {
 			echo '<a href="index.php?option=com_kunena">PLEASE COMPLETE KUNENA INSTALLATION</a>';
-			return;
+			return '';
 		}
 
 		KunenaFactory::loadLanguage('com_kunena');

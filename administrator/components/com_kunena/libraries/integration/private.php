@@ -31,9 +31,9 @@ class KunenaPrivate
 		return self::$instance;
 	}
 
-	protected function getOnClick($userid) {}
+	protected function getOnClick($userid) { return ''; }
 
-	protected function getURL($userid) {}
+	protected function getURL($userid) { return ''; }
 
 	public function showIcon($userid)
 	{
@@ -52,9 +52,9 @@ class KunenaPrivate
 		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="kicon-profile kicon-profile-pm" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '"></span></a>';
 	}
 
-	public function getInboxLink($text) {}
+	public function getInboxLink($text) { return ''; }
 
-	public function getInboxURL() {}
+	public function getInboxURL() { return ''; }
 
-	public function getUnreadCount($userid) {}
+	public function getUnreadCount($userid) { return 0; }
 }

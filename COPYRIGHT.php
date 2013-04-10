@@ -23,6 +23,17 @@ Joomla
 Copyright:	2005 - 2013 Open Source Matters, Inc. All rights reserved.
 License:	GPLv2 or later; http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
+Bootstrap
+---------
+Copyright:	Copyright 2012 Twitter, Inc.
+License:	Apache License v2.0: http://www.apache.org/licenses/LICENSE-2.0
+
+mooboo
+------
+Copyright:	Copyright 2012 Twitter, Inc.
+			Modified for MooTools by GP Technology Solutions Pty Ltd, darrennolan
+License:	Apache License v2.0: http://www.apache.org/licenses/LICENSE-2.0
+
 Nawte
 -----
 Copyright:	2008 Jean-Nicolas Jolivet (www.silverscripting.com)
@@ -39,10 +50,5 @@ mediaboxAdvanced
 Copyright:	2007-2011 John Einselen - http://iaian7.com
 			2007-2008 Christophe Beyls - http://www.digitalia.be
 License:	MIT license; http://www.opensource.org/licenses/mit-license.php
-
-plupload
---------
-Copyright:	2009, Moxiecode Systems AB
-License:	GPLv2; http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
  -->

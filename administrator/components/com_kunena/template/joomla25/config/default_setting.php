@@ -28,7 +28,7 @@ defined('_JEXEC') or die;
 			<button class="btn" type="button" data-dismiss="modal">
 				<?php echo JText::_('JCANCEL'); ?>
 			</button>
-			<button class="btn btn-primary" type="submit" onclick="document.getElementById('settingFormModal').submit();">
+			<button class="btn btn-primary" type="submit" onclick="Joomla.submitbutton('setDefaultValue');">
 				<?php echo JText::_('JSUBMIT'); ?>
 			</button>
 		</div>

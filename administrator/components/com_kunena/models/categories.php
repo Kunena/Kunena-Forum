@@ -51,32 +51,36 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
+		$filter_active = '';
+
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
 		$this->setState ( 'filter.search', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.published', 'filter_published', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.published', 'filter_published', '', 'string' );
 		$this->setState ( 'filter.published', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.title', 'filter_title', '', 'string' );
+		$filter_active .=  $value = $this->getUserStateFromRequest ( $this->context.'.filter.title', 'filter_title', '', 'string' );
 		$this->setState ( 'filter.title', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.type', 'filter_type', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.type', 'filter_type', '', 'string' );
 		$this->setState ( 'filter.type', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.access', 'filter_access', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.access', 'filter_access', '', 'string' );
 		$this->setState ( 'filter.access', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.locked', 'filter_locked', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.locked', 'filter_locked', '', 'string' );
 		$this->setState ( 'filter.locked', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.allow_polls', 'filter_allow_polls', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.allow_polls', 'filter_allow_polls', '', 'string' );
 		$this->setState ( 'filter.allow_polls', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.review', 'filter_review', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.review', 'filter_review', '', 'string' );
 		$this->setState ( 'filter.review', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.anonymous', 'filter_anonymous', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.anonymous', 'filter_anonymous', '', 'string' );
 		$this->setState ( 'filter.anonymous', $value !== '' ? (int) $value : null );
+
+		$this->setState ( 'filter.active',!empty($filter_active));
 
 		// TODO: implement
 		$value = $this->getUserStateFromRequest ( $this->context.".filter.levels", 'levellimit', 10, 'int' );

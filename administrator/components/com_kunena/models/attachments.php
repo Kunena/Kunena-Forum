@@ -50,27 +50,31 @@ class KunenaAdminModelAttachments extends JModelList {
 			$this->context .= '.'.$layout;
 		}
 
+		$filter_active = '';
+
 		// List state information
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.search', 'filter_search', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.search', 'filter_search', '', 'string' );
 		$this->setState ( 'filter.search', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.title', 'filter_title', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.title', 'filter_title', '', 'string' );
 		$this->setState ( 'filter.title', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.type', 'filter_type', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.type', 'filter_type', '', 'string' );
 		$this->setState ( 'filter.type', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.size', 'filter_size', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.size', 'filter_size', '', 'string' );
 		$this->setState ( 'filter.size', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.dims', 'filter_dims', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.dims', 'filter_dims', '', 'string' );
 		$this->setState ( 'filter.dims', $value );
 
-		$value = $this->getUserStateFromRequest (  $this->context .'.filter.username', 'filter_username', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest (  $this->context .'.filter.username', 'filter_username', '', 'string' );
 		$this->setState ( 'filter.username', $value );
 
-		$value = $this->getUserStateFromRequest (  $this->context .'.filter.post', 'filter_post', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest (  $this->context .'.filter.post', 'filter_post', '', 'string' );
 		$this->setState ( 'filter.post', $value );
+
+		$this->setState ( 'filter.active',!empty($filter_active));
 
 		// List state information.
 		parent::populateState('filename', 'asc');

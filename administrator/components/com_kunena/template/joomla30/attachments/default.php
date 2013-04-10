@@ -128,25 +128,44 @@ JHtml::_('dropdown.init');
 					</tr>
 				</tfoot>
 				<tbody>
-					<?php
-						$i = 0;
-						foreach($this->items as $id=>$row) :
-							$instance = KunenaForumMessageAttachmentHelper::get($row->id);
-							$message = $instance->getMessage();
-							$path = JPATH_ROOT.'/'.$row->folder.'/'.$row->filename;
-							if ( $instance->isImage($row->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
-					?>
-						<tr>
-							<td><?php echo JHtml::_('grid.id', $i, intval($row->id)) ?></td>
-							<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($row->filename, 10, 15) ?></td>
-							<td><?php echo $this->escape($row->filetype); ?></td>
-							<td><?php echo number_format ( intval ( $row->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_ATTACHMENTS_KILOBYTE'); ?></td>
-							<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
-							<td><?php echo $this->escape($row->user_title); ?></td>
-							<td><?php echo $this->escape($row->post_title); ?></td>
-							<td><?php echo intval($row->id); ?></td>
-						</tr>
-					<?php $i++; endforeach; ?>
+				<?php
+				$i = 0;
+				if($this->pagination->total > 0) :
+				foreach($this->items as $id=>$row) :
+				$instance = KunenaForumMessageAttachmentHelper::get($row->id);
+				$message = $instance->getMessage();
+				$path = JPATH_ROOT.'/'.$row->folder.'/'.$row->filename;
+				if ( $instance->isImage($row->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+				?>
+					<tr>
+						<td><?php echo JHtml::_('grid.id', $i, intval($row->id)) ?></td>
+						<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($row->filename, 10, 15) ?></td>
+						<td><?php echo $this->escape($row->filetype); ?></td>
+						<td><?php echo number_format ( intval ( $row->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_ATTACHMENTS_KILOBYTE'); ?></td>
+						<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
+						<td><?php echo $this->escape($row->user_title); ?></td>
+						<td><?php echo $this->escape($row->post_title); ?></td>
+						<td><?php echo intval($row->id); ?></td>
+					</tr>
+				<?php
+				$i++;
+				endforeach;
+				else : ?>
+					<tr>
+						<td colspan="10">
+							<div class="well center filter-state">
+								<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+									<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+									<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+									<?php else : ?>
+										<?php //Currently no default state, might change later. ?>
+									<?php endif; ?>
+								</span>
+							</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				</tbody>
 			</table>
 		</form>

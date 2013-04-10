@@ -15,13 +15,14 @@ JHtml::_('behavior.tooltip');
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
+		var dirn = '';
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>') {
-			var dirn = 'asc';
+			dirn = 'asc';
 		} else {
-			var dirn = direction.options[direction.selectedIndex].value;
+			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
 	}
@@ -40,11 +41,12 @@ JHtml::_('behavior.tooltip');
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm" name="adminForm">
 						<input type="hidden" name="view" value="users" />
 						<input type="hidden" name="task" value="" />
-						<input type="hidden" name="filter_order" value="<?php echo $this->escape ( $this->listOrdering ) ?>" />
-						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->listDirection) ?>" />
+						<input type="hidden" name="filter_order" value="<?php echo $this->escape($this->listOrdering) ?>" />
+						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape($this->listDirection) ?>" />
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHtml::_( 'form.token' ); ?>
 
+						<?php if($this->filterActive || $this->pagination->total > 0) : ?>
 						<div id="filter-bar" class="btn-toolbar">
 							<div class="filter-search btn-group pull-left">
 								<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
@@ -99,25 +101,29 @@ JHtml::_('behavior.tooltip');
 										<input class="input-block-level input-filter filter" type="text" name="filter_email" id="filter_email" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterEmail; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="nowrap center">
-										<select name="filter_signature" id="filter_signature" class="select-filter filter">
+										<label for="filter_signature" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
+										<select name="filter_signature" id="filter_signature" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
 										</select>
 									</td>
 									<td class="nowrap center">
-										<select name="filter_block" id="filter_block" class="select-filter filter">
+										<label for="filter_block" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
+										<select name="filter_block" id="filter_block" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
 										</select>
 									</td>
 									<td class="nowrap center">
-										<select name="filter_banned" id="filter_banned" class="select-filter filter">
+										<label for="filter_banned" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
+										<select name="filter_banned" id="filter_banned" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
 										</select>
 									</td>
 									<td class="nowrap center">
-										<select name="filter_moderator" id="filter_moderator" class="select-filter filter">
+										<label for="filter_moderator" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
+										<select name="filter_moderator" id="filter_moderator" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filterModerator); ?>
 										</select>
@@ -134,77 +140,94 @@ JHtml::_('behavior.tooltip');
 								</tr>
 							</tfoot>
 							<tbody>
-								<?php
-								if (!empty($this->items)) {
-									$k = 1;
-									//foreach ($profileList as $pl)
-									$i = 0;
-									foreach($this->items as $user) {
-										$kunena_user = KunenaFactory::getUser($user->id);
-										$k = 1 - $k;
-										$img_yes = '<span class="state publish"><span class="text">Enabled</span></span>';
-										$img_no = '<span class="state unpublish"><span class="text">Disabled</span></span>';
-										$userEnabled = $kunena_user->isBlocked() ? $img_no : $img_yes;
-										$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
-										$titleUserBLock = $kunena_user->isBlocked() ?  JText::_( 'Enabled' ) : JText::_( 'Blocked' );
-										$userBanned = $kunena_user->isBanned() ? $img_yes : $img_no;
-										$userBannedTask = $kunena_user->isBanned() ? 'ban' : 'ban';
-										$titleUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
+							<?php
+							$k = 1;
+							$i = 0;
+							$img_yes = '<span class="state publish"><span class="text">Enabled</span></span>';
+							$img_no = '<span class="state unpublish"><span class="text">Disabled</span></span>';
+							if($this->pagination->total > 0) :
+							foreach($this->items as $user) {
+							$kunena_user = KunenaFactory::getUser($user->id);
+							$userEnabled = $kunena_user->isBlocked() ? $img_no : $img_yes;
+							$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
+							$titleUserBLock = $kunena_user->isBlocked() ?  JText::_( 'Enabled' ) : JText::_( 'Blocked' );
+							$userBanned = $kunena_user->isBanned() ? $img_yes : $img_no;
+							$userBannedTask = $kunena_user->isBanned() ? 'ban' : 'ban';
+							$titleUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
+							?>
+								<tr class="row<?php echo $k; ?>">
+									<td class="center">
+										<?php echo JHtml::_('grid.id', $i, intval($user->id)) ?>
+									</td>
+									<td>
+										<span class="editlinktip hasTip" title="<?php echo $this->escape($user->username.'::'.$kunena_user->getAvatarImage('kavatar', 128, 128)); ?>">
+											<?php echo $kunena_user->getAvatarImage('kavatar', 24, 24); ?>
+											<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->username); ?></a>
+											<small>
+												<?php echo JText::sprintf('(Name: %s)', $this->escape($user->name));?>
+											</small>
+										</span>
+									</td>
+									<td>
+										<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->email); ?></a>
+									</td>
+									<td class="center">
+										<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
+										<?php if ($kunena_user->signature) { ?>
+											<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
+										<?php } else { ?>
+											<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
+										<?php } ?>
+										</span>
+									</td>
+									<td class="center">
+										<a class="jgrid" title="<?php echo $titleUserBlock ?>" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
+											<?php echo $userEnabled; ?>
+										</a>
+									</td>
+									<td class="center">
+										<a class="jgrid" title="<?php echo $titleUserBanned ?>" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
+											<?php echo $userBanned; ?>
+										</a>
+									</td>
+									<td class="center">
+										<?php
+										if ($kunena_user->moderator) {
+											echo JText::_('COM_KUNENA_YES');
+										} else {
+											echo JText::_('COM_KUNENA_NO');
+										}
 										?>
-										<tr class="row<?php echo $k; ?>">
-											<td class="center">
-												<?php echo JHtml::_('grid.id', $i, intval($user->id)) ?>
-											</td>
-											<td>
-												<span class="editlinktip hasTip" title="<?php echo $this->escape($user->username.'::'.$kunena_user->getAvatarImage('kavatar', 128, 128)); ?>">
-													<?php echo $kunena_user->getAvatarImage('kavatar', 24, 24); ?>
-													<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->username); ?></a>
-													<small>
-														<?php echo JText::sprintf('(Name: %s)', $this->escape($user->name));?>
-													</small>
-												</span>
-											</td>
-											<td>
-												<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->email); ?></a>
-											</td>
-											<td class="center">
-												<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
-												<?php if ($kunena_user->signature) { ?>
-													<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
-												<?php } else { ?>
-													<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
-												<?php } ?>
-												</span>
-											</td>
-											<td class="center">
-												<a class="jgrid" title="<?php echo $titleUserBlock ?>" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
-													<?php echo $userEnabled; ?>
-												</a>
-											</td>
-											<td class="center">
-												<a class="jgrid" title="<?php echo $titleUserBanned ?>" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
-													<?php echo $userBanned; ?>
-												</a>
-											</td>
-											<td class="center">
-												<?php
-												if ($kunena_user->moderator) {
-													echo JText::_('COM_KUNENA_YES');
-												} else {
-													echo JText::_('COM_KUNENA_NO');
-												}
-												?>
-											</td>
-											<td width="1%" class="center">
-												<?php echo $this->escape($kunena_user->userid); ?>
-											</td>
-										</tr>
-									<?php $i++; }
-								} else { ?>
-									<tr><td colspan="8"><?php echo JText::_('COM_KUNENA_NOUSERSFOUND') ?></td></tr>
-							<?php } ?>
+									</td>
+									<td width="1%" class="center">
+										<?php echo $this->escape($kunena_user->userid); ?>
+									</td>
+								</tr>
+							<?php
+							$i++;
+							$k = 1 - $k;
+							}
+							else : ?>
+								<tr>
+									<td colspan="10">
+										<div class="well center filter-state">
+										<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+											<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+											<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+										</span>
+										</div>
+									</td>
+								</tr>
+							<?php endif; ?>
 							</tbody>
 						</table>
+						<?php else : ?>
+						<div class="well well-large center filter-state">
+							<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+								<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+							</span>
+						</div>
+						<?php endif; ?>
 						<?php //Load the batch processing form. ?>
 						<?php echo $this->loadTemplateFile('moderators'); ?>
 					</form>

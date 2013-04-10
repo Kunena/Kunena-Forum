@@ -44,19 +44,20 @@ class KunenaAdminViewCategories extends KunenaView {
 
 		$this->user = JFactory::getUser();
 		$this->me = KunenaUserHelper::getMyself();
-		$this->userId		= $this->user->get('id');
+		$this->userId = $this->user->get('id');
 		$this->filterSearch = $this->escape($this->state->get('filter.search'));
 		$this->filterPublished = $this->escape($this->state->get('filter.published'));
 		$this->filterTitle = $this->escape($this->state->get('filter.title'));
-		$this->filterType	= $this->escape($this->state->get('filter.type'));
+		$this->filterType = $this->escape($this->state->get('filter.type'));
 		$this->filterAccess = $this->escape($this->state->get('filter.access'));
 		$this->filterLocked = $this->escape($this->state->get('filter.locked'));
 		$this->filterReview = $this->escape($this->state->get('filter.review'));
 		$this->filterAllow_polls = $this->escape($this->state->get('filter.allow_polls'));
 		$this->filterAnonymous = $this->escape($this->state->get('filter.anonymous'));
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
-		$this->saveOrder 	= ($this->listOrdering == 'a.ordering' && $this->listDirection == 'asc');
+		$this->saveOrder = ($this->listOrdering == 'a.ordering' && $this->listDirection == 'asc');
 		$this->saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveOrderAjax&tmpl=component';
 		$this->display();
 	}
@@ -64,6 +65,7 @@ class KunenaAdminViewCategories extends KunenaView {
 	protected function setToolBarEdit() {
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'categories' );
+		JToolbarHelper::spacer();
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::save('save');
 		JToolBarHelper::save2new('save2new');
@@ -73,15 +75,25 @@ class KunenaAdminViewCategories extends KunenaView {
 			JToolBarHelper::save2copy('save2copy');
 		}
 		JToolBarHelper::cancel();
+		JToolbarHelper::spacer();
 	}
 	protected function setToolBarDefault() {
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
+		$this->pagination = $this->get ( 'AdminNavigation' );
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
 		//TODO STRING
+		JToolBarHelper::spacer();
 		JToolBarHelper::addNew ('add', 'New Category');
-		JToolBarHelper::editList ();
-		JToolBarHelper::publish ();
-		JToolBarHelper::unpublish ();
-		JToolBarHelper::deleteList ();
+		//TODO: Implement flag to hide options, personal preference option.
+		//if($this->filterActive || $this->pagination->total > 0) {
+		JToolBarHelper::editList();
+		JToolBarHelper::divider();
+		JToolBarHelper::publish();
+		JToolBarHelper::unpublish();
+		JToolBarHelper::divider();
+		JToolBarHelper::deleteList();
+		//}
+		JToolBarHelper::spacer();
 		//JToolBarHelper::back ( JText::_ ( 'Home' ), 'index.php?option=com_kunena' );
 	}
 
@@ -167,8 +179,8 @@ class KunenaAdminViewCategories extends KunenaView {
 
     protected function getSortDirectionFields() {
         $sortDirection = array();
-//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		//$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		//$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
         // TODO: remove it when J2.5 support is dropped
         $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
         $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));

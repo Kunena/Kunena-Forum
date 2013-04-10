@@ -25,11 +25,12 @@ class KunenaAdminViewTrash extends KunenaView {
 
 		$this->filterSearch = $this->escape($this->state->get('list.search'));
 		$this->filterTitle = $this->escape($this->state->get('filter.title'));
-		$this->filterTopic	= $this->escape($this->state->get('filter.topic'));
-		$this->filterCategory	= $this->escape($this->state->get('filter.category'));
+		$this->filterTopic = $this->escape($this->state->get('filter.topic'));
+		$this->filterCategory = $this->escape($this->state->get('filter.category'));
 		$this->filterIp = $this->escape($this->state->get('filter.ip'));
 		$this->filterAuthor = $this->escape($this->state->get('filter.author'));
-		$this->filterDate	= $this->escape($this->state->get('filter.date'));
+		$this->filterDate = $this->escape($this->state->get('filter.date'));
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
 
@@ -54,7 +55,7 @@ class KunenaAdminViewTrash extends KunenaView {
 		} else {
 			JToolBarHelper::custom('restore','restore.png','restore_f2.png', 'COM_KUNENA_TRASH_RESTORE');
 		}
-		JToolBarHelper::spacer();
+		JToolBarHelper::divider();
 		JToolBarHelper::custom('purge','trash.png','trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		JToolBarHelper::spacer();
 	}

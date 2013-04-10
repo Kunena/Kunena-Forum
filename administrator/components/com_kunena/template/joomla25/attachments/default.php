@@ -13,13 +13,14 @@ defined ( '_JEXEC' ) or die ();
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
+		var dirn = '';
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>') {
-			var dirn = 'asc';
+			dirn = 'asc';
 		} else {
-			var dirn = direction.options[direction.selectedIndex].value;
+			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
 	}
@@ -126,31 +127,47 @@ defined ( '_JEXEC' ) or die ();
 								</tr>
 							</tfoot>
 							<tbody>
-								<?php
-								$k = 0;
-								$i = 0;
-								$n = count($this->items);
-								foreach($this->items as $id=>$attachment) {
-									$instance = KunenaForumMessageAttachmentHelper::get($attachment->id);
-									$message = $instance->getMessage();
-									$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
-									if ( $instance->isImage($attachment->filetype) && is_file($path)) list($width, $height) =	getimagesize( $path );
-								?>
-									<tr <?php echo 'class = "row' . $k . '"';?>>
-										<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
-										<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
-										<td><?php echo $this->escape($attachment->filetype); ?></td>
-										<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
-										<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
-										<td><?php echo $this->escape($message->name); ?></td>
-										<td><?php echo $this->escape($message->subject); ?></td>
-										<td><?php echo intval($attachment->id); ?></td>
-									</tr>
-								<?php
-								$i++;
-								$k = 1 - $k;
-								}
-								?>
+							<?php
+							$k = 0;
+							$i = 0;
+							$n = count($this->items);
+							if($this->pagination->total > 0) :
+							foreach($this->items as $id=>$attachment) {
+							$instance = KunenaForumMessageAttachmentHelper::get($attachment->id);
+							$message = $instance->getMessage();
+							$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
+							if ( $instance->isImage($attachment->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+							?>
+								<tr <?php echo 'class = "row' . $k . '"';?>>
+									<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
+									<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
+									<td><?php echo $this->escape($attachment->filetype); ?></td>
+									<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
+									<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
+									<td><?php echo $this->escape($message->name); ?></td>
+									<td><?php echo $this->escape($message->subject); ?></td>
+									<td><?php echo intval($attachment->id); ?></td>
+								</tr>
+							<?php
+							$i++;
+							$k = 1 - $k;
+							}
+							else : ?>
+								<tr>
+									<td colspan="10">
+										<div class="well center filter-state">
+										<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+											<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+											<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+												<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+											<?php else : ?>
+												<?php //Currently no default state, might change later. ?>
+											<?php endif; ?>
+										</span>
+										</div>
+									</td>
+								</tr>
+							<?php endif; ?>
 							</tbody>
 						</table>
 					</form>
@@ -162,4 +179,3 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-

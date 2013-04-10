@@ -177,36 +177,37 @@ if ($this->saveOrder) {
 				</tfoot>
 				<tbody>
 				<?php
-					$img_no = '<i class="icon-cancel"></i>';
-					$img_yes = '<i class="icon-checkmark"></i>';
-					$i = 0;
-					foreach($this->categories as $item) :
-						$orderkey   = array_search($item->id, $this->ordering[$item->parent_id]);
-						$canEdit    = $this->me->isAdmin($item);
-						$canCheckin = $this->user->authorise('core.admin', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
-						$canEditOwn = $canEdit;
-						$canChange  = $canEdit && $canCheckin;
+				$img_no = '<i class="icon-cancel"></i>';
+				$img_yes = '<i class="icon-checkmark"></i>';
+				$i = 0;
+				if($this->pagination->total > 0) :
+				foreach($this->categories as $item) :
+				$orderkey   = array_search($item->id, $this->ordering[$item->parent_id]);
+				$canEdit    = $this->me->isAdmin($item);
+				$canCheckin = $this->user->authorise('core.admin', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
+				$canEditOwn = $canEdit;
+				$canChange  = $canEdit && $canCheckin;
 
-						// Get the parents of item for sorting
-						if ($item->level > 0) {
-							$parentsStr = "";
-							$_currentParentId = $item->parent_id;
-							$parentsStr = " " . $_currentParentId;
-							for ($i2 = 0; $i2 < $item->level; $i2++) {
-								foreach ($this->ordering as $k => $v) {
-								$v = implode("-", $v);
-								$v = "-".$v."-";
-									if (strpos($v, "-" . $_currentParentId . "-") !== false) {
-										$parentsStr .= " " . $k;
-										$_currentParentId = $k;
-										break;
-									}
+					// Get the parents of item for sorting
+					if ($item->level > 0) {
+						$parentsStr = "";
+						$_currentParentId = $item->parent_id;
+						$parentsStr = " " . $_currentParentId;
+						for ($i2 = 0; $i2 < $item->level; $i2++) {
+							foreach ($this->ordering as $k => $v) {
+							$v = implode("-", $v);
+							$v = "-".$v."-";
+								if (strpos($v, "-" . $_currentParentId . "-") !== false) {
+									$parentsStr .= " " . $k;
+									$_currentParentId = $k;
+									break;
 								}
 							}
-						} else {
-							$parentsStr = "";
 						}
-					?>
+					} else {
+						$parentsStr = "";
+					}
+				?>
 					<tr sortable-group-id="<?php echo $item->parent_id;?>" item-id="<?php echo $item->id?>" parents="<?php echo $parentsStr?>" level="<?php echo $item->level?>">
 						<td class="order nowrap center hidden-phone">
 							<?php if ($canChange) :
@@ -286,7 +287,25 @@ if ($this->saveOrder) {
 							<?php echo (int) $item->id; ?>
 						</td>
 					</tr>
-				<?php $i++; endforeach; ?>
+				<?php
+				$i++;
+				endforeach;
+				else : ?>
+					<tr>
+						<td colspan="10">
+							<div class="well center filter-state">
+								<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+								<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+								<?php if($this->filterActive) : ?>
+									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+									<?php else : ?>
+									<button class="btn btn-success" type="button"  onclick="Joomla.submitbutton('add');"><?php echo JText::_('New Category'); ?></button>
+									<?php endif; ?>
+								</span>
+							</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				</tbody>
 			</table>
 		</form>

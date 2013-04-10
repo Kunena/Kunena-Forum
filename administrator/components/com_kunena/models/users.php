@@ -56,26 +56,30 @@ class KunenaAdminModelUsers extends JModelList {
 			$this->context .= '.'.$layout;
 		}
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
-		$this->setState ( 'filter.search', $value );
+		$filter_active = '';
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.username', 'filter_username', '', 'string' );
-		$this->setState ( 'filter.username', $value );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
+		$this->setState ( 'filter.search', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.email', 'filter_email', '', 'string' );
-		$this->setState ( 'filter.email', $value );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.username', 'filter_username', '', 'string' );
+		$this->setState ( 'filter.username', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.signature', 'filter_signature', '', 'string' );
-		$this->setState ( 'filter.signature', $value );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.email', 'filter_email', '', 'string' );
+		$this->setState ( 'filter.email', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.block', 'filter_block', '', 'string' );
-		$this->setState ( 'filter.block', $value );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.signature', 'filter_signature', '', 'string' );
+		$this->setState ( 'filter.signature', $value !== '' ? (int) $value : null  );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.banned', 'filter_banned', '', 'string' );
-		$this->setState ( 'filter.banned', $value );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.block', 'filter_block', '', 'string' );
+		$this->setState ( 'filter.block', $value !== '' ? (int) $value : null  );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'.filter.moderator', 'filter_moderator', '', 'string' );
-		$this->setState ( 'filter.moderator', $value );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.banned', 'filter_banned', '', 'string' );
+		$this->setState ( 'filter.banned', $value !== '' ? (int) $value : null  );
+
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.moderator', 'filter_moderator', '', 'string' );
+		$this->setState ( 'filter.moderator', $value !== '' ? (int) $value : null  );
+
+		$this->setState ( 'filter.active',!empty($filter_active));
 
 		// List state information.
 		parent::populateState('username', 'asc');
@@ -114,8 +118,8 @@ class KunenaAdminModelUsers extends JModelList {
 	protected function getListQuery()
 	{
 		// Create a new query object.
-		$db		= $this->getDbo();
-		$query	= $db->getQuery(true);
+		$db	= $this->getDbo();
+		$query = $db->getQuery(true);
 
 		// Select the required fields from the table.
 		$query->select(
@@ -221,9 +225,10 @@ class KunenaAdminModelUsers extends JModelList {
 	 * @return  html list
 	 * @since  3.0
 	 */
+	//TODO: Move this to view.
 	public function getModcatslist() {
 		$options = array();
 		if ($this->me->isAdmin()) $options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
-		return JHtml::_('kunenaforum.categorylist', 'catid[]', 0, $options, array('action'=>'admin'), 'class="inputbox" multiple="multiple" size="5"', 'value', 'text', 0);
+		return JHtml::_('kunenaforum.categorylist', 'catid[]', 0, $options, array('action'=>'admin'), 'class="input-block-level" multiple="multiple" size="5"', 'value', 'text', 0);
 	}
 }

@@ -25,7 +25,8 @@ class KunenaAdminViewSmilies extends KunenaView {
 
 		$this->filterSearch = $this->escape($this->state->get('filter.search'));
 		$this->filterCode	= $this->escape($this->state->get('filter.code'));
-		$this->filterUrl = $this->escape($this->state->get('filter.url'));
+		$this->filterLocation = $this->escape($this->state->get('filter.location'));
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
 
@@ -33,13 +34,17 @@ class KunenaAdminViewSmilies extends KunenaView {
 	}
 
 	protected function setToolbar() {
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
+		$this->pagination = $this->get ( 'Pagination' );
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'smilies' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
+		//TODO: Implement flag to hide options, personal preference option.
+		//if($this->filterActive || $this->pagination->total > 0) {
+		JToolBarHelper::editList();
+		JToolBarHelper::divider();
+		JToolBarHelper::deleteList();
+		//}
 		JToolBarHelper::spacer();
 	}
 
@@ -54,8 +59,8 @@ class KunenaAdminViewSmilies extends KunenaView {
 
     protected function getSortDirectionFields() {
         $sortDirection = array();
-//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		//$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		//$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
         // TODO: remove it when J2.5 support is dropped
         $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
         $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));

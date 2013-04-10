@@ -105,7 +105,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
-	function delete() {
+	function remove() {
 		$db = JFactory::getDBO ();
 
 		if (!JSession::checkToken('post')) {

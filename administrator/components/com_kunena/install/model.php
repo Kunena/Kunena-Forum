@@ -815,10 +815,16 @@ class KunenaModelInstall extends JModelLegacy {
 			case 'query':
 				$query = (string)$action;
 				$this->db->setQuery($query);
-				$this->db->query();
-				if (!$this->db->getErrorNum()) {
-					$success = true;
+
+				try {
+					$this->db->query();
+					if (!$this->db->getErrorNum()) {
+						$success = true;
+					}
+				} catch (Exception $e) {
+					$success = false;
 				}
+
 				if ($action['mode'] == 'silenterror' || !$this->db->getAffectedRows() || $success)
 					$result = null;
 				else

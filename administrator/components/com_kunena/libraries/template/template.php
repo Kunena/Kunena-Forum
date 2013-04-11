@@ -437,7 +437,8 @@ HTML;
 	}
 
 	public function getTemplateDetails() {
-		return $this->xml;
+		$xml = simplexml_load_file(KPATH_SITE . "/template/{$this->name}/template.xml");
+		return $xml;
 	}
 
 	function compileLess($inputFile, $outputFile) {

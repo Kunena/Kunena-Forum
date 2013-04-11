@@ -19,7 +19,8 @@ class KunenaViewUser extends KunenaView {
 		if ($this->me->exists()) {
 			$users = $this->get ( 'Items' );
 			foreach ($users as $user) {
-				$response[] = $user->username;
+				if ($this->config->username) $response[] = $user->username;
+				else $response[] = $user->name;
 			}
 		}
 		// Set the MIME type and header for JSON output.

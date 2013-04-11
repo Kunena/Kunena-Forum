@@ -60,8 +60,22 @@ class Com_KunenaInstallerScript {
 		// Prevent installation if requirements are not met.
 		if (!$this->checkRequirements($manifest->version)) return false;
 
-		if (is_dir($parent->getPath('extension_administrator').'/install')) {
-			JFolder::delete($parent->getPath('extension_administrator').'/install');
+		$adminPath = $parent->getPath('extension_administrator');
+		$sitePath = $parent->getPath('extension_site');
+
+		if (is_file($adminPath.'/admin.kunena.php')) {
+			// Kunena 2.0 or older release found, clean up the directories.
+			static $ignoreAdmin = array('index.html', 'kunena.xml', 'archive');
+			if (is_file($adminPath.'/install.script.php')) {
+				// Kunena 1.7 or older release..
+				$ignoreAdmin[] = 'install.script.php';
+				$ignoreAdmin[] = 'admin.kunena.php';
+			}
+			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
+			$this->deleteFolder($adminPath, $ignoreAdmin);
+			$this->deleteFolder($sitePath, $ignoreSite);
+			$this->deleteFolder($sitePath.'/template/blue_eagle', array('params.ini'));
+			// TODO: delete also en-GB files!
 		}
 
 		return true;
@@ -166,5 +180,28 @@ class Com_KunenaInstallerScript {
 
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version), 'notice');
 		return false;
+	}
+
+	public function deleteFiles($path, $ignore=array()) {
+		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS','.DS_Store','__MACOSX'));
+		if ( JFolder::exists($path) ) foreach (JFolder::files($path, '.', false, true, $ignore) as $file) {
+			if ( JFile::exists($file) ) {
+				JFile::delete($file);
+			}
+		}
+	}
+
+	public function deleteFolders($path, $ignore=array()) {
+		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS','.DS_Store','__MACOSX'));
+		if ( JFolder::exists($path) ) foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder) {
+			if ( JFolder::exists($folder) ) {
+				JFolder::delete($folder);
+			}
+		}
+	}
+
+	public function deleteFolder($path, $ignore=array()) {
+		$this->deleteFiles($path, $ignore);
+		$this->deleteFolders($path, $ignore);
 	}
 }

@@ -26,6 +26,9 @@ JTable::addIncludePath(__DIR__ . '/tables');
 jimport('joomla.html.html');
 JHtml::addIncludePath(__DIR__ . '/html/html');
 
+// Give access to all Kunena form fields.
+JForm::addFieldPath(__DIR__ . '/form/fields');
+
 // Register classes where the names have been changed to fit the autoloader rules.
 // @deprecated
 JLoader::register('KunenaAccess', __DIR__ . '/access.php');

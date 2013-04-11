@@ -292,7 +292,7 @@ class KunenaAdminControllerTools extends KunenaController {
 		$where ='';
 		if ($cleanup_days) {
 			$clean_date = JFactory::getDate()->toUnix() - ($cleanup_days * 86400);
-			$where = ' time < '.$clean_date;
+			$where = 'WHERE time < '.$clean_date;
 		}
 
 		$db	= JFactory::getDBO();

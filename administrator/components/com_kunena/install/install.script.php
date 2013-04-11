@@ -16,16 +16,16 @@ class Com_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
-			'0' => '5.4.9' // Preferred version
+			'0' => '5.4.13' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'2.5' => '2.5.6',
 			'3.0' => '3.0.2',
-			'0' => '2.5.8' // Preferred version
+			'2.5' => '2.5.6',
+			'0' => '2.5.9' // Preferred version
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
@@ -60,8 +60,22 @@ class Com_KunenaInstallerScript {
 		// Prevent installation if requirements are not met.
 		if (!$this->checkRequirements($manifest->version)) return false;
 
-		if (is_dir($parent->getPath('extension_administrator').'/install')) {
-			JFolder::delete($parent->getPath('extension_administrator').'/install');
+		$adminPath = $parent->getPath('extension_administrator');
+		$sitePath = $parent->getPath('extension_site');
+
+		if (is_file($adminPath.'/admin.kunena.php')) {
+			// Kunena 2.0 or older release found, clean up the directories.
+			static $ignoreAdmin = array('index.html', 'kunena.xml', 'archive');
+			if (is_file($adminPath.'/install.script.php')) {
+				// Kunena 1.7 or older release..
+				$ignoreAdmin[] = 'install.script.php';
+				$ignoreAdmin[] = 'admin.kunena.php';
+			}
+			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
+			$this->deleteFolder($adminPath, $ignoreAdmin);
+			$this->deleteFolder($sitePath, $ignoreSite);
+			$this->deleteFolder($sitePath.'/template/blue_eagle', array('params.ini'));
+			// TODO: delete also en-GB files!
 		}
 
 		return true;
@@ -92,12 +106,13 @@ class Com_KunenaInstallerScript {
 	protected function checkVersion($name, $version) {
 		$app = JFactory::getApplication();
 
-		$minor = '';
+		$major = $minor = 0;
 		foreach ($this->versions[$name] as $major=>$minor) {
 			if (!$major || version_compare($version, $major, '<')) continue;
 			if (version_compare($version, $minor, '>=')) return true;
 			break;
 		}
+		if (!$major) $minor = reset($this->versions[$name]);
 		$recommended = end($this->versions[$name]);
 		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is higly recommended to use %s %s or later.", $name, $version, $name, $minor, $name, $recommended), 'notice');
 		return false;
@@ -166,5 +181,28 @@ class Com_KunenaInstallerScript {
 
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version), 'notice');
 		return false;
+	}
+
+	public function deleteFiles($path, $ignore=array()) {
+		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS','.DS_Store','__MACOSX'));
+		if ( JFolder::exists($path) ) foreach (JFolder::files($path, '.', false, true, $ignore) as $file) {
+			if ( JFile::exists($file) ) {
+				JFile::delete($file);
+			}
+		}
+	}
+
+	public function deleteFolders($path, $ignore=array()) {
+		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS','.DS_Store','__MACOSX'));
+		if ( JFolder::exists($path) ) foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder) {
+			if ( JFolder::exists($folder) ) {
+				JFolder::delete($folder);
+			}
+		}
+	}
+
+	public function deleteFolder($path, $ignore=array()) {
+		$this->deleteFiles($path, $ignore);
+		$this->deleteFolders($path, $ignore);
 	}
 }

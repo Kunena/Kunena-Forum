@@ -167,6 +167,10 @@ class KunenaModelTopics extends KunenaModel {
 		$where = '';
 		$lastpost = true;
 
+		// Reset topics.
+		$this->total = 0;
+		$this->topics = array();
+
 		switch ($this->getState ( 'list.mode' )) {
 			case 'topics' :
 				$lastpost = false;
@@ -183,7 +187,7 @@ class KunenaModelTopics extends KunenaModel {
 			case 'unapproved' :
 				$allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.approve');
 				if (empty($allowed)) {
-					return array(0, array());
+					return;
 				}
 				$allowed = implode(',', array_keys($allowed));
 				$hold = '1';
@@ -192,7 +196,7 @@ class KunenaModelTopics extends KunenaModel {
 			case 'deleted' :
 				$allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.undelete');
 				if (empty($allowed)) {
-					return array(0, array());
+					return;
 				}
 				$allowed = implode(',', array_keys($allowed));
 				$hold = '2';

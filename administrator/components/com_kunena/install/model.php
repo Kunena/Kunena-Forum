@@ -798,7 +798,7 @@ class KunenaModelInstall extends JModelLegacy {
 		switch($nodeName) {
 			case 'phpfile':
 				$filename = $action['name'];
-				$include = KUNENA_INSTALLER_PATH . "/sql/updates/{$filename}.php";
+				$include = KUNENA_INSTALLER_PATH . "/sql/updates/php/{$filename}.php";
 				$function = 'kunena_'.strtr($filename, array('.'=>'', '-'=>'_'));
 				if(file_exists($include)) {
 					require( $include );

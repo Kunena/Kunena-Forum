@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @subpackage  com_plugins
  * @since       1.5
  */
-class PluginsViewPlugin extends JViewLegacy
+class KunenaAdminViewPlugin extends JViewLegacy
 {
 	protected $item;
 
@@ -54,33 +54,17 @@ class PluginsViewPlugin extends JViewLegacy
 		JFactory::getApplication()->input->set('hidemainmenu', true);
 
 		$user  = JFactory::getUser();
-		$canDo = PluginsHelper::getActions();
+		//$canDo = PluginsHelper::getActions();
 
-		JToolbarHelper::title(JText::sprintf('COM_PLUGINS_MANAGER_PLUGIN', JText::_($this->item->name)), 'plugin');
-
+		JToolbarHelper::title( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_PLUGINS_MANAGER'), 'pluginsmanager');
+		JToolbarHelper::spacer();
 		// If not checked out, can save the item.
-		if ($canDo->get('core.edit'))
-		{
+		//if ($canDo->get('core.edit'))
+		//{
 			JToolbarHelper::apply('plugin.apply');
 			JToolbarHelper::save('plugin.save');
-		}
+		//}
 		JToolbarHelper::cancel('plugin.cancel', 'JTOOLBAR_CLOSE');
-		JToolbarHelper::divider();
-		// Get the help information for the plugin item.
-
-		$lang = JFactory::getLanguage();
-
-		$help = $this->get('Help');
-		if ($lang->hasKey($help->url))
-		{
-			$debug = $lang->setDebug(false);
-			$url = JText::_($help->url);
-			$lang->setDebug($debug);
-		}
-		else
-		{
-			$url = null;
-		}
-		JToolbarHelper::help($help->key, false, $url);
+		JToolbarHelper::spacer();
 	}
 }

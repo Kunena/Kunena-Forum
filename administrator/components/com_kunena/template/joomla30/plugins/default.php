@@ -142,9 +142,9 @@ $user = JFactory::getUser();
 					$k = 0;
 					if($this->pagination->total > 0) :
 					foreach ($this->items as $i => $item) :
-					$canEdit    = $user->authorise('core.edit', 'com_plugins');
+					$canEdit = $user->authorise('core.edit', 'com_plugins');
 					$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;
-					$canChange  = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
+					$canChange = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
 					?>
 						<tr>
 							<td class="center hidden-phone">
@@ -158,8 +158,9 @@ $user = JFactory::getUser();
 									<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'plugins.', $canCheckin); ?>
 								<?php endif; ?>
 								<?php if ($canEdit) : ?>
-									<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=plugin.edit&extension_id='.(int) $item->extension_id); ?>">
-										<?php echo $item->name; ?></a>
+									<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')">
+										<?php echo $this->escape($item->name); ?>
+									</a>
 								<?php else : ?>
 										<?php echo $item->name; ?>
 								<?php endif; ?>

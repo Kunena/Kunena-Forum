@@ -22,6 +22,9 @@ if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 	$template->addScript( 'js/mediaboxAdv.js' );
 }
 
+// New Kunena JS for autocompleter
+$template->addScript ( 'autocompleter.js' );
+
 // New Kunena JS for default template
 $template->addScript ( 'js/default.js' );
 

@@ -16,16 +16,16 @@ class Com_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
-			'0' => '5.4.9' // Preferred version
+			'0' => '5.4.13' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'2.5' => '2.5.6',
 			'3.0' => '3.0.2',
-			'0' => '2.5.8' // Preferred version
+			'2.5' => '2.5.6',
+			'0' => '2.5.9' // Preferred version
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
@@ -106,12 +106,13 @@ class Com_KunenaInstallerScript {
 	protected function checkVersion($name, $version) {
 		$app = JFactory::getApplication();
 
-		$minor = '';
+		$major = $minor = 0;
 		foreach ($this->versions[$name] as $major=>$minor) {
 			if (!$major || version_compare($version, $major, '<')) continue;
 			if (version_compare($version, $minor, '>=')) return true;
 			break;
 		}
+		if (!$major) $minor = reset($this->versions[$name]);
 		$recommended = end($this->versions[$name]);
 		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is higly recommended to use %s %s or later.", $name, $version, $name, $minor, $name, $recommended), 'notice');
 		return false;

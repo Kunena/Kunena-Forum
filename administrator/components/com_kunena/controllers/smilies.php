@@ -101,7 +101,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
-	function delete() {
+	function remove() {
 		jimport('joomla.utilities.arrayhelper');
 		$db = JFactory::getDBO ();
 

@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<?php if ( $this->quickreply ) : ?>
-
 <li id="kreply<?php echo $this->displayMessageField('id') ?>_form" class="kreply-form" style="display: none">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" method="post" enctype="multipart/form-data" name="postform" id="postform">
 		<input type="hidden" name="task" value="post" />
@@ -40,4 +38,4 @@ defined ( '_JEXEC' ) or die ();
 		<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>
 	</form>
 </li>
-<?php endif ?>
+

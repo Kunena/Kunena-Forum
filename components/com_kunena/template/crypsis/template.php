@@ -41,6 +41,9 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		$this->loadMootools();
 		JHtml::_('behavior.tooltip');
 
+		// New Kunena JS for autocompleter
+		$template->addScript ( 'autocompleter.js' );
+
 		// New Kunena JS for default template
 		$this->addScript ( 'js/plugins.js' );
 

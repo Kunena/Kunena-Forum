@@ -16,18 +16,18 @@ defined('_JEXEC') or die;
  * @subpackage  com_plugins
  * @since       1.5
  */
-class KunenaAdminViewPlugin extends JViewLegacy
+class KunenaAdminViewPlugin extends KunenaView
 {
-	protected $item;
+	protected $item = null;
 
-	protected $form;
+	protected $form = null;
 
-	protected $state;
+	protected $state = null;
 
 	/**
 	 * Display the view
 	 */
-	public function display($tpl = null)
+	public function displayEdit($tpl = null)
 	{
 		$this->state	= $this->get('State');
 		$this->item		= $this->get('Item');
@@ -41,7 +41,7 @@ class KunenaAdminViewPlugin extends JViewLegacy
 		}
 
 		$this->addToolbar();
-		parent::display($tpl);
+		$this->display($tpl);
 	}
 
 	/**
@@ -61,10 +61,10 @@ class KunenaAdminViewPlugin extends JViewLegacy
 		// If not checked out, can save the item.
 		//if ($canDo->get('core.edit'))
 		//{
-			JToolbarHelper::apply('plugin.apply');
-			JToolbarHelper::save('plugin.save');
+			JToolbarHelper::apply('apply');
+			JToolbarHelper::save('save');
 		//}
-		JToolbarHelper::cancel('plugin.cancel', 'JTOOLBAR_CLOSE');
+		JToolbarHelper::cancel('cancel', 'JTOOLBAR_CLOSE');
 		JToolbarHelper::spacer();
 	}
 }

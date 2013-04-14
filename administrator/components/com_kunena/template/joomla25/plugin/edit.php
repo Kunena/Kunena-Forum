@@ -9,10 +9,9 @@
 
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_plugins/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
-JHtml::_('formbehavior.chosen', 'select');
 $this->fieldsets = $this->form->getFieldsets('params');
 ?>
 <script type="text/javascript">
@@ -25,7 +24,7 @@ $this->fieldsets = $this->form->getFieldsets('params');
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_plugins&layout=edit&extension_id='.(int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate form-horizontal">
+<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugin&layout=edit&extension_id='.(int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate form-horizontal">
 	<fieldset>
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#details" data-toggle="tab"><?php echo JText::_('JDETAILS');?></a></li>

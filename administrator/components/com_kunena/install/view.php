@@ -11,11 +11,11 @@ defined ( '_JEXEC' ) or die ();
 
 /**
  * The HTML Kunena configuration view.
- *
- * @version		1.6
  */
 class KunenaViewInstall extends JViewLegacy
 {
+	protected $model = null;
+
 	/**
 	 * Method to display the view.
 	 *
@@ -43,6 +43,11 @@ class KunenaViewInstall extends JViewLegacy
 		$this->model->setStep(0);
 
 		JRequest::setVar('hidemainmenu', 1);
+
+		// Joomla 2.5 support
+		if ($layout == 'default' && !$tpl && version_compare(JVERSION, '3.0', '<')) {
+			$tpl = 'j25';
+		}
 
 		parent::display($tpl);
 	}

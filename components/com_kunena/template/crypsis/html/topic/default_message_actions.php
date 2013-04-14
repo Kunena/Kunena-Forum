@@ -28,7 +28,7 @@ if ($this->message->modified_time) {
 	<div class="btn-toolbar btn-marging">
 		<div class="kmessage-buttons-cover">
 			<div class="kmessage-buttons-row">
-				<input type="button" class="btn" name="kreply-form" value="Quick Reply" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'block';this.form.submit();" />
+				<input type="button" class="btn" name="kreply-form" value="Quick Reply" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'block';" />
 				<div class="btn-group">
 					<button class="btn dropdown-toggle dropdown-border" data-toggle="dropdown" >Action</button>
 					<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>

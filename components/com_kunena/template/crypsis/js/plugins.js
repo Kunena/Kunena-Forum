@@ -35,6 +35,7 @@ window.addEvent('domready', function(){
 		});
 	});
 	
+  /* To check or uncheck boxes to select items */
 	$$('input.kcheckall').addEvent('click', function(e){
 		this.getParent('form').getElements('input.kcheck').each(function(el){
 			if(el.get('checked')==false){
@@ -45,6 +46,11 @@ window.addEvent('domready', function(){
 				el.set('checked',false);
 			}
 		}); 
+	});
+  
+  /* To close quick-reply form on hit on cancel button */
+  $$('.kreply-cancel').addEvent('click', function(e){
+		$$('.kreply-form').setStyle('display', 'none');
 	});
 });
 

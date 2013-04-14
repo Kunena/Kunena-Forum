@@ -78,14 +78,19 @@ class Com_KunenaInstallerScript {
 			// TODO: delete also en-GB files!
 		}
 
+		// Prepare installation.
+		$model = "{$adminPath}/install/model.php";
+		if (file_exists($model)) {
+			require_once($model);
+			$installer = new KunenaModelInstall();
+			$installer->install();
+		}
+
 		return true;
 	}
 
 	public function postflight($type, $parent) {
 		$installer = $parent->getParent();
-
-		// Set redirect.
-		//$installer->set('redirect_url', JRoute::_('index.php?option=com_kunena', false));
 
 		return true;
 	}

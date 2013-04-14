@@ -9,15 +9,8 @@
 
 defined('_JEXEC') or die;
 
-jimport ( 'joomla.application.component.modellist' );
+jimport ('joomla.application.component.modellist');
 
-/**
- * Methods supporting a list of plugin records.
- *
- * @package     Joomla.Administrator
- * @subpackage  com_plugins
- * @since       1.6
- */
 class KunenaAdminModelPlugins extends JModelList
 {
 	/**
@@ -29,6 +22,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 */
 	public function __construct($config = array())
 	{
+		$this->option = 'com_kunena';
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = array(
@@ -36,8 +30,6 @@ class KunenaAdminModelPlugins extends JModelList
 				'name',
 				'element',
 				'access',
-				'checked_out',
-				'checked_out_time',
 				'extension_id',
 			);
 		}
@@ -59,14 +51,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$app = JFactory::getApplication();
-
-		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
-		if ($layout) {
-			$this->context .= '.'.$layout;
-		}
-
+		$app = JFactory::getApplication('administrator');
 		$filter_active = '';
 
 		// Load the filter state.
@@ -74,21 +59,25 @@ class KunenaAdminModelPlugins extends JModelList
 		$this->setState('filter.search', $value !== '' ? $value : null);
 
 		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.enabled', 'filter_enabled', '', 'string');
-		$this->setState('filter.enabled', $value !== '' ? (int) $value : null );
+		$this->setState('filter.enabled', $value !== '' ? $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.title', 'filter_title', '', 'string' );
-		$this->setState ( 'filter.title', $value !== '' ? $value : null );
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.name', 'filter_name', null, 'cmd');
+		$this->setState('filter.name', $value !== '' ? $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_element', '', 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.element', 'filter_element', '');
 		$this->setState('filter.element', $value !== '' ? $value : null);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', '', 'string');
-		$this->setState('filter.access', $value !== '' ? (int) $value : null );
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', null, 'int');
+		$this->setState('filter.access', $value !== '' ? $value : null);
 
 		$this->setState ( 'filter.active',!empty($filter_active));
 
+		// Load the parameters.
+		$params = JComponentHelper::getParams('com_plugins');
+		$this->setState('params', $params);
+
 		// List state information.
-		parent::populateState('name', 'asc');
+		parent::populateState('folder', 'asc');
 	}
 
 	/**
@@ -106,14 +95,103 @@ class KunenaAdminModelPlugins extends JModelList
 	{
 		// Compile the store id.
 		$id	.= ':'.$this->getState('filter.search');
-		$id	.= ':'.$this->getState('filter.title');
+		$id	.= ':'.$this->getState('filter.enabled');
+		$id	.= ':'.$this->getState('filter.name');
 		$id	.= ':'.$this->getState('filter.element');
 		$id	.= ':'.$this->getState('filter.access');
 
 		return parent::getStoreId($id);
 	}
 
+	/**
+	 * Returns an object list
+	 *
+	 * @param   string The query
+	 * @param   int Offset
+	 * @param   int The number of records
+	 * @return  array
+	 */
+	protected function _getList($query, $limitstart=0, $limit=0)
+	{
+		$search = $this->getState('filter.name') ? $this->getState('filter.name') : $this->getState('filter.search');
+		$ordering = $this->getState('list.ordering', 'ordering');
+		if ($ordering == 'name' || (!empty($search) && stripos($search, 'id:') !== 0))
+		{
+			$this->_db->setQuery($query);
+			$result = $this->_db->loadObjectList();
+			$this->translate($result);
+			if (!empty($search))
+			{
+				foreach ($result as $i => $item)
+				{
+					if (!preg_match("/$search/i", $item->name))
+					{
+						unset($result[$i]);
+					}
+				}
+			}
 
+			$lang = JFactory::getLanguage();
+			$direction = ($this->getState('list.direction') == 'desc') ? -1 : 1;
+			JArrayHelper::sortObjects($result, $ordering, $direction, true, $lang->getLocale());
+
+			$total = count($result);
+			$this->cache[$this->getStoreId('getTotal')] = $total;
+			if ($total < $limitstart)
+			{
+				$limitstart = 0;
+				$this->setState('list.start', 0);
+			}
+			return array_slice($result, $limitstart, $limit ? $limit : null);
+		}
+		else
+		{
+			// Add the list ordering clause.
+			$direction	= strtoupper($this->state->get('list.direction'));
+			switch ($this->state->get('list.ordering')) {
+				case 'ordering':
+					$query->order('a.ordering ' . $direction);
+					break;
+				case 'enabled':
+					$query->order('a.enabled ' . $direction);
+					break;
+				case 'element':
+					$query->order('a.element ' . $direction);
+					break;
+				case 'access':
+					$query->order('a.access ' . $direction);
+					break;
+				default:
+					$query->order('a.extension_id ' . $direction);
+			}
+
+			$result = parent::_getList($query, $limitstart, $limit);
+			$this->translate($result);
+			return $result;
+		}
+	}
+
+	/**
+	 * Translate a list of objects
+	 *
+	 * @param   array The array of objects
+	 * @return  array The array of translated objects
+	 */
+	protected function translate(&$items)
+	{
+		$lang = JFactory::getLanguage();
+
+		foreach ($items as &$item)
+		{
+			$source = JPATH_PLUGINS . '/' . $item->folder . '/' . $item->element;
+			$extension = 'plg_' . $item->folder . '_' . $item->element;
+			$lang->load($extension . '.sys', JPATH_ADMINISTRATOR, null, false, false)
+				||	$lang->load($extension . '.sys', $source, null, false, false)
+				||	$lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
+				||	$lang->load($extension . '.sys', $source, $lang->getDefault(), false, false);
+			$item->name = JText::_($item->name);
+		}
+	}
 	/**
 	 * Build an SQL query to load the list data.
 	 *
@@ -129,12 +207,15 @@ class KunenaAdminModelPlugins extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				' a.enabled, a.name, a.element, a.access, a.extension_id, a.checked_out, a.checked_out_time'
+				'a.extension_id , a.name, a.element, a.folder, a.checked_out, a.checked_out_time,' .
+					' a.enabled, a.access, a.ordering'
 			)
 		);
 		$query->from($db->quoteName('#__extensions').' AS a');
 
-		$query->where($db->quoteName('type').'= '.$db->quote('plugin').' AND '.$db->quoteName('folder').'= '.$db->quote('kunena'));
+		$query->where($db->quoteName('type').' = '.$db->quote('plugin'));
+		$query->where($db->quoteName('folder').'= '.$db->quote('kunena'));
+
 
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor');
@@ -144,54 +225,36 @@ class KunenaAdminModelPlugins extends JModelList
 		$query->select('ag.title AS access_level');
 		$query->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 
-		// Filter by published state
-		$filter = $this->getState('filter.enabled');
-		if (is_numeric($filter))
+		// Filter by access level.
+		if ($access = $this->getState('filter.access'))
 		{
-			$query->where('a.enabled = '.(int) $filter);
-		} elseif ($filter === '')
+			$query->where('a.access = '.(int) $access);
+		}
+
+		// Filter by published state
+		$published = $this->getState('filter.enabled');
+		if (is_numeric($published))
+		{
+			$query->where('a.enabled = '.(int) $published);
+		} elseif ($published === '')
 		{
 			$query->where('(a.enabled IN (0, 1))');
 		}
 
-		// Filter by access level.
-		$filter = $this->getState ( 'filter.title');
-		if (!empty($filter)) {
-			$title = $db->Quote('%'.$db->escape($filter, true).'%');
-			$query->where('(a.name LIKE '.$title.')');
-		}
+		// Filter by state
+		$query->where('a.state >= 0');
 
-		// Filter by access level.
-		$filter = $this->getState ( 'filter.element');
-		if (!empty($filter)) {
-			$title = $db->Quote('%'.$db->escape($filter, true).'%');
-			$query->where('(a.element LIKE '.$title.')');
-		}
-
-		// Filter by access level.
-		$filter = $this->getState('filter.access');
-		if ($filter)
+		// Filter by element.
+		if ($search = $this->getState('filter.element'))
 		{
-			$query->where('a.access = '.(int) $filter);
+			$query->where('a.element LIKE '.$db->quote("%$search%"));
 		}
 
-		// Add the list ordering clause.
-		$direction	= strtoupper($this->state->get('list.direction'));
-		switch ($this->state->get('list.ordering')) {
-			case 'enabled':
-				$query->order('a.enabled ' . $direction);
-				break;
-			case 'name':
-				$query->order('a.name ' . $direction);
-				break;
-			case 'element':
-				$query->order('a.element ' . $direction);
-				break;
-			case 'access':
-				$query->order('a.access ' . $direction);
-				break;
-			default:
-				$query->order('a.extension_id ' . $direction);
+		// Filter by search in id
+		$search = $this->getState('filter.search');
+		if (!empty($search) && stripos($search, 'id:') === 0)
+		{
+			$query->where('a.extension_id = '.(int) substr($search, 3));
 		}
 
 		return $query;

@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+jimport ('joomla.application.component.modeladmin');
+
 /**
  * Plugin model.
  *
@@ -16,7 +18,7 @@ defined('_JEXEC') or die;
  * @subpackage  com_plugins
  * @since       1.6
  */
-class PluginsModelPlugin extends JModelAdmin
+class KunenaAdminModelPlugin extends JModelAdmin
 {
 	/**
 	 * @var		string	The help screen key for the module.
@@ -43,6 +45,11 @@ class PluginsModelPlugin extends JModelAdmin
 	 * @since   1.6
 	 */
 	protected $event_before_save = 'onExtensionBeforeSave';
+
+	public function __construct($config = array()) {
+		$this->option = 'com_kunena';
+		parent::__construct($config);
+	}
 
 	/**
 	 * Method to get the record form.
@@ -72,7 +79,7 @@ class PluginsModelPlugin extends JModelAdmin
 		$this->setState('item.element',	$element);
 
 		// Get the form.
-		$form = $this->loadForm('com_plugins.plugin', 'plugin', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_kunena.plugin', 'plugin', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form))
 		{
 			return false;
@@ -110,7 +117,36 @@ class PluginsModelPlugin extends JModelAdmin
 			$data = $this->getItem();
 		}
 
+		$this->preprocessData('com_plugins.plugin', $data);
+
 		return $data;
+	}
+
+	/**
+	 * Method to allow derived classes to preprocess the data.
+	 *
+	 * @param   string  $context  The context identifier.
+	 * @param   mixed   &$data    The data to be processed. It gets altered directly.
+	 *
+	 * @return  void
+	 *
+	 * @since   Joomla 3.1
+	 */
+	protected function preprocessData($context, &$data)
+	{
+		// Get the dispatcher and load the users plugins.
+		// TODO: rename to JEventDispatcher::getInstance() after dropping J2.5 support (used also elsewhere).
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('content');
+
+		// Trigger the data preparation event.
+		$results = $dispatcher->trigger('onContentPrepareData', array($context, $data));
+
+		// Check for errors encountered while preparing the data.
+		if (count($results) > 0 && in_array(false, $results, true))
+		{
+			$this->setError($dispatcher->getError());
+		}
 	}
 
 	/**
@@ -171,7 +207,7 @@ class PluginsModelPlugin extends JModelAdmin
 	 * @param   string	A prefix for the table class name. Optional.
 	 * @param   array  Configuration array for model. Optional.
 	 * @return  JTable	A database object
-	*/
+	 */
 	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
@@ -216,23 +252,23 @@ class PluginsModelPlugin extends JModelAdmin
 		// Load the core and/or local language sys file(s) for the ordering field.
 		$db = JFactory::getDbo();
 		$query = 'SELECT element' .
-				' FROM #__extensions' .
-				' WHERE (type =' .$db->Quote('plugin'). 'AND folder='. $db->Quote($folder) . ')';
+			' FROM #__extensions' .
+			' WHERE (type =' .$db->Quote('plugin'). 'AND folder='. $db->Quote($folder) . ')';
 		$db->setQuery($query);
 		$elements = $db->loadColumn();
 
 		foreach ($elements as $elementa)
 		{
-				$lang->load('plg_'.$folder.'_'.$elementa.'.sys', JPATH_ADMINISTRATOR, null, false, false)
-			||	$lang->load('plg_'.$folder.'_'.$elementa.'.sys', JPATH_PLUGINS.'/'.$folder.'/'.$elementa, null, false, false)
-			||	$lang->load('plg_'.$folder.'_'.$elementa.'.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-			||	$lang->load('plg_'.$folder.'_'.$elementa.'.sys', JPATH_PLUGINS.'/'.$folder.'/'.$elementa, $lang->getDefault(), false, false);
+			$lang->load('plg_'.$folder.'_'.$elementa.'.sys', JPATH_ADMINISTRATOR, null, false, false)
+				||	$lang->load('plg_'.$folder.'_'.$elementa.'.sys', JPATH_PLUGINS.'/'.$folder.'/'.$elementa, null, false, false)
+				||	$lang->load('plg_'.$folder.'_'.$elementa.'.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
+				||	$lang->load('plg_'.$folder.'_'.$elementa.'.sys', JPATH_PLUGINS.'/'.$folder.'/'.$elementa, $lang->getDefault(), false, false);
 		}
 
 		if (empty($folder) || empty($element))
 		{
 			$app = JFactory::getApplication();
-			$app->redirect(JRoute::_('index.php?option=com_plugins&view=plugins', false));
+			$app->redirect(JRoute::_('index.php?option=com_kunena&view=plugins', false));
 		}
 
 		$formFile = JPath::clean(JPATH_PLUGINS . '/' . $folder . '/' . $element . '/' . $element . '.xml');
@@ -242,10 +278,10 @@ class PluginsModelPlugin extends JModelAdmin
 		}
 
 		// Load the core and/or local language file(s).
-			$lang->load('plg_'.$folder.'_'.$element, JPATH_ADMINISTRATOR, null, false, false)
-		||	$lang->load('plg_'.$folder.'_'.$element, JPATH_PLUGINS.'/'.$folder.'/'.$element, null, false, false)
-		||	$lang->load('plg_'.$folder.'_'.$element, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-		||	$lang->load('plg_'.$folder.'_'.$element, JPATH_PLUGINS.'/'.$folder.'/'.$element, $lang->getDefault(), false, false);
+		$lang->load('plg_'.$folder.'_'.$element, JPATH_ADMINISTRATOR, null, false, false)
+			||	$lang->load('plg_'.$folder.'_'.$element, JPATH_PLUGINS.'/'.$folder.'/'.$element, null, false, false)
+			||	$lang->load('plg_'.$folder.'_'.$element, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
+			||	$lang->load('plg_'.$folder.'_'.$element, JPATH_PLUGINS.'/'.$folder.'/'.$element, $lang->getDefault(), false, false);
 
 		if (file_exists($formFile))
 		{

@@ -69,9 +69,9 @@ $user = JFactory::getUser();
 								</select>
 							</div>
 							<div class="btn-group pull-right">
-								<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+								<label for="sortTable" class="element-invisible"><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></label>
 								<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-									<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+									<option value=""><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></option>
 									<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 								</select>
 							</div>
@@ -87,10 +87,10 @@ $user = JFactory::getUser();
 										<?php echo JHtml::_('grid.sort', 'JSTATUS', 'enabled', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th class="title">
-										<?php echo JHtml::_('grid.sort', 'Title', 'name', $this->listDirection, $this->listOrdering); ?>
+										<?php echo JHtml::_('grid.sort', 'COM_PLUGINS_NAME_HEADING', 'name', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="15%" class="nowrap hidden-phone">
-										<?php echo JHtml::_('grid.sort', 'Element', 'element', $this->listDirection, $this->listOrdering); ?>
+										<?php echo JHtml::_('grid.sort', 'COM_PLUGINS_ELEMENT_HEADING', 'element', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="10%" class="hidden-phone center">
 										<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $this->listDirection, $this->listOrdering); ?>
@@ -110,8 +110,8 @@ $user = JFactory::getUser();
 										</select>
 									</td>
 									<td class="nowrap">
-										<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-										<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+										<label for="filter_name" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+										<input class="input-block-level input-filter filter" type="text" name="filter_name" id="filter_name" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterName; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="nowrap center">
 										<label for="filter_element" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
@@ -150,14 +150,14 @@ $user = JFactory::getUser();
 											<?php echo JHtml::_('grid.id', $i, $item->extension_id); ?>
 										</td>
 										<td class="center">
-											<?php echo JHtml::_('jgrid.published', $item->enabled, $i, 'plugins.', $canChange); ?>
+											<?php echo JHtml::_('jgrid.published', $item->enabled, $i, '', $canChange); ?>
 										</td>
 										<td>
 											<?php if ($item->checked_out) : ?>
-												<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'plugins.', $canCheckin); ?>
+												<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, '', $canCheckin); ?>
 											<?php endif; ?>
 											<?php if ($canEdit) : ?>
-												<a href="<?php echo JRoute::_('index.php?option=com_plugins&task=plugin.edit&extension_id='.(int) $item->extension_id); ?>">
+												<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=plugin&task=plugin.edit&extension_id='.(int) $item->extension_id); ?>">
 													<?php echo $item->name; ?></a>
 											<?php else : ?>
 													<?php echo $item->name; ?>

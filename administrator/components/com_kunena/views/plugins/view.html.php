@@ -21,7 +21,7 @@ class KunenaAdminViewPlugins extends KunenaView {
 	/**
 	 * Display the view
 	 */
-	function display($tpl = null) {
+	function displayDefault($tpl = null) {
 		$this->setToolbar();
 		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
@@ -32,14 +32,14 @@ class KunenaAdminViewPlugins extends KunenaView {
 
 		$this->filterSearch = $this->escape($this->state->get('filter.search'));
 		$this->filterEnabled = $this->escape($this->state->get('filter.enabled'));
-		$this->filterTitle = $this->escape($this->state->get('filter.title'));
+		$this->filterName = $this->escape($this->state->get('filter.name'));
 		$this->filterElement = $this->escape($this->state->get('filter.element'));
 		$this->filterAccess = $this->escape($this->state->get('filter.access'));
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
 
-		return parent::display($tpl);
+		return $this->display($tpl);
 	}
 
 	/**
@@ -53,10 +53,10 @@ class KunenaAdminViewPlugins extends KunenaView {
 		JToolbarHelper::spacer();
 		JToolbarHelper::editList('plugin.edit');
 		JToolbarHelper::divider();
-		JToolbarHelper::publish('plugins.publish', 'JTOOLBAR_ENABLE', true);
-		JToolbarHelper::unpublish('plugins.unpublish', 'JTOOLBAR_DISABLE', true);
+		JToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
+		JToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);
 		JToolbarHelper::divider();
-		JToolbarHelper::checkin('plugins.checkin');
+		JToolbarHelper::checkin('checkin');
 		JToolbarHelper::spacer();
 	}
 
@@ -84,9 +84,9 @@ class KunenaAdminViewPlugins extends KunenaView {
 	protected function getSortFields() {
 		$sortFields = array();
 		$sortFields[] = JHtml::_('select.option', 'enable', JText::_('JSTATUS'));
-		$sortFields[] = JHtml::_('select.option', 'name', JText::_('JGLOBAL_TITLE'));
-		$sortFields[] = JHtml::_('select.option', 'element', JText::_('Element'));
-		$sortFields[] = JHtml::_('select.option', 'access', JText::_('Acess'));
+		$sortFields[] = JHtml::_('select.option', 'name', JText::_('COM_PLUGINS_NAME_HEADING'));
+		$sortFields[] = JHtml::_('select.option', 'element', JText::_('COM_PLUGINS_ELEMENT_HEADING'));
+		$sortFields[] = JHtml::_('select.option', 'access', JText::_('JGRID_HEADING_ACCESS'));
 		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;

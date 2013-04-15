@@ -24,100 +24,128 @@ $this->fieldsets = $this->form->getFieldsets('params');
 	}
 </script>
 
-<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugin&layout=edit&extension_id='.(int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate form-horizontal">
-	<fieldset>
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#details" data-toggle="tab"><?php echo JText::_('JDETAILS');?></a></li>
-			<?php if (count($this->fieldsets)) : ?>
-				<?php foreach ($this->fieldsets as $fieldset) : ?>
-					<?php $label = !empty($fieldset->label) ? JText::_($fieldset->label) : JText::_('COM_PLUGINS_'.$fieldset->name.'_FIELDSET_LABEL');?>
-					<li><a href="#options-<?php echo $fieldset->name; ?>" data-toggle="tab"><?php echo $label ?></a></li>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		</ul>
+<div id="kunena" class="admin override">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div id="j-sidebar-container" class="span2">
+					<div id="sidebar">
+						<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla25/common/menu.php'; ?></div>
+					</div>
+				</div>
+				<div id="j-main-container" class="span10">
+					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugin&layout=edit&extension_id='.(int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate form-horizontal">
+						<fieldset>
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#details" data-toggle="tab"><?php echo JText::_('JDETAILS');?></a></li>
+								<?php if (count($this->fieldsets)) : ?>
+									<?php foreach ($this->fieldsets as $fieldset) : ?>
+										<?php $label = !empty($fieldset->label) ? JText::_($fieldset->label) : JText::_('COM_PLUGINS_'.$fieldset->name.'_FIELDSET_LABEL');?>
+										<li><a href="#options-<?php echo $fieldset->name; ?>" data-toggle="tab"><?php echo $label ?></a></li>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</ul>
 
-		<div class="tab-content">
-			<div class="tab-pane active" id="details">
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo $this->form->getLabel('name'); ?>
-					</div>
-					<div class="controls">
-						<?php echo $this->form->getInput('name'); ?>
-						<span class="readonly plg-name"><?php echo JText::_($this->item->name);?></span>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo $this->form->getLabel('enabled'); ?>
-					</div>
-					<div class="controls">
-						<?php echo $this->form->getInput('enabled'); ?>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo $this->form->getLabel('access'); ?>
-					</div>
-					<div class="controls">
-						<?php echo $this->form->getInput('access'); ?>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo $this->form->getLabel('ordering'); ?>
-					</div>
-					<div class="controls">
-						<?php echo $this->form->getInput('ordering'); ?>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo $this->form->getLabel('folder'); ?>
-					</div>
-					<div class="controls">
-						<?php echo $this->form->getInput('folder'); ?>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo $this->form->getLabel('element'); ?>
-					</div>
-					<div class="controls">
-						<?php echo $this->form->getInput('element'); ?>
-					</div>
-				</div>
-				<?php if ($this->item->extension_id) : ?>
-					<div class="control-group">
-						<div class="control-label">
-							<?php echo $this->form->getLabel('extension_id'); ?>
-						</div>
-						<div class="controls">
-							<?php echo $this->form->getInput('extension_id'); ?>
-						</div>
-					</div>
-				<?php endif; ?>
-				<!-- Plugin metadata -->
-				<?php if ($this->item->xml) : ?>
-					<?php if ($text = trim($this->item->xml->description)) : ?>
-						<div class="control-group">
-							<label id="jform_extdescription-lbl" class="control-label">
-								<?php echo JText::_('JGLOBAL_DESCRIPTION'); ?>
-							</label>
-							<div class="controls disabled">
-								<?php echo JText::_($text); ?>
+							<div class="tab-content">
+								<div id="details" class="tab-pane active">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<?php echo $this->form->getLabel('name'); ?>
+												</td>
+												<td>
+													<?php echo $this->form->getInput('name'); ?>
+													<span class="readonly plg-name"><?php echo JText::_($this->item->name);?></span>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<?php echo $this->form->getLabel('enabled'); ?>
+												</td>
+												<td>
+													<?php echo $this->form->getInput('enabled'); ?>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<?php echo $this->form->getLabel('access'); ?>
+												</td>
+												<td>
+													<?php echo $this->form->getInput('access'); ?>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<?php echo $this->form->getLabel('ordering'); ?>
+												</td>
+												<td>
+													<?php echo $this->form->getInput('ordering'); ?>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<?php echo $this->form->getLabel('folder'); ?>
+												</td>
+												<td>
+													<?php echo $this->form->getInput('folder'); ?>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<?php echo $this->form->getLabel('element'); ?>
+												</td>
+												<td>
+													<?php echo $this->form->getInput('element'); ?>
+												</td>
+											</tr>
+											<?php if ($this->item->extension_id) : ?>
+												<tr>
+													<td>
+														<?php echo $this->form->getLabel('extension_id'); ?>
+													</td>
+													<td>
+														<?php echo $this->form->getInput('extension_id'); ?>
+													</td>
+												</tr>
+											<?php endif; ?>
+											<!-- Plugin metadata -->
+											<?php if ($this->item->xml) : ?>
+												<?php if ($text = trim($this->item->xml->description)) : ?>
+													<tr>
+														<td>
+															<?php echo JText::_('JGLOBAL_DESCRIPTION'); ?>
+														</td>
+														<td>
+															<?php echo JText::_($text); ?>
+														</td>
+													</tr>
+												<?php endif; ?>
+											<?php else : ?>
+												<div class="alert alert-error">
+													<?php echo JText::_('COM_PLUGINS_XML_ERR'); ?>
+												</div>
+											<?php endif; ?>
+										</tbody>
+									</table>
+								</div>
+								<?php echo $this->loadTemplate('options'); ?>
 							</div>
-						</div>
-					<?php endif; ?>
-				<?php else : ?>
-					<div class="alert alert-error">
-						<?php echo JText::_('COM_PLUGINS_XML_ERR'); ?>
-					</div>
-				<?php endif; ?>
+						</fieldset>
+						<input type="hidden" name="task" value="" />
+						<?php echo JHtml::_('form.token'); ?>
+					</form>
+				</div>
+				<div class="pull-right small">
+					<?php echo KunenaVersion::getLongVersionHTML (); ?>
+				</div>
 			</div>
-			<?php echo $this->loadTemplate('options'); ?>
 		</div>
-	</fieldset>
-	<input type="hidden" name="task" value="" />
-	<?php echo JHtml::_('form.token'); ?>
-</form>
+	</div>
+</div>

@@ -8,29 +8,43 @@
  */
 
 defined('_JEXEC') or die;
+?>
 
+<?php
 foreach ($this->fieldsets as $name => $fieldset) :
 	echo '<div class="tab-pane" id="options-'.$name.'">';
 	$label = !empty($fieldset->label) ? $fieldset->label : 'COM_PLUGINS_'.$name.'_FIELDSET_LABEL';
 	if (isset($fieldset->description) && trim($fieldset->description)) :
-		echo '<p class="tip">'.$this->escape(JText::_($fieldset->description)).'</p>';
+	?>
+		<p class="tip"><?php echo $this->escape(JText::_($fieldset->description)) ?></p>;
+	<?php
 	endif;
 	?>
 	<?php $hidden_fields = ''; ?>
-	<?php foreach ($this->form->getFieldset($name) as $field) : ?>
-		<?php if (!$field->hidden) : ?>
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $field->label; ?>
-			</div>
-			<div class="controls">
-				<?php echo $field->input; ?>
-			</div>
-		</div>
-		<?php else : $hidden_fields .= $field->input; ?>
-		<?php endif; ?>
-	<?php endforeach; ?>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+			<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+		</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($this->form->getFieldset($name) as $field) : ?>
+				<?php if (!$field->hidden) : ?>
+					<tr>
+						<td>
+							<?php echo $field->label; ?>
+						</td>
+						<td>
+							<?php echo $field->input; ?>
+						</td>
+					</tr>
+				<?php else : $hidden_fields .= $field->input; ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
 	<?php echo $hidden_fields; ?>
-
 	<?php echo '</div>'; // .tab-pane div ?>
 <?php endforeach; ?>
+

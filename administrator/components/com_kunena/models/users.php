@@ -162,20 +162,20 @@ class KunenaAdminModelUsers extends JModelList {
 
 		// Filter by signature.
 		$filter = $this->getState('filter.signature');
-		if ($filter != '') {
+		if ($filter !== null) {
 			if ($filter) $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
 			else $query->where("ku.signature={$db->quote('')} OR ku.signature IS NULL");
 		}
 
 		// Filter by block state.
 		$filter = $this->getState('filter.block');
-		if ($filter != '') {
+		if ($filter !== null) {
 			$query->where('a.block='.(int) $filter);
 		}
 
 		// Filter by banned state.
 		$filter = $this->getState('filter.banned');
-		if ($filter != '') {
+		if ($filter !== null) {
 			$now = new JDate ();
 			if ($filter) $query->where("ku.banned={$db->quote($db->getNullDate())} OR ku.banned>{$db->quote($now->toSql())}");
 			else $query->where("ku.banned IS NULL OR (ku.banned>{$db->quote($db->getNullDate())} AND ku.banned<{$db->quote($now->toSql())})");
@@ -183,7 +183,7 @@ class KunenaAdminModelUsers extends JModelList {
 
 		// Filter by moderator state.
 		$filter = $this->getState('filter.moderator');
-		if ($filter != '') {
+		if ($filter !== null) {
 			$query->where('ku.moderator ='.(int) $filter);
 		}
 

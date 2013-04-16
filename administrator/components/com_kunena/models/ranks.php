@@ -104,7 +104,7 @@ class KunenaAdminModelRanks extends JModelList {
 		}
 
 		$filter = $this->getState ( 'filter.min');
-		if (!empty($filter)) {
+		if (is_numeric($filter)) {
 			$query->where('a.rank_min > ' . (int) $filter);
 		}
 

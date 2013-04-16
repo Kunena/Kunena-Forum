@@ -51,7 +51,7 @@ class KunenaAdminViewPlugins extends KunenaView {
 
 		JToolbarHelper::title(JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_PLUGINS_MANAGER'), 'pluginsmanager');
 		JToolbarHelper::spacer();
-		JToolbarHelper::editList();
+		JToolbarHelper::editList('plugin.edit');
 		JToolbarHelper::divider();
 		JToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
 		JToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);

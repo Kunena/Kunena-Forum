@@ -18,11 +18,11 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="jcontentevents" type="radio" default="0" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_DESC">
+				<field name="jcontentevents" type="list" default="0" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_DESC"  class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="jcontentevent_target" type="list" multiple="true" default="body" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_DESC">
+				<field name="jcontentevent_target" type="list" multiple="true" default="body" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_DESC"  class="inputbox">
 					<option value="title">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TITLES</option>
 					<option value="body">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_BODIES</option>
 				</field>

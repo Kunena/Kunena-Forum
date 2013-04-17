@@ -154,30 +154,30 @@ defined ( '_JEXEC' ) or die ();
 								if($this->pagination->total > 0) :
 								foreach ( $this->trash_items as $id => $row ) :
 								?>
-								<tr class="row<?php echo $k; ?>">
-									<td align="center"><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
-									<td>
-										<?php echo $this->escape($row->subject); ?>
-									</td>
-									<td>
-										<?php echo $this->escape($row->getTopic()->subject); ?>
-									</td>
-									<td>
-										<?php echo $this->escape($row->getCategory()->name); ?>
-									</td>
-									<td>
-										<?php echo $this->escape($row->ip); ?>
-									</td>
-									<td>
-										<?php echo $this->escape($row->getAuthor()->getName()); ?>
-									</td>
-									<td>
-										<?php echo strftime('%Y-%m-%d %H:%M:%S',$row->time); ?>
-									</td>
-									<td>
-										<?php echo intval($row->id) ?>
-									</td>
-								</tr>
+									<tr class="row<?php echo $k; ?>">
+										<td align="center"><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
+										<td>
+											<?php echo $this->escape($row->subject); ?>
+										</td>
+										<td>
+											<?php echo $this->escape($row->getTopic()->subject); ?>
+										</td>
+										<td>
+											<?php echo $this->escape($row->getCategory()->name); ?>
+										</td>
+										<td>
+											<?php echo $this->escape($row->ip); ?>
+										</td>
+										<td>
+											<?php echo $this->escape($row->getAuthor()->getName()); ?>
+										</td>
+										<td>
+											<?php echo strftime('%Y-%m-%d %H:%M:%S',$row->time); ?>
+										</td>
+										<td>
+											<?php echo intval($row->id) ?>
+										</td>
+									</tr>
 								<?php
 								$i++;
 								$k = 1 - $k;

@@ -24,6 +24,7 @@ class KunenaModel extends JModelLegacy {
 	protected $embedded = false;
 
 	public function __construct($config = array()) {
+		$this->option = 'com_kunena';
 		parent::__construct($config);
 		if (isset($this->_state)) {
 			$this->state = $this->_state;

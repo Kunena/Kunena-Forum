@@ -8,9 +8,7 @@
  */
 
 defined('_JEXEC') or die;
-?>
 
-<?php
 foreach ($this->fieldsets as $name => $fieldset) :
 	echo '<div class="tab-pane" id="options-'.$name.'">';
 	$label = !empty($fieldset->label) ? $fieldset->label : 'COM_PLUGINS_'.$name.'_FIELDSET_LABEL';
@@ -47,4 +45,3 @@ foreach ($this->fieldsets as $name => $fieldset) :
 	<?php echo $hidden_fields; ?>
 	<?php echo '</div>'; // .tab-pane div ?>
 <?php endforeach; ?>
-

@@ -56,7 +56,7 @@ class KunenaAdminViewPlugin extends KunenaView
 		$user  = JFactory::getUser();
 		//$canDo = PluginsHelper::getActions();
 
-		JToolbarHelper::title( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_PLUGINS_MANAGER'), 'pluginsmanager');
+		JToolbarHelper::title( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'pluginsmanager');
 		JToolbarHelper::spacer();
 		// If not checked out, can save the item.
 		//if ($canDo->get('core.edit'))

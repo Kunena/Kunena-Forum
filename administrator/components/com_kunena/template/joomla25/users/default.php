@@ -151,7 +151,7 @@ JHtml::_('behavior.tooltip');
 							$kunena_user = KunenaFactory::getUser($user->id);
 							$userEnabled = $kunena_user->isBlocked() ? $img_no : $img_yes;
 							$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
-							$titleUserBLock = $kunena_user->isBlocked() ?  JText::_( 'Enabled' ) : JText::_( 'Blocked' );
+							$titleUserBlock = $kunena_user->isBlocked() ?  JText::_( 'Enabled' ) : JText::_( 'Blocked' );
 							$userBanned = $kunena_user->isBanned() ? $img_yes : $img_no;
 							$userBannedTask = $kunena_user->isBanned() ? 'ban' : 'ban';
 							$titleUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );

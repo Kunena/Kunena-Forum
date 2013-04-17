@@ -899,6 +899,12 @@ class KunenaViewTopic extends KunenaView {
 		return $this->category->displayField($name);
 	}
 
+	function displayQuickReply() {
+		if ( $this->quickreply ) {
+			echo $this->loadTemplateFile ( 'quickreply' );
+		}
+	}
+
 	function canSubscribe() {
 		if (! $this->me->userid || ! $this->config->allowsubscriptions || $this->config->topic_subscriptions == 'disabled')
 			return false;

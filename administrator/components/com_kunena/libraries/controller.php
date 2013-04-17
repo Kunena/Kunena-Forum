@@ -50,8 +50,23 @@ class KunenaController extends JControllerLegacy {
 			return $instance;
 		}
 
+		$input = JFactory::getApplication()->input;
+
 		$app = JFactory::getApplication();
-		$view = strtolower ( JRequest::getWord ( 'view', $app->isAdmin() ? 'cpanel' : 'home' ) );
+		$command  = $input->get('task', 'display');
+
+		// Check for a controller.task command.
+		if (strpos($command, '.') !== false) {
+			// Explode the controller.task command.
+			list ($view, $task) = explode('.', $command);
+
+			// Reset the task without the controller context.
+			$input->set('task', $task);
+		} else {
+			// Base controller.
+			$view = strtolower ( JRequest::getWord ( 'view', $app->isAdmin() ? 'cpanel' : 'home' ) );
+		}
+
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.

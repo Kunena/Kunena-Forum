@@ -19,7 +19,7 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="private" type="radio" default="1" label="PLG_KUNENA_UDDEIM_PRIVATE" description="PLG_KUNENA_UDDEIM_PRIVATE_DESC">
+				<field name="private" type="list" default="1" label="PLG_KUNENA_UDDEIM_PRIVATE" description="PLG_KUNENA_UDDEIM_PRIVATE_DESC" class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>

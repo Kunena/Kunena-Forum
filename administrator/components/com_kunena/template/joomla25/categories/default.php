@@ -98,19 +98,19 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 									<th class="nowrap">
 										<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
 									</th>
-									<th width="24%" class="nowrap center">
+									<th width="24%" class="nowrap center hidden-phone">
 										<?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
 									</th>
-									<th width="5%" class="nowrap center">
+									<th width="5%" class="nowrap center hidden-phone">
 										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>
 									</th>
-									<th width="5%" class="nowrap center">
+									<th width="5%" class="nowrap center hidden-phone">
 										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
 									</th>
-									<th width="5%" class="center">
+									<th width="5%" class="center hidden-phone">
 										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->listDirection, $this->listOrdering); ?>
 									</th>
-									<th width="5%" class="nowrap center">
+									<th width="5%" class="nowrap center hidden-phone">
 										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
 									</th>
 									<th width="1%" class="nowrap center">
@@ -129,39 +129,39 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 											<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
 										</select>
 									</td>
-									<td class="nowrap">
+									<td class="nowrap ">
 										<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
 										<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
-									<td class="nowrap center">
+									<td class="nowrap center hidden-phone">
 										<label for="filter_access" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
 										<select name="filter_access" id="filter_access" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->filterAccess); ?>
 										</select>
 									</td>
-									<td class="nowrap center">
+									<td class="nowrap center hidden-phone">
 										<label for="filter_locked" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
 										<select name="filter_locked" id="filter_locked" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
 										</select>
 									</td>
-									<td class="nowrap center">
+									<td class="nowrap center hidden-phone">
 										<label for="filter_review" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
 										<select name="filter_review" id="filter_review" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
 										</select>
 									</td>
-									<td class="nowrap center">
+									<td class="nowrap center hidden-phone">
 										<label for="filter_allow_polls" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
 										<select name="filter_allow_polls" id="filter_allow_polls" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
 										</select>
 									</td>
-									<td class="nowrap center">
+									<td class="nowrap center hidden-phone">
 										<label for="filter_anonymous" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
 										<select name="filter_anonymous" id="filter_anonymous" class="select-filter filter" onchange="Joomla.orderTable()">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
@@ -243,7 +243,7 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 											<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($category->alias));?>
 										</small>
 									</td>
-									<td class="center">
+									<td class="center hidden-phone">
 										<span><?php echo $this->escape ( $category->accessname ); ?></span>
 										<small>
 											<?php echo JText::sprintf('(Access: %s)', $this->escape( $category->accesstype ));?>
@@ -264,7 +264,7 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 												<?php echo ($category->review == 1 ? $img_yes : $img_no); ?>
 											</a>
 										</td>
-										<td class="center">
+										<td class="center hidden-phone">
 											<a class="jgrid" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny':'allow').'_polls'; ?>')">
 												<?php echo ($category->allow_polls == 1 ? $img_yes : $img_no); ?>
 											</a>
@@ -275,7 +275,7 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 											</a>
 										</td>
 									<?php endif; ?>
-									<td class="center hidden-phone">
+									<td class="center">
 										<?php echo (int) $category->id; ?>
 									</td>
 								</tr>

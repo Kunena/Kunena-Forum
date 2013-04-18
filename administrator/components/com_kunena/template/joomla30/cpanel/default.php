@@ -56,7 +56,7 @@ defined ( '_JEXEC' ) or die ();
 								<img src="components/com_kunena/media/icons/large/prune.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>" /><br />
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?></span>
 							</a>
-							<a class="btn" href="index.php?option=com_plugins&view=plugins&filter_folder=kunena">
+							<a class="btn" href="index.php?option=com_kunena&view=plugins">
 								<img src="components/com_kunena/media/icons/large/pluginsmanager.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>" /><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></span>
 							</a>

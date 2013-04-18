@@ -38,7 +38,11 @@ class KunenaProfileKunena extends KunenaProfile {
 
 	public function _getTopHits($limit=0) {
 		$db = JFactory::getDBO ();
-		$query = "SELECT userid AS id, uhits AS count FROM #__kunena_users WHERE uhits>0 ORDER BY uhits DESC";
+		$query = "SELECT u.id, ku.uhits AS count
+			FROM #__kunena_users AS ku
+			INNER JOIN #__users AS u ON u.id=ku.userid
+			WHERE ku.uhits>0
+			ORDER BY ku.uhits DESC";
 		$db->setQuery ( $query, 0, $limit );
 		$top = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError();

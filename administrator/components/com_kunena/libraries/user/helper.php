@@ -187,7 +187,11 @@ abstract class KunenaUserHelper {
 		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
 		if (count(self::$_topposters) < $limit) {
 			$db = JFactory::getDBO ();
-			$query = "SELECT userid as id, posts AS count FROM #__kunena_users WHERE posts>0 ORDER BY posts DESC";
+			$query = "SELECT u.id, ku.posts AS count
+				FROM #__kunena_users AS ku
+				INNER JOIN #__users AS u ON u.id=ku.userid
+				WHERE ku.posts>0
+				ORDER BY ku.posts DESC";
 			$db->setQuery ( $query, 0, $limit );
 			self::$_topposters = (array) $db->loadObjectList ();
 			KunenaError::checkDatabaseError();

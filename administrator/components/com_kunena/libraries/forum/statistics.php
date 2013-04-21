@@ -299,7 +299,11 @@ class KunenaForumStatistics {
 	public function loadTopThankyous($limit=0) {
 		$limit = $limit ? $limit : $this->_config->popthankscount;
 		if (count($this->topThanks) < $limit) {
-			$query = "SELECT targetuserid AS id, COUNT(targetuserid) AS count FROM `#__kunena_thankyou` GROUP BY targetuserid ORDER BY count DESC";
+			$query = "SELECT t.targetuserid AS id, COUNT(t.targetuserid) AS count
+				FROM `#__kunena_thankyou` AS t
+				INNER JOIN `#__users` AS u ON u.id=t.targetuserid
+				GROUP BY t.targetuserid
+				ORDER BY count DESC";
 			$this->_db->setQuery ( $query, 0, $limit );
 			$this->topThanks = (array) $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();

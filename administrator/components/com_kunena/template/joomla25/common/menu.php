@@ -29,7 +29,7 @@ $view = JRequest::getCmd('view', 'cpanel');
 	<li<?php if ($view == 'ranks' || $view == 'rank') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=ranks'); ?>"><i class="icon-22-ranks"></i> <?php echo JText::_('COM_KUNENA_A_RANK_MANAGER'); ?></a></li>
 	<li<?php if ($view == 'templates' || $view == 'template') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=templates'); ?>"><i class="icon-22-template"></i> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a></li>
 	<li<?php if ($view == 'config') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=config'); ?>"><i class="icon-22-config"></i> <?php echo JText::_('COM_KUNENA_MENU_DESC_CONFIGURATION'); ?></a></li>
-	<li<?php if ($view == 'plugins') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=plugins'); ?>"><i class="icon-22-pluginsmanager"></i> <?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER'); ?></a></li>
+	<li<?php if ($view == 'plugins') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=plugins'); ?>"><i class="icon-22-pluginsmanager"></i> <?php echo JText::_('COM_KUNENA_PLUGIN_MANAGER'); ?></a></li>
 	<li<?php if ($view == 'tools') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=tools'); ?>"><i class="icon-22-tools"></i> <?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS'); ?></a></li>
 	<li<?php if ($view == 'trash') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=trash'); ?>"><i class="icon-22-trash"></i> <?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a></li>
 </ul>
@@ -48,7 +48,7 @@ $view = JRequest::getCmd('view', 'cpanel');
 	<a class="kadmin-mainmenu icon-prune-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"><?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS'); ?></a>
 	<a class="kadmin-mainmenu icon-stats-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=stats') ?>"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></a>
 	<a class="kadmin-mainmenu icon-systemreport-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=report') ?>"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
-	<a class="kadmin-mainmenu icon-pluginsmanager-sm" href="<?php echo JRoute::_('index.php?option=com_plugins&view=plugins&filter_folder=kunena') ?>"><?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER'); ?></a>
+	<a class="kadmin-mainmenu icon-pluginsmanager-sm" href="<?php echo JRoute::_('index.php?option=com_plugins&view=plugins&filter_folder=kunena') ?>"><?php echo JText::_('COM_KUNENA_PLUGIN_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-support-sm" href="http://www.kunena.org" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
 </div>
  */?>

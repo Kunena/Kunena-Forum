@@ -786,6 +786,8 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				$target = clone $this;
 				$target->exists(false);
 				$target->id = 0;
+				$target->hits = 0;
+				$target->params = '';
 			} else {
 				// If we just move into another category, we can keep using the old topic
 				$target = $this;

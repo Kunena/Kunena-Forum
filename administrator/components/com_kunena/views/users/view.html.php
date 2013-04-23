@@ -14,10 +14,12 @@ defined ( '_JEXEC' ) or die ();
  * Users view for Kunena backend
  */
 class KunenaAdminViewUsers extends KunenaView {
-	public function display($tpl = null) {
+	public function displayDefault() {
 		$this->setToolbar();
 		$this->items = $this->get('items');
 		$this->pagination = $this->get('Pagination');
+		$this->modcatlist = $this->get('Modcatslist');
+
 		$this->sortFields = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
@@ -28,24 +30,41 @@ class KunenaAdminViewUsers extends KunenaView {
 		$this->filterBlock = $this->escape($this->state->get('filter.block'));
 		$this->filterBanned = $this->escape($this->state->get('filter.banned'));
 		$this->filterModerator = $this->escape($this->state->get('filter.moderator'));
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
-		return parent::display($tpl);
+
+		$this->display();
 	}
 
 	protected function setToolbar() {
+		// Get the toolbar object instance
+		$bar = JToolBar::getInstance('toolbar');
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_USER_MANAGER'), 'users' );
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
-		JToolBarHelper::spacer();
+		JToolBarHelper::editList();
 		JToolBarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
-		JToolBarHelper::spacer();
+		JToolBarHelper::divider();
 		JToolBarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
-		JToolBarHelper::spacer();
+		if (version_compare(JVERSION, '3.0', '>')) {
+			JHtml::_('bootstrap.modal', 'moderateModal');
+			$title = JText::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
+			$dhtml = "<button data-toggle=\"modal\" data-target=\"#moderateModal\" class=\"btn btn-small\">
+						<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
+							$title</button>";
+			$bar->appendButton('Custom', $dhtml, 'batch');
+		} else {
+			JHtml::_('moobootstrap.modal', 'moderateModal');
+			$title = JText::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
+			$dhtml = "<a data-toggle=\"modal\" data-target=\"#moderateModal\" class=\"toolbar\" href=\"javascript:void(null);\">
+						<span class=\"icon-32-apply\" title=\"$title\"></span>
+							$title</a>";
+			$bar->appendButton('Custom', $dhtml, 'batch');
+		}
+		JToolBarHelper::divider();
 		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('delete','delete.png','delete_f2.png', 'COM_KUNENA_USER_DELETE');
+		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
 	}
 
@@ -107,23 +126,26 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	protected function getSortFields() {
 		$sortFields = array();
-		$sortFields[] = JHtml::_('select.option', 'a.username', JText::_('COM_KUNENA_USRL_USERNAME'));
-		//$sortFields[] = JHtml::_('select.option', 'a.name', JText::_('COM_KUNENA_USRL_REALNAME'));
-		$sortFields[] = JHtml::_('select.option', 'a.email', JText::_('COM_KUNENA_USRL_EMAIL'));
-		$sortFields[] = JHtml::_('select.option', 'ku.signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
-		$sortFields[] = JHtml::_('select.option', 'a.block', JText::_('COM_KUNENA_USRL_ENABLED'));
-		$sortFields[] = JHtml::_('select.option', 'ku.banned', JText::_('COM_KUNENA_USRL_BANNED'));
-		$sortFields[] = JHtml::_('select.option', 'ku.moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
-		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
+		//$sortFields[] = JHtml::_('select.option', 'name', JText::_('COM_KUNENA_USRL_REALNAME'));
+		$sortFields[] = JHtml::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = JHtml::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
+		$sortFields[] = JHtml::_('select.option', 'enabled', JText::_('COM_KUNENA_USRL_ENABLED'));
+		$sortFields[] = JHtml::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));
+		$sortFields[] = JHtml::_('select.option', 'moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}
 
-	protected function getSortDirectionFields() {
-		$sortDirection = array();
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+    protected function getSortDirectionFields() {
+        $sortDirection = array();
+//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+        // TODO: remove it when J2.5 support is dropped
+        $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+        $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
-		return $sortDirection;
-	}
+        return $sortDirection;
+    }
 }

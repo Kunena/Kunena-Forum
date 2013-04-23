@@ -4,11 +4,13 @@
  * @package Kunena.Administrator.Template
  * @subpackage SyncUsers
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewTools $this */
 
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );

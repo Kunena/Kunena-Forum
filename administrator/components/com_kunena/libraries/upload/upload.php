@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -121,6 +121,8 @@ class KunenaUpload extends JObject {
 		}
 		if (isset($_SERVER["CONTENT_TYPE"])) {
 			$contentType = $_SERVER["CONTENT_TYPE"];
+		} else {
+			$contentType = '';
 		}
 
 		if ($chunks && $chunk >= $chunks) {

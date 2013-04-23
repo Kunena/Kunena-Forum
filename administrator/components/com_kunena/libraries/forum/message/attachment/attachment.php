@@ -4,26 +4,43 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Message Attachment Class
+ * Class KunenaForumMessageAttachment
+ *
+ * @property int $id
+ * @property int $userid
+ * @property int $mesid
+ * @property string $hash
+ * @property int $size
+ * @property string $folder
+ * @property string $filetype
+ * @property string $filename
  */
 class KunenaForumMessageAttachment extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
+	protected $_shortname = null;
+	protected $_shorttime = null;
+	protected $_textLink = null;
+	protected $_imagelink = null;
+	protected $_thumblink = null;
+	/**
+	 * @var bool
+	 */
 	public $disabled = false;
 
 	protected static $_directory = 'media/kunena/attachments';
 
 	/**
-	 * Constructor
+	 * @param int $identifier
 	 *
-	 * @access	protected
+	 * @internal
 	 */
 	public function __construct($identifier = 0) {
 		// Always load the attachment -- if attachment does not exist: fill empty data
@@ -38,37 +55,54 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	/**
-	 * Returns KunenaForumMessageAttachment object
+	 * @param mixed $identifier
+	 * @param bool $reload
 	 *
-	 * @access	public
-	 * @param	identifier		The message to load - Can be only an integer.
-	 * @return	KunenaForumMessageAttachment		The message object.
-	 * @since	1.7
+	 * @return KunenaForumMessageAttachment
 	 */
 	static public function getInstance($identifier = null, $reload = false) {
 		return KunenaForumMessageAttachmentHelper::get($identifier, $reload);
 	}
 
+	/**
+	 * @param null|bool $exists
+	 *
+	 * @return bool
+	 */
 	function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
 		return $return;
 	}
 
+	/**
+	 * @param string $mime
+	 *
+	 * @return bool
+	 */
 	function isImage($mime) {
 		return (stripos ( $mime, 'image/' ) !== false);
 	}
 
+	/**
+	 * @return string
+	 */
 	function getTextLink() {
 		$this->generate();
 		return $this->_textLink;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getImageLink() {
 		$this->generate();
 		return $this->_imagelink;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getThumbnailLink() {
 		$this->generate();
 		return $this->_thumblink;
@@ -124,10 +158,20 @@ class KunenaForumMessageAttachment extends JObject {
 		}
 	}
 
+	/**
+	 * @return KunenaForumMessage
+	 */
 	public function getMessage() {
 		return KunenaForumMessageHelper::get($this->mesid);
 	}
 
+	/**
+	 * @param string $action
+	 * @param mixed  $user
+	 * @param bool   $silent
+	 *
+	 * @return bool
+	 */
 	public function authorise($action='read', $user=null, $silent=false) {
 		static $actions  = array(
 			'read'=>array('Read'),
@@ -155,6 +199,12 @@ class KunenaForumMessageAttachment extends JObject {
 		return true;
 	}
 
+	/**
+	 * @param string $key
+	 * @param null|int   $catid
+	 *
+	 * @return bool
+	 */
 	function upload($key='kattachment', $catid=null) {
 		require_once (KPATH_SITE . '/lib/kunena.upload.class.php');
 		$path = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid;
@@ -173,18 +223,14 @@ class KunenaForumMessageAttachment extends JObject {
 		$this->setError( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo ['name'] ) . ': ' . $fileinfo ['error'] );
 		return false;
 	}
+
 	/**
-	 * Method to get the messages table object
+	 *  Method to get the table object.
 	 *
-	 * This function uses a static variable to store the table name of the user table to
-	 * it instantiates. You can call this function statically to set the table name if
-	 * needed.
+	 * @param string $type		The messages table name to be used.
+	 * @param string $prefix	The messages table prefix to be used.
 	 *
-	 * @access	public
-	 * @param	string	The messages table name to be used
-	 * @param	string	The messages table prefix to be used
-	 * @return	object	The messages table object
-	 * @since	1.6
+	 * @return KunenaTable
 	 */
 	public function getTable($type = 'KunenaAttachments', $prefix = 'Table') {
 		static $tabletype = null;
@@ -199,18 +245,21 @@ class KunenaForumMessageAttachment extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
-	public function bind($data, $ignore = array()) {
+	/**
+	 * @param array $data
+	 * @param array $ignore
+	 */
+	public function bind(array $data, array $ignore = array()) {
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
 	}
 
 	/**
-	 * Method to load a KunenaForumMessageAttachment object by id
+	 * Method to load a KunenaForumMessageAttachment object by id.
 	 *
-	 * @access	public
-	 * @param	mixed	$id The message id to be loaded
-	 * @return	boolean			True on success
-	 * @since 1.6
+	 * @param int $id	The message id to be loaded.
+	 *
+	 * @return bool	True on success.
 	 */
 	public function load($id) {
 		// Create the table object
@@ -225,16 +274,15 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	/**
-	 * Method to save the KunenaForumMessageAttachment object to the database
+	 * Method to save the object to the database.
 	 *
-	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new message
-	 * @return	boolean True on success
-	 * @since 1.6
+	 * @param bool $updateOnly	Save the object only if not a new message.
+	 *
+	 * @return bool|null	True on success.
 	 */
 	public function save($updateOnly = false) {
 		// Do not save altered message
-		if ($this->disabled) return;
+		if ($this->disabled) return null;
 
 		// Create the messages table object
 		$table = $this->getTable ();
@@ -273,11 +321,9 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	/**
-	 * Method to delete the KunenaForumMessageAttachment object from the database
+	 * Method to delete this object from the database.
 	 *
-	 * @access	public
-	 * @return	boolean	True on success
-	 * @since 1.6
+	 * @return bool	True on success.
 	 */
 	public function delete() {
 		if (!$this->exists()) {
@@ -322,11 +368,21 @@ class KunenaForumMessageAttachment extends JObject {
 		}
 	}
 
+	/**
+	 * @param string $var
+	 *
+	 * @return string
+	 */
 	protected function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
-	protected function authoriseExists($user) {
+	/**
+	 * @param KunenaUser $user
+	 *
+	 * @return bool
+	 */
+	protected function authoriseExists(KunenaUser $user) {
 		// Checks if attachment exists
 		if (!$this->exists()) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
@@ -335,7 +391,12 @@ class KunenaForumMessageAttachment extends JObject {
 		return true;
 	}
 
-	protected function authoriseRead($user) {
+	/**
+	 * @param KunenaUser $user
+	 *
+	 * @return bool
+	 */
+	protected function authoriseRead(KunenaUser $user) {
 		// Checks if attachment exists
 		if (!$this->exists()) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
@@ -352,6 +413,11 @@ class KunenaForumMessageAttachment extends JObject {
 		return true;
 	}
 
+	/**
+	 * @param KunenaUser $user
+	 *
+	 * @return bool
+	 */
 	protected function authoriseOwn(KunenaUser $user) {
 		// Checks if attachment is users own or user is moderator in the category (or global)
 		if (($user->userid && $this->userid != $user->userid) && !$user->isModerator($this->getMessage()->getCategory())) {
@@ -361,7 +427,16 @@ class KunenaForumMessageAttachment extends JObject {
 		return true;
 	}
 
-	protected function _getAttachementLink($folder,$filename,$name,$title = '', $rel = 'nofollow') {
+	/**
+	 * @param string $folder
+	 * @param string $filename
+	 * @param string $name
+	 * @param string $title
+	 * @param string $rel
+	 *
+	 * @return string
+	 */
+	protected function _getAttachementLink($folder, $filename, $name, $title = '', $rel = 'nofollow') {
 		$link = JURI::ROOT()."{$folder}/{$filename}";
 		return '<a href="'.$link.'" title="'.$title.'" rel="'.$rel.'">'.$name.'</a>';
 	}

@@ -4,16 +4,17 @@
  * @package Kunena.Administrator.Template
  * @subpackage Trash
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAdminViewTrash $this */
+
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-//JHtml::_('formbehavior.chosen', 'select');
 ?>
 
 <script type="text/javascript">
@@ -42,7 +43,6 @@ JHtml::_('dropdown.init');
 			<input type="hidden" name="layout" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
 			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<?php echo JHtml::_( 'form.token' ); ?>
@@ -56,12 +56,12 @@ JHtml::_('dropdown.init');
 						<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterSearch; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 					</div>
 					<div class="btn-group pull-left">
-						<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i class="icon-search"></i></button>
-						<button class="btn tip" type="button" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
+						<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
+						<button class="btn tip" type="button" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-						<?php echo $this->navigation->getLimitBox(); ?>
+						<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -144,22 +144,44 @@ JHtml::_('dropdown.init');
 					<tfoot>
 						<tr>
 							<td colspan="8">
-								<?php echo $this->navigation->getListFooter(); ?>
+								<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 							</td>
 						</tr>
 					</tfoot>
-					<?php $i=0; foreach ( $this->trash_items as $id => $row ) : ?>
-					<tr>
-						<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
-					<td><?php echo $this->escape($row->subject); ?></td>
-						<td><?php echo $this->escape($row->getTopic()->subject); ?></td>
-						<td><?php echo $this->escape($row->getCategory()->name); ?></td>
-						<td><?php echo $this->escape($row->ip); ?></td>
-						<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
-						<td><?php echo strftime('%Y-%m-%d %H:%M:%S',$row->time); ?></td>
-						<td><?php echo intval($row->id); ?></td>
-					</tr>
-					<?php endforeach; ?>
+					<tbody>
+					<?php
+					$i = 0;
+					if($this->pagination->total > 0) :
+					foreach ($this->trash_items as $id => $row) : ?>
+						<tr>
+							<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
+							<td><?php echo $this->escape($row->subject); ?></td>
+							<td><?php echo $this->escape($row->getTopic()->subject); ?></td>
+							<td><?php echo $this->escape($row->getCategory()->name); ?></td>
+							<td><?php echo $this->escape($row->ip); ?></td>
+							<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
+							<td><?php echo strftime('%Y-%m-%d %H:%M:%S',$row->time); ?></td>
+							<td><?php echo intval($row->id); ?></td>
+						</tr>
+					<?php
+					endforeach;
+					else : ?>
+						<tr>
+							<td colspan="10">
+								<div class="well center filter-state">
+									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+										<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+										<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+											<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+										<?php else : ?>
+											<?php //Currently no default state, might change later. ?>
+										<?php endif; ?>
+									</span>
+								</div>
+							</td>
+						</tr>
+					<?php endif; ?>
+					</tbody>
 				</table>
 			</fieldset>
 		</form>

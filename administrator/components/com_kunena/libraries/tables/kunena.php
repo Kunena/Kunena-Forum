@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -111,6 +111,7 @@ abstract class KunenaTable extends JTable {
 	{
 		$fmtsql = 'INSERT INTO '.$this->_db->quoteName($this->_tbl).' (%s) VALUES (%s) ';
 		$fields = array();
+		$values = array();
 
 		foreach (get_object_vars($this) as $k => $v) {
 			if (is_array($v) or is_object($v) or $v === NULL) {
@@ -143,6 +144,8 @@ abstract class KunenaTable extends JTable {
 	{
 		$fmtsql = 'UPDATE '.$this->_db->quoteName($this->_tbl).' SET %s WHERE %s';
 		$tmp = array();
+		$where = '';
+		// TODO: what if where is empty?
 
 		foreach (get_object_vars($this) as $k => $v) {
 			if (is_array($v) or is_object($v) or $k[0] == '_') { // internal or NA field

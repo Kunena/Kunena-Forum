@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 DEFINE('KUNENA_SCHEMA_FILE', KPATH_ADMIN.'/install/install.xml');
 DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN.'/install/upgrade/upgrade.xml');
 DEFINE('KUNENA_INSTALL_SCHEMA_EMPTY', '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE schema><schema></schema>');
+DEFINE('KUNENA_INPUT_DATABASE', '_DB_');
 
 jimport('joomla.application.component.model');
 
@@ -47,8 +48,8 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * Overridden method to get model state variables.
 	 *
-	 * @param	string	Optional parameter name.
-	 * @param	mixed	The default value to use if no state property exists by name.
+	 * @param	string	$property	Optional parameter name.
+	 * @param	mixed	$default	The default value to use if no state property exists by name.
 	 * @return	object	The property where specified, the state object where omitted.
 	 * @since	1.6
 	 */
@@ -410,6 +411,7 @@ class KunenaModelSchema extends JModelLegacy
 			{
 				case 'unknown':
 					if (!$drop) break;
+					// Otherwise go on...
 				case 'drop':
 					$str .= 'DROP TABLE '.$this->db->quoteName($tablename).';';
 					break;
@@ -459,6 +461,7 @@ class KunenaModelSchema extends JModelLegacy
 								break;
 							case 'create':
 								$fields[] = '	ADD '.$this->getSchemaSQLField($field, $after);
+								break;
 							case '':
 								break;
 							default:
@@ -548,6 +551,7 @@ class KunenaModelSchema extends JModelLegacy
 					$version = $action->getAttribute('version');
 					$date = $action->getAttribute('date');
 					$this->upgradeNewAction($dbschema, $action, $table);
+					break;
 				case 'if':
 					$table = $action->getAttribute('table');
 					$field = $action->getAttribute('field');

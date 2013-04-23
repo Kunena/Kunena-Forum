@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Menu
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
@@ -16,6 +16,9 @@ jimport ('joomla.database.table');
 KunenaMenuFix::initialize();
 
 abstract class KunenaMenuFix {
+	/**
+	 * @var array|StdClass[]
+	 */
 	public static $items = array();
 	public static $filtered = array();
 	public static $aliases = array();
@@ -151,6 +154,7 @@ abstract class KunenaMenuFix {
 					continue;
 
 				$itemid = null;
+				$view = null;
 				if (($item->type == 'menulink' || $item->type == 'alias') && !empty($item->query['Itemid'])) {
 					$realitem = empty(self::$items[$item->query['Itemid']]) ? null : self::$items[$item->query['Itemid']];
 					if (is_object ($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena') {
@@ -167,7 +171,7 @@ abstract class KunenaMenuFix {
 					$view = empty($item->query['view']) ? 'legacy' : $item->query['view'];
 				}
 
-				if ($itemid !== null) {
+				if ($itemid !== null && $view) {
 					$language = isset($item->language) ? strtolower($item->language) : '*';
 					$home = self::getHome($item);
 					self::$filtered[$item->id] = $itemid;
@@ -181,6 +185,11 @@ abstract class KunenaMenuFix {
 		}
 	}
 
+	/**
+	 * @param StdClass $item
+	 *
+	 * @return object
+	 */
 	protected static function getHome($item) {
 		if (!$item) return null;
 		$id = $item->id;

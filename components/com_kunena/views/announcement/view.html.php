@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -29,7 +29,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->display();
@@ -48,7 +49,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->display();
@@ -67,7 +69,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->display();
@@ -89,7 +92,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->display();
@@ -162,8 +166,8 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function getPagination($maxpages) {
-		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$pagination->setDisplay($maxpages);
+		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
 
 		return $pagination->getPagesLinks();
 	}

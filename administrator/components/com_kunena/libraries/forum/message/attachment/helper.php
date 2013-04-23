@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,17 +14,19 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Message Attachment Helper Class
  */
 abstract class KunenaForumMessageAttachmentHelper {
-	// Global for every instance
+	/**
+	 * @var KunenaForumMessageAttachment[]
+	 */
 	protected static $_instances = array();
 	protected static $_messages = array();
 
 	/**
-	 * Returns KunenaForumMessageAttachment object
+	 * Returns KunenaForumMessageAttachment object.
 	 *
-	 * @access	public
-	 * @param	identifier		The attachment to load - Can be only an integer.
-	 * @return	KunenaForumMessageAttachment		The attachment object.
-	 * @since	1.7
+	 * @param int $identifier	The attachment to load - Can be only an integer.
+	 * @param bool $reload
+	 *
+	 * @return KunenaForumMessageAttachment
 	 */
 	static public function get($identifier = null, $reload = false) {
 		if ($identifier instanceof KunenaForumMessageAttachment) {
@@ -42,6 +44,12 @@ abstract class KunenaForumMessageAttachmentHelper {
 		return self::$_instances [$id];
 	}
 
+	/**
+	 * @param bool|array|int   $ids
+	 * @param string $authorise
+	 *
+	 * @return KunenaForumMessageAttachment[]
+	 */
 	static public function getById($ids = false, $authorise='read') {
 		if ($ids === false) {
 			return self::$_instances;
@@ -63,6 +71,12 @@ abstract class KunenaForumMessageAttachmentHelper {
 		return $list;
 	}
 
+	/**
+	 * @param bool|array|int   $ids
+	 * @param string $authorise
+	 *
+	 * @return KunenaForumMessageAttachment[]
+	 */
 	static public function getByMessage($ids = false, $authorise='read') {
 		if ($ids === false) {
 			return self::$_instances;
@@ -84,6 +98,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 
 			if (!empty(self::$_messages [$id])) {
 				foreach (self::$_messages [$id] as $instance) {
+					/** @var KunenaForumMessageAttachment $instance */
 					if ($instance->authorise($authorise, null, true)) {
 						$list [$instance->id] = $instance;
 					}
@@ -93,14 +108,26 @@ abstract class KunenaForumMessageAttachmentHelper {
 		return $list;
 	}
 
+	/**
+	 * @param mixed $category
+	 * @param null $user
+	 *
+	 * @return array
+	 */
 	static public function getExtensions($category, $user = null) {
 		$imagetypes = self::getImageExtensions($category, $user);
 		$filetypes = self::getFileExtensions($category, $user);
 
 		if ($imagetypes === false && $filetypes === false) return false;
-		return array_merge((array)$imagetypes, (array)$filetypes);
+		return (array) array_merge((array)$imagetypes, (array)$filetypes);
 	}
 
+	/**
+	 * @param mixed $category
+	 * @param mixed $user
+	 *
+	 * @return array|bool
+	 */
 	static public function getImageExtensions($category = null, $user = null) {
 		if ($category !== null) $category = KunenaForumCategoryHelper::get($category);
 		$user = KunenaUserHelper::get($user);
@@ -130,6 +157,12 @@ abstract class KunenaForumMessageAttachmentHelper {
 		return false;
 	}
 
+	/**
+	 * @param mixed $category
+	 * @param mixed $user
+	 *
+	 * @return array|bool
+	 */
 	static public function getFileExtensions($category = null, $user = null) {
 		$category = KunenaForumCategoryHelper::get($category);
 		$user = KunenaUserHelper::get($user);
@@ -159,6 +192,9 @@ abstract class KunenaForumMessageAttachmentHelper {
 		return false;
 	}
 
+	/**
+	 * @return bool
+	 */
 	static public function cleanup() {
 		$db = JFactory::getDBO ();
 		// Find up to 50 orphan attachments and delete them
@@ -166,7 +202,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 		$db->setQuery ( $query, 0, 50 );
 		$results = (array) $db->loadAssocList ('id');
 		if (KunenaError::checkDatabaseError ()) return false;
-		if (empty($results)) return;
+		if (empty($results)) return true;
 		foreach ($results as $result) {
 			$instance = new KunenaForumMessageAttachment ();
 			$instance->bind ( $result );
@@ -186,7 +222,12 @@ abstract class KunenaForumMessageAttachmentHelper {
 	 * The first 8 characters of the filename, followed by three dots
 	 * and the last 5 character of the filename.
 	 *
-	 * @param char $filename 	Filename to be shortened if too long
+	 * @param string $filename	Filename to be shortened.
+	 * @param int    $front
+	 * @param int    $back
+	 * @param string $filler
+	 *
+	 * @return string
 	 */
 	public static function shortenFilename($filename, $front=10, $back=8, $filler='...') {
 		$len = strlen($filename);
@@ -198,7 +239,13 @@ abstract class KunenaForumMessageAttachmentHelper {
 		return $output;
 	}
 
-	public static function getByUserid($user, $params) {
+	/**
+	 * @param mixed $user
+	 * @param array $params
+	 *
+	 * @return KunenaForumMessageAttachment[]
+	 */
+	public static function getByUserid($user, array $params) {
 		if ( $params['file'] == '1' && $params['image'] != '1'  ) $filetype = " AND filetype=''";
 		elseif ( $params['image'] == '1' && $params['file'] != '1'  ) $filetype = " AND filetype!=''";
 		elseif ( $params['file'] == '1' && $params['image'] == '1' ) $filetype = '';
@@ -224,7 +271,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 				self::$_instances [$id] = $instance;
 				self::$_messages [$instance->mesid][$id] = $instance;
 			}
-			$list[] = $instance;
+			$list[] = self::$_instances[$id];
 		}
 
 		return $list;
@@ -232,7 +279,10 @@ abstract class KunenaForumMessageAttachmentHelper {
 
 	// Internal functions
 
-	static protected function loadById($ids) {
+	/**
+	 * @param array $ids
+	 */
+	static protected function loadById(array $ids) {
 		foreach ($ids as $i=>$id) {
 			if (isset(self::$_instances [$id]))
 				unset($ids[$i]);
@@ -261,7 +311,10 @@ abstract class KunenaForumMessageAttachmentHelper {
 		unset ($results);
 	}
 
-	static protected function loadByMessage($ids) {
+	/**
+	 * @param array $ids
+	 */
+	static protected function loadByMessage(array $ids) {
 		foreach ($ids as $i=>$id) {
 			$id = intval($id);
 			if (!$id || isset(self::$_messages [$id]))

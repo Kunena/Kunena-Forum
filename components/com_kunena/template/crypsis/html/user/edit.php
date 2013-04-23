@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->document->addScriptDeclaration ( "// <![CDATA[
-window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });
-// ]]>" );
 ?>
 
 <div class="kheader">

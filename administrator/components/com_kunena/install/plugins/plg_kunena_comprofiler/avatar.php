@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -32,8 +32,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar {
 		$app = JFactory::getApplication ();
 		$user = KunenaFactory::getUser($user);
 
-		if ( $app->getClientId() == 0 ) $cbclient_id = 1;
-		if ( $app->getClientId() == 1 ) $cbclient_id = 2;
+		$cbclient_id = $app->getClientId() == 0 ? $cbclient_id = 1 : $cbclient_id = 2;
 		$_CB_framework->cbset( '_ui',  $cbclient_id );
 		// Get CUser object
 		$cbUser = null;

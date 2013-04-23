@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -88,6 +88,8 @@ class KunenaModelSearch extends KunenaModel {
 
 	protected function buildWhere() {
 		$db = JFactory::getDBO ();
+		$querystrings = array();
+
 		foreach ( $this->getSearchWords() as $searchword ) {
 			$searchword = $db->escape ( JString::trim ( $searchword ) );
 			if (empty ( $searchword ))

@@ -4,7 +4,7 @@
  * @package Kunena.Template.Mirage
  * @subpackage Credits
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -48,7 +48,7 @@ defined ( '_JEXEC' ) or die ();
 							</div>
 						</div>
 						<!-- Version Info -->
-						<div class="credits-footer innerspacer kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow"><?php echo JText::_('COM_KUNENA_COPYRIGHT');?> &copy; 2008 - 2012 <a href ="http://www.kunena.org" target = "_blank">Kunena</a>, <?php echo JText::_('COM_KUNENA_LICENSE');?>: <a href ="http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
+						<div class="credits-footer innerspacer kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow"><?php echo JText::_('COM_KUNENA_COPYRIGHT');?> &copy; 2008 - 2013 <a href ="http://www.kunena.org" target = "_blank">Kunena</a>, <?php echo JText::_('COM_KUNENA_LICENSE');?>: <a href ="http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
 						<!-- /Version Info -->
 					</div>
 				</div>

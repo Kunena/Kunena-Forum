@@ -4,11 +4,13 @@
  * @package Kunena.Administrator.Template
  * @subpackage Stats
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewStats $this */
 
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );

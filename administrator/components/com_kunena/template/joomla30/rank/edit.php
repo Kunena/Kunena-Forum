@@ -4,11 +4,13 @@
  * @package Kunena.Administrator.Template
  * @subpackage Ranks
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewRank $this */
 
 $iconPath = json_encode(JUri::root(true).'/');
 $this->document->addScriptDeclaration("function update_rank(newimage) {

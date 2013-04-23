@@ -47,15 +47,23 @@ class KunenaAdminModelRanks extends JModelList {
 			$this->context .= '.'.$layout;
 		}
 
+		$filter_active = '';
+
 		// List state information
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.title', 'filter_title', '', 'string' );
+
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
+		$this->setState ( 'filter.search', $value );
+
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.title', 'filter_title', '', 'string' );
 		$this->setState ( 'filter.title', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.special', 'filter_special', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.special', 'filter_special', '', 'string' );
 		$this->setState ( 'filter.special', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( $this->context .'.filter.min', 'filter_min', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context .'.filter.min', 'filter_min', '', 'string' );
 		$this->setState ( 'filter.min', $value !== '' ? (int) $value : null );
+
+		$this->setState ( 'filter.active',!empty($filter_active));
 
 		// List state information.
 		parent::populateState('id', 'asc');
@@ -96,7 +104,7 @@ class KunenaAdminModelRanks extends JModelList {
 		}
 
 		$filter = $this->getState ( 'filter.min');
-		if (!empty($filter)) {
+		if (is_numeric($filter)) {
 			$query->where('a.rank_min > ' . (int) $filter);
 		}
 

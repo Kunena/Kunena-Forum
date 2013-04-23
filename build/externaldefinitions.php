@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Build
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,12 @@ die();
 
 // dummy definitions of external classes and functions to avoid zend studio warnings and errors
 
-class Kunena {}
+class Kunena {
+	/**
+	 * @return bool
+	 */
+	function isSvn() {}
+}
 
 // Community Builder dummies
 function cbimport($var) {}
@@ -32,6 +37,7 @@ class CRoute {}
 class CMessaging {}
 class CActivityStream {}
 class CUserPoints {}
+define('COMMUNITY_GROUP_ADMIN', 1);
 
 // AlphaUserPoints
 class AlphaUserPointsHelper {}

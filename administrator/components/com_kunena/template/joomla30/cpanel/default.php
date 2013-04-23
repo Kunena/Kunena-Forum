@@ -4,11 +4,13 @@
  * @package Kunena.Administrator.Template
  * @subpackage CPanel
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewCpanel $this */
 ?>
 
 <div id="kunena" class="admin override">
@@ -19,10 +21,6 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	<div id="j-main-container" class="span10">
 		<section class="content-block" role="main">
-			<!--<div class="alert alert-info">
-				<button type="button" class="close" data-dismiss="alert">×</button>
-				<strong>Welcome on the New Kunena Environment!!!</strong> Its all about Bootstrap.
-			</div>-->
 			<div class="row-fluid">
 				<div class="span7">
 

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -71,6 +71,6 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$this->config->reset();
 		$this->config->save();
 
-		$this->app->redirect ( 'index.php?option=com_kunena&view=close&tmpl=component', JText::_('COM_KUNENA_CONFIG_DEFAULT') );
+		$this->app->redirect ( 'index.php?option=com_kunena&view=config', JText::_('COM_KUNENA_CONFIG_DEFAULT') );
 	}
 }

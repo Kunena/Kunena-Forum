@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -629,7 +629,7 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
-		$this->app->redirect ( $url );
+		if (isset($url)) $this->app->redirect($url);
 	}
 
 	public function approve() {
@@ -679,6 +679,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$error = null;
+		$targetobject = null;
 		if (!$object->authorise ( 'move' )) {
 			$error = $object->getError();
 		} elseif (!$target->authorise ( 'read' )) {

@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -40,5 +40,9 @@ class KunenaPrivateCommunity extends KunenaPrivate {
 	public function getInboxLink ($text) {
 		if (!$text) $text = JText::_('COM_KUNENA_PMS_INBOX');
 		return '<a href="'. CRoute::_('index.php?option=com_community&view=inbox').'" rel="follow">'. $text.'</a>';
+	}
+
+	public function getInboxURL () {
+		return CRoute::_('index.php?option=com_community&view=inbox');
 	}
 }

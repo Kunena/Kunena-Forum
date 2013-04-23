@@ -4,11 +4,14 @@
  * @package Kunena.Administrator.Template
  * @subpackage Users
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewUsers $this */
+
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
@@ -17,13 +20,13 @@ JHtml::_('dropdown.init');
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>') {
-			dirn = 'asc';
+			var dirn = 'asc';
 		} else {
-			dirn = direction.options[direction.selectedIndex].value;
+			var dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
 	}
@@ -55,7 +58,7 @@ JHtml::_('dropdown.init');
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-					<?php echo $this->pagination->getListFooter(); ?>
+					<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 				</div>
 				<div class="btn-group pull-right hidden-phone">
 					<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -132,68 +135,79 @@ JHtml::_('dropdown.init');
 				<tfoot>
 					<tr>
 						<td colspan="8">
-							<?php echo $this->pagination->getListFooter(); ?>
+							<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 						</td>
 					</tr>
 				</tfoot>
 				<tbody>
 				<?php
-					$img_no = '<i class="icon-cancel"></i>';
-					$img_yes = '<i class="icon-checkmark"></i>';
-					if (!empty($this->items)) :
-						$i = 0;
-						foreach($this->items as $item) :
-							$kunena_user = KunenaFactory::getUser($item->id);
-							$userBlockTask = $kunena_user->isBlocked() ? 'unblock' : 'block';
-							$userBannedTask = $kunena_user->isBanned() ? 'unban' : 'ban';
-						?>
-				<tr>
-					<td>
-						<?php echo JHtml::_('grid.id', $i, intval($item->id)) ?>
-					</td>
-					<td>
-						<span class="editlinktip hasTip" title="<?php echo $this->escape($item->username. '::'.$kunena_user->getAvatarImage('kavatar', 128, 128)); ?> ">
-							<?php echo $kunena_user->getAvatarImage('kavatar', 24, 24); ?>
-							<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($item->username); ?></a>
-							<small>
-								<?php echo JText::sprintf('(Name: %s)', $this->escape($item->name));?>
-							</small>
-						</span>
-					</td>
-					<td class="hidden-phone"><?php echo $this->escape($item->email); ?></td>
-					<td class="center hidden-phone hidden-tablet">
-						<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
-							<?php if ($kunena_user->signature) { ?>
-								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
-							<?php } else { ?>
-								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
-							<?php } ?>
-						</span>
-					</td>
-					<td class="center hidden-phone">
-						<a class ="btn btn-micro <?php echo (!$item->block ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
-							<?php echo (!$item->block ? $img_yes : $img_no); ?>
-						</a>
-					</td>
-					<td class="center hidden-phone">
-						<a class ="btn btn-micro <?php echo ($kunena_user->isBanned() ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
-							<?php echo ($kunena_user->isBanned() ? $img_yes : $img_no); ?>
-						</a>
-					</td>
-					<td class="center hidden-phone hidden-tablet">
-						<span class ="btn btn-micro <?php echo ($kunena_user->moderator ? 'active':''); ?>">
-							<?php echo ($kunena_user->moderator ? $img_yes : $img_no); ?>
-						</span>
-					</td>
-					<td class="center"><?php echo $this->escape($item->id); ?></td>
-				</tr>
-			<?php $i++; endforeach; else : ?>
-				<tr>
-					<td colspan="8"><?php echo JText::_('COM_KUNENA_NOUSERSFOUND') ?></td>
-				</tr>
-			<?php endif; ?>
+				$i = 0;
+				$img_no = '<i class="icon-cancel"></i>';
+				$img_yes = '<i class="icon-checkmark"></i>';
+				if($this->pagination->total > 0) :
+				foreach($this->items as $item) :
+				$kunena_user = KunenaFactory::getUser($item->id);
+				$userBlockTask = $kunena_user->isBlocked() ? 'unblock' : 'block';
+				$userBannedTask = $kunena_user->isBanned() ? 'unban' : 'ban';
+				?>
+					<tr>
+						<td>
+							<?php echo JHtml::_('grid.id', $i, intval($item->id)) ?>
+						</td>
+						<td>
+							<span class="editlinktip hasTip" title="<?php echo $this->escape($item->username. '::'.$kunena_user->getAvatarImage('kavatar', 128, 128)); ?> ">
+								<?php echo $kunena_user->getAvatarImage('kavatar', 24, 24); ?>
+								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($item->username); ?></a>
+								<small>
+									<?php echo JText::sprintf('(Name: %s)', $this->escape($item->name));?>
+								</small>
+							</span>
+						</td>
+						<td class="hidden-phone"><?php echo $this->escape($item->email); ?></td>
+						<td class="center hidden-phone hidden-tablet">
+							<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
+								<?php if ($kunena_user->signature) { ?>
+									<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
+								<?php } else { ?>
+									<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
+								<?php } ?>
+							</span>
+						</td>
+						<td class="center hidden-phone">
+							<a class ="btn btn-micro <?php echo (!$item->block ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
+								<?php echo (!$item->block ? $img_yes : $img_no); ?>
+							</a>
+						</td>
+						<td class="center hidden-phone">
+							<a class ="btn btn-micro <?php echo ($kunena_user->isBanned() ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
+								<?php echo ($kunena_user->isBanned() ? $img_yes : $img_no); ?>
+							</a>
+						</td>
+						<td class="center hidden-phone hidden-tablet">
+							<span class ="btn btn-micro <?php echo ($kunena_user->moderator ? 'active':''); ?>">
+								<?php echo ($kunena_user->moderator ? $img_yes : $img_no); ?>
+							</span>
+						</td>
+						<td class="center"><?php echo $this->escape($item->id); ?></td>
+					</tr>
+				<?php $i++;
+				endforeach;
+				else : ?>
+					<tr>
+						<td colspan="10">
+							<div class="well center filter-state">
+								<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+									<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+								</span>
+							</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				</tbody>
 			</table>
+			<?php //Load the batch processing form. ?>
+			<?php echo $this->loadTemplateFile('moderators'); ?>
 		</form>
 	</div>
 	<div class="pull-right small">

@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Finder
  *
- * @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -215,16 +215,19 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		$items = $this->getItems($offset, $limit);
 
 		// Iterate through the items and index them.
+		$item = null;
 		foreach ($items as $item) $this->index($item);
 
-		// Adjust the offsets.
-		$iState->batchOffset = $iState->batchSize;
-		$iState->totalItems -= $item->id - $offset;
+		if ($item) {
+			// Adjust the offsets.
+			$iState->batchOffset = $iState->batchSize;
+			$iState->totalItems -= $item->id - $offset;
 
-		// Update the indexer state.
-		$aState['offset'] = $item->id;
-		$iState->pluginState[$this->context] = $aState;
-		FinderIndexer::setState($iState);
+			// Update the indexer state.
+			$aState['offset'] = $item->id;
+			$iState->pluginState[$this->context] = $aState;
+			FinderIndexer::setState($iState);
+		}
 
 		unset($items, $item);
 		return true;
@@ -435,7 +438,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * Method to get the URL for the item. The URL is how we look up the link
 	 * in the Finder index.
 	 *
-	 * @param	mixed		The id of the item.
+	 * @param	mixed		$id	The id of the item.
 	 * @return	string		The URL of the item.
 	 */
 	protected function getUrl($id, $extension, $view) {

@@ -4,23 +4,30 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.User.Read
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Topic User Read Class
+ * Class KunenaForumTopicUserRead
+ *
+ * @property int $user_id
+ * @property int $topic_id
+ * @property int $category_id
+ * @property int $message_id
+ * @property int $time
  */
 class KunenaForumTopicUserRead extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
 
 	/**
-	 * Constructor
+	 * @param mixed $topic
+	 * @param mixed $user
 	 *
-	 * @access	protected
+	 * @internal
 	 */
 	public function __construct($topic = null, $user = null) {
 		$topic = KunenaForumTopicHelper::get($topic);
@@ -39,14 +46,29 @@ class KunenaForumTopicUserRead extends JObject {
 		$this->user_id = KunenaUserHelper::get($user)->userid;
 	}
 
+	/**
+	 * @param mixed $id
+	 * @param mixed $user
+	 * @param bool  $reload
+	 *
+	 * @return KunenaForumTopicUserRead
+	 */
 	static public function getInstance($id = null, $user = null, $reload = false) {
 		return KunenaForumTopicUserReadHelper::get($id, $user, $reload);
 	}
 
+	/**
+	 * @return KunenaForumTopicUserRead
+	 */
 	public function getTopic() {
 		return KunenaForumTopicUserReadHelper::get($this->topic_id);
 	}
 
+	/**
+	 * @param null|bool $exists
+	 *
+	 * @return bool
+	 */
 	function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
@@ -54,17 +76,12 @@ class KunenaForumTopicUserRead extends JObject {
 	}
 
 	/**
-	 * Method to get the topics table object
+	 * Method to get the topics table object.
 	 *
-	 * This function uses a static variable to store the table name of the user table to
-	 * it instantiates. You can call this function statically to set the table name if
-	 * needed.
+	 * @param string $type		Topics table name to be used.
+	 * @param string $prefix	Topics table prefix to be used.
 	 *
-	 * @access	public
-	 * @param	string	The topics table name to be used
-	 * @param	string	The topics table prefix to be used
-	 * @return	object	The topics table object
-	 * @since	2.0.0
+	 * @return KunenaTable|TableKunenaUserRead
 	 */
 	public function getTable($type = 'KunenaUserRead', $prefix = 'Table') {
 		static $tabletype = null;
@@ -79,7 +96,11 @@ class KunenaForumTopicUserRead extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
-	public function bind($data, $ignore = array()) {
+	/**
+	 * @param array $data
+	 * @param array $ignore
+	 */
+	public function bind(array $data, array $ignore = array()) {
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
 	}
@@ -90,12 +111,12 @@ class KunenaForumTopicUserRead extends JObject {
 	}
 
 	/**
-	 * Method to load a KunenaForumTopicUserRead object by id
+	 * Method to load a KunenaForumTopicUserRead object by id.
 	 *
-	 * @access	public
-	 * @param	mixed	$id The topic id to be loaded
-	 * @return	boolean			True on success
-	 * @since 2.0.0
+	 * @param int   $topic_id	Topic id to be loaded.
+	 * @param mixed $user
+	 *
+	 * @return bool	True on success.
 	 */
 	public function load($topic_id = null, $user = null) {
 		if ($topic_id === null) {
@@ -119,12 +140,11 @@ class KunenaForumTopicUserRead extends JObject {
 	}
 
 	/**
-	 * Method to save the KunenaForumTopicUserRead object to the database
+	 * Method to save the KunenaForumTopicUserRead object to the database.
 	 *
-	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new topic
-	 * @return	boolean True on success
-	 * @since 2.0.0
+	 * @param bool $updateOnly	Save the object only if not a new entry.
+	 *
+	 * @return bool	True on success.
 	 */
 	public function save($updateOnly = false) {
 		// Create the topics table object
@@ -160,11 +180,9 @@ class KunenaForumTopicUserRead extends JObject {
 	}
 
 	/**
-	 * Method to delete the KunenaForumTopicUserRead object from the database
+	 * Method to delete the KunenaForumTopicUserRead object from the database.
 	 *
-	 * @access	public
-	 * @return	boolean	True on success
-	 * @since 2.0.0
+	 * @return bool	True on success.
 	 */
 	public function delete() {
 		if (!$this->exists()) {

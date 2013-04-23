@@ -20,7 +20,7 @@ class Pkg_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
-			'0' => '5.4.9' // Preferred version
+			'0' => '5.4.13' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',
@@ -29,7 +29,7 @@ class Pkg_KunenaInstallerScript {
 		'Joomla!' => array (
 			'3.0' => '3.0.2',
 			'2.5' => '2.5.6',
-			'0' => '2.5.8' // Preferred version
+			'0' => '2.5.9' // Preferred version
 		)
 	);
 	/**
@@ -55,6 +55,7 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function preflight($type, $parent) {
+		/** @var JInstallerComponent $parent */
 		$manifest = $parent->getParent()->getManifest();
 
 		// Prevent installation if requirements are not met.
@@ -68,6 +69,15 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function postflight($type, $parent) {
+		// Clear Joomla system cache.
+		$cache = JFactory::getCache();
+		$cache->clean('_system');
+
+		// Remove all compiled files from APC cache.
+		if (function_exists('apc_clear_cache')) {
+			@apc_clear_cache();
+		}
+
 		if ($type == 'uninstall') return true;
 
 		$this->enablePlugin('system', 'kunena');
@@ -112,11 +122,13 @@ EOS;
 	protected function checkVersion($name, $version) {
 		$app = JFactory::getApplication();
 
+		$major = $minor = 0;
 		foreach ($this->versions[$name] as $major=>$minor) {
-			if (!$major || version_compare ( $version, $major, "<" )) continue;
-			if (version_compare ( $version, $minor, ">=" )) return true;
+			if (!$major || version_compare($version, $major, '<')) continue;
+			if (version_compare($version, $minor, '>=')) return true;
 			break;
 		}
+		if (!$major) $minor = reset($this->versions[$name]);
 		$recommended = end($this->versions[$name]);
 		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is higly recommended to use %s %s or later.", $name, $version, $name, $minor, $name, $recommended), 'notice');
 		return false;

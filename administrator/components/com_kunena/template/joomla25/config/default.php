@@ -4,27 +4,13 @@
  * @package Kunena.Administrator.Template
  * @subpackage Config
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
-JHtml::_('kunenatabs.start');
-
-$paneOptions = array(
-		'onActive' => 'function(title, description){
-		description.setStyle("display", "block");
-		title.addClass("open").removeClass("closed");
-}',
-		'onBackground' => 'function(title, description){
-		description.setStyle("display", "none");
-		title.addClass("closed").removeClass("open");
-}',
-		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
-		'useCookie' => true, // this must not be a string. Don't use quotes.
-);
+/** @var KunenaAdminViewConfig $this */
 ?>
 <div id="kunena" class="admin override">
 	<div class="container-fluid">
@@ -63,9 +49,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -139,9 +125,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -159,9 +145,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -186,9 +172,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -365,9 +351,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -397,9 +383,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -486,9 +472,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -543,9 +529,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -622,9 +608,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -661,9 +647,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -683,9 +669,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -720,9 +706,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -795,9 +781,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -838,9 +824,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -865,9 +851,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -960,9 +946,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -1042,9 +1028,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -1106,9 +1092,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -1175,9 +1161,9 @@ $paneOptions = array(
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th width="25%">Ttitle</th>
-														<th width="25%">Opiton</th>
-														<th>Description</th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -1219,6 +1205,8 @@ $paneOptions = array(
 							</div>
 						</div>
 					</form>
+					<?php //Load the setting comfirmation box form. ?>
+					<?php echo $this->loadTemplateFile('setting'); ?>
 				</div>
 				<div class="pull-right small">
 					<?php echo KunenaVersion::getLongVersionHTML(); ?>

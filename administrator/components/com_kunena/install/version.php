@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ class KunenaVersion
 	/**
 	 * Get warning for unstable releases
 	 *
-	 * @param	string	Message to be shown containing two %s parameters for version (2.0.0RC) and version type (GIT, RC, BETA etc)
+	 * @param	string	$msg	Message to be shown containing two %s parameters for version (2.0.0RC) and version type (GIT, RC, BETA etc)
 	 * @return	string	Warning message
 	 * @since	1.6
 	 */
@@ -36,7 +36,7 @@ class KunenaVersion
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_ALPHA');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_ALPHA_WARNING');
 		}
-		if (!empty($kn_version_warning))
+		if (!empty($kn_version_warning) && !empty($kn_version_type))
 		{
 			return JText::sprintf($msg, KunenaForum::version(), $kn_version_type).' '.$kn_version_warning;
 		}

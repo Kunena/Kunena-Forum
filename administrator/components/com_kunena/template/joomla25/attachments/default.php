@@ -4,19 +4,22 @@
  * @package Kunena.Administrator.Template
  * @subpackage Attachments
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewAttachments $this */
 ?>
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $this->state->get('list.ordering'); ?>') {
+		var dirn = '';
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -38,26 +41,36 @@ defined ( '_JEXEC' ) or die ();
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 						<input type="hidden" name="view" value="attachments" />
 						<input type="hidden" name="task" value="" />
-						<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering') ?>" />
-						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-						<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
+						<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering ?>" />
+						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->listDirection) ?>" />
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHtml::_( 'form.token' ); ?>
 
 						<div id="filter-bar" class="btn-toolbar">
 							<div class="filter-search btn-group pull-left">
 								<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
-								<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" />
+								<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" />
 							</div>
 							<div class="btn-group pull-left">
 								<button class="btn tip" type="button" ><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
 								<button class="btn tip" type="button"  onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
+								<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+								<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
+							</div>
+							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 								<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-									<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+									<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->escape($this->listDirection));?>
+								</select>
+							</div>
+							<div class="btn-group pull-right">
+								<label for="sortTable" class="element-invisible"><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></label>
+								<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+									<option value=""><?php echo JText::_('COM_KUNENA_SORT_TABLE_BY');?></option>
+									<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 								</select>
 							</div>
 							<div class="clearfix"></div>
@@ -67,13 +80,13 @@ defined ( '_JEXEC' ) or die ();
 							<thead>
 								<tr>
 									<th width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
-									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'a.filename', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'a.filetype', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'a.size', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->listDirection, $this->listOrdering ); ?></th>
+									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->listDirection, $this->listOrdering ); ?></th>
+									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $this->listDirection, $this->listOrdering ); ?>
 									<th><?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS'); ?>	</th>
-									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
-									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-									<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_ID', 'a.id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $this->listDirection, $this->listOrdering); ?></th>
+									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $this->listDirection, $this->listOrdering ); ?></th>
+									<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_ID', 'id', $this->listDirection, $this->listOrdering ); ?></th>
 								</tr>
 								<tr>
 									<td class="center">
@@ -111,40 +124,52 @@ defined ( '_JEXEC' ) or die ();
 							<tfoot>
 								<tr>
 									<td colspan="8">
-										<div class="pagination">
-											<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->pagination->getLimitBox (); ?></div>
-											<?php echo $this->pagination->getPagesLinks (); ?>
-											<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
-										</div>
+										<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 									</td>
 								</tr>
 							</tfoot>
 							<tbody>
-								<?php
-								$k = 0;
-								$i = 0;
-								$n = count($this->items);
-								foreach($this->items as $id=>$attachment) {
-									$instance = KunenaForumMessageAttachmentHelper::get($attachment->id);
-									$message = $instance->getMessage();
-									$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
-									if ( $instance->isImage($attachment->filetype) && is_file($path)) list($width, $height) =	getimagesize( $path );
-								?>
-									<tr <?php echo 'class = "row' . $k . '"';?>>
-										<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
-										<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
-										<td><?php echo $this->escape($attachment->filetype); ?></td>
-										<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
-										<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
-										<td><?php echo $this->escape($message->name); ?></td>
-										<td><?php echo $this->escape($message->subject); ?></td>
-										<td><?php echo intval($attachment->id); ?></td>
-									</tr>
-								<?php
-								$i++;
-								$k = 1 - $k;
-								}
-								?>
+							<?php
+							$k = 0;
+							$i = 0;
+							$n = count($this->items);
+							if($this->pagination->total > 0) :
+							foreach($this->items as $id=>$attachment) {
+							$instance = KunenaForumMessageAttachmentHelper::get($attachment->id);
+							$message = $instance->getMessage();
+							$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
+							if ( $instance->isImage($attachment->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+							?>
+								<tr <?php echo 'class = "row' . $k . '"';?>>
+									<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
+									<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
+									<td><?php echo $this->escape($attachment->filetype); ?></td>
+									<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
+									<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
+									<td><?php echo $this->escape($message->name); ?></td>
+									<td><?php echo $this->escape($message->subject); ?></td>
+									<td><?php echo intval($attachment->id); ?></td>
+								</tr>
+							<?php
+							$i++;
+							$k = 1 - $k;
+							}
+							else : ?>
+								<tr>
+									<td colspan="10">
+										<div class="well center filter-state">
+										<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+											<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+											<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+												<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+											<?php else : ?>
+												<?php //Currently no default state, might change later. ?>
+											<?php endif; ?>
+										</span>
+										</div>
+									</td>
+								</tr>
+							<?php endif; ?>
 							</tbody>
 						</table>
 					</form>
@@ -156,4 +181,3 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-

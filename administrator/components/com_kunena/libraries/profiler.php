@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,7 +16,13 @@ class KunenaProfiler extends JProfiler {
 	protected $_kstart = array();
 	protected $_heap = array();
 
-	// FIXME: override getInstance() and fix the function into Joomla
+	/**
+	 * @param string $prefix
+	 *
+	 * @return KunenaProfiler
+	 *
+	 * @fixme override getInstance() and fix the function into Joomla
+	 */
 	public static function instance($prefix = 'Kunena')
 	{
 		if (empty(self::$_instances[$prefix])) {

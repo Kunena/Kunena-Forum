@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -12,9 +12,7 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.application.component.helper' );
 
 /**
- * Base controller class for Kunena.
- *
- * @since		2.0
+ * Class KunenaController
  */
 class KunenaController extends JControllerLegacy {
 	public $app = null;
@@ -42,8 +40,7 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @return	object	Kunena Controller
-	 * @since	1.6
+	 * @return	KunenaController
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array()) {
 		static $instance = null;
@@ -53,8 +50,23 @@ class KunenaController extends JControllerLegacy {
 			return $instance;
 		}
 
+		$input = JFactory::getApplication()->input;
+
 		$app = JFactory::getApplication();
-		$view = strtolower ( JRequest::getWord ( 'view', $app->isAdmin() ? 'cpanel' : 'home' ) );
+		$command  = $input->get('task', 'display');
+
+		// Check for a controller.task command.
+		if (strpos($command, '.') !== false) {
+			// Explode the controller.task command.
+			list ($view, $task) = explode('.', $command);
+
+			// Reset the task without the controller context.
+			$input->set('task', $task);
+		} else {
+			// Base controller.
+			$view = strtolower ( JRequest::getWord ( 'view', $app->isAdmin() ? 'cpanel' : 'home' ) );
+		}
+
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
@@ -67,8 +79,16 @@ class KunenaController extends JControllerLegacy {
 		// Set the name for the controller and instantiate it.
 		if ($app->isAdmin()) {
 			$class = $prefix . 'AdminController' . ucfirst ( $view );
+			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
+			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+
 		} else {
 			$class = $prefix . 'Controller' . ucfirst ( $view );
+			KunenaFactory::loadLanguage('com_kunena.controllers');
+			KunenaFactory::loadLanguage('com_kunena.models');
+			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+
 		}
 		if (class_exists ( $class )) {
 			$instance = new $class ();
@@ -82,8 +102,8 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Method to display a view.
 	 *
-	 * @return	void
-	 * @since	1.6
+	 * @param bool $cachable
+	 * @param mixed $urlparams
 	 */
 	public function display($cachable = false, $urlparams = false) {
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
@@ -99,10 +119,7 @@ class KunenaController extends JControllerLegacy {
 
 		if ($this->app->isAdmin()) {
 			// Load admin language files
-			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
-			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
-			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena', 'site');
@@ -117,11 +134,8 @@ class KunenaController extends JControllerLegacy {
 			}
 		} else {
 			// Load site language files
-			KunenaFactory::loadLanguage('com_kunena.controllers');
-			KunenaFactory::loadLanguage('com_kunena.models');
 			KunenaFactory::loadLanguage('com_kunena.views');
 			KunenaFactory::loadLanguage('com_kunena.templates');
-			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena');
 
@@ -198,8 +212,9 @@ class KunenaController extends JControllerLegacy {
 	 *
 	 * If escaping mechanism is one of htmlspecialchars or htmlentities.
 	 *
-	 * @param  mixed $var The output to escape.
-	 * @return mixed The escaped value.
+	 * @param  string $var The output to escape.
+	 *
+	 * @return string The escaped value.
 	 */
 	public function escape($var) {
 		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
@@ -217,16 +232,30 @@ class KunenaController extends JControllerLegacy {
 		$this->_escape = $spec;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getRedirect() {
 		return $this->_redirect;
 	}
+
+	/**
+	 * @return string
+	 */
 	public function getMessage() {
 		return $this->_message;
 	}
+
+	/**
+	 * @return string
+	 */
 	public function getMessageType() {
 		return $this->_messageType;
 	}
 
+	/**
+	 * @param string $fragment
+	 */
 	protected function redirectBack($fragment = '') {
 		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
 		JFactory::getApplication ()->redirect ( $httpReferer.($fragment ? '#'.$fragment : '') );

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -140,7 +140,10 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
-	protected function _save() {
+    /**
+     * @return KunenaForumCategory
+     */
+    protected function _save() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (! JSession::checkToken('post')) {
@@ -243,6 +246,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		$count = 0;
+		$name = null;
+
 		$categories = KunenaForumCategoryHelper::getCategories ( $cid );
 		foreach ( $categories as $category ) {
 			if (!$category->authorise ( 'admin' )) {
@@ -259,8 +264,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 			}
 		}
 
-		if ($count == 1)
-			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_DELETED', $this->escape ( $name ) ) );
+		if ($count == 1 && $name)
+			$this->app->enqueueMessage(JText::sprintf ('COM_KUNENA_A_CATEGORY_DELETED', $this->escape($name)));
 		if ($count > 1)
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_DELETED', $count ) );
 		$this->redirectBack();
@@ -413,6 +418,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		$count = 0;
+		$name = null;
 
 		$categories = KunenaForumCategoryHelper::getCategories ( $cid );
 		foreach ( $categories as $category ) {
@@ -433,7 +439,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 			}
 		}
 
-		if ($count == 1)
+		if ($count == 1 && $name)
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVED', $this->escape ( $name ) ) );
 		if ($count > 1)
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_SAVED', $count ) );

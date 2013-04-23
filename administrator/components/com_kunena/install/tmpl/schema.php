@@ -4,11 +4,13 @@
  * @package Kunena.Installer
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaViewInstall $this */
 
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/install/media/install.css' );
 ?>

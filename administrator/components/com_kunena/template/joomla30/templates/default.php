@@ -4,11 +4,14 @@
  * @package Kunena.Administrator.Template
  * @subpackage Templates
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewTemplates $this */
+
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
@@ -27,7 +30,8 @@ JHtml::_('dropdown.init');
 			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<div class="btn-group pull-right hidden-phone">
-				<?php echo  $this->pagination->getListFooter(); ?>
+				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+				<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 			</div>
 
 			<table class="table table-striped">
@@ -45,9 +49,7 @@ JHtml::_('dropdown.init');
 			<tfoot>
 				<tr>
 					<td colspan="7">
-						<div class="pagination">
-							<?php echo $this->pagination->getPagesLinks (); ?>
-						</div>
+						<?php echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination); ?>
 					</td>
 				</tr>
 			</tfoot>

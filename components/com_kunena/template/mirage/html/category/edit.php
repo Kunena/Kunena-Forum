@@ -4,7 +4,7 @@
  * @package Kunena.Template.Mirage
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -88,7 +88,7 @@ JHtml::_('behavior.formvalidation');
 				</div>
 			</li>
 			<?php foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) foreach ($accesslist as $accessinput) : ?>
-			<li class="kpostcategory-row krow-even kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
+			<li class="kpostcategory-row krow-even kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
 				<div class="kform-label">
 					<label for="locked"><?php echo $accessinput['title'] ?></label>
 				</div>

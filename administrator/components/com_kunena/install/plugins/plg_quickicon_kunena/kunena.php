@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage QuickIcon
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,6 +33,7 @@ class plgQuickiconKunena extends JPlugin {
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
 		// TODO: replace LiveUpdate with something else...
+		$updateInfo = null;
 		if (0 && KunenaForum::installed() && KunenaFactory::getConfig()->version_check && JFactory::getUser()->authorise('core.manage', 'com_installer')) {
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true)

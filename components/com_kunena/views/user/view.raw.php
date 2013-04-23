@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -19,7 +19,8 @@ class KunenaViewUser extends KunenaView {
 		if ($this->me->exists()) {
 			$users = $this->get ( 'Items' );
 			foreach ($users as $user) {
-				$response[] = $user->username;
+				if ($this->config->username) $response[] = $user->username;
+				else $response[] = $user->name;
 			}
 		}
 		// Set the MIME type and header for JSON output.

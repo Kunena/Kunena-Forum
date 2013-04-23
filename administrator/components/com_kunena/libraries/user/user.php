@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,11 +14,56 @@ jimport ( 'joomla.utilities.date' );
 jimport ( 'joomla.filesystem.file' );
 
 /**
- * Kunena User Class
- */
+ * Class KunenaUser
+ *
+ * @property	int		$userid
+ * @property	string	$name
+ * @property	string	$username
+ * @property	string	$email
+ * @property	int		$blocked
+ * @property	string	$registerDate
+ * @property	string	$lastvisitDate
+ * @property	string	$signature
+ * @property	int		$moderator
+ * @property	int		$banned
+ * @property	int		$ordering
+ * @property	int		$posts
+ * @property	string	$avatar
+ * @property	int		$karma
+ * @property	int		$karma_time
+ * @property	int		$uhits
+ * @property	string	$personalText
+ * @property	int		$gender
+ * @property	string	$birthdate
+ * @property	string	$location
+ * @property	string	$websitename
+ * @property	string	$websiteurl
+ * @property	int		$rank
+ * @property	int		$view
+ * @property	int		$hideEmail
+ * @property	int		$showOnline
+ * @property	string	$icq
+ * @property	string	$aim
+ * @property	string	$yim
+ * @property	string	$msn
+ * @property	string	$skype
+ * @property	string	$twitter
+ * @property	string	$facebook
+ * @property	string	$gtalk
+ * @property	string	$myspace
+ * @property	string	$linkedin
+ * @property	string	$delicious
+ * @property	string	$friendfeed
+ * @property	string	$digg
+ * @property	string	$blogspot
+ * @property	string	$flickr
+ * @property	string	$bebo
+ * @property	int		$thankyou
+*/
 class KunenaUser extends JObject {
 	// Global for every instance
 	protected static $_ranks = null;
+
 	protected $_type = false;
 	protected $_class = false;
 	protected $_allowed = array();
@@ -28,9 +73,9 @@ class KunenaUser extends JObject {
 	protected $_db = null;
 
 	/**
-	 * Constructor
+	 * @param int $identifier
 	 *
-	 * @access	protected
+	 * @internal
 	 */
 	public function __construct($identifier = 0) {
 		// Always load the user -- if user does not exist: fill empty data
@@ -43,21 +88,29 @@ class KunenaUser extends JObject {
 	/**
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
-	 * @access	public
-	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-	 * @return	JUser			The User object.
-	 * @since	1.6
+	 * @param null|int $identifier	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 * @param bool $reload		Reload user from database.
+	 *
+	 * @return KunenaUser
 	 */
 	public static function getInstance($identifier = null, $reload = false) {
 		return KunenaUserHelper::get($identifier, $reload);
 	}
 
+	/**
+	 * @param null|bool $exists
+	 *
+	 * @return bool
+	 */
 	public function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
 		return $return;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isMyself() {
 		static $result = null;
 		if ($result === null) $result = KunenaUserHelper::getMyself()->userid == $this->userid;
@@ -65,17 +118,12 @@ class KunenaUser extends JObject {
 	}
 
 	/**
-	 * Method to get the user table object
+	 * Method to get the user table object.
 	 *
-	 * This function uses a static variable to store the table name of the user table to
-	 * it instantiates. You can call this function statically to set the table name if
-	 * needed.
+	 * @param	string	$type	The user table name to be used.
+	 * @param	string	$prefix	The user table prefix to be used.
 	 *
-	 * @access	public
-	 * @param	string	The user table name to be used
-	 * @param	string	The user table prefix to be used
-	 * @return	object	The user table object
-	 * @since	1.6
+	 * @return	JTable|TableKunenaUsers	The user table object.
 	 */
 	public function getTable($type = 'KunenaUsers', $prefix = 'Table') {
 		static $tabletype = null;
@@ -90,19 +138,22 @@ class KunenaUser extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
-	public function bind($data, $ignore = array()) {
+	/**
+	 * @param mixed $data
+	 * @param array $ignore
+	 */
+	public function bind($data, array $ignore = array()) {
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
 	}
 
 	/**
-	 * Method to load a KunenaUser object by userid
+	 * Method to load a KunenaUser object by userid.
 	 *
-	 * @access	public
-	 * @param	mixed	$identifier The user id of the user to load
-	 * @param	string	$path		Path to a parameters xml file
+	 * @param	mixed	$identifier The user id of the user to load.
+	 * @param	string	$path		Path to a parameters xml file.
+	 *
 	 * @return	boolean			True on success
-	 * @since 1.6
 	 */
 	public function load($id) {
 		// Create the user table object
@@ -121,12 +172,11 @@ class KunenaUser extends JObject {
 	}
 
 	/**
-	 * Method to save the KunenaUser object to the database
+	 * Method to save the KunenaUser object to the database.
 	 *
-	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new user
-	 * @return	boolean True on success
-	 * @since 1.6
+	 * @param	boolean $updateOnly Save the object only if not a new user.
+	 *
+	 * @return	boolean True on success.
 	 */
 	public function save($updateOnly = false) {
 		// Create the user table object
@@ -167,11 +217,9 @@ class KunenaUser extends JObject {
 	}
 
 	/**
-	 * Method to delete the KunenaUser object from the database
+	 * Method to delete the KunenaUser object from the database.
 	 *
-	 * @access	public
-	 * @return	boolean	True on success
-	 * @since 1.6
+	 * @return	boolean	True on success.
 	 */
 	public function delete() {
 		// Delete user table object
@@ -189,10 +237,21 @@ class KunenaUser extends JObject {
 
 	}
 
+	/**
+	 * @param bool   $yes
+	 * @param string $no
+	 *
+	 * @return string
+	 */
 	public function isOnline($yes = false, $no = 'offline') {
 		return KunenaUserHelper::isOnline($this->userid, $yes, $no);
 	}
 
+	/**
+	 * @param string $rule
+	 *
+	 * @return mixed
+	 */
 	public function getAllowedCategories($rule = 'read') {
 		if (!isset($this->_allowed[$rule])) {
 			$acl = KunenaAccess::getInstance();
@@ -202,6 +261,9 @@ class KunenaUser extends JObject {
 		return $this->_allowed[$rule];
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getMessageOrdering() {
 		static $ordering = null;
 		if (is_null($ordering)) {
@@ -223,9 +285,8 @@ class KunenaUser extends JObject {
 	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
 	 *
 	 * @param KunenaForumCategory $category
-	 * @return bool
 	 *
-	 * @since 2.0.0-BETA2
+	 * @return bool
 	 */
 	public function isAdmin(KunenaForumCategory $category = null) {
 		return KunenaAccess::getInstance()->isAdmin ( $this, $category && $category->exists() ? $category->id : null );
@@ -237,14 +298,16 @@ class KunenaUser extends JObject {
 	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
 	 *
 	 * @param KunenaForumCategory $category
-	 * @return bool
 	 *
-	 * @since 2.0.0-BETA2
+	 * @return bool
 	 */
 	public function isModerator(KunenaForumCategory $category = null) {
 		return KunenaAccess::getInstance()->isModerator ( $this, $category && $category->exists() ? $category->id : null );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isBanned() {
 		if (! $this->banned)
 			return false;
@@ -256,12 +319,21 @@ class KunenaUser extends JObject {
 		return ($ban->toUnix () > $now->toUnix ());
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isBlocked() {
 		if ($this->blocked)
 			return true;
 		return false;
 	}
 
+	/**
+	 * @param string $visitorname
+	 * @param bool   $escape
+	 *
+	 * @return string
+	 */
 	public function getName($visitorname = '', $escape = true) {
 		if (! $this->userid && !$this->name) {
 			$name = $visitorname;
@@ -272,16 +344,37 @@ class KunenaUser extends JObject {
 		return $name;
 	}
 
+	/**
+	 * @param string $class
+	 * @param string|int $sizex
+	 * @param int    $sizey
+	 *
+	 * @return string
+	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90) {
 		$avatars = KunenaFactory::getAvatarIntegration ();
 		return $avatars->getLink ( $this, $class, $sizex, $sizey );
 	}
 
+	/**
+	 * @param string|int $sizex
+	 * @param int    $sizey
+	 *
+	 * @return string
+	 */
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90) {
 		$avatars = KunenaFactory::getAvatarIntegration ();
 		return $avatars->getURL ( $this, $sizex, $sizey );
 	}
 
+	/**
+	 * @param null|string   $name
+	 * @param null|string   $title
+	 * @param string $rel
+	 * @param string $task
+	 *
+	 * @return string
+	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '') {
 		if (!$name) {
 			$name = $this->getName();
@@ -301,11 +394,23 @@ class KunenaUser extends JObject {
 		return $this->_link[$key];
 	}
 
+	/**
+	 * @param bool   $xhtml
+	 * @param string $task
+	 *
+	 * @return mixed
+	 */
 	public function getURL($xhtml = true, $task = '') {
 		if (!$this->exists()) return;
 		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, $task, $xhtml );
 	}
 
+	/**
+	 * @param int  $catid
+	 * @param bool|string $code
+	 *
+	 * @return string
+	 */
 	public function getType($catid = 0, $code=false) {
 		static $types = array(
 			'admin'=>'COM_KUNENA_VIEW_ADMIN',
@@ -339,6 +444,13 @@ class KunenaUser extends JObject {
 
 		return $code == 'class' ? $this->_class : ($code == false ? $types[$this->_type] : $this->_type);
 	}
+
+	/**
+	 * @param int  $catid
+	 * @param bool $type
+	 *
+	 * @return stdClass|string
+	 */
 	public function getRank($catid = 0, $type = false) {
 		// Default rank
 		$rank = new stdClass ();
@@ -427,6 +539,11 @@ class KunenaUser extends JObject {
 		return $rank;
 	}
 
+	/**
+	 * @param null|string $layout
+	 *
+	 * @return string
+	 */
 	public function getTopicLayout( $layout = null ) {
 		if ($layout == 'default') $layout = null;
 		if (!$layout) $layout = $this->_app->getUserState ( 'com_kunena.topic_layout' );
@@ -444,6 +561,9 @@ class KunenaUser extends JObject {
 		return $layout;
 	}
 
+	/**
+	 * @param string $layout
+	 */
 	public function setTopicLayout( $layout = 'default' ) {
 		if ($layout != 'default') $layout = $this->getTopicLayout( $layout );
 
@@ -455,6 +575,11 @@ class KunenaUser extends JObject {
 		}
 	}
 
+	/**
+	 * @param string $name
+	 *
+	 * @return string
+	 */
 	public function profileIcon($name) {
 		switch ($name) {
 			case 'gender' :
@@ -507,6 +632,12 @@ class KunenaUser extends JObject {
 		}
 	}
 
+	/**
+	 * @param string $name
+	 * @param bool $gray
+	 *
+	 * @return string
+	 */
 	public function socialButton($name, $gray = false) {
 		$social = array ('twitter' => array ('url' => 'http://twitter.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TWITTER' ), 'nourl' => '0' ),
 			'facebook' => array ('url' => 'http://www.facebook.com/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FACEBOOK' ), 'nourl' => '0' ),
@@ -543,6 +674,11 @@ class KunenaUser extends JObject {
 			return '';
 	}
 
+	/**
+	 * @param string $var
+	 *
+	 * @return string
+	 */
 	public function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}

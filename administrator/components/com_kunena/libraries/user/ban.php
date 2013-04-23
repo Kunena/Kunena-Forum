@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,13 +13,13 @@ defined ( '_JEXEC' ) or die ();
 jimport ('joomla.utilities.date');
 
 /**
-* Kunena User Ban
-*
-* Provides access to the #__kunena_users_banlist table
-*/
+ * Class KunenaUserBan
+ */
 class KunenaUserBan extends JObject
 {
-	// Global for every instance
+	/**
+	 * @var array|KunenaUserBan[]
+	 */
 	protected static $_instances = array();
 	protected static $_instancesByUserid = array();
 	protected static $_instancesByIP = array();
@@ -215,8 +215,8 @@ class KunenaUserBan extends JObject
 	 * needed.
 	 *
 	 * @access	public
-	 * @param	string	The user table name to be used
-	 * @param	string	The user table prefix to be used
+	 * @param	string	$type	The user table name to be used
+	 * @param	string	$prefix	The user table prefix to be used
 	 * @return	object	The user table object
 	 * @since	1.6
 	 */

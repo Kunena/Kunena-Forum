@@ -48,7 +48,7 @@ jimport( 'joomla.html.html.grid' );
 						<tr>
 							<th class="kcenter span1">#</th>
 							<th class="span1">
-								<input type="checkbox" name="toggle" onclick="checkAll(<?php echo $this->state->get('list.count.admin'); ?>);" />
+								<input type="checkbox" name="toggle" onclick="Joomla.checkAll(this); ?>);" />
 							</th>
 							<th class="span1"><?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 							<th class="span1"><small><?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
@@ -108,7 +108,7 @@ jimport( 'joomla.html.html.grid' );
 								<td class="span1 hidden-phone hidden-tablet"> <a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_anonymous ? 'deny':'allow').'_anonymous'; ?>')"> <?php echo ($category->allow_anonymous == 1 ? $img_yes : $img_no); ?> </a> </td>
 								<td class="span1 hidden-phone hidden-tablet"> <a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny':'allow').'_polls'; ?>')"> <?php echo ($category->allow_polls == 1 ? $img_yes : $img_no); ?> </a> </td>
 							<?php endif; ?>
-							<td class="span1 hidden-phone hidden-tablet"><?php echo JHtml::_('jgrid.published', $i, $category); ?></td>
+							<td class="span1 hidden-phone hidden-tablet"><?php echo JHtml::_('jgrid.published', $category->published, $i); ?></td>
 						</tr>
 						<?php
 						$j++;

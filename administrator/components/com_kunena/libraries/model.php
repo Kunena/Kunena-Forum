@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -24,6 +24,7 @@ class KunenaModel extends JModelLegacy {
 	protected $embedded = false;
 
 	public function __construct($config = array()) {
+		$this->option = 'com_kunena';
 		parent::__construct($config);
 		if (isset($this->_state)) {
 			$this->state = $this->_state;
@@ -36,8 +37,8 @@ class KunenaModel extends JModelLegacy {
 	/**
 	 * Method to get model state variables (from Joomla 1.6)
 	 *
-	 * @param	string	Optional parameter name
-	 * @param	mixed	Optional default value
+	 * @param	string	$property	Optional parameter name
+	 * @param	mixed	$default	Optional default value
 	 * @return	object	The property where specified, the state object where omitted
 	 */
 	public function getState($property = null, $default = null) {
@@ -56,8 +57,8 @@ class KunenaModel extends JModelLegacy {
 	/**
 	 * Method to set model state variables (from Joomla 1.6)
 	 *
-	 * @param	string	The name of the property
-	 * @param	mixed	The value of the property to set
+	 * @param	string	$property	The name of the property
+	 * @param	mixed	$value		The value of the property to set
 	 * @return	mixed	The previous value of the property
 	 */
 	public function setState($property, $value=null) {

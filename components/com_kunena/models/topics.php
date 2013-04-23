@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -46,6 +46,9 @@ class KunenaModelTopics extends KunenaModel {
 
 		$mode = $this->getWord ( 'mode', 'default' );
 		$this->setState ( 'list.mode', $mode );
+
+		$modetype = $this->getWord ( 'modetype', '' );
+		$this->setState ( 'list.modetype', $modetype );
 
 		$catid = $this->getInt ( 'catid' );
 		if ($catid) {
@@ -112,13 +115,33 @@ class KunenaModelTopics extends KunenaModel {
 
 	public function getTopics() {
 		if ($this->topics === false) {
-			$layout = $this->getState ( 'layout');
-			switch ($layout) {
-				case 'user':
-					$this->getUserTopics();
-					break;
-				default:
-					$this->getRecentTopics();
+			$layout = $this->getState ( 'layout' );
+			$mode = $this->getState('list.mode');
+			if ($mode == 'plugin') {
+				$pluginmode = $this->getState('list.modetype');
+				if(!empty($pluginmode)) {
+					$total = 0;
+					$topics = false;
+
+					JPluginHelper::importPlugin('kunena');
+					$dispatcher = JDispatcher::getInstance();
+					$dispatcher->trigger('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
+
+					if(!empty($topics)) {
+						$this->topics = $topics;
+						$this->total = $total;
+						$this->_common ();
+					}
+				}
+			}
+			if ($this->topics === false) {
+				switch ($layout) {
+					case 'user':
+						$this->getUserTopics();
+						break;
+					default:
+						$this->getRecentTopics();
+				}
 			}
 		}
 		return $this->topics;
@@ -144,6 +167,10 @@ class KunenaModelTopics extends KunenaModel {
 		$where = '';
 		$lastpost = true;
 
+		// Reset topics.
+		$this->total = 0;
+		$this->topics = array();
+
 		switch ($this->getState ( 'list.mode' )) {
 			case 'topics' :
 				$lastpost = false;
@@ -160,7 +187,7 @@ class KunenaModelTopics extends KunenaModel {
 			case 'unapproved' :
 				$allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.approve');
 				if (empty($allowed)) {
-					return array(0, array());
+					return;
 				}
 				$allowed = implode(',', array_keys($allowed));
 				$hold = '1';
@@ -169,7 +196,7 @@ class KunenaModelTopics extends KunenaModel {
 			case 'deleted' :
 				$allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.undelete');
 				if (empty($allowed)) {
-					return array(0, array());
+					return;
 				}
 				$allowed = implode(',', array_keys($allowed));
 				$hold = '2';

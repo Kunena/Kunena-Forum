@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -76,20 +76,21 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$this->user = JFactory::getUser();
-		$success = $this->saveUser();
-		if (!$success) {
+		if (!$this->saveUser()) {
 			$this->app->enqueueMessage($this->user->getError(), 'notice');
+		} elseif (!$this->saveAvatar()) {
+			$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_AVATAR_NOT_SAVED' ), 'notice' );
 		} else {
 			$this->saveProfile();
-			$this->saveAvatar();
 			$this->saveSettings();
 			if (!$this->me->save()) {
 				$this->app->enqueueMessage($this->me->getError(), 'notice');
+			} else {
+				$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_SAVED' ) );
 			}
 		}
 
-		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
-		$this->setRedirect ( $this->me->getUrl(false), $msg );
+		$this->setRedirect($this->me->getUrl(false));
 	}
 
 	function ban() {
@@ -153,9 +154,9 @@ class KunenaControllerUser extends KunenaController {
 			jimport ( 'joomla.filesystem.file' );
 			$avatar_deleted = '';
 			// Delete avatar from file system
-			if (JFile::exists ( JPATH_ROOT . '/media/kunena/avatars/' . $userprofile->avatar ) && !stristr($userprofile->avatar,'gallery/')) {
-				JFile::delete ( JPATH_ROOT . '/media/kunena/avatars/' . $userprofile->avatar );
-				$avatar_deleted = $this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM') );
+			if (JFile::exists ( JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar ) && !stristr($user->avatar,'gallery/')) {
+				JFile::delete ( JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar );
+				$avatar_deleted = JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
 			}
 			$user->avatar = '';
 			$user->save();
@@ -376,6 +377,7 @@ class KunenaControllerUser extends KunenaController {
 
 	protected function saveAvatar() {
 		$action = JRequest::getString('avatar', 'keep');
+		$current_avatar = $this->me->avatar;
 
 		require_once (KPATH_SITE.'/lib/kunena.upload.class.php');
 		$upload = new CKunenaUpload();
@@ -406,15 +408,21 @@ class KunenaControllerUser extends KunenaController {
 			if ($fileinfo['ready'] === true) {
 				$this->me->avatar = 'users/'.$fileinfo['name'];
 			}
-			if (!$fileinfo['status']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
-			else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
-
+			if (!$fileinfo['status']) {
+				$this->me->avatar = $current_avatar;
+				if (!$fileinfo['not_valid_img_ext']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'), 'error' );
+				else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
+				return false;
+			} else {
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
+			}
 		} else if ( $action == 'delete' ) {
 			//set default avatar
 			$this->me->avatar = '';
 		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false) {
 			$this->me->avatar = $action;
 		}
+		return true;
 	}
 
 	protected function saveSettings() {

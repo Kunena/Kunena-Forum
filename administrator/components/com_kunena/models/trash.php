@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -47,26 +47,30 @@ class KunenaAdminModelTrash extends KunenaModel {
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.search', 'filter_search', '', 'string' );
+		$filter_active = '';
+
+		$filter_active .= $value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_title', 'filter_title', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_title', 'filter_title', '', 'string' );
 		$this->setState ( 'filter.title', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_topic', 'filter_topic', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_topic', 'filter_topic', '', 'string' );
 		$this->setState ( 'filter.topic', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_category', 'filter_category', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_category', 'filter_category', '', 'string' );
 		$this->setState ( 'filter.category', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_ip', 'filter_ip', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_ip', 'filter_ip', '', 'string' );
 		$this->setState ( 'filter.ip', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_author', 'filter_author', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_author', 'filter_author', '', 'string' );
 		$this->setState ( 'filter.author', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_date', 'filter_time', '', 'string' );
+		$filter_active .= $value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_date', 'filter_time', '', 'string' );
 		$this->setState ( 'filter.time', $value );
+
+		$this->setState ( 'filter.active',!empty($filter_active));
 	}
 
 	/**
@@ -319,7 +323,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 	/**
 	 * Method to hash datas.
 	 *
-	 * @return	hash
+	 * @return	string Hashed value.
 	 * @since	1.6
 	 */
 	public function getMd5() {

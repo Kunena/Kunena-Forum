@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -16,6 +16,9 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaConfig
+ */
 class KunenaConfig extends JObject {
 
 	// New in Kunena 1.5.2: $id for JoomFish support
@@ -225,7 +228,7 @@ class KunenaConfig extends JObject {
 	}
 
 	public static function getInstance() {
-		static $instance = NULL;
+		static $instance = null;
 		if (! $instance) {
 			$instance = new KunenaConfig ();
 			$instance->load ();
@@ -233,6 +236,9 @@ class KunenaConfig extends JObject {
 		return $instance;
 	}
 
+	/**
+	 * @param mixed $properties
+	 */
 	public function bind($properties) {
 		$this->setProperties($properties);
 
@@ -261,9 +267,10 @@ class KunenaConfig extends JObject {
 		$this->bind($instance->getProperties());
 	}
 
-	//
-	// Load config settings from database table
-	//
+	/**
+	 * Load config settings from database table.
+	 * @param null $userinfo Not used.
+	 */
 	public function load($userinfo = null) {
 		$db = JFactory::getDBO ();
 		$db->setQuery ( "SELECT * FROM #__kunena_configuration WHERE id=1" );
@@ -289,6 +296,10 @@ class KunenaConfig extends JObject {
 	}
 
 	/**
+	 * @param sting $name
+	 *
+	 * @return JRegistry
+	 *
 	 * @internal
 	 */
 	public function getPlugin($name) {
@@ -305,7 +316,9 @@ class KunenaConfig extends JObject {
 
 	}
 
-
+	/**
+	 * @return string
+	 */
 	public function getEmail() {
 		$email = $this->get('email');
 		return !empty($email) ? $email : JFactory::getApplication()->getCfg('mailfrom', '');

@@ -4,12 +4,15 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaAccess
+ */
 class KunenaAccess {
 	const CATEGORY_SUBSCRIPTION = 1;
 	const TOPIC_SUBSCRIPTION = 2;
@@ -104,10 +107,8 @@ class KunenaAccess {
 	}
 
 	/**
-	 * Get HTML list of the available groups
-	 *
-	 * @param string	Access type.
-	 * @param int		Group id.
+	 * @param KunenaForumCategory	$category
+	 * @return array
 	 */
 	public function getAccessOptions($category) {
 		$list = array();
@@ -128,6 +129,11 @@ class KunenaAccess {
 		return $list;
 	}
 
+	/**
+	 * @param KunenaForumCategory $category
+	 *
+	 * @return string
+	 */
 	public function getAccessTypesList($category) {
 		static $enabled = false;
 		if (!$enabled) {
@@ -177,8 +183,8 @@ window.addEvent('domready', function(){
 	/**
 	 * Get group name in selected access type.
 	 *
-	 * @param string	Access type.
-	 * @param mixed		Group id.
+	 * @param string	$accesstype	Access type.
+	 * @param mixed		$id			Group id.
 	 */
 	public function getGroupName($accesstype, $id) {
 		if (!isset($this->accesstypes[$accesstype])) return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
@@ -194,6 +200,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @param int $catid Category Id
 	 * @param bool $all
+	 *
 	 * @return array
 	 */
 	public function getAdmins($catid = 0, $all = false) {
@@ -206,6 +213,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @param int $catid Category Id
 	 * @param bool $all
+	 *
 	 * @return array
 	 */
 	public function getModerators($catid = 0, $all = false) {
@@ -213,16 +221,32 @@ window.addEvent('domready', function(){
 		return $list;
 	}
 
+	/**
+	 * @param mixed $user
+	 *
+	 * @return array
+	 */
 	public function getAdminStatus($user = null) {
 		$user = KunenaFactory::getUser($user);
 		return !empty($this->adminsByUserid[$user->userid]) ? $this->adminsByUserid[$user->userid] : array();
 	}
 
+	/**
+	 * @param mixed $user
+	 *
+	 * @return array
+	 */
 	public function getModeratorStatus($user = null) {
 		$user = KunenaFactory::getUser($user);
 		return !empty($this->moderatorsByUserid[$user->userid]) ? $this->moderatorsByUserid[$user->userid] : array();
 	}
 
+	/**
+	 * @param mixed $user
+	 * @param int  $catid
+	 *
+	 * @return bool
+	 */
 	public function isAdmin($user = null, $catid = 0) {
 		$user = KunenaFactory::getUser($user);
 
@@ -241,6 +265,12 @@ window.addEvent('domready', function(){
 		return false;
 	}
 
+	/**
+	 * @param mixed $user
+	 * @param int  $catid
+	 *
+	 * @return bool
+	 */
 	public function isModerator($user = null, $catid = 0) {
 		$user = KunenaFactory::getUser($user);
 
@@ -260,10 +290,16 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * Assign user as moderator or resign him
+	 * Assign user as moderator or resign him.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param mixed $user
+	 * @param bool $status
+	 *
+	 * @return bool
 	 *
 	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
-	 **/
+	 */
 	public function setModerator($category, $user = null, $status = true) {
 		// Check if category exists
 		if ($category && !$category->exists()) return false;
@@ -294,6 +330,11 @@ window.addEvent('domready', function(){
 		return $success;
 	}
 
+	/**
+	 * @param mixed $user
+	 *
+	 * @return mixed
+	 */
 	public function getAllowedCategories($user = null) {
 		static $read = array();
 
@@ -360,6 +401,13 @@ window.addEvent('domready', function(){
 		return $list;
 	}
 
+	/**
+	 * @param mixed $user
+	 * @param int $catid
+	 * @param bool $string
+	 *
+	 * @return string|array
+	 */
 	public function getAllowedHold($user, $catid, $string=true) {
 		// hold = 0: normal
 		// hold = 1: unapproved
@@ -380,6 +428,16 @@ window.addEvent('domready', function(){
 		return $hold;
 	}
 
+	/**
+	 * @param int  $catid
+	 * @param mixed $topic
+	 * @param mixed $type
+	 * @param bool $moderators
+	 * @param bool $admins
+	 * @param mixed $excludeList
+	 *
+	 * @return array
+	 */
 	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null) {
 		$topic = KunenaForumTopicHelper::get($topic);
 		$category = $topic->getCategory();
@@ -470,6 +528,9 @@ window.addEvent('domready', function(){
 		return $userids;
 	}
 
+	/**
+	 * @param array $list
+	 */
 	protected function storeRoles(array $list = null) {
 		if (empty($list)) return;
 		foreach ( $list as $item ) {
@@ -487,6 +548,12 @@ window.addEvent('domready', function(){
 		}
 	}
 
+	/**
+	 * @param KunenaForumTopic $topic
+	 * @param bool             $type
+	 *
+	 * @return array
+	 */
 	public function loadSubscribers(KunenaForumTopic $topic, $type) {
 		$category = $topic->getCategory();
 		$db = JFactory::getDBO ();

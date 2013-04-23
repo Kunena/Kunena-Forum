@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Lib
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -557,7 +557,7 @@ class CKunenaImageFilter
 	 * either pass a string or an array of directories.
 	 *
 	 * @access	public
-	 * @param	string	A path to search.
+	 * @param	string	$path  A path to search.
 	 * @return	array	An array with directory elements
 	 * @since	1.0
 	 */

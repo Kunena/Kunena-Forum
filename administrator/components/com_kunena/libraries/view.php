@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -36,19 +36,10 @@ class KunenaView extends JViewLegacy {
 		if ($this->app->isSite() && !isset($config['template_path'])) $config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
 
 		if ($this->app->isAdmin()) {
-			if (version_compare(JVERSION, '3', '>')) {
-				// Joomla 3.0+ template:
-				$config['template_path'] = array(KPATH_ADMIN.'/template/joomla30/'.$name);
-				require_once KPATH_ADMIN.'/template/joomla30/template.php';
-				$templateAdmin = new KunenaAdminTemplate30;
-				$templateAdmin->initialize();
-			} else {
-				// Joomla 2.5 template:
-				$config['template_path'] = array(KPATH_ADMIN.'/template/joomla25/'.$name);
-				require_once KPATH_ADMIN.'/template/joomla25/template.php';
-				$templateAdmin = new KunenaAdminTemplate25;
-				$templateAdmin->initialize();
-			}
+			$templateAdmin = KunenaFactory::getAdminTemplate();
+			$templateAdmin->initialize();
+
+			$config['template_path'] = $templateAdmin->getTemplatePaths($name);
 		}
 
 		parent::__construct($config);
@@ -92,7 +83,7 @@ class KunenaView extends JViewLegacy {
 		} else {
 			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
 			include JPATH_SITE .'/'. $this->ktemplate->getFile ('html/display.php');
-			if ($this->config->get('credits', 1)) echo $this->poweredBy();
+			if ($this->config->get('credits', 1)) $this->poweredBy();
 		}
 	}
 
@@ -124,7 +115,7 @@ class KunenaView extends JViewLegacy {
 				return;
 			} elseif (!method_exists($this, $layoutFunction) && !file_exists(KPATH_SITE."/views/{$view}/{$layout}.php")) {
 				// Layout was not found (don't allow Joomla to raise an error)
-				echo $this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
+				$this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			}
@@ -375,7 +366,7 @@ class KunenaView extends JViewLegacy {
 	/**
 	 * Load a template file -- first look in the templates folder for an override
 	 *
-	 * @param   string   The name of the template source file ...
+	 * @param   string  $tpl	The name of the template source file ...
 	 * 					automatically searches the template paths and compiles as needed.
 	 * @return  string   The output of the the template script.
 	 */

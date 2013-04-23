@@ -4,59 +4,71 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Thankyou
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Message Thank You Class
+ * Class KunenaForumMessageThankyou
+ *
+ * @property int $postid
+ * @property int $userid
+ * @property int $targetuserid
+ * @property string $time
  */
 class KunenaForumMessageThankyou extends JObject {
+	/**
+	 * @var int
+	 */
 	protected $id = 0;
 	protected $users = array();
+
 	/**
-	 * Constructor -- please use getInstance()
+	 * @param int $id
 	 *
-	 * @access	protected
+	 * @internal
 	 */
 	public function __construct($id) {
 		$this->id = (int) $id;
 	}
 
 	/**
-	 * Returns KunenaForumMessage object
-	 *
-	 * @access	public
-	 * @param int $identifier The message to load - Can be only an integer.
+	 * @param null $identifier
 	 * @param bool $reload
-	 * @return	KunenaForumMessage		The message object.
+	 *
+	 * @return KunenaForumMessageThankyou
 	 */
 	static public function getInstance($identifier = null, $reload = false) {
 		return KunenaForumMessageThankyouHelper::get($identifier, $reload);
 	}
 
 	/**
-	 * Check if the user has already said thank you
-	 * @param int $pid
+	 * Check if the user has already said thank you.
+	 *
 	 * @param int $userid
-	 * @return int userid if hes in table else empty
-	 * @since 1.6
+	 *
+	 * @return bool
 	 */
 	public function exists($userid) {
-		return isset($this->users[$userid]);
+		return isset($this->users[(int) $userid]);
 	}
 
+	/**
+	 * @param int $userid
+	 * @param string $time
+	 */
 	public function _add($userid, $time) {
 		$this->users[$userid] = $time;
 	}
 
 	/**
-	 * Perform insert the thank you into table
-	 * @param int $userid
-	 * @return bool true if succes
-	 * @since 1.6
+	 * Save thank you.
+	 *
+	 * @param mixed $user
+	 *
+	 * @return bool
 	 */
 	public function save($user) {
 		$user = KunenaFactory::getUser($user);
@@ -94,12 +106,11 @@ class KunenaForumMessageThankyou extends JObject {
 	}
 
 	/**
-	* Perform insert the received thank you into user table
-	* @param int $userid
-	* @return bool true if succes
-	* @since 2.0
-	*/
-	protected function _savethankyou($message) {
+	 * @param KunenaForumMessage $message
+	 *
+	 * @return bool
+	 */
+	protected function _savethankyou(KunenaForumMessage $message) {
 		$db = JFactory::getDBO ();
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
@@ -116,22 +127,19 @@ class KunenaForumMessageThankyou extends JObject {
 	}
 
 	/**
-	 * Get the users who have given thank you to message
-	 * @param int $pid
-	 * @param string $named
-	 * @param string number how much users you will show
-	 * @return array List of userid=>time
-	 * @since 1.6
+	 * Get all users who have given thank you to this message.
+	 * @return array List of userid=>time.
 	 */
 	public function getList() {
 		return $this->users;
 	}
 
 	/**
-	 * Perform delete the thank you into table
-	 * @param int $userid
-	 * @return bool true if succes
-	 * @since 1.6
+	 * Detele thank you from the database.
+	 *
+	 * @param mixed $user
+	 *
+	 * @return bool
 	 */
 	public function delete($user) {
 		$user = KunenaFactory::getUser($user);

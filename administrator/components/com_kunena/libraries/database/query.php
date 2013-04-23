@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -305,7 +305,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	A string or array of table names.
+	 * @param	mixed	$tables	A string or array of table names.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6

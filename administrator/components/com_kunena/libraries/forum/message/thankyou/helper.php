@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Thankyou
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,21 +15,23 @@ defined ( '_JEXEC' ) or die ();
  * @since 2.0
  */
 abstract class KunenaForumMessageThankyouHelper {
+	/**
+	 * @var KunenaForumMessageThankyou[]
+	 */
 	protected static $_instances = array();
 
 	/**
-	 * Returns KunenaForumMessageThankyou object
+	 * @param int  $identifier	The message to load - Can be only an integer.
+	 * @param bool $reload
 	 *
-	 * @access	public
-	 * @param	identifier		The message to load - Can be only an integer.
-	 * @return	KunenaForumMessageThankyou		The thankyou object.
-	 * @since	1.7
+	 * @return KunenaForumMessageThankyou
 	 */
 	static public function get($identifier, $reload = false) {
 		if ($identifier instanceof KunenaForumMessageThankyou) {
 			return $identifier;
 		}
 		$id = intval ( $identifier );
+		// TODO: why this returns null? Does it have side effect?
 		if ($id < 1)
 			return;
 
@@ -42,9 +44,11 @@ abstract class KunenaForumMessageThankyouHelper {
 	}
 
 	/**
-	 * Total number of Thank yous
-	 * @param int $starttime Starting time as unix timestamp
-	 * @param int $endtime Ending time as unix timestamp
+	 * Get total number of Thank yous.
+	 *
+	 * @param int $starttime	Starting time as unix timestamp.
+	 * @param int $endtime		Ending time as unix timestamp.
+	 *
 	 * @return int
 	 */
 	static public function getTotal($starttime = null, $endtime = null) {
@@ -65,11 +69,13 @@ abstract class KunenaForumMessageThankyouHelper {
 	}
 
 	/**
-	 * Get most thanked/thanking users
+	 * Get users with most thank yous received / given.
+	 *
 	 * @param bool $target
-	 * @param int $limitstart
-	 * @param int $limit
-	 * @return List of users
+	 * @param int  $limitstart
+	 * @param int  $limit
+	 *
+	 * @return array
 	 */
 	static public function getTopUsers($target=true, $limitstart=0, $limit=10) {
 		$field = 'targetuserid';
@@ -91,10 +97,12 @@ abstract class KunenaForumMessageThankyouHelper {
 	}
 
 	/**
-	 * Get most thanked messages
+	 * Get messages with most thank yous given.
+	 *
 	 * @param int $limitstart
 	 * @param int $limit
-	 * @return List of messages
+	 *
+	 * @return array
 	 */
 	static public function getTopMessages($limitstart=0, $limit=10) {
 		$db = JFactory::getDBO();
@@ -115,14 +123,15 @@ abstract class KunenaForumMessageThankyouHelper {
 		return $results;
 	}
 
-
 	/**
-	 * Get messages where a user received (or said) Thank You
-	 * @param int $userid
+	 * Get messages where a user received / gave thank you.
+	 *
+	 * @param int  $userid
 	 * @param bool $target
-	 * @param int $limitstart
-	 * @param int $limit
-	 * @return Objectlist List of the wanted messages
+	 * @param int  $limitstart
+	 * @param int  $limit
+	 *
+	 * @return array
 	 */
 	static public function getUserMessages($userid, $target=true, $limitstart=0, $limit=10) {
 		$db = JFactory::getDBO();
@@ -137,17 +146,18 @@ abstract class KunenaForumMessageThankyouHelper {
 				INNER JOIN #__kunena_topics AS tt ON m.thread=tt.id
 				WHERE m.catid IN ({$catlist}) AND m.hold=0 AND tt.hold=0 AND t.{$field}={$db->quote(intval($userid))}";
 		$db->setQuery ( $query, (int) $limitstart, (int) $limit );
-		$results = $db->loadObjectList ();
+		$results = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 
 		return $results;
 	}
 
 	/**
-	 * Load users who have given thank you to listed messages
-	 * @param array $ids List of message IDs
+	 * Load users who have given thank you to listed messages.
+	 *
+	 * @param array $ids
 	 */
-	static protected function loadMessages($ids) {
+	static protected function loadMessages(array $ids) {
 		foreach ($ids as $i=>$id) {
 			$id = intval($id);
 			if (!$id || isset(self::$_instances [$id]))
@@ -176,9 +186,9 @@ abstract class KunenaForumMessageThankyouHelper {
 	}
 
 	/**
-	 * Perform the recount thankyous in kunena_users table
-	 * @return bool true if succes
-	 * @since 2.0
+	 * Recount thank yous.
+	 *
+	 * @return bool|int	Number of rows is successful, false on error.
 	 */
 	static public function recount() {
 		$db = JFactory::getDBO ();
@@ -210,12 +220,11 @@ abstract class KunenaForumMessageThankyouHelper {
 	}
 
 	/**
-	 * Returns KunenaForumMessageThankyou object
+	 * Return thank yous for the given messages.
 	 *
-	 * @access	public
-	 * @param	ids		The message to load - Can be only an instance of KunenaForumMessage.
-	 * @return	KunenaForumMessageThankyou		The thankyou object.
-	 * @since	2.0-BETA2
+	 * @param bool|array|int $ids
+	 *
+	 * @return KunenaForumMessageThankyou[]
 	 */
 	static public function getByMessage($ids = false) {
 		if ($ids === false) {

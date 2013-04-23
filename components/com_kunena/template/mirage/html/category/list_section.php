@@ -4,7 +4,7 @@
  * @package Kunena.Template.Mirage
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -61,7 +61,7 @@ $this->category_rowclass = array ("even", "odd" );
 							</li>
 						</ul>
 						<ul class="category-list">
-							<?php foreach ( $this->categories [$this->section->id] as $category ) $this->displayCategory($category) ?>
+							<?php foreach ($this->categories[$this->section->id] as $category) { $this->displayCategory($category); } ?>
 						</ul>
 					</div>
 				</div>

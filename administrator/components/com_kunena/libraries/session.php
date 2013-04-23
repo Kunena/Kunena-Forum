@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -50,8 +50,8 @@ class KunenaSession extends JObject
 	 * needed.
 	 *
 	 * @access	public
-	 * @param	string	The session table name to be used
-	 * @param	string	The session table prefix to be used
+	 * @param	string	$type	The session table name to be used
+	 * @param	string	$prefix	The session table prefix to be used
 	 * @return	object	The session table object
 	 * @since	1.5
 	 */

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,7 +15,7 @@ class pkg_kunena_languagesInstallerScript {
 		// Remove languages.
 		$languages = JFactory::getLanguage()->getKnownLanguages();
 		foreach ($languages as $language) {
-			echo $this->uninstallLanguage($language['tag'], $language['name']);
+			$this->uninstallLanguage($language['tag'], $language['name']);
 		}
 	}
 

@@ -4,11 +4,13 @@
  * @package Kunena.Administrator.Template
  * @subpackage Config
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewConfig $this */
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -51,9 +53,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -127,9 +129,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -147,9 +149,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -175,8 +177,8 @@ JHtml::_('dropdown.init');
 										<thead>
 											<tr>
 												<th width=""></th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -353,9 +355,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 										<tr>
-											<th width="25%">Ttitle</th>
-											<th width="25%">Opiton</th>
-											<th>Description</th>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+											<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 										</tr>
 										</thead>
 										<tbody>
@@ -385,9 +387,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -474,9 +476,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -531,9 +533,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -610,9 +612,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -649,9 +651,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -671,9 +673,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -708,9 +710,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -783,9 +785,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -826,9 +828,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -853,9 +855,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -948,9 +950,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -1030,9 +1032,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 										<tr>
-											<th width="25%">Ttitle</th>
-											<th width="25%">Opiton</th>
-											<th>Description</th>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+											<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 										</tr>
 										</thead>
 										<tbody>
@@ -1094,9 +1096,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 										<tr>
-											<th width="25%">Ttitle</th>
-											<th width="25%">Opiton</th>
-											<th>Description</th>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+											<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 										</tr>
 										</thead>
 										<tbody>
@@ -1163,9 +1165,9 @@ JHtml::_('dropdown.init');
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th width="25%">Ttitle</th>
-												<th width="25%">Opiton</th>
-												<th>Description</th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -1208,6 +1210,8 @@ JHtml::_('dropdown.init');
 				</div>
 			</article>
 		</form>
+		<?php //Load the setting comfirmation box form. ?>
+		<?php echo $this->loadTemplateFile('setting'); ?>
 	</div>
 	<div class="pull-right small">
 		<?php echo KunenaVersion::getLongVersionHTML(); ?>

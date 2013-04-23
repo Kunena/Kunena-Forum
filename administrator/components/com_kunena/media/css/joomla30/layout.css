@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Administrator.Joomla30
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,6 +15,23 @@
 #kunena.admin.override input[type="file"] {
     height: auto;
     line-height: 30px;
+}
+
+#kunena.admin.override li {
+    line-height: 20px;
+}
+
+#kunena.admin.override fieldset input,
+#kunena.admin.override fieldset textarea,
+#kunena.admin.override fieldset select,
+#kunena.admin.override fieldset img,
+#kunena.admin.override fieldset button {
+    float: none;
+    margin: 0;
+}
+
+#kunena.admin.override label {
+    display: inline !important;
 }
 
 #kunena.admin.override .center {
@@ -39,9 +56,22 @@
 #kunena.admin.override #dashboard-icons .btn {
     border-radius: 3px;
     min-height: 64px;
-    min-width: 64px;
+    min-width: 72px;
     overflow: hidden;
 }
-#kunena.admin.override label {
-    display: inline !important;
+
+/*All wells in tables should not have margin*/
+#kunena.admin.override table .well {
+    margin-bottom: 0;
+}
+
+#kunena.admin.override .filter-state {
+    font-size: 150%;
+}
+
+#kunena.admin.override .filter-state .btn {
+    padding: 0 6px;
+    vertical-align: inherit;
+    font-size: inherit;
+    line-height: 150%
 }

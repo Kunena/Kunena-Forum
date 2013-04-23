@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -40,8 +40,8 @@ class KunenaAccessComprofiler {
 	/**
 	 * Get group name in selected access type.
 	 *
-	 * @param string	Access type.
-	 * @param int		Group id.
+	 * @param string	$accesstype	Access type.
+	 * @param int		$id			Group id.
 	 */
 	public function getGroupName($accesstype, $id=null) {
 		if ($accesstype == 'communitybuilder') {
@@ -57,10 +57,11 @@ class KunenaAccessComprofiler {
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param string	Access type.
-	 * @param int		Group id.
+	 * @param string	$accesstype	Access type.
+	 * @param int		$category	Group id.
 	 */
 	public function getAccessOptions($accesstype, $category) {
+		$html = array();
 		if (!$accesstype || $accesstype == 'communitybuilder') {
 			$this->loadCategories();
 			$this->loadGroups();
@@ -132,8 +133,8 @@ class KunenaAccessComprofiler {
 	/**
 	 * Authorise list of userids to topic or category.
 	 *
-	 * @param	mixed	Category or topic.
-	 * @param	array	list(allow, deny).
+	 * @param	mixed	$topic		Category or topic.
+	 * @param	array	$userids	list(allow, deny).
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
 		if (empty($userids)) {

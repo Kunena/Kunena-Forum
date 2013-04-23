@@ -20,7 +20,7 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_GRAVATAR_AVATAR" description="PLG_KUNENA_GRAVATAR_AVATAR_DESC">
+				<field name="avatar" type="list" default="1" label="PLG_KUNENA_GRAVATAR_AVATAR" description="PLG_KUNENA_GRAVATAR_AVATAR_DESC"  class="inputbox">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>

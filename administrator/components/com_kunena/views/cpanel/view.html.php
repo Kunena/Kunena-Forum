@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,7 +18,9 @@ class KunenaAdminViewCpanel extends KunenaView {
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_DASHBOARD'), 'cp' );
 
 		if (JFactory::getUser()->authorise('core.admin', 'com_kunena')) {
+			JToolBarHelper::spacer();
 			JToolBarHelper::preferences('com_kunena');
+			JToolBarHelper::spacer();
 		}
 		$this->display ();
 	}

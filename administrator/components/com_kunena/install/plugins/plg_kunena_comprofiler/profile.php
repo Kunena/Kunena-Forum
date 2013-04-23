@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -62,5 +62,9 @@ class KunenaProfileComprofiler extends KunenaProfile {
 		$top = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 		return $top;
+	}
+
+	public function getEditProfileURL($userid, $xhtml = true) {
+		return cbSef( 'index.php?option=com_comprofiler&task=userDetails'. getCBprofileItemid(), $xhtml );
 	}
 }

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage BBCode
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -217,7 +217,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 		$this->class = $class;
 	}
 
-	public static function parseXML($xml) {
+	public static function parseXML(SimpleXMLElement $xml) {
 		$obj = new KunenaBbcodeEditorButton((string)$xml['name'], (string)$xml['class'], (string)$xml['tag'], (string)$xml['title'], (string)$xml['alt']);
 
 		foreach ($xml as $xml_item) {

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -129,13 +129,11 @@ class KunenaSpamRecaptcha {
 	}
 
 	/**
-	* Calls an HTTP POST function to verify if the user's guess was correct
-	* @param string $privkey
-	* @param string $remoteip
-	* @param string $challenge
-	* @param string $response
-	* @param array $extra_params an array of extra variables to post to the server
-	* @return ReCaptchaResponse
+	* Calls an HTTP POST function to verify if the user's guess was correct.
+	 *
+	* @param array $extra_params An array of extra variables to post to the server.
+	 *
+	* @return bool
 	*/
 	public function verify($extra_params = array()) {
 		if ( empty($this->privatekey) ) {
@@ -206,7 +204,7 @@ class KunenaSpamRecaptcha {
 	* Submits an HTTP POST to a reCAPTCHA server
 	* @param string $path
 	* @param array $data
-	* @param int port
+	* @param int $port
 	* @return array response
 	*/
 	private function _query($path, $data, $port = 80) {

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -34,8 +34,8 @@ class KunenaAvatar {
 	}
 
 	public function load($userlist) {}
-	public function getEditURL() {}
-	protected function _getURL($user, $sizex, $sizey) {}
+	public function getEditURL() { return ''; }
+	protected function _getURL($user, $sizex, $sizey) { return ''; }
 
 	public function getSize($sizex=90, $sizey=90) {
 		$size = new StdClass();

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -11,15 +11,15 @@ defined ( '_JEXEC' ) or die ();
 
 /**
  * The HTML Kunena configuration view.
- *
- * @version		1.6
  */
 class KunenaViewInstall extends JViewLegacy
 {
+	protected $model = null;
+
 	/**
 	 * Method to display the view.
 	 *
-	 * @param	string	A template file to load.
+	 * @param	string	$tpl	A template file to load.
 	 * @return	mixed	JError object on failure, void on success.
 	 * @throws	object	JError
 	 * @since	1.6
@@ -43,6 +43,11 @@ class KunenaViewInstall extends JViewLegacy
 		$this->model->setStep(0);
 
 		JRequest::setVar('hidemainmenu', 1);
+
+		// Joomla 2.5 support
+		if ($layout == 'default' && !$tpl && version_compare(JVERSION, '3.0', '<')) {
+			$tpl = 'j25';
+		}
 
 		parent::display($tpl);
 	}

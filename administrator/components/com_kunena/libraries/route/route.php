@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Route
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -119,6 +119,12 @@ abstract class KunenaRoute {
 		return self::$uris[$key];
 	}
 
+	/**
+	 * @param JUri $uri
+	 * @param bool $object
+	 *
+	 * @return JUri|string
+	 */
 	public static function normalize($uri = null, $object = false) {
 		if (self::$adminApp) {
 			// Use default routing in administration
@@ -431,7 +437,7 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
-	protected static function setItemID($uri) {
+	protected static function setItemID(JUri $uri) {
 		static $candidates = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
@@ -485,7 +491,7 @@ abstract class KunenaRoute {
 		return $bestid;
 	}
 
-	protected static function checkItem($item, $uri) {
+	protected static function checkItem($item, JUri $uri) {
 		$authorise = self::$menus->authorise($item->id);
 		if (!$authorise) {
 			return 0;
@@ -527,7 +533,7 @@ abstract class KunenaRoute {
 		return intval(empty($cache[$item->id]) || isset($cache[$item->id][$catid]));
 	}
 
-	protected static function checkCategory($item, $uri) {
+	protected static function checkCategory($item, JUri $uri) {
 		static $cache = array();
 		$catid = (int) $uri->getVar('catid');
 		$check = self::check($item, $uri);
@@ -542,7 +548,7 @@ abstract class KunenaRoute {
 		return intval(isset($cache[$item->id][$catid])) * 8;
 	}
 
-	protected static function check($item, $uri) {
+	protected static function check($item, JUri $uri) {
 		$hits = 0;
 		foreach ( $item->query as $var => $value ) {
 			if ($value != $uri->getVar($var)) {

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -34,9 +34,6 @@ define ( 'KURL_SITE', JUri::Root () . KPATH_COMPONENT_RELATIVE . '/' );
 define ( 'KURL_MEDIA', JUri::Root () . 'media/' . KUNENA_NAME . '/' );
 
 $libraryFile = JPATH_PLATFORM . '/kunena/bootstrap.php';
-if (!file_exists($libraryFile)) {
-	$libraryFile = __DIR__ . '/libraries/bootstrap.php';
-}
 if (file_exists($libraryFile)) {
 	require_once $libraryFile;
 }

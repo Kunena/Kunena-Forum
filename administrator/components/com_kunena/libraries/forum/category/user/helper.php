@@ -4,28 +4,27 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category.User
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Category User Helper Class
+ * Class KunenaForumCategoryUserHelper
  */
 abstract class KunenaForumCategoryUserHelper {
 	// Global for every instance
 	protected static $_instances = array();
 
 	/**
-	 * Get an instance of KunenaForumCategoryUser object
+	 * Get an instance of KunenaForumCategoryUser object.
 	 *
-	 * @access	public
-	 * @param	int  $id  The category id to load.
-	 * @param	int  $user	The user id to load - Can be only an integer.
-	 * @param	boolean  $reload Define if the instances of categories need to be reloaded.
-	 * @return	KunenaForumCategoryUser		The user category object.
-	 * @since	1.7
+	 * @param null|int	$category	The category id to load.
+	 * @param mixed		$user		The user id to load - Can be only an integer.
+	 * @param bool		$reload		Reload objects from the database.
+	 *
+	 * @return KunenaForumCategoryUser	The user category object.
 	 */
 	static public function get($category = null, $user = null, $reload = false) {
 		if ($category instanceof KunenaForumCategory) {
@@ -46,13 +45,12 @@ abstract class KunenaForumCategoryUserHelper {
 	}
 
 	/**
-	 * Get categories for a specific user
+	 * Get categories for a specific user.
 	 *
-	 * @access	public
-	 * @param	mixed  $ids  The category ids to load.
-	 * @param	int  $user	The user id to load - Can be only an integer.
-	 * @return	KunenaForumCategoryUser		The user category object.
-	 * @since	1.7
+	 * @param bool|array|int	$ids		The category ids to load.
+	 * @param mixed				$user		The user id to load.
+	 *
+	 * @return KunenaForumCategoryUser[]
 	 */
 	static public function getCategories($ids = false, $user=null) {
 		$user = KunenaUserHelper::get($user);
@@ -82,15 +80,12 @@ abstract class KunenaForumCategoryUserHelper {
 	// Internal functions
 
 	/**
-	 * Load categories for a specific user
+	 * Load categories for a specific user.
 	 *
-	 * @access	protected
-	 * @param	array  $ids  The category ids to load.
-	 * @param	int  $user	The user id to load - Can be only an integer.
-	 * @return	KunenaForumCategoryUser		The user category object.
-	 * @since	1.7
+	 * @param array			$ids		The category ids to load.
+	 * @param KunenaUser	$user
 	 */
-	static protected function loadCategories($ids, $user) {
+	static protected function loadCategories(array $ids, KunenaUser $user) {
 		foreach ($ids as $i=>$id) {
 			$iid = intval($id);
 			if ($iid != $id || isset(self::$_instances [$user->userid][$id]))

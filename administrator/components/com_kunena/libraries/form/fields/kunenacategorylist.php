@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Form
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,13 +13,19 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
+/**
+ * Class JFormFieldKunenaCategoryList
+ */
 class JFormFieldKunenaCategoryList extends JFormField {
 	protected $type = 'KunenaCategoryList';
 
-	protected function getInput() {
+    /**
+     * @return string
+     */
+    protected function getInput() {
 		if (!class_exists('KunenaForum') || !KunenaForum::installed()) {
 			echo '<a href="index.php?option=com_kunena">PLEASE COMPLETE KUNENA INSTALLATION</a>';
-			return;
+			return '';
 		}
 
 		KunenaFactory::loadLanguage('com_kunena');

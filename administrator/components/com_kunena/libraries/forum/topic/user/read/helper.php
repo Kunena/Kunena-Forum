@@ -4,27 +4,30 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.User.Read
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Topic User Read Helper Class
+ * Class KunenaForumTopicUserReadHelper
  */
 abstract class KunenaForumTopicUserReadHelper {
-	// Global for every instance
+	/**
+	 * @var KunenaForumTopicUserRead[]
+	 */
 	protected static $_instances = array();
 	protected static $_topics = array();
 
 	/**
-	 * Returns KunenaForumTopicUserRead object
+	 * Returns KunenaForumTopicUserRead object.
 	 *
-	 * @access	public
-	 * @param	identifier		The user topic to load - Can be only an integer.
-	 * @return	KunenaForumTopicUserRead		The user read topic object.
-	 * @since	2.0.0
+	 * @param mixed $topic	User topic to load.
+	 * @param mixed $user
+	 * @param bool $reload
+	 *
+	 * @return KunenaForumTopicUserRead
 	 */
 	static public function get($topic = null, $user = null, $reload = false) {
 		if ($topic instanceof KunenaForumTopic) {
@@ -46,6 +49,12 @@ abstract class KunenaForumTopicUserReadHelper {
 		return self::$_instances [$user->userid][$topic];
 	}
 
+	/**
+	 * @param bool|array $ids
+	 * @param mixed $user
+	 *
+	 * @return KunenaForumTopicUserRead[]
+	 */
 	static public function getTopics($ids = false, $user=null) {
 		$user = KunenaUserHelper::get($user);
 		if ($ids === false) {
@@ -70,6 +79,12 @@ abstract class KunenaForumTopicUserReadHelper {
 		return $list;
 	}
 
+	/**
+	 * @param KunenaForumTopic $old
+	 * @param KunenaForumTopic $new
+	 *
+	 * @return bool
+	 */
 	public static function move($old, $new) {
 		// Update database
 		$db = JFactory::getDBO ();
@@ -94,6 +109,12 @@ abstract class KunenaForumTopicUserReadHelper {
 		return true;
 	}
 
+	/**
+	 * @param KunenaForumTopic $old
+	 * @param KunenaForumTopic $new
+	 *
+	 * @return bool
+	 */
 	public static function merge($old, $new) {
 		$db = JFactory::getDBO ();
 
@@ -128,6 +149,9 @@ abstract class KunenaForumTopicUserReadHelper {
 		return true;
 	}
 
+	/**
+	 * @return bool
+	 */
 	static public function recount() {
 		$db = JFactory::getDBO ();
 		$query = "UPDATE #__kunena_user_read AS ur
@@ -141,6 +165,11 @@ abstract class KunenaForumTopicUserReadHelper {
 		return true;
 	}
 
+	/**
+	 * @param int $days
+	 *
+	 * @return bool
+	 */
 	static public function purge($days = 2) {
 		// Purge items that are older than x days (defaulting to 2)
 		$db = JFactory::getDBO ();
@@ -156,7 +185,11 @@ abstract class KunenaForumTopicUserReadHelper {
 
 	// Internal functions
 
-	static protected function loadTopics($ids, $user) {
+	/**
+	 * @param array      $ids
+	 * @param KunenaUser $user
+	 */
+	static protected function loadTopics(array $ids, KunenaUser $user) {
 		foreach ($ids as $i=>$id) {
 			$id = intval($id);
 			if (!$id || isset(self::$_instances [$user->userid][$id]))
@@ -185,6 +218,9 @@ abstract class KunenaForumTopicUserReadHelper {
 		unset ($results);
 	}
 
+	/**
+	 * @param int $id
+	 */
 	static protected function reloadTopic($id) {
 		if (empty(self::$_topics [$id])) return;
 
@@ -195,6 +231,7 @@ abstract class KunenaForumTopicUserReadHelper {
 		$results = (array) $db->loadAssocList ('user_id');
 		KunenaError::checkDatabaseError ();
 
+		// TODO: is there a bug?
 		foreach ( self::$_topics [$id] as $instance ) {
 			if (isset($results[$instance->user_id])) {
 				$instance->bind ( $results[$instance->user_id] );

@@ -4,11 +4,13 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+/** @var KunenaAdminViewCategories $this */
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');

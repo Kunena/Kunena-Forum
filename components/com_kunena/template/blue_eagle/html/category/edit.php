@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -117,7 +117,7 @@ $paneOptions = array(
 						foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) :
 							foreach ($accesslist as $accessinput) :
 						?>
-						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
+						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
 							<td class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
 							<td valign="top"><?php echo $accessinput['input'] ?></td>
 							<td valign="top"><?php echo $accessinput['desc'] ?></td>

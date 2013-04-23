@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -57,8 +57,8 @@ class KunenaDate extends JDate {
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 
-	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset=false) {
-		return '<span class="kdate" title="'.$this->toKunena($title, $offset).'">'.$this->toKunena($mode, $offset).'</span>';
+	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset=false, $class='') {
+		return '<span class="kdate '.$class.'" title="'.$this->toKunena($title, $offset).'">'.$this->toKunena($mode, $offset).'</span>';
 	}
 
 	public function toKunena($mode = 'datetime_today', $offset=false) {

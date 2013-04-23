@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -105,7 +105,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
-	function delete() {
+	function remove() {
 		$db = JFactory::getDBO ();
 
 		if (!JSession::checkToken('post')) {

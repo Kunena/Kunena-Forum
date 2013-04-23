@@ -21,9 +21,9 @@ class plgKunenaFinder extends JPlugin
 	 * Message is passed by reference, but after the save, so no changes will be saved.
 	 * Method is called right after the Message is saved
 	 *
-	 * @param	string		The context of the message passed to the plugin (added in 1.6)
-	 * @param	object		A Table object containing the message
-	 * @param	bool		If the message has just been created
+	 * @param	string		$context	The context of the message passed to the plugin (added in 1.6)
+	 * @param	object		$table		A Table object containing the message
+	 * @param	bool		$isNew		If the message has just been created
 	 * @since	2.5
 	 */
 	public function onKunenaAfterSave($context, $table, $isNew)
@@ -45,9 +45,9 @@ class plgKunenaFinder extends JPlugin
 	 * Finder before save message method
 	 * Method is called right before the content is saved
 	 *
-	 * @param	string		The context of the content passed to the plugin (added in 1.6)
-	 * @param	object		A Table object containing the message
-	 * @param	bool		If the message is just about to be created
+	 * @param	string		$context	The context of the content passed to the plugin (added in 1.6)
+	 * @param	object		$table		A Table object containing the message
+	 * @param	bool		$isNew		If the message is just about to be created
 	 * @since   2.5
 	 */
 	public function onKunenaBeforeSave($context, $table, $isNew)
@@ -69,8 +69,8 @@ class plgKunenaFinder extends JPlugin
 	/**
 	 * Finder after delete message method
 	 *
-	 * @param	string		The context of the content passed to the plugin (added in 1.6)
-	 * @param	object		A Table object containing the message
+	 * @param	string		$context	The context of the content passed to the plugin (added in 1.6)
+	 * @param	object		$table		A Table object containing the message
 	 * @since   2.5
 	 */
 	public function onKunenaAfterDelete($context, $table)
@@ -90,8 +90,8 @@ class plgKunenaFinder extends JPlugin
 	/**
 	 * Finder after delete message method
 	 *
-	 * @param	string		The context of the content passed to the plugin (added in 1.6)
-	 * @param	object		A Table object containing the message
+	 * @param	string		$context	The context of the content passed to the plugin (added in 1.6)
+	 * @param	object		$table		A Table object containing the message
 	 * @since   2.5
 	 */
 	public function onKunenaBeforeDelete($context, $table)

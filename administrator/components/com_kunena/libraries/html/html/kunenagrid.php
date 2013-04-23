@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage HTML
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -22,10 +22,10 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * Display a boolean setting widget.
 	 *
-	 * @param   integer  The row index.
-	 * @param   integer  The value of the boolean field.
-	 * @param   string   Task to turn the boolean setting on.
-	 * @param   string   Task to turn the boolean setting off.
+	 * @param   integer  $i			The row index.
+	 * @param   integer  $value		The value of the boolean field.
+	 * @param   string   $taskOn	Task to turn the boolean setting on.
+	 * @param   string   $taskOff	Task to turn the boolean setting off.
 	 *
 	 * @return  string   The boolean setting widget.
 	 */
@@ -53,12 +53,13 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param   string   The link title
-	 * @param   string   The order field for the column
-	 * @param   string   The current direction
-	 * @param   string   The selected ordering
-	 * @param   string   An optional task override
-	 * @param   string   An optional direction for the new column
+	 * @param   string   $title	The link title
+	 * @param   string   $order	The order field for the column
+	 * @param   string   $direction	The current direction
+	 * @param   string   $selected	The selected ordering
+	 * @param   string   $task	An optional task override
+	 * @param   string   $new_direction	An optional direction for the new column
+	 * @param   string   $form
 	 *
 	 * @return  string
 	 */
@@ -83,10 +84,10 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param   integer The row index
-	 * @param   integer The record id
-	 * @param   boolean
-	 * @param   string The name of the form element
+	 * @param   integer $rowNum	The row index
+	 * @param   integer $recId	The record id
+	 * @param   boolean $checkedOut
+	 * @param   string $name	The name of the form element
 	 *
 	 * @return  string
 	 */

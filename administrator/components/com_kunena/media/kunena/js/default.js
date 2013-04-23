@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Blue_Eagle
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -917,4 +917,7 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
+	
+	/* For profile tabs */
+	$$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); });
 });

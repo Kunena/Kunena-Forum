@@ -4,26 +4,28 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-
 /**
- * Kunena Forum Topic Helper Class
+ * Class KunenaForumTopicHelper
  */
 abstract class KunenaForumTopicHelper {
+	/**
+	 * @var KunenaForumTopic[]
+	 */
 	protected static $_instances = array();
 
 	/**
-	 * Returns KunenaForumTopic object
+	 * Returns KunenaForumTopic object.
 	 *
-	 * @access	public
-	 * @param	identifier		The topic to load - Can be only an integer.
-	 * @return	KunenaForumTopic		The topic object.
-	 * @since	1.7
+	 * @param int  $identifier	The topic to load - Can be only an integer.
+	 * @param bool $reload
+	 *
+	 * @return KunenaForumTopic
 	 */
 	static public function get($identifier = null, $reload = false) {
 		if ($identifier instanceof KunenaForumTopic) {
@@ -43,7 +45,14 @@ abstract class KunenaForumTopicHelper {
 		return self::$_instances [$id];
 	}
 
-	public static function subscribe($ids, $value=1, $user=null) {
+	/**
+	 * @param mixed $ids
+	 * @param bool  $value
+	 * @param mixed $user
+	 *
+	 * @return int
+	 */
+	public static function subscribe($ids, $value=true, $user=null) {
 		// Pre-load all items
 		$usertopics = KunenaForumTopicUserHelper::getTopics($ids, $user);
 		$count = 0;
@@ -56,7 +65,14 @@ abstract class KunenaForumTopicHelper {
 		return $count;
 	}
 
-	public static function favorite($ids, $value=1, $user=null) {
+	/**
+	 * @param mixed $ids
+	 * @param bool  $value
+	 * @param mixed $user
+	 *
+	 * @return int
+	 */
+	public static function favorite($ids, $value=true, $user=null) {
 		// Pre-load all items
 		$usertopics = KunenaForumTopicUserHelper::getTopics($ids, $user);
 		$count = 0;
@@ -69,6 +85,12 @@ abstract class KunenaForumTopicHelper {
 		return $count;
 	}
 
+	/**
+	 * @param mixed  $ids
+	 * @param string $authorise
+	 *
+	 * @return KunenaForumTopic[]
+	 */
 	static public function getTopics($ids = false, $authorise='read') {
 		if ($ids === false) {
 			return self::$_instances;
@@ -89,6 +111,12 @@ abstract class KunenaForumTopicHelper {
 		return $list;
 	}
 
+	/**
+	 * @param mixed $ids
+	 * @param mixed $user
+	 *
+	 * @return KunenaForumTopicUser[]
+	 */
 	static public function getUserTopics($ids = false, $user=null) {
 		if ($ids === false) {
 			$ids = array_keys(self::$_instances);
@@ -96,6 +124,12 @@ abstract class KunenaForumTopicHelper {
 		return KunenaForumTopicUserHelper::getTopics($ids, $user);
 	}
 
+	/**
+	 * @param mixed $ids
+	 * @param mixed $user
+	 *
+	 * @return array
+	 */
 	static public function getKeywords($ids=false, $user=false) {
 		if ($ids === false) {
 			$ids = array_keys(self::$_instances);
@@ -103,6 +137,14 @@ abstract class KunenaForumTopicHelper {
 		return KunenaKeywordHelper::getByTopics($ids, $user);
 	}
 
+	/**
+	 * @param mixed $categories
+	 * @param int   $limitstart
+	 * @param int   $limit
+	 * @param array $params
+	 *
+	 * @return array
+	 */
 	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array()) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$db = JFactory::getDBO ();
@@ -148,7 +190,7 @@ abstract class KunenaForumTopicHelper {
 			if (!empty($params['keywords'])) {
 				$keywords = KunenaKeywordHelper::getByKeywords($params['keywords']);
 				foreach ($keywords as $keyword) {
-					$kwids[] = $keyword->$id;
+					$kwids[] = $keyword->id;
 				}
 				$kwids = implode(',', $kwids);
 			}
@@ -212,11 +254,11 @@ abstract class KunenaForumTopicHelper {
 	}
 
 	/**
-	 * Method to delete selected topics
+	 * Method to delete selected topics.
 	 *
-	 * @access	public
-	 * @return	int	Affected rows
-	 * @since 1.6
+	 * @param array|int $ids
+	 *
+	 * @return int	Count of deleted topics.
 	 */
 	public static function delete($ids) {
 		if (empty($ids)) return 0;
@@ -256,11 +298,11 @@ abstract class KunenaForumTopicHelper {
 	}
 
 	/**
-	 * Method to put the KunenaForumTopic object on trash this is still present in database
+	 * Method to trash topics. They will be marked as deleted, but still exist in database.
 	 *
-	 * @access	public
-	 * @return	int	Affected rows
-	 * @since 1.6
+	 * @param array|int $ids
+	 *
+	 * @return int	Count of trashed topics.
 	 */
 	public static function trash($ids) {
 		if (empty($ids)) return 0;
@@ -283,6 +325,13 @@ abstract class KunenaForumTopicHelper {
 		return $db->getAffectedRows();
 	}
 
+	/**
+	 * @param mixed $ids
+	 * @param int  $start
+	 * @param int  $end
+	 *
+	 * @return bool|int
+	 */
 	public static function recount($ids=false, $start=0, $end=0) {
 		$db = JFactory::getDBO ();
 
@@ -371,7 +420,13 @@ abstract class KunenaForumTopicHelper {
 		return $rows;
 	}
 
-	static public function fetchNewStatus($topics, $user = null) {
+	/**
+	 * @param KunenaForumTopic[] $topics
+	 * @param mixed            $user
+	 *
+	 * @return array
+	 */
+	static public function fetchNewStatus(array $topics, $user = null) {
 		$user = KunenaUserHelper::get($user);
 		if (!KunenaFactory::getConfig()->shownew || empty($topics) || !$user->exists()) {
 			return array();
@@ -416,7 +471,10 @@ abstract class KunenaForumTopicHelper {
 
 	// Internal functions
 
-	static protected function loadTopics($ids) {
+	/**
+	 * @param array $ids
+	 */
+	static protected function loadTopics(array $ids) {
 		foreach ($ids as $i=>$id) {
 			$id = intval($id);
 			if (!$id || isset(self::$_instances [$id]))

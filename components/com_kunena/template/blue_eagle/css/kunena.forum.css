@@ -3375,3 +3375,16 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 /* --------------------------------------------------------------- */
 /* Fix ol li numbers */
 #Kunena ol li {list-style-position:inside;}
+
+/* kunena Poll*/
+#Kunena div.kpolldesc img.jr-forum-stat-bar
+{
+height: 20px !important;
+max-height: 20px !important;
+}
+ 
+img.kstats-bar
+{
+height: 20px !important;
+max-height: 20px !important;
+}

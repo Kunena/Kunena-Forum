@@ -188,7 +188,7 @@ abstract class KunenaBbcodeEditorElement {
 	 * @abstract
 	 * @param $xml
 	 */
-	public static function parseXML ($xml) {}
+	public static function parseXML (SimpleXMLElement $xml) {}
 }
 
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
@@ -397,7 +397,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement {
 		return $js;
 	}
 
-	public static function parseXML ($xml) {
+	public static function parseXML (SimpleXMLElement $xml) {
 		return new KunenaBbcodeEditorSeparator((string)$xml['name']);
 	}
 }

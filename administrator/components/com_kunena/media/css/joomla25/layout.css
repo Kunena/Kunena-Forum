@@ -206,3 +206,7 @@
 #kunena.admin.override label {
     display: inline !important;
 }
+
+#kunena.admin.override fieldset li, #kunena.admin.override ol#property-values li {
+    padding: 0;
+}

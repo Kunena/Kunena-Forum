@@ -88,7 +88,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
 		//TODO STRING
 		JToolBarHelper::spacer();
-		JToolBarHelper::addNew ('add', 'New Category');
+		JToolBarHelper::addNew ('add', 'COM_KUNENA_NEW_CATEGORY');
 		//TODO: Implement flag to hide options, personal preference option.
 		//if($this->filterActive || $this->pagination->total > 0) {
 		JToolBarHelper::editList();

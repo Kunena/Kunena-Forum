@@ -3388,3 +3388,5 @@ img.kstats-bar
 height: 20px !important;
 max-height: 20px !important;
 }
+/* Fix avatar on bootstrap templates */
+#Kunena img {height:auto !important; max-width:inherit !important;}

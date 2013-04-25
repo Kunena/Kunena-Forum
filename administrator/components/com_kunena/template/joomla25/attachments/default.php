@@ -38,22 +38,21 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 				</div>
 				<div id="j-main-container" class="span10">
-					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="view" value="attachments" />
+					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=attachments') ?>" method="post" id="adminForm" name="adminForm">
 						<input type="hidden" name="task" value="" />
 						<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering ?>" />
-						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->listDirection) ?>" />
+						<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection ?>" />
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHtml::_( 'form.token' ); ?>
 
 						<div id="filter-bar" class="btn-toolbar">
 							<div class="filter-search btn-group pull-left">
 								<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
-								<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" />
+								<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" />
 							</div>
 							<div class="btn-group pull-left">
-								<button class="btn tip" type="button" ><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
-								<button class="btn tip" type="button"  onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
+								<button class="btn tip" type="submit" ><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
+								<button class="btn tip" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
 								<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>

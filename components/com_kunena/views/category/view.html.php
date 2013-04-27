@@ -62,7 +62,7 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->category->isSection()) {
 // TODO: turn this on:
 /*			if ($this->me->isAdmin($this->category)) {
-				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&layout=manage&catid={$this->category->id}");
+				$url = "index.php?option=com_kunena&view=category&layout=manage&catid={$this->category->id}";
 				$this->category_manage = $this->getButton($url, 'manage', 'category', 'moderation');
 			}*/
 		}
@@ -210,7 +210,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->sectionButtons = array();
 		if ($this->me->exists()) {
 			$token = '&' . JSession::getFormToken() . '=1';
-			$this->sectionButtons['markread'] = $this->getButton(KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}{$token}"), 'markread', 'section', 'user');
+			$this->sectionButtons['markread'] = $this->getButton("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}{$token}", 'markread', 'section', 'user');
 		}
 		echo $this->loadTemplateFile('section');
 		$this->rowno = 0;
@@ -275,13 +275,13 @@ class KunenaViewCategory extends KunenaView {
 
 		// Is user allowed to post new topic?
 		if ($this->category->getNewTopicCategory()->exists()) {
-			$url = KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$this->category->id}");
+			$url = "index.php?option=com_kunena&view=topic&layout=create&catid={$this->category->id}";
 			$this->categoryButtons['create'] = $this->getButton($url, 'create', 'topic', 'communication');
 		}
 
 		// Is user allowed to mark forums as read?
 		if ($this->me->exists() && $this->total) {
-			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->category->id}{$token}");
+			$url = "index.php?option=com_kunena&view=category&task=markread&catid={$this->category->id}{$token}";
 			$this->categoryButtons['markread'] = $this->getButton($url, 'markread', 'category', 'user');
 		}
 
@@ -290,10 +290,10 @@ class KunenaViewCategory extends KunenaView {
 			$subscribed = $this->category->getSubscribed($this->me->userid);
 
 			if (!$subscribed) {
-				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=subscribe&catid={$this->category->id}{$token}");
+				$url = "index.php?option=com_kunena&view=category&task=subscribe&catid={$this->category->id}{$token}";
 				$this->categoryButtons['subscribe'] = $this->getButton($url, 'subscribe', 'category', 'user');
 			} else {
-				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=unsubscribe&catid={$this->category->id}{$token}");
+				$url = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$this->category->id}{$token}";
 				$this->categoryButtons['unsubscribe'] = $this->getButton($url, 'unsubscribe', 'category', 'user');
 			}
 		}

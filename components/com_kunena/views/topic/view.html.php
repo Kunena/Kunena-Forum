@@ -606,7 +606,11 @@ class KunenaViewTopic extends KunenaView {
 			$this->topicButtons->set('sticky', $this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation'));
 			$this->topicButtons->set('lock', $this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation'));
 			$this->topicButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation'));
-			$this->topicButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation'));
+			if ($this->topic->hold == 1 || $this->topic->hold == 0) {
+				$this->topicButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation'));
+			} elseif ($this->topic->hold == 2 || $this->topic->hold == 3) {
+				$this->topicButtons->set('undelete', $this->getButton ( sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation'));
+			}
 		}
 
 		if ($this->config->enable_threaded_layouts) {

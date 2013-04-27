@@ -26,11 +26,12 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<!-- /btn-group -->
 		<?php endif ?>
-		<?php if ($this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>
+		<?php if ($this->topicButtons->get('undelete') ||$this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>
 			<div class="btn-group">
 				<button class="btn btn-primary dropdown-toggle dropdown-border" data-toggle="dropdown">Moderation</button>
 				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 				<ul class="dropdown-menu">
+					<li><?php echo $this->topicButtons->get('undelete') ?></li>
 					<li><?php echo $this->topicButtons->get('delete') ?></li>
 					<li><?php echo $this->topicButtons->get('moderate') ?></li>
 					<li><?php echo $this->topicButtons->get('sticky') ?></li>

@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	<div id="j-main-container" class="span10">
 		<div class="well well-small">
-			<div class="module-title nav-header"><?php echo JText::_('Forum Tools') ?></div>
+			<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_FORUM_TOOLS') ?></div>
 			<hr class="hr-condensed">
 			<?php //TODO: Need to change all alt text eventually to appropriate descriptions when we redo languages. ?>
 			<div id="dashboard-icons" class="btn-group">

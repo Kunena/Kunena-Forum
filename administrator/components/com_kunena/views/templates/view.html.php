@@ -68,7 +68,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
-		JToolBarHelper::addNew('add', 'New Templates');
+		JToolBarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
 		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
 		JToolBarHelper::divider();
 		if (version_compare(JVERSION, '3', '>')) {

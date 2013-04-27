@@ -16,16 +16,15 @@ defined ( '_JEXEC' ) or die ();
 		<div class="row-fluid column-row">
 			<div class="span12 column-item">
 				<div class="kcreditsheader kcenter"> <img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-white.png');?>" alt="Kunena" style="margin: 18px;" /> </div>
-				<div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div>
+				<div class="kcredits-intro"><?php echo $this->intro; ?></div>
 				<div class="kcredits-language">
 					<ul class="kteam">
 						<?php foreach ($this->memberList as $member) : ?>
-						<li class="credits-teammember"> <a href="<?php echo $member['url'] ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']) ?></a>: <?php echo $member['title'] ?> </li>
+						<li class="credits-teammember"> <a href="<?php echo $member['url'] ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']) ?></a> - <?php echo $member['title'] ?> </li>
 						<?php endforeach ?>
 					</ul>
 				</div>
-				<div class="kcredits-more"> <?php echo $this->thanks ?> </div>
-				<div class="kcredits-language"> <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?> <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?> </div>
+				<div class="kcredits-language"> <?php echo $this->thanks ?> </div>
 				<div class="kcredits-more">
 					<div> <?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?> <a href="javascript: history.go(-1)" title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?>"><?php echo JText::_('COM_KUNENA_USER_RETURN_B') ?></a> </div>
 				</div>

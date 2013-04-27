@@ -43,7 +43,9 @@ class KunenaViewCredits extends KunenaView {
 					'title'=>JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_SERVER'), JText::_('COM_KUNENA_CREDITS_SECURITY'))),
 
 		);
-		$this->thanks = JText::_('COM_KUNENA_CREDITS_THANKS_PART_LONG');
+		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
+			'https://www.transifex.com/projects/p/Kunena', 'http://www.kunena.org',
+			'https://github.com/Kunena/Kunena-2.0/graphs/contributors');
 
 		$this->_prepareDocument();
 

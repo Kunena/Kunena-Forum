@@ -447,7 +447,9 @@ HTML;
 		}
 
 		// Load the cache.
-		$cacheFile = JPATH_CACHE."/kunena.{$this->name}.{$inputFile}.cache";
+		$cacheDir = JPATH_CACHE.'/kunena';
+		if (!is_dir($cacheDir)) JFolder::create($cacheDir);
+		$cacheFile = "{$cacheDir}/kunena.{$this->name}.{$inputFile}.cache";
 		if ( file_exists( $cacheFile ) ) {
 			$cache = unserialize( file_get_contents( $cacheFile ) );
 		} else {

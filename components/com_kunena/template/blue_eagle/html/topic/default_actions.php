@@ -30,8 +30,9 @@ $goto .= '<a class="kbuttongoto" href="#forum'.$locations[$this->location].'" re
 			<?php echo $this->topicButtons->get('favorite') ?>
 			</div>
 		<?php endif ?>
-		<?php if ($this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>
+		<?php if ($this->topicButtons->get('undelete') || $this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>
 			<div class="kmessage-buttons-row">
+			<?php echo $this->topicButtons->get('undelete') ?>
 			<?php echo $this->topicButtons->get('delete') ?>
 			<?php echo $this->topicButtons->get('moderate') ?>
 			<?php echo $this->topicButtons->get('sticky') ?>

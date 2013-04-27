@@ -153,7 +153,7 @@ defined ( '_JEXEC' ) or die ();
 														<?php if($this->filterActive || $this->pagination->total > 0) : ?>
 															<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 														<?php else : ?>
-															<button class="btn btn-success" type="button"  onclick="Joomla.submitbutton('add');"><?php echo JText::_('New Category'); ?></button>
+															<button class="btn btn-success" type="button"  onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_SMILIE'); ?></button>
 														<?php endif; ?>
 													</span>
 												</div>

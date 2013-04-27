@@ -18,22 +18,19 @@ defined ( '_JEXEC' ) or die ();
 		<div class="kbody">
 			<div class="kcreditsheader">
 				<img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-white.png');?>" alt="Kunena" class="fltlft" style="margin: 18px;" />
-				<div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div>
+				<div class="kcredits-intro"><?php echo $this->intro; ?></div>
 			</div>
 			<div class="kcredits-language">
 				<ul class="kteam">
 					<?php foreach ($this->memberList as $member) : ?>
 					<li class="credits-teammember">
-						<a href="<?php echo $member['url'] ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']) ?></a>: <?php echo $member['title'] ?>
+						<a href="<?php echo $member['url'] ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']) ?></a> - <?php echo $member['title'] ?>
 					</li>
 					<?php endforeach ?>
 				</ul>
 			</div>
-			<div class="kcredits-more">
-				<?php echo $this->thanks ?>
-			</div>
 			<div class="kcredits-language">
-				<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?> <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?>
+				<?php echo $this->thanks ?>
 			</div>
 			<div class="kcredits-more">
 				<div>

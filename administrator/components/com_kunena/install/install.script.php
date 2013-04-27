@@ -31,6 +31,10 @@ class Com_KunenaInstallerScript {
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	public function install($parent) {
+		// Delete all cached files.
+		$cacheDir = JPATH_CACHE.'/kunena';
+		if (is_dir($cacheDir)) JFolder::delete($cacheDir);
+		JFolder::create($cacheDir);
 		return true;
 	}
 

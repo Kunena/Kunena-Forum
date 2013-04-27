@@ -162,7 +162,7 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
-		return $this->ktemplate->getButton($link, $name, $scope, $type, $id);
+		return $this->ktemplate->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
 	}
 
 	public function getIcon($name, $title='') {

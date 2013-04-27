@@ -115,7 +115,7 @@ JHtml::_('dropdown.init');
 								<td class="nowrap center">
 									<label for="filter_special" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
 									<select name="filter_special" id="filter_special" class="select-filter filter" onchange="Joomla.orderTable()">
-										<option value=""><?php echo JText::_('All');?></option>
+										<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 										<?php echo JHtml::_('select.options', $this->specialOptions(), 'value', 'text', $this->filterSpecial); ?>
 									</select>
 								</td>

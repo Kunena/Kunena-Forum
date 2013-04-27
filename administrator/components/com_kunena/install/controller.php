@@ -100,9 +100,11 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$log = ob_get_contents();
 		ob_end_clean();
 
-		if (isset($this->steps[$this->step+1]) && ! $error) {
+		$percent = intval(99 * $this->step / count($this->steps));
+		if ($error) {
+			echo json_encode(array('success'=>false, 'status'=>"{$percent}%", 'error'=>$error, 'log'=>$log));
+		} elseif (isset($this->steps[$this->step+1])) {
 			$current = end($this->status);
-			$percent = intval(99 * $this->step / count($this->steps));
 			echo json_encode(array('success'=>true, 'status'=>"{$percent}%", 'current'=>$current['task'], 'log'=>$log));
 		} else {
 			echo json_encode(array('success'=>true, 'status'=>'100%', 'current'=>'Installation complete!', 'log'=>$log));

@@ -159,17 +159,21 @@ window.kunenainstall = function() {
 					window.kunenainstall();
 					return;
 				} else {
-					kunenaInstall.getElement('h2').set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>')
+					kunenaInstall.getElement('h2').set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
 					kunenaProgress.getParent().removeClass('active');
 				}
+				$$('.kunena-close').removeProperty('disabled');
 			} else {
 				if (window.parent.SqueezeBox) {
 					window.parent.SqueezeBox.resize({y: 500}, true);
 					window.parent.SqueezeBox.asset.set('height', 500).set('scrolling', 'auto');
 				}
-				kunenaInstall.set('html', '<h2><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + responseJSON.html + '</div>');
+				kunenaProgress.getParent().removeClass('active');
+				kunenaInstall.getElement('h2').set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
+				kunenaDescription.set('html', responseJSON.error);
+				document.id('kunena-installer').removeProperty('disabled');
+				document.id('kunena-container').removeClass('hidden');
 			}
-			$$('.kunena-close').removeProperty('disabled');
 		},
 		onError: function(responseText) {
 			if (window.parent.SqueezeBox) {
@@ -177,11 +181,11 @@ window.kunenainstall = function() {
 				window.parent.SqueezeBox.asset.set('height', 500).set('scrolling', 'auto');
 			}
 			kunenaInstall.set('html', '<h2><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + responseText + '</div>');
-			$$('.kunena-close').removeProperty('disabled');
+			document.id('kunena-installer').removeProperty('disabled');
 		},
 		onFailure: function() {
 			kunenaDescription.set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_ERROR_FATAL', true); ?>');
-			$$('.kunena-close').removeProperty('disabled');
+			document.id('kunena-installer').removeProperty('disabled');
 		}
 	});
 	kunenaRequest.post('<?php echo JSession::getFormToken(); ?>=1');

@@ -11,7 +11,9 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div id="Kunena" class="layout">
 <?php
-$this->displayMenu ();
+if ($this->ktemplate->params->get('displayMenu', 1)) {
+	$this->displayMenu ();
+}
 $this->displayLoginBox ();
 $this->displayBreadcrumb ();
 

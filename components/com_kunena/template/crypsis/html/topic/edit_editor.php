@@ -241,7 +241,7 @@ if (!$this->config->disemoticons) : ?>
 <!-- end of extendable secondary toolbar -->
 <div class="control-group">
 	<div class="controls">
-		<input type="text" name="helpbox" id="helpbox" size="88" class="kinputbox" disabled="disabled" maxlength="100"
+		<input type="text" name="helpbox" id="helpbox" size="88" class="input-xxlarge required" disabled="disabled"
 		value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" />
 	</div>
 </div>
@@ -250,8 +250,8 @@ if (!$this->config->disemoticons) : ?>
 	<div class="center"> <span class="center" onclick="kGrowShrinkMessage(100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span class="center" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></div>
-	<div class="controls span5">
-		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="90"  tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
+	<div class="controls">
+		<textarea class="input-xxlarge required" name="message" id="kbbcode-message" rows="12" tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 </div>
 

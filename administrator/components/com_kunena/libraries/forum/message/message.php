@@ -585,7 +585,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$isNew = ! $this->_exists;
 
 		$topic = $this->getTopic();
-		if (!$topic->exists()) {
+		$newTopic = !$topic->exists();
+		if ($newTopic) {
 			// Create topic, but do not cascade changes to category etc..
 			if (!$topic->save(false)) {
 				$this->setError ( $topic->getError () );
@@ -596,6 +597,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		// Create message
 		if (! parent::save ()) {
+			// If we created a new topic, remember to delete it too.
+			if ($newTopic) $topic->delete();
 			return false;
 		}
 
@@ -608,6 +611,15 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		// Did we change anything?
 		if ($update) {
+			if ($isNew && trim($this->message) == '') {
+				// Oops, no attachments remain and the message becomes empty.
+				// Let's delete the new message and fail on save.
+				$this->delete();
+				// If we created a new topic, remember to delete it too.
+				if ($newTopic) $topic->delete();
+				$this->setError(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
+				return false;
+			}
 			$table = $this->getTable ();
 			$table->bind ( $this->getProperties () );
 			$table->exists(true);

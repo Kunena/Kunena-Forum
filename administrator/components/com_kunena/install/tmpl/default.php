@@ -65,6 +65,7 @@ window.kunenainstall = function() {
 				} else {
 					kunenaInstall.getElement('h2').set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
 					kunenaProgress.getParent().removeClass('active');
+					kunenaProgress.addClass('bar-success');
 				}
 				$$('.kunena-close').removeProperty('disabled');
 			} else {
@@ -77,10 +78,12 @@ window.kunenainstall = function() {
 		},
 		onError: function(responseText) {
 			kunenaInstall.set('html', '<h2><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + responseText + '</div>');
+			kunenaProgress.addClass('bar-warning');
 			document.id('kunena-installer').removeProperty('disabled');
 		},
 		onFailure: function() {
 			kunenaDescription.set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_ERROR_FATAL', true); ?>');
+			kunenaProgress.addClass('bar-danger');
 			document.id('kunena-installer').removeProperty('disabled');
 		}
 	});

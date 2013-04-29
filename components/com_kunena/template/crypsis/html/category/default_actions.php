@@ -13,4 +13,6 @@ defined ( '_JEXEC' ) or die ();
 <?php if (!empty ($this->categoryButtons)) : ?>
 
 <td class="hidden-phone"> <?php echo implode( $this->categoryButtons) ; ?> </td>
+<br />
 <?php endif ?>
+<br />

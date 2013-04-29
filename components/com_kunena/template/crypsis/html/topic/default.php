@@ -9,7 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-$this->displayBreadcrumb ();
 $this->document->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
@@ -19,6 +18,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <div class="well"> <?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ) ?> </div>
 <?php endif ?>
 <?php
+    $this->displayBreadcrumb ();
 	$this->displayPoll();
 	$this->displayModulePosition( 'kunena_poll' );
 	$this->displayTopicActions();

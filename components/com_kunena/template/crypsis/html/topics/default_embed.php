@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif; ?>
 		<h3 class="page-header"><span><?php echo $this->escape($this->headerText); ?></span></h3>
 		<div class="clearfix"></div>
-		<div class="row-fluid column-row">
+		<div class="row-fluid column-row kunena-row">
 			<div class="span12 column-item">
 				<table class="table table-striped table-condensed">
 					<?php if (empty ( $this->topics ) && empty ( $this->subcategories )) : ?>

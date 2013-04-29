@@ -29,7 +29,7 @@ $k = 0;
 					</thead>
 					<tbody>
 						<tr>
-							<td rowspan="2" valign="top" class="kprofile-left  kauthor">
+							<td valign="top" class="span2 kprofile-left kauthor" style="border:none;vertical-align:top !important;">
 								<p><?php echo $this->message->getAuthor()->getLink() ?></p>
 								<p>
 									<?php
@@ -41,7 +41,7 @@ $k = 0;
 									?>
 								</p>
 							</td>
-							<td class="kmessage-left khistorymsg">
+							<td class="span10 kmessage-left khistorymsg">
 								<div class="well well-small">
 									<div class="kmsgtext"> <?php echo KunenaHtmlParser::parseBBCode( $this->message->message, $this ) ?> </div>
 								</div>

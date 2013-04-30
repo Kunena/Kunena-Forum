@@ -22,6 +22,25 @@ abstract class KunenaTemplateHelper {
 		return $defaultemplate == $template ? 1 : 0;
 	}
 
+	public static function parseXmlFilesNewTemplate($templateBaseDir = null) {
+		// Read the template folder to find templates
+		if (!$templateBaseDir) $templateBaseDir = KPATH_SITE.'/template';
+
+		// Check if the xml file exists
+		if(!is_file($templateBaseDir.'template.xml')) {
+			return false;
+		}
+		$data = self::parseKunenaInstallFile($templateBaseDir.'template.xml');
+		//var_dump($data);
+		if (!$data || $data->type != 'kunena-template') {
+			return false;
+		}
+
+		$data->directory = KPATH_SITE.'/template/'.strtolower($data->name);
+
+		return $data;
+	}
+
 	public static function parseXmlFiles($templateBaseDir = null) {
 		// Read the template folder to find templates
 		if (!$templateBaseDir) $templateBaseDir = KPATH_SITE.'/template';

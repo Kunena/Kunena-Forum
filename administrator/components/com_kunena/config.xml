@@ -1297,6 +1297,18 @@
 					value="1">JYES</option>
 		</field>
 		<field
+				name="cfg_autolink"
+				type="radio"
+				class="btn-group"
+				default="1"
+				label="COM_KUNENA_SYS_FIELD_LABEL_AUTOLINK"
+				description="COM_KUNENA_SYS_FIELD_DESC_AUTOLINK">
+			<option
+					value="0">JNO</option>
+			<option
+					value="1">JYES</option>
+		</field>
+		<field
 				name="cfg_enable_autoembedebay"
 				type="radio"
 				class="btn-group"

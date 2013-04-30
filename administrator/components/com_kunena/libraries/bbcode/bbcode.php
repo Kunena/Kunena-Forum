@@ -79,19 +79,21 @@ class KunenaBbcode extends NBBC_BBCode {
 		$url = $params['url'];
 		$text = $params['text'];
 
-		if (preg_match('#^mailto:#ui', $url)) {
-			// Cloak email addresses
-			$email = substr($text, 7);
-			return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
-		}
-
-		// Remove http(s):// from the text
-		$text = preg_replace ( '#^http(s?)://#ui', '', $text );
-
 		$config = KunenaFactory::getConfig ();
-		if ($config->trimlongurls) {
-			// shorten URL text if they are too long
-			$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
+		if ($config->autolink) {
+			if (preg_match('#^mailto:#ui', $url)) {
+				// Cloak email addresses
+				$email = substr($text, 7);
+				return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+			}
+
+			// Remove http(s):// from the text
+			$text = preg_replace ( '#^http(s?)://#ui', '', $text );
+
+			if ($config->trimlongurls) {
+				// shorten URL text if they are too long
+				$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
+			}
 		}
 
 		if (!isset($params['query'])) $params['query'] = '';
@@ -154,7 +156,12 @@ class KunenaBbcode extends NBBC_BBCode {
 			}
 		}
 
-		return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+		if ($config->autolink) {
+			return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+		}
+
+		// Auto-linking has been disabled.
+		return $text;
 	}
 
     /**

@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 				<table class="table table-striped table-condensed">
 					<?php if (empty ( $this->topics ) && empty ( $this->subcategories )) : ?>
 						<tr class="krow2">
-							<td class="kcol-first"><?php echo JText::_('COM_KUNENA_VIEW_NO_POSTS') ?></td>
+							<td class="kcol-first"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
 						</tr>
 					<?php else : ?>
 						<?php $this->displayRows (); ?>

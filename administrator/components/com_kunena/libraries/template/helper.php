@@ -30,7 +30,7 @@ abstract class KunenaTemplateHelper {
 		$data = self::parseXmlFile('', $templateBaseDir);
 		if ($data) {
 			// Guess template folder.
-			$data->directory = preg_replace('/[^a-z0-9_]/', '', strtolower($data->name));
+			$data->directory = preg_replace('/[^a-z0-9_]/', '', preg_replace('/\s+/', '_', strtolower($data->name)));
 			if (!$data->directory) return array();
 			// Template found from the root (folder cannot contain more than one template)
 			return array('' => $data);

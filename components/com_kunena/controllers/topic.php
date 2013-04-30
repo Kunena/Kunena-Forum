@@ -130,9 +130,11 @@ class KunenaControllerTopic extends KunenaController {
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key, $this->catid);
 		}
 
-		// Make sure that message has visible content to be shown.
+		// Make sure that message has visible content (text, images or objects) to be shown.
 		$text = KunenaHtmlParser::parseBBCode($message->message);
-		$text = trim(JFilterOutput::cleanText($text));
+		if (!preg_match('!(<img |<object )!', $text)) {
+			$text = trim(JFilterOutput::cleanText($text));
+		}
 		if (!$text) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error' );
 			$this->redirectBack ();
@@ -280,9 +282,11 @@ class KunenaControllerTopic extends KunenaController {
 			$topic->subject = $fields['subject'];
 		}
 
-		// If user removed all the text, delete the message instead.
+		// If user removed all the text and message doesn't contain images or objects, delete the message instead.
 		$text = KunenaHtmlParser::parseBBCode($message->message);
-		$text = trim(JFilterOutput::cleanText($text));
+		if (!preg_match('!(<img |<object )!', $text)) {
+			$text = trim(JFilterOutput::cleanText($text));
+		}
 		if (!$text) {
 			// Reload message (we don't want to change it).
 			$message->load();

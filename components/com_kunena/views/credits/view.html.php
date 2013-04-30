@@ -42,7 +42,7 @@ class KunenaViewCredits extends KunenaView {
 				array('name'=>'Joe Collins', 'url'=>'http://www.kunena.org/forum/profile/26335-jiminimonka',
 					'title'=>JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
 				array('name'=>'Oliver Ratzesberger', 'url'=>'http://www.kunena.org/forum/profile/64-fxstein',
-					'title'=>JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_SERVER'), JText::_('COM_KUNENA_CREDITS_SECURITY'))),
+					'title'=>JText::_('COM_KUNENA_CREDITS_FOUNDER')),
 
 		);
 		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',

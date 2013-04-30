@@ -39,10 +39,11 @@ abstract class KunenaHtmlParser {
 		return $smileyArray;
 	}
 
+	/**
+	 * @deprecated 3.0.0
+	 */
 	public static function JSText($txt) {
-		$txt = JText::_($txt);
-		$txt = preg_replace('`\'`','\\\\\'', $txt);
-		return $txt;
+		return JText::_($txt, true);
 	}
 
 	public static function parseText($txt, $len=0) {

@@ -1053,7 +1053,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>".json_encode($content)."</i></strong></p>';
+					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode($content)."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}
@@ -1064,7 +1064,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// ]]>"
 		);
 
-		return '<div id="'.$mapid.'" class="kgooglemap">'.KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE').'</div>';
+		return '<div id="'.$mapid.'" class="kgooglemap">'.JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE', true).'</div>';
 	}
 
 	function DoEbay($bbcode, $action, $name, $default, $params, $content) {
@@ -1599,7 +1599,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					$attachment = $att;
 					unset ( $attachments [$att->id] );
 					$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-					return "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
+					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
 				}
 			}
 			// No match -- assume that we have normal img tag

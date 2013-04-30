@@ -898,6 +898,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK_DESC') ?></td>
 													</tr>
 													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_AUTOLINK') ?></td>
+														<td><?php echo $this->lists ['autolink'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_AUTOLINK_DESC') ?></td>
+													</tr>
+													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_AUTOEMBEDYOUTUBE') ?></td>
 														<td><?php echo $this->lists ['autoembedyoutube'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_AUTOEMBEDYOUTUBE_DESC') ?></td>

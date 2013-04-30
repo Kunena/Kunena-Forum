@@ -1360,6 +1360,7 @@ class KunenaModelInstall extends JModelLegacy {
 	}
 
 	public function getInstallAction($version = null) {
+		require_once __DIR__.'/../api.php';
 		if ($version->component === null)
 			$this->_action = 'INSTALL';
 		else if ($version->prefix != 'kunena_')

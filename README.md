@@ -11,9 +11,10 @@
 
 *Kunena* 3.0 requires
 
-    Joomla! 2.5: version 2.5.6 or greater (>= 2.5.9 recommended)
-    Joomla! 3.0: version 3.0.2 or greater (>= 3.0.3 recommended)
-    PHP: version 5.3.1 or greater (>= 5.4.13 recommended)
+    Joomla! 2.5: version 2.5.9 or greater (>= 2.5.11 recommended)
+    Joomla! 3.0: version 3.0.3 or greater (>= 3.0.3 recommended)
+    Joomla! 3.1: version 3.1.1 or greater (>= 3.1.1 recommended)
+    PHP: version 5.3.1 or greater (>= 5.4.14 recommended)
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
@@ -21,7 +22,7 @@ Our installer will check for minimal version requirements and will abort the ins
 In addition we recommend the following PHP settings:
 
     max_execution_time     >= 30
-    memory_limit           >= 16M  (>= 64M recommended) - depends on other Joomla extensions used
+    memory_limit           >= 32M  (>= 64M recommended) - depends on other Joomla extensions used
     safe_mode               = off
     upload_max_filesize    >= 3M
     GD, DOM, JSON support installed
@@ -50,7 +51,7 @@ The Joomla installers allows you to directly install *Kunena* via package URL or
 
 As long as the minimum requirements are met, the Kunena install should take only a few moments. We have spent a great amount of time to automate the entire installation process.
 
-Upgrades are performed just like new installs. There is no need to uninstall Kunena to perform an upgrade. We STRONGLY recommend that you perform a backup before and new software install or upgrade. The upgrade procedure is identical to a new install and is performed via the Joomla extension installer. *Kunena* will detect all prior version of Kunena and will perform the necessary upgrade tasks fully automatic. 
+Upgrades are performed just like new installs. There is no need to uninstall Kunena to perform an upgrade. We STRONGLY recommend that you perform a backup before and new software install or upgrade. The upgrade procedure is identical to a new install and is performed via the Joomla extension installer. *Kunena* will detect all prior version of Kunena and will perform the necessary upgrade tasks fully automatic.
 
 
 ## COMMUNITY

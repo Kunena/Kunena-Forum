@@ -9,7 +9,7 @@
   				portions (C) 2007 MjazTools. All rights reserved.
   @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
   @link			http://www.kunena.org
-  
+
   The following parameters can be defined inside the Eclipse build task as Arguments. They
   allow the build file to be platform independent as not path information resides within
   any of the build files.
@@ -138,7 +138,7 @@
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
-		
+
 		<!-- Remove Mirage & Crypsis template -->
 		<delete dir="${tmp_dir}/packages/com_kunena/site/template/mirage" />
         <delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsis" />
@@ -146,22 +146,22 @@
 		<!-- Move libraries -->
 		<move todir="${tmp_dir}/libraries">
 			<fileset dir="${tmp_dir}/packages/com_kunena/libraries" />
-		</move>	
+		</move>
 
 		<!-- Move system plugin -->
 		<move todir="${tmp_dir}/plg_system_kunena">
 			<fileset dir="${tmp_dir}/packages/com_kunena/install/plugins/plg_system_kunena" />
-		</move>	
+		</move>
 
 		<!-- Move system plugin -->
 		<move todir="${tmp_dir}/plg_quickicon_kunena">
 			<fileset dir="${tmp_dir}/packages/com_kunena/install/plugins/plg_quickicon_kunena" />
-		</move>	
+		</move>
 
 		<!-- Move media files -->
 		<move todir="${tmp_dir}/media">
 			<fileset dir="${tmp_dir}/packages/com_kunena/media/kunena" />
-		</move>	
+		</move>
 
 		<!-- Move files needed by the installer -->
 		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -177,7 +177,7 @@
 		<!--move todir="${build_dir}/archive" includeEmptyDirs="no">
 			<fileset dir="${tmp_dir}/archive" />
 		</move-->
-		
+
 		<!-- Language pack -->
 		<copy file="${project_dir}/${kunena.admin}/language/all/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/${kunena.admin}/language/all/pkg_kunena_languages.xml" tofile="${tmp_dir}/languages_extra/pkg_kunena_languages.xml" overwrite="true" filtering="true" />
@@ -197,7 +197,7 @@
 			<include name="**/*.js" />
 		</yui-compressor>
 	</target>
-	
+
 	<macrodef name="language">
 		<attribute name="tag" default="en-GB"/>
 		<attribute name="include" default="false"/>
@@ -276,7 +276,6 @@
 	<target name="copy" depends="minify">
 		<mkdir dir="${tmp_dir}/languages" />
 		<language tag="en-GB" include="true" />
-<!--
 		<language tag="ar-AA" />
 		<language tag="az-AZ" />
 		<language tag="bg-BG" />
@@ -291,17 +290,16 @@
 		<language tag="eo-XX" />
 		<language tag="es-ES" />
 		<language tag="et-EE" />
-		<language tag="fa-IR" /-->
+		<language tag="fa-IR" />
 		<language tag="fi-FI" />
-		<!--language tag="fr-FR" /-->
-		<!--language tag="gl-ES" /-->
-		<!--language tag="he-IL" /-->
-		<!--language tag="hi-IN" /-->
-		<!--language tag="hr-HR" />
 		<language tag="fr-FR" />
-		<-language tag="gl-ES" /->
+		<!--language tag="gl-ES" /-->
 		<language tag="he-IL" />
-		<-language tag="hi-IN" /->
+		<!--language tag="hi-IN" /-->
+		<language tag="hr-HR" />
+		<language tag="fr-FR" />
+		<!--language tag="gl-ES" /-->
+		<language tag="he-IL" />
 		<language tag="hr-HR" />
 		<language tag="hu-HU" />
 		<language tag="id-ID" />
@@ -334,7 +332,7 @@
 		<language tag="vi-VN" />
 		<language tag="zh-CN" />
 		<language tag="zh-TW" />
--->
+
 		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/plg_system_kunena" />
 		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/plg_quickicon_kunena" />
 		<archive destfile="${build_dir}/packages/lib_kunena${str.version}" basedir="${tmp_dir}/libraries" />

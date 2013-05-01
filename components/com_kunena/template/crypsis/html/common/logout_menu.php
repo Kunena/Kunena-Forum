@@ -36,7 +36,7 @@ if (version_compare(JVERSION, '3.0','>')) {
 						<div><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&amp;view=announcement&amp;layout=list') ?>"><i class="icon-pencil-2"></i> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?></a></div>
 					<?php endif; ?>
 					<?php if (!empty($this->pm_link)) : ?>
-						<div> <a href="<?php echo $this->pm_link ?>" rel="follow"><i class="icon-mail"></i> Inbox: </a> </div>
+						<div> <a href="<?php echo $this->pm_link ?>" rel="follow"><i class="icon-mail"></i> <?php echo $this->privateMessagesText?></a> </div>
 					<?php endif ?>
 					<div><a href="<?php echo $this->me->getUrl (false, 'edit') ?>"><i class="icon-cog"></i> Preferences</a></div>
 					<!-- <li><a href="/help/support"><i class="icon-envelope"></i> Inbox</a></div> -->

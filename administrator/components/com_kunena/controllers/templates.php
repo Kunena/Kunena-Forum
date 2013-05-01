@@ -17,6 +17,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminControllerTemplates extends KunenaController {
 	protected $baseurl = null;
+	protected $locked = array('blue_eagle');
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
@@ -101,29 +102,30 @@ class KunenaAdminControllerTemplates extends KunenaController {
 				$templates = KunenaTemplateHelper::parseXmlFiles($tmp);
 				if (!empty($templates)) {
 					foreach ($templates as $template) {
-						// Never overwrite default template
-						if ($template->directory == 'default') continue;
+						// Never overwrite locked templates
+						if (in_array($template->directory, $this->locked)) continue;
 						if (is_dir($dest.$template->directory)) {
 							if (is_file($dest.$template->directory.'/params.ini')) {
-								if (is_file($tmp.$template->directory.'/params.ini')) {
-									JFile::delete($tmp.$template->directory.'/params.ini');
+								if (is_file($tmp.$template->sourcedir.'/params.ini')) {
+									JFile::delete($tmp.$template->sourcedir.'/params.ini');
 								}
-								JFile::move($dest.$template->directory.'/params.ini', $tmp.$template->directory.'/params.ini');
+								JFile::move($dest.$template->directory.'/params.ini', $tmp.$template->sourcedir.'/params.ini');
 							}
 							JFolder::delete($dest.$template->directory);
 						}
-						$error = JFolder::move($tmp.$template->directory, $dest.$template->directory);
-						if ($error !== true) $this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').': ' . $error, 'notice' );
+						$success = JFolder::move($tmp.$template->sourcedir, $dest.$template->directory);
+						if ($success !== true) {
+							$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_FAILED', $template->directory), 'notice' );
+						} else {
+							$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_SUCCESS', $template->directory));
+						}
 					}
-					$retval = JFolder::delete($tmp);
-					$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
+					if (file_exists($tmp)) JFolder::delete($tmp);
 				} else {
 					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'));
-					$retval = false;
 				}
 			} else {
 				JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
-				$retval = false;
 			}
 		}
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -140,17 +142,14 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		// templates to prevent to remove
-		$templates_locked = array('blue_eagle', 'mirage');
-		$otemplate = KunenaTemplateHelper::parseXmlFile($id);
-
 		// Initialize variables
 		$retval	= true;
+		$otemplate = KunenaTemplateHelper::parseXmlFile($id);
 		if ( !$otemplate ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
-		if ( in_array($id, $templates_locked) ) {
+		if ( in_array($id, $this->locked) ) {
 			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_SYSTEM_TEMPLATE', $otemplate->name), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}

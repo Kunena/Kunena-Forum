@@ -33,19 +33,21 @@ $this->displayBreadcrumb ();
 	<?php echo JHtml::_( 'form.token' ); ?>
 	<div class="well">
 		<span class="pull-right">
+        	<?php echo $this->getPagination (5); // odd number here (# - 5) ?>
+		</span>
+        <span class="pull-right">
 			<?php if (!empty($this->topicActions)) : ?>
 				<input class="kcheckall" type="checkbox" name="toggle" value="" />
 			<?php endif; ?>
-			<?php echo $this->getPagination (5); // odd number here (# - 5) ?>
 		</span>
 		<h2 style="padding-left:10px;"><span><?php echo $this->escape($this->headerText); ?></span></h2>
 		<div class="clearfix"></div>
-		<div class="row-fluid column-row">
+		<div class="row-fluid column-row kunena-row">
 			<div class="span12 column-item">
 				<table class="table table-striped table-hover">
 					<?php if (empty ( $this->topics ) && empty ( $this->subcategories )) : ?>
 						<tr>
-							<td class="kcol-first"><?php echo JText::_('COM_KUNENA_VIEW_NO_POSTS') ?></td>
+							<td class="kcol-first"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
 						</tr>
 					<?php else : ?>
 						<?php $this->displayRows (); ?>

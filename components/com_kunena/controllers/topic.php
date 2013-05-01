@@ -130,6 +130,16 @@ class KunenaControllerTopic extends KunenaController {
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key, $this->catid);
 		}
 
+		// Make sure that message has visible content (text, images or objects) to be shown.
+		$text = KunenaHtmlParser::parseBBCode($message->message);
+		if (!preg_match('!(<img |<object )!', $text)) {
+			$text = trim(JFilterOutput::cleanText($text));
+		}
+		if (!$text) {
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error' );
+			$this->redirectBack ();
+		}
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		if ( $message->hold == 0 ) {
@@ -270,6 +280,22 @@ class KunenaControllerTopic extends KunenaController {
 		// Check if we are editing first post and update topic if we are!
 		if ($topic->first_post_id == $message->id) {
 			$topic->subject = $fields['subject'];
+		}
+
+		// If user removed all the text and message doesn't contain images or objects, delete the message instead.
+		$text = KunenaHtmlParser::parseBBCode($message->message);
+		if (!preg_match('!(<img |<object )!', $text)) {
+			$text = trim(JFilterOutput::cleanText($text));
+		}
+		if (!$text) {
+			// Reload message (we don't want to change it).
+			$message->load();
+			if ($message->publish(KunenaForum::DELETED)) {
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_DELETE'));
+			} else {
+				$this->app->enqueueMessage($message->getError(), 'notice');
+			}
+			$this->app->redirect($message->getUrl($this->return, false));
 		}
 
 		// Activity integration

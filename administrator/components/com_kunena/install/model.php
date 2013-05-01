@@ -226,13 +226,12 @@ class KunenaModelInstall extends JModelLegacy {
 
 	function getInstallError() {
 		$status = $this->getState ( 'status', array () );
-		$error = 0;
 		foreach ( $status as $cur ) {
-			$error = ! $cur ['success'];
+			$error = !$cur['success'];
 			if ($error)
-				break;
+				return $cur['task'] .' ... '. ($cur['success'] > 0 ? 'SUCCESS' : 'FAILED');
 		}
-		return $error;
+		return false;
 	}
 
 	public function getSteps() {
@@ -1361,6 +1360,7 @@ class KunenaModelInstall extends JModelLegacy {
 	}
 
 	public function getInstallAction($version = null) {
+		require_once __DIR__.'/../api.php';
 		if ($version->component === null)
 			$this->_action = 'INSTALL';
 		else if ($version->prefix != 'kunena_')

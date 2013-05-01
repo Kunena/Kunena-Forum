@@ -32,45 +32,36 @@ class plgQuickiconKunena extends JPlugin {
 		}
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
-		// TODO: replace LiveUpdate with something else...
 		$updateInfo = null;
-		if (0 && KunenaForum::installed() && KunenaFactory::getConfig()->version_check && JFactory::getUser()->authorise('core.manage', 'com_installer')) {
+		if (KunenaForum::installed() && JFactory::getUser()->authorise('core.manage', 'com_installer')) {
+			$updateSite = 'http://update.kunena.org/%';
 			$db = JFactory::getDbo();
+
 			$query = $db->getQuery(true)
-				->select($db->qn('params'))
-				->from($db->qn('#__extensions'))
-				->where($db->qn('type').' = '.$db->q('component'))
-				->where($db->qn('element').' = '.$db->q('com_kunena'));
+				->select('*')
+				->from($db->qn('#__updates'))
+				->where($db->qn('extension_id').' > 0')
+				->where($db->qn('detailsurl').' LIKE '.$db->q($updateSite));
 			$db->setQuery($query);
-			$cparams = new JRegistry((string) $db->loadResult());
+			$list = (array) $db->loadObjectList();
 
-			//$cparams = JComponentHelper::getParams('com_kunena');
-			$liveupdate = new JRegistry($cparams->get('liveupdate', null));
-			$lastCheck = $liveupdate->get('lastcheck', 0);
-			$updateInfo = json_decode(trim((string) $liveupdate->get('updatedata', ''), '"'));
-			$valid = abs(time() - $lastCheck) <= 24 * 3600; // 24 hours
+			if ($list) {
+				$updateInfo = new stdClass();
+				$updateInfo->addons = 0;
+				$updateInfo->version = 0;
+				foreach ($list as $item) {
+					if ($item->element == 'pkg_kunena') $updateInfo->version = $item->version;
+					else $updateInfo->addons++;
+				}
 
-			if (!$valid) {
-				// If information is not valid, update it asynchronously.
-				$ajax_url = json_encode(JUri::base().'index.php?option=com_kunena&view=liveupdate&task=ajax');
-				$script = "window.addEvent('domready', function() {
-	var com_kunena_updatecheck_ajax_structure = {
-		onSuccess: function(msg, responseXML) {
-			var updateInfo = JSON.decode(msg, true);
-			if (updateInfo.html) {
-				document.id('com_kunena_icon').getElement('img').setProperty('src',updateInfo.img);
-				document.id('com_kunena_icon').getElement('span').set('html', updateInfo.html);
-				document.id('com_kunena_icon').getElement('a').set('href', updateInfo.link);
-			}
-		},
-		url: {$ajax_url}
-	};
-	ajax_object = new Request(com_kunena_updatecheck_ajax_structure);
-	ajax_object.send();
-});";
-
-				$document = JFactory::getDocument();
-				$document->addScriptDeclaration($script);
+			} else {
+				$query = $db->getQuery(true)
+					->select('update_site_id')
+					->from($db->qn('#__update_sites'))
+					->where($db->qn('enabled').' = 0')
+					->where($db->qn('location').' LIKE '.$db->q($updateSite));
+				$db->setQuery($query);
+				$updateInfo = !$db->loadResult();
 			}
 		}
 
@@ -81,21 +72,27 @@ class plgQuickiconKunena extends JPlugin {
 			$img = 'kunena/icons/icon-48-kupdate-alert-white.png';
 			$text = JText::_('PLG_QUICKICON_KUNENA_COMPLETE_INSTALLATION');
 
-		} elseif (empty($updateInfo->supported)) {
+		} elseif ($updateInfo === null) {
 			// Unsupported
 			$img = 'kunena/icons/kunena-logo-48-white.png';
 			$text = JText::_('COM_KUNENA');
 
-		} elseif ($updateInfo->stuck) {
-			// Stuck
+		} elseif ($updateInfo === false) {
+			// Disabled
 			$img = 'kunena/icons/icon-48-kupdate-alert-white.png';
-			$text = JText::_('COM_KUNENA') . '<br />' . JText::_('PLG_QUICKICON_KUNENA_UPDATE_CRASH');
+			$text = JText::_('COM_KUNENA') . '<br />' . JText::_('PLG_QUICKICON_KUNENA_UPDATE_DISABLED');
 
-		} elseif (version_compare(KunenaForum::version(), $updateInfo->version, '<')) {
+		} elseif (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<')) {
 			// Has updates
 			$img = 'kunena/icons/icon-48-kupdate-update-white.png';
-			$text = 'Kunena ' . $updateInfo->version . '<br />' . JText::_('PLG_QUICKICON_KUNENA_UPDATE_AVAILABLE');
-			$link .= '&view=liveupdate';
+			$text = 'Kunena ' . $updateInfo->version . '<br />' . JText::_('PLG_QUICKICON_KUNENA_UPDATE_NOW');
+			$link = 'index.php?option=com_installer&view=update';
+
+		} elseif (!empty($updateInfo->addons)) {
+			// Has updated add-ons
+			$img = 'kunena/icons/icon-48-kupdate-update-white.png';
+			$text = JText::_('COM_KUNENA') . '<br />' . JText::sprintf('PLG_QUICKICON_KUNENA_UPDATE_ADDONS', $updateInfo->addons);
+			$link = 'index.php?option=com_installer&view=update';
 
 		} else {
 			// Already in the latest release
@@ -103,6 +100,10 @@ class plgQuickiconKunena extends JPlugin {
 			$text = JText::_('COM_KUNENA');
 		}
 
+		// Use one line in J!3.0.
+		if (version_compare(JVERSION, '3.0', '>')) {
+			$text = preg_replace('|<br />|', ' - ', $text);
+		}
 		return array( array(
 			'link' => JRoute::_($link),
 			'image' => $img,

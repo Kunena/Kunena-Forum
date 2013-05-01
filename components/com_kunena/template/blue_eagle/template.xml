@@ -12,6 +12,10 @@
 	<description>COM_KUNENA_TEMPLATE_BLUE_EAGLE_DESC</description>
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>
+		<param name="displayMenu" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MENU" description="COM_KUNENA_TEMPLATE_DISPLAY_MENU_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</param>
 		<param name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
 			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
 			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
@@ -36,7 +40,7 @@
 		<param name="announcementBoxbgcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_BOX_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 		<param name="frontstatsHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 		<param name="whoisonlineHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
-		
+
 		<param name="inactiveTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR_DESC" />
 		<param name="activeTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR_DESC" />
 		<param name="hoverTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR" description="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR_DESC" />
@@ -44,22 +48,22 @@
 		<param name="inactiveFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" />
 		<param name="activeFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
 		<param name="toggleButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" />
-		
-	 <!--	
+
+	 <!--
    <param name="allButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_COLOR_DESC" />
 		<param name="allButtonhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_HOVER_COLOR_DESC" />
 		<param name="allButtonbordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_BORDER_COLOR_DESC" />
 		<param name="allButtonborderhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_BORDER_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_BORDER_HOVER_COLOR_DESC" />
 		<param name="allButtontextcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_TEXT_COLOR_DESC" />
 		<param name="allButtontexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_TEXT_HOVER_COLOR_DESC" />
-		
+
 		<param name="paginationLinkcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_COLOR_DESC" />
 		<param name="paginationLinkhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_HOVER_COLOR_DESC" />
 		<param name="paginationBordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_COLOR_DESC" />
 		<param name="paginationBorderhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_HOVER_COLOR_DESC" />
 		<param name="paginationTextcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR_DESC" />
 		<param name="paginationTexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR_DESC" />-->
-		
+
 		<param name="enableSkinner" type="list" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
@@ -68,7 +72,7 @@
 		<param name="templatebyText" type="hidden" default="" />
 		<param name="templatebyName" type="hidden" default="" />
 		<param name="templatebyLink" type="hidden" default="" />
-		
+
 		<!-- Required avatar sizes -->
 		<param name="avatarSizeXThumb" type="hidden" default="36" />
 		<param name="avatarSizeYThumb" type="hidden" default="36" />

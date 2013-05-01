@@ -79,19 +79,21 @@ class KunenaBbcode extends NBBC_BBCode {
 		$url = $params['url'];
 		$text = $params['text'];
 
-		if (preg_match('#^mailto:#ui', $url)) {
-			// Cloak email addresses
-			$email = substr($text, 7);
-			return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
-		}
-
-		// Remove http(s):// from the text
-		$text = preg_replace ( '#^http(s?)://#ui', '', $text );
-
 		$config = KunenaFactory::getConfig ();
-		if ($config->trimlongurls) {
-			// shorten URL text if they are too long
-			$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
+		if ($config->autolink) {
+			if (preg_match('#^mailto:#ui', $url)) {
+				// Cloak email addresses
+				$email = substr($text, 7);
+				return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+			}
+
+			// Remove http(s):// from the text
+			$text = preg_replace ( '#^http(s?)://#ui', '', $text );
+
+			if ($config->trimlongurls) {
+				// shorten URL text if they are too long
+				$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
+			}
 		}
 
 		if (!isset($params['query'])) $params['query'] = '';
@@ -154,7 +156,12 @@ class KunenaBbcode extends NBBC_BBCode {
 			}
 		}
 
-		return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+		if ($config->autolink) {
+			return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+		}
+
+		// Auto-linking has been disabled.
+		return $text;
 	}
 
     /**
@@ -1053,7 +1060,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>".json_encode($content)."</i></strong></p>';
+					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode($content)."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}
@@ -1064,7 +1071,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// ]]>"
 		);
 
-		return '<div id="'.$mapid.'" class="kgooglemap">'.KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE').'</div>';
+		return '<div id="'.$mapid.'" class="kgooglemap">'.JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE', true).'</div>';
 	}
 
 	function DoEbay($bbcode, $action, $name, $default, $params, $content) {
@@ -1599,7 +1606,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					$attachment = $att;
 					unset ( $attachments [$att->id] );
 					$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-					return "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
+					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
 				}
 			}
 			// No match -- assume that we have normal img tag

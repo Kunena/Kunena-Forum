@@ -232,6 +232,7 @@ class KunenaViewCommon extends KunenaView {
 		$this->params = $this->state->get('params');
 		$private = KunenaFactory::getPrivateMessaging();
 		$this->pm_link = $private->getInboxURL();
+		$this->privateMessagesText = $this->getPrivateMessageText();
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
@@ -354,6 +355,15 @@ class KunenaViewCommon extends KunenaView {
 			$count = $private->getUnreadCount($this->me->userid);
 			$this->privateMessagesLink = $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX'));
 		}
+	}
+
+	function getPrivateMessageText() {
+		$private = KunenaFactory::getPrivateMessaging();
+		if ($private) {
+			$count = $private->getUnreadCount($this->me->userid);
+			$privateMessagesText = $count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX');
+		}
+		return $privateMessagesText;
 	}
 
 	function getUserlistURL($action = '', $xhtml = true) {

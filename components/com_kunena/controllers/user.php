@@ -326,24 +326,25 @@ class KunenaControllerUser extends KunenaController {
 
 		$username = $this->user->get('username');
 
+		$user = clone $this->user;
 		// Bind the form fields to the user table
-		if (!$this->user->bind($post)) {
+		if (!$user->bind($post)) {
 			return false;
 		}
 
 		// Store user to the database
-		if (!$this->user->save(true)) {
+		if (!$user->save(true)) {
 			return false;
 		}
 
 		$session = JFactory::getSession();
-		$session->set('user', $this->user);
+		$session->set('user', $user);
 
 		// update session if username has been changed
-		if ( $username && $username != $this->user->username ){
+		if ( $username && $username != $user->username ){
 			$table = JTable::getInstance('session', 'JTable' );
 			$table->load($session->getId());
-			$table->username = $this->user->username;
+			$table->username = $user->username;
 			$table->store();
 		}
 		return true;

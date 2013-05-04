@@ -224,6 +224,7 @@ class KunenaConfig extends JObject {
 	public $rss_feedburner_url = '';
 	// New for 3.0.0
 	public $autolink = 1;
+	public $access_component = 1;
 
 	public function __construct() {
 		parent::__construct ();

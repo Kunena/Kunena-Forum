@@ -380,7 +380,10 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['iptracking'] = JHtml::_('select.genericlist', $yesno, 'cfg_iptracking', 'class="inputbox" size="1"', 'value', 'text', $this->config->iptracking);
 
 		// Added new options into Kunena 3.0.0
+		$config = JFactory::getConfig();
 		$lists ['autolink'] = JHtml::_('select.genericlist', $yesno, 'cfg_autolink', 'class="inputbox" size="1"', 'value', 'text', $this->config->autolink);
+		$lists ['access_component'] = JHtml::_('select.genericlist', $yesno, 'cfg_access_component', 'class="inputbox" size="1"', 'value', 'text', $this->config->access_component);
+		$lists ['componentUrl'] = preg_replace('|/+|', '/', JUri::root() . ($config->get('sef_rewrite') ? '' : 'index.php'). ($config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
 
 		return $lists;
 	}

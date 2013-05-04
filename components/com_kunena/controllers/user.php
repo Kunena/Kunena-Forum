@@ -77,7 +77,7 @@ class KunenaControllerUser extends KunenaController {
 
 		$this->user = JFactory::getUser();
 		if (!$this->saveUser()) {
-			$this->app->enqueueMessage($this->user->getError(), 'notice');
+			// Error was already enqueued.
 		} elseif (!$this->saveAvatar()) {
 			$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_AVATAR_NOT_SAVED' ), 'notice' );
 		} else {
@@ -326,7 +326,7 @@ class KunenaControllerUser extends KunenaController {
 
 		$username = $this->user->get('username');
 
-		$user = clone $this->user;
+		$user = new JUser($this->user->id);
 		// Bind the form fields to the user table
 		if (!$user->bind($post)) {
 			return false;
@@ -334,17 +334,20 @@ class KunenaControllerUser extends KunenaController {
 
 		// Store user to the database
 		if (!$user->save(true)) {
+			$this->app->enqueueMessage($user->getError(), 'notice');
 			return false;
 		}
 
+		// Reload the user.
+		$this->user->load();
 		$session = JFactory::getSession();
-		$session->set('user', $user);
+		$session->set('user', $this->user);
 
 		// update session if username has been changed
-		if ( $username && $username != $user->username ){
+		if ( $username && $username != $this->user->username ){
 			$table = JTable::getInstance('session', 'JTable' );
 			$table->load($session->getId());
-			$table->username = $user->username;
+			$table->username = $this->user->username;
 			$table->store();
 		}
 		return true;

@@ -109,6 +109,7 @@ class KunenaView extends JViewLegacy {
 				return;
 			} elseif ($this->config->regonly && ! $this->me->exists() && ! $this->teaser) {
 				// Forum is for registered users only
+				JResponse::setHeader('Status', '403 Forbidden', 'true');
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body = JText::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');

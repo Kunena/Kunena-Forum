@@ -23,9 +23,18 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0') || !Kunena
 }
 
 // Prevent direct access to the component if the option has been disabled.
-if (!KunenaConfig::getInstance()->get('access_component', 1) && !JFactory::getApplication()->getMenu()->getActive()) {
-	JLog::add("Direct access to the Kunena component prevented: ".JUri::getInstance()->toString(array('path', 'query')), JLog::WARNING, 'kunena');
-	JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+if (!KunenaConfig::getInstance()->get('access_component', 1)) {
+	$active = JFactory::getApplication()->getMenu()->getActive();
+
+	if (!$active) {
+		// Prevent access without using a menu item.
+		JLog::add("Kunena: Direct access denied: ".JUri::getInstance()->toString(array('path', 'query')), JLog::WARNING, 'kunena');
+		JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+	} elseif ($active->type != 'component' || $active->component != 'com_kunena') {
+		// Prevent spoofed access by using random menu item.
+		JLog::add("Kunena: spoofed access denied: ".JUri::getInstance()->toString(array('path', 'query')), JLog::WARNING, 'kunena');
+		JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+	}
 }
 
 // Load router

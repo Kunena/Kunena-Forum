@@ -73,7 +73,7 @@ class KunenaController extends JControllerLegacy {
 		if (file_exists ( $path )) {
 			require_once $path;
 		} else {
-			JError::raiseError ( 500, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER', ucfirst ( $view ) ) );
+			JError::raiseError ( 404, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER', ucfirst ( $view ) ) );
 		}
 
 		// Set the name for the controller and instantiate it.
@@ -93,7 +93,7 @@ class KunenaController extends JControllerLegacy {
 		if (class_exists ( $class )) {
 			$instance = new $class ();
 		} else {
-			JError::raiseError ( 500, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER_CLASS', $class ) );
+			JError::raiseError ( 404, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER_CLASS', $class ) );
 		}
 
 		return $instance;
@@ -141,9 +141,6 @@ class KunenaController extends JControllerLegacy {
 
 			$menu = $this->app->getMenu ();
 			$active = $menu->getActive ();
-			if (!$active) {
-				JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			}
 
 			// Check if menu item was correctly routed
 			$routed = $menu->getItem ( KunenaRoute::getItemID() );

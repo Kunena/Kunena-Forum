@@ -140,6 +140,11 @@ JHtml::_('dropdown.init');
 												<td><?php echo $this->lists ['sef'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_SEF_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CFG_ACCESS_COMPONENT') ?></td>
+												<td><?php echo $this->lists ['access_component'] ?></td>
+												<td><?php echo JText::sprintf('COM_KUNENA_CFG_ACCESS_COMPONENT_DESC', $this->lists ['componentUrl'], JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND')) ?></td>
+											</tr>
 										</tbody>
 									</table>
 								</fieldset>

@@ -191,12 +191,13 @@ abstract class JHtmlKunenaGrid
 		}
 
 		$task	= $value ? 'unpublish' : 'publish';
+		$class = $task=='unpublish' ? 'publish' : 'unpublish';
 		$alt	= $value ? JText::_('COM_KUNENA_PUBLISHED') : JText::_('COM_KUNENA_UNPUBLISHED');
 		$action = $value ? JText::_('COM_KUNENA_LIB_UNPUBLISH_ITEM') : JText::_('COM_KUNENA_LIB_PUBLISH_ITEM');
 
 		$title = $inactive_title = $alt .'::'. $action;
 
-		return self::action($i, $task, $prefix, $alt, $title, $task, $bootstrap);
+		return self::action($i, $task, $prefix, $alt, $title, $class, $bootstrap);
 	}
 
 	/**

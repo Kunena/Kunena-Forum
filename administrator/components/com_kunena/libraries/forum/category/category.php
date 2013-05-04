@@ -114,6 +114,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if (!empty($this->params)) $registry->loadString($this->params);
 		$this->params = $registry;
 
+		if (!$this->_name) $this->_name = get_class ($this);
 		$this->_alias = $this->get('alias', '');
 	}
 

@@ -14,6 +14,7 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0') || !Kunena
 	$lang = JFactory::getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
+	JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
 ?>
 	<h2><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC')?></h2>
 	<div><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_DESC')?></div>

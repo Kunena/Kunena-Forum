@@ -85,9 +85,9 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT') ?>
 														</td>
 														<td><input type="text"
-																							 name="cfg_sessiontimeout"
-																							 value="<?php echo $this->escape($this->config->sessiontimeout);
-																							 ?>" /></td>
+																 name="cfg_sessiontimeout"
+																 value="<?php echo $this->escape($this->config->sessiontimeout);
+																 ?>" /></td>
 														<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
 														</td>
 													</tr>
@@ -135,6 +135,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_SEF') ?></td>
 														<td><?php echo $this->lists ['sef'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_SEF_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CFG_ACCESS_COMPONENT') ?></td>
+														<td><?php echo $this->lists ['access_component'] ?></td>
+														<td><?php echo JText::sprintf('COM_KUNENA_CFG_ACCESS_COMPONENT_DESC', $this->lists ['componentUrl'], JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND')) ?></td>
 													</tr>
 												</tbody>
 											</table>

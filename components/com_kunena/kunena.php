@@ -22,6 +22,12 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0') || !Kunena
 	return;
 }
 
+// Prevent direct access to the component if the option has been disabled.
+if (!KunenaConfig::getInstance()->get('access_component', 1) && !JFactory::getApplication()->getMenu()->getActive()) {
+	JLog::add("Direct access to the Kunena component prevented: ".JUri::getInstance()->toString(array('path', 'query')), JLog::WARNING, 'kunena');
+	JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+}
+
 // Load router
 require_once KPATH_SITE . '/router.php';
 

@@ -220,7 +220,16 @@ class KunenaControllerUser extends KunenaController {
 		$remember = JRequest::getBool ( 'remember', false, 'POST');
 
 		$login = KunenaLogin::getInstance();
-		$login->loginUser($username, $password, $remember);
+		$error = $login->loginUser($username, $password, $remember);
+
+		// Get the return url from the request and validate that it is internal.
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		if (!$error && $return && JURI::isInternal($return))
+		{
+			// Redirect the user.
+			$this->app->redirect(JRoute::_($return, false));
+		}
+
 		$this->redirectBack ();
 	}
 
@@ -231,6 +240,15 @@ class KunenaControllerUser extends KunenaController {
 
 		$login = KunenaLogin::getInstance();
 		if (!JFactory::getUser()->guest) $login->logoutUser();
+
+		// Get the return url from the request and validate that it is internal.
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		if ($return && JURI::isInternal($return))
+		{
+			// Redirect the user.
+			$this->app->redirect(JRoute::_($return, false));
+		}
+
 		$this->redirectBack ();
 	}
 

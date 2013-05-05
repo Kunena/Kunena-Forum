@@ -308,10 +308,14 @@ class KunenaViewUser extends KunenaView {
 
 	function displayTab() {
 		$this->email = null;
-		if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isModerator() ) ) {
-			$this->email = JHtml::_('email.cloak', $this->user->email);
-		} else if ( $this->me->isAdmin() ) {
-			$this->email = JHtml::_('email.cloak', $this->user->email);
+		if ($this->user->email) {
+			if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isModerator() ) ) {
+				$this->email = JHtml::_('email.cloak', $this->user->email);
+			} elseif ( $this->me->isAdmin() ) {
+				$this->email = JHtml::_('email.cloak', $this->user->email);
+			}
+		} else {
+			$this->email = '';
 		}
 
 		switch ($this->do) {
@@ -506,7 +510,8 @@ class KunenaViewUser extends KunenaView {
 
 	function displayUserRow($user) {
 		$this->user = KunenaFactory::getUser($user->id);
-		if ($this->config->userlist_email && (!$this->user->hideEmail || $this->me->isModerator())) {
+		$this->email = '';
+		if ($this->user->email && $this->config->userlist_email && (!$this->user->hideEmail || $this->me->isModerator())) {
 			$this->email = JHtml::_('email.cloak', $this->user->email);
 		}
 		$this->rank_image = $this->user->getRank (0, 'image');

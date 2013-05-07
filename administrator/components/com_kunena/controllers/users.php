@@ -69,7 +69,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$user->ordering = $neworder;
 			$user->rank = $newrank;
 			if ($deleteAvatar == 1) $user->avatar = '';
-			else $user->avatar = $avatar;
 			if ( !$user->save() ) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_PROFILE_SAVED_FAILED' ) );
 			} else {

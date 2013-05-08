@@ -18,11 +18,11 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAdminControllerPlugins extends KunenaController {
 	protected $baseurl = null;
 
-	public function __construct($config = array()) {
+	public function __construct() {
 		$this->option = 'com_kunena';
 		$this->input = JFactory::getApplication()->input;
 
-		parent::__construct($config);
+		parent::__construct();
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=plugins';
 		$this->baseurl2 = 'administrator/index.php?option=com_kunena&view=plugins';
 		$this->view_list = 'plugins';

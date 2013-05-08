@@ -20,7 +20,7 @@ jimport('joomla.application.component.controllerform');
  */
 class KunenaAdminControllerPlugin extends KunenaController
 {
-	public function __construct($config = array())
+	public function __construct()
 	{
 		$this->option = 'com_kunena';
 		$this->view_list = 'plugins';
@@ -29,7 +29,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 		$this->text_prefix = 'COM_PLUGINS';
 		$this->input = JFactory::getApplication()->input;
 
-		parent::__construct($config);
+		parent::__construct();
 
 		JFactory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 

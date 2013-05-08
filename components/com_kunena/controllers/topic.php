@@ -16,8 +16,8 @@ defined ( '_JEXEC' ) or die ();
  * @since		2.0
  */
 class KunenaControllerTopic extends KunenaController {
-	public function __construct($config = array()) {
-		parent::__construct($config);
+	public function __construct() {
+		parent::__construct();
 		$this->catid = JRequest::getInt('catid', 0);
 		$this->return = JRequest::getInt('return', $this->catid);
 		$this->id = JRequest::getInt('id', 0);

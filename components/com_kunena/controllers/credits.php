@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
  * @since		2.0
  */
 class KunenaControllerCredits extends KunenaController {
-	public function __construct($config = array()) {
-		parent::__construct($config);
+	public function __construct() {
+		parent::__construct();
 	}
 }

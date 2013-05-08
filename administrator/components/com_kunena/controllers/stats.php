@@ -18,8 +18,8 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAdminControllerStats extends KunenaController {
 	protected $baseurl = null;
 
-	public function __construct($config = array()) {
-		parent::__construct($config);
+	public function __construct() {
+		parent::__construct();
 		$this->baseurl = 'index.php?option=com_kunena&view=stats';
 	}
 }

@@ -147,11 +147,11 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$searchword}{$params}{$limitstr}", $xhtml );
 	}
 
-	static function GetPollURL($do, $id = NULL, $catid) {
+	static function GetPollURL($do, $id = NULL, $catid=0) {
 		$idstring = '';
-		if ($id)
-			$idstring .= "&id=$id";
-		$catidstr = "&catid=$catid";
+		$catidstr = '';
+		if ($id) $idstring .= "&id=$id";
+		if ( $catid > 0 ) $catidstr = "&catid=$catid";
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}" );
 	}
 

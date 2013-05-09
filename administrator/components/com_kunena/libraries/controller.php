@@ -24,8 +24,8 @@ class KunenaController extends JControllerLegacy {
 	var $_message= null;
 	var $_messageType = null;
 
-	public function __construct() {
-		parent::__construct ();
+	public function __construct($config = array()) {
+		parent::__construct ($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication();
 		$this->config = KunenaFactory::getConfig();

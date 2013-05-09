@@ -87,10 +87,10 @@ class KunenaForumStatistics {
 		if (! $this->showgenstats && ! $force)
 			return;
 
-		$this->loadMemberCount($force);
-		$this->loadLastUserId($force);
-		$this->loadCategoryCount($force);
-		$this->loadLastDays($force);
+		$this->loadMemberCount();
+		$this->loadLastUserId();
+		$this->loadCategoryCount();
+		$this->loadLastDays();
 	}
 
 	/**

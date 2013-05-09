@@ -159,7 +159,7 @@ abstract class KunenaForumMessageHelper {
 		}
 		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse, 'topic.'.$authorise);
 		if ($childforums) {
-			$categories += KunenaForumCategoryHelper::getChildren($categories, -1, false, array('action'=>'topic.'.$authorise));
+			$categories += KunenaForumCategoryHelper::getChildren($categories, -1, array('action'=>'topic.'.$authorise));
 		}
 		$catlist = array();
 		foreach ($categories as $category) {

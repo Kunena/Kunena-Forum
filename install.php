@@ -71,8 +71,7 @@ class Pkg_KunenaInstallerScript {
 
 	public function postflight($type, $parent) {
 		// Clear Joomla system cache.
-		$cache = JFactory::getCache();
-		$cache->clean('_system');
+		JFactory::getCache()->clean('_system');
 
 		// Remove all compiled files from APC cache.
 		if (function_exists('apc_clear_cache')) {

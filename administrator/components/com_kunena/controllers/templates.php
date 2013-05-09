@@ -121,6 +121,8 @@ class KunenaAdminControllerTemplates extends KunenaController {
 						}
 					}
 					if (file_exists($tmp)) JFolder::delete($tmp);
+					// Clear all cache, just in case.
+					KunenaCacheHelper::clearAll();
 				} else {
 					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'));
 				}
@@ -162,6 +164,8 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		// Delete the template directory
 		if (JFolder::exists($tpl)) {
 			$retval = JFolder::delete($tpl);
+			// Clear all cache, just in case.
+			KunenaCacheHelper::clearAll();
 			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id) );
 		} else {
 			JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));

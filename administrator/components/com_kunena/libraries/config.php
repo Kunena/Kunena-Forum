@@ -263,6 +263,9 @@ class KunenaConfig extends JObject {
 		$db->setQuery ( "REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
 		$db->query ();
 		KunenaError::checkDatabaseError ();
+
+		// Clear cache.
+		KunenaCacheHelper::clear();
 	}
 
 	public function reset() {

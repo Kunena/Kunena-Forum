@@ -159,7 +159,7 @@ JHtml::_('dropdown.init');
 								<?php echo $kunena_user->getAvatarImage('kavatar', 24, 24); ?>
 								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($item->username); ?></a>
 								<small>
-									<?php echo JText::sprintf('(Name: %s)', $this->escape($item->name));?>
+									(<?php echo JText::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($item->name));?>)
 								</small>
 							</span>
 						</td>

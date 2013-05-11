@@ -155,7 +155,7 @@ abstract class KunenaMenuFix {
 
 				$itemid = null;
 				$view = null;
-				if (($item->type == 'menulink' || $item->type == 'alias') && !empty($item->query['Itemid'])) {
+				if ($item->type == 'alias' && !empty($item->query['Itemid'])) {
 					$realitem = empty(self::$items[$item->query['Itemid']]) ? null : self::$items[$item->query['Itemid']];
 					if (is_object ($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena') {
 						$itemid = $item->query['Itemid'];

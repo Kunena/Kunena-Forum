@@ -14,6 +14,7 @@
 	<description>Kunena Framework.</description>
 	<files>
 		<folder>bbcode</folder>
+		<folder>cache</folder>
 		<folder>database</folder>
 		<folder>external</folder>
 		<folder>form</folder>

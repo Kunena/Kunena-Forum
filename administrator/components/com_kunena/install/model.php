@@ -508,7 +508,7 @@ class KunenaModelInstall extends JModelLegacy {
 			}
 			$this->setTask($task+1);
 		} else {
-			if (function_exists('apc_clear_cache')) apc_clear_cache('system');
+			if (function_exists('apc_clear_cache')) @apc_clear_cache('system');
 
 			// Force page reload to avoid MySQL timeouts after extracting
 			$this->checkTimeout(true);
@@ -531,7 +531,7 @@ class KunenaModelInstall extends JModelLegacy {
 		// TODO: install also menu module
 		//$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
 
-		if (function_exists('apc_clear_cache')) apc_clear_cache('system');
+		if (function_exists('apc_clear_cache')) @apc_clear_cache('system');
 
 		if (! $this->getInstallError ())
 			$this->setStep ( $this->getStep()+1 );
@@ -599,7 +599,7 @@ class KunenaModelInstall extends JModelLegacy {
 
 		// Clean cache, just in case
 		KunenaMenuHelper::cleanCache();
-		JFactory::getCache('com_kunena')->clean();
+		JFactory::getCache()->clean('com_kunena');
 
 		// Delete installer file (only if not using GIT build).
 		if (!KunenaForum::isDev()) {
@@ -1719,8 +1719,7 @@ class KunenaModelInstall extends JModelLegacy {
 				JFactory::getApplication()->enqueueMessage($table->getError(), 'error');
 			}
 		}
-		$cache = JFactory::getCache('mod_menu');
-		$cache->clean();
+		JFactory::getCache()->clean('mod_menu');
 	}
 
 	function checkTimeout($stop = false) {

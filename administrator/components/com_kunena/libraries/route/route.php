@@ -421,7 +421,7 @@ abstract class KunenaRoute {
 					if (isset($item->language) && $item->language  != '*' && strtolower($item->language) != strtolower($language))
 						continue;
 
-					if ($item->type == 'menulink' && !empty($item->query['Itemid']) && !empty(self::$menu[$item->query['Itemid']])) {
+					if ($item->type == 'alias' && !empty($item->query['Itemid']) && !empty(self::$menu[$item->query['Itemid']])) {
 						// Follow links
 						$item = self::$menu[$item->query['Itemid']];
 					} elseif ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view'])) {

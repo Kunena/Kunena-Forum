@@ -13,8 +13,7 @@ defined ( '_JEXEC' ) or die ();
 
 abstract class KunenaMenuHelper {
 	public static function cleanCache() {
-		$cache = JFactory::getCache('mod_menu');
-		$cache->clean();
+		JFactory::getCache()->clean('mod_menu');
 	}
 
 	/**

@@ -70,6 +70,8 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function postflight($type, $parent) {
+		$this->fixUpdateSite();
+
 		// Clear Joomla system cache.
 		JFactory::getCache()->clean('_system');
 
@@ -196,5 +198,45 @@ EOS;
 
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version), 'notice');
 		return false;
+	}
+
+	protected function fixUpdateSite() {
+		$db = JFactory::getDbo();
+
+		// Enable Kunena updates if they were disabled.
+		$query = $db->getQuery(true)
+			->update($db->quoteName('#__update_sites'))
+			->set($db->quoteName('enabled').'=1')
+			->where($db->quoteName('location') . ' LIKE '. $db->quote('http://update.kunena.org/%'));
+		$db->setQuery($query);
+		$db->execute();
+
+		// Find old update sites.
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+			->select($db->quoteName('update_site_id'))->from($db->quoteName('#__update_sites'))
+			->where($db->quoteName('location') . ' LIKE '. $db->quote('http://update.kunena.org/%'))
+			->where($db->quoteName('location') . ' NOT LIKE '. $db->quote('%/list.xml'));
+		$db->setQuery($query);
+		$list = (array) $db->loadColumn();
+
+		if (!$list) return;
+
+		$ids = implode(',', $list);
+
+		// Remove old updates.
+		$query = $db->getQuery(true)->delete($db->quoteName('#__updates'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
+		$db->setQuery($query);
+		$db->execute();
+
+		// Remove old update extension bindings.
+		$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites_extensions'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
+		$db->setQuery($query);
+		$db->execute();
+
+		// Remove old update sites.
+		$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
+		$db->setQuery($query);
+		$db->execute();
 	}
 }

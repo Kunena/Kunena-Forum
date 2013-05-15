@@ -203,25 +203,44 @@ EOS;
 	protected function fixUpdateSite() {
 		$db = JFactory::getDbo();
 
-		// Enable Kunena updates if they were disabled.
-		$query = $db->getQuery(true)
-			->update($db->quoteName('#__update_sites'))
-			->set($db->quoteName('enabled').'=1')
-			->where($db->quoteName('location') . ' LIKE '. $db->quote('http://update.kunena.org/%'));
-		$db->setQuery($query);
-		$db->execute();
-
-		// Find old update sites.
-		$db = JFactory::getDbo();
+		// Find all update sites.
 		$query = $db->getQuery(true)
 			->select($db->quoteName('update_site_id'))->from($db->quoteName('#__update_sites'))
 			->where($db->quoteName('location') . ' LIKE '. $db->quote('http://update.kunena.org/%'))
-			->where($db->quoteName('location') . ' NOT LIKE '. $db->quote('%/list.xml'));
+			->order($db->quoteName('update_site_id') . ' ASC');
 		$db->setQuery($query);
 		$list = (array) $db->loadColumn();
 
-		if (!$list) return;
+		$query = $db->getQuery(true)
+			->set($db->quoteName('name').'='.$db->quote('Kunena 3.0 Update Site'))
+			->set($db->quoteName('type').'='.$db->quote('collection'))
+			->set($db->quoteName('location').'='.$db->quote('http://update.kunena.org/3.0/list.xml'))
+			->set($db->quoteName('enabled').'=1')
+			->set($db->quoteName('last_check_timestamp').'=0');
 
+		if (!$list) {
+			// Create new update site.
+			$query->insert($db->quoteName('#__update_sites'));
+			$id = $db->insertid();
+		} else {
+			// Update last Kunena update site with new information.
+			$id = array_pop($list);
+			$query->update($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . '=' . $id);
+		}
+		$db->setQuery($query);
+		$db->execute();
+
+		if ($list) {
+			$ids = implode(',', $list);
+
+			// Remove old update sites.
+			$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
+			$db->setQuery($query);
+			$db->execute();
+		}
+
+		// Currently only pkg_kunena gets registered to update site, so remove everything else.
+		$list[] = $id;
 		$ids = implode(',', $list);
 
 		// Remove old updates.
@@ -231,11 +250,6 @@ EOS;
 
 		// Remove old update extension bindings.
 		$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites_extensions'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
-		$db->setQuery($query);
-		$db->execute();
-
-		// Remove old update sites.
-		$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
 		$db->setQuery($query);
 		$db->execute();
 	}

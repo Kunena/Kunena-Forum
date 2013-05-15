@@ -255,7 +255,7 @@ class KunenaUser extends JObject {
 	public function getAllowedCategories($rule = 'read') {
 		if (!isset($this->_allowed[$rule])) {
 			$acl = KunenaAccess::getInstance();
-			$allowed = $acl->getAllowedCategories ( $this->userid, $rule );
+			$allowed = $acl->getAllowedCategories ( $this->userid );
 			$this->_allowed[$rule] = $allowed;
 		}
 		return $this->_allowed[$rule];

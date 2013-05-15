@@ -22,4 +22,25 @@ class KunenaAdminControllerCpanel extends KunenaController {
 		parent::__construct($config);
 		$this->baseurl = 'index.php?option=com_kunena';
 	}
+
+	public function display($cachable = false, $urlparams = false) {
+		$db = JFactory::getDbo();
+		$now = JDate::getInstance();
+
+		// Enable Kunena updates if they were disabled (but only every 6 hours or logout/login).
+		$now = time();
+		$timestamp = $this->app->getUserState('pkg_kunena.updateCheck', 0);
+		if ($timestamp < $now) {
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__update_sites'))
+				->set($db->quoteName('enabled').'=1')
+				->where($db->quoteName('location') . ' LIKE '. $db->quote('http://update.kunena.org/%'));
+			$db->setQuery($query);
+			$db->execute();
+
+			$this->app->setUserState('pkg_kunena.updateCheck', $now + 60*60*6);
+		}
+
+		parent::display($cachable, $urlparams);
+	}
 }

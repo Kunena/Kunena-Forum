@@ -86,13 +86,13 @@ class plgQuickiconKunena extends JPlugin {
 			// Has updates
 			$img = 'kunena/icons/icon-48-kupdate-update-white.png';
 			$text = 'Kunena ' . $updateInfo->version . '<br />' . JText::_('PLG_QUICKICON_KUNENA_UPDATE_NOW');
-			$link = 'index.php?option=com_installer&view=update';
+			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
 
 		} elseif (!empty($updateInfo->addons)) {
 			// Has updated add-ons
 			$img = 'kunena/icons/icon-48-kupdate-update-white.png';
 			$text = JText::_('COM_KUNENA') . '<br />' . JText::sprintf('PLG_QUICKICON_KUNENA_UPDATE_ADDONS', $updateInfo->addons);
-			$link = 'index.php?option=com_installer&view=update';
+			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
 
 		} else {
 			// Already in the latest release

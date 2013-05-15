@@ -70,6 +70,8 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function postflight($type, $parent) {
+		$this->fixUpdateSite();
+
 		// Clear Joomla system cache.
 		JFactory::getCache()->clean('_system');
 
@@ -196,5 +198,59 @@ EOS;
 
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version), 'notice');
 		return false;
+	}
+
+	protected function fixUpdateSite() {
+		$db = JFactory::getDbo();
+
+		// Find all update sites.
+		$query = $db->getQuery(true)
+			->select($db->quoteName('update_site_id'))->from($db->quoteName('#__update_sites'))
+			->where($db->quoteName('location') . ' LIKE '. $db->quote('http://update.kunena.org/%'))
+			->order($db->quoteName('update_site_id') . ' ASC');
+		$db->setQuery($query);
+		$list = (array) $db->loadColumn();
+
+		$query = $db->getQuery(true)
+			->set($db->quoteName('name').'='.$db->quote('Kunena 3.0 Update Site'))
+			->set($db->quoteName('type').'='.$db->quote('collection'))
+			->set($db->quoteName('location').'='.$db->quote('http://update.kunena.org/3.0/list.xml'))
+			->set($db->quoteName('enabled').'=1')
+			->set($db->quoteName('last_check_timestamp').'=0');
+
+		if (!$list) {
+			// Create new update site.
+			$query->insert($db->quoteName('#__update_sites'));
+			$id = $db->insertid();
+		} else {
+			// Update last Kunena update site with new information.
+			$id = array_pop($list);
+			$query->update($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . '=' . $id);
+		}
+		$db->setQuery($query);
+		$db->execute();
+
+		if ($list) {
+			$ids = implode(',', $list);
+
+			// Remove old update sites.
+			$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
+			$db->setQuery($query);
+			$db->execute();
+		}
+
+		// Currently only pkg_kunena gets registered to update site, so remove everything else.
+		$list[] = $id;
+		$ids = implode(',', $list);
+
+		// Remove old updates.
+		$query = $db->getQuery(true)->delete($db->quoteName('#__updates'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
+		$db->setQuery($query);
+		$db->execute();
+
+		// Remove old update extension bindings.
+		$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites_extensions'))->where($db->quoteName('update_site_id') . 'IN ('.$ids.')');
+		$db->setQuery($query);
+		$db->execute();
 	}
 }

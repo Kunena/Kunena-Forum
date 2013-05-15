@@ -14,6 +14,7 @@
 	<description>Kunena Forum Package.</description>
 
 	<scriptfile>install.php</scriptfile>
+
 	<files folder="packages">
 		<filename type="plugin"    group="system"     id="kunena"      >plg_system_kunena_v@kunenaversion@.zip</filename>
 		<filename type="plugin"    group="quickicon"  id="kunena"      >plg_quickicon_kunena_v@kunenaversion@.zip</filename>
@@ -32,7 +33,41 @@
 		<filename type="plugin"  group="kunena"    id="uddeim"         >plg_kunena_uddeim_v@kunenaversion@.zip</filename>
  -->
 	</files>
+
 	<updateservers>
 		<server type="collection" priority="1" name="Kunena 3.0 Update Site">http://update.kunena.org/3.0/list.xml</server>
 	</updateservers>
+
+	<restorepoint>
+		<customdirs>
+			<dir>administrator/manifests/packages/kunena</dir>
+			<dir>administrator/components/com_kunena</dir>
+			<dir>components/com_kunena</dir>
+			<dir>libraries/kunena</dir>
+			<dir>plugins/kunena</dir>
+			<dir>plugins/system/kunena</dir>
+			<dir>plugins/quickicon/kunena</dir>
+			<dir>media/kunena</dir>
+		</customdirs>
+		<customfiles>
+			<file>administrator/manifests/packages/pkg_kunena.xml</file>
+			<file>administrator/manifests/libraries/kunena.xml</file>
+			<file>administrator/manifests/files/kunena_media.xml</file>
+		</customfiles>
+		<langfiles>
+			<lang>com_kunena</lang>
+			<lang>plg_kunena_alphauserpoints</lang>
+			<lang>plg_kunena_community</lang>
+			<lang>plg_kunena_comprofiler</lang>
+			<lang>plg_kunena_gravatar</lang>
+			<lang>plg_kunena_joomla</lang>
+			<lang>plg_kunena_kunena</lang>
+			<lang>plg_kunena_uddeim</lang>
+			<lang>plg_system_kunena</lang>
+			<lang>plg_quickicon_kunena</lang>
+		</langfiles>
+		<extraprefixes>
+			<prefix>kunena</prefix>
+		</extraprefixes>
+	</restorepoint>
 </extension>

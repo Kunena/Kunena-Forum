@@ -35,8 +35,8 @@
 		<not><isset property="build_dir" /></not>
 	</condition>
 	<property file="build.config.ini" />
-	<property name="kunena.site" value="components/com_kunena" />
-	<property name="kunena.admin" value="administrator/components/com_kunena" />
+	<property name="kunena.site" value="components/com_kunena/site" />
+	<property name="kunena.admin" value="components/com_kunena/admin" />
 	<property name="kunena.media" value="media/kunena" />
 
 	<target name="dist" depends="mkdir,archive_old,init,build,minify,copy,info,cleanup" />
@@ -103,6 +103,14 @@
 			<istrue value="${cfg.bz2}" />
 		</condition>
 
+		<copy todir="${tmp_dir}/packages">
+			<fileset dir="${project_dir}" />
+			<firstmatchmapper>
+				<mapper type="regexp" from="^libraries/(.*)$$" to="lib_\1"/>
+				<mapper type="regexp" from="^media/([^/]*)/(.*)$$" to="\1_media/\2"/>
+				<mapper type="glob" from="plugins/*" to="*"/>
+			</firstmatchmapper>
+		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena">
 			<fileset dir="${project_dir}/${kunena.admin}">
 				<exclude name="language/**"/>
@@ -123,9 +131,19 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
 		<!-- Add version information to all xml files and forum.php -->
+		<copy todir="${tmp_dir}/packages" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}">
+				<include name="libraries/kunena/forum/forum.php"/>
+				<include name="**/*.xml"/>
+			</fileset>
+			<firstmatchmapper>
+				<mapper type="regexp" from="^libraries/(.*)$$" to="lib_\1"/>
+				<mapper type="regexp" from="^media/([^/]*)/(.*)$$" to="\1_media/\2"/>
+				<mapper type="glob" from="plugins/*" to="*"/>
+			</firstmatchmapper>
+		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.admin}">
-				<include name="libraries/forum/forum.php"/>
 				<include name="**/*.xml"/>
 				<include name="language/index.html"/>
 				<exclude name="language/**/*.xml"/>
@@ -141,27 +159,7 @@
 
 		<!-- Remove Mirage & Crypsis template -->
 		<delete dir="${tmp_dir}/packages/com_kunena/site/template/mirage" />
-        <delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsis" />
-
-		<!-- Move libraries -->
-		<move todir="${tmp_dir}/libraries">
-			<fileset dir="${tmp_dir}/packages/com_kunena/libraries" />
-		</move>
-
-		<!-- Move system plugin -->
-		<move todir="${tmp_dir}/plg_system_kunena">
-			<fileset dir="${tmp_dir}/packages/com_kunena/install/plugins/plg_system_kunena" />
-		</move>
-
-		<!-- Move system plugin -->
-		<move todir="${tmp_dir}/plg_quickicon_kunena">
-			<fileset dir="${tmp_dir}/packages/com_kunena/install/plugins/plg_quickicon_kunena" />
-		</move>
-
-		<!-- Move media files -->
-		<move todir="${tmp_dir}/media">
-			<fileset dir="${tmp_dir}/packages/com_kunena/media/kunena" />
-		</move>
+		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsis" />
 
 		<!-- Move files needed by the installer -->
 		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -193,7 +191,7 @@
 			<include name="**/*.css" />
 			<exclude name="template/mirage/css/*.css" />
 		</yui-compressor>
-		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/media/js" todir="${tmp_dir}/media/js">
+		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
 			<include name="**/*.js" />
 		</yui-compressor>
 	</target>
@@ -333,11 +331,11 @@
 		<language tag="zh-CN" />
 		<language tag="zh-TW" />
 
-		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/plg_system_kunena" />
-		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/plg_quickicon_kunena" />
-		<archive destfile="${build_dir}/packages/lib_kunena${str.version}" basedir="${tmp_dir}/libraries" />
+		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/packages/plg_system_kunena" />
+		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/packages/plg_quickicon_kunena" />
+		<archive destfile="${build_dir}/packages/lib_kunena${str.version}" basedir="${tmp_dir}/packages/lib_kunena" />
 		<archive destfile="${build_dir}/packages/com_kunena${str.version}" basedir="${tmp_dir}/packages/com_kunena" />
-		<archive destfile="${build_dir}/packages/kunena_media${str.version}" basedir="${tmp_dir}/media" />
+		<archive destfile="${build_dir}/packages/kunena_media${str.version}" basedir="${tmp_dir}/packages/kunena_media" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
 	</target>

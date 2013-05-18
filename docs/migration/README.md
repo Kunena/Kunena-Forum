@@ -1,6 +1,6 @@
-# Migrating Kunena or FireBoard from your old Joomla! 1.5 installation
+# Migrating from Joomla! 1.5
 
-Migrating Kunena from the old site contains the following six steps:
+Migrating Kunena (or FireBoard) from the old site contains the following six steps:
 
 * Migrating users (SQL tables)
 * Migrating forums (SQL tables)

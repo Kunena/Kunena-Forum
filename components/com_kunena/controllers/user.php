@@ -357,7 +357,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		// Reload the user.
-		$this->user->load();
+		$this->user->load($this->user->id);
 		$session = JFactory::getSession();
 		$session->set('user', $this->user);
 

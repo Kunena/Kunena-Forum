@@ -67,7 +67,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 			// Installation complete: reset and exit installer
 			$this->model->setAction(null);
 			$this->model->setStep(0);
-			echo json_encode(array('success'=>true, 'status'=>'100%', 'html'=>'Installation complete!'));
+			echo json_encode(array('success'=>true, 'status'=>'100%', 'html'=>JText::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE')));
 			return;
 		}
 
@@ -107,7 +107,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 			$current = end($this->status);
 			echo json_encode(array('success'=>true, 'status'=>"{$percent}%", 'current'=>$current['task'], 'log'=>$log));
 		} else {
-			echo json_encode(array('success'=>true, 'status'=>'100%', 'current'=>'Installation complete!', 'log'=>$log));
+			echo json_encode(array('success'=>true, 'status'=>'100%', 'current'=>JText::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE'), 'log'=>$log));
 		}
 	}
 

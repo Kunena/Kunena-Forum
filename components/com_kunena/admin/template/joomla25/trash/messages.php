@@ -85,7 +85,7 @@ defined ( '_JEXEC' ) or die ();
 							<thead>
 								<tr>
 									<th width="1%" class="nowrap">
-										<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->trash_items ); ?>);" />
+										<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" />
 									</th>
 									<th class="nowrap">
 										<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->listDirection, $this->listOrdering); ?>

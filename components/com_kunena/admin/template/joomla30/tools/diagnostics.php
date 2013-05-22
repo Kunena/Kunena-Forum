@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 	<div id="j-main-container" class="span10">
 
 		<?php
-		if ($task) :
+		if ( !empty($task) ) :
 			$rows = KunenaForumDiagnostics::getItems($task);
 			$info = KunenaForumDiagnostics::getFieldInfo($task);
 			$fields = array_keys((array) reset($rows));

@@ -39,6 +39,7 @@ class KunenaAccessCommunity {
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param int		$id			Group id.
+	 * @return string|null
 	 */
 	public function getGroupName($accesstype, $id=null) {
 		if ($accesstype == 'jomsocial') {
@@ -48,6 +49,7 @@ class KunenaAccessCommunity {
 			}
 			return $this->groups;
 		}
+		return null;
 	}
 
 	/**
@@ -55,6 +57,7 @@ class KunenaAccessCommunity {
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param int		$category	Group id.
+	 * @return array
 	 */
 	public function getAccessOptions($accesstype, $category) {
 		$html = array();
@@ -137,10 +140,11 @@ class KunenaAccessCommunity {
 	 *
 	 * @param	mixed	$topic		Category or topic.
 	 * @param	array	$userids	list(allow, deny).
+	 * @return array
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
 		if (empty($userids)) {
-			return;
+			return array (array(), array());
 		}
 
 		$category = $topic->getCategory();

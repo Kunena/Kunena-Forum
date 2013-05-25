@@ -963,6 +963,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$this->_topics = 0;
 		$this->_posts = 0;
 		$this->_lastid = $this->id;
+		/** @var array|KunenaForumCategory[] $categories */
 		$categories[$this->id] = $this;
 		// TODO: support channels
 		//$categories += $this->getChannels();

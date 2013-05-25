@@ -36,6 +36,8 @@ class KunenaAdminModelRanks extends JModelList {
 	/**
 	 * Method to auto-populate the model state.
 	 *
+	 * @param string $ordering
+	 * @param string $direction
 	 * @return	void
 	 */
 	protected function populateState($ordering = null, $direction = null) {

@@ -150,8 +150,7 @@ class KunenaUser extends JObject {
 	/**
 	 * Method to load a KunenaUser object by userid.
 	 *
-	 * @param	mixed	$identifier The user id of the user to load.
-	 * @param	string	$path		Path to a parameters xml file.
+	 * @param	mixed	$id The user id of the user to load.
 	 *
 	 * @return	boolean			True on success
 	 */

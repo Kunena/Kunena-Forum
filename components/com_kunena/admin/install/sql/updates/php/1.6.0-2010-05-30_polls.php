@@ -101,4 +101,5 @@ function kunena_160_2010_05_30_polls($parent) {
 	}
 	if ($upgraded)
 		return array ('action' => '', 'name' => JText::_ ( 'COM_KUNENA_INSTALL_160_POLLS' ), 'success' => true );
+	return null;
 }

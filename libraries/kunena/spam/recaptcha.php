@@ -42,6 +42,9 @@ defined ( '_JEXEC' ) or die ();
  * THE SOFTWARE.
  */
 
+/**
+ * Class KunenaSpamRecaptcha
+ */
 class KunenaSpamRecaptcha {
 	protected $error = '';
 	protected $config = null;

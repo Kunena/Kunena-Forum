@@ -26,8 +26,8 @@ class KunenaKeywordHelper {
 	/**
 	 * Returns KunenaKeyword object
 	 *
-	 * @access	public
-	 * @param	int	$identifier		The keywords to load - by ID
+	 * @param	mixed	$identifier		The keywords to load - by Id
+	 * @param	bool	$reload
 	 * @return	KunenaKeyword		The keyword object.
 	 * @since	1.7
 	 */

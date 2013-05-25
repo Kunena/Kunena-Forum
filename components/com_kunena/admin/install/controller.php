@@ -136,7 +136,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 
 	function runStep() {
 		if (empty($this->steps[$this->step]['step']))
-			return;
+			return null;
 		return call_user_func(array($this->model, "step" . $this->steps[$this->step]['step']));
 	}
 

@@ -149,7 +149,6 @@ class KunenaControllerUser extends KunenaController {
 		$DelSignature = JRequest::getVar ( 'delsignature', '' );
 		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
 
-		$db = JFactory::getDBO();
 		if (! empty ( $DelAvatar ) || ! empty ( $DelProfileInfo )) {
 			jimport ( 'joomla.filesystem.file' );
 			$avatar_deleted = '';
@@ -261,7 +260,6 @@ class KunenaControllerUser extends KunenaController {
 		}
 		$karma_delay = '14400'; // 14400 seconds = 6 hours
 		$userid = JRequest::getInt ( 'userid', 0 );
-		$catid = JRequest::getInt ( 'catid', 0 );
 
 		$target = KunenaFactory::getUser($userid);
 
@@ -405,7 +403,6 @@ class KunenaControllerUser extends KunenaController {
 		$upload = new CKunenaUpload();
 		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
 
-		$db = JFactory::getDBO();
 		if ( $upload->uploaded('avatarfile') ) {
 			$filename = 'avatar'.$this->me->userid;
 

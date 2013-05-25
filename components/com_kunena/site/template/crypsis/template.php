@@ -49,8 +49,9 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 
 		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 			// Load mediaxboxadvanced library if enabled in configuration
+			// TODO: replace with bootstrap compatible version
 			$this->addScript( 'js/mediaboxAdv.js' );
-			$this->addStyleSheet ( 'css/mediaboxAdv.css');
+			//$this->addStyleSheet ( 'css/mediaboxAdv.css');
 		}
 
 		// Toggler language strings
@@ -60,6 +61,11 @@ var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 // ]]>');
 
 		parent::initialize();
+	}
+
+	public function addStyleSheet($filename, $group='forum') {
+		$filename = $filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}");
+		return JFactory::getDocument ()->addStyleSheet ( JUri::root(true)."/{$filename}" );
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {

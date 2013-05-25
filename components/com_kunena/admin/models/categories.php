@@ -19,8 +19,14 @@ jimport( 'joomla.html.pagination' );
  * @since 2.0
  */
 class KunenaAdminModelCategories extends KunenaModel {
-	protected $__state_set = false;
+	public $context;
+	/**
+	 * @var KunenaForumCategory[]
+	 */
 	protected $_admincategories = false;
+	/**
+	 * @var KunenaForumCategory
+	 */
 	protected $_admincategory = false;
 
 	/**
@@ -134,6 +140,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 			else $this->_admincategories = $categories;
 			$admin = 0;
 			$acl = KunenaAccess::getInstance();
+			/** @var KunenaForumCategory $category */
 			foreach ($this->_admincategories as $category) {
 				$parent = $category->getParent();
 				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));

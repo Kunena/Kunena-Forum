@@ -240,10 +240,9 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 *
 	 * @return  void
 	 *
-	 * @since   2.5
 	 * @throws  Exception on database error.
 	 */
-	protected function index(FinderIndexerResult $item, $format = 'html') {
+	protected function index(FinderIndexerResult $item) {
 		// Check if the extension is enabled
 		if (JComponentHelper::isEnabled($this->extension) == false) {
 			return;
@@ -288,7 +287,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		}
 
 		// Check if Kunena has been installed.
-		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('3.0') || ! KunenaForum::installed()) {
+		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('3.1') || ! KunenaForum::installed()) {
 			return false;
 		}
 		KunenaForum::setup();
@@ -439,6 +438,8 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * in the Finder index.
 	 *
 	 * @param	mixed		$id	The id of the item.
+	 * @param	mixed		$extension Unused.
+	 * @param   string		$view View name.
 	 * @return	string		The URL of the item.
 	 */
 	protected function getUrl($id, $extension, $view) {

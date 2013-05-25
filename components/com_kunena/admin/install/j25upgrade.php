@@ -62,6 +62,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
+	 * @param string $table
 	 * @return	boolean Ready (true/false)
 	 * @since	1.6.4
 	 * @throws	Exception
@@ -149,7 +150,6 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 
 		// Need to initialize application
 		jimport ('joomla.environment.uri');
-		$app = JFactory::getApplication('administrator');
 
 		// Get component object
 		$component = JTable::getInstance ( 'extension', 'JTable', array('dbo'=>$this->db_new) );

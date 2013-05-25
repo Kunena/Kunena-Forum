@@ -118,7 +118,7 @@ abstract class KunenaDatabaseObject extends JObject {
 		}
 
 		// Include the Kunena plugins for the on save events.
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeSave event.
@@ -165,7 +165,7 @@ abstract class KunenaDatabaseObject extends JObject {
 		$table->exists ( $this->_exists );
 
 		// Include the Kunena plugins for the on save events.
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeDelete event.
@@ -224,7 +224,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	/**
 	 * Method to get the table object.
 	 *
-	 * @return  JTable  The table object.
+	 * @return  JTable|KunenaTable  The table object.
 	 */
 	protected function getTable() {
 		return JTable::getInstance ( $this->_table, 'Table' );

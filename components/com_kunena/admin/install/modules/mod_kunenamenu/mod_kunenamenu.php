@@ -11,13 +11,13 @@
 defined('_JEXEC') or die;
 
 // Kunena detection and version check
-if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0') || !KunenaForum::installed()) {
+if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1') || !KunenaForum::installed()) {
 	return;
 }
 
 // Include the class only once
 require_once __DIR__ . '/class.php';
 
-$params = (object) $params;
+/** @var object $params */
 $menu = new modKunenaMenu($params);
 $menu->display();

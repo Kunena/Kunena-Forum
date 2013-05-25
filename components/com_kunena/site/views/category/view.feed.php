@@ -42,8 +42,6 @@ class KunenaViewCategory extends KunenaView {
 		$this->document->image = $image;
 
 		foreach ( $this->topics as $topic ) {
-			$id = $topic->last_post_id;
-			$page = intval ( $topic->posts / $this->config->messages_per_page );
 			$description = $topic->last_post_message;
 			$date = new JDate($topic->last_post_time);
 			$userid = $topic->last_post_userid;

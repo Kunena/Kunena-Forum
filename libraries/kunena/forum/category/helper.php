@@ -264,7 +264,6 @@ abstract class KunenaForumCategoryHelper {
 			$ids = array(intval($ids)=>1);
 		}
 
-		$list = array ();
 		if (!$reverse) {
 			$allowed = $authorise != 'none' ? array_intersect_key($ids, KunenaAccess::getInstance()->getAllowedCategories ( null )) : $ids;
 			$list = array_intersect_key(self::$_instances, $allowed);
@@ -336,7 +335,7 @@ abstract class KunenaForumCategoryHelper {
 	 * @param int   $levels
 	 * @param array $params
 	 *
-	 * @return KunenaForumCategory[]
+	 * @return array|KunenaForumCategory[]
 	 */
 	static public function getChildren($parents = 0, $levels = 0, $params = array()) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

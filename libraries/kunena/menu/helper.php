@@ -11,9 +11,14 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaMenuHelper
+ */
 abstract class KunenaMenuHelper {
 	public static function cleanCache() {
-		JFactory::getCache()->clean('mod_menu');
+		/** @var JCache|JCacheController $cache */
+		$cache = JFactory::getCache();
+		$cache->clean('mod_menu');
 	}
 
 	/**
@@ -38,8 +43,6 @@ abstract class KunenaMenuHelper {
 		$items = array();
 		if (true) { // !($items = $cache->get($key))) {
 			// Initialise variables.
-			$list		= array();
-
 			$path		= $active->tree;
 			$start		= (int) $params->get('startLevel');
 			$end		= (int) $params->get('endLevel');

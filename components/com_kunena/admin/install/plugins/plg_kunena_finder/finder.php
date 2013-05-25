@@ -34,11 +34,11 @@ class plgKunenaFinder extends JPlugin
 		ob_end_clean();
 		JLog::add('onKunenaAfterSave table: '.$table_content, JLog::INFO);
 		JLog::add('onKunenaAfterSave isNew: '.($isNew)?'Yes':'No', JLog::INFO);
-		$dispatcher	= JDispatcher::getInstance();
+		$dispatcher	= JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
-		$results = $dispatcher->trigger('onFinderAfterSave', array($context, $table, $isNew));
+		$dispatcher->trigger('onFinderAfterSave', array($context, $table, $isNew));
 
 	}
 	/**
@@ -59,11 +59,11 @@ class plgKunenaFinder extends JPlugin
 		JLog::add('onKunenaBeforeSave table: '.$table_content, JLog::INFO);
 		JLog::add('onKunenaBeforeSave isNew: '.($isNew)?'Yes':'No', JLog::INFO);
 
-		$dispatcher	= JDispatcher::getInstance();
+		$dispatcher	= JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
-		$results = $dispatcher->trigger('onFinderBeforeSave', array($context, $table, $isNew));
+		$dispatcher->trigger('onFinderBeforeSave', array($context, $table, $isNew));
 
 	}
 	/**
@@ -81,11 +81,11 @@ class plgKunenaFinder extends JPlugin
 		ob_end_clean();
 		JLog::add('onKunenaAfterDelete table: '.$table_content, JLog::INFO);
 
-		$dispatcher	= JDispatcher::getInstance();
+		$dispatcher	= JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
-		$results = $dispatcher->trigger('onFinderAfterDelete', array($context, $table));
+		$dispatcher->trigger('onFinderAfterDelete', array($context, $table));
 	}
 	/**
 	 * Finder after delete message method
@@ -102,11 +102,11 @@ class plgKunenaFinder extends JPlugin
 		ob_end_clean();
 		JLog::add('onKunenaBeforeDelete table: '.$table_content, JLog::INFO);
 	
-		$dispatcher	= JDispatcher::getInstance();
+		$dispatcher	= JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 	
 		// Trigger the onFinderAfterDelete event.
-		$results = $dispatcher->trigger('onFinderBeforeDelete', array($context, $table));
+		$dispatcher->trigger('onFinderBeforeDelete', array($context, $table));
 	}
 
 }

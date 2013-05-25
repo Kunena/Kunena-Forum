@@ -10,6 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaHtmlParser
+ */
 abstract class KunenaHtmlParser {
 	static $emoticons = null;
 	static $relative = true;
@@ -112,9 +115,9 @@ abstract class KunenaHtmlParser {
 			$params = new JRegistry();
 			$params->set('ksource', 'kunena');
 
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
-			$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+			$dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
 			$content = $row->text;
 		}
 		return $content;

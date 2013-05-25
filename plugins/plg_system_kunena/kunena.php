@@ -10,25 +10,28 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class plgSystemKunena
+ */
 class plgSystemKunena extends JPlugin {
 
 	function __construct(& $subject, $config) {
 		// Check if Kunena API exists
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 		if (! is_file ( $api ))
-			return false;
+			return;
 
 		jimport ( 'joomla.application.component.helper' );
 		// Check if Kunena component is installed/enabled
 		if (! JComponentHelper::isEnabled ( 'com_kunena', true )) {
-			return false;
+			return;
 		}
 
 		// Load Kunena API
 		require_once $api;
 
 		// Do not load if Kunena version is not supported or Kunena is not installed
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed())) return;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.1') && KunenaForum::installed())) return;
 
 		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_system_kunena.sys', KPATH_ADMIN);
 
@@ -147,13 +150,13 @@ class plgSystemKunena extends JPlugin {
 	 * @return object KunenaForumMessage
 	 */
 	protected function runJoomlaContentEvent( &$text, &$params, $page = 0 ) {
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
 		$row = new stdClass();
 		$row->text =& $text;
 
-		$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+		$dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
 
 		$text =& $row->text;
 
@@ -201,7 +204,7 @@ class plgSystemKunena extends JPlugin {
 	 */
 	public function onExtensionBeforeInstall($method, $type, $manifest, $eid) {
 		// We don't want to handle discover install (where there's no manifest provided)
-		if (!$manifest) return;
+		if (!$manifest) return null;
 		return $this->onExtensionBeforeUpdate($type, $manifest);
 	}
 	/**
@@ -229,5 +232,6 @@ class plgSystemKunena extends JPlugin {
 		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
 		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($type))));
 		$app->redirect('index.php?option=com_installer');
+		return true;
 	}
 }

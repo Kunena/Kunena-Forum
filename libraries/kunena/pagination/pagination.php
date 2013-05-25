@@ -473,8 +473,6 @@ class KunenaPagination
 	 */
 	public function getListFooter()
 	{
-		$app = JFactory::getApplication();
-
 		$list = array();
 		$list['prefix'] = $this->prefix;
 		$list['limit'] = $this->limit;

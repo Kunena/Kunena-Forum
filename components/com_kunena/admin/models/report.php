@@ -87,9 +87,6 @@ class KunenaAdminModelReport extends KunenaModel {
 		$ktemplate = KunenaFactory::getTemplate();
 		$ktemplatedetails = $ktemplate->getTemplateDetails();
 
-		//get all the config settings for Kunena
-		$kconfig = $this->_getKunenaConfiguration();
-
 		$jtemplatedetails = $this->_getJoomlaTemplate();
 
 		$joomlamenudetails = $this->_getJoomlaMenuDetails();
@@ -103,12 +100,6 @@ class KunenaAdminModelReport extends KunenaModel {
 
 		// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
 		jimport( 'joomla.plugin.helper' );
-
-		if ( JPluginHelper::isEnabled('system', 'mtupgrade') ) 	$mtupgrade = '[u]System - Mootools Upgrade:[/u] Enabled';
-		else $mtupgrade = '[u]System - Mootools Upgrade:[/u] Disabled';
-
-		if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] Enabled';
-		else $plg_mt = '[u]System - Mootools12:[/u] Disabled';
 
 		$plg['jfirephp'] = $this->getExtensionVersion('system/jfirephp', 'System - JFirePHP');
 		$plg['ksearch'] = $this->getExtensionVersion('search/kunena', 'Search - Kunena Search');
@@ -232,7 +223,7 @@ class KunenaAdminModelReport extends KunenaModel {
 
 		$db->setQuery($query);
 		$template = $db->loadResult();
-		if (KunenaError::checkDatabaseError()) return;
+		if (KunenaError::checkDatabaseError()) return false;
 
 		$xml = simplexml_load_file(JPATH_SITE.'/templates/'.$template.'/templateDetails.xml');
 		if (!$xml || $xml->getName() != 'extension') {
@@ -293,7 +284,7 @@ class KunenaAdminModelReport extends KunenaModel {
 			if (preg_match('`_kunena_`',$table)) {
 				$kunena_db->setQuery("SHOW FULL FIELDS FROM " .$table. "");
 				$fullfields = $kunena_db->loadObjectList ();
-				if (KunenaError::checkDatabaseError()) return;
+				if (KunenaError::checkDatabaseError()) return null;
 
 				$fieldTypes = array('tinytext','text','char','varchar');
 
@@ -326,6 +317,8 @@ class KunenaAdminModelReport extends KunenaModel {
 	/**
 	 * Return extension version string if installed.
 	 *
+	 * @param  string  $extension
+	 * @param  string  $name
 	 * @return	string
 	 * @since	1.6
 	 */

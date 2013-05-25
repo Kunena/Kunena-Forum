@@ -37,7 +37,7 @@ class KunenaAdminViewPlugin extends KunenaView
 		if (count($errors = $this->get('Errors')))
 		{
 			JError::raiseError(500, implode("\n", $errors));
-			return false;
+			return;
 		}
 
 		$this->addToolbar();
@@ -53,7 +53,6 @@ class KunenaAdminViewPlugin extends KunenaView
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
 
-		$user  = JFactory::getUser();
 		//$canDo = PluginsHelper::getActions();
 
 		JToolbarHelper::title( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'pluginsmanager');

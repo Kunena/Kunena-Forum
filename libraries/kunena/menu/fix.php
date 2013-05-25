@@ -15,6 +15,9 @@ jimport ('joomla.database.table');
 
 KunenaMenuFix::initialize();
 
+/**
+ * Class KunenaMenuFix
+ */
 abstract class KunenaMenuFix {
 	/**
 	 * @var array|StdClass[]
@@ -87,7 +90,6 @@ abstract class KunenaMenuFix {
 	}
 
 	public static function fixLegacy() {
-		$items = array();
 		$errors = array();
 		foreach (self::$legacy as $itemid) {
 			$item = self::$items[$itemid];

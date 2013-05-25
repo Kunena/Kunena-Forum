@@ -190,7 +190,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		if ($this->getState('list.limit') && $total < $this->getState('list.start'))
 			$this->setState('list.start', intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
 
-		$ids = $db->setQuery($query, $this->getState('list.start'), $this->getState('list.limit'));
+		$db->setQuery($query, $this->getState('list.start'), $this->getState('list.limit'));
 		$ids = $db->loadColumn();
 
 		return KunenaForumMessageHelper::getMessages($ids, 'none');
@@ -281,7 +281,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		if ($this->getState('list.limit') && $total < $this->getState('list.start'))
 			$this->setState('list.start', intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
 
-		$ids = $db->setQuery($query, $this->getState('list.start'), $this->getState('list.limit'));
+		$db->setQuery($query, $this->getState('list.start'), $this->getState('list.limit'));
 		$ids = $db->loadColumn();
 
 		return KunenaForumTopicHelper::getTopics($ids, 'none');

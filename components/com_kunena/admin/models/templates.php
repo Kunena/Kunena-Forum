@@ -59,9 +59,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
-		// Initialise variables.
-		$jinput = JFactory::getApplication()->input;
-
 		// Load the configuration definition file.
 		$template = $this->getState ('template');
 		$xml = KunenaTemplate::getInstance($template)->getConfigXml();
@@ -92,7 +89,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	function getTemplates() {
 		//get template xml file info
-		$rows = array();
 		$rows = KunenaTemplateHelper::parseXmlFiles();
 		// set dynamic template information
 		foreach( $rows as $row ) {
@@ -114,7 +110,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 	function getEditparams() {
 		jimport('joomla.filesystem.file');
 
-		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
 		$template = $this->app->getUserState ( 'kunena.edit.template');
 		$ini	= KPATH_SITE.'/template/'.$template.'/params.ini';
 		$xml	= KPATH_SITE.'/template/'.$template.'/template.xml';
@@ -144,7 +139,7 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		$filename = $this->app->getUserState ( 'kunena.editcss.filename');
 		$content = JFile::read(KPATH_SITE.'/template/'.$template.'/css/'.$filename);
 		if ($content === false) {
-			 return;
+			 return null;
 		}
 		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
 

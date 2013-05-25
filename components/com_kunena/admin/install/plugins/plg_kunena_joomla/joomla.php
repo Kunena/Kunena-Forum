@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 class plgKunenaJoomla extends JPlugin {
 	public function __construct(&$subject, $config) {
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed())) return;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.1') && KunenaForum::installed())) return;
 
 		parent::__construct ( $subject, $config );
 
@@ -26,7 +26,7 @@ class plgKunenaJoomla extends JPlugin {
 	 * @return KunenaAccess
 	 */
 	public function onKunenaGetAccessControl() {
-		if (!$this->params->get('access', 1)) return;
+		if (!$this->params->get('access', 1)) return null;
 
 		require_once __DIR__ . "/access.php";
 		return new KunenaAccessJoomla($this->params);
@@ -38,7 +38,7 @@ class plgKunenaJoomla extends JPlugin {
 	 * @return KunenaLogin
 	 */
 	public function onKunenaGetLogin() {
-		if (!$this->params->get('login', 1)) return;
+		if (!$this->params->get('login', 1)) return null;
 
 		require_once __DIR__ . "/login.php";
 		return new KunenaLoginJoomla($this->params);

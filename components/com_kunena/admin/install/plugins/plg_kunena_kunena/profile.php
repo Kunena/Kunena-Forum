@@ -29,7 +29,6 @@ class KunenaProfileKunena extends KunenaProfile {
 	{
 		if ($user == 0) return false;
 		$user = KunenaFactory::getUser($user);
-		$my = JFactory::getUser();
 		if ($user === false) return false;
 		$userid = "&userid={$user->userid}";
 		$do = $task ? '&do='.$task : '';

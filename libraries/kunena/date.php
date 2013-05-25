@@ -11,6 +11,9 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.utilities.date' );
 
+/**
+ * Class KunenaDate
+ */
 class KunenaDate extends JDate {
 	public static function getInstance($date = 'now', $tz = null) {
 		return new KunenaDate($date, $tz);

@@ -20,7 +20,7 @@ class Pkg_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
-			'0' => '5.4.14' // Preferred version
+			'0' => '5.4.15' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',
@@ -134,7 +134,7 @@ EOS;
 		}
 		if (!$major) $minor = reset($this->versions[$name]);
 		$recommended = end($this->versions[$name]);
-		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is higly recommended to use %s %s or later.", $name, $version, $name, $minor, $name, $recommended), 'notice');
+		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.", $name, $version, $name, $minor, $name, $recommended), 'notice');
 		return false;
 	}
 
@@ -214,9 +214,9 @@ EOS;
 		$list = (array) $db->loadColumn();
 
 		$query = $db->getQuery(true)
-			->set($db->quoteName('name').'='.$db->quote('Kunena 3.0 Update Site'))
+			->set($db->quoteName('name').'='.$db->quote('Kunena 3.1 Update Site'))
 			->set($db->quoteName('type').'='.$db->quote('collection'))
-			->set($db->quoteName('location').'='.$db->quote('http://update.kunena.org/3.0/list.xml'))
+			->set($db->quoteName('location').'='.$db->quote('http://update.kunena.org/3.1/list.xml'))
 			->set($db->quoteName('enabled').'=1')
 			->set($db->quoteName('last_check_timestamp').'=0');
 

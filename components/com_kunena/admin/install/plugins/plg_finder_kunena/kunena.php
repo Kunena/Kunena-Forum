@@ -287,7 +287,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		}
 
 		// Check if Kunena has been installed.
-		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('3.0') || ! KunenaForum::installed()) {
+		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('3.1') || ! KunenaForum::installed()) {
 			return false;
 		}
 		KunenaForum::setup();

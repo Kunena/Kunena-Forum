@@ -118,8 +118,7 @@ class KunenaUpload extends JObject {
 		// Look for the content type header
 		if (isset($_SERVER["HTTP_CONTENT_TYPE"])) {
 			$contentType = $_SERVER["HTTP_CONTENT_TYPE"];
-		}
-		if (isset($_SERVER["CONTENT_TYPE"])) {
+		} elseif (isset($_SERVER["CONTENT_TYPE"])) {
 			$contentType = $_SERVER["CONTENT_TYPE"];
 		} else {
 			$contentType = '';

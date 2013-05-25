@@ -148,6 +148,6 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		if (!empty($ruleEnabled[0]->published)) {
 			return $ruleEnabled[0]->points2;
 		}
-		return;
+		return null;
 	}
 }

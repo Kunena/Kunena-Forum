@@ -44,7 +44,7 @@ class KunenaAdminModelSmiley extends KunenaModel {
 			$db->setQuery ( "SELECT * FROM #__kunena_smileys WHERE id={$db->quote($id)}" );
 			$selected = $db->loadObject ();
 			if (KunenaError::checkDatabaseError ())
-				return;
+				return null;
 
 			return $selected;
 		}
@@ -70,7 +70,6 @@ class KunenaAdminModelSmiley extends KunenaModel {
 		ksort($smiley_images);
 
 		$smiley_list = array();
-		$i = 0;
 		foreach ( $smiley_images as $file => $path ) {
 			$smiley_list[] = JHtml::_ ( 'select.option', $path, $file );
 		}

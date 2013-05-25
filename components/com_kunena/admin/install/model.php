@@ -595,11 +595,13 @@ class KunenaModelInstall extends JModelLegacy {
 		$this->createMenu(false);
 
 		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
-		$count = KunenaForumCategoryHelper::fixAliases();
+		KunenaForumCategoryHelper::fixAliases();
 
 		// Clean cache, just in case
 		KunenaMenuHelper::cleanCache();
-		JFactory::getCache()->clean('com_kunena');
+		/** @var JCache|JCacheController $cache */
+		$cache = JFactory::getCache();
+		$cache->clean('com_kunena');
 
 		// Delete installer file (only if not using GIT build).
 		if (!KunenaForum::isDev()) {
@@ -674,7 +676,6 @@ class KunenaModelInstall extends JModelLegacy {
 		// Handle only first table in the list
 		$table = array_shift($state);
 		if ($table) {
-			$query = $create[$table];
 			if (!isset($tables[$table])) {
 				$result = $schema->updateSchemaTable($table);
 				if ($result) {
@@ -751,7 +752,6 @@ class KunenaModelInstall extends JModelLegacy {
 		// Allow queries to fail
 		$this->db->setDebug(false);
 
-		$results = array();
 		foreach ($xml->upgrade[0] as $version) {
 			// If we have already upgraded to this version, continue to the next one
 			$vernum = (string) $version['version'];
@@ -863,7 +863,6 @@ class KunenaModelInstall extends JModelLegacy {
 
 	// TODO: move to migration
 	public function migrateAvatars() {
-		$app = JFactory::getApplication ();
 		$stats = $this->getAvatarStatus();
 
 		static $dirs = array (
@@ -897,7 +896,6 @@ class KunenaModelInstall extends JModelLegacy {
 				$file = JPATH_ROOT . "/$dir/$avatar";
 				break;
 			}
-			$success = false;
 			if ($file) {
 				$file = JPath::clean($file, '/');
 				// Make sure to copy only supported fileformats
@@ -1008,7 +1006,6 @@ class KunenaModelInstall extends JModelLegacy {
 			return true;
 		}
 
-		$app = JFactory::getApplication ();
 		$stats = $this->getAttachmentStatus();
 
 		static $dirs = array (
@@ -1426,13 +1423,13 @@ class KunenaModelInstall extends JModelLegacy {
 		$tables = $this->listTables ( 'kunena_' );
 		$oldtables = $this->listTables ( $oldprefix );
 		if ($oldtable == $newtable || !isset ( $oldtables [$oldtable] ) || isset ( $tables [$newtable] ))
-			return; // Nothing to migrate
+			return null; // Nothing to migrate
 
 		// Make identical copy from the table with new name
 		$create = array_pop($this->db->getTableCreate($this->db->getPrefix () . $oldtable));
 		$collation = $this->db->getCollation ();
 		if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
-		if (!$create) return;
+		if (!$create) return null;
 		$create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);
 		$create = preg_replace('/(DEFAULT )?CHARSET=[\w\d]+/', '', $create);
 		$create = preg_replace('/COLLATE [\w\d_]+/', '', $create);
@@ -1471,7 +1468,7 @@ class KunenaModelInstall extends JModelLegacy {
 	{
 		$tables = $this->listTables ( 'kunena_' );
 		if (isset ( $tables ['kunena_version'] ))
-			return; // Nothing to migrate
+			return null; // Nothing to migrate
 		$collation = $this->db->getCollation ();
 		if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
 		$query = "CREATE TABLE IF NOT EXISTS `".$this->db->getPrefix()."kunena_version` (
@@ -1708,6 +1705,7 @@ class KunenaModelInstall extends JModelLegacy {
 		if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
 			throw new KunenaInstallerException ( $table->getError () );
 		}
+		return true;
 	}
 
 	function deleteMenu() {
@@ -1719,7 +1717,9 @@ class KunenaModelInstall extends JModelLegacy {
 				JFactory::getApplication()->enqueueMessage($table->getError(), 'error');
 			}
 		}
-		JFactory::getCache()->clean('mod_menu');
+		/** @var JCache|JCacheController $cache */
+		$cache = JFactory::getCache();
+		$cache->clean('mod_menu');
 	}
 
 	function checkTimeout($stop = false) {

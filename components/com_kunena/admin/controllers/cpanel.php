@@ -25,7 +25,6 @@ class KunenaAdminControllerCpanel extends KunenaController {
 
 	public function display($cachable = false, $urlparams = false) {
 		$db = JFactory::getDbo();
-		$now = JDate::getInstance();
 
 		// Enable Kunena updates if they were disabled (but only every 6 hours or logout/login).
 		$now = time();

@@ -165,7 +165,7 @@ class KunenaDatabaseQuery
 	/**
 	 * Clear data from the query or a specific clause of the query.
 	 *
-	 * @param	string	$clear	Optionally, the name of the clause to clear, or nothing to clear the whole query.
+	 * @param	string	$clause	Optionally, the name of the clause to clear, or nothing to clear the whole query.
 	 *
 	 * @return	void
 	 * @since	1.6
@@ -263,7 +263,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	string	$table	The name of the table to delete from.
+	 * @param	string	$tables	The name of the table to delete from.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6

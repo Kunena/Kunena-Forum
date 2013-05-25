@@ -9,6 +9,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaFactory
+ */
 abstract class KunenaFactory {
 	static $session = null;
 
@@ -17,7 +20,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
 	 *
-	 * @return object KunenaConfig
+	 * @return KunenaConfig
 	 */
 	public static function getConfig() {
 		return KunenaConfig::getInstance();
@@ -28,6 +31,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
+	 * @param	string	$name
 	 * @return object KunenaTemplate
 	 */
 	public static function getTemplate($name = null) {
@@ -61,6 +65,7 @@ abstract class KunenaFactory {
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
 	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to Id automatically.
+	 * @param	bool	$reload
 	 *
 	 * @return object KunenaUser
 	 */
@@ -73,7 +78,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
-	 * @param array $update	An array containing session options
+	 * @param array|bool $update	An array containing session options
 	 * @return object KunenaSession
 	 */
 	public static function getSession($update = false) {

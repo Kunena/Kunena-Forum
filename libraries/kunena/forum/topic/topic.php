@@ -1342,7 +1342,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		if ($votes >= $config->pollnbvotesbyuser) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES' );
 		}
-		if ($config->polltimebtvotes && $poll->getMyTime($user) + $config->polltimebtvotes > JFactory::getDate()->toUnix()) {
+		if ($config->polltimebtvotes && $poll->getMyTime($user) + (int) $config->polltimebtvotes > JFactory::getDate()->toUnix()) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY' );
 		}
 		if ($this->locked ) {

@@ -94,7 +94,7 @@ function kunena_200_2012_05_30_configuration($parent) {
 			$plugins['jomsocial']->params->set('activity_stream_limit', $config->get('activity_limit', 0));
 		}
 		unset($config->activity_limit, $config->alphauserpointsnumchars);
-		foreach ($plugins as $name => $plugin) {
+		foreach ($plugins as $plugin) {
 			$plugin->params = $plugin->params->toString();
 			if (!empty($plugin->enabled)) {
 				$plugin->store();

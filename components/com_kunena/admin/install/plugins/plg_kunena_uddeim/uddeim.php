@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 class plgKunenaUddeIM extends JPlugin {
 	public function __construct(&$subject, $config) {
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed())) return;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.1') && KunenaForum::installed())) return;
 
 		KunenaFactory::loadLanguage('plg_kunena_uddeim.sys', 'admin');
 		$path = JPATH_SITE."/components/com_uddeim/uddeim.api.php";
@@ -35,7 +35,7 @@ class plgKunenaUddeIM extends JPlugin {
 	 * @return KunenaPrivate
 	 */
 	public function onKunenaGetPrivate() {
-		if (!$this->params->get('private', 1)) return;
+		if (!$this->params->get('private', 1)) return null;
 
 		require_once __DIR__ . "/private.php";
 		return new KunenaPrivateUddeIM($this->params);

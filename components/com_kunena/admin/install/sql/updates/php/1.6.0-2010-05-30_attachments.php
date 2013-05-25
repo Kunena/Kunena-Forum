@@ -17,7 +17,7 @@ function kunena_160_2010_05_30_attachments($parent) {
 	$fields = array_pop ( $db->getTableColumns ( '#__kunena_attachments' ) );
 	if (! isset ( $fields ['filelocation'] )) {
 		// Already converted, there is nothing to do
-		return;
+		return null;
 	}
 
 	//Import filesystem libraries.

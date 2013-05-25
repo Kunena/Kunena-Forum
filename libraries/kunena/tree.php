@@ -115,8 +115,6 @@ class KunenaTree implements Iterator {
 	}
 
 	public function &getIndentation($parent_id = 0, $itemIndent = array(), $gap = false) {
-		$parent = $this->_parent;
-
 		$parent_tree = &$this->_tree[$parent_id];
 		end($parent_tree);
 		$last_id = key($parent_tree);
@@ -137,7 +135,7 @@ class KunenaTree implements Iterator {
 
 			if ($gap) {
 				// Parent isn't available, so we need to do some tricks to make it to look good
-				$current = array_pop($indent);
+				array_pop($indent);
 				$indent[] = 'empty';
 				$itemIndent = $indent;
 				if (count($parent_tree) > 1) {

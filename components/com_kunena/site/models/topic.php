@@ -25,7 +25,6 @@ class KunenaModelTopic extends KunenaModel {
 		$active = $this->app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 
-		$layout = $this->getWord ( 'layout', 'default' );
 		$layout = $this->me->getTopicLayout ();
 		$this->setState ( 'layout', $layout );
 
@@ -52,7 +51,7 @@ class KunenaModelTopic extends KunenaModel {
 		if ($value < 1 || $value > 100) $value = $this->config->messages_per_page;
 		$this->setState ( 'list.limit', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
+		//$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
 		$value = $this->getInt ( 'limitstart', 0 );

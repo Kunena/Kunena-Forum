@@ -29,5 +29,6 @@ class KunenaLoginCommunity {
 		$usersConfig = JComponentHelper::getParams ( 'com_users' );
 		if ($usersConfig->get ( 'allowUserRegistration' ))
 			return CRoute::_('index.php?option=com_community&view=register');
+		return null;
 	}
 }

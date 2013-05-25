@@ -246,7 +246,6 @@ abstract class KunenaForumMessageHelper {
 	public static function loadLocation($mesids) {
 		// NOTE: if you already know the location using this code just takes resources
 		if (!is_array($mesids)) $mesids = explode ( ',', $mesids );
-		$list = array();
 		$ids = array();
 		foreach ($mesids as $id) {
 			if ($id instanceof KunenaForumMessage) {

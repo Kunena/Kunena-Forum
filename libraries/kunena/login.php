@@ -10,13 +10,19 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaLogin
+ */
 class KunenaLogin {
 	protected static $instance = false;
+	/**
+	 * @var array|KunenaLogin[]
+	 */
 	protected $instances = array();
 
 	public function __construct() {
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$classes = $dispatcher->trigger('onKunenaGetLogin');
 		foreach ($classes as $class) {
 			if (!is_object($class)) continue;

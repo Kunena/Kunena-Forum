@@ -117,7 +117,7 @@ $this->fieldsets = $this->form->getFieldsets('params');
 											<?php endif; ?>
 											<!-- Plugin metadata -->
 											<?php if ($this->item->xml) : ?>
-												<?php if ($text = trim($this->item->xml->description)) : ?>
+												<?php if (($text = trim($this->item->xml->description))) : ?>
 													<tr>
 														<td>
 															<?php echo JText::_('JGLOBAL_DESCRIPTION'); ?>

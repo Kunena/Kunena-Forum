@@ -137,7 +137,6 @@ class CKunenaFile extends JFile
 		// Initialize variables
 		jimport('joomla.client.helper');
 		$FTPOptions = JClientHelper::getCredentials('ftp');
-		$ret = false;
 		if (is_uploaded_file($src)) {
 			if ($FTPOptions['enabled'] == 1 && self::exists($dest) && !CKunenaPath::isOwner($dest)) @chmod($dest, 0777);
 			$ret = parent::upload($src, $dest);

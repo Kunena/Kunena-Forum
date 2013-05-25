@@ -84,7 +84,7 @@ class KunenaViewTopic extends KunenaView {
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -262,7 +262,7 @@ class KunenaViewTopic extends KunenaView {
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -288,7 +288,6 @@ class KunenaViewTopic extends KunenaView {
 	protected function displayEdit($tpl = null) {
 		$this->catid = $this->state->get('item.catid');
 		$mesid = $this->state->get('item.mesid');
-		$document = JFactory::getDocument();
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
@@ -309,7 +308,7 @@ class KunenaViewTopic extends KunenaView {
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -351,7 +350,8 @@ class KunenaViewTopic extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->poll = $this->get('Poll');
@@ -501,7 +501,7 @@ class KunenaViewTopic extends KunenaView {
 			$params->set('kunena_layout', $this->state->get('layout'));
 
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onKunenaPrepare', array ('kunena.user', &$this->profile, &$params, 0));
 
 			//karma points and buttons
@@ -628,7 +628,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
 		return $this->loadTemplateFile('actions');
@@ -684,7 +684,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
 		return $this->loadTemplateFile("message_actions");
@@ -708,7 +708,6 @@ class KunenaViewTopic extends KunenaView {
 		$this->thankyou = array();
 		$this->total_thankyou = 0;
 		$this->more_thankyou= 0;
-		$thankyous = array();
 
 		if ( isset($message->thankyou) ) {
 			if ($this->config->showthankyou && $this->profile->userid) {
@@ -844,7 +843,6 @@ class KunenaViewTopic extends KunenaView {
 		if (! $this->hasThreadHistory())
 			return;
 
-		$db = JFactory::getDBO();
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
 		$this->historycount = count ( $this->history );
 		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
@@ -860,7 +858,7 @@ class KunenaViewTopic extends KunenaView {
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->history, &$params, 0));

@@ -12,6 +12,9 @@ defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_SITE . '/router.php';
 
+/**
+ * Class KunenaRouteLegacy
+ */
 abstract class KunenaRouteLegacy {
 	// List of legacy views from previous releases
 	static $functions = array (

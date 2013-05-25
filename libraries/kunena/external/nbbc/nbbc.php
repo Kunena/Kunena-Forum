@@ -434,7 +434,6 @@ var $default_smileys = Array(
 '>_>'=> 'lookright.gif', '>.>' => 'lookright.gif',
 '<_<'=> 'lookleft.gif', '<.<' => 'lookleft.gif',
 'XD' => 'laugh.gif', 'X-D' => 'laugh.gif',
-';D' => 'bigwink.gif', ';-D' => 'bigwink.gif',
 ':3' => 'smile3.gif', ':-3' => 'smile3.gif',
 '=3' => 'smile3.gif', '=-3' => 'smile3.gif',
 ';3' => 'wink3.gif', ';-3' => 'wink3.gif',

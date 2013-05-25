@@ -56,10 +56,10 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   $title	The link title
 	 * @param   string   $order	The order field for the column
 	 * @param   string   $direction	The current direction
-	 * @param   string   $selected	The selected ordering
-	 * @param   string   $task	An optional task override
+	 * @param   string|int   $selected	The selected ordering
+	 * @param   string|null   $task	An optional task override
 	 * @param   string   $new_direction	An optional direction for the new column
-	 * @param   string   $form
+	 * @param   string|null   $form
 	 *
 	 * @return  string
 	 */
@@ -130,8 +130,6 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * @param   integer  $i
 	 * @param   mixed    $value	Either the scalar value, or an object (for backward compatibility, deprecated)
-	 * @param   string   $img1	Image for a positive or on value
-	 * @param   string   $img0	Image for the empty or off value
 	 * @param   string   $prefix	An optional prefix for the task
 	 *
 	 * @return  string
@@ -153,7 +151,8 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * @param   integer  $i
 	 * @param   string   $img	Image for a positive or on value
-	 * @param   string   $img0	Image for the empty or off value
+	 * @param   string   $alt
+	 * @param   string   $task
 	 * @param   string   $prefix	An optional prefix for the task
 	 *
 	 * @return  string

@@ -10,11 +10,14 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class plgQuickiconKunena
+ */
 class plgQuickiconKunena extends JPlugin {
 
 	function __construct(& $subject, $config) {
 		// Do not load if Kunena version is not supported or KunenaForum isn't detected
-		if (!(class_exists('KunenaForum'))) return false;
+		if (!(class_exists('KunenaForum'))) return;
 
 		$this->loadLanguage('plg_quickicon_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_quickicon_kunena.sys', KPATH_ADMIN);
 
@@ -25,10 +28,11 @@ class plgQuickiconKunena extends JPlugin {
 	 * Display Kunena backend icon in Joomla 2.5+
 	 *
 	 * @param string $context
+	 * @return array|null
 	 */
 	public function onGetIcons($context) {
 		if (!$context == 'mod_quickicon' || !JFactory::getUser()->authorise('core.manage', 'com_kunena')) {
-			return;
+			return null;
 		}
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 

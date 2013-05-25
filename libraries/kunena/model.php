@@ -15,54 +15,48 @@ defined ( '_JEXEC' ) or die ();
  * @since		2.0
  */
 class KunenaModel extends JModelLegacy {
+	/**
+	 * @var JSite|JAdministrator
+	 */
 	public $app = null;
+
+	/**
+	 * @var KunenaUser
+	 */
 	public $me = null;
+
+	/**
+	 * @var KunenaConfig
+	 */
 	public $config = null;
 
-	protected $__state_set = null;
+	/**
+	 * @var JRegistry
+	 */
+	public $params = null;
+
+	/**
+	 * @var JObject
+	 */
 	protected $state = null;
+
+	/**
+	 * @var bool
+	 */
 	protected $embedded = false;
+
+	/**
+	 * @var string
+	 */
+	protected $_escape = 'htmlspecialchars';
 
 	public function __construct($config = array()) {
 		$this->option = 'com_kunena';
 		parent::__construct($config);
-		if (isset($this->_state)) {
-			$this->state = $this->_state;
-		}
+
 		$this->app = JFactory::getApplication();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
-	}
-
-	/**
-	 * Method to get model state variables (from Joomla 1.6)
-	 *
-	 * @param	string	$property	Optional parameter name
-	 * @param	mixed	$default	Optional default value
-	 * @return	object	The property where specified, the state object where omitted
-	 */
-	public function getState($property = null, $default = null) {
-		if (!$this->__state_set) {
-			// Private method to auto-populate the model state.
-			$this->populateState();
-
-			// Set the model state set flat to true.
-			$this->__state_set = true;
-		}
-
-		$value = $property === null ? $this->state : $this->state->get($property, $default);
-		return $value;
-	}
-
-	/**
-	 * Method to set model state variables (from Joomla 1.6)
-	 *
-	 * @param	string	$property	The name of the property
-	 * @param	mixed	$value		The value of the property to set
-	 * @return	mixed	The previous value of the property
-	 */
-	public function setState($property, $value=null) {
-		return $this->state->set($property, $value);
 	}
 
 	public function initialize($params = array()) {
@@ -83,20 +77,6 @@ class KunenaModel extends JModelLegacy {
 			$Itemid = $active ? (int) $active->id : 0;
 		}
 		return $Itemid;
-	}
-
-	/**
-	 * Method to auto-populate the model state (from Joomla 1.6)
-	 *
-	 * This method should only be called once per instantiation and is designed
-	 * to be called on the first call to the getState() method unless the model
-	 * configuration flag to ignore the request is set.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @return	void
-	 */
-	protected function populateState() {
 	}
 
 	/**
@@ -126,7 +106,7 @@ class KunenaModel extends JModelLegacy {
 	protected function getParameters() {
 		// If we are not in embedded mode, get variable from application
 		if (!$this->embedded) {
-			return JFactory::getApplication()->getPageParameters('com_kunena');
+			return $this->app->getParams('com_kunena');
 		}
 		return $this->params;
 	}

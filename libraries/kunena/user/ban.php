@@ -64,12 +64,15 @@ class KunenaUserBan extends JObject
 		return KunenaUserHelper::get((int) $this->modified_by);
 	}
 
+	/**
+	 * @param KunenaUserBan $instance
+	 */
 	private static function storeInstance($instance) {
 		// Fill userid cache
 		self::cacheUserid($instance->userid);
 		self::cacheUserid($instance->created_by);
 		self::cacheUserid($instance->modified_by);
-		foreach ($instance->comments as $cid=>$comment) {
+		foreach ($instance->comments as $comment) {
 			self::cacheUserid($comment->userid);
 		}
 
@@ -90,7 +93,7 @@ class KunenaUserBan extends JObject
 	 * Returns the global KunenaUserBan object, only creating it if it doesn't already exist.
 	 *
 	 * @access	public
-	 * @param	int $id	The ban object to be loaded
+	 * @param	int $identifier	The ban object to be loaded
 	 * @return	KunenaUserBan			The ban object.
 	 * @since	1.6
 	 */
@@ -113,7 +116,8 @@ class KunenaUserBan extends JObject
 	 * Returns the global KunenaUserBan object, only creating it if it doesn't already exist.
 	 *
 	 * @access	public
-	 * @param	int $id	The ban object to be loaded
+	 * @param	int $identifier	The ban object to be loaded
+	 * @param	bool	$create
 	 * @return	KunenaUserBan			The ban object.
 	 * @since	1.6
 	 */
@@ -137,7 +141,8 @@ class KunenaUserBan extends JObject
 	 * Returns the global KunenaUserBan object, only creating it if it doesn't already exist.
 	 *
 	 * @access	public
-	 * @param	int $id	The ban object to be loaded
+	 * @param	int $identifier	The ban object to be loaded
+	 * @param	bool $create
 	 * @return	KunenaUserBan			The ban object.
 	 * @since	1.6
 	 */
@@ -287,7 +292,7 @@ class KunenaUserBan extends JObject
 	 * Method to load a KunenaUserBan object by user id
 	 *
 	 * @access	public
-	 * @param	int	$userid The user id of the user to load
+	 * @param	string	$ip
 	 * @param	int $mode KunenaUserBan::ANY or KunenaUserBan::ACTIVE
 	 * @return	boolean			True on success
 	 * @since 1.6

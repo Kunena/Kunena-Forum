@@ -33,7 +33,7 @@ $task = JRequest::getCmd('test');
 		$fields = array_keys((array) reset($rows));
 	?>
 
-	<div class="kadmin-functitle icon-config"><?php echo JText::sprintf('Diagnostics on %s', $task); ?></div>
+	<div class="kadmin-functitle icon-config"><?php echo JText::sprintf('COM_KUNENA_DIAGNOSTICS_LABEL_DIAG_ON', $task); ?></div>
 	<table class="adminform">
 		<?php if ($rows) : ?>
 		<tr>
@@ -56,27 +56,27 @@ $task = JRequest::getCmd('test');
 		</tr>
 		<?php endforeach ?>
 		<?php else : ?>
-		<tr><td><?php echo JText::_('No issues found!') ?></td></tr>
+		<tr><td><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_NO_ISSUES_FOUND') ?></td></tr>
 		<?php endif ?>
 	</table>
 
 	<?php else : ?>
 
-	<div class="kadmin-functitle icon-config"><?php echo JText::_('Diagnostics'); ?></div>
+	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?></div>
 	<table class="adminform">
 		<?php foreach (KunenaForumDiagnostics::getList() as $item) : ?>
 		<?php $count = KunenaForumDiagnostics::count($item) ?>
 		<tr>
 			<td><?php echo $item ?></td>
 			<?php if ($count) : ?>
-			<td style="color:red"><?php echo JText::_('TEST FAILED') ?></td>
-			<td><a href="<?php echo KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&layout=diagnostics&test={$item}"); ?>"><?php echo JText::sprintf('%s issues', "<b>{$count}</b>") ?></a></td>
+			<td style="color:red"><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_FAILED') ?></td>
+			<td><a href="<?php echo KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&layout=diagnostics&test={$item}"); ?>"><?php echo JText::sprintf('COM_KUNENA_DIAGNOSTICS_LABEL_NUMBER_OF_ISSUES', "<b>{$count}</b>") ?></a></td>
 			<td>
-				<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&".JSession::getFormToken().'=1').'">FIX ISSUES</a>' : '' ?>
-				<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&".JSession::getFormToken().'=1').'">DELETE BROKEN ITEMS</a>' : '' ?></td>
+				<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&".JSession::getFormToken().'=1').'">'.JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_FIX_ISSUES').'</a>' : '' ?>
+				<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&".JSession::getFormToken().'=1').'">'.JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DELETE_BROKEN_ITEMS').'</a>' : '' ?></td>
 			<?php else : ?>
-			<td style="color:green"><?php echo JText::_('TEST PASSED') ?></td>
-			<td><?php echo JText::_('No issues') ?></td>
+			<td style="color:green"><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_PASSED') ?></td>
+			<td><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_NO_ISSUES_FOUND') ?></td>
 			<?php endif ?>
 		</tr>
 		<?php endforeach ?>

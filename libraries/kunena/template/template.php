@@ -455,7 +455,9 @@ HTML;
 		} else {
 			$cache = JPATH_SITE.'/'.$this->getFile($inputFile, false, 'less');
 		}
-		$outputFile = KPATH_SITE."/template/{$this->name}/css/{$outputFile}";
+		$outputDir = KPATH_MEDIA."/cache/{$this->name}/css";
+		if (!is_dir($outputDir)) JFolder::create($outputDir);
+		$outputFile = "{$outputDir}/{$outputFile}";
 
 		$less = new lessc;
 		$less->setVariables($this->style_variables);

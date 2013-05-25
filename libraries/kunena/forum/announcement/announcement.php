@@ -213,6 +213,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	// Internal functions
 
 	protected function saveInternal() {
+		/** @var JCache|JCacheController $cache */
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$cache->remove('announcement', 'global');
 	}

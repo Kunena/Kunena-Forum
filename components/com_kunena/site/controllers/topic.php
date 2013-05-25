@@ -788,7 +788,6 @@ class KunenaControllerTopic extends KunenaController {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 			$this->redirectBack ();
 		}
-		$category = $topic->getCategory();
 
 		$reason = JRequest::getString ( 'reason' );
 		$text = JRequest::getString ( 'text' );

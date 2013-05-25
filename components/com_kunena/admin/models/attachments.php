@@ -38,6 +38,8 @@ class KunenaAdminModelAttachments extends JModelList {
 	/**
 	 * Method to auto-populate the model state.
 	 *
+	 * @param string $ordering
+	 * @param string $direction
 	 * @return	void
 	 * @since	1.6
 	 */

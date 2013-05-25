@@ -54,7 +54,6 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 				$this->redirectBack ();
 			}
 
-			$db = JFactory::getDBO();
 			$session = KunenaFactory::getSession();
 			if ($session->userid) {
 				// Mark all unread topics in the category to read
@@ -83,7 +82,6 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			$this->redirectBack ();
 		}
 
-		$db = JFactory::getDBO();
 		if ($this->me->exists()) {
 			$success = $category->subscribe(1);
 			if ($success) {
@@ -100,7 +98,6 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			$this->redirectBack ();
 		}
 
-		$db = JFactory::getDBO();
 		$catid = JRequest::getInt('catid', 0);
 		$catids = $catid ? array($catid) : array_keys(JRequest::getVar('categories', array(), 'post', 'array'));
 

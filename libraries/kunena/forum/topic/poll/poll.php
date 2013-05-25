@@ -191,7 +191,7 @@ class KunenaForumTopicPoll extends JObject {
 			$this->mytime[$user->userid] = $this->_db->loadResult();
 			KunenaError::checkDatabaseError();
 		}
-		return $this->mytime[$user->userid];
+		return (int) $this->mytime[$user->userid];
 	}
 
 	/**

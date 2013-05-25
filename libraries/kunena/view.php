@@ -201,9 +201,9 @@ class KunenaView extends JViewLegacy {
 	 *
 	 * @param int $number 		Number to be formated
 	 * @param int $precision	Significant digits for output
+	 * @return string
 	 */
 	public function formatLargeNumber($number, $precision = 3) {
-		$output = '';
 		// Do we need to reduce the number of significant digits?
 		if ($number >= 10000){
 			// Round the number to n significant digits

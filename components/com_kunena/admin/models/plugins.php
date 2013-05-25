@@ -16,7 +16,7 @@ class KunenaAdminModelPlugins extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 * @see     JController
 	 * @since   1.6
 	 */
@@ -51,7 +51,6 @@ class KunenaAdminModelPlugins extends JModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$app = JFactory::getApplication('administrator');
 		$filter_active = '';
 
 		// Load the filter state.
@@ -87,7 +86,7 @@ class KunenaAdminModelPlugins extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string	A prefix for the store id.
+	 * @param   string	$id  A prefix for the store id.
 	 *
 	 * @return  string	A store id.
 	 */
@@ -106,9 +105,9 @@ class KunenaAdminModelPlugins extends JModelList
 	/**
 	 * Returns an object list
 	 *
-	 * @param   string The query
-	 * @param   int Offset
-	 * @param   int The number of records
+	 * @param   JDatabaseQuery $query  The query
+	 * @param   int    $limitstart  Offset
+	 * @param   int    $limit  The number of records
 	 * @return  array
 	 */
 	protected function _getList($query, $limitstart=0, $limit=0)
@@ -174,7 +173,7 @@ class KunenaAdminModelPlugins extends JModelList
 	/**
 	 * Translate a list of objects
 	 *
-	 * @param   array The array of objects
+	 * @param   array $items  The array of objects
 	 * @return  array The array of translated objects
 	 */
 	protected function translate(&$items)
@@ -226,7 +225,8 @@ class KunenaAdminModelPlugins extends JModelList
 		$query->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 
 		// Filter by access level.
-		if ($access = $this->getState('filter.access'))
+		$access = $this->getState('filter.access');
+		if ($access)
 		{
 			$query->where('a.access = '.(int) $access);
 		}
@@ -245,13 +245,12 @@ class KunenaAdminModelPlugins extends JModelList
 		$query->where('a.state >= 0');
 
 		// Filter by element.
-		if ($search = $this->getState('filter.element'))
+		$search = $this->getState('filter.element');
+		if ($search)
 		{
 			$query->where('a.element LIKE '.$db->quote("%$search%"));
 		}
-
 		// Filter by search in id
-		$search = $this->getState('filter.search');
 		if (!empty($search) && stripos($search, 'id:') === 0)
 		{
 			$query->where('a.extension_id = '.(int) substr($search, 3));

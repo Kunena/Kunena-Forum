@@ -65,6 +65,7 @@ class KunenaLoginComprofiler {
 		$usersConfig = JComponentHelper::getParams ( 'com_users' );
 		if ($usersConfig->get ( 'allowUserRegistration' ))
 			return cbSef ( 'index.php?option=com_comprofiler&task=registers' );
+		return null;
 	}
 
 	public function getResetURL() {

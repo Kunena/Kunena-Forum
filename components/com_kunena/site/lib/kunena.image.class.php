@@ -88,7 +88,7 @@ class CKunenaImage
 	/**
 	 * Constructor.
 	 *
-	 * @return	void
+	 * @param object $source
 	 * @since	1.6
 	 */
 	public function __construct($source = null)
@@ -97,7 +97,7 @@ class CKunenaImage
 		if (!CKunenaImageHelper::test())
 		{
 			$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_UNMET_DEP'));
-			return false;
+			return;
 		}
 
 		// Initialize image type

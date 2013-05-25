@@ -797,7 +797,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		// Activity integration
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 		$activity = KunenaFactory::getActivityIntegration();
 		if ($postDelta < 0) {

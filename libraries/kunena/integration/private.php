@@ -10,6 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaPrivate
+ */
 class KunenaPrivate
 {
 	protected static $instance = false;
@@ -17,7 +20,7 @@ class KunenaPrivate
 	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$classes = $dispatcher->trigger('onKunenaGetPrivate');
 			foreach ($classes as $class) {
 				if (!is_object($class)) continue;

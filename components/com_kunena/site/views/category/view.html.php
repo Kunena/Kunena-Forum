@@ -337,7 +337,7 @@ class KunenaViewCategory extends KunenaView {
 		$params->set('kunena_view', 'category');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topics', &$this->topics, &$params, 0));

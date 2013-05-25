@@ -52,7 +52,7 @@ function kunena_200_2011_12_14_aliases($parent) {
 	}
 	// Create SEF: name and Name (UTF8)
 	if ($config->get('sefcats')) {
-		foreach ($categories as $id=>$category) {
+		foreach ($categories as $category) {
 			$created = false;
 			if ($config->get('sefutf8')) {
 				$name = $aliasUtf[$category->id];

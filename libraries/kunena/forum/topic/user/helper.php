@@ -19,7 +19,7 @@ abstract class KunenaForumTopicUserHelper {
 	 */
 	protected static $_instances = array();
 	/**
-	 * @var array
+	 * @var array|KunenaForumTopicUser[]
 	 */
 	protected static $_topics = array();
 
@@ -261,7 +261,7 @@ abstract class KunenaForumTopicUserHelper {
 		KunenaError::checkDatabaseError ();
 
 		// TODO: Is there a bug?
-		foreach ( self::$_topics [$id] as $instance ) {
+		foreach (self::$_topics[$id] as $instance) {
 			if (isset($results[$instance->user_id])) {
 				$instance->bind ( $results[$instance->user_id] );
 				$instance->exists(true);

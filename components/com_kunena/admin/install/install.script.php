@@ -95,8 +95,6 @@ class Com_KunenaInstallerScript {
 	}
 
 	public function postflight($type, $parent) {
-		$installer = $parent->getParent();
-
 		return true;
 	}
 

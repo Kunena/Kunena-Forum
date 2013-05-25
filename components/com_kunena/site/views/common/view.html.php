@@ -45,7 +45,6 @@ class KunenaViewCommon extends KunenaView {
 		if ($this->offline) return;
 
 		if ($this->config->showannouncement > 0) {
-			$new = new KunenaForumAnnouncement;
 			$items = KunenaForumAnnouncementHelper::getAnnouncements();
 			$this->announcement = array_pop($items);
 			if (!$this->announcement) {

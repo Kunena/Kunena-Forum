@@ -165,7 +165,6 @@ class CKunenaUpload {
 	}
 
 	function uploadFile($uploadPath, $input='kattachment', $filename='', $ajax=true) {
-		$result = array ();
 		$this->resetStatus();
 
 		// create upload directory if it does not exist
@@ -269,6 +268,7 @@ class CKunenaUpload {
 		// assume the extension is false until we know its ok
 		$extOk = false;
 		$fileparts = $this->getValidExtension($this->validFileExts);
+		$uploadedFileExtension = '';
 		if ($fileparts) {
 			$this->_isfile = true;
 			$extOk = true;
@@ -347,7 +347,7 @@ class CKunenaUpload {
 		$this->fileHash = md5_file ( $this->fileTemp );
 
 		// Override filename if given in the parameter
-		if ($filename) $uploadedFileBasename = $filename;
+		$uploadedFileBasename = $filename;
 		$uploadedFileBasename = CKunenaFile::makeSafe ( $uploadedFileBasename );
 		if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
 

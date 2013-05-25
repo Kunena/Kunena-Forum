@@ -73,7 +73,9 @@ class Pkg_KunenaInstallerScript {
 		$this->fixUpdateSite();
 
 		// Clear Joomla system cache.
-		JFactory::getCache()->clean('_system');
+		/** @var JCache|JCacheController $cache */
+		$cache = JFactory::getCache();
+		$cache->clean('_system');
 
 		// Remove all compiled files from APC cache.
 		if (function_exists('apc_clear_cache')) {

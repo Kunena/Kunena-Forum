@@ -72,8 +72,8 @@ $task = JRequest::getCmd('test');
 			<td style="color:red"><?php echo JText::_('TEST FAILED') ?></td>
 			<td><a href="<?php echo KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&layout=diagnostics&test={$item}"); ?>"><?php echo JText::sprintf('%s issues', "<b>{$count}</b>") ?></a></td>
 			<td>
-				<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&".JUtility::getToken().'=1').'">FIX ISSUES</a>' : '' ?>
-				<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&".JUtility::getToken().'=1').'">DELETE BROKEN ITEMS</a>' : '' ?></td>
+				<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&".JSession::getFormToken().'=1').'">FIX ISSUES</a>' : '' ?>
+				<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&".JSession::getFormToken().'=1').'">DELETE BROKEN ITEMS</a>' : '' ?></td>
 			<?php else : ?>
 			<td style="color:green"><?php echo JText::_('TEST PASSED') ?></td>
 			<td><?php echo JText::_('No issues') ?></td>

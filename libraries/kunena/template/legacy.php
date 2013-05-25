@@ -10,7 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-// Just for loading legacy
+/**
+ * Class KunenaTemplateLegacy is needed to load support for legacy templates
+ */
 class KunenaTemplateLegacy {
 	public static function load() {}
 }
@@ -73,6 +75,9 @@ define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . 'template/'.KUNENA_RELTMPLTPATH.'/'
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . 'template/'.KUNENA_RELTMPLTPATH.'/');
 define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
 
+/**
+ * Class CKunenaTools is legacy class from Kunena 1.6/1.7
+ */
 class CKunenaTools {
 	public static function addStyleSheet($filename) {
 		$document = JFactory::getDocument ();
@@ -92,7 +97,6 @@ class CKunenaTools {
 	public static function addScript($filename) {
 		$document = JFactory::getDocument ();
 		$config = KunenaFactory::getConfig ();
-		$template = KunenaFactory::getTemplate();
 
 		// Replace edit.js and mediaboxAdv.js with the new version of the file
 		$filename = preg_replace('#^.*/(editor(-min)?.js)$#', KUNENA_DIRECTURL.'template/blue_eagle/js/\1', $filename);

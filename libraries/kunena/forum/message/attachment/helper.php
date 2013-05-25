@@ -251,7 +251,6 @@ abstract class KunenaForumMessageAttachmentHelper {
 		elseif ( $params['file'] == '1' && $params['image'] == '1' ) $filetype = '';
 		else return array();
 
-		$orderby = '';
 		if ( $params['orderby'] == 'desc' ) $orderby = ' ORDER BY id DESC';
 		else $orderby = ' ORDER BY id ASC';
 

@@ -25,7 +25,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function publish() {
-		$db		= JFactory::getDBO();
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
 
@@ -57,16 +56,17 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	function edit() {
 		jimport('joomla.filesystem.path');
 		jimport('joomla.filesystem.file');
-		$db		= JFactory::getDBO();
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$template = array_shift($cid);
 
 		if (!$template) {
-			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
+			JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
+			return;
 		}
 		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
 		if (!is_dir( $tBaseDir . '/' . $template )) {
-			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
+			JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
+			return;
 		}
 
 		$template = JPath::clean($template);
@@ -93,7 +93,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		}
 		else {
 			$success = JFile::upload($file ['tmp_name'], $tmp . $file ['name']);
-			$success = JArchive::extract ( $tmp . $file ['name'], $tmp );
+			if ($success) $success = JArchive::extract ( $tmp . $file ['name'], $tmp );
 			if (! $success) {
 				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
 			}
@@ -145,7 +145,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		}
 
 		// Initialize variables
-		$retval	= true;
 		$otemplate = KunenaTemplateHelper::parseXmlFile($id);
 		if ( !$otemplate ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error' );
@@ -238,10 +237,8 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function apply() {
-		$task = JRequest::getCmd('task');
 		$template= JRequest::getVar('templatename', '', 'method', 'cmd');
-		$menus= JRequest::getVar('selections', array(), 'post', 'array');
-		$default= JRequest::getBool('default');
+		$menus = JRequest::getVar('selections', array(), 'post', 'array');
 		JArrayHelper::toInteger($menus);
 
 		if (! JSession::checkToken('post')) {
@@ -261,10 +258,8 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function save() {
-		$task = JRequest::getCmd('task');
 		$template= JRequest::getVar('templatename', '', 'method', 'cmd');
 		$menus= JRequest::getVar('selections', array(), 'post', 'array');
-		$default= JRequest::getBool('default');
 		JArrayHelper::toInteger($menus);
 
 		if (! JSession::checkToken('post')) {

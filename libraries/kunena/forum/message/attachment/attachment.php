@@ -115,7 +115,6 @@ class KunenaForumMessageAttachment extends JObject {
 
 			$config = KunenaFactory::getConfig();
 			$this->_imagelink = null;
-			$template = KunenaFactory::getTemplate();
 			switch (strtolower ( $this->_shorttype )) {
 				case 'image' :
 					// Check for thumbnail and if available, use for display
@@ -346,7 +345,7 @@ class KunenaForumMessageAttachment extends JObject {
 	// Internal functions
 
 	protected function check() {
-		$author = KunenaUserHelper::get($this->userid);
+		//$author = KunenaUserHelper::get($this->userid);
 	}
 
 	protected function deleteFile() {

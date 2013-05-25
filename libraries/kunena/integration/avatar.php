@@ -10,6 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaAvatar
+ */
 class KunenaAvatar {
 	public $avatarSizes = null;
 	protected $resize = false;
@@ -19,7 +22,7 @@ class KunenaAvatar {
 	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$classes = $dispatcher->trigger('onKunenaGetAvatar');
 			foreach ($classes as $class) {
 				if (!is_object($class)) continue;

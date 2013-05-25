@@ -30,8 +30,6 @@ class JFormFieldKunenaCategoryList extends JFormField {
 
 		KunenaFactory::loadLanguage('com_kunena');
 
-		$none = $this->element['none'];
-
 		$size = $this->element['size'];
 		$class = $this->element['class'];
 

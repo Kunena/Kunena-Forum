@@ -9,6 +9,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaSession
+ */
 class KunenaSession extends JObject
 {
 	protected $_exists = false;
@@ -35,7 +38,6 @@ class KunenaSession extends JObject
 	{
 		if (!self::$_instance) {
 			$my = JFactory::getUser();
-			$db = JFactory::getDBO();
 			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
 			if ($update) self::$_instance->updateSessionInfo();
 		}
@@ -73,8 +75,7 @@ class KunenaSession extends JObject
 	 * Method to load a KunenaSession object by userid
 	 *
 	 * @access	public
-	 * @param	mixed	$identifier The user id of the user to load
-	 * @param	string	$path		Path to a parameters xml file
+	 * @param	int	$userid The user id of the user to load
 	 * @return	boolean			True on success
 	 * @since 1.5
 	 */

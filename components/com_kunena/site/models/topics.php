@@ -100,7 +100,7 @@ class KunenaModelTopics extends KunenaModel {
 		if ($value < 1 || $value > 100) $value = $this->config->threads_per_page;
 		$this->setState ( 'list.limit', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
+		//$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_start", 'limitstart', 0, 'int' );
@@ -124,7 +124,7 @@ class KunenaModelTopics extends KunenaModel {
 					$topics = false;
 
 					JPluginHelper::importPlugin('kunena');
-					$dispatcher = JDispatcher::getInstance();
+					$dispatcher = JEventDispatcher::getInstance();
 					$dispatcher->trigger('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
 
 					if(!empty($topics)) {

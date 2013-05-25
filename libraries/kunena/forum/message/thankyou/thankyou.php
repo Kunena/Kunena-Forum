@@ -154,7 +154,6 @@ class KunenaForumMessageThankyou extends JObject {
 			return false;
 		}
 		$db = JFactory::getDBO ();
-		$time = JFactory::getDate();
 		$query = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)} AND userid={$db->quote($user->userid)}";
 		$db->setQuery ( $query );
 		$db->query ();

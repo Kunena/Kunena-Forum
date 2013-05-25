@@ -29,6 +29,9 @@ class KunenaForumStatistics {
 	public $todayReplyCount = null;
 	public $yesterdayReplyCount = null;
 
+	/**
+	 * @var array|KunenaForumTopic[]
+	 */
 	public $topTopics = null;
 	public $topPosters = null;
 	public $topProfiles = null;
@@ -181,7 +184,7 @@ class KunenaForumStatistics {
 	/**
 	 * @param int $limit
 	 *
-	 * @return array
+	 * @return array|KunenaForumTopic[]
 	 */
 	public function loadTopTopics($limit=0) {
 		$limit = $limit ? $limit : $this->_config->popsubjectcount;

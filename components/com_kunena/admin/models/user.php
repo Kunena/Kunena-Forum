@@ -48,8 +48,8 @@ class KunenaAdminModelUser extends KunenaModel {
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery ( "SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1" );
-		$subslist = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		$subslist = (array) $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return array();
 
 		return $subslist;
 	}
@@ -59,8 +59,8 @@ class KunenaAdminModelUser extends KunenaModel {
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery ( "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$userid}" );
-		$subscatslist = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		$subscatslist = (array) $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return array();
 
 		return $subscatslist;
 	}
@@ -70,15 +70,15 @@ class KunenaAdminModelUser extends KunenaModel {
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip" );
-		$iplist = implode("','", $db->loadColumn ());
-		if (KunenaError::checkDatabaseError()) return;
+		$iplist = implode("','", (array) $db->loadColumn ());
+		if (KunenaError::checkDatabaseError()) return array();
 
 		$list = array();
 		if ($iplist) {
 			$iplist = "'{$iplist}'";
 			$db->setQuery ( "SELECT m.ip,m.userid,u.username,COUNT(*) as mescnt FROM #__kunena_messages AS m INNER JOIN #__users AS u ON m.userid=u.id WHERE m.ip IN ({$iplist}) GROUP BY m.userid,m.ip" );
-			$list = $db->loadObjectlist ();
-		if (KunenaError::checkDatabaseError()) return;
+			$list = (array) $db->loadObjectlist ();
+		if (KunenaError::checkDatabaseError()) return array();
 		}
 		$useripslist = array();
 		foreach ($list as $item) {
@@ -89,7 +89,6 @@ class KunenaAdminModelUser extends KunenaModel {
 	}
 
 	public function getListmodcats() {
-		$db = JFactory::getDBO ();
 		$user = $this->getUser();
 
 		$modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
@@ -110,8 +109,8 @@ class KunenaAdminModelUser extends KunenaModel {
 		$user = $this->getUser();
 		//grab all special ranks
 		$db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_special = '1'" );
-		$specialRanks = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		$specialRanks = (array) $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return array();
 
 		$yesnoRank [] = JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED') );
 		foreach ( $specialRanks as $ranks ) {
@@ -134,8 +133,8 @@ class KunenaAdminModelUser extends KunenaModel {
 
 		$userids = implode(',', $userids);
 		$db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userids.")" );
-		$userids = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		$userids = (array) $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return array();
 
 		return $userids;
 	}

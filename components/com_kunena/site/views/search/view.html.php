@@ -118,7 +118,7 @@ class KunenaViewSearch extends KunenaView {
 		$params->set('kunena_view', 'search');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->results, &$params, 0));

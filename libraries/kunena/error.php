@@ -9,6 +9,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaError
+ */
 abstract class KunenaError {
 	static $enabled = 0;
 	static $handler = false;
@@ -74,7 +77,6 @@ abstract class KunenaError {
 	public static function getDatabaseError() {
 		$db = JFactory::getDBO();
 		if ($db->getErrorNum ()) {
-			$app = JFactory::getApplication();
 			if (self::$debug || self::$admin) {
 				return $db->getErrorMsg();
 			} else {

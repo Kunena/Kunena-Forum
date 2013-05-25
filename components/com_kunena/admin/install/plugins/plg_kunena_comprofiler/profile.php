@@ -52,7 +52,7 @@ class KunenaProfileComprofiler extends KunenaProfile {
 	}
 
 	public static function trigger($event, &$params) {
-		return KunenaIntegrationComprofiler::trigger($event, $params);
+		KunenaIntegrationComprofiler::trigger($event, $params);
 	}
 
 	public function _getTopHits($limit=0) {

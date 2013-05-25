@@ -46,7 +46,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 		if (!$text) $text = JText::_('COM_KUNENA_PMS_INBOX');
 
 		$userid = $this->getCBUserid();
-		if($userid === null) return;
+		if($userid === null) return null;
 
 		$itemid = getCBprofileItemid();
 
@@ -58,19 +58,19 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 
 		$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
 		if (file_exists($cbpath)) require_once($cbpath);
-		else return;
+		else return null;
 
 		$userid = $_CB_framework->myId();
 
 		$cbUser = CBuser::getInstance( (int) $userid );
-		if($cbUser === null) return;
+		if($cbUser === null) return null;
 
 		return $userid;
 	}
 
 	public function getInboxURL () {
 		$userid = $this->getCBUserid();
-		if($userid === null) return;
+		if($userid === null) return null;
 
 		$itemid = getCBprofileItemid();
 

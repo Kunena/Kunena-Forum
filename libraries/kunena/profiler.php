@@ -11,9 +11,15 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ('joomla.error.profiler');
 
+/**
+ * Class KunenaProfiler
+ */
 class KunenaProfiler extends JProfiler {
 	protected static $_instances = array();
 	protected $_kstart = array();
+	/**
+	 * @var array|KunenaProfilerItem[]
+	 */
 	protected $_heap = array();
 
 	/**
@@ -60,9 +66,15 @@ class KunenaProfiler extends JProfiler {
 	}
 }
 
+/**
+ * Class KunenaProfilerItem
+ */
 class KunenaProfilerItem {
+	/**
+	 * @var array|KunenaProfilerItem[]
+	 */
 	protected static $_instances = array();
-	protected $start = array();
+	public $start = array();
 
 	public function __construct($name) {
 		$this->name = $name;
@@ -71,6 +83,10 @@ class KunenaProfilerItem {
 		$this->external = 0.0;
 	}
 
+	/**
+	 * @param string $name
+	 * @return KunenaProfilerItem
+	 */
 	public static function getInstance($name) {
 		if (empty(self::$_instances[$name])) {
 			self::$_instances[$name] = new KunenaProfilerItem($name);

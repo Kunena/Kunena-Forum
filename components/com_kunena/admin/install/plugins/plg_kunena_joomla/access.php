@@ -40,6 +40,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param int		$id			Group id.
+	 * @return string|null
 	 */
 	public function getGroupName($accesstype, $id=null){
 		static $groups = array();
@@ -70,6 +71,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param int		$category	Group id.
+	 * @return array
 	 */
 	public function getAccessOptions($accesstype, $category) {
 		$html = array();
@@ -230,20 +232,22 @@ class KunenaAccessJoomla {
 	 *
 	 * @param	mixed	$topic		Category or topic.
 	 * @param	array	$userids	list(allow, deny).
+	 * @return array
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
+		$allow = $deny = array();
+
 		if (empty($userids)) {
-			return;
+			return array($allow, $deny);
 		}
 
-		$allow = $deny = array();
 		$category = $topic->getCategory();
 		if ($category->accesstype == 'joomla.level') {
 			// Check against Joomla access levels
 			$groups = $this->getGroupsByViewLevel($category->access);
 			$allow = $this->getUsersByGroup($groups, true, $userids);
 		} elseif ($category->accesstype == 'joomla.group') {
-			if ($category->pub_access <= 0) return;
+			if ($category->pub_access <= 0) return array($allow, $deny);
 			// Check against Joomla user groups
 			$public = $this->getUsersByGroup($category->pub_access, $category->pub_recurse, $userids);
 			$admin = $category->admin_access && $category->admin_access != $category->pub_access ? $this->getUsersByGroup($category->admin_access, $category->admin_recurse, $userids) : array();
@@ -257,7 +261,7 @@ class KunenaAccessJoomla {
 	/**
 	 * Method to return a list of groups which have view level (derived from Joomla 1.6)
 	 *
-	 * @param	integer	$userId	Id of the user for which to get the list of authorised view levels.
+	 * @param	integer	$viewlevel
 	 *
 	 * @return	array	List of view levels for which the user is authorised.
 	 */
@@ -288,6 +292,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @param	int		$groupId	The group Id
 	 * @param	boolean	$recursive	Recursively include all child groups (optional)
+	 * @param	array	$inUsers	Only list selected users.
 	 *
 	 * @return	array
 	 */

@@ -115,18 +115,18 @@ class KunenaGravatar {
 	public function __set($var, $value) {
 		switch ($var) {
 			case "email" :
-				return $this->setEmail ( $value );
+				$this->setEmail ( $value );
 			case "rating" :
-				return $this->setRating ( $value );
+				$this->setRating ( $value );
 			case "default" :
-				return $this->setDefault ( $value );
+				$this->setDefault ( $value );
 			case "size" :
-				return $this->setSize ( $value );
+				$this->setSize ( $value );
 			// Cannot set gravatar_id
 			case "gravatar_id" :
 				return;
 		}
-		return @$this->properties [$var] = $value;
+		$this->properties[$var] = $value;
 	}
 
 	/**

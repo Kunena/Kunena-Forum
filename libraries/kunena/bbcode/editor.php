@@ -146,7 +146,7 @@ class KunenaBbcodeEditor {
 		$this->editor_elements = self::parseXML($xml_file);
 
 		//Hook to manipulate the Editor XML like adding buttons
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher->trigger( 'onKunenaBbcodeEditorInit', array ( $this ) );
 
@@ -162,6 +162,9 @@ class KunenaBbcodeEditor {
 
 }
 
+/**
+ * Class KunenaBbcodeEditorElement
+ */
 abstract class KunenaBbcodeEditorElement {
 	var $name;
 
@@ -191,6 +194,9 @@ abstract class KunenaBbcodeEditorElement {
 	public static function parseXML (SimpleXMLElement $xml) {}
 }
 
+/**
+ * Class KunenaBbcodeEditorButton
+ */
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 	protected $tag;
 	protected $config;
@@ -387,6 +393,9 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 	}
 }
 
+/**
+ * Class KunenaBbcodeEditorSeparator
+ */
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement {
 	public function generateJs ($identifier) {
 		$js = "\nkbbcode.addFunction('#', function() {";

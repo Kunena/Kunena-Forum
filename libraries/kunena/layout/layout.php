@@ -213,6 +213,7 @@ class KunenaLayout
 	 * @return  KunenaLayout  Method supports chaining.
 	 *
 	 * @see     set()
+	 * @throws \InvalidArgumentException
 	 */
 	public function setProperties($properties)
 	{

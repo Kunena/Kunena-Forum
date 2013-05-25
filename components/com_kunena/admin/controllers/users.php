@@ -43,7 +43,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 	}
 
 	function save() {
-		$db = JFactory::getDBO ();
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -90,7 +89,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 	}
 
 	function trashusermessages() {
-		$db = JFactory::getDBO ();
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -132,7 +130,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 	}
 
 	function movemessages () {
-		$db = JFactory::getDBO ();
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -207,8 +204,8 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
+		$my = JFactory::getUser();
 		foreach ( $cids as $userid ) {
-			$my = JFactory::getUser();
 			$user = JFactory::getUser($userid);
 			$groups = JUserHelper::getUserGroups($userid);
 			$error = false;

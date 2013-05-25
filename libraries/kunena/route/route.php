@@ -16,6 +16,9 @@ jimport('joomla.filter.output');
 
 KunenaRoute::initialize();
 
+/**
+ * Class KunenaRoute
+ */
 abstract class KunenaRoute {
 	// List of views: array of default variable=>value pairs, which can be removed from URI
 	static $views = array (

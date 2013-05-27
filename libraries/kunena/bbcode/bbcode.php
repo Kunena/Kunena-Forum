@@ -35,6 +35,7 @@ class KunenaBbcode extends NBBC_BBCode {
      * @internal
      */
     public function __construct($relative = true) {
+		parent::__construct();
 		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 

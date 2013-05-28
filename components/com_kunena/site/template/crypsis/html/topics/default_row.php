@@ -9,6 +9,10 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+echo KunenaLayout::factory('Topic/Row')->set('topic', $this->topic);
+return;
+
 if (version_compare(JVERSION, '3.0','>')) {
 			JHtml::_('bootstrap.tooltip');
 }

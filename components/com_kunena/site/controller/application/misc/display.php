@@ -10,33 +10,27 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class ComponentKunenaControllerApplicationMiscDisplay extends KunenaControllerDisplay
+class ComponentKunenaControllerApplicationMiscDisplay extends KunenaControllerApplicationDisplay
 {
+	protected $header;
+	protected $body;
+
 	protected function display() {
 		// Display layout with given parameters.
 		$content = KunenaLayout::factory('Page/Custom')
 			->set('header', $this->header)
 			->set('body', $this->body);
-
-		$page = KunenaLayout::factory('Page')
-			->set('content', $content)
-			->set('menu', $this->menu)
-			->set('breadcrumb', $this->breadcrumb);
-
-		return $page;
+		return $content;
 	}
 
 	protected function before() {
-		KunenaFactory::loadLanguage('com_kunena.templates');
+		parent::before();
 
-		$this->menu = null;
-		$this->breadcrumb = $this->app->getPathway();
+		$params = $this->app->getParams('com_kunena');
+		$this->header = $params->get('page_title');
 
-		$params = $this->app->getParams( 'com_kunena' );
-		$this->header = $params->get( 'page_title' );
-
-		$body = $params->get( 'body' );
-		$format = $params->get( 'body_format' );
+		$body = $params->get('body');
+		$format = $params->get('body_format');
 
 		$this->header = htmlspecialchars($this->header, ENT_COMPAT, 'UTF-8');
 		if ($format == 'html') {

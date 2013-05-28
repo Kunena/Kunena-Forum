@@ -64,6 +64,13 @@ class KunenaLayout
 	protected $closures = array();
 
 	/**
+	 * Content to be appended after the main output.
+	 *
+	 * @var array
+	 */
+	protected $after = array();
+
+	/**
 	 * Method to instantiate the layout.
 	 *
 	 * @param	string			$name
@@ -86,9 +93,29 @@ class KunenaLayout
 		try {
 			return (string) $this->render();
 		} catch (Exception $e) {
-			// Exceptions aren't allowed in string conversion, use PHP error instead.
-			trigger_error($e->getMessage(), E_USER_ERROR);
-			return '';
+			// Exceptions aren't allowed in string conversion, log the error and output it as a string.
+			$trace = $e->getTrace();
+			$class = get_class($this);
+			foreach ($trace as $caller) {
+				if (isset($caller['class']) && isset($caller['function'])
+					&& $caller['function'] == '__toString' && $caller['class'] == $class) {
+					break;
+				}
+			}
+
+			$error  = "Fatal Error in layout {$this->name}: {$e->getMessage()}";
+			$error .= " in {$trace[0]['file']} on line {$trace[0]['line']}";
+			$error .= " called from {$caller['file']} on line {$caller['line']}";
+			JLog::add($error, JLog::CRITICAL, 'kunena');
+
+			$error = "<b>Fatal Error</b> in layout <b>{$this->name}</b>: {$e->getMessage()}";
+			if (JDEBUG) {
+				$error .= " in <b>{$trace[0]['file']}</b> on line {$trace[0]['line']}<br />";
+				$error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
+			} else {
+				$error .= '. Please enable debug mode for more information.';
+			}
+			return '<br />'.$error.'<br />';
 		}
 	}
 
@@ -125,26 +152,38 @@ class KunenaLayout
 			throw new RuntimeException("Layout Path For '{$this->name}:{$this->layout}' Not Found");
 		}
 
-		// Start an output buffer.
-		ob_start();
-
-		// Load the layout.
 		try {
+			// Start an output buffer.
+			ob_start();
+
+			// Load the layout.
 			include $path;
+
+			// And get the contents.
+			$output = ob_get_clean();
+
 		} catch (Exception $e) {
+			// Flush the contents and re-throw the exception.
+			ob_end_clean();
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
 			throw $e;
 		}
 
-		// Get the layout contents.
-		$output = ob_get_clean();
 		if (JDEBUG || KunenaConfig::getInstance()->get('debug')) {
 			$output = trim($output);
 			$output = "\n<!-- START {$path} -->\n{$output}\n<!-- END {$path} -->\n";
 		}
 
+		foreach ($this->after as $content) {
+			$output .= (string) $content;
+		}
+
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
 		return $output;
+	}
+
+	public function appendAfter($content) {
+		$this->after[] = $content;
 	}
 
 	/**
@@ -261,10 +300,19 @@ class KunenaLayout
 	public function __get($property)
 	{
 		 if (!array_key_exists($property, $this->closures)) {
-            throw new InvalidArgumentException(sprintf('Property "%s" is not defined.', $property));
+			 if (JDEBUG) {
+			 	throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
+		 	} else {
+				 return null;
+		 	}
         }
 
         return $this->closures[$property]();
+	}
+
+	public function __call($name, $arguments)
+	{
+		throw new InvalidArgumentException(sprintf('Method %s() is not defined', $name));
 	}
 
 	/**

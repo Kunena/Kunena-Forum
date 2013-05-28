@@ -21,7 +21,7 @@ abstract class KunenaError {
 	public static function initialize() {
 		if (!self::$enabled) {
 			self::$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
-			self::$admin = JFactory::getApplication()->isAdmin() || KunenaUserHelper::getMyself()->isAdmin();
+			self::$admin = JFactory::getApplication()->isAdmin();
 			register_shutdown_function(array('KunenaError', 'shutdownHandler'), self::$debug || self::$admin || KUNENA_PROFILER);
 			if (!self::$debug) return;
 

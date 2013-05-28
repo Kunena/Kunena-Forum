@@ -43,8 +43,7 @@ class KunenaAccess {
 
 		// Load administrators and moderators from cache
 		$cache = JFactory::getCache('com_kunena', 'output');
-		// FIXME: enable caching after fixing the issues
-		$data = false; //$cache->get(self::$cacheKey, 'com_kunena');
+		$data = $cache->get(self::$cacheKey, 'com_kunena');
 		if ($data) {
 			$data = unserialize($data);
 			if (isset($data['v']) && $data['v'] == 1) {
@@ -81,9 +80,11 @@ class KunenaAccess {
 
 		/** @var KunenaAccess $access */
 		foreach ($this->accesstypes['all'] as $access) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'('.get_class($access).')') : null;
 			if (method_exists($access, 'loadCategoryRoles')) {
 				$this->storeRoles((array) $access->loadCategoryRoles());
 			}
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'('.get_class($access).')') : null;
 		}
 		// Load native category moderators and administrators
 		$db = JFactory::getDBO ();
@@ -94,8 +95,6 @@ class KunenaAccess {
 
 		// Store new data into cache
 		$cache = JFactory::getCache('com_kunena', 'output');
-		// FIXME: enable caching after fixing the issues
-		/*
 		$cache->store(serialize(array(
 			'v'=>1, // version identifier
 			'ac'=>$this->adminsByCatid,
@@ -103,7 +102,6 @@ class KunenaAccess {
 			'mc'=>$this->moderatorsByCatid,
 			'mu'=>$this->moderatorsByUserid,
 			)), self::$cacheKey, 'com_kunena');
-		*/
 	}
 
 	/**

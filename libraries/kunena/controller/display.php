@@ -1,0 +1,64 @@
+<?php
+/**
+ * Kunena Component
+ * @package Kunena.Framework
+ * @subpackage Controller
+ *
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
+
+abstract class KunenaControllerDisplay extends KunenaControllerBase
+{
+	public $output = null;
+
+	/**
+	 * @see KunenaControllerBase::execute()
+	 */
+	public function execute() {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		// Run before executing action.
+		$this->before();
+
+		// Display layout with given parameters.
+		$this->output = $this->display();
+
+		// Run after executing action.
+		$this->after();
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		return $this->output;
+	}
+
+	/**
+	 * Initialize and display the layout.
+	 *
+	 * @return KunenaLayout
+	 */
+	abstract protected function display();
+
+	/**
+	 * Executed before display.
+	 */
+	protected function before() {}
+
+	/**
+	 * Executed after display.
+	 */
+	protected function after() {}
+
+	/**
+	 * Return view as a string.
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		$output = (string) $this->execute();
+
+		return $output;
+	}
+
+
+}

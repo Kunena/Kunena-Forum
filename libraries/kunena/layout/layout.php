@@ -37,6 +37,12 @@ defined ( '_JEXEC' ) or die ();
 class KunenaLayout
 {
 	/**
+	 * Layout name.
+	 * @var string
+	 */
+	protected $name = '';
+
+	/**
 	 * The view layout.
 	 *
 	 * @var    string
@@ -51,13 +57,22 @@ class KunenaLayout
 	protected $paths;
 
 	/**
+	 * Support for closure variables.
+	 *
+	 * @var array
+	 */
+	protected $closures = array();
+
+	/**
 	 * Method to instantiate the layout.
 	 *
+	 * @param	string			$name
 	 * @param   SplPriorityQueue  $paths  The paths queue.
 	 */
-	public function __construct(SplPriorityQueue $paths = null)
+	public function __construct($name, SplPriorityQueue $paths = null)
 	{
 		// Setup dependencies.
+		$this->name = $name;
 		$this->paths = isset($paths) ? $paths : $this->loadPaths();
 	}
 
@@ -96,27 +111,39 @@ class KunenaLayout
 	 * Method to render the view.
 	 *
 	 * @return  string  The rendered view.
-	 * @throws  RuntimeException
+	 * @throws  Exception|RunTimeException
 	 */
 	public function render()
 	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->name}'") : null;
 		// Get the layout path.
 		$path = $this->getPath($this->getLayout());
 
 		// Check if the layout path was found.
 		if (!$path) {
-			throw new RuntimeException("Layout Path For '{$this->getLayout()}' Not Found");
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
+			throw new RuntimeException("Layout Path For '{$this->name}:{$this->layout}' Not Found");
 		}
 
 		// Start an output buffer.
 		ob_start();
 
 		// Load the layout.
-		include $path;
+		try {
+			include $path;
+		} catch (Exception $e) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
+			throw $e;
+		}
 
 		// Get the layout contents.
 		$output = ob_get_clean();
+		if (JDEBUG || KunenaConfig::getInstance()->get('debug')) {
+			$output = trim($output);
+			$output = "\n<!-- START {$path} -->\n{$output}\n<!-- END {$path} -->\n";
+		}
 
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
 		return $output;
 	}
 
@@ -133,17 +160,20 @@ class KunenaLayout
 	/**
 	 * Method to get the layout path.
 	 *
-	 * @param   string  $layout  The layout name.
+	 * @param   string  $layout  The layout name, defaulting to the current one.
 	 *
 	 * @return  mixed  The layout file name if found, false otherwise.
 	 */
-	public function getPath($layout)
+	public function getPath($layout = null)
 	{
+		if (!$layout) {
+			$layout = $this->getLayout();
+		}
 		// Get the layout file name.
 		$file = JPath::clean($layout . '.php');
 
 		$paths = array();
-		foreach ($this->paths as $path) {
+		foreach (clone $this->paths as $path) {
 			$paths[] = $path;
 		}
 		// Find the layout file path.
@@ -200,9 +230,52 @@ class KunenaLayout
 	 */
 	public function set($property, $value = null)
 	{
-		$this->$property = $value;
+		$isFactory = is_object($value) && method_exists($value, '__invoke');
+		if ($isFactory) {
+			$this->closures[$property] = $value;
+		} else {
+			$this->$property = $value;
+		}
 
 		return $this;
+	}
+
+	/**
+	 * Property overloading.
+	 *
+	 * @param $property
+	 * @param $value
+	 */
+	public function __set($property, $value)
+	{
+		$this->set($property, $value);
+	}
+
+	/**
+	 * Property overloading.
+	 *
+	 * @param $property
+	 * @return mixed
+	 * @throws InvalidArgumentException
+	 */
+	public function __get($property)
+	{
+		 if (!array_key_exists($property, $this->closures)) {
+            throw new InvalidArgumentException(sprintf('Property "%s" is not defined.', $property));
+        }
+
+        return $this->closures[$property]();
+	}
+
+	/**
+	 * Property overloading.
+	 *
+	 * @param $property
+	 * @return bool
+	 */
+	public function __isset($property)
+	{
+		return array_key_exists($property, $this->closures);
 	}
 
 	/**
@@ -251,7 +324,7 @@ class KunenaLayout
 	 * @return  KunenaLayout
 	 */
 	public static function factory($paths) {
-		if (!is_array($paths)) $paths = (array) $paths;
+		$paths = (array) $paths;
 
 		$app = JFactory::getApplication();
 		// Add all paths for the template overrides.
@@ -267,6 +340,7 @@ class KunenaLayout
 		foreach ($paths as $path) {
 			if (!$path) continue;
 
+			$path = (string) preg_replace('|\\\|', '/', strtolower($path));
 			$lookup = $template->getTemplatePaths("{$base}/{$path}", true);
 			foreach ($lookup as $loc) {
 				$templatePaths->insert($loc, 1);
@@ -280,7 +354,8 @@ class KunenaLayout
 			// Attempt to load layout class if it doesn't exist.
 			$class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
 			if (!class_exists($class)) {
-				$filename = JPATH_BASE . "/components/com_kunena/layouts/{$path}/layout.php";
+				$fpath = (string) preg_replace('|\\\|', '/', strtolower($path));
+				$filename = JPATH_BASE . "/components/com_kunena/layout/{$fpath}.php";
 				if (!is_file($filename)) {
 					continue;
 				}
@@ -288,10 +363,10 @@ class KunenaLayout
 			}
 
 			// Create layout object.
-			return new $class($templatePaths);
+			return new $class($path, $templatePaths);
 		}
 
 		// Create default layout object.
-		return new KunenaLayout($templatePaths);
+		return new KunenaLayout($path, $templatePaths);
 	}
 }

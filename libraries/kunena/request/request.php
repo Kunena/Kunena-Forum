@@ -34,7 +34,7 @@ class KunenaRequest
 	/**
 	 * Returns controller.
 	 *
-	 * @param   mixed	$path	Controller path.
+	 * @param   string	$path	Controller path.
 	 * @param	JInput	$input
 	 *
 	 * @return  KunenaController
@@ -44,17 +44,12 @@ class KunenaRequest
 		$path = (string) $path;
 		if (!$path) throw new InvalidArgumentException('No controller given.', 404);
 
-		// Attempt to load controller class if it doesn't exist.
-		$class = 'KunenaController' . preg_replace('/[^A-Z0-9_]/i', '', $path) . 'Display';
+		// Attempt to load controller.
+		$path = strtr($path, '/', '\\');
+		if ($path[0] != '\\') $path = "\\Component\\Kunena\\Controller\\{$path}";
+		$class = preg_replace('/[^A-Z0-9_]/i', '', $path);
 		if (!class_exists($class)) {
-			$filename = JPATH_BASE . "/components/com_kunena/controllers/{$path}/display.php";
-			if (!is_file($filename)) {
-				throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $path), 404);
-			}
-			require_once $filename;
-		}
-		if (!class_exists($class)) {
-			$class = 'KunenaControllerDisplay';
+			throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $path), 404);
 		}
 
 		// Create controller object.

@@ -91,10 +91,10 @@ abstract class KunenaForum {
 	 * @return boolean True if online.
 	 */
 	public static function enabled($checkAdmin = true) {
-		if (!JComponentHelper::isEnabled ( 'com_kunena', true )) {
+		if (!JComponentHelper::isEnabled('com_kunena', true)) {
 			return false;
 		}
-		$config = KunenaFactory::getConfig ();
+		$config = KunenaFactory::getConfig();
 		return !$config->board_offline
 			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
 	}

@@ -13,7 +13,10 @@ defined ( '_JEXEC' ) or die ();
 // Disable caching
 $this->cache = false;
 
-// Show one topic row
+echo KunenaLayout::factory('Message/Row')
+	->set('message', $this->message)
+	->set('checkbox', !empty($this->topicActions))
+	->setLayout('table');
 ?>
 
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">

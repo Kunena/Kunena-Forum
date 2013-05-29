@@ -19,10 +19,10 @@ $topic = $this->topic;
 
 ?>
 <tr>
-	<td class="kcol-mid kcol-ktopicicon hidden-phone span1">
+	<td class="hidden-phone span1">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="kcol-mid kcol-ktopictitle span6">
+	<td class="span6">
 		<div class="hasTooltip"><span class="Title">
 			<?php
 			echo $this->getTopicLink($topic, null, null, null, 'hasTooltip' ) ;
@@ -59,17 +59,17 @@ $topic = $this->topic;
 	</td>
 	<td class="span1">
 		<?php if (!empty($topic->avatar)) : ?>
-		<span class="ktopic-latest-post-avatar hidden-phone">
+		<span class="hidden-phone">
 			<?php echo $topic->getLastPostAuthor()->getLink( $topic->avatar); ?>
 		</span>
 		<?php endif; ?>
 	</td>
 	<td class="span2">
-		<span class="ktopic-latest-post hasTooltip" title="<?php echo $topic->getLastPostAuthor()->getName(); ?>">
+		<span class="hasTooltip" title="<?php echo $topic->getLastPostAuthor()->getName(); ?>">
 			<?php echo $topic->getLastPostAuthor()->getLink(); ?>
 		</span>
 		<br />
-		<span class="ktopic-date hasTooltip" title="<?php echo KunenaDate::getInstance($topic->last_post_time)
+		<span class="hasTooltip" title="<?php echo KunenaDate::getInstance($topic->last_post_time)
 			->toKunena('config_post_dateformat_hover'); ?>">
 			<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') ); ?>
 		</span>

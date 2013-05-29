@@ -24,8 +24,8 @@ defined ( '_JEXEC' ) or die ();
 		<div class="clearfix"></div>
 	</div>
 	<div class="row-fluid column-row">
-		<div class="span12 column-item">
-			<table class="kblocktable" id="kflattable">
+		<div class="column-item">
+			<table class="table table-striped" id="kflattable">
 				<?php if (empty ( $this->messages ) && empty ( $this->subcategories )) : ?>
 					<tr class="krow2">
 						<td class="kcol-first"><?php echo JText::_('COM_KUNENA_NO_POSTS') ?></td>

@@ -117,9 +117,6 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 		JResponse::setHeader( 'Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true );
 
 		if ($this->config->get('credits', 1)) {
-			/** @var JCache|JCacheControllerCallback $cache */
-			$cache = JFactory::getCache('com_kunena', 'callback');
-			$cache->setLifeTime(180);
 			$this->output->appendAfter($this->poweredBy());
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;

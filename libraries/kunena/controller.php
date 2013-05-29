@@ -196,7 +196,7 @@ class KunenaController extends JControllerLegacy {
 			// Render the view.
 			if ($vFormat=='html') {
 				JPluginHelper::importPlugin('kunena');
-				$dispatcher = JEventDispatcher::getInstance();
+				$dispatcher = JDispatcher::getInstance();
 				$dispatcher->trigger('onKunenaDisplay', array('start', $view));
 				$view->displayAll ();
 				$dispatcher->trigger('onKunenaDisplay', array('end', $view));

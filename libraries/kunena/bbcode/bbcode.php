@@ -46,7 +46,7 @@ class KunenaBbcode extends NBBC_BBCode {
 		$this->SetURLPattern (array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher->trigger( 'onKunenaBbcodeConstruct', array( $this ) );
 	}
@@ -1207,7 +1207,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				// this is important to avoid recursive event behaviour with our own plugins
 				$params->set('ksource', 'kunena');
 				JPluginHelper::importPlugin('content');
-				$dispatcher = JEventDispatcher::getInstance();
+				$dispatcher = JDispatcher::getInstance();
 				$dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
 				$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit-$bbcode->text_length);
 				$bbcode->text_length += strlen($article->text);

@@ -32,7 +32,7 @@ class KunenaController extends JControllerLegacy {
 		$this->me = KunenaUserHelper::getMyself();
 
 		// Save user profile if it didn't exist.
-		if (!$this->me->userid && !$this->me->exists()) {
+		if ($this->me->userid && !$this->me->exists()) {
 			$this->me->save();
 		}
 	}
@@ -196,7 +196,7 @@ class KunenaController extends JControllerLegacy {
 			// Render the view.
 			if ($vFormat=='html') {
 				JPluginHelper::importPlugin('kunena');
-				$dispatcher = JEventDispatcher::getInstance();
+				$dispatcher = JDispatcher::getInstance();
 				$dispatcher->trigger('onKunenaDisplay', array('start', $view));
 				$view->displayAll ();
 				$dispatcher->trigger('onKunenaDisplay', array('end', $view));

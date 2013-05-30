@@ -150,7 +150,7 @@ class plgSystemKunena extends JPlugin {
 	 * @return object KunenaForumMessage
 	 */
 	protected function runJoomlaContentEvent( &$text, &$params, $page = 0 ) {
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
 		$row = new stdClass();

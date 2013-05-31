@@ -18,7 +18,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * The application object.
 	 *
-	 * @var    JApplicationBase
+	 * @var    JApplicationBase|JSite|JAdministrator
 	 */
 	protected $app;
 

@@ -17,8 +17,6 @@ class KunenaLayoutPageModule extends KunenaLayout
 	/**
 	 * Renders module position.
 	 *
-	 * @param string $position
-	 *
 	 * @return string
 	 */
 	public function renderPosition() {

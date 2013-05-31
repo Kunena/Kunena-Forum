@@ -386,11 +386,10 @@ class KunenaLayoutBase
 		$templatePaths = new SplPriorityQueue();
 		if ($app->isAdmin()) {
 			$template = KunenaFactory::getAdminTemplate();
-			$base = 'layouts';
 		} else {
 			$template = KunenaFactory::getTemplate();
-			$base = 'html/layouts';
 		}
+		$base = 'layouts';
 
 		foreach ($paths as $path) {
 			if (!$path) continue;

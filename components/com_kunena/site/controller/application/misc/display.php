@@ -10,6 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerApplicationMiscDisplay
+ */
 class ComponentKunenaControllerApplicationMiscDisplay extends KunenaControllerApplicationDisplay
 {
 	protected $header;

@@ -138,7 +138,8 @@ abstract class KunenaTable extends JTable {
 	/**
 	 * Description
 	 *
-	 * @param [type] $updateNulls
+	 * @param bool $updateNulls
+	 * @return bool
 	 */
 	protected function updateObject($updateNulls=false)
 	{

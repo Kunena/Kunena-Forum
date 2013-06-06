@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="span4">
 				<p><?php echo JText::_($this->profile->getType()) ?></p>
 				<p><strong><?php echo $this->escape($this->name);?></strong></p>
-				<span class=" badge badge-warning"><?php echo intval($this->thankyou); ?> Thanks</span> <span class=" badge badge-info"><?php echo intval($this->posts); ?> Messages</span>
+				<span class="badge badge-warning"><?php echo intval($this->thankyou); ?> Thanks</span> <span class="badge badge-info"><?php echo intval($this->posts); ?> Messages</span>
 			</div>
 			<div class="span5"> <span>
 				<?php $this->displayTemplateFile('user', 'default', 'social');?>

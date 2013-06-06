@@ -11,14 +11,14 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div id="kunena" class="layout">
 <?php
-echo KunenaLayout::factory('Page/MenuBar');
-echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_top');
+echo $this->subLayout('Page/MenuBar');
+echo $this->subLayout('Page/Module')->set('position', 'kunena_top');
 
 	// Display current view/layout
 echo $this->content;
 
-echo KunenaLayout::factory('Page/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
-echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_bottom');
-echo KunenaLayout::factory('Page/Footer');
+echo $this->subLayout('Page/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+echo $this->subLayout('Page/Module')->set('position', 'kunena_bottom');
+echo $this->subLayout('Page/Footer');
 ?>
 </div>

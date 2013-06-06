@@ -23,7 +23,7 @@ $topic = $this->topic;
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td class="span6">
-		<div class="hasTooltip"><span class="Title">
+		<div class="hasTooltip">
 			<?php
 			echo $this->getTopicLink($topic, null, null, null, 'hasTooltip' ) ;
 			if ($topic->getUserTopic()->favorite) : ?>
@@ -38,7 +38,7 @@ $topic = $this->topic;
 					'<sup dir="ltr">(' . $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 			?>
-		</span> </div>
+		</div>
 		<div class="hasTooltip">
 			<span class="label label-info">Question</span>
 			<?php if ($topic->locked != 0) : ?>

@@ -368,6 +368,34 @@ class KunenaLayoutBase
 	}
 
 	/**
+	 * Display layout from current layout.
+	 *
+	 * By using $this->subLayout() instead of KunenaLayout::factory() you can make your template files both
+	 * easier to read and gain some context awareness -- for example possibility to use setLayout().
+	 *
+	 * @param   $path
+	 * @return  KunenaLayout
+	 */
+	public function subLayout($path)
+	{
+		return self::factory($path);
+	}
+
+	/**
+	 * Display arbitrary MVC triad from current layout.
+	 *
+	 * By using $this->subLayout() instead of KunenaRequest::factory() you can make your template files both
+	 * easier to read and gain some context awareness.
+	 *
+	 * @param   $path
+	 * @return  KunenaController
+	 */
+	public function subRequest($path)
+	{
+		return KunenaRequest::factory($path.'/Display');
+	}
+
+	/**
 	 * Returns layout class.
 	 *
 	 * <code>

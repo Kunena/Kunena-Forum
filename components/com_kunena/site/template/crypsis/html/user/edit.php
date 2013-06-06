@@ -12,8 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 ?>
 
-<div class="kheader">
-	<h3 class="page-header"><span class="k-name"><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?></span>
+<div>
+	<h3><span><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?></span>
 		<?php if (!empty($this->editlink)) echo '<h3 class="btn pull-right"><i class="icon-arrow-left"></i>'.$this->editlink.'</h3>';?>
 	</h3>
 </div>

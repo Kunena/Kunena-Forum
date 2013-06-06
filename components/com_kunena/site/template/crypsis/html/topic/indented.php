@@ -25,32 +25,29 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <?php $this->displayModulePosition( 'kunena_poll' ); ?>
 <?php $this->displayTopicActions(); ?>
 <div>
-	<div>
-		<h3 class="page-header"><span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></span></h3>
-		<?php if ($this->usertopic->favorite) : ?>
-			<div class="kfavorite"></div>
-		<?php endif ?>
-		<?php if (!empty($this->keywords)) : ?>
-			<div class="kkeywords"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?></div>
-		<?php endif ?>
-	</div>
-	<div class="kbody">
-		<?php foreach ( $this->messages as $id=>$message ) : ?>
-			<div class="kmsgindent" style="padding-left: <?php echo (count($message->indent)-3)*2 ?>%">
-				<?php $this->displayMessage($id, $message); ?>
-			</div>
-		<?php endforeach; ?>
-	</div>
+  <div>
+    <h3><span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></span></h3>
+    <?php if (!empty($this->keywords)) : ?>
+    <div><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?></div>
+    <?php endif ?>
+  </div>
+  <div>
+    <?php foreach ( $this->messages as $id=>$message ) : ?>
+    <div style="padding-left: <?php echo (count($message->indent)-3)*2 ?>%">
+      <?php $this->displayMessage($id, $message); ?>
+    </div>
+    <?php endforeach; ?>
+  </div>
 </div>
 <?php $this->displayTopicActions(); ?>
-<div class="kcontainer klist-bottom">
-	<div class="kbody">
-		<div class="kmoderatorslist-jump fltrt">
-			<?php $this->displayForumJump (); ?>
-		</div>
-		<?php if (!empty ( $this->moderators ) ) : ?>
-			<div class="klist-moderators">
-				<?php
+<div>
+  <div>
+    <div>
+      <?php $this->displayForumJump (); ?>
+    </div>
+    <?php if (!empty ( $this->moderators ) ) : ?>
+    <div>
+      <?php
 				echo '' . JText::_('COM_KUNENA_MODERATORS') . ": ";
 				$modlinks = array();
 				foreach ( $this->moderators as $moderator ) {
@@ -58,7 +55,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 				}
 				echo implode(', ', $modlinks);
 				?>
-			</div>
-		<?php endif; ?>
-	</div>
+    </div>
+    <?php endif; ?>
+  </div>
 </div>

@@ -14,11 +14,11 @@ $i=0;
 JHtml::_('behavior.calendar');
 ?>
 
-<div class="kheader">
+<div>
 	<h2><span><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></span></h2>
 </div>
-<div class="kcontainer">
-	<div class="kbody">
+<div>
+	<div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kform-ban" name="kformban" method="post">
 			<input type="hidden" name="view" value="user" />
 			<input type="hidden" name="task" value="ban" />

@@ -15,8 +15,7 @@ defined ( '_JEXEC' ) or die ();
 <?php if ($this->spacing) : ?>
 
 <tr>
-  <td class="kcontenttablespacer"
-		colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>">&nbsp;</td>
+  <td colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>">&nbsp;</td>
 </tr>
 <?php endif; ?>
 <tr>
@@ -25,9 +24,9 @@ defined ( '_JEXEC' ) or die ();
     <div class="clearfix"></div>
   </td>
   <td width="span8">
-    <div class="ItemContent Discussion">
-      <div class="Title"><a href="#"><?php echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'hasTooltip' ) ;?></a></div>
-      <div class="Meta"> <span><i class="icon-comments-2"></i> <?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ).' '. JText::_('COM_KUNENA_GEN_REPLIES')?></span> <i class="icon-eye"></i><span class="LastCommentBy"> <?php echo $this->formatLargeNumber ( $this->topic->hits ).' '.  JText::_('COM_KUNENA_GEN_HITS');?></span> <span> <i class="icon-user"></i> Started by <a class="tip" title="admin" href="#">
+    <div>
+      <div><a href="#"><?php echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'hasTooltip' ) ;?></a></div>
+      <div> <span><i class="icon-comments-2"></i> <?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ).' '. JText::_('COM_KUNENA_GEN_REPLIES')?></span> <i class="icon-eye"></i><span> <?php echo $this->formatLargeNumber ( $this->topic->hits ).' '.  JText::_('COM_KUNENA_GEN_HITS');?></span> <span> <i class="icon-user"></i> Started by <a class="tip" title="admin" href="#">
         <?php
 				echo $this->topic->getFirstPostAuthor()->getLink();
 			?>
@@ -39,12 +38,12 @@ defined ( '_JEXEC' ) or die ();
               <?php
 				echo $this->topic->getLastPostAuthor()->getLink();
 			?>
-              <div class="info_title pull-right"> <?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?> </div>
-              <div class="post_msg"> <?php echo KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 100)  ;?></div>
+              <div class="pull-right"> <?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?> </div>
+              <div> <?php echo KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 100)  ;?></div>
               <div class="clear"></div>
             </div>
           </div>
-          <div class="jfku_useractions"> <a href="" rel="nofollow" title="View Topic 'Test'"><span class="gototopic" >
+          <div> <a href="" rel="nofollow" title="View Topic 'Test'"><span class="gototopic" >
             <button class="btn btn-small">Go To Topic</button>
             </span></a> <span class="jf_ku_preview_close"><a class="btn btn-micro" id="test2" href="javascript:void(0);" onclick="javascript:hideMessage();" title="Hide Message"><i class="icon-uparrow"></i></a></span> </div>
           <div class="clear"></div>
@@ -76,7 +75,6 @@ defined ( '_JEXEC' ) or die ();
 <!-- Module position -->
 <?php if ($this->module) : ?>
 <tr>
-  <td class="ktopicmodule"
-		colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
+  <td colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
 </tr>
 <?php endif; ?>

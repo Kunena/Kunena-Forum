@@ -16,9 +16,9 @@ if ($this->message->modified_time) {
 	$dateshown = KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat' ).' ';
 }
 ?>
-<div class="kmessagereply">
+<div>
 	<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
-		<div class="kmessage-editmarkup-cover">
+		<div>
 			<span class="alert" <?php echo $datehover ?>> <?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
 				<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
 			</span> <br />
@@ -26,8 +26,8 @@ if ($this->message->modified_time) {
 	<?php endif ?>
 	<?php if (empty($this->message_closed)) : ?>
 	<div class="btn-toolbar btn-marging">
-		<div class="kmessage-buttons-cover">
-			<div class="kmessage-buttons-row">
+		<div>
+			<div>
 				<input type="button" class="btn" name="kreply-form" value="Quick Reply" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'block';" />
 				<div class="btn-group">
 					<button class="btn dropdown-toggle dropdown-border" data-toggle="dropdown" >Action</button>
@@ -62,7 +62,7 @@ if ($this->message->modified_time) {
 	<?php endif; ?>
 	</div>
 	<?php if(!empty($this->thankyou)): ?>
-		<div class="kmessage-thankyou">
+		<div>
 			<?php
 			echo JText::_('COM_KUNENA_THANKYOU').': '.implode(', ', $this->thankyou).' ';
 			if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS',$this->more_thankyou);

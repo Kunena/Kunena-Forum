@@ -31,7 +31,7 @@ class plgQuickiconKunena extends JPlugin {
 	 * @return array|null
 	 */
 	public function onGetIcons($context) {
-		if (!$context == 'mod_quickicon' || !JFactory::getUser()->authorise('core.manage', 'com_kunena')) {
+		if ($context != 'mod_quickicon' || !JFactory::getUser()->authorise('core.manage', 'com_kunena')) {
 			return null;
 		}
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');

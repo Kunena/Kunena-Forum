@@ -127,10 +127,10 @@ class KunenaForumMessageAttachment extends JObject {
 					}
 
 					$img = '<img title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JUri::root() . $thumb . '" alt="' . $this->escape ( $this->filename ) . '" />';
-					$this->_thumblink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)? 'lightbox[thumb' . intval ( $this->mesid ). ']':'' );
+					$this->_thumblink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)? 'fancybox-button':'', ($config->lightbox)? 'fancybox-button':'' );
 					$img = '<img title="' . $this->escape ( $this->filename ) . '" src="' . JUri::root() . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
-					$this->_imagelink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[imagelink' . intval ( $this->mesid ) .']':'' );
-					$this->_textLink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[simple' . $this->mesid . ']' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
+					$this->_imagelink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)?'fancybox-button':'', ($config->lightbox)?'fancybox-button':'' );
+					$this->_textLink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), ($config->lightbox)?'fancybox-button' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
@@ -435,8 +435,8 @@ class KunenaForumMessageAttachment extends JObject {
 	 *
 	 * @return string
 	 */
-	protected function _getAttachementLink($folder, $filename, $name, $title = '', $rel = 'nofollow') {
+	protected function _getAttachementLink($folder, $filename, $name, $title = '', $rel = 'nofollow', $class='') {
 		$link = JURI::ROOT()."{$folder}/{$filename}";
-		return '<a href="'.$link.'" title="'.$title.'" rel="'.$rel.'">'.$name.'</a>';
+		return '<a href="'.$link.'" title="'.$title.'" class="'.$rel.'" rel="'.$rel.'">'.$name.'</a>';
 	}
 }

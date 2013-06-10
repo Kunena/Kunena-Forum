@@ -47,11 +47,25 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		$this->compileLess('main.less', 'kunena.css');
 		$this->addStyleSheet ( 'css/kunena.css' );
 
+		JHtml::_('bootstrap.framework');
+
 		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
-			// Load mediaxboxadvanced library if enabled in configuration
-			// TODO: replace with bootstrap compatible version
-			$this->addScript( 'js/mediaboxAdv.js' );
-			//$this->addStyleSheet ( 'css/mediaboxAdv.css');
+			// Load fancybox library if enabled in configuration
+			$this->addScript( 'js/fancybox.js' );
+			$this->addStyleSheet ( 'css/fancybox.css');
+			JFactory::getDocument()->addScriptDeclaration('
+				jQuery(document).ready(function() {
+					jQuery(".fancybox-button").fancybox({
+						prevEffect		: \'none\',
+						nextEffect		: \'none\',
+						closeBtn		:  true,
+						helpers		: {
+							title	: { type : \'inside\' },
+							buttons	: {}
+						}
+					});
+				});
+			');
 		}
 
 		// Toggler language strings

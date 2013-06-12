@@ -153,7 +153,7 @@ JHtml::_('behavior.tooltip');
 							$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
 							$titleUserBlock = $kunena_user->isBlocked() ?  JText::_( 'COM_KUNENA_USERS_LABEL_ENABLED' ) : JText::_( 'COM_KUNENA_USERS_LABEL_BLOCKED' );
 							$userBanned = $kunena_user->isBanned() ? $img_yes : $img_no;
-							$userBannedTask = $kunena_user->isBanned() ? 'ban' : 'ban';
+							$userBannedTask = $kunena_user->isBanned() ? 'unban' : 'ban';
 							$titleUserBanned = $kunena_user->isBanned() ? JText::_( 'COM_KUNENA_USERS_LABEL_BANNED' ) : JText::_( 'COM_KUNENA_USERS_LABEL_NOT_BANNED' );
 							?>
 								<tr class="row<?php echo $k; ?>">

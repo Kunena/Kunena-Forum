@@ -36,6 +36,38 @@ class KunenaAccessJoomla {
 	}
 
 	/**
+	 * Get access groups for the selected category.
+	 *
+	 * @param KunenaForumCategory  $category  Category
+	 * @return array
+	 */
+	public function getCategoryAccess(KunenaForumCategory $category)
+	{
+		$list = array();
+		if ($category->accesstype == 'joomla.group') {
+			$groupname = $this->getGroupName($category->accesstype, $category->pub_access);
+			$accessname = JText::sprintf( $category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? JText::_( $groupname ) : JText::_('COM_KUNENA_NOBODY') );
+
+			$list["joomla.group.{$category->pub_access}"] = array('type'=>'joomla.group', 'id'=>$category->pub_access, 'alias'=>$accessname,
+				'title'=>$accessname);
+
+			$groupname = $this->getGroupName($category->accesstype, $category->admin_access);
+			if ($groupname && $category->pub_access != $category->admin_access) {
+				$accessname = JText::sprintf( $category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_( $groupname ));
+				$list["joomla.group.{$category->admin_access}"] = array('type'=>'joomla.group', 'id'=>$category->admin_access, 'alias'=>$accessname,
+					'title'=>$accessname);
+			}
+
+		} else {
+			$groupname = $this->getGroupName($category->accesstype, $category->access);
+			$list["joomla.level.{$category->access}"] = array('type'=>'joomla.level', 'id'=>$category->access, 'alias'=>$groupname,
+				'title'=>$groupname);
+		}
+
+		return $list;
+	}
+
+	/**
 	 * Get group name in selected access type.
 	 *
 	 * @param string	$accesstype	Access type.
@@ -61,7 +93,7 @@ class KunenaAccessJoomla {
 			$groups[$accesstype] = $db->loadObjectList('id');
 		}
 		if ($id !== null) {
-			return isset($groups[$accesstype][$id]) ? $groups[$accesstype][$id]->title : '';
+			return isset($groups[$accesstype][$id]) ? $groups[$accesstype][$id]->title : JText::_('COM_KUNENA_NOBODY');
 		}
 		return $groups[$accesstype];
 	}

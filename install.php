@@ -62,6 +62,12 @@ class Pkg_KunenaInstallerScript {
 		// Prevent installation if requirements are not met.
 		if (!$this->checkRequirements($manifest->version)) return false;
 
+		// Remove old log file before installation.
+		$logFile = JFactory::getConfig()->get('log_path').'/kunena.php';
+		if (file_exists($logFile)) {
+			@unlink($logFile);
+		}
+
 		return true;
 	}
 

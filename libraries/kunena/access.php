@@ -29,7 +29,7 @@ class KunenaAccess {
 
 	public function __construct() {
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		$classes = $dispatcher->trigger('onKunenaGetAccessControl');
 		foreach ($classes as $class) {
 			if (!is_object($class)) continue;

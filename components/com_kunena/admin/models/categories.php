@@ -142,31 +142,22 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$acl = KunenaAccess::getInstance();
 			/** @var KunenaForumCategory $category */
 			foreach ($this->_admincategories as $category) {
+				// TODO: Following is needed for J!2.5 only:
 				$parent = $category->getParent();
 				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
 				$category->up = $this->me->isAdmin($parent) && reset($siblings) != $category->id;
 				$category->down = $this->me->isAdmin($parent) && end($siblings) != $category->id;
 				$category->reorder = $this->me->isAdmin($parent);
-				// FIXME: stop creating access names manually
-				if ($category->accesstype == 'joomla.level') {
-					$groupname = $acl->getGroupName($category->accesstype, $category->access);
-					$category->accessname = $groupname ? $groupname : JText::_('COM_KUNENA_NOBODY');
-				} elseif ($category->accesstype != 'joomla.group') {
-					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype))).': '.$acl->getGroupName($category->accesstype, $category->access);
-				} else {
-					$groupname = $acl->getGroupName($category->accesstype, $category->pub_access);
-					$category->accessname = JText::sprintf( $category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? JText::_( $groupname ) : JText::_('COM_KUNENA_NOBODY') );
-					$groupname = $acl->getGroupName($category->accesstype, $category->admin_access);
-					if ($groupname && $category->pub_access != $category->admin_access) {
-						$category->accessname .= ' / '.JText::sprintf( $category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_( $groupname ));
-					}
-				}
-				if ($category->accesstype != 'joomla.group') {
-					$category->admin_group = '';
-				} else {
-					$category->admin_group = JText::_ ( $acl->getGroupName($category->accesstype, $category->admin_access ));
-				}
 
+				// Get ACL groups for the category.
+				$access = $acl->getCategoryAccess($category);
+				$category->accessname = array();
+				foreach ($access as $item) {
+					$category->accessname[] = $item['title'];
+				}
+				$category->accessname = implode(' / ', $category->accessname);
+
+				// Checkout?
 				if ($this->me->isAdmin($category) && $category->isCheckedOut(0)) {
 					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
 				} else {

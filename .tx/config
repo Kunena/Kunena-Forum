@@ -51,18 +51,6 @@ source_file = components/com_kunena/admin/language/en-GB/en-GB.plg_finder_kunena
 source_lang = en-GB
 minimum_perc = 80
 
-[Kunena.admin-plg_quickicon_kunena-sys]
-file_filter = components/com_kunena/admin/language/<lang>/<lang>.plg_quickicon_kunena.sys.ini
-source_file = components/com_kunena/admin/language/en-GB/en-GB.plg_quickicon_kunena.sys.ini
-source_lang = en-GB
-minimum_perc = 80
-
-[Kunena.admin-plg_system_kunena-sys]
-file_filter = components/com_kunena/admin/language/<lang>/<lang>.plg_system_kunena.sys.ini
-source_file = components/com_kunena/admin/language/en-GB/en-GB.plg_system_kunena.sys.ini
-source_lang = en-GB
-minimum_perc = 80
-
 [Kunena.admin-plg_kunena_alphauserpoints-sys]
 file_filter = components/com_kunena/admin/language/<lang>/<lang>.plg_kunena_alphauserpoints.sys.ini
 source_file = components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_alphauserpoints.sys.ini
@@ -158,3 +146,16 @@ file_filter = components/com_kunena/site/language/<lang>/<lang>.mod_kunenamenu.s
 source_file = components/com_kunena/site/language/en-GB/en-GB.mod_kunenamenu.sys.ini
 source_lang = en-GB
 minimum_perc = 80
+
+[Kunena.admin-plg_quickicon_kunena-sys]
+file_filter = components/com_kunena/admin/language/<lang>/<lang>.plg_quickicon_kunena.sys.ini
+source_file = plugins/quickicon/kunena/language/en-GB/en-GB.plg_quickicon_kunena.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+
+[Kunena.admin-plg_system_kunena-sys]
+file_filter = components/com_kunena/admin/language/<lang>/<lang>.plg_system_kunena.sys.ini
+source_file = plugins/system/kunena/language/en-GB/en-GB.plg_system_kunena.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+

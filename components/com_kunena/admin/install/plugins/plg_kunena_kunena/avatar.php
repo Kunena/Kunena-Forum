@@ -20,7 +20,7 @@ class KunenaAvatarKunena extends KunenaAvatar {
 
 	public function getEditURL()
 	{
-		return KunenaRoute::_('index.php?option=com_kunena&func=profile&do=edit');
+		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
 	}
 
 	protected function _getURL($user, $sizex, $sizey)

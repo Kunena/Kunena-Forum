@@ -18,14 +18,14 @@ defined ( '_JEXEC' ) or die ();
  *
  * <code>
  *	// Executes the controller and sets the layout for the view.
- *	echo KunenaRequest::factory('user/login')->execute()->set('layout', 'form');
+ *	echo KunenaRequest::factory('User/Login')->execute()->set('layout', 'form');
  *
  *	// If there are no parameters for the view, this shorthand works also.
- *	echo KunenaRequest::factory('user/registration');
+ *	echo KunenaRequest::factory('User/Registration');
  * </code>
  *
- * Individual controller classes are located in /components/com_kunena/controllers
- * sub-folders eg: controllers/user/login/display.php
+ * Individual controller classes are located in /components/com_kunena/controller
+ * sub-folders eg: controller/user/login/display.php
  *
  * @see KunenaLayout
  */

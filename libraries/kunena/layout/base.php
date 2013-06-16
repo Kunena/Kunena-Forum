@@ -136,14 +136,19 @@ class KunenaLayoutBase
 	/**
 	 * Method to render the view.
 	 *
+	 * @param   string  Layout.
+	 *
 	 * @return  string  The rendered view.
+	 *
 	 * @throws  Exception|RunTimeException
 	 */
-	public function render()
+	public function render($layout = null)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->name}'") : null;
+
 		// Get the layout path.
-		$path = $this->getPath($this->getLayout());
+		if (!$layout) $layout = $this->getLayout();
+		$path = $this->getPath($layout);
 
 		// Check if the layout path was found.
 		if (!$path) {
@@ -181,14 +186,45 @@ class KunenaLayoutBase
 		return $output;
 	}
 
+	/**
+	 * Load a template file.
+	 *
+	 * @param   string  $tpl  The name of the template source file.
+	 *
+	 * @return  string  The output of the the template file.
+	 *
+	 * @throws  Exception
+	 */
+	public function loadTemplate($tpl = null)
+	{
+		return $this->render("{$this->name}_{$tpl}");
+	}
+
+	/**
+	 * Append HTML after the layout content.
+	 *
+	 * @param  string  $content
+	 */
 	public function appendAfter($content) {
 		$this->after[] = $content;
 	}
 
+	/**
+	 * Add stylesheet to the document.
+	 *
+	 * @param $filename
+	 * @return mixed
+	 */
 	public function addStyleSheet($filename) {
 		return KunenaFactory::getTemplate()->addStyleSheet ( $filename );
 	}
 
+	/**
+	 * Add script to the document.
+	 *
+	 * @param $filename
+	 * @return mixed
+	 */
 	public function addScript($filename) {
 		return KunenaFactory::getTemplate()->addScript ( $filename );
 	}
@@ -247,6 +283,7 @@ class KunenaLayoutBase
 	 */
 	public function setLayout($layout)
 	{
+		if (!$layout) $layout = 'default';
 		$this->layout = $layout;
 
 		return $this;
@@ -388,7 +425,7 @@ class KunenaLayoutBase
 	 * easier to read and gain some context awareness.
 	 *
 	 * @param   $path
-	 * @return  KunenaController
+	 * @return  KunenaControllerDisplay
 	 */
 	public function subRequest($path)
 	{
@@ -400,7 +437,7 @@ class KunenaLayoutBase
 	 *
 	 * <code>
 	 *	// Output pagination/pages layout with current cart instance.
-	 *	echo KunenaLayout::factory('pagination/pages')->set('pagination', $this->pagination);
+	 *	echo KunenaLayout::factory('Pagination/Pages')->set('pagination', $this->pagination);
 	 * </code>
 	 *
 	 * @param   mixed $paths String or array of strings.

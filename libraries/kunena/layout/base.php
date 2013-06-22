@@ -388,10 +388,25 @@ class KunenaLayoutBase
 
 		foreach ((array) $properties as $k => $v) {
 			// Use the set function which might be overridden.
-			$this->set($k, $v);
+			if ($k[0] != "\0") $this->set($k, $v);
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Returns an associative array of public object properties.
+	 *
+	 * @return  array
+	 */
+	public function getProperties()
+	{
+		$properties = (array) $this;
+		$list = array();
+		foreach ($properties as $property=>$value) {
+			if ($property[0] != "\0") $list[$property] = $value;
+		}
+		return $list;
 	}
 
 	/**
@@ -467,6 +482,7 @@ class KunenaLayoutBase
 		}
 
 		// Go through all the matching layouts.
+		$path = 'Undefined';
 		foreach ($paths as $path) {
 			if (!$path) continue;
 

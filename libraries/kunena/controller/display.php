@@ -60,5 +60,18 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		return $output;
 	}
 
-
+	/**
+	 * Returns an associative array of public object properties.
+	 *
+	 * @return  array
+	 */
+	public function getProperties()
+	{
+		$properties = (array) $this;
+		$list = array();
+		foreach ($properties as $property=>$value) {
+			if ($property[0] != "\0") $list[$property] = $value;
+		}
+		return $list;
+	}
 }

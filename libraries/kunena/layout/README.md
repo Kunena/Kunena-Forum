@@ -25,7 +25,7 @@ Then go through all view classes and change following line in display() method:
 into this:
 
     $name = ucfirst($this->getName());
-    echo KunenaLayout::factory("Application/{$name}")->setProperties($this->getProperties(false))->setLayout($tpl);
+    echo KunenaLayout::factory("Application/{$name}")->setProperties($this->getProperties(false))->setLayout($this->getLayout());
 
 That's it! Your component should be fully operational and using KunenaLayouts instead of legacy template files.
 
@@ -39,6 +39,6 @@ The only code that remains in the legacy view is this:
     public function display($tpl = null)
     {
         $name = ucfirst($this->getName());
-        echo KunenaRequest::factory("Application/{$name}/Display")->execute()->setLayout($tpl);
+        echo KunenaRequest::factory("Application/{$name}/Display")->execute()->setLayout($this->getLayout());
     }
 

@@ -231,7 +231,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 				$instance->delete();
 				if ( !$jresult ) $this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $userid) );
 
-				$this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE', $username, $userid));
+				$this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE_SUCCESSFULLY', $username, $userid));
 			}
 		}
 

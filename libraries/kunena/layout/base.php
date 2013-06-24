@@ -153,7 +153,7 @@ class KunenaLayoutBase
 		// Check if the layout path was found.
 		if (!$path) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
-			throw new RuntimeException("Layout Path For '{$this->name}:{$this->layout}' Not Found");
+			throw new RuntimeException("Layout Path For '{$this->name}:{$layout}' Not Found");
 		}
 
 		try {

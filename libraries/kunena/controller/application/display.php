@@ -12,10 +12,25 @@ defined ( '_JEXEC' ) or die ();
 
 abstract class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var KunenaLayout
+	 */
 	protected $content;
+	/**
+	 * @var JBreadchrumb
+	 */
 	protected $breadcrumb;
+	/**
+	 * @var KunenaUser
+	 */
 	protected $me;
+	/**
+	 * @var KunenaConfig
+	 */
 	protected $config;
+	/**
+	 * @var KunenaTemplate
+	 */
 	protected $template;
 	/**
 	 * @var JDocument

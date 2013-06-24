@@ -175,7 +175,7 @@ class CKunenaUpload {
 				return false;
 			}
 		}
-		CKunenaFolder::createIndex($uploadPath);
+		KunenaFolder::createIndex($uploadPath);
 
 		// Get file name and validate with path type
 		$this->fileName = JFile::makeSafe(JRequest::getString ( $input.'_name', '', 'post' ));
@@ -235,7 +235,7 @@ class CKunenaUpload {
 		} else {
 			// Currently not in use: this is meant for experimental AJAX uploads
 			// Open temp file
-			$this->fileTemp = CKunenaPath::tmpdir() . '/kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->fileName );
+			$this->fileTemp = KunenaPath::tmpdir() . '/kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->fileName );
 			$out = fopen ($this->fileTemp, $chunk == 0 ? "wb" : "ab");
 			if ($out) {
 				// Read binary input stream and append it to temp file
@@ -348,7 +348,7 @@ class CKunenaUpload {
 
 		// Override filename if given in the parameter
 		if ($filename) $uploadedFileBasename = $filename;
-		$uploadedFileBasename = CKunenaFile::makeSafe ( $uploadedFileBasename );
+		$uploadedFileBasename = KunenaFile::makeSafe ( $uploadedFileBasename );
 		if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
 
 		// Rename file if there is already one with the same name

@@ -288,7 +288,6 @@ class KunenaViewTopic extends KunenaView {
 	protected function displayEdit($tpl = null) {
 		$this->catid = $this->state->get('item.catid');
 		$mesid = $this->state->get('item.mesid');
-		$document = JFactory::getDocument();
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
@@ -351,7 +350,8 @@ class KunenaViewTopic extends KunenaView {
 
 		$errors = $this->getErrors();
 		if ($errors) {
-			return $this->displayNoAccess($errors);
+			$this->displayNoAccess($errors);
+			return;
 		}
 
 		$this->poll = $this->get('Poll');
@@ -708,7 +708,6 @@ class KunenaViewTopic extends KunenaView {
 		$this->thankyou = array();
 		$this->total_thankyou = 0;
 		$this->more_thankyou= 0;
-		$thankyous = array();
 
 		if ( isset($message->thankyou) ) {
 			if ($this->config->showthankyou && $this->profile->userid) {
@@ -844,7 +843,6 @@ class KunenaViewTopic extends KunenaView {
 		if (! $this->hasThreadHistory())
 			return;
 
-		$db = JFactory::getDBO();
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
 		$this->historycount = count ( $this->history );
 		KunenaForumMessageAttachmentHelper::getByMessage($this->history);

@@ -460,8 +460,8 @@ function getTopicClass($prefix='k', $class='topic') {
 
 	public function getCategoryRSSURL($catid, $xhtml = true) {
 		if ($this->config->enablerss) {
-			$params = '&catid=' . ( int ) $catid;
-			return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+			$params = '&catid=' . (int) $catid;
+			return KunenaRoute::_ ( "index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml );
 		}
 		return;
 	}

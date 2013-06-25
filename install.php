@@ -62,6 +62,12 @@ class Pkg_KunenaInstallerScript {
 		// Prevent installation if requirements are not met.
 		if (!$this->checkRequirements($manifest->version)) return false;
 
+		// Remove old log file before installation.
+		$logFile = JFactory::getConfig()->get('log_path').'/kunena.php';
+		if (file_exists($logFile)) {
+			@unlink($logFile);
+		}
+
 		return true;
 	}
 
@@ -73,7 +79,9 @@ class Pkg_KunenaInstallerScript {
 		$this->fixUpdateSite();
 
 		// Clear Joomla system cache.
-		JFactory::getCache()->clean('_system');
+		/** @var JCache|JCacheController $cache */
+		$cache = JFactory::getCache();
+		$cache->clean('_system');
 
 		// Remove all compiled files from APC cache.
 		if (function_exists('apc_clear_cache')) {

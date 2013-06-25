@@ -38,7 +38,7 @@ class plgKunenaFinder extends JPlugin
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
-		$results = $dispatcher->trigger('onFinderAfterSave', array($context, $table, $isNew));
+		$dispatcher->trigger('onFinderAfterSave', array($context, $table, $isNew));
 
 	}
 	/**
@@ -63,7 +63,7 @@ class plgKunenaFinder extends JPlugin
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
-		$results = $dispatcher->trigger('onFinderBeforeSave', array($context, $table, $isNew));
+		$dispatcher->trigger('onFinderBeforeSave', array($context, $table, $isNew));
 
 	}
 	/**
@@ -85,7 +85,7 @@ class plgKunenaFinder extends JPlugin
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
-		$results = $dispatcher->trigger('onFinderAfterDelete', array($context, $table));
+		$dispatcher->trigger('onFinderAfterDelete', array($context, $table));
 	}
 	/**
 	 * Finder after delete message method
@@ -106,7 +106,7 @@ class plgKunenaFinder extends JPlugin
 		JPluginHelper::importPlugin('finder');
 	
 		// Trigger the onFinderAfterDelete event.
-		$results = $dispatcher->trigger('onFinderBeforeDelete', array($context, $table));
+		$dispatcher->trigger('onFinderBeforeDelete', array($context, $table));
 	}
 
 }

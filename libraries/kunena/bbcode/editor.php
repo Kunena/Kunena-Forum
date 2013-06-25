@@ -162,6 +162,9 @@ class KunenaBbcodeEditor {
 
 }
 
+/**
+ * Class KunenaBbcodeEditorElement
+ */
 abstract class KunenaBbcodeEditorElement {
 	var $name;
 
@@ -191,6 +194,9 @@ abstract class KunenaBbcodeEditorElement {
 	public static function parseXML (SimpleXMLElement $xml) {}
 }
 
+/**
+ * Class KunenaBbcodeEditorButton
+ */
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 	protected $tag;
 	protected $config;
@@ -387,6 +393,9 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 	}
 }
 
+/**
+ * Class KunenaBbcodeEditorSeparator
+ */
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement {
 	public function generateJs ($identifier) {
 		$js = "\nkbbcode.addFunction('#', function() {";

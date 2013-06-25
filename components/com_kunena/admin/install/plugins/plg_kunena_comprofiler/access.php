@@ -42,6 +42,7 @@ class KunenaAccessComprofiler {
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param int		$id			Group id.
+	 * @return string|null
 	 */
 	public function getGroupName($accesstype, $id=null) {
 		if ($accesstype == 'communitybuilder') {
@@ -51,6 +52,7 @@ class KunenaAccessComprofiler {
 			}
 			return $this->groups;
 		}
+		return null;
 	}
 
 
@@ -59,6 +61,7 @@ class KunenaAccessComprofiler {
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param int		$category	Group id.
+	 * @return array
 	 */
 	public function getAccessOptions($accesstype, $category) {
 		$html = array();
@@ -135,13 +138,15 @@ class KunenaAccessComprofiler {
 	 *
 	 * @param	mixed	$topic		Category or topic.
 	 * @param	array	$userids	list(allow, deny).
+	 * @return array
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
+		$allow = $deny = array();
+
 		if (empty($userids)) {
-			return;
+			return array($allow, $deny);
 		}
 		$category = $topic->getCategory();
-		$allow = $deny = array();
 
 		if ($category->accesstype == 'communitybuilder') {
 			$params = array ('category'=>$category, 'topic'=>$topic, 'userids'=>$userids, 'allow'=>&$allow, 'deny'=>&$deny);

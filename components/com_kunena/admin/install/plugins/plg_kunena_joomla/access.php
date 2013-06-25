@@ -36,10 +36,43 @@ class KunenaAccessJoomla {
 	}
 
 	/**
+	 * Get access groups for the selected category.
+	 *
+	 * @param KunenaForumCategory  $category  Category
+	 * @return array
+	 */
+	public function getCategoryAccess(KunenaForumCategory $category)
+	{
+		$list = array();
+		if ($category->accesstype == 'joomla.group') {
+			$groupname = $this->getGroupName($category->accesstype, $category->pub_access);
+			$accessname = JText::sprintf( $category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? JText::_( $groupname ) : JText::_('COM_KUNENA_NOBODY') );
+
+			$list["joomla.group.{$category->pub_access}"] = array('type'=>'joomla.group', 'id'=>$category->pub_access, 'alias'=>$accessname,
+				'title'=>$accessname);
+
+			$groupname = $this->getGroupName($category->accesstype, $category->admin_access);
+			if ($groupname && $category->pub_access != $category->admin_access) {
+				$accessname = JText::sprintf( $category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_( $groupname ));
+				$list["joomla.group.{$category->admin_access}"] = array('type'=>'joomla.group', 'id'=>$category->admin_access, 'alias'=>$accessname,
+					'title'=>$accessname);
+			}
+
+		} else {
+			$groupname = $this->getGroupName($category->accesstype, $category->access);
+			$list["joomla.level.{$category->access}"] = array('type'=>'joomla.level', 'id'=>$category->access, 'alias'=>$groupname,
+				'title'=>$groupname);
+		}
+
+		return $list;
+	}
+
+	/**
 	 * Get group name in selected access type.
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param int		$id			Group id.
+	 * @return string|null
 	 */
 	public function getGroupName($accesstype, $id=null){
 		static $groups = array();
@@ -60,7 +93,7 @@ class KunenaAccessJoomla {
 			$groups[$accesstype] = $db->loadObjectList('id');
 		}
 		if ($id !== null) {
-			return isset($groups[$accesstype][$id]) ? $groups[$accesstype][$id]->title : '';
+			return isset($groups[$accesstype][$id]) ? $groups[$accesstype][$id]->title : JText::_('COM_KUNENA_NOBODY');
 		}
 		return $groups[$accesstype];
 	}
@@ -70,6 +103,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param int		$category	Group id.
+	 * @return array
 	 */
 	public function getAccessOptions($accesstype, $category) {
 		$html = array();
@@ -230,20 +264,22 @@ class KunenaAccessJoomla {
 	 *
 	 * @param	mixed	$topic		Category or topic.
 	 * @param	array	$userids	list(allow, deny).
+	 * @return array
 	 */
 	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
+		$allow = $deny = array();
+
 		if (empty($userids)) {
-			return;
+			return array($allow, $deny);
 		}
 
-		$allow = $deny = array();
 		$category = $topic->getCategory();
 		if ($category->accesstype == 'joomla.level') {
 			// Check against Joomla access levels
 			$groups = $this->getGroupsByViewLevel($category->access);
 			$allow = $this->getUsersByGroup($groups, true, $userids);
 		} elseif ($category->accesstype == 'joomla.group') {
-			if ($category->pub_access <= 0) return;
+			if ($category->pub_access <= 0) return array($allow, $deny);
 			// Check against Joomla user groups
 			$public = $this->getUsersByGroup($category->pub_access, $category->pub_recurse, $userids);
 			$admin = $category->admin_access && $category->admin_access != $category->pub_access ? $this->getUsersByGroup($category->admin_access, $category->admin_recurse, $userids) : array();
@@ -257,7 +293,7 @@ class KunenaAccessJoomla {
 	/**
 	 * Method to return a list of groups which have view level (derived from Joomla 1.6)
 	 *
-	 * @param	integer	$userId	Id of the user for which to get the list of authorised view levels.
+	 * @param	integer	$viewlevel
 	 *
 	 * @return	array	List of view levels for which the user is authorised.
 	 */
@@ -288,6 +324,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @param	int		$groupId	The group Id
 	 * @param	boolean	$recursive	Recursively include all child groups (optional)
+	 * @param	array	$inUsers	Only list selected users.
 	 *
 	 * @return	array
 	 */

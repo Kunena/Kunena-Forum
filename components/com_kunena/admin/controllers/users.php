@@ -43,7 +43,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 	}
 
 	function save() {
-		$db = JFactory::getDBO ();
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -90,7 +89,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 	}
 
 	function trashusermessages() {
-		$db = JFactory::getDBO ();
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -132,7 +130,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 	}
 
 	function movemessages () {
-		$db = JFactory::getDBO ();
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -194,7 +191,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
-	function delete() {
+	function remove() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -207,9 +204,10 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
+		$my = JFactory::getUser();
 		foreach ( $cids as $userid ) {
-			$my = JFactory::getUser();
 			$user = JFactory::getUser($userid);
+			$username = $user->username;
 			$groups = JUserHelper::getUserGroups($userid);
 			$error = false;
 
@@ -226,12 +224,14 @@ class KunenaAdminControllerUsers extends KunenaController {
 			if ( !$error ) {
 				$user = KunenaUserHelper::get($userid);
 				$user->delete();
+				if ( !$result ) $this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $userid) );
 
 				// Delete the user too from Joomla!
 				$instance = JUser::getInstance($userid);
 				$instance->delete();
+				if ( !$jresult ) $this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $userid) );
 
-				$this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE', $userid));
+				$this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE_SUCCESSFULLY', $username, $userid));
 			}
 		}
 

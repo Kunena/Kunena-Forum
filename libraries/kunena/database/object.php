@@ -224,7 +224,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	/**
 	 * Method to get the table object.
 	 *
-	 * @return  JTable  The table object.
+	 * @return  JTable|KunenaTable  The table object.
 	 */
 	protected function getTable() {
 		return JTable::getInstance ( $this->_table, 'Table' );

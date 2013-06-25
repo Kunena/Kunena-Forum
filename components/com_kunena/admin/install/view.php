@@ -31,8 +31,6 @@ class KunenaViewInstall extends JViewLegacy
 			parent::display($tpl);
 			return;
 		}
-		// Initialize variables.
-		$user = JFactory::getUser();
 
 		// Load the view data.
 		$this->model = $this->get('Model');

@@ -198,6 +198,7 @@ class KunenaAdminControllerTools extends KunenaController {
 					if ($state->categories) {
 						// Update category statistics
 						KunenaForumCategoryHelper::recount();
+						KunenaForumCategoryHelper::fixAliases();
 						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORY') );
 					}
 					break;

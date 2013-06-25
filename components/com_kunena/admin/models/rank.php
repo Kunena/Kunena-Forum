@@ -43,7 +43,7 @@ class KunenaAdminModelRank extends KunenaModel {
 		if ($id) {
 			$db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_id={$db->quote($id)}" );
 			$selected = $db->loadObject ();
-			if (KunenaError::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return null;
 
 			return $selected;
 		}
@@ -69,7 +69,6 @@ class KunenaAdminModelRank extends KunenaModel {
 		ksort($rank_images);
 
 		$rank_list = array();
-		$i = 0;
 		foreach ( $rank_images as $file => $path ) {
 			$rank_list[] = JHtml::_ ( 'select.option', $path, $file );
 		}

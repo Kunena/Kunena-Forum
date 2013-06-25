@@ -79,7 +79,7 @@ class KunenaAccess {
 		$me = KunenaUserHelper::getMyself();
 		JFactory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
 
-		$roles = array();
+		/** @var KunenaAccess $access */
 		foreach ($this->accesstypes['all'] as $access) {
 			if (method_exists($access, 'loadCategoryRoles')) {
 				$this->storeRoles((array) $access->loadCategoryRoles());
@@ -112,7 +112,8 @@ class KunenaAccess {
 	 */
 	public function getAccessOptions($category) {
 		$list = array();
-		foreach ($this->accesstypes['all'] as $type=>$access) {
+		/** @var KunenaAccess $access */
+		foreach ($this->accesstypes['all'] as $access) {
 			if (method_exists($access, 'getAccessOptions')) {
 				$list += $access->getAccessOptions(null, $category);
 			}
@@ -179,20 +180,52 @@ window.addEvent('domready', function(){
 		return JHtml::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="'.count($accesstypes).'" onchange="javascript:kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype );
 	}
 
+	/**
+	 * Get access groups for the selected category.
+	 *
+	 * @param KunenaForumCategory  $category  Category
+	 * @return array|null
+	 */
+	public function getCategoryAccess(KunenaForumCategory $category)
+	{
+		$list = array();
+
+		$accesstype = $category->accesstype;
+		if (!isset($this->accesstypes[$accesstype])) return $list;
+		/** @var KunenaAccess $access */
+		foreach ($this->accesstypes[$accesstype] as $access) {
+			if (method_exists($access, 'getCategoryAccess')) {
+				$list += $access->getCategoryAccess($category);
+			}
+		}
+		if (!$list) {
+			// Legacy support.
+			$id = $category->access;
+			$name = $this->getGroupName($accesstype, $id);
+			$list["{$accesstype}.{$id}"] = array('type'=>'joomla.level', 'id'=>$id,
+				'title'=>$name);
+		}
+		return $list;
+	}
 
 	/**
 	 * Get group name in selected access type.
 	 *
 	 * @param string	$accesstype	Access type.
 	 * @param mixed		$id			Group id.
+	 * @return string|null
+	 *
+	 * @deprecated 3.0.1
 	 */
 	public function getGroupName($accesstype, $id) {
 		if (!isset($this->accesstypes[$accesstype])) return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
+		/** @var KunenaAccess $access */
 		foreach ($this->accesstypes[$accesstype] as $access) {
 			if (method_exists($access, 'getGroupName')) {
 				return $access->getGroupName($accesstype, $id);
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -363,6 +396,7 @@ window.addEvent('domready', function(){
 
 				// Get external authorization
 				if (!empty($categories)) {
+					/** @var KunenaAccess $access */
 					foreach ($this->accesstypes['all'] as $access) {
 						if (method_exists($access, 'authoriseCategories')) {
 							$read[$id] += $access->authoriseCategories($id, $categories);
@@ -391,6 +425,7 @@ window.addEvent('domready', function(){
 		$list = array();
 		if (empty($this->accesstypes[$category->accesstype])) return $list;
 		foreach ($this->accesstypes[$category->accesstype] as $access) {
+			/** @var KunenaAccess $access */
 			if (method_exists($access, 'getAuthoriseActions')) {
 				$sublist = $access->getAuthoriseActions($category, $userid);
 				foreach ($sublist as $key=>$value) {
@@ -456,6 +491,7 @@ window.addEvent('domready', function(){
 			$subscribers = $this->loadSubscribers($topic, $type);
 			$allow = $deny = array();
 			if (!empty($subscribers)) {
+				/** @var KunenaAccess $access */
 				foreach ($this->accesstypes[$category->accesstype] as $access) {
 					if (method_exists($access, 'authoriseUsers')) {
 						list ($a, $d) = $access->authoriseUsers($topic, $subscribers);

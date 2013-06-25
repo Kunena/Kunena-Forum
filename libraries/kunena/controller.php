@@ -32,7 +32,7 @@ class KunenaController extends JControllerLegacy {
 		$this->me = KunenaUserHelper::getMyself();
 
 		// Save user profile if it didn't exist.
-		if (!$this->me->userid && !$this->me->exists()) {
+		if ($this->me->userid && !$this->me->exists()) {
 			$this->me->save();
 		}
 	}
@@ -40,6 +40,8 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Method to get the appropriate controller.
 	 *
+	 * @param	string	$prefix
+	 * @param	mixed	$config
 	 * @return	KunenaController
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array()) {
@@ -102,8 +104,10 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Method to display a view.
 	 *
-	 * @param bool $cachable
-	 * @param mixed $urlparams
+	 * @param   boolean    $cachable   If true, the view output will be cached
+	 * @param   array|bool $urlparams  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 *
+	 * @return  JControllerLegacy  A JControllerLegacy object to support chaining.
 	 */
 	public function display($cachable = false, $urlparams = false) {
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
@@ -202,6 +206,7 @@ class KunenaController extends JControllerLegacy {
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $this;
 	}
 
 	/**

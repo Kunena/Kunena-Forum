@@ -50,6 +50,7 @@ class KunenaLoginJoomla {
 			$Itemid = UsersHelperRoute::getRegistrationRoute();
 			return JRoute::_('index.php?option=com_users&view=registration'.($Itemid ? "&Itemid={$Itemid}" : ''));
 		}
+		return null;
 	}
 
 	public function getResetURL() {

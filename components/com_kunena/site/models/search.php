@@ -138,7 +138,6 @@ class KunenaModelSearch extends KunenaModel {
 				break;
 			default :
 				$time = time () - 86400 * 365;
-				$searchdate = '365';
 		}
 
 		if ($time) {

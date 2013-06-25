@@ -12,6 +12,9 @@ defined ( '_JEXEC' ) or die ();
 
 jimport('joomla.html.html');
 
+/**
+ * Class JHtmlKunenaForum
+ */
 abstract class JHtmlKunenaForum {
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
@@ -116,6 +119,8 @@ abstract class JHtmlKunenaForum {
 	 * @param string $title Link title
 	 * @param string $rel Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
 	 * @param mixed $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
+	 *
+	 * @return string
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '') {
 		$list['href'] = KunenaRoute::_($uri);

@@ -10,6 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaActivity
+ */
 class KunenaActivity
 {
 	protected static $instance = false;

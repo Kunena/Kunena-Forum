@@ -152,7 +152,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Method to get a single record.
 	 *
-	 * @param   integer	The id of the primary key.
+	 * @param   integer	 $pk  The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
 	 */
@@ -203,9 +203,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
-	 * @param   type	The table type to instantiate
-	 * @param   string	A prefix for the table class name. Optional.
-	 * @param   array  Configuration array for model. Optional.
+	 * @param   string	$type  The table type to instantiate
+	 * @param   string	$prefix  A prefix for the table class name. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
 	 * @return  JTable	A database object
 	 */
 	public function getTable($type = 'Extension', $prefix = 'JTable', $config = array())
@@ -234,8 +234,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	}
 
 	/**
-	 * @param   object	A form object.
-	 * @param   mixed	The data expected for the form.
+	 * @param   JForm	$form  A form object.
+	 * @param   mixed	$data  The data expected for the form.
+	 * @param   string	$group  Form group.
 	 * @return  mixed  True if successful.
 	 * @throws	Exception if there is an error in the form event.
 	 * @since   1.6
@@ -247,7 +248,6 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		$folder		= $this->getState('item.folder');
 		$element	= $this->getState('item.element');
 		$lang		= JFactory::getLanguage();
-		$client		= JApplicationHelper::getClientInfo(0);
 
 		// Load the core and/or local language sys file(s) for the ordering field.
 		$db = JFactory::getDbo();
@@ -316,7 +316,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * A protected method to get a set of ordering conditions.
 	 *
-	 * @param   object	A record object.
+	 * @param   object	$table  A record object.
 	 * @return  array  An array of conditions to add to add to ordering queries.
 	 * @since   1.6
 	 */
@@ -331,7 +331,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Override method to save the form data.
 	 *
-	 * @param   array  The form data.
+	 * @param   array  $data  The form data.
 	 * @return  boolean  True on success.
 	 * @since   1.6
 	 */

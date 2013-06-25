@@ -23,6 +23,10 @@ jimport('joomla.utilities.string');
  */
 class KunenaBbcode extends NBBC_BBCode {
 	public $autolink_disable = 0;
+	/**
+	 * @var object
+	 */
+	public $parent = null;
 
     /**
      * Use KunenaBbcode::getInstance() instead.
@@ -31,8 +35,7 @@ class KunenaBbcode extends NBBC_BBCode {
      * @internal
      */
     public function __construct($relative = true) {
-		parent::__construct ();
-
+		parent::__construct();
 		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 
@@ -246,6 +249,9 @@ class KunenaBbcode extends NBBC_BBCode {
 	}
 }
 
+/**
+ * Class KunenaBbcodeLibrary
+ */
 class KunenaBbcodeLibrary extends BBCodeLibrary {
 	var $default_smileys = array();
 	var $default_tag_rules = array(
@@ -822,6 +828,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$this->default_tag_rules['quote']['plain_start'] = "\n".JText::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE')."\n";
 	}
 
+	/**
+	 * @param KunenaBbcode $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 * @return bool|mixed|string
+	 */
 	function DoEmail($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK) {
 			return true;
@@ -831,8 +846,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return JHtml::_('email.cloak', htmlspecialchars ( $email ), $bbcode->IsValidEmail ( $email ), htmlspecialchars ( $text ), $bbcode->IsValidEmail ( $text ));
 	}
 
-	// Format a [url] tag by producing an <a>...</a> element.
-	// The URL only allows http, https, mailto, and ftp protocols for safety.
+	/**
+	 * Format a [url] tag by producing an <a>...</a> element.
+	 * The URL only allows http, https, mailto, and ftp protocols for safety.
+	 *
+	 * @param KunenaBbcode $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 * @return bool|string
+	 */
 	function DoURL($bbcode, $action, $name, $default, $params, $content) {
 		// We can't check this with BBCODE_CHECK because we may have no URL before the content
 		// has been processed.
@@ -1005,6 +1030,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	/**
+	 * @param KunenaBBCode $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 * @return bool|string
+	 */
 	function DoMap($bbcode, $action, $name, $default, $params, $content) {
 		static $id = false;
 		static $sensor = true;
@@ -1109,6 +1143,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$config = KunenaFactory::getConfig();
 		$user = JFactory::getUser ();
 		$db = JFactory::getDBO ();
+		/** @var JSite $site */
 		$site = JFactory::getApplication('site');
 
 		$query = 'SELECT a.*, u.name AS author, cc.title AS category,
@@ -1174,7 +1209,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$params->set('ksource', 'kunena');
 				JPluginHelper::importPlugin('content');
 				$dispatcher = JDispatcher::getInstance();
-				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
+				$dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
 				$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit-$bbcode->text_length);
 				$bbcode->text_length += strlen($article->text);
 				$html = $article->text;
@@ -1198,6 +1233,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return $html;
 	}
 
+	/**
+	 * @param KunenaBBCode $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 * @return bool|string
+	 */
 	function DoCode($bbcode, $action, $name, $default, $params, $content) {
 		static $enabled = false;
 
@@ -1263,6 +1307,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	/**
+	 * @param KunenaBBCode $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 * @return bool|string
+	 */
 	function DoVideo($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK) {
 			$bbcode->autolink_disable++;
@@ -1513,6 +1566,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	/**
+	 * @param KunenaBBCode $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 * @return bool|string
+	 */
 	function DoFile($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK)
 			return true;
@@ -1560,6 +1622,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	/**
+	 * @param KunenaBBCode $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 * @return bool|string
+	 */
 	function DoImage($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK) {
 			return true;
@@ -1599,6 +1670,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$filename = basename($fileurl);
 
 			// Remove attachment from the attachments list and show it if it exists
+			/** @var array|KunenaForumMessageAttachment[] $attachments */
 			$attachments = &$bbcode->parent->attachments;
 			$attachment = null;
 			foreach ( $attachments as $att ) {

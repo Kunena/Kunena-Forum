@@ -10,8 +10,14 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaLogin
+ */
 class KunenaLogin {
 	protected static $instance = false;
+	/**
+	 * @var array|KunenaLogin[]
+	 */
 	protected $instances = array();
 
 	public function __construct() {

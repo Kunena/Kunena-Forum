@@ -371,7 +371,7 @@ class KunenaViewUser extends KunenaView {
 
 		asort ( $folders );
 
-		foreach ( $folders as $key => $val ) {
+		foreach ( $folders as $val ) {
 			$str .=  '<option value="' . urlencode($val) . '"';
 
 			if ($selected == $val) {
@@ -536,6 +536,7 @@ class KunenaViewUser extends KunenaView {
 				return false;
 			}
 		}
+		return false;
 	}
 
 	function displayAttachments() {
@@ -554,7 +555,7 @@ class KunenaViewUser extends KunenaView {
 			foreach ($messages as $message ) {
 				$topic_ids[] = $message->thread;
 			}
-			$topics = KunenaForumTopicHelper::getTopics($topic_ids, 'none');
+			KunenaForumTopicHelper::getTopics($topic_ids, 'none');
 		}
 
 		echo $this->loadTemplateFile('attachments');

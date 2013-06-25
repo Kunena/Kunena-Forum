@@ -69,7 +69,7 @@ $paneOptions = array(
 										<li><a href="#tab4" data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a></li>
 										<li><a href="#tab5" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a></li>
 										<li><a href="#tab6" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a></li>
-										<li><a href="#tab7" data-toggle="tab"><?php echo JText::_('Forum Settings'); ?></a></li>
+										<li><a href="#tab7" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a></li>
 									</ul>
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab1">

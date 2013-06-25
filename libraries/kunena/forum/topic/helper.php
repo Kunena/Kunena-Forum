@@ -54,7 +54,7 @@ abstract class KunenaForumTopicHelper {
 	 */
 	public static function subscribe($ids, $value=true, $user=null) {
 		// Pre-load all items
-		$usertopics = KunenaForumTopicUserHelper::getTopics($ids, $user);
+		KunenaForumTopicUserHelper::getTopics($ids, $user);
 		$count = 0;
 		foreach ($ids as $id) {
 			$usertopic = KunenaForumTopicUserHelper::get($id, $user);
@@ -74,7 +74,7 @@ abstract class KunenaForumTopicHelper {
 	 */
 	public static function favorite($ids, $value=true, $user=null) {
 		// Pre-load all items
-		$usertopics = KunenaForumTopicUserHelper::getTopics($ids, $user);
+		KunenaForumTopicUserHelper::getTopics($ids, $user);
 		$count = 0;
 		foreach ($ids as $id) {
 			$usertopic = KunenaForumTopicUserHelper::get($id, $user);
@@ -143,7 +143,7 @@ abstract class KunenaForumTopicHelper {
 	 * @param int   $limit
 	 * @param array $params
 	 *
-	 * @return array
+	 * @return array|KunenaForumTopic[]
 	 */
 	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array()) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -384,7 +384,7 @@ abstract class KunenaForumTopicHelper {
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return false;
-		$rows = $db->getAffectedRows ();
+		$rows += $db->getAffectedRows ();
 
 		// Recount total posts, total attachments and update first & last post information (by time)
 		$query ="UPDATE #__kunena_topics AS tt
@@ -442,7 +442,6 @@ abstract class KunenaForumTopicHelper {
 		}
 
 		if ($ids) {
-			$topiclist = array();
 			$idstr = implode ( ",", $ids );
 
 			$db = JFactory::getDBO ();

@@ -143,7 +143,7 @@ class KunenaModelSchema extends JModelLegacy
 	public function updateSchemaTable($table)
 	{
 		$sql = $this->getSQL();
-		if (!isset($sql[$table])) return;
+		if (!isset($sql[$table])) return null;
 		$this->db->setQuery($sql[$table]['sql']);
 		$this->db->query();
 		if ($this->db->getErrorNum()) throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
@@ -270,7 +270,7 @@ class KunenaModelSchema extends JModelLegacy
 	{
 		$old = $this->getDOMDocument($old);
 		$new = $this->getDOMDocument($new);
-		if (!$old || !$new) return;
+		if (!$old || !$new) return null;
 
 		//$old->validate();
 		//$new->validate();
@@ -356,7 +356,6 @@ class KunenaModelSchema extends JModelLegacy
 		// Remove default='' from a field
 		if ($loc['new']->tagName == 'field' && $loc['new']->getAttribute('default') === null) $loc['new']->removeAttribute('default');
 
-		$attributes = array();
 		$attrAll = $this->listAllNodes(array('new'=>$loc['new']->attributes, 'old'=>$loc['old']->attributes));
 		if (!$action) foreach ($attrAll as $attrName => $attrLoc)
 		{
@@ -392,7 +391,7 @@ class KunenaModelSchema extends JModelLegacy
 		else if ($input === KUNENA_INPUT_DATABASE) $schema = $this->getSchemaFromDatabase();
 		else if (is_string($input) && file_exists($input)) $schema = $this->getSchemaFromFile($input);
 		else if (is_string($input)) { $schema = new DOMDocument('1.0', 'utf-8'); $schema->loadXML($input); }
-		if (!isset($schema)  || $schema == false) return;
+		if (!isset($schema)  || $schema == false) return null;
 		$schema->formatOutput = true;
 		$schema->preserveWhiteSpace = false;
 

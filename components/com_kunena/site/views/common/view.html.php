@@ -45,7 +45,6 @@ class KunenaViewCommon extends KunenaView {
 		if ($this->offline) return;
 
 		if ($this->config->showannouncement > 0) {
-			$new = new KunenaForumAnnouncement;
 			$items = KunenaForumAnnouncementHelper::getAnnouncements();
 			$this->announcement = array_pop($items);
 			if (!$this->announcement) {
@@ -362,7 +361,7 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function getRSSURL($params = '', $xhtml = true) {
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml );
 	}
 
 	function getRSSLink($name, $rel = 'follow', $params = '') {
@@ -370,7 +369,7 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	public function getStatsLink($name, $class = '', $rel = 'follow') {
-		return '<a href="'. KunenaRoute::_ ( 'index.php?option=com_kunena&view=stats' ) .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
+		return '<a href="'. KunenaRoute::_ ( 'index.php?option=com_kunena&view=statistics' ) .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
 	}
 
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '') {

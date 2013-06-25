@@ -35,8 +35,8 @@ class KunenaKeyword extends JObject {
 	/**
 	 * Returns KunenaKeyword object
 	 *
-	 * @access	public
 	 * @param	int	$identifier		The keyword to load - Can be either string or integer
+	 * @param	bool	$reset
 	 * @return	KunenaKeyword		The topic object.
 	 * @since	1.7
 	 */

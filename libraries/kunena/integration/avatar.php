@@ -10,6 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class KunenaAvatar
+ */
 class KunenaAvatar {
 	public $avatarSizes = null;
 	protected $resize = false;

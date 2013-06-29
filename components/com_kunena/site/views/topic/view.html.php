@@ -84,7 +84,7 @@ class KunenaViewTopic extends KunenaView {
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -262,7 +262,7 @@ class KunenaViewTopic extends KunenaView {
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -308,7 +308,7 @@ class KunenaViewTopic extends KunenaView {
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -501,7 +501,7 @@ class KunenaViewTopic extends KunenaView {
 			$params->set('kunena_layout', $this->state->get('layout'));
 
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JEventDispatcher::getInstance();
+			$dispatcher = JDispatcher::getInstance();
 			$dispatcher->trigger('onKunenaPrepare', array ('kunena.user', &$this->profile, &$params, 0));
 
 			//karma points and buttons
@@ -628,7 +628,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
 		return $this->loadTemplateFile('actions');
@@ -684,7 +684,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
 		return $this->loadTemplateFile("message_actions");
@@ -858,7 +858,7 @@ class KunenaViewTopic extends KunenaView {
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->history, &$params, 0));

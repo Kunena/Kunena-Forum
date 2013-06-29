@@ -637,7 +637,7 @@ class CKunenaImageHelper
 			}
 		}
 
-		CKunenaFolder::createIndex($newpath);
+		KunenaFolder::createIndex($newpath);
 
 		if ($imageinfo->width > $maxwidth || $imageinfo->height > $maxheight) {
 			$image = new CKunenaImage($file);
@@ -648,15 +648,15 @@ class CKunenaImageHelper
 			$options = array('quality' => $quality);
 			$image = $image->resize($maxwidth, $maxheight, true, $scale);
 			$type = $image->getType();
-			$temp = CKunenaPath::tmpdir() . '/kunena_' . md5 ( rand() );
+			$temp = KunenaPath::tmpdir() . '/kunena_' . md5 ( rand() );
 			$image->toFile($temp, $type, $options);
 			unset ($image);
-			if (! CKunenaFile::move ( $temp, $newpath.'/'.$newfile )) {
+			if (! KunenaFile::move ( $temp, $newpath.'/'.$newfile )) {
 				unlink ($temp);
 				return false;
 			}
 		} else {
-			if (! CKunenaFile::copy ( $file, $newpath.'/'.$newfile )) {
+			if (! KunenaFile::copy ( $file, $newpath.'/'.$newfile )) {
 				return false;
 			}
 		}

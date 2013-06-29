@@ -18,6 +18,8 @@
 		<folder>controller</folder>
 		<folder>database</folder>
 		<folder>external</folder>
+		<folder>file</folder>
+		<folder>folder</folder>
 		<folder>form</folder>
 		<folder>forum</folder>
 		<folder>html</folder>
@@ -27,6 +29,7 @@
 		<folder>menu</folder>
 		<folder>module</folder>
 		<folder>pagination</folder>
+		<folder>path</folder>
 		<folder>request</folder>
 		<folder>route</folder>
 		<folder>spam</folder>

@@ -93,7 +93,7 @@ $paneOptions = array(
         </fieldset>
         <fieldset>
           <legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
-          <table class="kadmin-adminform">
+          <table>
             <tr>
               <td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
               <td>
@@ -107,7 +107,7 @@ $paneOptions = array(
       <div class="tab-pane" id="tab2">
         <fieldset>
           <legend><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></legend>
-          <table class="kadmin-adminform">
+          <table>
             <tr>
               <td class="nowrap" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
               <td valign="top" width="25%"><?php echo $this->options ['accesstypes']; ?></td>
@@ -129,7 +129,7 @@ $paneOptions = array(
       <div class="tab-pane" id="tab3">
         <fieldset>
           <legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
-          <table class="kadmin-adminform">
+          <table>
             <tr>
               <td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
               <td><?php echo $this->options ['forumLocked']; ?></td>
@@ -174,7 +174,7 @@ $paneOptions = array(
         <fieldset>
           <?php if (!$this->category->id || !$this->category->isSection()): ?>
           <legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
-          <div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
+          <div><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
           <div class="btn-group pull-right"> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-cog"></i> <span class="caret"></span> </a>
             <ul class="dropdown-menu actions" style="min-width:0 !important;">
               <li> <a href="index.php?option=com_kunena&amp;view=category&amp;layout=manage" ><i class="hasTip icon-plus tip" title="Add"></i> Add</a> </li>

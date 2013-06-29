@@ -12,10 +12,10 @@ defined ( '_JEXEC' ) or die ();
 
 ?>
 
-<div class="kheader">
+<div>
 	<h2><span><?php echo JText::_('COM_KUNENA_REPORT_TO_MODERATOR') ?></span></h2>
 </div>
-<div class="center">
+<div>
 	<form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="kform-report">
 		<input type="hidden" name="view" value="topic" />
 		<input type="hidden" name="task" value="report" />

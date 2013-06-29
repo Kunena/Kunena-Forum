@@ -150,40 +150,58 @@ class KunenaViewCategory extends KunenaView {
 	}
 
 	public function getCategoryIcon($category, $thumb = false) {
-		if (! $thumb) {
+		$path	= JPATH_ROOT . '/media/kunena/' . $this->config->catimagepath . '/';
+		$uri	= JUri::root(true) . '/media/kunena/' . $this->config->catimagepath . '/';
+		
+		if (!$thumb) {
 			if ($category->getNewCount()) {
-				// Check Unread    Cat Images
-				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif" )) {
-					return "<img src=\"" . JUri::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-				} else {
-					return $this->getIcon ( $this->ktemplate->categoryIcons[1], JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
+				// Check Unread Cat Images
+				$file = $this->getCategoryIconFile($category->id . '_on', $path);
+				if ($file) {
+					return '<img src="' . $uri . $file .'" border="0" class="kforum-cat-image" alt=" " />';
 				}
-			} else {
-				// Check Read Cat Images
-				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif" )) {
-					return "<img src=\"" . JUri::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
-				} else {
-					return $this->getIcon ( $this->ktemplate->categoryIcons[0], JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
-				}
+				return $this->getIcon ( $this->ktemplate->categoryIcons[1], JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 			}
-		} elseif ($this->config->showchildcaticon) {
-			if ($category->getNewCount()) {
-				// Check Unread    Cat Images
-				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif" )) {
-					return "<img src=\"" . JUri::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-				} else {
-					return $this->getIcon ( $this->ktemplate->categoryIcons[1].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
-				}
-			} else {
+			else {
 				// Check Read Cat Images
-				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif" )) {
-					return "<img src=\"" . JUri::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-				} else {
-					return $this->getIcon ( $this->ktemplate->categoryIcons[0].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+				$file = $this->getCategoryIconFile($category->id . '_off', $path);
+				if ($file) {
+					return '<img src="' . $uri . $file .'" border="0" class="kforum-cat-image" alt=" " />';
 				}
+				return $this->getIcon ( $this->ktemplate->categoryIcons[0], JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+			}
+		}
+		elseif ($this->config->showchildcaticon) {
+			if ($category->getNewCount()) {
+				// Check Unread Cat Images
+				$file = $this->getCategoryIconFile($category->id . '_on_childsmall', $path);
+				if ($file) {
+					return '<img src="' . $uri . $file .'" border="0" class="kforum-cat-image" alt=" " />';
+				}
+				return $this->getIcon ( $this->ktemplate->categoryIcons[1].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
+			}
+			else {
+				// Check Read Cat Images
+				$file = $this->getCategoryIconFile($category->id . '_off_childsmall', $path);
+				if ($file) {
+					return '<img src="' . $uri . $file .'" border="0" class="kforum-cat-image" alt=" " />';
+				}
+				return $this->getIcon ( $this->ktemplate->categoryIcons[0].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 			}
 		}
 		return '';
+	}
+	
+	private function getCategoryIconFile($filename, $path = '') {
+		$types	= array('.gif', '.png', '.jpg');
+		
+		foreach ($types as $ext) {
+			if (is_file($path . $filename . $ext)) {
+				return $filename . $ext;
+			}
+		}
+		
+		return false;
 	}
 
 	public function displaySectionField($field) {
@@ -460,8 +478,8 @@ function getTopicClass($prefix='k', $class='topic') {
 
 	public function getCategoryRSSURL($catid, $xhtml = true) {
 		if ($this->config->enablerss) {
-			$params = '&catid=' . ( int ) $catid;
-			return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+			$params = '&catid=' . (int) $catid;
+			return KunenaRoute::_ ( "index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml );
 		}
 		return;
 	}

@@ -26,7 +26,7 @@ class KunenaProfileCommunity extends KunenaProfile {
 
 	public function getProfileURL($userid, $task='', $xhtml = true) {
 		$do = $task ? '&task='.$task : '';
-		return CRoute::_('index.php?option=com_community&view=profile'.$do, $xhtml);
+		return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid.$do, $xhtml);
 	}
 
 	public function _getTopHits($limit=0) {
@@ -45,6 +45,6 @@ class KunenaProfileCommunity extends KunenaProfile {
 	public function showProfile($view, &$params) {}
 
 	public function getEditProfileURL($userid, $xhtml = true) {
-		return $this->getProfileURL($userid, 'edit', $xhtml = true);
+		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
 }

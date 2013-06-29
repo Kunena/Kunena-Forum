@@ -415,10 +415,10 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		foreach ($this->getChannels() as $category) {
 			if ($category->authorise('topic.create', $user, true)) return $category;
 		}
-		if ($this->exists() && $this->isSection()) return new KunenaForumCategory();
-		$categories = KunenaForumCategoryHelper::getChildren(intval($this->id), -1, array('action'=>'topic.create', 'parents'=>false));
-
-		if ($categories) return reset($categories);
+		$categories = KunenaForumCategoryHelper::getChildren(intval($this->id), -1, array('action'=>'topic.create'));
+		if ($categories) foreach ($categories as $category) {
+			if ($category->authorise('topic.create', null, true)) return $category;
+		}
 		return new KunenaForumCategory();
 	}
 

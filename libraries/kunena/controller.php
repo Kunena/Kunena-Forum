@@ -35,6 +35,8 @@ class KunenaController extends JControllerLegacy {
 		if ($this->me->userid && !$this->me->exists()) {
 			$this->me->save();
 		}
+
+		if (empty($this->input)) $this->input = $this->app->input;
 	}
 
 	/**
@@ -256,11 +258,15 @@ class KunenaController extends JControllerLegacy {
 	}
 
 	/**
-	 * @param string $fragment
+	 * @param string $anchor
 	 */
-	protected function redirectBack($fragment = '') {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
-		JFactory::getApplication ()->redirect ( $httpReferer.($fragment ? '#'.$fragment : '') );
+	protected function redirectBack($anchor = '') {
+		$default = $this->app->isSite() ? KunenaRoute::_() : JUri::base(true);
+		$uri = JUri::getInstance($this->input->server->getString('HTTP_REFERER', $default));
+		if (!JUri::isInternal($uri->toString())) $uri = JUri::getInstance($default);
+		if ($anchor) $uri->setFragment($anchor);
+
+		JFactory::getApplication()->redirect($uri->toString());
 	}
 
 }

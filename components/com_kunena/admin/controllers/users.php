@@ -69,7 +69,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$user->rank = $newrank;
 			if ($deleteAvatar == 1) $user->avatar = '';
 			if ( !$user->save() ) {
-				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_PROFILE_SAVED_FAILED' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_PROFILE_SAVED_FAILED' ), 'error');
 			} else {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY' ) );
 			}
@@ -187,11 +187,11 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$options = array('clientid'=>0); // Just logout from site
 		$this->app->logout( (int) $id, $options);
 
-		$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USER_LOGOUT_DONE'));
+		$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USER_LOGOUT_DONE') );
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
-	function delete() {
+	function remove() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -205,32 +205,41 @@ class KunenaAdminControllerUsers extends KunenaController {
 		}
 
 		$my = JFactory::getUser();
+		$usernames = array();
 		foreach ( $cids as $userid ) {
 			$user = JFactory::getUser($userid);
+			$username = $user->username;
 			$groups = JUserHelper::getUserGroups($userid);
-			$error = false;
 
 			if ( $my->id == $userid ) {
-				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_YOURSELF'));
-				$error = true;
+				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_YOURSELF'), 'notice');
+				continue;
 			}
 
 			if ( $user->authorise('core.admin') )  {
-				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'));
-				$error = true;
+				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'), 'notice');
+				continue;
 			}
 
-			if ( !$error ) {
-				$user = KunenaUserHelper::get($userid);
-				$user->delete();
-
-				// Delete the user too from Joomla!
-				$instance = JUser::getInstance($userid);
-				$instance->delete();
-
-				$this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE', $userid));
+			$user = KunenaUserHelper::get($userid);
+			$result = $user->delete();
+			if ( !$result ) {
+				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $userid), 'notice' );
+				continue;
 			}
+
+			// Delete the user too from Joomla!
+			$instance = JUser::getInstance($userid);
+			$jresult = $instance->delete();
+			if ( !$jresult ) {
+				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $userid), 'notice' );
+				continue;
+			}
+
+			$usernames[] = $username;
 		}
+
+		if ( !empty($usernames) )  $this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE_SUCCESSFULLY', implode(', ',$usernames)) );
 
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
@@ -390,12 +399,12 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$catids = JRequest::getVar ( 'catid', array (), 'post', 'array' );
 
 		if ( empty($userids) ) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_USERS_SELECTED' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_USERS_SELECTED' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
 		if ( empty($catids) ) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_CATEGORIES_SELECTED' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_CATEGORIES_SELECTED' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 

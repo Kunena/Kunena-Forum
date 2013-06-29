@@ -22,7 +22,7 @@ class KunenaAvatar {
 	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JEventDispatcher::getInstance();
+			$dispatcher = JDispatcher::getInstance();
 			$classes = $dispatcher->trigger('onKunenaGetAvatar');
 			foreach ($classes as $class) {
 				if (!is_object($class)) continue;

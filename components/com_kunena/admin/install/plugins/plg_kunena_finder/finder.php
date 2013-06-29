@@ -34,7 +34,7 @@ class plgKunenaFinder extends JPlugin
 		ob_end_clean();
 		JLog::add('onKunenaAfterSave table: '.$table_content, JLog::INFO);
 		JLog::add('onKunenaAfterSave isNew: '.($isNew)?'Yes':'No', JLog::INFO);
-		$dispatcher	= JEventDispatcher::getInstance();
+		$dispatcher	= JDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
@@ -59,7 +59,7 @@ class plgKunenaFinder extends JPlugin
 		JLog::add('onKunenaBeforeSave table: '.$table_content, JLog::INFO);
 		JLog::add('onKunenaBeforeSave isNew: '.($isNew)?'Yes':'No', JLog::INFO);
 
-		$dispatcher	= JEventDispatcher::getInstance();
+		$dispatcher	= JDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
@@ -81,7 +81,7 @@ class plgKunenaFinder extends JPlugin
 		ob_end_clean();
 		JLog::add('onKunenaAfterDelete table: '.$table_content, JLog::INFO);
 
-		$dispatcher	= JEventDispatcher::getInstance();
+		$dispatcher	= JDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
@@ -102,7 +102,7 @@ class plgKunenaFinder extends JPlugin
 		ob_end_clean();
 		JLog::add('onKunenaBeforeDelete table: '.$table_content, JLog::INFO);
 	
-		$dispatcher	= JEventDispatcher::getInstance();
+		$dispatcher	= JDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 	
 		// Trigger the onFinderAfterDelete event.

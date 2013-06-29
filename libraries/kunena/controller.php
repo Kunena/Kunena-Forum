@@ -32,7 +32,7 @@ class KunenaController extends JControllerLegacy {
 		$this->me = KunenaUserHelper::getMyself();
 
 		// Save user profile if it didn't exist.
-		if (!$this->me->userid && !$this->me->exists()) {
+		if ($this->me->userid && !$this->me->exists()) {
 			$this->me->save();
 		}
 	}
@@ -84,6 +84,7 @@ class KunenaController extends JControllerLegacy {
 			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+			KunenaFactory::loadLanguage('com_kunena', 'site');
 
 		} else {
 			$class = $prefix . 'Controller' . ucfirst ( $view );
@@ -126,7 +127,6 @@ class KunenaController extends JControllerLegacy {
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 			// Load last to get deprecated language files to work
-			KunenaFactory::loadLanguage('com_kunena', 'site');
 			KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 			// Version warning
@@ -196,7 +196,7 @@ class KunenaController extends JControllerLegacy {
 			// Render the view.
 			if ($vFormat=='html') {
 				JPluginHelper::importPlugin('kunena');
-				$dispatcher = JEventDispatcher::getInstance();
+				$dispatcher = JDispatcher::getInstance();
 				$dispatcher->trigger('onKunenaDisplay', array('start', $view));
 				$view->displayAll ();
 				$dispatcher->trigger('onKunenaDisplay', array('end', $view));

@@ -80,7 +80,7 @@ var $pat_main;
 var $pat_comment;
 var $pat_comment2;
 var $pat_wiki;
-function BBCodeLexer($string, $tagmarker = '[') {
+function __construct($string, $tagmarker = '[') {
 $regex_beginmarkers = Array( '[' => '\[', '<' => '<', '{' => '\{', '(' => '\(' );
 $regex_endmarkers = Array( '[' => '\]', '<' => '>', '{' => '\}', '(' => '\)' );
 $endmarkers = Array( '[' => ']', '<' => '>', '{' => '}', '(' => ')' );
@@ -1007,7 +1007,7 @@ var $rule_html;
 var $pre_trim;
 var $post_trim;
 var $debug;
-function NBBC_BBCode() {
+function __construct() {
 $this->defaults = new BBCodeLibrary;
 $this->tag_rules = $this->defaults->default_tag_rules;
 $this->smileys = $this->defaults->default_smileys;

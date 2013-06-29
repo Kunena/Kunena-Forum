@@ -15,4 +15,15 @@
 		<filename>index.html</filename>
 		<folder>language</folder>
 	</files>
-</extension>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="context"
+					   type="text"
+					   default="mod_quickicon"
+					   description="PLG_QUICKICON_KUNENA_GROUP_DESC"
+					   label="PLG_QUICKICON_KUNENA_GROUP_LABEL"
+						/>
+			</fieldset>
+		</fields>
+	</config></extension>

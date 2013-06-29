@@ -361,7 +361,7 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function getRSSURL($params = '', $xhtml = true) {
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml );
 	}
 
 	function getRSSLink($name, $rel = 'follow', $params = '') {
@@ -369,7 +369,7 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	public function getStatsLink($name, $class = '', $rel = 'follow') {
-		return '<a href="'. KunenaRoute::_ ( 'index.php?option=com_kunena&view=stats' ) .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
+		return '<a href="'. KunenaRoute::_ ( 'index.php?option=com_kunena&view=statistics' ) .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
 	}
 
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '') {

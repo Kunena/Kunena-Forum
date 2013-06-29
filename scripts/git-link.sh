@@ -1,6 +1,8 @@
 #!/bin/bash
 GIT_SOURCE=${0%/*/*}
 GIT_TARGET=$PWD
+OPT_DELETE=0
+OPT_DELETE_ALL=0
 
 echo
 echo "Link Kunena development tree into web site."
@@ -8,12 +10,33 @@ echo "GIT repository in ........: $GIT_SOURCE"
 echo "Joomla installation in ...: $GIT_TARGET"
 echo
 
-[ -f $GIT_TARGET/configuration.php ] || { 
+while getopts ":d" optname
+	do
+		case "$optname" in
+			"d")
+				OPT_DELETE=1
+				;;
+			"f")
+				OPT_DELETE_ALL=1
+				;;
+			"?")
+				echo "Unknown option $OPTARG"
+				exit 1
+				;;
+
+		esac
+	done
+
+[ -f $GIT_TARGET/configuration.php ] || {
 	echo "ERROR: Joomla installation was not found!"
 	echo "Please run this command in Joomla root directory!"
 	echo
-	echo "Example:"
+	echo "Add symbolic links to repository (as user www-data):"
 	echo "sudo -u www-data $0"
+	echo "Remove symbolic links (as user www-data):"
+	echo "sudo -u www-data $0 -d"
+	echo "Remove everything (including media):"
+	echo "sudo -u www-data $0 -df"
 	echo
 	exit 1; 
 }
@@ -48,11 +71,23 @@ do
 	else
 		unlink $target
 	fi
-	echo "Linking ${targets[$i]}"
-	ln -s $source $target
+	if ((!$OPT_DELETE)); then
+		echo "Linking ${targets[$i]}"
+		ln -s $source $target
+	fi
 done;
-echo "Copying media/kunena"
-cp -r $GIT_SOURCE/media/kunena $GIT_TARGET/media/kunena
+if ((!$OPT_DELETE)); then
+	echo "Copying media/kunena"
+	cp -r $GIT_SOURCE/media/kunena $GIT_TARGET/media/kunena
+else
+	if ((!OPT_DELETE_ALL)); then
+		rm -rf $GIT_TARGET/media/kunena
+	fi
+	mkdir $GIT_TARGET/administrator/components/com_kunena
+	cp -r $GIT_SOURCE/components/com_kunena/admin/kunena.xml $GIT_TARGET/administrator/components/com_kunena/kunena.xml
+	echo "Removed development tree from your web site."
+	echo "Please install Kunena Package to fix your site!"
+fi
 
 echo
 echo "Done!"

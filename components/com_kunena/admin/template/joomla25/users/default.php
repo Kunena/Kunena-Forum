@@ -151,10 +151,10 @@ JHtml::_('behavior.tooltip');
 							$kunena_user = KunenaFactory::getUser($user->id);
 							$userEnabled = $kunena_user->isBlocked() ? $img_no : $img_yes;
 							$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
-							$titleUserBlock = $kunena_user->isBlocked() ?  JText::_( 'Enabled' ) : JText::_( 'Blocked' );
+							$titleUserBlock = $kunena_user->isBlocked() ?  JText::_( 'COM_KUNENA_USERS_LABEL_BLOCKED' ) : JText::_( 'COM_KUNENA_USERS_LABEL_ENABLED' );
 							$userBanned = $kunena_user->isBanned() ? $img_yes : $img_no;
-							$userBannedTask = $kunena_user->isBanned() ? 'ban' : 'ban';
-							$titleUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
+							$userBannedTask = $kunena_user->isBanned() ? 'unban' : 'ban';
+							$titleUserBanned = $kunena_user->isBanned() ? JText::_( 'COM_KUNENA_USERS_LABEL_BANNED' ) : JText::_( 'COM_KUNENA_USERS_LABEL_NOT_BANNED' );
 							?>
 								<tr class="row<?php echo $k; ?>">
 									<td class="center">

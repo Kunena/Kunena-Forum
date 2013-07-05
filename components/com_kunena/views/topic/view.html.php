@@ -454,7 +454,7 @@ class KunenaViewTopic extends KunenaView {
 		if (isset($this->message)) {
 			$this->user = KunenaFactory::getUser($this->message->userid);
 			$username = $this->message->getAuthor()->getName();
-			$this->userLink = $this->message->userid ? JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
+			$this->userLink = $this->message->userid ? JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&amp;view=user&amp;layout=moderate&amp;userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
 		}
 
 		if ($this->mesid) {
@@ -531,8 +531,8 @@ class KunenaViewTopic extends KunenaView {
 			if ($this->config->showkarma && $this->profile->userid) {
 				$this->userkarma_title = JText::_ ( 'COM_KUNENA_KARMA' ) . ": " . $this->profile->karma;
 				if ($this->me->userid && $this->me->userid != $this->profile->userid) {
-					$this->userkarma_minus = ' ' . CKunenaLink::GetKarmaLink ( 'decrease', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_SMITE' ) . '"> </span>' );
-					$this->userkarma_plus = ' ' . CKunenaLink::GetKarmaLink ( 'increase', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_APPLAUD' ) . '"> </span>' );
+					$this->userkarma_minus = ' ' . CKunenaLink::GetKarmaLink ( 'decrease', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-minus" title="' . JText::_ ( 'COM_KUNENA_KARMA_SMITE' ) . '"> </span>' );
+					$this->userkarma_plus = ' ' . CKunenaLink::GetKarmaLink ( 'increase', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-plus" title="' . JText::_ ( 'COM_KUNENA_KARMA_APPLAUD' ) . '"> </span>' );
 				}
 			}
 
@@ -597,8 +597,8 @@ class KunenaViewTopic extends KunenaView {
 		$catid = $this->state->get('item.catid');
 		$id = $this->state->get('item.id');
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . JUtility::getToken() . '=1';
-		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
+		$task = "index.php?option=com_kunena&amp;view=topic&amp;task=%s&amp;catid={$catid}&amp;id={$id}&amp;" . JUtility::getToken() . '=1';
+		$layout = "index.php?option=com_kunena&amp;view=topic&amp;layout=%s&amp;catid={$catid}&amp;id={$id}";
 
 		$this->topicButtons = new JObject();
 
@@ -639,7 +639,7 @@ class KunenaViewTopic extends KunenaView {
 
 		if ($this->config->enable_threaded_layouts) {
 
-			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JUtility::getToken() . '=1';
+			$url = "index.php?option=com_kunena&amp;view=user&amp;task=change&amp;topic_layout=%s&amp;" . JUtility::getToken() . '=1';
 			if ($this->layout != 'default') {
 				$this->topicButtons->set('flat', $this->getButton ( sprintf($url, 'flat'), 'flat', 'layout', 'user'));
 			}
@@ -662,8 +662,8 @@ class KunenaViewTopic extends KunenaView {
 		$id = $this->topic->id;
 		$mesid = $this->message->id;
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&" . JUtility::getToken() . '=1';
-		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
+		$task = "index.php?option=com_kunena&amp;view=topic&amp;task=%s&amp;catid={$catid}&amp;id={$id}&amp;mesid={$mesid}&amp;" . JUtility::getToken() . '=1';
+		$layout = "index.php?option=com_kunena&amp;view=topic&amp;layout=%s&amp;catid={$catid}&amp;id={$id}&amp;mesid={$mesid}";
 
 		$this->messageButtons = new JObject();
 		$this->message_closed = null;
@@ -672,7 +672,7 @@ class KunenaViewTopic extends KunenaView {
 		if ($this->message->authorise('reply')) {
 			$this->quickreply ? $this->messageButtons->set('quickreply', $this->getButton ( sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")) : null;
 			$this->messageButtons->set('reply', $this->getButton ( sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
-			$this->messageButtons->set('quote', $this->getButton ( sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
+			$this->messageButtons->set('quote', $this->getButton ( sprintf($layout, 'reply&amp;quote=1'), 'quote', 'message', 'communication'));
 
 		} elseif (!$this->me->isModerator ( $this->topic->getCategory() )) {
 			// User is not allowed to write a post
@@ -724,7 +724,7 @@ class KunenaViewTopic extends KunenaView {
 
 		if ( isset($message->thankyou) ) {
 			if ($this->config->showthankyou && $this->profile->userid) {
-				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JUtility::getToken() . '=1';
+				$task = "index.php?option=com_kunena&amp;view=topic&amp;task=%s&amp;catid={$this->category->id}&amp;id={$this->topic->id}&amp;mesid={$this->message->id}&amp;" . JUtility::getToken() . '=1';
 
 				// for normal users, show only limited number of thankyou (config->thankyou_max)
 				if ( !$this->me->isAdmin() || !$this->me->isModerator() ) {
@@ -748,7 +748,7 @@ class KunenaViewTopic extends KunenaView {
 		$cachegroup = 'com_kunena.messages';
 
 		if ($this->config->reportmsg && $this->me->exists()) {
-			$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid='.intval($this->category->id).'&id='.intval($this->message->thread).'&mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
+			$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&amp;view=topic&amp;layout=report&amp;catid='.intval($this->category->id).'&amp;id='.intval($this->message->thread).'&amp;mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
 		} else {
 			$this->reportMessageLink = null;
 		}
@@ -968,9 +968,9 @@ class KunenaViewTopic extends KunenaView {
 	public function getPollURL($do, $id = NULL, $catid) {
 		$idstring = '';
 		if ($id)
-			$idstring .= "&id=$id";
-		$catidstr = "&catid=$catid";
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}" );
+			$idstring .= "&amp;id=$id";
+		$catidstr = "&amp;catid=$catid";
+		return KunenaRoute::_ ( "index.php?option=com_kunena&amp;view=poll&amp;do={$do}{$catidstr}{$idstring}" );
 	}
 
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '') {

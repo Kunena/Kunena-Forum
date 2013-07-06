@@ -1692,7 +1692,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
 			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.$width.' style="max-height:'.$config->imageheight.'px;" alt="" /></a></div>';
 		}
-		return '<div class="kmsgimage"><img src="' . $fileurl . $width .'" style="max-height:'.$config->imageheight.'px;" alt="" /></div>';
+		return '<div class="kmsgimage"><img src="' . $fileurl .'"'. $width .' style="max-height:'.$config->imageheight.'px;" alt="" /></div>';
 	}
 
 	function DoTerminal($bbcode, $action, $name, $default, $params, $content) {

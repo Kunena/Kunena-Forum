@@ -54,4 +54,15 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
+	
+	if( jQuery('#postcatid') != undefined ) {
+		jQuery('#postcatid').change(function() {
+			var catid = jQuery('select#postcatid option').filter(':selected').val();
+			if ( pollcategoriesid[catid] !== undefined ) {
+				jQuery('#kbbcode-poll-button').removeAttr('style');
+			} else {
+				jQuery('#kbbcode-poll-button').attr('style','display:none;');
+			}
+		});
+	}
 });

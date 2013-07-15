@@ -19,14 +19,13 @@ $this->document->addScriptDeclaration('config_attachment_limit = '.$this->config
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
-include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');
-include_once (KPATH_SITE.'/lib/kunena.special.js.php');
-
 $this->k=0;
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal" id="postform" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
   <input type="hidden" name="view" value="topic" />
+  <input id="bbcode_catid" type="hidden" name="bbcode_catid" value="<?php echo $this->category->allow_polls ?>" />
+  <input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
   <?php if ($this->message->exists()) : ?>
   <input type="hidden" name="task" value="edit" />
   <input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
@@ -44,7 +43,7 @@ $this->k=0;
         <fieldset class="pull-left">
           <legend><?php echo $this->escape($this->title)?></legend>
           <?php if (isset($this->selectcatlist)): ?>
-          <div class="control-group"> 
+          <div class="control-group">
             <!-- Username -->
             <label class="control-label"><?php echo JText::_('COM_KUNENA_CATEGORY')?></label>
             <div class="controls"> <?php echo $this->selectcatlist?> </div>

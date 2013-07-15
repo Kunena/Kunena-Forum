@@ -18,23 +18,23 @@ $this->displayBreadcrumb ();
 <?php $this->displayModulePosition ( 'kunena_announcement' ) ?>
 
 <table class="table" style="border:none;">
-	<tr>
-		<td style="border:none;"> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
-		<td style="border:none;" class="hidden-phone">
-			<form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
-				<?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
-			</form>
-		</td>
-		<td style="border:none;" class="hidden-phone">
-			<?php $this->displayForumJump () ?>
-		</td>
-	</tr>
+  <tr>
+    <td style="border:none;"> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
+    <td style="border:none;" class="hidden-phone">
+      <form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
+        <?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
+      </form>
+    </td>
+    <td style="border:none;" class="hidden-phone">
+      <?php $this->displayForumJump () ?>
+    </td>
+  </tr>
 </table>
 <?php $this->displayTemplateFile('topics', 'default', 'embed'); ?>
 <table class="table">
-	<tr>
-		<td class="klist-actions-info-all" style="border:none;"> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
-	</tr>
+  <tr>
+    <td style="border:none;"> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
+  </tr>
 </table>
 <?php
 $this->displayWhoIsOnline ();

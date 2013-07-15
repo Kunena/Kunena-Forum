@@ -20,5 +20,5 @@ if (version_compare(JVERSION, '3.0','>')) {
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="jumpto" name="jumpto" method="post" target="_self">
 	<input type="hidden" name="view" value="category" />
 	<input type="hidden" name="task" value="jump" />
-	<span class="kright"> <?php echo $this->categorylist; ?> </span>
+	<span> <?php echo $this->categorylist; ?> </span>
 </form>

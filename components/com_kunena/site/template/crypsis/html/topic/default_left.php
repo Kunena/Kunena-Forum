@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 			</td>
 		</tr>
 		<tr>
-			<td class="kbuttonbar-left" style="border:none;">
+			<td style="border:none;">
 				<?php $this->displayMessageActions() ?>
 			</td>
 		</tr>

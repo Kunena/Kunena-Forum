@@ -15,14 +15,14 @@ $i=1;
 $j=0;
 ?>
 
-<div class="kheader">
+<div>
 	<h2><span><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></span></h2>
 </div>
-<div class="kcontainer">
-	<div class="kbody">
-		<table class="kblock-ban">
+<div>
+	<div>
+		<table>
 			<thead>
-				<tr class="ksth">
+				<tr>
 					<th class="kid"> # </th>
 					<th class="kbanned-user" width="20%"><?php echo JText::_('COM_KUNENA_BAN_BANNEDUSER'); ?></th>
 					<th class="kbanned-from" width="15%"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></th>

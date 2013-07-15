@@ -84,6 +84,7 @@ class KunenaController extends JControllerLegacy {
 			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+			KunenaFactory::loadLanguage('com_kunena', 'site');
 
 		} else {
 			$class = $prefix . 'Controller' . ucfirst ( $view );
@@ -126,7 +127,6 @@ class KunenaController extends JControllerLegacy {
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 			// Load last to get deprecated language files to work
-			KunenaFactory::loadLanguage('com_kunena', 'site');
 			KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 			// Version warning

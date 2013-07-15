@@ -11,9 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
-<div class="kprofile" style="width:auto; height:auto;">
-	<ul class="kpost-profile" id="messages" style="list-style:none;text-align:center;margin:5px;">
-		<li class="kpost-avatar">
+<div style="width:auto; height:auto;">
+	<ul id="messages" style="list-style:none;text-align:center;margin:5px;">
+		<li>
 			<div class="pros">
 				<?php $avatar = $this->profile->getAvatarImage ('', 'post'); if ($avatar) : ?>
 					<span class="kavatar"><?php echo $this->profile->getLink( $avatar ); ?></span>

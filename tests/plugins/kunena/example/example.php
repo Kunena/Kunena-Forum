@@ -113,6 +113,7 @@ class plgKunenaExample extends JPlugin {
 	 * @param	string		$context	The context of the content passed to the plugin (added in 1.6).
 	 * @param	object		$object		A JTableKunena object.
 	 * @param	bool		$isNew		If the content is just about to be created.
+	 * @return  bool
 	 */
 	public function onKunenaAfterSave($context, &$object, $isNew) {
 		return true;

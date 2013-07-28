@@ -12,9 +12,9 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <?php if ($this->avatarlink) : ?>
 
-<div class="kavatar-lg"><?php echo $this->avatarlink; ?></div>
+<div><?php echo $this->avatarlink; ?></div>
 <?php endif; ?>
-<div id="kprofile-stats">
+<div>
 	<ul>
 		<?php if ( !empty($this->banReason) ) { ?>
 			<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong> <?php echo $this->escape($this->banReason); ?></li>

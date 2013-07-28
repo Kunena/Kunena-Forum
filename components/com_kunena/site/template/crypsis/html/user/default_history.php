@@ -13,15 +13,15 @@ defined ( '_JEXEC' ) or die ();
 $j=count($this->banhistory);
 ?>
 
-<div class="kblock banhistory">
-	<div class="kheader">
+<div>
+	<div>
 		<h2><span><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></span></h2>
 	</div>
-	<div class="kcontainer">
-		<div class="kbody">
-			<table class="kblock-ban">
+	<div>
+		<div>
+			<table>
 				<thead>
-					<tr class="ksth">
+					<tr>
 						<th class="kid"> # </th>
 						<th class="kbanfrom"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></th>
 						<th class="kbanstart"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></th>

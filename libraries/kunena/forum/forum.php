@@ -163,7 +163,7 @@ abstract class KunenaForum {
 	 *
 	 * @see KunenaForum::installed()
 	 *
-	 * @param string $version Minumum required version.
+	 * @param string $version Minimum required version.
 	 *
 	 * @return boolean Yes, if it is safe to use Kunena Framework.
 	 */
@@ -171,6 +171,10 @@ abstract class KunenaForum {
 		// If requested version is smaller than 2.0, it's not compatible
 		if (version_compare($version, '2.0', '<')) {
 			return false;
+		}
+		// Development version support.
+		if ($version == '3.1') {
+			return true;
 		}
 
 		// Check if future version is needed (remove GIT and DEVn from the current version)
@@ -210,7 +214,7 @@ abstract class KunenaForum {
 	}
 
 	/**
-	 * Returns major version number (2.0, 2.1, 3.0 and so on).
+	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
 	 * @return string Major version in xxx.yyy format.
 	 */

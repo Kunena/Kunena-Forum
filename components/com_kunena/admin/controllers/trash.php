@@ -85,13 +85,12 @@ class KunenaAdminControllerTrash extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$msg = JText::_('COM_KUNENA_TRASH_RESTORE_DONE');
-
+		$nb_items = 0;
 		if ( $type=='messages' ) {
 			$messages = KunenaForumMessageHelper::getMessages($cid, 'none');
 			foreach ( $messages as $target ) {
 				if ( $target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED) ) {
-					$this->app->enqueueMessage ( $msg );
+					$nb_items++;
 				} else {
 					$this->app->enqueueMessage ( $target->getError(), 'notice' );
 				}
@@ -100,7 +99,7 @@ class KunenaAdminControllerTrash extends KunenaController {
 			$topics = KunenaForumTopicHelper::getTopics($cid, 'none');
 			foreach ( $topics as $target ) {
 				if ( $target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED) ) {
-					$this->app->enqueueMessage ( $msg );
+					$nb_items++;
 				} else {
 					$this->app->enqueueMessage ( $target->getError(), 'notice' );
 				}
@@ -108,6 +107,8 @@ class KunenaAdminControllerTrash extends KunenaController {
 		} else {
 			// Error...
 		}
+
+		if ( $nb_items > 0 ) $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nb_items), 'green' );
 
 		KunenaUserHelper::recount();
 		KunenaForumTopicHelper::recount();

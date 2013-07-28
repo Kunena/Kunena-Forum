@@ -97,7 +97,7 @@ class KunenaView extends JViewLegacy {
 
 		KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 
-		if (isset($this->common)) {
+		if (!$this->embedded && isset($this->common)) {
 			if ($this->config->board_offline && ! $this->me->isAdmin ()) {
 				// Forum is offline
 				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
@@ -481,7 +481,7 @@ class KunenaView extends JViewLegacy {
 	public function setDescription($description) {
 		if (!$this->state->get('embedded')) {
 			// TODO: allow translations/overrides
-			$this->document->setMetadata ( 'description', $this->document->getDescription() . '. ' . $description );
+			$this->document->setMetadata ( 'description',  $description );
 		}
 	}
 }

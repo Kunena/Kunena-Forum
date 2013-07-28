@@ -35,7 +35,7 @@
 	</files>
 
 	<updateservers>
-		<server type="collection" priority="1" name="Kunena 3.1 Update Site">http://update.kunena.org/3.1/list.xml</server>
+		<server type="collection" priority="1" name="Kunena 3.0 Update Site">http://update.kunena.org/3.0/list.xml</server>
 	</updateservers>
 
 	<restorepoint>

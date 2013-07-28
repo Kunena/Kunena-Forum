@@ -33,7 +33,7 @@ class plgSystemKunena extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is not installed
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.1') && KunenaForum::installed())) return;
 
-		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_system_kunena.sys', KPATH_ADMIN);
+		$this->loadLanguage('plg_system_kunena.sys');
 
 		parent::__construct ( $subject, $config );
 	}

@@ -57,7 +57,7 @@ class CKunenaLink {
 		if (($config->rss_feedburner_url) && ($params =='')) {            // do it only for the basic generic rss.
 			return $config->rss_feedburner_url;
 		} else {
-			return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+			return KunenaRoute::_ ( "index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml );
 		}
 	}
 

@@ -45,6 +45,6 @@ class KunenaProfileCommunity extends KunenaProfile {
 	public function showProfile($view, &$params) {}
 
 	public function getEditProfileURL($userid, $xhtml = true) {
-		return $this->getProfileURL($userid, 'edit', $xhtml = true);
+		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
 }

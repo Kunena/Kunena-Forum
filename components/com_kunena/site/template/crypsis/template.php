@@ -42,6 +42,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		JHtml::_('behavior.tooltip');
 
 		JHtml::_('jquery.framework');
+		JHtml::_('formbehavior.chosen');
 
 		// New Kunena JS for default template
 		$this->addScript ( 'js/plugins.js' );

@@ -49,6 +49,12 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		$this->compileLess('main.less', 'kunena.css');
 		$this->addStyleSheet ( 'css/kunena.css' );
 
+		if ( KunenaFactory::getConfig()->pollenabled == 1 ) {
+			JText::script('KUNENA_POLL_OPTION_NAME');
+			JText::script('KUNENA_EDITOR_HELPLINE_OPTION');
+			$this->addScript( 'js/kunena.poll.js' );
+		}
+
 		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 			// Load mediaxboxadvanced library if enabled in configuration
 			// TODO: replace with bootstrap compatible version

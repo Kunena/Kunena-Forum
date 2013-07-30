@@ -12,13 +12,13 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <tr class="krow<?php echo $this->mmm % 2 ?> <?php echo $this->class ?>">
-	<td class="kcol-first kmsgsubject kmsgsubject<?php echo $this->escape($this->msgsuffix) ?>"> <span class="<?php echo implode('"></span><span class="ktree ktree-', $this->message->indent)?>"></span>
+	<td> <span class="<?php echo implode('"></span><span class="ktree ktree-', $this->message->indent)?>"></span>
 		<?php if ($this->message->id == $this->state->get('item.mesid')) : ?>
 			<?php echo $this->escape($this->message->subject) ?>
 		<?php else : ?>
 			<?php echo $this->getTopicLink($this->topic, $this->message, $this->escape($this->message->subject)) ?>
 		<?php endif; ?>
 	</td>
-	<td class="kcol-mid kprofile kprofile-list"><?php echo $this->message->getAuthor()->getLink() ?></td>
-	<td class="kcol-last kmsgdate kmsgdate-list" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> </td>
+	<td><?php echo $this->message->getAuthor()->getLink() ?></td>
+	<td title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> </td>
 </tr>

@@ -20,7 +20,6 @@ $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
 include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');
-include_once (KPATH_SITE.'/lib/kunena.special.js.php');
 
 $this->k=0;
 ?>
@@ -44,7 +43,7 @@ $this->k=0;
         <fieldset class="pull-left">
           <legend><?php echo $this->escape($this->title)?></legend>
           <?php if (isset($this->selectcatlist)): ?>
-          <div class="control-group"> 
+          <div class="control-group">
             <!-- Username -->
             <label class="control-label"><?php echo JText::_('COM_KUNENA_CATEGORY')?></label>
             <div class="controls"> <?php echo $this->selectcatlist?> </div>

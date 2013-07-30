@@ -17,6 +17,35 @@ function hideMessage() {
 	div.style.display = "none";
 }
 
+jQuery(document).ready(function() {
+	/* To hide or open spoiler on click */
+	jQuery('.kspoiler').each(function( ) {	
+		jQuery('.kspoiler-header').click(function() {
+			if ( jQuery('.kspoiler-content').attr('style')=='display:none' ) {
+				jQuery('.kspoiler-content').removeAttr('style');
+				jQuery('.kspoiler-expand').attr('style','display:none;');
+				jQuery('.kspoiler-hide').removeAttr('style');
+			} else {
+				jQuery('.kspoiler-content').attr('style','display:none;');
+				jQuery('.kspoiler-expand').removeAttr('style');
+				jQuery('.kspoiler-hide').attr('style','display:none;');
+			}
+		});
+	});
+	
+	/* To check or uncheck boxes to select items */
+	jQuery('input.kcheckall').click(function() {
+		jQuery( '.kcheck' ).each(function( ) {			
+			jQuery(this).prop('checked',!jQuery(this).prop('checked'));
+		});
+	});
+		
+	/* To close quick-reply form on hit on cancel button */
+	jQuery('.kreply-cancel').click(function() {
+		jQuery('.kreply-form').attr('style','display:none;');
+	});
+});
+
 window.addEvent('domready', function(){	
 	$$('.kspoiler').each(function(el){
 		var contentElement = el.getElement('.kspoiler-content');
@@ -33,24 +62,6 @@ window.addEvent('domready', function(){
 				hideElement.setStyle('display', 'none');
 			}
 		});
-	});
-	
-  /* To check or uncheck boxes to select items */
-	$$('input.kcheckall').addEvent('click', function(e){
-		this.getParent('form').getElements('input.kcheck').each(function(el){
-			if(el.get('checked')==false){
-				el.set('checked',true);
-				el.set('value','1');
-			} else {
-				el.set('value','0');
-				el.set('checked',false);
-			}
-		}); 
-	});
-  
-  /* To close quick-reply form on hit on cancel button */
-  $$('.kreply-cancel').addEvent('click', function(e){
-		$$('.kreply-form').setStyle('display', 'none');
 	});
 });
 

@@ -347,7 +347,7 @@ class CKunenaUpload {
 		$this->fileHash = md5_file ( $this->fileTemp );
 
 		// Override filename if given in the parameter
-		$uploadedFileBasename = $filename;
+		if($filename) $uploadedFileBasename = $filename;
 		$uploadedFileBasename = KunenaFile::makeSafe($uploadedFileBasename);
 		if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
 

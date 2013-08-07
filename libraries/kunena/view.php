@@ -331,13 +331,13 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function displayWhoIsOnline($tpl = null) {
-		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
+		if ($this->me->getUserLevel() >= KunenaFactory::getConfig()->showwhoisonline) {
 			echo $this->common->display('whosonline');
 		}
 	}
 
 	public function displayStatistics() {
-		if (KunenaFactory::getConfig()->showstats > 0) {
+		if ($this->me->getUserLevel() >= KunenaFactory::getConfig()->showstats) {
 			echo $this->common->display('statistics');
 		}
 	}

@@ -560,6 +560,23 @@ class KunenaUser extends JObject {
 		return $layout;
 	}
 
+	public function getUserLevel() {
+		// bin dec  user level
+		// 00 | 0 | anonymous
+		// 01 | 1 | user
+		// 11 | 3 | administrator (implies user)
+
+		return (int)$this->isAdmin() << 1 | (int)$this->exists();
+
+		// The result value will be compared with a settings variable by the caller
+
+		// dec  configuration values
+		//  0 | Show always
+		//  1 | Show to users
+		//  3 | Show to administrators
+		//  4 | Don't show
+	}
+
 	/**
 	 * @param string $layout
 	 */

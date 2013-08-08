@@ -17,40 +17,32 @@ function hideMessage() {
 	div.style.display = "none";
 }
 
-window.addEvent('domready', function(){	
-	$$('.kspoiler').each(function(el){
-		var contentElement = el.getElement('.kspoiler-content');
-		var expandElement = el.getElement('.kspoiler-expand');
-		var hideElement = el.getElement('.kspoiler-hide');
-		el.getElement('.kspoiler-header').addEvent('click', function(e){
-			if (contentElement.style.display == "none") {
-				contentElement.setStyle('display');
-				expandElement.setStyle('display', 'none');
-				hideElement.setStyle('display');
+jQuery(document).ready(function() {
+	/* To hide or open spoiler on click */
+	jQuery('.kspoiler').each(function( ) {	
+		jQuery('.kspoiler-header').click(function() {
+			if ( jQuery('.kspoiler-content').attr('style')=='display:none' ) {
+				jQuery('.kspoiler-content').removeAttr('style');
+				jQuery('.kspoiler-expand').attr('style','display:none;');
+				jQuery('.kspoiler-hide').removeAttr('style');
 			} else {
-				contentElement.setStyle('display', 'none');
-				expandElement.setStyle('display');
-				hideElement.setStyle('display', 'none');
+				jQuery('.kspoiler-content').attr('style','display:none;');
+				jQuery('.kspoiler-expand').removeAttr('style');
+				jQuery('.kspoiler-hide').attr('style','display:none;');
 			}
 		});
 	});
 	
-  /* To check or uncheck boxes to select items */
-	$$('input.kcheckall').addEvent('click', function(e){
-		this.getParent('form').getElements('input.kcheck').each(function(el){
-			if(el.get('checked')==false){
-				el.set('checked',true);
-				el.set('value','1');
-			} else {
-				el.set('value','0');
-				el.set('checked',false);
-			}
-		}); 
+	/* To check or uncheck boxes to select items */
+	jQuery('input.kcheckall').click(function() {
+		jQuery( '.kcheck' ).each(function( ) {			
+			jQuery(this).prop('checked',!jQuery(this).prop('checked'));
+		});
 	});
-  
-  /* To close quick-reply form on hit on cancel button */
-  $$('.kreply-cancel').addEvent('click', function(e){
-		$$('.kreply-form').setStyle('display', 'none');
+		
+	/* To close quick-reply form on hit on cancel button */
+	jQuery('.kreply-cancel').click(function() {
+		jQuery('.kreply-form').attr('style','display:none;');
 	});
 });
 

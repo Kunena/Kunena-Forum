@@ -84,6 +84,7 @@ class KunenaController extends JControllerLegacy {
 			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+			KunenaFactory::loadLanguage('com_kunena', 'site');
 
 		} else {
 			$class = $prefix . 'Controller' . ucfirst ( $view );
@@ -99,6 +100,38 @@ class KunenaController extends JControllerLegacy {
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * Execute task.
+	 *
+	 * @param string $task
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public function execute($task)
+	{
+		$dot = strpos($task, '.');
+		$this->task = $dot ? substr($task, $dot + 1) : $task;
+
+		$task = strtolower($this->task);
+		if (isset($this->taskMap[$this->task]))
+		{
+			$doTask = $this->taskMap[$this->task];
+		}
+		elseif (isset($this->taskMap['__default']))
+		{
+			$doTask = $this->taskMap['__default'];
+		}
+		else
+		{
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
+		}
+
+		// Record the actual task being fired
+		$this->doTask = $doTask;
+
+		return $this->$doTask();
 	}
 
 	/**
@@ -126,7 +159,6 @@ class KunenaController extends JControllerLegacy {
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 			// Load last to get deprecated language files to work
-			KunenaFactory::loadLanguage('com_kunena', 'site');
 			KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 			// Version warning

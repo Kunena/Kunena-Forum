@@ -59,3 +59,6 @@ JLoader::register('KunenaForumTopic', KPATH_FRAMEWORK . '/forum/topic/topic.php'
 JLoader::register('KunenaForumTopicPoll', KPATH_FRAMEWORK . '/forum/topic/poll/poll.php');
 JLoader::register('KunenaForumTopicUser', KPATH_FRAMEWORK . '/forum/topic/user/user.php');
 JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/forum/topic/user/read/read.php');
+
+// Register CKunenaLink class in order to allow old templates to work
+JLoader::register('CKunenaLink', KPATH_SITE . '/lib/kunena.link.class.php');

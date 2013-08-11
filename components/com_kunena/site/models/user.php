@@ -48,7 +48,7 @@ class KunenaModelUser extends KunenaModel {
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_search", 'search', '' );
+		$value = $this->app->input->get ( 'search', null, 'string' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
 
 		$db = JFactory::getDBO();

@@ -44,9 +44,7 @@ jQuery(document).ready(function() {
 	jQuery('.kreply-cancel').click(function() {
 		jQuery('.kreply-form').attr('style','display:none;');
 	});
-});
-
-jQuery(document).ready(function() { 
+	
 	/* Change avatar in gallery */
 	if ( jQuery('#avatar_category_select') != undefined ) { 
 		jQuery('#avatar_category_select').change(function() {
@@ -82,4 +80,13 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-});  
+	
+	/* Allow to make working drop-down choose destination */
+	jQuery('#kchecktask').change(function() {
+		var task = jQuery("select#kchecktask").val();
+		if (task=='move') {
+			jQuery("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
+		}
+	}); 
+});
+

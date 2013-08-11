@@ -19,12 +19,35 @@ $this->document->addScriptDeclaration('config_attachment_limit = '.$this->config
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
+$this->document->addScriptDeclaration('window.addEvent(\'domready\', function() {
+	$(\'postcatid\').addEvent(\'change\',function(){
+		var catid = $(\'postcatid\').getSelected().get(\'value\');
+		if ( pollcategoriesid[catid] !== undefined ) {
+			kbbcode.addFunction(\'Poll\', function() {
+				kToggleOrSwap(\'kbbcode-poll-options\');
+			}, {\'id\': \'kbbcode-poll-button\',
+				\'class\': \'kbbcode-poll-button\',
+				\'title\': Joomla.JText._(\'COM_KUNENA_EDITOR_POLL\'),
+				\'alt\': Joomla.JText._(\'COM_KUNENA_EDITOR_HELPLINE_POLL\')});
+
+		} else {
+			kbbcode.addFunction(\'Poll\', function() {
+				kToggleOrSwap(\'kbbcode-poll-options\');
+			}, {\'id\': \'kbbcode-poll-button\',
+				\'class\': \'kbbcode-poll-button\',
+				\'style\':\'display: none;\',
+				\'title\': Joomla.JText._(\'COM_KUNENA_EDITOR_POLL\'),
+				\'alt\': Joomla.JText._(\'COM_KUNENA_EDITOR_HELPLINE_POLL\')});
+		}
+	});
+		kEditorInitialize();
+});');
+
 $this->k=0;
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal" id="postform" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
   <input type="hidden" name="view" value="topic" />
-  <input id="bbcode_catid" type="hidden" name="bbcode_catid" value="<?php echo $this->category->allow_polls ?>" />
   <input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
   <?php if ($this->message->exists()) : ?>
   <input type="hidden" name="task" value="edit" />

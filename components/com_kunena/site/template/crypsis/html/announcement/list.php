@@ -9,6 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$pagination = $this->getPaginationObject(5);
 ?>
 
 <div class="well well-small">
@@ -63,7 +65,9 @@ defined ( '_JEXEC' ) or die ();
                   <?php endif; ?>
                   <!-- /Bulk Actions --> 
                 </div>
-                <div class="pull-right"> <?php echo $pagination = $this->getPagination(5); ?> </div>
+                <div class="pull-right">
+					<?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?>
+				</div>
               </td>
             </tr>
           </tfoot>

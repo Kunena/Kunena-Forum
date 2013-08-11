@@ -14,6 +14,9 @@ JHtml::_('behavior.multiselect');
 if (version_compare(JVERSION, '3.0','>')) {
 	JHtml::_('dropdown.init');
 }
+
+$pagination = $this->getPaginationObject(5);
+
 $this->displayBreadcrumb ();
 
 if (!$this->me->exists()) {
@@ -169,7 +172,7 @@ window.addEvent('domready', function() {
 								printf ( JText::_('COM_KUNENA_FORUM_SEARCHRESULTS'), $resStartStop, intval($this->total) );
 								?>
               <?php if ($this->total > $this->state->get('list.limit')) : ?>
-              <?php echo $this->getPagination(5); ?>
+              <?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?>
               <?php endif; ?>
             </th>
           </tr>

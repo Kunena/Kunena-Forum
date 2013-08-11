@@ -128,6 +128,6 @@ class KunenaLayoutSearch extends KunenaLayout
 	function getPagination($maxpages) {
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
-		return $pagination->getPagesLinks();
+		return $pagination;
 	}
 }

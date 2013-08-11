@@ -50,10 +50,14 @@ class KunenaViewUser extends KunenaView {
 		parent::display($tpl);
 	}
 
-	function getPagination($maxpages) {
+	function getPaginationObject($maxpages) {
 		$pagination = new KunenaPagination($this->count, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
-		return $pagination->getPagesLinks();
+		return $pagination;
+	}
+
+	function getPagination($maxpages) {
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	protected function displayCommon($tpl = null) {

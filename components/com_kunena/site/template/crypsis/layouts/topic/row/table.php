@@ -11,7 +11,6 @@
 defined('_JEXEC') or die();
 
 /** @var KunenaLayout $this */
-/** @var KunenaForumTopic $this->topic */
 /** @var bool $this->checkbox */
 
 /** @var KunenaForumTopic $topic */

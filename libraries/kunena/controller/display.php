@@ -20,7 +20,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	public function execute() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 		// Run before executing action.
-		$this->before();
+		$result = $this->before();
+		if ($result === false) {
+			return KunenaLayout::factory('Empty');
+		}
 
 		// Display layout with given parameters.
 		$this->output = $this->display();
@@ -73,5 +76,18 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			if ($property[0] != "\0") $list[$property] = $value;
 		}
 		return $list;
+	}
+
+	/**
+	 * Shortcut for $this->input->set()
+	 *
+	 * @param $key
+	 * @param $value
+	 * @return $this
+	 */
+	public function set($key, $value)
+	{
+		$this->input->set($key, (string) $value);
+		return $this;
 	}
 }

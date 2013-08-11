@@ -1,8 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topic
+ * @package Kunena.Site
+ * @subpackage Layout.Topic
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,4 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo KunenaLayout::factory('User/Profile')->set('user', $this->profile)->setLayout('circle');
+class KunenaLayoutTopicActions extends KunenaLayout
+{
+}

@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+$pagination = $this->getPaginationObject(7);
+
 if ($this->me->exists()) {
 	$this->document->addScriptDeclaration( "// <![CDATA[
 document.addEvent('domready', function() {
@@ -137,20 +139,9 @@ document.addEvent('domready', function() {
 				<?php endforeach; ?>
 			</table>
 		</form>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" method="post" name="usrlform" id="usrlform" onsubmit="return false;">
-			<?php echo JHtml::_( 'form.token' ); ?>
-			<table id="kuserlist-bottom">
-				<tr>
-					<td>
-						<div>
-							<?php
-								echo $this->getPagination(7);
-								?>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</form>
 	</div>
 </div>
+<div><?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?></div>
+
+
 <?php $this->displayWhoIsOnline(); ?>

@@ -14,8 +14,7 @@ $this->displayAnnouncement ();
 $this->displayBreadcrumb ();
 
 ?>
-<!-- Module position: kunena_announcement -->
-<?php $this->displayModulePosition ( 'kunena_announcement' ) ?>
+<?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_announcement'); ?>
 
 <table class="table" style="border:none;">
   <tr>

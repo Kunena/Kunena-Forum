@@ -9,6 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$pagination = $this->getPaginationObject(4);
 ?>
 
 <div>
@@ -30,10 +32,11 @@ defined ( '_JEXEC' ) or die ();
           </ul>
           <?php endif ?>
         </div>
-      </div>
-      <?php echo $this->displayTopicActions(); ?>
+		</div>
+		<?php echo KunenaLayout::factory('Topic/Actions')->set('id', $this->topic->id)->set('layout',
+			$this->layout); ?>
       <?php if ($this->total >1) : ?>
-      <div class="pagination"> <?php echo $this->getPagination(4); ?> </div>
+      <div class="pagination"> <?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?> </div>
       <?php endif; ?>
       <div>
         <div>

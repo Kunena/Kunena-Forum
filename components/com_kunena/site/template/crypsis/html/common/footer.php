@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <!-- Module position: kunena_bottom -->
-<?php $this->displayModulePosition( 'kunena_bottom' ); ?>
+<?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_bottom'); ?>
 <?php if (isset($this->rss)) : ?>
 
 <div class="pull-right"><?php echo $this->rss; ?></div>

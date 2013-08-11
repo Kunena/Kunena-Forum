@@ -154,6 +154,6 @@ foreach ( $this->sections as $section ) :
   </div>
 </div>
 <!-- Begin: Category Module Position -->
-<?php $this->displayModulePosition('kunena_section_' . ++$mmm) ?>
+<?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 <!-- Finish: Category Module Position -->
 <?php endforeach; ?>

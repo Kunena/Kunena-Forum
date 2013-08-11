@@ -818,17 +818,21 @@ class KunenaViewTopic extends KunenaView {
 		}
 	}
 
-	function getPagination($maxpages) {
+	function getPaginationObject($maxpages) {
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
-        $uri = KunenaRoute::normalize(null, true);
-        if ($uri) {
-            $uri->delVar('mesid');
-            $pagination->setUri($uri);
-        }
+		$uri = KunenaRoute::normalize(null, true);
+		if ($uri) {
+			$uri->delVar('mesid');
+			$pagination->setUri($uri);
+		}
 
-        return $pagination->getPagesLinks();
+		return $pagination;
+	}
+
+	function getPagination($maxpages) {
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	// Helper functions

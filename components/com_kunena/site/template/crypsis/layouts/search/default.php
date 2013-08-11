@@ -15,6 +15,8 @@ JHtml::_('behavior.multiselect');
 // FIXME: doesn't work in J!2.5
 JHtml::_('dropdown.init');
 
+$pagination = $this->getPagination(5);
+
 if (0 &&!$this->me->exists()) {
 	$this->document->addScriptDeclaration( "// <![CDATA[
 window.addEvent('domready', function() {
@@ -167,9 +169,7 @@ window.addEvent('domready', function() {
 									$resStartStop = '0';
 								printf ( JText::_('COM_KUNENA_FORUM_SEARCHRESULTS'), $resStartStop, intval($this->total) );
 								?>
-								<?php if ($this->total > $this->state->get('list.limit')) : ?>
-								<?php echo $this->getPagination(5); ?>
-								<?php endif; ?>
+								<?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?>
 							</th>
 						</tr>
 					</tbody>

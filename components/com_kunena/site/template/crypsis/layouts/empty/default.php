@@ -10,4 +10,5 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo KunenaLayout::factory('User/Profile')->set('user', $this->profile)->setLayout('circle');
+// Empty layout to allow no output, used for example when KunenaControllerDisplay::before() function returns false.
+// This file can be changed for testing purposes, but it should remain empty in production sites.

@@ -18,12 +18,8 @@ $files = getTranslations('administrator/components/com_kunena/language');
 foreach ($files as $file) {
 	$contents = file_get_contents($file);
 	echo "$file:\n";
-	$contents = str_replace('_QQ_','"\""',$contents);
-	$lines = explode("\n", $contents );
-	if (!strpos($file, 'menu')) foreach ($lines as $line) {
-		if (!preg_match('/^(;.*|\s*|[A-Z0-9_\.]+="[^"]*")$/u', $line)) echo $line."\n";
-	}
-	$strings = parse_ini_string($contents, false, INI_SCANNER_RAW);
+	$contents = str_replace('_QQ_', '"\""', $contents);
+	$strings = parse_ini_string($contents);
 	if ($strings === false) {
 		echo "ERROR!\n";
 		continue;
@@ -37,12 +33,8 @@ $files = getTranslations('components/com_kunena/language');
 foreach ($files as $file) {
 	$contents = file_get_contents($file);
 	echo "$file:\n";
-	$contents = str_replace('_QQ_','"\""',$contents);
-	$lines = explode("\n", $contents );
-	if (!strpos($file, 'menu')) foreach ($lines as $line) {
-		if (!preg_match('/^(;.*|\s*|[A-Z0-9_\.]+="[^"]*")$/u', $line)) echo $line."\n";
-	}
-	$strings = parse_ini_string($contents, false, INI_SCANNER_RAW);
+	$contents = str_replace('_QQ_', '"\""', $contents);
+	$strings = parse_ini_string($contents);
 	if ($strings === false) {
 		echo "ERROR!\n";
 		continue;

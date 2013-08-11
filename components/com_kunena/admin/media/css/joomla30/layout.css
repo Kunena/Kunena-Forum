@@ -1,0 +1,82 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator.Joomla30
+ *
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+
+#kunena.admin.override {
+    font-size: 13px;
+}
+
+#kunena.admin.override select,
+#kunena.admin.override input[type="file"] {
+    height: auto;
+    line-height: 30px;
+}
+
+#kunena.admin.override li {
+    line-height: 20px;
+}
+
+#kunena.admin.override fieldset input,
+#kunena.admin.override fieldset textarea,
+#kunena.admin.override fieldset select,
+#kunena.admin.override fieldset img,
+#kunena.admin.override fieldset button {
+    float: none;
+    margin: 0;
+}
+
+#kunena.admin.override label {
+    display: inline !important;
+}
+
+#kunena.admin.override .center {
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#kunena.admin.override .select-filter {
+    margin-bottom: 0;
+    width: auto;
+}
+
+#kunena.admin.override .input-filter {
+     margin-bottom: 0;
+ }
+
+#kunena.admin.override #dashboard-icons.btn-group {
+    white-space: normal;
+}
+
+#kunena.admin.override #dashboard-icons .btn {
+    border-radius: 3px;
+    min-height: 64px;
+    min-width: 72px;
+    overflow: hidden;
+}
+
+/*All wells in tables should not have margin*/
+#kunena.admin.override table .well {
+    margin-bottom: 0;
+}
+
+#kunena.admin.override .filter-state {
+    font-size: 150%;
+}
+
+#kunena.admin.override .filter-state .btn {
+    padding: 0 6px;
+    vertical-align: inherit;
+    font-size: inherit;
+    line-height: 150%
+}
+
+/* Set correct height for permission box in category manager */
+#kunena.admin select[multiple], #kunena.admin select[size] {
+	min-height: 90px;
+}

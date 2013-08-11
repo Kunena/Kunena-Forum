@@ -3389,4 +3389,4 @@ height: 20px !important;
 max-height: 20px !important;
 }
 /* Fix avatar on bootstrap templates */
-#Kunena img {height:auto !important; max-width:inherit !important;}
+#Kunena img.kavatar {height:auto !important; max-width:inherit !important;}

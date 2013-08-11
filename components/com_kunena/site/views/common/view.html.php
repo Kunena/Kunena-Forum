@@ -231,6 +231,7 @@ class KunenaViewCommon extends KunenaView {
 		$this->params = $this->state->get('params');
 		$private = KunenaFactory::getPrivateMessaging();
 		$this->pm_link = $private->getInboxURL();
+		$this->announcesListLink = KunenaForumAnnouncementHelper::getUrl('list');
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;

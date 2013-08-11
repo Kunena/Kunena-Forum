@@ -17,7 +17,7 @@ class Kunena {
 	/**
 	 * @return bool
 	 */
-	function isSvn() {}
+	static function isSvn() {}
 }
 
 // Community Builder dummies

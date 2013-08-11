@@ -17,6 +17,26 @@ function hideMessage() {
 	div.style.display = "none";
 }
 
+/**
+ *  Helper function for to perform JSON request for preview
+ */
+function kPreviewHelper() {
+	if (_previewActive == true){
+		if ( jQuery('#kbbcode-message').val() != null ) {
+			jQuery.ajax({
+				type: 'POST',
+				url: jQuery('#kpreview_url').val(),
+				async: false,
+				dataType: 'json',
+				data: {body : jQuery('#kbbcode-message').val() },
+				success: function(data){
+					jQuery('#kbbcode-preview').html(data.preview);
+				}
+			});
+		}
+	}
+}
+
 jQuery(document).ready(function() {
 	/* To hide or open spoiler on click */
 	jQuery('.kspoiler').each(function( ) {	

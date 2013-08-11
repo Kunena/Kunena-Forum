@@ -1,0 +1,329 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator.Joomla25
+ *
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+
+@CHARSET "UTF-8";
+
+/** Joomla 1.6 backend fix **/ 
+DIV#element-box,
+DIV.m {
+	background-color:#FFF !important;
+}
+.jgrid SPAN.state {
+width:20px;
+height:13px;
+text-align:center;
+float:left;
+background-repeat:no-repeat !important;
+}
+div.pagetitle {	
+display: block !important;
+}
+/** end Joomla 1.6 backend fix **/
+
+div.icon-48-kunena {
+	background-image:url(../icons/kunena-logo-48-white.png);
+}
+
+.hideable {
+	position: relative;
+	visibility: hidden;
+}
+
+#submenu-box {
+	display: none !important;
+}
+
+#kadmin {
+	text-align: left;
+	width: 100%;
+	min-height: 500px;
+}
+
+#kadmin-header {
+	clear: both;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.kadmin-container {
+	width: 100%;
+}
+.kadmin-left {
+	width: 190px;
+	float:left;
+	border-right: 1px solid #ccc;
+	margin-right: 20px;
+	position: absolute;
+}
+
+#kadmin table {
+	margin: 0;
+	padding 0;
+	width:100%;
+	border: collapse;
+}
+#kadmin table td {
+	padding 5px;
+}
+
+table.kadmin-adminform td {
+	vertical-align:top;
+}
+
+/* Small icons  */
+a.icon-cp-sm { background: url(../icons/small/kunena-logo-20-white.png) 5px 5px no-repeat; }
+a.icon-config-sm { background: url(../icons/small/config.png) 5px 5px no-repeat; }
+a.icon-adminforum-sm { background: url(../icons/small/categories.png) 5px 5px no-repeat; }
+a.icon-profiles-sm { background: url(../icons/small/users.png) 5px 5px no-repeat; }
+a.icon-template-sm { background: url(../icons/small/templates.png) 5px 5px no-repeat; }
+a.icon-smilies-sm{ background: url(../icons/small/smileys.png) 5px 5px no-repeat; }
+a.icon-ranks-sm { background: url(../icons/small/ranks.png) 5px 5px no-repeat; }
+a.icon-topicicons-sm { background: url(../icons/small/topicicons.png) 5px 5px no-repeat; }
+a.icon-files-sm { background: url(../icons/small/files.png) 5px 5px no-repeat; }
+a.icon-images-sm { background: url(../icons/small/images.png) 5px 5px no-repeat; }
+a.icon-prune-sm { background: url(../icons/small/prune.png) 5px 5px no-repeat; }
+a.icon-syncusers-sm { background: url(../icons/small/syncusers.png) 5px 5px no-repeat; }
+a.icon-recount-sm { background: url(../icons/small/recount.png) 5px 5px no-repeat; }
+a.icon-trash-sm { background: url(../icons/small/trash.png) 5px 5px no-repeat; }
+a.icon-stats-sm { background: url(../icons/small/stats.png) 5px 5px no-repeat; }
+a.icon-systemreport-sm { background: url(../icons/small/report.png) 5px 5px no-repeat; }
+a.icon-support-sm { background: url(../icons/small/support.png) 5px 5px no-repeat; }
+a.icon-editcss-sm { background: url(../icons/small/css.png) 5px 5px no-repeat; }
+a.icon-pluginsmanager-sm { background: url(../icons/small/pluginsmanager.png) 5px 5px no-repeat; }
+
+/* Large icons */
+div.kadmin-functitle.icon-cpanel { background: url(../icons/kunena-logo-48-white.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-config { background: url(../icons/large/config.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-adminforum { background: url(../icons/large/categories.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-profiles { background: url(../icons/large/users.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-template { background: url(../icons/large/templates.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-smilies{ background: url(../icons/large/smileys.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-ranks { background: url(../icons/large/ranks.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-topicicons { background: url(../icons/large/topicicons.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-files { background: url(../icons/large/files.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-images { background: url(../icons/large/images.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-prune { background: url(../icons/large/prune.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-syncusers { background: url(../icons/large/syncusers.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-recount { background: url(../icons/large/recount.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-trash { background: url(../icons/large/trash.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-stats { background: url(../icons/large/stats.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-systemreport { background: url(../icons/large/report.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-support { background: url(../icons/large/support.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-editcss { background: url(../icons/large/css.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-purgerestatements { background: url(../icons/large/purgerestatements.png) 5px 5px no-repeat; }
+
+div.kadmin-functitle.no-icon { text-indent: 5px !important; }
+
+.left 	{ text-align:left; }
+.right 	{ text-align:right; }
+.center { text-align:center; }
+.nowrap { white-space: nowrap; }
+
+table.adminform,
+form.adminform{
+	margin-top: 10px !important;
+}
+
+#kadmin-menu {
+	border-top: 1px solid #ccc;
+}
+
+#kadmin-menu a {
+	display: block;
+	font-size: 11px;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	height: 25px;
+	line-height: 25px;
+	text-indent: 30px;
+}
+
+.kadmin-mainmenu {
+	background: #FBFBFB;
+	padding: 3px;
+}
+
+.kadmin-activemenu {
+	background: #fff;
+	padding: 5px;
+}
+
+.kadmin-submenu {
+	background: #fff;
+	padding-left: 10px;
+	padding: 5px 5px 5px 15px;
+}
+
+.kadmin-right {
+	background: #fff;
+	padding: 5px 5px 5px 220px;
+}
+
+.kadmin-footer {
+	clear:both;
+	font-size: 10px;
+	text-align: right;
+	padding: 5px;
+	background: #FBFBFB;
+}
+
+.kadmin-functitle {
+	font-size: 16px;
+	text-align: left;
+	padding: 5px;
+	border: 1px solid #CCC;
+	font-weight: bold;
+	clear: both;
+	display: block;
+	height: 48px;
+	line-height: 44px;
+	text-indent: 60px;
+}
+
+.kadmin-funcsubtitle {
+	font-size: 14px;
+	text-align: left;
+	padding: 5px;
+	border-bottom: 3px solid #7F9DB9;
+	font-weight: bold;
+	color: #7F9DB9;
+	margin: 10px 0 10px 0;
+}
+
+.krow0 td {
+	padding: 8px 5px;
+	text-align: left;
+	border-bottom: 1px dotted #ccc;
+}
+
+.krow1 td {
+	padding: 8px 5px;
+	text-align: left;
+	border-bottom: 1px dotted #ccc;
+}
+
+td.kadmin-tdtitle {
+	font-weight: bold;
+	padding-left: 10px;
+	color: #666;
+}
+
+#kcongifcover fieldset {
+	border: 1px solid #CFDCEB;
+}
+
+#kcongifcover fieldset legend {
+	color: #666;
+}
+
+table.kadmin-sort td {
+	height: 35px;
+}
+
+td.kadmin-paging {
+	margin: 0 auto;
+	background: #F3F3F3 !important;
+}
+
+select#kforums {
+	width: 200px;
+}
+div.tpl-thumbnail img {
+	float:left;
+	margin-bottom:10px;
+	border:4px solid #ccc;
+	padding:2px
+	max-width: 300px;
+}
+div.tpl-desc {
+	clear: left;
+}
+input.ksm-field {
+	width: 50px;
+}
+input.ksm-field-large {
+	width: 100%;
+}
+.kadmin-statscover {
+	padding:0px;
+}
+table.kadmin-stat {
+	background-color:#FFFFFF;
+	border:1px solid #ddd;
+	padding:1px;
+	width:100%;
+}
+table.kadmin-stat th {
+	background:#EEE;
+	border-bottom:1px solid #CCC;
+	border-top:1px solid #EEE;
+	color:#666;
+	font-size:11px;
+	padding:3px 4px;
+	text-align:left;
+}
+table.kadmin-stat td {
+	font-size:11px;
+	line-height:140%;
+	padding:4px;
+	text-align:left;
+}
+table.kadmin-stat caption {
+	clear:both;
+	font-size:14px;
+	font-weight:bold;
+	margin:10px 0 2px 0;
+	padding:2px;
+	text-align:left;
+}
+table.kadmin-stat .col1 {
+	background-color:#F1F3F5;
+}
+table.kadmin-stat .col2 {
+	background-color: #FBFBFB;
+}
+
+span.kwriteable { color: green; }
+span.kunwriteable { color: red; }
+
+/* standard form style table */
+div.col { float: left; }
+div.width-45 { width: 45%; }
+div.width-55 { width: 55%; }
+div.width-50 { width: 50%; }
+div.width-70 { width: 70%; }
+div.width-30 { width: 30%; }
+div.width-60 { width: 60%; }
+div.width-40 { width: 40%; }
+
+table.admintable td 					 { padding: 3px; }
+table.admintable td.key,
+table.admintable td.paramlist_key {
+	background-color: #f6f6f6;
+	text-align: right;
+	width: 140px;
+	color: #666;
+	font-weight: bold;
+	border-bottom: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
+}
+
+fieldset.adminform label, fieldset.adminform span.faux-label {
+	background-color: #f6f6f6;
+	text-align: right;
+	width: 150px;
+	color: #666;
+	font-weight: bold;
+	border-bottom: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
+	margin-right:10px;
+}
+div.current input, div.current textarea, div.current select {
+	margin:0 2px 0 2px !important;
+}

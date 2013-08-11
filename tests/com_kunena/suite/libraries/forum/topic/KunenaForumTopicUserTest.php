@@ -4,7 +4,7 @@
  * @package Kunena.UnitTest
  * @subpackage Utilities
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -125,6 +125,6 @@ class KunenaForumTopicUserTest extends PHPUnit_Framework_TestCase {
 	public function testDelete(KunenaForumTopicUser $topicuser) {
 		$this->assertTrue($topicuser->delete());
 		$this->assertFalse($topicuser->exists());
-		self::$topic == null;
+		self::$topic = null;
 	}
 }

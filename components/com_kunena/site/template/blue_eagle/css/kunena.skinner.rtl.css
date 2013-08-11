@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+/**
+* Kunena Component
+* @package Kunena.Template.Blue_Eagle
+*
+* @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/
+
+#Kunena tr.krow1 td {
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .klist-actions-forum {
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena td.kcol-first {
+	border-right: none;
+}
+#Kunena td.kcol-last,
+#Kunena td.kcol-mid {
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+#Kunena .klist-pages {
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .klist-times
+#Kunena .klist-actions-forum {
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .klist-pages-all {
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .klist-jump-all,
+#Kunena .klist-times-all {
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .klist-categories {
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .kprofilebox-right {
+	border-right: 0 none;
+}
+#Kunena td.kprofile-left {
+	border-left: 0 none;
+}

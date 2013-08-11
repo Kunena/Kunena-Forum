@@ -1,0 +1,899 @@
+@charset "utf-8";
+
+/**
+* Kunena Component
+* @package Kunena.Template.Blue_Eagle
+*
+* @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/
+
+/* MAIN STYLES */
+
+#Kunena .fltlft {float:right;}
+#Kunena .fltrt {float:left;}
+#Kunena .kright {text-align:left;}
+#Kunena .kleft {text-align:right;}
+
+
+/* Block styling */
+
+#Kunena div.kblock div.ktitle {
+	text-align: right;
+}
+#Kunena div.kblock span.ktoggler {
+	float: left;
+	/* TODO: override right rule */
+	left: -10px;
+}
+#Kunena div.kblock span.select-toggle {
+	float: left;
+	/* TODO: override right rule */
+	left: 13px;
+}
+#Kunena div.ktopic-title-cover {
+	text-align:right;
+}
+#Kunena div.ktopic-details {
+	clear:right;
+}
+#Kunena .klatest-avatar,
+#Kunena .ktopic-latest-post-avatar {
+	margin: 4px 0 2px 6px;
+	float: right;
+}
+#Kunena td.kcol-first {
+	/* TODO: override left rule(?) */
+	border-right: none;
+}
+#Kunena td.kcol-mid {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+}
+#Kunena td.kcol-last {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+}
+
+/* MENU */
+
+#Kunena #ktab {
+	margin:0 0 0 20px;
+}
+#Kunena #ktab ul ul {
+	float: right;
+}
+#Kunena #ktab li,
+#Kunena #ktab div.moduletable ul.menu li	{
+	float: right;
+	margin: 2px 0 0 2px!important;
+}
+#Kunena #ktab a {
+	float: right;
+	border-radius: 5px 0 0 5px;
+	-moz-border-radius: 5px 0 0 5px;
+	-webkit-border-radius: 5px 0 0 5px;
+}
+#Kunena #ktab a:hover,
+#Kunena #ktab li.Kunena-item-active a	{
+	background-position: left bottom;
+}
+#Kunena #ktab a:hover span,
+#Kunena #ktab li.Kunena-item-active a span	{
+	background-position: right bottom;
+}
+#Kunena select#searchlist {
+	float:right;
+}
+
+/* Using a Joomla menu module */
+
+#Kunena option {
+	padding: 0px 2px 0px 10px;
+}
+#Kunena .button,
+#Kunena .kbutton {
+	/* TODO: override right rule(?) */
+	margin-left: 10px;
+}
+#Kunena table.klist-bottom td.klist-moderators {
+	text-align:right;
+}
+#Kunena .klist-actions-info {
+	float: right;
+	padding-left: 10px;
+	padding-right: 15px;
+}
+#Kunena .klist-pages {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+	float: left;
+	padding-left: 5px;
+	padding-right: 10px;
+}
+#Kunena .klist-times {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+	padding-left: 10px;
+	padding-right: 5px;
+}
+#Kunena .klist-actions-info-all {
+	padding-left: 10px;
+	padding-right: 15px;
+	width: 100%;
+}
+#Kunena .klist-actions-forum {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+}
+#Kunena .klist-pages-all {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+	padding-left: 3px;
+	padding-right: 5px;
+	text-align: left;
+}
+#Kunena .klist-times-all {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+}
+#Kunena .klist-jump-all {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+}
+#Kunena .klist-moderators {
+	clear: right;
+}
+#Kunena .klist-categories {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+	padding: 0 10px 0 5px;
+}
+
+/* Pagination */
+
+#Kunena ul.kpagination{ 
+	padding:0 0 0 5px;
+}
+#Kunena .kpagination li.page {
+	/* TODO: override right rule(?) */
+	margin-left:2px;
+}
+#Kunena .kpagination a:link,
+#Kunena .kpagination a:visited {
+	padding:3px 5px;
+}
+
+/* Inline pagination in topics */
+#Kunena div.ktopic-title-cover ul.kpagination { 
+	text-align:right;
+}
+#Kunena div.ktopic-title-cover ul.kpagination li.page {
+	float:right;
+	padding:4px 0 0 3px; 
+}
+#Kunena #kflattable ul.kpagination li {
+	/* TODO: override right rule(?) */
+	margin-left: 5px;
+}
+#Kunena span.ktopic-posted-time {
+	float:right;
+}
+#Kunena span.ktopic-category {
+	float:right; 
+	clear:right;
+}
+#Kunena span.ktopic-by { 
+	float:right;
+}
+#Kunena span.ktopic-locked { 
+	/* TODO: override left rule(?) */
+	margin-right: 3px;
+	text-align: right;
+}
+
+/* HEADER */
+
+#Kunena td.kprofileboxcnt {
+	text-align:right;
+}
+#Kunena td.kprofileboxcnt ul {
+	margin: 5px 5px 5px 0;
+	/* TODO: override left rule(?) */
+	padding-right: 0;
+}
+#Kunena td.kprofileboxcnt ul.kprofilebox-link li {
+	/* TODO: override left rule(?) */
+	padding-right:10px !important;
+}
+
+/* SEARCH */
+
+#Kunena fieldset legend {
+	margin: 0 -5px 0 0;
+}
+#Kunena select#catids option{
+	/* TODO: override left rule(?) */
+	padding-right: 5px;
+}
+#Kunena label.searchlabel {
+	/* TODO: override right rule(?) */
+	margin-left: 100px;
+}
+#Kunena input#keywords,
+#Kunena input#username {
+	/* TODO: override right rule(?) */
+	margin-left: 10px;
+}
+#Kunena select#catids {
+	float:right;
+}
+#Kunena label#childforums-lbl{
+	float:right;
+	clear:right;
+}
+#Kunena fieldset#search-posts-date select,
+#Kunena fieldset#search-posts-sort select {
+	/* TODO: override right rule(?) */
+	margin-left: 10px;
+}
+#Kunena fieldset#search-posts-start select {
+	/* TODO: override left rule(?) */
+	margin-right: 10px;
+}
+#Kunena div#ksearchresult div.resultmsg {
+	clear:right;
+}
+#Kunena div#ksearchresult span.kmsgdate {
+	float: right;
+}
+
+/* PROFILEBOX AND LOGINBOX */
+
+#Kunena ul.kprofilebox-link {
+	float:left;
+}
+#Kunena ul.kprofilebox-link li {
+	/* TODO: create new icon arrow-rtl.png and use it */
+	background: url("../images/icons/arrow.png") no-repeat right !important;
+	padding-left: 10px;
+	padding-right:12px;
+}
+#Kunena .kprofilebox-left {
+	/* TODO: override right rule(?) */
+	border-left: 1px solid;
+}
+#Kunena .kprofilebox-right {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+}
+
+/* CATEGORY LIST */
+
+#Kunena td.kcol-kcatlastpost {
+	text-align:right;
+}
+#Kunena table.kblocktable {
+	text-align: right;
+}
+#Kunena h1,
+#Kunena h2 {
+	text-align: right;
+}
+#Kunena h2 span.kright {
+	float: left;
+}
+#Kunena .kcheckbox {
+	float:left;
+	/* TODO: override right rule(?) */
+	margin-left: 14px;
+}
+#Kunena div.kfavorite {
+	background-position: right top;
+	float: left;
+}
+#Kunena .ktitle,
+#Kunena a.ktitle {
+	float:right;
+}
+#Kunena div.kthead-title a {
+	float: right;
+}
+#Kunena div.kthead-desc,
+#Kunena div.kthead-moderators  {
+	clear: right;
+}
+#Kunena div.kthead-child {
+	clear: right;
+}
+#Kunena span.kchildcount {
+	margin-left: 6px;
+	margin-right: 2px;
+}
+#Kunena div.klatest-subject,
+#Kunena div.klatest-subject-by {
+	/* TODO: override left rule(?) */
+	margin-right: 5px;
+}
+#Kunena div.kcc-subcat {
+	float: right;
+}
+
+/* SHOW CATEGORY  */
+
+#Kunena img.stickyicon,
+#Kunena img.attachicon {
+	float: left;
+}
+#Kunena img.catavatar {
+	/* TODO: override left rule(?) */
+	margin-right: 4px;
+}
+
+/* VIEW PAGE */
+
+#Kunena div.kmsg-header-top span.kmsgdate-top,
+#Kunena div.kmsg-header-bottom span.kmsgdate-bottom,
+#Kunena div.kmsg-header-right span.kmsgdate-right,
+#Kunena div.kmsg-header-left span.kmsgdate-left {
+	/* TODO: override left rule(?) */
+	padding-right: 10px;
+}
+#Kunena div.kmsg-header-top span.kmsg-title-top,
+#Kunena div.kmsg-header-bottom span.kmsg-title-bottom,
+#Kunena div.kmsg-header-left span.kmsg-title-left,
+#Kunena div.kmsg-header-right span.kmsg-title-right {
+	/* TODO: override left rule(?) */
+	margin-right:5px;
+}
+#Kunena div.kmsg-header-top span.kmsg-id-top,
+#Kunena div.kmsg-header-bottom span.kmsg-id-bottom,
+#Kunena div.kmsg-header-left span.kmsg-id-left,
+#Kunena div.kmsg-header-right span.kmsg-id-right {
+	float: left;
+	margin:0 0 0 10px;
+}
+#Kunena span.kpost-thankyou {
+	float: left;
+	/* TODO: override right rule(?) */
+	margin-left: 15px;
+}
+#Kunena span.kmsgtitle,
+#Kunena span.kmsgtitle-new {
+	background-position: right center;
+	/* TODO: override left rule(?) */
+	padding-right: 25px;
+}
+#Kunena span.kmsgtitle-new {
+	background-position: right center;
+}
+#Kunena th.kmsg-date span.ktopbottom,
+#Kunena th.kmsg-date span.kheader-right {
+	float: right;
+}
+#Kunena span.kmsgdate {
+	/* TODO: override left rule(?) */
+	padding-right: 5px;
+}
+#Kunena ul.kfile-attach li {
+	/* TODO: override left rule(?) */
+	padding-right: 30px;
+	float: right;
+}
+#Kunena ul.kfile-attach li span {
+	/* TODO: override left rule(?) */
+	padding-right: 10px;
+}
+#Kunena ul.kfile-attach-editing li span {
+	/* TODO: override left rule(?) */
+	padding-right: 2px;
+}
+#Kunena ul.kfile-attach li a img,
+#Kunena ul.kfile-attach-editing li a img {
+	/* TODO: override left rule(?) */
+	margin-right: 10px;
+}
+#Kunena div.kmsgtext pre,
+#Kunena div.kmsgtext code {
+	border-left: 1px solid;
+	border-right: 5px solid;
+}
+#Kunena table.kmsg th a {
+	float: left;
+}
+#Kunena div.kmessage-editmarkup-cover {
+	text-align: left;
+}
+#Kunena span.kmessage-editmarkup {
+	background-position: right center;
+	/* TODO: override left rule(?) */
+	margin-right: 3px;
+}
+#Kunena span.kmessage-informmarkup {
+	/* TODO: override left rule(?) */
+	margin-right: 3px;
+}
+#Kunena div.kmsgsignature {
+	text-align:right;
+}
+#Kunena div.kmessage-buttons-cover {
+	float: left;
+}
+#Kunena div.kmessage-buttons-row {
+	text-align: right;
+}
+#Kunena div.khide {
+	padding: 10px 25px 10px 10px;
+}
+
+/* Avatar position: right */
+
+#Kunena td.kprofile-right {
+	/* TODO: override left rule(?) */
+	border-right: 1px solid;
+}
+
+/* Avatar position: left */
+
+#Kunena td.kprofile-left {
+	/* TODO: override left rule(?) */
+	border-left: 1px solid;
+}
+
+/* User info on posts */
+
+/* Left and right layouts */
+
+#Kunena li.kpost-online-status-top-yes {
+	float: right;
+	/* TODO: override right rule(?) */
+	padding-left:5px;
+}
+#Kunena li.kpost-online-status-top-no {	
+	float: right;
+	/* TODO: override right rule(?) */
+	padding-left:5px;
+}
+#Kunena ul#kpost-profiletop li.kpost-avatar{
+	float:right;
+	clear:right;
+	/* TODO: override right rule(?) */
+	margin-left: 5px;
+}
+#Kunena ul#kpost-profiletop li.kpost-userrank{
+	/* TODO: override right rule(?) */
+	padding-left: 5px;
+}
+#Kunena ul#kpost-profiletop li.kpost-smallicons{
+	float:left;
+}
+#Kunena ul#kpost-profiletop li.kpost-personal{
+	float:left;
+}
+
+/* top */
+
+#Kunena div.ktopbottom-avatar {
+	float: right;
+}
+#Kunena div.kprofile-mid {
+	text-align: right;
+	float:right;
+}
+#Kunena div.kprofile-right {
+	float:left;
+	text-align:left;
+}
+#Kunena div.kpersonal {
+	text-align: right;
+	float:right;
+}
+
+/* Stats on main page */
+
+#Kunena ul#kstatslistleft li,
+#Kunena ul#kstatslistright li {
+	/* TODO: override left rule(?) */
+	margin-right: 0;
+}
+
+/* POST PAGE */
+
+#Kunena td.kcaptcha {
+	text-align: right;
+}
+#Kunena div#khistory td.khistorymsg {
+	text-align:right;
+}
+#Kunena div#khistory span.khistory-msgdate {
+	float:right;
+	/* TODO: override left rule(?) */
+	padding-right: 10px;
+}
+#Kunena div#khistory tr.ksth a {
+	float:left;
+	/* TODO: override right rule(?) */
+	padding-left: 10px;
+}
+
+/* Post Previews */
+
+#Kunena textarea#kbbcode-message {
+	float: right;
+}
+#Kunena div.kbbcode-preview-bottom {
+	float:right;
+	clear:right;
+}
+#Kunena div.kbbcode-preview-right {
+	float:left;
+	/* TODO: override right rule(?) */
+	margin-left: 10px;
+}
+#Kunena #kpost-message td.kcol-first {
+	text-align: left;
+}
+
+/* FORUM ICON BUTTONS */
+
+*/
+#Kunena .kicon-button span span {
+	padding: 0 20px 0 7px;
+}
+#Kunena .kbuttononline-yes span span,
+#Kunena .kbuttonmod span span,
+#Kunena .kbuttononline-yes span span:hover,
+#Kunena .kbuttonmod span span:hover{
+	background-position: left -220px;
+}
+#Kunena .kbuttonuser span span,
+#Kunena .kbuttonuser span span:hover {
+	background-position: left -380px;
+}
+#Kunena .kbuttononline-no span span,
+#Kunena .kbuttongen span span,
+#Kunena .kbuttoncomm span span,
+#Kunena .kbuttononline-no span span:hover,
+#Kunena .kbuttongen span span:hover,
+#Kunena .kbuttoncomm span span:hover {
+	background-position: left -500px;
+}
+#Kunena a.kbuttongoto span.top {
+	background-position: right top;
+}
+#Kunena a.kbuttongoto span.bottom {
+	background-position: right top;
+}
+#Kunena form.kform-report,
+#Kunena form.kform-report label,
+#Kunena form.kform-report input,
+#Kunena form.kform-report textarea {
+	float:right;
+}
+
+/*BBCODE BUTTONS */
+
+#Kunena img.kbbcode {
+	/* TODO: override right rule(?) */
+	margin-left: 1px;
+}
+#Kunena img.kbbcode:hover {
+	/* TODO: override right rule(?) */
+	margin-left: 1px;
+}
+#Kunena #kbbcode-toolbar li {
+	float:right;
+}
+#Kunena #kbbcode-toolbar li a {
+	/* TODO: override right rule(?) */
+	margin-left: 2px;
+}
+#Kunena #kattachments a {
+	/* TODO: override right rule(?) */
+	margin-left: 2px;
+}
+
+/* Multi file upload for bbcode editor */
+
+#Kunena .kattachment-insert {
+	/* TODO: override left rule(?) */
+	margin-right: 20px;
+}
+#Kunena .kfile-input {
+	left: 0px; 
+}
+#Kunena #kbbcode-filelist .file-invalid {
+	/* TODO: override left rule(?) */
+	padding-right: 48px;
+}
+#Kunena #kbbcode-filelist .file {
+	/* TODO: override left rule(?) */
+	padding-right: 22px;
+}
+
+/* POLLS */
+
+label.kpoll-title-lbl {
+	margin: 10px 5px 10px 15px;
+}
+label.kpoll-term-lbl {
+	margin: 10px 30px 10px 15px;
+}
+#kpoll-form-vote ul {
+	margin:0 20px 0 0;
+}
+#kpoll-btns {
+	margin: 5px 20px 20px 0;
+}
+#Kunena div.kpolldesc td.kpoll-option {
+	text-align: right;
+}
+#Kunena div.kpolldesc td.kpoll-bar {
+	text-align: right;
+}
+#Kunena #kpoll-button-vote {
+	margin: 20px 30px 20px 20px;
+}
+
+/* PATHWAY */
+
+#Kunena .path-element-first {
+	/* TODO: create new rtl image and use it */
+	background: url("../images/pathway_start.gif") no-repeat right center;
+	padding: 1px 22px 1px 3px;
+}
+#Kunena .kforum-pathway .path-element,
+#Kunena .kforum-pathway-bottom .path-element	{
+	/* TODO: create new rtl image and use it */
+	background: url("../images/icons/arrow.png") no-repeat right center;
+	padding-left: 3px;
+	padding-right: 12px;
+}
+#Kunena .kforum-pathway .path-element-last,
+#Kunena .kforum-pathway-bottom .path-element-last {
+	/* TODO: create new rtl image and use it */
+	background: url("../images/pathway_finallink.gif") no-repeat right center;
+	padding: 1px 37px 1px 5px;
+}
+
+/* HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT */
+
+#Kunena img.calendar {
+	margin: 5px -5px 5px 0;
+}
+#Kunena .kcredits-intro {
+	text-align:right;
+}
+#Kunena .kteammember {
+	text-align:right;
+}
+#Kunena div#searchuser_tbody div.search-user {
+	float: right;
+}
+#Kunena div#searchuser_tbody div.userlist-jump {
+	float: left;
+}
+
+/* STATISTICS PAGE */
+
+#Kunena tr.ksth th.kname {
+	text-align: right;
+}
+
+/* WHO IS ONLINE */
+
+#Kunena #kwhoispage td.td-3 {
+	text-align:right;
+}
+
+/* MODERATOR PAGE */
+
+#Kunena div#kmod-container {
+	clear:right;
+}
+#Kunena div#kmod-leftcol {
+	float:right;
+	clear:right;
+}
+#Kunena div#kmod-rightcol {
+	float:left;
+}
+#Kunena div.kmoderate-message div.kmessage-avatar {
+	float:right;
+	padding:5px 0 0 5px;
+}
+#Kunena div.kmoderate-message div.kmessage-msgtext {
+	/* TODO: override left rule(?) */
+	margin-right: 42px;
+}
+#Kunena td.krowmoderation input.kbutton {
+	margin: 0 5px; 0 0;
+}
+#Kunena td.krowmoderation {
+	text-align: left;
+}
+
+/* PROFILE */
+
+#Kunena .kicon-profile { 
+	/* TODO: override right rule(?) */
+	margin-left: 3px;
+}
+#Kunena div#kprofile-leftcol {
+	float:right;
+}
+#Kunena div#kprofile-stats ul {
+	margin: 0 3px 0 0;
+}
+div#kprofile-stats ul li span.krankname {
+	/* TODO: override right rule(?) */
+	margin-left: 5px;
+	float:right;
+}
+div#kprofile-stats ul li span.krank-admin {
+	/* TODO: override right rule(?) */
+	margin-left: 5px;
+	float:left;
+}
+#Kunena table#kprofile td.kcol-right {
+	/* TODO: override left rule(?) */
+	border-right: 0;
+}
+#Kunena div.kprofile-rightcol1 ul li,
+#Kunena div.kprofile-rightcol2 ul li {
+	/* TODO: override left rule(?) */
+	padding-right: 0;
+}
+#Kunena div#kprofile-stats ul li {
+	/* TODO: override left rule(?) */
+	padding-right: 0;
+}
+#Kunena li.bd a {
+	/* TODO: override left rule(?) */
+	margin-right: 10px;
+}
+#Kunena div.kiconrow {
+	/* TODO: override right rule(?) */
+	padding-left: 10px;
+	float:right;
+}
+#Kunena div.kiconrow span,
+#Kunena div.kiconprofile span {
+	float:right;
+	margin: 0  0 5px 5px;
+}
+#Kunena div.kprofile-rightcol2 {
+	float:left;
+	/* TODO: override left rule(?) */
+	margin-right: 10px;
+}
+#Kunena div.kprofile-rightcol2 ul li span.email {
+	float:right;
+	/* TODO: override right rule(?) */
+	margin-left: 5px;
+}
+#Kunena div.kprofile-rightcol2 ul li span.website {
+	float:right;
+	/* TODO: override right rule(?) */
+	margin-left: 5px;
+}
+#Kunena dd.kprofile-modtools h4 {
+	/* TODO: override left rule(?) */
+	margin-right: 5px;
+}
+#Kunena dd.kprofile-modtools ul li span {
+	/* TODO: override right rule(?) */
+	margin-left: 15px;
+}
+
+/* Tabs */
+
+#Kunena dl.tabs {
+	float: right;
+}
+#Kunena dl.tabs dt {
+	float: right;
+	/* TODO: override left rule(?) */
+	margin-right: 3px;
+}
+#Kunena dd.kprofile-modtools ul {
+	/* TODO: override left rule(?) */
+	margin-right: 5px;
+}
+#Kunena dd.kprofile-modtools .kcheckbox {
+	float:right;
+	clear:right;
+}
+#Kunena dd.kprofile-modtools label {
+	float:right;
+	clear:left;
+	margin: 3px 5px 10px 10px;
+}
+#Kunena input.kbutton {
+	margin: 10px 5px 0 0;
+}
+
+/* SLIDERS */
+
+#Kunena #kprofilebox-toggle {
+	/* TODO: override right rule(?) */
+	margin-left: 1px;
+}
+
+/* FOOTER */
+
+#Kunena img.rsslink {
+	float:left;
+	/* TODO: override right rule(?) */
+	margin-left: 3px;
+}
+
+/* Mootools Autocompleter CSS classes */
+
+ul.autocompleter-choices {
+	/* TODO: override left rule(?) */
+	text-align: right;
+}
+
+/* SHOW ICONS */
+
+#Kunena span.ktopicattach {
+	background-position: right center;
+	float:left;
+}
+#Kunena span.kfavoritestar {
+	background-position: right center;
+}
+#Kunena span.kfavoritestar-grey {
+	background-position: right center;
+}
+#Kunena span.ktopiclocked,
+#Kunena span.kforumlocked {
+	background-position: right center;
+}
+#Kunena span.kforumbottom {
+	background-position: right center;
+}
+#Kunena span.kforumtop {
+	background-position: right center;
+}
+#Kunena span.krss {
+	background-position: right center;
+	margin: 5px -29px 0 5px;
+}
+#Kunena span.kpdf {
+	background-position: right center;
+	margin: 5px -29px 0 33px;
+}
+#Kunena div.krss-block {
+	float: left;
+}
+#Kunena span.kforummoderated {
+	background-position: right center;
+
+#Kunena span.kreadforum,
+#Kunena span.knotloginforum {
+	background-position: right center;
+}
+#Kunena span.kunreadforum {
+	background-position: right center;
+}
+#Kunena span.kreadforum-sm,
+#Kunena span.knotloginforum-sm {
+	background-position: right center;
+	/* TODO: override right rule(?) */
+	margin-left: 3px;
+}
+#Kunena span.kunreadforum-sm {
+	background-position: right center;
+	/* TODO: override right rule(?) */
+	margin-left: 3px;
+}
+
+/* Threaded view  */
+
+#Kunena .ktree {
+	/* TODO: create new rtl image and use it */
+	background: url("../images/treenodes-rtl.png") no-repeat right center;
+}

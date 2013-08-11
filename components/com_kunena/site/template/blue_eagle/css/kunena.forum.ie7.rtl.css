@@ -1,0 +1,17 @@
+﻿﻿@charset "utf-8";
+
+/**
+* Kunena Component
+* @package Kunena.Template.Blue_Eagle
+*
+* @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/ 
+#Kunena .kpagination a:visited { float: right; }
+#Kunena span.kforumlocked { right: 5px; }
+#Kunena div.current dd { text-align: right; }
+#Kunena div.current { text-align: right; padding-right:0; }
+#Kunena div.k-profile span.k-name { float:right; }
+#Kunena div.keditavatar tr td.kcol-mid td.kuadesc span { float:right; }
+#Kunena spn.kmsgtitle { float: right; }

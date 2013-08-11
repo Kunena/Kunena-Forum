@@ -1,0 +1,173 @@
+@charset "utf-8";
+
+/**
+* Kunena Component
+* @package Kunena.Template.Blue_Eagle
+*
+* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/ 
+
+/* Layout */
+
+#Kunena .kpagination span {
+	border-style:solid;
+	border-width: 1px;
+	font-weight:bold;
+	padding:1px 5px;
+	margin: 2px;
+}
+
+#Kunena ul#kbbcode-toolbar li a.kbbcode-separator {
+	background-position:-400px 0;
+	width: 8px;
+	cursor: default;
+}
+
+#Kunena .kheader h2,
+#Kunena .kheader h2 a {
+	font-size:16px ;
+}
+
+/* Grid */
+
+#Kunena a.grid_true,
+#Kunena a.grid_false,
+#Kunena a.grid_publish,
+#Kunena a.grid_unpublish,
+#Kunena .move_up,
+#Kunena .move_down {
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	display: inline-block;
+}
+#Kunena a.grid_true,
+#Kunena a.grid_unpublish {
+	background: url("../images/publish.png") no-repeat left center;
+}
+#Kunena a.grid_false,
+#Kunena a.grid_publish {
+	background: url("../images/unpublish.png") no-repeat left center;
+}
+#Kunena a.move_up {
+	background: url("../images/arrow-up.png") no-repeat left center;
+}
+#Kunena a.move_down {
+	background: url("../images/arrow-down.png") no-repeat left center;
+}
+#Kunena .kgrid-lock a.grid_true {
+	background: url("../images/icon-locked.png") no-repeat left center;
+}
+
+#Kunena .kfooter {
+	clear: both;
+	min-height: 28px;
+}
+#Kunena span.ktopicpoll {
+	background: url("../images/icons/poll.png") no-repeat left center;
+	margin: 2px;
+	width: 32px;
+	height: 32px;
+	float:right;
+}
+
+#Kunena .kspoiler {
+	cursor: auto;
+}
+#Kunena .kspoiler-header {
+	cursor: pointer;
+}
+#Kunena .kspoiler-title {
+	font-weight: bold;
+}
+#Kunena .kspoiler-expand,
+#Kunena .kspoiler-hide {
+	color: #888;
+}
+#Kunena .kspoiler-wrapper {
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+	min-height: 5px;
+	width: 100%;
+	background-color: #ffc;
+}
+#Kunena .kspoiler-content {
+	margin: 10px 5px;
+}
+
+#Kunena span.ktopicmy {
+	background-image: url("../images/icons/myflag.png");
+	width: 16px;
+	height: 16px;
+	margin-left: 2px;
+}
+
+/* Fix broken file input box for Yootheme Warp 6 templates */
+#Kunena .kfile-input {
+	display: block;
+	overflow: hidden;
+	visibility: visible;
+}
+
+#Kunena #jumpto .inputbox {
+	max-width: 90%;
+}
+
+#Kunena #postcatid {
+	width: 50%;
+}
+
+#Kunena .krowmoderation select {
+	max-width: 40%;
+}
+
+#Kunena .kiconsel {
+	white-space: nowrap;
+}
+
+#Kunena .jr-forum-stat-bar {
+	height: 10px;
+}
+
+/* Bootstrap Tweaks
+---------------------------------------------------- */
+#Kunena img[height="10"] {
+	height: 10px;
+	max-width: none;
+}
+#Kunena .kprofileboxcnt .input span input[type="checkbox"] {
+	margin-top: 0px !important;
+}
+#Kunena .kprofileboxcnt .kbutton {
+	margin-top: 0px !important;
+}
+#Kunena sup.knewchar {
+	position: static;
+}
+#Kunena .kcol-mid label {
+	display: inline;
+}
+#subscribeMe {
+	margin-top: 0px;
+}
+#Kunena .kfile-hide input {
+	vertical-align: baseline;
+}
+#Kunena #ktab li a::before	{
+	content:"";
+}
+
+/* Menu fixes for Gantry */
+#Kunena ul.menu li#current.active > a:before, 
+#Kunena ul.menu li#current.active > .item:before, 
+#Kunena ul.menu li#current.active > .separator:before,
+#Kunena ul.menu li a:before, 
+#Kunena ul.menu li .item:before, 
+#Kunena ul.menu li .separator:before {
+	content: "";
+	margin: 0;
+	width: 0;
+	height: 0;
+}

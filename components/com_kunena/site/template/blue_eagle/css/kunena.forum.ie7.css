@@ -1,0 +1,74 @@
+﻿﻿@charset "utf-8";
+
+/**
+* Kunena Component
+* @package Kunena.Template.Blue_Eagle
+*
+* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+*
+* Based on FireBoard Component
+* @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/ 
+#Kunena ul.kpagination{  overflow: hidden; }
+#Kunena .kpagination li{ margin:0 2px;  display:inline; }
+#Kunena .kpagination a:link,
+#Kunena .kpagination a:visited { display:inline; float: left; overflow: hidden; }
+#Kunena .kpagination .active { margin: 2px 2px 0; }
+#Kunena .kpagination li.page { line-height: .917em; height: .917em; padding:2px; } 
+#Kunena .kpagination li.more { line-height: .667em; }
+#Kunena td.klist-pages-all .kpagination li { margin:0 1px; }
+#Kunena td.kcol-ktopiclastpost { width: 25%; display: block; }
+#Kunena tr.krow1 td.kcol-ktopictitle,
+#Kunena tr.krow1 td.kcol-kcattitle { width: 50%; }
+#Kunena .krow1-stickymsg td { background: #FFFFCC !important; }
+#Kunena .krow2-stickymsg td { background: #FFFFCC !important; }
+#Kunena .klist-actions td.klist-actions-info-all { width: 60%; }
+#Kunena td.kprofile-right { overflow:hidden; width: 170px; display: table-row; }
+#Kunena .kicon-button span { background-image: url("../media/iconsets/buttons/default/default.png"); }
+#Kunena div.kpathway { margin-top: 0px; }
+#Kunena span.kicon-profile-website,
+#Kunena span.kicon-profile-pm { 	margin-top: 0px; }
+#Kunena div.kmsg-header-top span.kmsgdate-top,
+#Kunena div.kmsg-header-bottom span.kmsgdate-bottom,
+#Kunena div.kmsg-header-right span.kmsgdate-right,
+#Kunena div.kmsg-header-left span.kmsgdate-left { float: left; }
+#Kunena div.kcc-subcat { float: none; display: inline; }
+#Kunena td.kcol-first { background: transparent; }
+#Kunena .kblock div.kheader { background: #5388B4 !important; }
+#Kunena h2 a { color: #ffffff !important;}
+#Kunena span.kforummoderated,
+#Kunena span.kforumlocked { position: relative; bottom: 3px; left: 5px; }
+#Kunena div.current dd { text-align: left; overflow: hidden; padding:0; }
+#Kunena div.current { text-align: left; overflow: hidden; padding-left:0; }
+#Kunena div.current dd div.kblock { width: 100%;;overflow:hidden; }
+#Kunena div.kavatar-lg { margin-top:20px; border: none; }
+#Kunena tr.ksth th { background:#737373; }
+#Kunena div.k-profile span.k-name { display:inline; float:left; }
+#Kunena span.ktopic-by { float: none; }
+#Kunena span.ktopic-posted-time { display:inline; float:none; }
+#Kunena td.kprofile-right { width: 19%; }
+#Kunena td.kmessage-right { width: 81%; }
+#Kunena td.kprofile-left { width: 19%; }
+#Kunena td.kmessage-left { width: 81%; }
+#Kunena td.kbuttonbar-right { width: 81%; }
+#Kunena div.kmsg-header-right span.kmsg-id-right { padding-top:-20px;}
+#Kunena td.kbuttonbar-left { width: 81%; }
+#Kunena div.keditavatar tr td.kcol-first label { white-space: nowrap; }
+#Kunena div.keditavatar tr td.kcol-mid td.kuadesc span { float:left; }
+#Kunena div.kmsgtext-article,
+#Kunena div.kmsgtext-quote,
+#Kunena div.kmsgtext-hide,
+#Kunena div.kmsgtext-confidential { overflow: hidden; }
+#Kunena input.kbutton { filter:chroma(color=#000000); border:none; color: #111111 !important; border: 1px solid #999999;}
+#Kunena .kattachment-remove,#Kunena .kattachment-insert { bottom:4px;}
+#Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover { bottom:4px;}
+#Kunena div.kmsgbody div.kmsgtext { overflow:hidden; }
+#Kunena #ktop { overflow:hidden; }
+#Kunena .kfile-input {top: 7px;}
+#Kunena spn.kmsgtitle { float: left; }
+#Kunena .kcredits {height: auto;}

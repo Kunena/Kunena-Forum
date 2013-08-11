@@ -9,12 +9,12 @@
 
 ## REQUIREMENTS
 
-*Kunena* 3.1 requires
+*Kunena* 3.0 requires
 
     Joomla! 2.5: version 2.5.9 or greater (>= 2.5.11 recommended)
     Joomla! 3.0: version 3.0.3 or greater (>= 3.0.3 recommended)
     Joomla! 3.1: version 3.1.1 or greater (>= 3.1.1 recommended)
-    PHP: version 5.3.1 or greater (>= 5.4.15 recommended)
+    PHP: version 5.3.1 or greater (>= 5.4.14 recommended)
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.

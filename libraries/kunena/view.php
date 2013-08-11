@@ -481,7 +481,7 @@ class KunenaView extends JViewLegacy {
 	public function setDescription($description) {
 		if (!$this->state->get('embedded')) {
 			// TODO: allow translations/overrides
-			$this->document->setMetadata ( 'description', $this->document->getDescription() . '. ' . $description );
+			$this->document->setMetadata ( 'description',  $description );
 		}
 	}
 }

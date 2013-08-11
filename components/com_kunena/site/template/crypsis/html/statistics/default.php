@@ -58,7 +58,11 @@ $k = 0;
 						<tr class="k<?php echo $this->escape($tabclass[$id & 1]); ?>">
 							<td class="kcol-first"><?php echo $id+1 ?></td>
 							<td class="kcol-mid"> <?php echo $item->link ?> </td>
-							<td class="kcol-mid"> <img class="kstats-bar" style="max-height:15px" src="<?php echo $template->getImagePath('bar.png') ?>" alt="" height="10" width="<?php echo $item->percent ?>%" /> </td>
+							<td class="kcol-mid">
+								<div class="progress">
+									<div class="bar" style="width: <?php echo $item->percent ?>%;"></div>
+								</div>
+							</td>
 							<td class="kcol-last"> <?php echo $item->count ?> </td>
 						</tr>
 					<?php endforeach; ?>

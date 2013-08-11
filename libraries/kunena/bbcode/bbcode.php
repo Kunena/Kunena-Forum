@@ -113,9 +113,16 @@ class KunenaBbcode extends NBBC_BBCode {
 				$video = $path[1];
 			}
 			if (isset($video)) {
-				return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
-					.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
-					.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+				$uri = JURI::getInstance();
+				if ( $uri->isSSL() ) {
+					return '<object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/'
+							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/'
+									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+				} else {
+					return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
+							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
+									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+				}
 			}
 		}
 		if ($config->autoembedebay && empty($this->parent->forceMinimal) && isset($params['host']) && strstr($params['host'], '.ebay.')) {
@@ -810,6 +817,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'plain_start' => "\nTerminal:\n",
 				'plain_end' => "\n",
 			),
+
+			'tweet' => array(
+					'mode' => BBCODE_MODE_LIBRARY,
+					'method' => 'DoTweet',
+					'class' => 'block',
+					'allow_in' => array('listitem', 'block', 'columns'),
+					'content' => BBCODE_REQUIRED,
+					'plain_content' => array(),
+			),
 	);
 
 	function __construct() {
@@ -1412,6 +1428,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			else
 				return;
 		}
+
+		$uri = JURI::getInstance();
+		if ( $uri->isSSL() && $vid ["type"] == 'youtube' ) $vid_source = preg_replace("/^http:/", "https:", $vid_source);
 		$vid_source = preg_replace ( '/%vcode%/', $content, $vid_source );
 		if (! is_array ( $vid_par2 ))
 			$vid_par2 = array ();
@@ -1692,7 +1711,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
 			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.$width.' style="max-height:'.$config->imageheight.'px;" alt="" /></a></div>';
 		}
-		return '<div class="kmsgimage"><img src="' . $fileurl . $width .'" style="max-height:'.$config->imageheight.'px;" alt="" /></div>';
+		return '<div class="kmsgimage"><img src="' . $fileurl .'"'. $width .' style="max-height:'.$config->imageheight.'px;" alt="" /></div>';
 	}
 
 	function DoTerminal($bbcode, $action, $name, $default, $params, $content) {
@@ -1702,5 +1721,66 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$colortext = isset($params ["colortext"]) ? $params ["colortext"] : '#ffffff';
 
 		return "<div class=\"highlight\"><pre style=\"font-family:monospace;background-color:#444444;\"><span style=\"color:{$colortext};\">{$content}</span></pre></div>";
+	}
+
+	/**
+	 * @param KunenaBBCode $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 * @return bool|string
+	 */
+	function DoTweet($bbcode, $action, $name, $default, $params, $content) {
+		if ($action == BBCODE_CHECK)
+			return true;
+
+		$tweetid = trim($content);
+
+		if ( !is_numeric($tweetid) ) return false;
+
+		$cache = JFactory::getCache('Kunena_tweet_quote');
+		$cache->setCaching(true);
+		$cache->setLifeTime($twCacheTime);
+		$tweet_quote = $cache->get( array( $this, 'getTweet' ), array( $tweetid ) );
+
+		return '<div>'.$tweet_quote.'</div>';
+	}
+
+	function getTweet($tweetid ) {
+		if ( !function_exists('curl_init') ) return false;
+
+		$url = 'https://api.twitter.com/1/statuses/oembed.json?id='.$tweetid .'&align=center';
+
+		$curl = curl_init();
+		$header[0] = "Accept: text/xml,application/xml,application/json,application/xhtml+xml,";
+		$header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
+		$header[] = "Cache-Control: max-age=0";
+		$header[] = "Connection: keep-alive";
+		$header[] = "Keep-Alive: 300";
+		$header[] = "Accept-Charset: utf-8;q=0.7,*;q=0.7";
+		$header[] = "Accept-Language: en-us,en;q=0.5";
+
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_USERAGENT, 'Kunena)');
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_HTTPPROXYTUNNEL, true);
+
+		$result = curl_exec($curl);
+		curl_close($curl);
+
+		if ( !empty($result) ) {
+			$tweet_object = json_decode($result);
+
+			return $tweet_object->html;
+		}
+
+		return false;
 	}
 }

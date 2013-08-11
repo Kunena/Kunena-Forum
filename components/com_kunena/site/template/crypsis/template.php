@@ -42,11 +42,19 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		JHtml::_('behavior.tooltip');
 		JHtml::_('bootstrap.modal');
 
+		JHtml::_('jquery.framework');
+
 		// New Kunena JS for default template
 		$this->addScript ( 'js/plugins.js' );
 
 		$this->compileLess('main.less', 'kunena.css');
 		$this->addStyleSheet ( 'css/kunena.css' );
+
+		if ( KunenaFactory::getConfig()->pollenabled == 1 ) {
+			JText::script('KUNENA_POLL_OPTION_NAME');
+			JText::script('KUNENA_EDITOR_HELPLINE_OPTION');
+			$this->addScript( 'js/kunena.poll.js' );
+		}
 
 		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 			// Load mediaxboxadvanced library if enabled in configuration

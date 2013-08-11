@@ -75,3 +75,8 @@
     font-size: inherit;
     line-height: 150%
 }
+
+/* Set correct height for permission box in category manager */
+#kunena.admin select[multiple], #kunena.admin select[size] {
+	min-height: 90px;
+}

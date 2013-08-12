@@ -24,43 +24,40 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	$this->displayTopicActions();
 ?>
 <div>
-	<?php if ($this->total >1) : ?>
-		<div class="pagination pull-right" style="margin:-20px 0 0 0 ;"><?php echo $this->getPagination (5); ?></div>
-	<?php endif ?>
-	<div>
-		<h3><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></h3>
-		<?php $this->displayModulePosition( 'kunena_topictitle' ); ?>
-	</div>
+  <?php if ($this->total >1) : ?>
+  <div class="pagination pull-right" style="margin:-20px 0 0 0 ;"><?php echo $this->getPagination (5); ?></div>
+  <?php endif ?>
+  <div>
+    <h3><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></h3>
+    <?php $this->displayModulePosition( 'kunena_topictitle' ); ?>
+  </div>
 </div>
 <div class="clearfix"></div>
-<?php if ($this->usertopic->favorite) : ?>
-<div class="kfavorite"></div>
-<?php endif ?>
-<?php if (!empty($this->keywords)) : ?>
+<?php /*  TODO ?><?php if (!empty($this->keywords)) : ?>
 <h6><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?></h6>
-<?php endif ?>
+<?php endif ?><?php */?>
 <span>
 <?php $this->displayMessages() ?>
 </span>
 <div>
-	<?php $this->displayTopicActions(); ?>
-	<div class="pull-right">
-		<div>
-			<?php if ($this->total >1) : ?>
-				<div class="pagination pull-right" style="margin:-50px 0 0 0 ;"><?php echo $this->getPagination (5); ?></div>
-			<?php endif ?>
-			<div style="padding-top:10px">
-				<?php $this->displayForumJump (); ?>
-			</div>
-		</div>
-	</div>
+  <?php $this->displayTopicActions(); ?>
+  <div class="pull-right">
+    <div>
+      <?php if ($this->total >1) : ?>
+      <div class="pagination pull-right" style="margin:-50px 0 0 0 ;"><?php echo $this->getPagination (5); ?></div>
+      <?php endif ?>
+      <div style="padding-top:10px">
+        <?php $this->displayForumJump (); ?>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="clearfix"></div>
 <div class="row-fluid column-row">
-	<div class="span10 column-item">
-		<?php if (!empty ( $this->moderators ) ) : ?>
-			<div class="klist-moderators">
-				<?php
+  <div class="span10 column-item">
+    <?php if (!empty ( $this->moderators ) ) : ?>
+    <div>
+      <?php
 				echo '' . JText::_('COM_KUNENA_MODERATORS') . ": ";
 				$modlinks = array();
 				foreach ( $this->moderators as $moderator) {
@@ -68,7 +65,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 				}
 				echo implode(', ', $modlinks);
 				?>
-			</div>
-		<?php endif; ?>
-	</div>
+    </div>
+    <?php endif; ?>
+  </div>
 </div>

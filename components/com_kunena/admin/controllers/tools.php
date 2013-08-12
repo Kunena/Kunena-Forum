@@ -24,7 +24,7 @@ class KunenaAdminControllerTools extends KunenaController {
 	}
 
 	function diagnostics() {
-		if (!JRequest::checkToken('get')) {
+		if (!JSession::checkToken('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;

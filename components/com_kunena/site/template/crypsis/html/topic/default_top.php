@@ -11,23 +11,23 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
-<div class="kmsg-header kmsg-header-top">
+<div>
 	<h2> <span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-top"> <?php echo $this->displayMessageField('subject') ?> </span> <span class="kmsgdate kmsgdate-top" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> </span> <span class="kmsg-id-top"> <?php echo $this->numLink ?> </span> </h2>
 </div>
 <table class="<?php echo $this->class ?>">
 	<tbody>
 		<tr>
-			<td class="kprofile-top">
+			<td>
 				<?php $this->displayMessageProfile('horizontal') ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="kmessage-top">
+			<td>
 				<?php $this->displayMessageContents() ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="kbuttonbar-top">
+			<td>
 				<?php $this->displayMessageActions() ?>
 			</td>
 		</tr>

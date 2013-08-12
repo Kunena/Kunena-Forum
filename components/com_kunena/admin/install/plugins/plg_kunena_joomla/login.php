@@ -54,7 +54,7 @@ class KunenaLoginJoomla {
 	}
 
 	public function getResetURL() {
-		$Itemid = UsersHelperRoute::getResendRoute();
+		$Itemid = UsersHelperRoute::getResetRoute();
 		return JRoute::_('index.php?option=com_users&view=reset'.($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 

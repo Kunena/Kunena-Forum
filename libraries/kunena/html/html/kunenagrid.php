@@ -20,6 +20,56 @@ defined ( '_JEXEC' ) or die ();
 abstract class JHtmlKunenaGrid
 {
 	/**
+	 * Returns an action on a grid
+	 *
+	 * @param integer $i The row index
+	 * @param string $task The task to fire
+	 * @param string|array $prefix An optional task prefix or an array of options
+	 * @param string $text An optional text to display
+	 * @param string $title An optional title
+	 * @param string $class An optional active HTML class
+	 * @param boolean $bootstrap An optional setting for to know if it the link will be used in bootstrap.
+	 * @param string $img An optinal img HTML tag
+	 * @param string $checkbox An optional prefix for checkboxes.
+	 *
+	 * @return string The Html code
+	 *
+	 * @since 3.0
+	 */
+	public static function action($i, $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img='', $checkbox = 'cb') {
+		if (is_array($prefix)) {
+			$options = $prefix;
+			$text = array_key_exists('text', $options) ? $options['text'] : $text;
+			$active_title = array_key_exists('active_title', $options) ? $options['active_title'] : $active_title;
+			$inactive_title = array_key_exists('inactive_title', $options) ? $options['inactive_title'] : $inactive_title;
+			$active_class = array_key_exists('active_class', $options) ? $options['active_class'] : $active_class;
+			$inactive_class = array_key_exists('inactive_class', $options) ? $options['inactive_class'] : $inactive_class;
+			$enabled = array_key_exists('enabled', $options) ? $options['enabled'] : $enabled;
+			$translate = array_key_exists('translate', $options) ? $options['translate'] : $translate;
+			$checkbox = array_key_exists('checkbox', $options) ? $options['checkbox'] : $checkbox;
+			$prefix = array_key_exists('prefix', $options) ? $options['prefix'] : '';
+		}
+
+		$active = $task== 'publish' ? 'active' : '';
+
+		if ($bootstrap) {
+			$html[] = '<a class="btn btn-micro ' . $active . '" ';
+			$html[] = ' href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
+			$html[] = ' title="'. $title .'">';
+			$html[] = '<i class="icon-' . $class . '">';
+			$html[] = '</i>';
+			$html[] = '</a>';
+		} else {
+			$html[] = '<a class="grid_'.$task.' hasTip" alt="'.$alt.'"';
+			$html[] = ' href="#" onclick="return listItemTask(\''. $checkbox . $i .'\',\''. $prefix . $task .'\')"';
+			$html[] = 'title="'. $title .'">';
+			$html[] = $img;
+			$html[] = '</a>';
+		}
+		return implode($html);
+	}
+
+	/**
 	 * Display a boolean setting widget.
 	 *
 	 * @param   integer  $i			The row index.
@@ -134,7 +184,7 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return  string
 	 */
-	public static function published($i, $value, $prefix='') {
+	public static function published($i, $value, $prefix='', $bootstrap=false) {
 		if (is_object($value)) {
 			$value = $value->published;
 		}
@@ -142,10 +192,11 @@ abstract class JHtmlKunenaGrid
 		$task	= $value ? 'unpublish' : 'publish';
 		$alt	= $value ? JText::_('COM_KUNENA_PUBLISHED') : JText::_('COM_KUNENA_UNPUBLISHED');
 		$action = $value ? JText::_('COM_KUNENA_LIB_UNPUBLISH_ITEM') : JText::_('COM_KUNENA_LIB_PUBLISH_ITEM');
+		$class = $task=='unpublish' ? 'publish' : 'unpublish';
 
-		$href = '<a class="grid_'.$task.' hasTip" href="#" onclick="return listItemTask(\'cb'. $i .'\',\''. $prefix.$task .'\')" alt="'.$alt.'" title="'. $alt .'::'. $action .'"></a>';
+		$title = $inactive_title = $alt .'::'. $action;
 
-		return $href;
+		 return self::action($i, $task, $prefix, $alt, $title, $class, $bootstrap);
 	}
 
 	/**
@@ -157,12 +208,9 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return  string
 	 */
-	public static function task($i, $img, $alt, $task, $prefix='') {
-		$href = '<a href="javascript:void(0);" onclick="return listItemTask(\'cb' . $i .'\',\''. $prefix.$task .'\')"><img src="'. KunenaFactory::getTemplate()->getImagePath($img) .'" alt="'. $alt .'" title="'. $alt .'" /></a>';
-
-		return $href;
+	public static function task($i, $img, $alt, $task, $prefix='', $bootstrap=false) {
+		return self::action($i, $task, $prefix, $alt, '', $task , $bootstrap, '<img src="'. KunenaFactory::getTemplate()->getImagePath($img) .'" alt="'. $alt .'" title="'. $alt .'" />');
 	}
-
 	/*
 	public static function state(
 		$filter_state = '*',
@@ -249,8 +297,6 @@ abstract class JHtmlKunenaGrid
 		if (!$loaded)
 		{
 			JHtml::_('behavior.tooltip');
-			// FIXME: is this needed in J!2.5?
-			KunenaTemplate::getInstance()->addScript ( 'js/grid.js' );
 
 			// Build the behavior script.
 			$js = '

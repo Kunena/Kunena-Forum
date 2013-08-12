@@ -22,7 +22,7 @@ class KunenaProfileKunena extends KunenaProfile {
 		$config = KunenaFactory::getConfig ();
 		$my = JFactory::getUser();
 		if ( $config->userlist_allowed == 1 && $my->id == 0  ) return false;
-		return KunenaRoute::_('index.php?option=com_kunena&func=userlist'.$action, $xhtml);
+		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'.$action, $xhtml);
 	}
 
 	public function getProfileURL($user, $task='', $xhtml = true)
@@ -31,8 +31,14 @@ class KunenaProfileKunena extends KunenaProfile {
 		$user = KunenaFactory::getUser($user);
 		if ($user === false) return false;
 		$userid = "&userid={$user->userid}";
-		$do = $task ? '&do='.$task : '';
-		return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
+		if ($task && $task != 'edit') {
+			// TODO: remove in the future.
+			$do = $task ? '&do='.$task : '';
+			return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
+		} else {
+			$layout = $task ? '&layout='.$task : '';
+			return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}", $xhtml);
+		}
 	}
 
 	public function _getTopHits($limit=0) {

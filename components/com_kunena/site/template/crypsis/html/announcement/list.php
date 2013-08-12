@@ -15,14 +15,13 @@ defined ( '_JEXEC' ) or die ();
   <h2 class="page-header"> <span> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
     <?php if (!empty($this->actions['add'])) : ?>
     <div class="btn-group pull-right"><a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-cog"></i> <span class="caret"></span> </a>
-      <ul class="dropdown-menu actions" style="min-width:0 !important;">
-        <li> <a href="index.php?option=com_kunena&view=announcement&layout=create" ><i class="hasTip icon-plus tip" title="Add"></i> Add</a> </li>
-        <?php // TODO 
-        // <li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-delete tip" title="Delete"></i> Delete</a> </li>
-        // <li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-edit tip" title="Edit"></i> Edit</a> </li>
-        // <li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-ok tip" title="Edit"></i> Publish</a> </li>
-        // <li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-remove tip" title="Edit"></i> Unpublished</a> </li> ?>
-      </ul>
+      	<ul class="dropdown-menu actions" style="min-width:0 !important;">
+			<li> <a href="index.php?option=com_kunena&view=announcement&layout=create" ><i class="hasTip icon-plus tip" title="Add"></i> <?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD') ?></a> </li>
+			<li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-delete tip" title="Delete"></i> <?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_DELETE') ?></a> </li>
+			<li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-edit tip" title="Edit"></i> <?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_EDIT') ?></a> </li>
+			<li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-ok tip" title="Edit"></i> <?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_PUBLISH') ?></a> </li>
+			<li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-remove tip" title="Edit"></i> <?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_UNPUBLISH') ?></a> </li>
+		</ul>
     </div>
     <?php endif; ?>
     </span> </h2>
@@ -46,6 +45,7 @@ defined ( '_JEXEC' ) or die ();
               <th class="span1"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
               <th class="span1"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
               <th class="span1"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
+              <th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_AUTHOR'); ?></th>
               <?php endif; ?>
             </tr>
           </thead>
@@ -55,13 +55,13 @@ defined ( '_JEXEC' ) or die ();
           <tfoot>
             <tr>
               <td colspan="7">
-                <div class="pull-left"> 
+                <div class="pull-left">
                   <!-- Bulk Actions -->
                   <?php  if ( !empty($this->announcementActions) ) : ?>
                   <?php echo JHtml::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
                   <input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
                   <?php endif; ?>
-                  <!-- /Bulk Actions --> 
+                  <!-- /Bulk Actions -->
                 </div>
                 <div class="pull-right"> <?php echo $pagination = $this->getPagination(5); ?> </div>
               </td>

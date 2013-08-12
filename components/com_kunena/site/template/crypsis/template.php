@@ -41,10 +41,11 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		$this->loadMootools();
 		JHtml::_('behavior.tooltip');
 
+		JHtml::_('jquery.framework');
+		JHtml::_('formbehavior.chosen');
+
 		// New Kunena JS for default template
 		$this->addScript ( 'js/plugins.js' );
-
-		JHtml::_('bootstrap.framework');
 
 		if ( KunenaFactory::getConfig()->use_lazyload ) {
 			$this->addScript( 'js/lazyload.js' );
@@ -58,6 +59,12 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 
 		$this->compileLess('main.less', 'kunena.css');
 		$this->addStyleSheet ( 'css/kunena.css' );
+
+		if ( KunenaFactory::getConfig()->pollenabled == 1 ) {
+			JText::script('KUNENA_POLL_OPTION_NAME');
+			JText::script('KUNENA_EDITOR_HELPLINE_OPTION');
+			$this->addScript( 'js/kunena.poll.js' );
+		}
 
 		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 			// Load mediaxboxadvanced library if enabled in configuration
@@ -87,18 +94,28 @@ var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 				'flat'=>'layout-flat', 'threaded'=>'layout-threaded', 'indented'=>'layout-indented',
 				'list'=>'reply');
 
+		// need special style for buttons in drop-down list
+		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'unsubscribe', 'favorite', 'sticky', 'lock', 'moderate', 'undelete', 'permdelete' );
+
 		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
 		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") $title = '';
 		if ($id) $id = 'id="'.$id.'"';
 
-
-		return <<<HTML
-<a $id class="btn" style="" href="{$link}" rel="nofollow" title="{$title}">
-	<span class="{$name}"></span>
-	{$text}
-</a>
+		if ( in_array($name,$buttonsDropdown) ) {
+			return <<<HTML
+				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
+				{$text}
+				</a>
 HTML;
+		} else {
+			return <<<HTML
+				<a $id class="btn" style="" href="{$link}" rel="nofollow" title="{$title}">
+				<span class="{$name}"></span>
+				{$text}
+				</a>
+HTML;
+		}
 	}
 
 	public function getIcon($name, $title='') {

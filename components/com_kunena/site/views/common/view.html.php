@@ -289,6 +289,8 @@ class KunenaViewCommon extends KunenaView {
 				if ($login) $this->logout = $login;
 				$this->lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
 
+				$this->getPrivateMessageTextURL();
+
 				// TODO: Edit profile (need to get link to edit page, even with integration)
 				//$this->editProfileLink = '<a href="' . $url.'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>';
 
@@ -349,6 +351,7 @@ class KunenaViewCommon extends KunenaView {
 		$private = KunenaFactory::getPrivateMessaging();
 		if ($private) {
 			$count = $private->getUnreadCount($this->me->userid);
+			$this->privateMessagesLink = $private->getInboxLink(JText::plural('COM_KUNENA_TEMPLATE_PMS_INBOX', $count));
 			$this->privateMessagesURL = $private->getInboxURL ();
 			$this->privateMessagesText = JText::plural('COM_KUNENA_TEMPLATE_PMS_INBOX', $count);
 		}

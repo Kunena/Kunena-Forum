@@ -45,6 +45,7 @@ defined ( '_JEXEC' ) or die ();
               <th class="span1"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
               <th class="span1"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
               <th class="span1"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
+              <th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_AUTHOR'); ?></th>
               <?php endif; ?>
             </tr>
           </thead>

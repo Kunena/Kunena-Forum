@@ -225,6 +225,8 @@ class KunenaConfig extends JObject {
 	// New for 3.0.0
 	public $autolink = 1;
 	public $access_component = 1;
+	// New for 3.1.0
+	public $use_lazyload = 0;
 
 	public function __construct() {
 		parent::__construct ();

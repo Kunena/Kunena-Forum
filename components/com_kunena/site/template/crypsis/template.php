@@ -47,6 +47,16 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		// New Kunena JS for default template
 		$this->addScript ( 'js/plugins.js' );
 
+		if ( KunenaFactory::getConfig()->use_lazyload ) {
+			$this->addScript( 'js/lazyload.js' );
+			JFactory::getDocument()->addScriptDeclaration('
+				jQuery(document).ready(function() {
+					jQuery("img.lazy").lazyload({
+						effect : "fadeIn"
+					});
+				});');
+		}
+
 		$this->compileLess('main.less', 'kunena.css');
 		$this->addStyleSheet ( 'css/kunena.css' );
 

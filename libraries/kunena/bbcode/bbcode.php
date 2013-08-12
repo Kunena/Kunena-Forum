@@ -1708,7 +1708,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$fileurl = $bbcode->HTMLEncode ( $fileurl );
 
 		// Need to check if we are nested inside a URL code
-		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
+		if ($bbcode->autolink_disable == 0 && $config->lightbox && $config->use_lazyload) {
+			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img class="lazy" src="' . JUri::root() . 'media/kunena/images/grey.gif" data-original="'.$fileurl.'"'.$width.' style="max-height:'.$config->imageheight.'px;" alt="" /></a></div>';
+		} elseif(!$config->use_lazyload) {
 			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.$width.' style="max-height:'.$config->imageheight.'px;" alt="" /></a></div>';
 		}
 		return '<div class="kmsgimage"><img src="' . $fileurl .'"'. $width .' style="max-height:'.$config->imageheight.'px;" alt="" /></div>';

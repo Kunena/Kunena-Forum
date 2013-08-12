@@ -41,7 +41,7 @@ JHtml::_('behavior.tooltip');
 				<?php endif; ?>
 				<?php if (!empty($this->profile->websiteurl)): ?>
 					<?php // FIXME: we need a better way to add http/https ?>
-					<li><span class="kicon-profile kicon-profile-website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename); ?></a></li>
+					<li><span class="kicon-profile kicon-profile-website"></span><a href="<?php echo $this->escape($this->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename); ?></a></li>
 				<?php endif; ?>
 			</ul>
 		<?php endif;?>

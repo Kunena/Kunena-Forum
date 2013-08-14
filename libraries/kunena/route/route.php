@@ -349,8 +349,10 @@ abstract class KunenaRoute {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return false;
 		}
+
 		// Support legacy URIs
-		if ($uri->getVar('func')) {
+		$legacy_urls = self::$config->get('legacy_urls', 1);
+		if ($legacy_urls && $uri->getVar('func')) {
 			$result = KunenaRouteLegacy::convert($uri);
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			if (!$result) return false;
@@ -359,47 +361,24 @@ abstract class KunenaRoute {
 		// Check URI
 		switch ($uri->getVar('view', 'home')) {
 			case 'announcement':
-				KunenaRouteLegacy::convert($uri);
-				$r = array();
+				if ($legacy_urls) KunenaRouteLegacy::convert($uri);
 				break;
+
 			case 'category':
-				$r = array('catid', 'limitstart', 'limit');
-				break;
 			case 'common':
-				$r = array();
-				break;
 			case 'credits':
-				$r = array();
-				break;
 			case 'home':
-				$r = array();
-				break;
 			case 'misc':
-				$r = array();
-				break;
 			case 'search':
-				$r = array('q', 'titleonly', 'searchuser', 'starteronly', 'exactname', 'replyless',
-					'replylimit', 'searchdate', 'beforeafter', 'sortby', 'order', 'childforums', 'catids',
-					'show', 'limitstart', 'limit');
-				break;
 			case 'statistics':
-				$r = array();
-				break;
 			case 'topic':
-				$r = array('catid', 'id', 'mesid', 'limitstart', 'limit');
-				break;
 			case 'topics':
-				$r = array('mode', 'userid', 'sel', 'limitstart', 'limit');
-				break;
 			case 'user':
-				$r = array('userid');
-				break;
 			case 'users':
-				$r = array('search', 'limitstart', 'limit');
 				break;
+
 			default:
-				$result = KunenaRouteLegacy::convert($uri);
-				if (!$result) {
+				if (!$legacy_urls || !KunenaRouteLegacy::convert($uri)) {
 					KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 					return false;
 				}

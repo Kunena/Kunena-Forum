@@ -607,7 +607,8 @@ class KunenaUser extends JObject {
 					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . $this->escape ( $this->location ) . '"></span>';
 				break;
 			case 'website' :
-				$url = 'http://' . $this->websiteurl;
+				$url = $this->websiteurl;
+				if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl)) $url = 'http://' . $this->websiteurl;
 				if (! $this->websitename)
 					$websitename = $this->websiteurl;
 				else

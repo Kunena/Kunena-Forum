@@ -139,6 +139,9 @@ class KunenaViewUser extends KunenaView {
 		$this->online = $this->profile->isOnline();
 		$this->showUnusedSocial = true;
 
+		if (!preg_match("~^(?:f|ht)tps?://~i", $this->profile->websiteurl)) $this->websiteurl = 'http://' . $this->profile->websiteurl;
+		else $this->websiteurl = $this->profile->websiteurl;
+
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = ($avatar instanceof KunenaAvatarKunena) ? true : false;
 

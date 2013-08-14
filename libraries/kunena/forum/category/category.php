@@ -59,7 +59,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	protected $_channels = false;
 	protected $_topics = false;
 	protected $_posts = false;
-	protected $_lastid = false;
+	protected $_lastcat = false;
 	protected $_authcache = array();
 	protected $_authfcache = array();
 	protected $_new = 0;
@@ -355,7 +355,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function getLastCategory() {
 		$this->buildInfo();
-		return KunenaForumCategoryHelper::get($this->_lastid);
+		return $this->_lastcat;
 	}
 
 	/**
@@ -974,7 +974,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return;
 		$this->_topics = 0;
 		$this->_posts = 0;
-		$this->_lastid = $this->id;
+		$this->_lastcat = $this;
 		/** @var array|KunenaForumCategory[] $categories */
 		$categories[$this->id] = $this;
 		// TODO: support channels
@@ -985,8 +985,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			$lastCategory = $category->getLastCategory();
 			$this->_topics += $category->_topics ? $category->_topics : max($category->numTopics, 0);
 			$this->_posts += $category->_posts ? $category->_posts: max($category->numPosts, 0);
-			if ($lastCategory->last_post_time && KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $lastCategory->last_post_time)
-				$this->_lastid = $lastCategory->id;
+			if ($lastCategory->last_post_time && $this->_lastcat->last_post_time < $lastCategory->last_post_time)
+				$this->_lastcat = $lastCategory;
 		}
 	}
 

@@ -486,14 +486,12 @@ abstract class KunenaForumTopicHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
 		$db->setQuery ( $query );
-		$results = (array) $db->loadAssocList ('id');
+		$results = (array) $db->loadObjectList('id', 'KunenaForumTopic');
 		KunenaError::checkDatabaseError ();
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumTopic ($results[$id]);
-				$instance->exists(true);
-				self::$_instances [$id] = $instance;
+				self::$_instances [$id] = $results[$id];
 			} else {
 				self::$_instances [$id] = null;
 			}

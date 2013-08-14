@@ -59,7 +59,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	protected $_channels = false;
 	protected $_topics = false;
 	protected $_posts = false;
-	protected $_lastid = false;
+	protected $_lastcat = false;
 	protected $_authcache = array();
 	protected $_authfcache = array();
 	protected $_new = 0;
@@ -107,14 +107,16 @@ class KunenaForumCategory extends KunenaDatabaseObject {
      * @param mixed|array $properties
      */
     public function __construct($properties = null) {
-		if ($properties !== null) {
+		if (!empty($this->id)) {
+			$this->_exists = true;
+		} elseif ($properties !== null) {
 			$this->setProperties($properties);
 		}
 		$registry = new JRegistry();
 		if (!empty($this->params)) $registry->loadString($this->params);
 		$this->params = $registry;
 
-		if (!$this->_name) $this->_name = get_class ($this);
+		if (!$this->_name) $this->_name = get_class($this);
 		$this->_alias = $this->get('alias', '');
 	}
 
@@ -353,7 +355,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function getLastCategory() {
 		$this->buildInfo();
-		return KunenaForumCategoryHelper::get($this->_lastid);
+		return $this->_lastcat;
 	}
 
 	/**
@@ -473,11 +475,21 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	public function authorise($action='read', $user=null, $silent=false) {
 		if ($action == 'none') return true;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		if ($user === null) {
 			$user = KunenaUserHelper::getMyself();
 		} elseif (!($user instanceof KunenaUser)) {
 			$user = KunenaUserHelper::get($user);
 		}
+
+		if ($action == 'read') {
+			$error = $this->authoriseRead($user);
+			if ($silent === false && $error) $this->setError($error);
+			if ($silent !== null) $error = !$error;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return $error;
+		}
+
 		if (empty($this->_authcache[$user->userid][$action])) {
 			if (!isset(self::$actions[$action])) {
 				JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
@@ -505,9 +517,9 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		}
 		$error = $this->_authcache[$user->userid][$action];
 		if ($silent === false && $error) $this->setError ( $error );
+		if ($silent !== null) $error = !$error;
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		if ($silent !== null) $error = !$error;
 		return $error;
 	}
 
@@ -962,7 +974,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return;
 		$this->_topics = 0;
 		$this->_posts = 0;
-		$this->_lastid = $this->id;
+		$this->_lastcat = $this;
 		/** @var array|KunenaForumCategory[] $categories */
 		$categories[$this->id] = $this;
 		// TODO: support channels
@@ -973,8 +985,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			$lastCategory = $category->getLastCategory();
 			$this->_topics += $category->_topics ? $category->_topics : max($category->numTopics, 0);
 			$this->_posts += $category->_posts ? $category->_posts: max($category->numPosts, 0);
-			if ($lastCategory->last_post_time && KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $lastCategory->last_post_time)
-				$this->_lastid = $lastCategory->id;
+			if ($lastCategory->last_post_time && $this->_lastcat->last_post_time < $lastCategory->last_post_time)
+				$this->_lastcat = $lastCategory;
 		}
 	}
 

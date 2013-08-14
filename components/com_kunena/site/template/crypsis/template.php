@@ -63,12 +63,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 			//$this->addStyleSheet ( 'css/mediaboxAdv.css');
 		}
 
-		// Toggler language strings
-		JFactory::getDocument()->addScriptDeclaration('// <![CDATA[
-var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
-var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
-// ]]>');
-
 		parent::initialize();
 	}
 

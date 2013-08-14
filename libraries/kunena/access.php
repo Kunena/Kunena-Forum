@@ -25,7 +25,7 @@ class KunenaAccess {
 	protected $moderatorsByCatid = null;
 	protected $moderatorsByUserid = null;
 
-	protected static $cacheKey = 'com_kunena.access.global';
+	protected static $cacheKey = 'com_kunena.access.global.v1';
 
 	public function __construct() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -42,22 +42,22 @@ class KunenaAccess {
 			}
 		}
 
-		// Load administrators and moderators from cache
-		$cache = JFactory::getCache('com_kunena', 'output');
-		// FIXME: enable caching after fixing the issues
-		$data = false; //$cache->get(self::$cacheKey, 'com_kunena');
-		if ($data) {
-			$data = unserialize($data);
-			if (isset($data['v']) && $data['v'] == 1) {
+		if (KunenaConfig::getInstance()->get('cache_adm')) {
+			// Load administrators and moderators from cache
+			$cache = JFactory::getCache('com_kunena', 'output');
+			// FIXME: Experimental caching.
+			$data = $cache->get(self::$cacheKey, 'com_kunena');
+			if ($data) {
+				$data = unserialize($data);
 				$this->adminsByCatid = (array)$data['ac'];
 				$this->adminsByUserid = (array)$data['au'];
 				$this->moderatorsByCatid = (array)$data['mc'];
 				$this->moderatorsByUserid = (array)$data['mu'];
 			}
-		}
-		// If values were not cached (or users permissions have been changed), force reload
-		if (!isset($this->adminsByCatid)) {
-			$this->clearCache();
+			// If values were not cached (or users permissions have been changed), force reload
+			if (!isset($this->adminsByCatid)) {
+				$this->clearCache();
+			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
@@ -94,18 +94,17 @@ class KunenaAccess {
 		$this->storeRoles((array) $db->loadObjectList ());
 		KunenaError::checkDatabaseError ();
 
-		// Store new data into cache
-		$cache = JFactory::getCache('com_kunena', 'output');
 		// FIXME: enable caching after fixing the issues
-		/*
-		$cache->store(serialize(array(
-			'v'=>1, // version identifier
-			'ac'=>$this->adminsByCatid,
-			'au'=>$this->adminsByUserid,
-			'mc'=>$this->moderatorsByCatid,
-			'mu'=>$this->moderatorsByUserid,
-			)), self::$cacheKey, 'com_kunena');
-		*/
+		if (KunenaConfig::getInstance()->get('cache_adm')) {
+			// Store new data into cache
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache->store(serialize(array(
+				'ac'=>$this->adminsByCatid,
+				'au'=>$this->adminsByUserid,
+				'mc'=>$this->moderatorsByCatid,
+				'mu'=>$this->moderatorsByUserid,
+				)), self::$cacheKey, 'com_kunena');
+		}
 	}
 
 	/**

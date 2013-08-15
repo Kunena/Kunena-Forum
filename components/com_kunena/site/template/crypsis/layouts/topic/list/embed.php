@@ -32,7 +32,7 @@ defined ( '_JEXEC' ) or die ();
 							<td class="kcol-first"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
 						</tr>
 					<?php else : ?>
-						<?php $this->displayRows (); ?>
+						<?php $this->displayRows(); ?>
 						<?php  if ( !empty($this->topicActions) || !empty($this->embedded) ) : ?>
 							<tr class="krow1">
 								<td colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>" class="kcol krowmoderation">

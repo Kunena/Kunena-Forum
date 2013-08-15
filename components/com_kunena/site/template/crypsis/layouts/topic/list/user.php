@@ -25,7 +25,7 @@ $this->displayBreadcrumb ();
   </tr>
 </table>
 <div class="clearfix"></div>
-<?php $this->displayTemplateFile('topics', 'user', 'embed'); ?>
+<?php echo $this->render('user_embed'); ?>
 <table>
   <tr>
     <td> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>

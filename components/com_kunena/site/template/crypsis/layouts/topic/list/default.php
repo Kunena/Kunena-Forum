@@ -11,28 +11,28 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
+$this->displayBreadcrumb ();
+
 ?>
 <?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_announcement'); ?>
 
-<table class="table">
+<table class="table" style="border:none;">
   <tr>
-    <td> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_USERPOSTS') ?> </td>
-    <td>
+    <td style="border:none;"> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
+    <td style="border:none;" class="hidden-phone">
       <form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
         <?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
       </form>
     </td>
-    <td class="visible-desktop">
-      <?php $this->displayForumJump () ?>
+    <td style="border:none;" class="hidden-phone">
+      <?php $this->displayForumJump (); ?>
     </td>
-    <td><?php echo $this->getPagination ( 5 ); ?></td>
   </tr>
 </table>
-<?php $this->displayTemplateFile('topics', 'posts', 'embed'); ?>
-<table>
+<?php echo $this->render('embed'); ?>
+<table class="table">
   <tr>
-    <td> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
-    <td><?php echo $this->getPagination ( 5 ); ?></td>
+    <td style="border:none;"> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
   </tr>
 </table>
 <?php

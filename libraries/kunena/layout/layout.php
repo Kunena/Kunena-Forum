@@ -32,7 +32,7 @@ class KunenaLayout extends KunenaLayoutBase
 	public function displayForumJump() {
 		// TODO: convert
 		if (KunenaFactory::getConfig()->enableforumjump) {
-			$this->common->catid = !empty($this->category->id) ? $this->category->id : 0;
+			$this->common->catid = isset($this->category) && !empty($this->category->id) ? $this->category->id : 0;
 			echo $this->common->display('forumjump');
 		}
 	}

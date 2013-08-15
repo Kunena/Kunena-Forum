@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="2.5" type="plugin" group="content" method="upgrade">
+	<name>plg_content_kunena</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_CONTENT_KUNENA_DESC</description>
+	<files>
+		<filename plugin="kunena">kunena.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+</extension>

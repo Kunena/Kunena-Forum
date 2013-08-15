@@ -41,15 +41,14 @@ class KunenaRequest
 	 * @throws	InvalidArgumentException
 	 */
 	public static function factory($path, JInput $input = null) {
-		$path = (string) $path;
-		if (!$path) throw new InvalidArgumentException('No controller given.', 404);
+		// Normalize input.
+		$words = ucwords(strtolower(trim(preg_replace('/[^a-z0-9_]+/i', ' ', (string) $path))));
+		if (!$words) throw new InvalidArgumentException('No controller given.', 404);
 
 		// Attempt to load controller.
-		$path = strtr($path, '/', '\\');
-		if ($path[0] != '\\') $path = "\\Component\\Kunena\\Controller\\{$path}";
-		$class = preg_replace('/[^A-Z0-9_]/i', '', $path);
+		$class = 'ComponentKunenaController' . str_replace(' ', '', $words);
 		if (!class_exists($class)) {
-			throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $path), 404);
+			throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $class), 404);
 		}
 
 		// Create controller object.

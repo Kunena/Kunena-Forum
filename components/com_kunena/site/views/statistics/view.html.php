@@ -23,7 +23,14 @@ class KunenaViewStatistics extends KunenaView {
 		$this->userlist = $this->_getUserListLink('', intval($this->get('memberCount')));
 
 		$this->_prepareDocument();
-		parent::display ();
+
+		// Support new layouts
+		$layout = KunenaLayout::factory('Statistics/General');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		}  else {
+			parent::display ();
+		}
 	}
 
 	protected function _getUserListLink($action, $name, $title = null, $rel = 'nofollow'){

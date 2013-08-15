@@ -72,4 +72,4 @@ $k = 0;
 	</div>
 </div>
 <?php endforeach; ?>
-<?php $this->displayWhoIsOnline(); ?>
+<?php echo $this->subRequest('Statistics/WhoIsOnline'); ?>

@@ -51,7 +51,13 @@ class KunenaViewCredits extends KunenaView {
 
 		$this->_prepareDocument();
 
-		parent::display ();
+		// Support new layouts
+		$layout = KunenaLayout::factory('Credits');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		}  else {
+			parent::display ();
+		}
 	}
 
 	protected function _prepareDocument(){

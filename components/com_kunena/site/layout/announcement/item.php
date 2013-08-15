@@ -12,26 +12,16 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
-	function __construct($name, SplPriorityQueue $paths = null) {
+	public function __construct($name, SplPriorityQueue $paths = null) {
 		parent::__construct($name, $paths);
 		$this->template = KunenaFactory::getTemplate();
 	}
 
-	function canPublish() {
-		return $this->announcement->authorise('edit');
-	}
-	function canEdit() {
-		return $this->announcement->authorise('edit');
-	}
-	function canDelete() {
-		return $this->announcement->authorise('delete');
-	}
-
-	function displayField($name, $mode=null) {
+	public function displayField($name, $mode=null) {
 		return $this->announcement->displayField($name, $mode);
 	}
 
-	function displayActions() {
+	public function displayActions() {
 		$this->buttons = array();
 		if ($this->announcement->authorise('edit'))
 			$this->buttons['edit'] = $this->getButton($this->announcement->getUri('edit'), 'edit', 'announcement', 'moderation');
@@ -44,7 +34,7 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 		return $contents;
 	}
 
-	function getButton($link, $name, $scope, $type, $id = null) {
+	protected function getButton($link, $name, $scope, $type, $id = null) {
 		return $this->template->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
 	}
 }

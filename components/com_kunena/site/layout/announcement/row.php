@@ -12,17 +12,17 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaLayoutAnnouncementRow extends KunenaLayout
 {
-	function canPublish() {
+	public function canPublish() {
 		return $this->announcement->authorise('edit');
 	}
-	function canEdit() {
+	public function canEdit() {
 		return $this->announcement->authorise('edit');
 	}
-	function canDelete() {
+	public function canDelete() {
 		return $this->announcement->authorise('delete');
 	}
 
-	function displayField($name, $mode=null) {
+	public function displayField($name, $mode=null) {
 		return $this->announcement->displayField($name, $mode);
 	}
 }

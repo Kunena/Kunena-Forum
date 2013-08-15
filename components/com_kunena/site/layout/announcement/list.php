@@ -12,14 +12,14 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaLayoutAnnouncementList extends KunenaLayout
 {
-	function getPaginationObject($maxpages) {
+	public function getPaginationObject($maxpages) {
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
 		return $pagination;
 	}
 
-	function displayItems() {
+	public function displayItems() {
 		$this->row = 0;
 		$this->k = 0;
 		foreach ($this->announcements as $this->announcement) {
@@ -27,13 +27,13 @@ class KunenaLayoutAnnouncementList extends KunenaLayout
 		}
 	}
 
-	function displayItem() {
+	public function displayItem() {
 		$this->k= 1 - $this->k;
 		echo $this->subLayout('Announcement/Row')->setProperties($this->getProperties());
 		$this->row++;
 	}
 
-	function displayField($name, $mode=null) {
+	public function displayField($name, $mode=null) {
 		return $this->announcement->displayField($name, $mode);
 	}
 }

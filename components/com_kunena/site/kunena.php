@@ -71,8 +71,7 @@ $input = $app->input;
 $view = $input->getWord ( 'func', $input->getWord ( 'view', 'home' ) );
 $task = $input->getCmd ( 'task', 'display' );
 
-// Register the controller path and execute the controller.
-JLoader::registerPrefix('ComponentKunenaController', __DIR__.'/controller');
+// Define controller and execute it.
 $class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($task);
 if (class_exists($class, true)) {
 	/** @var KunenaControllerBase $controller */

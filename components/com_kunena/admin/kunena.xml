@@ -16,8 +16,10 @@
 		<filename>index.html</filename>
 		<filename>kunena.php</filename>
 		<filename>router.php</filename>
+		<folder>controller</folder>
 		<folder>controllers</folder>
 		<folder>language</folder>
+		<folder>layout</folder>
 		<folder>lib</folder>
 		<folder>models</folder>
 		<folder>template</folder>

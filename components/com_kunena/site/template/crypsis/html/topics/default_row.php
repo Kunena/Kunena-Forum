@@ -10,19 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-// Disable caching
-$this->cache = false;
-$cols = empty($this->topicActions) ? 5 : 6;
-$position = 'kunena_topic_' . $this->position;
-
-if ($this->spacing) : ?>
-	<tr>
-		<td class="kcontenttablespacer" colspan="<?php echo $cols; ?>">&nbsp;</td>
-	</tr>
-<?php
-endif;
-echo KunenaLayout::factory('Topic/Row')->set('topic', $this->topic)->set('checkbox', !empty($this->topicActions))
+echo KunenaLayout::factory('Topic/Row')
+	->set('topic', $this->topic)
+	->set('spacing', !empty($this->spacing))
+	->set('position', 'kunena_topic_' . $this->position)
+	->set('checkbox', !empty($this->topicActions))
 	->setLayout('table');
-
-echo KunenaLayout::factory('Page/Module')->set('position', $position)->set('cols', $cols)->setLayout('table_row');
-?>

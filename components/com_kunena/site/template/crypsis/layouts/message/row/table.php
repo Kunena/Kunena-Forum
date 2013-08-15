@@ -18,6 +18,7 @@ defined ( '_JEXEC' ) or die ();
 $message = $this->message;
 $topic = $message->getTopic();
 $config = KunenaFactory::getConfig();
+$cols = empty($this->checkbox) ? 4 : 5;
 ?>
 <tr>
 	<td class="span3 hidden-phone"> <?php echo $this->getTopicLink ( $topic, 'unread', $topic->getIcon() ) ?> </td>
@@ -80,5 +81,12 @@ $config = KunenaFactory::getConfig();
 		<input class ="kcheck" type="checkbox" name="posts[<?php echo $message->id?>]" value="1" />
 	</td>
 	<?php endif; ?>
+	<?php
+	if (!empty($this->position))
+		echo $this->subLayout('Page/Module')
+			->set('position', $this->position)
+			->set('cols', $cols)
+			->setLayout('table_row');
+	?>
 </tr>
 

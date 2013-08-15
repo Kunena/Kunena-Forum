@@ -10,22 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-// Show one topic row
-?>
-<?php if ($this->spacing) : ?>
-	<tr>
-		<td class="kcontenttablespacer" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>">&nbsp;</td>
-	</tr>
-<?php
-endif;
 echo KunenaLayout::factory('Topic/Row')
 	->set('topic', $this->topic)
+	->set('spacing', !empty($this->spacing))
+	->set('position', 'kunena_topic_' . $this->position)
 	->set('checkbox', !empty($this->topicActions))
 	->setLayout('user_table');
-?>
-<!-- Module position -->
-<?php if ($this->module) : ?>
-	<tr>
-		<td class="ktopicmodule" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
-	</tr>
-<?php endif; ?>

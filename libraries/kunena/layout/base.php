@@ -236,11 +236,12 @@ class KunenaLayoutBase
 	 */
 	public function getLayout()
 	{
-		return $this->layout;
+		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
+		return $layout ? $layout : 'default';
 	}
 
 	/**
-	 * Method to get the layout path.
+	 * Method to get the layout path. If layout file isn't found, fall back to default layout.
 	 *
 	 * @param   string  $layout  The layout name, defaulting to the current one.
 	 *
@@ -251,15 +252,14 @@ class KunenaLayoutBase
 		if (!$layout) {
 			$layout = $this->getLayout();
 		}
-		// Get the layout file name.
-		$file = JPath::clean($layout . '.php');
 
 		$paths = array();
 		foreach (clone $this->paths as $path) {
 			$paths[] = $path;
 		}
 		// Find the layout file path.
-		$path = JPath::find($paths, $file);
+		$path = JPath::find($paths, "{$layout}.php");
+		if (!$path) $path = JPath::find($paths, 'default.php');
 
 		return $path;
 	}

@@ -12,11 +12,19 @@ defined ( '_JEXEC' ) or die ();
 
 /** @var KunenaLayout $this */
 /** @var KunenaForumTopic $this->topic */
+/** @var bool $this->spacing */
 /** @var bool $this->checkbox */
 
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
-?>
+
+$cols = empty($this->checkbox) ? 5 : 6;
+if ($this->spacing) : ?>
+<tr>
+	<td class="kcontenttablespacer" colspan="<?php echo $cols; ?>">&nbsp;</td>
+</tr>
+<?php endif; ?>
+
 <tr>
 	<td>
 		<strong><?php echo $this->formatLargeNumber ( max(0,$topic->getTotal()-1) ); ?></strong>
@@ -85,8 +93,15 @@ $topic = $this->topic;
 	</td>
 	<?php if (!empty($this->checkbox)) : ?>
 	<td>
-		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topi->id?>]" value="1" />
+		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topic->id?>]" value="1" />
 	</td>
 	<?php endif; ?>
+	<?php
+	if (!empty($this->position))
+		echo $this->subLayout('Page/Module')
+			->set('position', $this->position)
+			->set('cols', $cols)
+			->setLayout('table_row');
+	?>
 </tr>
 

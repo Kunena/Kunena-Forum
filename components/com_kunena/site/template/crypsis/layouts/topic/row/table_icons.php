@@ -17,7 +17,12 @@ defined('_JEXEC') or die();
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
 
-?>
+$cols = empty($this->checkbox) ? 5 : 6;
+if ($this->spacing) : ?>
+	<tr>
+		<td class="kcontenttablespacer" colspan="<?php echo $cols; ?>">&nbsp;</td>
+	</tr>
+<?php endif; ?>
 <tr>
 	<td class="span1 hidden-phone">
 		<div class="pull-left">
@@ -102,4 +107,11 @@ $topic = $this->topic;
 		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topic->id?>]" value="1" />
 	</td>
 	<?php endif; ?>
+	<?php
+	if (!empty($this->position))
+		echo $this->subLayout('Page/Module')
+			->set('position', $this->position)
+			->set('cols', $cols)
+			->setLayout('table_row');
+	?>
 </tr>

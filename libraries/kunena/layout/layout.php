@@ -17,6 +17,48 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaLayout extends KunenaLayoutBase
 {
+	public function displayAnnouncement() {
+		// TODO: convert
+		if (KunenaFactory::getConfig()->showannouncement > 0) {
+			echo $this->common->display('announcement');
+		}
+	}
+
+	public function displayBreadcrumb() {
+		// TODO: convert
+		echo $this->common->display('breadcrumb');
+	}
+
+	public function displayForumJump() {
+		// TODO: convert
+		if (KunenaFactory::getConfig()->enableforumjump) {
+			$this->common->catid = !empty($this->category->id) ? $this->category->id : 0;
+			echo $this->common->display('forumjump');
+		}
+	}
+
+	public function displayWhoIsOnline($tpl = null) {
+		// TODO: convert
+		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
+			echo $this->common->display('whosonline');
+		}
+	}
+
+	public function displayStatistics() {
+		// TODO: convert
+		if (KunenaFactory::getConfig()->showstats > 0) {
+			echo $this->common->display('statistics');
+		}
+	}
+
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		return KunenaFactory::getTemplate()->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
+	}
+
+	public function getIcon($name, $title='') {
+		return KunenaFactory::getTemplate()->getIcon($name, $title);
+	}
+
 	/**
 	 * This function formats a number to n significant digits when above
 	 * 10,000. Starting at 10,0000 the out put changes to 10k, starting

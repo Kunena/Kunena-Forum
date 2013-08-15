@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
           <?php else : ?>
           <?php
 						foreach ($this->categories as $this->category) {
-							$this->displayTemplateFile('category', 'user', 'row');
+							echo $this->subLayout('Category/User/Row')->set('category', $this->category);
 						} ?>
           <?php
 						if ( !empty($this->categoryActions) || !empty($this->embedded) ) : ?>

@@ -34,7 +34,7 @@ $this->displayBreadcrumb ();
 </div>
 <?php
 if (count ( $this->categories )) {
-	$this->displayTemplateFile('category', 'list', 'embed');
+	echo $this->render('embed');
 } else {
 	$this->displayInfoMessage ();
 }

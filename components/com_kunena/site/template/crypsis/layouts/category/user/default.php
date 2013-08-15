@@ -24,12 +24,12 @@ defined ( '_JEXEC' ) or die ();
         <td> <?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE') ?> </td>
       </tr>
       <?php
-				else :
-					foreach ($this->categories as $this->category) {
-						$this->displayTemplateFile('category', 'user', 'row');
-					}
-				endif;
-				?>
+		else :
+			foreach ($this->categories as $this->category) {
+				echo $this->subLayout('Category/User/Row')->setProperties($this->getProperties());
+			}
+		endif;
+		?>
     </table>
   </div>
 </div>

@@ -44,7 +44,13 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->_prepareDocument('default');
 
-		$this->display ($tpl);
+		// Support new layouts
+		$layout = KunenaLayout::factory('Category/Item');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		} else {
+			$this->display($tpl);
+		}
 	}
 
 	function displayList($tpl = null) {
@@ -78,7 +84,13 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->_prepareDocument('list');
 
-		$this->display ($tpl);
+		// Support new layouts
+		$layout = KunenaLayout::factory('Category/Index');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		} else {
+			$this->display($tpl);
+		}
 	}
 
 	function displayUser($tpl = null) {
@@ -89,10 +101,16 @@ class KunenaViewCategory extends KunenaView {
 		$errors = $this->getErrors();
 		if ($errors) {
 			$this->displayNoAccess($errors);
-		} else {
-			$this->_prepareDocument('user');
+		}
 
-			$this->display ($tpl);
+		$this->_prepareDocument('user');
+
+		// Support new layouts
+		$layout = KunenaLayout::factory('Category/User');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		} else {
+			$this->display($tpl);
 		}
 	}
 
@@ -112,7 +130,13 @@ class KunenaViewCategory extends KunenaView {
 		$this->header = $header;
 		$this->setTitle ( $header );
 
-		$this->display ($tpl);
+		// Support new layouts
+		$layout = KunenaLayout::factory('Category/Manage');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		} else {
+			$this->display($tpl);
+		}
 	}
 
 	function displayCreate() {
@@ -135,7 +159,13 @@ class KunenaViewCategory extends KunenaView {
 		$this->header = $header;
 		$this->setTitle ( $header );
 
-		$this->display ();
+		// Support new layouts
+		$layout = KunenaLayout::factory('Category/Edit');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties())->setLayout($this->getLayout());
+		} else {
+			$this->display();
+		}
 	}
 
 	function getLastPostLink($category, $content = null, $title = null, $class = null) {
@@ -424,7 +454,7 @@ class KunenaViewCategory extends KunenaView {
 		}
 	}
 
-function getTopicClass($prefix='k', $class='topic') {
+	function getTopicClass($prefix='k', $class='topic') {
 		$class = $prefix . $class;
 		$txt = $class . (($this->position & 1) + 1);
 		if ($this->topic->ordering) {

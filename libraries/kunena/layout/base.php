@@ -104,13 +104,13 @@ class KunenaLayoutBase
 
 			$error  = "Fatal Error in layout {$this->name}: {$e->getMessage()}";
 			$error .= " in {$trace[0]['file']} on line {$trace[0]['line']}";
-			$error .= " called from {$caller['file']} on line {$caller['line']}";
+			if (isset($caller['file'])) $error .= " called from {$caller['file']} on line {$caller['line']}";
 			JLog::add($error, JLog::CRITICAL, 'kunena');
 
 			$error = "<b>Fatal Error</b> in layout <b>{$this->name}</b>: {$e->getMessage()}";
 			if (JDEBUG) {
 				$error .= " in <b>{$trace[0]['file']}</b> on line {$trace[0]['line']}<br />";
-				$error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
+				if (isset($caller['file'])) $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
 			} else {
 				$error .= '. Please enable debug mode for more information.';
 			}

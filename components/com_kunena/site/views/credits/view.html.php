@@ -56,7 +56,7 @@ class KunenaViewCredits extends KunenaView {
 		if ($layout->getPath()) {
 			echo $layout->setProperties($this->getProperties());
 		}  else {
-			parent::display ();
+			$this->display();
 		}
 	}
 

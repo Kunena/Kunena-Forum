@@ -42,3 +42,15 @@
 * Rest of the files...
 
 ## Delete ./search
+
+## Move files from ./announcement
+
+* create.php => ../layouts/announcement/edit/create.php
+* default.php => ../layouts/announcement/item/default.php
+* default_actions.php => ../layouts/announcement/item/actions/default.php
+* edit.php => ../layouts/announcement/edit/default.php
+* list.php => ../layouts/announcement/list/default.php
+* list_item.php => ../layouts/announcement/row/default.php
+* Rest of the files...
+
+## Delete ./announcement

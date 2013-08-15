@@ -33,7 +33,13 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		$this->display();
+		// Support new layouts
+		$layout = KunenaLayout::factory('Announcement/Item');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		} else {
+			$this->display();
+		}
 	}
 
 	function displayCreate($tpl = null) {
@@ -53,7 +59,13 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		$this->display();
+		// Support new layouts
+		$layout = KunenaLayout::factory('Announcement/Edit')->setLayout('create');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		} else {
+			$this->display();
+		}
 	}
 
 	function displayEdit($tpl = null) {
@@ -73,7 +85,13 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		$this->display();
+		// Support new layouts
+		$layout = KunenaLayout::factory('Announcement/Edit')->setLayout('edit');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		} else {
+			$this->display();
+		}
 	}
 
 	function displayList($tpl = null) {
@@ -96,7 +114,13 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		$this->display();
+		// Support new layouts
+		$layout = KunenaLayout::factory('Announcement/List');
+		if ($layout->getPath()) {
+			echo $layout->setProperties($this->getProperties());
+		} else {
+			$this->display();
+		}
 	}
 
 	function displayItems() {

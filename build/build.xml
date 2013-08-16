@@ -159,7 +159,6 @@
 
 		<!-- Remove Mirage & Crypsis template -->
 		<delete dir="${tmp_dir}/packages/com_kunena/site/template/mirage" />
-		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsis" />
 
 		<!-- Move files needed by the installer -->
 		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />

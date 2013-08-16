@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo KunenaLayout::factory('Message/Item')
+echo $this->subLayout('Message/Item')
 	->set('profile', $this->profile)
 	->set('topic', $this->topic)
 	->set('message', $this->message)

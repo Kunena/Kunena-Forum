@@ -18,7 +18,7 @@ jimport ( 'joomla.document.html.html' );
  */
 class KunenaViewCommon extends KunenaView {
 	public $catid = 0;
-	protected $offline = false;
+	public $offline = false;
 
 	function display($layout = null, $tpl = null) {
 		$this->state = $this->get ( 'State' );

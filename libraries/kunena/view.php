@@ -21,6 +21,7 @@ class KunenaView extends JViewLegacy {
 	public $templatefiles = array();
 	public $teaser = null;
 
+	protected $inLayout = 0;
 	protected $_row = 0;
 
 	public function __construct($config = array()){
@@ -58,6 +59,8 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function displayAll() {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
 		if ($this->me->isAdmin ()) {
 			if ($this->config->board_offline) {
 				$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
@@ -88,6 +91,8 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function displayLayout($layout=null, $tpl = null) {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
 		if ($layout) $this->setLayout ($layout);
 		$view = $this->getName ();
 		$layout = $this->getLayout ();
@@ -135,6 +140,38 @@ class KunenaView extends JViewLegacy {
 		}
 		KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 		return $contents;
+	}
+
+	/**
+	 * Render new layout if available, otherwise continue to the old logic.
+	 *
+	 * @param $layout
+	 * @param $tpl
+	 */
+	public function render($layout, $tpl) {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
+		if (isset($tpl) && $tpl == 'default') $tpl = null;
+		if ($this->embedded) {
+			// Support legacy embedded views.
+			$file = isset($tpl) ? $this->getLayout() . '_' . $tpl : $this->getLayout();
+			foreach ($this->_path['template'] as $path) {
+				$found = !strstr($path, '/com_kunena/') && is_file($path.$file.'.php');
+				if ($found) {
+					$this->display($tpl);
+					return;
+				}
+			}
+		}
+		// Support new layouts.
+		$layout = KunenaLayout::factory($layout);
+		if ($layout->getPath()) {
+			$this->inLayout++;
+			echo $layout->setProperties($this->getProperties())->setLegacy($this)->setLayout($tpl ? $tpl : $this->getLayout());
+			$this->inLayout--;
+		} else {
+			$this->display($tpl);
+		}
 	}
 
 	public function displayModulePosition($position) {
@@ -261,6 +298,8 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function displayError($messages = array(), $code = 404) {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
 		$title = JText::_('COM_KUNENA_ACCESS_DENIED');	// can be overriden
 
 		switch ((int) $code) {
@@ -303,6 +342,8 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function displayNoAccess($errors = array()) {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
 		// Backward compatability
 		$this->displayError($errors, 200);
 	}
@@ -349,6 +390,8 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function displayFormToken() {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
 		echo '[K=TOKEN]';
 	}
 
@@ -358,6 +401,13 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function displayTemplateFile($view, $layout, $template = null) {
+		if ($this->inLayout) {
+			$layout = $this->getLayout();
+			$template = $template ? $template : 'default';
+			list($layout, $template) = KunenaFactory::getTemplate()->mapLegacyView("{$view}/{$layout}_{$template}");
+			return KunenaLayout::factory($layout)->setLayout($template)->setLegacy($this);
+		}
+
 		if (!isset($this->_path['template_'.$view])) {
 			$this->_path['template_'.$view] = $this->_path['template'];
 			foreach ($this->_path['template_'.$view] as &$dir) $dir = preg_replace("#/{$this->_name}/$#", "/{$view}/", $dir);
@@ -388,6 +438,13 @@ class KunenaView extends JViewLegacy {
 	 */
 	public function loadTemplateFile($tpl = null)
 	{
+		if ($this->inLayout) {
+			$view = $this->getName();
+			$layout = $this->getLayout();
+			list($layout, $template) = KunenaFactory::getTemplate()->mapLegacyView("{$view}/{$layout}_{$tpl}");
+			return KunenaLayout::factory($layout)->setLayout($template)->setLegacy($this);
+		}
+
 		KUNENA_PROFILER ? $this->profiler->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
 		// Create the template file name based on the layout
@@ -441,14 +498,16 @@ class KunenaView extends JViewLegacy {
 	}
 
 	final public function poweredBy() {
-			$credits = '<div style="text-align:center">';
-			$credits .= JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits', JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow', array('style'=>'display: inline; visibility: visible; text-decoration: none;'));
-			$credits .= ' <a href="http://www.kunena.org" rel="follow" target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'.JText::_('COM_KUNENA').'</a>';
-			if ($this->ktemplate->params->get('templatebyText')) {
-				$credits .= ' :: <a href ="'. $this->ktemplate->params->get('templatebyLink').'" rel="follow" target="_blank" style="text-decoration: none;">' . $this->ktemplate->params->get('templatebyText') .' '. $this->ktemplate->params->get('templatebyName') .'</a>';
-			}
-			$credits .= '</div>';
-			echo $credits;
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
+		$credits = '<div style="text-align:center">';
+		$credits .= JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits', JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow', array('style'=>'display: inline; visibility: visible; text-decoration: none;'));
+		$credits .= ' <a href="http://www.kunena.org" rel="follow" target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'.JText::_('COM_KUNENA').'</a>';
+		if ($this->ktemplate->params->get('templatebyText')) {
+			$credits .= ' :: <a href ="'. $this->ktemplate->params->get('templatebyLink').'" rel="follow" target="_blank" style="text-decoration: none;">' . $this->ktemplate->params->get('templatebyText') .' '. $this->ktemplate->params->get('templatebyName') .'</a>';
+		}
+		$credits .= '</div>';
+		echo $credits;
 	}
 
 	// Caching
@@ -457,6 +516,8 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function setTitle($title) {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
 		if (!$this->state->get('embedded')) {
 			// Check for empty title and add site name if param is set
 			$title = strip_tags($title);
@@ -473,12 +534,16 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function setKeywords($keywords) {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
 		if (!$this->state->get('embedded')) {
 			if ( !empty($keywords) ) $this->document->setMetadata ( 'keywords', $keywords );
 		}
 	}
 
 	public function setDescription($description) {
+		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+
 		if (!$this->state->get('embedded')) {
 			// TODO: allow translations/overrides
 			$this->document->setMetadata ( 'description',  $description );

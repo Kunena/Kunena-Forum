@@ -141,7 +141,7 @@ document.addEvent('domready', function() {
 		</form>
 	</div>
 </div>
-<div><?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?></div>
+<div><?php echo $this->subLayout('Pagination/List')->set('pagination', $pagination); ?></div>
 
 
 <?php $this->displayWhoIsOnline(); ?>

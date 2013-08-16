@@ -114,7 +114,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->_prepareDocument('default');
 
-		$this->display($tpl);
+		$this->render('Topic/Item', $tpl);
 		$this->topic->markRead ();
 	}
 
@@ -224,7 +224,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	protected function DisplayReply($tpl = null) {
@@ -282,7 +282,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	protected function displayEdit($tpl = null) {
@@ -335,7 +335,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	function displayVote($tpl = null) {
@@ -359,7 +359,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->usersvoted = $this->get('PollUsers');
 		$this->voted = $this->get('MyVotes');
 
-		$this->display($tpl);
+		$this->render('Topic/Vote', $tpl);
 	}
 
 	protected function displayReport($tpl = null) {
@@ -386,7 +386,7 @@ class KunenaViewTopic extends KunenaView {
 			}
 			$this->topic = $this->message->getTopic();
 		}
-		$this->display($tpl);
+		$this->render('Topic/Report', $tpl);
 	}
 
 	protected function displayModerate($tpl = null) {
@@ -452,7 +452,7 @@ class KunenaViewTopic extends KunenaView {
 			if (KunenaError::checkDatabaseError()) return;
 		}
 
-		$this->display($tpl);
+		$this->render('Topic/Moderate', $tpl);
 	}
 
 	function displayPoll() {
@@ -848,6 +848,7 @@ class KunenaViewTopic extends KunenaView {
 			return;
 
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
+		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count ( $this->history );
 		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
 		$userlist = array();

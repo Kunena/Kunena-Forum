@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Category View
  */
 class KunenaViewCategory extends KunenaView {
-	protected $pagination = null;
+	public $pagination = null;
 
 	function displayDefault($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
@@ -44,13 +44,7 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->_prepareDocument('default');
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Category/Item');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display($tpl);
-		}
+		$this->render('Category/Item', $tpl);
 	}
 
 	function displayList($tpl = null) {
@@ -84,13 +78,7 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->_prepareDocument('list');
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Category/Index');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display($tpl);
-		}
+		$this->render('Category/Index', $tpl);
 	}
 
 	function displayUser($tpl = null) {
@@ -105,13 +93,7 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->_prepareDocument('user');
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Category/User');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display($tpl);
-		}
+		$this->render('Category/User', $tpl);
 	}
 
 	function displayManage($tpl) {
@@ -130,20 +112,14 @@ class KunenaViewCategory extends KunenaView {
 		$this->header = $header;
 		$this->setTitle ( $header );
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Category/Manage');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display($tpl);
-		}
+		$this->render('Category/Manage', $tpl);
 	}
 
-	function displayCreate() {
-		$this->displayEdit();
+	function displayCreate($tpl = null) {
+		$this->displayEdit($tpl);
 	}
 
-	function displayEdit() {
+	function displayEdit($tpl = null) {
 		$this->category = $this->get ( 'AdminCategory' );
 		if ($this->category === false) {
 			$this->setError(JText::_('COM_KUNENA_NO_ACCESS'));
@@ -159,13 +135,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->header = $header;
 		$this->setTitle ( $header );
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Category/Edit');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties())->setLayout($this->getLayout());
-		} else {
-			$this->display();
-		}
+		$this->render('Category/Edit', $tpl);
 	}
 
 	function getLastPostLink($category, $content = null, $title = null, $class = null) {

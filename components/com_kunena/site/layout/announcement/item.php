@@ -33,8 +33,4 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 		$contents = $this->subLayout('Announcement/Item/Actions')->setProperties($this->getProperties());
 		return $contents;
 	}
-
-	protected function getButton($link, $name, $scope, $type, $id = null) {
-		return $this->template->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
-	}
 }

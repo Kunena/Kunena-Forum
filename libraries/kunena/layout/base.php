@@ -52,9 +52,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * The paths queue.
 	 *
-	 * @var    SplPriorityQueue
+	 * @var    array
 	 */
-	protected $paths;
+	protected $includePaths;
 
 	/**
 	 * Support for closure variables.
@@ -64,23 +64,16 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	protected $closures = array();
 
 	/**
-	 * Content to be appended after the main output.
-	 *
-	 * @var array
-	 */
-	protected $after = array();
-
-	/**
 	 * Method to instantiate the layout.
 	 *
 	 * @param	string			$name
-	 * @param   SplPriorityQueue  $paths  The paths queue.
+	 * @param   array  $paths  The paths queue.
 	 */
-	public function __construct($name, SplPriorityQueue $paths = null)
+	public function __construct($name, array $paths = null)
 	{
 		// Setup dependencies.
 		$this->name = $name;
-		$this->paths = isset($paths) ? $paths : $this->loadPaths();
+		$this->includePaths = isset($paths) ? $paths : $this->loadPaths();
 	}
 
 	/**
@@ -95,27 +88,71 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		} catch (Exception $e) {
 			// Exceptions aren't allowed in string conversion, log the error and output it as a string.
 			$trace = $e->getTrace();
+			$location = null;
 			foreach ($trace as $caller) {
+				if (!$location && isset($caller['file']) && !strstr($caller['file'], '/libraries/')) $location = $caller;
 				if (isset($caller['class']) && isset($caller['function'])
 					&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__) {
 					break;
 				}
 			}
+			if (!$location) $location = reset($trace);
+			if (isset($caller['file']) && strstr($caller['file'], '/libraries/')) $caller = next($trace);
 
 			$error  = "Fatal Error in layout {$this->name}: {$e->getMessage()}";
-			$error .= " in {$trace[0]['file']} on line {$trace[0]['line']}";
+			$error .= " in {$location['file']} on line {$location['line']}";
 			if (isset($caller['file'])) $error .= " called from {$caller['file']} on line {$caller['line']}";
 			JLog::add($error, JLog::CRITICAL, 'kunena');
 
 			$error = "<b>Fatal Error</b> in layout <b>{$this->name}</b>: {$e->getMessage()}";
 			if (JDEBUG) {
-				$error .= " in <b>{$trace[0]['file']}</b> on line {$trace[0]['line']}<br />";
+				$error .= " in <b>{$location['file']}</b> on line {$location['line']}<br />";
 				if (isset($caller['file'])) $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
 			} else {
 				$error .= '. Please enable debug mode for more information.';
 			}
 			return '<br />'.$error.'<br />';
 		}
+	}
+
+	/**
+	 * Dirty function to debug layout/path errors
+	 *
+	 * @return  string
+	 */
+	public function debugInfo() {
+		$rawPath  = strtolower(str_replace('.', '/', $this->name)) .'/'. $this->layout . '.php';
+
+		$html = "<pre>";
+		$html .= '<strong>Layout:</strong> ' . $this->name . '<br />';
+		$html .= '<strong>Template:</strong> ' . $this->layout . '.php<br />';
+		$html .= '<strong>RAW Layout path:</strong> ' . $rawPath . '<br>';
+		$html .= '<strong>includePaths:</strong> ';
+		$html .= print_r($this->includePaths, true);
+		$html .= '<strong>Checking paths:</strong> <br />';
+
+		foreach ($this->includePaths as $path) {
+			$file = $path .'/'. $this->layout . '.php';;
+
+			if (!file_exists($file)) {
+				$html .= 'NOT exists: ' . $file . '<br />';
+
+				$file = $path . '/default.php';
+				if (!file_exists($file)) {
+					$html .= 'NOT exists: ' . $file . '<br />';
+				} else {
+					$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
+					break;
+				}
+			} else {
+				$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
+				break;
+			}
+		}
+
+		$html .= "</pre>";
+
+		return $html;
 	}
 
 	/**
@@ -129,7 +166,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function render($layout = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->name}'") : null;
+		if (0 && JDEBUG)
+		{
+			echo $this->debugInfo();
+		}
 
 		// Get the layout path.
 		if (!$layout) $layout = $this->getLayout();
@@ -137,7 +177,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 		// Check if the layout path was found.
 		if (!$path) {
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
 			throw new RuntimeException("Layout Path For '{$this->name}:{$layout}' Not Found");
 		}
 
@@ -154,7 +193,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		} catch (Exception $e) {
 			// Flush the contents and re-throw the exception.
 			ob_end_clean();
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
 			throw $e;
 		}
 
@@ -163,11 +201,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			$output = "\n<!-- START {$path} -->\n{$output}\n<!-- END {$path} -->\n";
 		}
 
-		foreach ($this->after as $content) {
-			$output .= (string) $content;
-		}
-
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
 		return $output;
 	}
 
@@ -183,15 +216,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	public function loadTemplate($tpl = null)
 	{
 		return $this->render("{$this->name}_{$tpl}");
-	}
-
-	/**
-	 * Append HTML after the layout content.
-	 *
-	 * @param  string  $content
-	 */
-	public function appendAfter($content) {
-		$this->after[] = $content;
 	}
 
 	/**
@@ -239,7 +263,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 
 		$paths = array();
-		foreach (clone $this->paths as $path) {
+		foreach ($this->includePaths as $path) {
 			$paths[] = $path;
 		}
 		// Find the layout file path.
@@ -252,11 +276,11 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to get the view paths.
 	 *
-	 * @return  SplPriorityQueue  The paths queue.
+	 * @return  array  The paths queue.
 	 */
 	public function getPaths()
 	{
-		return $this->paths;
+		return $this->includePaths;
 	}
 
 	/**
@@ -277,13 +301,26 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to set the view paths.
 	 *
-	 * @param   SplPriorityQueue  $paths  The paths queue.
+	 * @param   string  $path  The paths queue.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.
 	 */
-	public function setPaths(SplPriorityQueue $paths)
+	public function setPath($path)
 	{
-		$this->paths = $paths;
+		array_unshift($this->includePaths, $path);
+
+		return $this;
+	}
+	/**
+	 * Method to set the view paths.
+	 *
+	 * @param   array  $paths  The paths queue.
+	 *
+	 * @return  KunenaLayout  Method supports chaining.
+	 */
+	public function setPaths(array $paths)
+	{
+		$this->includePaths = $paths;
 
 		return $this;
 	}
@@ -339,6 +376,12 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
         return $this->closures[$property]();
 	}
 
+	/**
+	 * @param $name
+	 * @param $arguments
+	 * @return mixed
+	 * @throws InvalidArgumentException
+	 */
 	public function __call($name, $arguments)
 	{
 		throw new InvalidArgumentException(sprintf('Method %s() is not defined', $name));
@@ -397,11 +440,11 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to load the paths queue.
 	 *
-	 * @return  SplPriorityQueue  The paths queue.
+	 * @return  array  The paths queue.
 	 */
 	protected function loadPaths()
 	{
-		return new SplPriorityQueue();
+		return array();
 	}
 
 	/**
@@ -448,7 +491,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 		$app = JFactory::getApplication();
 		// Add all paths for the template overrides.
-		$templatePaths = new SplPriorityQueue();
 		if ($app->isAdmin()) {
 			$template = KunenaFactory::getAdminTemplate();
 		} else {
@@ -456,13 +498,14 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 		$base = 'layouts';
 
+		$templatePaths = array();
 		foreach ($paths as $path) {
 			if (!$path) continue;
 
 			$path = (string) preg_replace('|\\\|', '/', strtolower($path));
 			$lookup = $template->getTemplatePaths("{$base}/{$path}", true);
 			foreach ($lookup as $loc) {
-				$templatePaths->insert($loc, 1);
+				array_unshift($templatePaths, $loc);
 			}
 		}
 

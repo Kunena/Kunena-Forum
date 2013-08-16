@@ -40,7 +40,7 @@ class KunenaViewSearch extends KunenaView {
 
 		$this->_prepareDocument();
 
-		$this->display ();
+		$this->render('Search', $tpl);
 	}
 
 	function displaySearchResults() {

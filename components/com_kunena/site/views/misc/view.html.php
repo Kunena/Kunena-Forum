@@ -32,7 +32,7 @@ class KunenaViewMisc extends KunenaView {
 			$this->body = KunenaHtmlParser::parseBBCode($this->body);
 		}
 
-		$this->display ();
+		$this->render('Page/Custom', $tpl);
 	}
 
 	protected function _prepareDocument(){

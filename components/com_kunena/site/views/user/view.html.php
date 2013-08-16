@@ -47,7 +47,7 @@ class KunenaViewUser extends KunenaView {
 
 		$this->_prepareDocument('list');
 
-		parent::display($tpl);
+		$this->render('User/List', $tpl);
 	}
 
 	function getPaginationObject($maxpages) {
@@ -175,7 +175,8 @@ class KunenaViewUser extends KunenaView {
 		}
 
 		$this->_prepareDocument('common');
-		parent::display();
+		$layout = $this->getLayout() != 'default' ? "User/{$this->getLayout()}" : 'User/Item';
+		$this->render($layout, $tpl);
 	}
 
 	function displayUnapprovedPosts() {

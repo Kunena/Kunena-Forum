@@ -18,9 +18,7 @@ JHtml::_('behavior.tooltip');
 </div>
 <div>
   <div>
-    <table class="<?php
-		echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '';
-		?>">
+    <table>
       <tbody>
         <!-- Kunena specific settings -->
         <tr>

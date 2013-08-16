@@ -33,13 +33,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Announcement/Item');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display();
-		}
+		$this->render('Announcement/Item', $tpl);
 	}
 
 	function displayCreate($tpl = null) {
@@ -59,13 +53,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Announcement/Edit')->setLayout('create');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display();
-		}
+		$this->render('Announcement/Edit', $tpl);
 	}
 
 	function displayEdit($tpl = null) {
@@ -85,13 +73,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Announcement/Edit')->setLayout('edit');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display();
-		}
+		$this->render('Announcement/Edit', $tpl);
 	}
 
 	function displayList($tpl = null) {
@@ -114,13 +96,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Announcement/List');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display();
-		}
+		$this->render('Announcement/List', $tpl);
 	}
 
 	function displayItems() {

@@ -17,38 +17,128 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaLayout extends KunenaLayoutBase
 {
-	public function displayAnnouncement() {
-		// TODO: convert
-		if (KunenaFactory::getConfig()->showannouncement > 0) {
-			echo $this->common->display('announcement');
+	/**
+	 * Content to be appended after the main output.
+	 *
+	 * @var array
+	 */
+	protected $after = array();
+
+	protected $legacy;
+
+	/**
+	 * Append HTML after the layout content.
+	 *
+	 * @param  string  $content
+	 */
+	public function appendAfter($content) {
+		$this->after[] = $content;
+	}
+
+	/**
+	 * Method to render the view.
+	 *
+	 * @param   string  Layout.
+	 *
+	 * @return  string  The rendered view.
+	 *
+	 * @throws  Exception|RunTimeException
+	 */
+	public function render($layout = null)
+	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->name}'") : null;
+
+		try {
+			$output = parent::render($layout);
+			foreach ($this->after as $content) {
+				$output .= (string) $content;
+			}
+		} catch (Exception $e) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
+			throw $e;
+		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
+		return $output;
+	}
+
+	public function setLegacy(KunenaView $view) {
+		$this->legacy = $view;
+
+		return $this;
+	}
+
+	/**
+	 * Add legacy template support.
+	 *
+	 * @param $view
+	 * @param $layout
+	 * @param null $template
+	 * @deprecated 3.1
+	 */
+	public function displayTemplateFile($view, $layout, $template = null) {
+		list($layout, $template) = KunenaFactory::getTemplate()->mapLegacyView("{$view}/{$layout}_{$template}");
+		echo $this->subLayout($layout)->setLayout($template)->setLegacy($this->legacy);
+	}
+
+	/**
+	 * Add legacy template support.
+	 *
+	 * @param $property
+	 * @return mixed
+	 * @throws InvalidArgumentException
+	 * @deprecated 3.1
+	 */
+	public function __get($property)
+	{
+		try {
+			return parent::__get($property);
+		} catch (InvalidArgumentException $e) {
+			if ($this->legacy && $this->__isset($property)) {
+				return $this->legacy->{$property};
+			}
+			throw $e;
 		}
 	}
 
-	public function displayBreadcrumb() {
-		// TODO: convert
-		echo $this->common->display('breadcrumb');
-	}
-
-	public function displayForumJump() {
-		// TODO: convert
-		if (KunenaFactory::getConfig()->enableforumjump) {
-			$this->common->catid = isset($this->category) && !empty($this->category->id) ? $this->category->id : 0;
-			echo $this->common->display('forumjump');
+	/**
+	 * Add legacy template support.
+	 *
+	 * @param $name
+	 * @param $arguments
+	 * @return mixed
+	 * @throws InvalidArgumentException
+	 * @deprecated 3.1
+	 */
+	public function __call($name, $arguments)
+	{
+		try {
+			$result = parent::__call($name, $arguments);
+			return $result;
+		} catch (InvalidArgumentException $e) {
+			$callable = array($this->legacy, $name);
+			if ($this->legacy && is_callable($callable)) {
+				return call_user_func_array($callable, $arguments);
+			}
+			throw $e;
 		}
 	}
 
-	public function displayWhoIsOnline($tpl = null) {
-		// TODO: convert
-		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
-			echo $this->common->display('whosonline');
+	/**
+	 * Add legacy template support.
+	 *
+	 * @param $property
+	 * @return bool
+	 * @deprecated 3.1
+	 */
+	public function __isset($property)
+	{
+		$isset = parent::__isset($property)|| $this->legacy && (isset($this->legacy->{$property}));
+		if (!$isset && $this->legacy) {
+			$properties = $this->legacy->getProperties();
+			return array_key_exists($property, $properties);
 		}
-	}
-
-	public function displayStatistics() {
-		// TODO: convert
-		if (KunenaFactory::getConfig()->showstats > 0) {
-			echo $this->common->display('statistics');
-		}
+		return $isset;
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {

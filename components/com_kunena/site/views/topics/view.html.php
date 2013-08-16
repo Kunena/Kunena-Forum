@@ -34,13 +34,7 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->_prepareDocument('default');
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Topic/List');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display($tpl);
-		}
+		$this->render('Topic/List', $tpl);
 	}
 
 	function displayUser($tpl = null) {
@@ -62,13 +56,7 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->_prepareDocument('user');
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Topic/List')->setLayout('user');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display($tpl);
-		}
+		$this->render('Topic/List', $tpl);
 	}
 
 	function displayPosts($tpl = null) {
@@ -91,13 +79,7 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->_prepareDocument('posts');
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Message/List');
-		if ($layout->getPath()) {
-			echo $layout->setProperties($this->getProperties());
-		} else {
-			$this->display($tpl);
-		}
+		$this->render('Message/List', $tpl);
 	}
 
 	function displayRows() {

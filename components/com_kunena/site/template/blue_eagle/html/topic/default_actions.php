@@ -23,11 +23,12 @@ $goto .= '<a class="kbuttongoto" href="#forum'.$locations[$this->location].'" re
 			<?php echo $goto ?>
 		</td>
 		<td class="klist-actions-forum">
-		<?php if ($this->topicButtons->get('reply') || $this->topicButtons->get('subscribe') || $this->topicButtons->get('favorite') ) : ?>
+		<?php if ($this->topicButtons->get('reply') || $this->topicButtons->get('subscribe') || $this->topicButtons->get('favorite') || $this->topicButtons->get('solved') ) : ?>
 			<div class="kmessage-buttons-row">
 			<?php echo $this->topicButtons->get('reply') ?>
 			<?php echo $this->topicButtons->get('subscribe') ?>
 			<?php echo $this->topicButtons->get('favorite') ?>
+			<?php echo $this->topicButtons->get('solved') ?>
 			</div>
 		<?php endif ?>
 		<?php if ($this->topicButtons->get('undelete') || $this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>

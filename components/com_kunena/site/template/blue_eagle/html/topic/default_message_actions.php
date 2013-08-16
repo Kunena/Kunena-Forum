@@ -59,6 +59,11 @@ if ($this->message->modified_time) {
 	<?php echo $this->messageButtons->get('thankyou'); ?>
 </div>
 <?php endif; ?>
+<?php if($this->messageButtons->get('solved')): ?>
+	<div class="kpost-solved">
+<?php echo $this->messageButtons->get('solved'); ?>
+</div>
+<?php endif; ?>
 <?php if(!empty($this->thankyou)): ?>
 <div class="kmessage-thankyou">
 <?php

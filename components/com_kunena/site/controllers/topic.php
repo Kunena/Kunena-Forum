@@ -904,4 +904,44 @@ class KunenaControllerTopic extends KunenaController {
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS' ) );
 		$this->app->redirect ( $topic->getUrl($this->return, false) );
 	}
+
+	public function solved() {
+		$type = JRequest::getString('task');
+		$this->setSolved($type);
+	}
+
+	public function unsolved() {
+		$type = JRequest::getString('task');
+		$this->setSolved($type);
+	}
+
+	protected function setSolved($type) {
+		if (! JSession::checkToken ('get')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if (!$topic->authorise('solved')) {
+			$this->app->enqueueMessage ( $topic->getError(), 'notice' );
+		} else {
+			 if ( $type=='solved' ) {
+				$topic->icon_id = 8;
+				$topic->subject= JText::_('COM_KUNENA_TOPIC_SOLVED_LABEL_SUBJECT').' '.$topic->subject;
+				$topic->solved=1;
+				$topic->save();
+
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_SOLVED_ADDED_SUCCESS' ) );
+			} else {
+				$topic->icon_id = 0;
+				$topic->subject= str_replace(JText::_('COM_KUNENA_TOPIC_SOLVED_LABEL_SUBJECT'),'', $topic->subject);
+				$topic->solved=0;
+				$topic->save();
+
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_SOLVED_REMOVED_SUCCESS' ) );
+			}
+
+			$this->redirectBack ();
+		}
+	}
 }

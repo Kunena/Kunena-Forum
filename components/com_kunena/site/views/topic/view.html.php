@@ -627,6 +627,12 @@ class KunenaViewTopic extends KunenaView {
 			}
 		}
 
+		// Solved button
+		if ($this->topic->authorise('solved') ) {
+			if ($this->topic->solved) $this->topicButtons->set('solved', $this->getButton ( sprintf($task, 'unsolved'), 'unsolved', 'topic', 'user'));
+			else $this->topicButtons->set('solved', $this->getButton ( sprintf($task, 'solved'), 'solved', 'topic', 'user'));
+		}
+
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));

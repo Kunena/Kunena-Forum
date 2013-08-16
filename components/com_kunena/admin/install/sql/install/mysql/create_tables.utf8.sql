@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 	`ordering` int(11) NOT NULL default '0',
 	`posts` int(11) NOT NULL default '0',
 	`hits` int(11) NOT NULL default '0',
+  `solved` int(11) NOT NULL default '0', 
 	`attachments` int(11) NOT NULL default '0',
 	`poll_id` int(11) NOT NULL default '0',
 	`moved_id` int(11) NOT NULL default '0',

@@ -26,6 +26,7 @@ class TableKunenaTopics extends KunenaTable {
 	public $ordering = null;
 	public $posts = null;
 	public $hits = null;
+	public $solved=null;
 	public $attachments = null;
 	public $poll_id = null;
 	public $moved_id = null;

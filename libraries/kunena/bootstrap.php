@@ -15,6 +15,13 @@ if (!class_exists('JLoader')) return;
 // Define Kunena framework path.
 define('KPATH_FRAMEWORK', __DIR__);
 
+// Register the Joomla compatibility layer.
+if (version_compare(JVERSION, '3', '>')) {
+	JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla3');
+} else {
+	JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla2');
+}
+
 // Register the library base path for Kunena Framework.
 JLoader::registerPrefix('Kunena', KPATH_FRAMEWORK);
 

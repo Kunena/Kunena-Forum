@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
  *
  * @see KunenaRequest
  */
-class KunenaLayoutBase
+class KunenaLayoutBase extends KunenaCompatLayoutBase
 {
 	/**
 	 * Layout name.
@@ -116,21 +116,6 @@ class KunenaLayoutBase
 			}
 			return '<br />'.$error.'<br />';
 		}
-	}
-
-	/**
-	 * Method to escape output.
-	 *
-	 * @param   string  $output  The output to escape.
-	 *
-	 * @return  string  The escaped output.
-	 *
-	 * @see     JView::escape()
-	 */
-	public function escape($output)
-	{
-		// Escape the output.
-		return htmlspecialchars($output, ENT_COMPAT, 'UTF-8');
 	}
 
 	/**
@@ -430,7 +415,7 @@ class KunenaLayoutBase
 	 */
 	public function subLayout($path)
 	{
-		return self::factory($path);
+		return self::factory($path)->setLayout($this->getLayout());
 	}
 
 	/**
@@ -444,7 +429,7 @@ class KunenaLayoutBase
 	 */
 	public function subRequest($path)
 	{
-		return KunenaRequest::factory($path.'/Display');
+		return KunenaRequest::factory($path.'/Display')->set('layout', $this->getLayout());
 	}
 
 	/**

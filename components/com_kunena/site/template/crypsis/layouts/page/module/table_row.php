@@ -9,11 +9,13 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$modules = $this->renderPosition();
+if (!$modules) return;
 ?>
 <!-- Module position: <?php echo $this->position ?> -->
 <tr>
 	<td colspan="<?php echo $this->cols; ?>">
-		MODULE: <?php echo $this->position ?>
-		<?php echo $this->renderPosition(); ?>
+		<?php echo $modules; ?>
 	</td>
 </tr>

@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
-<li id="kreply<?php echo $this->displayMessageField('id') ?>_form" style="display: none">
+<li id="kreply<?php echo $this->displayMessageField('id') ?>_form" class="kreply-form" style="display: none">
   <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" method="post" enctype="multipart/form-data" name="postform" id="postform">
     <input type="hidden" name="task" value="post" />
     <input type="hidden" name="parentid" value="<?php echo $this->displayMessageField('id') ?>" />

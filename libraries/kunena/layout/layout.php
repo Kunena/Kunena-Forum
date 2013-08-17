@@ -62,7 +62,7 @@ class KunenaLayout extends KunenaLayoutBase
 		return $output;
 	}
 
-	public function setLegacy(KunenaView $view) {
+	public function setLegacy(KunenaView $view = null) {
 		$this->legacy = $view;
 
 		return $this;
@@ -82,7 +82,7 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * Add legacy template support.
+	 * Add legacy template support. Overrides the parent class.
 	 *
 	 * @param $property
 	 * @return mixed
@@ -91,13 +91,21 @@ class KunenaLayout extends KunenaLayoutBase
 	 */
 	public function __get($property)
 	{
-		try {
-			return parent::__get($property);
-		} catch (InvalidArgumentException $e) {
-			if ($this->legacy && $this->__isset($property)) {
-				return $this->legacy->{$property};
+		if (!array_key_exists($property, $this->closures)) {
+			if ($this->legacy) {
+				if (isset($this->legacy->{$property})) {
+					return $this->legacy->{$property};
+				}
+				$properties = $this->legacy->getProperties();
+				if (array_key_exists($property, $properties)) {
+					return $this->legacy->{$property};
+				}
 			}
-			throw $e;
+			if (JDEBUG) {
+				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
+			} else {
+				return null;
+			}
 		}
 	}
 
@@ -113,8 +121,8 @@ class KunenaLayout extends KunenaLayoutBase
 	public function __call($name, $arguments)
 	{
 		try {
-			$result = parent::__call($name, $arguments);
-			return $result;
+			return parent::__call($name, $arguments);
+
 		} catch (InvalidArgumentException $e) {
 			$callable = array($this->legacy, $name);
 			if ($this->legacy && is_callable($callable)) {
@@ -133,12 +141,18 @@ class KunenaLayout extends KunenaLayoutBase
 	 */
 	public function __isset($property)
 	{
-		$isset = parent::__isset($property)|| $this->legacy && (isset($this->legacy->{$property}));
-		if (!$isset && $this->legacy) {
-			$properties = $this->legacy->getProperties();
-			return array_key_exists($property, $properties);
-		}
-		return $isset;
+		return parent::__isset($property) || ($this->legacy && (isset($this->legacy->{$property})));
+	}
+
+	/**
+	 * Add legacy template support.
+	 *
+	 * @param   $path
+	 * @return  KunenaLayout
+	 */
+	public function subLayout($path)
+	{
+		return parent::subLayout($path)->setLegacy($this->legacy);
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {

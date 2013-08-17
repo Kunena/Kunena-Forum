@@ -33,10 +33,10 @@ $pagination = $this->getPaginationObject(4);
           <?php endif ?>
         </div>
 		</div>
-		<?php echo KunenaLayout::factory('Topic/Actions')->set('id', $this->topic->id)->set('layout',
+		<?php echo $this->subLayout('Topic/Actions')->set('id', $this->topic->id)->set('layout',
 			$this->layout); ?>
       <?php if ($this->total >1) : ?>
-      <div class="pagination"> <?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?> </div>
+      <div class="pagination"> <?php echo $this->subLayout('Pagination/List')->set('pagination', $pagination); ?> </div>
       <?php endif; ?>
       <div>
         <div>

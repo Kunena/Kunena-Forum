@@ -20,7 +20,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <div id="kforum-head" class="<?php echo isset ( $this->category->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>"> <?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ) ?> </div>
 <?php endif ?>
 <?php $this->displayPoll(); ?>
-<?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_poll'); ?>
+<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_poll'); ?>
 <?php $this->displayTopicActions(); ?>
 <div>
   <div>

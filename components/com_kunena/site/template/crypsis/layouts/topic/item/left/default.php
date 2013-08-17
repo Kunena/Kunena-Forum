@@ -29,4 +29,4 @@ defined ( '_JEXEC' ) or die ();
 	</tbody>
 </table>
 
-<?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_msg_' . $this->mmm); ?>
+<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_msg_' . $this->mmm); ?>

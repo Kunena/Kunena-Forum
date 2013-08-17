@@ -62,7 +62,7 @@ $i=0;
               <td><?php echo $this->galleries; ?></td>
             </tr>
             <tr>
-              <td>
+              <td id="kgallery_avatar_list">
                 <?php
 									$kid = 0;
 									foreach ($this->galleryimg as $avatarimg) : ?>
@@ -76,6 +76,14 @@ $i=0;
           </table>
         </td>
       </tr>
+      <tr>
+      	<td>
+		<?php foreach($this->galleryImagesList as $name=>$gallery): ?>
+			<input type="hidden" id="Kunena_<?php echo $name ?>" name="<?php echo $name ?>" value='<?php echo $gallery ?>' />
+		<?php endforeach; ?>
+		<input type="hidden" id="Kunena_Image_Gallery_URL" name="Kunena_Image_Gallery_URL" value="<?php echo JURI::root().'media/kunena/avatars/gallery' ?>" />
+		</td>
+		</tr>
       <?php endif; ?>
     </table>
   </div>

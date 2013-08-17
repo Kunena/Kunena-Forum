@@ -52,7 +52,6 @@ defined ( '_JEXEC' ) or die ();
 				</table>
 			</div>
 			<div class="pagination pull-right" style="margin:10px 25px 10px 0 ;"><?php echo $this->getPagination (5); ?></div>
-			<div class="clearfix"></div>
 		</div>
 	</div>
 </form>

@@ -1,7 +1,7 @@
 @charset "utf-8";
 /**
 * Kunena Component
-* @package Kunena.Template.Bootstrap
+* @package Kunena.Template.Crypsis
 *
 * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -277,8 +277,8 @@ margin-left:-9px;
 }
 
 .you {
-    float: right;    
-    margin: 5px 20px 5px 45px;         
+    float: right;
+    margin: 5px 20px 5px 45px;
 }
 
 .you::before {
@@ -288,10 +288,6 @@ margin-left:-9px;
 .navbar-inner {
 border:1px solid #E3E3E3;
 }
-.navbar .nav {
-margin:0 20px 10px 10px !important;
-}
-
 #messages li {
   float: left;
   margin-bottom: 30px;
@@ -545,14 +541,9 @@ display: inline-block;
 	height: 12px;
 	vertical-align: middle;
 }
-input {
-width: auto;
-}   
-.icon-unpublish:before {
-    color: #BD362F;
-    content: "J";
+.kreply-form-reply {
+margin-right:5px;
 }
-.icon-publish:before, .icon-save:before, .icon-checkmark:before {
-    color: #51A351;
-    content: "G";
-} 
+input[type='radio'], input[type='checkbox'] {
+margin:4px 3px 0;
+}

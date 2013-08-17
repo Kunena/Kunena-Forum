@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 
 <div class="well well-small"> <span><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kwhoisonline"></a></span>
   <div class="row-fluid column-row">
-    <h2 class="page-header"><span><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE') ?></span></h2>
+    <h2 class="page-header btn-link"><span><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE') ?></span></h2>
     <div class="row-fluid column-row">
       <div class="span12 column-item">
         <div class="krow2">

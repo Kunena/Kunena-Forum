@@ -35,8 +35,8 @@ if (version_compare(JVERSION, '3.0','>')) {
 					<?php if( $this->me->isModerator() ) : ?>
 						<div><a href="<?php echo $this->announcesListLink ?>"><i class="icon-pencil-2"></i> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?></a></div>
 					<?php endif; ?>
-					<?php if (!empty($this->pm_link)) : ?>
-						<div> <a href="<?php echo $this->pm_link ?>" rel="follow"><i class="icon-mail"></i> Inbox: </a> </div>
+					<?php if (!empty($this->privateMessagesURL)) : ?>
+						<div> <a href="<?php echo $this->privateMessagesURL ?>" rel="follow"><i class="icon-mail"></i> <?php echo $this->privateMessagesText?>: </a> </div>
 					<?php endif ?>
 					<div><a href="<?php echo $this->me->getUrl (false, 'edit') ?>"><i class="icon-cog"></i><?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES') ?></a></div>
 					<!-- <li><a href="/help/support"><i class="icon-envelope"></i> Inbox</a></div> -->

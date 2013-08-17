@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
 ?>
-<?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_announcement'); ?>
+<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_announcement'); ?>
 
 <table class="table">
   <tr>

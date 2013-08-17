@@ -169,7 +169,7 @@ window.addEvent('domready', function() {
 									$resStartStop = '0';
 								printf ( JText::_('COM_KUNENA_FORUM_SEARCHRESULTS'), $resStartStop, intval($this->total) );
 								?>
-								<?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?>
+								<?php echo $this->subLayout('Pagination/List')->set('pagination', $pagination); ?>
 							</th>
 						</tr>
 					</tbody>

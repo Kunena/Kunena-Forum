@@ -546,7 +546,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 
 				$contents = trim(KunenaFactory::getProfile()->showProfile($this, $params));
-				if (!$contents) $contents = $this->loadTemplateFile('profile');
+				if (!$contents) $contents = (string) $this->loadTemplateFile('profile');
 				$contents .= implode(' ', $dispatcher->trigger('onKunenaDisplay', array ('topic.profile', $this, $params)));
 
 				// FIXME: enable caching after fixing the issues (also external profile stuff affects this)
@@ -631,7 +631,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
-		return $this->loadTemplateFile('actions');
+		return (string) $this->loadTemplateFile('actions');
 	}
 
 	function displayMessageActions() {
@@ -687,7 +687,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
-		return $this->loadTemplateFile("message_actions");
+		return (string) $this->loadTemplateFile("message_actions");
 	}
 
 	function displayMessage($id, $message, $template=null) {
@@ -780,7 +780,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->msgsuffix = '-new';
 			}
 
-			$contents = $this->loadTemplateFile($template);
+			$contents = (string) $this->loadTemplateFile($template);
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
 			// FIXME: enable caching after fixing the issues
 			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);

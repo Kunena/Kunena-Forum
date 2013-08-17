@@ -66,7 +66,7 @@ $pagination = $this->getPaginationObject(5);
                   <!-- /Bulk Actions --> 
                 </div>
                 <div class="pull-right">
-					<?php echo KunenaLayout::factory('Pagination/List')->set('pagination', $pagination); ?>
+					<?php echo $this->subLayout('Pagination/List')->set('pagination', $pagination); ?>
 				</div>
               </td>
             </tr>

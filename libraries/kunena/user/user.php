@@ -66,7 +66,7 @@ class KunenaUser extends JObject {
 
 	protected $_type = false;
 	protected $_class = false;
-	protected $_allowed = array();
+	protected $_allowed = null;
 	protected $_link = array();
 
 	protected $_exists = false;
@@ -247,17 +247,13 @@ class KunenaUser extends JObject {
 	}
 
 	/**
-	 * @param string $rule
-	 *
-	 * @return mixed
+	 * @return array
 	 */
-	public function getAllowedCategories($rule = 'read') {
-		if (!isset($this->_allowed[$rule])) {
-			$acl = KunenaAccess::getInstance();
-			$allowed = $acl->getAllowedCategories ( $this->userid );
-			$this->_allowed[$rule] = $allowed;
+	public function getAllowedCategories() {
+		if (!isset($this->_allowed)) {
+			$this->_allowed = KunenaAccess::getInstance()->getAllowedCategories($this->userid);
 		}
-		return $this->_allowed[$rule];
+		return $this->_allowed;
 	}
 
 	/**

@@ -500,7 +500,6 @@ class KunenaModelInstall extends JModelLegacy {
 					$this->deleteFolder($dest, $ignore[$dest]);
 					if ($dest == KUNENA_INSTALLER_SITEPATH) {
 						$this->deleteFolder("$dest/template/blue_eagle", array('params.ini'));
-						$this->deleteFolder("$dest/template/mirage", array('params.ini'));
 					}
 				}
 				// Copy new files into folder

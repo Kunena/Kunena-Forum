@@ -593,9 +593,9 @@ class KunenaUser extends JObject {
 				break;
 			case 'birthdate' :
 				if ($this->birthdate) {
-					$date = new JDate ( $this->birthdate );
+					$date = new KunenaDate($this->birthdate);
 					if ($date->format('%Y')<1902) break;
-					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . KunenaDate::getInstance($this->birthdate)->toKunena( 'date', 0 ) . '"></span>';
+					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
 				}
 				break;
 			case 'location' :
@@ -603,7 +603,8 @@ class KunenaUser extends JObject {
 					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . $this->escape ( $this->location ) . '"></span>';
 				break;
 			case 'website' :
-				$url = 'http://' . $this->websiteurl;
+				$url = $this->websiteurl;
+				if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl)) $url = 'http://' . $this->websiteurl;
 				if (! $this->websitename)
 					$websitename = $this->websiteurl;
 				else

@@ -1709,7 +1709,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		// Need to check if we are nested inside a URL code
 		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
-			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" class="fancybox-button" rel="fancybox-button"><img src="'.$fileurl.'"'.$width.' style="max-height:'.$config->imageheight.'px;" alt="" /></a></div>';
+			$layout = KunenaLayout::factory('message/attachment')->setLayout('lightbox');
+			if ($layout->getPath()) return $layout->set('fileurl', $fileurl)->set('width', $width)->set('imageheight', $config->imageheight);
+			else  return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.$width.' style="max-height:'.$config->imageheight.'px;" alt="" /></a></div>';
 		}
 		return '<div class="kmsgimage"><img src="' . $fileurl .'"'. $width .' style="max-height:'.$config->imageheight.'px;" alt="" /></div>';
 	}

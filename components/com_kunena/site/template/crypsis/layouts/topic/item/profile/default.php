@@ -10,4 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo KunenaLayout::factory('User/Profile')->set('user', $this->profile)->setLayout('circle');
+echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('circle');

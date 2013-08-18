@@ -32,9 +32,9 @@ if ($this->message->modified_time) {
 		?>
 	</div>
 	<?php endif; ?>
-		<?php echo KunenaRequest::factory('Message/Actions/Display')->set('mesid', $this->message->id); ?>
+		<?php echo $this->subRequest('Message/Actions')->set('mesid', $this->message->id); ?>
 	</div>
 	</div>
 </div>
 
-<?php echo KunenaLayout::factory('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>
+<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>

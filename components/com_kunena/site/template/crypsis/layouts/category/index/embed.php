@@ -24,12 +24,12 @@ foreach ( $this->sections as $section ) :
   <?php if ($this->me->isAdmin()) : ?>
   <div class="btn-group pull-right"> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-cog"></i> <span class="caret"></span> </a>
     <ul class="dropdown-menu actions">
-      <li> <a href="index.php?option=com_kunena&amp;view=category&amp;layout=create" ><i class="hasTip icon-new tip"></i> New Category</a> </li>
-      <li> <a href="index.php?option=com_kunena&amp;view=category&amp;layout=manage" ><i class="hasTip icon-edit tip"></i> Edit Section</a> </li>
+      <li> <a href="index.php?option=com_kunena&amp;view=category&amp;layout=create" ><i class="hasTip icon-new tip"></i> <?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_CREATECATEGORY') ?></a> </li>
+      <li> <a href="index.php?option=com_kunena&amp;view=category&amp;layout=manage" ><i class="hasTip icon-edit tip"></i> <?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_EDITSECTION') ?></a> </li>
     </ul>
   </div>
   <?php endif; ?>
-  <h2><span><?php echo $this->GetCategoryLink ( $section, $this->escape($section->name) ); ?><a href="" rel="follow"><span class="kicon krss" title="get the latest posts directly to your desktop"></span></a></span></h2>
+  <h2><span><?php echo $this->GetCategoryLink ( $section, $this->escape($section->name) ); ?><a href="" rel="follow"><span class="kicon krss" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a></span></h2>
   <?php if (!empty($section->description)) : ?>
   <div class="ktitle-desc km hidden-phone"> <?php echo KunenaHtmlParser::parseBBCode ( $section->description ); ?> </div>
   <?php endif; ?>
@@ -66,10 +66,10 @@ foreach ( $this->sections as $section ) :
 										}
 										?>
               <?php if ( $this->getMarkReadButtonURL($category->id, $category->numTopics) ): ?>
-              <a href="<?php echo $this->getMarkReadButtonURL($category->id, $category->numTopics) ?>" rel="follow"><span class="kicon kmark-read" title="mark category read"></span></a>
+              <a href="<?php echo $this->getMarkReadButtonURL($category->id, $category->numTopics) ?>" rel="follow"><span class="kicon kmark-read" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_MARKCATEGORYREAD') ?>"></span></a>
               <?php endif; ?>
               <?php if($this->getCategoryRSSURL($category->id)): ?>
-              <a href="<?php echo $this->getCategoryRSSURL($category->id) ?>" rel="follow"><span class="kicon krss-small" title="get the latest posts directly to your desktop"></span></a>
+              <a href="<?php echo $this->getCategoryRSSURL($category->id) ?>" rel="follow"><span class="kicon krss-small" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
               <?php endif; ?>
               </span> </div>
             <?php if (!empty($category->description)) : ?>
@@ -154,6 +154,6 @@ foreach ( $this->sections as $section ) :
   </div>
 </div>
 <!-- Begin: Category Module Position -->
-<?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
+<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 <!-- Finish: Category Module Position -->
 <?php endforeach; ?>

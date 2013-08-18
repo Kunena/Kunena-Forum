@@ -15,6 +15,7 @@
 	<files>
 		<folder>bbcode</folder>
 		<folder>cache</folder>
+		<folder>compat</folder>
 		<folder>controller</folder>
 		<folder>database</folder>
 		<folder>external</folder>

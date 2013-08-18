@@ -21,7 +21,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <?php endif ?>
 <?php
 	$this->displayPoll();
-	echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_poll');
+	echo $this->subLayout('Page/Module')->set('position', 'kunena_poll');
 	$this->displayTopicActions();
 ?>
 <div>

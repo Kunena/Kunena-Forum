@@ -14,7 +14,7 @@ $this->displayAnnouncement ();
 $this->displayBreadcrumb ();
 
 ?>
-<?php echo KunenaLayout::factory('Page/Module')->set('position', 'kunena_announcement'); ?>
+<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_announcement'); ?>
 
 <div class="pull-right hidden-phone" style="margin:-42px 4px 0 0;" >
   <?php $this->displayForumjump(); ?>

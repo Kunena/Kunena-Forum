@@ -365,15 +365,15 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function __get($property)
 	{
-		 if (!array_key_exists($property, $this->closures)) {
-			 if (JDEBUG) {
-			 	throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
-		 	} else {
+		if (!array_key_exists($property, $this->closures)) {
+			if (JDEBUG) {
+				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
+			} else {
 				 return null;
-		 	}
-        }
+			}
+		}
 
-        return $this->closures[$property]();
+		return $this->closures[$property]();
 	}
 
 	/**

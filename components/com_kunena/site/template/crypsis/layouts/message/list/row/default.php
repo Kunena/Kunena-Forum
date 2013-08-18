@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo KunenaLayout::factory('Message/Row')
+echo $this->subLayout('Message/Row')
 	->set('message', $this->message)
 	->set('spacing', !empty($this->spacing))
 	->set('position', 'kunena_message_row' . $this->position)

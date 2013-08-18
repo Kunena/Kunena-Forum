@@ -9,7 +9,7 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>Kunena Team</copyright>
 	<license>GNU/GPL</license>
-	<description>COM_KUNENA_TEMPLATE_BLUE_EAGLE_DESC</description>
+	<description>COM_KUNENA_TEMPLATE_BLUE_EAGLE_GENERAL_DESC</description>
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>
 		<param name="displayMenu" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MENU" description="COM_KUNENA_TEMPLATE_DISPLAY_MENU_DESC">

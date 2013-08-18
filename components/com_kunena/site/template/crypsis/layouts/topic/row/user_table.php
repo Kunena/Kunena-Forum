@@ -50,7 +50,7 @@ if ($this->spacing) : ?>
 			}
 			?>
 		</div>
-		<div<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $topic->getCategory() ) ) ?></div>
+		<div><?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $topic->getCategory() ) ) ?></div>
 		<div title="<?php echo KunenaDate::getInstance($topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' .
 				KunenaDate::getInstance($topic->first_post_time)->toKunena('config_post_dateformat');?>

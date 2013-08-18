@@ -40,6 +40,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		// Template requires Mootools 1.4+ framework
 		$this->loadMootools();
 		JHtml::_('behavior.tooltip');
+		JHtml::_('bootstrap.modal');
 
 		JHtml::_('jquery.framework');
 		JHtml::_('formbehavior.chosen');
@@ -74,12 +75,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 				});
 			');
 		}
-
-		// Toggler language strings
-		JFactory::getDocument()->addScriptDeclaration('// <![CDATA[
-var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
-var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
-// ]]>');
 
 		parent::initialize();
 	}

@@ -3,7 +3,7 @@
 <extension type="package" version="2.5" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>3.0.90-DEV</version>
+	<version>3.0.91-DEV-HMVC</version>
 	<versionname>Internal</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
@@ -17,6 +17,7 @@
 
 	<files folder="packages">
 		<filename type="plugin"    group="system"     id="kunena"      >plg_system_kunena_v@kunenaversion@.zip</filename>
+		<filename type="plugin"    group="content"    id="kunena"      >plg_content_kunena_v@kunenaversion@.zip</filename>
 		<filename type="plugin"    group="quickicon"  id="kunena"      >plg_quickicon_kunena_v@kunenaversion@.zip</filename>
 		<filename type="library"                      id="kunena"      >lib_kunena_v@kunenaversion@.zip</filename>
 		<filename type="file"                         id="kunena_media">kunena_media_v@kunenaversion@.zip</filename>
@@ -46,6 +47,7 @@
 			<dir>libraries/kunena</dir>
 			<dir>plugins/kunena</dir>
 			<dir>plugins/system/kunena</dir>
+			<dir>plugins/content/kunena</dir>
 			<dir>plugins/quickicon/kunena</dir>
 			<dir>media/kunena</dir>
 		</customdirs>
@@ -64,6 +66,7 @@
 			<lang>plg_kunena_kunena</lang>
 			<lang>plg_kunena_uddeim</lang>
 			<lang>plg_system_kunena</lang>
+			<lang>plg_content_kunena</lang>
 			<lang>plg_quickicon_kunena</lang>
 		</langfiles>
 		<extraprefixes>

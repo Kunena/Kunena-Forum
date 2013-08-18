@@ -114,7 +114,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->_prepareDocument('default');
 
-		$this->display($tpl);
+		$this->render('Topic/Item', $tpl);
 		$this->topic->markRead ();
 	}
 
@@ -224,7 +224,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	protected function DisplayReply($tpl = null) {
@@ -282,7 +282,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	protected function displayEdit($tpl = null) {
@@ -335,7 +335,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	function displayVote($tpl = null) {
@@ -359,7 +359,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->usersvoted = $this->get('PollUsers');
 		$this->voted = $this->get('MyVotes');
 
-		$this->display($tpl);
+		$this->render('Topic/Vote', $tpl);
 	}
 
 	protected function displayReport($tpl = null) {
@@ -386,7 +386,7 @@ class KunenaViewTopic extends KunenaView {
 			}
 			$this->topic = $this->message->getTopic();
 		}
-		$this->display($tpl);
+		$this->render('Topic/Report', $tpl);
 	}
 
 	protected function displayModerate($tpl = null) {
@@ -452,7 +452,7 @@ class KunenaViewTopic extends KunenaView {
 			if (KunenaError::checkDatabaseError()) return;
 		}
 
-		$this->display($tpl);
+		$this->render('Topic/Moderate', $tpl);
 	}
 
 	function displayPoll() {
@@ -546,7 +546,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 
 				$contents = trim(KunenaFactory::getProfile()->showProfile($this, $params));
-				if (!$contents) $contents = $this->loadTemplateFile('profile');
+				if (!$contents) $contents = (string) $this->loadTemplateFile('profile');
 				$contents .= implode(' ', $dispatcher->trigger('onKunenaDisplay', array ('topic.profile', $this, $params)));
 
 				// FIXME: enable caching after fixing the issues (also external profile stuff affects this)
@@ -631,7 +631,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
-		return $this->loadTemplateFile('actions');
+		return (string) $this->loadTemplateFile('actions');
 	}
 
 	function displayMessageActions() {
@@ -687,7 +687,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
-		return $this->loadTemplateFile("message_actions");
+		return (string) $this->loadTemplateFile("message_actions");
 	}
 
 	function displayMessage($id, $message, $template=null) {
@@ -780,7 +780,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->msgsuffix = '-new';
 			}
 
-			$contents = $this->loadTemplateFile($template);
+			$contents = (string) $this->loadTemplateFile($template);
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
 			// FIXME: enable caching after fixing the issues
 			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
@@ -818,17 +818,21 @@ class KunenaViewTopic extends KunenaView {
 		}
 	}
 
-	function getPagination($maxpages) {
+	function getPaginationObject($maxpages) {
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
-        $uri = KunenaRoute::normalize(null, true);
-        if ($uri) {
-            $uri->delVar('mesid');
-            $pagination->setUri($uri);
-        }
+		$uri = KunenaRoute::normalize(null, true);
+		if ($uri) {
+			$uri->delVar('mesid');
+			$pagination->setUri($uri);
+		}
 
-        return $pagination->getPagesLinks();
+		return $pagination;
+	}
+
+	function getPagination($maxpages) {
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	// Helper functions
@@ -844,6 +848,7 @@ class KunenaViewTopic extends KunenaView {
 			return;
 
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
+		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count ( $this->history );
 		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
 		$userlist = array();

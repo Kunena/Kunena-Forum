@@ -470,6 +470,27 @@ HTML;
 	}
 
 	/**
+	 * Legacy template support.
+	 *
+	 * @param $search
+	 * @return array
+	 * @deprecated 3.1
+	 */
+	public function mapLegacyView($search) {
+		static $map;
+
+		if (!isset($map)) {
+			$file = $this->getFile('mapping.php');
+			if ($file) {
+				include $file;
+			}
+		}
+		$search = preg_replace('/_(.*)?^/', '', $search);
+		if (isset($map[$search])) return $map[$search];
+		return array($search, 'default');
+	}
+
+	/**
 	 * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
 	 *
 	 * @access	public

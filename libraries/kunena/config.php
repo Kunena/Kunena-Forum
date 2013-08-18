@@ -232,9 +232,16 @@ class KunenaConfig extends JObject {
 
 	public static function getInstance() {
 		static $instance = null;
+
 		if (! $instance) {
-			$instance = new KunenaConfig ();
-			$instance->load ();
+			/** @var JCache|JCacheController $cache */
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$instance = $cache->get('configuration', 'com_kunena');
+			if (!$instance) {
+				$instance = new KunenaConfig();
+				$instance->load();
+			}
+			$cache->store($instance, 'configuration', 'com_kunena');
 		}
 		return $instance;
 	}

@@ -47,13 +47,17 @@ class KunenaViewUser extends KunenaView {
 
 		$this->_prepareDocument('list');
 
-		parent::display($tpl);
+		$this->render('User/List', $tpl);
+	}
+
+	function getPaginationObject($maxpages) {
+		$pagination = new KunenaPagination($this->count, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
+		return $pagination;
 	}
 
 	function getPagination($maxpages) {
-		$pagination = new KunenaPagination($this->count, $this->state->get('list.start'), $this->state->get('list.limit'));
-		$pagination->setDisplayedPages($maxpages);
-		return $pagination->getPagesLinks();
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	protected function displayCommon($tpl = null) {
@@ -171,7 +175,8 @@ class KunenaViewUser extends KunenaView {
 		}
 
 		$this->_prepareDocument('common');
-		parent::display();
+		$layout = $this->getLayout() != 'default' ? "User/{$this->getLayout()}" : 'User/Item';
+		$this->render($layout, $tpl);
 	}
 
 	function displayUnapprovedPosts() {

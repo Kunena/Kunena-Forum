@@ -22,6 +22,11 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1') || !Kunena
 	return;
 }
 
+// Display time it took to create the entire page in the footer.
+$kunena_profiler = KunenaProfiler::instance('Kunena');
+$kunena_profiler->start('Total Time');
+KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
+
 // Prevent direct access to the component if the option has been disabled.
 if (!KunenaConfig::getInstance()->get('access_component', 1)) {
 	$active = JFactory::getApplication()->getMenu()->getActive();
@@ -40,44 +45,52 @@ if (!KunenaConfig::getInstance()->get('access_component', 1)) {
 // Load router
 require_once KPATH_SITE . '/router.php';
 
-// Display time it took to create the entire page in the footer
-$kunena_profiler = KunenaProfiler::instance('Kunena');
-$kunena_profiler->start('Total Time');
-KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
-
 // Initialize Kunena Framework.
 KunenaForum::setup();
 
 // Initialize custom error handlers.
-KunenaError::initialize ();
+KunenaError::initialize();
 
-// Initialize session
-$ksession = KunenaFactory::getSession ( true );
+// Initialize session.
+$ksession = KunenaFactory::getSession(true);
 if ($ksession->userid > 0) {
 	// Create user if it does not exist
-	$kuser = KunenaUserHelper::getMyself ();
-	if (! $kuser->exists ()) {
-		$kuser->save ();
+	$kuser = KunenaUserHelper::getMyself();
+	if (!$kuser->exists()) {
+		$kuser->save();
 	}
 	// Save session
-	if (! $ksession->save ()) {
-		JFactory::getApplication ()->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_SESSION_SAVE_FAILED' ), 'error' );
+	if (!$ksession->save()) {
+		JFactory::getApplication()->enqueueMessage (JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
 	}
 }
 
-// Support legacy urls (they need to be redirected)
-$view = JRequest::getWord ( 'func', JRequest::getWord ( 'view', 'home' ) );
-$task = JRequest::getCmd ( 'task' );
+// Support legacy urls (they need to be redirected).
+$app = JFactory::getApplication();
+$input = $app->input;
+$view = $input->getWord ( 'func', $input->getWord ( 'view', 'home' ) );
+$task = $input->getCmd ( 'task', 'display' );
 
-if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
-	// Load and execute controller
-	$controller = KunenaController::getInstance ();
-	KunenaRoute::cacheLoad ();
-	$controller->execute ( $task );
-	KunenaRoute::cacheStore ();
-	$controller->redirect ();
+// Define controller and execute it.
+$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($task);
+if (class_exists($class, true)) {
+	/** @var KunenaControllerBase $controller */
+	$controller = new $class($input, $app);
+	$layout = $controller->execute();
+}
+
+if (isset($controller) && $layout instanceof KunenaLayout && $layout->content->getPath()) {
+	// Execute HMVC layout.
+	echo $layout;
+} elseif (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
+	// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.
+	$controller = KunenaController::getInstance();
+	KunenaRoute::cacheLoad();
+	$controller->execute($task);
+	KunenaRoute::cacheStore();
+	$controller->redirect();
 } else {
-	// Legacy support
+	// Legacy URL support.
 	$uri = KunenaRoute::current(true);
 	if ($uri) {
 		// FIXME: using wrong Itemid
@@ -90,15 +103,16 @@ if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 // Remove custom error handlers.
 KunenaError::cleanup ();
 
-// Display profiler information
+// Display profiler information.
 $kunena_time = $kunena_profiler->stop('Total Time');
 if (KUNENA_PROFILER) {
 	echo '<div class="kprofiler">';
 	echo "<h3>Kunena Profile Information</h3>";
 	foreach($kunena_profiler->getAll() as $item) {
 		//if ($item->getTotalTime()<($kunena_time->getTotalTime()/20)) continue;
-		if ($item->getTotalTime()<0.002 && $item->calls < 20) continue;
-		echo sprintf ("Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>", $item->name, $item->getInternalTime(), $item->getTotalTime(), $item->calls);
+		//if ($item->getTotalTime()<0.002 && $item->calls < 20) continue;
+		echo sprintf ("Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>", $item->name, $item->getInternalTime(),
+			$item->getTotalTime(), $item->calls);
 	}
 	echo '</div>';
 }

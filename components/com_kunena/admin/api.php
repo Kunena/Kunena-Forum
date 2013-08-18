@@ -36,5 +36,9 @@ if (file_exists($libraryFile)) {
 	require_once $libraryFile;
 }
 
+if (JFactory::getApplication()->isSite()) {
+	JLoader::registerPrefix('ComponentKunenaController', KPATH_SITE.'/controller');
+}
+
 // Kunena has been initialized
 define ( 'KUNENA_LOADED', 1 );

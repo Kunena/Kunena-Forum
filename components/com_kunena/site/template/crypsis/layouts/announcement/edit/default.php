@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 JHtml::_('behavior.formvalidation');
-$this->document->addScriptDeclaration('// <![CDATA[
+$this->addScriptDeclaration('// <![CDATA[
 	function kunenaValidate(f) { return document.formvalidator.isValid(f); }
 // ]]>');
 ?>

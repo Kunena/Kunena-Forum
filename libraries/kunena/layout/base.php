@@ -225,7 +225,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @return mixed
 	 */
 	public function addStyleSheet($filename) {
-		return KunenaFactory::getTemplate()->addStyleSheet ( $filename );
+		return KunenaFactory::getTemplate()->addStyleSheet($filename);
 	}
 
 	/**
@@ -235,7 +235,17 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @return mixed
 	 */
 	public function addScript($filename) {
-		return KunenaFactory::getTemplate()->addScript ( $filename );
+		return KunenaFactory::getTemplate()->addScript($filename);
+	}
+
+	/**
+	 * Add script declaration to the document.
+	 *
+	 * @param $filename
+	 * @return mixed
+	 */
+	public function addScriptDeclaration($content, $type = 'text/javascript') {
+		return KunenaFactory::getTemplate()->addScriptDeclaration($content, $type);
 	}
 
 	/**

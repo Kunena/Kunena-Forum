@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->document->addScriptDeclaration("// <![CDATA[
+$this->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")."';
 // ]]>");
 ?>

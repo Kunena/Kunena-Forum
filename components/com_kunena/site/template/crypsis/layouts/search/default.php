@@ -18,7 +18,7 @@ JHtml::_('dropdown.init');
 $pagination = $this->getPagination(5);
 
 if (0 &&!$this->me->exists()) {
-	$this->document->addScriptDeclaration( "// <![CDATA[
+	$this->addScriptDeclaration( "// <![CDATA[
 window.addEvent('domready', function() {
 	// Attach auto completer to the following ids:
 	new Autocompleter.Request.JSON('kusername', '" . KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&format=raw') . "', { 'postVar': 'search' });

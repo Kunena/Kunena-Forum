@@ -281,6 +281,13 @@ HTML;
 	/**
 	 * Wrapper to addScript
 	 */
+	function addScriptDeclaration($content, $type = 'text/javascript') {
+		return JFactory::getDocument()->addScriptDeclaration($content, $type);
+	}
+
+	/**
+	 * Wrapper to addScript
+	 */
 	function addScript($filename) {
 		$filemin_path = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/media/kunena/$filemin_path")) {

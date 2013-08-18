@@ -480,12 +480,12 @@ HTML;
 		static $map;
 
 		if (!isset($map)) {
-			$file = $this->getFile('mapping.php');
-			if ($file) {
+			$file = JPATH_SITE .'/'. $this->getFile('mapping.php');
+			if (is_file($file)) {
 				include $file;
 			}
 		}
-		$search = preg_replace('/_(.*)?^/', '', $search);
+		$search = rtrim($search, '_');
 		if (isset($map[$search])) return $map[$search];
 		return array($search, 'default');
 	}

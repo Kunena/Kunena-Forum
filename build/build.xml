@@ -159,7 +159,6 @@
 
 		<!-- Remove Mirage & Crypsis template -->
 		<delete dir="${tmp_dir}/packages/com_kunena/site/template/mirage" />
-		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsis" />
 
 		<!-- Move files needed by the installer -->
 		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -332,6 +331,7 @@
 		<language tag="zh-TW" />
 
 		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/packages/plg_system_kunena" />
+		<archive destfile="${build_dir}/packages/plg_content_kunena${str.version}" basedir="${tmp_dir}/packages/plg_content_kunena" />
 		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/packages/plg_quickicon_kunena" />
 		<archive destfile="${build_dir}/packages/lib_kunena${str.version}" basedir="${tmp_dir}/packages/lib_kunena" />
 		<archive destfile="${build_dir}/packages/com_kunena${str.version}" basedir="${tmp_dir}/packages/com_kunena" />

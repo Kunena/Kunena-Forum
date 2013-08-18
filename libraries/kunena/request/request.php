@@ -18,14 +18,14 @@ defined ( '_JEXEC' ) or die ();
  *
  * <code>
  *	// Executes the controller and sets the layout for the view.
- *	echo KunenaRequest::factory('user/login')->execute()->set('layout', 'form');
+ *	echo KunenaRequest::factory('User/Login')->execute()->set('layout', 'form');
  *
  *	// If there are no parameters for the view, this shorthand works also.
- *	echo KunenaRequest::factory('user/registration');
+ *	echo KunenaRequest::factory('User/Registration');
  * </code>
  *
- * Individual controller classes are located in /components/com_kunena/controllers
- * sub-folders eg: controllers/user/login/display.php
+ * Individual controller classes are located in /components/com_kunena/controller
+ * sub-folders eg: controller/user/login/display.php
  *
  * @see KunenaLayout
  */
@@ -34,27 +34,21 @@ class KunenaRequest
 	/**
 	 * Returns controller.
 	 *
-	 * @param   mixed	$path	Controller path.
+	 * @param   string	$path	Controller path.
 	 * @param	JInput	$input
 	 *
 	 * @return  KunenaController
 	 * @throws	InvalidArgumentException
 	 */
 	public static function factory($path, JInput $input = null) {
-		$path = (string) $path;
-		if (!$path) throw new InvalidArgumentException('No controller given.', 404);
+		// Normalize input.
+		$words = ucwords(strtolower(trim(preg_replace('/[^a-z0-9_]+/i', ' ', (string) $path))));
+		if (!$words) throw new InvalidArgumentException('No controller given.', 404);
 
-		// Attempt to load controller class if it doesn't exist.
-		$class = 'KunenaController' . preg_replace('/[^A-Z0-9_]/i', '', $path) . 'Display';
+		// Attempt to load controller.
+		$class = 'ComponentKunenaController' . str_replace(' ', '', $words);
 		if (!class_exists($class)) {
-			$filename = JPATH_BASE . "/components/com_kunena/controllers/{$path}/display.php";
-			if (!is_file($filename)) {
-				throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $path), 404);
-			}
-			require_once $filename;
-		}
-		if (!class_exists($class)) {
-			$class = 'KunenaControllerDisplay';
+			throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $class), 404);
 		}
 
 		// Create controller object.

@@ -53,7 +53,7 @@ foreach ( $this->sections as $section ) :
 									// Show new posts, locked, review
 									echo $this->getCategoryLink($category);
 									?>
-              <span>
+              <span class="kinfo1">
               <?php
 										if ($category->getNewCount()) {
 											echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";

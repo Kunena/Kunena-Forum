@@ -31,7 +31,6 @@ $files = array(
 	'components/com_kunena/site/language/en-GB/en-GB.com_kunena.models.ini',
 	'components/com_kunena/site/language/en-GB/en-GB.com_kunena.templates.ini',
 	'components/com_kunena/site/language/en-GB/en-GB.com_kunena.tpl_blue_eagle.ini',
-	'components/com_kunena/site/language/en-GB/en-GB.com_kunena.tpl_mirage.ini',
 	'components/com_kunena/site/language/en-GB/en-GB.com_kunena.views.ini'
 );
 

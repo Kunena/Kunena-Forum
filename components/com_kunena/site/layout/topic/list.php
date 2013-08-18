@@ -58,11 +58,6 @@ class KunenaLayoutTopicList extends KunenaLayout
 		}
 	}
 
-	function getPagination($maxpages) {
-		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
-		$pagination->setDisplayedPages($maxpages);
-		return $pagination->getPagesLinks();
-	}
 
 	function displayTimeFilter($id = 'kfilter-select-time', $attrib = 'class="kinputbox" onchange="this.form.submit()" size="1"') {
 		// make the select list for time selection

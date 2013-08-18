@@ -79,10 +79,14 @@ if (class_exists($class, true)) {
 	$layout = $controller->execute();
 }
 
+// TODO: enable HMVC later... For now let's use legacy mode at all times.
+/*
 if (isset($controller) && $layout instanceof KunenaLayout && $layout->content->getPath()) {
 	// Execute HMVC layout.
 	echo $layout;
-} elseif (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
+} else
+*/
+if (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
 	// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.
 	$controller = KunenaController::getInstance();
 	KunenaRoute::cacheLoad();

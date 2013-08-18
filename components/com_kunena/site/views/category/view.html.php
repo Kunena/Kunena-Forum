@@ -316,7 +316,7 @@ class KunenaViewCategory extends KunenaView {
 			}
 		}
 
-		$contents = $this->loadTemplateFile('actions');
+		$contents = $this->loadTemplateFile('actions', array('categoryButtons'=>$this->categoryButtons));
 		return $contents;
 	}
 

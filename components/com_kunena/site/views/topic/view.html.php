@@ -19,6 +19,7 @@ class KunenaViewTopic extends KunenaView {
 
 	var $poll = null;
 	var $mmm = 0;
+	var $k = 0;
 	var $cache = true;
 
 	public function displayDefault($tpl = null) {

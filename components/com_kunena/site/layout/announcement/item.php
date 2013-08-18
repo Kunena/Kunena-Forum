@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
-	public function __construct($name, SplPriorityQueue $paths = null) {
+	public function __construct($name, array $paths = null) {
 		parent::__construct($name, $paths);
 		$this->template = KunenaFactory::getTemplate();
 	}

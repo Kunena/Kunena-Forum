@@ -52,8 +52,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/kunena.css' );
 
 		if ( KunenaFactory::getConfig()->pollenabled == 1 ) {
-			JText::script('KUNENA_POLL_OPTION_NAME');
-			JText::script('KUNENA_EDITOR_HELPLINE_OPTION');
+			JText::script('COM_KUNENA_POLL_OPTION_NAME');
+			JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
 			$this->addScript( 'js/kunena.poll.js' );
 		}
 

@@ -402,10 +402,8 @@ class KunenaView extends JViewLegacy {
 
 	public function displayTemplateFile($view, $layout, $template = null) {
 		// HMVC legacy support.
-		$layout = $this->getLayout();
-		$template = $template ? $template : 'default';
-		list($layout, $template) = $this->ktemplate->mapLegacyView("{$view}/{$layout}_{$template}");
-		$hmvc = KunenaLayout::factory($layout)->setLayout($template);
+		list($name, $override) = $this->ktemplate->mapLegacyView("{$view}/{$layout}_{$template}");
+		$hmvc = KunenaLayout::factory($name)->setLayout($override);
 		if ($hmvc->getPath()) {
 			return $hmvc->setLegacy($this);
 		}
@@ -441,20 +439,19 @@ class KunenaView extends JViewLegacy {
 	 */
 	public function loadTemplateFile($tpl = null)
 	{
+		KUNENA_PROFILER ? $this->profiler->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		// HMVC legacy support.
 		$view = $this->getName();
 		$layout = $this->getLayout();
-		list($layout, $template) = $this->ktemplate->mapLegacyView("{$view}/{$layout}_{$tpl}");
-		$hmvc = KunenaLayout::factory($layout)->setLayout($template);
+		list($name, $override) = $this->ktemplate->mapLegacyView("{$view}/{$layout}_{$tpl}");
+		$hmvc = KunenaLayout::factory($name)->setLayout($override);
 		if ($hmvc->getPath()) {
+			KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return $hmvc->setLegacy($this);
 		}
 
-		// Old code.
-		KUNENA_PROFILER ? $this->profiler->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-
 		// Create the template file name based on the layout
-		$layout = $this->getLayout();
 		$file = isset($tpl) ? $layout.'_'.$tpl : $layout;
 
 		if (!isset($this->templatefiles[$file])) {

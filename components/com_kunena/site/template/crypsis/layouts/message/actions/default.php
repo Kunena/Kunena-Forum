@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <?php if (empty($this->message_closed)) : ?>
 
-<div class="btn-toolbar btn-marging">
+<div class="btn-toolbar btn-marging kmessagepadding">
 	<a href="#kreply<?php echo $this->message->displayField('id') ?>_form" role="button" class="btn" data-toggle="modal">Quick Reply</a>
 	<div class="btn-group">
 		<button class="btn" data-toggle="dropdown">Action</button>

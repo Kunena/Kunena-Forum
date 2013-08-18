@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension type="file" version="2.5" method="upgrade">
+	<name>Kunena Language - Hindi (India)</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>translations@kunena.org</authorEmail>
+	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/hi_IN/</authorUrl>
+	<copyright>(C) 2008 - 2013 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<description>Hindi (India) language file for Kunena Forum Component</description>
+
+	<fileset>
+		<files folder="admin" target="administrator/language/hi-IN">
+			<filename>hi-IN.com_kunena.controllers.ini</filename>
+			<filename>hi-IN.com_kunena.ini</filename>
+			<filename>hi-IN.com_kunena.libraries.ini</filename>
+			<filename>hi-IN.com_kunena.models.ini</filename>
+			<filename>hi-IN.com_kunena.sys.ini</filename>
+			<filename>hi-IN.com_kunena.views.ini</filename>
+			<filename>hi-IN.plg_kunena_alphauserpoints.sys.ini</filename>
+			<filename>hi-IN.plg_kunena_community.sys.ini</filename>
+			<filename>hi-IN.plg_kunena_comprofiler.sys.ini</filename>
+			<filename>hi-IN.plg_kunena_gravatar.sys.ini</filename>
+			<filename>hi-IN.plg_kunena_joomla.sys.ini</filename>
+			<filename>hi-IN.plg_kunena_kunena.sys.ini</filename>
+			<filename>hi-IN.plg_kunena_uddeim.sys.ini</filename>
+			<filename>hi-IN.plg_quickicon_kunena.sys.ini</filename>
+			<filename>hi-IN.plg_system_kunena.sys.ini</filename>
+		</files>
+		<files folder="site" target="language/hi-IN">
+			<filename>hi-IN.com_kunena.controllers.ini</filename>
+			<filename>hi-IN.com_kunena.ini</filename>
+			<filename>hi-IN.com_kunena.models.ini</filename>
+			<filename>hi-IN.com_kunena.templates.ini</filename>
+			<filename>hi-IN.com_kunena.tpl_blue_eagle.ini</filename>
+			<filename>hi-IN.com_kunena.views.ini</filename>
+		</files>
+	</fileset>
+</extension>

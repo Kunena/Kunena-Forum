@@ -45,7 +45,7 @@ if ($this->spacing) : ?>
 			?>
 		</div>
 		<div class="hasTooltip">
-			<span class="label label-info">Question</span>
+			<span class="label label-info"><?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION') ?></span>
 			<?php if ($topic->locked != 0) : ?>
 			<span class="label label-important">
 				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED') ?></i>

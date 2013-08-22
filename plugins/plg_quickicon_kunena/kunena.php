@@ -19,9 +19,10 @@ class plgQuickiconKunena extends JPlugin {
 		// Do not load if Kunena version is not supported or KunenaForum isn't detected
 		if (!class_exists('KunenaForum')) return;
 
-		$this->loadLanguage('plg_quickicon_kunena.sys');
-
 		parent::__construct ( $subject, $config );
+
+		// ! Always load language after parent::construct else the name of plugin isn't yet set
+		$this->loadLanguage('plg_quickicon_kunena.sys');
 	}
 
 	/**

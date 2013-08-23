@@ -526,3 +526,108 @@ color:inherit !important;
 border: solid 1px rgba(0, 0, 0, 0.1) !important;
 }
 
+/* MAKE Class Suffix work in Skinner
+/* CSS suffix support for category specific styling (Leave this section at the bottom)
+----------------------------------------------------------------------------------------------- */
+
+/* -red category suffix
+------------------------------------------------------ */
+
+#Kunena .kforum-headerdesc-red {
+color: #000000;
+background: rgb(255,221,221) transparent;
+background: rgba(255,221,221, 0.6);
+}
+#Kunena tr.krow1-red td {
+background: rgb(255,221,221) transparent;
+background: rgba(255,221,221, 0.6);
+}
+#Kunena tr.krow2-red td {
+background: rgb(255,207,207) transparent;
+background: rgba(255,207,207, 0.6);
+}
+
+/* -green category suffix
+----------------------------------------------------- */
+
+#Kunena .kforum-headerdesc-green {
+background: rgb(210,248,219) transparent;
+background: rgba(210,248,219, 0.6);
+}
+#Kunena tr.krow1-green td {
+background: rgb(210,248,219) transparent;
+background: rgba(210,248,219, 0.6);
+
+}
+#Kunena tr.krow2-green td {
+background: rgb(191,229,199) transparent;
+background: rgba(191,229,199, 0.6);
+}
+
+/* -yellow category suffix
+------------------------------------------------------ */
+
+#Kunena .kforum-headerdesc-yellow {
+color: #000000;
+background: rgb(255,255,204) transparent;
+background: rgba(255,255,204, 0.6);
+}
+#Kunena tr.krow1-yellow td {
+background: rgb(255,255,204) transparent;
+background: rgba(255,255,204, 0.6);
+}
+#Kunena tr.krow2-yellow td {
+background: rgb(255,255,170) transparent;
+background: rgba(255,255,170, 0.6);
+}
+
+/* -blue category suffix
+------------------------------------------------------- */
+
+#Kunena .kforum-headerdesc-blue {
+color: #000000;
+background: rgb(195,240,255) transparent;
+background: rgba(195,240,255, 0.6);
+}
+#Kunena tr.krow1-blue td {
+background: rgb(195,240,255) transparent;
+background: rgba(195,240,255, 0.6);
+}
+#Kunena tr.krow2-blue td {
+background: rgb(177,227,255) transparent;
+background: rgba(177,227,255, 0.6);
+}
+
+/* -grey category suffix
+------------------------------------------------------ */
+
+#Kunena .kforum-headerdesc-grey {
+color: #000000;
+background: rgb(229,229,229) transparent;
+background: rgba(229,229,229, 0.6);
+}
+#Kunena tr.krow1-grey td {
+background: rgb(229,229,229) transparent;
+background: rgba(229,229,229, 0.6);
+}
+#Kunena tr.krow2-grey td {
+background: rgb(213,213,213) transparent;
+background: rgba(213,213,213, 0.6);
+}
+
+/* -pink category suffix
+---------------------------------------------------- */
+
+#Kunena .kforum-headerdesc-pink {
+color: #000000;
+background: rgb(255,221,255) transparent;
+background: rbga(255,221,255, 0.6);
+}
+#Kunena tr.krow1-pink td {
+background: rgb(255,221,255) transparent;
+background: rbga(255,221,255, 0.6);
+}
+#Kunena tr.krow2-pink td {
+background: rgb(255,208,255) transparent;
+background: rgba(255,208,255, 0.6);
+}

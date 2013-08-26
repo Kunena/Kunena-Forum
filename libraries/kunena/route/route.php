@@ -289,6 +289,7 @@ abstract class KunenaRoute {
 
 	public static function cleanup() {
 		self::$filtered = array();
+		self::$uris = array();
 	}
 
 	protected static function prepare($uri = null) {
@@ -331,7 +332,7 @@ abstract class KunenaRoute {
 		} elseif ($uri instanceof JUri) {
 			// Nothing to do
 		} else {
-			$uri = JUri::getInstance ( (string)$uri );
+			$uri = new JUri((string) $uri);
 		}
 		$option = $uri->getVar('option');
 		$Itemid = $uri->getVar('Itemid');

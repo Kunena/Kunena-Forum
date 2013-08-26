@@ -94,8 +94,12 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	 * @internal
 	 */
 	public function __construct($properties = null) {
+		if (!empty($this->id)) {
+			$this->_exists = true;
+		} else {
+			parent::__construct($properties);
+		}
 		$this->_db = JFactory::getDBO ();
-		parent::__construct($properties);
 	}
 
 	/**

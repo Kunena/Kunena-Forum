@@ -147,6 +147,28 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Add legacy template support.
 	 *
+	 * @param   string  $property  The name of the property.
+	 * @param   mixed   $value     The value of the property to set.
+	 *
+	 * @return  KunenaLayout  Method supports chaining.
+	 */
+	public function set($property, $value = null)
+	{
+		$isFactory = is_object($value) && method_exists($value, '__invoke');
+		if ($isFactory) {
+			$this->closures[$property] = $value;
+		} elseif ($this->legacy) {
+			$this->legacy->{$property} = $value;
+		} else {
+			$this->{$property} = $value;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Add legacy template support.
+	 *
 	 * @param   $path
 	 * @return  KunenaLayout
 	 */

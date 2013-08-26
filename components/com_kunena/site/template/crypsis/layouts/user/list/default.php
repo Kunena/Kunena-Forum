@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $pagination = $this->getPaginationObject(7);
 
 if ($this->me->exists()) {
-	$this->document->addScriptDeclaration( "// <![CDATA[
+	$this->addScriptDeclaration( "// <![CDATA[
 document.addEvent('domready', function() {
 	// Attach auto completer to the following ids:
 	new Autocompleter.Request.JSON('kusersearch', '".KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&format=raw')."', { 'postVar': 'search' });

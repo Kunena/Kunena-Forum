@@ -155,6 +155,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		}
 		// Fix last post position when user can see unapproved or deleted posts
 		if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
+			KunenaForumMessageHelper::getMessages($lastpostlist);
 			KunenaForumMessageHelper::loadLocation($lastpostlist);
 		}
 

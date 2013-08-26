@@ -12,10 +12,10 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <?php if (empty($this->message_closed)) : ?>
 
-<div class="btn-toolbar btn-marging">
-	<a href="#kreply<?php echo $this->message->displayField('id') ?>_form" role="button" class="btn" data-toggle="modal">Quick Reply</a>
+<div class="btn-toolbar btn-marging kmessagepadding">
+	<a href="#kreply<?php echo $this->message->displayField('id') ?>_form" role="button" class="btn" data-toggle="modal"><?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY') ?></a>
 	<div class="btn-group">
-		<button class="btn" data-toggle="dropdown">Action</button>
+		<button class="btn" data-toggle="dropdown"><?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION') ?></button>
 		<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 		<ul class="dropdown-menu">
 			<li><?php echo $this->messageButtons->get('reply'); ?></li>
@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	<?php if ($this->messageButtons->get('moderate')) : ?>
 	<div class="btn-group">
-		<button class="btn" data-toggle="dropdown">Moderate</button>
+		<button class="btn" data-toggle="dropdown"><?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE') ?></button>
 		<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 		<ul class="dropdown-menu">
 			<li><?php echo $this->messageButtons->get('moderate'); ?></li>

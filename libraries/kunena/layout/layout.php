@@ -107,6 +107,8 @@ class KunenaLayout extends KunenaLayoutBase
 				return null;
 			}
 		}
+
+		return $this->closures[$property]();
 	}
 
 	/**

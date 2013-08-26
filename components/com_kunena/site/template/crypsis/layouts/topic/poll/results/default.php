@@ -51,6 +51,18 @@ $row = 0;
 		<a href="<?php echo $this->getPollURL('vote', $this->topic->id, $this->category->id);?>"> <?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?> </a>
 	<?php endif; ?>
 	<?php if( $this->me->isModerator($this->topic->getCategory()) ) : ?>
-		<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&id={$this->topic->id}&catid={$this->category->id}&pollid={$this->poll->id}&task=resetvotes&".JSession::getFormToken() .'=1') ?>"><?php echo JText::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?></a>
+		<div class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?></h3>
+			</div>
+			<div class="modal-body">
+				<p><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn"><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?></a>
+				<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&id={$this->topic->id}&catid={$this->category->id}&pollid={$this->poll->id}&task=resetvotes&".JSession::getFormToken() .'=1') ?>" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?></a>
+			</div>
+		</div>
 	<?php endif; ?>
 </div>

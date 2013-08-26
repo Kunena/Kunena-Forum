@@ -77,6 +77,10 @@ class KunenaViewCommon extends KunenaView {
 	function displayForumJump($tpl = null) {
 		if ($this->offline) return;
 
+		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$cache = JFactory::getCache('com_kunena', 'output');
+		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template')) return;
+
 		$options = array ();
 		$options [] = JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
 		$cat_params = array ('sections'=>1, 'catid'=>0);
@@ -87,6 +91,8 @@ class KunenaViewCommon extends KunenaView {
 			return $result;
 		}
 		echo $result;
+
+		$cache->end();
 	}
 
 	function displayBreadcrumb($tpl = null) {

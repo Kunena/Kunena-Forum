@@ -167,12 +167,14 @@ abstract class KunenaRoute {
 	}
 
 	public static function cacheLoad() {
+		// FIXME: Experimental caching.
+		if (!KunenaConfig::getInstance()->get('cache_url')) return;
+
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$user = KunenaUserHelper::getMyself();
 		$cache = self::getCache();
 		// TODO: can use viewlevels instead of userid
-		// FIXME: enable caching after fixing the issues
-		$data = false; // $cache->get($user->userid, 'com_kunena.route');
+		$data = $cache->get($user->userid, 'com_kunena.route.v1');
 		if ($data !== false) {
 			list(self::$subtree, self::$uris) = unserialize($data);
 		}
@@ -180,14 +182,16 @@ abstract class KunenaRoute {
 	}
 
 	public static function cacheStore() {
+		// FIXME: Experimental caching.
+		if (!KunenaConfig::getInstance()->get('cache_url')) return;
+
 		if (!self::$urisSave) return;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$user = KunenaUserHelper::getMyself();
 		$data = array(self::$subtree, self::$uris);
 		$cache = self::getCache();
 		// TODO: can use viewlevels instead of userid
-		// FIXME: enable caching after fixing the issues
-		//$cache->store(serialize($data), $user->userid, 'com_kunena.route');
+		$cache->store(serialize($data), $user->userid, 'com_kunena.route.v1');
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
@@ -289,6 +293,7 @@ abstract class KunenaRoute {
 
 	public static function cleanup() {
 		self::$filtered = array();
+		self::$uris = array();
 	}
 
 	protected static function prepare($uri = null) {
@@ -331,7 +336,7 @@ abstract class KunenaRoute {
 		} elseif ($uri instanceof JUri) {
 			// Nothing to do
 		} else {
-			$uri = JUri::getInstance ( (string)$uri );
+			$uri = new JUri((string) $uri);
 		}
 		$option = $uri->getVar('option');
 		$Itemid = $uri->getVar('Itemid');
@@ -345,8 +350,10 @@ abstract class KunenaRoute {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return false;
 		}
+
 		// Support legacy URIs
-		if ($uri->getVar('func')) {
+		$legacy_urls = self::$config->get('legacy_urls', 1);
+		if ($legacy_urls && $uri->getVar('func')) {
 			$result = KunenaRouteLegacy::convert($uri);
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			if (!$result) return false;
@@ -355,47 +362,24 @@ abstract class KunenaRoute {
 		// Check URI
 		switch ($uri->getVar('view', 'home')) {
 			case 'announcement':
-				KunenaRouteLegacy::convert($uri);
-				$r = array();
+				if ($legacy_urls) KunenaRouteLegacy::convert($uri);
 				break;
+
 			case 'category':
-				$r = array('catid', 'limitstart', 'limit');
-				break;
 			case 'common':
-				$r = array();
-				break;
 			case 'credits':
-				$r = array();
-				break;
 			case 'home':
-				$r = array();
-				break;
 			case 'misc':
-				$r = array();
-				break;
 			case 'search':
-				$r = array('q', 'titleonly', 'searchuser', 'starteronly', 'exactname', 'replyless',
-					'replylimit', 'searchdate', 'beforeafter', 'sortby', 'order', 'childforums', 'catids',
-					'show', 'limitstart', 'limit');
-				break;
 			case 'statistics':
-				$r = array();
-				break;
 			case 'topic':
-				$r = array('catid', 'id', 'mesid', 'limitstart', 'limit');
-				break;
 			case 'topics':
-				$r = array('mode', 'userid', 'sel', 'limitstart', 'limit');
-				break;
 			case 'user':
-				$r = array('userid');
-				break;
 			case 'users':
-				$r = array('search', 'limitstart', 'limit');
 				break;
+
 			default:
-				$result = KunenaRouteLegacy::convert($uri);
-				if (!$result) {
+				if (!$legacy_urls || !KunenaRouteLegacy::convert($uri)) {
 					KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 					return false;
 				}
@@ -409,17 +393,17 @@ abstract class KunenaRoute {
 		if (self::$search === false) {
 			$user = KunenaUserHelper::getMyself();
 			$language = JFactory::getDocument()->getLanguage();
-			$cache = self::getCache();
+			self::$search = false;
 
-			// FIXME: enable caching after fixing the issues
-			self::$search = false; //unserialize($cache->get('search', "com_kunena.route.{$language}.{$user->userid}"));
+			if (KunenaConfig::getInstance()->get('cache_mid')) {
+				// FIXME: Experimental caching.
+				$cache = self::getCache();
+				self::$search = unserialize($cache->get('search', "com_kunena.route.v1.{$language}.{$user->userid}"));
+			}
+
 			if (self::$search === false) {
 				self::$search['home'] = array();
 				foreach ( self::$menu as $item ) {
-					// Joomla! 1.5:
-					if (! is_object ( $item ) || (isset($item->published) && $item->published < 1 ))
-						continue;
-
 					// Do not add menu items for other languages
 					if (isset($item->language) && $item->language  != '*' && strtolower($item->language) != strtolower($language))
 						continue;
@@ -433,8 +417,7 @@ abstract class KunenaRoute {
 						self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
 					}
 				}
-				// FIXME: enable caching after fixing the issues
-				//$cache->store(serialize(self::$search), 'search', "com_kunena.route.{$language}.{$user->userid}");
+				if (isset($cache)) $cache->store(serialize(self::$search), 'search', "com_kunena.route.v1.{$language}.{$user->userid}");
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

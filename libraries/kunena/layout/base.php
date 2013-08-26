@@ -99,12 +99,12 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			if (!$location) $location = reset($trace);
 			if (isset($caller['file']) && strstr($caller['file'], '/libraries/')) $caller = next($trace);
 
-			$error  = "Fatal Error in layout {$this->name}: {$e->getMessage()}";
+			$error  = "Rendering Error in layout {$this->name}: {$e->getMessage()}";
 			$error .= " in {$location['file']} on line {$location['line']}";
 			if (isset($caller['file'])) $error .= " called from {$caller['file']} on line {$caller['line']}";
 			JLog::add($error, JLog::CRITICAL, 'kunena');
 
-			$error = "<b>Fatal Error</b> in layout <b>{$this->name}</b>: {$e->getMessage()}";
+			$error = "<b>Rendering Error</b> in layout <b>{$this->name}</b>: {$e->getMessage()}";
 			if (JDEBUG) {
 				$error .= " in <b>{$location['file']}</b> on line {$location['line']}<br />";
 				if (isset($caller['file'])) $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
@@ -177,7 +177,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 		// Check if the layout path was found.
 		if (!$path) {
-			throw new RuntimeException("Layout Path For '{$this->name}:{$layout}' Not Found");
+			throw new RuntimeException("Layout '{$this->name}:{$layout}' Not Found");
 		}
 
 		try {
@@ -225,7 +225,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @return mixed
 	 */
 	public function addStyleSheet($filename) {
-		return KunenaFactory::getTemplate()->addStyleSheet ( $filename );
+		return KunenaFactory::getTemplate()->addStyleSheet($filename);
 	}
 
 	/**
@@ -235,7 +235,17 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @return mixed
 	 */
 	public function addScript($filename) {
-		return KunenaFactory::getTemplate()->addScript ( $filename );
+		return KunenaFactory::getTemplate()->addScript($filename);
+	}
+
+	/**
+	 * Add script declaration to the document.
+	 *
+	 * @param $filename
+	 * @return mixed
+	 */
+	public function addScriptDeclaration($content, $type = 'text/javascript') {
+		return KunenaFactory::getTemplate()->addScriptDeclaration($content, $type);
 	}
 
 	/**
@@ -339,7 +349,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		if ($isFactory) {
 			$this->closures[$property] = $value;
 		} else {
-			$this->$property = $value;
+			$this->{$property} = $value;
 		}
 
 		return $this;

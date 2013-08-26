@@ -16,7 +16,7 @@ jimport('joomla.error.profiler');
  *
  * All SEF URLs are formatted like this:
  *
- * http://site.com/menuitem/1-category-name/10-subject/[view]/[layout]/[param1]-value1/[param2]-value2?param3=value3&param4=value4
+ * http://site.com/menuitem/category/10-subject/[view]/[layout]/[param1]-value1/[param2]-value2?param3=value3&param4=value4
  *
  * - If catid exists, category will always be in the first segment
  * - If there is no catid, second segment for message will not be used (param-value: id-10)
@@ -80,7 +80,7 @@ function KunenaBuildRoute(&$query) {
 	// We may have catid also in the menu item (it will not be in URI)
 	$numeric = !empty ( $menuitem->query ['catid'] );
 
-	// Support URIs like: /forum/12-my_category
+	// Support URIs like: /forum/category
 	if (!empty ( $query ['catid'] ) && ($view == 'category' || $view == 'topic' || $view == 'home')) {
 		// TODO: ensure that we have view=category/topic
 		$catid = ( int ) $query ['catid'];
@@ -98,7 +98,7 @@ function KunenaBuildRoute(&$query) {
 		unset ( $query ['catid'] );
 	}
 
-	// Support URIs like: /forum/12-category/123-topic
+	// Support URIs like: /forum/category/123-topic
 	if (!empty ( $query ['id'] ) && $numeric) {
 		$id = (int) $query ['id'];
 		if ($id) {
@@ -125,13 +125,13 @@ function KunenaBuildRoute(&$query) {
 		$segments [] = $view;
 	}
 
-	// Support URIs like: /forum/12-category/123-topic/reply
+	// Support URIs like: /forum/category/123-topic/reply
 	if (!empty ( $query ['layout'] )) {
 		// Use filtered value
 		$segments [] = (string) preg_replace( '/[^a-z]/', '', $query ['layout'] );
 	}
 
-	// Support URIs like: /forum/12-category/123-topic/reply/124
+	// Support URIs like: /forum/category/123-topic/reply/124
 	if (isset ( $query ['mesid'] ) && $numeric) {
 		$segments [] = (int) $query ['mesid'];
 		unset ( $query ['mesid'] );

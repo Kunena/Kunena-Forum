@@ -26,7 +26,7 @@ $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 ?>
 
-<div class="modal hide fade" id="kreply<?php echo $message->displayField('id') ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: 0; right: -10px; width:auto; margin:0; z-index: 1;">
+<div class="modal hide fade" id="kreply<?php echo $message->displayField('id') ?>_form" class="kreply-form" data-backdrop="false" style="position: relative; top: 10px; left: 0; right: -10px; width:auto; margin:0; z-index: 1;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>Reply to <?php echo $author->getLink() ?></h3>

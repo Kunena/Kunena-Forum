@@ -66,7 +66,7 @@ class KunenaUser extends JObject {
 
 	protected $_type = false;
 	protected $_class = false;
-	protected $_allowed = array();
+	protected $_allowed = null;
 	protected $_link = array();
 
 	protected $_exists = false;
@@ -247,17 +247,13 @@ class KunenaUser extends JObject {
 	}
 
 	/**
-	 * @param string $rule
-	 *
-	 * @return mixed
+	 * @return array
 	 */
-	public function getAllowedCategories($rule = 'read') {
-		if (!isset($this->_allowed[$rule])) {
-			$acl = KunenaAccess::getInstance();
-			$allowed = $acl->getAllowedCategories ( $this->userid );
-			$this->_allowed[$rule] = $allowed;
+	public function getAllowedCategories() {
+		if (!isset($this->_allowed)) {
+			$this->_allowed = KunenaAccess::getInstance()->getAllowedCategories($this->userid);
 		}
-		return $this->_allowed[$rule];
+		return $this->_allowed;
 	}
 
 	/**
@@ -597,9 +593,9 @@ class KunenaUser extends JObject {
 				break;
 			case 'birthdate' :
 				if ($this->birthdate) {
-					$date = new JDate ( $this->birthdate );
+					$date = new KunenaDate($this->birthdate);
 					if ($date->format('%Y')<1902) break;
-					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . KunenaDate::getInstance($this->birthdate)->toKunena( 'date', 0 ) . '"></span>';
+					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
 				}
 				break;
 			case 'location' :
@@ -607,7 +603,8 @@ class KunenaUser extends JObject {
 					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . $this->escape ( $this->location ) . '"></span>';
 				break;
 			case 'website' :
-				$url = 'http://' . $this->websiteurl;
+				$url = $this->websiteurl;
+				if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl)) $url = 'http://' . $this->websiteurl;
 				if (! $this->websitename)
 					$websitename = $this->websiteurl;
 				else

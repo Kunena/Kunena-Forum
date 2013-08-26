@@ -24,7 +24,7 @@ JHtml::_('behavior.tooltip');
 			<li><span class="kicon-profile kicon-profile-location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>:</strong> <?php echo $this->locationlink; ?></li>
 			<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
 			<li><span class="kicon-profile kicon-profile-gender-<?php echo $this->genderclass; ?>"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong> <?php echo $this->gender; ?></li>
-			<li class="bd"><span class="kicon-profile kicon-profile-birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong> <span title="<?php echo KunenaDate::getInstance($this->profile->birthdate)->toKunena('ago', 0); ?>"><?php echo KunenaDate::getInstance($this->profile->birthdate)->toKunena('date', 0); ?></span>
+			<li class="bd"><span class="kicon-profile kicon-profile-birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong> <span title="<?php echo KunenaDate::getInstance($this->profile->birthdate)->toKunena('ago', 'GMT'); ?>"><?php echo KunenaDate::getInstance($this->profile->birthdate)->toKunena('date', 'GMT'); ?></span>
 			<!--  <a href="#" title=""><span class="bday-remind"></span></a> -->
 			</li>
 		</ul>
@@ -41,7 +41,7 @@ JHtml::_('behavior.tooltip');
 				<?php endif; ?>
 				<?php if (!empty($this->profile->websiteurl)): ?>
 					<?php // FIXME: we need a better way to add http/https ?>
-					<li><span class="kicon-profile kicon-profile-website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename); ?></a></li>
+					<li><span class="kicon-profile kicon-profile-website"></span><a href="<?php echo $this->escape($this->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText(trim($this->profile->websitename) ? $this->profile->websitename : $this->websiteurl); ?></a></li>
 				<?php endif; ?>
 			</ul>
 		<?php endif;?>

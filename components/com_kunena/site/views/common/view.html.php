@@ -34,16 +34,9 @@ class KunenaViewCommon extends KunenaView {
 		if (empty($this->html)) {
 			$this->body = KunenaHtmlParser::parseBBCode($this->body);
 		}
-		// Support new layouts
-		$layout = KunenaLayout::factory('Page/Custom');
-		if ($layout->getPath()) {
-			$result = $layout->setProperties($this->getProperties());
-		}  else {
-			// Fall back to old template file.
-			$result = $this->loadTemplateFile($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
+		$result = $this->loadTemplateFile($tpl);
+		if (JError::isError($result)) {
+			return $result;
 		}
 		echo $result;
 	}
@@ -68,16 +61,9 @@ class KunenaViewCommon extends KunenaView {
 				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
 				$this->showdate = $this->announcement->showdate;
 
-				// Support new layouts
-				$layout = KunenaLayout::factory('Page/Announcement');
-				if ($layout->getPath()) {
-					$result = $layout->setProperties($this->getProperties());
-				}  else {
-					// Fall back to old template file.
-					$result = $this->loadTemplateFile($tpl);
-					if (JError::isError($result)) {
-						return $result;
-					}
+				$result = $this->loadTemplateFile($tpl);
+				if (JError::isError($result)) {
+					return $result;
 				}
 				echo $result;
 			} else {
@@ -91,23 +77,22 @@ class KunenaViewCommon extends KunenaView {
 	function displayForumJump($tpl = null) {
 		if ($this->offline) return;
 
+		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$cache = JFactory::getCache('com_kunena', 'output');
+		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template')) return;
+
 		$options = array ();
 		$options [] = JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
 		$cat_params = array ('sections'=>1, 'catid'=>0);
 		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Page/Forumjump');
-		if ($layout->getPath()) {
-			$result = $layout->setProperties($this->getProperties());
-		}  else {
-			// Fall back to old template file.
-			$result = $this->loadTemplateFile($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
+		$result = $this->loadTemplateFile($tpl);
+		if (JError::isError($result)) {
+			return $result;
 		}
 		echo $result;
+
+		$cache->end();
 	}
 
 	function displayBreadcrumb($tpl = null) {
@@ -118,7 +103,7 @@ class KunenaViewCommon extends KunenaView {
 		$view = JRequest::getWord ( 'view', 'default' );
 		$layout = JRequest::getWord ( 'layout', 'default' );
 
-		$pathway = $this->app->getPathway();
+		$this->breadcrumb = $pathway = $this->app->getPathway();
 		$active = $this->app->getMenu ()->getActive ();
 
 		if (empty($this->pathway)) {
@@ -167,16 +152,9 @@ class KunenaViewCommon extends KunenaView {
 			if ($item->link) $this->pathway[] = $item;
 		}
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Page/Breadcrumb');
-		if ($layout->getPath()) {
-			$result = $layout->setProperties($this->getProperties())->set('breadcrumb', $pathway);
-		}  else {
-			// Fall back to old template file.
-			$result = $this->loadTemplateFile($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
+		$result = $this->loadTemplateFile($tpl, array('pathway'=>$this->pathway));
+		if (JError::isError($result)) {
+			return $result;
 		}
 		echo $result;
 	}
@@ -223,16 +201,10 @@ class KunenaViewCommon extends KunenaView {
 
 		$this->usersUrl = $this->getUserlistURL('');
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Page/Whoisonline');
-		if ($layout->getPath()) {
-			$result = $layout->setProperties($this->getProperties());
-		}  else {
-			// Fall back to old template file.
-			$result = $this->loadTemplateFile($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
+		// Fall back to old template file.
+		$result = $this->loadTemplateFile($tpl);
+		if (JError::isError($result)) {
+			return $result;
 		}
 		echo $result;
 
@@ -256,16 +228,9 @@ class KunenaViewCommon extends KunenaView {
 		$this->userlistLink = $this->getUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
 		$this->moreLink = $this->getStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;');
 
-		// Support new layouts
-		$layout = KunenaLayout::factory('Page/Statistics');
-		if ($layout->getPath()) {
-			$result = $layout->setProperties($this->getProperties());
-		}  else {
-			// Fall back to old template file.
-			$result = $this->loadTemplateFile($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
+		$result = $this->loadTemplateFile($tpl);
+		if (JError::isError($result)) {
+			return $result;
 		}
 		echo $result;
 		$cache->end();
@@ -289,16 +254,9 @@ class KunenaViewCommon extends KunenaView {
 				$this->rss = $this->getRSSLink ( $this->getIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
 			}
 		}
-		// Support new layouts
-		$layout = KunenaLayout::factory('Page/Footer');
-		if ($layout->getPath()) {
-			$result = $layout->setProperties($this->getProperties());
-		}  else {
-			// Fall back to old template file.
-			$result = $this->loadTemplateFile($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
+		$result = $this->loadTemplateFile($tpl);
+		if (JError::isError($result)) {
+			return $result;
 		}
 		echo $result;
 	}

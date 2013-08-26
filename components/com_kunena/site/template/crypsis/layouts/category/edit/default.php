@@ -9,7 +9,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-JFactory::getDocument()->addScriptDeclaration("
+$this->addScriptDeclaration("
 function submitbutton(pressbutton)
 {
 	var form = document.adminForm;

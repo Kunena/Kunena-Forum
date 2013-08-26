@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 echo $this->subLayout('Page/MenuBar');
 echo $this->subLayout('Page/Module')->set('position', 'kunena_top');
 
-	// Display current view/layout
+// Display current view/layout
 echo $this->content;
 
 echo $this->subLayout('Page/Breadcrumb')->set('breadcrumb', $this->breadcrumb);

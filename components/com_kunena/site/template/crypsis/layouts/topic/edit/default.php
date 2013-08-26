@@ -14,12 +14,12 @@ JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.keepalive');
 
-$this->document->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
+$this->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
 
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
-$this->document->addScriptDeclaration('window.addEvent(\'domready\', function() {
+$this->addScriptDeclaration('window.addEvent(\'domready\', function() {
 	if ( typeof pollcategoriesid != \'undefined\' ) {
 		var catid = $(\'kcategory_poll\').get(\'value\');
 		if ( pollcategoriesid[catid] !== undefined ) {

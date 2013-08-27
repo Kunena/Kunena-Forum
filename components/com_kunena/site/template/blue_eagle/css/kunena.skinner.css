@@ -40,11 +40,8 @@
 	border-bottom:1px solid rgba(0, 0, 0, 0.1);
 }
 #Kunena div.kblock {
-	border-bottom-color: rgba(0, 0, 0, 0.2);
-	border-top-color: rgba(0, 0, 0, 0.2);
-	border-left-color: rgba(0, 0, 0, 0.2);
-	border-right-color: rgba(0, 0, 0, 0.2);
-	background-color: rgba(0, 0, 0, 0.01);
+    border-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.01);
 }
 #Kunena .kblock div.kheader {
 	border-top: 1px solid;
@@ -136,14 +133,12 @@
 #Kunena select:hover {
     background:  0 0 no-repeat;
 	background-color:transparent !important;
-	border:1px solid;
-	border-color:rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 
 }
 #Kunena option {
-	background-color: rgba(0, 0, 0, 0.01);
-	background: none;
-	color: inherit;
+    background: rgba(0, 0, 0, 0.01) none;
+    color: inherit;
 }
 #Kunena .button,
 #Kunena .kbutton {
@@ -158,8 +153,7 @@
 #Kunena .kfile-input-textbox {
 	background:  0 0 no-repeat;
 	background-color:transparent !important;
-	border:1px solid;
-	border-color:rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 #Kunena .kbutton:hover,
 #Kunena .kbutton:focus {
@@ -192,9 +186,8 @@
 }
 #Kunena .klist-top,
 #Kunena .klist-bottom {
-	background-color: rgba(0, 0, 0, 0.01);
-	background:none;
-	border-color:rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.01) none;
+    border-color:rgba(0, 0, 0, 0.2);
 }
 #Kunena .klist-markallcatsread {
 	border-color: rgba(0, 0, 0, 0.2);
@@ -243,9 +236,8 @@
 	background-color: rgba(0, 0, 0, 0.01);
 }
 #Kunena fieldset {
-	background-color: rgba(255, 255, 255, .05);
-	border-color: rgba(255, 255, 255, .1);
-	background-image: none;
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .05) none;
 }
 #Kunena div#ksearchresult div.kresult-title {
 	border-bottom: 0 none;
@@ -335,7 +327,7 @@
 	border-top: 0 none;
 }
 #Kunena .kreply-form .inputbox {
-	background-color: none;
+	background-color: transparent;
 	border: 1px solid;
 }
 #Kunena div.kmsgtext-article,
@@ -378,8 +370,7 @@
 #Kunena #kpostmessage tr.krow2 td.kcol-ktopicicons td	{
 	background:  0 0 no-repeat;
 	background-color:transparent !important;
-	border:1px solid;
-	border-color:rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 #Kunena #kpostmessage tr.krow1 .kpostbuttonset td.kposthint {
 	background: rgba(255, 255, 255, 0.2);
@@ -446,8 +437,7 @@
 #Kunena #kprofilebox-toggle,
 #Kunena #kpost-message .invalid,
 #lbImage {
-	border:1px solid;
-	border-color:rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 #Kunena div.kavatar-lg { 
 	border: 0 none;
@@ -526,3 +516,94 @@ color:inherit !important;
 border: solid 1px rgba(0, 0, 0, 0.1) !important;
 }
 
+/* MAKE Class Suffix work in Skinner
+/* CSS suffix support for category specific styling (Leave this section at the bottom)
+----------------------------------------------------------------------------------------------- */
+
+/* -red category suffix
+------------------------------------------------------ */
+
+#Kunena .kforum-headerdesc-red {
+color: #000000;
+
+    background: rgba(255,221,221, 0.6);
+}
+#Kunena tr.krow1-red td {
+
+    background: rgba(255,221,221, 0.6);
+ }
+#Kunena tr.krow2-red td {
+
+    background: rgba(255,207,207, 0.6);
+ }
+
+/* -green category suffix
+----------------------------------------------------- */
+
+#Kunena .kforum-headerdesc-green {
+background: rgba(210,248,219, 0.6);
+ }
+#Kunena tr.krow1-green td {
+background: rgba(210,248,219, 0.6);
+
+ }
+#Kunena tr.krow2-green td {
+background: rgba(191,229,199, 0.6);
+ }
+
+/* -yellow category suffix
+------------------------------------------------------ */
+
+#Kunena .kforum-headerdesc-yellow {
+color: #000000;
+background: rgba(255,255,204, 0.6);
+}
+#Kunena tr.krow1-yellow td {
+
+ background: rgba(255,255,204, 0.6);
+ }
+#Kunena tr.krow2-yellow td {
+background: rgba(255,255,170, 0.6);
+ }
+
+/* -blue category suffix
+------------------------------------------------------- */
+
+#Kunena .kforum-headerdesc-blue {
+    color: #000000;
+    background: rgba(195,240,255, 0.6);
+}
+#Kunena tr.krow1-blue td {
+    background: rgba(195,240,255, 0.6);
+ }
+#Kunena tr.krow2-blue td {
+    background: rgba(177,227,255, 0.6);
+ }
+
+/* -grey category suffix
+------------------------------------------------------ */
+
+#Kunena .kforum-headerdesc-grey {
+    color: #000000;
+    background: rgba(229,229,229, 0.6);
+}
+#Kunena tr.krow1-grey td {
+    background: rgba(229,229,229, 0.6);
+ }
+#Kunena tr.krow2-grey td {
+    background: rgba(213,213,213, 0.6);
+ }
+
+/* -pink category suffix
+---------------------------------------------------- */
+
+#Kunena .kforum-headerdesc-pink {
+    color: #000000;
+    background: rgba(255,221,255, 0.6);
+}
+#Kunena tr.krow1-pink td {
+    background: rgba(255,221,255, 0.6);
+ }
+#Kunena tr.krow2-pink td {
+    background: rgba(255,208,255, 0.6);
+ }

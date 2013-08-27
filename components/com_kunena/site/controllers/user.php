@@ -470,8 +470,31 @@ class KunenaControllerUser extends KunenaController {
 		fputs($fp, "Content-length: ".strlen($data)."\n" );
 		fputs($fp, "Connection: close\n\n" );
 		fputs($fp, $data);
+		// Create a buffer which holds the response
+		$response = '';
+		// Read the response
+		while (!feof($fp))
+		{
+			$response .= fread($fp, 1024);
+		}
+		// The file pointer is no longer needed. Close it
 		fclose($fp);
-		return true;
+
+		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
+		{
+			// Report accepted. There is no need to display the reason
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+			return true;
+		}
+		else
+		{
+			// Report failed or refused
+			$reasons = array();
+			preg_match('/<p>.*<\/p>/', $response, $reasons);
+			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])));
+			return false;
+		}
 	}
 
 	public function delfile() {

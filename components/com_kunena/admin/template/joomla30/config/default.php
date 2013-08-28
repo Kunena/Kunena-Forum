@@ -35,6 +35,7 @@ JHtml::_('dropdown.init');
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#tab_basics" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASICS'); ?></a></li>
 							<li><a href="#tab_frontend" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_FRONTEND'); ?></a></li>
+							<li><a href="#tab_modules" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_MODULES'); ?></a></li>
 							<li><a href="#tab_users" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_USERS'); ?></a></li>
 							<li><a href="#tab_security" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_SECURITY'); ?></a></li>
 							<li><a href="#tab_avatars" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_AVATARS'); ?></a></li>
@@ -114,11 +115,6 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK') ?></td>
 												<td><?php echo $this->lists ['version_check'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?></td>
-												<td><?php echo $this->lists ['time_to_create_page'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE_DESC') ?></td>
 											</tr>
 										</tbody>
 									</table>
@@ -203,16 +199,6 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH') ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_HISTORY') ?></td>
-												<td><?php echo $this->lists ['showhistory'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_A_HISTORY_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_HISTLIM') ?></td>
-												<td><input type="text" name="cfg_historylimit" value="<?php echo $this->escape($this->config->historylimit) ?>" /></td>
-												<td><?php echo JText::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
-											</tr>
-											<tr>
 												<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT') ?></td>
 												<td><?php echo $this->lists ['post_dateformat'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_DESC') ?></td>
@@ -226,11 +212,6 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_('COM_KUNENA_A_SHOWNEW') ?></td>
 												<td><?php echo $this->lists ['shownew'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_SHOWNEW_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT') ?></td>
-												<td><?php echo $this->lists ['showannouncement'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT') ?></td>
@@ -385,7 +366,52 @@ JHtml::_('dropdown.init');
 									</table>
 								</fieldset>
 							</div>
-
+							<div class="tab-pane" id="tab_modules">
+								<fieldset>
+									<legend><?php echo JText::_('COM_KUNENA_A_MODULES') ?></legend>
+									<table class="table table-striped">
+										<thead>
+										<tr>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+											<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr>
+											<td><?php echo JText::_('COM_KUNENA_SHOWWHOIS') ?></td>
+											<td><?php echo $this->lists ['showwhoisonline'] ?></td>
+											<td><?php echo JText::_('COM_KUNENA_SHOWWHOISDESC') ?></td>
+										</tr>
+										<tr>
+											<td><?php echo JText::_('COM_KUNENA_SHOWSTATS') ?></td>
+											<td><?php echo $this->lists ['showstats'] ?></td>
+											<td><?php echo JText::_('COM_KUNENA_SHOWSTATSDESC') ?></td>
+										</tr>
+										<tr>
+											<td><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT') ?></td>
+											<td><?php echo $this->lists ['showannouncement'] ?></td>
+											<td><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT_DESC') ?></td>
+										</tr>
+										<tr>
+											<td><?php echo JText::_('COM_KUNENA_A_HISTORY') ?></td>
+											<td><?php echo $this->lists ['showhistory'] ?></td>
+											<td><?php echo JText::_('COM_KUNENA_A_HISTORY_DESC') ?></td>
+										</tr>
+										<tr>
+											<td><?php echo JText::_('COM_KUNENA_A_HISTLIM') ?></td>
+											<td><input type="text" name="cfg_historylimit" value="<?php echo $this->escape($this->config->historylimit) ?>" /></td>
+											<td><?php echo JText::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
+										</tr>
+										<tr>
+											<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?></td>
+											<td><?php echo $this->lists ['time_to_create_page'] ?></td>
+											<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE_DESC') ?></td>
+										</tr>
+										</tbody>
+									</table>
+								</fieldset>
+							</div>
 							<div class="tab-pane" id="tab_users">
 								<fieldset>
 									<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
@@ -1112,16 +1138,6 @@ JHtml::_('dropdown.init');
 										</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_SHOWWHOIS') ?></td>
-												<td><?php echo $this->lists ['showwhoisonline'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_SHOWWHOISDESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_SHOWSTATS') ?></td>
-												<td><?php echo $this->lists ['showstats'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_SHOWSTATSDESC') ?></td>
-											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_STATSGENERAL') ?></td>
 												<td><?php echo $this->lists ['showgenstats'] ?></td>

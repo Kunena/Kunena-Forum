@@ -43,6 +43,9 @@
     border-color: rgba(0, 0, 0, 0.2);
     background-color: rgba(0, 0, 0, 0.01);
 }
+
+
+
 #Kunena .kblock div.kheader {
     border-top: 1px solid;
     border-left: 1px solid;
@@ -136,10 +139,12 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
 
 }
+
 #Kunena option {
     background: rgba(0, 0, 0, 0.01) none;
     color: inherit;
 }
+
 #Kunena .button,
 #Kunena .kbutton {
     border-color: rgba(0, 0, 0, 0.2);
@@ -155,6 +160,7 @@
     background-color:transparent !important;
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 #Kunena .kbutton:hover,
 #Kunena .kbutton:focus {
     border-color: rgba(0, 0, 0, 0.2);
@@ -189,6 +195,7 @@
     background: rgba(0, 0, 0, 0.01) none;
     border-color:rgba(0, 0, 0, 0.2);
 }
+
 #Kunena .klist-markallcatsread {
     border-color: rgba(0, 0, 0, 0.2);
     background-color: rgba(0, 0, 0, 0.01);
@@ -242,6 +249,7 @@
 #Kunena div#ksearchresult div.kresult-title {
     border-bottom: 0 none;
 }
+
 #Kunena div#ksearchresult div.resultcat {
     border-top: 0 none;
 }
@@ -372,6 +380,7 @@
     background-color:transparent !important;
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 #Kunena #kpostmessage tr.krow1 .kpostbuttonset td.kposthint {
     background: rgba(255, 255, 255, 0.2);
     border:0 none;
@@ -439,6 +448,7 @@
 #lbImage {
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 #Kunena div.kavatar-lg {
     border: 0 none;
     background: transparent;
@@ -510,8 +520,8 @@ ul.autocompleter-choices,
 #main a:hover {
     background-color: transparent !important;
     color:inherit !important;
-}
 
+}
 #Kunena tr, #Kunena td {
     border: solid 1px rgba(0, 0, 0, 0.1) !important;
 }
@@ -526,29 +536,29 @@ ul.autocompleter-choices,
 #Kunena .kforum-headerdesc-red {
     color: #000000;
 
-    background: rgba(255,221,221, 0.6);
+    background: rgba(255,221,221, 0.3);
 }
 #Kunena tr.krow1-red td {
 
-    background: rgba(255,221,221, 0.6);
+    background: rgba(255,221,221, 0.3);
 }
 #Kunena tr.krow2-red td {
 
-    background: rgba(255,207,207, 0.6);
+    background: rgba(255,207,207, 0.3);
 }
 
 /* -green category suffix
 ----------------------------------------------------- */
 
 #Kunena .kforum-headerdesc-green {
-    background: rgba(210,248,219, 0.6);
+    background: rgba(210,248,219, 0.3);
 }
 #Kunena tr.krow1-green td {
-    background: rgba(210,248,219, 0.6);
+    background: rgba(210,248,219, 0.3);
 
 }
 #Kunena tr.krow2-green td {
-    background: rgba(191,229,199, 0.6);
+    background: rgba(191,229,199, 0.3);
 }
 
 /* -yellow category suffix
@@ -556,14 +566,14 @@ ul.autocompleter-choices,
 
 #Kunena .kforum-headerdesc-yellow {
     color: #000000;
-    background: rgba(255,255,204, 0.6);
+    background: rgba(255,255,204, 0.3);
 }
 #Kunena tr.krow1-yellow td {
 
-    background: rgba(255,255,204, 0.6);
+    background: rgba(255,255,204, 0.3);
 }
 #Kunena tr.krow2-yellow td {
-    background: rgba(255,255,170, 0.6);
+    background: rgba(255,255,170, 0.3);
 }
 
 /* -blue category suffix
@@ -571,13 +581,13 @@ ul.autocompleter-choices,
 
 #Kunena .kforum-headerdesc-blue {
     color: #000000;
-    background: rgba(195,240,255, 0.6);
+    background: rgba(195,240,255, 0.3);
 }
 #Kunena tr.krow1-blue td {
-    background: rgba(195,240,255, 0.6);
+    background: rgba(195,240,255, 0.3);
 }
 #Kunena tr.krow2-blue td {
-    background: rgba(177,227,255, 0.6);
+    background: rgba(177,227,255, 0.3);
 }
 
 /* -grey category suffix
@@ -585,13 +595,13 @@ ul.autocompleter-choices,
 
 #Kunena .kforum-headerdesc-grey {
     color: #000000;
-    background: rgba(229,229,229, 0.6);
+    background: rgba(229,229,229, 0.3);
 }
 #Kunena tr.krow1-grey td {
-    background: rgba(229,229,229, 0.6);
+    background: rgba(229,229,229, 0.3);
 }
 #Kunena tr.krow2-grey td {
-    background: rgba(213,213,213, 0.6);
+    background: rgba(213,213,213, 0.3);
 }
 
 /* -pink category suffix
@@ -599,11 +609,11 @@ ul.autocompleter-choices,
 
 #Kunena .kforum-headerdesc-pink {
     color: #000000;
-    background: rgba(255,221,255, 0.6);
+    background: rgba(255,221,255, 0.3);
 }
 #Kunena tr.krow1-pink td {
-    background: rgba(255,221,255, 0.6);
+    background: rgba(255,221,255, 0.3);
 }
 #Kunena tr.krow2-pink td {
-    background: rgba(255,208,255, 0.6);
+    background: rgba(255,208,255, 0.3);
 }

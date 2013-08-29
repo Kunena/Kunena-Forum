@@ -80,7 +80,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 				'list'=>'reply');
 
 		// need special style for buttons in drop-down list
-		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'unsubscribe', 'favorite', 'sticky', 'lock', 'moderate', 'undelete', 'permdelete' );
+		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete' );
 
 		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");

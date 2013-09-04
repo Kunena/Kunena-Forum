@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 				<ul class="kteam">
 					<?php foreach ($this->memberList as $member) : ?>
 					<li class="credits-teammember">
-						<a href="<?php echo $member['url'] ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']) ?></a> - <?php echo $member['title'] ?>
+						<?php echo $this->escape($member['name']) ?> - <?php echo $member['title'] ?>
 					</li>
 					<?php endforeach ?>
 				</ul>

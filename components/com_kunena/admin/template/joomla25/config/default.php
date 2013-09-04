@@ -116,6 +116,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['time_to_create_page'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CONFIG_LABEL_KUNENA_BACKLINK') ?></td>
+														<td><?php echo $this->lists ['kunena_backlink'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIG_LABEL_KUNENA_BACKLINK_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>

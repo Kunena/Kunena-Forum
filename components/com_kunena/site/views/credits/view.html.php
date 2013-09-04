@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaViewCredits extends KunenaView {
 	function displayDefault($tpl = null) {
 
-		$this->intro = JText::sprintf('COM_KUNENA_CREDITS_INTRO', 'http://www.kunena.org/team');
+		$this->intro = JText::_('COM_KUNENA_CREDITS_INTRODUCTION');
 
 		$this->memberList = array(
 				array('name'=>'Matias Griese', 'url'=>'http://www.kunena.org/forum/profile/63-matias',
@@ -45,8 +45,8 @@ class KunenaViewCredits extends KunenaView {
 					'title'=>JText::_('COM_KUNENA_CREDITS_FOUNDER')),
 
 		);
-		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
-			'https://www.transifex.com/projects/p/Kunena', 'http://www.kunena.org',
+		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS_FOR_ALL',
+			'https://www.transifex.com/projects/p/Kunena',
 			'https://github.com/Kunena/Kunena-2.0/graphs/contributors');
 
 		$this->_prepareDocument();

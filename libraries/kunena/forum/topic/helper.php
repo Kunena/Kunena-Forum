@@ -92,6 +92,7 @@ abstract class KunenaForumTopicHelper {
 	 * @return KunenaForumTopic[]
 	 */
 	static public function getTopics($ids = false, $authorise='read') {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($ids === false) {
 			return self::$_instances;
 		} elseif (is_array ($ids) ) {
@@ -108,6 +109,7 @@ abstract class KunenaForumTopicHelper {
 			}
 		}
 
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $list;
 	}
 

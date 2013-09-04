@@ -201,7 +201,9 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 * @return string
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null) {
-		return KunenaRoute::getCategoryUrl($category ? $category : $this, $xhtml);
+		$category = $category ? KunenaForumCategoryHelper::get($category) : $this;
+		if (!$category->exists()) return '';
+		return KunenaRoute::getCategoryUrl($category, $xhtml);
 	}
 
 	/**

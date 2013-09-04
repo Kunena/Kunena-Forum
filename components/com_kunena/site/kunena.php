@@ -72,34 +72,35 @@ $view = $input->getWord('func', $input->getWord('view', 'home'));
 $subview = $input->getWord('layout', 'default');
 $task = $input->getCmd('task', 'display');
 
-// Define controller and execute it.
-$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);
-if (class_exists($class, true)) {
-	/** @var KunenaControllerBase $controller */
-	$controller = new $class($input, $app);
-} else {
-	$controller = new KunenaControllerApplicationDisplay($input, $app);
-}
-$layout = $controller->execute();
-if ($layout->content->getPath()) {
-	// Execute HMVC layout.
-	echo $layout;
 
-} elseif (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
-	// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.
-	$controller = KunenaController::getInstance();
-	KunenaRoute::cacheLoad();
-	$controller->execute($task);
-	KunenaRoute::cacheStore();
-	$controller->redirect();
-} else {
-	// Legacy URL support.
-	$uri = KunenaRoute::current(true);
-	if ($uri) {
-		// FIXME: using wrong Itemid
-		JFactory::getApplication ()->redirect (KunenaRoute::_($uri, false));
+try {
+	// Define HMVC controller and execute it.
+	/** @var KunenaControllerApplicationDisplay $controller */
+	$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);
+	$controller = class_exists($class) ? new $class($input, $app) : new KunenaControllerApplicationDisplay($input, $app);
+
+	// Execute HMVC layout.
+	echo $controller->execute();
+
+} catch (Exception $e) {
+
+	// Execute old MVC.
+	if (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
+		// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.
+		$controller = KunenaController::getInstance();
+		KunenaRoute::cacheLoad();
+		$controller->execute($task);
+		KunenaRoute::cacheStore();
+		$controller->redirect();
 	} else {
-		return JError::raiseError( 404, "Kunena view '{$view}' not found" );
+		// Legacy URL support.
+		$uri = KunenaRoute::current(true);
+		if ($uri) {
+			// FIXME: using wrong Itemid
+			JFactory::getApplication ()->redirect (KunenaRoute::_($uri, false));
+		} else {
+			return JError::raiseError( 404, "Kunena view '{$view}' not found" );
+		}
 	}
 }
 

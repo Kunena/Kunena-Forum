@@ -79,6 +79,30 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
+	 * Set the object properties based on a named array/hash.
+	 *
+	 * @param   mixed  $properties  Either an associative array or another object.
+	 *
+	 * @return  KunenaControllerDisplay  Method supports chaining.
+	 *
+	 * @see     set()
+	 * @throws \InvalidArgumentException
+	 */
+	public function setProperties($properties)
+	{
+		if (!is_array($properties) && !is_object($properties)) {
+			throw new \InvalidArgumentException('Parameter should be either array or an object.');
+		}
+
+		foreach ((array) $properties as $k => $v) {
+			// Use the set function which might be overridden.
+			if ($k[0] != "\0") $this->$k = $v;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Shortcut for $this->input->set()
 	 *
 	 * @param $key
@@ -87,7 +111,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function set($key, $value)
 	{
-		$this->input->set($key, (string) $value);
+		$this->input->set($key, $value);
 		return $this;
 	}
 }

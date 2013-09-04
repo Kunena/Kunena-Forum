@@ -68,25 +68,24 @@ if ($ksession->userid > 0) {
 // Support legacy urls (they need to be redirected).
 $app = JFactory::getApplication();
 $input = $app->input;
-$view = $input->getWord ( 'func', $input->getWord ( 'view', 'home' ) );
-$task = $input->getCmd ( 'task', 'display' );
+$view = $input->getWord('func', $input->getWord('view', 'home'));
+$subview = $input->getWord('layout', 'default');
+$task = $input->getCmd('task', 'display');
 
 // Define controller and execute it.
-$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($task);
+$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);
 if (class_exists($class, true)) {
 	/** @var KunenaControllerBase $controller */
 	$controller = new $class($input, $app);
-	$layout = $controller->execute();
+} else {
+	$controller = new KunenaControllerApplicationDisplay($input, $app);
 }
-
-// TODO: enable HMVC later... For now let's use legacy mode at all times.
-/*
-if (isset($controller) && $layout instanceof KunenaLayout && $layout->content->getPath()) {
+$layout = $controller->execute();
+if ($layout->content->getPath()) {
 	// Execute HMVC layout.
 	echo $layout;
-} else
-*/
-if (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
+
+} elseif (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
 	// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.
 	$controller = KunenaController::getInstance();
 	KunenaRoute::cacheLoad();

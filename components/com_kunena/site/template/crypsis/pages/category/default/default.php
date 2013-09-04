@@ -1,8 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Layout.Category.Item.Actions
+ * @package Kunena.Template.Crypsis
+ * @subpackage Pages.Search
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,6 +10,5 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaLayoutCategoryItemActions extends KunenaLayout
-{
-}
+echo $this->subRequest('Category/List');
+echo $this->subRequest('Category/Topics');

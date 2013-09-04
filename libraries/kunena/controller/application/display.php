@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-abstract class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
+class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var KunenaLayout
@@ -36,6 +36,13 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 	 * @var JDocument
 	 */
 	protected $document;
+
+	protected function display() {
+		// Display layout with given parameters.
+		$content = KunenaLayout::factory("{$this->input->getCmd('view')}/{$this->input->getCmd('layout')}", 'pages')
+			->set('input', $this->input);
+		return $content;
+	}
 
 	public function execute() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
@@ -85,6 +92,7 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 		// Load language files.
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.templates');
+		KunenaFactory::loadLanguage('com_kunena.views');
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaConfig::getInstance();

@@ -10,20 +10,18 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-
-<div class="well well-small"> <span><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kannouncement"></a></span>
-  <h2 class="page-header"><?php echo JHtml::_('kunenaforum.link', $this->annListUrl, $this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'), null, 'follow'); ?></h2>
-  <div class="row-fluid column-row">
-    <div class="span12 column-item">
-      <?php if ($this->showdate) : ?>
-      <div><?php echo $this->announcement->displayField('created', 'date_today') ?></div>
-      <?php endif; ?>
-      <div> <?php echo $this->announcement->displayField('sdescription') ?>
-        <?php if (!empty($this->announcement->description)) : ?>
-        ...<br />
-        <?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), JText::_('COM_KUNENA_ANN_READMORE'), null, 'follow'); ?>
-        <?php endif; ?>
-      </div>
-    </div>
-  </div>
+<div class="alert alert-success">
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
+	<h3>
+		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), $this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'), null, 'follow'); ?>
+		<?php if ($this->announcement->showdate) : ?>
+		<small>(<?php echo $this->announcement->displayField('created', 'date_today') ?>)</small>
+		<?php endif; ?>
+	</h3>
+	<div>
+		<?php echo $this->announcement->displayField('sdescription') ?>
+		<?php if (!empty($this->announcement->description)) : ?>
+		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), JText::_('COM_KUNENA_ANN_READMORE'), null, 'follow'); ?>
+		<?php endif; ?>
+	</div>
 </div>

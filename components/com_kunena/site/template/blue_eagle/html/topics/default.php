@@ -15,34 +15,34 @@ $this->displayAnnouncement ();
 <!-- Module position: kunena_announcement -->
 <?php $this->displayModulePosition ( 'kunena_announcement' ) ?>
 <table class="klist-actions">
-	<tr>
-		<td class="klist-actions-info-all">
-			<strong><?php echo intval($this->total) ?></strong>
-			<?php echo JText::_('COM_KUNENA_TOPICS')?>
-		</td>
+    <tr>
+        <td class="klist-actions-info-all">
+            <strong><?php echo intval($this->total) ?></strong>
+            <?php echo JText::_('COM_KUNENA_TOPICS')?>
+        </td>
 
-		<td class="klist-times-all">
-			<form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
-			<?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
-			</form>
-		</td>
+        <td class="klist-times-all hidden-phone">
+            <form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
+                <?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
+            </form>
+        </td>
 
-		<td class="klist-jump-all visible-desktop"><?php $this->displayForumJump () ?></td>
+        <td class="klist-jump-all hidden-phone"><?php $this->displayForumJump () ?></td>
 
-		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
-	</tr>
+        <td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
+    </tr>
 </table>
 
 <?php $this->displayTemplateFile('topics', 'default', 'embed'); ?>
 
 <table class="klist-actions">
-	<tr>
-		<td class="klist-actions-info-all">
-			<strong><?php echo intval($this->total) ?></strong>
-			<?php echo JText::_('COM_KUNENA_TOPICS')?>
-		</td>
-		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
-	</tr>
+    <tr>
+        <td class="klist-actions-info-all">
+            <strong><?php echo intval($this->total) ?></strong>
+            <?php echo JText::_('COM_KUNENA_TOPICS')?>
+        </td>
+        <td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
+    </tr>
 </table>
 
 <?php

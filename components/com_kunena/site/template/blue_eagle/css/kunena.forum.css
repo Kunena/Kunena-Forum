@@ -239,11 +239,11 @@ PX		EM			PCT			PT
 	height: 1px;
 	position: relative;
 }
-#Kunena .ktoggler.close a:hover {
+#Kunena .ktoggler .close a:hover {
 	color:#ff0000;
 	background: url("../images/expand.gif") no-repeat scroll 0 0 transparent;
 }
-#Kunena .ktoggler.open a:hover {
+#Kunena .ktoggler .open a:hover {
 	color:#ff0000;
 	background: url("../images/shrink.gif") no-repeat scroll 0 0 transparent;
 }
@@ -674,7 +674,6 @@ PX		EM			PCT			PT
 #Kunena .klist-actions td {
 	vertical-align:middle;
 	padding: 0 10px;
-	white-space:nowrap;
 }
 
 #Kunena .klist-actions-bottom {
@@ -1466,12 +1465,12 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.kmsgbody {
-	display: table;
+	display: line-cell;
 	table-layout: fixed;
 	width: 100%;
-	padding: 10px 0 0 0;
+	padding: 10px 0px 0px;
 	margin-top: 5px;
-	min-height: 180px;
+	min-height: 180px ;
 }
 #Kunena div.kmsgbody div.kmsgtext {
 	word-wrap:break-word;
@@ -3390,3 +3389,8 @@ max-height: 20px !important;
 }
 /* Fix avatar on bootstrap templates */
 #Kunena img.kavatar {height:auto !important; max-width:inherit !important;}
+
+/* Fix bad bug (chrome)  */
+#Kunena img {
+	max-width: none;
+}

@@ -37,7 +37,8 @@ abstract class KunenaForumTopicHelper {
 
 	if (empty ( self::$_instances [$id] )) {
 			self::$_instances [$id] = new KunenaForumTopic ( array('id'=>$id) );
-			self::$_instances [$id]->load();
+			// Only load topics which haven't been preloaded before (including missing ones).
+			if (!array_key_exists($id, self::$_instances)) self::$_instances[$id]->load();
 		} elseif ($reload) {
 			self::$_instances [$id]->load();
 		}

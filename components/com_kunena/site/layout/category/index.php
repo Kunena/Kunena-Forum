@@ -95,15 +95,4 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 
 		return null;
 	}
-
-	function getLastPostLink($category, $content = null, $title = null, $class = null) {
-		$lastTopic = $category->getLastTopic();
-		$channels = $category->getChannels();
-		if (!isset($channels[$lastTopic->category_id])) $category = $lastTopic->getCategory();
-		$uri = $lastTopic->getUri($category, 'last');
-
-		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 20);
-		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
-	}
 }

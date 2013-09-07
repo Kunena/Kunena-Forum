@@ -20,7 +20,7 @@ if (count($data->pages) <= 1) return;
 		$last = 0;
 		foreach($data->pages as $k=>$item) {
 			if ($last+1 != $k) {
-				echo '<li class="disabled">...</li>';
+				echo '<li class="disabled"><a>...</a></li>';
 			}
 			$last = $k;
 

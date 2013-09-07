@@ -37,7 +37,8 @@ abstract class KunenaForumTopicHelper {
 
 	if (empty ( self::$_instances [$id] )) {
 			self::$_instances [$id] = new KunenaForumTopic ( array('id'=>$id) );
-			self::$_instances [$id]->load();
+			// Only load topics which haven't been preloaded before (including missing ones).
+			if (!array_key_exists($id, self::$_instances)) self::$_instances[$id]->load();
 		} elseif ($reload) {
 			self::$_instances [$id]->load();
 		}
@@ -92,6 +93,7 @@ abstract class KunenaForumTopicHelper {
 	 * @return KunenaForumTopic[]
 	 */
 	static public function getTopics($ids = false, $authorise='read') {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($ids === false) {
 			return self::$_instances;
 		} elseif (is_array ($ids) ) {
@@ -108,6 +110,7 @@ abstract class KunenaForumTopicHelper {
 			}
 		}
 
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $list;
 	}
 

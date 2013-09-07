@@ -494,9 +494,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * </code>
 	 *
 	 * @param   mixed $paths String or array of strings.
+	 * @param   string $base Base path.
 	 * @return  KunenaLayout
 	 */
-	public static function factory($paths) {
+	public static function factory($paths, $base = 'layouts') {
 		$paths = (array) $paths;
 
 		$app = JFactory::getApplication();
@@ -506,7 +507,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		} else {
 			$template = KunenaFactory::getTemplate();
 		}
-		$base = 'layouts';
 
 		$templatePaths = array();
 		foreach ($paths as $path) {

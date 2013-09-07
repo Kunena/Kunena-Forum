@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$template = KunenaTemplate::getInstance();
 ?>
 <!-- BEGIN: GENERAL STATS -->
 <?php if($this->config->showgenstats): ?>

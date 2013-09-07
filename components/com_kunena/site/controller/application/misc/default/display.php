@@ -13,20 +13,22 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  */
-class ComponentKunenaControllerApplicationMiscDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerApplicationDisplay
 {
 	protected $header;
 	protected $body;
 
-	protected function display() {
+	protected function display()
+	{
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Page/Custom')
+		$content = KunenaLayout::factory('Misc/Default', 'pages')
 			->set('header', $this->header)
 			->set('body', $this->body);
 		return $content;
 	}
 
-	protected function before() {
+	protected function before()
+	{
 		parent::before();
 
 		$params = $this->app->getParams('com_kunena');
@@ -39,7 +41,9 @@ class ComponentKunenaControllerApplicationMiscDisplay extends KunenaControllerAp
 		if ($format == 'html') {
 			$this->body = trim($body);
 		} elseif ($format == 'text') {
-			$this->body = function () use ($body) { return htmlspecialchars($body, ENT_COMPAT, 'UTF-8'); };
+			$this->body = function () use ($body) {
+				return htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
+			};
 		} else {
 			$this->body = function () use ($body) {
 				/** @var JCache|JCacheControllerCallback $cache */

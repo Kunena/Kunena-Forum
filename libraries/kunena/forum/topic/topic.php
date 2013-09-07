@@ -435,8 +435,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	 * @return string
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null) {
-		$uri = $this->getUri($category, $action);
-		return KunenaRoute::_($uri, $xhtml);
+		return KunenaRoute::getTopicUrl($this, $xhtml, $action, $category ? $category : $this->getCategory());
 	}
 
 	/**

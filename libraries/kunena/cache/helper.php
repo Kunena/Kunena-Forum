@@ -49,6 +49,14 @@ abstract class KunenaCacheHelper {
 	}
 
 	/**
+	 * Clear Category cache.
+	 */
+	public static function clearCategories() {
+		/** @var JCache|JCacheController $cache */
+		$cache = JFactory::getCache();
+		$cache->remove('categories', 'com_kunena');
+	}
+	/**
 	 * Crear Joomla system cache.
 	 */
 	public static function clearSystem() {

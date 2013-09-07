@@ -31,19 +31,21 @@ abstract class KunenaForumTopicHelper {
 		if ($identifier instanceof KunenaForumTopic) {
 			return $identifier;
 		}
-		$id = intval ( $identifier );
+		$id = (int) $identifier;
 		if ($id < 1)
-			return new KunenaForumTopic ();
+			return new KunenaForumTopic;
 
-	if (empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumTopic ( array('id'=>$id) );
+		if (empty(self::$_instances[$id])) {
+			$instance = new KunenaForumTopic;
 			// Only load topics which haven't been preloaded before (including missing ones).
-			if (!array_key_exists($id, self::$_instances)) self::$_instances[$id]->load();
+			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->id = $id;
+			self::$_instances[$id] = $instance;
 		} elseif ($reload) {
-			self::$_instances [$id]->load();
+			self::$_instances[$id]->load();
 		}
 
-		return self::$_instances [$id];
+		return self::$_instances[$id];
 	}
 
 	/**

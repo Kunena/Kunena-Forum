@@ -32,19 +32,21 @@ abstract class KunenaForumMessageHelper {
 		if ($identifier instanceof KunenaForumMessage) {
 			return $identifier;
 		}
-		$id = intval ( $identifier );
+		$id = (int) $identifier;
 		if ($id < 1)
-			return new KunenaForumMessage ();
+			return new KunenaForumMessage;
 
-		if (empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumMessage ( array('id'=>$id) );
+		if (empty(self::$_instances[$id])) {
+			$instance = new KunenaForumMessage;
 			// Only load messages which haven't been preloaded before (including missing ones).
-			if (!array_key_exists($id, self::$_instances)) self::$_instances[$id]->load();
+			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->id = $id;
+			self::$_instances[$id] = $instance;
 		} elseif ($reload) {
-			self::$_instances [$id]->load();
+			self::$_instances[$id]->load();
 		}
 
-		return self::$_instances [$id];
+		return self::$_instances[$id];
 	}
 
 	/**

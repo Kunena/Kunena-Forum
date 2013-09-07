@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class ComponentKunenaControllerApplicationSearchDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerApplicationSearchDefaultDisplay extends KunenaControllerApplicationDisplay
 {
 	/**
 	 * @var KunenaModelSearch
@@ -21,14 +21,17 @@ class ComponentKunenaControllerApplicationSearchDisplay extends KunenaController
 	 */
 	public $total;
 
-	protected function display() {
+	protected function display()
+	{
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Search')->setProperties($this->getProperties());
+		$content = KunenaLayout::factory('Search/Default', 'pages')
+			->setProperties($this->getProperties());
 
 		return $content;
 	}
 
-	protected function before() {
+	protected function before()
+	{
 		parent::before();
 
 		require_once KPATH_SITE . '/models/search.php';
@@ -61,7 +64,8 @@ class ComponentKunenaControllerApplicationSearchDisplay extends KunenaController
 		$this->prepareDocument();
 	}
 
-	protected function prepareDocument(){
+	protected function prepareDocument()
+	{
 		$this->document->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 
 		// TODO: set keywords and description

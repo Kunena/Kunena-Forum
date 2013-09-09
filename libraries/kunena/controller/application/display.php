@@ -58,7 +58,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		}
 
 		// Wrapper layout.
-		$this->output = KunenaLayout::factory('Page');
+		$this->output = KunenaLayout::factory('Page')->set('me', $this->me);
 
 		if ($this->config->board_offline && !$this->me->isAdmin ()) {
 			// Forum is offline.

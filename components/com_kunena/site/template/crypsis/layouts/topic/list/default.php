@@ -11,30 +11,16 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
-$this->displayBreadcrumb ();
-
+echo $this->subLayout('Page/Module')->set('position', 'kunena_announcement');
 ?>
-<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_announcement'); ?>
 
-<table class="table" style="border:none;">
-  <tr>
-    <td style="border:none;"> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
-    <td style="border:none;" class="hidden-phone">
-      <form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
-        <?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
-      </form>
-    </td>
-    <td style="border:none;" class="hidden-phone">
-      <?php $this->displayForumJump (); ?>
-    </td>
-  </tr>
-</table>
-<?php echo $this->render('embed'); ?>
-<table class="table">
-  <tr>
-    <td style="border:none;"> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
-  </tr>
-</table>
+<div>
+	<strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?>
+	<form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
+		<?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
+	</form>
+	<?php echo $this->render('embed'); ?>
+</div>
 <?php
 $this->displayWhoIsOnline ();
 $this->displayStatistics ();

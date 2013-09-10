@@ -15,9 +15,9 @@ defined ( '_JEXEC' ) or die ();
  */
 class ComponentKunenaControllerCategoryListDisplay extends KunenaControllerDisplay
 {
-	protected $sections;
-	protected $categories;
-	protected $pending;
+	protected $sections = array();
+	protected $categories = array();
+	protected $pending = array();
 
 	/**
 	 * @var KunenaUser

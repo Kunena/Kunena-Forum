@@ -259,18 +259,18 @@ abstract class KunenaForumCategoryHelper {
 	 * @param bool   $reverse
 	 * @param string $authorise
 	 *
-	 * @return KunenaForumCategory[]
+	 * @return array|KunenaForumCategory[]
 	 */
 	static public function getCategories($ids = false, $reverse = false, $authorise='read') {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
 		if ($ids === false) {
-			$ids = self::$_instances;
 			if ($authorise == 'none') {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-				return $ids;
+				return self::$_instances;
 			}
-		} elseif (is_array ($ids) ) {
+			$ids = self::$_instances;
+		} elseif (is_array($ids)) {
 			$ids = array_flip($ids);
 		} else {
 			$ids = array(intval($ids)=>1);

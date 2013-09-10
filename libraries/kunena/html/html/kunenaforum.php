@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.html.html');
-
 /**
  * Class JHtmlKunenaForum
  */

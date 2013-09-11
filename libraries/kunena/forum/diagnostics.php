@@ -834,4 +834,12 @@ abstract class KunenaForumDiagnostics {
 /*
 -- Fix category channels (category selection bug):
 UPDATE jos_kunena_categories SET channels='THIS' WHERE channels='none' OR channels=NULL
+
+-- Find and update topics without owners:
+INSERT INTO `j25_kunena_user_topics` (topic_id, user_id, owner)
+(SELECT t.id, t.first_post_userid, 1
+FROM j25_kunena_topics AS t
+INNER JOIN (SELECT topic_id, MAX(owner) AS owner FROM `j25_kunena_user_topics` GROUP BY topic_id HAVING owner=0) AS j ON j.topic_id=t.id
+WHERE t.first_post_userid>0)
+ON DUPLICATE KEY UPDATE owner=1
 */

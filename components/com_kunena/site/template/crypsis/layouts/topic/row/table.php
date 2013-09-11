@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
+$avatar = $topic->getAuthor()->getAvatarImage();
 
 $cols = empty($this->checkbox) ? 5 : 6;
 if ($this->spacing) : ?>
@@ -24,7 +25,7 @@ if ($this->spacing) : ?>
 <?php endif; ?>
 
 <tr>
-	<td class="hidden-phone span1">
+	<td class="hidden-phone span1 center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td class="span6">
@@ -62,10 +63,10 @@ if ($this->spacing) : ?>
 			<?php echo JText::_('COM_KUNENA_GEN_REPLIES').':'.$this->formatLargeNumber(max(0,$topic->getTotal()-1));?>
 		</span>
 	</td>
-	<td class="span1">
-		<?php if (!empty($topic->avatar)) : ?>
+	<td class="span1 center">
+		<?php if ($avatar) : ?>
 		<span class="hidden-phone">
-			<?php echo $topic->getLastPostAuthor()->getLink( $topic->avatar); ?>
+			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
 		</span>
 		<?php endif; ?>
 	</td>

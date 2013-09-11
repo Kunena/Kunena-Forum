@@ -46,6 +46,12 @@ class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 		$this->config = KunenaConfig::getInstance();
 		$access = KunenaAccess::getInstance();
 
+		$start = $this->input->getInt('limitstart', 0);
+		$limit = $this->input->getInt('limit', 0);
+		if ($limit < 1 || $limit > 100) $limit = $this->config->threads_per_page;
+
+		// TODO: add more parameters from the model
+
 		$finder = new KunenaForumTopicFinder();
 		$finder->filterByUserAccess($this->me)
 			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
@@ -57,7 +63,7 @@ class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 		//$this->total = $cache->get(array($finder, 'count'), array(), 'topics_count_need_attention');
 
 		$this->total = $finder->count();
-		$this->pagination = new KunenaPagination($this->total, 0, 20);
+		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
 		$this->topics = $finder
 			->order('last_post_time', -1)

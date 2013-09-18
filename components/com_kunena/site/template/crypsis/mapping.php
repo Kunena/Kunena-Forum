@@ -31,10 +31,9 @@ $map = array(
 
 	'announcement/create' => array('announcement/edit', 'create'),
 	'announcement/default' => array('announcement/item', 'default'),
-	'announcement/default_actions' => array('announcement/item/actions', 'default'),
 	'announcement/edit' => array('announcement/edit', 'default'),
 	'announcement/list' => array('announcement/list', 'default'),
-	'announcement/list_item' => array('announcement/row', 'default'),
+	'announcement/list_item' => array('announcement/list/row', 'default'),
 
 	'category/create' => array('category/edit', 'create'),
 	'category/default' => array('category/item', 'default'),

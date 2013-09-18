@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Template.Crypsis
- * @subpackage Announcement
+ * @subpackage Pages.Search
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,7 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-if (empty($this->buttons)) return;
-?>
-
-<div> <?php echo implode(' ', $this->buttons) ?> </div>
+echo $this->subRequest('Announcement/List');

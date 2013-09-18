@@ -12,16 +12,9 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaLayoutAnnouncementItem extends KunenaLayout
 {
-	public function __construct($name, array $paths = null) {
-		parent::__construct($name, $paths);
-		$this->template = KunenaFactory::getTemplate();
-	}
+	public $buttons;
 
-	public function displayField($name, $mode=null) {
-		return $this->announcement->displayField($name, $mode);
-	}
-
-	public function displayActions() {
+	public function getActions() {
 		$this->buttons = array();
 		if ($this->announcement->authorise('edit'))
 			$this->buttons['edit'] = $this->getButton($this->announcement->getUri('edit'), 'edit', 'announcement', 'moderation');
@@ -30,7 +23,6 @@ class KunenaLayoutAnnouncementItem extends KunenaLayout
 		if ($this->buttons)
 			$this->buttons['cpanel'] = $this->getButton(KunenaForumAnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
 
-		$contents = $this->subLayout('Announcement/Item/Actions')->setProperties($this->getProperties());
-		return $contents;
+		return $this->buttons;
 	}
 }

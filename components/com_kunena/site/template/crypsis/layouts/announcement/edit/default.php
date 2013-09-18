@@ -11,33 +11,76 @@
 defined ( '_JEXEC' ) or die ();
 
 JHtml::_('behavior.formvalidation');
-$this->addScriptDeclaration('// <![CDATA[
-	function kunenaValidate(f) { return document.formvalidator.isValid(f); }
-// ]]>');
 ?>
+<h2>
+	<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo $this->announcement->exists() ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?>
+</h2>
 
 <div class="well well-small">
-  <h2 class="page-header"><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>: <?php echo $this->announcement->exists() ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD') ?></h2>
-  <div class="row-fluid column-row">
-    <div class="span12 column-item">
-      <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" name="editform" class="form-validate" id="editform" onsubmit="return kunenaValidate(this);">
-        <input type="hidden" name="task" value="save" />
-        <?php echo $this->displayInput('id') ?> <?php echo JHtml::_( 'form.token' ) ?>
-        <div class="span12 column-item">
-          <label class="span12"> <span><?php echo JText::_('COM_KUNENA_ANN_TITLE') ?>:</span> <span><?php echo $this->displayInput('title', 'class="klarge required" rows="80" cols="16"') ?></span> </label>
-          <label> <span><?php echo JText::_('COM_KUNENA_ANN_SORTTEXT') ?>:</span> <span style="width:100%"><?php echo $this->displayInput('sdescription', 'class="ksmall required"') ?></span> </label>
-        </div>
-        <div class="span12 column-item">
-          <label> <span><?php echo JText::_('COM_KUNENA_ANN_LONGTEXT') ?>:</span> <span><?php echo $this->displayInput('description', 'class="klarge" rows="80" cols="16"') ?></span> </label>
-        </div>
-        <div class="span12 column-item">
-          <label> <span><?php echo JText::_('COM_KUNENA_ANN_DATE') ?>:</span> <span><?php echo $this->displayInput('created', 'addcreated', 'kanncreated') ?></span> </label>
-          <label> <span><?php echo JText::_('COM_KUNENA_ANN_SHOWDATE') ?>:</span> <span><?php echo $this->displayInput('showdate') ?></span> </label>
-          <label> <span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?>:</span> <span><?php echo $this->displayInput('published') ?></span> </label>
-        </div>
-        <input name="submit" class="btn" type="submit" value="<?php echo JText::_('COM_KUNENA_SAVE') ?>"/>
-        <input onclick="javascript:window.history.back();" name="cancel" class="btn" type="button" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>"/>
-      </form>
-    </div>
-  </div>
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post" name="editform" class="form-validate form-horizontal" id="editform" onsubmit="return kunenaValidate(this);">
+		<input type="hidden" name="task" value="save" />
+		<?php echo $this->displayInput('id'); ?>
+		<?php echo JHtml::_('form.token'); ?>
+
+		<div class="control-group">
+			<label class="control-label" for="ann-title">
+				<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
+			</label>
+			<div class="controls" id="ann-title">
+				<?php echo $this->displayInput('title', 'class="input-xxlarge required"'); ?>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="ann-short">
+				<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>
+			</label>
+			<div class="controls" id="ann-short">
+				<?php echo $this->displayInput('sdescription', 'class="input-xxlarge required"'); ?>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="ann-long">
+				<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>
+			</label>
+			<div class="controls" id="ann-long">
+				<?php echo $this->displayInput('description', 'rows="5" class="input-xxlarge"'); ?>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="ann-date">
+				<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
+			</label>
+			<div class="controls" id="ann-date">
+				<?php echo $this->displayInput('created', 'addcreated'); ?>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="ann-showdate">
+				<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE'); ?>
+			</label>
+			<div class="controls" id="ann-showdate">
+				<?php echo $this->displayInput('showdate'); ?>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="ann-publish">
+				<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
+			</label>
+			<div class="controls" id="ann-publish">
+				<?php echo $this->displayInput('published'); ?>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="controls" id="ann-publish">
+				<input name="submit" class="btn btn-primary" type="submit" value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
+				<input onclick="javascript:window.history.back();" name="cancel" class="btn" type="button" value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"/>
+			</div>
+		</div>
+	</form>
 </div>

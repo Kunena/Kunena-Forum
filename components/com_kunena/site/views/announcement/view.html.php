@@ -135,11 +135,11 @@ class KunenaViewAnnouncement extends KunenaView {
 			case 'id':
 				return '<input type="hidden" name="id" value="'.intval($this->announcement->id).'" />';
 			case 'title':
-				return '<input type="text" name="title" $attributes value="'.$this->escape($this->announcement->title).'"/>';
+				return '<input type="text" name="title" '.$attributes.' value="'.$this->escape($this->announcement->title).'"/>';
 			case 'sdescription':
-				return '<textarea name="sdescription" $attributes>'.$this->escape($this->announcement->sdescription).'</textarea>';
+				return '<textarea name="sdescription" '.$attributes.'>'.$this->escape($this->announcement->sdescription).'</textarea>';
 			case 'description':
-				return '<textarea name="description" $attributes>'.$this->escape($this->announcement->description).'</textarea>';
+				return '<textarea name="description" '.$attributes.'>'.$this->escape($this->announcement->description).'</textarea>';
 			case 'created':
 				return JHtml::_('calendar', $this->escape($this->announcement->created), 'created', $id);
 			case 'showdate':

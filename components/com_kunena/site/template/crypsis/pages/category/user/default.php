@@ -10,6 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Category/Index', $this->input);
-echo $this->subRequest('Statistics/Whoisonline');
-echo $this->subRequest('Page/Statistics');
+echo $this->subRequest('Category/Subscriptions', $this->input);

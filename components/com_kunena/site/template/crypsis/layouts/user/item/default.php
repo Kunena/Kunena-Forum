@@ -55,7 +55,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="tab-pane fade" id="subscriptions">
 				<?php if ($this->showSubscriptions) :?>
 					<div>
-						<?php $this->displayCategoriesSubscriptions(); ?>
+						<?php echo $this->subRequest('Category/Subscriptions'); ?>
 						<?php $this->displaySubscriptions(); ?>
 					</div>
 				<?php endif; ?>

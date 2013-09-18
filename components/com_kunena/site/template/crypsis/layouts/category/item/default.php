@@ -32,6 +32,12 @@ defined ( '_JEXEC' ) or die ();
 		<a>Displaying <?php echo count($this->topics) .' out of '. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->total)); ?></a>
 	</h2>
 
+	<?php if (!empty($this->categoryButtons)) : ?>
+	<div class="hidden-phone">
+		<?php echo implode($this->categoryButtons); // TODO <- ?>
+	</div>
+	<?php endif; ?>
+
 	<?php if (empty($this->topics) && !$this->category->isSection()) : ?>
 	<div class="alert">
 		<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
@@ -95,13 +101,5 @@ defined ( '_JEXEC' ) or die ();
 	<?php endif; ?>
 </form>
 
-	<?php if (!empty($this->moderators)) : ?>
-	<?php
-		$modslist = array();
-		foreach ( $this->moderators as $moderator ) {
-			$modslist[] = $moderator->getLink();
-		}
-		echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
-	?>
-<?php endif; ?>
+<?php if (!empty($this->moderators)) echo $this->subLayout('Category/Moderators')->set('moderators', $this->moderators); ?>
 <?php endif; ?>

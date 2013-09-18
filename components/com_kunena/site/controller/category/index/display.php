@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  */
-class ComponentKunenaControllerCategoryListDisplay extends KunenaControllerDisplay
+class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay
 {
 	protected $sections = array();
 	protected $categories = array();
@@ -31,7 +31,7 @@ class ComponentKunenaControllerCategoryListDisplay extends KunenaControllerDispl
 	protected function display()
 	{
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Category/List')
+		$content = KunenaLayout::factory('Category/Index')
 			->set('sections', $this->sections)
 			->set('categories', $this->categories)
 			->set('me', $this->me)
@@ -88,6 +88,7 @@ class ComponentKunenaControllerCategoryListDisplay extends KunenaControllerDispl
 			$postIds[$topic->id] = $topic->last_post_id;
 		}
 		KunenaUserHelper::loadUsers($userIds);
+		KunenaForumMessageHelper::getMessages($postIds);
 
 		// Pre-fetch user related stuff.
 		$this->pending = array();
@@ -130,8 +131,7 @@ class ComponentKunenaControllerCategoryListDisplay extends KunenaControllerDispl
 				}
 
 				// Fix last post position when user can see unapproved or deleted posts.
-				if ($postIds && !$topic_ordering) {
-					KunenaForumMessageHelper::getMessages($postIds);
+				if (!$topic_ordering) {
 					KunenaForumMessageHelper::loadLocation($postIds);
 				}
 			}

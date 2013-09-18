@@ -21,12 +21,7 @@ foreach ($this->sections as $section) :
 			<?php // TODO: add javascript to actions ?>
 			<button class="btn btn-small">Mark Read</button>
 			<?php if ($this->me->isAdmin($section)) : ?>
-			<button class="btn btn-small dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-			<ul class="dropdown-menu pull-right">
-				<li><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=approve&catid='.$section->id) ?>">Approve Posts</a></li>
-				<li><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=edit&catid='.$section->id) ?>">Edit Section</a></li>
-				<li><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage&catid='.$section->id) ?>">Manage Categories</a></li>
-			</ul>
+			<button class="btn btn-small">Approve Posts</button>
 			<?php endif; ?>
 		</div>
 		<?php endif; ?>

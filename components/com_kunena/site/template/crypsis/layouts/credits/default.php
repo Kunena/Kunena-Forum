@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
 
 <div class="well well-small">
 	<div class="container-fluid pull-left">
-		<img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-white.png'); ?>" alt="Kunena" />
+		<img src="<?php echo $this->logo; ?>" alt="Kunena" />
 	</div>
 	<p>
 		<?php echo $this->intro; ?>

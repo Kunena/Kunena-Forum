@@ -43,11 +43,6 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 				<?php endif; ?>
 			</tr>
 		</thead>
-		<tbody>
-			<?php foreach ($this->topics as $i => $topic)
-				echo $this->subLayout('Topic/List/Row')
-					->set('topic', $topic)->set('position', $i); ?>
-		</tbody>
 		<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 		<tfoot>
 			<tr>
@@ -63,8 +58,13 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 					<?php endif; ?>
 				</td>
 			</tr>
-		</tfoot>
+			</tfoot>
 		<?php endif; ?>
+		<tbody>
+			<?php foreach ($this->topics as $i => $topic)
+				echo $this->subLayout('Topic/List/Row')
+					->set('topic', $topic)->set('position', $i); ?>
+		</tbody>
 		<?php endif; ?>
 	</table>
 </form>

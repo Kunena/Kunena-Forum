@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="divider"></div>
 				<?php if ($this->me->isModerator()) : ?>
 				<div>
-					<a href="<?php //echo $this->announcesListLink ?>" class="btn btn-link">
+					<a href="<?php echo KunenaForumAnnouncementHelper::getUrl('list') ?>" class="btn btn-link">
 						<i class="icon-pencil-2"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>

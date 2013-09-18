@@ -16,5 +16,7 @@ defined ( '_JEXEC' ) or die ();
 <?php endif; ?>
 
 <?php if (($time = $this->getTime()) !== null) : ?>
-<div class="center"> <span><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time) ?></span> </div>
+<div class="center">
+	<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
+</div>
 <?php endif; ?>

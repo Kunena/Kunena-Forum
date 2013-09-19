@@ -30,6 +30,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	{
 		// Display layout with given parameters.
 		$content = KunenaLayout::factory('Category/Item')
+			->set('headerText', $this->headerText)
 			->set('category', $this->category)
 			->set('topics', $this->topics)
 			->set('total', $this->total)
@@ -54,6 +55,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		if (!$this->category->exists()) return;
+
+		$this->headerText = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 
 		$topic_ordering = $this->category->topic_ordering;
 

@@ -37,7 +37,7 @@ foreach ($this->sections as $section) :
 		<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($section->getTopics())); ?>)</small>
 	</h2>
 
-	<div class="row-fluid collapse in" id="section<?php echo $section->id; ?>">
+	<div class="row-fluid collapse in <?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 		<table class="table table-striped table-hover table-bordered table-condensed">
 			<?php if (!empty($section->description)) : ?>
 			<thead class="hidden-phone">

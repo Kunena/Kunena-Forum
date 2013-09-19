@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 	<?php endif; ?>
 
 	<h2>
-		<a>Displaying <?php echo count($this->topics) .' out of '. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->total)); ?></a>
+		<a><?php echo $this->escape($this->headerText); ?></a>
 	</h2>
 
 	<?php if (!empty($this->categoryButtons)) : ?>

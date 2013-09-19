@@ -50,8 +50,7 @@ defined ( '_JEXEC' ) or die ();
 					echo $this->subLayout('Category/List/Row')
 						->set('category', $this->category)
 						->set('config', $this->config)
-						->set('checkbox', !empty($this->actions))
-						->setLayout('flat');
+						->set('checkbox', !empty($this->actions));
 				} ?>
 			</tbody>
 			<tfoot>

@@ -26,8 +26,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			->set('categories', $this->categories)
 			->set('pagination', $this->pagination)
 			->set('config', $this->config)
-			->set('actions', $this->getActions())
-			->setLayout('flat');
+			->set('actions', $this->getActions());
 		return $content;
 	}
 

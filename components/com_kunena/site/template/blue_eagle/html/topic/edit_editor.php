@@ -121,27 +121,29 @@ defined ( '_JEXEC' ) or die ();
 				<input type="hidden" name="number_total_options" id="numbertotal"
 					value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			</div>
-			<?php endif; ?>
+			<?php endif;
 
-			<?php
 			if ($this->config->highlightcode) {
+				$list_codetype = '';
 				$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
 				if ( file_exists($path) ) {
-					$files = JFolder::files($path, ".php"); ?>
-					<div id="kbbcode-code-options" style="display: none;">
-						<?php echo JText::_('COM_KUNENA_EDITOR_CODE_TYPE'); ?>
-						<select id="kcodetype" name="kcode_type" class="kbutton"
-							onmouseover="javascript:document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true); ?>')">
-						<?php
-						echo '<option value = ""></option>';
-						foreach ($files as $file)
-							echo '<option value = "'.substr($file,0,-4).'">'.substr($file,0,-4).'</option>';
-						?>
-					</select>
-					<input id="kbutton_addcode" type="button" name="Code" onclick="kInsertCode()" value="<?php echo JText::_('COM_KUNENA_EDITOR_CODE_INSERT'); ?>"
-						onmouseover="javascript:document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODEAPPLY', true); ?>')" />
-					</div>
-			<?php }
+					$files = JFolder::files($path, ".php");
+					$options_codetype = array();
+					$options_codetype[] = JHTML::_('select.option', '-1', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
+					foreach ($files as $file) {
+						$options_codetype[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
+					}
+					$javascript = "javascript:document.id('helpbox').set('value', '".JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true)."')";
+					$list_codetype = JHTML::_('select.genericlist', $options_codetype , 'kcodetype"', 'class="kbutton" onmouseover="'.$javascript.'"' , 'value', 'text', '-1' );
+				} ?>
+				<div id="kbbcode-code-options" style="display: none;">
+					<?php
+					echo $list_codetype;
+					?>
+				<input id="kbutton_addcode" type="button" name="Code" onclick="kInsertCode()" value="<?php echo JText::_('COM_KUNENA_EDITOR_CODE_INSERT'); ?>"
+					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODEAPPLY', true); ?>')" />
+				</div>
+			<?php
 			}
 			if ($this->config->showvideotag) {
 			?>

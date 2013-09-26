@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 $catid = isset($this->catid) ? $this->catid : 0;
-$childforums = (int) (isset($this->childforums) || $this->childforums);
+$childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 
 <form action="<?php echo KunenaRoute::_() ?>" method="post" class="form-search">

@@ -9,20 +9,24 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$isReply = $this->message->id != $this->topic->first_post_id;
 ?>
 
 <div class="chat">
   <div class="bubble me span12">
     <div style="border-bottom:1px solid #e5e5e5;">
       <h5> <?php echo $this->profile->getLink() ?> <small>
-        <?php if($this->topic->first_post_id  == $this->message->id){
+        <?php if (!$isReply) {
 					echo 'Created a new topic.';
 				} else {
 					echo 'Replied the topic.';
 				}
 				?>
         </small> <small><span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"><?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span></small> </h5>
-      <h4><?php echo $this->message->displayField('subject') ?></h4>
+	  <?php if ($this->message->subject) : ?>
+      <h4><?php echo ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $this->message->displayField('subject') ?></h4>
+	  <?php endif; ?>
     </div>
     <p class="kmsg"> <?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this->view) ?></p>
     <h5>

@@ -83,11 +83,17 @@ class KunenaControllerUser extends KunenaController {
 		} else {
 			$this->saveProfile();
 			$this->saveSettings();
-			if (!$this->me->save()) {
+			$success = $this->me->save();
+			if (!$success) {
 				$this->app->enqueueMessage($this->me->getError(), 'notice');
 			} else {
 				$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_SAVED' ) );
 			}
+
+			JPluginHelper::importPlugin( 'system' );
+			// Renamme into JEventDispatcher when dropping Joomla! 2.5 support
+			$dispatcher = JDispatcher::getInstance();
+			$results = $dispatcher->trigger( 'OnAfterKunenaProfileUpdate', array( $this->me, $success ) );
 		}
 
 		$this->setRedirect($this->me->getUrl(false));

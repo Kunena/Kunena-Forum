@@ -49,7 +49,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$catid = $this->input->getInt('catid');
 		$limitstart = $this->input->getInt('limitstart', 0);
-		$limit = $this->input->getInt('limit', 10);
+		$limit = $this->input->getInt('limit', 0);
+		if ($limit < 1 || $limit > 100) $limit = $this->config->threads_per_page;
+
 		// TODO:
 		$direction = 'DESC';
 

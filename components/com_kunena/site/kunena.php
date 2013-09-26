@@ -74,6 +74,8 @@ $task = $input->getCmd('task', 'display');
 
 
 try {
+	if ($task != 'display') throw new Exception();
+
 	// Define HMVC controller and execute it.
 	/** @var KunenaControllerApplicationDisplay $controller */
 	$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);

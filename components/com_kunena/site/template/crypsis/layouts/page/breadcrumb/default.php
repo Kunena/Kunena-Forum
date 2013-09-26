@@ -14,7 +14,7 @@ $pathway = $this->breadcrumb->getPathway();
 $item = array_shift($pathway);
  if ($item) : ?>
 
-<ul class="breadcrumb well well-small">
+<ul class="breadcrumb">
 	<li class="active">
 		<span class="divider icon-location"></span>
 		<a href="<?php echo $item->link ?>"><?php echo $item->name ?></a>

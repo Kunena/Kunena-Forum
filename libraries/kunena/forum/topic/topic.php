@@ -332,7 +332,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	/**
-	 * @param int    $limitstart
+	 * @param int|null $limitstart Null if all pages need to be active.
 	 * @param int    $limit
 	 * @param int    $display
 	 * @param string $prefix
@@ -342,7 +342,10 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	public function getPagination($limitstart=0, $limit=6, $display=4, $prefix='') {
 		if (!$this->_pagination) {
 			$this->_pagination = new KunenaPagination($this->posts, $limitstart, $limit, $prefix);
-			$this->_pagination->setDisplayedPages($display, "index.php?option=com_kunena&view=topic&catid={$this->category_id}&id={$this->id}");
+			$this->_pagination
+				->setUri($this->getUri())
+				->setDisplayedPages($display);
+			if ($limitstart == null) $this->_pagination->pagesCurrent = 0;
 		}
 		return $this->_pagination;
 	}

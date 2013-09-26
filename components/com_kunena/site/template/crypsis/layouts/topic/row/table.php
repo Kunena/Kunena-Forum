@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
+$avatar = $topic->getAuthor()->getAvatarImage();
 
 $cols = empty($this->checkbox) ? 5 : 6;
 if ($this->spacing) : ?>
@@ -24,11 +25,11 @@ if ($this->spacing) : ?>
 <?php endif; ?>
 
 <tr>
-	<td class="hidden-phone span1">
+	<td class="hidden-phone span1 center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td class="span6">
-		<div class="hasTooltip">
+		<div>
 			<?php
 			echo $this->getTopicLink($topic, null, null, null, 'hasTooltip' ) ;
 			if ($topic->getUserTopic()->favorite) : ?>
@@ -38,20 +39,20 @@ if ($this->spacing) : ?>
 			if ($topic->getUserTopic()->posts) : ?>
 				<i class="icon-flag hasTooltip" ><?php JText::_('COM_KUNENA_MYPOSTS') ?></i>
 			<?php endif;
-			if ($topic->unread) {
+			if ($topic->unread) :
 				echo $this->getTopicLink($topic, 'unread',
 					'<sup dir="ltr">(' . $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
-			}
+			endif;
 			?>
 		</div>
-		<div class="hasTooltip">
+		<div>
 			<span class="label label-info"><?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION') ?></span>
 			<?php if ($topic->locked != 0) : ?>
 			<span class="label label-important">
 				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED') ?></i>
 			</span>
 			<?php endif; ?>
-			in <?php echo $this->getCategoryLink($topic->getCategory() ,null, null, 'hasTooltip' ) ?>
+			in <?php echo $this->getCategoryLink($topic->getCategory(), null, null, 'hasTooltip' ) ?>
 		</div>
 	</td>
 	<td class="span1 hidden-phone">
@@ -62,10 +63,10 @@ if ($this->spacing) : ?>
 			<?php echo JText::_('COM_KUNENA_GEN_REPLIES').':'.$this->formatLargeNumber(max(0,$topic->getTotal()-1));?>
 		</span>
 	</td>
-	<td class="span1">
-		<?php if (!empty($topic->avatar)) : ?>
+	<td class="span1 center">
+		<?php if ($avatar) : ?>
 		<span class="hidden-phone">
-			<?php echo $topic->getLastPostAuthor()->getLink( $topic->avatar); ?>
+			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
 		</span>
 		<?php endif; ?>
 	</td>
@@ -76,7 +77,7 @@ if ($this->spacing) : ?>
 		<br />
 		<span class="hasTooltip" title="<?php echo KunenaDate::getInstance($topic->last_post_time)
 			->toKunena('config_post_dateformat_hover'); ?>">
-			<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') ); ?>
+			<?php echo $this->getTopicLink($topic, 'last',  KunenaDate::getInstance($topic->last_post_time)->toKunena('config_post_dateformat') ); ?>
 		</span>
 	</td>
 	<?php if (!empty($this->checkbox)) : ?>

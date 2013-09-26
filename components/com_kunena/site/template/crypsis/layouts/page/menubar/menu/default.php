@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <ul class="nav">
-  <?php
+<?php
 foreach ($this->list as $i => $item) :
 	$class = 'item'.$item->id;
 

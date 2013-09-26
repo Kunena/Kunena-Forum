@@ -110,11 +110,12 @@ HTML;
 	public function getImage($image, $alt='') {
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
 	}
+
 	public function getPaginationListRender($list) {
 		$html = '<div class="pagination pagination-small" ><ul class="pagination-small">';
 		$last = 0;
 		foreach($list['pages'] as $i=>$page) {
-			if ($last+1 != $i) $html .= '<li>...</li>';
+			if ($last+1 != $i) $html .= '<li><a class="disabled">...</a></li>';
 			$html .= '<li>'.$page['data'].'</li>';
 			$last = $i;
 		}

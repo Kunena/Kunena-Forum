@@ -10,5 +10,5 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Category/List');
+echo $this->subRequest('Category/Index');
 echo $this->subRequest('Category/Topics');

@@ -12,11 +12,11 @@ defined ( '_JEXEC' ) or die ();
 
 ?>
 
-<div class="well well-small">
-	<h3 class="btn-link">
-		<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE') ?>
-	</h3>
+<h3 class="btn-link">
+	<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE') ?>
+</h3>
 
+<div class="well well-small">
 	<p>
 		<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?>
 	</p>

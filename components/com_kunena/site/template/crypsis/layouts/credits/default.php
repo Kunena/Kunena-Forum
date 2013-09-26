@@ -11,24 +11,43 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
+<h2>
+	<?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?>
+</h2>
+
 <div class="well well-small">
-	<h2 class="page-header"><span><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span></h2>
-		<div class="row-fluid column-row">
-			<div class="span12 column-item">
-				<div> <img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-white.png');?>" alt="Kunena" style="margin: 18px;" /> </div>
-				<div><?php echo $this->intro; ?></div>
-				<div>
-					<ul>
-						<?php foreach ($this->memberList as $member) : ?>
-						<li> <a href="<?php echo $member['url'] ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']) ?></a> - <?php echo $member['title'] ?> </li>
-						<?php endforeach ?>
-					</ul>
-				</div>
-				<div> <?php echo $this->thanks ?> </div>
-				<div>
-					<div> <?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?> <a href="javascript: history.go(-1)" title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?>"><?php echo JText::_('COM_KUNENA_USER_RETURN_B') ?></a> </div>
-				</div>
-				<div><?php echo JText::_('COM_KUNENA_COPYRIGHT');?> &copy; 2008 - 2013 <a href = "http://www.kunena.org" target = "_blank">Kunena</a>, <?php echo JText::_('COM_KUNENA_LICENSE');?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
-			</div>
-		</div>
+	<div class="container-fluid pull-left">
+		<img src="<?php echo $this->logo; ?>" alt="Kunena" />
+	</div>
+	<p>
+		<?php echo $this->intro; ?>
+	</p>
+	<div class="clearfix"></div>
+
+	<dl class="dl-horizontal">
+		<?php foreach($this->memberList as $member) : ?>
+		<dt>
+			<a href="<?php echo $member['url']; ?>" target="_blank" rel="follow"><?php echo $this->escape($member['name']); ?></a>
+		</dt>
+		<dd>
+			<?php echo $member['title']; ?>
+		</dd>
+		<?php endforeach ?>
+	</dl>
+
+	<p>
+		<?php echo $this->thanks; ?>
+	</p>
+
+	<p>
+		<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK'); ?>
+		<a href="javascript: history.go(-1)" title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK'); ?>">
+			<?php echo JText::_('COM_KUNENA_USER_RETURN_B'); ?>
+		</a>
+	</p>
+
+	<p>
+		<?php echo JText::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2013 <a href = "http://www.kunena.org" target = "_blank">Kunena</a>,
+		<?php echo JText::_('COM_KUNENA_LICENSE'); ?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
+	</p>
 </div>

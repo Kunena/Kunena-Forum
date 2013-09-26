@@ -106,6 +106,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		// Load language files.
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.templates');
+		KunenaFactory::loadLanguage('com_kunena.models');
 		KunenaFactory::loadLanguage('com_kunena.views');
 
 		$this->me = KunenaUserHelper::getMyself();

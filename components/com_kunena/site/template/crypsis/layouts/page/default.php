@@ -11,7 +11,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div id="kunena" class="layout">
 <?php
-echo $this->subLayout('Page/MenuBar')->set('me', $this->me);
+echo $this->subLayout('Page/MenuBar');
 echo $this->subLayout('Page/Module')->set('position', 'kunena_top');
 echo $this->subRequest('Page/Announcement');
 echo $this->subLayout('Page/Module')->set('position', 'kunena_announcement');

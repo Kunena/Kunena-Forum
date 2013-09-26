@@ -16,7 +16,7 @@ class ComponentKunenaControllerPageMenuDisplay extends KunenaControllerDisplay
 		if (!$this->basemenu) return ' ';
 
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Page/Menubar/Menu')
+		$content = KunenaLayout::factory('Page/Menu')
 			->set('list', $this->list)
 			->set('path', $this->path)
 			->set('active_id', $this->active_id);

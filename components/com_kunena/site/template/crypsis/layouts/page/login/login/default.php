@@ -10,8 +10,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$userConfig = JComponentHelper::getParams('com_users');
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown">
@@ -20,6 +18,10 @@ $userConfig = JComponentHelper::getParams('com_users');
 		</a>
 		<div class="dropdown-menu well well-small">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
+				<input type="hidden" name="view" value="user" />
+				<input type="hidden" name="task" value="login" />
+				<?php echo JHtml::_('form.token'); ?>
+
 				<div id="form-login-username" class="control-group">
 					<div class="controls">
 						<div class="input-prepend input-append">
@@ -46,7 +48,7 @@ $userConfig = JComponentHelper::getParams('com_users');
 						</div>
 					</div>
 				</div>
-				<?php if (JPluginHelper::isEnabled('system', 'remember')) : ?>
+				<?php if ($this->rememberMe) : ?>
 					<div id="form-login-remember" class="control-group checkbox">
 						<label for="modlgn-remember" class="control-label">
 							<?php echo JText::_('JGLOBAL_REMEMBER_ME') ?>
@@ -59,18 +61,26 @@ $userConfig = JComponentHelper::getParams('com_users');
 						<button type="submit" tabindex="3" name="Submit" class="btn btn-primary btn"><?php echo JText::_('JLOGIN') ?></button>
 					</p>
 
-					<?php if ($userConfig->get('allowUserRegistration')) : ?>
 					<p>
-						<a href="<?php echo JRoute::_('index.php?option=com_users&view=registration'); ?>">
-							<?php echo JText::_('REGISTER'); ?> <i class="icon-arrow-right"></i>
+						<?php if ($this->resetPasswordUrl) : ?>
+						<a href="<?php echo $this->resetPasswordUrl ?>" rel="nofollow">
+							<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD') ?>
 						</a>
+						<br />
+						<?php endif ?>
+						<?php if ($this->remindUsernameUrl) : ?>
+						<a href="<?php echo $this->remindUsernameUrl ?>" rel="nofollow">
+							<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME') ?>
+						</a>
+						<br />
+						<?php endif ?>
+						<?php if ($this->registrationUrl) : ?>
+						<a href="<?php echo $this->registrationUrl ?>" rel="nofollow">
+							<?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') ?>
+						</a>
+						<?php endif ?>
 					</p>
-					<?php endif; ?>
 				</div>
-
-				<input type="hidden" name="view" value="user" />
-				<input type="hidden" name="task" value="login" />
-				<?php echo JHtml::_('form.token'); ?>
 			</form>
 		</div>
 	</li>

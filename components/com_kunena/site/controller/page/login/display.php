@@ -13,13 +13,40 @@ defined ( '_JEXEC' ) or die ();
 class ComponentKunenaControllerPageLoginDisplay extends KunenaControllerDisplay
 {
 	protected function display() {
-		$me = KunenaUserHelper::getMyself();
-		$layout = ($me->exists() ? 'Logout' : 'Login' );
+		$layout = ($this->me->exists() ? 'Logout' : 'Login' );
 
 		// Display layout with given parameters.
 		$content = KunenaLayout::factory("Page/Login/{$layout}")
-			->set('me', $me);
+			->setProperties($this->getProperties());
 
 		return $content;
+	}
+
+	protected function before()
+	{
+		$login = KunenaLogin::getInstance();
+		if (!$login->enabled()) return false;
+
+		$this->my = JFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
+		if ($this->my->guest) {
+			$this->registrationUrl = $login->getRegistrationUrl();
+			$this->resetPasswordUrl = $login->getResetUrl();
+			$this->remindUsernameUrl = $login->getRemindUrl();
+			$this->rememberMe = $login->getRememberMe();
+		} else {
+			$this->lastvisitDate = KunenaDate::getInstance($this->my->lastvisitDate);
+
+			// TODO: Private messages
+			//$this->getPrivateMessageLink();
+
+			// Announcements
+			if ($this->me->isModerator()) {
+				$this->announcementsUrl = KunenaForumAnnouncementHelper::getUrl('list');
+			}
+
+		}
+
+		return true;
 	}
 }

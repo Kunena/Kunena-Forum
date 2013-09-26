@@ -9,8 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.filter.output');
-
 // Kunena 2.0.0: Update menu items
 function kunena_200_2012_06_10_pubwrite($parent) {
 	$config = KunenaFactory::getConfig();

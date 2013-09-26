@@ -10,18 +10,22 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+$announcement = $this->announcement;
+$actions = $this->getActions();
 ?>
-
+<h2>
+	<?php echo $announcement->displayField('title'); ?>
+	<?php if ($this->announcement->showdate) : ?>
+	<small title="<?php echo $announcement->displayField('created', 'ago'); ?>">
+		<?php echo $announcement->displayField('created', 'date_today'); ?>
+	</small>
+	<?php endif; ?>
+</h2>
 <div class="well well-small">
-  <h2 class="page-header"> <span><?php echo $this->displayField('title') ?></span> </h2>
-  <div class="row-fluid column-row"> <?php echo $this->displayActions() ?>
-    <div class="span12 column-item">
-      <div>
-        <?php if ($this->showdate) : ?>
-        <div title="<?php echo $this->displayField('created', 'ago'); ?>"> <?php echo $this->displayField('created', 'date_today') ?> </div>
-        <?php endif; ?>
-        <div><?php echo $this->displayField('description') ?></div>
-      </div>
-    </div>
-  </div>
+	<?php if (!empty($actions)) : ?>
+	<div>
+		<?php echo implode(' ', $actions); ?>
+	</div>
+	<?php endif; ?>
+	<div><?php echo $announcement->displayField('description'); ?></div>
 </div>

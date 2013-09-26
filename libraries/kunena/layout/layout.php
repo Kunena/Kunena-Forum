@@ -107,6 +107,8 @@ class KunenaLayout extends KunenaLayoutBase
 				return null;
 			}
 		}
+
+		return $this->closures[$property]();
 	}
 
 	/**
@@ -215,13 +217,20 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		if (!$content) $content = $this->escape($category->name);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
+		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $link;
 	}
 
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL) {
-		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		$url = $topic->getUrl($category ? $category : (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
 		if ($title === null) {
 			if ($action instanceof KunenaForumMessage) {
@@ -242,6 +251,20 @@ class KunenaLayout extends KunenaLayoutBase
 				}
 			}
 		}
+		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $link;
+	}
+
+	public function getLastPostLink($category, $content = null, $title = null, $class = null) {
+		$lastTopic = $category->getLastTopic();
+		$channels = $category->getChannels();
+		if (!isset($channels[$lastTopic->category_id])) $category = $lastTopic->getCategory();
+		$uri = $lastTopic->getUrl($category, true, 'last');
+
+		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 30);
+		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 }

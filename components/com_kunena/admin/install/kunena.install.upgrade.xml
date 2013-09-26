@@ -400,6 +400,7 @@
 			<query>UPDATE `#__kunena_topics` SET hold='4' WHERE first_post_id='0'</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+			<query mode="silenterror">ALTER TABLE `j25_kunena_topics` ADD KEY `last_post_id` (`last_post_id`)</query>
 		</version>
 	</upgrade>
 </comupgrade>

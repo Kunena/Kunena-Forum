@@ -111,6 +111,8 @@ abstract class KunenaUserHelper {
 	 * @return array
 	 */
 	public static function loadUsers(array $userids = array()) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
 		foreach($userids as $userid){
@@ -147,6 +149,8 @@ abstract class KunenaUserHelper {
 		foreach ($userids as $userid) {
 			if (isset(self::$_instances [$userid])) $list [$userid] = self::$_instances [$userid];
 		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $list;
 	}
 

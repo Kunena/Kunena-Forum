@@ -287,11 +287,7 @@ class KunenaPagination
 	 */
 	public function getData()
 	{
-		static $data;
-		if (!is_object($data))
-		{
-			$data = $this->_buildDataObject();
-		}
+		$data = $this->_buildDataObject();
 		return $data;
 	}
 

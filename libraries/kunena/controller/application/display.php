@@ -10,8 +10,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-abstract class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
+class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var KunenaLayout
+	 */
+	protected $page;
 	/**
 	 * @var KunenaLayout
 	 */
@@ -37,13 +41,24 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 	 */
 	protected $document;
 
+	protected function display() {
+		// Display layout with given parameters.
+		$this->page->set('input', $this->input);
+
+		return $this->page;
+	}
+
 	public function execute() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+
 		// Run before executing action.
-		$this->before();
+		$result = $this->before();
+		if ($result === false) {
+			return KunenaLayout::factory('Empty');
+		}
 
 		// Wrapper layout.
-		$this->output = KunenaLayout::factory('Page');
+		$this->output = KunenaLayout::factory('Page')->set('me', $this->me);
 
 		if ($this->config->board_offline && !$this->me->isAdmin ()) {
 			// Forum is offline.
@@ -82,9 +97,17 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 
 	protected function before() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+
+		$this->page = KunenaLayout::factory("{$this->input->getCmd('view')}/{$this->input->getCmd('layout')}", 'pages');
+		if (!$this->page->getPath()) {
+			throw new RuntimeException("Layout '{$this->input->getCmd('view')}/{$this->input->getCmd('layout')}' does not exist!", 404);
+		}
+
 		// Load language files.
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.templates');
+		KunenaFactory::loadLanguage('com_kunena.models');
+		KunenaFactory::loadLanguage('com_kunena.views');
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaConfig::getInstance();

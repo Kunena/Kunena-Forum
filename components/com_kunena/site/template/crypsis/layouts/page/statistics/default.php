@@ -9,30 +9,71 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+// FIXME:
+$this->statisticsLink = '';//$this->getStatsLink($this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), '');
+$this->usercountLink = '';//$this->getUserlistLink('', $this->memberCount);
+$this->userlistLink = '';//$this->getUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
+$this->moreLink = '';//$this->getStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;');
 ?>
 
-<div class="well well-small"> <span><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kfrontstats-tbody"></a></span>
-  <h2 class="page-header">
-	<span>
-		<?php echo $this->statisticsLink; ?>
-	</span>
-  </h2>
-  <div class="row-fluid column-row">
-    <div class="span12 column-item" >
-      <ul id="kstatslistleft" class="fltlft span6" style="list-style-type:none;">
-        <li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>: <strong> <?php echo intval($this->messageCount); ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>: <strong><?php echo intval($this->topicCount); ?></strong></li>
-        <li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>: <strong><?php echo intval($this->sectionCount); ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>: <strong><?php echo intval($this->categoryCount); ?></strong></li>
-        <li><?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>: <strong><?php echo $this->todayTopicCount; ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>: <strong><?php echo intval($this->yesterdayTopicCount); ?></strong></li>
-        <li><?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>: <strong><?php echo intval($this->todayReplyCount); ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>: <strong><?php echo intval($this->yesterdayReplyCount); ?></strong></li>
-      </ul>
-      <ul id="kstatslistright" class="fltrt kright span6" style="list-style-type:none;">
-        <li ><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $this->usercountLink; ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>: <strong><?php echo $this->latestMemberLink ?></strong></li>
-        <li>&nbsp;</li>
-        <li><?php echo $this->userlistLink; ?></li>
-        <li>
-          <?php if ($this->config->showpopuserstats || $this->config->showpopsubjectstats) echo $this->moreLink; ?>
-        </li>
-      </ul>
-    </div>
-  </div>
+<h3>
+	<a href="<?php echo $this->statisticsUrl; ?>">
+		<?php echo $this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
+	</a>
+</h3>
+
+<div class="well well-small">
+	<div class="row-fluid">
+		<ul class="unstyled span6">
+			<li>
+				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
+				<strong><?php echo intval($this->messageCount); ?></strong>
+				<span class="divider">|</span>
+				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
+				<strong><?php echo intval($this->topicCount); ?></strong>
+			</li>
+			<li>
+				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
+				<strong><?php echo intval($this->sectionCount); ?></strong>
+				<span class="divider">|</span>
+				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
+				<strong><?php echo intval($this->categoryCount); ?></strong>
+			</li>
+			<li>
+				<?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
+				<strong><?php echo $this->todayTopicCount; ?></strong>
+				<span class="divider">|</span>
+				<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
+				<strong><?php echo intval($this->yesterdayTopicCount); ?></strong>
+			</li>
+			<li>
+				<?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
+				<strong><?php echo intval($this->todayReplyCount); ?></strong>
+				<span class="divider">|</span>
+				<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
+				<strong><?php echo intval($this->yesterdayReplyCount); ?></strong>
+			</li>
+		</ul>
+		<ul class="unstyled span6">
+			<li>
+				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
+				<strong><a href="<?php echo $this->userlistLink; ?>"><?php echo $this->memberCount; ?></a></strong>
+				<span class="divider">|</span>
+				<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
+				<strong><?php echo $this->latestMemberLink ?></strong>
+			</li>
+			<li>
+				&nbsp;
+			</li>
+			<li>
+				<a href="<?php echo $this->userlistLink; ?>"><?php echo JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;'; ?></a>
+			</li>
+			<?php if ($this->config->showpopuserstats || $this->config->showpopsubjectstats) : ?>
+			<li>
+				<a href="<?php echo $this->userlistLink; ?>"><?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;'; ?></a>
+			</li>
+			<?php endif; ?>
+		</ul>
+	</div>
 </div>

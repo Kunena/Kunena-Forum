@@ -106,6 +106,8 @@ jQuery(document).ready(function() {
 		var task = jQuery("select#kchecktask").val();
 		if (task=='move') {
 			jQuery("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
+		} else {
+			jQuery("#kchecktarget").attr('disabled', true);
 		}
 	}); 
 });

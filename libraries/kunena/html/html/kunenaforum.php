@@ -123,14 +123,13 @@ abstract class JHtmlKunenaForum {
 	 * @return string
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '') {
-		$list['href'] = KunenaRoute::_($uri);
+		$list['href'] = (is_string($uri) && $uri[0]=='/') ? $uri : KunenaRoute::_($uri);
 		if ($title) $list['title'] = $title;
 		if ($class) $list['class'] = $class;
 		if ($rel) $list['rel'] = $rel;
 		if (is_array($attributes)) {
 			$list += $attributes;
 		}
-		ksort($list);
 
 		// Parse attributes
 		$attr = array();

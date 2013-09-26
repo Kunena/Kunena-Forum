@@ -145,11 +145,12 @@ class KunenaView extends JViewLegacy {
 	/**
 	 * Render new layout if available, otherwise continue to the old logic.
 	 *
-	 * @param $layout
-	 * @param $tpl
-	 * @param $hmvcParams
+	 * @param string $layout
+	 * @param string $tpl
+	 * @param array  $hmvcParams
+	 * @throws LogicException
 	 */
-	public function render($layout, $tpl, $hmvcParams = array()) {
+	public function render($layout, $tpl, array $hmvcParams = array()) {
 		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
 
 		if (isset($tpl) && $tpl == 'default') $tpl = null;

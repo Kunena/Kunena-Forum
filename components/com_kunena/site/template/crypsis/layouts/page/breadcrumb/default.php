@@ -14,15 +14,16 @@ $pathway = $this->breadcrumb->getPathway();
 $item = array_shift($pathway);
  if ($item) : ?>
 
-<div class="row-fluid column-row">
-	<div class="span12 column-item">
-		<ul class="breadcrumb" style="border:1px solid #E3E3E3;">
-			<li class="active"><span class="divider icon-location"></span><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
-			<?php foreach($pathway as $item) : ?>
-				<li class="divider">/</li>
-				<li><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
-			<?php endforeach; ?>
-		</ul>
-	</div>
-</div>
+<ul class="breadcrumb">
+	<li class="active">
+		<span class="divider icon-location"></span>
+		<a href="<?php echo $item->link ?>"><?php echo $item->name ?></a>
+	</li>
+	<?php foreach($pathway as $item) : ?>
+	<li class="divider">/</li>
+	<li>
+		<a href="<?php echo $item->link ?>"><?php echo $item->name ?></a>
+	</li>
+	<?php endforeach; ?>
+</ul>
 <?php endif ?>

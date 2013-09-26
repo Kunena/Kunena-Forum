@@ -175,7 +175,7 @@ function KunenaBuildRoute(&$query) {
 	}
 
 	if (isset($query['start']) && $query['start'] == '@') {
-		$segments[] = '%'.++$pos.'$d';
+		$query['start'] = '%'.++$pos.'$d';
 	}
 
 	KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;

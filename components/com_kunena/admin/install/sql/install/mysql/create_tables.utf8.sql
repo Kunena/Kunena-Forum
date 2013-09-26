@@ -129,7 +129,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 	KEY `first_post_userid` (first_post_userid),
 	KEY `last_post_userid` (last_post_userid),
 	KEY `first_post_time` (first_post_time),
-	KEY `last_post_time` (last_post_time) ) DEFAULT CHARACTER SET utf8;
+	KEY `last_post_time` (last_post_time)
+	KEY `last_post_id` (last_post_id) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
 	`id` int(11) NOT NULL auto_increment,

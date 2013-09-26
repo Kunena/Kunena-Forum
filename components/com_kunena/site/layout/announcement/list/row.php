@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaLayoutAnnouncementRow extends KunenaLayout
+class KunenaLayoutAnnouncementListRow extends KunenaLayout
 {
 	public function canPublish() {
 		return $this->announcement->authorise('edit');

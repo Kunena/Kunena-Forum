@@ -239,6 +239,7 @@ window.addEvent('domready', function(){
 	 */
 	public function getAdmins($catid = 0, $all = false) {
 		$list = !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
+		if ($all && !empty($this->adminsByCatid[0])) $list += $this->adminsByCatid[0];
 		return $list;
 	}
 
@@ -252,6 +253,7 @@ window.addEvent('domready', function(){
 	 */
 	public function getModerators($catid = 0, $all = false) {
 		$list = !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
+		if ($all && !empty($this->moderatorsByCatid[0])) $list += $this->moderatorsByCatid[0];
 		return $list;
 	}
 

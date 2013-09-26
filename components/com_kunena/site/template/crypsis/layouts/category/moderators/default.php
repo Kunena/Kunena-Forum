@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <?php if (!empty($this->moderators)) : ?>
-<div class="row-fluid">
+<div>
 	<?php
 	echo JText::_('COM_KUNENA_MODERATORS') . ": ";
 	foreach ($this->moderators as $moderator) echo "{$moderator->getLink()} &nbsp;";

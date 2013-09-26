@@ -20,7 +20,7 @@ if (count($data->pages) <= 1) return;
 		$last = 0;
 		foreach($data->pages as $k=>$item) {
 			if ($last+1 != $k) {
-				echo '<li class="disabled"><a>...</a></li>';
+				echo '<li><a class="disabled">...</a></li>';
 			}
 			$last = $k;
 
@@ -33,7 +33,7 @@ if (count($data->pages) <= 1) return;
 				echo '<li class="active"><a>' . $item->text . '</a></li>';
 			} else {
 				// Doesn't match any other condition, render disabled item.
-				echo '<li class="disabled"><a>' . $item->text . '</a></li>';
+				echo '<li><a class="disabled">' . $item->text . '</a></li>';
 			}
 		}
 		?>

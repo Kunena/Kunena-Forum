@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
-$author = $topic->getLastPostAuthor();
+$topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 
 $cols = empty($this->checkbox) ? 4 : 5;
 if ($this->spacing) : ?>
@@ -34,31 +34,38 @@ if ($this->spacing) : ?>
 			<small class="hidden-phone">
 				(<?php echo $this->formatLargeNumber(max(0, $topic->getTotal()-1)).' '. JText::_('COM_KUNENA_GEN_REPLIES'); ?>)
 			</small>
+			<?php if ($topic->unread) {
+				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+			}
+			?>
 		</h4>
+		<div class="pull-right">
+			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages); ?>
+		</div>
 		<ul class="inline hidden-phone">
 			<li>
 				<i class="icon-user"></i>
 				Started by <?php echo $topic->getFirstPostAuthor()->getLink(); ?>
 			</li>
-			<li title="<?php echo KunenaDate::getInstance($topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
+			<li title="<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat_hover'); ?>">
 				<i class="icon-calendar"></i>
-				<?php echo KunenaDate::getInstance($topic->first_post_time)->toKunena('config_post_dateformat'); ?>
+				<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			</li>
 		</ul>
 	</td>
 	<td class="span1 center hidden-phone">
-			<?php echo $author->getLink($author->getAvatarImage('img-polaroid', 48)) ?>
+			<?php echo $topic->getLastPostAuthor()->getLink($topic->getLastPostAuthor()->getAvatarImage('img-polaroid', 48)) ?>
 	</td>
 	<td class="span3 hidden-phone">
 		<div>
 			<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
 		</div>
 		<div>
-			<?php echo $author->getLink(); ?>
+			<?php echo $topic->getLastPostAuthor()->getLink(); ?>
 		</div>
 		<div>
-			<span class="ktopic-date hasTooltip" title="<?php echo KunenaDate::getInstance($topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?>">
-				<?php echo KunenaDate::getInstance($topic->last_post_time)->toKunena('config_post_dateformat'); ?>
+			<span class="ktopic-date hasTooltip" title="<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat_hover'); ?>">
+				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
 			</span>
 		</div>
 	</td>

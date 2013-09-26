@@ -13,7 +13,6 @@ jimport ( 'joomla.filesystem.folder' );
 jimport ( 'joomla.filesystem.file' );
 jimport ( 'joomla.filesystem.path' );
 jimport ( 'joomla.filesystem.archive' );
-jimport ( 'joomla.installer.installer' );
 
 define('KUNENA_INSTALLER_PATH', __DIR__);
 define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));

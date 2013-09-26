@@ -99,8 +99,6 @@ class KunenaAdminModelReport extends KunenaModel {
 		$joomlalanguages = $this->_getJoomlaLanguagesInstalled();
 
 		// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
-		jimport( 'joomla.plugin.helper' );
-
 		$plg['jfirephp'] = $this->getExtensionVersion('system/jfirephp', 'System - JFirePHP');
 		$plg['ksearch'] = $this->getExtensionVersion('search/kunena', 'Search - Kunena Search');
 		$plg['kdiscuss'] = $this->getExtensionVersion('content/kunenadiscuss', 'Content - Kunena Discuss');
@@ -351,7 +349,6 @@ class KunenaAdminModelReport extends KunenaModel {
 		}
 		$version = null;
 		if (!empty($xmlfiles)) {
-			jimport('joomla.installer.installer');
 			$installer = JInstaller::getInstance();
 
 			foreach ($xmlfiles as $file) {

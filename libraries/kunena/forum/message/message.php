@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ('joomla.user.helper');
-jimport ('joomla.mail.helper');
-
 /**
  * Class KunenaForumMessage
  *
@@ -249,7 +246,6 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		$topic = $this->getTopic();
 		if (count ( $emailToList )) {
-			jimport('joomla.mail.helper');
 			if (! $config->getEmail() ) {
 				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ) );
 				return false;

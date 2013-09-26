@@ -9,8 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-jimport( 'joomla.html.html.grid' );
-
 ?>
 
 <div class="well well-small">

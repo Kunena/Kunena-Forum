@@ -29,7 +29,7 @@ class KunenaLayoutSearchResults extends KunenaLayout
 			$this->category = $this->message->getCategory();
 			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 			$ressubject = KunenaHtmlParser::parseText ($this->message->subject);
-			$resmessage = $this->parse ($this->message->message, 500);
+			$resmessage = KunenaHtmlParser::parseBBCode($this->message->message, 500);
 
 			$profile = KunenaFactory::getUser((int)$this->message->userid);
 			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');

@@ -47,7 +47,9 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 
 		$this->results = array();
 		$this->total = $this->model->getTotal();
-		$this->data = $this->model->getResults();
+		$this->results = $this->model->getResults();
+
+		$this->pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 
 		$this->error = $this->model->getError();
 	}

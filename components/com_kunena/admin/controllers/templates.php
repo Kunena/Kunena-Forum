@@ -10,6 +10,11 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport('joomla.filesystem.path');
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
+jimport('joomla.filesystem.archive');
+
 /**
  * Kunena Backend Templates Controller
  *
@@ -56,8 +61,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function edit() {
-		jimport('joomla.filesystem.path');
-		jimport('joomla.filesystem.file');
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$template = array_shift($cid);
 
@@ -78,9 +81,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function install() {
-		jimport ( 'joomla.filesystem.folder' );
-		jimport ( 'joomla.filesystem.file' );
-		jimport ( 'joomla.filesystem.archive' );
 		$tmp = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
 		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
@@ -137,7 +137,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function uninstall() {
-		jimport ( 'joomla.filesystem.folder' );
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
 		$template	= $id;
@@ -190,7 +189,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$template	= JRequest::getVar('id', '', 'method', 'cmd');
 		$filename	= JRequest::getVar('filename', '', 'method', 'cmd');
 
-		jimport('joomla.filesystem.file');
 		if (JFile::getExt($filename) !== 'css') {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl.'&layout=choosecss&id='.$template, false));
@@ -224,14 +222,12 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			return;
 		}
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE.'/template/'.$template.'/css/'.$filename;
 		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_WRITABLE'));
 		}
-		jimport('joomla.filesystem.file');
 		$return = JFile::write($file, $filecontent);
 		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0555')) {
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_UNWRITABLE'));
@@ -303,11 +299,9 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$params= JRequest::getVar('jform', array(), 'post', 'array');
 
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE.'/template/'.$template.'/params.ini';
-		jimport('joomla.filesystem.file');
 		if ( count($params) ) {
 			$registry = new JRegistry();
 			$registry->loadArray($params);

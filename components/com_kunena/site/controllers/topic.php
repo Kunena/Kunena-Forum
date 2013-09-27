@@ -797,7 +797,6 @@ class KunenaControllerTopic extends KunenaController {
 			$this->redirectBack ();
 			return;
 		}
-		jimport ( 'joomla.mail.helper' );
 		if (! $this->config->getEmail() || ! JMailHelper::isEmailAddress ( $this->config->getEmail() )) {
 			// Error: email address is invalid
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );

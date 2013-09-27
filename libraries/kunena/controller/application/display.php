@@ -98,9 +98,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected function before() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 
-		$this->page = KunenaLayout::factory("{$this->input->getCmd('view')}/{$this->input->getCmd('layout')}", 'pages');
+		$this->page = KunenaLayout::factory("{$this->input->getCmd('view')}/{$this->input->getCmd('layout', 'default')}", 'pages');
 		if (!$this->page->getPath()) {
-			throw new RuntimeException("Layout '{$this->input->getCmd('view')}/{$this->input->getCmd('layout')}' does not exist!", 404);
+			throw new RuntimeException("Layout '{$this->input->getCmd('view')}/{$this->input->getCmd('layout', 'default')}' does not exist!", 404);
 		}
 
 		// Load language files.

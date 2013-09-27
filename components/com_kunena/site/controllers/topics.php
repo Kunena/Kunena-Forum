@@ -20,12 +20,14 @@ class KunenaControllerTopics extends KunenaController {
 	function none() {
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CONTROLLER_NO_TASK' ) );
 		$this->redirectBack ();
+		return;
 	}
 
 	function permdel() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$message = '';
@@ -52,6 +54,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$message = '';
@@ -75,6 +78,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$message = '';
@@ -98,6 +102,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$message = '';
@@ -122,6 +127,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$topics = KunenaForumTopicHelper::getTopics(array_keys(JRequest::getVar('topics', array ( 0 ), 'post', 'array')));
@@ -149,6 +155,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$topics = KunenaForumTopicHelper::getTopics(array_keys(JRequest::getVar('topics', array ( 0 ), 'post', 'array')));
@@ -164,6 +171,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$topics = KunenaForumTopicHelper::getTopics(array_keys(JRequest::getVar('topics', array ( 0 ), 'post', 'array')));
@@ -179,6 +187,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$success = 0;
@@ -203,6 +212,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$success = 0;
@@ -226,6 +236,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$success = 0;
@@ -249,6 +260,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$success = 0;

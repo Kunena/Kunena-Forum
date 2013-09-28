@@ -87,10 +87,11 @@ class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 			$topicIds = array_keys($this->topics);
 			KunenaForumTopicHelper::getUserTopics($topicIds);
 			KunenaForumTopicHelper::getKeywords($topicIds);
-			$lastpostlist += KunenaForumTopicHelper::fetchNewStatus($this->topics);
+			$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
+
 			// Fetch last / new post positions when user can see unapproved or deleted posts
-			if ($lastpostlist && $this->me->userid && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
-				KunenaForumMessageHelper::loadLocation($lastpostlist);
+			if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
+				KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 			}
 		}
 	}

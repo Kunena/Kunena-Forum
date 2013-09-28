@@ -26,11 +26,9 @@ if (version_compare(JVERSION, '3', '>')) {
 JLoader::registerPrefix('Kunena', KPATH_FRAMEWORK);
 
 // Give access to all Kunena tables.
-jimport('joomla.database.table');
 JTable::addIncludePath(KPATH_FRAMEWORK . '/tables');
 
 // Give access to all Kunena JHtml functions.
-jimport('joomla.html.html');
 JHtml::addIncludePath(KPATH_FRAMEWORK . '/html/html');
 
 // Give access to all Kunena form fields.

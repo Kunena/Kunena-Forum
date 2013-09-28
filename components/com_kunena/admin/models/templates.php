@@ -148,7 +148,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	function getFTPcredentials() {
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
 
 		return $ftp;

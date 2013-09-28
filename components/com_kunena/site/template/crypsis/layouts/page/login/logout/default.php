@@ -25,11 +25,15 @@ defined ( '_JEXEC' ) or die ();
 					<p>
 						<strong><?php echo $this->escape($this->me->get('name')); ?></strong>
 					</p>
+					<p>
+						<i class="icon-clock"></i>
+						<?php echo $this->lastvisitDate->toSpan('datetime_today', 'ago'); ?>
+					</p>
 				</div>
 				<div class="divider"></div>
-				<?php if ($this->me->isModerator()) : ?>
+				<?php if (!empty($this->announcementsUrl)) : ?>
 				<div>
-					<a href="<?php echo KunenaForumAnnouncementHelper::getUrl('list') ?>" class="btn btn-link">
+					<a href="<?php echo !empty($this->announcementsUrl); ?>" class="btn btn-link">
 						<i class="icon-pencil-2"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>
@@ -44,15 +48,9 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 				<?php endif ?>
 				<div>
-					<a href="<?php echo $this->me->getUrl (false, 'edit') ?>" class="btn btn-small btn-link">
+					<a href="<?php echo $this->me->getUrl(false, 'edit') ?>" class="btn btn-small btn-link">
 						<i class="icon-cog"></i>
 						<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES') ?>
-					</a>
-				</div>
-				<div>
-					<a href="http://www.kunena.org/docs/" class="btn btn-small btn-link">
-						<i class="icon-help"></i>
-						<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_HELP') ?>
 					</a>
 				</div>
 				<div class="divider"></div>

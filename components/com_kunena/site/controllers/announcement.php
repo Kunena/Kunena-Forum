@@ -26,6 +26,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -46,6 +47,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -73,6 +75,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		if (! JSession::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', (array) JRequest::getInt ('id'), 'post', 'array' );
@@ -91,6 +94,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
+			return;
 		}
 
 		$now = new JDate();
@@ -108,6 +112,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		if (!$announcement->authorise($id ? 'edit' : 'create') || !$announcement->save()) {
 			$this->app->enqueueMessage ( $announcement->getError(), 'error');
 			$this->redirectBack ();
+			return;
 		}
 
 		$this->app->enqueueMessage ( JText::_ ( $id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD' ) );

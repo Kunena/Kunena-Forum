@@ -30,6 +30,7 @@ defined ( '_JEXEC' ) or die ();
 
 	<h2>
 		<a><?php echo $this->escape($this->headerText); ?></a>
+		<div class="pull-right"><?php echo $this->subLayout('Search/Button')->set('catid', $this->category->id); ?></div>
 	</h2>
 
 	<?php if (!empty($this->categoryButtons)) : ?>

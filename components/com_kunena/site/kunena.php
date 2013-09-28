@@ -68,6 +68,7 @@ if ($ksession->userid > 0) {
 // Support legacy urls (they need to be redirected).
 $app = JFactory::getApplication();
 $input = $app->input;
+$input->set('limitstart', $input->getInt('limitstart', $input->getInt('start')));
 $view = $input->getWord('func', $input->getWord('view', 'home'));
 $subview = $input->getWord('layout', 'default');
 $task = $input->getCmd('task', 'display');

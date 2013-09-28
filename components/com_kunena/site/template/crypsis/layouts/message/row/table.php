@@ -17,6 +17,8 @@ defined ( '_JEXEC' ) or die ();
 /** @var KunenaForumMessage $message */
 $message = $this->message;
 $topic = $message->getTopic();
+$isReply = $message->id != $topic->first_post_id;
+
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;
 ?>
@@ -31,7 +33,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		?>
 		<div>
 			<?php echo $this->getTopicLink ( $topic, $message,
-				KunenaHtmlParser::parseText($message->subject, 30),
+				($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . KunenaHtmlParser::parseText($message->subject, 30),
 				KunenaHtmlParser::stripBBCode ($message->message, 500)) ?>
 		</div>
 	</td>

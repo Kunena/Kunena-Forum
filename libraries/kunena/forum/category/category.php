@@ -673,8 +673,12 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$success = $this->addAlias($this->get('alias'));
 		if ($success) $this->_alias = $this->alias;
 
-		$table->reorder ();
-		$this->ordering = $table->ordering;
+		// TODO: remove this hack...
+		if (!isset($this->_noreorder)) {
+			$table->reorder ();
+			$this->ordering = $table->ordering;
+			unset($this->_noreorder);
+		}
 
 		// Clear cache
 		$access = KunenaAccess::getInstance();
@@ -931,6 +935,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		}
 		if (!$update) return true;
 
+		// TODO: remove this hack...
+		$this->_noreorder = true;
 		return $this->save();
 	}
 

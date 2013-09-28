@@ -15,9 +15,6 @@ JHtml::_('behavior.multiselect');
 // FIXME: doesn't work in J!2.5
 JHtml::_('dropdown.init');
 
-$pagination = $this->getPagination(5);
-
-$this->me = KunenaUserHelper::getMyself();
 if (!$this->me->exists()) {
 	$this->addScriptDeclaration( "// <![CDATA[
 window.addEvent('domready', function() {
@@ -145,43 +142,3 @@ window.addEvent('domready', function() {
 		</div>
 	</div>
 </form>
-
-
-
-
-<?php if($this->results): ?>
-	<div class="well"> <span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="ksearchresult"></a></span>
-		<h2> <span> <?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?> </span> </h2>
-		<div class="ksearchresult-desc km"> <span><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords')) ); ?></span> </div>
-		<div class="row-fluid column-row">
-			<div class="span12 column-item">
-				<?php if ($this->error) : ?>
-					<div> <?php echo $this->error; ?> </div>
-				<?php endif; ?>
-				<table class="table">
-					<tbody>
-						<tr>
-							<td>
-								<?php $this->displayRows() ?>
-							</td>
-						</tr>
-						<tr class="ksth">
-							<th colspan="3">
-								<?php
-								$resStart = $this->state->get('list.start') + 1;
-								$resStop = $this->state->get('list.start') + count ( $this->results );
-								if ($resStart < $resStop)
-									$resStartStop = ( string ) ($resStart) . ' - ' . ( string ) ($resStop);
-								else
-									$resStartStop = '0';
-								printf ( JText::_('COM_KUNENA_FORUM_SEARCHRESULTS'), $resStartStop, intval($this->total) );
-								?>
-								<?php echo $this->subLayout('Pagination/List')->set('pagination', $pagination); ?>
-							</th>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-<?php endif; ?>

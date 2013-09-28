@@ -10,4 +10,5 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subLayout('Search')->setProperties($this->getProperties());
+echo $this->subRequest('Search/Form', $this->input);
+echo $this->subRequest('Search/Results', $this->input);

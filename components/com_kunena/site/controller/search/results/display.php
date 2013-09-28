@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class ComponentKunenaControllerApplicationSearchDefaultDisplay extends KunenaControllerApplicationDisplay
+class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var KunenaModelSearch
@@ -20,11 +20,12 @@ class ComponentKunenaControllerApplicationSearchDefaultDisplay extends KunenaCon
 	 * @var int
 	 */
 	public $total;
+	public $data = array();
 
 	protected function display()
 	{
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Search/Default', 'pages')
+		$content = KunenaLayout::factory('Search/Results')
 			->setProperties($this->getProperties());
 
 		return $content;
@@ -38,36 +39,18 @@ class ComponentKunenaControllerApplicationSearchDefaultDisplay extends KunenaCon
 		$this->model = new KunenaModelSearch();
 		$this->state = $this->model->getState();
 
+		$this->me = KunenaUserHelper::getMyself();
 		$this->message_ordering = $this->me->getMessageOrdering();
-//TODO: Need to move the select markup outside of view.  Otherwise difficult to stylize
 
 		$this->searchwords = $this->model->getSearchWords();
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
 		$this->results = array();
 		$this->total = $this->model->getTotal();
-		if ($this->total) {
-			$this->results = $this->model->getResults();
-			$this->search_class = ' open';
-			$this->search_style = ' style="display: none;"';
-			$this->search_title = JText::_('COM_KUNENA_TOGGLER_EXPAND');
-		} else {
-			$this->search_class = ' close';
-			$this->search_style = '';
-			$this->search_title = JText::_('COM_KUNENA_TOGGLER_COLLAPSE');
-		}
+		$this->results = $this->model->getResults();
 
-		$this->selected=' selected="selected"';
-		$this->checked=' checked="checked"';
+		$this->pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
+
 		$this->error = $this->model->getError();
-
-		$this->prepareDocument();
-	}
-
-	protected function prepareDocument()
-	{
-		$this->document->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
-
-		// TODO: set keywords and description
 	}
 }

@@ -72,10 +72,11 @@ $input->set('limitstart', $input->getInt('limitstart', $input->getInt('start')))
 $view = $input->getWord('func', $input->getWord('view', 'home'));
 $subview = $input->getWord('layout', 'default');
 $task = $input->getCmd('task', 'display');
+$format = $input->getCmd('format', 'html');
 
 
 try {
-	if ($task != 'display') throw new Exception();
+	if ($task != 'display' || $format != 'html') throw new Exception();
 
 	// Define HMVC controller and execute it.
 	/** @var KunenaControllerApplicationDisplay $controller */

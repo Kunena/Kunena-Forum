@@ -371,10 +371,24 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * @return KunenaDate
+	 */
+	public function getTime() {
+		return new KunenaDate($this->time);
+	}
+
+	/**
 	 * @return KunenaUser
 	 */
 	public function getModifier() {
 		return KunenaUserHelper::get($this->modified_by);
+	}
+
+	/**
+	 * @return KunenaDate
+	 */
+	public function getModifiedTime() {
+		return new KunenaDate($this->modified_time);
 	}
 
 	/**

@@ -137,10 +137,19 @@
 				<include name="**/*.xml"/>
 			</fileset>
 			<firstmatchmapper>
-				<mapper type="regexp" from="^libraries/(.*)$$" to="lib_\1"/>
-				<mapper type="regexp" from="^media/([^/]*)/(.*)$$" to="\1_media/\2"/>
-				<mapper type="glob" from="plugins/*" to="*"/>
+							<mapper type="regexp" from="^libraries/(.*)$$" to="lib_\1"/>
+							<mapper type="regexp" from="^media/([^/]*)/(.*)$$" to="\1_media/\2"/>
+							<mapper type="glob" from="plugins/*" to="*"/>
 			</firstmatchmapper>
+		</copy>
+		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
+			<fileset dir="${project_dir}/libraries"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plugins" overwrite="true">
+			<fileset dir="${project_dir}/plugins"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
+			<fileset dir="${project_dir}/media"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.admin}">
@@ -188,8 +197,9 @@
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/com_kunena/site" todir="${tmp_dir}/packages/com_kunena/site">
 			<include name="**/*.js" />
 			<include name="**/*.css" />
+			<exclude name="template/mirage/css/*.css" />
 		</yui-compressor>
-		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
+		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/kunena/js" todir="${tmp_dir}/packages/kunena_media/kunena/js">
 			<include name="**/*.js" />
 		</yui-compressor>
 	</target>
@@ -286,12 +296,16 @@
 		<language tag="eo-XX" />
 		<language tag="es-ES" />
 		<language tag="et-EE" />
-		<language tag="eu-ES" />
 		<language tag="fa-IR" />
 		<language tag="fi-FI" />
 		<language tag="fr-FR" />
+		<!--language tag="gl-ES" /-->
 		<language tag="he-IL" />
-		<language tag="hi-IN" />
+		<!--language tag="hi-IN" /-->
+		<language tag="hr-HR" />
+		<language tag="fr-FR" />
+		<!--language tag="gl-ES" /-->
+		<language tag="he-IL" />
 		<language tag="hr-HR" />
 		<language tag="hu-HU" />
 		<language tag="id-ID" />
@@ -310,8 +324,8 @@
 		<language tag="pt-PT" />
 		<language tag="ro-RO" />
 		<language tag="ru-RU" />
-		<language tag="sk-SK" />
 		<language tag="sl-SI" />
+		<language tag="sk-SK" />
 		<language tag="sq-AL" />
 		<language tag="sr-RS" />
 		<language tag="sr-YU" />
@@ -325,12 +339,12 @@
 		<language tag="zh-CN" />
 		<language tag="zh-TW" />
 
-		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/packages/plg_system_kunena" />
-		<archive destfile="${build_dir}/packages/plg_content_kunena${str.version}" basedir="${tmp_dir}/packages/plg_content_kunena" />
-		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/packages/plg_quickicon_kunena" />
-		<archive destfile="${build_dir}/packages/lib_kunena${str.version}" basedir="${tmp_dir}/packages/lib_kunena" />
+		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/packages/plugins/plg_system_kunena" />
+		<archive destfile="${build_dir}/packages/plg_content_kunena${str.version}" basedir="${tmp_dir}/packages/plugins/plg_content_kunena" />
+		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/packages/plugins/plg_quickicon_kunena" />
+		<archive destfile="${build_dir}/packages/lib_kunena${str.version}" basedir="${tmp_dir}/packages/lib_kunena/kunena" />
 		<archive destfile="${build_dir}/packages/com_kunena${str.version}" basedir="${tmp_dir}/packages/com_kunena" />
-		<archive destfile="${build_dir}/packages/kunena_media${str.version}" basedir="${tmp_dir}/packages/kunena_media" />
+		<archive destfile="${build_dir}/packages/kunena_media${str.version}" basedir="${tmp_dir}/packages/kunena_media/kunena" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
 	</target>
@@ -347,7 +361,8 @@
 		<echo message="Date:            ${TODAY}" />
 	</target>
 
-	<target name="cleanup" depends="info">
+	<target name="cleanup" depends="info">		
+		<delete dir="${tmp_dir}/packages" />
 		<delete dir="${tmp_dir}" />
 		<delete dir="${build_dir}" />
 	</target>

@@ -26,7 +26,8 @@ class KunenaAdminControllerSmilies extends KunenaController {
 	function add() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=smiley&layout=add', false));
@@ -35,24 +36,26 @@ class KunenaAdminControllerSmilies extends KunenaController {
 	function edit() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$id = array_shift($cid);
 		if (!$id) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_SMILEYS_SELECTED' ), 'notice' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
-		} else {
-			$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=smiley&layout=edit&id={$id}", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
+
+		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=smiley&layout=edit&id={$id}", false));
 	}
 
 	function save() {
 		$db = JFactory::getDBO ();
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
@@ -79,13 +82,13 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		}
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_SMILEY_SAVED') );
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function smileyupload() {
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
@@ -98,7 +101,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE') );
 		}
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function remove() {
@@ -107,7 +110,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
@@ -121,6 +124,6 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		}
 
 		$this->app->enqueueMessage (JText::_('COM_KUNENA_SMILEY_DELETED') );
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

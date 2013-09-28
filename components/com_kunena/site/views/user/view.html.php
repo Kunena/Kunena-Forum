@@ -404,7 +404,6 @@ class KunenaViewUser extends KunenaView {
 				$lang = JFactory::getLanguage();
 				$lang->load('com_users', JPATH_ADMINISTRATOR);
 
-				jimport( 'joomla.form.form' );
 				JForm::addFormPath(JPATH_ROOT.'/components/com_users/models/forms');
 				JForm::addFieldPath(JPATH_ROOT.'/components/com_users/models/fields');
 				JPluginHelper::importPlugin('user');

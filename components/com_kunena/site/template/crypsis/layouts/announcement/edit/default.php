@@ -54,7 +54,7 @@ JHtml::_('behavior.formvalidation');
 				<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
 			</label>
 			<div class="controls" id="ann-date">
-				<?php echo $this->displayInput('created', 'addcreated'); ?>
+				<?php echo $this->displayInput('created', '', 'addcreated'); ?>
 			</div>
 		</div>
 

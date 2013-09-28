@@ -263,7 +263,10 @@ class KunenaLayout extends KunenaLayoutBase
 		if (!isset($channels[$lastTopic->category_id])) $category = $lastTopic->getCategory();
 		$uri = $lastTopic->getUrl($category, true, 'last');
 
-		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 30);
+		if (!$content) {
+			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE').' ' : '';
+			$content .= KunenaHtmlParser::parseText($lastTopic->subject, 30);
+		}
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}

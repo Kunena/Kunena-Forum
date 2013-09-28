@@ -9,8 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.html.html');
-
 class KunenaAdminTemplate25 {
 
 	public function initialize() {

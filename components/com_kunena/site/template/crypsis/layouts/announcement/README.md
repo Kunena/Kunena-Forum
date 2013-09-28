@@ -1,7 +1,6 @@
 # Announcements
 
-Announcements are global messages, which can be used to broadcast important news to the users. Latest announcement will
-be shown in the top of most forum pages.
+Announcements are global messages, which can be used to broadcast important news to the users. Latest announcement will be shown in the top of most forum pages.
 
 Available layouts for the announcements are:
 

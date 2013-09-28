@@ -319,11 +319,10 @@ class KunenaModelTopics extends KunenaModel {
 
 			KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
 			KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
-			$lastpostlist += KunenaForumTopicHelper::fetchNewStatus($this->topics);
+			$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 			// Fetch last / new post positions when user can see unapproved or deleted posts
-			$me = KunenaUserHelper::get();
-			if ($postlist || ($lastpostlist && $me->userid && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))) {
-				KunenaForumMessageHelper::loadLocation($postlist + $lastpostlist);
+			if ($postlist || $lastreadlist || ($this->me->userid && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))) {
+				KunenaForumMessageHelper::loadLocation($postlist + $lastpostlist + $lastreadlist);
 			}
 		}
 	}

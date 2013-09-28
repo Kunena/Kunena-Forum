@@ -15,10 +15,10 @@ $map = array(
 	'common/default' => array('page/custom', 'default'),
 	'common/footer' => array('page/footer', 'default'),
 	'common/forumjump' => array('page/forumjump', 'default'),
-	'common/login' => array('page/menubar/login', 'default'),
-	'common/logout' => array('page/menubar/logout', 'default'),
+	'common/login' => array('page/login/login', 'default'),
+	'common/logout' => array('page/login/logout', 'default'),
 	'common/menu' => array('page/menubar', 'default'),
-	'common/menu_menu' => array('page/menubar/menu', 'default'),
+	'common/menu_menu' => array('page/menu', 'default'),
 	'common/statistics' => array('page/statistics', 'default'),
 	'common/whosonline' => array('page/whoisonline', 'default'),
 

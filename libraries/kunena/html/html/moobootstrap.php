@@ -9,8 +9,6 @@
 
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.html.html');
-
 /**
  * Utility class for Bootstrap elements (written in Mootools).
  *

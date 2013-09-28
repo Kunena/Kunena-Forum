@@ -11,7 +11,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div id="kunena" class="layout">
 <?php
-echo KunenaLayout::factory('Page/MenuBar')->set('me', $this->me);
+echo KunenaLayout::factory('Page/MenuBar');
 
 // Display current view/layout
 $this->displayLayout();

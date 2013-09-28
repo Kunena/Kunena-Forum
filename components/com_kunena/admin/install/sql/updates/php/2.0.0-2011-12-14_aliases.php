@@ -9,8 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.filter.output');
-
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
 function kunena_200_2011_12_14_aliases($parent) {
 	$config = KunenaFactory::getConfig ();

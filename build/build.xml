@@ -106,6 +106,9 @@
 		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
 			<fileset dir="${project_dir}/libraries/kunena"/>
 		</copy>
+        <copy todir="${tmp_dir}/packages/plg_content_kunena" overwrite="true">
+            <fileset dir="${project_dir}/plugins/plg_content_kunena"/>
+        </copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
 			<fileset dir="${project_dir}/plugins/plg_system_kunena"/>
 		</copy>
@@ -141,6 +144,11 @@
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
+        <copy todir="${tmp_dir}/packages/plg_content_kunena" overwrite="true" filtering="true">
+            <fileset dir="${project_dir}/plugins/plg_content_kunena">
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/plugins/plg_system_kunena">
 				<include name="**/*.xml"/>

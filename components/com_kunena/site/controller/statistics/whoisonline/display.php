@@ -14,7 +14,7 @@ class ComponentKunenaControllerStatisticsWhoisonlineDisplay extends KunenaContro
 {
 	protected function display() {
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Page/WhoIsOnline')->setProperties($this->getProperties());
+		$content = KunenaLayout::factory('Statistics/WhoIsOnline')->setProperties($this->getProperties());
 
 		return $content;
 	}

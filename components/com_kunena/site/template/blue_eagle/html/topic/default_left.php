@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmsg-header kmsg-header-left">
-	<h2>
+    <h2>
 		<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-left">
 			<?php echo $this->displayMessageField('subject') ?>
 		</span>
@@ -20,26 +20,26 @@ defined ( '_JEXEC' ) or die ();
 		</span>
 		<span class="kmsg-id-left">
 			<a id="<?php echo intval($this->message->id) ?>"></a>
-			<?php echo $this->numLink ?>
+            <?php echo $this->numLink ?>
 		</span>
-	</h2>
+    </h2>
 </div>
-<table class="<?php echo $this->class ?>">
-	<tbody>
-		<tr>
-			<td rowspan="2" class="kprofile-left">
-				<?php $this->displayMessageProfile('vertical') ?>
-			</td>
-			<td class="kmessage-left">
-				<?php $this->displayMessageContents() ?>
-			</td>
-		</tr>
-		<tr>
-			<td class="kbuttonbar-left">
-				<?php $this->displayMessageActions() ?>
-			</td>
-		</tr>
-	</tbody>
+<table class="mobile <?php echo $this->class ?>">
+    <tbody>
+    <tr>
+        <td rowspan="2" class="kprofile-left">
+            <?php $this->displayMessageProfile('vertical') ?>
+        </td>
+        <td class="kmessage-left">
+            <?php $this->displayMessageContents() ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="kbuttonbar-left">
+            <?php $this->displayMessageActions() ?>
+        </td>
+    </tr>
+    </tbody>
 </table>
 
 <!-- Begin: Message Module Position -->

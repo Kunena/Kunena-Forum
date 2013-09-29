@@ -136,11 +136,13 @@
 				<include name="libraries/kunena/forum/forum.php"/>
 				<include name="**/*.xml"/>
 			</fileset>
-			<firstmatchmapper>
-				<mapper type="regexp" from="^libraries/(.*)$$" to="lib_\1"/>
-				<mapper type="regexp" from="^media/([^/]*)/(.*)$$" to="\1_media/\2"/>
-				<mapper type="glob" from="plugins/*" to="*"/>
-			</firstmatchmapper>
+			<fileset dir="${project_dir}/plugins"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
+			<fileset dir="${project_dir}/libraries"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
+			<fileset dir="${project_dir}/media"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.admin}">
@@ -189,7 +191,7 @@
 			<include name="**/*.js" />
 			<include name="**/*.css" />
 		</yui-compressor>
-		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
+		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/kunena/js" todir="${tmp_dir}/packages/kunena_media/kunena/js">
 			<include name="**/*.js" />
 		</yui-compressor>
 	</target>

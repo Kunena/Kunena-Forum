@@ -48,7 +48,13 @@ IF exist %GitTarget%\media\kunena ( rmdir /S/q %GitTarget%\media\kunena )
 IF exist %GitTarget%\plugins\system\kunena ( rmdir /S/q %GitTarget%\plugins\system\kunena )
 IF exist %GitTarget%\plugins\content\kunena ( rmdir /S/q %GitTarget%\plugins\content\kunena )
 IF exist %GitTarget%\plugins\quickicon\kunena ( rmdir /S/q %GitTarget%\plugins\quickicon\kunena )
-echo Done!
+echo Put back kunena.xml file in place to allow to uninstall kunena
+Md %GitTarget%\administrator\components\com_kunena
+Copy %GitSource%\components\com_kunena\admin\kunena.xml %GitTarget%\administrator\components\com_kunena 
+echo Removed development tree from your web site.
+echo Please install Kunena Package to fix your site!
+echo:
+echo:
 pause
 goto:eof 
 
@@ -61,14 +67,17 @@ IF exist %GitTarget%\media\kunena ( rmdir /S/q %GitTarget%\media\kunena )
 IF exist %GitTarget%\plugins\system\kunena ( rmdir /S/q %GitTarget%\plugins\system\kunena )
 IF exist %GitTarget%\plugins\content\kunena ( rmdir /S/q %GitTarget%\plugins\content\kunena )
 IF exist %GitTarget%\plugins\quickicon\kunena ( rmdir /S/q %GitTarget%\plugins\quickicon\kunena )
+
 echo Make symbolic links
 mklink /d %GitTarget%\administrator\components\com_kunena %GitSource%\components\com_kunena\admin
 mklink /d %GitTarget%\components\com_kunena %GitSource%\components\com_kunena\site
 mklink /d %GitTarget%\libraries\kunena %GitSource%\libraries\kunena
-mklink /d %GitTarget%\media\kunena %GitSource%\media\kunena
 mklink /d %GitTarget%\plugins\system\kunena %GitSource%\plugins\plg_system_kunena
 mklink /d %GitTarget%\plugins\content\kunena %GitSource%\plugins\plg_content_kunena
 mklink /d %GitTarget%\plugins\quickicon\kunena %GitSource%\plugins\plg_quickicon_kunena
+echo Copying media/kunena
+xcopy /E /I %GitSource%\media\kunena\*.* %GitTarget%\media\kunena
+
 pause
 goto:eof 
 

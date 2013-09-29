@@ -11,13 +11,17 @@
 	<license>GNU/GPL</license>
 	<description>COM_KUNENA_TEMPLATE_CRYPSIS_DESC</description>
 	<files>
-		<filename>index.html</filename>
+		<filename>config.xml</filename>
+		<filename>mapping.php</filename>
+		<filename>README.md</filename>
 		<filename>template.php</filename>
-		<filename>kunena_tmpl_crypsis.xml</filename>
-		<folder>css</folder>
 		<folder>html</folder>
 		<folder>images</folder>
-		<folder>js</folder>
+        <folder>js</folder>
+		<folder>language</folder>
+		<folder>layouts</folder>
+		<folder>less</folder>
 		<folder>media</folder>
+		<folder>pages</folder>
 	</files>
 </extension>

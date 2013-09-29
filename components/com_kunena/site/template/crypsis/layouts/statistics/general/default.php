@@ -12,13 +12,13 @@ defined ( '_JEXEC' ) or die ();
 
 ?>
 <?php if($this->config->showgenstats): ?>
-<h2>
+<h2 class="btn-link">
 	<?php echo $this->escape($this->config->board_title); ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
 </h2>
 
 <div class="well well-small">
 	<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
-	<b><?php echo $this->userlist;?></b>
+	<b><a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a></b>
 
 	<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
 	<b><?php echo $this->latestMemberLink ?></b>
@@ -54,9 +54,9 @@ defined ( '_JEXEC' ) or die ();
 <?php endif; ?>
 
 <?php foreach ($this->top as $top) : ?>
-<h2>
+<h3 class="btn-link">
 	<?php echo $top[0]->title; ?>
-</h2>
+</h3>
 
 <table class="table table-striped table-bordered">
 	<thead>
@@ -85,5 +85,3 @@ defined ( '_JEXEC' ) or die ();
 	</tbody>
 </table>
 <?php endforeach; ?>
-
-<?php echo $this->subRequest('Statistics/WhoIsOnline'); ?>

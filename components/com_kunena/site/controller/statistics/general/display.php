@@ -10,11 +10,11 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class ComponentKunenaControllerPageStatisticsDisplay extends KunenaControllerDisplay
+class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaControllerDisplay
 {
 	protected function display() {
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Page/Statistics')->setProperties($this->getProperties());
+		$content = KunenaLayout::factory('Statistics/General')->setProperties($this->getProperties());
 
 		return $content;
 	}
@@ -25,11 +25,12 @@ class ComponentKunenaControllerPageStatisticsDisplay extends KunenaControllerDis
 		$this->config = KunenaConfig::getInstance();
 
 		$statistics = KunenaForumStatistics::getInstance();
-		$statistics->loadGeneral();
+		$statistics->loadAll();
 		$this->setProperties($statistics);
 
-		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
-		$this->statisticsUrl = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
+		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink();
 		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
+
+		return true;
 	}
 }

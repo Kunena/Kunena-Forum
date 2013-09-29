@@ -38,7 +38,6 @@
 		<folder>template</folder>
 		<folder>upload</folder>
 		<folder>user</folder>
-		<filename>index.html</filename>
 		<filename>access.php</filename>
 		<filename>bootstrap.php</filename>
 		<filename>config.php</filename>

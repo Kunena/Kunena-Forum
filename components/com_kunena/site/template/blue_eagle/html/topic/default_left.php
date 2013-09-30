@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 		</span>
 	</h2>
 </div>
-<table class="<?php echo $this->class ?>">
+<table class="mobile <?php echo $this->class ?>">
 	<tbody>
 		<tr>
 			<td rowspan="2" class="kprofile-left">

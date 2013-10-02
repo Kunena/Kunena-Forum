@@ -74,6 +74,7 @@ class KunenaModelSearch extends KunenaModel {
 		}
 		$this->setState ( 'query.catids', $value );
 
+		// FIXME: support search topic
 		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
 			$value = JRequest::getVar ( 'ids', array (0), 'post', 'array' );
 			JArrayHelper::toInteger($value);
@@ -196,9 +197,7 @@ class KunenaModelSearch extends KunenaModel {
 			return 0;
 		}
 
-		// Access Filters
-		$accessFilter = new Elastica\Filter\Terms();
-		$accessFilter->setTerms('catid', array_map('intval',$allowedCategories));
+		if ($this->total === false) $this->getResults();
 
 		/* if there are no forums to search in, set error and return */
 		if ($this->total == 0) {

@@ -47,12 +47,16 @@ class KunenaLayoutPage extends KunenaLayout
 	 *
 	 * @return $this
 	 */
-	public function addBreadcrumb($text, $uri, $ignore = false)
+	public function addBreadcrumb($text, $uri, $ignore = true)
 	{
-		/*if ($ignore) {
-			$menu = JFactory::getApplication()->getMenu();
-			if ($input->getCmd('view').'/'.$input->getCmd('layout', 'default') == $this->name) return $this;
-		}*/
+		if ($ignore) {
+			$active = KunenaRoute::$active;
+			$view = isset($active->query['view']) ? $active->query['view'] : '';
+			$layout = isset($active->query['layout']) ? $active->query['layout'] : 'default';
+
+			if ($active && $active->component == 'com_kunena'
+				&& strtolower("{$view}/{$layout}") == strtolower($this->name)) return $this;
+		}
 		$this->breadcrumb->addItem($text, KunenaRoute::normalize($uri));
 
 		return $this;

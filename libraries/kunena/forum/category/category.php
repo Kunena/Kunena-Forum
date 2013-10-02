@@ -206,6 +206,25 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return KunenaRoute::getCategoryUrl($category, $xhtml);
 	}
 
+	public function getNewTopicUrl($xhtml = true) {
+		if (!$this->getNewTopicCategory()->exists()) {
+			return null;
+		}
+
+		$catid = $this->id ? "&catid={$this->id}" : '';
+		return KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create{$catid}", $xhtml);
+	}
+
+	public function getMarkReadUrl($xhtml = true) {
+		if (!KunenaUserHelper::getMyself()->exists()) {
+			return null;
+		}
+
+		$catid = $this->id ? "&catid={$this->id}" : '';
+		$token = '&' . JSession::getFormToken() . '=1';
+		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$token}", $xhtml);
+	}
+
 	/**
 	 * @param mixed		$category	Fake category (or null).
 	 * @param int|null	$action		Limitstart.

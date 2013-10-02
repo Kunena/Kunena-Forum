@@ -74,6 +74,16 @@ class KunenaModelSearch extends KunenaModel {
 		}
 		$this->setState ( 'query.catids', $value );
 
+		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
+			$value = JRequest::getVar ( 'ids', array (0), 'post', 'array' );
+			JArrayHelper::toInteger($value);
+		} else {
+			$value = JRequest::getString ( 'ids', '0', 'get' );
+			$value = explode ( ' ', $value );
+			JArrayHelper::toInteger($value);
+		}
+		$this->setState ('query.ids', $value );
+
 		$value = JRequest::getInt ( 'show', 0 );
 		$this->setState ( 'query.show', $value );
 
@@ -186,7 +196,9 @@ class KunenaModelSearch extends KunenaModel {
 			return 0;
 		}
 
-		if ($this->total === false) $this->getResults();
+		// Access Filters
+		$accessFilter = new Elastica\Filter\Terms();
+		$accessFilter->setTerms('catid', array_map('intval',$allowedCategories));
 
 		/* if there are no forums to search in, set error and return */
 		if ($this->total == 0) {

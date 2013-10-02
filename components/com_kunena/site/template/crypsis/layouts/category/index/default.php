@@ -12,14 +12,18 @@ defined ( '_JEXEC' ) or die ();
 
 $mmm=0;
 foreach ($this->sections as $section) :
+	$markReadUrl = $section->getMarkReadUrl();
 ?>
 
 <div>
 	<div class="btn-toolbar pull-right">
 		<?php if ($this->me->exists()) : ?>
 		<div class="btn-group">
-			<?php // TODO: add javascript to actions ?>
-			<button class="btn btn-small">Mark Read</button>
+			<?php if ($markReadUrl) : ?>
+			<a class="btn btn-small" href="<?php echo $markReadUrl ?>">
+				<?php echo JText::_('COM_KUNENA_MARK_CATEGORIES_READ') ?>
+			</a>
+			<?php endif; ?>
 			<?php if ($this->me->isAdmin($section)) : ?>
 			<button class="btn btn-small">Approve Posts</button>
 			<?php endif; ?>

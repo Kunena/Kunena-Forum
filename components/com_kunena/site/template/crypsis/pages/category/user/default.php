@@ -10,4 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Category/Subscriptions', $this->input);
+$content = $this->execute('Category/Subscriptions');
+
+$this->addBreadcrumb(JText::_('COM_KUNENA_VIEW_CATEGORIES_USER'),
+	'index.php?option=com_kunena&view=category&layout=user');
+
+echo $content;

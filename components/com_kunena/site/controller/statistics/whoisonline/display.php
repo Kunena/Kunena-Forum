@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controller.Statistics.Whoisonline
+ * @subpackage Controllers.Statistics
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,17 +10,19 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerStatisticsWhoisonlineDisplay
+ */
 class ComponentKunenaControllerStatisticsWhoisonlineDisplay extends KunenaControllerDisplay
 {
-	protected function display() {
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Statistics/WhoIsOnline')->setProperties($this->getProperties());
+	protected $name = 'Statistics/WhoIsOnline';
 
-		return $content;
-	}
-
-	protected function before() {
+	protected function before()
+	{
 		parent::before();
+
+		$this->config = KunenaConfig::getInstance();
+		if (!$this->config->get('showwhoisonline')) throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
 
 		$me = KunenaUserHelper::getMyself();
 		$moderator = intval($me->isModerator())+intval($me->isAdmin());
@@ -60,5 +62,10 @@ class ComponentKunenaControllerStatisticsWhoisonlineDisplay extends KunenaContro
 
 		$profile = KunenaFactory::getProfile();
 		$this->usersUrl = $profile->getUserListURL('');
+	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
 	}
 }

@@ -10,4 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Topic/List')->execute()->setLayout('new');
+$content = $this->execute('Topic/List')->setLayout('new');
+
+$this->addBreadcrumb('Topics Needing Attention', // TODO <-
+	'index.php?option=com_kunena&view=topics&layout=unread');
+
+echo $content;

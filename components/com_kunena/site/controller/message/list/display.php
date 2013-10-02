@@ -1,15 +1,8 @@
-			}
-		}
-	}
-
-	protected function prepareDocument()
-	{
-		$this->setTitle(JText::_('Topics Needing Attention')); // TODO <-
 <?php
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Topic
+ * @subpackage Controllers.Misc
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -18,14 +11,18 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Class ComponentKunenaControllerTopicListDisplay
+ * Class ComponentKunenaControllerMessageListDisplay
  */
-class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
+class ComponentKunenaControllerMessageListDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var KunenaUser
 	 */
 	protected $me;
+	/**
+	 * @var KunenaConfig
+	 */
+	protected $config;
 	protected $topics;
 
 	protected function display()

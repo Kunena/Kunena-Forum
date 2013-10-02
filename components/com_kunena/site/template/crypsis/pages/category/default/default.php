@@ -10,5 +10,14 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+$content = $this->execute('Category/Topics');
+
+// Display breadcrumb path to the current category.
+$parents = KunenaForumCategoryHelper::getParents($content->category->id);
+$parents[] = $content->category;
+foreach ( $parents as $parent ) {
+	$this->addBreadcrumb($parent->displayField('name'), $parent->getUri());
+}
+
 echo $this->subRequest('Category/Index');
-echo $this->subRequest('Category/Topics');
+echo $content;

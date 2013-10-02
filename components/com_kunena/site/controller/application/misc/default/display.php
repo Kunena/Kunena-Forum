@@ -21,7 +21,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	protected function display()
 	{
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Misc/Default', 'pages')
+		$content = KunenaLayoutPage::factory('Misc/Default')
 			->set('header', $this->header)
 			->set('body', $this->body);
 		return $content;

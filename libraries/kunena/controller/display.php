@@ -12,24 +12,37 @@ defined ( '_JEXEC' ) or die ();
 
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
+	protected $name = 'Empty';
+
 	public $output = null;
+	public $layout = 'default';
+	public $config;
+	protected $primary = false;
 
 	/**
 	 * @see KunenaControllerBase::execute()
 	 */
 	public function execute() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
-		// Run before executing action.
-		$result = $this->before();
-		if ($result === false) {
-			return KunenaLayout::factory('Empty');
+		try {
+			// Run before executing action.
+			$result = $this->before();
+			if ($result === false) {
+				return KunenaLayout::factory('Empty');
+			}
+
+			// Display layout with given parameters.
+			$this->output = $this->display();
+
+			// Run after executing action.
+			$this->after();
+		} catch (KunenaExceptionAuthorise $e) {
+			if ($this->primary) {
+				throw $e;
+			} else {
+				$this->output = KunenaLayout::factory('Empty');
+			}
 		}
-
-		// Display layout with given parameters.
-		$this->output = $this->display();
-
-		// Run after executing action.
-		$this->after();
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 		return $this->output;
@@ -40,17 +53,43 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @return KunenaLayout
 	 */
-	abstract protected function display();
+	protected function display()
+	{
+		// Display layout with given parameters.
+		$content = KunenaLayout::factory($this->name)->setProperties($this->getProperties());
+
+		return $content;
+	}
+
+	/**
+	 * @internal
+	 */
+	public function setPrimary() {
+		$this->primary = true;
+
+		return $this;
+	}
 
 	/**
 	 * Executed before display.
 	 */
-	protected function before() {}
+	protected function before() {
+		$this->layout = $this->input->getCmd('layout', 'default');
+		$this->config = KunenaConfig::getInstance();
+		if ($this->primary) $this->document = JFactory::getDocument();
+	}
 
 	/**
 	 * Executed after display.
 	 */
-	protected function after() {}
+	protected function after() {
+		if ($this->primary) $this->prepareDocument();
+	}
+
+	/**
+	 * Prepare title, description, keywords, breadcrumb etc.
+	 */
+	protected function prepareDocument() {}
 
 	/**
 	 * Return view as a string.
@@ -58,9 +97,33 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @return string
 	 */
 	public function __toString() {
-		$output = (string) $this->execute();
+		try {
+			$output = $this->execute();
 
-		return $output;
+		} catch (KunenaExceptionAuthorise $e) {
+			if (!$this->primary) return KunenaLayout::factory('Empty');
+
+			$document = JFactory::getDocument();
+			$document->setTitle($e->getResponseStatus());
+			JResponse::setHeader('Status', $e->getResponseStatus(), 'true');
+			$output = KunenaLayout::factory('Misc/Default', 'pages')
+				->set('header', $e->getResponseStatus())
+				->set('body', $e->getMessage());
+
+		} catch (Exception $e) {
+			// TODO: error message?
+			if (!$this->primary) return KunenaLayout::factory('Empty');
+
+			$title = '500 Internal Server Error';
+			$document = JFactory::getDocument();
+			$document->setTitle($title);
+			JResponse::setHeader('Status', $title, 'true');
+			$output = KunenaLayout::factory('Misc/Default', 'pages')
+				->set('header', $title)
+				->set('body', $e->getMessage());
+		}
+
+		return (string) $output;
 	}
 
 	/**
@@ -113,5 +176,35 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	{
 		$this->input->set($key, $value);
 		return $this;
+	}
+
+
+	protected function setTitle($title, $replace=false)
+	{
+		if (!$replace) {
+			// Obey Joomla configuration.
+			if ($this->app->getCfg('sitename_pagetitles', 0) == 1) {
+				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+
+			} elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2) {
+				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
+
+			} else {
+				$title = KunenaFactory::getConfig()->board_title .' - '. $title;
+			}
+		}
+
+		$title = strip_tags($title);
+		$this->document->setTitle($title);
+	}
+
+	protected function setKeywords($keywords)
+	{
+		if (!empty($keywords)) $this->document->setMetadata('keywords', $keywords);
+	}
+
+	protected function setDescription($description)
+	{
+		$this->document->setMetadata('description',  $description);
 	}
 }

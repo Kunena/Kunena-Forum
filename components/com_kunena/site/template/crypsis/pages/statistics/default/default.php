@@ -10,5 +10,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Statistics/General');
+$content = $this->execute('Statistics/General');
+
+$this->addBreadcrumb(JText::_('COM_KUNENA_MENU_STATISTICS'),
+	'index.php?option=com_kunena&view=statistics&layout=default');
+
+echo $content;
 echo $this->subRequest('Statistics/WhoIsOnline');

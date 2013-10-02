@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controller.Statistics.Whoisonline
+ * @subpackage Controllers.Statistics
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,19 +10,19 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerStatisticsGeneralDisplay
+ */
 class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaControllerDisplay
 {
-	protected function display() {
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Statistics/General')->setProperties($this->getProperties());
+	protected $name = 'Statistics/General';
 
-		return $content;
-	}
-
-	protected function before() {
+	protected function before()
+	{
 		parent::before();
 
 		$this->config = KunenaConfig::getInstance();
+		if (!$this->config->get('showstats')) throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
 
 		$statistics = KunenaForumStatistics::getInstance();
 		$statistics->loadAll();
@@ -32,5 +32,10 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
 
 		return true;
+	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));
 	}
 }

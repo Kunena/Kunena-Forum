@@ -13,8 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $colspan = empty($this->topicActions) ? 5 : 6;
 ?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="ktopicsform" id="ktopicsform">
-	<input type="hidden" name="view" value="topics" />
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post" name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<h3><?php echo $this->escape($this->headerText); ?></h3>

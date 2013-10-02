@@ -2,17 +2,21 @@
 /**
  * Kunena Component
  * @package Kunena.Template.Crypsis
- * @subpackage Pages.Search
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+/** @var KunenaLayout $this */
+?>
+<div id="kunena" class="layout">
+<?php
+echo $this->subLayout('Page/MenuBar');
 
-$content = $this->execute('Announcement/Edit');
+// Display current view/layout
+echo $this->content;
 
-$this->addBreadcrumb(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
-	'index.php?option=com_kunena&view=announcement&layout=list');
-
-echo $content;
+echo $this->subLayout('Page/Footer');
+?>
+</div>

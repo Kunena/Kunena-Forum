@@ -25,11 +25,6 @@ class KunenaModelUser extends KunenaModel {
 
 		$config = KunenaFactory::getConfig();
 
-		// TODO: create state for item
-		if ($layout != 'list') {
-			return;
-		}
-
 		// List state information
 		$limit = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlist_rows'), 'int' );
 		if ($limit < 1 || $limit > 100) $limit = $config->get('userlist_rows');
@@ -50,16 +45,16 @@ class KunenaModelUser extends KunenaModel {
 
 		$value = $this->app->input->get ( 'search', null, 'string' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
+	}
 
+	public function getQueryWhere() {
 		$db = JFactory::getDBO();
 		$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
 		$db->setQuery ( $query );
 		$superadmins = (array) $db->loadColumn();
 		if (!$superadmins) $superadmins = array(0);
 		$this->setState ( 'list.exclude', implode(',', $superadmins));
-	}
 
-	public function getQueryWhere() {
 		if ($this->config->userlist_count_users == '1' ) $where = '(u.block=0 OR u.activation="")';
 		elseif ($this->config->userlist_count_users == '2' ) $where = '(u.block=0 AND u.activation="")';
 		elseif ($this->config->userlist_count_users == '3' ) $where = 'u.block=0';

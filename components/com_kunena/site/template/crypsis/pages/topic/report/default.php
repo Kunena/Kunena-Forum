@@ -10,14 +10,16 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$content = $this->execute('Category/Topics');
+$content = $this->execute('Topic/Report');
 
-// Display breadcrumb path to the current category.
+// Display breadcrumb path to the current category / topic / message / report.
 $parents = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 foreach ($parents as $parent) {
 	$this->addBreadcrumb($parent->displayField('name'), $parent->getUri());
 }
+$this->addBreadcrumb(JText::_('COM_KUNENA_MENU_TOPIC'), $content->topic->getUri());
+if ($content->message) $this->addBreadcrumb(JText::_('COM_KUNENA_MESSAGE'), $content->message->getUri());
+$this->addBreadcrumb(JText::_('COM_KUNENA_REPORT'), $content->uri);
 
-echo $this->subRequest('Category/Index');
 echo $content;

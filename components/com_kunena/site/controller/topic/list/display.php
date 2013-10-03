@@ -1,8 +1,15 @@
+			}
+		}
+	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('Topics Needing Attention')); // TODO <-
 <?php
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Topic
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -11,7 +18,7 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Class ComponentKunenaControllerApplicationMiscDisplay
+ * Class ComponentKunenaControllerTopicListDisplay
  */
 class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 {
@@ -19,10 +26,6 @@ class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 	 * @var KunenaUser
 	 */
 	protected $me;
-	/**
-	 * @var KunenaConfig
-	 */
-	protected $config;
 	protected $topics;
 
 	protected function display()
@@ -50,17 +53,11 @@ class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 		$limit = $this->input->getInt('limit', 0);
 		if ($limit < 1 || $limit > 100) $limit = $this->config->threads_per_page;
 
-		// TODO: add more parameters from the model
-
 		$finder = new KunenaForumTopicFinder();
 		$finder->filterByUserAccess($this->me)
 			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
 			->filterByMoved(false)
 			->filterBy('locked', '=', 0);
-
-		//$cache = JFactory::getCache('com_kunena', 'callback');
-		//$cache->setLifeTime(180);
-		//$this->total = $cache->get(array($finder, 'count'), array(), 'topics_count_need_attention');
 
 		$this->total = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);

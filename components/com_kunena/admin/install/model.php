@@ -314,7 +314,6 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini")) {
 			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
 		}
@@ -348,7 +347,6 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
 			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
 		}

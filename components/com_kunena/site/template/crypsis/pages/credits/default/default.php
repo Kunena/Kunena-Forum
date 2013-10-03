@@ -10,4 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Credits');
+$content = $this->execute('Credits');
+
+$this->addBreadcrumb(JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT'), 'index.php?option=com_kunena&view=credits');
+
+echo $content;

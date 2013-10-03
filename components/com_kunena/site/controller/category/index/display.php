@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Category
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -15,37 +15,19 @@ defined ( '_JEXEC' ) or die ();
  */
 class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay
 {
-	protected $sections = array();
-	protected $categories = array();
-	protected $pending = array();
+	protected $name = 'Category/Index';
 
-	/**
-	 * @var KunenaUser
-	 */
-	protected $me;
-	/**
-	 * @var KunenaConfig
-	 */
-	protected $config;
-
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Category/Index')
-			->set('sections', $this->sections)
-			->set('categories', $this->categories)
-			->set('me', $this->me)
-			->set('config', $this->config)
-			->set('pending', $this->pending);
-		return $content;
-	}
+	/** @var KunenaUser */
+	public $me;
+	public $sections = array();
+	public $categories = array();
+	public $pending = array();
 
 	protected function before()
 	{
 		parent::before();
 
 		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
 
 		// Get sections to display.
 		$catid = $this->input->getInt('catid', 0);
@@ -136,5 +118,17 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 				}
 			}
 		}
+	}
+
+	protected function prepareDocument()
+	{
+		$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
+		$this->setTitle($title);
+
+		$keywords = JText::_('COM_KUNENA_CATEGORIES');
+		$this->setKeywords($keywords);
+
+		$description = JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title;
+		$this->setDescription($description);
 	}
 }

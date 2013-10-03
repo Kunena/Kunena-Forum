@@ -86,32 +86,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		try {
 			return (string) $this->render();
 		} catch (Exception $e) {
-			// Exceptions aren't allowed in string conversion, log the error and output it as a string.
-			$trace = $e->getTrace();
-			$location = null;
-			foreach ($trace as $caller) {
-				if (!$location && isset($caller['file']) && !strstr($caller['file'], '/libraries/')) $location = $caller;
-				if (isset($caller['class']) && isset($caller['function'])
-					&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__) {
-					break;
-				}
-			}
-			if (!$location) $location = reset($trace);
-			if (isset($caller['file']) && strstr($caller['file'], '/libraries/')) $caller = next($trace);
-
-			$error  = "Rendering Error in layout {$this->name}: {$e->getMessage()}";
-			$error .= " in {$location['file']} on line {$location['line']}";
-			if (isset($caller['file'])) $error .= " called from {$caller['file']} on line {$caller['line']}";
-			JLog::add($error, JLog::CRITICAL, 'kunena');
-
-			$error = "<b>Rendering Error</b> in layout <b>{$this->name}</b>: {$e->getMessage()}";
-			if (JDEBUG) {
-				$error .= " in <b>{$location['file']}</b> on line {$location['line']}<br />";
-				if (isset($caller['file'])) $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
-			} else {
-				$error .= '. Please enable debug mode for more information.';
-			}
-			return '<br />'.$error.'<br />';
+			return $this->renderError($e);
 		}
 	}
 
@@ -202,6 +177,35 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 
 		return $output;
+	}
+
+	public function renderError(Exception $e) {
+		// Exceptions aren't allowed in string conversion, log the error and output it as a string.
+		$trace = $e->getTrace();
+		$location = null;
+		foreach ($trace as $caller) {
+			if (!$location && isset($caller['file']) && !strstr($caller['file'], '/libraries/')) $location = $caller;
+			if (isset($caller['class']) && isset($caller['function'])
+				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__) {
+				break;
+			}
+		}
+		if (!$location) $location = reset($trace);
+		if (isset($caller['file']) && strstr($caller['file'], '/libraries/')) $caller = next($trace);
+
+		$error  = "Rendering Error in layout {$this->name}: {$e->getMessage()}";
+		$error .= " in {$location['file']} on line {$location['line']}";
+		if (isset($caller['file'])) $error .= " called from {$caller['file']} on line {$caller['line']}";
+		JLog::add($error, JLog::CRITICAL, 'kunena');
+
+		$error = "<b>Rendering Error</b> in layout <b>{$this->name}</b>: {$e->getMessage()}";
+		if (JDEBUG) {
+			$error .= " in <b>{$location['file']}</b> on line {$location['line']}<br />";
+			if (isset($caller['file'])) $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
+		} else {
+			$error .= '. Please enable debug mode for more information.';
+		}
+		return '<br />'.$error.'<br />';
 	}
 
 	/**

@@ -163,26 +163,47 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	}
 
 	/**
-	 * @param string $action
-	 * @param mixed  $user
-	 * @param bool   $silent
+	 * Returns true if user is authorised to do the action.
+	 *
+	 * @param string     $action
+	 * @param KunenaUser $user
 	 *
 	 * @return bool
 	 */
-	public function authorise($action='read', $user=null, $silent=false) {
-		if ($action == 'none') return true;
-		if ($user === null) {
-			$user = KunenaUserHelper::getMyself();
-		} elseif (!($user instanceof KunenaUser)) {
-			$user = KunenaUserHelper::get($user);
+	public function isAuthorised($action='read', KunenaUser $user = null) {
+		return !$this->tryAuthorise($action, $user, false);
+	}
+
+	/**
+	 * Throws an exception if user isn't authorised to do the action.
+	 *
+	 * @param string      $action
+	 * @param KunenaUser  $user
+	 * @param bool        $throw
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws KunenaExceptionAuthorise
+	 * @throws InvalidArgumentException
+	 */
+	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true) {
+		// Special case to ignore authorisation.
+		if ($action == 'none') {
+			return null;
 		}
 
+		// Load user if not given.
+		if ($user === null) {
+			$user = KunenaUserHelper::getMyself();
+		}
+
+		// Use local authentication cache to speed up the authentication calls.
 		if (empty($this->_authcache[$user->userid][$action])) {
+			// Unknown action - throw invalid argument exception.
 			if (!isset(self::$actions[$action])) {
-				JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
-				return false;
+				throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
 			}
 
+			// Do the authorisation.
 			$this->_authcache[$user->userid][$action] = null;
 			foreach (self::$actions[$action] as $function) {
 				if (!isset($this->_authfcache[$user->userid][$function])) {
@@ -196,11 +217,36 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 				}
 			}
 		}
-		$error = $this->_authcache[$user->userid][$action];
-		if ($silent === false && $error) $this->setError ( $error );
+		$exception = $this->_authcache[$user->userid][$action];
 
-		if ($silent !== null) $error = !$error;
-		return $error;
+		// Throw or return the exception.
+		if ($throw && $exception) throw $exception;
+		return $exception;
+	}
+
+	/**
+	 * @param string $action
+	 * @param mixed  $user
+	 * @param bool   $silent
+	 *
+	 * @return bool
+	 * @deprecated
+	 */
+	public function authorise($action='read', $user=null, $silent=false) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		if ($user === null) {
+			$user = KunenaUserHelper::getMyself();
+		} elseif (!($user instanceof KunenaUser)) {
+			$user = KunenaUserHelper::get($user);
+		}
+
+		$exception = $this->tryAuthorise($action, $user, false);
+		if ($silent === false && $exception) $this->setError($exception->getMessage());
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		if ($silent !== null) return !$exception;
+		return $exception ? $exception->getMessage() : null;
 	}
 
 	/**
@@ -225,7 +271,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	 */
 	protected function authoriseNew(KunenaUser $user) {
 		if ($this->exists()) {
-			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 		return null;
 	}
@@ -236,8 +282,11 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	 * @return null|string
 	 */
 	protected function authoriseRead(KunenaUser $user) {
-		if (!$this->exists() || ($this->published != 1 && !$user->isModerator())) {
-			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
+		if (!$this->exists()) {
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+		}
+		if ($this->published != 1 && !$user->isModerator()) {
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 		return null;
 	}
@@ -252,9 +301,9 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 		if ($banned) {
 			$banned = KunenaUserBan::getInstanceByUserid($user->userid, true);
 			if (!$banned->isLifetime()) {
-				return JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena());
+				return new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
 			} else {
-				return JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' );
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
 			}
 		}
 		return null;
@@ -267,8 +316,11 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	 */
 	protected function authoriseWrite(KunenaUser $user) {
 		// Check that user is global moderator
-		if (!$user->userid || !$user->isModerator()) {
-			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
+		if (!$user->exists()) {
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_NOT_MODERATOR'), 401);
+		}
+		if (!$user->isModerator()) {
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 		return null;
 	}

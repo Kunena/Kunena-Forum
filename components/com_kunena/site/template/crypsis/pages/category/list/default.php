@@ -10,6 +10,11 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Category/Index', $this->input);
+$content = $this->execute('Category/Index');
+
+$this->addBreadcrumb(JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT'),
+	'index.php?option=com_kunena&view=category&layout=list');
+
+echo $content;
 echo $this->subRequest('Statistics/Whoisonline');
 echo $this->subRequest('Page/Statistics');

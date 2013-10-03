@@ -15,24 +15,18 @@ defined ( '_JEXEC' ) or die ();
  */
 class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaControllerDisplay
 {
-	protected $total = array();
-	protected $categories = array();
+	protected $name = 'Category/List';
 
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Category/List')
-			->set('header', $this->title)
-			->set('categories', $this->categories)
-			->set('pagination', $this->pagination)
-			->set('config', $this->config)
-			->set('actions', $this->getActions());
-		return $content;
-	}
+	public $total;
+	public $pagination;
+	public $categories = array();
 
 	protected function before()
 	{
 		parent::before();
+
+		$me = KunenaUserHelper::getMyself();
+		if (!$me->exists()) throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
 
 		$limit = $this->input->getInt('limit', 0);
 		if ($limit < 1 || $limit > 100) $limit = 20;
@@ -40,10 +34,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		$limitstart = $this->input->getInt('limitstart', 0);
 		if ($limitstart < 0) $limitstart = 0;
 
-		$this->config = KunenaConfig::getInstance();
 		$this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 
-		$me = KunenaUserHelper::getMyself();
 		list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($me->userid);
 
 		$topicIds = array();
@@ -75,11 +67,24 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		$this->pagination = new JPagination($total, $limitstart, $limit);
 	}
 
-	public function getActions() {
+	public function getActions()
+	{
 		$options = array();
 		$options[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$options[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
 		return $options;
+	}
+
+	protected function prepareDocument()
+	{
+		$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
+		$this->setTitle($title);
+
+		$keywords = JText::_('COM_KUNENA_CATEGORIES');
+		$this->setKeywords($keywords);
+
+		$description = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
+		$this->setDescription($description);
 	}
 }

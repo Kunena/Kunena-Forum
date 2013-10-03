@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Topic
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,6 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerTopicPollDisplay
+ */
 class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 {
 	/**
@@ -18,7 +21,8 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	public $topic;
 	public $poll;
 
-	protected function display() {
+	protected function display()
+	{
 		// Display layout with given parameters.
 		if ($this->voted || !$this->topic->authorise('poll.vote', null, true)) {
 			$content = KunenaLayout::factory('Topic/Poll/Results')->setProperties($this->getProperties());
@@ -29,7 +33,8 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		return $content;
 	}
 
-	protected function before() {
+	protected function before()
+	{
 		parent::before();
 
 		$this->topic = KunenaForumTopicHelper::get($this->input->getInt('id'));

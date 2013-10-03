@@ -10,5 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Search/Form', $this->input);
-echo $this->subRequest('Search/Results', $this->input);
+$content = $this->execute('Search/Form');
+
+$this->addBreadcrumb(JText::_('COM_KUNENA_MENU_SEARCH'), 'index.php?option=com_kunena&view=search');
+
+echo $content;
+echo $this->subRequest('Search/Results');

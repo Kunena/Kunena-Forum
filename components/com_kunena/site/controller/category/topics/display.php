@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Category
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -15,37 +15,23 @@ defined ( '_JEXEC' ) or die ();
  */
 class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDisplay
 {
-	protected $category;
+	protected $name = 'Category/Item';
 
-	/**
-	 * @var KunenaUser
-	 */
-	protected $me;
-	/**
-	 * @var KunenaConfig
-	 */
-	protected $config;
-
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Category/Item')
-			->set('headerText', $this->headerText)
-			->set('category', $this->category)
-			->set('topics', $this->topics)
-			->set('total', $this->total)
-			->set('me', $this->me)
-			->set('config', $this->config)
-			->set('pagination', $this->pagination);
-		return $content;
-	}
+	public $headerText;
+	/** @var KunenaForumCategory */
+	public $category;
+	public $total;
+	public $topics;
+	/** @var KunenaPagination */
+	public $pagination;
+	/** @var KunenaUser */
+	public $me;
 
 	protected function before()
 	{
 		parent::before();
 
 		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
 
 		$catid = $this->input->getInt('catid');
 		$limitstart = $this->input->getInt('limitstart', 0);
@@ -56,7 +42,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$direction = 'DESC';
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
-		if (!$this->category->exists()) return;
+		$this->category->tryAuthorise();
 
 		$this->headerText = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 
@@ -105,5 +91,23 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		}
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
+	}
+
+	protected function prepareDocument()
+	{
+		$page = $this->pagination->pagesCurrent;
+		$pages = $this->pagination->pagesTotal;
+		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
+		$parentText = $this->category->getParent()->displayField('name');
+		$categoryText = $this->category->displayField('name');
+
+		$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', "{$parentText} / {$categoryText}{$pagesText}");
+		$this->setTitle($title);
+
+		$keywords = JText::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
+		$this->setKeywords($keywords);
+
+		$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
+		$this->setDescription($description);
 	}
 }

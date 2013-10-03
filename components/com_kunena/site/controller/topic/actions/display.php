@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Topic
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,9 +10,11 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerTopicActionsDisplay
+ */
 class ComponentKunenaControllerTopicActionsDisplay extends KunenaControllerDisplay
 {
-	public $layout;
 	/**
 	 * @var KunenaForumTopic
 	 */
@@ -26,10 +28,12 @@ class ComponentKunenaControllerTopicActionsDisplay extends KunenaControllerDispl
 		return $content;
 	}
 
-	protected function before() {
+	protected function before()
+	{
+		parent::before();
+
 		$id = $this->input->getInt('id');
 
-		$this->layout = $this->input->getCmd('layout');
 		$this->topic = KunenaForumTopic::getInstance($id);
 
 		$catid = $this->topic->category_id;

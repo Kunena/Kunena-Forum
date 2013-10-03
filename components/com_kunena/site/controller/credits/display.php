@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Credits
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -15,18 +15,12 @@ defined ( '_JEXEC' ) or die ();
  */
 class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 {
+	protected $name = 'Credits';
+
+	public $logo;
 	public $intro;
 	public $memberList;
 	public $thanks;
-	public $logo;
-
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Credits')
-			->setProperties($this->getProperties());
-		return $content;
-	}
 
 	protected function before()
 	{
@@ -66,5 +60,18 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'http://www.kunena.org',
 			'https://github.com/Kunena/Kunena-Forum/graphs/contributors');
+	}
+
+	protected function prepareDocument()
+	{
+		$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
+		$this->setTitle($title, true);
+
+		$keywords = 'kunena forum, kunena, forum, joomla, joomla extension, joomla component';
+		$this->setKeywords($keywords);
+
+		// TODO: translate at some point...
+		$description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. For more information, please visit www.kunena.org.';
+		$this->setDescription($description);
 	}
 }

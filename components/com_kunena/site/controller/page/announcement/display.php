@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controller.Statistics.Whoisonline
+ * @subpackage Controllers.Page
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,19 +10,14 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerPageAnnouncementDisplay
+ */
 class ComponentKunenaControllerPageAnnouncementDisplay extends KunenaControllerDisplay
 {
+	protected $name = 'Page/Announcement';
+
 	public $announcement;
-
-	protected function display()
-	{
-		// TODO: add caching.
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Page/Announcement')
-			->set('announcement', $this->announcement);
-
-		return $content;
-	}
 
 	protected function before()
 	{

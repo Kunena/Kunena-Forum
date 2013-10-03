@@ -127,7 +127,7 @@ class KunenaViewCommon extends KunenaView {
 				$pathway->addItem(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'), KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=list"));
 			} elseif ($id) {
 				$topic = KunenaForumTopicHelper::get($id);
-				$pathway->addItem($this->escape( $topic->subject ), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
+				$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC')), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
 			}
 			if ($view == 'topic') {
 				$active_layout = (!empty($active->query['view']) && $active->query['view'] == 'topic' && !empty($active->query['layout'])) ? $active->query['layout'] : '';

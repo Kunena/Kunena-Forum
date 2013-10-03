@@ -20,7 +20,7 @@ $map = array(
 	'common/menu' => array('page/menubar', 'default'),
 	'common/menu_menu' => array('page/menu', 'default'),
 	'common/statistics' => array('page/statistics', 'default'),
-	'common/whosonline' => array('page/whoisonline', 'default'),
+	'common/whosonline' => array('statistics/whoisonline', 'default'),
 
 	'credits/default' => array('credits', 'default'),
 

@@ -180,7 +180,7 @@ class KunenaForumTopicFinder
 		} elseif ($starting) {
 			$this->query->where("t.{$name}_post_time > {$this->db->quote($starting->toUnix())}");
 		} elseif ($ending) {
-			$this->query->where("t.{$name}_post_time < {$this->db->quote($ending->toUnix())}");
+			$this->query->where("t.{$name}_post_time <= {$this->db->quote($ending->toUnix())}");
 		}
 
 		return $this;

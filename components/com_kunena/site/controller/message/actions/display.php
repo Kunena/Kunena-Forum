@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Message
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,28 +10,25 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerMessageActionsDisplay
+ */
 class ComponentKunenaControllerMessageActionsDisplay extends KunenaControllerDisplay
 {
-	public $layout;
-	/**
-	 * @var KunenaForumTopic
-	 */
+	protected $name = 'Message/Actions';
+
+	/** @var KunenaForumTopic */
 	public $topic;
 	public $message;
 	public $messageButtons;
 
-	protected function display() {
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Message/Actions')->setProperties($this->getProperties());
+	protected function before()
+	{
+		parent::before();
 
-		return $content;
-	}
-
-	protected function before() {
 		$mesid = $this->input->getInt('mesid');
 		$me = KunenaUserHelper::getMyself();
 
-		$this->layout = $this->input->getCmd('layout');
 		$this->message = KunenaForumMessage::getInstance($mesid);
 		$this->topic = $this->message->getTopic();
 

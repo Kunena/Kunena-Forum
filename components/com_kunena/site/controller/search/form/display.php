@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Search
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,21 +10,15 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerSearchFormDisplay
+ */
 class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var KunenaModelSearch
-	 */
+	protected $name = 'Search/Form';
+
+	/** @var KunenaModelSearch */
 	public $model;
-
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Search/Form')
-			->setProperties($this->getProperties());
-
-		return $content;
-	}
 
 	protected function before()
 	{
@@ -38,5 +32,10 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 		$this->error = $this->model->getError();
+	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 	}
 }

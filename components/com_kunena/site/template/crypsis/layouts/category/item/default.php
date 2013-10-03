@@ -9,6 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$categoryActions = $this->getCategoryActions();
 ?>
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">
@@ -33,12 +35,6 @@ defined ( '_JEXEC' ) or die ();
 		<div class="pull-right"><?php echo $this->subLayout('Search/Button')->set('catid', $this->category->id); ?></div>
 	</h2>
 
-	<?php if (!empty($this->categoryButtons)) : ?>
-	<div class="hidden-phone">
-		<?php echo implode($this->categoryButtons); // TODO <- ?>
-	</div>
-	<?php endif; ?>
-
 	<?php if (empty($this->topics) && !$this->category->isSection()) : ?>
 	<div class="alert">
 		<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
@@ -52,9 +48,17 @@ defined ( '_JEXEC' ) or die ();
 					<a href="#forumbottom"><span class="divider"></span><i class="icon-arrow-down hasTooltip"></i></a>
 				</td>
 				<td colspan="3">
-					<div class="pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
+					<ul class="inline pull-right">
+						<?php if ($categoryActions) : ?>
+						<li class="hidden-phone">
+							<?php echo implode($categoryActions); ?>
+						</li>
+						<?php endif; ?>
+
+						<li>
+							<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+						</li>
+					</ul>
 				</td>
 			</tr>
 		</thead>

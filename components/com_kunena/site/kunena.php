@@ -75,19 +75,22 @@ $task = $input->getCmd('task', 'display');
 $format = $input->getCmd('format', 'html');
 
 
-try {
-	if ($task != 'display' || $format != 'html') throw new Exception();
 
+if ($task == 'display' && $format == 'html') {
 	// Define HMVC controller and execute it.
+
 	/** @var KunenaControllerApplicationDisplay $controller */
 	$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);
 	$controller = class_exists($class) ? new $class($input, $app) : new KunenaControllerApplicationDisplay($input, $app);
 
 	// Execute HMVC layout.
-	echo $controller->execute();
+	if ($controller->exists()) {
+		echo $controller->execute();
+		$hmvc = true;
+	}
+}
 
-} catch (Exception $e) {
-
+if (!isset($hmvc)) {
 	// Execute old MVC.
 	if (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
 		// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.

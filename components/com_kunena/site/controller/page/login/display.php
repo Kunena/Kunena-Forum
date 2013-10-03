@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Page
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,25 +10,33 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerPageLoginDisplay
+ */
 class ComponentKunenaControllerPageLoginDisplay extends KunenaControllerDisplay
 {
-	protected function display() {
-		$layout = ($this->me->exists() ? 'Logout' : 'Login' );
+	protected $name = 'Credits';
 
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory("Page/Login/{$layout}")
-			->setProperties($this->getProperties());
-
-		return $content;
-	}
+	public $me;
+	public $my;
+	public $registrationUrl;
+	public $resetPasswordUrl;
+	public $remindUsernameUrl;
+	public $rememberMe;
+	public $lastvisitDate;
+	public $announcementsUrl;
 
 	protected function before()
 	{
+		parent::before();
+
 		$login = KunenaLogin::getInstance();
 		if (!$login->enabled()) return false;
 
-		$this->my = JFactory::getUser();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->name = ($this->me->exists() ? 'Page/Login/Logout' : 'Page/Login/Login');
+
+		$this->my = JFactory::getUser();
 		if ($this->my->guest) {
 			$this->registrationUrl = $login->getRegistrationUrl();
 			$this->resetPasswordUrl = $login->getResetUrl();

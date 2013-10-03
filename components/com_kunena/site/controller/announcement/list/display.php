@@ -10,19 +10,20 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerAnnouncementListDisplay
+ */
 class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerDisplay
 {
-	public $layout;
+	protected $name = 'Announcement/List';
 
-	protected function display() {
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Announcement/List')->setProperties($this->getProperties());
+	public $total;
+	public $pagination;
+	public $announcements;
 
-		return $content;
-	}
-
-	protected function before() {
-		$this->layout = $this->input->getCmd('layout', 'default');
+	protected function before()
+	{
+		parent::before();
 
 		$limit = $this->input->getInt('limit', 0);
 		if ($limit < 1 || $limit > 100) $limit = 20;
@@ -37,5 +38,10 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 			$this->pagination->limit, !$moderator);
 
 		return true;
+	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 	}
 }

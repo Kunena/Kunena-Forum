@@ -10,4 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-echo $this->subRequest('Announcement/Edit');
+$content = $this->execute('Announcement/Edit');
+
+$this->addBreadcrumb(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
+	'index.php?option=com_kunena&view=announcement&layout=list');
+
+echo $content;

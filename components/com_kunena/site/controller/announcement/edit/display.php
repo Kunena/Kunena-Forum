@@ -10,34 +10,29 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerAnnouncementEditDisplay
+ */
 class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerDisplay
 {
-	public $layout;
+	protected $name = 'Announcement/Edit';
 
-	protected function display() {
-		if ((!$this->announcement->exists() && !$this->announcement->authorise('create'))
-			|| ($this->announcement->exists() && !$this->announcement->authorise('edit'))) {
-			$content = KunenaLayout::factory('Page/Custom')
-				->set('header', JText::_('COM_KUNENA_ACCESS_DENIED'))
-				->set('body', $this->announcement->getError());
+	public $announcement;
 
-			return $content;
-		}
-
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Announcement/Edit')->setProperties($this->getProperties());
-
-		return $content;
-	}
-
-	protected function before() {
+	protected function before()
+	{
 		parent::before();
 
 		$id = $this->input->getInt('id', null);
 
-		$this->layout = $this->input->getCmd('layout', 'default');
 		$this->announcement = KunenaForumAnnouncementHelper::get($id);
+		$this->announcement->tryAuthorise($id ? 'edit' : 'create');
 
 		return true;
+	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 	}
 }

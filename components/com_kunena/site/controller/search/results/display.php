@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Search
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,8 +10,13 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerSearchResultsDisplay
+ */
 class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay
 {
+	protected $name = 'Search/Results';
+
 	/**
 	 * @var KunenaModelSearch
 	 */
@@ -21,15 +26,6 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 */
 	public $total;
 	public $data = array();
-
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Search/Results')
-			->setProperties($this->getProperties());
-
-		return $content;
-	}
 
 	protected function before()
 	{
@@ -52,5 +48,10 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		$this->pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 
 		$this->error = $this->model->getError();
+	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 	}
 }

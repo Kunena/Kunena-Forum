@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Page
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,30 +10,34 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+/**
+ * Class ComponentKunenaControllerPageMenuDisplay
+ */
 class ComponentKunenaControllerPageMenuDisplay extends KunenaControllerDisplay
 {
-	protected function display() {
-		if (!$this->basemenu) return ' ';
+	protected $name = 'Page/Menu';
 
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Page/Menu')
-			->set('list', $this->list)
-			->set('path', $this->path)
-			->set('active_id', $this->active_id);
-
-		return $content;
-	}
+	public $basemenu;
+	public $list;
+	public $menu;
+	public $active;
+	public $path;
+	public $active_id;
+	public $showAll;
+	public $class_sfx;
 
 	protected function before() {
+		parent::before();
+
 		$this->basemenu = $basemenu = KunenaRoute::getMenu();
-		if (!$basemenu) return;
+		if (!$basemenu) return false;
 
 		$parameters = new JRegistry();
-		$ktemplate = KunenaFactory::getTemplate();
-		$parameters->set('showAllChildren', $ktemplate->params->get('menu_showall', 0));
+		$template = KunenaFactory::getTemplate();
+		$parameters->set('showAllChildren', $template->params->get('menu_showall', 0));
 		$parameters->set('menutype', $basemenu->menutype);
 		$parameters->set('startLevel', $basemenu->level + 1);
-		$parameters->set('endLevel', $basemenu->level + $ktemplate->params->get('menu_levels', 1));
+		$parameters->set('endLevel', $basemenu->level + $template->params->get('menu_levels', 1));
 
 		$this->list = KunenaMenuHelper::getList($parameters);
 		$this->menu = $this->app->getMenu();
@@ -42,5 +46,7 @@ class ComponentKunenaControllerPageMenuDisplay extends KunenaControllerDisplay
 		$this->path = isset($this->active) ? $this->active->tree : array();
 		$this->showAll = $parameters->get('showAllChildren');
 		$this->class_sfx = htmlspecialchars($parameters->get('class_sfx'));
+
+		return true;
 	}
 }

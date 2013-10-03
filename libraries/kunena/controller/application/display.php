@@ -21,7 +21,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 */
 	protected $content;
 	/**
-	 * @var JBreadchrumb
+	 * @var JPathway
 	 */
 	protected $breadcrumb;
 	/**
@@ -31,7 +31,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	/**
 	 * @var KunenaConfig
 	 */
-	protected $config;
+	public $config;
 	/**
 	 * @var KunenaTemplate
 	 */
@@ -40,6 +40,11 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 * @var JDocument
 	 */
 	protected $document;
+
+	public function exists() {
+		$this->page = KunenaLayoutPage::factory("{$this->input->getCmd('view')}/{$this->input->getCmd('layout', 'default')}");
+		return (bool) $this->page->getPath();
+	}
 
 	protected function display() {
 		// Display layout with given parameters.
@@ -54,7 +59,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		// Run before executing action.
 		$result = $this->before();
 		if ($result === false) {
-			return KunenaLayout::factory('Empty');
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		// Wrapper layout.
@@ -80,7 +85,28 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		} else {
 			// Display real content.
-			$this->content = $this->display();
+			try {
+				$content = $this->display()->set('breadcrumb', $this->breadcrumb);
+				$this->content = $content->render();
+
+			} catch (KunenaExceptionAuthorise $e) {
+				$this->setResponseStatus($e->getCode());
+				$this->output->setLayout('unauthorized');
+				$this->document->setTitle($e->getResponseStatus());
+
+				$this->content = KunenaLayout::factory('Page/Custom')
+					->set('header', $e->getResponseStatus())
+					->set('body', $e->getMessage());
+
+			} catch (Exception $e) {
+				$this->setResponseStatus($e->getCode());
+				$this->output->setLayout('unauthorized');
+				$this->document->setTitle($e->getMessage());
+
+				$this->content = KunenaLayout::factory('Page/Custom')
+					->set('header', 'Error while rendering layout')
+					->set('body', isset($content) ? $content->renderError($e) : $this->content->renderError($e));
+			}
 		}
 
 		// Display wrapper layout with given parameters.
@@ -98,8 +124,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	protected function before() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 
-		$this->page = KunenaLayout::factory("{$this->input->getCmd('view')}/{$this->input->getCmd('layout', 'default')}", 'pages');
-		if (!$this->page->getPath()) {
+		if (!$this->exists()) {
 			throw new RuntimeException("Layout '{$this->input->getCmd('view')}/{$this->input->getCmd('layout', 'default')}' does not exist!", 404);
 		}
 
@@ -177,13 +202,12 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			case 410:
 				JResponse::setHeader('Status', '410 Gone', 'true');
 				break;
-			case 500:
-				JResponse::setHeader('Status', '500 Internal Server Error', 'true');
-				break;
 			case 503:
 				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
 				break;
+			case 500:
 			default:
+				JResponse::setHeader('Status', '500 Internal Server Error', 'true');
 		}
 	}
 

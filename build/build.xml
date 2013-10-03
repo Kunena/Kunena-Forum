@@ -167,14 +167,12 @@
 		<copy todir="${tmp_dir}/packages/com_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.admin}">
 				<include name="**/*.xml"/>
-				<include name="language/index.html"/>
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena/site" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.site}">
 				<include name="**/*.xml"/>
-				<include name="language/index.html"/>
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
@@ -224,13 +222,11 @@
 			<copy todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.admin}">
 					<include name="**/@{tag}.*.ini"/>
-					<include name="index.html"/>
 				</fileset>
 			</copy>
 			<copy todir="${tmp_dir}/languages/@{tag}/site" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.site}">
 					<include name="**/@{tag}.*.ini"/>
-					<include name="index.html"/>
 				</fileset>
 			</copy>
 			<if>
@@ -250,9 +246,7 @@
 						</fileset>
 					</move>
 					<copy todir="${tmp_dir}/packages/com_kunena/language/@{tag}">
-						<fileset dir="${tmp_dir}/languages/@{tag}/admin">
-							<include name="index.html"/>
-						</fileset>
+						<fileset dir="${tmp_dir}/languages/@{tag}/admin" />
 					</copy>
 					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena_@{tag}_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}"/>
 				</else>

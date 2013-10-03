@@ -9,12 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-// FIXME:
-$this->statisticsLink = '';//$this->getStatsLink($this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), '');
-$this->usercountLink = '';//$this->getUserlistLink('', $this->memberCount);
-$this->userlistLink = '';//$this->getUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
-$this->moreLink = '';//$this->getStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;');
 ?>
 
 <h3>
@@ -58,7 +52,7 @@ $this->moreLink = '';//$this->getStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_
 		<ul class="unstyled span6">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
-				<strong><a href="<?php echo $this->userlistLink; ?>"><?php echo $this->memberCount; ?></a></strong>
+				<strong><a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a></strong>
 				<span class="divider">|</span>
 				<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
 				<strong><?php echo $this->latestMemberLink ?></strong>
@@ -67,11 +61,11 @@ $this->moreLink = '';//$this->getStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_
 				&nbsp;
 			</li>
 			<li>
-				<a href="<?php echo $this->userlistLink; ?>"><?php echo JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;'; ?></a>
+				<a href="<?php echo $this->userlistUrl; ?>"><?php echo JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;'; ?></a>
 			</li>
 			<?php if ($this->config->showpopuserstats || $this->config->showpopsubjectstats) : ?>
 			<li>
-				<a href="<?php echo $this->userlistLink; ?>"><?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;'; ?></a>
+				<a href="<?php echo $this->statisticsUrl; ?>"><?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;'; ?></a>
 			</li>
 			<?php endif; ?>
 		</ul>

@@ -10,6 +10,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+$markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown">
@@ -54,6 +55,13 @@ defined ( '_JEXEC' ) or die ();
 					</a>
 				</div>
 				<div class="divider"></div>
+
+				<?php if ($markAllReadUrl) : ?>
+				<a href="<?php echo $markAllReadUrl ?>" class="btn btn-small btn-link">
+					<i class="icon-out"></i>
+					<?php echo JText::_('COM_KUNENA_MARK_ALL_READ') ?>
+				</a>
+				<?php endif ?>
 
 				<button class="btn btn-small btn-link" name="submit" type="submit">
 					<i class="icon-out"></i>

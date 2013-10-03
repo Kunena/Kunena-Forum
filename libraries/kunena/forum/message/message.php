@@ -54,6 +54,26 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	protected $_hold = 1;
 	protected $_thread = 0;
 
+	protected $_authcache = array();
+	protected $_authtcache = array();
+	protected $_authfcache = array();
+	protected static $actions = array(
+		'none'=>array(),
+		'read'=>array('Read'),
+		'reply'=>array('Read','NotHold'),
+		'edit'=>array('Read','Own','EditTime'),
+		'move'=>array('Read'),
+		'approve'=>array('Read'),
+		'delete'=>array('Read','Own','EditTime', 'Delete'),
+		'thankyou'=>array('Read', 'Thankyou'),
+		'unthankyou'=>array('Read'),
+		'undelete'=>array('Read'),
+		'permdelete'=>array('Read'),
+		'attachment.read'=>array('Read'),
+		'attachment.create'=>array('Read','Own','EditTime'),
+		'attachment.delete'=>array(), // TODO: In the future we might want to restrict this: array('Read','EditTime'),
+	);
+
 	/**
 	 * @param mixed $properties
 	 *
@@ -410,49 +430,95 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * Returns true if user is authorised to do the action.
+	 *
+	 * @param string     $action
+	 * @param KunenaUser $user
+	 *
+	 * @return bool
+	 */
+	public function isAuthorised($action='read', KunenaUser $user = null) {
+		return !$this->tryAuthorise($action, $user, false);
+	}
+
+	/**
+	 * Throws an exception if user isn't authorised to do the action.
+	 *
+	 * @param string      $action
+	 * @param KunenaUser  $user
+	 * @param bool        $throw
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws KunenaExceptionAuthorise
+	 * @throws InvalidArgumentException
+	 */
+	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true) {
+		// Special case to ignore authorisation.
+		if ($action == 'none') {
+			return null;
+		}
+
+		// Load user if not given.
+		if ($user === null) {
+			$user = KunenaUserHelper::getMyself();
+		}
+
+		if (empty($this->_authcache[$user->userid][$action])) {
+			// Unknown action - throw invalid argument exception.
+			if (!isset(self::$actions[$action])) {
+				throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
+			}
+
+			// Load category authorisation.
+			if (!isset($this->_authtcache[$user->userid][$action])) {
+				$this->_authtcache[$user->userid][$action] = $this->getTopic()->tryAuthorise('post.'.$action, $user, false);
+			}
+
+			$this->_authcache[$user->userid][$action] = $this->_authtcache[$user->userid][$action];
+			if (empty($this->_authcache[$user->userid][$action])) {
+				foreach (self::$actions[$action] as $function) {
+					if (!isset($this->_authfcache[$user->userid][$function])) {
+						$authFunction = 'authorise'.$function;
+						$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
+					}
+					$error = $this->_authfcache[$user->userid][$function];
+					if ($error) {
+						$this->_authcache[$user->userid][$action] = $error;
+						break;
+					}
+				}
+			}
+		}
+		$exception = $this->_authcache[$user->userid][$action];
+
+		// Throw or return the exception.
+		if ($throw && $exception) throw $exception;
+		return $exception;
+	}
+
+/**
 	 * @param string $action
 	 * @param mixed  $user
 	 * @param bool   $silent
 	 *
 	 * @return bool
+	 * @deprecated 3.1
 	 */
 	public function authorise($action='read', $user=null, $silent=false) {
-		if ($action == 'none') return true;
-		static $actions  = array(
-			'none'=>array(),
-			'read'=>array('Read'),
-			'reply'=>array('Read','NotHold'),
-			'edit'=>array('Read','Own','EditTime'),
-			'move'=>array('Read'),
-			'approve'=>array('Read'),
-			'delete'=>array('Read','Own','EditTime', 'Delete'),
-			'thankyou'=>array('Read', 'Thankyou'),
-			'unthankyou'=>array('Read'),
-			'undelete'=>array('Read'),
-			'permdelete'=>array('Read'),
-			'attachment.read'=>array('Read'),
-			'attachment.create'=>array('Read','Own','EditTime'),
-			'attachment.delete'=>array(), // TODO: In the future we might want to restrict this: array('Read','EditTime'),
-		);
-		$user = KunenaUserHelper::get($user);
-		if (!isset($actions[$action])) {
-			if (!$silent) $this->setError ( __CLASS__.'::'.__FUNCTION__.'(): '.JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
-			return false;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		if ($user === null) {
+			$user = KunenaUserHelper::getMyself();
+		} elseif (!($user instanceof KunenaUser)) {
+			$user = KunenaUserHelper::get($user);
 		}
-		$topic = $this->getTopic();
-		$auth = $topic->authorise('post.'.$action, $user, $silent);
-		if (!$auth) {
-			if (!$silent) $this->setError ( $topic->getError() );
-			return false;
-		}
-		foreach ($actions[$action] as $function) {
-			$authFunction = 'authorise'.$function;
-			if (! method_exists($this, $authFunction) || ! $this->$authFunction($user)) {
-				if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-				return false;
-			}
-		}
-		return true;
+
+		$exception = $this->tryAuthorise($action, $user, false);
+		if ($silent === false && $exception) $this->setError($exception->getMessage());
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		if ($silent !== null) return !$exception;
+		return $exception ? $exception->getMessage() : null;
 	}
 
 	/**
@@ -830,68 +896,74 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	/**
 	 * @param KunenaUser $user
 	 *
-	 * @return bool
+	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseRead(KunenaUser $user) {
+		if ($this->hold || !$user->exists()) {
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
+		}
 		// Check that user has the right to see the post (user can see his own unapproved posts)
 		if ($this->hold > 1 || ($this->hold == 1 && $this->userid != $user->userid)) {
 			$access = KunenaAccess::getInstance();
 			$hold = $access->getAllowedHold($user->userid, $this->catid, false);
 			if (!in_array($this->hold, $hold)) {
-				$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-				return false;
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 			}
 		}
-		return true;
+		return null;
 	}
 
 	/**
 	 * @param KunenaUser $user
 	 *
-	 * @return bool
+	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseNotHold(KunenaUser $user) {
 		if ($this->hold) {
 			// Nobody can reply to unapproved or deleted post
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			return false;
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
-		return true;
+		return null;
 	}
 
 	/**
 	 * @param KunenaUser $user
 	 *
-	 * @return bool
+	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseOwn(KunenaUser $user) {
+		// Guests cannot own posts.
+		if (!$user->exists()) {
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 401);
+		}
 		// Check that topic owned by the user or user is a moderator
 		// TODO: check #__kunena_user_topics
-		if ((!$this->userid || $this->userid != $user->userid) && !$user->isModerator($this->getCategory())) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
-			return false;
+		if ($this->userid != $user->userid && !$user->isModerator($this->getCategory())) {
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
-		return true;
+		return null;
 	}
 
 	/**
 	 * @param KunenaUser $user
 	 *
-	 * @return bool
+	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseThankyou(KunenaUser $user) {
 		// Check that message is not your own
 		if(!KunenaFactory::getConfig()->showthankyou) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_THANKYOU_DISABLED' ) );
-			return false;
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
 		}
 
-		if (!$user->userid || !$this->userid || $this->userid == $user->userid) {
+		if (!$user->userid) {
 			// TODO: better error message
-			$this->setError ( JText::_ ( 'COM_KUNENA_THANKYOU_DISABLED' ) );
-			return false;
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_THANKYOU_DISABLED'), 401);
 		}
-		return true;
+		if (!$this->userid || $this->userid == $user->userid) {
+			// TODO: better error message
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_THANKYOU_DISABLED'), 403);
+		}
+		return null;
 	}
 
 	/**
@@ -899,48 +971,40 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 *
 	 * @param KunenaUser $user
 	 *
-	 * @return bool
+	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseEditTime(KunenaUser $user) {
 		// Do not perform rest of the checks to moderators and admins
 		if ($user->isModerator($this->getCategory())) {
-			return true;
+			return null;
 		}
 		// User is only allowed to edit post within time specified in the configuration
 		$config = KunenaFactory::getConfig ();
 		if (intval($config->useredit) != 1) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
-			return false;
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}
-		if (intval($config->useredittime) == 0) {
-			return true;
-		} else {
+		if (intval($config->useredittime) != 0) {
 			//Check whether edit is in time
-			$modtime = $this->modified_time;
-			if (! $modtime) {
-				$modtime = $this->time;
-			}
-			if ($modtime + intval($config->useredittime)< JFactory::getDate ()->toUnix()) {
-				$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
-				return false;
+			$modtime = $this->modified_time ? $this->modified_time : $this->time;
+			if ($modtime + intval($config->useredittime) < JFactory::getDate()->toUnix()) {
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
 		}
-		return true;
+		return null;
 	}
 
 	/**
 	 * @param KunenaUser $user
 	 *
-	 * @return bool
+	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseDelete(KunenaUser $user) {
 		$config = KunenaFactory::getConfig();
 		if (!$user->isModerator($this->getCategory())
 				&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id)) {
-			$this->setError (JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER' ) );
-			return false;
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
-		return true;
+		return null;
 	}
 
 	/**

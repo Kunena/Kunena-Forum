@@ -1,10 +1,3 @@
-			}
-		}
-	}
-
-	protected function prepareDocument()
-	{
-		$this->setTitle(JText::_('Topics Needing Attention')); // TODO <-
 <?php
 /**
  * Kunena Component
@@ -91,5 +84,10 @@ class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 				KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 			}
 		}
+	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('Topics Needing Attention')); // TODO <-
 	}
 }

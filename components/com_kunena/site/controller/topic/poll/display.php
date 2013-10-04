@@ -15,16 +15,19 @@ defined ( '_JEXEC' ) or die ();
  */
 class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 {
+	public $me;
+	public $category;
 	/**
 	 * @var KunenaForumTopic
 	 */
 	public $topic;
 	public $poll;
+	public $uri;
 
 	protected function display()
 	{
 		// Display layout with given parameters.
-		if ($this->voted || !$this->topic->authorise('poll.vote', null, true)) {
+		if ($this->voted || !$this->topic->isAuthorised('poll.vote')) {
 			$content = KunenaLayout::factory('Topic/Poll/Results')->setProperties($this->getProperties());
 		} else {
 			$content = KunenaLayout::factory('Topic/Poll/Vote')->setProperties($this->getProperties());
@@ -43,9 +46,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		$this->me = KunenaUserHelper::getMyself();
 
 		// need to check if poll is allowed in this category
-		if (!$this->config->pollenabled || !$this->topic->poll_id || !$this->category->allow_polls) {
-			return false;
-		}
+		$this->topic->tryAuthorise('poll.read');
 
 		$this->poll = $this->topic->getPoll();
 		$this->usercount = $this->poll->getUserCount();
@@ -56,12 +57,15 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		$this->users_voted_morelist = array();
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
 			$i = 0;
+			// FIXME: too many queries...
 			foreach($this->usersvoted as $userid=>$vote) {
 				if ( $i <= '4' ) $this->users_voted_list[] = KunenaFactory::getUser(intval($userid))->getLink();
 				else $this->users_voted_morelist[] = KunenaFactory::getUser(intval($userid))->getLink();
 				$i++;
 			}
 		}
+
+		$this->uri = "index.php?option=com_kunena&view=topic&layout=poll&catid={$this->category->id}&id={$this->topic->id}";
 
 		return true;
 	}

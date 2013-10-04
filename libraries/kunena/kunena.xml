@@ -18,6 +18,7 @@
 		<folder>compat</folder>
 		<folder>controller</folder>
 		<folder>database</folder>
+		<folder>exception</folder>
 		<folder>external</folder>
 		<folder>file</folder>
 		<folder>folder</folder>

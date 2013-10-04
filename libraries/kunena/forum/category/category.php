@@ -85,9 +85,9 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'topic.lock'=>array('Read','NotBanned', 'Moderate'),
 			'topic.poll.read'=>array('Read', 'Poll'),
 			'topic.poll.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Poll'),
-			'topic.poll.edit'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
-			'topic.poll.delete'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
-			'topic.poll.vote'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
+			'topic.poll.edit'=>array('Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'),
+			'topic.poll.delete'=>array('Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'),
+			'topic.poll.vote'=>array('Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'),
 			'topic.post.read'=>array('Read'),
 			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.post.thankyou' =>array('Read', 'NotBanned'),
@@ -573,7 +573,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated
+	 * @deprecated 3.1
 	 */
 	public function authorise($action='read', $user=null, $silent=false) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -1273,6 +1273,15 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if (!$this->allow_polls) {
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED'), 403);
 		}
+		return null;
+	}
+
+	/**
+	 * @param KunenaUser $user
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 */
+	protected function authoriseVote(KunenaUser $user) {
 		// Check if user is guest
 		if ($user->userid == 0) {
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POLL_NOT_LOGGED'), 401);

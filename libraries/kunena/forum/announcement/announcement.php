@@ -230,7 +230,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated
+	 * @deprecated 3.1
 	 */
 	public function authorise($action='read', $user=null, $silent=false) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

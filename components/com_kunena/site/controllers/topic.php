@@ -900,6 +900,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		$vote = JRequest::getInt('kpollradio', '');
 		$id = JRequest::getInt ( 'id', 0 );
+		$catid = JRequest::getInt ( 'catid', 0 );
 
 		$topic = KunenaForumTopicHelper::get($id);
 		$poll = $topic->getPoll();
@@ -922,6 +923,7 @@ class KunenaControllerTopic extends KunenaController {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS' ) );
 			}
 		}
+		print_r($this->return); die();
 		$this->setRedirect($topic->getUrl($this->return, false));
 	}
 

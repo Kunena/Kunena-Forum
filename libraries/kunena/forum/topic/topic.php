@@ -68,11 +68,11 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			'subscribe'=>array('Read'),
 			'sticky'=>array('Read'),
 			'lock'=>array('Read'),
-			'poll.read'=>array('Read'),
+			'poll.read'=>array('Read', 'Poll'),
 			'poll.create'=>array('Own'),
 			'poll.edit'=>array('Read','Own','NoVotes'),
-			'poll.delete'=>array('Read','Own'),
-			'poll.vote'=>array('Read', 'Vote'),
+			'poll.delete'=>array('Read','Own', 'Poll'),
+			'poll.vote'=>array('Read', 'Poll', 'Vote'),
 			'post.read'=>array('Read'),
 			'post.thankyou'=>array('Read','NotMoved'),
 			'post.unthankyou'=>array('Read'),
@@ -1260,20 +1260,18 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	/**
-	 * @param $mesid
-	 *
 	 * @return bool
 	 */
-	public function resetvotes($mesid) {
-		if( !isset($mesid) ) return false;
+	public function resetvotes() {
+		if(!$this->poll_id) return false;
 
-		$query ="UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($mesid)}";
+		$query ="UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($this->poll_id)}";
 			$this->_db->setQuery($query);
 			$this->_db->Query();
 		if (KunenaError::checkDatabaseError ())
 		return false;
 
-		$query ="DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($mesid)}";
+		$query ="DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($this->poll_id)}";
 			$this->_db->setQuery($query);
 			$this->_db->Query();
 		if (KunenaError::checkDatabaseError ())
@@ -1379,6 +1377,20 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return null;
 	}
 
+		/**
+	 * @param KunenaUser $user
+	 *
+	 * @return null|string
+	 */
+	protected function authorisePoll(KunenaUser $user) {
+		// Check that user can vote
+		$poll = $this->getPoll();
+		if (!$poll->exists()) {
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_NO_POLL'), 404);
+		}
+		return null;
+	}
+
 	/**
 	 * @param KunenaUser $user
 	 *
@@ -1389,9 +1401,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		$config = KunenaFactory::getConfig();
 		$poll = $this->getPoll();
 		$votes = $poll->getMyVotes($user);
-		if (!$poll->exists()) {
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_NO_POLL'), 404);
-		}
 		if ($votes && $config->pollallowvoteone) {
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE'), 403);
 		}

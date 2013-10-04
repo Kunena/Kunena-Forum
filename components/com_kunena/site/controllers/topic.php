@@ -932,10 +932,8 @@ class KunenaControllerTopic extends KunenaController {
 			return;
 		}
 
-		$pollid = JRequest::getInt ( 'pollid', 0 );
-
 		$topic = KunenaForumTopicHelper::get($this->id);
-		$result = $topic->resetvotes($pollid);
+		$topic->resetvotes();
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS' ) );
 		$this->setRedirect($topic->getUrl($this->return, false));

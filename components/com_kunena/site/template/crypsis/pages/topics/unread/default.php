@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Template.Crypsis
- * @subpackage Pages.Search
+ * @subpackage Pages.Topics
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL

@@ -26,7 +26,9 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 ?>
 <div>
   <div>
-    <h3><span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></span></h3>
+    <h3>
+	    <?php echo $this->topic->getIcon(); ?>
+	    <span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></span></h3>
     <?php if (!empty($this->keywords)) : ?>
     <div><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?></div>
     <?php endif ?>

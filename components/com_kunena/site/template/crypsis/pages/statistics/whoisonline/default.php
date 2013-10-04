@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Template.Crypsis
- * @subpackage Topic
+ * @subpackage Pages.Statistics
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,4 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-include dirname(__FILE__) . '/vote_embed.php';
+$content = $this->execute('Statistics/WhoIsOnline');
+
+$this->addBreadcrumb(JText::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'),
+	'index.php?option=com_kunena&view=statistics&layout=whoisonline');
+
+echo $content;

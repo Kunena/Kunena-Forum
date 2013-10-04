@@ -28,6 +28,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	public $uri;
 	public $title;
 	public $topicIcons;
+	public $userLink;
 
 	protected function before()
 	{
@@ -58,9 +59,11 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 		// Have a link to moderate user as well.
 		if (isset($this->message)) {
-			$this->user = KunenaFactory::getUser($this->message->userid);
-			$username = $this->message->getAuthor()->getName();
-			$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
+			$user = $this->message->getAuthor();
+			if ($user->exists()) {
+				$username = $user->getName();
+				$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
+			}
 		}
 
 		if ($this->message) {

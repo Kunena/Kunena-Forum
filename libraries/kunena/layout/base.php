@@ -40,7 +40,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Layout name.
 	 * @var string
 	 */
-	protected $name = '';
+	protected $_name = '';
 
 	/**
 	 * The view layout.
@@ -72,7 +72,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	public function __construct($name, array $paths = null)
 	{
 		// Setup dependencies.
-		$this->name = $name;
+		$this->_name = $name;
 		$this->includePaths = isset($paths) ? $paths : $this->loadPaths();
 	}
 
@@ -96,10 +96,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @return  string
 	 */
 	public function debugInfo() {
-		$rawPath  = strtolower(str_replace('.', '/', $this->name)) .'/'. $this->layout . '.php';
+		$rawPath  = strtolower(str_replace('.', '/', $this->_name)) .'/'. $this->layout . '.php';
 
 		$html = "<pre>";
-		$html .= '<strong>Layout:</strong> ' . $this->name . '<br />';
+		$html .= '<strong>Layout:</strong> ' . $this->_name . '<br />';
 		$html .= '<strong>Template:</strong> ' . $this->layout . '.php<br />';
 		$html .= '<strong>RAW Layout path:</strong> ' . $rawPath . '<br>';
 		$html .= '<strong>includePaths:</strong> ';
@@ -152,7 +152,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 		// Check if the layout path was found.
 		if (!$path) {
-			throw new RuntimeException("Layout '{$this->name}:{$layout}' Not Found");
+			throw new RuntimeException("Layout '{$this->_name}:{$layout}' Not Found");
 		}
 
 		try {
@@ -193,12 +193,12 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		if (!$location) $location = reset($trace);
 		if (isset($caller['file']) && strstr($caller['file'], '/libraries/')) $caller = next($trace);
 
-		$error  = "Rendering Error in layout {$this->name}: {$e->getMessage()}";
+		$error  = "Rendering Error in layout {$this->_name}: {$e->getMessage()}";
 		$error .= " in {$location['file']} on line {$location['line']}";
 		if (isset($caller['file'])) $error .= " called from {$caller['file']} on line {$caller['line']}";
 		JLog::add($error, JLog::CRITICAL, 'kunena');
 
-		$error = "<b>Rendering Error</b> in layout <b>{$this->name}</b>: {$e->getMessage()}";
+		$error = "<b>Rendering Error</b> in layout <b>{$this->_name}</b>: {$e->getMessage()}";
 		if (JDEBUG) {
 			$error .= " in <b>{$location['file']}</b> on line {$location['line']}<br />";
 			if (isset($caller['file'])) $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
@@ -219,7 +219,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function loadTemplate($tpl = null)
 	{
-		return $this->render("{$this->name}_{$tpl}");
+		return $this->render("{$this->_name}_{$tpl}");
 	}
 
 	/**

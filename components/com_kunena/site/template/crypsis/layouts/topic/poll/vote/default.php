@@ -15,7 +15,8 @@ defined ( '_JEXEC' ) or die ();
 	<?php echo JText::_('COM_KUNENA_POLL_NAME') .' '. KunenaHtmlParser::parseText($this->poll->title); ?>
 </h2>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" id="poll-vote" method="post">
+<div class="collapse in" id="poll-vote">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" method="post">
 	<input type="hidden" name="task" value="vote" />
 	<input type="hidden" name="catid" value="<?php echo $this->topic->category_id ?>" />
 	<input type="hidden" name="id" value="<?php echo $this->topic->id ?>" />
@@ -34,3 +35,4 @@ defined ( '_JEXEC' ) or die ();
 		<input id="kpoll-button-vote" class="btn btn-success" type="submit" value="<?php echo $this->voted && $this->config->pollallowvoteone ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE') : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
 	</div>
 </form>
+</div>

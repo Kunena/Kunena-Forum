@@ -22,7 +22,10 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	<div class="pull-right">
 		<?php echo $this->subLayout('Pagination/List')->set('pagination', $pagination); ?>
 	</div>
-	<h3><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></h3>
+	<h3>
+		<?php echo $this->topic->getIcon(); ?>
+		<?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?>
+	</h3>
 	<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_topictitle'); ?>
 </div>
 <div class="clearfix"></div>

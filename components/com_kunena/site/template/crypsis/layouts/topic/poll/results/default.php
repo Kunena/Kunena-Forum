@@ -17,7 +17,8 @@ $row = 0;
 	<?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText ($this->poll->title); ?>
 </h2>
 
-<table class="table table-striped table-bordered table-condensed" id="poll-results">
+<div class="collapse in" id="poll-results">
+<table class="table table-striped table-bordered table-condensed">
 	<?php foreach ( $this->poll->getOptions() as $option ) : ?>
 	<tr>
 		<td><?php echo KunenaHtmlParser::parseText ($option->text); ?></td>
@@ -53,8 +54,8 @@ $row = 0;
 			<td colspan="4">
 				<?php if (!$this->me->exists()) : ?>
 					<?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
-				<?php elseif ($this->voted && $this->topic->isAuthorised('poll.vote')) : ?>
-					<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=poll&task=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>>">
+				<?php elseif ($this->topic->isAuthorised('poll.vote')) : ?>
+					<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>>">
 						<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 					</a>
 				<?php endif; ?>
@@ -80,3 +81,4 @@ $row = 0;
 		</tr>
 	</tfoot>
 </table>
+</div>

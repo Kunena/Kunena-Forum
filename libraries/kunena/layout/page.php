@@ -55,7 +55,7 @@ class KunenaLayoutPage extends KunenaLayout
 			$layout = isset($active->query['layout']) ? $active->query['layout'] : 'default';
 
 			if ($active && $active->component == 'com_kunena'
-				&& strtolower("{$view}/{$layout}") == strtolower($this->name)) return $this;
+				&& strtolower("{$view}/{$layout}") == strtolower($this->_name)) return $this;
 		}
 		$this->breadcrumb->addItem($text, KunenaRoute::normalize($uri));
 

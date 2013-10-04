@@ -20,8 +20,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 	<?php echo !isset($this->message) ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?>
 </h2>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="myform" id="myform" class="form-horizontal">
-	<input type="hidden" name="view" value="topic" />
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" method="post" name="myform" id="myform" class="form-horizontal">
 	<input type="hidden" name="task" value="move" />
 	<input type="hidden" name="catid" value="<?php echo $this->category->id; ?>" />
 	<input type="hidden" name="id" value="<?php echo $this->topic->id; ?>" />
@@ -59,7 +58,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 		<hr />
 		<h3>
 			<div class="pull-left thumbnail">
-				<?php echo $this->user->getAvatarImage('', 'list'); ?>
+				<?php echo $this->message->getAuthor()->getAvatarImage('', 'list'); ?>
 			</div>
 			<?php echo $this->escape($this->message->subject); ?>
 			<br />

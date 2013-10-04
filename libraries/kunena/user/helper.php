@@ -55,12 +55,13 @@ abstract class KunenaUserHelper {
 		}
 		// Find the user id
 		if ($identifier instanceof JUser) {
-			$id = intval ( $identifier->id );
-		} else if (is_numeric ( $identifier )) {
-			$id = intval ( $identifier );
+			$id = (int) $identifier->id;
+		} elseif (((string)(int) $identifier) === ((string) $identifier)) {
+			// Ignore imported users, which haven't been mapped to Joomla (id<0).
+			$id = (int) max($identifier, 0);
 		} else {
-			jimport ( 'joomla.user.helper' );
-			$id = intval ( JUserHelper::getUserId ( ( string ) $identifier ) );
+			// Slow, don't use usernames!
+			$id = (int) JUserHelper::getUserId((string) $identifier);
 		}
 
 		// Always return fresh user if id is anonymous/not found
@@ -115,9 +116,10 @@ abstract class KunenaUserHelper {
 
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
-		foreach($userids as $userid){
-			if (intval($userid) && empty ( self::$_instances [$userid] )) {
-				$e_userids[$userid] = $userid;
+		foreach($userids as $userid) {
+			// Ignore guests and imported users, which haven't been mapped to Joomla (id<0).
+			if ($userid > 0 && empty(self::$_instances[$userid])) {
+				$e_userids[(int) $userid] = (int) $userid;
 			}
 		}
 

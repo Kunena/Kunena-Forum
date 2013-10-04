@@ -69,4 +69,9 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 
 		return true;
 	}
+
+	protected function prepareDocument()
+	{
+		$this->setTitle(JText::_('COM_KUNENA_POLL_NAME').' '.KunenaHtmlParser::parseText ($this->poll->title));
+	}
 }

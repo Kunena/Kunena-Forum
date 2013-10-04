@@ -159,7 +159,7 @@ class KunenaUser extends JObject {
 		$table = $this->getTable ();
 
 		// Load the KunenaTableUser object based on the user id
-		$this->_exists = $table->load ( $id );
+		if ($id > 0) $this->_exists = $table->load($id);
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );

@@ -46,7 +46,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 */
 	public function render($layout = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->name}'") : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->_name}'") : null;
 
 		try {
 			$output = parent::render($layout);
@@ -54,11 +54,11 @@ class KunenaLayout extends KunenaLayoutBase
 				$output .= (string) $content;
 			}
 		} catch (Exception $e) {
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 			throw $e;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 		return $output;
 	}
 

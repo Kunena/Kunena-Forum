@@ -51,6 +51,14 @@ if ($this->message->modified_time) {
 		<?php echo $this->messageButtons->get('publish'); ?>
 	<?php else : ?>
 		<?php echo $this->message_closed; ?>
+		<?php if( !$this->topic->locked ) : ?>
+			<?php echo $this->messageButtons->get('edit'); ?>
+			<?php echo $this->messageButtons->get('moderate'); ?>
+			<?php echo $this->messageButtons->get('delete'); ?>
+			<?php echo $this->messageButtons->get('permdelete'); ?>
+			<?php echo $this->messageButtons->get('undelete'); ?>
+			<?php echo $this->messageButtons->get('publish'); ?>
+		<?php endif ?>
 	<?php endif ?>
 	</div>
 </div>

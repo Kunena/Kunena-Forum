@@ -116,7 +116,7 @@
     #Kunena div.kthead-title a {
         float: none;
         font-size: 1.2em;
-        margin: 10px 0;
+        margin: 0;
     }
 
     #Kunena .kblocktable .kl {
@@ -129,7 +129,7 @@
     }
 
     #Kunena .kcol-mid.kcol-kcatlastpost {
-        padding-bottom: 20px;
+        padding-bottom: 5px;
     }
 
     
@@ -165,10 +165,6 @@
         display: none;
     }
 
-    #Kunena td.kcol-mid.kcol-ktopiclastpost .klatest-post-info {
-        margin-left: 10px;
-    }
-
     #Kunena .klist-markallcatsread,
     #Kunena .klist-bottom{
         display:none;
@@ -202,7 +198,7 @@
     }
 
     #Kunena ul.kpost-profile {
-        height: 60px;
+        min-height: 60px;
         display: block ;
         padding-left: 80px;
         position: relative ;
@@ -369,5 +365,42 @@
 	#Kunena .ktopicattach {
 	padding-right:10px !important;
 	}
+	
+	#Kunena .klist-pages-all, #Kunena .klist-times-all {
+		border:none;
+	}
+	
+	#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li {
+		padding:4px;
+	}
+	
+	#Kunena div.klatest-subject, #Kunena div.klatest-subject-by {
+		margin-left:0px;
+	}
+	
+	#Kunena table.kblocktable {
+		padding-right:10px;
+	}
+	
+	#Kunena .klatest-post-info {
+		text-align:right;
+		padding-right:10px;
+	}
+	
+	#Kunena td.ktopicmoderation {
+    margin-top: -30px;
+	}
+	
+	#Kunena .kcheck {
+		margin-left:60px;
+	}
+	
+	#Kunena div.kmessage-buttons-row {
+		white-space:normal;
+		padding-right:10px;
+	}
+	
+	#Kunena tr.krow2 td {
+		padding: 2px 8px;
+	}
 }
-

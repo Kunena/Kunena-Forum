@@ -16,8 +16,8 @@ $this->cache = false;
 // Show one topic row
 ?>
 <?php if ($this->spacing) : ?>
-<tr>
-	<td class="kcontenttablespacer" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>">&nbsp;</td>
+<tr class="hidden-phone">
+	<td class="kcontenttablespacer hidden-phone" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>">&nbsp;</td>
 </tr>
 <?php endif; ?>
 

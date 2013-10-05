@@ -38,7 +38,7 @@ foreach ( $this->sections as $section ) :
 	?>
 		<tr class="k<?php echo $tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
 			id="kcat<?php echo intval($category->id) ?>">
-			<td class="kcol-first kcol-category-icon">
+			<td class="kcol-first kcol-category-icon hidden-phone">
 				<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '') ?>
 			</td>
 
@@ -99,12 +99,12 @@ foreach ( $this->sections as $section ) :
 		<?php endif; ?>
 			</td>
 
-			<td class="kcol-mid kcol-kcattopics visible-desktop">
+			<td class="kcol-mid kcol-kcattopics hidden-phone">
 				<span class="kcat-topics-number"><?php echo $this->formatLargeNumber ( $category->getTopics() ) ?></span>
 				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_TOPICS');?></span>
 			</td>
 
-			<td class="kcol-mid kcol-kcatreplies visible-desktop">
+			<td class="kcol-mid kcol-kcatreplies hidden-phone">
 				<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getReplies() ) ?></span>
 				<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
 			</td>
@@ -124,7 +124,7 @@ foreach ( $this->sections as $section ) :
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($category) ?>
 			</div>
 
-			<div class="klatest-subject-by ks">
+			<div class="klatest-subject-by ks hidden-phone">
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
 					echo $last->getLastPostAuthor()->getLink();

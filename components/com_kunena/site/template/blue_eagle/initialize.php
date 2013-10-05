@@ -39,6 +39,7 @@ if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.foru
 } else {
 	// Load css from default template
 	$template->addStyleSheet ( 'css/kunena.forum.css' );
+	$template->addStyleSheet ( 'css/kunena.responsive.css' );
 	if ($skinner) {
 		$template->addStyleSheet ( 'css/kunena.skinner.css' );
 	} else {

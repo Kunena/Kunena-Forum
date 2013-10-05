@@ -547,7 +547,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 
 #Kunena span.kmessage-editmarkup {
-	background-color: #F2F1EE no-repeat left center;
+	background-color: #F2F1EE;
 	border-left-color: #BFC3C6;
 	border-right-color: #BFC3C6;
 	border-top-color: #BFC3C6;

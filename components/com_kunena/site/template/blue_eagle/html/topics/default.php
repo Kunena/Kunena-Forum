@@ -21,7 +21,7 @@ $this->displayAnnouncement ();
 			<?php echo JText::_('COM_KUNENA_TOPICS')?>
 		</td>
 
-		<td class="klist-times-all hidden-phone">
+		<td class="klist-times-all">
 			<form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
 			<?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
 			</form>

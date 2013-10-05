@@ -72,12 +72,9 @@ class KunenaTemplate extends JObject
 
 		// Find configuration file.
 		$this->xml_path = KPATH_SITE . "/template/{$name}/config.xml";
-		if (file_exists($this->xml_path)) {
-			$xpath = '//field';
-		} else {
+		if (!file_exists($this->xml_path)) {
 			// Configuration file was not found - legacy template support.
 			$this->xml_path = KPATH_SITE . "/template/{$name}/template.xml";
-			$xpath = '//param';
 		}
 
 		// TODO: move configuration out of filesystem (keep on legacy).
@@ -94,7 +91,7 @@ class KunenaTemplate extends JObject
 		// Load default values from configuration definition file.
 		$this->xml = simplexml_load_file($this->xml_path);
 		if ($this->xml) {
-			foreach ($this->xml->xpath($xpath) as $node) {
+			foreach ($this->xml->xpath('//field') as $node) {
 				if (isset($node['name']) && isset($node['default'])) $this->params->def($node['name'], $node['default']);
 			}
 			// Generate CSS variables for less compiler.
@@ -119,7 +116,7 @@ class KunenaTemplate extends JObject
 			// Update old template files to new format.
 			$xml = preg_replace(
 					array('|<params>|', '|</params>|', '|<param\s+|', '|</param>|'),
-					array('<config><fieldset>', '</fieldset></config>','<field ', '</field>'),
+					array('<config>', '</config>','<field ', '</field>'),
 					$xml);
 		}
 		return $xml;

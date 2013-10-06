@@ -32,6 +32,7 @@ defined ( '_JEXEC' ) or die ();
 								<ul class="nav nav-tabs">
 									<li class="active"><a href="#tab_basics" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASICS'); ?></a></li>
 									<li><a href="#tab_frontend" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_FRONTEND'); ?></a></li>
+									<li><a href="#tab_modules" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_MODULES'); ?></a></li>
 									<li><a href="#tab_users" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_USERS'); ?></a></li>
 									<li><a href="#tab_security" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_SECURITY'); ?></a></li>
 									<li><a href="#tab_avatars" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_AVATARS'); ?></a></li>
@@ -111,11 +112,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['version_check'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?></td>
 													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?></td>
-														<td><?php echo $this->lists ['time_to_create_page'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE_DESC') ?></td>
-													</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -176,178 +172,164 @@ defined ( '_JEXEC' ) or die ();
 											<legend><?php echo JText::_('COM_KUNENA_A_LOOKS') ?></legend>
 											<table class="table table-striped">
 												<thead>
-													<tr>
-														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
-														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
-														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
-													</tr>
+												<tr>
+													<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+													<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+													<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
+												</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_THREADS') ?></td>
-														<td><input type="text" name="cfg_threads_per_page" value="<?php echo $this->escape($this->config->threads_per_page) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_THREADS_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_MESSAGES') ?></td>
-														<td><input type="text" name="cfg_messages_per_page" value="<?php echo $this->escape($this->config->messages_per_page) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_SEARCH') ?></td>
-														<td><input type="text" name="cfg_messages_per_page_search" value="<?php echo $this->escape($this->config->messages_per_page_search) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_HISTORY') ?></td>
-														<td><?php echo $this->lists ['showhistory'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_HISTORY_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_HISTLIM') ?></td>
-														<td><input type="text" name="cfg_historylimit" value="<?php echo $this->escape($this->config->historylimit) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT') ?></td>
-														<td><?php echo $this->lists ['post_dateformat'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_HOVER') ?></td>
-														<td><?php echo $this->lists ['post_dateformat_hover'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_SHOWNEW') ?></td>
-														<td><?php echo $this->lists ['shownew'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_SHOWNEW_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT') ?></td>
-														<td><?php echo $this->lists ['showannouncement'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT') ?></td>
-														<td><?php echo $this->lists ['avataroncat'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS') ?></td>
-														<td><?php echo $this->lists ['listcat_show_moderators'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH') ?></td>
-														<td><input type="text" name="cfg_catimagepath" value="<?php echo $this->escape($this->config->catimagepath) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST') ?></td>
-														<td><?php echo $this->lists ['showchildcaticon'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_TAWIDTH') ?></td>
-														<td><input type="text" name="cfg_rtewidth" value="<?php echo $this->escape($this->config->rtewidth) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_TAWIDTH_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_TAHEIGHT') ?></td>
-														<td><input type="text" name="cfg_rteheight" value="<?php echo $this->escape($this->config->rteheight) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_TAHEIGHT_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_FORUM_JUMP') ?></td>
-														<td><?php echo $this->lists ['enableforumjump'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_FORUM_JUMP_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></td>
-														<td><?php echo $this->lists ['reportmsg'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_REPORT_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM') ?></td>
-														<td><?php echo $this->lists ['ordering_system'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_HIDE_IP') ?></td>
-														<td><?php echo $this->lists ['hide_ip'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_HIDE_IP_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_IN') ?></td>
-														<td><?php echo $this->lists ['latestcategory_in'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_IN_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY') ?></td>
-														<td><?php echo $this->lists ['latestcategory'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_TOPICICONS') ?></td>
-														<td><?php echo $this->lists ['topicicons'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_TOPCIICONS_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLELIGHTBOX') ?></td>
-														<td><?php echo $this->lists ['lightbox'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLELIGHTBOX_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_SHOW_TOPICS_FROM_LAST_TIME') ?></td>
-														<td><?php echo $this->lists ['show_list_time'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_SHOW_TOPICS_FROM_LAST_TIME_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_TYPE') ?></td>
-														<td><?php echo $this->lists ['show_session_type'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_TYPE_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_START_TIME') ?></td>
-														<td><input type="text" name="cfg_show_session_starttime" value="<?php echo $this->escape($this->config->show_session_starttime) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST') ?></td>
-														<td><?php echo $this->lists ['userlist_count_users'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT') ?></td>
-														<td><?php echo $this->lists ['topic_layout'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS') ?></td>
-														<td><?php echo $this->lists ['enable_threaded_layouts'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
-														<td><input type="text" name="cfg_attachment_limit" value="<?php echo $this->escape($this->config->attachment_limit) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY') ?></td>
-														<td><?php echo $this->lists ['pickup_category'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY') ?></td>
-														<td><?php echo $this->lists ['article_display'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT') ?></td>
-														<td><?php echo $this->lists ['default_sort'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT_DESC') ?></td>
-													</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_THREADS') ?></td>
+													<td><input type="text" name="cfg_threads_per_page" value="<?php echo $this->escape($this->config->threads_per_page) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_A_THREADS_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES') ?></td>
+													<td><input type="text" name="cfg_messages_per_page" value="<?php echo $this->escape($this->config->messages_per_page) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_SEARCH') ?></td>
+													<td><input type="text" name="cfg_messages_per_page_search" value="<?php echo $this->escape($this->config->messages_per_page_search) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT') ?></td>
+													<td><?php echo $this->lists ['post_dateformat'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_HOVER') ?></td>
+													<td><?php echo $this->lists ['post_dateformat_hover'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_SHOWNEW') ?></td>
+													<td><?php echo $this->lists ['shownew'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_SHOWNEW_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT') ?></td>
+													<td><?php echo $this->lists ['avataroncat'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS') ?></td>
+													<td><?php echo $this->lists ['listcat_show_moderators'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH') ?></td>
+													<td><input type="text" name="cfg_catimagepath" value="<?php echo $this->escape($this->config->catimagepath) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST') ?></td>
+													<td><?php echo $this->lists ['showchildcaticon'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_TAWIDTH') ?></td>
+													<td><input type="text" name="cfg_rtewidth" value="<?php echo $this->escape($this->config->rtewidth) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_A_TAWIDTH_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_TAHEIGHT') ?></td>
+													<td><input type="text" name="cfg_rteheight" value="<?php echo $this->escape($this->config->rteheight) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_A_TAHEIGHT_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_FORUM_JUMP') ?></td>
+													<td><?php echo $this->lists ['enableforumjump'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_FORUM_JUMP_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></td>
+													<td><?php echo $this->lists ['reportmsg'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_REPORT_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM') ?></td>
+													<td><?php echo $this->lists ['ordering_system'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_HIDE_IP') ?></td>
+													<td><?php echo $this->lists ['hide_ip'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_HIDE_IP_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_IN') ?></td>
+													<td><?php echo $this->lists ['latestcategory_in'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_IN_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY') ?></td>
+													<td><?php echo $this->lists ['latestcategory'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_TOPICICONS') ?></td>
+													<td><?php echo $this->lists ['topicicons'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_TOPCIICONS_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLELIGHTBOX') ?></td>
+													<td><?php echo $this->lists ['lightbox'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLELIGHTBOX_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_SHOW_TOPICS_FROM_LAST_TIME') ?></td>
+													<td><?php echo $this->lists ['show_list_time'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_SHOW_TOPICS_FROM_LAST_TIME_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_TYPE') ?></td>
+													<td><?php echo $this->lists ['show_session_type'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_TYPE_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_START_TIME') ?></td>
+													<td><input type="text" name="cfg_show_session_starttime" value="<?php echo $this->escape($this->config->show_session_starttime) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST') ?></td>
+													<td><?php echo $this->lists ['userlist_count_users'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT') ?></td>
+													<td><?php echo $this->lists ['topic_layout'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS') ?></td>
+													<td><?php echo $this->lists ['enable_threaded_layouts'] ?></td>
+
+													<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
+													<td><input type="text" name="cfg_attachment_limit" value="<?php echo $this->escape($this->config->attachment_limit) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY') ?></td>
+													<td><?php echo $this->lists ['pickup_category'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY') ?></td>
+													<td><?php echo $this->lists ['article_display'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT') ?></td>
+													<td><?php echo $this->lists ['default_sort'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT_DESC') ?></td>
+												</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -381,7 +363,52 @@ defined ( '_JEXEC' ) or die ();
 											</table>
 										</fieldset>
 									</div>
-
+									<div class="tab-pane" id="tab_modules">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_A_MODULES') ?></legend>
+											<table class="table table-striped">
+												<thead>
+												<tr>
+													<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+													<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+													<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_SHOWWHOIS') ?></td>
+													<td><?php echo $this->lists ['showwhoisonline'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_SHOWWHOISDESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_SHOWSTATS') ?></td>
+													<td><?php echo $this->lists ['showstats'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_SHOWSTATSDESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT') ?></td>
+													<td><?php echo $this->lists ['showannouncement'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_HISTORY') ?></td>
+													<td><?php echo $this->lists ['showhistory'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_HISTORY_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_HISTLIM') ?></td>
+													<td><input type="text" name="cfg_historylimit" value="<?php echo $this->escape($this->config->historylimit) ?>" /></td>
+													<td><?php echo JText::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?></td>
+													<td><?php echo $this->lists ['time_to_create_page'] ?></td>
+													<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE_DESC') ?></td>
+												</tr>
+												</tbody>
+											</table>
+										</fieldset>
+									</div>
 									<div class="tab-pane" id="tab_users">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
@@ -1108,16 +1135,6 @@ defined ( '_JEXEC' ) or die ();
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_SHOWWHOIS') ?></td>
-														<td><?php echo $this->lists ['showwhoisonline'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_SHOWWHOISDESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_SHOWSTATS') ?></td>
-														<td><?php echo $this->lists ['showstats'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_SHOWSTATSDESC') ?></td>
-													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_STATSGENERAL') ?></td>
 														<td><?php echo $this->lists ['showgenstats'] ?></td>

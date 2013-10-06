@@ -1012,9 +1012,9 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_('COM_KUNENA_A_RSS_AUTHOR_IN_TITLE_DESC') ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT') ?></td>
 												<td><?php echo $this->lists ['rss_word_count'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT_DESC') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES') ?></td>

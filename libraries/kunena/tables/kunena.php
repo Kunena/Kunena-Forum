@@ -99,7 +99,9 @@ abstract class KunenaTable extends JTable {
 	}
 
 	public function store($updateNulls = false) {
-		$k = $this->_tbl_keys;
+		// Workaround Joomla 3.2 change.
+		// TODO: remove check when we're only supporting J!3.5+.
+		$k = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
 
 		// Implement JObservableInterface: Pre-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.

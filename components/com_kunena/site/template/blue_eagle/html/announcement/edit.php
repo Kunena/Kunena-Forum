@@ -59,7 +59,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 					</label>
 				</div>
 					<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_SAVE') ?>"/>
-					<input onclick="javascript:window.history.back();" name="cancel" class="kbutton" type="button" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>"/>
+					<input onclick="window.history.back();" name="cancel" class="kbutton" type="button" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>"/>
 				</form>
 			</div>
 		</div>

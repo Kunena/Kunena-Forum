@@ -39,7 +39,9 @@ class KunenaUserFinder
 		$this->limit = $this->config->userlist_rows;
 		$this->db = JFactory::getDbo();
 		$this->query = $this->db->getQuery(true);
-		$this->query->from('#__users AS u')->leftJoin('#__kunena_users AS ku ON ku.userid=u.id');
+		$this->query
+			->from('#__users AS u')
+			->leftJoin('#__kunena_users AS ku ON ku.userid=u.id');
 	}
 
 	/**

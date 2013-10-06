@@ -24,18 +24,6 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	public $poll;
 	public $uri;
 
-	protected function display()
-	{
-		// Display layout with given parameters.
-		if ($this->voted || !$this->topic->isAuthorised('poll.vote')) {
-			$content = KunenaLayout::factory('Topic/Poll/Results')->setProperties($this->getProperties());
-		} else {
-			$content = KunenaLayout::factory('Topic/Poll/Vote')->setProperties($this->getProperties());
-		}
-
-		return $content;
-	}
-
 	protected function before()
 	{
 		parent::before();
@@ -52,16 +40,29 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		$this->usercount = $this->poll->getUserCount();
 		$this->usersvoted = $this->poll->getUsers();
 		$this->voted = $this->poll->getMyVotes();
+		echo (int) $this->topic->isAuthorised('poll.vote');
 
-		$this->users_voted_list = array();
-		$this->users_voted_morelist = array();
-		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
-			$i = 0;
-			// FIXME: too many queries...
-			foreach($this->usersvoted as $userid=>$vote) {
-				if ( $i <= '4' ) $this->users_voted_list[] = KunenaFactory::getUser(intval($userid))->getLink();
-				else $this->users_voted_morelist[] = KunenaFactory::getUser(intval($userid))->getLink();
-				$i++;
+		if (!empty($this->alwaysVote)) {
+			// Authorise forced vote.
+			$this->topic->tryAuthorise('poll.vote');
+			$this->name = 'Topic/Poll/Vote';
+
+		} elseif (!$this->voted && $this->topic->isAuthorised('poll.vote')) {
+			$this->name = 'Topic/Poll/Vote';
+
+		} else {
+			$this->name = 'Topic/Poll/Results';
+
+			$this->users_voted_list = array();
+			$this->users_voted_morelist = array();
+			if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
+				$i = 0;
+				// FIXME: too many queries...
+				foreach($this->usersvoted as $userid=>$vote) {
+					if ( $i <= '4' ) $this->users_voted_list[] = KunenaFactory::getUser(intval($userid))->getLink();
+					else $this->users_voted_morelist[] = KunenaFactory::getUser(intval($userid))->getLink();
+					$i++;
+				}
 			}
 		}
 

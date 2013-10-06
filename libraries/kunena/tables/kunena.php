@@ -20,90 +20,109 @@ abstract class KunenaTable extends JTable {
 	}
 
 	public function load($keys = null, $reset = true) {
+		// Implement JObservableInterface: Pre-processing by observers
+		// TODO: remove if when we're only supporting J!3.5+.
+		if (isset($this->_observers)) $this->_observers->update('onBeforeLoad', array($keys, $reset));
+
+		// Workaround Joomla 3.2 change.
+		// TODO: remove check when we're only supporting J!3.5+.
+		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+
 		if (empty($keys)) {
+			$empty = true;
+			$keys  = array();
+
 			// If empty, use the value of the current key
-			if (!is_array($this->_tbl_key)) {
-				$keyName = $this->_tbl_key;
-				$keyValue = $this->$keyName;
-
-				// If null primary key there's is no need to load anything
-				if(is_null($keyValue)) return false;
-				$keys = array($keyName => $keyValue);
-			} else {
-				$keys = array();
-				foreach ($this->_tbl_key as $keyName) {
-					$keyValue = $this->$keyName;
-					$keys[$keyName] = $keyValue;
-
-					// If null primary key there's is no need to load anything
-					if(is_null($keyValue)) return false;
-				}
+			foreach ($tbl_keys as $key) {
+				$empty      = $empty && empty($this->$key);
+				$keys[$key] = $this->$key;
 			}
+
+			// If empty primary key there's is no need to load anything
+			if ($empty) {
+				return false;
+			}
+
 		} elseif (!is_array($keys)) {
 			// Load by primary key.
-			$keys = array($keys);
+			$keyCount = count($tbl_keys);
+
+			if (!$keyCount) {
+				throw new RuntimeException('No table keys defined.');
+			} elseif ($keyCount > 1) {
+				throw new InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
+			}
+			$keys = array($this->getKeyName() => $keys);
 		}
 
 		if ($reset) $this->reset();
 
 		// Initialise the query.
-		$query	= new KunenaDatabaseQuery();
-		$query->select('*');
-		$query->from($this->_tbl);
+		$query = $this->_db->getQuery(true)
+			->select('*')
+			->from($this->_tbl);
 		$fields = array_keys($this->getProperties());
 
-		if (is_array($this->_tbl_key)) reset($this->_tbl_key);
-		foreach ($keys as $field => $value) {
-			if (is_numeric($field)) {
-				if (!is_array($this->_tbl_key)) {
-					$field = $this->_tbl_key;
-				} else {
-					list($i,$field) = each($this->_tbl_key);
-				}
-				$this->$field = $value;
-			}
+		foreach ($keys as $field => $value)
+		{
 			// Check that $field is in the table.
-			if (!in_array($field, $fields)) {
-				$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_CLASS_IS_MISSING_FIELD', get_class($this), $field));
-				$this->setError($e);
-				return false;
+			if (!in_array($field, $fields))
+			{
+				throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', get_class($this), $field));
 			}
 			// Add the search tuple to the query.
-			$query->where($this->_db->quoteName($field).' = '.$this->_db->quote($value));
+			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 		}
 
 		$this->_db->setQuery($query);
+
 		$row = $this->_db->loadAssoc();
 
-		// Check for a database error.
 		if ($this->_db->getErrorNum()) {
-			$e = new JException($this->_db->getErrorMsg());
-			$this->setError($e);
-			return false;
+			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 		}
 
-		// Check that we have a result.
 		if (empty($row)) {
-			$e = new JException(JText::_('JLIB_DATABASE_ERROR_EMPTY_ROW_RETURNED'));
-			$this->setError($e);
-			return false;
+			// Check that we have a result.
+			$result = false;
+		} else {
+			// Bind the object with the row and return.
+			$result = $this->_exists = $this->bind($row);
 		}
+
+		// Implement JObservableInterface: Post-processing by observers
+		// TODO: remove if when we're only supporting J!3.5+.
+		if (isset($this->_observers)) $this->_observers->update('onAfterLoad', array(&$result, $row));
 
 		// Bind the object with the row and return.
-		return $this->_exists = $this->bind($row);
+		return $result;
 	}
 
 	public function store($updateNulls = false) {
+		// Workaround Joomla 3.2 change.
+		// TODO: remove check when we're only supporting J!3.5+.
+		$k = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+
+		// Implement JObservableInterface: Pre-processing by observers
+		// TODO: remove if when we're only supporting J!3.5+.
+		if (isset($this->_observers)) $this->_observers->update('onBeforeStore', array($updateNulls, $k));
+
 		if ($this->exists()) {
-			$ret = $this->updateObject ( $updateNulls );
+			$result = $this->updateObject($updateNulls);
 		} else {
-			$ret = $this->insertObject ();
+			$result = $this->insertObject();
 		}
-		if (! $ret) {
-			$this->setError ( get_class ( $this ) . '::store failed - ' . $this->_db->getErrorMsg () );
+
+		if (!$result) {
+			$this->setError(get_class($this) . '::store() failed - ' . $this->_db->getErrorMsg());
 			return false;
 		}
 		$this->_exists = true;
+
+		// Implement JObservableInterface: Post-processing by observers
+		// TODO: remove if when we're only supporting J!3.5+.
+		if (isset($this->_observers)) $this->_observers->update('onAfterStore', array(&$result));
+
 		return true;
 	}
 
@@ -124,7 +143,7 @@ abstract class KunenaTable extends JTable {
 			$values[] = $this->_db->Quote($v);
 		}
 		$this->_db->setQuery(sprintf($fmtsql, implode(",", $fields) ,  implode(",", $values)));
-		if (!$this->_db->query()) {
+		if (!$this->_db->execute()) {
 			return false;
 		}
 		$id = $this->_db->insertid();
@@ -184,69 +203,59 @@ abstract class KunenaTable extends JTable {
 			$where = implode(' AND ', $where);
 		}
 		$this->_db->setQuery(sprintf($fmtsql, implode(",", $tmp) , $where));
-		return $this->_db->query();
+		return $this->_db->execute();
 	}
 
-	/**
-	 * Method to delete a row from the database table by primary key value.
-	 *
-	 * @param   mixed    $keys  An optional primary key value to delete.  If not set the
-	 *                          instance property value is used.
-	 *
-	 * @return  boolean  True on success.
-	 *
-	 * @link	http://docs.joomla.org/JTable/delete
-	 * @since   Joomla 11.1
-	 */
-	public function delete($keys = null)
+	public function delete($pk = null)
 	{
-		// Initialise variables.
-		if (empty($keys)) {
-			// If empty, use the value of the current key
-			if (!is_array($this->_tbl_key)) {
-				$keyName = $this->_tbl_key;
-				$keyValue = $this->$keyName;
+		// Workaround Joomla 3.2 change.
+		// TODO: remove check when we're only supporting J!3.5+.
+		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
 
-				// If null primary key there's is no need to delete
-				if(is_null($keyValue)) {
-					$e = new JException(JText::_('JLIB_DATABASE_ERROR_NULL_PRIMARY_KEY'));
-					$this->setError($e);
-					return false;
-				}
-				$keys = array($keyName => $keyValue);
-			} else {
-				$keys = array();
-				foreach ($this->_tbl_key as $keyName) {
-					$keyValue = $this->$keyName;
-					$keys[$keyName] = $keyValue;
+		if (is_null($pk)) {
+			$pk = array();
 
-					// If null primary key there's is no need to delete
-					if(is_null($keyValue)) {
-						$e = new JException(JText::_('JLIB_DATABASE_ERROR_NULL_PRIMARY_KEY'));
-						$this->setError($e);
-						return false;
-					}
-				}
+			foreach ($tbl_keys AS $key) {
+				$pk[$key] = $this->$key;
 			}
-		} elseif (!is_array($keys)) {
-			// Delete by primary key.
-			$keys = array($this->_tbl_key => $keys);
+		} elseif (!is_array($pk)) {
+			$key = reset($tbl_keys);
+			$pk = array($key => $pk);
 		}
+
+		foreach ($tbl_keys AS $key) {
+			$pk[$key] = is_null($pk[$key]) ? $this->$key : $pk[$key];
+
+			if ($pk[$key] === null) {
+				throw new UnexpectedValueException('Null primary key not allowed.');
+			}
+			$this->$key = $pk[$key];
+		}
+
+		// Implement JObservableInterface: Pre-processing by observers
+		// TODO: remove if when we're only supporting J!3.5+.
+		if (isset($this->_observers)) $this->_observers->update('onBeforeDelete', array($pk));
 
 		// Delete the row by primary key.
-		$query = $this->_db->getQuery(true);
-		$query->delete($this->_tbl);
-		foreach ($keys as $key=>$value) {
+		$query = $this->_db->getQuery(true)
+			->delete($this->_tbl);
+		foreach ($pk as $key=>$value) {
 			$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 		}
+
 		$this->_db->setQuery($query);
 
 		// Check for a database error.
-		if (!$this->_db->query()) {
-			$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
-			$this->setError($e);
-			return false;
+		$this->_db->execute();
+
+		// Check for a database error.
+		if (!$this->_db->getErrorNum()) {
+			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 		}
+
+		// Implement JObservableInterface: Post-processing by observers
+		// TODO: remove if when we're only supporting J!3.5+.
+		if (isset($this->_observers)) $this->_observers->update('onAfterDelete', array($pk));
 
 		return true;
 	}

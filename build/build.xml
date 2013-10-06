@@ -177,9 +177,6 @@
 			</fileset>
 		</copy>
 
-		<!-- Remove Mirage & Crypsis template -->
-		<delete dir="${tmp_dir}/packages/com_kunena/site/template/mirage" />
-
 		<!-- Move files needed by the installer -->
 		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/install.php" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -245,9 +242,6 @@
 							<include name="*.install.ini"/>
 						</fileset>
 					</move>
-					<copy todir="${tmp_dir}/packages/com_kunena/language/@{tag}">
-						<fileset dir="${tmp_dir}/languages/@{tag}/admin" />
-					</copy>
 					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena_@{tag}_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}"/>
 				</else>
 			</if>

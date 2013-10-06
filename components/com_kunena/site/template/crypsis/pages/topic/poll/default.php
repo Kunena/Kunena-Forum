@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$content = $this->request('Topic/Poll')->setProperties(array('alwaysVote'=>true))->execute();
+$content = $this->execute('Topic/Poll');
 
 // Display breadcrumb path to the current category / topic / message / report.
 $parents = KunenaForumCategoryHelper::getParents($content->category->id);

@@ -465,8 +465,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->topic = $this->get ( 'Topic' );
 		}
 		$this->poll = $this->get('Poll');
-		$this->usercount = $this->get('PollUserCount');
 		$this->usersvoted = $this->get('PollUsers');
+		$this->usercount = count($this->usersvoted);
 		$this->voted = $this->get('MyVotes');
 
 		$this->users_voted_list = array();

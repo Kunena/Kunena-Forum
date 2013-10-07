@@ -37,7 +37,7 @@ if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.foru
 		CKunenaTools::addStyleSheet ( JUri::root(true). "/templates/{$app->getTemplate()}/css/kunena.default.css" );
 	}
 } else {
-	$loadResponsiveCSS = $template->params->get('loadResponsiveCSS');
+	$loadResponsiveCSS = $template->params->get('loadResponsiveCSS', 1);
 	// Load css from default template
 	$template->addStyleSheet ( 'css/kunena.forum.css' );
 	if ($loadResponsiveCSS) $template->addStyleSheet ( 'css/kunena.responsive.css' );

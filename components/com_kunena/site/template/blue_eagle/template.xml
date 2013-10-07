@@ -59,62 +59,62 @@
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>
 
-		<field name="forumHeadercolor" type="color" default="#eee"
+		<field name="forumHeadercolor" type="color" default="#5388B4"
 			label="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND_DESC"
 		/>
 
-		<field name="announcementHeadercolor" type="color" default="#eee" 
+		<field name="announcementHeadercolor" type="color" default="#5388B4" 
 			label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_HEADER_BACKGROUND" 
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
 		
-		<field name="announcementBoxbgcolor" type="color" default="#eee" 
+		<field name="announcementBoxbgcolor" type="color" default="#FFFFFF" 
 			label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_BOX_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
 		
-		<field name="frontstatsHeadercolor" type="color" default="#eee" 
+		<field name="frontstatsHeadercolor" type="color" default="#5388B4" 
 			label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" 
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" 
 		/>
 		
-		<field name="whoisonlineHeadercolor" type="color" default="#eee" 
+		<field name="whoisonlineHeadercolor" type="color" default="#5388B4" 
 			label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
 
-		<field name="inactiveTabcolor" type="color" default="#eee" 
+		<field name="inactiveTabcolor" type="color" default="#737373" 
 			label="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR" 
 			description="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR_DESC" 
 		/>
 		
-		<field name="activeTabcolor" type="color" default="#eee" 
+		<field name="activeTabcolor" type="color" default="#5388B4" 
 			label="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR" 
 			description="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR_DESC" 
 		/>
 		
-		<field name="hoverTabcolor" type="color" default="#eee" 
+		<field name="hoverTabcolor" type="color" default="#5388B4" 
 			label="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR" 
 			description="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR_DESC" 
 		/>
 		
-		<field name="topBordercolor" type="color" default="#eee" 
+		<field name="topBordercolor" type="color" default="#5388B4" 
 			label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR" 
 			description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC" 
 		/>
 		
-		<field name="inactiveFontcolor" type="color" default="#eee" 
+		<field name="inactiveFontcolor" type="color" default="#FFFFFF" 
 			label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" 
 			description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" 
 		/>
 		
-		<field name="activeFontcolor" type="color" default="#eee" 
+		<field name="activeFontcolor" type="color" default="#FFFFFF" 
 			label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" 
 			description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC"
 		/>
 		
-		<field name="toggleButtoncolor" type="color" default="#eee" 
+		<field name="toggleButtoncolor" type="color" default="#5388B4" 
 			label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" 
 			description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" 
 		/>

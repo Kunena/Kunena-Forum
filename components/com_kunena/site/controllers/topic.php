@@ -846,19 +846,33 @@ class KunenaControllerTopic extends KunenaController {
 				jimport ( 'joomla.environment.uri' );
 				$msglink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
-				$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$this->me->username} ({$this->me->name})";
-				$mailmessage .= "\n";
-				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RREASON' ) . " " . $reason;
-				$mailmessage .= "\n";
-				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RMESSAGE' ) . " " . $text;
-				$mailmessage .= "\n\n";
-				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_POSTER' ) . " {$baduser->username} ({$baduser->name})";
-				$mailmessage .= "\n";
-				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_SUBJECT' ) . ": " . $topic->subject;
-				$mailmessage .= "\n";
-				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_MESSAGE' ) . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext, 0, false);
-				$mailmessage .= "\n-----\n\n";
-				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_LINK' ) . " " . $msglink;
+				// Render the email.
+				$layout = KunenaLayout::factory('Email/Report')
+					->set('message', $this->message)
+					->set('me', $this->me)
+					->set('title', $reason)
+					->set('content', $text)
+					->set('messageLink', $msglink);
+
+				try {
+					$mailmessage = $layout->render();
+
+				} catch (Exception $e) {
+					// TODO: Deprecated in 3.1, remove in 4.0
+					$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$this->me->username} ({$this->me->name})";
+					$mailmessage .= "\n";
+					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RREASON' ) . " " . $reason;
+					$mailmessage .= "\n";
+					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RMESSAGE' ) . " " . $text;
+					$mailmessage .= "\n\n";
+					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_POSTER' ) . " {$baduser->username} ({$baduser->name})";
+					$mailmessage .= "\n";
+					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_SUBJECT' ) . ": " . $topic->subject;
+					$mailmessage .= "\n";
+					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_MESSAGE' ) . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext, 0, false);
+					$mailmessage .= "\n-----\n\n";
+					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_LINK' ) . " " . $msglink;
+				}
 				$mailmessage = JMailHelper::cleanBody ( strtr ( $mailmessage, array ('&#32;' => '' ) ) );
 
 				foreach ( $emailToList as $emailTo ) {

@@ -1068,36 +1068,47 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return string
 	 */
 	protected function createEmailBody($subscription, $subject, $url, $message, $once) {
-		$config = KunenaFactory::getConfig();
-		if ($subscription) {
-			$msg1 = $this->get ( 'parent' ) ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT' );
-			$msg2 = $this->get ( 'parent' ) ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT' );
-		} else {
-			$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD1' );
-			$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD2' );
-		}
+		$layout = KunenaLayout::factory('Email/NewPost')
+			->set('message', $message)
+			->set('messageUrl', $url)
+			->set('once', $once);
 
-		$msg = $msg1 . " " . $config->board_title . "\n\n";
-		// DO NOT REMOVE EXTRA SPACE, JMailHelper::cleanBody() removes "Subject:" from the message body
-		$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . " : " . $subject . "\n";
-		$msg .= JText::_ ( 'COM_KUNENA_CATEGORY' ) . " : " . $this->getCategory()->name . "\n";
-		$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $this->getAuthor()->getName('???', false) . "\n\n";
-		$msg .= "URL : $url\n\n";
-		if ($config->mailfull == 1) {
-			$msg .= JText::_ ( 'COM_KUNENA_MESSAGE' ) . " :\n-----\n";
-			$msg .= $message;
-			$msg .= "\n-----\n\n";
-		}
-		$msg .= $msg2 . "\n";
-		if ($subscription && $once) {
-			if ($this->parent) {
-				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' ) . "\n";
+		try {
+			$msg = $layout->render($subscription ? 'default' : 'moderator');
+
+		} catch (Exception $e) {
+			// TODO: Deprecated in 3.1, remove in 4.0
+			$config = KunenaFactory::getConfig();
+			if ($subscription) {
+				$msg1 = $this->get ( 'parent' ) ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT' );
+				$msg2 = $this->get ( 'parent' ) ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT' );
 			} else {
-				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE' ) . "\n";
+				$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD1' );
+				$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD2' );
 			}
+
+			$msg = $msg1 . " " . $config->board_title . "\n\n";
+			// DO NOT REMOVE EXTRA SPACE, JMailHelper::cleanBody() removes "Subject:" from the message body
+			$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . " : " . $subject . "\n";
+			$msg .= JText::_ ( 'COM_KUNENA_CATEGORY' ) . " : " . $this->getCategory()->name . "\n";
+			$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $this->getAuthor()->getName('???', false) . "\n\n";
+			$msg .= "URL : $url\n\n";
+			if ($config->mailfull == 1) {
+				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE' ) . " :\n-----\n";
+				$msg .= $message;
+				$msg .= "\n-----\n\n";
+			}
+			$msg .= $msg2 . "\n";
+			if ($subscription && $once) {
+				if ($this->parent) {
+					$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' ) . "\n";
+				} else {
+					$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE' ) . "\n";
+				}
+			}
+			$msg .= "\n";
+			$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
 		}
-		$msg .= "\n";
-		$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
 		return JMailHelper::cleanBody ( $msg );
 	}
 }

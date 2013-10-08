@@ -865,12 +865,16 @@ class KunenaControllerTopic extends KunenaController {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 						continue;
 
-					$mail = JFactory::getMailer();
-					$mail->setSender(array($this->me->username,$this->me->email));
-					$mail->setBody($mailmessage);
-					$mail->setSubject($mailsubject);
-					$mail->addRecipient($emailTo->email);
-					$mail->send();
+					try {
+						$mail = JFactory::getMailer();
+						$mail->setSender(array($this->me->username,$this->me->email));
+						$mail->setBody($mailmessage);
+						$mail->setSubject($mailsubject);
+						$mail->addRecipient($emailTo->email);
+						$mail->send();
+					} catch (Exception $e) {
+						JLog::add($e->getMessage(), JLog::WARNING, 'kunena');
+					}
 				}
 
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );

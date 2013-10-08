@@ -1050,7 +1050,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 				$mail->ClearBCCs();
 				$mail->addBCC($emails);
 			}
-			$mail->Send();
+			try {
+				$mail->Send();
+			} catch (Exception $e) {
+				JLog::add($e->getMessage(), JLog::WARNING, 'kunena');
+			}
 		}
 	}
 

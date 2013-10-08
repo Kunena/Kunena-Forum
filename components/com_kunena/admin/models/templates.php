@@ -80,10 +80,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_kunena.edit.template.data', array());
 
-		if (empty($data)) {
-			$data = KunenaTemplate::getInstance()->params->toArray();
-		}
-
 		return $data;
 	}
 

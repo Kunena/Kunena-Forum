@@ -1069,7 +1069,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 */
 	protected function createEmailBody($subscription, $subject, $url, $message, $once) {
 		$layout = KunenaLayout::factory('Email/NewPost')
-			->set('message', $message)
+			->set('message', $this)
 			->set('messageUrl', $url)
 			->set('once', $once);
 

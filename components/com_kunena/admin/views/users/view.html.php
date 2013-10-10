@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAdminViewUsers extends KunenaView {
 	public function displayDefault() {
 		$this->setToolbar();
-		$this->items = $this->get('items');
+		$this->users = $this->get('items');
 		$this->pagination = $this->get('Pagination');
 		$this->modcatlist = $this->get('Modcatslist');
 

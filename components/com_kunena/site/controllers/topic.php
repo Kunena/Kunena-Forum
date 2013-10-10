@@ -832,7 +832,7 @@ class KunenaControllerTopic extends KunenaController {
 			return;
 		} else {
 			$acl = KunenaAccess::getInstance();
-			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false, $this->me->userid);
+			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false);
 
 			if (!empty ( $emailToList )) {
 				$mailsender = JMailHelper::cleanAddress ( $this->config->board_title . ' ' . JText::_ ( 'COM_KUNENA_FORUM' ) . ': ' . $this->me->getName() );
@@ -847,15 +847,18 @@ class KunenaControllerTopic extends KunenaController {
 				$msglink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
 				// Render the email.
-				$layout = KunenaLayout::factory('Email/Report')
-					->set('message', $this->message)
+				$layout = KunenaLayout::factory('Email/Report')->debug(false)
+					->set('message', $message)
 					->set('me', $this->me)
 					->set('title', $reason)
 					->set('content', $text)
 					->set('messageLink', $msglink);
 
 				try {
-					$mailmessage = $layout->render();
+					$output = $layout->render();
+					list($mailmessage, $alt) = explode('-----=====-----', $output);
+					$mailmessage = trim((string) $mailmessage);
+					$alt = trim((string) $alt);
 
 				} catch (Exception $e) {
 					// TODO: Deprecated in 3.1, remove in 4.0
@@ -872,8 +875,8 @@ class KunenaControllerTopic extends KunenaController {
 					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_MESSAGE' ) . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext, 0, false);
 					$mailmessage .= "\n-----\n\n";
 					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_LINK' ) . " " . $msglink;
+					$mailmessage = JMailHelper::cleanBody ( strtr ( $mailmessage, array ('&#32;' => '' ) ) );
 				}
-				$mailmessage = JMailHelper::cleanBody ( strtr ( $mailmessage, array ('&#32;' => '' ) ) );
 
 				foreach ( $emailToList as $emailTo ) {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
@@ -882,6 +885,10 @@ class KunenaControllerTopic extends KunenaController {
 					try {
 						$mail = JFactory::getMailer();
 						$mail->setSender(array($this->me->username,$this->me->email));
+						if (!empty($alt)) {
+							$mail->isHtml(true);
+							$mail->AltBody = $alt;
+						}
 						$mail->setBody($mailmessage);
 						$mail->setSubject($mailsubject);
 						$mail->addRecipient($emailTo->email);

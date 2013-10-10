@@ -298,13 +298,13 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 			// Send email to all subscribers
 			if (!empty($receivers[1])) {
-				$mail->setBody($this->createEmailBody(1, $subject, $url, $message, $once));
+				$this->attachEmailBody($mail, 1, $subject, $url, $message, $once);
 				$this->sendEmail($mail, $receivers[1]);
 			}
 
 			// Send email to all moderators
 			if (!empty($receivers[0])) {
-				$mail->setBody($this->createEmailBody(0, $subject, $url, $message, $once));
+				$this->attachEmailBody($mail, 0, $subject, $url, $message, $once);
 				$this->sendEmail($mail, $receivers[0]);
 			}
 
@@ -416,7 +416,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 *
 	 * @return int|string
 	 */
-	public function displayField($field) {
+	public function displayField($field, $html=true) {
 		switch ($field) {
 			case 'id':
 				return intval($this->id);
@@ -424,7 +424,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
-				return KunenaHtmlParser::parseBBCode($this->message);
+				return $html ? KunenaHtmlParser::parseBBCode($this->message) : KunenaHtmlParser::stripBBCode
+					($this->message, null, false);
 		}
 		return '';
 	}
@@ -1059,6 +1060,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * @param JMail $mail
 	 * @param int $subscription
 	 * @param string $subject
 	 * @param string $url
@@ -1067,14 +1069,22 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 *
 	 * @return string
 	 */
-	protected function createEmailBody($subscription, $subject, $url, $message, $once) {
-		$layout = KunenaLayout::factory('Email/NewPost')
+	protected function attachEmailBody(JMail $mail, $subscription, $subject, $url, $message, $once) {
+		$layout = KunenaLayout::factory('Email/NewPost')->debug(false)
 			->set('message', $this)
 			->set('messageUrl', $url)
 			->set('once', $once);
 
 		try {
-			$msg = $layout->render($subscription ? 'default' : 'moderator');
+			$output = $layout->render($subscription ? 'default' : 'moderator');
+			list($msg, $alt) = explode('-----=====-----', $output);
+			$msg = trim((string) $msg);
+			$alt = trim((string) $alt);
+
+			if ($alt) {
+				$mail->isHtml(true);
+				$mail->AltBody = $alt;
+			}
 
 		} catch (Exception $e) {
 			// TODO: Deprecated in 3.1, remove in 4.0
@@ -1109,6 +1119,6 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			$msg .= "\n";
 			$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
 		}
-		return JMailHelper::cleanBody ( $msg );
+		$mail->setBody($msg);
 	}
 }

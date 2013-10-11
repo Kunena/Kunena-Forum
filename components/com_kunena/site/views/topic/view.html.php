@@ -472,10 +472,17 @@ class KunenaViewTopic extends KunenaView {
 		$this->users_voted_list = array();
 		$this->users_voted_morelist = array();
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
-			$i = 0;
+			$userids_votes = array();
 			foreach($this->usersvoted as $userid=>$vote) {
-				if ( $i <= '4' ) $this->users_voted_list[] = KunenaFactory::getUser(intval($userid))->getLink();
-				else $this->users_voted_morelist[] = KunenaFactory::getUser(intval($userid))->getLink();
+				$userids_votes[] = $userid;
+			}
+
+			$loaded_users = KunenaUserHelper::loadUsers($userids_votes);
+
+			$i = 0;
+			foreach($loaded_users as $userid=>$user) {
+				if ( $i <= '4' ) $this->users_voted_list[] = $loaded_users[$userid]->getLink();
+				else $this->users_voted_morelist[] = $loaded_users[$userid]->getLink();
 				$i++;
 			}
 		}
@@ -732,7 +739,7 @@ class KunenaViewTopic extends KunenaView {
 
 				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
 
-				foreach( $thankyous as $userid=>$time){
+				foreach($loaded_users as $userid=>$user) {
 					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 					$this->thankyou[] = $loaded_users[$userid]->getLink().$thankyou_delete;

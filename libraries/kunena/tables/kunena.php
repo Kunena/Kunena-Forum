@@ -248,7 +248,7 @@ abstract class KunenaTable extends JTable {
 		$this->_db->execute();
 
 		// Check for a database error.
-		if (!$this->_db->getErrorNum()) {
+		if ($this->_db->getErrorNum()) {
 			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 		}
 

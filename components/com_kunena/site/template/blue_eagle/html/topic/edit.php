@@ -196,7 +196,7 @@ $this->k=0;
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW'));?>:: "tabindex="3" />
 				<input type="button" name="cancel" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
-				onclick="javascript:window.history.back();"
+				onclick="window.history.back();"
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" tabindex="5" />
 			</td>
 		</tr>

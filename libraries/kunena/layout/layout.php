@@ -36,6 +36,14 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
+	 * @param $key
+	 * @return string
+	 */
+	public function text($key) {
+		return JText::_($key);
+	}
+
+	/**
 	 * Method to render the view.
 	 *
 	 * @param   string  Layout.

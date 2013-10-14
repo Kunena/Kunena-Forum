@@ -62,6 +62,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @var array
 	 */
 	protected $closures = array();
+	protected $debug;
 
 	/**
 	 * Method to instantiate the layout.
@@ -74,6 +75,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		// Setup dependencies.
 		$this->_name = $name;
 		$this->includePaths = isset($paths) ? $paths : $this->loadPaths();
+		$this->debug = JDEBUG || KunenaConfig::getInstance()->get('debug');
 	}
 
 	/**
@@ -141,7 +143,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function render($layout = null)
 	{
-		if (0 && JDEBUG)
+		if (0 && $this->debug)
 		{
 			echo $this->debugInfo();
 		}
@@ -171,12 +173,23 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			throw $e;
 		}
 
-		if (JDEBUG || KunenaConfig::getInstance()->get('debug')) {
+		if ($this->debug) {
 			$output = trim($output);
 			$output = "\n<!-- START {$path} -->\n{$output}\n<!-- END {$path} -->\n";
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Set/override debug mode.
+	 *
+	 * @param bool $value
+	 */
+	public function debug($value) {
+		$this->debug = (bool) $value;
+
+		return $this;
 	}
 
 	public function renderError(Exception $e) {
@@ -199,7 +212,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		JLog::add($error, JLog::CRITICAL, 'kunena');
 
 		$error = "<b>Rendering Error</b> in layout <b>{$this->_name}</b>: {$e->getMessage()}";
-		if (JDEBUG) {
+		if ($this->debug) {
 			$error .= " in <b>{$location['file']}</b> on line {$location['line']}<br />";
 			if (isset($caller['file'])) $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
 		} else {
@@ -380,7 +393,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	public function __get($property)
 	{
 		if (!array_key_exists($property, $this->closures)) {
-			if (JDEBUG) {
+			if ($this->debug) {
 				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
 			} else {
 				 return null;

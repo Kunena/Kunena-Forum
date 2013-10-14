@@ -27,7 +27,7 @@ $this->displayAnnouncement ();
 			</form>
 		</td>
 
-		<td class="klist-jump-all visible-desktop"><?php $this->displayForumJump () ?></td>
+		<td class="klist-jump-all hidden-phone"><?php $this->displayForumJump () ?></td>
 
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
 	</tr>

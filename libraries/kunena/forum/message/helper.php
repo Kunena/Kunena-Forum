@@ -289,6 +289,9 @@ abstract class KunenaForumMessageHelper {
 		}
 	}
 
+	/**
+	 * Free up memory by cleaning up all cached items.
+	 */
 	public static function cleanup() {
 		self::$_instances = array();
 		self::$_location = array();

@@ -329,6 +329,13 @@ abstract class KunenaForumTopicHelper {
 	}
 
 	/**
+	 * Free up memory by cleaning up all cached items.
+	 */
+	public static function cleanup() {
+		self::$_instances = array();
+	}
+
+	/**
 	 * @param mixed $ids
 	 * @param int  $start
 	 * @param int  $end

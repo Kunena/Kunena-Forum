@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ('joomla.user.helper');
-jimport ('joomla.mail.helper');
-
 /**
  * Class KunenaForumMessage
  *
@@ -249,7 +246,6 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		$topic = $this->getTopic();
 		if (count ( $emailToList )) {
-			jimport('joomla.mail.helper');
 			if (! $config->getEmail() ) {
 				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ) );
 				return false;
@@ -630,7 +626,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		// Cascade changes to other tables
-		$this->update();
+		$this->update($newTopic);
 
 		return true;
 	}
@@ -776,7 +772,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 	// Internal functions
 
-	protected function update() {
+	protected function update($newTopic = false) {
 		// If post was published and then moved, we need to update old topic
 		if (!$this->_hold && $this->_thread && $this->_thread != $this->thread) {
 			$topic = KunenaForumTopicHelper::get($this->_thread);
@@ -787,7 +783,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		$postDelta = $this->delta(true);
 		$topic = $this->getTopic();
-		// Create / update topic
+		// New topic
+		if ($newTopic) {
+			$topic->hold = 0;
+		}
+		// Update topic
 		if (!$this->hold && $topic->hold && $topic->exists()) {
 			// We published message -> publish and recount topic
 			$topic->hold = 0;

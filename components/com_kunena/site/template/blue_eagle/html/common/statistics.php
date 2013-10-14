@@ -18,14 +18,14 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	<div class="kcontainer" id="kfrontstats-tbody">
 		<div class="kbody">
-			<table class = "kblocktable" id ="kfrontstats">
+			<table class="kblocktable" id="kfrontstats">
 				<tr class="krow1">
-					<td class = "kcol-first">
+					<td class="kcol-first">
 						<div class="kstatsicon"></div>
 					</td>
 					<td class="kcol-mid km">
 						<ul id="kstatslistright" class="fltrt kright">
-							<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $this->getUserlistLink('', $this->memberCount) ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>: <strong><?php echo $this->latestMemberLink ?></strong></li>
+							<li class="hidden-phone"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $this->getUserlistLink('', $this->memberCount) ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>: <strong><?php echo $this->latestMemberLink ?></strong></li>
 							<li>&nbsp;</li>
 							<li><?php echo $this->getUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;') ?></li>
 							<li><?php if ($this->config->showpopuserstats || $this->config->showpopsubjectstats) echo $this->getStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;');?></li>

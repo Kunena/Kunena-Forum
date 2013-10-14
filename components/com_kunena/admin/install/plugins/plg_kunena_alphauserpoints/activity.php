@@ -69,8 +69,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 	}
 
 	public function onAfterThankyou($target, $actor, $message) {
-		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . KunenaFactory::getUser($target)->username );
-		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . KunenaFactory::getUser($actor)->username );
+		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT_FROM' ).': ' . KunenaFactory::getUser($target)->username );
+		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID_TO' ).': ' . KunenaFactory::getUser($actor)->username );
 		if ( $this->_checkPermissions($message) ) {
 			$auptarget = AlphaUserPointsHelper::getAnyUserReferreID( $actor );
 			$aupactor = AlphaUserPointsHelper::getAnyUserReferreID( $target );

@@ -67,7 +67,7 @@ JHtml::_('behavior.tooltip');
 										<td>
 											<ul class="adminformlist">
 											</ul>
-											<?php if (count($this->form->getFieldset())) : ?>
+											<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
 												<table class="table table-bordered table-striped">
 													<?php foreach($this->form->getFieldset() as $field) : if (!$field->hidden) : ?>
 														<tr>

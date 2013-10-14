@@ -54,10 +54,11 @@ class KunenaAccess {
 				$this->moderatorsByCatid = (array)$data['mc'];
 				$this->moderatorsByUserid = (array)$data['mu'];
 			}
-			// If values were not cached (or users permissions have been changed), force reload
-			if (!isset($this->adminsByCatid)) {
-				$this->clearCache();
-			}
+		}
+
+		// If values were not cached (or users permissions have been changed), force reload
+		if (!isset($this->adminsByCatid)) {
+			$this->clearCache();
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}

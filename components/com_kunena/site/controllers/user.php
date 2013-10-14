@@ -477,6 +477,7 @@ class KunenaControllerUser extends KunenaController {
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=".$userid." GROUP BY ip ORDER BY `time` DESC", 0, 1 );
 		$ip = $db->loadResult();
 
+		// TODO: replace this code by using JHttpTransport class
 		$data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$this->config->stopforumspam_key;
 		$fp = fsockopen("www.stopforumspam.com",80);
 		fputs($fp, "POST /add.php HTTP/1.1\n" );
@@ -507,7 +508,7 @@ class KunenaControllerUser extends KunenaController {
 			$reasons = array();
 			preg_match('/<p>.*<\/p>/', $response, $reasons);
 			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])));
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])),'error');
 			return false;
 		}
 	}

@@ -248,7 +248,7 @@
 		<field primary_key="yes" name="user_id" type="int(11)" null="0" />
 		<field primary_key="yes" name="category_id" type="int(11)" null="0" />
 		<field name="role" type="tinyint(4)" null="0" default="0"/>
-		<field name="allreadtime" type="datetime" null="1" />
+		<field name="allreadtime" type="int(11)" null="1" />
 		<field name="subscribed" type="tinyint(4)" null="0" default="0" />
 		<field name="params" type="text" null="0" />
 		<key name="PRIMARY" unique="1" columns="user_id,category_id"/>

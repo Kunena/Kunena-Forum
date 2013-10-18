@@ -140,7 +140,7 @@ defined ( '_JEXEC' ) or die ();
 							?>
 								<tr <?php echo 'class = "row' . $k . '"';?>>
 									<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
-									<td><?php echo $attachment->getThumbnailLink() . '<br />' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->getFilename(), 10, 15) ?></td>
+									<td><?php echo $attachment->getThumbnailLink() . '<br />' . $attachment->getFilename() ?></td>
 									<td><?php echo $this->escape($attachment->filetype); ?></td>
 									<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
 									<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>

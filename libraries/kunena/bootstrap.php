@@ -66,4 +66,6 @@ JLoader::register('KunenaForumTopicUser', KPATH_FRAMEWORK . '/forum/topic/user/u
 JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/forum/topic/user/read/read.php');
 
 // Register CKunenaLink class in order to allow old templates to work
-JLoader::register('CKunenaLink', KPATH_SITE . '/lib/kunena.link.class.php');
+if (defined('KPATH_SITE')) {
+	JLoader::register('CKunenaLink', KPATH_SITE . '/lib/kunena.link.class.php');
+}

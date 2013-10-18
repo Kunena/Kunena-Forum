@@ -30,6 +30,7 @@ class CKunenaUpload {
 	protected $_isimage;
 	protected $_isfile;
 
+	protected $realName = false;
 	protected $fileName = false;
 	protected $fileTemp = false;
 	protected $fileSize = false;
@@ -97,6 +98,7 @@ class CKunenaUpload {
 			'status' => $this->status,
 			'ready' => $this->ready,
 			'name' => $this->fileName,
+			'real' => $this->realName,
 			'size' => $this->fileSize
 		);
 
@@ -137,6 +139,7 @@ class CKunenaUpload {
 	function uploaded($input='kattachment') {
 		$file = JRequest::getVar ( $input, NULL, 'FILES', 'array' );
 		if (is_uploaded_file ( $file ['tmp_name'] ) && $file ['error'] == 0) return true;
+		return false;
 	}
 
 	function getValidExtension($validExts) {
@@ -153,10 +156,10 @@ class CKunenaUpload {
 				// Add first dot if it is missing in extension list
 				$ext = '.'.$ext;
 			}
-			$extension = substr($this->fileName, -strlen($ext));
+			$extension = substr($this->realName, -strlen($ext));
 			if (strtolower($extension) == strtolower($ext)) {
 				// File must contain one letter before extension
-				$ret[] = substr($this->fileName, 0, -strlen($ext));
+				$ret[] = substr($this->realName, 0, -strlen($ext));
 				$ret[] = substr($extension, 1);
 				break;
 			}
@@ -177,7 +180,7 @@ class CKunenaUpload {
 		KunenaFolder::createIndex($uploadPath);
 
 		// Get file name and validate with path type
-		$this->fileName = JFile::makeSafe(JRequest::getString ( $input.'_name', '', 'post' ));
+		$this->realName = JFile::makeSafe(JRequest::getString ( $input.'_name', '', 'post' ));
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );
@@ -194,9 +197,8 @@ class CKunenaUpload {
 			}
 			$this->fileTemp = $file ['tmp_name'];
 			$this->fileSize = $file ['size'];
-			if (! $this->fileName) {
-				// Need to add additonal path type check as array getVar does not
-				$this->fileName = JFile::makeSafe($file ['name']);
+			if (!$this->realName) {
+				$this->realName = $file['name'];
 			}
 			//any errors the server registered on uploading
 			switch ($file ['error']) {
@@ -234,7 +236,7 @@ class CKunenaUpload {
 		} else {
 			// Currently not in use: this is meant for experimental AJAX uploads
 			// Open temp file
-			$this->fileTemp = KunenaPath::tmpdir() . '/kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->fileName );
+			$this->fileTemp = KunenaPath::tmpdir() . '/kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->realName );
 			$out = fopen ($this->fileTemp, $chunk == 0 ? "wb" : "ab");
 			if ($out) {
 				// Read binary input stream and append it to temp file
@@ -346,21 +348,28 @@ class CKunenaUpload {
 		// Get a hash value from the file
 		$this->fileHash = md5_file ( $this->fileTemp );
 
-		// Override filename if given in the parameter
-		if($filename) $uploadedFileBasename = $filename;
-		$uploadedFileBasename = KunenaFile::makeSafe($uploadedFileBasename);
-		if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
+		if ($filename === null) {
+			// Use random non-existing filename.
+			do {
+				$this->fileName = md5(rand());
+			} while (file_exists("{$uploadPath}/{$this->fileName}"));
+		} else {
+			// Override filename if given in the parameter
+			if($filename) $uploadedFileBasename = $filename;
+			$uploadedFileBasename = KunenaFile::makeSafe($uploadedFileBasename);
+			if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
 
-		// Rename file if there is already one with the same name
-		$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
-		if (file_exists($uploadPath .'/'. $newFileName)) {
-			$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
-			for ($i=2; file_exists("{$uploadPath}/{$newFileName}"); $i++) {
-				$newFileName = $uploadedFileBasename . date('_Y-m-d') . "-$i." . $uploadedFileExtension;
+			// Rename file if there is already one with the same name
+			$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
+			if (file_exists($uploadPath .'/'. $newFileName)) {
+				$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
+				for ($i=2; file_exists("{$uploadPath}/{$newFileName}"); $i++) {
+					$newFileName = $uploadedFileBasename . date('_Y-m-d') . "-$i." . $uploadedFileExtension;
+				}
 			}
+			$this->fileName = $newFileName;
+			$this->fileName = preg_replace('/[[:space:]]/', '',$this->fileName);
 		}
-		$this->fileName = $newFileName;
-		$this->fileName = preg_replace('/[[:space:]]/', '',$this->fileName);
 
 		// All the processing is complete - now we need to move the file(s) into the final location
 		@chmod($this->fileTemp, 0644);

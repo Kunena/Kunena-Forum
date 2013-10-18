@@ -900,7 +900,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseRead(KunenaUser $user) {
-		if ($this->hold || !$user->exists()) {
+		if ($this->hold && !$user->exists()) {
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 		// Check that user has the right to see the post (user can see his own unapproved posts)

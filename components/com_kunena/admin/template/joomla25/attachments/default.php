@@ -134,18 +134,17 @@ defined ( '_JEXEC' ) or die ();
 							$n = count($this->items);
 							if($this->pagination->total > 0) :
 							foreach($this->items as $id=>$attachment) {
-							$instance = KunenaForumMessageAttachmentHelper::get($attachment->id);
-							$message = $instance->getMessage();
+							$message = $attachment->getMessage();
 							$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
-							if ( $instance->isImage($attachment->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+							if ( $attachment->isImage($attachment->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
 							?>
 								<tr <?php echo 'class = "row' . $k . '"';?>>
 									<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
-									<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
+									<td><?php echo $attachment->getThumbnailLink() . '<br />' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->getFilename(), 10, 15) ?></td>
 									<td><?php echo $this->escape($attachment->filetype); ?></td>
 									<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
 									<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
-									<td><?php echo $this->escape($message->name); ?></td>
+									<td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
 									<td><?php echo $this->escape($message->subject); ?></td>
 									<td><?php echo intval($attachment->id); ?></td>
 								</tr>

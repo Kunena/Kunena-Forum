@@ -132,21 +132,20 @@ JHtml::_('dropdown.init');
 				<?php
 				$i = 0;
 				if($this->pagination->total > 0) :
-				foreach($this->items as $id=>$row) :
-				$instance = KunenaForumMessageAttachmentHelper::get($row->id);
-				$message = $instance->getMessage();
-				$path = JPATH_ROOT.'/'.$row->folder.'/'.$row->filename;
-				if ( $instance->isImage($row->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+				foreach($this->items as $id=>$attachment) :
+				$message = $attachment->getMessage();
+				$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
+				if ( $attachment->isImage($attachment->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
 				?>
 					<tr>
-						<td><?php echo JHtml::_('grid.id', $i, intval($row->id)) ?></td>
-						<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($row->filename, 10, 15) ?></td>
-						<td><?php echo $this->escape($row->filetype); ?></td>
-						<td><?php echo number_format ( intval ( $row->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_ATTACHMENTS_KILOBYTE'); ?></td>
+						<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
+						<td><?php echo $attachment->getThumbnailLink() . '<br />' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->getFilename(), 10, 15) ?></td>
+						<td><?php echo $this->escape($attachment->filetype); ?></td>
+						<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_ATTACHMENTS_KILOBYTE'); ?></td>
 						<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
-						<td><?php echo $this->escape($row->user_title); ?></td>
-						<td><?php echo $this->escape($row->post_title); ?></td>
-						<td><?php echo intval($row->id); ?></td>
+						<td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
+						<td><?php echo $this->escape($message->subject); ?></td>
+						<td><?php echo intval($attachment->id); ?></td>
 					</tr>
 				<?php
 				$i++;

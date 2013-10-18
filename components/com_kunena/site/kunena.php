@@ -76,7 +76,7 @@ $format = $input->getCmd('format', 'html');
 
 // Define HMVC controller and execute it.
 $controllerClass = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);
-$controllerDefault = 'ComponentKunenaControllerApplication'.ucfirst($task);
+$controllerDefault = 'KunenaControllerApplication'.ucfirst($task);
 /** @var KunenaControllerApplicationDisplay $controller */
 $controller = class_exists($controllerClass) ? new $controllerClass($input, $app) :
 	(class_exists($controllerDefault) ? new $controllerDefault($input, $app) : null);

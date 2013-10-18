@@ -22,6 +22,7 @@ KunenaRoute::initialize();
 abstract class KunenaRoute {
 	// List of views: array of default variable=>value pairs, which can be removed from URI
 	static $views = array (
+		'attachment'=>array('layout'=>'default', 'thumb'=>0, 'download'=>0),
 		'announcement'=>array('layout'=>'default'),
 		'category'=>array('layout'=>'default', 'catid'=>'0'),
 		'common'=>array('layout'=>'default'),
@@ -365,6 +366,7 @@ abstract class KunenaRoute {
 				if ($legacy_urls) KunenaRouteLegacy::convert($uri);
 				break;
 
+			case 'attachment':
 			case 'category':
 			case 'common':
 			case 'credits':

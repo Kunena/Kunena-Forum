@@ -157,6 +157,10 @@ class KunenaForumTopicFinder
 			else $list[] = (int) $category;
 		}
 		$list = implode(',', $list);
+
+		// Handle empty list as impossible filter value.
+		if (!$list) $list = -1;
+
 		$this->query->where("t.category_id IN ({$list})");
 
 		return $this;

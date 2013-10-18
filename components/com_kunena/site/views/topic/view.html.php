@@ -16,6 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaViewTopic extends KunenaView {
 	public $topicButtons = null;
 	public $messageButtons = null;
+	public $inline_attachments = array();
 
 	var $poll = null;
 	var $mmm = 0;

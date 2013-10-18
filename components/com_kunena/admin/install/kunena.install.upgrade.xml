@@ -404,9 +404,15 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `hold_time`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `time_hold` ( `time` , `hold` );</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `hold` ( `hold` );</query>
-        </version>
-        <version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
-			<query mode="silenterror">ALTER TABLE `j25_kunena_topics` ADD KEY `last_post_id` (`last_post_id`)</query>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD KEY `last_post_id` (`last_post_id`)</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `protected` TINYINT( 4 ) NOT NULL DEFAULT '0' AFTER `userid`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `filename_real` VARCHAR( 255 ) NOT NULL DEFAULT '';</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `caption` VARCHAR( 255 ) NOT NULL DEFAULT '';</query>
+			<query mode="silenterror">UPDATE `#__kunena_attachments` SET `filename_real`=`filename` WHERE `filename_real`='';</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD INDEX `filename_real` (`filename_real`);</query>
+
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		 </version>

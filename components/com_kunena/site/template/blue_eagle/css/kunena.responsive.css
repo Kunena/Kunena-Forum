@@ -26,13 +26,24 @@
 
 /* MOBILE */
 @media (max-width: 579px) {
-
-
+ 
   #Kunena table,
 	#Kunena tbody{
 		display: block ;
 		width: 100% !important;
 		padding: 0;
+	}	
+	
+	#Kunena table.kmsg tbody {
+		min-height:auto;
+	}
+	
+	#Kunena table.klist-actions {
+		width:99% !important;
+	}
+	
+	#Kunena td.kcontenttablespacer {
+		margin-bottom:-9px;
 	}
 	
 	#Kunena table kmsg,
@@ -84,7 +95,7 @@
     #Kunena .kprofilebox .kprofileboxcnt {
         position: relative;
         z-index: 10;
-        min-height: 60px;
+        min-height: 90px;
     }
 
     #Kunena .kprofilebox .kprofileboxcnt ul.kprofilebox-welcome li.kms {
@@ -96,7 +107,7 @@
 
     #Kunena .kprofilebox .kprofileboxcnt ul.kprofilebox-welcome input.kbutton {
         position: absolute;
-        top: 15px;
+        top: 65px;
         right: 20px ;
     }
 
@@ -235,8 +246,8 @@
     }
 
     #Kunena .kicon-button {
-        display: block;
-        width: 90%;
+        display: -ms-inline-flexbox;
+				display: inline-flexbox;
     }
 
 
@@ -320,13 +331,11 @@
     }
 
   #Kunena div.kmsgbody div.kmsgtext {
-  padding-right: 10px;
-	margin-bottom:40px !important;
+  padding-right: 25px;
+	margin-bottom: 40px !important;
   }
 	
-	#Kunena div.kmsgbody div.kmsgtext:not(:last-child) {
-	padding-bottom: 100px;	
-	}
+	
 	
 	/* HIDE STUFF PHONE */
 	#Kunena .hidden-phone {
@@ -335,7 +344,7 @@
 	
 	/* add actions buttons */
 	#Kunena div.kmessage-buttons-cover {
-	float:left;	
+	float:none;	
 	}
 	
 	#Kunena div.kmsgbody {
@@ -346,24 +355,27 @@
 	}
 
 	#Kunena .kblock .kmsgbody {
-	min-height: 140px ;
-	padding-bottom:50px;
+		min-height: 100px ;
 	}
 	
 	#Kunena .kmessage-buttons-cover {
-	margin-top:-150px;	
+		margin-right:20px;
+	}
+	
+	#Kunena td.kbuttonbar-left {
+		height:auto;
 	}
 	
 	#Kunena img.kavatar {
-	width:100%;
+		width:100%;
 	}
 	
 	#Kunena td.kcol-mid {
-	border:0px !important;
+		border:0px !important;
 	}
 	
 	#Kunena .ktopicattach {
-	padding-right:10px !important;
+		padding-right:10px !important;
 	}
 	
 	#Kunena .klist-pages-all, #Kunena .klist-times-all {
@@ -384,7 +396,7 @@
 	
 	#Kunena .klatest-post-info {
 		text-align:right;
-		padding-right:10px;
+		padding-right:30px;
 	}
 	
 	#Kunena td.ktopicmoderation {
@@ -403,4 +415,30 @@
 	#Kunena tr.krow2 td {
 		padding: 2px 8px;
 	}
+	
+	#Kunena .klist-actions-forum {
+		border:none;
+	}
+	
+	#Kunena div.kmsgsignature {
+		
+		white-space: normal;
+		padding-right:10px;
+	}
+	
+	#Kunena div.kmsgattach {
+		padding-right:10px;
+		margin-bottom:120px;
+	}
+	
+	#Kunena div.kpost-thankyou {
+		margin-bottom:5px;
+		margin-top:0px;
+	}
+	
+	#Kunena .krow2-stickymsg,
+	#Kunena .krow1-stickymsg {
+		padding-right:10px;
+	}
+	
 }

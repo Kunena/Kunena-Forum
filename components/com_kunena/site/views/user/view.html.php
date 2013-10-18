@@ -357,35 +357,19 @@ class KunenaViewUser extends KunenaView {
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.utilities.string');
 		$folders = JFolder::folders($path,'.',true, true);
-		foreach ($folders as $key => $folder) {
+		$galleries = array();
+		if ($this->getAvatarGallery($path)) {
+			$galleries[] = JHtml::_('select.option', 'default', JText::_('COM_KUNENA_DEFAULT_GALLERY'));
+		}
+		foreach ($folders as $folder) {
 			$folder = substr($folder, strlen($path)+1);
-			$folders[$key] = $folder;
+			if (!$this->getAvatarGallery($path.'/'.$folder)) continue;
+			$galleries[] = JHtml::_('select.option', $folder, JString::ucwords(str_replace('/', ' / ', $folder)));
 		}
 
 		$selected = JString::trim($this->gallery);
-		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\">\n";
-		$str .=  "<option value=\"default\"";
 
-		if ($selected == "") {
-			$str .=  " selected=\"selected\"";
-		}
-
-		$str .=  ">" . JText::_ ( 'COM_KUNENA_DEFAULT_GALLERY' ) . "</option>\n";
-
-		asort ( $folders );
-
-		foreach ( $folders as $val ) {
-			$str .=  '<option value="' . urlencode($val) . '"';
-
-			if ($selected == $val) {
-				$str .=  " selected=\"selected\"";
-			}
-
-			$str .=  ">{$this->escape(JString::ucwords(str_replace('/', ' / ', $val)))}</option>\n";
-		}
-
-		$str .=  "</select>\n";
-		return $str;
+		return $galleries ? JHtml::_('select.genericlist', $galleries, $this->escape($select_name), '', 'value', 'text', $selected, 'avatar_category_select') : null;
 	}
 
 	function displayEditUser() {

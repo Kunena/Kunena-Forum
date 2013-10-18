@@ -47,7 +47,7 @@ $i=0;
 		</td>
 	</tr>
 <?php endif; ?>
-<?php if ($this->config->allowavatargallery):?>
+<?php if ($this->config->allowavatargallery && $this->galleries):?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>

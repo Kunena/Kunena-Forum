@@ -286,6 +286,7 @@
 	<target name="copy" depends="minify">
 		<mkdir dir="${tmp_dir}/languages" />
 		<language tag="en-GB" include="true" />
+        <language tag="af-ZA" />
 		<language tag="ar-AA" />
 		<language tag="az-AZ" />
 		<language tag="bg-BG" />

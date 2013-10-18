@@ -1484,7 +1484,7 @@ PX		EM			PCT			PT
 	width: 97%;
 }
 #Kunena div.kmsgbody div.kmsgtext img {
-	max-width:100%;
+	max-width:100% !important;
 	max-height: 800px;
 }
 #Kunena div.kmsgbody div.kmsgtext ul > li {

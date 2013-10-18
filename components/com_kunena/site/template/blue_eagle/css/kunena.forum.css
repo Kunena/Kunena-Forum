@@ -3395,3 +3395,8 @@ max-height: 20px !important;
 #Kunena img {  
 max-width: none !important;  
 }
+
+#Kunena ul.kteam,
+#Kunena ul.kpost-profile {
+	list-style: none;
+}

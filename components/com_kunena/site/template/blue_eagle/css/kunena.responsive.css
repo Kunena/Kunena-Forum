@@ -80,7 +80,8 @@
 	
 
     /* Profile */
-    #Kunena .kprofilebox .kprofilebox-left {
+    #Kunena .kprofilebox .kprofilebox-left,
+    #Kunena .kprofilebox .kprofilebox-right {
         width: 50px !important;
         border: none;
         float: left;
@@ -88,7 +89,8 @@
         z-index: 50;
     }
 
-    #Kunena .kprofilebox .kprofilebox-left img {
+    #Kunena .kprofilebox .kprofilebox-left img,
+    #Kunena .kprofilebox .kprofilebox-right img {
         margin-top: 7px;
     }
 
@@ -201,6 +203,7 @@
 
     /* Topic */
     #Kunena .kmsgdate.kmsgdate-left,
+    #Kunena .kmsgdate.kmsgdate-right,
     #Kunena ul.kpost-profile .kpost-userrank,
     #Kunena ul.kpost-profile .kpost-usertyr,
     #Kunena ul.kpost-profile .kpost-karma,
@@ -362,7 +365,8 @@
 		margin-right:20px;
 	}
 	
-	#Kunena td.kbuttonbar-left {
+	#Kunena td.kbuttonbar-left,
+	#Kunena td.kbuttonbar-right {
 		height:auto;
 	}
 	

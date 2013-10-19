@@ -491,6 +491,30 @@ class KunenaViewTopic extends KunenaView {
 		else echo $this->loadTemplateFile("poll");
 	}
 
+	function getCodeTypes() {
+		if (!$this->config->highlightcode) return null;
+
+		$paths = array(
+			JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi',
+			JPATH_ROOT.'/plugins/content/geshi/geshi/geshi'
+		);
+		foreach ($paths as $path) {
+			if (!file_exists($path)) continue;
+
+			$files = JFolder::files($path, ".php");
+			$options = array();
+			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
+			foreach ($files as $file) {
+				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
+			}
+			$javascript = "document.id('helpbox').set('value', '".JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true)."')";
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" onmouseover="'.$javascript.'"' , 'value', 'text', '-1' );
+
+			return $list;
+		}
+		return null;
+	}
+
 	function displayMessageProfile() {
 		echo $this->getMessageProfileBox();
 	}

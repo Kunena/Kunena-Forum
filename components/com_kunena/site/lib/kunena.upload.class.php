@@ -35,6 +35,8 @@ class CKunenaUpload {
 	protected $fileSize = false;
 	protected $fileHash = false;
 	protected $imageInfo = false;
+	protected $name = false;
+	protected $extension = false;
 
 	protected $ready = false;
 	protected $status = true;
@@ -140,28 +142,22 @@ class CKunenaUpload {
 	}
 
 	function getValidExtension($validExts) {
-		$ret = null;
-		// Go through every allowed extension, if the extension matches the file extension (case insensitive)
-		//then the file extension is ok
-		foreach ( $validExts as $ext ) {
-			$ext = trim ( $ext );
-			if (!$ext) {
-				// Do not allow empty extensions
-				continue;
-			}
-			if ($ext[0] != '.') {
-				// Add first dot if it is missing in extension list
-				$ext = '.'.$ext;
-			}
-			$extension = substr($this->fileName, -strlen($ext));
-			if (strtolower($extension) == strtolower($ext)) {
-				// File must contain one letter before extension
-				$ret[] = substr($this->fileName, 0, -strlen($ext));
-				$ret[] = substr($extension, 1);
-				break;
-			}
+		foreach ( $validExts as $index => &$ext ) {
+			// make the search case insensitive
+			$ext = strtolower($ext);
+			// removes spaces, tab, and dot; at the beginning and at the end, if any
+			$ext = trim($ext, " \t.");
+			// finally removes empty items
+			if (empty($ext)) unset($validExts[$index]);
 		}
-		return $ret;
+
+		// search for the extension in the valid extensions list
+		if (in_array(strtolower($this->extension), $validExts)) {
+			// found
+			return array($this->name, $this->extension);
+		}
+		// not found
+		return null;
 	}
 
 	function uploadFile($uploadPath, $input='kattachment', $filename='', $ajax=true) {
@@ -196,7 +192,10 @@ class CKunenaUpload {
 			$this->fileSize = $file ['size'];
 			if (! $this->fileName) {
 				// Need to add additonal path type check as array getVar does not
-				$this->fileName = JFile::makeSafe($file ['name']);
+				$elements = pathinfo($file['name']);
+				$this->fileName = JFile::makeSafe($elements['basename']);
+				$this->name = JFile::makeSafe($elements['filename']);
+				$this->extension = JFile::makeSafe($elements['extension']);
 			}
 			//any errors the server registered on uploading
 			switch ($file ['error']) {

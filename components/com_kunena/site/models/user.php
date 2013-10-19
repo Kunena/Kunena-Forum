@@ -105,7 +105,7 @@ class KunenaModelUser extends KunenaModel {
 			$search = $this->getQuerySearch();
 			$query = "SELECT COUNT(*)
 				FROM #__users AS u
-				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
+				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
 			$db->setQuery ( $query );
 			$total = $db->loadResult ();
@@ -130,19 +130,18 @@ class KunenaModelUser extends KunenaModel {
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
-			$moderator = intval($this->me->isModerator());
-			$query = "SELECT *, IF(ku.hideEmail=0 OR {$moderator},u.email,'') AS email
+			$query = "SELECT u.id
 				FROM #__users AS u
-				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
+				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
 			$query .= " ORDER BY {$db->quoteName($this->getState ( 'list.ordering'))} {$this->getState ( 'list.direction')}";
 
 			$db->setQuery ( $query, $limitstart, $limit );
-			$items = $db->loadObjectList ('id');
+			$items = $db->loadColumn();
 			KunenaError::checkDatabaseError();
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			KunenaUserHelper::loadUsers(array_keys($items));
+			$items = KunenaUserHelper::loadUsers($items);
 		}
 		return $items;
 	}

@@ -123,7 +123,6 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<?php endif;
 
-			;
 			if (($codeTypes = $this->getCodeTypes())) :
 			?>
 			<div id="kbbcode-code-options" style="display: none;">

@@ -278,15 +278,8 @@ class KunenaModelTopics extends KunenaModel {
 
 		$start = $this->getState ( 'list.start' );
 		$limit = $this->getState ( 'list.limit' );
+		// Time will be calculated inside KunenaForumMessageHelper::getLatestMessages()
 		$time = $this->getState ( 'list.time' );
-		if ($time < 0) {
-			$time = 0;
-		} elseif ($time == 0) {
-			$time = KunenaFactory::getSession ()->lasttime;
-		} else {
-			$time = JFactory::getDate ()->toUnix () - ($time * 3600);
-		}
-
 
 		$params = array();
 		$params['mode'] = $this->getState ( 'list.mode' );

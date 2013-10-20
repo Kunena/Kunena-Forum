@@ -533,7 +533,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		// Update rest of the information
 		$category = $this->getCategory();
-		$this->hold = $category->review ? (int)!$category->authorise ('moderate', $user, true) : 0;
+		$this->hold = $category->review && !$category->authorise('moderate', $user, true) ? 1 : $this->hold;
 		$this->modified_by = $user->userid;
 		$this->modified_time = JFactory::getDate()->toUnix();
 	}
@@ -900,7 +900,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseRead(KunenaUser $user) {
-		if ($this->hold || !$user->exists()) {
+		if ($this->hold && !$user->exists()) {
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
 		// Check that user has the right to see the post (user can see his own unapproved posts)

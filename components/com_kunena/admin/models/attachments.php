@@ -94,6 +94,23 @@ class KunenaAdminModelAttachments extends JModelList {
 		return parent::getStoreId($id);
 	}
 
+	protected function _getList($query, $limitstart = 0, $limit = 0)
+	{
+		$this->_db->setQuery($query, $limitstart, $limit);
+		$ids = $this->_db->loadColumn();
+		$results = KunenaForumMessageAttachmentHelper::getById($ids);
+		$userids = array();
+		$mesids = array();
+		foreach ($results as $result) {
+			$userids[$result->userid] = $result->userid;
+			$mesids[$result->mesid] = $result->mesid;
+		}
+		KunenaUserHelper::loadUsers($userids);
+		KunenaForumMessageHelper::getMessages($mesids);
+
+		return $results;
+	}
+
 	protected function getListQuery() {
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
@@ -101,7 +118,7 @@ class KunenaAdminModelAttachments extends JModelList {
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.id, a.mesid, a.userid, a.size, a.folder, a.filetype, a.filename'
+				'a.id'
 			)
 		);
 
@@ -117,7 +134,7 @@ class KunenaAdminModelAttachments extends JModelList {
 		$filter = $this->getState('filter.title');
 		if (!empty($filter)) {
 			$title = $db->Quote('%'.$db->escape($filter, true).'%');
-			$query->where('(a.filename LIKE '.$title.')');
+			$query->where('(a.filename LIKE '.$title.' OR a.filename_real LIKE '.$title.')');
 		}
 
 		$filter = $this->getState('filter.type');

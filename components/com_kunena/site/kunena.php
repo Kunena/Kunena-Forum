@@ -74,20 +74,17 @@ $subview = $input->getWord('layout', 'default');
 $task = $input->getCmd('task', 'display');
 $format = $input->getCmd('format', 'html');
 
+// Define HMVC controller and execute it.
+$controllerClass = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);
+$controllerDefault = 'KunenaControllerApplication'.ucfirst($task);
+/** @var KunenaControllerApplicationDisplay $controller */
+$controller = class_exists($controllerClass) ? new $controllerClass($input, $app) :
+	(class_exists($controllerDefault) ? new $controllerDefault($input, $app) : null);
 
-
-if ($task == 'display' && $format == 'html') {
-	// Define HMVC controller and execute it.
-
-	/** @var KunenaControllerApplicationDisplay $controller */
-	$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);
-	$controller = class_exists($class) ? new $class($input, $app) : new KunenaControllerApplicationDisplay($input, $app);
-
-	// Execute HMVC layout.
-	if ($controller->exists()) {
-		echo $controller->execute();
-		$hmvc = true;
-	}
+// Execute HMVC if the controller is present.
+if ($controller && $controller->exists()) {
+	echo $controller->execute();
+	$hmvc = true;
 }
 
 if (!isset($hmvc)) {

@@ -380,10 +380,23 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['iptracking'] = JHtml::_('select.genericlist', $yesno, 'cfg_iptracking', 'class="inputbox" size="1"', 'value', 'text', $this->config->iptracking);
 
 		// Added new options into Kunena 3.0.0
-		$config = JFactory::getConfig();
 		$lists ['autolink'] = JHtml::_('select.genericlist', $yesno, 'cfg_autolink', 'class="inputbox" size="1"', 'value', 'text', $this->config->autolink);
 		$lists ['access_component'] = JHtml::_('select.genericlist', $yesno, 'cfg_access_component', 'class="inputbox" size="1"', 'value', 'text', $this->config->access_component);
-		$lists ['componentUrl'] = preg_replace('|/+|', '/', JUri::root() . ($config->get('sef_rewrite') ? '' : 'index.php'). ($config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
+		$lists ['componentUrl'] = preg_replace('|/+|', '/', JUri::root() . ($this->config->get('sef_rewrite') ? '' : 'index.php'). ($this->config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
+
+		// Added new options into Kunena 3.1.0
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('version')->from('#__kunena_version')->order('id');
+		$db->setQuery($query, 0, 1);
+		$lists['legacy_urls_version'] = $db->loadResult();
+
+		$options = array();
+		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+		$options[] = JHtml::_('select.option', '1', 'Kunena 1.x');
+		$lists['legacy_urls_desc'] = version_compare($lists['legacy_urls_version'], '2.0', '<') ? JText::_('COM_KUNENA_CFG_LEGACY_URLS_DESC_YES') : JText::_('COM_KUNENA_CFG_LEGACY_URLS_DESC_NO');
+		$lists['legacy_urls'] = JHtml::_('select.genericlist', $options, 'cfg_legacy_urls', 'class="inputbox" size="1"', 'value', 'text', $this->config->legacy_urls);
+		$lists['attachment_protection'] = JHtml::_('select.genericlist', $yesno, 'cfg_attachment_protection', 'class="inputbox" size="1"', 'value', 'text', $this->config->attachment_protection);
 
 		return $lists;
 	}

@@ -217,39 +217,39 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
+		$users = KunenaUserHelper::loadUsers($cids);
+
 		$my = JFactory::getUser();
 		$usernames = array();
-		foreach ( $cids as $userid ) {
-			$user = JFactory::getUser($userid);
-			$username = $user->username;
-			$groups = JUserHelper::getUserGroups($userid);
+		foreach ( $users as $user ) {
+			$groups = JUserHelper::getUserGroups($user->userid);
 
-			if ( $my->id == $userid ) {
+			if ( $my->id == $user->userid ) {
 				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_YOURSELF'), 'notice');
 				continue;
 			}
 
-			if ( $user->authorise('core.admin') )  {
+			$instance = JUser::getInstance($user->userid);
+
+			if ( $instance->authorise('core.admin') )  {
 				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'), 'notice');
 				continue;
 			}
 
-			$user = KunenaUserHelper::get($userid);
 			$result = $user->delete();
 			if ( !$result ) {
-				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $userid), 'notice' );
+				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $user->userid), 'notice' );
 				continue;
 			}
 
 			// Delete the user too from Joomla!
-			$instance = JUser::getInstance($userid);
 			$jresult = $instance->delete();
 			if ( !$jresult ) {
-				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $userid), 'notice' );
+				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $user->userid), 'notice' );
 				continue;
 			}
 
-			$usernames[] = $username;
+			$usernames[] = $user->username;
 		}
 
 		if ( !empty($usernames) )  $this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE_SUCCESSFULLY', implode(', ',$usernames)) );

@@ -127,7 +127,7 @@ abstract class KunenaUserHelper {
 			$userlist = implode ( ',', $e_userids );
 
 			$db = JFactory::getDBO ();
-			$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*
+			$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid
 				FROM #__users AS u
 				LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
 				WHERE u.id IN ({$userlist})";
@@ -135,11 +135,11 @@ abstract class KunenaUserHelper {
 			$results = $db->loadAssocList ();
 			KunenaError::checkDatabaseError ();
 
-			foreach ( $results as $user ) {
-				$instance = new KunenaUser (false);
-				$instance->setProperties ( $user );
-				$instance->exists(true);
-				self::$_instances [$instance->userid] = $instance;
+			foreach ($results as $user) {
+				$instance = new KunenaUser(false);
+				$instance->setProperties($user);
+				$instance->exists(isset($user['posts']));
+				self::$_instances[$instance->userid] = $instance;
 			}
 
 			// Preload avatars if configured

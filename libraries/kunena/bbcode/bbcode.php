@@ -1259,8 +1259,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @return bool|string
 	 */
 	function DoCode($bbcode, $action, $name, $default, $params, $content) {
-		static $enabled = false;
-
 		if ($action == BBCODE_CHECK) {
 			return true;
 		}
@@ -1271,16 +1269,20 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		} elseif ($type == 'html') {
 			$type = 'html4strict';
 		}
-		if (empty($bbcode->parent->forceMinimal) && $enabled === false && KunenaFactory::getConfig ()->highlightcode) {
-			$enabled = true;
-
-			$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
-			if (file_exists($path)) {
-				require_once $path;
+		$highlight = KunenaFactory::getConfig()->highlightcode && empty($bbcode->parent->forceMinimal);
+		if ($highlight && !class_exists('GeSHi')) {
+			$paths = array(
+				JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi.php',
+				JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php'
+			);
+			foreach ($paths as $path) {
+				if (!class_exists('GeSHi') && file_exists($path)) {
+					require_once $path;
+				}
 			}
 
 		}
-		if ($enabled && class_exists('GeSHi')) {
+		if ($highlight && class_exists('GeSHi')) {
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();
@@ -1544,7 +1546,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$attachment = array_shift ( $attachments );
 		} elseif (!empty ( $attachments )) {
 			foreach ( $attachments as $att ) {
-				if ($att->filename == $content) {
+				if ($att->getFilename() == $content) {
 					$attachment = $att;
 					unset ( $attachments [$att->id] );
 					break;
@@ -1553,7 +1555,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments )) {
 			foreach ( $bbcode->parent->inline_attachments as $att ) {
-				if ($att->filename == trim(strip_tags($content))) {
+				if ($att->getFilename() == trim(strip_tags($content))) {
 					$attachment = $att;
 					break;
 				}
@@ -1571,10 +1573,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		} elseif ($attachment->exists() && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
 			$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
 			// TODO: use absolute / relative url depending on where BBCode is shown
-			$link = JUri::root() . "{$attachment->folder}/{$attachment->filename}";
+			$link = $attachment->getUrl();
 			$image = $attachment->getImageLink();
 			if (empty ( $image )) {
-				return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
+				return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->getFilename() . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
 			} else {
 				return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
 			}

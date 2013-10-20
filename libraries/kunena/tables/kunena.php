@@ -126,83 +126,138 @@ abstract class KunenaTable extends JTable {
 		return true;
 	}
 
+	/**
+	 * Inserts a row into a table based on an object's properties.
+	 *
+	 * @return  boolean    True on success.
+	 *
+	 * @throws  RuntimeException
+	 */
 	protected function insertObject()
 	{
-		$fmtsql = 'INSERT INTO '.$this->_db->quoteName($this->_tbl).' (%s) VALUES (%s) ';
 		$fields = array();
 		$values = array();
 
-		foreach (get_object_vars($this) as $k => $v) {
-			if (is_array($v) or is_object($v) or $v === NULL) {
+		// Workaround Joomla 3.2 change.
+		// TODO: remove check when we're only supporting J!3.5+.
+		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+
+		// Iterate over the object variables to build the query fields and values.
+		foreach (get_object_vars($this) as $k => $v)
+		{
+			// Only process non-null scalars.
+			if (is_array($v) or is_object($v) or $v === null)
+			{
 				continue;
 			}
-			if ($k[0] == '_') { // internal field
+
+			// Ignore any internal fields.
+			if ($k[0] == '_')
+			{
 				continue;
 			}
+
+			// Prepare and sanitize the fields and values for the database query.
 			$fields[] = $this->_db->quoteName($k);
-			$values[] = $this->_db->Quote($v);
+			$values[] = $this->_db->quote($v);
 		}
-		$this->_db->setQuery(sprintf($fmtsql, implode(",", $fields) ,  implode(",", $values)));
-		if (!$this->_db->execute()) {
+
+		// Create the base insert statement.
+		$query = $this->_db->getQuery(true)
+			->insert($this->_db->quoteName($this->_tbl))
+			->columns($fields)
+			->values(implode(',', $values));
+
+		// Set the query and execute the insert.
+		$this->_db->setQuery($query);
+
+		if (!$this->_db->execute())
+		{
 			return false;
 		}
+
+		// Update the primary key if it exists.
 		$id = $this->_db->insertid();
-		if ($this->_tbl_key && !is_array($this->_tbl_key) && $id) {
-			$k = $this->_tbl_key;
-			$this->$k = $id;
+
+		if (count($tbl_keys) == 1 && $id)
+		{
+			$key = reset($tbl_keys);
+			$this->$key = $id;
 		}
+
 		return true;
 	}
 
 	/**
-	 * Description
+	 * Updates a row in a table based on an object's properties.
 	 *
-	 * @param bool $updateNulls
-	 * @return bool
+	 * @param   boolean  $nulls    True to update null fields or false to ignore them.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @throws  RuntimeException
 	 */
-	protected function updateObject($updateNulls=false)
+	public function updateObject($nulls = false)
 	{
-		$fmtsql = 'UPDATE '.$this->_db->quoteName($this->_tbl).' SET %s WHERE %s';
-		$tmp = array();
-		$where = '';
-		// TODO: what if where is empty?
+		$fields = array();
+		$where = array();
 
-		foreach (get_object_vars($this) as $k => $v) {
-			if (is_array($v) or is_object($v) or $k[0] == '_') { // internal or NA field
+		// Workaround Joomla 3.2 change.
+		// TODO: remove check when we're only supporting J!3.5+.
+		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
+
+		// Create the base update statement.
+		$statement = 'UPDATE ' . $this->_db->quoteName($this->_tbl) . ' SET %s WHERE %s';
+
+		// Iterate over the object variables to build the query fields/value pairs.
+		foreach (get_object_vars($this) as $k => $v)
+		{
+			// Only process scalars that are not internal fields.
+			if (is_array($v) or is_object($v) or $k[0] == '_')
+			{
 				continue;
 			}
 
-			if (is_array($this->_tbl_key) && in_array($k, $this->_tbl_key)) {
-				// PK not to be updated
-				$where[] = $k . '=' . $this->_db->Quote($v);
-				continue;
-			} elseif ($k == $this->_tbl_key) {
-				// PK not to be updated
-				$where = $k . '=' . $this->_db->Quote($v);
+			// Set the primary key to the WHERE clause instead of a field to update.
+			if (in_array($k, $tbl_keys))
+			{
+				$where[] = $this->_db->quoteName($k) . '=' . $this->_db->quote($v);
 				continue;
 			}
 
-			if ($v === null) {
-				if ($updateNulls) {
+			// Prepare and sanitize the fields and values for the database query.
+			if ($v === null)
+			{
+				// If the value is null and we want to update nulls then set it.
+				if ($nulls)
+				{
 					$val = 'NULL';
-				} else {
+				}
+				// If the value is null and we do not want to update nulls then ignore this field.
+				else
+				{
 					continue;
 				}
-			} else {
-				$val = $this->_db->Quote($v);
 			}
-			$tmp[] = $this->_db->quoteName($k) . '=' . $val;
+			// The field is not null so we prep it for update.
+			else
+			{
+				$val = $this->_db->quote($v);
+			}
+
+			// Add the field to be updated.
+			$fields[] = $this->_db->quoteName($k) . '=' . $val;
 		}
 
-		// Nothing to update.
-		if (empty($tmp)) {
+		// We don't have any fields to update.
+		if (empty($fields))
+		{
 			return true;
 		}
 
-		if (is_array($where)) {
-			$where = implode(' AND ', $where);
-		}
-		$this->_db->setQuery(sprintf($fmtsql, implode(",", $tmp) , $where));
+		// Set the query and execute the update.
+		$this->_db->setQuery(sprintf($statement, implode(",", $fields), implode(' AND ', $where)));
+
 		return $this->_db->execute();
 	}
 
@@ -249,7 +304,7 @@ abstract class KunenaTable extends JTable {
 		$this->_db->execute();
 
 		// Check for a database error.
-		if (!$this->_db->getErrorNum()) {
+		if ($this->_db->getErrorNum()) {
 			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 		}
 

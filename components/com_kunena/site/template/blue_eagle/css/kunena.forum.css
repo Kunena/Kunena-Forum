@@ -1484,7 +1484,7 @@ PX		EM			PCT			PT
 	width: 97%;
 }
 #Kunena div.kmsgbody div.kmsgtext img {
-	max-width:100%;
+	max-width:100% !important;
 	max-height: 800px;
 }
 #Kunena div.kmsgbody div.kmsgtext ul > li {
@@ -3394,4 +3394,9 @@ max-height: 20px !important;
 /* Fix bad bug (chrome)  */  
 #Kunena img {  
 max-width: none !important;  
+}
+
+#Kunena ul.kteam,
+#Kunena ul.kpost-profile {
+	list-style: none;
 }

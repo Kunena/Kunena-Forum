@@ -80,13 +80,17 @@ class KunenaTemplate extends JObject
 		// TODO: move configuration out of filesystem (keep on legacy).
 		$ini = KPATH_SITE . "/template/{$name}/params.ini";
 		$content = '';
+		$format = 'INI';
 		if (is_readable( $ini ) ) {
 			$this->paramstime = filemtime($ini);
 			$content = file_get_contents($ini);
+			// Workaround a bug in previous versions (file may contain JSON).
+			if ($content && $content[0] == '{') $format = 'JSON';
 		}
 		$this->name = $name;
 
-		$this->params = new JRegistry($content);
+		$this->params = new JRegistry();
+		$this->params->loadString($content, $format);
 
 		// Load default values from configuration definition file.
 		$this->xml = simplexml_load_file($this->xml_path);
@@ -115,8 +119,8 @@ class KunenaTemplate extends JObject
 		if (!strstr($xml, '<config>')) {
 			// Update old template files to new format.
 			$xml = preg_replace(
-					array('|<params>|', '|</params>|', '|<param\s+|', '|</param>|'),
-					array('<config>', '</config>','<field ', '</field>'),
+					array('|<params|', '|</params>|', '|<param\s+|', '|</param>|'),
+					array('<config', '</config>','<field ', '</field>'),
 					$xml);
 		}
 		return $xml;

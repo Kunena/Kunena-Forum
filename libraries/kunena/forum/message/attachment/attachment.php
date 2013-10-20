@@ -16,11 +16,14 @@ defined ( '_JEXEC' ) or die ();
  * @property int $id
  * @property int $userid
  * @property int $mesid
+ * @property int $protected
  * @property string $hash
  * @property int $size
  * @property string $folder
  * @property string $filetype
  * @property string $filename
+ * @property string $filename_real
+ * @property string $caption
  */
 class KunenaForumMessageAttachment extends JObject {
 	protected $_exists = false;
@@ -36,6 +39,11 @@ class KunenaForumMessageAttachment extends JObject {
 	public $disabled = false;
 
 	protected static $_directory = 'media/kunena/attachments';
+	protected static $actions  = array(
+		'read'=>array('Read'),
+		'create'=>array(),
+		'delete'=>array('Exists', 'Own'),
+	);
 
 	/**
 	 * @param int $identifier
@@ -108,43 +116,68 @@ class KunenaForumMessageAttachment extends JObject {
 		return $this->_thumblink;
 	}
 
+	public function getFilename($escape = true) {
+		$filename = $this->protected ? $this->filename_real : $this->filename;
+		return $escape ? $this->escape($filename) : $filename;
+	}
+
+	public function getUrl($thumb = false, $inline = true) {
+		$protect = (bool) KunenaConfig::getInstance()->attachment_protection;
+		// Use direct URLs to the attachments if protection is turned off and file wasn't protected.
+		if (!$protect && !$this->protected) {
+			$file = $this->folder . '/' . $this->filename;
+			$thumbfile = $this->folder . '/thumb/' . $this->filename;
+			if (!file_exists(JPATH_ROOT . '/' . $thumbfile)) {
+				$thumbfile = $file;
+			}
+			return JUri::root(true) .'/'. $this->escape($thumb ? $thumbfile : $file);
+		}
+
+		// Route attachment through Kunena.
+		$thumb = $thumb ? '&thumb=1' : '';
+		$download = $inline ? '' : '&download=1';
+		return KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw");
+	}
+
 	protected function generate() {
-		if (!isset($this->_shorttype)) {
-			$this->_shorttype = $this->isImage($this->filetype) ? 'image' : $this->filetype;
-			$this->_shortname = KunenaForumMessageAttachmentHelper::shortenFileName($this->filename);
+		if (!isset($this->_shortname)) {
+			$this->_shortname = KunenaForumMessageAttachmentHelper::shortenFileName($this->getFilename(false));
 
 			$config = KunenaFactory::getConfig();
-			$this->_imagelink = null;
-			switch (strtolower ( $this->_shorttype )) {
-				case 'image' :
-					// Check for thumbnail and if available, use for display
-					if (file_exists ( JPATH_ROOT . '/' . $this->folder . '/thumb/' . $this->filename )) {
-						$thumb = $this->folder . '/thumb/' . $this->filename;
-						$imgsize = '';
-					} else {
-						$thumb = $this->folder . '/' . $this->filename;
-						$imgsize = 'width="' . $config->thumbwidth . 'px" height="' . $config->thumbheight . 'px"';
-					}
+			$this->_isImage = (stripos($this->filetype, 'image/') !== false);
+			if ($this->_isImage) {
+				// Check for thumbnail and if available, use for display
+				$thumbUrl = $this->getUrl(true);
+				$imageUrl = $this->getUrl();
+				if (file_exists(JPATH_ROOT . '/' . $this->folder . '/thumb/' . $this->filename)) {
+					$imgsize = '';
+				} else {
+					$imgsize = 'width="' . $config->thumbwidth . 'px" height="' . $config->thumbheight . 'px"';
+				}
 
-					$img = '<img title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JUri::root() . $thumb . '" alt="' . $this->escape ( $this->filename ) . '" />';
-					$this->_thumblink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)? 'lightbox[thumb' . intval ( $this->mesid ). ']':'' );
-					$img = '<img title="' . $this->escape ( $this->filename ) . '" src="' . JUri::root() . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
-					$this->_imagelink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[imagelink' . intval ( $this->mesid ) .']':'' );
-					$this->_textLink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[simple' . $this->mesid . ']' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
-					break;
-				default :
-					// Filetype without thumbnail or icon support - use default file icon
-					$img = '<img src="' . JUri::root(). 'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
-					$this->_thumblink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), 'nofollow' );
-					$this->_textLink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
+				$img = '<img title="' . $this->getFilename() . '" ' . $imgsize . ' src="' . $thumbUrl . '" alt="' . $this->getFilename() . '" />';
+				$this->_thumblink = $this->_getAttachementLink($imageUrl, $img, $this->getFilename(), ($config->lightbox)? 'lightbox[thumb' . intval($this->mesid) . ']' : '');
+
+				$img = '<img title="' . $this->getFilename() . '" src="' . $imageUrl . '" alt="' . $this->getFilename() . '" />';
+				$this->_imagelink = $this->_getAttachementLink($imageUrl, $img, $this->getFilename(), ($config->lightbox)?'lightbox[imagelink' . intval($this->mesid) .']' : '');
+
+				$this->_textLink = $this->_getAttachementLink($imageUrl, $this->escape($this->_shortname), $this->getFilename(), ($config->lightbox)?'lightbox[simple' . intval($this->mesid) . ']' . ' nofollow':' nofollow' ) . ' (' . number_format(intval($this->size) / 1024, 0, '', ',') . 'KB)';
+
+			} else {
+				$fileUrl = $this->getUrl();
+				// Filetype without thumbnail or icon support - use default file icon
+				$img = '<img src="' . JUri::root(true). '/media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+				$this->_thumblink = $this->_getAttachementLink($fileUrl, $img, $this->getFilename(), 'nofollow');
+				$this->_textLink = $this->_getAttachementLink ($fileUrl, $this->escape($this->_shortname), $this->getFilename(), 'nofollow') . ' (' . number_format(intval($this->size) / 1024, 0, '', ',') . 'KB)';
 			}
+
 			$this->disabled = false;
 			if (! KunenaUserHelper::getMyself()->exists()) {
-				if ($this->_shorttype == 'image' && ! $config->showimgforguest) {
+				if ($this->_isImage && !$config->showimgforguest) {
 					$this->disabled = true;
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' );
 				}
-				if ($this->_shorttype != 'image' && ! $config->showfileforguest) {
+				if (!$this->_isImage && !$config->showfileforguest) {
 					$this->disabled = true;
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' );
 				}
@@ -165,37 +198,91 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	/**
+	 * @return KunenaUser
+	 */
+	public function getAuthor() {
+		return KunenauserHelper::get($this->userid);
+	}
+
+	/**
+	 * Returns true if user is authorised to do the action.
+	 *
+	 * @param string     $action
+	 * @param KunenaUser $user
+	 *
+	 * @return bool
+	 */
+	public function isAuthorised($action='read', KunenaUser $user = null) {
+		return !$this->tryAuthorise($action, $user, false);
+	}
+
+	/**
+	 * Throws an exception if user isn't authorised to do the action.
+	 *
+	 * @param string      $action
+	 * @param KunenaUser  $user
+	 * @param bool        $throw
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws KunenaExceptionAuthorise
+	 * @throws InvalidArgumentException
+	 */
+	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true) {
+		// Special case to ignore authorisation.
+		if ($action == 'none') {
+			return null;
+		}
+
+		// Load user if not given.
+		if ($user === null) {
+			$user = KunenaUserHelper::getMyself();
+		}
+
+		// Unknown action - throw invalid argument exception.
+		if (!isset(self::$actions[$action])) {
+			throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
+		}
+
+		// Load message authorisation.
+		$exception = $this->getMessage()->tryAuthorise('attachment.'.$action, $user, false);
+
+		// Check authorisation.
+		if (!$exception) {
+			foreach (self::$actions[$action] as $function) {
+				$authFunction = 'authorise'.$function;
+				$exception = $this->$authFunction($user);
+				if ($exception) break;
+			}
+		}
+
+		// Throw or return the exception.
+		if ($throw && $exception) throw $exception;
+		return $exception;
+	}
+
+	/**
 	 * @param string $action
 	 * @param mixed  $user
 	 * @param bool   $silent
 	 *
 	 * @return bool
+	 * @deprecated 3.1
 	 */
 	public function authorise($action='read', $user=null, $silent=false) {
-		static $actions  = array(
-			'read'=>array('Read'),
-			'create'=>array(),
-			'delete'=>array('Exists', 'Own'),
-		);
-		$user = KunenaUserHelper::get($user);
-		if (!isset($actions[$action])) {
-			if (!$silent) $this->setError ( __CLASS__.'::'.__FUNCTION__.'(): '.JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
-			return false;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		if ($user === null) {
+			$user = KunenaUserHelper::getMyself();
+		} elseif (!($user instanceof KunenaUser)) {
+			$user = KunenaUserHelper::get($user);
 		}
-		$message = $this->getMessage();
-		$auth = $message->authorise('attachment.'.$action, $user, $silent);
-		if (!$auth) {
-			if (!$silent) $this->setError ( $message->getError() );
-			return false;
-		}
-		foreach ($actions[$action] as $function) {
-			$authFunction = 'authorise'.$function;
-			if (! method_exists($this, $authFunction) || ! $this->$authFunction($user)) {
-				if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-				return false;
-			}
-		}
-		return true;
+
+		$exception = $this->tryAuthorise($action, $user, false);
+		if ($silent === false && $exception) $this->setError($exception->getMessage());
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		if ($silent !== null) return !$exception;
+		return $exception ? $exception->getMessage() : null;
 	}
 
 	/**
@@ -208,15 +295,20 @@ class KunenaForumMessageAttachment extends JObject {
 		require_once (KPATH_SITE . '/lib/kunena.upload.class.php');
 		$path = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid;
 		$upload = new CKunenaUpload($catid);
-		$upload->uploadFile($path, $key, '', false);
+		$protection = (bool) KunenaConfig::getInstance()->attachment_protection;
+		$filename = $protection ? null : '';
+		$upload->uploadFile($path, $key, $filename, false);
 		$fileinfo = $upload->getFileInfo();
 
 		if ($fileinfo ['status'] && $fileinfo['ready'] === true) {
+			$this->protected = (int) $protection;
 			$this->hash =$fileinfo ['hash'];
 			$this->size = $fileinfo ['size'];
 			$this->folder = '/media/kunena/attachments/' . $this->userid;
 			$this->filetype = $fileinfo ['mime'];
 			$this->filename = $fileinfo ['name'];
+			$this->filename_real = $fileinfo ['real'];
+			$this->caption = '';
 			return true;
 		}
 		$this->setError( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo ['name'] ) . ': ' . $fileinfo ['error'] );
@@ -379,15 +471,14 @@ class KunenaForumMessageAttachment extends JObject {
 	/**
 	 * @param KunenaUser $user
 	 *
-	 * @return bool
+	 * @return KunenaExceptionAuthorise|null
 	 */
 	protected function authoriseExists(KunenaUser $user) {
 		// Checks if attachment exists
 		if (!$this->exists()) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			return false;
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
-		return true;
+		return null;
 	}
 
 	/**
@@ -398,18 +489,22 @@ class KunenaForumMessageAttachment extends JObject {
 	protected function authoriseRead(KunenaUser $user) {
 		// Checks if attachment exists
 		if (!$this->exists()) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			return false;
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
-		$this->generate();
-		// TODO: In the future we might want to separate read and peak
-/*
-		if ($this->disabled) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			return false;
+		// FIXME: authorisation for guests is missing, but needs a few changes in the code in order to work.
+		/*
+		if (!$user->exists()) {
+			$config = KunenaConfig::getInstance();
+			$this->generate();
+			if ($this->_isImage && !$config->showimgforguest) {
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'), 401);
+			}
+			if (!$this->_isImage && !$config->showfileforguest) {
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'), 401);
+			}
 		}
-*/
-		return true;
+		*/
+		return null;
 	}
 
 	/**
@@ -420,23 +515,20 @@ class KunenaForumMessageAttachment extends JObject {
 	protected function authoriseOwn(KunenaUser $user) {
 		// Checks if attachment is users own or user is moderator in the category (or global)
 		if (($user->userid && $this->userid != $user->userid) && !$user->isModerator($this->getMessage()->getCategory())) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			return false;
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
-		return true;
+		return null;
 	}
 
 	/**
-	 * @param string $folder
-	 * @param string $filename
+	 * @param string $path
 	 * @param string $name
 	 * @param string $title
 	 * @param string $rel
 	 *
 	 * @return string
 	 */
-	protected function _getAttachementLink($folder, $filename, $name, $title = '', $rel = 'nofollow') {
-		$link = JURI::ROOT()."{$folder}/{$filename}";
-		return '<a href="'.$link.'" title="'.$title.'" rel="'.$rel.'">'.$name.'</a>';
+	protected function _getAttachementLink($path, $name, $title = '', $rel = 'nofollow') {
+		return '<a href="'.$path.'" title="'.$title.'" rel="'.$rel.'">'.$name.'</a>';
 	}
 }

@@ -20,11 +20,14 @@ class TableKunenaAttachments extends KunenaTable {
 	public $id = null;
 	public $userid = null;
 	public $mesid = null;
+	public $protected = null;
 	public $hash = null;
 	public $size = null;
 	public $folder = null;
 	public $filetype = null;
 	public $filename = null;
+	public $filename_real = null;
+	public $comment = null;
 
 	public function __construct($db) {
 		parent::__construct ( '#__kunena_attachments', 'id', $db );
@@ -45,6 +48,9 @@ class TableKunenaAttachments extends KunenaTable {
 		}
 		if (!$this->filename) {
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_FILENAME'));
+		}
+		if (!$this->filename_real) {
+			$this->filename_real = $this->filename;
 		}
 		$file = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
 		if (!file_exists($file)) {

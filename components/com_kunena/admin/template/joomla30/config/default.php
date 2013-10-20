@@ -145,6 +145,11 @@ JHtml::_('dropdown.init');
 												<td><?php echo $this->lists ['access_component'] ?></td>
 												<td><?php echo JText::sprintf('COM_KUNENA_CFG_ACCESS_COMPONENT_DESC', $this->lists ['componentUrl'], JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND')) ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CFG_LEGACY_URLS') ?></td>
+												<td><?php echo $this->lists ['legacy_urls'] ?></td>
+												<td><?php echo JText::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacy_urls_version'], $this->lists['legacy_urls_desc']) ?></td>
+											</tr>
 										</tbody>
 									</table>
 								</fieldset>
@@ -331,11 +336,6 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS') ?></td>
 												<td><?php echo $this->lists ['enable_threaded_layouts'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS_DESC') ?></td>
-											</tr>
-											<tr>
-												<td align="left" width="25%" valign="top"><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
-												<td align="left" width="25%" valign="top"><input type="text" name="cfg_attachment_limit" value="<?php echo $this->escape($this->config->attachment_limit) ?>" /></td>
-												<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY') ?></td>
@@ -710,6 +710,30 @@ JHtml::_('dropdown.init');
 							</div>
 
 							<div class="tab-pane" id="tab_uploads">
+								<fieldset>
+									<legend><?php echo JText::_('COM_KUNENA_A_ATTACHMENTS') ?></legend>
+									<table class="table table-striped">
+										<thead>
+										<tr>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+											<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+											<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
+										</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
+												<td><input type="text" name="cfg_attachment_limit" value="<?php echo $this->escape($this->config->attachment_limit) ?>" /></td>
+												<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_PROTECTION') ?></td>
+												<td><?php echo $this->lists ['attachment_protection'] ?></td>
+												<td><?php echo JText::sprintf('COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC', JUri::root(false, '/media/kunena/attachments').'image.png') ?></td>
+											</tr>
+										</tbody>
+									</table>
+								</fieldset>
 								<fieldset>
 									<legend><?php echo JText::_('COM_KUNENA_A_IMAGE') ?></legend>
 									<table class="table table-striped">

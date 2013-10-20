@@ -13,13 +13,24 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class ComponentKunenaControllerTopicListDisplay
  */
-class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
+abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * @var KunenaUser
 	 */
 	protected $me;
+	/**
+	 * @var array|KunenaForumTopic[]
+	 */
 	protected $topics;
+		/**
+	 * @var KunenaPagination
+	 */
+	protected $pagination;
+	/**
+	 * @var string
+	 */
+	protected $headerText;
 
 	protected function display()
 	{
@@ -27,67 +38,42 @@ class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 		$content = KunenaLayout::factory('Topic/List')
 			->set('me', $this->me)
 			->set('config', $this->config)
-			->set('total', $this->total)
 			->set('topics', $this->topics)
-			->set('headerText', 'Topics Needing Attention') // TODO <-
+			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination);
 		return $content;
 	}
 
-	protected function before()
-	{
-		parent::before();
+	protected function prepareTopics() {
+		// collect user ids for avatar prefetch when integrated
+		$userlist = array();
+		$lastpostlist = array();
+		foreach ($this->topics as $topic) {
+			$userlist[(int) $topic->first_post_userid] = (int) $topic->first_post_userid;
+			$userlist[(int) $topic->last_post_userid] = (int) $topic->last_post_userid;
+			$lastpostlist[(int) $topic->last_post_id] = (int) $topic->last_post_id;
+		}
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
-		$access = KunenaAccess::getInstance();
+		// Prefetch all users/avatars to avoid user by user queries during template iterations
+		if (!empty($userlist)) KunenaUserHelper::loadUsers($userlist);
 
-		$start = $this->input->getInt('limitstart', 0);
-		$limit = $this->input->getInt('limit', 0);
-		if ($limit < 1 || $limit > 100) $limit = $this->config->threads_per_page;
+		$topicIds = array_keys($this->topics);
+		KunenaForumTopicHelper::getUserTopics($topicIds);
+		KunenaForumTopicHelper::getKeywords($topicIds);
+		$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
-		$finder = new KunenaForumTopicFinder();
-		$finder->filterByUserAccess($this->me)
-			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
-			->filterByMoved(false)
-			->filterBy('locked', '=', 0);
-
-		$this->total = $finder->count();
-		$this->pagination = new KunenaPagination($this->total, $start, $limit);
-
-		$this->topics = $finder
-			->order('last_post_time', -1)
-			->start($this->pagination->limitstart)
-			->limit($this->pagination->limit)
-			->find();
-
-		if ($this->topics) {
-			// collect user ids for avatar prefetch when integrated
-			$userlist = array();
-			$lastpostlist = array();
-			foreach ($this->topics as $topic) {
-				$userlist[(int) $topic->first_post_userid] = (int) $topic->first_post_userid;
-				$userlist[(int) $topic->last_post_userid] = (int) $topic->last_post_userid;
-				$lastpostlist[(int) $topic->last_post_id] = (int) $topic->last_post_id;
-			}
-
-			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			if (!empty($userlist)) KunenaUserHelper::loadUsers($userlist);
-
-			$topicIds = array_keys($this->topics);
-			KunenaForumTopicHelper::getUserTopics($topicIds);
-			KunenaForumTopicHelper::getKeywords($topicIds);
-			$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
-
-			// Fetch last / new post positions when user can see unapproved or deleted posts
-			if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
-				KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
-			}
+		// Fetch last / new post positions when user can see unapproved or deleted posts
+		if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
+			KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 		}
 	}
 
 	protected function prepareDocument()
 	{
-		$this->setTitle(JText::_('Topics Needing Attention')); // TODO <-
+		$page = $this->pagination->pagesCurrent;
+		$total = $this->pagination->pagesTotal;
+		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
+
+		$this->setTitle($headerText);
 	}
 }

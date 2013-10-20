@@ -67,10 +67,6 @@ class KunenaModelTopics extends KunenaModel {
 				if (in_array('', $latestcategory, true)) $latestcategory = $this->config->latestcategory;
 				if ($latestcategory_in == '') $latestcategory_in = $this->config->latestcategory_in;
 
-				// Selection time from user state / menu item / url parameter / configuration.
-				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
-				$this->setState ( 'list.time', $value );
-
 			} else {
 				// Use RSS configuration.
 				if(!empty($this->config->rss_excluded_categories)) {
@@ -80,10 +76,6 @@ class KunenaModelTopics extends KunenaModel {
 					$latestcategory = $this->config->rss_included_categories;
 					$latestcategory_in = 1;
 				}
-
-				// Selection time.
-				$value = $this->getInt ('sel', $this->config->rss_timelimit);
-				$this->setState ( 'list.time', $value );
 
 			}
 			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
@@ -95,19 +87,32 @@ class KunenaModelTopics extends KunenaModel {
 		$this->setState ( 'list.categories', $latestcategory );
 		$this->setState ( 'list.categories.in', $latestcategory_in );
 
+		// Selection time.
+		if (JFactory::getDocument()->getType() != 'feed') {
+			// Selection time from user state / menu item / url parameter / configuration.
+			$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
+			$this->setState ( 'list.time', (int) $value );
+
+		} else {
+			// Selection time.
+			$value = $this->getInt ('sel', $this->config->rss_timelimit);
+			$this->setState ( 'list.time', $value );
+
+		}
+
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_limit", 'limit', 0, 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_limit", 'limit', 0, 'int' );
 		if ($value < 1 || $value > 100) $value = $this->config->threads_per_page;
 		$this->setState ( 'list.limit', $value );
 
 		//$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_start", 'limitstart', 0, 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_start", 'limitstart', 0, 'int' );
 		//$value = $this->getInt ( 'limitstart', 0 );
 		$this->setState ( 'list.start', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_direction", 'filter_order_Dir', 'desc', 'word' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_direction", 'filter_order_Dir', 'desc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
@@ -273,10 +278,13 @@ class KunenaModelTopics extends KunenaModel {
 
 		$start = $this->getState ( 'list.start' );
 		$limit = $this->getState ( 'list.limit' );
+		// Time will be calculated inside KunenaForumMessageHelper::getLatestMessages()
+		$time = $this->getState ( 'list.time' );
+
 		$params = array();
 		$params['mode'] = $this->getState ( 'list.mode' );
 		$params['reverse'] = ! $this->getState ( 'list.categories.in' );
-		$params['starttime'] = $this->getState ( 'list.time' );
+		$params['starttime'] = $time;
 		$params['user'] = $this->getState ( 'user' );
 		list ($this->total, $this->messages) = KunenaForumMessageHelper::getLatestMessages($this->getState ( 'list.categories' ), $start, $limit, $params);
 

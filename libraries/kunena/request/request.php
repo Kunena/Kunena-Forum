@@ -37,7 +37,7 @@ class KunenaRequest
 	 * @param   string	$path	Controller path.
 	 * @param	JInput	$input
 	 *
-	 * @return  KunenaController
+	 * @return  KunenaControllerBase
 	 * @throws	InvalidArgumentException
 	 */
 	public static function factory($path, JInput $input = null) {

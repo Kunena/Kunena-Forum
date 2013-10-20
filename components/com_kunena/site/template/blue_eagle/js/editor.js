@@ -260,7 +260,6 @@ var kbbcode = new Class({
 		if(this.options.interceptTabs) {
 
 			this.el.addEvent('keypress', function(event){
-				event = new Event(event);
 				if(event.key == "tab") {
 					event.preventDefault();
 					this.replaceSelection("\t");
@@ -596,8 +595,9 @@ function kGenerateColorPalette(width, height)
 }
 
 function kInsertCode() {
-	var kcodetype = document.id('kcodetype').get('value');
-	if (kcodetype != '') kcodetype = ' type='+kcodetype;
+	var kcodetype = '';
+	if( document.id('kcodetype') != undefined ) kcodetype = document.id('kcodetype').get('value');
+	if (kcodetype != '') kcodetype = ' type='+kcodetype;  
 	kbbcode.focus().wrapSelection('[code'+kcodetype+']', '[/code]', false); 
 	kToggleOrSwap("kbbcode-code-options");
 }

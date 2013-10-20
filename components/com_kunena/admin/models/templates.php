@@ -60,7 +60,7 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Load the configuration definition file.
-		$template = $this->getState ('template');
+		$template = $this->getState('template');
 		$xml = KunenaTemplate::getInstance($template)->getConfigXml();
 
 		// Get the form.
@@ -79,6 +79,11 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 	{
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_kunena.edit.template.data', array());
+
+		if (empty($data)) {
+			$template = $this->getState('template');
+			$data = KunenaTemplate::getInstance($template)->params->toArray();
+		}
 
 		return $data;
 	}
@@ -101,25 +106,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	function getStart() {
 		return $this->getState ('list.start');
-	}
-
-	function getEditparams() {
-		jimport('joomla.filesystem.file');
-
-		$template = $this->app->getUserState ( 'kunena.edit.template');
-		$ini	= KPATH_SITE.'/template/'.$template.'/params.ini';
-		$xml	= KPATH_SITE.'/template/'.$template.'/template.xml';
-
-		// Read the ini file
-		if (JFile::exists($ini)) {
-			$content = file_get_contents($ini);
-		} else {
-			$content = null;
-		}
-		// FIXME: Joomla 3.0: need to use JForm
-		$params = new JRegistry();
-		$params->loadString($content,'INI');
-		return $params;
 	}
 
 	function getTemplatedetails() {

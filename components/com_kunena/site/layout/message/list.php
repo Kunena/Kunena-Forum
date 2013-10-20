@@ -12,7 +12,10 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaLayoutMessageList extends KunenaLayout
 {
-	function displayTimeFilter($id = 'kfilter-select-time', $attrib = 'class="kinputbox" onchange="this.form.submit()" size="1"') {
+	public function displayTimeFilter($id = 'filter-time', $attrib = 'onchange="this.form.submit()"')
+	{
+		if (!isset($this->state)) return;
+
 		// make the select list for time selection
 		$timesel[] = JHtml::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));
 		$timesel[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));

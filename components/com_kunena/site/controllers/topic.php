@@ -362,6 +362,8 @@ class KunenaControllerTopic extends KunenaController {
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
 		if ($message->hold == 1) {
+			// If user cannot approve message by himself, send email to moderators.
+			if (!$topic->authorise('approve')) $message->sendNotification();
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
 		$this->app->redirect ( $message->getUrl($this->return, false ) );
@@ -667,13 +669,18 @@ class KunenaControllerTopic extends KunenaController {
 		if ($this->mesid) {
 			// Approve message
 			$target = KunenaForumMessageHelper::get($this->mesid);
+			$message = $target;
 		} else {
 			// Approve topic
 			$target = KunenaForumTopicHelper::get($this->id);
+			$message = KunenaForumMessageHelper::get($target->first_post_id);
 		}
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED)) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ) );
-			$target->sendNotification();
+			// Only email if message wasn't modified by the author before approval
+			// TODO: this is just a workaround for #1862, we need to find better solution.
+			$modifiedByAuthor = ($message->modified_by == $message->userid);
+			if (!$modifiedByAuthor) $target->sendNotification();
 		} else {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}

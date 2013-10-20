@@ -297,7 +297,8 @@ class KunenaConfig extends JObject {
 		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
 		foreach ($plugins as $name => $registry) {
-			if ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
+			if ($name == '38432UR24T5bBO6') $this->bind($registry->toArray());
+			elseif ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
 		}
 	}
 

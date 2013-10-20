@@ -305,10 +305,10 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		if ( count($params) ) {
 			$registry = new JRegistry();
 			$registry->loadArray($params);
-			$txt = $registry->toString();
+			$txt = $registry->toString('INI');
 			$return = JFile::write($file, $txt);
 			if (!$return) {
-				$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE.', $file));
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
 				$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			}
 		}

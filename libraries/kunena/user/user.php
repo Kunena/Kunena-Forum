@@ -342,7 +342,7 @@ class KunenaUser extends JObject {
 	/**
 	 * @param string $class
 	 * @param string|int $sizex
-	 * @param int    $sizey
+	 * @param int	$sizey
 	 *
 	 * @return string
 	 */
@@ -353,7 +353,7 @@ class KunenaUser extends JObject {
 
 	/**
 	 * @param string|int $sizex
-	 * @param int    $sizey
+	 * @param int	$sizey
 	 *
 	 * @return string
 	 */
@@ -396,7 +396,8 @@ class KunenaUser extends JObject {
 	 * @return mixed
 	 */
 	public function getURL($xhtml = true, $task = '') {
-		if (!$this->exists()) return;
+		// Note: We want to link also existing users who have never visited Kunena before.
+		if (!$this->userid || !$this->registerDate) return;
 		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, $task, $xhtml );
 	}
 
@@ -677,5 +678,23 @@ class KunenaUser extends JObject {
 	 */
 	public function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	/**
+	 * @param string $name
+	 */
+	public function __get($name) {
+		switch ($name) {
+			case 'id':
+				return $this->userid;
+		}
+		
+		$trace = debug_backtrace();
+		trigger_error(
+			'Undefined property via __get(): ' . $name .
+			' in ' . $trace[0]['file'] .
+			' on line ' . $trace[0]['line'],
+			E_USER_NOTICE);
+		return null;
 	}
 }

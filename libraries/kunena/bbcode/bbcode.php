@@ -1259,8 +1259,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @return bool|string
 	 */
 	function DoCode($bbcode, $action, $name, $default, $params, $content) {
-		static $enabled = false;
-
 		if ($action == BBCODE_CHECK) {
 			return true;
 		}
@@ -1271,16 +1269,20 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		} elseif ($type == 'html') {
 			$type = 'html4strict';
 		}
-		if (empty($bbcode->parent->forceMinimal) && $enabled === false && KunenaFactory::getConfig ()->highlightcode) {
-			$enabled = true;
-
-			$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
-			if (file_exists($path)) {
-				require_once $path;
+		$highlight = KunenaFactory::getConfig()->highlightcode && empty($bbcode->parent->forceMinimal);
+		if ($highlight && !class_exists('GeSHi')) {
+			$paths = array(
+				JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi.php',
+				JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php'
+			);
+			foreach ($paths as $path) {
+				if (!class_exists('GeSHi') && file_exists($path)) {
+					require_once $path;
+				}
 			}
 
 		}
-		if ($enabled && class_exists('GeSHi')) {
+		if ($highlight && class_exists('GeSHi')) {
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();

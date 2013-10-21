@@ -25,6 +25,8 @@ class ComponentKunenaControllerPageLoginDisplay extends KunenaControllerDisplay
 	public $rememberMe;
 	public $lastvisitDate;
 	public $announcementsUrl;
+	public $pm_link;
+	public $inboxCount;
 
 	protected function before()
 	{
@@ -45,8 +47,12 @@ class ComponentKunenaControllerPageLoginDisplay extends KunenaControllerDisplay
 		} else {
 			$this->lastvisitDate = KunenaDate::getInstance($this->my->lastvisitDate);
 
-			// TODO: Private messages
-			//$this->getPrivateMessageLink();
+			$private = KunenaFactory::getPrivateMessaging();
+			if ($private) {
+				$count = $private->getUnreadCount($this->me->userid);
+				$this->inboxCount = $count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX');
+				$this->pm_link = $private->getInboxURL ();
+			}
 
 			// Announcements
 			if ($this->me->isModerator()) {

@@ -10,32 +10,60 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->displayAnnouncement ();
+$colspan = empty($this->postActions) ? 4 : 5;
 ?>
-<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_announcement'); ?>
+<form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self" class="pull-right">
+	<?php $this->displayTimeFilter('sel') ?>
+</form>
 
-<table class="table">
-  <tr>
-    <td> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_USERPOSTS') ?> </td>
-    <td>
-      <form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
-        <?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
-      </form>
-    </td>
-    <td class="visible-desktop">
-      <?php $this->displayForumJump () ?>
-    </td>
-    <td><?php echo $this->getPagination ( 5 ); ?></td>
-  </tr>
-</table>
-<?php echo $this->render('embed'); ?>
-<table>
-  <tr>
-    <td> <strong><?php echo intval($this->total) ?></strong> <?php echo JText::_('COM_KUNENA_TOPICS')?> </td>
-    <td><?php echo $this->getPagination ( 5 ); ?></td>
-  </tr>
-</table>
-<?php
-$this->displayWhoIsOnline ();
-$this->displayStatistics ();
-?>
+<h3>
+	<?php echo $this->escape($this->headerText); ?>
+	<span class="badge badge-info"><?php echo $this->pagination->total ?></span>
+</h3>
+
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post" name="ktopicsform" id="ktopicsform">
+	<?php echo JHtml::_( 'form.token' ); ?>
+	<table class="table table-striped table-bordered table-condensed">
+		<?php if (empty($this->messages)) : ?>
+		<tr>
+			<td colspan="<?php echo $colspan; ?>">
+				<?php echo JText::_('COM_KUNENA_NO_POSTS') ?>
+			</td>
+		</tr>
+		<?php else : ?>
+		<thead>
+			<tr>
+				<td colspan="4">
+					<div class="pagination pull-right">
+						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+					</div>
+					<div class="clearfix"></div>
+				</td>
+				<?php if (!empty($this->postActions)) : ?>
+					<td>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
+					</td>
+				<?php endif; ?>
+			</tr>
+		</thead>
+		<?php if (!empty($this->postActions)) : ?>
+		<tfoot>
+			<tr>
+				<td colspan="<?php echo $colspan; ?>">
+					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
+					<?php if (!empty($this->postActions)) : ?>
+						<?php echo JHtml::_('select.genericlist', $this->postActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+					<?php endif; ?>
+				</td>
+			</tr>
+		</tfoot>
+		<?php endif; ?>
+		<tbody>
+			<?php foreach ($this->messages as $i => $message)
+				echo $this->subLayout('Message/List/Row')
+					->set('message', $message)->set('position', $i); ?>
+		</tbody>
+		<?php endif; ?>
+	</table>
+</form>

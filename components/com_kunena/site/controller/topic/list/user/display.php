@@ -11,9 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Class ComponentKunenaControllerTopicListRecentDisplay
+ * Class ComponentKunenaControllerTopicListUserDisplay
  */
-class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
+class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaControllerTopicListDisplay
 {
 	protected function display()
 	{
@@ -50,6 +50,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
 		}
 
+		$user = KunenaUserHelper::get($this->state->get('user'));
+
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
 		$reverse = !$this->state->get('list.categories.in');
@@ -57,50 +59,34 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$order = 'last_post_time';
 
 		$finder = new KunenaForumTopicFinder();
-		$finder->filterByMoved(false);
+		$finder
+			->filterByMoved(false)
+			->filterByHold(array(0))
+			->filterByTime($time);
 
 		switch ($this->state->get('list.mode')) {
-			case 'topics' :
-				$order = 'first_post_time';
+			case 'posted' :
 				$finder
-					->filterByHold(array(0))
-					->filterByTime($time, null, false);
+					->filterByUser($user, 'posted')
+					->order('last_post_id', -1, 'ut');
 				break;
-			case 'sticky' :
-				$finder
-					->filterByHold(array(0))
-					->filterBy('t.ordering', '>', 0)
-					->filterByTime($time);
+
+			case 'started' :
+				$finder->filterByUser($user, 'owner');
 				break;
-			case 'locked' :
-				$finder
-					->filterByHold(array(0))
-					->filterBy('t.locked', '>', 0)
-					->filterByTime($time);
+
+			case 'favorites' :
+				$finder->filterByUser($user, 'favorited');
 				break;
-			case 'noreplies' :
-				$finder
-					->filterByHold(array(0))
-					->filterBy('t.posts', '=', 1)
-					->filterByTime($time);
+
+			case 'subscriptions' :
+				$finder->filterByUser($user, 'subscribed');
 				break;
-			case 'unapproved' :
-				$authorise = 'topic.approve';
-				$finder
-					->filterByHold(array(1))
-					->filterByTime($time);
-				break;
-			case 'deleted' :
-				$authorise = 'topic.undelete';
-				$finder
-					->filterByHold(array(2, 3))
-					->filterByTime($time);
-				break;
-			case 'replies' :
+
 			default :
 				$finder
-					->filterByHold(array(0))
-					->filterByTime($time);
+					->filterByUser($user, 'involved')
+					->order('favorite', -1, 'ut');
 				break;
 		}
 
@@ -118,27 +104,23 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		if ($this->topics) $this->prepareTopics();
 
 		switch ($this->state->get('list.mode')) {
-			case 'topics' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+			case 'posted' :
+				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
 				break;
-			case 'sticky' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+			case 'started' :
+				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
 				break;
-			case 'locked' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+			case 'favorites' :
+				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
 				break;
-			case 'noreplies' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+			case 'subscriptions' :
+				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
 				break;
-			case 'unapproved' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+			case 'plugin' :
+				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
 				break;
-			case 'deleted' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
-				break;
-			case 'replies' :
 			default :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
+				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 		}
 	}
 }

@@ -10,8 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$content = $this->execute('Topic/List/Moderator');
+$content = $this->execute('Topic/List/Moderator')->setLayout('moderator');
 
-$this->addBreadcrumb($content->headerText, 'index.php?option=com_kunena&view=topics&layout=unread');
+$this->addBreadcrumb($content->headerText, 'index.php?option=com_kunena&view=topics&layout=moderator');
 
 echo $content;

@@ -14,7 +14,7 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 ?>
 
 <form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self" class="pull-right">
-	<?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
+	<?php $this->displayTimeFilter('sel') ?>
 </form>
 
 <h3>

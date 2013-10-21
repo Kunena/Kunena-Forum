@@ -32,8 +32,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			->filterByMoved(false)
 			->filterBy('locked', '=', 0);
 
-		$this->total = $finder->count();
-		$this->pagination = new KunenaPagination($this->total, $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		$this->topics = $finder
 			->order('last_post_time', -1)

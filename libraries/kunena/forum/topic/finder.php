@@ -77,13 +77,14 @@ class KunenaForumTopicFinder
 	 *
 	 * @param  string $by
 	 * @param  int $direction
+	 * @param  string $alias
 	 *
 	 * @return $this
 	 */
-	public function order($by, $direction = 1)
+	public function order($by, $direction = 1, $alias = 't')
 	{
 		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = 't.'.$this->db->quoteName($by);
+		$by = $alias.'.'.$this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 
 		return $this;
@@ -255,6 +256,12 @@ class KunenaForumTopicFinder
 			case '!subscribed':
 				$this->query->where('ut.subscribed!=1');
 				break;
+			case 'involved':
+				$this->query->where('(ut.posts>0 OR ut.favorite=1 OR ut.subscribed=1)');
+				break;
+			case '!involved':
+				$this->query->where('(ut.posts<1 AND ut.favorite=0 AND ut.subscribed=0)');
+				break;
 		}
 
 		return $this;
@@ -361,6 +368,7 @@ class KunenaForumTopicFinder
 		$query = clone $this->query;
 		$this->build($query);
 		$query->select('COUNT(*)');
+		$query->clear('order');
 		$this->db->setQuery($query);
 		$count = (int) $this->db->loadResult();
 		KunenaError::checkDatabaseError();

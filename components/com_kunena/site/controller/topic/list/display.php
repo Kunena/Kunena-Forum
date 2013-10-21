@@ -44,27 +44,31 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		return $content;
 	}
 
-	protected function prepareTopics() {
-		// collect user ids for avatar prefetch when integrated
-		$userlist = array();
-		$lastpostlist = array();
+	protected function prepareTopics(array $userIds = array(), array $mesIds = array()) {
+		// collect user ids for avatar prefetch when integrated.
+		$lastIds = array();
 		foreach ($this->topics as $topic) {
-			$userlist[(int) $topic->first_post_userid] = (int) $topic->first_post_userid;
-			$userlist[(int) $topic->last_post_userid] = (int) $topic->last_post_userid;
-			$lastpostlist[(int) $topic->last_post_id] = (int) $topic->last_post_id;
+			$userIds[(int) $topic->first_post_userid] = (int) $topic->first_post_userid;
+			$userIds[(int) $topic->last_post_userid] = (int) $topic->last_post_userid;
+			$lastIds[(int) $topic->last_post_id] = (int) $topic->last_post_id;
 		}
 
-		// Prefetch all users/avatars to avoid user by user queries during template iterations
-		if (!empty($userlist)) KunenaUserHelper::loadUsers($userlist);
+		// Prefetch all users/avatars to avoid user by user queries during template iterations.
+		if (!empty($userIds)) KunenaUserHelper::loadUsers($userIds);
 
 		$topicIds = array_keys($this->topics);
 		KunenaForumTopicHelper::getUserTopics($topicIds);
-		KunenaForumTopicHelper::getKeywords($topicIds);
-		$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
+		//KunenaForumTopicHelper::getKeywords($topicIds);
+		$mesIds += KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
-		// Fetch last / new post positions when user can see unapproved or deleted posts
-		if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
-			KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
+		// Fetch also last post positions when user can see unapproved or deleted posts.
+		// TODO: Optimize? Take account of configuration option...
+		if ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
+			$mesIds += $lastIds;
+		}
+		// Load position information for all selected messages.
+		if ($mesIds) {
+			KunenaForumMessageHelper::loadLocation($mesIds);
 		}
 	}
 

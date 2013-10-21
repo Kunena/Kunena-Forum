@@ -77,13 +77,14 @@ class KunenaForumMessageFinder
 	 *
 	 * @param  string $by
 	 * @param  int $direction
+	 * @param  string $alias
 	 *
 	 * @return $this
 	 */
-	public function order($by, $direction = 1)
+	public function order($by, $direction = 1, $alias = 'm')
 	{
 		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = 'm.'.$this->db->quoteName($by);
+		$by = $alias.'.'.$this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 
 		return $this;
@@ -193,21 +194,38 @@ class KunenaForumMessageFinder
 	 *
 	 * @return $this
 	 */
-	public function filterByUser(KunenaUser $user, $action = 'posted')
+	public function filterByUser(KunenaUser $user = null, $action = 'posted')
 	{
+		if (is_null($user) || is_null($user->userid))
+		{
+			return $this;
+		}
+
 		switch ($action)
 		{
-			case 'posted':
-				$this->query->where('m.userid='.$user->userid);
+			case 'author':
+				$this->query->where('m.userid='. (int) $user->userid);
 				break;
-			case '!posted':
-				$this->query->where('m.userid!='.$user->userid);
+			case '!author':
+				$this->query->where('m.userid!='. (int) $user->userid);
 				break;
-			case 'edited':
-				$this->query->where('m.modified_by='.$user->userid);
+			case 'editor':
+				$this->query->where('m.modified_by='. (int) $user->userid);
 				break;
-			case '!edited':
-				$this->query->where('m.modified_by!='.$user->userid);
+			case '!editor':
+				$this->query->where('m.modified_by!='. (int) $user->userid);
+				break;
+			case 'thanker':
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=m.id AND th.userid='. (int) $user->userid);
+				break;
+			case '!thanker':
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=m.id AND th.userid!='. (int) $user->userid);
+				break;
+			case 'thankee':
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=m.id AND th.targetuserid='. (int) $user->userid);
+				break;
+			case '!thankee':
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=m.id AND th.targetuserid!='. (int) $user->userid);
 				break;
 		}
 
@@ -264,6 +282,8 @@ class KunenaForumMessageFinder
 
 	protected function build($query)
 	{
+		// TODO: remove the field..
+		$query->where("m.moved=0");
 		if (!empty($this->hold)) {
 			JArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);

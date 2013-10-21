@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$content = $this->execute('Topic/List/User');
+$content = $this->execute('Topic/List/User')->setLayout('user');
 
 $this->addBreadcrumb($content->headerText, 'index.php?option=com_kunena&view=topics&layout=user');
 

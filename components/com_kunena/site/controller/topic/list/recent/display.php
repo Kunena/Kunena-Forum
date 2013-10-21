@@ -107,8 +107,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
 		$finder->filterByCategories($categories);
 
-		$this->total = $finder->count();
-		$this->pagination = new KunenaPagination($this->total, $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		$this->topics = $finder
 			->order($order, -1)

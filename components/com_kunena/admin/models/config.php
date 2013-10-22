@@ -162,7 +162,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['userlist_joindate'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_userlist_joindate', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_joindate );
 		$lists ['userlist_lastvisitdate'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_userlist_lastvisitdate', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_lastvisitdate );
 		$lists ['userlist_userhits'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_userhits );
-		$lists ['usernamechange'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_usernamechange', 'class="inputbox" size="1"', 'value', 'text', $this->config->usernamechange );
 		$lists ['reportmsg'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $this->config->reportmsg );
 		$lists ['captcha'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $this->config->captcha );
 		$lists ['mailfull'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailfull );

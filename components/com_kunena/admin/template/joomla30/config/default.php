@@ -585,11 +585,6 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED_DESC') ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_ALLOW_USERNAME_CHANGE') ?></td>
-												<td><?php echo $this->lists ['usernamechange'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_ALLOW_USERNAME_CHANGE_DESC') ?></td>
-											</tr>
-											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_FLOOD') ?></td>
 												<td><input type="text" name="cfg_floodprotection" value="<?php echo $this->escape($this->config->floodprotection) ?>" /></td>
 												<td><?php echo JText::_('COM_KUNENA_A_FLOOD_DESC') ?></td>

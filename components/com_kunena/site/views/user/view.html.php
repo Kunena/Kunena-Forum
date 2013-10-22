@@ -28,7 +28,7 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEdit($tpl = null) {
 		$userid = JRequest::getInt('userid');
-		$this->usernamechange = $this->config->usernamechange && (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1));
+		$this->usernamechange = JComponentHelper::getParams('com_users')->get('change_login_name', 1);
 
 		if ($userid && $this->me->userid != $userid) {
 			$user = KunenaFactory::getUser( $userid );

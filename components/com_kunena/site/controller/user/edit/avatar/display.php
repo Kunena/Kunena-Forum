@@ -60,7 +60,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 		$folders = JFolder::folders($path);
 		foreach($folders as $folder)
 		{
-			$images = $this->getGallery($folder);
+			$images = $this->getGallery("{$path}/{$folder}");
 			if ($images)
 			{
 				foreach($images as $image) $files[$folder][] = "{$folder}/{$image}";

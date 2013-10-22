@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <h3>
-	<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE'); ?>
+	<?php echo $this->headerText; ?>
 </h3>
 
 <table class="table table-bordered table-striped table-hover">

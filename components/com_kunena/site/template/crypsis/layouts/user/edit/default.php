@@ -12,12 +12,10 @@ defined ( '_JEXEC' ) or die ();
 
 ?>
 <h2>
-	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?>
-	<?php if (!empty($this->editlink)) : ?>
+	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
 	<div class="btn pull-right">
-		<i class="icon-arrow-left"></i> <?php echo $this->editlink; ?>
+		<i class="icon-arrow-left"></i> <?php echo $this->profile->getLink(JText::_('COM_KUNENA_BACK'), JText::_('COM_KUNENA_BACK'), 'nofollow'); ?>
 	</div>
-	<?php endif; ?>
 </h2>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>" method="post" enctype="multipart/form-data" name="kuserform" class="form-validate" id="kuserform">
@@ -51,16 +49,16 @@ defined ( '_JEXEC' ) or die ();
 
 		<div id="KunenaUserEdit" class="tab-content">
 			<div class="tab-pane fade in active" id="home">
-				<?php $this->displayEditUser(); ?>
+				<?php echo $this->subRequest('User/Edit/User'); ?>
 			</div>
 			<div class="tab-pane fade" id="editprofile">
-				<?php $this->displayEditProfile(); ?>
+				<?php echo $this->subRequest('User/Edit/Profile'); ?>
 			</div>
 			<div class="tab-pane fade" id="editavatar">
-				<?php $this->displayEditAvatar(); ?>
+				<?php echo $this->subRequest('User/Edit/Avatar'); ?>
 			</div>
 			<div class="tab-pane fade" id="editsettings">
-				<?php $this->displayEditSettings(); ?>
+				<?php echo $this->subRequest('User/Edit/Settings'); ?>
 			</div>
 
 			<div class="center">

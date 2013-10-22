@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <h3>
-	<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE') ?>
+	<?php echo $this->headerText; ?>
 </h3>
 
 <table class="table table-bordered table-striped table-hover">
@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 				<label for="username"><?php echo JText::_( 'COM_KUNENA_UNAME' ); ?></label>
 			</td>
 			<td>
-				<input type="text" name="username" id="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->usernamechange ? 'disabled="disabled" ' : '' ?>/>
+				<input type="text" name="username" id="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->changeUsername ? 'disabled="disabled" ' : '' ?>/>
 			</td>
 		</tr>
 		<tr>
@@ -61,20 +61,20 @@ defined ( '_JEXEC' ) or die ();
 	</tbody>
 </table>
 
-<?php if(!empty($this->userparameters)) : ?>
+<?php if(!empty($this->frontendForm)) : ?>
 <h3>
 	<?php echo JText::_('COM_KUNENA_GLOBAL_SETTINGS'); ?>
 </h3>
 
 <table class="table table-bordered table-striped table-hover">
 	<tbody>
-		<?php foreach ($this->userparameters as $userparam): ?>
+		<?php foreach ($this->frontendForm as $field): ?>
 		<tr>
 			<td class="span3">
-				<?php echo $userparam->label ?>
+				<?php echo $field->label ?>
 			</td>
 			<td>
-				<?php echo $userparam->input ?>
+				<?php echo $field->input ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>

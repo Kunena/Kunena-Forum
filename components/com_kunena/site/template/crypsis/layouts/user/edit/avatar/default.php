@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <h3>
-	<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?>
+	<?php echo $this->headerText; ?>
 </h3>
 
 <table class="table table-bordered table-striped">
@@ -49,33 +49,28 @@ defined ( '_JEXEC' ) or die ();
 	<tr>
 		<td class="span3">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
-			<input id="kunena_url_avatargallery" type="hidden" value="<?php echo $this->me->getUrl(true, 'edit') ?>" />
+			<input id="kunena_url_avatargallery" type="hidden" value="<?php echo $this->profile->getUrl(true, 'edit') ?>" />
 		</td>
 		<td>
+			<?php if ($this->galleryOptions) : ?>
 			<div>
-				<?php echo $this->galleries; ?>
+				<?php echo JHtml::_('select.genericlist', $this->galleryOptions, 'gallery', '', 'value', 'text', $this->gallery, 'avatar_category_select'); ?>
 			</div>
+			<?php endif; ?>
+
+			<?php if ($this->galleryImages) : ?>
 			<ul class="thumbnails">
-				<?php foreach ($this->galleryimg as $avatarimg) : ?>
+				<?php foreach ($this->galleryImages as $image) : ?>
 				<li class="span2">
 					<label class="thumbnail">
-						<img src="<?php echo $this->galleryurl .'/'. ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>" alt="" />
-						<input type="radio" name="avatar" value="<?php echo 'gallery/' . ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>"/>
+						<img src="<?php echo "{$this->galleryUri}/{$image}" ?>" alt="" />
+						<input type="radio" name="avatar" value="<?php echo "gallery/{$image}" ?>"/>
 					</label>
 				</li>
 				<?php endforeach; ?>
 			</ul>
+			<?php endif; ?>
 		</td>
 	</tr>
-<?php /* TODO: ????
-	<tr>
-		<td>
-			<?php foreach($this->galleryImagesList as $name=>$gallery): ?>
-			<input type="hidden" id="Kunena_<?php echo $name ?>" name="<?php echo $name ?>" value='<?php echo $gallery ?>' />
-			<?php endforeach; ?>
-			<input type="hidden" id="Kunena_Image_Gallery_URL" name="Kunena_Image_Gallery_URL" value="<?php echo JURI::root().'media/kunena/avatars/gallery' ?>" />
-		</td>
-	</tr>
-*/ ?>
 	<?php endif; ?>
 </table>

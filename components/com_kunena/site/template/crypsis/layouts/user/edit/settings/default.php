@@ -11,18 +11,18 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <h3>
-	<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE'); ?>
+	<?php echo $this->headerText; ?>
 </h3>
 
 <table class="table table-bordered table-striped table-hover">
 	<tbody>
-		<?php foreach ($this->settings as $setting) : ?>
+		<?php foreach ($this->settings as $field) : ?>
 			<tr>
 				<td class="span3">
-					<?php echo $setting->label ?>
+					<?php echo $field->label ?>
 				</td>
 				<td>
-					<?php echo $setting->field ?>
+					<?php echo $field->field ?>
 				</td>
 			</tr>
 		<?php endforeach ?>

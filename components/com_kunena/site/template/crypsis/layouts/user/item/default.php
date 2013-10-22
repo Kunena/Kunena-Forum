@@ -12,9 +12,10 @@ defined ( '_JEXEC' ) or die ();
 
 ?>
 
-<h3><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?> </h3>
-<hr />
-<div class="clearfix"></div>
+<h2>
+	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?>
+</h2>
+
 <div id="user">
 	<div class="span12">
 		<div>
@@ -113,3 +114,4 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
+<div class="clearfix"></div>

@@ -12,6 +12,92 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaLayoutUserItem extends KunenaLayout
 {
+	public function getTabs()
+	{
+		$banInfo = KunenaUserBan::getInstanceByUserid($this->user->id, true);
+		$myProfile = $this->profile->isMyself();
+		$moderator = $this->me->isModerator();
+
+		// Decide which tabs to display.
+		$showPosts = true;
+		$showSubscriptions = $this->config->allowsubscriptions && $myProfile;
+		$showFavorites = $this->config->allowfavorites && $myProfile;
+		$showThankYou = $this->config->showthankyou && $this->me->exists();
+		$showUnapproved = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus();
+		$showAttachments = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
+		$showBanManager = $moderator && $myProfile;
+		$showBanHistory = $moderator && !$myProfile;
+		$showBanUser = $banInfo->canBan();
+
+		// Define all tabs.
+		$tabs = array();
+		if ($showPosts) {
+			$tab = new stdClass();
+			$tab->title = JText::_('COM_KUNENA_USERPOSTS');
+			$tab->content = 'FIXME';
+			$tab->active = true;
+			$tabs['posts'] = $tab;
+		}
+		if ($showSubscriptions) {
+			$tab = new stdClass();
+			$tab->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
+			$tab->content = $this->subRequest('Category/Subscriptions').'FIXME';
+			$tab->active = false;
+			$tabs['subscriptions'] = $tab;
+		}
+		if ($showFavorites) {
+			$tab = new stdClass();
+			$tab->title = JText::_('COM_KUNENA_FAVORITES');
+			$tab->content = 'FIXME';
+			$tab->active = false;
+			$tabs['favorites'] = $tab;
+		}
+		if ($showThankYou) {
+			$tab = new stdClass();
+			$tab->title = JText::_('COM_KUNENA_THANK_YOU');
+			$tab->content = 'FIXME';
+			$tab->active = false;
+			$tabs['thankyou'] = $tab;
+		}
+		if ($showUnapproved) {
+			$tab = new stdClass();
+			$tab->title = JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION');
+			$tab->content = 'FIXME';
+			$tab->active = false;
+			$tabs['unapproved'] = $tab;
+		}
+		if ($showAttachments) {
+			$tab = new stdClass();
+			$tab->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
+			$tab->content = $this->subRequest('User/Attachments');
+			$tab->active = false;
+			$tabs['attachments'] = $tab;
+		}
+		if ($showBanManager) {
+			$tab = new stdClass();
+			$tab->title = JText::_('COM_KUNENA_BAN_BANMANAGER');
+			$tab->content = $this->subRequest('User/Ban/Manager');
+			$tab->active = false;
+			$tabs['banmanager'] = $tab;
+		}
+		if ($showBanHistory) {
+			$tab = new stdClass();
+			$tab->title = JText::_('COM_KUNENA_BAN_BANHISTORY');
+			$tab->content = $this->subRequest('User/Ban/History');
+			$tab->active = false;
+			$tabs['banhistory'] = $tab;
+		}
+		if ($showBanUser) {
+			$tab = new stdClass();
+			$tab->title = $banInfo->exists() ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW');
+			$tab->content = $this->subRequest('User/Ban/Form');
+			$tab->active = false;
+			$tabs['banuser'] = $tab;
+		}
+
+		return $tabs;
+	}
+
 	function displayUnapprovedPosts() {
 		$params = array(
 			'topics_categories' => 0,

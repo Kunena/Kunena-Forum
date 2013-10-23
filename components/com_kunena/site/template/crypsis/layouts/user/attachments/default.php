@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <h3>
-	<?php echo $this->title;?>
+	<?php echo $this->headerText; ?>
 </h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>" method="post" id="adminForm" name="adminForm">
@@ -47,11 +47,11 @@ defined ( '_JEXEC' ) or die ();
 			</th>
 		</tr>
 		<?php
-			if (empty($this->items)) :
+			if (!$this->attachments) :
 				echo JText::_('COM_KUNENA_USER_NO_ATTACHMENTS');
 			else :
 				$i=0;
-				foreach ($this->items as $attachment) :
+				foreach ($this->attachments as $attachment) :
 					$message = $attachment->getMessage();
 		?>
 		<tr>
@@ -77,7 +77,7 @@ defined ( '_JEXEC' ) or die ();
 			<td class="center">
 				<?php if ($attachment->authorise('delete')) : ?>
 				<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile')">
-					<img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" />
+					<img src="<?php echo $this->template->getImagePath('icons/publish_x.png') ?>" alt="" title="" />
 				</a>
 				<?php endif ?>
 			</td>

@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<h2>
-		<?php echo $this->escape($this->header); ?>
+		<?php echo $this->escape($this->headerText); ?>
 		<?php if (!empty($this->actions)) : ?>
 		<div class="input-append pull-right">
 			<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0, 'kchecktask'); ?>

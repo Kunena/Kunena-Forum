@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <h3>
-	<?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW'); ?>
+	<?php echo $this->headerText; ?>
 </h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>" id="kform-ban" name="kformban" method="post">
@@ -47,7 +47,7 @@ defined ( '_JEXEC' ) or die ();
 					$block[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
 					$block[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
 					// build the html select list
-					echo JHtml::_('select.genericlist', $block, 'block', '', 'value', 'text', $this->escape($this->baninfo->blocked));
+					echo JHtml::_('select.genericlist', $block, 'block', '', 'value', 'text', $this->escape($this->banInfo->blocked));
 					?>
 				</td>
 			</tr>
@@ -58,7 +58,7 @@ defined ( '_JEXEC' ) or die ();
 					<span><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></span>
 				</td>
 				<td>
-					<?php echo JHtml::_('calendar', $this->escape($this->baninfo->expiration), 'expiration', 'expiration', '%Y-%m-%d',array('onclick'=>'$(\'expiration\').setStyle(\'display\')')); ?>
+					<?php echo JHtml::_('calendar', $this->escape($this->banInfo->expiration), 'expiration', 'expiration', '%Y-%m-%d',array('onclick'=>'$(\'expiration\').setStyle(\'display\')')); ?>
 				</td>
 			</tr>
 			<tr>
@@ -68,7 +68,7 @@ defined ( '_JEXEC' ) or die ();
 					<span><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON_DESC'); ?></span>
 				</td>
 				<td>
-					<textarea class="required" name="reason_public" id="reason_public" ><?php echo $this->escape($this->baninfo->reason_public) ?></textarea>
+					<textarea class="required" name="reason_public" id="reason_public" ><?php echo $this->escape($this->banInfo->reason_public) ?></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -78,7 +78,7 @@ defined ( '_JEXEC' ) or die ();
 					<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON_DESC'); ?></span>
 				</td>
 				<td>
-					<textarea class="required" name="reason_private" id="reason_private"><?php echo $this->escape($this->baninfo->reason_private) ?></textarea>
+					<textarea class="required" name="reason_private" id="reason_private"><?php echo $this->escape($this->banInfo->reason_private) ?></textarea>
 				</td>
 			</tr>
 			<tr>

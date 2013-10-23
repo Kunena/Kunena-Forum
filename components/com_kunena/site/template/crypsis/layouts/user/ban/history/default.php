@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <h3>
-	<?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?>
+	<?php echo $this->headerText; ?>
 </h3>
 
 <table class="table table-bordered table-striped table-hover">
@@ -39,55 +39,55 @@ defined ( '_JEXEC' ) or die ();
 	</thead>
 	<tbody>
 		<?php
-		if (!empty($this->banhistory)) :
-			$i = count($this->banhistory);
-			foreach ($this->banhistory as $userban) :
+		if (!empty($this->banHistory)) :
+			$i = count($this->banHistory);
+			foreach ($this->banHistory as $banInfo) :
 		?>
 		<tr>
 			<td class="center">
 				<?php echo $i--; ?>
 			</td>
 			<td>
-				<?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?>
+				<?php echo $banInfo->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?>
 			</td>
 			<td>
-				<?php if ($userban->created_time) echo KunenaDate::getInstance($userban->created_time)->toKunena('datetime'); ?>
+				<?php if ($banInfo->created_time) echo KunenaDate::getInstance($banInfo->created_time)->toKunena('datetime'); ?>
 			</td>
 			<td>
-				<?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($userban->expiration)->toKunena('datetime'); ?>
+				<?php echo $banInfo->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($banInfo->expiration)->toKunena('datetime'); ?>
 			</td>
 			<td>
-				<?php echo $userban->getCreator()->getLink(); ?>
+				<?php echo $banInfo->getCreator()->getLink(); ?>
 			</td>
 			<td>
 				<?php
-				if ($userban->modified_by && $userban->modified_time)
-					echo $userban->getModifier()->getLink() . ' ' . KunenaDate::getInstance($userban->modified_time)->toKunena('datetime');
+				if ($banInfo->modified_by && $banInfo->modified_time)
+					echo $banInfo->getModifier()->getLink() . ' ' . KunenaDate::getInstance($banInfo->modified_time)->toKunena('datetime');
 				?>
 			</td>
 		</tr>
-		<?php if ($userban->reason_public) : ?>
+		<?php if ($banInfo->reason_public) : ?>
 		<tr>
 			<td></td>
 			<td>
 				<b><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b>
 			</td>
 			<td colspan="4">
-				<?php echo KunenaHtmlParser::parseText ($userban->reason_public); ?>
+				<?php echo KunenaHtmlParser::parseText ($banInfo->reason_public); ?>
 			</td>
 		</tr>
 		<?php endif; ?>
-		<?php if($userban->reason_private) : ?>
+		<?php if($this->me->isModerator() && $banInfo->reason_private) : ?>
 		<tr>
 			<td></td>
 			<td>
 				<b><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b></td>
 			<td colspan="4">
-				<?php echo KunenaHtmlParser::parseText ($userban->reason_private); ?>
+				<?php echo KunenaHtmlParser::parseText ($banInfo->reason_private); ?>
 			</td>
 		</tr>
 		<?php endif; ?>
-		<?php if (is_array($userban->comments)) foreach ($userban->comments as $comment) : ?>
+		<?php if ($this->me->isModerator() && is_array($banInfo->comments)) foreach ($banInfo->comments as $comment) : ?>
 		<tr>
 			<td></td>
 			<td>

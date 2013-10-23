@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <h3>
-	<?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?>
+	<?php echo $this->headerText; ?>
 </h3>
 
 <table class="table table-bordered table-striped table-hover">
@@ -25,10 +25,10 @@ defined ( '_JEXEC' ) or die ();
 		</tr>
 	</thead>
 	<tbody>
-		<?php if ($this->bannedusers) :
+		<?php if ($this->userBans) :
 			$i = 0;
-			foreach ($this->bannedusers as $userban) :
-				$bantext = $userban->blocked ? JText::_('COM_KUNENA_BAN_UNBLOCK_USER') : JText::_('COM_KUNENA_BAN_UNBAN_USER');
+			foreach ($this->userBans as $banInfo) :
+				$bantext = $banInfo->blocked ? JText::_('COM_KUNENA_BAN_UNBLOCK_USER') : JText::_('COM_KUNENA_BAN_UNBAN_USER');
 				$i++;
 		?>
 		<tr>
@@ -36,16 +36,16 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $i; ?>
 			</td>
 			<td>
-				<?php echo $userban->getUser()->getLink() ?>
+				<?php echo $banInfo->getUser()->getLink() ?>
 			</td>
 			<td>
-				<?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); ?>
+				<?php echo $banInfo->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); ?>
 			</td>
 			<td>
-				<?php echo KunenaDate::getInstance($userban->created_time)->toKunena('datetime'); ?>
+				<?php echo KunenaDate::getInstance($banInfo->created_time)->toKunena('datetime'); ?>
 			</td>
 			<td>
-				<?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($userban->expiration)->toKunena('datetime'); ?>
+				<?php echo $banInfo->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($banInfo->expiration)->toKunena('datetime'); ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>

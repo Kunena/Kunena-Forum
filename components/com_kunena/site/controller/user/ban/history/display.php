@@ -41,7 +41,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->banHistory = KunenaUserBan::getUserHistory($this->profile->userid);
 
-		$this->headerText = JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name));
+		$this->headerText = JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->profile->getName());
 	}
 
 	protected function prepareDocument()

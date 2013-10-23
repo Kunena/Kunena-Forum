@@ -23,10 +23,11 @@ class Com_KunenaInstallerScript {
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.1' => '3.1.1',
-			'3.0' => '3.0.3',
-			'2.5' => '2.5.9',
-			'0' => '2.5.14' // Preferred version
+			'3.2' => '3.2',
+			'3.1' => '3.1.5',
+			'3.0' => '3.1.5',
+			'2.5' => '2.5.14',
+			'0' => '3.1.5' // Preferred version
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');

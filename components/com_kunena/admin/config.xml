@@ -904,18 +904,6 @@
 					value="2">COM_KUNENA_SYS_FIELD_OPTION_MODSEEDELETEDRESTOREADMINS</option>
 		</field>
 		<field
-				name="cfg_enable_usernamechange"
-				type="radio"
-				class="btn-group"
-				default="0"
-				label="COM_KUNENA_SYS_FIELD_LABEL_SECURITYUSERNAMECHANGE"
-				description="COM_KUNENA_SYS_FIELD_DESC_SECURITYUSERNAMECHANGE">
-			<option
-					value="0">JNO</option>
-			<option
-					value="1">JYES</option>
-		</field>
-		<field
 				name="cfg_floodprotection"
 				type="text"
 				label="COM_KUNENA_SYS_FIELD_LABEL_SECURITYFLOOD"

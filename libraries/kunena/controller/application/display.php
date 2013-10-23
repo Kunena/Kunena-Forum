@@ -1,8 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @package Kunena.Framework
+ * @subpackage Controller
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL

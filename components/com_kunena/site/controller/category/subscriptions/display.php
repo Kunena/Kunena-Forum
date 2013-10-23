@@ -34,8 +34,6 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		$limitstart = $this->input->getInt('limitstart', 0);
 		if ($limitstart < 0) $limitstart = 0;
 
-		$this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
-
 		list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($me->userid);
 
 		$topicIds = array();
@@ -65,6 +63,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			KunenaForumCategoryHelper::getNewTopics(array_keys($this->categories));
 		}
 		$this->pagination = new JPagination($total, $limitstart, $limit);
+
+		$this->headerText = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 	}
 
 	public function getActions()

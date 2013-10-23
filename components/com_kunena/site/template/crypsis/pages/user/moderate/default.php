@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Template.Crypsis
- * @subpackage User
+ * @subpackage Pages.User
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHtml::_('behavior.calendar');
-JHtml::_('behavior.tooltip');
-?>
+$content = $this->execute('User/Ban/Form');
+
+$this->addBreadcrumb($content->headerText, 'index.php?option=com_kunena&view=user&layout=moderate');
+
+echo $content;

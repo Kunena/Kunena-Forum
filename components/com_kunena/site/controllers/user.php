@@ -324,9 +324,7 @@ class KunenaControllerUser extends KunenaController {
 
 		// we only allow users to edit few fields
 		$allow = array('name', 'email', 'password', 'password2', 'params');
-		if ($this->config->usernamechange) {
-			if (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1)) $allow[] = 'username';
-		}
+		if (JComponentHelper::getParams('com_users')->get('change_login_name', 1)) $allow[] = 'username';
 
 		//clean request
 		$post = JRequest::get( 'post' );

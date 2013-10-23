@@ -94,7 +94,6 @@ class KunenaConfig extends JObject {
 	public $popusercount = 5;
 	public $showpopsubjectstats = 1;
 	public $popsubjectcount = 5;
-	public $usernamechange = 0;
 	// New 1.0.5 config variables
 	// bbcode options
 	public $showspoilertag = 1;
@@ -226,7 +225,7 @@ class KunenaConfig extends JObject {
 	public $autolink = 1;
 	public $access_component = 1;
 	// New for 3.1.0
-	public $legacy_urls = 1; // TODO: Add configuration option
+	public $legacy_urls = 1;
 	public $attachment_protection = 0;
 
 	public function __construct() {

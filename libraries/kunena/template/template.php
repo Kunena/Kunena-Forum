@@ -498,6 +498,14 @@ HTML;
 		return array($search, 'default');
 	}
 
+	public function isHmvc() {
+		static $hmvc;
+		if (is_null($hmvc)) {
+			$hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
+		}
+		return $hmvc;
+	}
+
 	/**
 	 * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
 	 *

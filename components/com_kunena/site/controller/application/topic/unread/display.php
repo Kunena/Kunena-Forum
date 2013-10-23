@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @subpackage Controllers.Topic
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -11,14 +11,15 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Class ComponentKunenaControllerApplicationMiscDisplay
+ * Class ComponentKunenaControllerApplicationTopicUnreadDisplay
  */
 class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaControllerApplicationDisplay
 {
 	public function exists()
 	{
-		return true;
+		return KunenaFactory::getTemplate()->isHmvc();
 	}
+
 	/*
 	 * Redirect unread layout to the page that contains the first unread message.
 	 */

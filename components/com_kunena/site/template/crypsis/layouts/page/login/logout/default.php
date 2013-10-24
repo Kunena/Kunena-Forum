@@ -34,7 +34,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<div class="divider"></div>
 				<?php if (!empty($this->announcementsUrl)) : ?>
 				<div>
-					<a href="<?php echo !empty($this->announcementsUrl); ?>" class="btn btn-link">
+					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
 						<i class="icon-pencil-2"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>
@@ -44,7 +44,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<div>
 					<a href="<?php echo $this->pm_link ?>" class="btn btn-small btn-link">
 						<i class="icon-mail"></i>
-						Inbox:
+						<?php echo $this->inboxCount ?>
 					</a>
 				</div>
 				<?php endif ?>

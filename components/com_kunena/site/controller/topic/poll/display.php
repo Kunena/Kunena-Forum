@@ -40,7 +40,6 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		$this->usercount = $this->poll->getUserCount();
 		$this->usersvoted = $this->poll->getUsers();
 		$this->voted = $this->poll->getMyVotes();
-		echo (int) $this->topic->isAuthorised('poll.vote');
 
 		if (!empty($this->alwaysVote)) {
 			// Authorise forced vote.
@@ -63,6 +62,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 
 				$loaded_users = KunenaUserHelper::loadUsers($userids_votes);
 
+				$i = 0;
 				foreach($loaded_users as $userid=>$user) {
 					if ( $i <= '4' ) $this->users_voted_list[] = $loaded_users[$userid]->getLink();
 					else $this->users_voted_morelist[] = $loaded_users[$userid]->getLink();

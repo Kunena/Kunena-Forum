@@ -82,6 +82,7 @@ $categoryActions = $this->getCategoryActions();
 				<?php //$this->displayCategoryActions() ?>
 			</td>
 			<td colspan="3">
+				<!-- TODO: Moderation tasks aren't displayed -->
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 				<!-- Bulk Actions -->
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>

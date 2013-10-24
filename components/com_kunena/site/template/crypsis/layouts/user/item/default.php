@@ -39,6 +39,8 @@ $tabs = $this->getTabs();
 	<?php $this->subLayout('User/Item/Social')->set('profile', $this->profile); ?>
 </div>
 
+<!-- TODO: Missing integration data (AUP points ...) -->
+
 <div class="clearfix"></div>
 
 <div class="tabs-left">

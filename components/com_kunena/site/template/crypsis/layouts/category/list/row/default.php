@@ -36,6 +36,7 @@ $avatar = $this->config->avataroncat > 0 ? $topic->getAuthor()->getAvatarImage()
 			<?php endif; ?>
 		</td>
 		<td>
+		<!-- TODO : Missing topic tags (keywords), topic hits, icons (favorite, locked) -->
 		<div>
 			<?php echo $this->getTopicLink($topic, 'last', KunenaHtmlParser::parseText($topic->subject, 30)) ?>
 		</div>

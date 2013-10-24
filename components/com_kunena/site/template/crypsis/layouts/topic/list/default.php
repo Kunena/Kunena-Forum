@@ -47,6 +47,7 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 				<?php endif; ?>
 			</tr>
 		</thead>
+		<!-- TODO: Moderation tasks aren't displayed -->
 		<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 		<tfoot>
 			<tr>
@@ -64,6 +65,7 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 			</tr>
 			</tfoot>
 		<?php endif; ?>
+		<!-- TODO: Missing forum jump -->
 		<tbody>
 			<?php foreach ($this->topics as $i => $topic)
 				echo $this->subLayout('Topic/List/Row')

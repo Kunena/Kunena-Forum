@@ -145,6 +145,7 @@ foreach ($this->sections as $section) :
 			<?php endforeach; endif; ?>
 		</table>
 	</div>
+	<!-- TODO: Missing moderators list -->
 </div>
 <!-- Begin: Category Module Position -->
 <?php echo $this->subLayout('Page/Module')->set('position', 'kunena_section_' . ++$mmm); ?>

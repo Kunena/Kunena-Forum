@@ -180,7 +180,7 @@ abstract class KunenaError {
 			} else {
 					echo '<p>Please contact the site owner.</p>';
 			}
-			echo '<hr /><p><a href="javascript:history.go(-1)">Go back</a></p><br />';
+			echo '<hr /><p><a href="javascript:window.history.back()">Go back</a></p><br />';
 			echo '</div>';
 			echo '
 	</body>

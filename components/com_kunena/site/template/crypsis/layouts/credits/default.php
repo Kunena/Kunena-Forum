@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 
 	<p>
 		<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK'); ?>
-		<a href="javascript: history.go(-1)" title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK'); ?>">
+		<a href="javascript:window.history.back()" title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK'); ?>">
 			<?php echo JText::_('COM_KUNENA_USER_RETURN_B'); ?>
 		</a>
 	</p>

@@ -18,11 +18,11 @@ if ($this->message->modified_time) {
 ?>
 <div>
 	<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
-	<div>
-		<span class="alert" <?php echo $datehover ?>> <?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
-			<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
-		</span> <br />
-		<br />
+	<span class="alert" <?php echo $datehover ?>> <?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
+		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
+	</span>
+	<br />
+	<br />
 	<?php endif ?>
 	<?php if(!empty($this->thankyou)): ?>
 	<div>
@@ -32,9 +32,8 @@ if ($this->message->modified_time) {
 		?>
 	</div>
 	<?php endif; ?>
-		<?php echo $this->subRequest('Message/Actions')->set('mesid', $this->message->id); ?>
-	</div>
-	</div>
+	<?php echo $this->subRequest('Message/Actions')->set('mesid', $this->message->id); ?>
 </div>
+
 
 <?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>

@@ -102,9 +102,9 @@ defined ( '_JEXEC' ) or die ();
 						onmouseover="javascript:document.id('helpbox').set('value', '<?php
 						echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE', true); ?>')" />
 				<img id="kbutton-poll-add"
-						src="<?php echo $this->ktemplate->getImagePath('icons/poll_add_options.png') ?>"
+						src="<?php echo $this->template->getImagePath('icons/poll_add_options.png') ?>"
 						onmouseover="javascript:document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION', true); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>" /> <img id="kbutton-poll-rem"
-						src="<?php echo $this->ktemplate->getImagePath('icons/poll_rem_options.png' ) ?>"
+						src="<?php echo $this->template->getImagePath('icons/poll_rem_options.png' ) ?>"
 						onmouseover="javascript:document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION', true); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 				<?php echo JHtml::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN', true).'\')')); ?>

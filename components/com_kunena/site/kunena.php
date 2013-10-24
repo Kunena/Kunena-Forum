@@ -76,7 +76,9 @@ $task = $input->getCmd('task', 'display');
 // Get HMVC controller and if exists, execute it.
 $controller = KunenaControllerApplication::getInstance($view, $subview, $task, $input, $app);
 if ($controller) {
+	KunenaRoute::cacheLoad();
 	echo $controller->execute();
+	KunenaRoute::cacheStore();
 
 } elseif (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
 	// Execute old MVC.

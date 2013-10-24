@@ -64,7 +64,7 @@ $this->k=0;
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<h2>
-		<?php echo $this->escape($this->title)?>
+		<?php echo $this->escape($this->headerText)?>
 	</h2>
 
 	<div class="well">
@@ -116,14 +116,14 @@ $this->k=0;
 							<?php foreach ($this->topicIcons as $id=>$icon): ?>
 							<span class="kiconsel">
 							<input type="radio" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
-							<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" /> </span>
+							<img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" /> </span>
 							<?php endforeach; ?>
 						</div>
 					</div>
 					<?php endif; ?>
 					<?php
 					// Show bbcode editor
-					$this->displayTemplateFile('topic', 'edit', 'editor');
+					echo $this->subLayout('Topic/Edit/Editor')->setProperties($this->getProperties());
 					?>
 					<?php if ($this->allowedExtensions) : ?>
 					<div class="control-group krow<?php echo 1 + $this->k^=1;?>" id="kpost-attachments">
@@ -136,7 +136,11 @@ $this->k=0;
 									<input id="kupload" class="kfile-input" name="kattachment" type="file" />
 								</div>
 								<a href="#" class="kattachment-remove btn" style="display: none"><?php echo	JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a> <a href="#" class="kattachment-insert btn" style="display: none"><?php echo	JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a> </div>
-							<?php $this->displayAttachments($this->message); ?>
+							<?php
+							if (!empty($this->attachments))
+								echo $this->subLayout('Topic/Edit/Attachments')
+									->set('attachments', $this->attachments);
+							?>
 						</div>
 					</div>
 					<?php endif; ?>
@@ -156,7 +160,7 @@ $this->k=0;
 						</div>
 					</div>
 					<?php endif; ?>
-					<?php if ($this->canSubscribe()) : ?>
+					<?php if ($this->canSubscribe) : ?>
 					<div class="control-group">
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
 						<div class="controls">
@@ -198,4 +202,7 @@ if (!$this->message->name) {
 }
 ?>
 </form>
-<?php if ($this->hasThreadHistory ()) $this->displayThreadHistory (); ?>
+<?php
+if ($this->config->showhistory && $this->topic->exists())
+	echo $this->subRequest('Topic/Form/History', new JInput(array('id'=>$this->topic->id)));
+?>

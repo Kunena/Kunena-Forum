@@ -147,22 +147,21 @@ JHtml::_('behavior.tooltip');
 							$img_yes = '<span class="state publish"><span class="text">Enabled</span></span>';
 							$img_no = '<span class="state unpublish"><span class="text">Disabled</span></span>';
 							if($this->pagination->total > 0) :
-							foreach($this->items as $user) {
-							$kunena_user = KunenaFactory::getUser($user->id);
-							$userEnabled = $kunena_user->isBlocked() ? $img_no : $img_yes;
-							$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
-							$titleUserBlock = $kunena_user->isBlocked() ?  JText::_( 'COM_KUNENA_USERS_LABEL_BLOCKED' ) : JText::_( 'COM_KUNENA_USERS_LABEL_ENABLED' );
-							$userBanned = $kunena_user->isBanned() ? $img_yes : $img_no;
-							$userBannedTask = $kunena_user->isBanned() ? 'unban' : 'ban';
-							$titleUserBanned = $kunena_user->isBanned() ? JText::_( 'COM_KUNENA_USERS_LABEL_BANNED' ) : JText::_( 'COM_KUNENA_USERS_LABEL_NOT_BANNED' );
+							foreach($this->users as $user) {
+							$userEnabled = $user->isBlocked() ? $img_no : $img_yes;
+							$userBlockTask =  $user->isBlocked() ? 'unblock' : 'block';
+							$titleUserBlock = $user->isBlocked() ?  JText::_( 'COM_KUNENA_USERS_LABEL_BLOCKED' ) : JText::_( 'COM_KUNENA_USERS_LABEL_ENABLED' );
+							$userBanned = $user->isBanned() ? $img_yes : $img_no;
+							$userBannedTask = $user->isBanned() ? 'unban' : 'ban';
+							$titleUserBanned = $user->isBanned() ? JText::_( 'COM_KUNENA_USERS_LABEL_BANNED' ) : JText::_( 'COM_KUNENA_USERS_LABEL_NOT_BANNED' );
 							?>
 								<tr class="row<?php echo $k; ?>">
 									<td class="center">
-										<?php echo JHtml::_('grid.id', $i, intval($user->id)) ?>
+										<?php echo JHtml::_('grid.id', $i, intval($user->userid)) ?>
 									</td>
 									<td>
-										<span class="editlinktip hasTip" title="<?php echo $this->escape($user->username.'::'.$kunena_user->getAvatarImage('kavatar', 128, 128)); ?>">
-											<?php echo $kunena_user->getAvatarImage('kavatar', 24, 24); ?>
+										<span class="editlinktip hasTip" title="<?php echo $this->escape($user->username.'::'.$user->getAvatarImage('kavatar', 128, 128)); ?>">
+											<?php echo $user->getAvatarImage('kavatar', 24, 24); ?>
 											<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->username); ?></a>
 											<small>
 												<?php echo JText::sprintf('(Name: %s)', $this->escape($user->name));?>
@@ -170,11 +169,11 @@ JHtml::_('behavior.tooltip');
 										</span>
 									</td>
 									<td>
-										<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->email); ?></a>
+										<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->email); ?></a>
 									</td>
 									<td class="center">
-										<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
-										<?php if ($kunena_user->signature) { ?>
+										<span class="editlinktip <?php echo ($user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($user->signature); ?> ">
+										<?php if ($user->signature) { ?>
 											<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
 										<?php } else { ?>
 											<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
@@ -193,7 +192,7 @@ JHtml::_('behavior.tooltip');
 									</td>
 									<td class="center">
 										<?php
-										if ($kunena_user->moderator) {
+										if ($user->moderator) {
 											echo JText::_('COM_KUNENA_YES');
 										} else {
 											echo JText::_('COM_KUNENA_NO');
@@ -201,7 +200,7 @@ JHtml::_('behavior.tooltip');
 										?>
 									</td>
 									<td width="1%" class="center">
-										<?php echo $this->escape($kunena_user->userid); ?>
+										<?php echo $this->escape($user->userid); ?>
 									</td>
 								</tr>
 							<?php

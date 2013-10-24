@@ -497,9 +497,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   $path
 	 * @return  KunenaControllerDisplay
 	 */
-	public function subRequest($path)
+	public function subRequest($path, Jinput $input = null)
 	{
-		return KunenaRequest::factory($path.'/Display')->set('layout', $this->getLayout());
+		return KunenaRequest::factory($path.'/Display', $input)->set('layout', $this->getLayout());
 	}
 
 	/**

@@ -11,22 +11,14 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
-<table class="table" style="border:none;" >
-	<tbody>
-		<tr>
-			<td rowspan="2" class="span3 hidden-phone" style="border:none;vertical-align:top !important;">
-				<?php $this->displayMessageProfile('vertical') ?>
-			</td>
-			<td class="span9" style="border:none;vertical-align:top !important;">
-				<?php $this->displayMessageContents() ?>
-			</td>
-		</tr>
-		<tr>
-			<td style="border:none;">
-				<?php $this->displayMessageActions() ?>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<div class="row-fluid">
+	<div class="span2 hidden-phone <?php echo $this->profile->isMyself() ? 'pull-left' : 'pull-right'; ?>">
+		<?php $this->displayMessageProfile('vertical') ?>
+	</div>
+	<div class="span10">
+		<?php $this->displayMessageContents() ?>
+		<?php $this->displayMessageActions() ?>
+	</div>
+</div>
 
 <?php echo $this->subLayout('Page/Module')->set('position', 'kunena_msg_' . $this->mmm); ?>

@@ -26,7 +26,7 @@ $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 ?>
 
-<div class="modal hide fade" id="kreply<?php echo $message->displayField('id') ?>_form" class="kreply-form" data-backdrop="false" style="position: relative; top: 10px; left: 0; right: -10px; width:auto; margin:0; z-index: 1;">
+<div class="modal hide fade" id="kreply<?php echo $message->displayField('id') ?>_form" data-backdrop="false" style="position: relative; top: 0; left: -20px; right: -10px; width:auto; margin:5px; z-index: 1;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>Reply to <?php echo $author->getLink() ?></h3>
@@ -49,12 +49,15 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 		<textarea class="span12" name="message" rows="6" cols="60"></textarea>
 		<?php if ($topic->authorise('subscribe')) : ?>
 		<input type="checkbox" name="subscribeMe" value="1" <?php echo ($config->subscriptionschecked == 1) ? 'checked="checked"' : '' ?> />
-		<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i> <br />
+		<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
+		<br />
 		<?php endif; ?>
 		</div>
 		<div class="modal-footer">
-			<input type="submit" class="btn kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_SUBMIT') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
-			<button class="btn" data-dismiss="modal" aria-hidden="true" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>"><?php echo JText::_('COM_KUNENA_CANCEL') ?></button>
+			<input type="submit" class="btn btn-primary kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_SUBMIT') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
+			<button class="btn" data-dismiss="modal" aria-hidden="true" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>">
+				<?php echo JText::_('COM_KUNENA_CANCEL') ?>
+			</button>
 			<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>
 		</div>
 	</form>

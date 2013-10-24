@@ -145,28 +145,27 @@ JHtml::_('dropdown.init');
 				$img_no = '<i class="icon-cancel"></i>';
 				$img_yes = '<i class="icon-checkmark"></i>';
 				if($this->pagination->total > 0) :
-				foreach($this->items as $item) :
-				$kunena_user = KunenaFactory::getUser($item->id);
-				$userBlockTask = $kunena_user->isBlocked() ? 'unblock' : 'block';
-				$userBannedTask = $kunena_user->isBanned() ? 'unban' : 'ban';
+				foreach($this->users as $user) :
+				$userBlockTask = $user->isBlocked() ? 'unblock' : 'block';
+				$userBannedTask = $user->isBanned() ? 'unban' : 'ban';
 				?>
 					<tr>
 						<td>
-							<?php echo JHtml::_('grid.id', $i, intval($item->id)) ?>
+							<?php echo JHtml::_('grid.id', $i, intval($user->userid)) ?>
 						</td>
 						<td>
-							<span class="editlinktip hasTip" title="<?php echo $this->escape($item->username. '::'.$kunena_user->getAvatarImage('kavatar', 128, 128)); ?> ">
-								<?php echo $kunena_user->getAvatarImage('kavatar', 24, 24); ?>
-								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($item->username); ?></a>
+							<span class="editlinktip hasTip" title="<?php echo $this->escape($user->username. '::'.$user->getAvatarImage('kavatar', 128, 128)); ?> ">
+								<?php echo $user->getAvatarImage('kavatar', 24, 24); ?>
+								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->username); ?></a>
 								<small>
-									(<?php echo JText::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($item->name));?>)
+									(<?php echo JText::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($user->name));?>)
 								</small>
 							</span>
 						</td>
-						<td class="hidden-phone"><?php echo $this->escape($item->email); ?></td>
+						<td class="hidden-phone"><?php echo $this->escape($user->email); ?></td>
 						<td class="center hidden-phone hidden-tablet">
-							<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
-								<?php if ($kunena_user->signature) { ?>
+							<span class="editlinktip <?php echo ($user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($user->signature); ?> ">
+								<?php if ($user->signature) { ?>
 									<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
 								<?php } else { ?>
 									<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
@@ -174,21 +173,21 @@ JHtml::_('dropdown.init');
 							</span>
 						</td>
 						<td class="center hidden-phone">
-							<a class ="btn btn-micro <?php echo (!$item->block ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
-								<?php echo (!$item->block ? $img_yes : $img_no); ?>
+							<a class ="btn btn-micro <?php echo (!$user->isBlocked() ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
+								<?php echo (!$user->isBlocked() ? $img_yes : $img_no); ?>
 							</a>
 						</td>
 						<td class="center hidden-phone">
-							<a class ="btn btn-micro <?php echo ($kunena_user->isBanned() ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
-								<?php echo ($kunena_user->isBanned() ? $img_yes : $img_no); ?>
+							<a class ="btn btn-micro <?php echo ($user->isBanned() ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
+								<?php echo ($user->isBanned() ? $img_yes : $img_no); ?>
 							</a>
 						</td>
 						<td class="center hidden-phone hidden-tablet">
-							<span class ="btn btn-micro <?php echo ($kunena_user->moderator ? 'active':''); ?>">
-								<?php echo ($kunena_user->moderator ? $img_yes : $img_no); ?>
+							<span class ="btn btn-micro <?php echo ($user->moderator ? 'active':''); ?>">
+								<?php echo ($user->moderator ? $img_yes : $img_no); ?>
 							</span>
 						</td>
-						<td class="center"><?php echo $this->escape($item->id); ?></td>
+						<td class="center"><?php echo $this->escape($user->userid); ?></td>
 					</tr>
 				<?php $i++;
 				endforeach;

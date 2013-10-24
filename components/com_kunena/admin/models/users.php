@@ -221,6 +221,52 @@ class KunenaAdminModelUsers extends JModelList {
 	}
 
 	/**
+	 * Method to get User objects of data items.
+	 *
+	 * @return  KunenaUser  List of KunenaUser objects found.
+	 *
+	 * @since   3.0
+	*/
+	public function getItems() {
+		// Get a storage key.
+		$store = $this->getStoreId();
+
+		// Try to load the data from internal storage.
+		if (isset($this->cache[$store])) {
+			return $this->cache[$store];
+		}
+
+		// Load the list items.
+		$query = $this->_getListQuery();
+		$items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			 $this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		$instances = array();
+		$e_userids = array();
+		foreach ( $items as $user ) {
+			$e_userids[] = $user->id;
+			$user->blocked = $user->block;
+			$instance = new KunenaUser (false);
+			$instance->setProperties ( $user );
+			$instance->exists(true);
+			$instances [$instance->userid] = $instance;
+		}
+
+		// Preload avatars if configured
+		$avatars = KunenaFactory::getAvatarIntegration();
+		$avatars->load($e_userids);
+
+		// Add the items to the internal cache.
+		$this->cache[$store] = $instances;
+		return $this->cache[$store];
+	}
+
+	/**
 	 * Method to get html list of Kunena categories
 	 *
 	 * @return  string

@@ -229,6 +229,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @return  string  The output of the the template file.
 	 *
 	 * @throws  Exception
+	 * @deprecated
 	 */
 	public function loadTemplate($tpl = null)
 	{

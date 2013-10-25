@@ -9,14 +9,16 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+?>
 
-echo $this->subLayout('Message/Item')
-	->set('profile', $this->profile)
-	->set('topic', $this->topic)
-	->set('message', $this->message)
-	->set('numLink', $this->numLink)
-	->set('view', $this)
-	->set('signatureHtml', $this->signatureHtml)
-	->set('reportMessageLink', $this->reportMessageLink)
-	->set('ipLink', isset($this->ipLink) ? $this->ipLink : null)
-	->set('attachments', $this->attachments);
+<div class="row-fluid">
+	<div class="span2 hidden-phone <?php echo $this->profile->isMyself() ? 'pull-left' : 'pull-right'; ?>">
+		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('circle'); ?>
+	</div>
+	<div class="span10">
+		<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()) ?>
+		<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id) ?>
+	</div>
+</div>
+
+<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_msg_' . $this->location); ?>

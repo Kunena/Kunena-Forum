@@ -388,6 +388,29 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * Resolve/get current topic.
+	 *
+	 * @return  KunenaForumTopic  Returns this topic or move target if this was moved.
+	 *
+	 * @throws  RuntimeException  If there is a redirect loop on moved_id.
+	 *
+	 * @since 3.1
+	 */
+	public function getTopic() {
+		$ids = array();
+		$topic = $this;
+		// If topic has been moved, find the new topic
+		while ($topic->moved_id) {
+			if (isset($ids[$topic->moved_id])) {
+				throw new RuntimeException(JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP'), 500);
+			}
+			$ids[$topic->moved_id] = 1;
+			$topic = KunenaForumTopicHelper::get($topic->moved_id);
+		}
+		return $topic;
+	}
+
+	/**
 	 * @param string $field
 	 *
 	 * @return int|string

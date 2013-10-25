@@ -11,22 +11,16 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Class ComponentKunenaControllerTopicActionsDisplay
+ * Class ComponentKunenaControllerTopicItemActionsDisplay
  */
-class ComponentKunenaControllerTopicActionsDisplay extends KunenaControllerDisplay
+class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerDisplay
 {
+	protected $name = 'Topic/Item/Actions';
 	/**
 	 * @var KunenaForumTopic
 	 */
 	public $topic;
 	public $topicButtons;
-
-	protected function display() {
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Topic/Actions')->setProperties($this->getProperties());
-
-		return $content;
-	}
 
 	protected function before()
 	{
@@ -46,7 +40,7 @@ class ComponentKunenaControllerTopicActionsDisplay extends KunenaControllerDispl
 		$this->topicButtons = new JObject();
 
 		// Reply topic
-		if ($this->topic->authorise('reply')) {
+		if ($this->topic->isAuthorised('reply')) {
 			// this user is allowed to reply to this topic
 			$this->topicButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication'));
 		}
@@ -57,7 +51,7 @@ class ComponentKunenaControllerTopicActionsDisplay extends KunenaControllerDispl
 		if ($usertopic->subscribed) {
 			// this user is allowed to unsubscribe
 			$this->topicButtons->set('subscribe', $this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user'));
-		} elseif ($this->topic->authorise('subscribe')) {
+		} elseif ($this->topic->isAuthorised('subscribe')) {
 			// this user is allowed to subscribe
 			$this->topicButtons->set('subscribe', $this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user'));
 		}
@@ -66,13 +60,13 @@ class ComponentKunenaControllerTopicActionsDisplay extends KunenaControllerDispl
 		if ($usertopic->favorite) {
 			// this user is allowed to unfavorite
 			$this->topicButtons->set('favorite', $this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user'));
-		} elseif ($this->topic->authorise('favorite')) {
+		} elseif ($this->topic->isAuthorised('favorite')) {
 			// this user is allowed to add a favorite
 			$this->topicButtons->set('favorite', $this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user'));
 		}
 
 		// Moderator specific buttons
-		if ($this->topic->getCategory()->authorise('moderate')) {
+		if ($this->topic->getCategory()->isAuthorised('moderate')) {
 			$sticky = $this->topic->ordering ? 'unsticky' : 'sticky';
 			$lock = $this->topic->locked ? 'unlock' : 'lock';
 

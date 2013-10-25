@@ -184,7 +184,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 */
 	public function subLayout($path)
 	{
-		return parent::subLayout($path)->setLegacy($this->legacy);
+		return parent::subLayout($path)->setLegacy($this->legacy)->setLayout($this->layout);
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {

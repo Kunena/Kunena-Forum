@@ -561,14 +561,29 @@ class KunenaUser extends JObject {
 	 * @param string $layout
 	 */
 	public function setTopicLayout( $layout = 'default' ) {
-		if ($layout != 'default') $layout = $this->getTopicLayout( $layout );
+		if ($layout != 'default') $layout = $this->getTopicLayout($layout);
 
-		$this->_app->setUserState ( 'com_kunena.topic_layout', $layout );
+		$this->_app->setUserState ('com_kunena.topic_layout', $layout);
 
-		if ($this->userid) {
+		if ($this->userid && $this->view != $layout) {
 			$this->view = $layout;
 			$this->save(true);
 		}
+	}
+
+	/**
+	 * Render user signature.
+	 *
+	 * @return string
+	 *
+	 * @since 3.1
+	 */
+	public function getSignature() {
+		static $html;
+		if (!isset($html)) {
+			$html = KunenaHtmlParser::parseBBCode($this->signature, $this, KunenaConfig::getInstance()->maxsig);
+		}
+		return $html;
 	}
 
 	/**

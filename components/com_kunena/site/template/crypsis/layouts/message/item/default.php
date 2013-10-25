@@ -11,6 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $isReply = $this->message->id != $this->topic->first_post_id;
+$signature = $this->profile->getSignature();
+$this->attachments = $this->message->getAttachments();
 ?>
 
 <div class="chat row-fluid">
@@ -26,8 +28,8 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 			?>
 			</small>
 			<small class="pull-right">
-				<?php echo KunenaDate::getInstance($this->message->time)->toSpan('config_post_dateformat', 'config_post_dateformat_hover') ?>
-				<?php echo $this->numLink ?>
+				<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover') ?>
+				<a href="#<?php echo $this->message->id; ?>">#<?php echo $this->location; ?></a>
 			</small>
 		</h3>
 	<?php if ($this->message->subject) : ?>
@@ -36,11 +38,9 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 		</h3>
 	<?php endif; ?>
 
-		<hr />
 		<p class="kmsg">
-			<?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this->view) ?>
+			<?php echo $this->message->displayField('message') ?>
 		</p>
-		<hr />
 		<?php if (!empty($this->attachments)) : ?>
 		<h4>
 			<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
@@ -57,9 +57,9 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 		</ul>
 		<?php endif; ?>
 
-		<?php if ($this->signatureHtml) : ?>
+		<?php if ($signature) : ?>
 		<div class="pull-left">
-			<?php echo $this->signatureHtml ?>
+			<?php echo $signature ?>
 		</div>
 		<?php endif ?>
 		<?php if (!empty($this->reportMessageLink)) :?>

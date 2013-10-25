@@ -16,58 +16,49 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
 ?>
 <?php if ($this->category->headerdesc) : ?>
+<div class="alert alert-info">
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
+	<?php echo $this->category->displayField('headerdesc'); ?>
+</div>
+<?php endif; ?>
 
-<div id="kforum-head" class="<?php echo isset ( $this->category->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>"> <?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ) ?> </div>
-<?php endif ?>
+<div class="pull-right">
+	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+</div>
+
+<h3>
+	<?php echo $this->topic->getIcon(); ?>
+	<?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->topic->displayField('subject') ?>
+</h3>
+
+<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_topictitle'); ?>
+<div class="clearfix"></div>
+
 <?php
-	$this->displayPoll();
-	echo $this->subLayout('Page/Module')->set('position', 'kunena_poll');
-	$this->displayTopicActions();
+echo $this->subRequest('Topic/Poll')->set('id', $this->topic->id);
+echo $this->subLayout('Page/Module')->set('position', 'kunena_poll');
+echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id);
+echo $this->subRequest('Topic/Item/Message')->set('mesid', $this->message->id)->set('location', $this->message->replynum);
 ?>
-<div>
-  <div>
-    <h3>
-	    <?php echo $this->topic->getIcon(); ?>
-	    <span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></span></h3>
-    <?php if (!empty($this->keywords)) : ?>
-    <div><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?></div>
-    <?php endif ?>
-  </div>
-  <div>
-    <div>
-      <?php $this->displayMessage($this->state->get('item.mesid'), $this->messages[$this->state->get('item.mesid')]) ?>
-      <?php $this->displayTopicActions(); ?>
-    </div>
-  </div>
+
+<h3>
+	<?php echo JText::sprintf('COM_KUNENA_TOPIC_REPLIES_TITLE', $this->escape($this->topic->subject)) ?>
+</h3>
+
+<table class="table table-striped table-bordered table-hover">
+<?php foreach ($this->messages as $id=>$message) {
+	echo $this->subLayout('Topic/Item/Message')
+		->set('message', $message)
+		->set('selected', $this->message->id)
+		->setLayout('row');
+}
+?>
+</table>
+
+<div class="pull-right">
+	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
 </div>
-<div>
-  <div>
-    <h3><span><?php echo JText::sprintf('COM_KUNENA_TOPIC_REPLIES_TITLE', $this->escape($this->topic->subject)) ?></span></h3>
-  </div>
-  <div>
-    <div>
-      <table>
-        <?php foreach ( $this->messages as $id=>$message ) $this->displayMessage($id, $message, 'row') ?>
-      </table>
-    </div>
-  </div>
-</div>
-<div>
-  <div>
-    <div>
-      <?php $this->displayForumJump (); ?>
-    </div>
-    <?php if (!empty ( $this->moderators ) ) : ?>
-    <div>
-      <?php
-				echo '' . JText::_('COM_KUNENA_MODERATORS') . ": ";
-				$modlinks = array();
-				foreach ( $this->moderators as $moderator ) {
-					$modlinks[] = $moderator->getLink();
-				}
-				echo implode(', ', $modlinks);
-				?>
-    </div>
-    <?php endif; ?>
-  </div>
-</div>
+<?php echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id); ?>
+<div class="clearfix"></div>
+
+<?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?>

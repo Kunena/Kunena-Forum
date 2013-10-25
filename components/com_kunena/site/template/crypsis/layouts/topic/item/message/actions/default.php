@@ -32,7 +32,7 @@ if ($this->message->modified_time) {
 		?>
 	</div>
 	<?php endif; ?>
-	<?php echo $this->subRequest('Message/Actions')->set('mesid', $this->message->id); ?>
+	<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 </div>
 
 

@@ -1,0 +1,103 @@
+<?php
+/**
+ * Kunena Component
+ * @package Kunena.Site
+ * @subpackage Controllers.Message
+ *
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
+
+/**
+ * Class ComponentKunenaControllerTopicItemMessageDisplay
+ */
+class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerDisplay
+{
+	protected $name = 'Topic/Item/Message';
+
+	public $me;
+	public $message;
+	public $topic;
+	public $category;
+	public $profile;
+	public $reportMessageLink;
+	public $ipLink;
+
+	protected function before()
+	{
+		parent::before();
+
+		$mesid = $this->input->getInt('mesid', 0);
+
+		$this->me = KunenaUserHelper::getMyself();
+		$this->location = $this->input->getInt('location', 0);
+		$this->message = KunenaForumMessageHelper::get($mesid);
+		$this->message->tryAuthorise();
+		$this->topic = $this->message->getTopic();
+		$this->category = $this->topic->getCategory();
+		$this->profile = $this->message->getAuthor();
+
+		// Thank you info and buttons
+		$this->thankyou = array();
+		$this->total_thankyou = 0;
+		$this->more_thankyou= 0;
+
+		if (isset($this->message->thankyou))
+		{
+			if ($this->config->showthankyou && $this->profile->exists())
+			{
+				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JSession::getFormToken() . '=1';
+
+				// for normal users, show only limited number of thankyou (config->thankyou_max)
+				if (!$this->me->isAdmin() && !$this->me->isModerator())
+				{
+					if (count($this->message->thankyou) > $this->config->thankyou_max)
+					{
+						$this->more_thankyou = count($this->message->thankyou) - $this->config->thankyou_max;
+					}
+					$this->total_thankyou =count($this->message->thankyou);
+					$thankyous = array_slice($this->message->thankyou, 0, $this->config->thankyou_max, true);
+				} else
+				{
+					$thankyous = $this->message->thankyou;
+				}
+
+				$userids_thankyous = array();
+				foreach ($thankyous as $userid=>$time)
+				{
+					$userids_thankyous[] = $userid;
+				}
+
+				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
+
+				foreach($loaded_users as $userid=>$user)
+				{
+					$thankyou_delete = $this->message->isAuthorised('unthankyou') ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
+						. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
+					$this->thankyou[] = $loaded_users[$userid]->getLink().$thankyou_delete;
+				}
+			}
+		}
+
+		if ($this->config->reportmsg && $this->me->exists())
+		{
+			$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid='.intval($this->category->id).'&id='.intval($this->message->thread).'&mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
+		}
+
+
+		//Show admins the IP address of the user:
+		if ($this->category->isAuthorised('admin') || ($this->category->isAuthorised('moderate') && !$this->config->hide_ip))
+		{
+			if (!empty($this->message->ip))
+			{
+				$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank"> IP: ' . $this->message->ip . '</a>';
+			}
+			else
+			{
+				$this->ipLink = '&nbsp;';
+			}
+		}
+	}
+}

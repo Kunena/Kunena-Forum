@@ -11,11 +11,11 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Class ComponentKunenaControllerMessageActionsDisplay
+ * Class ComponentKunenaControllerMessageItemActionsDisplay
  */
-class ComponentKunenaControllerMessageActionsDisplay extends KunenaControllerDisplay
+class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControllerDisplay
 {
-	protected $name = 'Message/Actions';
+	protected $name = 'Message/Item/Actions';
 
 	/** @var KunenaForumTopic */
 	public $topic;
@@ -44,7 +44,7 @@ class ComponentKunenaControllerMessageActionsDisplay extends KunenaControllerDis
 		$this->message_closed = null;
 
 		// Reply / Quote
-		if ($this->message->authorise('reply', null, false)) {
+		if ($this->message->isAuthorised('reply')) {
 			if ($me->exists() && !KunenaSpamRecaptcha::getInstance()->enabled()) {
 				$this->messageButtons->set('quickreply', $this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}"));
 			}
@@ -57,7 +57,7 @@ class ComponentKunenaControllerMessageActionsDisplay extends KunenaControllerDis
 		}
 
 		// Thank you
-		if($this->message->authorise('thankyou') && !array_key_exists($me->userid, $this->message->thankyou)) {
+		if($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou)) {
 			$this->messageButtons->set('thankyou', $this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user'));
 		}
 
@@ -67,16 +67,16 @@ class ComponentKunenaControllerMessageActionsDisplay extends KunenaControllerDis
 		}
 
 		// Moderation and own post actions
-		$this->message->authorise('edit') ? $this->messageButtons->set('edit', $this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation')) : null;
-		$this->message->authorise('move') ? $this->messageButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation')) : null;
+		$this->message->isAuthorised('edit') ? $this->messageButtons->set('edit', $this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation')) : null;
+		$this->message->isAuthorised('move') ? $this->messageButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation')) : null;
 		if ($this->message->hold == 1) {
-			$this->message->authorise('approve') ? $this->messageButtons->set('publish', $this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation')) : null;
-			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
+			$this->message->isAuthorised('approve') ? $this->messageButtons->set('publish', $this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation')) : null;
+			$this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		} elseif ($this->message->hold == 2 || $this->message->hold == 3) {
-			$this->message->authorise('undelete') ? $this->messageButtons->set('undelete', $this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation')) : null;
-			$this->message->authorise('permdelete') ? $this->messageButtons->set('permdelete', $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent')) : null;
+			$this->message->isAuthorised('undelete') ? $this->messageButtons->set('undelete', $this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation')) : null;
+			$this->message->isAuthorised('permdelete') ? $this->messageButtons->set('permdelete', $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent')) : null;
 		} else {
-			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
+			$this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
 
 		JPluginHelper::importPlugin('kunena');

@@ -38,11 +38,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$limit = $this->state->get('list.limit');
 
 		// Exclude super admins.
-		// TODO: figure out a better way...
-		$db = JFactory::getDbo();
-		$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id=8";
-		$db->setQuery($query);
-		$superadmins = (array) $db->loadColumn();
+		$superadmins = JAccess::getUsersByGroup(8);
 
 		$finder = new KunenaUserFinder();
 		$finder

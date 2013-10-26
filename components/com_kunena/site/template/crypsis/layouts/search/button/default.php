@@ -14,6 +14,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 
 <form action="<?php echo KunenaRoute::_() ?>" method="post" class="form-search">
+ <div class="input-append">
 	<input type="hidden" name="view" value="search" />
 	<input type="hidden" name="task" value="results" />
 	<?php if (isset($this->catid)) : ?>
@@ -28,4 +29,5 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 	<input  class="input-medium search-query" type="text" name="q" value="" placeholder="" />
 
 	<button type="submit" class="btn"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></button>
+ </div>
 </form>

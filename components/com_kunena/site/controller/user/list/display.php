@@ -1,34 +1,45 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.User
+ * @package     Kunena.Site
+ * @subpackage  Controller.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerUserListDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 {
 	protected $name = 'User/List';
 
 	public $state;
+
 	public $me;
+
 	public $total;
+
 	public $users;
+
 	public $pagination;
 
+	/**
+	 * Load user list.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
 
 		require_once KPATH_SITE . '/models/user.php';
-		$model = new KunenaModelUser();
+		$model = new KunenaModelUser;
 		$this->state = $model->getState();
 
 		$this->me = KunenaUserHelper::getMyself();
@@ -44,7 +55,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$db->setQuery($query);
 		$superadmins = (array) $db->loadColumn();
 
-		$finder = new KunenaUserFinder();
+		$finder = new KunenaUserFinder;
 		$finder
 			->filterByConfiguration($superadmins)
 			->filterByName($this->state->get('list.search'));
@@ -59,7 +70,13 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			->find();
 	}
 
-	protected function prepareDocument(){
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
+	protected function prepareDocument()
+	{
 		$page = $this->pagination->pagesCurrent;
 		$pages = $this->pagination->pagesTotal;
 		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';

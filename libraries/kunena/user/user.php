@@ -118,6 +118,75 @@ class KunenaUser extends JObject {
 	}
 
 	/**
+	 * Returns true if user is authorised to do the action.
+	 *
+	 * @param string     $action
+	 * @param KunenaUser $user
+	 *
+	 * @return bool
+	 *
+	 * @since 3.1
+	 */
+	public function isAuthorised($action='read', KunenaUser $user = null) {
+		return !$this->tryAuthorise($action, $user, false);
+	}
+
+	/**
+	 * Throws an exception if user isn't authorised to do the action.
+	 *
+	 * @param string      $action
+	 * @param KunenaUser  $user
+	 * @param bool        $throw
+	 *
+	 * @return KunenaExceptionAuthorise|null
+	 * @throws KunenaExceptionAuthorise
+	 * @throws InvalidArgumentException
+	 *
+	 * @since 3.1
+	 */
+	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true) {
+		// Special case to ignore authorisation.
+		if ($action == 'none') {
+			return null;
+		}
+
+		// Load user if not given.
+		if ($user === null) {
+			$user = KunenaUserHelper::getMyself();
+		}
+
+		$config = KunenaConfig::getInstance();
+		$exception = null;
+
+		switch ($action) {
+			case 'read' :
+				if (!isset($this->registerDate) || (!$user->exists() && !$config->pubprofile))
+				{
+					$exception = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 403);
+				}
+				break;
+			case 'edit' :
+				if (!isset($this->registerDate) || !$this->isMyself())
+				{
+					$exception = new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), 403);
+				}
+				break;
+			case 'ban' :
+				$banInfo = KunenaUserBan::getInstanceByUserid($this->userid, true);
+				if (!$banInfo->canBan()) {
+					$exception =  new KunenaExceptionAuthorise($banInfo->getError(), 403);
+				}
+				break;
+			default :
+				throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
+		}
+
+		// Throw or return the exception.
+		if ($throw && $exception) throw $exception;
+		return $exception;
+	}
+
+	/**
 	 * Method to get the user table object.
 	 *
 	 * @param	string	$type	The user table name to be used.

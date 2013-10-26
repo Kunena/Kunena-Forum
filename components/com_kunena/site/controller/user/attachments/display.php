@@ -1,17 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.User
+ * @package     Kunena.Site
+ * @subpackage  Controller.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerUserAttachmentsDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDisplay
 {
@@ -21,16 +23,24 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	 * @var KunenaUser
 	 */
 	public $me;
+
 	/**
 	 * @var KunenaUser
 	 */
 	public $profile;
+
 	/**
 	 * @var array|KunenaForumMessageAttachments[]
 	 */
 	public $attachments;
+
 	public $headerText;
 
+	/**
+	 * Prepare user attachments list.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -42,23 +52,35 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		$this->me = KunenaUserHelper::getMyself();
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->attachments = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
+
 		// Pre-load messages.
 		$messageIds = array();
-		foreach ($this->attachments as $attachment) {
+
+		foreach ($this->attachments as $attachment)
+		{
 			$messageIds[] = (int) $attachment->mesid;
 		}
+
 		$messages = KunenaForumMessageHelper::getMessages($messageIds, 'none');
 
 		// Pre-load topics.
 		$topicIds = array();
-		foreach ($messages as $message) {
+
+		foreach ($messages as $message)
+		{
 			$topicIds[] = $message->thread;
 		}
+
 		KunenaForumTopicHelper::getTopics($topicIds, 'none');
 
 		$this->headerText = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle($this->headerText);

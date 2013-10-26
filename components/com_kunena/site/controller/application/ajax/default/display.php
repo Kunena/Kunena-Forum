@@ -1,29 +1,45 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Application
+ * @package     Kunena.Site
+ * @subpackage  Controller.Application
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerApplicationAjaxDefaultDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaControllerApplicationDisplay
 {
+	/**
+	 * Return true if layout exists.
+	 *
+	 * @return bool
+	 */
 	public function exists()
 	{
-		return true;
+		return KunenaFactory::getTemplate()->isHmvc();
 	}
 
+	/**
+	 * Return AJAX for the requested layout.
+	 *
+	 * @return string  String in JSON or RAW.
+	 *
+	 * @throws RuntimeException
+	 * @throws KunenaExceptionAuthorise
+	 */
 	public function execute()
 	{
 		$format = $this->input->getWord('format', 'html');
-		$function = 'display'.ucfirst($format);
+		$function = 'display' . ucfirst($format);
+
 		if (!method_exists($this, $function))
 		{
 			// Invalid page request.
@@ -32,6 +48,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 		// Run before executing action.
 		$result = $this->before();
+
 		if ($result === false)
 		{
 			$content = new RuntimeException(JText::_('COM_KUNENA_NO_ACCESS'), 404);
@@ -41,7 +58,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 			// Invalid access token.
 			$content = new RuntimeException(JText::_('COM_KUNENA_ERROR_TOKEN'), 401);
 		}
-		elseif ($this->config->board_offline && !$this->me->isAdmin ())
+		elseif ($this->config->board_offline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
 			$content = new RuntimeException(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
@@ -53,7 +70,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		}
 		else
 		{
-			$display = $this->input->getCmd('display', 'Undefined').'/Display';
+			$display = $this->input->getCmd('display', 'Undefined') . '/Display';
+
 			try
 			{
 				$content = KunenaRequest::factory($display, $this->input)->setPrimary()->execute()->render();
@@ -67,7 +85,13 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		return $this->$function($content);
 	}
 
-	protected function before() {
+	/**
+	 * Prepare AJAX display.
+	 *
+	 * @return void
+	 */
+	protected function before()
+	{
 		// Load language files.
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.templates');
@@ -79,29 +103,33 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		$this->document = JFactory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
-
-		return true;
 	}
 
 	/**
-	 * @param mixed $content
+	 * Display output as RAW.
 	 *
-	 * @return string
+	 * @param   mixed  $content  Content to be returned.
+	 *
+	 * @return  string
 	 */
 	public function displayRaw($content)
 	{
 		if ($content instanceof Exception)
 		{
 			$this->setResponseStatus($content->getCode());
-			return $content->getCode() .' '. $content->getMessage();
+
+			return $content->getCode() . ' ' . $content->getMessage();
 		}
+
 		return (string) $content;
 	}
 
 	/**
-	 * @param mixed $content
+	 * Display output as JSON.
 	 *
-	 * @return string
+	 * @param   mixed  $content  Content to be returned.
+	 *
+	 * @return  string
 	 */
 	public function displayJson($content)
 	{
@@ -115,7 +143,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		if ($content instanceof Exception)
 		{
 			$response->success = false;
-			$response->message = $content->getcode() .' '. $content->getMessage();
+			$response->message = $content->getcode() . ' ' . $content->getMessage();
 		}
 		else
 		{

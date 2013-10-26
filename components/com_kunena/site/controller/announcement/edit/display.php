@@ -1,17 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Announcement
+ * @package     Kunena.Site
+ * @subpackage  Controller.Announcement
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerAnnouncementEditDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerDisplay
 {
@@ -19,6 +21,11 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 
 	public $announcement;
 
+	/**
+	 * Prepare announcement form display.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -27,10 +34,13 @@ class ComponentKunenaControllerAnnouncementEditDisplay extends KunenaControllerD
 
 		$this->announcement = KunenaForumAnnouncementHelper::get($id);
 		$this->announcement->tryAuthorise($id ? 'edit' : 'create');
-
-		return true;
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));

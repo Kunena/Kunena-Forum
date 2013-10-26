@@ -10,15 +10,16 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-
-<h3>
+<div class="kfrontend">
+ <h3>
 	<a href="<?php echo $this->statisticsUrl; ?>">
 		<?php echo $this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
 	</a>
-</h3>
-
-<div class="well well-small">
-	<div class="row-fluid">
+	<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#kstats">X</div>
+ </h3>
+ <div class="kstats" id="kstats">
+  <div class="well well-small">
+	 <div class="row-fluid">
 		<ul class="unstyled span6">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
@@ -69,5 +70,7 @@ defined ( '_JEXEC' ) or die ();
 			</li>
 			<?php endif; ?>
 		</ul>
+	 </div>
 	</div>
+ </div>
 </div>

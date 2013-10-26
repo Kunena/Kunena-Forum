@@ -11,11 +11,13 @@
 defined ( '_JEXEC' ) or die ();
 
 ?>
-
-<h3 class="btn-link">
+<div class="kfrontend">
+ <h3 class="btn-link">
 	<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE') ?>
-</h3>
-
+ 	<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#kwho">X</div>
+ </h3>
+ 
+<div id="kwho">
 <div class="well well-small">
 	<p>
 		<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?>
@@ -47,4 +49,6 @@ defined ( '_JEXEC' ) or die ();
 		<li class = "kwho-user" title = "<?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></li>
 		<li class = "kwho-guest" title = "<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></li>
 	</ul>
+	</div>
+ </div>
 </div>

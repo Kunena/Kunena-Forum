@@ -7,6 +7,9 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/ 
+active, a:focus {
+	outline: 0;
+}
 .kgooglemap {
 	width: 100%;
 	display: block;
@@ -61,11 +64,6 @@
 #tow {
 	display: none;
 }
-.kfrontend .row-fluid {
-	padding-left: -13px;
-	width: 102.5%;
-	margin-left: -9px;
-}
 .ContentBody {
 	position: relative;
 }
@@ -117,20 +115,6 @@
 	padding: 10px 18px;
 	position: relative;
 	vertical-align: top;
-}
-.bubble::before {
-	background-color: #FFF;
-	content: "\00a0";
-	display: block;
-	height: 16px;
-	position: absolute;
-	top: 11px;
-	transform: rotate( 29deg ) skew( -35deg );
-	-moz-transform: rotate( 29deg ) skew( -35deg );
-	-ms-transform: rotate( 29deg ) skew( -35deg );
-	-o-transform: rotate( 29deg ) skew( -35deg );
-	-webkit-transform: rotate( 29deg ) skew( -35deg );
-	width: 20px;
 }
 .me {
 	float: left;
@@ -248,27 +232,41 @@ input[type='radio'],
 input[type='checkbox'] {
 	margin: 4px 3px 0;
 }
-
 #kbbcode-toolbar li a {
-    background-image: url("../media/iconsets/editor/default/default.png");
-    background-repeat: no-repeat;
-    display: block;
-    height: 18px;
-    margin-right: 2px;
-    width: 18px;
+	background-image: url("../media/iconsets/editor/default/default.png");
+	background-repeat: no-repeat;
+	display: block;
+	height: 18px;
+	margin-right: 2px;
+	width: 18px;
 }
-
 .icon-unpublish:before {
-    color: #BD362F;
-    content: "J";
+	color: #BD362F;
+	content: "J";
 }
-.icon-publish:before, .icon-save:before, .icon-checkmark:before {
-    color: #51A351;
-    content: "G";
-} 
+.icon-publish:before,
+.icon-save:before,
+.icon-checkmark:before {
+	color: #51A351;
+	content: "G";
+}
 .btn {
-line-height:20px;
+	line-height: 20px;
 }
 .kmessagepadding {
-padding-left:20px;
+	padding-left: 20px;
+}
+img {
+	max-width: 100%;
+	width: auto \9;
+	height: auto;
+}
+.table {
+	margin-bottom: 0px;
+}
+.form-search {
+	margin: 0px;
+}
+.search-btn {
+	line-height: 18px;
 }

@@ -74,3 +74,6 @@ $this->attachments = $this->message->getAttachments();
 		<?php endif ?>
 	</div>
 </div>
+<?php echo $this->subLayout('Message/Edit')
+	->set('message', $this->message)
+  ->setLayout('quickreply'); ?>

@@ -60,9 +60,10 @@ jQuery(document).ready(function() {
 		});
 	});
 		
-	/* To close quick-reply form on hit on cancel button */
-	jQuery('.kreply-cancel').click(function() {
-		jQuery('.kreply-form').attr('style','display:none;');
+	/* To allow to close or open the quick-reply modal box */
+	jQuery('.openmodal').click(function() {
+		var boxToOpen = jQuery(this).attr('href');
+		jQuery(boxToOpen ).css('visibility', 'visible');
 	});
 	
 	/* Change avatar in gallery */

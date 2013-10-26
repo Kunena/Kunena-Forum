@@ -1,17 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Message
+ * @package     Kunena.Site
+ * @subpackage  Controller.Message
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerMessageListRecentDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
 {
@@ -20,6 +22,11 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 	 */
 	protected $messages;
 
+	/**
+	 * Return display layout.
+	 *
+	 * @return KunenaLayout
+	 */
 	protected function display()
 	{
 		// Display layout with given parameters.
@@ -30,15 +37,21 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
 			->set('state', $this->state);
+
 		return $content;
 	}
 
+	/**
+	 * Prepare category list display.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
 
 		require_once KPATH_SITE . '/models/topics.php';
-		$this->model = new KunenaModelTopics();
+		$this->model = new KunenaModelTopics;
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
 
@@ -47,11 +60,17 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		// Handle &sel=x parameter.
 		$time = $this->state->get('list.time');
-		if ($time < 0) {
+
+		if ($time < 0)
+		{
 			$time = null;
-		} elseif ($time == 0) {
+		}
+		elseif ($time == 0)
+		{
 			$time = new JDate(KunenaFactory::getSession()->lasttime);
-		} else {
+		}
+		else
+		{
 			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
 		}
 
@@ -64,10 +83,11 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$authorise = 'read';
 		$order = 'time';
 
-		$finder = new KunenaForumMessageFinder();
+		$finder = new KunenaForumMessageFinder;
 		$finder->filterByTime($time);
 
-		switch ($this->state->get('list.mode')) {
+		switch ($this->state->get('list.mode'))
+		{
 			case 'unapproved' :
 				$authorise = 'topic.post.approve';
 				$finder
@@ -110,20 +130,29 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 
 		// Load topics...
 		$topicIds = array();
-		foreach ($this->messages as $message) {
+
+		foreach ($this->messages as $message)
+		{
 			$topicIds[(int) $message->thread] = (int) $message->thread;
 		}
+
 		$this->topics = KunenaForumTopicHelper::getTopics($topicIds, 'none');
 
 		$userIds = $mesIds = array();
-		foreach ($this->messages as $message) {
+
+		foreach ($this->messages as $message)
+		{
 			$userIds[(int) $message->userid] = (int) $message->userid;
 			$mesIds[(int) $message->id] = (int) $message->id;
 		}
 
-		if ($this->topics) $this->prepareTopics($userIds, $mesIds);
+		if ($this->topics)
+		{
+			$this->prepareTopics($userIds, $mesIds);
+		}
 
-		switch ($this->state->get('list.mode')) {
+		switch ($this->state->get('list.mode'))
+		{
 			case 'unapproved':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
 				break;

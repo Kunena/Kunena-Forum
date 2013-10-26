@@ -12,7 +12,6 @@
 	<description>COM_KUNENA_TEMPLATE_CRYPSIS_DESC</description>
 	<files>
 		<filename>config.xml</filename>
-		<filename>mapping.php</filename>
 		<filename>README.md</filename>
 		<filename>template.php</filename>
 		<folder>html</folder>

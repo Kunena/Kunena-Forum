@@ -1,3 +1,6 @@
+	protected function _getAttachementLink($folder, $filename, $name, $title = '', $rel = 'nofollow') {
+		$link = JURI::ROOT()."{$folder}/{$filename}";
+		var_dump($link);
 <?php
 /**
  * Kunena Component
@@ -211,6 +214,8 @@ class KunenaForumMessageAttachment extends JObject {
 	 * @param KunenaUser $user
 	 *
 	 * @return bool
+	 *
+	 * @since 3.1
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null) {
 		return !$this->tryAuthorise($action, $user, false);
@@ -226,6 +231,8 @@ class KunenaForumMessageAttachment extends JObject {
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
+	 *
+	 * @since 3.1
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true) {
 		// Special case to ignore authorisation.

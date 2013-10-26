@@ -64,7 +64,7 @@ defined ( '_JEXEC' ) or die ();
 				<li class="span2">
 					<label class="thumbnail">
 						<img src="<?php echo "{$this->galleryUri}/{$image}" ?>" alt="" />
-						<input type="radio" name="avatar" value="<?php echo "gallery/{$image}" ?>"/>
+						<input type="radio" name="avatar" value="<?php echo "gallery/{$image}" ?>" />
 					</label>
 				</li>
 				<?php endforeach; ?>

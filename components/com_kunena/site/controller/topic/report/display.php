@@ -1,17 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Topic
+ * @package     Kunena.Site
+ * @subpackage  Controller.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerTopicReportDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDisplay
 {
@@ -21,12 +23,21 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	 * @var KunenaForumTopic
 	 */
 	public $topic;
+
 	/**
 	 * @var KunenaForumMessage|null
 	 */
 	public $message;
+
 	public $uri;
 
+	/**
+	 * Prepare report message form.
+	 *
+	 * @return void
+	 *
+	 * @throws KunenaExceptionAuthorise
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -35,27 +46,42 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 		$mesid = $this->input->getInt('mesid');
 
 		$me = KunenaUserHelper::getMyself();
-		if (!$this->config->reportmsg) {
+
+		if (!$this->config->reportmsg)
+		{
 			// Deny access if report feature has been disabled.
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
-		if (!$me->exists()) {
+
+		if (!$me->exists())
+		{
 			// Deny access if user is guest.
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
-		if (!$mesid) {
+
+		if (!$mesid)
+		{
 			$this->topic = KunenaForumTopicHelper::get($id);
 			$this->topic->tryAuthorise();
-		} else {
+		}
+		else
+		{
 			$this->message = KunenaForumMessageHelper::get($mesid);
 			$this->message->tryAuthorise();
 			$this->topic = $this->message->getTopic();
 		}
+
 		$this->category = $this->topic->getCategory();
 
-		$this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$this->category->id}&id={$this->topic->id}" . ($this->message ? "&mesid={$this->message->id}" : '');
+		$this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$this->category->id}" .
+			"&id={$this->topic->id}" . ($this->message ? "&mesid={$this->message->id}" : '');
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle(JText::_('COM_KUNENA_REPORT_TO_MODERATOR'));

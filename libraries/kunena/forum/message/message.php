@@ -457,6 +457,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @param KunenaUser $user
 	 *
 	 * @return bool
+	 *
+	 * @since 3.1
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null) {
 		return !$this->tryAuthorise($action, $user, false);
@@ -472,6 +474,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
+	 *
+	 * @since 3.1
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true) {
 		// Special case to ignore authorisation.

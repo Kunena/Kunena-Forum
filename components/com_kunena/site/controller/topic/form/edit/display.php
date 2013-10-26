@@ -1,22 +1,31 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.User
+ * @package     Kunena.Site
+ * @subpackage  Controller.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerTopicFormEditDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisplay
 {
 	protected $name = 'Topic/Edit';
 
+	/**
+	 * Prepare topic edit form.
+	 *
+	 * @return void
+	 *
+	 * @throws KunenaExceptionAuthorise
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -32,12 +41,14 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		$this->topic = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
-		if ($this->config->topicicons && $this->topic->isAuthorised('edit')) {
+
+		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
+		{
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
 		// Run onKunenaPrepare event.
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -54,13 +65,15 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		// Get poll.
 		if ($this->message->parent == 0
-			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit')) {
+			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit'))
+		{
 			$this->poll = $this->topic->getPoll();
 		}
 
 		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
 
-		if ($saved) {
+		if ($saved)
+		{
 			// Update message contents.
 			$this->message->edit($saved);
 		}
@@ -72,17 +85,32 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		$this->canSubscribe = $this->canSubscribe();
 
-		$this->headerText = JText::_('COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
+		$this->headerText = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle($this->headerText);
 	}
 
-	protected function canSubscribe() {
-		if (! $this->me->userid || ! $this->config->allowsubscriptions || $this->config->topic_subscriptions == 'disabled')
+	/**
+	 * Can user subscribe to the topic?
+	 *
+	 * @return bool
+	 */
+	protected function canSubscribe()
+	{
+		if (!$this->me->userid || !$this->config->allowsubscriptions
+			|| $this->config->topic_subscriptions == 'disabled')
+		{
 			return false;
-		return ! $this->topic->getUserTopic()->subscribed;
+		}
+
+		return !$this->topic->getUserTopic()->subscribed;
 	}
 }

@@ -1,24 +1,31 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.User
+ * @package     Kunena.Site
+ * @subpackage  Controller.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerTopicFormHistoryDisplay
  *
  * TODO: merge to another controller...
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerDisplay
 {
 	protected $name = 'Topic/Edit/History';
 
+	/**
+	 * Prepare reply history display.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -26,19 +33,24 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		$id = $this->input->getInt('id');
 
 		$this->topic = KunenaForumTopicHelper::get($id);
+		$this->history = KunenaForumMessageHelper::getMessagesByTopic(
+			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
+		);
 
-		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
 		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count($this->history);
 		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
 		$userlist = array();
-		foreach ($this->history as $message) {
+
+		foreach ($this->history as $message)
+		{
 			$userlist[(int) $message->userid] = (int) $message->userid;
 		}
+
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
@@ -52,9 +64,14 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		$this->attachments = KunenaForumMessageAttachmentHelper::getByMessage($this->history);
 		$this->inline_attachments = array();
 
-		$this->headerText = JText::_('COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
+		$this->headerText = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle($this->headerText);

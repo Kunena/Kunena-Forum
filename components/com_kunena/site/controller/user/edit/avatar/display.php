@@ -1,33 +1,47 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.User
+ * @package     Kunena.Site
+ * @subpackage  Controller.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerUserEditAvatarDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaControllerUserEditDisplay
 {
 	protected $name = 'User/Edit/Avatar';
+
 	protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
 
 	public $gallery;
+
 	public $galleries;
+
 	public $galleryOptions;
+
 	public $headerText;
 
+	/**
+	 * Prepare avatar form.
+	 *
+	 * @return void
+	 *
+	 * @throws KunenaExceptionAuthorise
+	 */
 	protected function before()
 	{
 		parent::before();
 
 		$avatar = KunenaFactory::getAvatarIntegration();
+
 		if (!($avatar instanceof KunenaAvatarKunena))
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
@@ -45,39 +59,74 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle($this->headerText);
 	}
 
+	/**
+	 * Get avatar gallery directories.
+	 *
+	 * @param   string  $path  Absolute path for the gallery.
+	 *
+	 * @return  array|string[]  List of directories.
+	 */
 	protected function getGalleries($path)
 	{
 		$files = array();
 		$images = $this->getGallery($path);
-		if ($images) $files[''] = $images;
+
+		if ($images)
+		{
+			$files[''] = $images;
+		}
 
 		// TODO: Allow recursive paths.
 		$folders = JFolder::folders($path);
-		foreach($folders as $folder)
+
+		foreach ($folders as $folder)
 		{
 			$images = $this->getGallery("{$path}/{$folder}");
+
 			if ($images)
 			{
-				foreach($images as $image) $files[$folder][] = "{$folder}/{$image}";
+				foreach ($images as $image)
+				{
+					$files[$folder][] = "{$folder}/{$image}";
+				}
 			}
 		}
+
 		return $files;
 	}
 
+	/**
+	 * Get files from selected gallery.
+	 *
+	 * @param   string  $path  Absolute path for the gallery.
+	 *
+	 * @return  array
+	 */
 	protected function getGallery($path)
 	{
 		return JFolder::files($path, $this->imageFilter);
 	}
 
+	/**
+	 * Get avatar galleries and make them select option list.
+	 *
+	 * @return array|string[]  List of options.
+	 */
 	protected function getGalleryOptions()
 	{
 		$options = array();
-		foreach ($this->galleries as $gallery=>$files)
+
+		foreach ($this->galleries as $gallery => $files)
 		{
 			$text = $gallery ? JString::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
 			$options[] = JHtml::_('select.option', $gallery, $text);

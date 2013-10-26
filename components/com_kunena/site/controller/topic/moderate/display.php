@@ -1,17 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Topic
+ * @package     Kunena.Site
+ * @subpackage  Controller.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerTopicModerateDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisplay
 {
@@ -21,15 +23,27 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	 * @var KunenaForumTopic
 	 */
 	public $topic;
+
 	/**
 	 * @var KunenaForumMessage|null
 	 */
 	public $message;
+
 	public $uri;
+
 	public $title;
+
 	public $topicIcons;
+
 	public $userLink;
 
+	/**
+	 * Prepare topic moderate display.
+	 *
+	 * @return void
+	 *
+	 * @throws KunenaExceptionAuthorise
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -38,35 +52,51 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 		$id = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 
-		if (!$mesid) {
+		if (!$mesid)
+		{
 			$this->topic = KunenaForumTopicHelper::get($id);
 			$this->topic->tryAuthorise('move');
-		} else {
+		}
+		else
+		{
 			$this->message = KunenaForumMessageHelper::get($mesid);
 			$this->message->tryAuthorise('move');
 			$this->topic = $this->message->getTopic();
 		}
+
 		$this->category = $this->topic->getCategory();
 
-		$this->uri = "index.php?option=com_kunena&view=topic&layout=moderate&catid={$this->category->id}&id={$this->topic->id}" . ($this->message ? "&mesid={$this->message->id}" : '');
-		$this->title = !$this->message ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
+		$this->uri = "index.php?option=com_kunena&view=topic&layout=moderate"
+			. "&catid={$this->category->id}&id={$this->topic->id}"
+			. ($this->message ? "&mesid={$this->message->id}" : '');
+		$this->title = !$this->message ?
+			JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
+			JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
 
 		// Load topic icons if available.
-		if ($this->config->topicicons) {
+		if ($this->config->topicicons)
+		{
 			$this->template = KunenaTemplate::getInstance();
 			$this->topicIcons = $this->template->getTopicIcons(false);
 		}
 
 		// Have a link to moderate user as well.
-		if (isset($this->message)) {
+		if (isset($this->message))
+		{
 			$user = $this->message->getAuthor();
-			if ($user->exists()) {
+
+			if ($user->exists())
+			{
 				$username = $user->getName();
-				$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
+				$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link',
+					'index.php?option=com_kunena&view=user&layout=moderate&userid=' . $this->message->userid,
+					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')')
+					: null;
 			}
 		}
 
-		if ($this->message) {
+		if ($this->message)
+		{
 			// Get thread and reply count from current message:
 			$db = JFactory::getDbo();
 			$query = "SELECT COUNT(mm.id) AS replies FROM #__kunena_messages AS m
@@ -75,10 +105,19 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 				WHERE m.id={$db->Quote($this->message->id)}";
 			$db->setQuery($query, 0, 1);
 			$this->replies = $db->loadResult();
-			if (KunenaError::checkDatabaseError()) return;
+
+			if (KunenaError::checkDatabaseError())
+			{
+				return;
+			}
 		}
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle($this->title);

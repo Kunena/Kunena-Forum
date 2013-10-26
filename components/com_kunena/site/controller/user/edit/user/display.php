@@ -1,25 +1,33 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.User
+ * @package     Kunena.Site
+ * @subpackage  Controller.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerUserEditUserDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaControllerUserEditDisplay
 {
 	protected $name = 'User/Edit/User';
 
 	public $changeUsername;
+
 	public $frontendForm;
 
+	/**
+	 * Load user form.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -34,14 +42,14 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 		{
 			JFactory::getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
 
-			JForm::addFormPath(JPATH_ROOT.'/components/com_users/models/forms');
-			JForm::addFieldPath(JPATH_ROOT.'/components/com_users/models/fields');
+			JForm::addFormPath(JPATH_ROOT . '/components/com_users/models/forms');
+			JForm::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
 
 			JPluginHelper::importPlugin('user');
 
 			$registry = new JRegistry($this->user->params);
 			$form = JForm::getInstance('com_users.profile', 'frontend');
-			$data = new StdClass();
+			$data = new StdClass;
 			$data->params = $registry->toArray();
 			$dispatcher = JDispatcher::getInstance();
 			$dispatcher->trigger('onContentPrepareForm', array($form, $data));
@@ -53,6 +61,11 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE');
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle($this->headerText);

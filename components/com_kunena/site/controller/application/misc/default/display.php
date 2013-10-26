@@ -1,32 +1,46 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @package     Kunena.Site
+ * @subpackage  Controller.Application
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerApplicationDisplay
 {
-	protected $header;
-	protected $body;
+	public $header;
 
+	public $body;
+
+	/**
+	 * Return custom display layout.
+	 *
+	 * @return KunenaLayout
+	 */
 	protected function display()
 	{
 		// Display layout with given parameters.
 		$content = KunenaLayoutPage::factory('Misc/Default')
 			->set('header', $this->header)
 			->set('body', $this->body);
+
 		return $content;
 	}
 
+	/**
+	 * Prepare custom text output.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -38,17 +52,26 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		$format = $params->get('body_format');
 
 		$this->header = htmlspecialchars($this->header, ENT_COMPAT, 'UTF-8');
-		if ($format == 'html') {
+
+		if ($format == 'html')
+		{
 			$this->body = trim($body);
-		} elseif ($format == 'text') {
-			$this->body = function () use ($body) {
+		}
+		elseif ($format == 'text')
+		{
+			$this->body = function () use ($body)
+			{
 				return htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
 			};
-		} else {
-			$this->body = function () use ($body) {
+		}
+		else
+		{
+			$this->body = function () use ($body)
+			{
 				/** @var JCache|JCacheControllerCallback $cache */
 				$cache = JFactory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
+
 				return $cache->call(array('KunenaHtmlParser','parseBBCode'), $body);
 			};
 		}

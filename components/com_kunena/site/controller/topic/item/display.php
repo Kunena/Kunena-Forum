@@ -1,42 +1,56 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Topic
+ * @package     Kunena.Site
+ * @subpackage  Controller.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerTopicItemDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 {
 	protected $name = 'Topic/Item';
+
 	/**
 	 * @var KunenaUser
 	 */
 	public $me;
+
 	/**
 	 * @var KunenaForumCategory
 	 */
 	public $category;
+
 	/**
 	 * @var KunenaForumTopic
 	 */
 	public $topic;
+
 	/**
 	 * @var KunenaPagination
 	 */
 	public $pagination;
+
 	/**
 	 * @var string
 	 */
 	public $headerText;
 
+	/**
+	 * Prepare topic display.
+	 *
+	 * @return void
+	 *
+	 * @throws KunenaForumAuthorise
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -46,7 +60,11 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$mesid = $this->input->getInt('mesid', 0);
 		$start = $this->input->getInt('limitstart', 0);
 		$limit = $this->input->getInt('limit', 0);
-		if ($limit < 1 || $limit > 100) $limit = $this->config->messages_per_page;
+
+		if ($limit < 1 || $limit > 100)
+		{
+			$limit = $this->config->messages_per_page;
+		}
 
 		$this->me = KunenaUserHelper::getMyself();
 
@@ -65,10 +83,13 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		}
 
 		// Load also category (prefer the URI variable if available).
-		if ($catid && $catid != $this->topic->category_id) {
+		if ($catid && $catid != $this->topic->category_id)
+		{
 			$this->category = KunenaForumCategoryHelper::get($catid);
 			$this->category->tryAuthorise();
-		} else {
+		}
+		else
+		{
 			$this->category = $this->topic->getCategory();
 		}
 
@@ -79,17 +100,20 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		if ($this->primary)
 		{
 			$channels = $this->category->getChannels();
+
 			if ($this->message->thread != $this->topic->id
 				|| ($this->topic->category_id != $this->category->id && !isset($channels[$this->topic->category_id]))
 				|| ($mesid && $this->layout != 'threaded'))
 			{
 				while (@ob_end_clean());
+
 				$this->app->redirect($this->message->getUrl(null, false));
 			}
 		}
+
 		// Load messages from the current page and set the pagination.
 		$hold = KunenaAccess::getInstance()->getAllowedHold($this->me, $this->category->id, false);
-		$finder = new KunenaForumMessageFinder();
+		$finder = new KunenaForumMessageFinder;
 		$finder
 			->filterBy('thread', '=', $this->topic->id)
 			->filterByHold($hold);
@@ -106,7 +130,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->prepareMessages($mesid);
 
 		// Run events.
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
@@ -125,6 +149,13 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->headerText = JText::_('COM_KUNENA_TOPIC') . $this->topic->displayField('subject');
 	}
 
+	/**
+	 * Prepare messages for display.
+	 *
+	 * @param   int  $mesid  Selected message Id.
+	 *
+	 * @return  void
+	 */
 	protected function prepareMessages($mesid)
 	{
 		// Get thank yous for all messages in the page
@@ -135,6 +166,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$userlist = array();
 		$this->threaded = array();
 		$location = $this->pagination->limitstart;
+
 		foreach ($this->messages AS $message)
 		{
 			$message->replynum = ++$location;
@@ -158,15 +190,17 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			$thankyou_list = $thankyous[$message->id]->getList();
 			$message->thankyou = array();
 
-			if(!empty($thankyou_list))
+			if (!empty($thankyou_list))
 			{
 				$message->thankyou = $thankyou_list;
 			}
 		}
+
 		if (!isset($this->messages[$mesid]) && !empty($this->messages))
 		{
 			$this->message = reset($this->messages);
 		}
+
 		if ($threaded)
 		{
 			if (!isset($this->messages[$this->topic->first_post_id]))
@@ -186,9 +220,19 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		KunenaForumMessageAttachmentHelper::getByMessage($this->messages);
 	}
 
-	protected function getThreadedOrdering($parent = 0, $indent = array()) {
+	/**
+	 * Change ordering of the displayed messages and apply threading.
+	 *
+	 * @param   int    $parent  Parent Id.
+	 * @param   array  $indent  Indent for the current object.
+	 *
+	 * @return  array
+	 */
+	protected function getThreadedOrdering($parent = 0, $indent = array())
+	{
 		$list = array();
-		if (count($indent) == 1 && $this->topic->getTotal() > $this->pagination->limitstart+$this->pagination->limit)
+
+		if (count($indent) == 1 && $this->topic->getTotal() > $this->pagination->limitstart + $this->pagination->limit)
 		{
 			$last = -1;
 		}
@@ -217,7 +261,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			end($indent);
 			$key = key($indent);
 
-			if ($skip) {
+			if ($skip)
+			{
 				$indent[] = 'gap';
 			}
 
@@ -240,14 +285,20 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			if (!empty($this->threaded[$mesid]))
 			{
 				// Fix edges
-				if ($mesid != $last) {
+				if ($mesid != $last)
+				{
 					$indent[$key] = 'edge';
-				} else {
+				}
+				else
+				{
 					$indent[$key] = 'empty';
 				}
-				if ($skip) {
-					$indent[$key+1] = 'empty';
+
+				if ($skip)
+				{
+					$indent[$key + 1] = 'empty';
 				}
+
 				$list += $this->getThreadedOrdering($mesid, $indent);
 			}
 
@@ -258,9 +309,15 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			array_pop($indent);
 		}
+
 		return $list;
 	}
 
+	/**
+	 * After render update topic data for the user.
+	 *
+	 * @return void
+	 */
 	protected function after()
 	{
 		parent::after();
@@ -276,6 +333,11 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		}
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$page = $this->pagination->pagesCurrent;

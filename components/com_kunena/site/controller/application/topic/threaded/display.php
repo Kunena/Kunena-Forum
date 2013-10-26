@@ -1,27 +1,38 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Topic
+ * @package     Kunena.Site
+ * @subpackage  Controller.Application
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerApplicationTopicThreadedDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaControllerApplicationDisplay
 {
-	public function exists() {
+	/**
+	 * Return true if layout exists.
+	 *
+	 * @return bool
+	 */
+	public function exists()
+	{
 		$this->page = KunenaLayoutPage::factory("{$this->input->getCmd('view')}/default");
+
 		return (bool) $this->page->getPath();
 	}
 
-	/*
-	 * Redirect unread layout to the page that contains the first unread message.
+	/**
+	 * Change topic layout to threaded.
+	 *
+	 * @return void
 	 */
 	protected function before()
 	{

@@ -1,31 +1,41 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.User
+ * @package     Kunena.Site
+ * @subpackage  Controller.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerUserEditProfileDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaControllerUserEditDisplay
 {
 	protected $name = 'User/Edit/Profile';
 
+	/**
+	 * Prepare profile form items.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
 
-		$bd = @explode("-" , $this->profile->birthdate);
+		$bd = $this->profile->birthdate ? explode("-", $this->profile->birthdate) : array();
 
-		$this->birthdate["year"] = $bd[0];
-		$this->birthdate["month"] = $bd[1];
-		$this->birthdate["day"] = $bd[2];
+		if (count($bd) == 3)
+		{
+			$this->birthdate["year"] = $bd[0];
+			$this->birthdate["month"] = $bd[1];
+			$this->birthdate["day"] = $bd[2];
+		}
 
 		$this->genders[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
 		$this->genders[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
@@ -37,6 +47,11 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE');
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle($this->headerText);

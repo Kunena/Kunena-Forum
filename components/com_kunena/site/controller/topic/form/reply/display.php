@@ -1,17 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.User
+ * @package     Kunena.Site
+ * @subpackage  Controller.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerTopicFormReplyDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDisplay
 {
@@ -19,6 +21,14 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 	public $captchaHtml = null;
 
+	/**
+	 * Prepare topic reply form.
+	 *
+	 * @return void
+	 *
+	 * @throws RuntimeException
+	 * @throws KunenaExceptionAuthorise
+	 */
 	protected function before()
 	{
 		parent::before();
@@ -34,26 +44,34 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$this->template = KunenaFactory::getTemplate();
 
 		$captcha = KunenaSpamRecaptcha::getInstance();
-		if ($captcha->enabled()) {
+
+		if ($captcha->enabled())
+		{
 			$this->captchaHtml = $captcha->getHtml();
-			if (!$this->captchaHtml) {
+
+			if (!$this->captchaHtml)
+			{
 				throw new RuntimeException($captcha->getError(), 500);
 			}
 		}
 
-		if (!$mesid) {
+		if (!$mesid)
+		{
 			$this->topic = KunenaForumTopicHelper::get($id);
 			$parent = KunenaForumMessageHelper::get($this->topic->first_post_id);
-		} else {
+		}
+		else
+		{
 			$parent = KunenaForumMessageHelper::get($mesid);
 			$this->topic = $parent->getTopic();
 		}
+
 		$this->category = $this->topic->getCategory();
 
 		$parent->tryAuthorise('reply');
 
 		// Run event.
-		$params = new JRegistry();
+		$params = new JRegistry;
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -64,7 +82,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
 
 		// Can user edit topic icons?
-		if ($this->config->topicicons && $this->topic->isAuthorised('edit')) {
+		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
+		{
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
@@ -78,18 +97,32 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->canSubscribe = $this->canSubscribe();
-
-		$this->headerText = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY' ) . ' ' . $this->topic->subject;
+		$this->headerText = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ' ' . $this->topic->subject;
 	}
 
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
 	protected function prepareDocument()
 	{
 		$this->setTitle($this->headerText);
 	}
 
-	protected function canSubscribe() {
-		if (! $this->me->userid || ! $this->config->allowsubscriptions || $this->config->topic_subscriptions == 'disabled')
+	/**
+	 * Can user subscribe to the topic?
+	 *
+	 * @return bool
+	 */
+	protected function canSubscribe()
+	{
+		if (!$this->me->userid || !$this->config->allowsubscriptions
+			|| $this->config->topic_subscriptions == 'disabled')
+		{
 			return false;
-		return ! $this->topic->getUserTopic()->subscribed;
+		}
+
+		return !$this->topic->getUserTopic()->subscribed;
 	}
 }

@@ -1,38 +1,57 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Page
+ * @package     Kunena.Site
+ * @subpackage  Controller.Page
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerPageMenuDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerPageMenuDisplay extends KunenaControllerDisplay
 {
 	protected $name = 'Page/Menu';
 
 	public $basemenu;
+
 	public $list;
+
 	public $menu;
+
 	public $active;
+
 	public $path;
+
 	public $active_id;
+
 	public $showAll;
+
 	public $class_sfx;
 
-	protected function before() {
+	/**
+	 * Prepare menu display.
+	 *
+	 * @return bool
+	 */
+	protected function before()
+	{
 		parent::before();
 
 		$this->basemenu = $basemenu = KunenaRoute::getMenu();
-		if (!$basemenu) return false;
 
-		$parameters = new JRegistry();
+		if (!$basemenu)
+		{
+			return false;
+		}
+
+		$parameters = new JRegistry;
 		$template = KunenaFactory::getTemplate();
 		$parameters->set('showAllChildren', $template->params->get('menu_showall', 0));
 		$parameters->set('menutype', $basemenu->menutype);

@@ -1,20 +1,27 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Topic
+ * @package     Kunena.Site
+ * @subpackage  Controller.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 /**
  * Class ComponentKunenaControllerTopicListRecentDisplay
+ *
+ * @since  3.1
  */
 class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
 {
+	/**
+	 * Return display layout.
+	 *
+	 * @return KunenaLayout
+	 */
 	protected function display()
 	{
 		// Display layout with given parameters.
@@ -25,15 +32,21 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
 			->set('state', $this->state);
+
 		return $content;
 	}
 
+	/**
+	 * Prepare recent topics list.
+	 *
+	 * @return void
+	 */
 	protected function before()
 	{
 		parent::before();
 
 		require_once KPATH_SITE . '/models/topics.php';
-		$this->model = new KunenaModelTopics();
+		$this->model = new KunenaModelTopics;
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
 
@@ -42,11 +55,17 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		// Handle &sel=x parameter.
 		$time = $this->state->get('list.time');
-		if ($time < 0) {
+
+		if ($time < 0)
+		{
 			$time = null;
-		} elseif ($time == 0) {
+		}
+		elseif ($time == 0)
+		{
 			$time = new JDate(KunenaFactory::getSession()->lasttime);
-		} else {
+		}
+		else
+		{
 			$time = new JDate(JFactory::getDate()->toUnix() - ($time * 3600));
 		}
 
@@ -56,10 +75,11 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$authorise = 'read';
 		$order = 'last_post_time';
 
-		$finder = new KunenaForumTopicFinder();
+		$finder = new KunenaForumTopicFinder;
 		$finder->filterByMoved(false);
 
-		switch ($this->state->get('list.mode')) {
+		switch ($this->state->get('list.mode'))
+		{
 			case 'topics' :
 				$order = 'first_post_time';
 				$finder
@@ -115,9 +135,13 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			->limit($this->pagination->limit)
 			->find();
 
-		if ($this->topics) $this->prepareTopics();
+		if ($this->topics)
+		{
+			$this->prepareTopics();
+		}
 
-		switch ($this->state->get('list.mode')) {
+		switch ($this->state->get('list.mode'))
+		{
 			case 'topics' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				break;

@@ -32,9 +32,10 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 			</td>
 		</tr>
 		<?php else : ?>
+		<?php //fix me: hide if 1 page ?>
 		<thead>
 			<tr>
-				<td colspan="5">
+				<td colspan="5"> 
 					<div class="pagination pull-right">
 						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
 					</div>

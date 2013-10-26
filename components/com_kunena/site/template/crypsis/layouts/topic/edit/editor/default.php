@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 // Kunena bbcode editor
 ?>
-
+<?php //fix me: No icons ?> 
 <div class="control-group">
 	<label class="control-label"><?php echo JText::_('COM_KUNENA_BOARDCODE');?></label>
 	<div class="controls">

@@ -75,6 +75,7 @@ if ($this->spacing) : ?>
 		<?php echo $this->formatLargeNumber ( $topic->hits );?>
 		<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 	</td>
+	<?php //fix me: hide if setting show avatar is turned off ?>
 	<td>
 		<?php if (!empty($topic->avatar)) : ?>
 		<?php echo $topic->getLastPostAuthor()->getLink( $topic->avatar ) ?>

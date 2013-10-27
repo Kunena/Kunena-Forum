@@ -204,10 +204,18 @@ abstract class KunenaUserHelper {
 	 */
 	public static function getOnlineUsers() {
 		if (self::$_online === null) {
+			// Need to calculate the time less the time selected by user, user
+			$querytime = '';
+			if ( KunenaFactory::getConfig()->show_session_starttime != 0 ) {
+				$time = JFactory::getDate()->toUnix() - KunenaFactory::getConfig()->show_session_starttime;
+				$querytime = 'AND time > '.$time;
+			}
+
 			$db = JFactory::getDBO ();
 			$query = "SELECT s.userid, s.time
 				FROM #__session AS s
 				WHERE s.client_id=0 AND s.userid>0
+				".$querytime."
 				GROUP BY s.userid
 				ORDER BY s.time DESC";
 
@@ -234,7 +242,7 @@ abstract class KunenaUserHelper {
 			$user_array = 0;
 			$guest_array = 0;
 
-			// need to calcute the time less the time selected by user, user
+			// Need to calcute the time less the time selected by user, user
 			$querytime = '';
 			if ( $kunena_config->show_session_starttime != 0 ) {
 				$time = JFactory::getDate()->toUnix() - $kunena_config->show_session_starttime;

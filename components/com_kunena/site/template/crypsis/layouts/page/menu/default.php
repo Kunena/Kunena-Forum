@@ -1,58 +1,75 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Common
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Page
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 // Basic logic has been taken from Joomla! 2.5 (mod_menu)
-// HTML output emulates default Joomla! 1.5 (mod_mainmenu), but only first level is supported
-
 // Note. It is important to remove spaces between elements.
 ?>
 
 <ul class="nav">
 <?php
-foreach ($this->list as $i => $item) :
-	$class = 'item'.$item->id;
+foreach ($this->list as $i => $item)
+{
+	$class = 'item' . $item->id;
 
-	if (in_array($item->id, $this->path)) {
+	if (in_array($item->id, $this->path))
+	{
 		$class .= ' active';
-	} elseif ($item->type == 'alias') {
+	}
+	elseif ($item->type == 'alias')
+	{
 		$aliasToId = $item->params->get('aliasoptions');
-		if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path)-1]) {
+
+		if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path)-1])
+		{
 			$class .= ' active';
-		} elseif (in_array($aliasToId, $this->path)) {
+		}
+		elseif (in_array($aliasToId, $this->path))
+		{
 			$class .= ' alias-parent-active';
 		}
 	}
 
 	$class .= ($item->deeper) ? ' deeper' : '';
 	$class .= ($item->parent) ? ' parent' : '';
-	$class = !empty($class) ? ' class="'.trim($class) .'"' : '';
+	$class = !empty($class) ? ' class="' . trim($class) . '"' : '';
 	$id = ($item->id == $this->active_id) ? ' id="current"' : '';
 
-	echo '<li'.$id.$class.'>';
+	echo '<li' . $id . $class . '>';
 
-	$flink = ' href="'.htmlspecialchars($item->flink).'" ';
-	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : '';
-	$title = $item->anchor_title ? ' title="'.$item->anchor_title.'" ' : '';
-	if ($item->menu_image) {
+	$flink = ' href="'.htmlspecialchars($item->flink) . '" ';
+	$class = $item->anchor_css ? ' class="' . $item->anchor_css . '" ' : '';
+	$title = $item->anchor_title ? ' title="' . $item->anchor_title . '" ' : '';
+
+	if ($item->menu_image)
+	{
 		$menu_text = $item->params->get('menu_text', 1);
-		$menu_text ?
-		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" /><span class="image-title">'.$item->title.'</span> ' :
-		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" />';
-	} else {
+
+		if ($menu_text)
+		{
+			$linktype = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">'
+				. $item->title . '</span> ';
+		}
+		else
+		{
+			$linktype = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
+		}
+	}
+	else
+	{
 		$linktype = $item->title;
 	}
 
-	switch ($item->browserNav) {
+	switch ($item->browserNav)
+	{
 		default:
 		case 0:
 			$extra = '';
@@ -68,23 +85,31 @@ foreach ($this->list as $i => $item) :
 	}
 
 	// Render the menu item.
-	if ($item->type == 'separator') {
+	if ($item->type == 'separator')
+	{
 		echo "<span class=\"separator\"{$title}>{$linktype}</span>";
-	} else {
+	}
+	else
+	{
 		echo "<a {$flink}{$class}{$title}{$extra}>{$linktype}</a>";
 	}
 
-	if ($item->deeper) {
+	if ($item->deeper)
+	{
 		// The next item is deeper.
 		echo '<ul>';
-	} elseif ($item->shallower) {
+	}
+	elseif ($item->shallower)
+	{
 		// The next item is shallower.
 		echo '</li>';
 		echo str_repeat('</ul></li>', $item->level_diff);
-	} else {
+	}
+	else
+	{
 		// The next item is on the same level.
 		echo '</li>';
 	}
-endforeach;
+}
 ?>
 </ul>

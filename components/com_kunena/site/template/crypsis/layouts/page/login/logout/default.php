@@ -1,22 +1,24 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Common
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Page
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
+
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
+// FIXME: move announcements logic and pm logic into the template file...
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
+
 		<div class="dropdown-menu well well-small">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div class="center">
@@ -24,7 +26,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 						<?php echo $this->me->getAvatarImage('img-polaroid'); ?>
 					</a>
 					<p>
-						<strong><?php echo $this->escape($this->me->get('name')); ?></strong>
+						<strong><?php echo $this->escape($this->me->getName()); ?></strong>
 					</p>
 					<p>
 						<i class="icon-clock"></i>
@@ -32,6 +34,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					</p>
 				</div>
 				<div class="divider"></div>
+
 				<?php if (!empty($this->announcementsUrl)) : ?>
 				<div>
 					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
@@ -40,26 +43,28 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					</a>
 				</div>
 				<?php endif; ?>
+
 				<?php if (!empty($this->pm_link)) : ?>
 				<div>
-					<a href="<?php echo $this->pm_link ?>" class="btn btn-small btn-link">
+					<a href="<?php echo $this->pm_link; ?>" class="btn btn-small btn-link">
 						<i class="icon-mail"></i>
-						<?php echo $this->inboxCount ?>
+						<?php echo $this->inboxCount; ?>
 					</a>
 				</div>
-				<?php endif ?>
+				<?php endif; ?>
+
 				<div>
-					<a href="<?php echo $this->me->getUrl(false, 'edit') ?>" class="btn btn-small btn-link">
+					<a href="<?php echo $this->me->getUrl(false, 'edit'); ?>" class="btn btn-small btn-link">
 						<i class="icon-cog"></i>
-						<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES') ?>
+						<?php echo JText::_('COM_KUNENA_LOGOUTMENU_LABEL_PREFERENCES'); ?>
 					</a>
 				</div>
 				<div class="divider"></div>
 
 				<?php if ($markAllReadUrl) : ?>
-				<a href="<?php echo $markAllReadUrl ?>" class="btn btn-small btn-link">
+				<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-small btn-link">
 					<i class="icon-out"></i>
-					<?php echo JText::_('COM_KUNENA_MARK_ALL_READ') ?>
+					<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>
 				</a>
 				<?php endif ?>
 

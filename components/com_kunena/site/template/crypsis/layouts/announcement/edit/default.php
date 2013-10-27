@@ -1,23 +1,25 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Announcement
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Announcement
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 JHtml::_('behavior.formvalidation');
 ?>
 <h2>
-	<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo $this->announcement->exists() ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?>
+	<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:
+	<?php echo $this->announcement->exists() ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?>
 </h2>
 
 <div class="well well-small">
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post" name="editform" class="form-validate form-horizontal" id="editform">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
+	      name="editform" class="form-validate form-horizontal" id="editform">
 		<input type="hidden" name="task" value="save" />
 		<?php echo $this->displayInput('id'); ?>
 		<?php echo JHtml::_('form.token'); ?>
@@ -78,8 +80,10 @@ JHtml::_('behavior.formvalidation');
 
 		<div class="control-group">
 			<div class="controls" id="ann-publish">
-				<input name="submit" class="btn btn-primary" type="submit" value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
-				<input onclick="javascript:window.history.back();" name="cancel" class="btn" type="button" value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"/>
+				<input name="submit" class="btn btn-primary" type="submit"
+				       value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
+				<input onclick="window.history.back();" name="cancel" class="btn" type="button"
+				       value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"/>
 			</div>
 		</div>
 	</form>

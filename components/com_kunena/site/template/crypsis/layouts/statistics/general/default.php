@@ -1,24 +1,31 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Statistics
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Statistics
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
-
+defined('_JEXEC') or die;
 ?>
-<?php if($this->config->showgenstats): ?>
+<?php if ($this->config->showgenstats) : ?>
 <h2 class="btn-link">
 	<?php echo $this->escape($this->config->board_title); ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
 </h2>
 
 <div class="well well-small">
 	<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
-	<b><a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a></b>
+	<b>
+
+		<?php if ($this->userlistUrl) : ?>
+		<a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a>
+		<?php else : ?>
+		<?php echo $this->memberCount; ?>
+		<?php endif; ?>
+
+	</b>
 
 	<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
 	<b><?php echo $this->latestMemberLink ?></b>
@@ -26,30 +33,30 @@ defined ( '_JEXEC' ) or die ();
 	<br />
 
 	<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
-	<b><?php echo intval($this->messageCount); ?></b>
+	<b><?php echo (int) $this->messageCount; ?></b>
 
 	<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
-	<b><?php echo intval($this->topicCount); ?></b>
+	<b><?php echo (int) $this->topicCount; ?></b>
 
 	<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
-	<b><?php echo intval($this->sectionCount); ?></b>
+	<b><?php echo (int) $this->sectionCount; ?></b>
 
 	<?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
-	<b><?php echo intval($this->categoryCount); ?></b>
+	<b><?php echo (int) $this->categoryCount; ?></b>
 
 	<br />
 
 	<?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
-	<b><?php echo intval($this->todayTopicCount); ?></b>
+	<b><?php echo (int) $this->todayTopicCount; ?></b>
 
 	<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
-	<b><?php echo intval($this->yesterdayTopicCount); ?></b>
+	<b><?php echo (int) $this->yesterdayTopicCount; ?></b>
 
 	<?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
-	<b><?php echo intval($this->todayReplyCount); ?></b>
+	<b><?php echo (int) $this->todayReplyCount; ?></b>
 
 	<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
-	<b><?php echo intval($this->yesterdayReplyCount); ?></b>
+	<b><?php echo (int) $this->yesterdayReplyCount; ?></b>
 </div>
 <?php endif; ?>
 
@@ -67,7 +74,8 @@ defined ( '_JEXEC' ) or die ();
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($top as $id=>$item) : ?>
+
+		<?php foreach ($top as $id => $item) : ?>
 		<tr>
 			<td class="center">
 				<?php echo $id+1; ?>
@@ -82,6 +90,7 @@ defined ( '_JEXEC' ) or die ();
 			</td>
 		</tr>
 		<?php endforeach; ?>
+
 	</tbody>
 </table>
 <?php endforeach; ?>

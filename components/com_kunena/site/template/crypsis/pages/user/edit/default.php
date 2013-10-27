@@ -1,17 +1,20 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Pages.User
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Pages.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 $content = $this->execute('User/Edit');
 
-$this->addBreadcrumb($content->headerText, 'index.php?option=com_kunena&view=user&layout=edit');
+$this->addBreadcrumb(
+	$content->headerText,
+	'index.php?option=com_kunena&view=user&layout=edit'
+);
 
 echo $content;

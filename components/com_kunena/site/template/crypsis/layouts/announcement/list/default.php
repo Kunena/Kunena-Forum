@@ -1,24 +1,26 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Announcement
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Announcement
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 $options = $this->getOptions();
 ?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post" id="adminForm" name="adminForm">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
+      id="adminForm" name="adminForm">
 	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<h2>
 		<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
+
 		<?php if (!empty($options)) : ?>
 			<div class="btn-toolbar pull-right">
 				<div class="btn-group input-append">
@@ -26,12 +28,14 @@ $options = $this->getOptions();
 					<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 				</div>
 				<div class="btn-group input-append">
-					<a class="btn btn-small" href="index.php?option=com_kunena&view=announcement&layout=create">
+					<a class="btn btn-small"
+					   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
 						<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
 					</a>
 				</div>
 			</div>
 		<?php endif; ?>
+
 	</h2>
 
 	<table class="table table-striped table-bordered">
@@ -43,6 +47,7 @@ $options = $this->getOptions();
 				<th class="span4">
 					<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
 				</th>
+
 				<?php if ($options): ?>
 				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
@@ -57,14 +62,17 @@ $options = $this->getOptions();
 					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 				</th>
 				<?php endif; ?>
+
 				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 				</th>
+
 				<?php if ($options): ?>
-					<th class="span1 center">
-						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
-					</th>
+				<th class="span1 center">
+					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+				</th>
 				<?php endif; ?>
+
 			</tr>
 		</thead>
 
@@ -79,13 +87,15 @@ $options = $this->getOptions();
 		</tfoot>
 
 		<tbody>
+
 			<?php
-			foreach ($this->announcements as $row=>$announcement)
+			foreach ($this->announcements as $row => $announcement)
 				echo $this->subLayout('Announcement/List/Row')
 					->set('announcement', $announcement)
 					->set('row', $row)
 					->set('checkbox', !empty($options));
 			?>
+
 		</tbody>
 	</table>
 </form>

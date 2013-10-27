@@ -31,18 +31,21 @@ abstract class KunenaForumTopicHelper {
 		if ($identifier instanceof KunenaForumTopic) {
 			return $identifier;
 		}
-		$id = intval ( $identifier );
+		$id = (int) $identifier;
 		if ($id < 1)
-			return new KunenaForumTopic ();
+			return new KunenaForumTopic;
 
-	if (empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumTopic ( array('id'=>$id) );
-			self::$_instances [$id]->load();
+		if (empty(self::$_instances[$id])) {
+			$instance = new KunenaForumTopic;
+			// Only load topics which haven't been preloaded before (including missing ones).
+			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->id = $id;
+			self::$_instances[$id] = $instance;
 		} elseif ($reload) {
-			self::$_instances [$id]->load();
+			self::$_instances[$id]->load();
 		}
 
-		return self::$_instances [$id];
+		return self::$_instances[$id];
 	}
 
 	/**
@@ -326,6 +329,13 @@ abstract class KunenaForumTopicHelper {
 	}
 
 	/**
+	 * Free up memory by cleaning up all cached items.
+	 */
+	public static function cleanup() {
+		self::$_instances = array();
+	}
+
+	/**
 	 * @param mixed $ids
 	 * @param int  $start
 	 * @param int  $end
@@ -486,14 +496,12 @@ abstract class KunenaForumTopicHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
 		$db->setQuery ( $query );
-		$results = (array) $db->loadAssocList ('id');
+		$results = (array) $db->loadObjectList('id', 'KunenaForumTopic');
 		KunenaError::checkDatabaseError ();
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumTopic ($results[$id]);
-				$instance->exists(true);
-				self::$_instances [$id] = $instance;
+				self::$_instances [$id] = $results[$id];
 			} else {
 				self::$_instances [$id] = null;
 			}

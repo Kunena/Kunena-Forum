@@ -16,7 +16,7 @@ class Com_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
-			'0' => '5.4.14' // Preferred version
+			'0' => '5.4.20' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',
@@ -26,7 +26,7 @@ class Com_KunenaInstallerScript {
 			'3.1' => '3.1.1',
 			'3.0' => '3.0.3',
 			'2.5' => '2.5.9',
-			'0' => '2.5.11' // Preferred version
+			'0' => '2.5.14' // Preferred version
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');

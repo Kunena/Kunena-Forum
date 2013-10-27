@@ -54,8 +54,8 @@ $paneOptions = array(
 		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div class="kbuttons">
-			<button onclick="javascript: submitbutton('save')"><?php echo JText::_( 'Save' ); ?></button>
-			<button onclick="javascript: submitbutton('cancel')"><?php echo JText::_( 'Cancel' ); ?></button>
+			<button onclick="submitbutton('save')"><?php echo JText::_( 'Save' ); ?></button>
+			<button onclick="submitbutton('cancel')"><?php echo JText::_( 'Cancel' ); ?></button>
 		</div>
 		<?php
 			echo JHtml::_('tabs.start', 'pane', $paneOptions);

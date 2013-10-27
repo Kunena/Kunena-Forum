@@ -139,6 +139,9 @@ class KunenaViewUser extends KunenaView {
 		$this->online = $this->profile->isOnline();
 		$this->showUnusedSocial = true;
 
+		if (!preg_match("~^(?:f|ht)tps?://~i", $this->profile->websiteurl)) $this->websiteurl = 'http://' . $this->profile->websiteurl;
+		else $this->websiteurl = $this->profile->websiteurl;
+
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = ($avatar instanceof KunenaAvatarKunena) ? true : false;
 
@@ -396,7 +399,6 @@ class KunenaViewUser extends KunenaView {
 				$lang = JFactory::getLanguage();
 				$lang->load('com_users', JPATH_ADMINISTRATOR);
 
-				jimport( 'joomla.form.form' );
 				JForm::addFormPath(JPATH_ROOT.'/components/com_users/models/forms');
 				JForm::addFieldPath(JPATH_ROOT.'/components/com_users/models/fields');
 				JPluginHelper::importPlugin('user');

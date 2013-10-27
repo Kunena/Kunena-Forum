@@ -103,6 +103,38 @@ class KunenaController extends JControllerLegacy {
 	}
 
 	/**
+	 * Execute task.
+	 *
+	 * @param string $task
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public function execute($task)
+	{
+		$dot = strpos($task, '.');
+		$this->task = $dot ? substr($task, $dot + 1) : $task;
+
+		$task = strtolower($this->task);
+		if (isset($this->taskMap[$this->task]))
+		{
+			$doTask = $this->taskMap[$this->task];
+		}
+		elseif (isset($this->taskMap['__default']))
+		{
+			$doTask = $this->taskMap['__default'];
+		}
+		else
+		{
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
+		}
+
+		// Record the actual task being fired
+		$this->doTask = $doTask;
+
+		return $this->$doTask();
+	}
+
+	/**
 	 * Method to display a view.
 	 *
 	 * @param   boolean    $cachable   If true, the view output will be cached

@@ -83,11 +83,17 @@ class KunenaControllerUser extends KunenaController {
 		} else {
 			$this->saveProfile();
 			$this->saveSettings();
-			if (!$this->me->save()) {
+			$success = $this->me->save();
+			if (!$success) {
 				$this->app->enqueueMessage($this->me->getError(), 'notice');
 			} else {
 				$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_SAVED' ) );
 			}
+
+			JPluginHelper::importPlugin( 'system' );
+			// Renamme into JEventDispatcher when dropping Joomla! 2.5 support
+			$dispatcher = JDispatcher::getInstance();
+			$results = $dispatcher->trigger( 'OnAfterKunenaProfileUpdate', array( $this->me, $success ) );
 		}
 
 		$this->setRedirect($this->me->getUrl(false));
@@ -462,6 +468,7 @@ class KunenaControllerUser extends KunenaController {
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=".$userid." GROUP BY ip ORDER BY `time` DESC", 0, 1 );
 		$ip = $db->loadResult();
 
+		// TODO: replace this code by using JHttpTransport class
 		$data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$this->config->stopforumspam_key;
 		$fp = fsockopen("www.stopforumspam.com",80);
 		fputs($fp, "POST /add.php HTTP/1.1\n" );
@@ -470,8 +477,31 @@ class KunenaControllerUser extends KunenaController {
 		fputs($fp, "Content-length: ".strlen($data)."\n" );
 		fputs($fp, "Connection: close\n\n" );
 		fputs($fp, $data);
+		// Create a buffer which holds the response
+		$response = '';
+		// Read the response
+		while (!feof($fp))
+		{
+			$response .= fread($fp, 1024);
+		}
+		// The file pointer is no longer needed. Close it
 		fclose($fp);
-		return true;
+
+		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
+		{
+			// Report accepted. There is no need to display the reason
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+			return true;
+		}
+		else
+		{
+			// Report failed or refused
+			$reasons = array();
+			preg_match('/<p>.*<\/p>/', $response, $reasons);
+			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])),'error');
+			return false;
+		}
 	}
 
 	public function delfile() {

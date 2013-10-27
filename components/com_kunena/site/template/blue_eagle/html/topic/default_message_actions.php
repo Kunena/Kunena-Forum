@@ -23,17 +23,17 @@ if ($this->message->modified_time) {
 	</div>
 	<?php endif ?>
 </div>
-<div class="kmessage-editmarkup-cover">
+<div class="kmessage-editmarkup-cover hidden-phone">
 	<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
-	<span class="kmessage-editmarkup" <?php echo $datehover ?>>
+	<span class="kmessage-editmarkup hidden-phone" <?php echo $datehover ?>>
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
 		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
 	</span>
 	<?php endif ?>
 	<?php if (!empty($this->reportMessageLink)) :?>
-	<span class="kmessage-informmarkup"><?php echo $this->reportMessageLink ?></span>
+	<span class="kmessage-informmarkup hidden-phone"><?php echo $this->reportMessageLink ?></span>
 	<?php if (!empty($this->ipLink)) : ?>
-	<span class="kmessage-informmarkup"><?php echo $this->ipLink ?></span>
+	<span class="kmessage-informmarkup hidden-phone"><?php echo $this->ipLink ?></span>
 	<?php endif ?>
 	<?php endif ?>
 </div>
@@ -51,6 +51,14 @@ if ($this->message->modified_time) {
 		<?php echo $this->messageButtons->get('publish'); ?>
 	<?php else : ?>
 		<?php echo $this->message_closed; ?>
+		<?php if( !$this->topic->locked ) : ?>
+			<?php echo $this->messageButtons->get('edit'); ?>
+			<?php echo $this->messageButtons->get('moderate'); ?>
+			<?php echo $this->messageButtons->get('delete'); ?>
+			<?php echo $this->messageButtons->get('permdelete'); ?>
+			<?php echo $this->messageButtons->get('undelete'); ?>
+			<?php echo $this->messageButtons->get('publish'); ?>
+		<?php endif ?>
 	<?php endif ?>
 	</div>
 </div>

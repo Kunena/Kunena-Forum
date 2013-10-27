@@ -225,6 +225,8 @@ class KunenaConfig extends JObject {
 	// New for 3.0.0
 	public $autolink = 1;
 	public $access_component = 1;
+	// New for 3.1.0
+	public $legacy_urls = 1; // TODO: Add configuration option
 
 	public function __construct() {
 		parent::__construct ();
@@ -297,7 +299,8 @@ class KunenaConfig extends JObject {
 		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
 		foreach ($plugins as $name => $registry) {
-			if ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
+			if ($name == '38432UR24T5bBO6') $this->bind($registry->toArray());
+			elseif ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
 		}
 	}
 

@@ -156,11 +156,11 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
 	KEY `thread` (thread),
 	KEY `ip` (ip),
 	KEY `userid` (userid),
-	KEY `time` (time),
 	KEY `locked` (locked),
-	KEY `hold_time` (hold,time),
 	KEY `parent_hits` (parent,hits),
-	KEY `catid_parent` (catid,parent) ) DEFAULT CHARACTER SET utf8;
+	KEY `catid_parent` (catid,parent),
+	KEY `time_hold` (time,hold),
+	KEY `hold` (hold)) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_messages_text` (
 	`mesid` int(11) NOT NULL default '0',

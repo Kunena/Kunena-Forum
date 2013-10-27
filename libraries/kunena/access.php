@@ -25,9 +25,10 @@ class KunenaAccess {
 	protected $moderatorsByCatid = null;
 	protected $moderatorsByUserid = null;
 
-	protected static $cacheKey = 'com_kunena.access.global';
+	protected static $cacheKey = 'com_kunena.access.global.v1';
 
 	public function __construct() {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher = JDispatcher::getInstance();
 		$classes = $dispatcher->trigger('onKunenaGetAccessControl');
@@ -41,23 +42,24 @@ class KunenaAccess {
 			}
 		}
 
-		// Load administrators and moderators from cache
-		$cache = JFactory::getCache('com_kunena', 'output');
-		// FIXME: enable caching after fixing the issues
-		$data = false; //$cache->get(self::$cacheKey, 'com_kunena');
-		if ($data) {
-			$data = unserialize($data);
-			if (isset($data['v']) && $data['v'] == 1) {
+		if (KunenaConfig::getInstance()->get('cache_adm')) {
+			// Load administrators and moderators from cache
+			$cache = JFactory::getCache('com_kunena', 'output');
+			// FIXME: Experimental caching.
+			$data = $cache->get(self::$cacheKey, 'com_kunena');
+			if ($data) {
+				$data = unserialize($data);
 				$this->adminsByCatid = (array)$data['ac'];
 				$this->adminsByUserid = (array)$data['au'];
 				$this->moderatorsByCatid = (array)$data['mc'];
 				$this->moderatorsByUserid = (array)$data['mu'];
 			}
+			// If values were not cached (or users permissions have been changed), force reload
+			if (!isset($this->adminsByCatid)) {
+				$this->clearCache();
+			}
 		}
-		// If values were not cached (or users permissions have been changed), force reload
-		if (!isset($this->adminsByCatid)) {
-			$this->clearCache();
-		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
 	public static function getInstance() {
@@ -92,18 +94,17 @@ class KunenaAccess {
 		$this->storeRoles((array) $db->loadObjectList ());
 		KunenaError::checkDatabaseError ();
 
-		// Store new data into cache
-		$cache = JFactory::getCache('com_kunena', 'output');
 		// FIXME: enable caching after fixing the issues
-		/*
-		$cache->store(serialize(array(
-			'v'=>1, // version identifier
-			'ac'=>$this->adminsByCatid,
-			'au'=>$this->adminsByUserid,
-			'mc'=>$this->moderatorsByCatid,
-			'mu'=>$this->moderatorsByUserid,
-			)), self::$cacheKey, 'com_kunena');
-		*/
+		if (KunenaConfig::getInstance()->get('cache_adm')) {
+			// Store new data into cache
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache->store(serialize(array(
+				'ac'=>$this->adminsByCatid,
+				'au'=>$this->adminsByUserid,
+				'mc'=>$this->moderatorsByCatid,
+				'mu'=>$this->moderatorsByUserid,
+				)), self::$cacheKey, 'com_kunena');
+		}
 	}
 
 	/**
@@ -260,7 +261,7 @@ window.addEvent('domready', function(){
 	 * @return array
 	 */
 	public function getAdminStatus($user = null) {
-		$user = KunenaFactory::getUser($user);
+		if (!($user instanceof KunenaUser)) $user = KunenaFactory::getUser($user);
 		return !empty($this->adminsByUserid[$user->userid]) ? $this->adminsByUserid[$user->userid] : array();
 	}
 
@@ -270,7 +271,7 @@ window.addEvent('domready', function(){
 	 * @return array
 	 */
 	public function getModeratorStatus($user = null) {
-		$user = KunenaFactory::getUser($user);
+		if (!($user instanceof KunenaUser)) $user = KunenaFactory::getUser($user);
 		return !empty($this->moderatorsByUserid[$user->userid]) ? $this->moderatorsByUserid[$user->userid] : array();
 	}
 
@@ -281,7 +282,7 @@ window.addEvent('domready', function(){
 	 * @return bool
 	 */
 	public function isAdmin($user = null, $catid = 0) {
-		$user = KunenaFactory::getUser($user);
+		if (!($user instanceof KunenaUser)) $user = KunenaFactory::getUser($user);
 
 		// Guests and banned users cannot be administrators
 		if (!$user->exists() || $user->isBanned()) return false;
@@ -305,7 +306,7 @@ window.addEvent('domready', function(){
 	 * @return bool
 	 */
 	public function isModerator($user = null, $catid = 0) {
-		$user = KunenaFactory::getUser($user);
+		if (!($user instanceof KunenaUser)) $user = KunenaUserHelper::get($user);
 
 		// Guests and banned users cannot be moderators
 		if (!$user->exists() || $user->isBanned()) return false;
@@ -340,7 +341,7 @@ window.addEvent('domready', function(){
 		$status = intval($status);
 
 		// Check if user exists
-		$user = KunenaUserHelper::get($user);
+		if (!($user instanceof KunenaUser)) $user = KunenaUserHelper::get($user);
 		if (!$user->exists()) {
 			return false;
 		}
@@ -372,10 +373,10 @@ window.addEvent('domready', function(){
 		static $read = array();
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		$user = KunenaFactory::getUser($user);
-		$id = $user->userid;
+		if (!($user instanceof KunenaUser)) $user = KunenaFactory::getUser($user);
 
-		if (!isset($read[$id])) {
+		if (!isset($read[$user->userid])) {
+			$id = $user->userid;
 			$app = JFactory::getApplication();
 			// TODO: handle guests/bots with no userstate
 			$read[$id] = $app->getUserState("com_kunena.user{$id}_read");
@@ -388,7 +389,7 @@ window.addEvent('domready', function(){
 						unset($categories[$category->id]);
 					}
 					// Moderators have always access
-					if (self::isModerator($id, $category->id)) {
+					if (self::isModerator($user, $category->id)) {
 						$read[$id][$category->id] = $category->id;
 						unset($categories[$category->id]);
 					}
@@ -406,9 +407,8 @@ window.addEvent('domready', function(){
 				$app->setUserState("com_kunena.user{$id}_read", $read[$id]);
 			}
 		}
-		$allowed = $read[$id];
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return $allowed;
+		return $read[$user->userid];
 	}
 
 	/**
@@ -447,15 +447,15 @@ window.addEvent('domready', function(){
 		// hold = 0: normal
 		// hold = 1: unapproved
 		// hold = 2: deleted
-		$user = KunenaFactory::getUser($user);
+		if (!($user instanceof KunenaUser)) $user = KunenaFactory::getUser($user);
 		$config = KunenaFactory::getConfig ();
 
 		$hold [0] = 0;
-		if ($this->isModerator ( $user->userid, $catid )) {
+		if ($this->isModerator($user, $catid)) {
 			$hold [1] = 1;
 		}
-		if (($config->mod_see_deleted == '0' && $this->isAdmin ( $user->userid, $catid ))
-			|| ($config->mod_see_deleted == '1' && $this->isModerator( $user->userid, $catid ))) {
+		if (($config->mod_see_deleted == '0' && $this->isAdmin($user, $catid))
+			|| ($config->mod_see_deleted == '1' && $this->isModerator($user, $catid))) {
 			$hold [2] = 2;
 			$hold [3] = 3;
 	}

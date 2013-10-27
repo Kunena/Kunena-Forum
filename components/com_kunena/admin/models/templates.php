@@ -116,7 +116,7 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 		// Read the ini file
 		if (JFile::exists($ini)) {
-			$content = JFile::read($ini);
+			$content = file_get_contents($ini);
 		} else {
 			$content = null;
 		}
@@ -137,7 +137,7 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		jimport('joomla.filesystem.file');
 		$template = $this->app->getUserState ( 'kunena.edit.template');
 		$filename = $this->app->getUserState ( 'kunena.editcss.filename');
-		$content = JFile::read(KPATH_SITE.'/template/'.$template.'/css/'.$filename);
+		$content = file_get_contents(KPATH_SITE.'/template/'.$template.'/css/'.$filename);
 		if ($content === false) {
 			 return null;
 		}
@@ -148,7 +148,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	function getFTPcredentials() {
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
 
 		return $ftp;

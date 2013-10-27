@@ -13,7 +13,6 @@ jimport ( 'joomla.filesystem.folder' );
 jimport ( 'joomla.filesystem.file' );
 jimport ( 'joomla.filesystem.path' );
 jimport ( 'joomla.filesystem.archive' );
-jimport ( 'joomla.installer.installer' );
 
 define('KUNENA_INSTALLER_PATH', __DIR__);
 define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
@@ -500,7 +499,6 @@ class KunenaModelInstall extends JModelLegacy {
 					$this->deleteFolder($dest, $ignore[$dest]);
 					if ($dest == KUNENA_INSTALLER_SITEPATH) {
 						$this->deleteFolder("$dest/template/blue_eagle", array('params.ini'));
-						$this->deleteFolder("$dest/template/mirage", array('params.ini'));
 					}
 				}
 				// Copy new files into folder

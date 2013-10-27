@@ -103,13 +103,17 @@
 			<istrue value="${cfg.bz2}" />
 		</condition>
 
-		<copy todir="${tmp_dir}/packages">
-			<fileset dir="${project_dir}" />
-			<firstmatchmapper>
-				<mapper type="regexp" from="^libraries/(.*)$$" to="lib_\1"/>
-				<mapper type="regexp" from="^media/([^/]*)/(.*)$$" to="\1_media/\2"/>
-				<mapper type="glob" from="plugins/*" to="*"/>
-			</firstmatchmapper>
+		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
+			<fileset dir="${project_dir}/libraries/kunena"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
+			<fileset dir="${project_dir}/plugins/plg_system_kunena"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
+			<fileset dir="${project_dir}/plugins/plg_quickicon_kunena"/>
+		</copy>
+		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
+			<fileset dir="${project_dir}/media/kunena"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena">
 			<fileset dir="${project_dir}/${kunena.admin}">
@@ -131,16 +135,26 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
 		<!-- Add version information to all xml files and forum.php -->
-		<copy todir="${tmp_dir}/packages" overwrite="true" filtering="true">
-			<fileset dir="${project_dir}">
-				<include name="libraries/kunena/forum/forum.php"/>
+		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}/libraries/kunena">
+				<include name="forum/forum.php"/>
 				<include name="**/*.xml"/>
 			</fileset>
-			<firstmatchmapper>
-				<mapper type="regexp" from="^libraries/(.*)$$" to="lib_\1"/>
-				<mapper type="regexp" from="^media/([^/]*)/(.*)$$" to="\1_media/\2"/>
-				<mapper type="glob" from="plugins/*" to="*"/>
-			</firstmatchmapper>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}/plugins/plg_system_kunena">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}/plugins/plg_quickicon_kunena">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}/media/kunena">
+				<include name="**/*.xml"/>
+			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.admin}">
@@ -157,8 +171,7 @@
 			</fileset>
 		</copy>
 
-		<!-- Remove Mirage & Crypsis template -->
-		<delete dir="${tmp_dir}/packages/com_kunena/site/template/mirage" />
+		<!-- Remove Crypsis template -->
 		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsis" />
 
 		<!-- Move files needed by the installer -->
@@ -189,7 +202,6 @@
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/com_kunena/site" todir="${tmp_dir}/packages/com_kunena/site">
 			<include name="**/*.js" />
 			<include name="**/*.css" />
-			<exclude name="template/mirage/css/*.css" />
 		</yui-compressor>
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
 			<include name="**/*.js" />
@@ -288,16 +300,12 @@
 		<language tag="eo-XX" />
 		<language tag="es-ES" />
 		<language tag="et-EE" />
+		<language tag="eu-ES" />
 		<language tag="fa-IR" />
 		<language tag="fi-FI" />
 		<language tag="fr-FR" />
-		<!--language tag="gl-ES" /-->
 		<language tag="he-IL" />
-		<!--language tag="hi-IN" /-->
-		<language tag="hr-HR" />
-		<language tag="fr-FR" />
-		<!--language tag="gl-ES" /-->
-		<language tag="he-IL" />
+		<language tag="hi-IN" />
 		<language tag="hr-HR" />
 		<language tag="hu-HU" />
 		<language tag="id-ID" />
@@ -316,8 +324,8 @@
 		<language tag="pt-PT" />
 		<language tag="ro-RO" />
 		<language tag="ru-RU" />
-		<language tag="sl-SI" />
 		<language tag="sk-SK" />
+		<language tag="sl-SI" />
 		<language tag="sq-AL" />
 		<language tag="sr-RS" />
 		<language tag="sr-YU" />

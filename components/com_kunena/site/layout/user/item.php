@@ -1,17 +1,28 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Layout.User
+ * @package     Kunena.Site
+ * @subpackage  Layout.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
+/**
+ * KunenaLayoutUserItem
+ *
+ * @since  3.1
+ *
+ */
 class KunenaLayoutUserItem extends KunenaLayout
 {
+	/**
+	 * Method to get tabs for user profile
+	 *
+	 * @return array
+	 */
 	public function getTabs()
 	{
 		$banInfo = KunenaUserBan::getInstanceByUserid($this->user->id, true);
@@ -31,64 +42,82 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		// Define all tabs.
 		$tabs = array();
-		if ($showPosts) {
-			$tab = new stdClass();
+
+		if ($showPosts)
+		{
+			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_USERPOSTS');
 			$tab->content = 'FIXME';
 			$tab->active = true;
 			$tabs['posts'] = $tab;
 		}
-		if ($showSubscriptions) {
-			$tab = new stdClass();
+
+		if ($showSubscriptions)
+		{
+			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
-			$tab->content = $this->subRequest('Category/Subscriptions').'FIXME';
+			$tab->content = $this->subRequest('Category/Subscriptions') . 'FIXME';
 			$tab->active = false;
 			$tabs['subscriptions'] = $tab;
 		}
-		if ($showFavorites) {
-			$tab = new stdClass();
+
+		if ($showFavorites)
+		{
+			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_FAVORITES');
 			$tab->content = 'FIXME';
 			$tab->active = false;
 			$tabs['favorites'] = $tab;
 		}
-		if ($showThankYou) {
-			$tab = new stdClass();
+
+		if ($showThankYou)
+		{
+			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_THANK_YOU');
 			$tab->content = 'FIXME';
 			$tab->active = false;
 			$tabs['thankyou'] = $tab;
 		}
-		if ($showUnapproved) {
-			$tab = new stdClass();
+
+		if ($showUnapproved)
+		{
+			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION');
 			$tab->content = 'FIXME';
 			$tab->active = false;
 			$tabs['unapproved'] = $tab;
 		}
-		if ($showAttachments) {
-			$tab = new stdClass();
+
+		if ($showAttachments)
+		{
+			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 			$tab->content = $this->subRequest('User/Attachments');
 			$tab->active = false;
 			$tabs['attachments'] = $tab;
 		}
-		if ($showBanManager) {
-			$tab = new stdClass();
+
+		if ($showBanManager)
+		{
+			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_BAN_BANMANAGER');
 			$tab->content = $this->subRequest('User/Ban/Manager');
 			$tab->active = false;
 			$tabs['banmanager'] = $tab;
 		}
-		if ($showBanHistory) {
-			$tab = new stdClass();
+
+		if ($showBanHistory)
+		{
+			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_BAN_BANHISTORY');
 			$tab->content = $this->subRequest('User/Ban/History');
 			$tab->active = false;
 			$tabs['banhistory'] = $tab;
 		}
-		if ($showBanUser) {
-			$tab = new stdClass();
+
+		if ($showBanUser)
+		{
+			$tab = new stdClass;
 			$tab->title = $banInfo->exists() ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW');
 			$tab->content = $this->subRequest('User/Ban/Form');
 			$tab->active = false;
@@ -98,7 +127,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 		return $tabs;
 	}
 
-	function displayUnapprovedPosts() {
+	/**
+	 * Method to display unapproved posts
+	 *
+	 * @return void
+	 */
+	public function displayUnapprovedPosts()
+	{
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -113,7 +148,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
-	function displayUserPosts() {
+	/**
+	 * Method to display user posts
+	 *
+	 * @return void
+	 */
+	public function displayUserPosts()
+	{
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -128,7 +169,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
-	function displayGotThankyou() {
+	/**
+	 * Method to display who got thankyou
+	 *
+	 * @return void
+	 */
+	public function displayGotThankyou()
+	{
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -143,7 +190,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
-	function displaySaidThankyou() {
+	/**
+	 * Method to display who said thankyou
+	 *
+	 * @return void
+	 */
+	public function displaySaidThankyou()
+	{
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -158,7 +211,13 @@ class KunenaLayoutUserItem extends KunenaLayout
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
-	function displayFavorites() {
+	/**
+	 * Method to display favorites topics
+	 *
+	 * @return void
+	 */
+	public function displayFavorites()
+	{
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -173,8 +232,18 @@ class KunenaLayoutUserItem extends KunenaLayout
 		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
-	function displaySubscriptions() {
-		if ($this->config->topic_subscriptions == 'disabled') return;
+	/**
+	 * Method to display subscriptions
+	 *
+	 * @return void
+	 */
+	public function displaySubscriptions()
+	{
+		if ($this->config->topic_subscriptions == 'disabled')
+		{
+			return;
+		}
+
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -189,8 +258,18 @@ class KunenaLayoutUserItem extends KunenaLayout
 		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
-	function displayCategoriesSubscriptions() {
-		if ($this->config->category_subscriptions == 'disabled') return;
+	/**
+	 * Method to display categories subscriptions
+	 *
+	 * @return void
+	 */
+	public function displayCategoriesSubscriptions()
+	{
+		if ($this->config->category_subscriptions == 'disabled')
+		{
+			return;
+		}
+
 		$params = array(
 			'userid' => $this->user->id,
 			'limit' => 6,

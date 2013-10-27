@@ -1,21 +1,37 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Layout.Announcement.List
+ * @package     Kunena.Site
+ * @subpackage  Layout.Announcement.List
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
+/**
+ * KunenaLayoutAnnouncementList
+ *
+ * @since  3.1
+ *
+ */
 class KunenaLayoutAnnouncementList extends KunenaLayout
 {
-	public function getOptions() {
+	/**
+	 * Method to get moderation action in annoucements list
+	 *
+	 * @see KunenaCompatLayoutBase::getOptions()
+	 *
+	 * @return string
+	 */
+	public function getOptions()
+	{
 		// TODO: use action based ACL
 		$options = array();
-		if (KunenaUserHelper::getMyself()->isModerator()) {
+
+		if (KunenaUserHelper::getMyself()->isModerator())
+		{
 			$options[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 			$options[] = JHtml::_('select.option', 'unpublish', JText::_('COM_KUNENA_UNPUBLISH'));
 			$options[] = JHtml::_('select.option', 'publish', JText::_('COM_KUNENA_PUBLISH'));

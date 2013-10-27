@@ -1,6 +1,3 @@
-	protected function _getAttachementLink($folder, $filename, $name, $title = '', $rel = 'nofollow') {
-		$link = JURI::ROOT()."{$folder}/{$filename}";
-		var_dump($link);
 <?php
 /**
  * Kunena Component

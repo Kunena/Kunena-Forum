@@ -32,7 +32,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	{
 		parent::before();
 
-		$catid = $this->input->getInt('catid');
+		$catid = $this->input->getInt('catid', 0);
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
 		$this->me = KunenaUserHelper::getMyself();

@@ -748,7 +748,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			}
 		}
 
-		if (!$this->exists()) {
+		if (!$this->exists() && !$this->getCategory()->authorise('moderate')) {
 			// Ignore identical messages (posted within 5 minutes)
 			$duplicatetimewindow = JFactory::getDate ()->toUnix() - 5 * 60;
 			$this->_db->setQuery ( "SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid

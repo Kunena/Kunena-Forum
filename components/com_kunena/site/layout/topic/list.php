@@ -1,22 +1,39 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Layout.Topic
+ * @package     Kunena.Site
+ * @subpackage  Layout.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
+/**
+ * KunenaLayoutTopicList
+ *
+ * @since  3.1
+ *
+ */
 class KunenaLayoutTopicList extends KunenaLayout
 {
+	/**
+	 * Method to return HTML select list for time filter
+	 *
+	 * @param   int     $id      Id of the HTML select list
+	 * @param   string  $attrib  Extra attribute to apply to the list
+	 *
+	 * @return void
+	 */
 	public function displayTimeFilter($id = 'filter-time', $attrib = 'onchange="this.form.submit()"')
 	{
-		if (!isset($this->state)) return;
+		if (!isset($this->state))
+		{
+			return;
+		}
 
-		// make the select list for time selection
+		// Make the select list for time selection
 		$timesel[] = JHtml::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));
 		$timesel[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
 		$timesel[] = JHtml::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));

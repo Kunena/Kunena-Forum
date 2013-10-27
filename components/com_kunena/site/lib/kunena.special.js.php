@@ -1,15 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Lib
+ * @package     Kunena.Site
+ * @subpackage  Lib
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 
-defined( '_JEXEC' ) or die();
+defined('_JEXEC') or die;
 
 /**
  * Deprecated class placeholder. This file is keep for legacy users which still use blue eagle template.
@@ -21,7 +21,9 @@ defined( '_JEXEC' ) or die();
  */
 
 ob_start();
-if (!empty($this->poll)) :
+
+if (!empty($this->poll))
+:
 	$this->addScript('js/poll.js');
 ?>
 var KUNENA_POLL_CATS_NOT_ALLOWED = "<?php echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED', true) ?>";
@@ -29,10 +31,17 @@ var KUNENA_EDITOR_HELPLINE_OPTION = "<?php echo JText::_('COM_KUNENA_EDITOR_HELP
 var KUNENA_POLL_OPTION_NAME = "<?php echo JText::_('COM_KUNENA_POLL_OPTION_NAME', true) ?>";
 var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "<?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW', true) ?>";
 var KUNENA_ICON_ERROR = <?php echo json_encode(KunenaFactory::getTemplate()->getImagePath('publish_x.png')) ?>;
-<?php endif ?>
-<?php if ($this->me->userid) : ?>
+<?php
+endif
+?>
+
+<?php if ($this->me->userid)
+:
+?>
 var kunena_anonymous_name = "<?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS', true) ?>";
-<?php endif ?>
+<?php
+endif
+?>
 
 window.addEvent('domready', function(){
 
@@ -64,9 +73,13 @@ window.addEvent('domready', function(){
 				kbutton.removeProperty('checked');
 			}
 		}
-		<?php if ($this->me->userid != 0) : ?>
+		<?php if ($this->me->userid != 0)
+		:
+		?>
 		kunenaSelectUsername(kbutton,kuser);
-		<?php endif ?>
+		<?php
+		endif
+		?>
 	}
 	//	for hide or show polls if category is allowed
 	if(document.id('postcatid') !== null) {
@@ -78,12 +91,16 @@ window.addEvent('domready', function(){
 	if(document.id('kauthorname') !== undefined) {
 		var kuser = document.id('kauthorname').get('value');
 		var kbutton = document.id('kanonymous');
-		<?php if ($this->me->userid != 0) : ?>
+		<?php if ($this->me->userid != 0)
+		:
+		?>
 		kunenaSelectUsername(kbutton, kuser);
 		kbutton.addEvent('click', function(e) {
 			kunenaSelectUsername(this, kuser);
 		});
-		<?php endif ?>
+		<?php
+		endif
+		?>
 	}
 	//	to select if anynomous option is allowed on new topic tab
 	if(document.id('postcatid') !== null) {
@@ -104,6 +121,8 @@ $script = ob_get_contents();
 ob_end_clean();
 
 $document = JFactory::getDocument();
-$document->addScriptDeclaration( "// <![CDATA[
-{$script}
-// ]]>");
+$document->addScriptDeclaration(
+	"// <![CDATA[
+		{$script}
+	// ]]>"
+);

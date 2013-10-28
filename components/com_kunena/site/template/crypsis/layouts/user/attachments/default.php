@@ -68,7 +68,7 @@ $attachments = $this->attachments;
 			<tr>
 				<td><?php echo ++$i; ?></td>
 				<td>
-					<?php if ($canDelete) echo JHtml::_('grid.id', $i, intval($attachment->id)); ?>
+					<?php if ($canDelete) echo JHtml::_('grid.id', $i-1, intval($attachment->id)); ?>
 				</td>
 				<td class="center">
 					<img src="<?php echo $attachment->isImage()

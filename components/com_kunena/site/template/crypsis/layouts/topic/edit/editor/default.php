@@ -127,24 +127,15 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		<?php endif; ?>
 		<?php
-			if ($this->config->highlightcode) {
-				$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
-				if ( file_exists($path) ) {
-					$files = JFolder::files($path, ".php"); ?>
-					<div id="kbbcode-code-options" style="display: none;"> <?php echo JText::_('COM_KUNENA_EDITOR_CODE_TYPE'); ?>
-						<select id="kcodetype" name="kcode_type" class="kbutton"
-							onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true); ?>')">
-							<?php
-							echo '<option value = ""></option>';
-							foreach ($files as $file)
-								echo '<option value = "'.substr($file,0,-4).'">'.substr($file,0,-4).'</option>';
-							?>
-						</select>
-						<input id="kbutton_addcode" type="button" name="Code" onclick="kInsertCode()" value="<?php echo JText::_('COM_KUNENA_EDITOR_CODE_INSERT'); ?>"
-						onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODEAPPLY', true); ?>')" />
-					</div>
-		<?php }
-			}
+			if (($codeTypes = $this->getCodeTypes())) :
+			?>
+			<div id="kbbcode-code-options" style="display: none;">
+				<?php echo $codeTypes; ?>
+				<input id="kbutton_addcode" type="button" name="Code" onclick="kInsertCode()" value="<?php echo JText::_('COM_KUNENA_EDITOR_CODE_INSERT'); ?>"
+					onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODEAPPLY', true); ?>')" />
+			</div>
+			<?php endif;
+
 			if ($this->config->showvideotag) {
 			?>
 				<div id="kbbcode-video-options" style="display: none;">

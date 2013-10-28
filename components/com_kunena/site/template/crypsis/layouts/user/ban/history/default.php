@@ -56,7 +56,7 @@ defined('_JEXEC') or die;
 					: JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?>
 			</td>
 			<td>
-				<?php if ($banInfo->created_time) echo $banInfo->getCreationDate()->toKunena('datetime'); ?>
+				<?php echo $banInfo->getCreationDate()->toKunena('datetime'); ?>
 			</td>
 			<td>
 				<?php echo $banInfo->isLifetime()
@@ -99,7 +99,7 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 
 		<?php
-			if ($this->me->isModerator() && is_array($banInfo->comments))
+			if ($this->me->isModerator() && !empty($banInfo->comments))
 				foreach ($banInfo->comments as $comment) :
 		?>
 		<tr>

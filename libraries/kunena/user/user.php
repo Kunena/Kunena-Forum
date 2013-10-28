@@ -707,6 +707,137 @@ class KunenaUser extends JObject {
 	}
 
 	/**
+	 * Get URL to private messages.
+	 *
+	 * @return string  URL.
+	 *
+	 * @since 3.1
+	 */
+	public function getPrivateMsgLink()
+	{
+		static $pm;
+
+		if (!isset($pm))
+		{
+			$private = KunenaFactory::getPrivateMessaging();
+
+			if (!$this->userid)
+			{
+				$pm = '';
+			}
+			elseif ($this->isMyself())
+			{
+				$count = $private->getUnreadCount($this->userid);
+				$pm = $private->getInboxLink($count
+					? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
+					: JText::_('COM_KUNENA_PMS_INBOX'));
+			}
+			else
+			{
+				$pm = $private->getInboxLink(JText::_('COM_KUNENA_PM_WRITE'));
+			}
+		}
+
+		return $pm;
+	}
+
+	/**
+	 * Get email address if current user has permissions to see it.
+	 *
+	 * @return string  Cloaked email address or empty string.
+	 *
+	 * @since 3.1
+	 */
+	public function getEmailLink()
+	{
+		static $email;
+
+		if (!isset($email))
+		{
+			$config = KunenaConfig::getInstance();
+			$me = KunenaUserHelper::getMyself();
+
+			$email = '';
+			if ($this->email && (($config->showemail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
+			{
+				$email = JHtml::_('email.cloak', $this->email);
+			}
+		}
+
+		return $email;
+	}
+
+	/**
+	 * Get website link from the user.
+	 *
+	 * @return string  Link to the website.
+	 *
+	 * @since 3.1
+	 */
+	public function getWebsiteLink()
+	{
+		static $html;
+
+		if (!isset($html) && $this->websiteurl)
+		{
+			$html = '';
+			$url = $this->websiteurl;
+
+			if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
+			{
+				$url = 'http://' . $url;
+			}
+
+			$name = trim($this->websitename) ? $this->websitename : $this->websiteurl;
+
+			$html = '<a href="' . $this->escape($url) . '" target="_blank">' . $this->escape($name) . '</a>';
+		}
+
+		return (string) $html;
+	}
+
+	/**
+	 * Output gender.
+	 *
+	 * @param  bool  $translate
+	 *
+	 * @return string  One of: male, female or unknown.
+	 *
+	 * @since 3.1
+	 */
+	public function getGender($translate = true)
+	{
+		switch ($this->gender)
+		{
+			case 1 :
+				$gender = 'male';
+				break;
+			case 2 :
+				$gender = 'female';
+				break;
+			default :
+				$gender = 'unknown';
+		}
+
+		return $translate ? JText::_('COM_KUNENA_MYPROFILE_GENDER_' . $gender) : $gender;
+	}
+
+	/**
+	 * Render personal text.
+	 *
+	 * @return string
+	 *
+	 * @since 3.1
+	 */
+	public function getPersonalText() {
+		static $html;
+		if (!isset($html)) {
+			$html = KunenaHtmlParser::parseText($this->personalText);
+		}
+		return $html;
+	}
+
+	/**
 	 * Render user signature.
 	 *
 	 * @return string

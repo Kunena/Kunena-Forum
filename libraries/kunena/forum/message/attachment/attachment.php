@@ -88,7 +88,9 @@ class KunenaForumMessageAttachment extends JObject {
 	 *
 	 * @return bool
 	 */
-	function isImage($mime) {
+	function isImage($mime = null) {
+		if (is_null($mime)) $mime = $this->filetype;
+
 		return (stripos ( $mime, 'image/' ) !== false);
 	}
 

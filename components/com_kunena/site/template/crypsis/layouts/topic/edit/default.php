@@ -19,29 +19,29 @@ $this->addScriptDeclaration('config_attachment_limit = '.$this->config->attachme
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
-$this->addScriptDeclaration('window.addEvent(\'domready\', function() {
-	if ( typeof pollcategoriesid != \'undefined\' ) {
-		var catid = $(\'kcategory_poll\').get(\'value\');
+$this->addScriptDeclaration("window.addEvent('domready', function() {
+	if ( typeof pollcategoriesid != 'undefined' ) {
+		var catid = $('kcategory_poll').get('value');
 		if ( pollcategoriesid[catid] !== undefined ) {
-			kbbcode.addFunction(\'Poll\', function() {
-				kToggleOrSwap(\'kbbcode-poll-options\');
-			}, {\'id\': \'kbbcode-poll-button\',
-				\'class\': \'kbbcode-poll-button\',
-				\'title\': Joomla.JText._(\'COM_KUNENA_EDITOR_POLL\'),
-				\'alt\': Joomla.JText._(\'COM_KUNENA_EDITOR_HELPLINE_POLL\')});
+			kbbcode.addFunction('Poll', function() {
+				kToggleOrSwap('kbbcode-poll-options');
+			}, {'id': 'kbbcode-poll-button',
+				'class': 'kbbcode-poll-button',
+				'title': Joomla.JText._('COM_KUNENA_EDITOR_POLL'),
+				'alt': Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_POLL')});
 
 		} else {
-			kbbcode.addFunction(\'Poll\', function() {
-				kToggleOrSwap(\'kbbcode-poll-options\');
-			}, {\'id\': \'kbbcode-poll-button\',
-				\'class\': \'kbbcode-poll-button\',
-				\'style\':\'display: none;\',
-				\'title\': Joomla.JText._(\'COM_KUNENA_EDITOR_POLL\'),
-				\'alt\': Joomla.JText._(\'COM_KUNENA_EDITOR_HELPLINE_POLL\')});
+			kbbcode.addFunction('Poll', function() {
+				kToggleOrSwap('kbbcode-poll-options');
+			}, {'id': 'kbbcode-poll-button',
+				'class': 'kbbcode-poll-button',
+				'style':'display: none;',
+				'title': Joomla.JText._('COM_KUNENA_EDITOR_POLL'),
+				'alt': Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_POLL')});
 		}
 	}
 	kEditorInitialize();
-});');
+});");
 
 $this->k=0;
 ?>

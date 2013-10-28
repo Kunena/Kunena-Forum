@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage User
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -18,43 +18,49 @@ defined ( '_JEXEC' ) or die ();
 	<tbody>
 		<tr>
 			<td class="span3">
-				<label for="username"><?php echo JText::_( 'COM_KUNENA_UNAME' ); ?></label>
+				<label for="username"><?php echo JText::_('COM_KUNENA_UNAME'); ?></label>
 			</td>
 			<td>
-				<input type="text" name="username" id="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->changeUsername ? 'disabled="disabled" ' : '' ?>/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="name"><?php echo JText::_( 'COM_KUNENA_REALNAME' ); ?></label>
-			</td>
-			<td>
-				<input class="inputbox required" type="text" id="name" name="name" value="<?php echo $this->escape($this->user->get('name'));?>" size="40" />
+				<input type="text" name="username" id="username"
+				       value="<?php echo $this->escape($this->user->get('username'));?>"
+				       <?php if (!$this->changeUsername) echo 'disabled="disabled"'; ?> />
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<label for="email"><?php echo JText::_( 'COM_KUNENA_USRL_EMAIL' ); ?></label>
+				<label for="name"><?php echo JText::_('COM_KUNENA_REALNAME'); ?></label>
 			</td>
 			<td>
-				<input class="inputbox required validate-email" type="text" id="email" name="email" value="<?php echo $this->escape($this->user->get('email'));?>" size="40" />
+				<input class="required" type="text" id="name" name="name"
+				       value="<?php echo $this->escape($this->user->get('name')); ?>" size="40" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="email"><?php echo JText::_('COM_KUNENA_USRL_EMAIL'); ?></label>
+			</td>
+			<td>
+				<input class="required validate-email" type="text" id="email" name="email"
+				       value="<?php echo $this->escape($this->user->get('email')); ?>" size="40" />
 			</td>
 		</tr>
 		<?php if($this->user->get('password')) : ?>
 		<tr>
 			<td>
-				<label for="password"><?php echo JText::_( 'COM_KUNENA_PASS' ); ?></label>
+				<label for="password"><?php echo JText::_('COM_KUNENA_PASS'); ?></label>
 			</td>
 			<td>
-				<input class="inputbox validate-password" type="password" id="kpassword" name="password" value="" size="40" />
+				<input class="validate-password" type="password" id="password" name="password"
+				       value="" size="40" />
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<label for="password2"><?php echo JText::_( 'COM_KUNENA_VPASS' ); ?></label>
+				<label for="password2"><?php echo JText::_('COM_KUNENA_VPASS'); ?></label>
 			</td>
 			<td>
-				<input class="inputbox validate-passverify" type="password" id="kpassword2" name="password2" value="" size="40" />
+				<input class="validate-passverify" type="password" id="password2" name="password2"
+				       value="" size="40" />
 			</td>
 		</tr>
 		<?php endif; ?>
@@ -68,16 +74,18 @@ defined ( '_JEXEC' ) or die ();
 
 <table class="table table-bordered table-striped table-hover">
 	<tbody>
+
 		<?php foreach ($this->frontendForm as $field): ?>
 		<tr>
 			<td class="span3">
-				<?php echo $field->label ?>
+				<?php echo $field->label; ?>
 			</td>
 			<td>
-				<?php echo $field->input ?>
+				<?php echo $field->input; ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>
+
 	</tbody>
 </table>
 <?php endif; ?>

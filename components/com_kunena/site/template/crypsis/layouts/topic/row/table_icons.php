@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topics
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 /** @var KunenaLayout $this */
 /** @var KunenaForumTopic $this->topic */
@@ -19,29 +19,35 @@ $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 
 $cols = empty($this->checkbox) ? 4 : 5;
-if ($this->spacing) : ?>
+
+if (!empty($this->spacing)) : ?>
 <tr>
 	<td class="kcontenttablespacer" colspan="<?php echo $cols; ?>">&nbsp;</td>
 </tr>
 <?php endif; ?>
+
 <tr class="<?php echo $topic->ordering ? 'warning' : ''; ?>">
 	<td class="span1 center">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()) ?>
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td class="span7">
 		<h4>
 			<?php echo $this->getTopicLink($topic); ?>
 			<small class="hidden-phone">
-				(<?php echo $this->formatLargeNumber(max(0, $topic->getTotal()-1)).' '. JText::_('COM_KUNENA_GEN_REPLIES'); ?>)
+				(<?php echo $this->formatLargeNumber(max(0, $topic->getTotal() - 1)) . ' ' . JText::_('COM_KUNENA_GEN_REPLIES'); ?>)
 			</small>
-			<?php if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+			<?php
+			if ($topic->unread) {
+				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $topic->unread
+					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 			?>
 		</h4>
+
 		<div class="pull-right">
 			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages); ?>
 		</div>
+
 		<ul class="inline hidden-phone">
 			<li>
 				<i class="icon-user"></i>
@@ -54,24 +60,25 @@ if ($this->spacing) : ?>
 		</ul>
 	</td>
 	<td class="span1 center hidden-phone">
-			<?php echo $topic->getLastPostAuthor()->getLink($topic->getLastPostAuthor()->getAvatarImage('img-polaroid', 48)) ?>
+			<?php echo $topic->getLastPostAuthor()->getLink($topic->getLastPostAuthor()->getAvatarImage('img-polaroid', 48)); ?>
 	</td>
 	<td class="span3 hidden-phone">
 		<div>
-			<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
+			<?php echo $this->getTopicLink($topic, 'last'); ?>
 		</div>
 		<div>
 			<?php echo $topic->getLastPostAuthor()->getLink(); ?>
 		</div>
 		<div>
-			<span class="ktopic-date hasTooltip" title="<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat_hover'); ?>">
+			<span class="ktopic-date hasTooltip" title="<?php echo $topic->getLastPostTime()
+				->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
 			</span>
 		</div>
 	</td>
 	<?php if (!empty($this->checkbox)) : ?>
 	<td class="span1">
-		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topic->id?>]" value="1" />
+		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topic->id; ?>]" value="1" />
 	</td>
 	<?php endif; ?>
 	<?php

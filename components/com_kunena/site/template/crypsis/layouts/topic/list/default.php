@@ -1,37 +1,42 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topics
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
 $colspan = empty($this->topicActions) ? 5 : 6;
 ?>
 
-<form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self" class="pull-right">
-	<?php $this->displayTimeFilter('sel') ?>
+<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+      method="post" target="_self" class="pull-right">
+	<?php $this->displayTimeFilter('sel'); ?>
 </form>
 
 <h3>
 	<?php echo $this->escape($this->headerText); ?>
-	<span class="badge badge-info"><?php echo $this->pagination->total ?></span>
+	<span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
 </h3>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post" name="ktopicsform" id="ktopicsform">
-	<?php echo JHtml::_( 'form.token' ); ?>
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
+	<?php echo JHtml::_('form.token'); ?>
+
 	<table class="table table-striped table-bordered table-condensed">
-		<?php if (empty ( $this->topics ) && empty ( $this->subcategories )) : ?>
+
+		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 		<tr>
 			<td colspan="<?php echo $colspan; ?>">
-				<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
+				<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS'); ?>
 			</td>
 		</tr>
+
 		<?php else : ?>
+
 		<thead>
 			<tr>
 				<td colspan="5">
@@ -40,13 +45,19 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 					</div>
 					<div class="clearfix"></div>
 				</td>
+
 				<?php if (!empty($this->topicActions)) : ?>
 				<td>
-					<input class="kcheckall" type="checkbox" name="toggle" value="" />
+					<label>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
+					</label>
 				</td>
 				<?php endif; ?>
+
 			</tr>
 		</thead>
+
+		<?php // FIXME: topic actions ?>
 		<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 		<tfoot>
 			<tr>
@@ -60,15 +71,23 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 						endif;?>
 						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
+
 				</td>
 			</tr>
 			</tfoot>
 		<?php endif; ?>
+
 		<tbody>
-			<?php foreach ($this->topics as $i => $topic)
-				echo $this->subLayout('Topic/List/Row')
-					->set('topic', $topic)->set('position', $i); ?>
+			<?php
+			foreach ($this->topics as $i => $topic) {
+				echo $this->subLayout('Topic/Row')
+					->set('topic', $topic)
+					->set('position', 'kunena_topic_' . $i)
+					->set('checkbox', !empty($this->topicActions));
+			}
+			?>
 		</tbody>
 		<?php endif; ?>
+
 	</table>
 </form>

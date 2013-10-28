@@ -1,117 +1,139 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage User
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
+// FIXME: add missing fields...
+
+/** @var KunenaUser $profile */
+$profile = $this->profile;
+
+if ($this->config->showuserstats) {
+	$rankImage = $profile->getRank (0, 'image');
+	$rankTitle = $profile->getRank (0, 'title');
+}
 ?>
-<?php if ($this->avatarlink) : ?>
+<div class="row-fluid">
+	<div class="span3 center">
+		<div class="thumbnail" style="width: 200px; height: 200px; vertical-align: middle;">
+			<?php echo $profile->getAvatarImage('img-rounded', 200, 200); ?>
+		</div>
+	</div>
 
-<div>
-	<?php echo $this->avatarlink; ?>
+	<div class="span4">
+		<div class="badge badge-success">
+			<?php echo JText::sprintf('COM_KUNENA_X_VIEWS', (int) $profile->uhits); ?>
+		</div>
+		<div class="badge badge-info">
+			<?php echo JText::sprintf('COM_KUNENA_X_POSTS', (int) $profile->posts); ?>
+		</div>
+		<div class="badge badge-warning">
+			<?php echo JText::sprintf('COM_KUNENA_X_THANKS', (int) $profile->thankyou); ?>
+		</div>
+
+		<dl class="dl-horizontal">
+
+			<dt>
+				<?php echo JText::_('COM_KUNENA_USERTYPE'); ?>
+			</dt>
+			<dd class="<?php echo $profile->getType(0, true); ?>">
+				<?php echo JText::_($profile->getType()); ?>
+			</dd>
+
+			<?php if (!empty($this->banReason)) : ?>
+			<dt>
+				<?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>
+			</dt>
+			<dd>
+				<?php echo $this->escape($this->banReason); ?>
+			</dd>
+			<?php endif ?>
+
+			<?php if ($this->config->showuserstats) : ?>
+			<dt>
+				<?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>
+			</dt>
+			<dd>
+				<div><?php echo $rankImage; ?></div>
+				<div><?php echo $this->escape($rankTitle); ?></div>
+			</dd>
+			<?php endif; ?>
+
+			<dt>
+				<?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>
+			</dt>
+			<dd title="<?php echo $profile->getRegisterDate()->toKunena('ago'); ?>">
+				<?php echo $profile->getRegisterDate()->toKunena('date_today', 'utc'); ?>
+			</dd>
+
+			<dt>
+				<?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>
+			</dt>
+			<dd title="<?php echo $profile->getLastVisitDate()->toKunena('ago'); ?>">
+				<?php echo $profile->getLastVisitDate()->toKunena('date_today', 'utc'); ?>
+			</dd>
+
+			<dt>
+				<?php echo JText::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?>
+			</dt>
+			<dd>
+				UTC <?php echo $profile->getTime()->toTimezone(); ?>
+			</dd>
+			<dt>
+				<?php echo JText::_('COM_KUNENA_MYPROFILE_LOCAL_TIME'); ?>
+			</dt>
+			<dd>
+				<?php echo $profile->getTime()->toKunena('time'); ?>
+			</dd>
+
+			<?php if (!empty($this->userpoints)) : ?>
+			<dt>
+				<?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?>
+			</dt>
+			<dd>
+				<?php echo (int) $this->userpoints; ?>
+			</dd>
+			<?php endif; ?>
+
+			<?php if (!empty($this->usermedals)) : ?>
+			<dt>
+				<?php echo JText::_('COM_KUNENA_AUP_MEDALS'); ?>
+			</dt>
+			<dd>
+				<?php echo implode(' ', $this->usermedals); ?>
+			</dd>
+			<?php endif; ?>
+
+			<?php if (!empty($this->PMlink)) : ?>
+			<dt>
+				<?php echo JText::_('COM_KUNENA_MYPROFILE_SEND_MESSAGE'); ?>
+			</dt>
+			<dd>
+				<?php echo $this->PMlink; ?>
+			</dd>
+			<?php endif ?>
+
+			<?php if (!empty($this->personalText)) : ?>
+			<dt>
+				<?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>
+			</dt>
+			<dd>
+				<?php echo KunenaHtmlParser::parseText($this->personalText); ?>
+			</dd>
+			<?php endif; ?>
+
+		</dl>
+	</div>
+
+	<div class="span4">
+		<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?>
+	</div>
 </div>
-<?php endif; ?>
-<ul>
-	<?php if (!empty($this->banReason)) : ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong>
-		<?php echo $this->escape($this->banReason); ?>
-	</li>
-	<?php endif ?>
-	<li>
-		<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>">
-			<span class="online-<?php echo $this->profile->isOnline('yes', 'no') ?>">
-				<span><?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-				</span>
-			</span>
-		</span>
-	</li>
-	<?php if (!empty($this->usertype)) : ?>
-	<li class="usertype">
-		<?php echo JText::_($this->usertype); ?>
-	</li>
-	<?php endif; ?>
-	<?php if (!empty($this->rank_title)) : ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?></strong>
-		<?php echo $this->escape($this->rank_title); ?>
-	</li>
-	<?php endif; ?>
-	<?php if (!empty($this->rank_image)) : ?>
-	<li class="kprofile-rank">
-		<?php echo $this->rank_image; ?>
-	</li>
-	<?php endif; ?>
-	<?php if (!empty($this->registerdate)) : ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?></strong>
-		<span title="<?php echo KunenaDate::getInstance($this->registerdate)->toKunena('ago'); ?>">
-			<?php echo KunenaDate::getInstance($this->registerdate)->toKunena('date_today', 'utc'); ?>
-		</span>
-	</li>
-	<?php endif; ?>
-	<?php if (!empty($this->lastvisitdate)) : ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?></strong>
-		<span title="<?php echo KunenaDate::getInstance($this->lastvisitdate)->toKunena('ago'); ?>">
-			<?php echo KunenaDate::getInstance($this->lastvisitdate)->toKunena('date_today', 'utc'); ?>
-		</span>
-	</li>
-	<?php endif; ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?></strong>
-		GMT <?php echo $this->localtime->toTimezone(); ?>
-	</li>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCAL_TIME'); ?></strong>
-		<?php echo $this->localtime->toKunena('time'); ?>
-	</li>
-	<?php if (!empty($this->posts)): ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_POSTS'); ?></strong>
-		<?php echo intval($this->posts); ?>
-	</li>
-	<?php endif; ?>
-	<?php if (!empty($this->thankyou)) : ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED'); ?></strong>
-		<?php echo intval($this->thankyou); ?>
-	</li>
-	<?php endif; ?>
-	<?php if (!empty($this->userpoints)) : ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?></strong>
-		<?php echo intval($this->userpoints); ?>
-	</li>
-	<?php endif; ?>
-	<?php if (!empty($this->usermedals)) : ?>
-	<li>
-		<?php foreach ( $this->usermedals as $medal ) : echo $medal,' '; endforeach ?>
-	</li>
-	<?php endif ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW'); ?></strong>
-		<?php echo intval($this->profile->uhits); ?>
-	</li>
-	<li>
-		<?php echo $this->displayKarma(); ?>
-	</li>
-	<?php if ($this->PMlink) : ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_SEND_MESSAGE'); ?></strong>
-		<?php echo $this->PMlink; ?>
-	</li>
-	<?php endif ?>
-	<?php if (!empty($this->personalText)) : ?>
-	<li>
-		<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong>
-		<?php echo KunenaHtmlParser::parseText($this->personalText); ?>
-	</li>
-	<?php endif; ?>
-</ul>
+<div class="clearfix"></div>

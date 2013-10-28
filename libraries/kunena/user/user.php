@@ -436,10 +436,11 @@ class KunenaUser extends JObject {
 	 * @param null|string   $title
 	 * @param string $rel
 	 * @param string $task
+	 * @param string $class
 	 *
 	 * @return string
 	 */
-	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '') {
+	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null) {
 		if (!$name) {
 			$name = $this->getName();
 		}
@@ -448,13 +449,14 @@ class KunenaUser extends JObject {
 			if (!$title) {
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}
-			$uclass = $this->getType(0, 'class');
+			$class = !is_null($class) ? $class : $this->getType(0, 'class');
 			$link = $this->getURL (true, $task);
 			if (! empty ( $link ))
-				$this->_link[$key] = "<a class=\"{$uclass}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
+				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
 			else
-				$this->_link[$key] = "<span class=\"{$uclass}\">{$name}</span>";
+				$this->_link[$key] = "<span class=\"{$class}\">{$name}</span>";
 		}
+
 		return $this->_link[$key];
 	}
 
@@ -602,6 +604,70 @@ class KunenaUser extends JObject {
 			$rank->rank_image = null;
 		}
 		return $rank;
+	}
+
+	/**
+	 * Return local time for the user.
+	 *
+	 * @return KunenaDate  User time instance.
+	 */
+	public function getTime()
+	{
+		static $time;
+
+		if (!isset($time))
+		{
+			$timezone = JFactory::getApplication()->getCfg('offset', null);
+
+			if ($this->userid)
+			{
+				$user = JUser::getInstance($this->userid);
+				$timezone = $user->getParam('timezone', $timezone);
+			}
+
+			$time = new KunenaDate('now', $timezone);
+
+			try
+			{
+				$offset = new DateTimeZone($timezone);
+				$time->setTimezone($offset);
+			}
+			catch (Exception $e)
+			{
+				// TODO: log error?
+			}
+		}
+
+		return $time;
+	}
+
+	/**
+	 * Return registration date.
+	 *
+	 * @return KunenaDate
+	 */
+	public function getRegisterDate()
+	{
+		return KunenaDate::getInstance($this->registerDate);
+	}
+
+	/**
+	 * Return last visit date.
+	 *
+	 * @return KunenaDate
+	 */
+	public function getLastVisitDate()
+	{
+		if (!$this->lastvisitDate || $this->lastvisitDate == "0000-00-00 00:00:00")
+		{
+			$date = KunenaDate::getInstance($this->registerDate);
+		}
+		else
+		{
+			$date = KunenaDate::getInstance($this->lastvisitDate);
+		}
+
+		return $date;
 	}
 
 	/**

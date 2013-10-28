@@ -1,27 +1,28 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage User
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
-
+defined('_JEXEC') or die;
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
-	<div class="btn pull-right">
-		<i class="icon-arrow-left"></i> <?php echo $this->profile->getLink(JText::_('COM_KUNENA_BACK'), JText::_('COM_KUNENA_BACK'), 'nofollow'); ?>
-	</div>
+
+	<?php echo $this->profile->getLink(
+		'<i class="icon-arrow-left"></i> ' . JText::_('COM_KUNENA_BACK'),
+		JText::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn pull-right'
+	); ?>
 </h2>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>" method="post" enctype="multipart/form-data" name="kuserform" class="form-validate" id="kuserform">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" enctype="multipart/form-data" name="kuserform" class="form-validate" id="kuserform">
 	<input type="hidden" name="task" value="save" />
-	<input type="hidden" name="userid" value="<?php echo $this->user->id ?>" />
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<input type="hidden" name="userid" value="<?php echo (int) $this->user->id; ?>" />
+	<?php echo JHtml::_('form.token'); ?>
 
 	<div class="tabs">
 		<ul id="KunenaUserEdit" class="nav nav-tabs">
@@ -61,13 +62,16 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $this->subRequest('User/Edit/Settings'); ?>
 			</div>
 
+			<br />
+
 			<div class="center">
 				<button class="btn btn-primary validate" type="submit">
 					<?php echo JText::_('COM_KUNENA_SAVE'); ?>
 				</button>
-				<input type="button" name="cancel" class="btn" value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
-				onclick="window.history.back();"
-				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
+				<input type="button" name="cancel" class="btn"
+				       value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
+				       onclick="window.history.back();"
+				       title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" />
 			</div>
 		</div>
 	</div>

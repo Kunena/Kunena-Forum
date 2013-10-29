@@ -101,6 +101,11 @@ class KunenaControllerUser extends KunenaController {
 			$this->setRedirect($user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			return;
 		}
+		$ban = KunenaUserBan::getInstanceByUserid($user->userid, true);
+		if (!$ban->canBan()) {
+			$this->setRedirect($user->getUrl(false), $ban->getError(), 'error');
+			return;
+		}
 
 		$ip = JRequest::getVar ( 'ip', '' );
 		$block = JRequest::getInt ( 'block', 0 );
@@ -109,7 +114,6 @@ class KunenaControllerUser extends KunenaController {
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
-		$ban = KunenaUserBan::getInstanceByUserid ( $user->userid, true );
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
 			$success = $ban->save ();

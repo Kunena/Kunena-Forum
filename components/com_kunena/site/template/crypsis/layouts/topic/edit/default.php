@@ -61,6 +61,9 @@ $this->k=0;
 	<?php if (!isset($this->selectcatlist)) : ?>
 	<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
 	<?php endif; ?>
+	<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
+	<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
+	<?php endif; ?>
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<h2>

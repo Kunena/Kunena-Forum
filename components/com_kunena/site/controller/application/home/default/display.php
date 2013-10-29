@@ -85,6 +85,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 			$this->input->set('defaultmenu', null);
 
 			// Set active menu item to point the real page.
+			$this->input->set('Itemid', $default->id);
 			$menu->setActive($default->id);
 		}
 

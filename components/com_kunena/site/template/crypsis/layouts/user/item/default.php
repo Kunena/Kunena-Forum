@@ -20,7 +20,7 @@ $tabs = $this->getTabs();
 		<?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
 	</sup>
 
-	<?php if ($this->profile->isMyself()) : ?>
+	<?php if ($this->profile->isAuthorised('edit')) : ?>
 	<?php echo $this->profile->getLink(
 		'<i class="icon-arrow-right"></i> ' . JText::_('COM_KUNENA_EDIT'),
 		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn pull-right'

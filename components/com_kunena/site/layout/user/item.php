@@ -45,9 +45,23 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 		if ($showPosts)
 		{
+			$params = array(
+				'embedded' => 1,
+				'topics_categories' => 0,
+				'topics_catselection' => 1,
+
+				'userid' => $this->profile->userid,
+				'mode' => 'latest',
+				'sel' => 720,
+				'limit' => 6,
+				'filter_order' => 'time',
+				'limitstart' => 0,
+				'filter_order_Dir' => 'desc',
+			);
+
 			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_USERPOSTS');
-			$tab->content = 'FIXME';
+			$tab->content = $this->subRequest('Message/List/Recent', new JInput($params), $params);
 			$tab->active = true;
 			$tabs['posts'] = $tab;
 		}
@@ -56,16 +70,66 @@ class KunenaLayoutUserItem extends KunenaLayout
 		{
 			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
-			$tab->content = $this->subRequest('Category/Subscriptions') . 'FIXME';
+			$tab->content = '';
+
+			if ($this->config->category_subscriptions != 'disabled') {
+				$params = array(
+					'embedded' => 1,
+
+					'userid' => $this->profile->userid,
+					'limit' => 6,
+					'filter_order' => 'time',
+					'limitstart' => 0,
+					'filter_order_Dir' => 'desc',
+				);
+				$tab->content .= $this->subRequest('Category/Subscriptions', new JInput($params), $params);
+			}
+
+			if ($this->config->topic_subscriptions != 'disabled')
+			{
+				$params = array(
+					'embedded' => 1,
+					'topics_categories' => 0,
+					'topics_catselection' => 1,
+
+					'userid' => $this->profile->userid,
+					'mode' => 'subscriptions',
+					'sel' => -1,
+					'limit' => 6,
+					'filter_order' => 'time',
+					'limitstart' => 0,
+					'filter_order_Dir' => 'desc',
+				);
+				$tab->content .= $this->subRequest('Topic/List/User', new JInput($params), $params);
+			}
+
 			$tab->active = false;
-			$tabs['subscriptions'] = $tab;
+
+			if ($tab->content)
+			{
+				$tabs['subscriptions'] = $tab;
+			}
 		}
 
 		if ($showFavorites)
 		{
+			$params = array(
+				'embedded' => 1,
+				'topics_categories' => 0,
+				'topics_catselection' => 1,
+
+				'userid' => $this->profile->userid,
+				'mode' => 'favorites',
+				'sel' => -1,
+				'limit' => 6,
+				'filter_order' => 'time',
+				'limitstart' => 0,
+				'filter_order_Dir' => 'desc',
+			);
+
 			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_FAVORITES');
-			$tab->content = 'FIXME';
+			$tab->content = $this->subRequest('Topic/List/User', new JInput($params), $params);
 			$tab->active = false;
 			$tabs['favorites'] = $tab;
 		}
@@ -74,16 +138,60 @@ class KunenaLayoutUserItem extends KunenaLayout
 		{
 			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_THANK_YOU');
-			$tab->content = 'FIXME';
+			$tab->content = '';
+
+			$params = array(
+				'embedded' => 1,
+				'topics_categories' => 0,
+				'topics_catselection' => 1,
+
+				'userid' => $this->profile->userid,
+				'mode' => 'mythanks',
+				'sel' => -1,
+				'limit' => 6,
+				'filter_order' => 'time',
+				'limitstart' => 0,
+				'filter_order_Dir' => 'desc',
+			);
+			$tab->content .= $this->subRequest('Message/List/Recent', new JInput($params), $params);
+
+			$params = array(
+				'embedded' => 1,
+				'topics_categories' => 0,
+				'topics_catselection' => 1,
+
+				'userid' => $this->profile->userid,
+				'mode' => 'thankyou',
+				'sel' => -1,
+				'limit' => 6,
+				'filter_order' => 'time',
+				'limitstart' => 0,
+				'filter_order_Dir' => 'desc',
+			);
+			$tab->content .= $this->subRequest('Message/List/Recent', new JInput($params), $params);
+
 			$tab->active = false;
 			$tabs['thankyou'] = $tab;
 		}
 
 		if ($showUnapproved)
 		{
+			$params = array(
+				'embedded' => 1,
+				'topics_categories' => 0,
+				'topics_catselection' => 1,
+
+				'userid' => $this->profile->userid,
+				'mode' => 'unapproved',
+				'sel' => -1,
+				'limit' => 6,
+				'filter_order' => 'time',
+				'limitstart' => 0,
+				'filter_order_Dir' => 'desc',
+			);
 			$tab = new stdClass;
 			$tab->title = JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION');
-			$tab->content = 'FIXME';
+			$tab->content = $this->subRequest('Message/List/Recent', new JInput($params), $params);
 			$tab->active = false;
 			$tabs['unapproved'] = $tab;
 		}

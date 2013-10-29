@@ -46,7 +46,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		parent::before();
 
 		require_once KPATH_SITE . '/models/topics.php';
-		$this->model = new KunenaModelTopics;
+		$this->model = new KunenaModelTopics(array(), $this->input);
+		$this->model->initialize($this->options, $this->options->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
 

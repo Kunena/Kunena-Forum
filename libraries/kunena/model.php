@@ -36,6 +36,16 @@ class KunenaModel extends JModelLegacy {
 	public $params = null;
 
 	/**
+	 * @var JInput
+	 */
+	protected $input = null;
+
+	/**
+	 * @var JFilterInput
+	 */
+	protected $filter = null;
+
+	/**
 	 * @var JObject
 	 */
 	protected $state = null;
@@ -50,18 +60,22 @@ class KunenaModel extends JModelLegacy {
 	 */
 	protected $_escape = 'htmlspecialchars';
 
-	public function __construct($config = array()) {
+	public function __construct($config = array(), JInput $input = null) {
 		$this->option = 'com_kunena';
 		parent::__construct($config);
 
 		$this->app = JFactory::getApplication();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
+		$this->input = $input ? $input : $this->app->input;
 	}
 
-	public function initialize($params = array()) {
-		$this->embedded = true;
-		$this->setState('embedded', true);
+	public function initialize($params = array(), $embedded = true) {
+		if ($embedded) {
+			$this->embedded = true;
+			$this->setState('embedded', true);
+			$this->filter = JFilterInput::getInstance();
+		}
 
 		if ($params instanceof JRegistry) {
 			$this->params = $params;
@@ -73,7 +87,7 @@ class KunenaModel extends JModelLegacy {
 	public function getItemid() {
 		$Itemid = 0;
 		if (!$this->embedded) {
-			$active = JFactory::getApplication()->getMenu ()->getActive ();
+			$active = $this->app->getMenu()->getActive();
 			$Itemid = $active ? (int) $active->id : 0;
 		}
 		return $Itemid;
@@ -104,9 +118,8 @@ class KunenaModel extends JModelLegacy {
 	}
 
 	protected function getParameters() {
-		// If we are not in embedded mode, get variable from application
-		if (!$this->embedded) {
-			return $this->app->getParams('com_kunena');
+		if (!$this->params) {
+			$this->params = $this->app->getParams('com_kunena');
 		}
 		return $this->params;
 	}
@@ -114,68 +127,42 @@ class KunenaModel extends JModelLegacy {
 	protected function getUserStateFromRequest($key, $request, $default = null, $type = 'none') {
 		// If we are not in embedded mode, get variable from application
 		if (!$this->embedded) {
-			return JFactory::getApplication()->getUserStateFromRequest($key, $request, $default, $type);
+			return $this->app->getUserStateFromRequest($key, $request, $default, $type);
 		}
 
 		// Embedded models/views do not have user state -- all variables come from parameters
-		return $this->getVar($request, $default, 'default', $type);
+		return $this->getVar($request, $default, 'request', $type);
 	}
 
-	protected function getVar($name, $default = null, $hash = 'default', $type = 'none', $mask = 0) {
+	protected function getVar($name, $default = null, $hash = 'request', $type = 'none') {
 		// If we are not in embedded mode, get variable from request
 		if (!$this->embedded) {
-			return JRequest::getVar($name, $default, $hash, $type, $mask);
+			if ($hash == 'request') {
+				return $this->input->get($name, $default, $type);
+			} else {
+				return $this->input->{$hash}->get($name, $default, $type);
+			}
 		}
 
-		return self::_cleanVar($this->params->get($name, $default), $mask, strtoupper($type));
+		return $this->filter->clean($this->params->get($name, $default), $type);
 	}
 
-	protected function getBool($name, $default = false, $hash = 'default') {
+	protected function getBool($name, $default = false, $hash = 'request') {
 		return $this->getVar($name, $default, $hash, 'bool');
 	}
-	protected function getCmd($name, $default = '', $hash = 'default') {
+	protected function getCmd($name, $default = '', $hash = 'request') {
 		return $this->getVar($name, $default, $hash, 'cmd');
 	}
-	protected function getFloat($name, $default = 0.0, $hash = 'default') {
+	protected function getFloat($name, $default = 0.0, $hash = 'request') {
 		return $this->getVar($name, $default, $hash, 'float');
 	}
-	protected function getInt($name, $default = 0, $hash = 'default') {
+	protected function getInt($name, $default = 0, $hash = 'request') {
 		return $this->getVar($name, $default, $hash, 'int');
 	}
-	protected function getString($name, $default = '', $hash = 'default', $mask = 0) {
-		return $this->getVar($name, $default, $hash, 'string', $mask);
+	protected function getString($name, $default = '', $hash = 'request') {
+		return $this->getVar($name, $default, $hash, 'string');
 	}
-	protected function getWord($name, $default = '', $hash = 'default') {
+	protected function getWord($name, $default = '', $hash = 'request') {
 		return $this->getVar($name, $default, $hash, 'word');
-	}
-
-	protected function _cleanVar($var, $mask = 0, $type=null) {
-		// Static input filters for specific settings
-		static $noHtmlFilter	= null;
-		static $safeHtmlFilter	= null;
-
-		// If the no trim flag is not set, trim the variable
-		if (!($mask & 1) && is_string($var)) {
-			$var = trim($var);
-		}
-
-		// Now we handle input filtering
-		if ($mask & 2) {
-			// If the allow raw flag is set, do not modify the variable
-		}
-		elseif ($mask & 4) {
-			// If the allow html flag is set, apply a safe html filter to the variable
-			if (is_null($safeHtmlFilter)) {
-				$safeHtmlFilter = JFilterInput::getInstance(null, null, 1, 1);
-			}
-			$var = $safeHtmlFilter->clean($var, $type);
-		} else {
-			// Since no allow flags were set, we will apply the most strict filter to the variable
-			if (is_null($noHtmlFilter)) {
-				$noHtmlFilter = JFilterInput::getInstance();
-			}
-			$var = $noHtmlFilter->clean($var, $type);
-		}
-		return $var;
 	}
 }

@@ -28,7 +28,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Run before executing action.
 			$result = $this->before();
 			if ($result === false) {
-				return KunenaLayout::factory('Empty');
+				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
 			}
 
 			// Display layout with given parameters.
@@ -40,7 +40,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			if ($this->primary) {
 				throw $e;
 			} else {
-				$this->output = KunenaLayout::factory('Empty');
+				$this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
 			}
 		}
 
@@ -56,7 +56,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	protected function display()
 	{
 		// Display layout with given parameters.
-		$content = KunenaLayout::factory($this->name)->setProperties($this->getProperties());
+		$content = KunenaLayout::factory($this->name)
+			->setProperties($this->getProperties())
+			->setOptions($this->getOptions());
 
 		return $content;
 	}

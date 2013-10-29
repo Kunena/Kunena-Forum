@@ -49,8 +49,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	protected function display() {
 		// Display layout with given parameters.
-		$this->page->set('input', $this->input);
-		$this->page->setLayout($this->input->getWord('layout', 'default'));
+		$this->page
+			->set('input', $this->input)
+			->setLayout($this->input->getWord('layout', 'default'))
+			->setOptions($this->getOptions());
 
 		return $this->page;
 	}
@@ -65,7 +67,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		}
 
 		// Wrapper layout.
-		$this->output = KunenaLayout::factory('Page')->set('me', $this->me);
+		$this->output = KunenaLayout::factory('Page')
+			->set('me', $this->me)
+			->setOptions($this->getOptions());
 
 		if ($this->config->board_offline && !$this->me->isAdmin ()) {
 			// Forum is offline.

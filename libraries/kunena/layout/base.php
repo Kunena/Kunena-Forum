@@ -185,6 +185,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Set/override debug mode.
 	 *
 	 * @param bool $value
+	 *
+	 * @return  KunenaLayoutBase  Instance of $this to allow chaining.
 	 */
 	public function debug($value) {
 		$this->debug = (bool) $value;
@@ -486,7 +488,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function subLayout($path)
 	{
-		return self::factory($path)->setLayout($this->getLayout());
+		return self::factory($path)
+			->setLayout($this->getLayout())
+			->setOptions($this->getOptions());
 	}
 
 	/**
@@ -496,11 +500,15 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * easier to read and gain some context awareness.
 	 *
 	 * @param   $path
+	 * @param   $input
+	 * @param   $options
+	 *
 	 * @return  KunenaControllerDisplay
 	 */
-	public function subRequest($path, Jinput $input = null)
+	public function subRequest($path, Jinput $input = null, $options = null)
 	{
-		return KunenaRequest::factory($path.'/Display', $input)->set('layout', $this->getLayout());
+		return KunenaRequest::factory($path.'/Display', $input, $options)
+			->set('layout', $this->getLayout());
 	}
 
 	/**

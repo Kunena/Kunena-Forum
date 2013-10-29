@@ -328,7 +328,7 @@ $paneOptions = array(
 										<div class="tab-pane" id="tab5">
 											<fieldset>
 												<legend><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
-												<table class="kadmin-adminform">
+												<table class="table table-striped">
 													<thead>
 													<tr>
 														<?php /*
@@ -342,8 +342,7 @@ $paneOptions = array(
 													</thead>
 
 													<?php
-													if ($this->sub) : foreach ( $this->sub as $sub ) :
-														$topic = KunenaForumTopicHelper::get($sub->thread);
+													if ($this->sub) : foreach ( $this->sub as $topic ) :
 														?>
 														<tr>
 															<td><?php echo $this->escape($topic->subject); ?></td>
@@ -361,7 +360,7 @@ $paneOptions = array(
 										<div class="tab-pane" id="tab6">
 											<fieldset>
 												<legend><?php echo JText::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
-												<table class="kadmin-adminform">
+												<table class="table table-striped">
 													<?php
 													$i=0; foreach ($this->ipslist as $ip => $list) :
 														$userlist = array();

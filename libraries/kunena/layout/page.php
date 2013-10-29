@@ -21,22 +21,29 @@ class KunenaLayoutPage extends KunenaLayout
 	 * Get main MVC triad from current layout.
 	 *
 	 * @param   $path
+	 * @param   $input
+	 * @param   $options
+	 *
 	 * @return  KunenaControllerDisplay
 	 */
-	public function request($path)
+	public function request($path, Jinput $input = null, $options = null)
 	{
-		return KunenaRequest::factory($path.'/Display')->setPrimary()->set('layout', $this->getLayout());
+		return KunenaRequest::factory($path.'/Display', $input, $options ? $options : $this->getOptions())
+			->setPrimary()->set('layout', $this->getLayout());
 	}
 
 	/**
 	 * Execute main MVC triad to get the current layout.
 	 *
 	 * @param   $path
+	 * @param   $input
+	 * @param   $options
+	 *
 	 * @return  KunenaLayout
 	 */
-	public function execute($path)
+	public function execute($path, Jinput $input = null, $options = null)
 	{
-		return $this->request($path)->execute();
+		return $this->request($path, $input, $options)->execute();
 	}
 
 	/**

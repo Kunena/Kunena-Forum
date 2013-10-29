@@ -36,11 +36,12 @@ class KunenaRequest
 	 *
 	 * @param   string	$path	Controller path.
 	 * @param	JInput	$input
+	 * @param	mixed	$options
 	 *
 	 * @return  KunenaControllerBase
 	 * @throws	InvalidArgumentException
 	 */
-	public static function factory($path, JInput $input = null) {
+	public static function factory($path, JInput $input = null, $options = null) {
 		// Normalize input.
 		$words = ucwords(strtolower(trim(preg_replace('/[^a-z0-9_]+/i', ' ', (string) $path))));
 		if (!$words) throw new InvalidArgumentException('No controller given.', 404);
@@ -52,6 +53,6 @@ class KunenaRequest
 		}
 
 		// Create controller object.
-		return new $class($input);
+		return new $class($input, null, $options);
 	}
 }

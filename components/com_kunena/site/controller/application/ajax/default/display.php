@@ -74,7 +74,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 			try
 			{
-				$content = KunenaRequest::factory($display, $this->input)->setPrimary()->execute()->render();
+				$content = KunenaRequest::factory($display, $this->input, $this->options)
+					->setPrimary()->execute()->render();
 			}
 			catch (Exception $e)
 			{

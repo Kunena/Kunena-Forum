@@ -27,8 +27,11 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 		$controllerClass = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($subview).ucfirst($task);
 		$controllerDefault = 'KunenaControllerApplication'.ucfirst($task);
 		/** @var KunenaControllerApplicationDisplay $controller */
-		$controller = class_exists($controllerClass) ? new $controllerClass($input, $app) :
-			(class_exists($controllerDefault) ? new $controllerDefault($input, $app) : null);
+		$controller = class_exists($controllerClass)
+			? new $controllerClass($input, $app, $app->getParams('com_kunena'))
+			: (class_exists($controllerDefault)
+				? new $controllerDefault($input, $app, $app->getParams('com_kunena'))
+				: null);
 
 		// Execute HMVC if the controller is present.
 		if ($controller && $controller->exists()) {

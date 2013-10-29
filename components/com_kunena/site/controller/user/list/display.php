@@ -39,9 +39,9 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		parent::before();
 
 		require_once KPATH_SITE . '/models/user.php';
-		$model = new KunenaModelUser(array(), $this->input);
+		$this->model = new KunenaModelUser(array(), $this->input);
 		$this->model->initialize($this->options, $this->options->get('embedded', false));
-		$this->state = $model->getState();
+		$this->state = $this->model->getState();
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaConfig::getInstance();

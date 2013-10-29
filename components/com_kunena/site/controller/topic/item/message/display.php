@@ -54,6 +54,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->topic = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 		$this->profile = $this->message->getAuthor();
+		$this->ktemplate = KunenaFactory::getTemplate();
 
 		// Thank you info and buttons.
 		$this->thankyou = array();

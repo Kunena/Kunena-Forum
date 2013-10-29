@@ -31,7 +31,9 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			->set('topics', $this->topics)
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
-			->set('state', $this->state);
+			->set('state', $this->state)
+			->set('topicActions', $this->topicActions)
+			->set('actionMove', $this->actionMove);
 
 		return $content;
 	}
@@ -164,5 +166,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			default :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
 		}
+
+		$this->topicActions = $this->model->getTopicActions();
+		$this->actionMove = $this->model->getActionMove();
 	}
 }

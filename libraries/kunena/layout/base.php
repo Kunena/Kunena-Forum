@@ -185,6 +185,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Set/override debug mode.
 	 *
 	 * @param bool $value
+	 *
+	 * @return  KunenaLayoutBase  Instance of $this to allow chaining.
 	 */
 	public function debug($value) {
 		$this->debug = (bool) $value;

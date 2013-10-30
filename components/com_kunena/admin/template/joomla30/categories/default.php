@@ -21,6 +21,7 @@ if ($this->saveOrder) {
 	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', $this->listDirection, $this->saveOrderingUrl, false, true);
 }
 
+$filterItem = $this->escape($this->state->get('item.id'));
 ?>
 
 <script type="text/javascript">
@@ -46,6 +47,7 @@ if ($this->saveOrder) {
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>" method="post" name="adminForm" id="adminForm">
 			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="catid" value="<?php echo $filterItem; ?>" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>" />
@@ -94,6 +96,9 @@ if ($this->saveOrder) {
 							<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th class="nowrap">
+							<?php echo JText::_('COM_KUNENA_GO'); ?>
+						</th>
+						<th class="nowrap">
 							<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th width="24%" class="nowrap center hidden-phone">
@@ -126,6 +131,8 @@ if ($this->saveOrder) {
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 								<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
 							</select>
+						</td>
+						<td>
 						</td>
 						<td class="nowrap">
 							<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
@@ -235,6 +242,17 @@ if ($this->saveOrder) {
 						</td>
 						<td class="center">
 							<?php echo JHtml::_('jgrid.published', (bool) $item->published, $i, '','cb'); ?>
+						</td>
+						<td class="center">
+							<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id)) : ?>
+								<button class="btn btn-micro" title="Display only this item and its children" onclick="jQuery('input[name=catid]').val(<?php echo $item->id ?>);this.form.submit()">
+									<i class="icon-location"></i>
+								</button>
+							<?php else : ?>
+								<button class="btn btn-micro" title="Display only this item and its children" onclick="jQuery('input[name=catid]').val(<?php echo $item->parent_id ?>);this.form.submit()">
+									<i class="icon-arrow-up"></i>
+								</button>
+							<?php endif; ?>
 						</td>
 						<td class="has-context">
 							<?php

@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 /** @var KunenaLayout $this */
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
+$userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getAuthor()->getAvatarImage();
 
@@ -20,7 +21,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 
 if (!empty($this->spacing)) : ?>
 <tr>
-	<td class="kcontenttablespacer" colspan="<?php echo $cols; ?>">&nbsp;</td>
+	<td colspan="<?php echo $cols; ?>">&nbsp;</td>
 </tr>
 <?php endif; ?>
 
@@ -32,18 +33,18 @@ if (!empty($this->spacing)) : ?>
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip'); ?>
 
-			<?php if ($topic->getUserTopic()->favorite) : ?>
+			<?php if ($userTopic->favorite) : ?>
 				<i class="icon-star hasTooltip"><?php JText::_('COM_KUNENA_FAVORITE'); ?></i>
 			<?php endif; ?>
 
-			<?php if ($topic->getUserTopic()->posts) : ?>
+			<?php if ($userTopic->posts) : ?>
 				<i class="icon-flag hasTooltip"><?php JText::_('COM_KUNENA_MYPOSTS'); ?></i>
 			<?php endif; ?>
 
 			<?php
 			if ($topic->unread) {
 				echo $this->getTopicLink($topic, 'unread',
-					'<sup dir="ltr">(' . $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+					'<sup dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 			?>
 		</div>
@@ -71,8 +72,7 @@ if (!empty($this->spacing)) : ?>
 			<?php echo JText::_('COM_KUNENA_GEN_HITS') . ':' . $this->formatLargeNumber($topic->hits); ?>
 		</span>
 		<span>
-			<?php echo JText::_('COM_KUNENA_GEN_REPLIES') . ':' .
-				$this->formatLargeNumber(max(0, $topic->getTotal() - 1)); ?>
+			<?php echo JText::_('COM_KUNENA_GEN_REPLIES') . ':' . $this->formatLargeNumber($topic->getReplies()); ?>
 		</span>
 	</td>
 	<td class="span1 center">
@@ -97,7 +97,7 @@ if (!empty($this->spacing)) : ?>
 	<?php if (!empty($this->checkbox)) : ?>
 	<td class="span1">
 		<label>
-			<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->id; ?>]" value="1" />
+			<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 		</label>
 	</td>
 	<?php endif; ?>

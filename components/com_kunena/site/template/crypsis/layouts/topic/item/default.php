@@ -1,16 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topic
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
-/** @var KunenaViewTopic $this */
 $this->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
@@ -28,18 +27,22 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 
 <h3>
 	<?php echo $this->topic->getIcon(); ?>
-	<?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?>
+	<?php echo $this->topic->displayField('subject'); ?>
 </h3>
 
-<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_topictitle'); ?>
 <div class="clearfix"></div>
 
 <?php
+echo $this->subLayout('Page/Module')->set('position', 'kunena_topictitle');
 echo $this->subRequest('Topic/Poll')->set('id', $this->topic->id);
 echo $this->subLayout('Page/Module')->set('position', 'kunena_poll');
 echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id);
-foreach ($this->messages as $id=>$message) {
-	echo $this->subRequest('Topic/Item/Message')->set('mesid', $message->id)->set('location', $id);
+
+foreach ($this->messages as $id => $message)
+{
+	echo $this->subRequest('Topic/Item/Message')
+		->set('mesid', $message->id)
+		->set('location', $id);
 }
 ?>
 

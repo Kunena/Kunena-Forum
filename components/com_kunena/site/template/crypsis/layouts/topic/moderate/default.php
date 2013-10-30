@@ -111,8 +111,8 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 			</label>
 			<div class="controls" id="kmod_subject">
 				<input type="text" name="subject" value="<?php echo !isset($this->message)
-					? $this->topic->gitField('subject')
-					: $this->message->getField('subject'); ?>" />
+					? $this->topic->displayField('subject')
+					: $this->message->displayField('subject'); ?>" />
 			</div>
 		</div>
 

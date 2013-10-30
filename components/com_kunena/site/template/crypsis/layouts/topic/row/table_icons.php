@@ -11,9 +11,6 @@
 defined('_JEXEC') or die;
 
 /** @var KunenaLayout $this */
-/** @var KunenaForumTopic $this->topic */
-/** @var bool $this->checkbox */
-
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
@@ -22,7 +19,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 
 if (!empty($this->spacing)) : ?>
 <tr>
-	<td class="kcontenttablespacer" colspan="<?php echo $cols; ?>">&nbsp;</td>
+	<td colspan="<?php echo $cols; ?>">&nbsp;</td>
 </tr>
 <?php endif; ?>
 
@@ -34,11 +31,11 @@ if (!empty($this->spacing)) : ?>
 		<h4>
 			<?php echo $this->getTopicLink($topic); ?>
 			<small class="hidden-phone">
-				(<?php echo $this->formatLargeNumber(max(0, $topic->getTotal() - 1)) . ' ' . JText::_('COM_KUNENA_GEN_REPLIES'); ?>)
+				(<?php echo $this->formatLargeNumber($topic->getReplies()) . ' ' . JText::_('COM_KUNENA_GEN_REPLIES'); ?>)
 			</small>
 			<?php
 			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $topic->unread
+				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr" class="knewchar">(' . (int) $topic->unread
 					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 			?>
@@ -60,7 +57,9 @@ if (!empty($this->spacing)) : ?>
 		</ul>
 	</td>
 	<td class="span1 center hidden-phone">
-			<?php echo $topic->getLastPostAuthor()->getLink($topic->getLastPostAuthor()->getAvatarImage('img-polaroid', 48)); ?>
+			<?php echo $topic->getLastPostAuthor()->getLink(
+				$topic->getLastPostAuthor()->getAvatarImage('img-polaroid', 48)
+			); ?>
 	</td>
 	<td class="span3 hidden-phone">
 		<div>
@@ -78,7 +77,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 	<?php if (!empty($this->checkbox)) : ?>
 	<td class="span1">
-		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topic->id; ?>]" value="1" />
+		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 	</td>
 	<?php endif; ?>
 	<?php

@@ -1,19 +1,21 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topic
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 ?>
 
 <div class="btn-toolbar">
 	<div>
-		<?php if ($this->topicButtons->get('reply') || $this->topicButtons->get('subscribe') || $this->topicButtons->get('favorite')) : ?>
+		<?php if ($this->topicButtons->get('reply')
+			|| $this->topicButtons->get('subscribe')
+			|| $this->topicButtons->get('favorite')) : ?>
 		<div class="btn-group">
 			<a class="btn" data-toggle="dropdown"><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?></a>
 			<a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
@@ -25,7 +27,10 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 		<?php endif ?>
 
-		<?php if ($this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>
+		<?php if ($this->topicButtons->get('delete')
+			|| $this->topicButtons->get('moderate')
+			|| $this->topicButtons->get('sticky')
+			|| $this->topicButtons->get('lock')) : ?>
 		<div class="btn-group">
 			<a class="btn btn-primary" data-toggle="dropdown"><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
 			<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
@@ -38,7 +43,9 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 		<?php endif ?>
 
-		<?php if ($this->topicButtons->get('flat') || $this->topicButtons->get('threaded') || $this->topicButtons->get('indented')) : ?>
+		<?php if ($this->topicButtons->get('flat')
+			|| $this->topicButtons->get('threaded')
+			|| $this->topicButtons->get('indented')) : ?>
 		<div class="btn-group">
 			<a class="btn" data-toggle="dropdown"><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_LAYOUT') ?></a>
 			<a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>

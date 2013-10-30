@@ -1,16 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topic
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
-?>
-<?php
+defined('_JEXEC') or die;
+
 $this->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
@@ -27,32 +26,37 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 </div>
 
 <h3>
-	<?php echo $this->topic->getIcon(); ?>
-	<?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->topic->displayField('subject') ?>
+	<?php
+	echo $this->topic->getIcon();
+	echo $this->topic->displayField('subject');
+	?>
 </h3>
-
-<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_topictitle'); ?>
 <div class="clearfix"></div>
 
 <?php
+echo $this->subLayout('Page/Module')->set('position', 'kunena_topictitle');
 echo $this->subRequest('Topic/Poll')->set('id', $this->topic->id);
 echo $this->subLayout('Page/Module')->set('position', 'kunena_poll');
 echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id);
-echo $this->subRequest('Topic/Item/Message')->set('mesid', $this->message->id)->set('location', $this->message->replynum);
+echo $this->subRequest('Topic/Item/Message')
+	->set('mesid', $this->message->id)
+	->set('location', $this->message->replynum);
 ?>
 
 <h3>
-	<?php echo JText::sprintf('COM_KUNENA_TOPIC_REPLIES_TITLE', $this->escape($this->topic->subject)) ?>
+	<?php echo JText::sprintf('COM_KUNENA_TOPIC_REPLIES_TITLE', $this->topic->displayField('subject')); ?>
 </h3>
 
 <table class="table table-striped table-bordered table-hover">
-<?php foreach ($this->messages as $id=>$message) {
-	echo $this->subLayout('Topic/Item/Message')
-		->set('message', $message)
-		->set('selected', $this->message->id)
-		->setLayout('row');
-}
-?>
+	<?php
+	foreach ($this->messages as $id => $message)
+	{
+		echo $this->subLayout('Topic/Item/Message')
+			->set('message', $message)
+			->set('selected', $this->message->id)
+			->setLayout('row');
+	}
+	?>
 </table>
 
 <div class="pull-right">

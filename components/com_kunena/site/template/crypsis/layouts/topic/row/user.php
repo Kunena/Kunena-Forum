@@ -19,13 +19,13 @@ $cols = empty($this->checkbox) ? 5 : 6;
 
 if (!empty($this->spacing)) : ?>
 <tr>
-	<td class="kcontenttablespacer" colspan="<?php echo $cols; ?>">&nbsp;</td>
+	<td colspan="<?php echo $cols; ?>">&nbsp;</td>
 </tr>
 <?php endif; ?>
 
 <tr>
 	<td>
-		<strong><?php echo $this->formatLargeNumber(max(0, $topic->getTotal() - 1)); ?></strong>
+		<strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong>
 		<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
 	</td>
 	<td class="hidden-phone">
@@ -44,7 +44,7 @@ if (!empty($this->spacing)) : ?>
 
 			if ($topic->unread) {
 				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr" class="knewchar">('
-					. $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+					. (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 
 			if ($topic->locked != 0) {
@@ -66,13 +66,13 @@ if (!empty($this->spacing)) : ?>
 		</div>
 	</td>
 	<td>
-		<?php echo $this->formatLargeNumber($topic->hits ); ?>
+		<?php echo $this->formatLargeNumber($topic->hits); ?>
 		<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 	</td>
 	<td>
 
 		<?php if (!empty($topic->avatar)) : ?>
-		<?php echo $topic->getLastPostAuthor()->getLink($topic->avatar) ?>
+		<?php echo $topic->getLastPostAuthor()->getLink($topic->avatar); ?>
 		<?php endif; ?>
 
 	</td>
@@ -90,7 +90,7 @@ if (!empty($this->spacing)) : ?>
 	<?php if (!empty($this->checkbox)) : ?>
 	<td>
 		<label>
-			<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->id; ?>]" value="1" />
+			<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 		</label>
 	</td>
 	<?php endif; ?>

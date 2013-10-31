@@ -176,7 +176,7 @@ class KunenaAdminControllerTools extends KunenaController {
 
 		$this->checkTimeout();
 		while (1) {
-			$count = mt_rand(95000, 105000);
+			$count = mt_rand(4500, 5500);
 			switch ($state->step) {
 				case 0:
 					if ($state->topics) {
@@ -321,7 +321,7 @@ class KunenaAdminControllerTools extends KunenaController {
 			$start = $time;
 			return false;
 		}
-		if ($time - $start < 1)
+		if ($time - $start < 14)
 			return false;
 
 		return true;

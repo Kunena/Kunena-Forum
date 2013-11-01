@@ -285,13 +285,8 @@ class KunenaPagination
 	 */
 	public function getData()
 	{
-		static $data;
-
-		if (!is_object($data))
-		{
-			$data = $this->_buildDataObject();
-		}
-
+		// Do not have static cache here (if needed, keep it in object context).
+		$data = $this->_buildDataObject();
 		return $data;
 	}
 

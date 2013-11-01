@@ -50,7 +50,7 @@ abstract class KunenaRoute {
 	static $active = false;
 	static $home = false;
 	static $search = false;
-	static $routeVars = null;
+	static $current = null;
 
 	static $childlist = false;
 	static $subtree = array();
@@ -285,9 +285,9 @@ abstract class KunenaRoute {
 		}
 		self::$home = self::getHome(self::$active);
 
-		$uri = clone JURI::getInstance();
-		$router = JFactory::getApplication()->getRouter();
-		self::$routeVars = $router->parse($uri);
+		// Get current route.
+		self::$current = new JUri('index.php');
+		self::$current->setQuery(JFactory::getApplication()->getRouter()->getVars());
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
@@ -302,7 +302,7 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
 			if (!isset($current[$uri])) {
-				$get = self::$routeVars;
+				$get = self::$current->getQuery(true);
 				// If values are both in GET and POST, they are only stored in POST
 				foreach (JRequest::get( 'post' ) as $key=>$value) {
 					if (($key == 'view' || $key == 'layout' || $key == 'task') && !preg_match('/[^a-zA-Z0-9_ ]/i', $value))

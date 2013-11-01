@@ -110,6 +110,11 @@ jQuery(document).ready(function() {
 		} else {
 			jQuery("#kchecktarget").attr('disabled', true);
 		}
-	}); 
+	});
+	
+	/* To submit form for approve categories in index page */
+	jQuery('#cat_approve_post').click(function() {
+		jQuery('#kcategoriesapprove').submit();
+	});
 });
 

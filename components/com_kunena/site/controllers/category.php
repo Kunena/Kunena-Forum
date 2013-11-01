@@ -121,4 +121,65 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 
 		$this->redirectBack ();
 	}
+
+	/**
+	 * Method to approve topics in selected categories on the index page
+	 *
+	 * @return void
+	 */
+	public function approveTopicsInCategories()
+	{
+		if (!JSession::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->redirectBack();
+
+			return;
+		}
+
+		$categories = $this->app->input->get('categories', array ( 0 ), 'array');
+
+		$cats = array_keys($categories);
+
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('id')->from('#__kunena_topics')->where('category_id IN (' . implode(',', $cats) . ')')->where('hold!=0');
+		$db->setQuery($query);
+		$topics_id = $db->loadObjectList();
+
+		if (KunenaError::checkDatabaseError() )
+		{
+			return array(0, array());
+		}
+
+		$topics_list = array();
+
+		foreach ($topics_id as $id)
+		{
+			$topics_list[] = $id->id;
+		}
+
+		$topics = KunenaForumTopicHelper::getTopics($topics_list);
+
+		$success = 0;
+
+		foreach ( $topics as $topic )
+		{
+			if ($topic->authorise('approve') && $topic->publish(KunenaForum::PUBLISHED))
+			{
+				$success++;
+			}
+		}
+
+		if ($success)
+		{
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_CATEGORIES_APPROVE_SUCCESS', $success));
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_CATEGORIES_NOTHING_TO_APPROVE'));
+		}
+
+		$this->redirectBack();
+	}
 }

@@ -27,8 +27,7 @@ foreach ($this->sections as $section) :
 		<?php endif; ?>
 
 		<?php if ($this->me->isAdmin($section)) : ?>
-		<?php // FIXME: translate and implement. ?>
-		<button class="btn btn-small">Approve Posts</button>
+		<button id="cat_approve_post" class="btn btn-small"><?php echo JText::_('COM_KUNENA_CATEGORIES_TITLE_APPROVE_POSTS') ?></button>
 		<?php endif; ?>
 
 	</div>
@@ -73,7 +72,7 @@ foreach ($this->sections as $section) :
 		</tr>
 
 		<?php else : ?>
-
+		 <form id="kcategoriesapprove" name="ktopicsform" method="post" action="<?php echo JRoute::_('index.php?option=com_kunena&view=category&task=approvetopicsincategories') ?>">
 		<?php
 			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
@@ -174,9 +173,23 @@ foreach ($this->sections as $section) :
 				</div>
 			</td>
 			<?php endif; ?>
+			<?php
+			if ($this->me->isAdmin($section))
+			:
+			?>
+			<td class="center">
+				<label>
+					<input type="checkbox" name="categories[<?php echo (int) $category->id?>]" value="1" />
+				</label>
+			</td>
+			<?php
+			endif;
+			?>
 
 		</tr>
 		<?php endforeach; ?>
+		<?php echo JHtml::_('form.token'); ?>
+		</form>
 
 		<?php endif; ?>
 

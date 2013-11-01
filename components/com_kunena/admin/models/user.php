@@ -60,10 +60,10 @@ class KunenaAdminModelUser extends KunenaModel {
 				$topic_list[] = $sub->thread;
 			}
 
-			$topics_list = KunenaForumTopicHelper::getTopics($topic_list);
+			$topic_list = KunenaForumTopicHelper::getTopics($topic_list);
 		}
 
-		return $topics_list;
+		return $topic_list;
 	}
 
 	public function getCatsubcriptions() {

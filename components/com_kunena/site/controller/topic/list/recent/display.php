@@ -49,7 +49,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
-		$this->model->initialize($this->options, $this->options->get('embedded', false));
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
 

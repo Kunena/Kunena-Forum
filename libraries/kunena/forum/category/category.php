@@ -789,9 +789,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
-		$cache = JFactory::getCache('com_kunena', 'output');
-		// FIXME: enable caching after fixing the issues
-		//$cache->clean('categories');
+		KunenaCacheHelper::clear();
 
 		return true;
 	}

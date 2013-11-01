@@ -1135,7 +1135,7 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		while (1) {
-			$count = mt_rand(95000, 105000);
+			$count = mt_rand(4500, 5500);
 			switch ($state->step) {
 				case 0:
 					// Update topic statistics
@@ -1168,7 +1168,7 @@ class KunenaModelInstall extends JModelLegacy {
 				$state->step++;
 				$state->start = 0;
 			}
-			if ($this->checkTimeout()) break;
+			if ($this->checkTimeout(false, 14)) break;
 		}
 		$app->setUserState ( 'com_kunena.install.recount', $state );
 		return false;
@@ -1718,7 +1718,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$cache->clean('mod_menu');
 	}
 
-	function checkTimeout($stop = false) {
+	function checkTimeout($stop = false, $timeout = 1) {
 		static $start = null;
 		if ($stop) $start = 0;
 		$time = microtime (true);
@@ -1726,7 +1726,7 @@ class KunenaModelInstall extends JModelLegacy {
 			$start = $time;
 			return false;
 		}
-		if ($time - $start < 1)
+		if ($time - $start < $timeout)
 			return false;
 
 		return true;

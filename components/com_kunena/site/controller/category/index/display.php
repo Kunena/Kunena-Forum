@@ -30,6 +30,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 	public $pending = array();
 
+	public $more = array();
+
 	/**
 	 * Prepare category index display.
 	 *
@@ -53,6 +55,34 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			$sections = KunenaForumCategoryHelper::getChildren();
 		}
 
+		$sectionIds = array();
+
+		$this->more[$catid] = 0;
+		foreach ($sections as $key => $category)
+		{
+			$this->categories[$category->id] = array();
+			$this->more[$category->id] = 0;
+
+			// Display only categories which are supposed to show up.
+			if ($catid || $category->params->get('display.index.parent', 3) > 0)
+			{
+				if ($catid || $category->params->get('display.index.children', 3) > 1)
+				{
+					$sectionIds[] = $category->id;
+				}
+				else
+				{
+					$this->more[$category->id]++;
+				}
+			}
+			else
+			{
+				$this->more[$category->parent_id]++;
+				unset($sections[$key]);
+				continue;
+			}
+		}
+
 		// Get categories and subcategories.
 		if (empty($sections))
 		{
@@ -60,21 +90,43 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		}
 
 		$this->sections = $sections;
-		$categories = KunenaForumCategoryHelper::getChildren(array_keys($sections));
+		$categories = KunenaForumCategoryHelper::getChildren($sectionIds);
 
 		if (empty($categories))
 		{
 			return;
 		}
 
-		$subcategories = KunenaForumCategoryHelper::getChildren(array_keys($categories));
-
+		$categoryIds = array();
 		$topicIds = array();
 		$userIds = array();
 		$postIds = array();
 
-		foreach ($categories as $category)
+		foreach ($categories as $key => $category)
 		{
+			$this->more[$category->id] = 0;
+
+			// Display only categories which are supposed to show up.
+			if ($catid || $category->params->get('display.index.parent', 3) > 1)
+			{
+				if ($catid
+					|| ($category->getParent()->params->get('display.index.children', 3) > 2
+						&& $category->params->get('display.index.children', 3) > 2))
+				{
+					$categoryIds[] = $category->id;
+				}
+				else
+				{
+					$this->more[$category->id]++;
+				}
+			}
+			else
+			{
+				$this->more[$category->parent_id]++;
+				unset($categories[$key]);
+				continue;
+			}
+
 			// Get list of topics.
 			$last = $category->getLastCategory();
 
@@ -86,9 +138,19 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			$this->categories[$category->parent_id][] = $category;
 		}
 
+		$subcategories = KunenaForumCategoryHelper::getChildren($categoryIds);
+
 		foreach ($subcategories as $category)
 		{
-			$this->categories[$category->parent_id][] = $category;
+			// Display only categories which are supposed to show up.
+			if ($catid || $category->params->get('display.index.parent', 3) > 2)
+			{
+				$this->categories[$category->parent_id][] = $category;
+			}
+			else
+			{
+				$this->more[$category->parent_id]++;
+			}
 		}
 
 		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).

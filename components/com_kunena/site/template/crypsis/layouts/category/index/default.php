@@ -63,17 +63,17 @@ foreach ($this->sections as $section) :
 		</thead>
 		<?php endif; ?>
 
-		<?php if (empty($this->categories[$section->id])) : ?>
-
-		<?php if ($section->isSection()) : ?>
+		<?php if ($section->isSection() && empty($this->categories[$section->id]) && empty($this->more[$section->id])) : ?>
 		<tr>
 			<td>
-				<?php echo JText::_('COM_KUNENA_GEN_NOFORUMS'); ?>
+				<h4>
+					<?php echo JText::_('COM_KUNENA_GEN_NOFORUMS'); ?>
+				</h4>
 			</td>
 		</tr>
-		<?php endif; ?>
 
 		<?php else : ?>
+
 		<?php
 			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
@@ -124,6 +124,14 @@ foreach ($this->sections as $section) :
 						?>
 					</li>
 					<?php endforeach; ?>
+					<?php if (!empty($this->more[$section->id])) : ?>
+					<li>
+						<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE')); ?>
+						<small class="hidden-phone muted">
+							(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]);?>)
+						</small>
+					</li>
+					<?php endif; ?>
 
 				</ul>
 				<?php endif; ?>
@@ -170,6 +178,17 @@ foreach ($this->sections as $section) :
 		</tr>
 		<?php endforeach; ?>
 
+		<?php endif; ?>
+
+		<?php if (!empty($this->more[$section->id])) : ?>
+		<tr>
+			<td colspan="3">
+				<h4>
+					<?php echo $this->getCategoryLink($category, JText::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
+					<small>(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]);?>)</small>
+				</h4>
+			</td>
+		</tr>
 		<?php endif; ?>
 
 	</table>

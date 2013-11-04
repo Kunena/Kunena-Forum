@@ -237,15 +237,18 @@ HTML;
 	}
 
 	public function addStyleSheet($filename, $group='forum') {
-		$filemin = $filename = $this->getFile($filename);
-		$filemin_path = preg_replace ( '/\.css$/u', '-min.css', $filename );
-		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/$filemin_path")) {
-			$filemin = preg_replace ( '/\.css$/u', '-min.css', $filename );
+		if (!preg_match('|https?://|', $filename)) {
+			$filemin = $filename = $this->getFile($filename);
+			$filemin_path = preg_replace ( '/\.css$/u', '-min.css', $filename );
+			if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/$filemin_path")) {
+				$filemin = preg_replace ( '/\.css$/u', '-min.css', $filename );
+			}
+			if (JFile::exists(JPATH_ROOT."/$filemin")) {
+				$filename = $filemin;
+			}
+			$filename = JUri::root(true)."/{$filename}";
 		}
-		if (JFile::exists(JPATH_ROOT."/$filemin")) {
-			$filename = $filemin;
-		}
-		return JFactory::getDocument ()->addStyleSheet ( JUri::root(true)."/{$filename}" );
+		return JFactory::getDocument()->addStyleSheet($filename);
 	}
 
 	public function addIEStyleSheet($filename, $condition='IE') {
@@ -290,12 +293,15 @@ HTML;
 	 * Wrapper to addScript
 	 */
 	function addScript($filename) {
-		$filemin_path = preg_replace ( '/\.js$/u', '-min.js', $filename );
-		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/media/kunena/$filemin_path")) {
-			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
+		if (!preg_match('|https?://|', $filename)) {
+			$filemin_path = preg_replace ( '/\.js$/u', '-min.js', $filename );
+			if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/media/kunena/$filemin_path")) {
+				// If we are in debug more, make sure we load the unpacked css
+				$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
+			}
+			$filename = $this->getFile($filename, true, '', 'media/kunena', 'default');
 		}
-		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true, '', 'media/kunena', 'default') );
+		return JFactory::getDocument()->addScript($filename);
 	}
 
 	public function getTemplatePaths($path = '', $fullpath = false) {

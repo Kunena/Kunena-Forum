@@ -159,7 +159,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->captchaHtml = $captcha->getHtml();
 			if ( !$this->captchaHtml ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->redirectBack();
+				return;
 			}
 		}
 
@@ -237,7 +238,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->captchaHtml = $captcha->getHtml();
 			if ( !$this->captchaHtml ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->redirectBack();
+				return;
 			}
 		}
 
@@ -911,10 +913,35 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplateFile ( 'history' );
 	}
 
-	function redirectBack() {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
-		while (@ob_end_clean());
-		$this->app->redirect ( $httpReferer );
+	/**
+	 * Redirect back to the referrer page.
+	 *
+	 * If there's no referrer or it's external, Kunena will return to forum home page.
+	 * Also redirects back to tasks are prevented.
+	 *
+	 * @param string $anchor
+	 */
+	protected function redirectBack($anchor = '') {
+		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$referrer = $this->input->server->getString('HTTP_REFERER');
+
+		$uri = JUri::getInstance($referrer ? $referrer : $default);
+		if (JUri::isInternal($uri->toString())) {
+			// Parse route.
+			$vars = $this->app->getRouter()->parse($uri);
+			$uri = new JUri('index.php');
+			$uri->setQuery($vars);
+
+			// Make sure we do not return into a task.
+			$uri->delVar('task');
+			$uri->delVar(JSession::getFormToken());
+		} else {
+			$uri = JUri::getInstance($default);
+		}
+
+		if ($anchor) $uri->setFragment($anchor);
+
+		$this->app->redirect(JRoute::_($uri->toString()));
 	}
 
 	public function getNumLink($mesid, $replycnt) {

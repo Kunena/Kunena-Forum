@@ -25,7 +25,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	public function publish() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -40,13 +40,13 @@ class KunenaControllerAnnouncement extends KunenaController {
 				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title) ) );
 			}
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function unpublish() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -61,7 +61,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title) ) );
 			}
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function edit() {
@@ -74,7 +74,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	public function delete() {
 		if (! JSession::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -93,7 +93,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	public function save() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -111,7 +111,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		$announcement->bind($fields);
 		if (!$announcement->authorise($id ? 'edit' : 'create') || !$announcement->save()) {
 			$this->app->enqueueMessage ( $announcement->getError(), 'error');
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 

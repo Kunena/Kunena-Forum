@@ -297,11 +297,11 @@ class KunenaController extends JControllerLegacy {
 	 *
 	 * @param string $anchor
 	 */
-	protected function redirectBack($anchor = '') {
+	protected function setRedirectBack($anchor = '') {
 		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
-		$referer = $this->input->server->getString('HTTP_REFERER');
+		$referrer = $this->input->server->getString('HTTP_REFERER');
 
-		$uri = JUri::getInstance($referer ? $referer : $default);
+		$uri = JUri::getInstance($referrer ? $referrer : $default);
 		if (JUri::isInternal($uri->toString())) {
 			// Parse route.
 			$vars = $this->app->getRouter()->parse($uri);
@@ -317,6 +317,6 @@ class KunenaController extends JControllerLegacy {
 
 		if ($anchor) $uri->setFragment($anchor);
 
-		JFactory::getApplication()->redirect(JRoute::_($uri->toString()));
+		$this->setRedirect(JRoute::_($uri->toString()));
 	}
 }

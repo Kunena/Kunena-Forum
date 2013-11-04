@@ -27,6 +27,8 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 
 	public $galleryOptions;
 
+	public $galleryImages;
+
 	public $headerText;
 
 	/**
@@ -53,7 +55,9 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 		$this->gallery = $this->input->getString('gallery', '');
 		$this->galleries = $this->getGalleries($path);
 		$this->galleryOptions = $this->getGalleryOptions($path);
-		$this->galleryImages = isset($this->galleries[$this->gallery]) ? $this->galleries[$this->gallery] : reset($this->galleries);
+		$this->galleryImages = isset($this->galleries[$this->gallery])
+			? $this->galleries[$this->gallery]
+			: reset($this->galleries);
 		$this->galleryUri = JUri::root(true) . '/media/kunena/avatars/gallery';
 
 		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');

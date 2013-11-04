@@ -51,6 +51,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	{
 		parent::before();
 
+		require_once KPATH_SITE . '/models/category.php';
+		$this->model = new KunenaModelCategory;
+
 		$this->me = KunenaUserHelper::getMyself();
 
 		$catid = $this->input->getInt('catid');
@@ -124,6 +127,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 				KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 			}
 		}
+
+		$this->topicActions = $this->model->getTopicActions();
+		$this->actionMove = $this->model->getActionMove();
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);

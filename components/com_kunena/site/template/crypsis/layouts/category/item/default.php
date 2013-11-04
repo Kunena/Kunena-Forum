@@ -98,7 +98,6 @@ $categoryActions = $this->getCategoryActions();
 			</td>
 			<td colspan="3">
 
-				<?php // FIXME: implement topic actions part... ?>
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,

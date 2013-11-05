@@ -31,6 +31,25 @@ class KunenaTemplate extends JObject
 	public $params = null;
 	public $paramstime = false;
 
+	protected $pathTypes = array();
+	protected $pathTypeDefaults = array(
+		'emoticons' => 'media/emoticons',
+		'ranks' => 'media/ranks',
+		'icons' => 'media/icons',
+		'topicicons' => 'media/topicicons',
+		'images' => 'media/images',
+		'js' => 'media/js',
+		'css' => 'media/css'
+	);
+	protected $pathTypeOld = array(
+		'emoticons' => 'images/emoticons',
+		'ranks' => 'images/ranks',
+		'icons' => 'images/icons',
+		'topicicons' => 'images/topicicons',
+		'images' => 'images',
+		'js' => 'js',
+		'css' => 'css'
+	);
 	protected $default = array();
 	protected $css_compile = true;
 	protected $filecache = array();
@@ -105,6 +124,9 @@ class KunenaTemplate extends JObject
 				}
 			}
 		}
+
+		// Set lookup paths.
+		$this->pathTypes += $this->isHmvc() ? $this->pathTypeDefaults : $this->pathTypeOld;
 	}
 
 	public function getConfigXml() {
@@ -219,7 +241,7 @@ HTML;
 
 		if (JDEBUG || KunenaFactory::getConfig()->debug) {
 			// Debugging Mootools issues
-			$this->addScript ( 'js/debug.js' );
+			$this->addScript ( 'debug.js' );
 		}
 	}
 
@@ -238,7 +260,8 @@ HTML;
 
 	public function addStyleSheet($filename, $group='forum') {
 		if (!preg_match('|https?://|', $filename)) {
-			$filemin = $filename = $this->getFile($filename);
+			$filename = preg_replace('|^css/|u', '', $filename);
+			$filemin = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'media/kunena/css');
 			$filemin_path = preg_replace ( '/\.css$/u', '-min.css', $filename );
 			if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/$filemin_path")) {
 				$filemin = preg_replace ( '/\.css$/u', '-min.css', $filename );
@@ -252,7 +275,8 @@ HTML;
 	}
 
 	public function addIEStyleSheet($filename, $condition='IE') {
-		$url = $this->getFile($filename, true);
+		$filename = preg_replace('|^css/|u', '', $filename);
+		$url = $this->getFile($filename, true, $this->pathTypes['css'], 'media/kunena/css');
 		$stylelink = "<!--[if {$condition}]>\n";
 		$stylelink .= '<link rel="stylesheet" href="'.$url.'" />' ."\n";
 		$stylelink .= "<![endif]-->\n";
@@ -294,12 +318,13 @@ HTML;
 	 */
 	function addScript($filename) {
 		if (!preg_match('|https?://|', $filename)) {
+			$filename = preg_replace('|^js/|u', '', $filename);
 			$filemin_path = preg_replace ( '/\.js$/u', '-min.js', $filename );
 			if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/media/kunena/$filemin_path")) {
 				// If we are in debug more, make sure we load the unpacked css
 				$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 			}
-			$filename = $this->getFile($filename, true, '', 'media/kunena', 'default');
+			$filename = $this->getFile($filename, true, $this->pathTypes['js'], 'media/kunena/js', 'default');
 		}
 		return JFactory::getDocument()->addScript($filename);
 	}
@@ -331,24 +356,25 @@ HTML;
 	}
 
 	public function getSmileyPath($filename='', $url = false) {
-		return $this->getFile($filename, $url, 'images/emoticons', 'media/kunena/emoticons');
+		return $this->getFile($filename, $url, $this->pathTypes['emoticons'], 'media/kunena/emoticons');
 	}
 
 	public function getRankPath($filename='', $url = false) {
-		return $this->getFile($filename, $url, 'images/ranks', 'media/kunena/ranks');
+		return $this->getFile($filename, $url, $this->pathTypes['ranks'], 'media/kunena/ranks');
 	}
 
 	public function getTopicIconPath($filename='', $url = true) {
-		return $this->getFile($filename, $url, 'images/topicicons', 'media/kunena/topicicons');
+		$set = $this->isHmvc() ? '/default' : '';
+		return $this->getFile($filename, $url, $this->pathTypes['topicicons'].$set, 'media/kunena/topicicons/default');
 	}
 
 	public function getImagePath($filename='', $url = true) {
-		return $this->getFile($filename, $url, 'images', 'media/kunena/images');
+		return $this->getFile($filename, $url, $this->pathTypes['images'], 'media/kunena/images');
 	}
 
 	public function getTopicIcons($all = false, $checked = 0) {
 		if (empty($this->topicIcons)) {
-			$xmlfile = JPATH_ROOT.'/media/kunena/topicicons/default/topicicons.xml';
+			$xmlfile = $this->getTopicIconPath('topicicons.xml', false);
 			if (file_exists($xmlfile)) {
 				$xml = simplexml_load_file($xmlfile);
 				if (isset($xml->icons)) {
@@ -412,7 +438,8 @@ HTML;
 			$index = 0;
 		}
 		$icon = $this->topicIcons[$index];
-		return $this->getTopicIconPath("default/{$icon->filename}", $url);
+
+		return $this->getTopicIconPath($icon->filename, $url);
 	}
 
 	public function getTopicIcon($topic ) {
@@ -437,13 +464,20 @@ HTML;
 			if ($topic->hold == 2) $icon = 'deleted';
 			if ($topic->moved_id) $icon = 'moved';
 			if (!empty($topic->unread)) $icon .= '_new';
+
+			// FIXME: hardcoded to system type...
 			$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
 	}
 
-	// TODO: remove in the future
+	/**
+	 * @param $filename
+	 *
+	 * @return string
+	 * @deprecated 3.1
+	 */
 	public function getTopicsIconPath($filename) {
 		if ( empty($filename) ) return;
 
@@ -474,6 +508,12 @@ HTML;
 		$outputFile = "{$outputDir}/{$outputFile}";
 
 		$less = new lessc;
+		$class = $this;
+		$less->registerFunction('url', function($arg) use ($class) {
+			list($type, $q, $values) = $arg;
+			$value = reset($values);
+			return "url({$q}{$class->getFile($value, true, 'media', 'media/kunena')}{$q})";
+		});
 		$less->setVariables($this->style_variables);
 		$newCache = $less->cachedCompile( $cache );
 		if ( !is_array( $cache ) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile) ) {

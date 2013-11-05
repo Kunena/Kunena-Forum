@@ -43,7 +43,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 	public function exists()
 	{
-		if ($this->input->getWord('format') != 'html')
+		if ($this->input->getWord('format', 'html') != 'html')
 		{
 			// TODO: we need to deal with other formats in the future.
 			return false;

@@ -25,6 +25,23 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	protected $default = array('crypsis');
 
+	/**
+	 * Relative paths to various file types in this template.
+	 *
+	 * These will override default files in JROOT/media/kunena
+	 *
+	 * @var array
+	 */
+	protected $pathTypes = array(
+		'emoticons' => 'media/emoticons',
+		'ranks' => 'media/ranks',
+		'icons' => 'media/icons',
+		'topicicons' => 'media/topicicons',
+		'images' => 'media/images',
+		'js' => 'media/js',
+		'css' => 'media/css'
+	);
+
 	protected $userClasses = array(
 		'kwho-',
 		'admin'=>'kwho-admin',
@@ -84,11 +101,11 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('formbehavior.chosen');
 
 		// Load JavaScript.
-		$this->addScript ( 'js/plugins.js' );
+		$this->addScript ( 'plugins.js' );
 
 		// Compile CSS from LESS files.
 		$this->compileLess('main.less', 'kunena.css');
-		$this->addStyleSheet ( 'css/kunena.css' );
+		$this->addStyleSheet('kunena.css');
 
 		$config = KunenaFactory::getConfig();
 
@@ -97,15 +114,15 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		{
 			JText::script('COM_KUNENA_POLL_OPTION_NAME');
 			JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-			$this->addScript( 'js/kunena.poll.js' );
+			$this->addScript('poll.js');
 		}
 
 		// If enabled, load also MediaBox advanced.
 		if ($config->lightbox == 1)
 		{
 			// TODO: replace with bootstrap compatible version
-			$this->addScript( 'js/mediaboxAdv.js' );
-			//$this->addStyleSheet ( 'css/mediaboxAdv.css');
+			$this->addScript( 'mediaboxAdv.js' );
+			//$this->addStyleSheet ( 'mediaboxAdv.css');
 		}
 
 		parent::initialize();
@@ -113,8 +130,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 	public function addStyleSheet($filename, $group='forum')
 	{
-		$filename = $filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}");
-		return JFactory::getDocument ()->addStyleSheet ( JUri::root(true)."/{$filename}" );
+		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
+		return JFactory::getDocument()->addStyleSheet(JUri::root(true)."/{$filename}");
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null)

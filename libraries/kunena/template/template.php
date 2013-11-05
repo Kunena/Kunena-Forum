@@ -58,6 +58,7 @@ class KunenaTemplate extends JObject
 	protected $userClasses = array(
 		'kuser-',
 		'admin'=>'kuser-admin',
+		'localadmin'=>'kuser-admin',
 		'globalmod'=>'kuser-globalmod',
 		'moderator'=>'kuser-moderator',
 		'user'=>'kuser-user',

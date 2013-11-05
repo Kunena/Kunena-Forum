@@ -124,11 +124,11 @@ foreach ($this->sections as $section) :
 						?>
 					</li>
 					<?php endforeach; ?>
-					<?php if (!empty($this->more[$section->id])) : ?>
+					<?php if (!empty($this->more[$category->id])) : ?>
 					<li>
 						<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE')); ?>
 						<small class="hidden-phone muted">
-							(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]);?>)
+							(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>)
 						</small>
 					</li>
 					<?php endif; ?>
@@ -184,8 +184,8 @@ foreach ($this->sections as $section) :
 		<tr>
 			<td colspan="3">
 				<h4>
-					<?php echo $this->getCategoryLink($category, JText::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
-					<small>(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]);?>)</small>
+					<?php echo $this->getCategoryLink($section, JText::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
+					<small>(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]); ?>)</small>
 				</h4>
 			</td>
 		</tr>

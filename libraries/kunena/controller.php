@@ -19,11 +19,6 @@ class KunenaController extends JControllerLegacy {
 	public $me = null;
 	public $config = null;
 
-	var $_escape = 'htmlspecialchars';
-	var $_redirect = null;
-	var $_message= null;
-	var $_messageType = null;
-
 	public function __construct($config = array()) {
 		parent::__construct ($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
@@ -246,47 +241,33 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Escapes a value for output in a view script.
 	 *
-	 * If escaping mechanism is one of htmlspecialchars or htmlentities.
-	 *
 	 * @param  string $var The output to escape.
 	 *
 	 * @return string The escaped value.
 	 */
 	public function escape($var) {
-		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
-			return call_user_func ( $this->_escape, $var, ENT_COMPAT, 'UTF-8' );
-		}
-		return call_user_func ( $this->_escape, $var );
-	}
-
-	/**
-	 * Sets the _escape() callback.
-	 *
-	 * @param mixed $spec The callback for _escape() to use.
-	 */
-	public function setEscape($spec) {
-		$this->_escape = $spec;
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getRedirect() {
-		return $this->_redirect;
+		return $this->redirect;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getMessage() {
-		return $this->_message;
+		return $this->message;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getMessageType() {
-		return $this->_messageType;
+		return $this->messageType;
 	}
 
 	/**
@@ -297,11 +278,11 @@ class KunenaController extends JControllerLegacy {
 	 *
 	 * @param string $anchor
 	 */
-	protected function redirectBack($anchor = '') {
+	protected function setRedirectBack($anchor = '') {
 		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
-		$referer = $this->input->server->getString('HTTP_REFERER');
+		$referrer = $this->input->server->getString('HTTP_REFERER');
 
-		$uri = JUri::getInstance($referer ? $referer : $default);
+		$uri = JUri::getInstance($referrer ? $referrer : $default);
 		if (JUri::isInternal($uri->toString())) {
 			// Parse route.
 			$vars = $this->app->getRouter()->parse($uri);
@@ -317,6 +298,6 @@ class KunenaController extends JControllerLegacy {
 
 		if ($anchor) $uri->setFragment($anchor);
 
-		JFactory::getApplication()->redirect(JRoute::_($uri->toString()));
+		$this->setRedirect(JRoute::_($uri->toString()));
 	}
 }

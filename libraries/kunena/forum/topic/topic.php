@@ -482,6 +482,26 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * Get published state in text.
+	 *
+	 * @return string
+	 *
+	 * @since 3.1
+	 */
+	public function getState() {
+		switch ($this->hold) {
+			case 0:
+				return 'published';
+			case 1:
+				return 'unapproved';
+			case 2:
+			case 3:
+				return 'deleted';
+		}
+		return 'unknown';
+	}
+
+	/**
 	 * @param mixed $category
 	 * @param string $action
 	 *
@@ -1228,7 +1248,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			return false;
 		}
 
-		if ($exists && $message->userid && abs($postdelta) == 1) {
+		if ($exists && $message->userid && abs($postdelta) <= 1) {
 			// Update user topic
 			$usertopic = $this->getUserTopic($message->userid);
 			if (!$usertopic->update($message, $postdelta)) {

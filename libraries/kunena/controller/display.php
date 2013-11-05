@@ -28,6 +28,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Run before executing action.
 			$result = $this->before();
 			if ($result === false) {
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
 			}
 
@@ -38,6 +39,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$this->after();
 		} catch (KunenaExceptionAuthorise $e) {
 			if ($this->primary) {
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 				throw $e;
 			} else {
 				$this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());

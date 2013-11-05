@@ -444,8 +444,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
-				return $html ? KunenaHtmlParser::parseBBCode($this->message) : KunenaHtmlParser::stripBBCode
-					($this->message, null, false);
+				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
+					($this->message, $this, $html);
 		}
 		return '';
 	}

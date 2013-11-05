@@ -50,7 +50,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -59,7 +59,7 @@ class KunenaControllerTopic extends KunenaController {
 			$success = $captcha->verify();
 			if ( !$success ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->setRedirectBack();
 				return;
 			}
 		}
@@ -69,7 +69,7 @@ class KunenaControllerTopic extends KunenaController {
 			$category = KunenaForumCategoryHelper::get($this->catid);
 			if (!$category->authorise('topic.create')) {
 				$this->app->enqueueMessage ( $category->getError(), 'notice' );
-				$this->redirectBack ();
+				$this->setRedirectBack();
 				return;
 			}
 			list ($topic, $message) = $category->newTopic($fields);
@@ -78,7 +78,7 @@ class KunenaControllerTopic extends KunenaController {
 			$parent = KunenaForumMessageHelper::get($this->id);
 			if (!$parent->authorise('reply')) {
 				$this->app->enqueueMessage ( $parent->getError(), 'notice' );
-				$this->redirectBack ();
+				$this->setRedirectBack();
 				return;
 			}
 			list ($topic, $message) = $parent->newReply($fields);
@@ -95,7 +95,7 @@ class KunenaControllerTopic extends KunenaController {
 			$count = $db->loadResult ();
 			if (KunenaError::checkDatabaseError() || $count) {
 				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection) );
-				$this->redirectBack ();
+				$this->setRedirectBack();
 				return;
 			}
 		}
@@ -142,7 +142,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 		if (!$text) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -160,7 +160,7 @@ class KunenaControllerTopic extends KunenaController {
 		$success = $message->save ();
 		if (! $success) {
 			$this->app->enqueueMessage ( $message->getError (), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -250,14 +250,14 @@ class KunenaControllerTopic extends KunenaController {
 		if (! JSession::checkToken('post')) {
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
 		if (!$message->authorise('edit')) {
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage ( $message->getError(), 'notice' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -317,7 +317,7 @@ class KunenaControllerTopic extends KunenaController {
 		if (! $success) {
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage ( $message->getError (), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 		// Display possible warnings (upload failed etc)
@@ -398,14 +398,14 @@ class KunenaControllerTopic extends KunenaController {
 	protected function setThankyou($type){
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
 		$message = KunenaForumMessageHelper::get($this->mesid);
 		if (!$message->authorise($type)) {
 			$this->app->enqueueMessage ( $message->getError() );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -415,7 +415,7 @@ class KunenaControllerTopic extends KunenaController {
 		if ( $type== 'thankyou') {
 			if (!$thankyou->save ( $this->me )) {
 				$this->app->enqueueMessage ( $thankyou->getError() );
-				$this->redirectBack ();
+				$this->setRedirectBack();
 				return;
 			}
 			$activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
@@ -423,7 +423,7 @@ class KunenaControllerTopic extends KunenaController {
 			$userid = JRequest::getInt('userid','0');
 			if (!$thankyou->delete ( $userid )) {
 				$this->app->enqueueMessage ( $thankyou->getError() );
-				$this->redirectBack ();
+				$this->setRedirectBack();
 				return;
 			}
 			$activityIntegration->onAfterUnThankyou($userid, $this->me->userid, $message);
@@ -434,7 +434,7 @@ class KunenaControllerTopic extends KunenaController {
 	public function subscribe() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -448,13 +448,13 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function unsubscribe() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -468,13 +468,13 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function favorite() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -488,13 +488,13 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function unfavorite() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -508,13 +508,13 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function sticky() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -530,13 +530,13 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' ) );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function unsticky() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -552,13 +552,13 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' ) );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function lock() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -574,13 +574,13 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' ) );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function unlock() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -596,13 +596,13 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' ) );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function delete() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -637,7 +637,7 @@ class KunenaControllerTopic extends KunenaController {
 	public function undelete() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -661,7 +661,7 @@ class KunenaControllerTopic extends KunenaController {
 	public function permdelete() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -690,7 +690,7 @@ class KunenaControllerTopic extends KunenaController {
 	public function approve() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -718,7 +718,7 @@ class KunenaControllerTopic extends KunenaController {
 	public function move() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -787,27 +787,27 @@ class KunenaControllerTopic extends KunenaController {
 	function report() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
 		if (!$this->me->exists() || $this->config->reportmsg == 0) {
 			// Deny access if report feature has been disabled or user is guest
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ), 'notice' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
 		if (!$this->config->get('send_emails')) {
 			// Emails have been disabled
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ), 'notice' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 		if (! $this->config->getEmail() || ! JMailHelper::isEmailAddress ( $this->config->getEmail() )) {
 			// Error: email address is invalid
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -825,7 +825,7 @@ class KunenaControllerTopic extends KunenaController {
 		if (!$target->authorise('read')) {
 			// Deny access if user cannot read target
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -835,7 +835,7 @@ class KunenaControllerTopic extends KunenaController {
 		if (empty ( $reason ) && empty ( $text )) {
 			// Do nothing: empty subject or reason is empty
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_FORG0T_SUB_MES' ) );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		} else {
 			$acl = KunenaAccess::getInstance();
@@ -926,7 +926,7 @@ class KunenaControllerTopic extends KunenaController {
 	public function vote() {
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -962,7 +962,7 @@ class KunenaControllerTopic extends KunenaController {
 	public function resetvotes() {
 		if (!JSession::checkToken('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 

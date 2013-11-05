@@ -41,9 +41,16 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 */
 	protected $document;
 
-	public function exists() {
+	public function exists()
+	{
+		if ($this->input->getWord('format') != 'html')
+		{
+			// TODO: we need to deal with other formats in the future.
+			return false;
+		}
 		$name = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
 		$this->page = KunenaLayoutPage::factory($name);
+
 		return (bool) $this->page->getPath();
 	}
 
@@ -63,6 +70,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		// Run before executing action.
 		$result = $this->before();
 		if ($result === false) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
@@ -131,6 +139,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 
 		if (!$this->exists()) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 			throw new RuntimeException("Layout '{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}' does not exist!", 404);
 		}
 

@@ -48,7 +48,7 @@ defined('_JEXEC') or die;
 	</tr>
 	<?php endif; ?>
 
-	<?php if ($this->config->allowavatargallery) : ?>
+	<?php if ($this->config->allowavatargallery && ($this->galleryOptions || $this->galleryImages)) : ?>
 	<tr>
 		<td class="span3">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>

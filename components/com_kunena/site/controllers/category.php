@@ -33,7 +33,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	function markread() {
 		if (! JSession::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -52,7 +52,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			$category = KunenaForumCategoryHelper::get($catid);
 			if (!$category->authorise('read')) {
 				$this->app->enqueueMessage ( $category->getError(), 'error' );
-				$this->redirectBack ();
+				$this->setRedirectBack();
 				return;
 			}
 
@@ -68,20 +68,20 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 				}
 			}
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function subscribe() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
 		$category = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
 		if (!$category->authorise('read')) {
 			$this->app->enqueueMessage ( $category->getError(), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -92,13 +92,13 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			}
 		}
 
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function unsubscribe() {
 		if (! JSession::checkToken ('request') ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -119,6 +119,6 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			}
 		}
 
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 }

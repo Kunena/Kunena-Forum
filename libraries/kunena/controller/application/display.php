@@ -41,9 +41,16 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 */
 	protected $document;
 
-	public function exists() {
+	public function exists()
+	{
+		if ($this->input->getWord('format') != 'html')
+		{
+			// TODO: we need to deal with other formats in the future.
+			return false;
+		}
 		$name = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
 		$this->page = KunenaLayoutPage::factory($name);
+
 		return (bool) $this->page->getPath();
 	}
 

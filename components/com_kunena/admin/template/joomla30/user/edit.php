@@ -297,11 +297,10 @@ function textCounter(field, target) {
 									</thead>
 									<?php
 										if (!empty($this->subscatslist)) : foreach($this->subscatslist as $cat) :
-											$category = KunenaForumCategoryHelper::get($cat->category_id);
 									?>
 									<tr>
-										<td><?php echo $this->escape($category->name); ?> <small><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($category->alias)); ?></small></td>
-										<td><?php echo $this->escape($category->id); ?></td>
+										<td><?php echo $this->escape($cat->name); ?> <small><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small></td>
+										<td><?php echo $this->escape($cat->id); ?></td>
 									</tr>
 									<?php endforeach; else : ?>
 									<tr>

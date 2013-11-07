@@ -24,9 +24,79 @@ class KunenaControllerTopic extends KunenaController {
 		$this->mesid = JRequest::getInt('mesid', 0);
 	}
 
+	/**
+	 * Upload files with AJAX.
+	 *
+	 * @throws RuntimeException
+	 */
 	public function upload() {
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
 		$upload = KunenaUpload::getInstance();
-		$upload->ajaxUpload();
+
+		try
+		{
+			if (!JSession::checkToken('request'))
+			{
+				//throw new RuntimeException(JText::_('Forbidden'), 403);
+			}
+
+			$me = KunenaUserHelper::getMyself();
+			$catid = $this->input->getInt('catid', 0);
+			$mesid = $this->input->getInt('mesid', 0);
+			$caption = $this->input->getString('caption');
+
+			$options = array(
+				'filename' => $this->input->getString('filename'),
+				'size' => $this->input->getInt('size'),
+				'mime' => $this->input->getString('mime'),
+				'hash' => $this->input->getString('hash'),
+				'chunkStart' => $this->input->getInt('chunkStart', 0),
+				'chunkEnd' => $this->input->getInt('chunkEnd', 0),
+			);
+
+			$upload->addExtensions(KunenaForumMessageAttachmentHelper::getExtensions($catid, $me->userid));
+			$response = $upload->ajaxUpload($options);
+
+			if (0 && !empty($response->completed))
+			{
+				$uploadFolder = $upload->getFolder();
+				$uploadFile = $upload->getProtectedFilename($response->filename);
+				$attachment = new KunenaForumMessageAttachment;
+				$attachment->bind(
+					array(
+						'mesid' => (int) $mesid,
+						'userid' => (int) $me->userid,
+						'protected' => null,
+						'hash' => $response->hash,
+						'size' => $response->size,
+						'folder' => null,
+						'filetype' => $response->mime,
+						'filename' => null,
+						'filename_real' => $response->filename,
+						'caption' => $caption,
+					)
+				);
+			}
+		}
+		catch (Exception $response)
+		{
+		}
+
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+
+		while(@ob_end_clean());
+
+		echo $upload->ajaxResponse($response);
 	}
 
 	public function post() {

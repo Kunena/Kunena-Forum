@@ -43,8 +43,7 @@ class KunenaAvatarKunena extends KunenaAvatar {
 			$resized = "resized/size{$sizex}x{$sizey}/{$dir}";
 		}
 		if ( !is_file( "{$path}/{$resized}/{$file}" ) ) {
-			require_once(KPATH_SITE.'/lib/kunena.image.class.php');
-			CKunenaImageHelper::version("{$path}/{$avatar}", "{$path}/{$resized}", $file, $sizex, $sizey, intval($config->avatarquality));
+			KunenaImageHelper::version("{$path}/{$avatar}", "{$path}/{$resized}", $file, $sizex, $sizey, intval($config->avatarquality));
 		}
 		return KURL_MEDIA . "avatars/{$resized}/{$file}";
 	}

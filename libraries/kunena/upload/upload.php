@@ -112,7 +112,7 @@ class KunenaUpload
 	{
 		$user = JFactory::getUser();
 		$session = JFactory::getSession();
-		$token = JFactory::getApplication()->get('secret') . $user->get('id', 0) . $session->getToken();
+		$token = JFactory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
 		list($name, $ext) = $this->splitFilename($filename);
 
 		return md5("{$name}.{$token}.{$ext}");

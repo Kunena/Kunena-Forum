@@ -103,7 +103,7 @@ class KunenaControllerTopic extends KunenaController {
 				$attachment->saveFile($uploadFile, $basename, $extension, true);
 
 				// Set id and override response variables just in case if attachment was modified.
-				$response->id = "att-{$attachment->id}";
+				$response->id = $attachment->id;
 				$response->hash = $attachment->hash;
 				$response->size = $attachment->size;
 				$response->mime = $attachment->filetype;

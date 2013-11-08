@@ -25,7 +25,7 @@ class KunenaFile extends JFile
 		$info = @getimagesize($file);
 		if ($info)
 		{
-			$type = $info['hash'];
+			$type = $info['mime'];
 		}
 		elseif (function_exists('finfo_open'))
 		{

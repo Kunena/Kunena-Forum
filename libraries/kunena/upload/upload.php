@@ -19,6 +19,8 @@ class KunenaUpload
 {
 	protected $validExtensions = array();
 
+	protected $filename;
+
 	/**
 	 * Get new instance of upload class.
 	 *
@@ -49,18 +51,14 @@ class KunenaUpload
 	{
 		foreach ($extensions as $ext)
 		{
-			$ext = trim((string) $ext);
+			$ext = trim((string) $ext, ". \t\n\r\0\x0B");
 
 			if (!$ext)
 			{
 				continue;
 			}
 
-			if ($ext[0] != '.')
-			{
-				$ext = '.' . $ext;
-			}
-
+			$ext = '.' . $ext;
 			$this->validExtensions[$ext] = $ext;
 		}
 
@@ -75,8 +73,10 @@ class KunenaUpload
 	 * @return array  File parts: list($name, $extension).
 	 * @throws RuntimeException
 	 */
-	public function splitFilename($filename)
+	public function splitFilename($filename = null)
 	{
+		$filename = $filename ? $filename : $this->filename;
+
 		if (!$filename)
 		{
 			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
@@ -108,8 +108,27 @@ class KunenaUpload
 		);
 	}
 
-	public function getProtectedFilename($filename)
+	/**
+	 * @param  string  $filename  Original filename.
+	 *
+	 * @return string  Path pointing to the protected file.
+	 */
+	public function getProtectedFile($filename = null)
 	{
+		$filename = $filename ? $filename : $this->filename;
+
+		return $this->getFolder() . '/' . $this->getProtectedFilename($filename);
+	}
+
+	/**
+	 * @param  string  $filename  Original filename.
+	 *
+	 * @return string     Protected filename.
+	 */
+	public function getProtectedFilename($filename = null)
+	{
+		$filename = $filename ? $filename : $this->filename;
+
 		$user = JFactory::getUser();
 		$session = JFactory::getSession();
 		$token = JFactory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
@@ -118,6 +137,11 @@ class KunenaUpload
 		return md5("{$name}.{$token}.{$ext}");
 	}
 
+	/**
+	 * Get upload folder.
+	 *
+	 * @return string  Absolute path.
+	 */
 	public function getFolder()
 	{
 		$dir = KunenaPath::tmpdir();
@@ -125,6 +149,13 @@ class KunenaUpload
 		return "{$dir}/uploads";
 	}
 
+	/**
+	 * Convert value into bytes.
+	 *
+	 * @param  string  $value  Value, for example: 1G, 10M, 120k...
+	 *
+	 * @return int  Value in bytes.
+	 */
 	public static function toBytes($value)
 	{
 		$value = trim($value);
@@ -151,23 +182,30 @@ class KunenaUpload
 		{
 			case 'g':
 			case 'gb':
-			$value *= 1024;
+				$value *= 1024;
+				// Continue.
 			case 'm':
 			case 'mb':
-			$value *= 1024;
+				$value *= 1024;
+				// Continue.
 			case 'k':
 			case 'kb':
-			$value *= 1024;
+				$value *= 1024;
 		}
 
 		return (int) $value;
 	}
-	
+
+	/**
+	 * Get maximum limit for file uploads.
+	 *
+	 * @return int  Size limit in bytes.
+	 */
 	public function getMaxSize()
 	{
 		$config = KunenaConfig::getInstance();
 
-		return max(
+		return (int) max(
 			0,
 			min(
 				$this->toBytes(ini_get('upload_max_filesize')) - 1024,
@@ -222,6 +260,9 @@ class KunenaUpload
 		}
 
 		try {
+			// Set filename for future queries.
+			$this->filename = $options['filename'];
+
 			$folder = $this->getFolder();
 
 			// Create target directory if it does not exist.
@@ -231,8 +272,7 @@ class KunenaUpload
 			}
 
 			// Calculate temporary filename.
-			$file = $this->getProtectedFilename($options['filename']);
-			$outFile = "{$folder}/{$file}";
+			$outFile = $this->getProtectedFile();
 
 			if ($options['chunkEnd'] > $options['size'] || $options['chunkStart'] > $options['chunkEnd'])
 			{
@@ -336,10 +376,8 @@ class KunenaUpload
 
 		if ($exception instanceof Exception)
 		{
-			if ($outFile && is_file($outFile))
-			{
-				@unlink($outFile);
-			}
+			$this->cleanup();
+
 			throw $exception;
 		}
 
@@ -368,6 +406,21 @@ class KunenaUpload
 		}
 
 		return $options;
+	}
+
+	/**
+	 * Clean up temporary file if it exists.
+	 *
+	 * @return void
+	 */
+	public function cleanup()
+	{
+		if (!$this->filename || !file_exists($this->filename))
+		{
+			return;
+		}
+
+		@unlink($this->filename);
 	}
 
 	/**

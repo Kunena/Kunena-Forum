@@ -38,6 +38,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		$upload = KunenaUpload::getInstance();
 
+		// We are converting all exceptions into JSON.
 		try
 		{
 			if (!JSession::checkToken('request'))
@@ -48,8 +49,21 @@ class KunenaControllerTopic extends KunenaController {
 			$me = KunenaUserHelper::getMyself();
 			$catid = $this->input->getInt('catid', 0);
 			$mesid = $this->input->getInt('mesid', 0);
-			$caption = $this->input->getString('caption');
 
+			if ($mesid)
+			{
+				$message = KunenaForumMessageHelper::get($mesid);
+				$message->tryAuthorise('attachment.create');
+				$category = $message->getCategory();
+			}
+			else
+			{
+				$category = KunenaForumCategoryHelper::get($catid);
+				// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
+				if ($category->id) $category->tryAuthorise('topic.post.attachment.create');
+			}
+
+			$caption = $this->input->getString('caption');
 			$options = array(
 				'filename' => $this->input->getString('filename'),
 				'size' => $this->input->getInt('size'),
@@ -59,17 +73,22 @@ class KunenaControllerTopic extends KunenaController {
 				'chunkEnd' => $this->input->getInt('chunkEnd', 0),
 			);
 
-			$upload->addExtensions(KunenaForumMessageAttachmentHelper::getExtensions($catid, $me->userid));
-			$response = $upload->ajaxUpload($options);
+			// Upload!
+			$upload->addExtensions(KunenaForumMessageAttachmentHelper::getExtensions($category->id, $me->userid));
+			$response = (object) $upload->ajaxUpload($options);
 
-			if (0 && !empty($response->completed))
+			if (!empty($response->completed))
 			{
-				$uploadFolder = $upload->getFolder();
-				$uploadFile = $upload->getProtectedFilename($response->filename);
+				// We have it all, lets create the attachment.
+				$uploadFile = $upload->getProtectedFile();
+				list($basename, $extension) = $upload->splitFilename();
+
+				// FIXME: Resize images if they are too large!
+
 				$attachment = new KunenaForumMessageAttachment;
 				$attachment->bind(
 					array(
-						'mesid' => (int) $mesid,
+						'mesid' => 0,
 						'userid' => (int) $me->userid,
 						'protected' => null,
 						'hash' => $response->hash,
@@ -81,10 +100,23 @@ class KunenaControllerTopic extends KunenaController {
 						'caption' => $caption,
 					)
 				);
+				$attachment->saveFile($uploadFile, $basename, $extension, true);
+
+				// Set id and override response variables just in case if attachment was modified.
+				$response->id = "att-{$attachment->id}";
+				$response->hash = $attachment->hash;
+				$response->size = $attachment->size;
+				$response->mime = $attachment->filetype;
+				$response->filename = $attachment->filename_real;
+
+				// FIXME: attachment needs to be bound to the message when posting!
 			}
 		}
 		catch (Exception $response)
 		{
+			$upload->cleanup();
+
+			// Use the exception as the response.
 		}
 
 		header('Content-type: application/json');

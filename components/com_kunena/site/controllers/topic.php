@@ -82,9 +82,6 @@ class KunenaControllerTopic extends KunenaController {
 				// We have it all, lets create the attachment.
 				$uploadFile = $upload->getProtectedFile();
 				list($basename, $extension) = $upload->splitFilename();
-
-				// FIXME: Resize images if they are too large!
-
 				$attachment = new KunenaForumMessageAttachment;
 				$attachment->bind(
 					array(
@@ -100,6 +97,33 @@ class KunenaControllerTopic extends KunenaController {
 						'caption' => $caption,
 					)
 				);
+
+				// Resize image if needed.
+				if ($attachment->isImage())
+				{
+					$imageInfo = JImage::getImageFileProperties($uploadFile);
+					$config = KunenaConfig::getInstance();
+
+					if ($imageInfo->width > $config->imagewidth || $imageInfo->heigth > $config->imageheight)
+					{
+						// Calculate quality for both JPG and PNG.
+						$quality = $config->imagequality;
+						if ($quality < 1 || $quality > 100) $quality = 70;
+						if ($imageInfo->type == IMAGETYPE_PNG) $quality = intval(($quality-1)/10);
+
+						$image = new JImage($uploadFile);
+						$image = $image->resize($config->imagewidth, $config->imageheight, false);
+
+						$options = array('quality' => $quality);
+						$image->toFile($uploadFile, $imageInfo->type, $options);
+
+						unset($image);
+
+						$attachment->hash = md5_file($uploadFile);
+						$attachment->size = filesize($uploadFile);
+					}
+				}
+
 				$attachment->saveFile($uploadFile, $basename, $extension, true);
 
 				// Set id and override response variables just in case if attachment was modified.
@@ -108,8 +132,6 @@ class KunenaControllerTopic extends KunenaController {
 				$response->size = $attachment->size;
 				$response->mime = $attachment->filetype;
 				$response->filename = $attachment->filename_real;
-
-				// FIXME: attachment needs to be bound to the message when posting!
 			}
 		}
 		catch (Exception $response)
@@ -229,6 +251,12 @@ class KunenaControllerTopic extends KunenaController {
 
 		// Prevent user abort from this point in order to maintain data integrity.
 		@ignore_user_abort(true);
+
+		// Mark attachments to be added or deleted.
+		$attachments = JRequest::getVar ( 'attachments', array(), 'post', 'array' );
+		$attachment = JRequest::getVar ( 'attachment', array(), 'post', 'array' );
+		$message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
+		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {
@@ -371,10 +399,14 @@ class KunenaControllerTopic extends KunenaController {
 			$message->makeAnonymous();
 		}
 
-		// Mark attachments to be deleted
+		// Prevent user abort from this point in order to maintain data integrity.
+		@ignore_user_abort(true);
+
+		// Mark attachments to be added or deleted.
 		$attachments = JRequest::getVar ( 'attachments', array(), 'post', 'array' );
-		$attachkeeplist = JRequest::getVar ( 'attachment', array(), 'post', 'array' );
-		$message->removeAttachment(array_keys(array_diff_key($attachments, $attachkeeplist)));
+		$attachment = JRequest::getVar ( 'attachment', array(), 'post', 'array' );
+		$message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
+		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {

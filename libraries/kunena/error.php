@@ -234,6 +234,7 @@ abstract class KunenaError {
 			if ($debug)
 			{
 				echo "<p>The error was detected in the <b>{$extension}</b>.</p>";
+				echo $errorMsg;
 
 				if (strpos($file, 'kunena') !== false)
 				{

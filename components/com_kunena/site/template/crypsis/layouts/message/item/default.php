@@ -58,15 +58,15 @@ $attachments = $this->message->getAttachments();
 
 
 		<?php if ($signature) : ?>
-		<div class="pull-left">
-			<?php echo $signature; ?>
+		<div>
+			<p><?php echo $signature; ?></p>
 		</div>
 		<?php endif ?>
 
 		<?php if (!empty($this->reportMessageLink)) : ?>
 		<div class="pull-left">
 			<p>
-				<i class="icon-warning-sign"></i>
+				<i class="icon-warning"></i>
 				<?php echo $this->reportMessageLink; ?>
 			</p>
 		</div>

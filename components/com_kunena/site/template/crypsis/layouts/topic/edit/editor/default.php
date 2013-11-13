@@ -93,7 +93,7 @@ defined ( '_JEXEC' ) or die ();
 					onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY', true); ?>')" />
 		</div>
 		<?php if (!$this->message->parent && isset($this->poll)) : ?>
-			<div id="kbbcode-poll-options" style="display: none;">
+			<div id="kbbcode-poll-options" style="display: none;" class="kpoll">
 				<?php JHtml::_('behavior.calendar'); ?>
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
@@ -101,11 +101,8 @@ defined ( '_JEXEC' ) or die ();
 						value="<?php echo $this->escape( $this->poll->title ) ?>"
 						onmouseover="document.id('helpbox').set('value', '<?php
 						echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE', true); ?>')" />
-				<img id="kbutton-poll-add"
-						src="<?php echo $this->template->getImagePath('icons/poll_add_options.png') ?>"
-						onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION', true); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>" /> <img id="kbutton-poll-rem"
-						src="<?php echo $this->template->getImagePath('icons/poll_rem_options.png' ) ?>"
-						onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION', true); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
+				<i id="kbutton-poll-add" class="icon-plus"
+						onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION', true); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i> <i id="kbutton-poll-rem" class="icon-minus" onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION', true); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 				<?php echo JHtml::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN', true).'\')')); ?>
 				<div id="kpoll-alert-error" class="alert" style="display:none;">

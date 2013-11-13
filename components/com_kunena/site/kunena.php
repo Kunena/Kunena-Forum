@@ -68,21 +68,20 @@ if ($ksession->userid > 0) {
 // Support legacy urls (they need to be redirected).
 $app = JFactory::getApplication();
 $input = $app->input;
-$view = $input->getWord ( 'func', $input->getWord ( 'view', 'home' ) );
-$task = $input->getCmd ( 'task', 'display' );
+$input->set('limitstart', $input->getInt('limitstart', $input->getInt('start')));
+$view = $input->getWord('func', $input->getWord('view', 'home'));
+$subview = $input->getWord('layout', 'default');
+$task = $input->getCmd('task', 'display');
 
-// Define controller and execute it.
-$class = 'ComponentKunenaControllerApplication'.ucfirst($view).ucfirst($task);
-if (class_exists($class, true)) {
-	/** @var KunenaControllerBase $controller */
-	$controller = new $class($input, $app);
-	$layout = $controller->execute();
-}
+// Get HMVC controller and if exists, execute it.
+$controller = KunenaControllerApplication::getInstance($view, $subview, $task, $input, $app);
+if ($controller) {
+	KunenaRoute::cacheLoad();
+	echo $controller->execute();
+	KunenaRoute::cacheStore();
 
-if (isset($controller) && $layout instanceof KunenaLayout && $layout->content->getPath()) {
-	// Execute HMVC layout.
-	echo $layout;
 } elseif (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
+	// Execute old MVC.
 	// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.
 	$controller = KunenaController::getInstance();
 	KunenaRoute::cacheLoad();
@@ -94,9 +93,9 @@ if (isset($controller) && $layout instanceof KunenaLayout && $layout->content->g
 	$uri = KunenaRoute::current(true);
 	if ($uri) {
 		// FIXME: using wrong Itemid
-		JFactory::getApplication ()->redirect (KunenaRoute::_($uri, false));
+		JFactory::getApplication()->redirect(KunenaRoute::_($uri, false));
 	} else {
-		return JError::raiseError( 404, "Kunena view '{$view}' not found" );
+		return JError::raiseError(404, "Kunena view '{$view}' not found");
 	}
 }
 

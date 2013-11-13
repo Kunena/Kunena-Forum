@@ -1,64 +1,39 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Layout.Topic
+ * @package     Kunena.Site
+ * @subpackage  Layout.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 
+/**
+ * KunenaLayoutMessageList
+ *
+ * @since  3.1
+ *
+ */
 class KunenaLayoutMessageList extends KunenaLayout
 {
-	function displayRows() {
-		$lasttopic = NULL;
-		$this->position = 0;
-
-		// Run events
-		$params = new JRegistry();
-		$params->set('ksource', 'kunena');
-		$params->set('kunena_view', 'user');
-		$params->set('kunena_layout', 'posts');
-
-		$dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
-
-		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->messages, &$params, 0));
-
-		foreach ( $this->messages as $this->message ) {
-			$this->position++;
-			$this->topic = $this->message->getTopic();
-			$this->category = $this->topic->getCategory();
-			$usertype = $this->me->getType($this->category->id, true);
-
-			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
-			$this->postAuthor = KunenaFactory::getUser($this->message->userid);
-			$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
-			$this->firstPostTime = $this->topic->first_post_time;
-			$this->firstUserName = $this->topic->first_post_guest_name;
-			$this->keywords = $this->topic->getKeywords(false, ', ');
-			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
-			$this->pages = ceil ( $this->topic->getTotal() / $this->config->messages_per_page );
-			if ($this->config->avataroncat) {
-				$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
-			}
-			$contents = $this->subLayout('Message/List/Row')->setProperties($this->getProperties())->setLayout($this->getLayout());
-
-			echo $contents;
-			$lasttopic = $this->topic;
+	/**
+	 * Method to display the time filter
+	 *
+	 * @param   int     $id      The HTML id for the select list
+	 * @param   string  $attrib  The extras attributes for the select list
+	 *
+	 * @return void
+	 */
+	public function displayTimeFilter($id = 'filter-time', $attrib = 'onchange="this.form.submit()"')
+	{
+		if (!isset($this->state))
+		{
+			return;
 		}
-	}
 
-	function getPagination($maxpages) {
-		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
-		$pagination->setDisplayedPages($maxpages);
-		return $pagination->getPagesLinks();
-	}
-
-	function displayTimeFilter($id = 'kfilter-select-time', $attrib = 'class="kinputbox" onchange="this.form.submit()" size="1"') {
-		// make the select list for time selection
+		// Make the select list for time selection
 		$timesel[] = JHtml::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));
 		$timesel[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
 		$timesel[] = JHtml::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));

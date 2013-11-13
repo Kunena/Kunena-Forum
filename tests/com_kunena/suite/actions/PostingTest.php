@@ -21,7 +21,6 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 	 * Sets up the fixture.
 	 */
 	public static function setUpBeforeClass() {
-		jimport('joomla.plugin.helper');
 		$queries[] = "TRUNCATE TABLE #__kunena_categories";
 		$queries[] = "TRUNCATE TABLE #__kunena_topics";
 		$queries[] = "TRUNCATE TABLE #__kunena_messages";

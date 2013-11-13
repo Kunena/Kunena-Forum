@@ -1,52 +1,85 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topic
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Message
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
+
+$isReply = $this->message->id != $this->topic->first_post_id;
+$signature = $this->profile->getSignature();
+$attachments = $this->message->getAttachments();
 ?>
 
-<div class="chat">
-  <div class="bubble me span12">
-    <div style="border-bottom:1px solid #e5e5e5;">
-      <h5> <?php echo $this->profile->getLink() ?> <small>
-        <?php if($this->topic->first_post_id  == $this->message->id){
-					echo 'Created a new topic.';
-				} else {
-					echo 'Replied the topic.';
-				}
-				?>
-        </small> <small><span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"><?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span></small> </h5>
-      <h4><?php echo $this->message->displayField('subject') ?></h4>
-    </div>
-    <p class="kmsg"> <?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this->view) ?></p>
-    <h5>
-      <?php if ($this->signatureHtml) : ?>
-      <span class="pull-left"><small> <?php echo $this->signatureHtml ?></small> </span>
-      <?php endif ?>
-      <?php if (!empty($this->reportMessageLink)) :?>
-      <span class="pull-right"><small><?php echo $this->reportMessageLink ?></small>
-      <?php if (!empty($this->ipLink)) : ?>
-      <br />
-      <small><?php echo $this->ipLink ?></small>
-      <?php endif ?>
-      </span>
-      <div class="clearfix"></div>
-      <?php endif ?>
-    </h5>
-  </div>
+<div class="chat row-fluid">
+	<div class="bubble <?php echo $this->profile->isMyself() ? 'me' : 'you'; ?> span12">
+		<h3>
+			<?php echo $this->profile->getLink(); ?>
+			<small>
+				<?php echo (!$isReply) ? 'Created the topic.' : 'Replied the topic.'; ?>
+			</small>
+			<small class="pull-right">
+				<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+				<a href="#<?php echo $this->message->id; ?>">#<?php echo $this->location; ?></a>
+			</small>
+		</h3>
+
+		<?php if ($this->message->subject) : ?>
+		<h3>
+			<?php echo ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $this->message->displayField('subject'); ?>
+		</h3>
+		<?php endif; ?>
+
+		<p class="kmsg">
+			<?php echo $this->message->displayField('message'); ?>
+		</p>
+
+		<?php if (!empty($attachments)) : ?>
+		<h4>
+			<?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?>
+		</h4>
+		<ul class="thumbnails">
+
+			<?php foreach($attachments as $attachment) : ?>
+				<li class="span4">
+					<div class="thumbnail">
+						<?php echo $attachment->getThumbnailLink(); ?>
+						<?php echo $attachment->getTextLink(); ?>
+					</div>
+				</li>
+			<?php endforeach; ?>
+
+		</ul>
+		<?php endif; ?>
+
+
+		<?php if ($signature) : ?>
+		<div>
+			<p><?php echo $signature; ?></p>
+		</div>
+		<?php endif ?>
+
+		<?php if (!empty($this->reportMessageLink)) : ?>
+		<div class="pull-left">
+			<p>
+				<i class="icon-warning"></i>
+				<?php echo $this->reportMessageLink; ?>
+			</p>
+		</div>
+		<?php endif; ?>
+
+		<?php if (!empty($this->ipLink)) : ?>
+		<div class="pull-right">
+			<p>
+				<?php echo $this->ipLink; ?>
+			</p>
+		</div>
+		<?php endif; ?>
+
+		<div class="clearfix"></div>
+	</div>
 </div>
-<?php if (!empty($this->attachments)) : ?>
-<div class="span12"> <?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
-  <ul>
-    <?php foreach($this->attachments as $attachment) : ?>
-    <li style="list-style:none; margin-bottom:5px;"> <span> <?php echo $attachment->getThumbnailLink(); ?> </span> <span> <?php echo $attachment->getTextLink(); ?> </span> </li>
-    <?php endforeach; ?>
-  </ul>
-</div>
-<?php endif; ?>

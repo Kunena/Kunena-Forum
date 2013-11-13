@@ -50,7 +50,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif; ?>
 		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->message->subject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
-		<?php if ($this->topic->authorise('subscribe')) : ?>
+		<?php if ($this->topic->authorise('subscribe') && !$this->usertopic->subscribed) : ?>
 		<?php if ( !$this->usertopic->subscribed ): ?><input type="checkbox" name="subscribeMe" value="1" <?php if ($this->config->subscriptionschecked == 1) echo 'checked="checked"' ?> /><?php endif; ?>
 		<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 		<br />

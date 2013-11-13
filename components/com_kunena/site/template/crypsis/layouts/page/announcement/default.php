@@ -1,29 +1,35 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Common
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Page
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 ?>
+<div class="alert alert-info">
+	<a class="close" data-dismiss="alert" href="#">&times;</a>
+	<h4>
+		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(),
+			$this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'),
+			null, 'follow'); ?>
 
-<div class="well well-small"> <span><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kannouncement"></a></span>
-  <h2 class="page-header"><?php echo JHtml::_('kunenaforum.link', $this->annListUrl, $this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'), null, 'follow'); ?></h2>
-  <div class="row-fluid column-row">
-    <div class="span12 column-item">
-      <?php if ($this->showdate) : ?>
-      <div><?php echo $this->announcement->displayField('created', 'date_today') ?></div>
-      <?php endif; ?>
-      <div> <?php echo $this->announcement->displayField('sdescription') ?>
-        <?php if (!empty($this->announcement->description)) : ?>
-        ...<br />
-        <?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), JText::_('COM_KUNENA_ANN_READMORE'), null, 'follow'); ?>
-        <?php endif; ?>
-      </div>
-    </div>
-  </div>
+		<?php if ($this->announcement->showdate) : ?>
+		<small>(<?php echo $this->announcement->displayField('created', 'date_today'); ?>)</small>
+		<?php endif; ?>
+
+	</h4>
+	<h6>
+		<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
+
+		<?php if (!empty($this->announcement->description)) : ?>
+		<p>
+		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), JText::_('COM_KUNENA_ANN_READMORE'),
+				null, 'follow'); ?></p>
+		<?php endif; ?>
+
+	</h6>
 </div>

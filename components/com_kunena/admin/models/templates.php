@@ -60,7 +60,7 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Load the configuration definition file.
-		$template = $this->getState ('template');
+		$template = $this->getState('template');
 		$xml = KunenaTemplate::getInstance($template)->getConfigXml();
 
 		// Get the form.
@@ -81,7 +81,8 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		$data = JFactory::getApplication()->getUserState('com_kunena.edit.template.data', array());
 
 		if (empty($data)) {
-			$data = KunenaTemplate::getInstance()->params->toArray();
+			$template = $this->getState('template');
+			$data = KunenaTemplate::getInstance($template)->params->toArray();
 		}
 
 		return $data;
@@ -107,25 +108,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		return $this->getState ('list.start');
 	}
 
-	function getEditparams() {
-		jimport('joomla.filesystem.file');
-
-		$template = $this->app->getUserState ( 'kunena.edit.template');
-		$ini	= KPATH_SITE.'/template/'.$template.'/params.ini';
-		$xml	= KPATH_SITE.'/template/'.$template.'/template.xml';
-
-		// Read the ini file
-		if (JFile::exists($ini)) {
-			$content = JFile::read($ini);
-		} else {
-			$content = null;
-		}
-		// FIXME: Joomla 3.0: need to use JForm
-		$params = new JRegistry();
-		$params->loadString($content,'INI');
-		return $params;
-	}
-
 	function getTemplatedetails() {
 		$template = $this->app->getUserState ( 'kunena.edit.template');
 		$details	= KunenaTemplateHelper::parseXmlFile($template);
@@ -137,7 +119,7 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		jimport('joomla.filesystem.file');
 		$template = $this->app->getUserState ( 'kunena.edit.template');
 		$filename = $this->app->getUserState ( 'kunena.editcss.filename');
-		$content = JFile::read(KPATH_SITE.'/template/'.$template.'/css/'.$filename);
+		$content = file_get_contents(KPATH_SITE.'/template/'.$template.'/css/'.$filename);
 		if ($content === false) {
 			 return null;
 		}
@@ -148,7 +130,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	function getFTPcredentials() {
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
 
 		return $ftp;

@@ -561,7 +561,7 @@ class CKunenaImageFilter
 	 * @return	array	An array with directory elements
 	 * @since	1.0
 	 */
-	function addIncludePath($path='')
+	public static function addIncludePath($path='')
 	{
 		static $paths=null;
 

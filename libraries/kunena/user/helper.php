@@ -55,12 +55,13 @@ abstract class KunenaUserHelper {
 		}
 		// Find the user id
 		if ($identifier instanceof JUser) {
-			$id = intval ( $identifier->id );
-		} else if (is_numeric ( $identifier )) {
-			$id = intval ( $identifier );
+			$id = (int) $identifier->id;
+		} elseif (((string)(int) $identifier) === ((string) $identifier)) {
+			// Ignore imported users, which haven't been mapped to Joomla (id<0).
+			$id = (int) max($identifier, 0);
 		} else {
-			jimport ( 'joomla.user.helper' );
-			$id = intval ( JUserHelper::getUserId ( ( string ) $identifier ) );
+			// Slow, don't use usernames!
+			$id = (int) JUserHelper::getUserId((string) $identifier);
 		}
 
 		// Always return fresh user if id is anonymous/not found
@@ -111,11 +112,14 @@ abstract class KunenaUserHelper {
 	 * @return array
 	 */
 	public static function loadUsers(array $userids = array()) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
-		foreach($userids as $userid){
-			if (intval($userid) && empty ( self::$_instances [$userid] )) {
-				$e_userids[$userid] = $userid;
+		foreach($userids as $userid) {
+			// Ignore guests and imported users, which haven't been mapped to Joomla (id<0).
+			if ($userid > 0 && empty(self::$_instances[$userid])) {
+				$e_userids[(int) $userid] = (int) $userid;
 			}
 		}
 
@@ -123,7 +127,7 @@ abstract class KunenaUserHelper {
 			$userlist = implode ( ',', $e_userids );
 
 			$db = JFactory::getDBO ();
-			$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*
+			$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid
 				FROM #__users AS u
 				LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
 				WHERE u.id IN ({$userlist})";
@@ -131,11 +135,11 @@ abstract class KunenaUserHelper {
 			$results = $db->loadAssocList ();
 			KunenaError::checkDatabaseError ();
 
-			foreach ( $results as $user ) {
-				$instance = new KunenaUser (false);
-				$instance->setProperties ( $user );
-				$instance->exists(true);
-				self::$_instances [$instance->userid] = $instance;
+			foreach ($results as $user) {
+				$instance = new KunenaUser(false);
+				$instance->setProperties($user);
+				$instance->exists(isset($user['posts']));
+				self::$_instances[$instance->userid] = $instance;
 			}
 
 			// Preload avatars if configured
@@ -147,6 +151,8 @@ abstract class KunenaUserHelper {
 		foreach ($userids as $userid) {
 			if (isset(self::$_instances [$userid])) $list [$userid] = self::$_instances [$userid];
 		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $list;
 	}
 
@@ -204,10 +210,18 @@ abstract class KunenaUserHelper {
 	 */
 	public static function getOnlineUsers() {
 		if (self::$_online === null) {
+			// Need to calculate the time less the time selected by user, user
+			$querytime = '';
+			if ( KunenaFactory::getConfig()->show_session_starttime != 0 ) {
+				$time = JFactory::getDate()->toUnix() - KunenaFactory::getConfig()->show_session_starttime;
+				$querytime = 'AND time > '.$time;
+			}
+
 			$db = JFactory::getDBO ();
 			$query = "SELECT s.userid, s.time
 				FROM #__session AS s
 				WHERE s.client_id=0 AND s.userid>0
+				".$querytime."
 				GROUP BY s.userid
 				ORDER BY s.time DESC";
 
@@ -234,7 +248,7 @@ abstract class KunenaUserHelper {
 			$user_array = 0;
 			$guest_array = 0;
 
-			// need to calcute the time less the time selected by user, user
+			// Need to calcute the time less the time selected by user, user
 			$querytime = '';
 			if ( $kunena_config->show_session_starttime != 0 ) {
 				$time = JFactory::getDate()->toUnix() - $kunena_config->show_session_starttime;

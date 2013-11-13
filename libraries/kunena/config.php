@@ -94,7 +94,6 @@ class KunenaConfig extends JObject {
 	public $popusercount = 5;
 	public $showpopsubjectstats = 1;
 	public $popsubjectcount = 5;
-	public $usernamechange = 0;
 	// New 1.0.5 config variables
 	// bbcode options
 	public $showspoilertag = 1;
@@ -225,6 +224,9 @@ class KunenaConfig extends JObject {
 	// New for 3.0.0
 	public $autolink = 1;
 	public $access_component = 1;
+	// New for 3.1.0
+	public $legacy_urls = 1;
+	public $attachment_protection = 0;
 
 	public function __construct() {
 		parent::__construct ();
@@ -304,7 +306,8 @@ class KunenaConfig extends JObject {
 		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
 		foreach ($plugins as $name => $registry) {
-			if ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
+			if ($name == '38432UR24T5bBO6') $this->bind($registry->toArray());
+			elseif ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
 		}
 	}
 

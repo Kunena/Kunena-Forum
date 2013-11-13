@@ -16,9 +16,11 @@ defined ( '_JEXEC' ) or die ();
 class KunenaViewTopic extends KunenaView {
 	public $topicButtons = null;
 	public $messageButtons = null;
+	public $inline_attachments = array();
 
 	var $poll = null;
 	var $mmm = 0;
+	var $k = 0;
 	var $cache = true;
 
 	public function displayDefault($tpl = null) {
@@ -75,7 +77,7 @@ class KunenaViewTopic extends KunenaView {
 		// If page does not exist, redirect to the last page (no redirect in embedded mode).
 		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start')) {
 			while (@ob_end_clean());
-			$this->app->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
+			$this->app->redirect($this->topic->getUrl(null, false, (int)(($this->total-1) / $this->state->get('list.limit'))));
 		}
 
 		// Run events
@@ -157,7 +159,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->captchaHtml = $captcha->getHtml();
 			if ( !$this->captchaHtml ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->redirectBack();
+				return;
 			}
 		}
 
@@ -235,7 +238,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->captchaHtml = $captcha->getHtml();
 			if ( !$this->captchaHtml ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->redirectBack();
+				return;
 			}
 		}
 
@@ -465,23 +469,54 @@ class KunenaViewTopic extends KunenaView {
 			$this->topic = $this->get ( 'Topic' );
 		}
 		$this->poll = $this->get('Poll');
-		$this->usercount = $this->get('PollUserCount');
 		$this->usersvoted = $this->get('PollUsers');
+		$this->usercount = count($this->usersvoted);
 		$this->voted = $this->get('MyVotes');
 
 		$this->users_voted_list = array();
 		$this->users_voted_morelist = array();
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
-			$i = 0;
+			$userids_votes = array();
 			foreach($this->usersvoted as $userid=>$vote) {
-				if ( $i <= '4' ) $this->users_voted_list[] = KunenaFactory::getUser(intval($userid))->getLink();
-				else $this->users_voted_morelist[] = KunenaFactory::getUser(intval($userid))->getLink();
+				$userids_votes[] = $userid;
+			}
+
+			$loaded_users = KunenaUserHelper::loadUsers($userids_votes);
+
+			$i = 0;
+			foreach($loaded_users as $userid=>$user) {
+				if ( $i <= '4' ) $this->users_voted_list[] = $loaded_users[$userid]->getLink();
+				else $this->users_voted_morelist[] = $loaded_users[$userid]->getLink();
 				$i++;
 			}
 		}
 
 		if ($this->voted || !$this->topic->authorise('poll.vote', null, true)) echo $this->loadTemplateFile("pollresults");
 		else echo $this->loadTemplateFile("poll");
+	}
+
+	function getCodeTypes() {
+		if (!$this->config->highlightcode) return null;
+
+		$paths = array(
+			JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi',
+			JPATH_ROOT.'/plugins/content/geshi/geshi/geshi'
+		);
+		foreach ($paths as $path) {
+			if (!file_exists($path)) continue;
+
+			$files = JFolder::files($path, ".php");
+			$options = array();
+			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
+			foreach ($files as $file) {
+				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
+			}
+			$javascript = "document.id('helpbox').set('value', '".JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true)."')";
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" onmouseover="'.$javascript.'"' , 'value', 'text', '-1' );
+
+			return $list;
+		}
+		return null;
 	}
 
 	function displayMessageProfile() {
@@ -725,10 +760,17 @@ class KunenaViewTopic extends KunenaView {
 				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
 				else $canUnthankyou=false;
 
+				$userids_thankyous = array();
 				foreach( $thankyous as $userid=>$time){
+					$userids_thankyous[] = $userid;
+				}
+
+				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
+
+				foreach($loaded_users as $userid=>$user) {
 					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
-					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
+					$this->thankyou[] = $loaded_users[$userid]->getLink().$thankyou_delete;
 				}
 			}
 		}
@@ -871,10 +913,35 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplateFile ( 'history' );
 	}
 
-	function redirectBack() {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
-		while (@ob_end_clean());
-		$this->app->redirect ( $httpReferer );
+	/**
+	 * Redirect back to the referrer page.
+	 *
+	 * If there's no referrer or it's external, Kunena will return to forum home page.
+	 * Also redirects back to tasks are prevented.
+	 *
+	 * @param string $anchor
+	 */
+	protected function redirectBack($anchor = '') {
+		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$referrer = $this->input->server->getString('HTTP_REFERER');
+
+		$uri = JUri::getInstance($referrer ? $referrer : $default);
+		if (JUri::isInternal($uri->toString())) {
+			// Parse route.
+			$vars = $this->app->getRouter()->parse($uri);
+			$uri = new JUri('index.php');
+			$uri->setQuery($vars);
+
+			// Make sure we do not return into a task.
+			$uri->delVar('task');
+			$uri->delVar(JSession::getFormToken());
+		} else {
+			$uri = JUri::getInstance($default);
+		}
+
+		if ($anchor) $uri->setFragment($anchor);
+
+		$this->app->redirect(JRoute::_($uri->toString()));
 	}
 
 	public function getNumLink($mesid, $replycnt) {

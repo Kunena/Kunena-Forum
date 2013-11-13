@@ -16,18 +16,18 @@ $this->cache = false;
 // Show one topic row
 ?>
 <?php if ($this->spacing) : ?>
-<tr>
-	<td class="kcontenttablespacer" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>">&nbsp;</td>
+<tr class="hidden-phone">
+	<td class="kcontenttablespacer hidden-phone" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>">&nbsp;</td>
 </tr>
 <?php endif; ?>
 
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
 
-	<td class="kcol-first kcol-ktopicreplies">
+	<td class="kcol-first kcol-ktopicreplies hidden-phone">
 		<strong><?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
 	</td>
 
-	<td class="kcol-mid kcol-ktopicicon">
+	<td class="kcol-mid kcol-ktopicicon hidden-phone">
 		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
 	</td>
 
@@ -81,7 +81,7 @@ $this->cache = false;
 		<?php endif; ?>
 	</td>
 
-	<td class="kcol-mid kcol-ktopicviews visible-desktop">
+	<td class="kcol-mid kcol-ktopicviews hidden-phone">
 		<span class="ktopic-views-number"><?php echo $this->formatLargeNumber ( $this->topic->hits );?></span>
 		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_GEN_HITS');?> </span>
 	</td>

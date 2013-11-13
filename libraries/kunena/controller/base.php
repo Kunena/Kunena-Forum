@@ -30,15 +30,89 @@ abstract class KunenaControllerBase implements Serializable
 	protected $input;
 
 	/**
+	 * Options object.
+	 *
+	 * @var    JRegistry
+	 * @since  3.1
+	 */
+	protected $options = null;
+
+	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   JInput            $input  The input object.
-	 * @param   JApplicationBase  $app    The application object.
+	 * @param   JInput            $input    The input object.
+	 * @param   JApplicationBase  $app      The application object.
+	 * @param   JRegistry|array   $options  Array / JRegistry object with the options to load.
 	 */
-	public function __construct(JInput $input = null, $app = null) {
+	public function __construct(JInput $input = null, $app = null, $options = null)
+	{
 		// Setup dependencies.
 		$this->app = isset($app) ? $app : $this->loadApplication();
 		$this->input = isset($input) ? $input : $this->loadInput();
+
+		if ($options)
+		{
+			$this->setOptions($options);
+		}
+	}
+
+	/**
+	 * Set the options.
+	 *
+	 * @param   mixed  $options  Array / JRegistry object with the options to load.
+	 *
+	 * @return  KunenaControllerBase  Instance of $this to allow chaining.
+	 *
+	 * @since   3.1
+	 */
+	public function setOptions($options = null)
+	{
+		// Received JRegistry
+		if ($options instanceof JRegistry)
+		{
+			$this->options = $options;
+		}
+		// Received array
+		elseif (is_array($options))
+		{
+			$this->options = new JRegistry($options);
+		}
+		else
+		{
+			$this->options = new JRegistry;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Get the options.
+	 *
+	 * @return  JRegistry  Object with the options.
+	 *
+	 * @since   3.1
+	 */
+	public function getOptions()
+	{
+		// Always return a JRegistry instance
+		if (!($this->options instanceof JRegistry))
+		{
+			$this->resetOptions();
+		}
+
+		return $this->options;
+	}
+
+	/**
+	 * Function to empty all the options.
+	 *
+	 * @return  KunenaControllerBase  Instance of $this to allow chaining.
+	 *
+	 * @since   3.1
+	 */
+	public function resetOptions()
+	{
+		return $this->setOptions(null);
 	}
 
 	/**
@@ -77,7 +151,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * @return  string  The serialized controller.
 	 */
 	public function serialize() {
-		return serialize($this->input);
+		return serialize(array($this->input, $this->options));
 	}
 
 	/**
@@ -93,8 +167,8 @@ abstract class KunenaControllerBase implements Serializable
 		// Setup dependencies.
 		$this->app = $this->loadApplication();
 
-		// Unserialize the input.
-		$this->input = unserialize($input);
+		// Unserialize the input and options.
+		list ($this->input, $this->options) = unserialize($input);
 
 		if (!($this->input instanceof JInput))
 		{

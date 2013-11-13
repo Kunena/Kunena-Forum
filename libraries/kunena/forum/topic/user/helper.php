@@ -81,6 +81,43 @@ abstract class KunenaForumTopicUserHelper {
 	}
 
 	/**
+	 * Get all user ids who have participated to the given topics.
+	 *
+	 * @param array|KunenaForumTopic[] $topics
+	 * @param string $value  Row to pick up as value.
+	 * @return array List of [topic][userid] = value.
+	 */
+	static public function getUserIds(array $topics, $value = 'user_id') {
+		// Convert topic objects into ids
+		$ids = array();
+		foreach ($topics as $id) {
+			if ($id instanceof KunenaForumTopic) $ids[(int) $id->id] = (int) $id->id;
+			else $ids[(int) $id] = (int) $id;
+		}
+		$idlist = implode(',', $ids);
+
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('topic_id, user_id')
+			->from($db->quoteName('#__kunena_user_topics'))
+			->where("topic_id IN ({$idlist})")
+			->where('posts>0');
+
+		$query->select($db->quoteName($value));
+
+		$db->setQuery($query);
+		$results = (array) $db->loadRowList();
+		KunenaError::checkDatabaseError();
+
+		$list = array();
+		foreach ($results as $result) {
+			$list[$result->topic_id][$result->user_id] = $result->{$value};
+		}
+
+		return $list;
+	}
+
+	/**
 	 * @param KunenaForumTopic $old
 	 * @param KunenaForumTopic $new
 	 *
@@ -91,7 +128,7 @@ abstract class KunenaForumTopicUserHelper {
 		$db = JFactory::getDBO ();
 		$query ="UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 		if (KunenaError::checkDatabaseError ())
 			return false;
 
@@ -141,7 +178,7 @@ abstract class KunenaForumTopicUserHelper {
 
 		foreach ($queries as $query) {
 			$db->setQuery($query);
-			$db->query ();
+			$db->execute();
 			if (KunenaError::checkDatabaseError ())
 				return false;
 		}
@@ -151,6 +188,14 @@ abstract class KunenaForumTopicUserHelper {
 		self::reloadTopic($new->id);
 
 		return true;
+	}
+
+	/**
+	 * Free up memory by cleaning up all cached items.
+	 */
+	public static function cleanup() {
+		self::$_instances = array();
+		self::$_topics = array();
 	}
 
 	/**
@@ -186,7 +231,7 @@ abstract class KunenaForumTopicUserHelper {
 					GROUP BY m.userid, m.thread
 				ON DUPLICATE KEY UPDATE category_id=VALUES(category_id), posts=VALUES(posts), last_post_id=VALUES(last_post_id)";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		$rows = $db->getAffectedRows ();
@@ -197,7 +242,7 @@ abstract class KunenaForumTopicUserHelper {
 			SET posts=0, last_post_id=0
 			WHERE m.id IS NULL {$where2}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		$rows += $db->getAffectedRows ();
@@ -205,7 +250,7 @@ abstract class KunenaForumTopicUserHelper {
 		// Delete entries that have default values
 		$query ="DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params='' {$where2}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		$rows += $db->getAffectedRows ();

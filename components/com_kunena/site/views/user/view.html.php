@@ -28,7 +28,7 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEdit($tpl = null) {
 		$userid = JRequest::getInt('userid');
-		$this->usernamechange = $this->config->usernamechange && (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1));
+		$this->usernamechange = JComponentHelper::getParams('com_users')->get('change_login_name', 1);
 
 		if ($userid && $this->me->userid != $userid) {
 			$user = KunenaFactory::getUser( $userid );
@@ -142,6 +142,9 @@ class KunenaViewUser extends KunenaView {
 
 		$this->online = $this->profile->isOnline();
 		$this->showUnusedSocial = true;
+
+		if (!preg_match("~^(?:f|ht)tps?://~i", $this->profile->websiteurl)) $this->websiteurl = 'http://' . $this->profile->websiteurl;
+		else $this->websiteurl = $this->profile->websiteurl;
 
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = ($avatar instanceof KunenaAvatarKunena) ? true : false;
@@ -359,35 +362,19 @@ class KunenaViewUser extends KunenaView {
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.utilities.string');
 		$folders = JFolder::folders($path,'.',true, true);
-		foreach ($folders as $key => $folder) {
+		$galleries = array();
+		if ($this->getAvatarGallery($path)) {
+			$galleries[] = JHtml::_('select.option', 'default', JText::_('COM_KUNENA_DEFAULT_GALLERY'));
+		}
+		foreach ($folders as $folder) {
 			$folder = substr($folder, strlen($path)+1);
-			$folders[$key] = $folder;
+			if (!$this->getAvatarGallery($path.'/'.$folder)) continue;
+			$galleries[] = JHtml::_('select.option', $folder, JString::ucwords(str_replace('/', ' / ', $folder)));
 		}
 
 		$selected = JString::trim($this->gallery);
-		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\">\n";
-		$str .=  "<option value=\"default\"";
 
-		if ($selected == "") {
-			$str .=  " selected=\"selected\"";
-		}
-
-		$str .=  ">" . JText::_ ( 'COM_KUNENA_DEFAULT_GALLERY' ) . "</option>\n";
-
-		asort ( $folders );
-
-		foreach ( $folders as $val ) {
-			$str .=  '<option value="' . urlencode($val) . '"';
-
-			if ($selected == $val) {
-				$str .=  " selected=\"selected\"";
-			}
-
-			$str .=  ">{$this->escape(JString::ucwords(str_replace('/', ' / ', $val)))}</option>\n";
-		}
-
-		$str .=  "</select>\n";
-		return $str;
+		return $galleries ? JHtml::_('select.genericlist', $galleries, $this->escape($select_name), '', 'value', 'text', $selected, 'avatar_category_select') : null;
 	}
 
 	function displayEditUser() {
@@ -401,7 +388,6 @@ class KunenaViewUser extends KunenaView {
 				$lang = JFactory::getLanguage();
 				$lang->load('com_users', JPATH_ADMINISTRATOR);
 
-				jimport( 'joomla.form.form' );
 				JForm::addFormPath(JPATH_ROOT.'/components/com_users/models/forms');
 				JForm::addFieldPath(JPATH_ROOT.'/components/com_users/models/fields');
 				JPluginHelper::importPlugin('user');

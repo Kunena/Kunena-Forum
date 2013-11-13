@@ -13,7 +13,6 @@ jimport ( 'joomla.filesystem.folder' );
 jimport ( 'joomla.filesystem.file' );
 jimport ( 'joomla.filesystem.path' );
 jimport ( 'joomla.filesystem.archive' );
-jimport ( 'joomla.installer.installer' );
 
 define('KUNENA_INSTALLER_PATH', __DIR__);
 define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
@@ -315,7 +314,6 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini")) {
 			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
 		}
@@ -349,7 +347,6 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
 			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
 		}
@@ -500,7 +497,6 @@ class KunenaModelInstall extends JModelLegacy {
 					$this->deleteFolder($dest, $ignore[$dest]);
 					if ($dest == KUNENA_INSTALLER_SITEPATH) {
 						$this->deleteFolder("$dest/template/blue_eagle", array('params.ini'));
-						$this->deleteFolder("$dest/template/mirage", array('params.ini'));
 					}
 				}
 				// Copy new files into folder
@@ -1139,7 +1135,7 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		while (1) {
-			$count = mt_rand(95000, 105000);
+			$count = mt_rand(4500, 5500);
 			switch ($state->step) {
 				case 0:
 					// Update topic statistics
@@ -1172,7 +1168,7 @@ class KunenaModelInstall extends JModelLegacy {
 				$state->step++;
 				$state->start = 0;
 			}
-			if ($this->checkTimeout()) break;
+			if ($this->checkTimeout(false, 14)) break;
 		}
 		$app->setUserState ( 'com_kunena.install.recount', $state );
 		return false;
@@ -1722,7 +1718,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$cache->clean('mod_menu');
 	}
 
-	function checkTimeout($stop = false) {
+	function checkTimeout($stop = false, $timeout = 1) {
 		static $start = null;
 		if ($stop) $start = 0;
 		$time = microtime (true);
@@ -1730,7 +1726,7 @@ class KunenaModelInstall extends JModelLegacy {
 			$start = $time;
 			return false;
 		}
-		if ($time - $start < 1)
+		if ($time - $start < $timeout)
 			return false;
 
 		return true;

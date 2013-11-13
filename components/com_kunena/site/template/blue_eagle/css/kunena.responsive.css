@@ -1,0 +1,448 @@
+@charset "utf-8";
+
+/**
+* Kunena Component
+* @package Kunena.Template.Blue_Eagle
+*
+* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+*
+* Based on FireBoard Component
+* @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/ 
+
+/* Responsive
+----------------------------------------------------------------------------------------------- */
+
+/* DESKTOP */
+@media (min-width: 580px) {
+
+}
+
+
+/* MOBILE */
+@media (max-width: 579px) {
+ 
+  #Kunena table,
+	#Kunena tbody{
+		display: block ;
+		width: 100% !important;
+		padding: 0;
+	}	
+	
+	#Kunena table.kmsg tbody {
+		min-height:auto;
+	}
+	
+	#Kunena table.klist-actions {
+		width:99% !important;
+	}
+	
+	#Kunena td.kcontenttablespacer {
+		margin-bottom:-9px;
+	}
+	
+	#Kunena table kmsg,
+	#Kunena tbody kmsg{
+		padding: 0 0 20px 0 !important;
+	}
+	
+	#Kunena .klist-actions {
+		padding:0px !important;
+	}
+	
+	#Kunena table:before {
+		content: "" !important;
+	}
+	
+	#Kunena table tr {
+		display: block ;
+		width: 100% ;
+	}
+	
+	#Kunena table tr td,
+	#Kunena table tr th {
+		display: block ;
+		width: 100% !important;
+	}
+	
+	
+	.kcc-table::after,
+	#Kunena td.kcol-mid.kcol-ktopiclastpost::after {
+		content: "";
+		display: block;
+		clear: both;
+	}
+	
+
+    /* Profile */
+    #Kunena .kprofilebox .kprofilebox-left,
+    #Kunena .kprofilebox .kprofilebox-right {
+        width: 50px !important;
+        border: none;
+        float: left;
+        position: relative;
+        z-index: 50;
+    }
+
+    #Kunena .kprofilebox .kprofilebox-left img,
+    #Kunena .kprofilebox .kprofilebox-right img {
+        margin-top: 7px;
+    }
+
+    #Kunena .kprofilebox .kprofileboxcnt {
+        position: relative;
+        z-index: 10;
+        min-height: 90px;
+    }
+
+    #Kunena .kprofilebox .kprofileboxcnt ul.kprofilebox-welcome li.kms {
+    }
+
+    #Kunena .kprofilebox .kprofileboxcnt ul.kprofilebox-welcome {
+        margin: 0;
+    }
+
+    #Kunena .kprofilebox .kprofileboxcnt ul.kprofilebox-welcome input.kbutton {
+        position: absolute;
+        top: 65px;
+        right: 20px ;
+    }
+
+    #Kunena .kprofilebox .kprofileboxcnt .kprofilebox-link {
+        display: none;
+    }
+
+    #Kunena .klink-block,
+    #Kunena .k_guest{
+        display: none;
+    }
+
+	#Kunena tr td:not(:last-child) {
+		border-bottom: none !important;
+	}
+
+    #Kunena div.kthead-title a {
+        float: none;
+        font-size: 1.2em;
+        margin: 0;
+    }
+
+    #Kunena .kblocktable .kl {
+        margin: 0;
+    }
+
+    #Kunena div.kthead-desc,
+    #Kunena div.klatest-subject-by{
+        display: none;
+    }
+
+    #Kunena .kcol-mid.kcol-kcatlastpost {
+        padding-bottom: 5px;
+    }
+
+    
+    #Kunena  td.visible-desktop {
+        display: none !important;
+    }
+
+    #Kunena td.kcol-first.kcol-category-icon,
+    #Kunena td.kcol-mid.kcol-ktopicicon{
+        display: none;
+    }
+
+    #Kunena td.kcol-first.kcol-ktopicreplies {
+        margin-bottom: -18px;
+    }
+
+    #Kunena td.kcol-first.kcol-ktopicreplies,
+    #Kunena td.kcol-first.kcol-ktopicreplies strong {
+        font-size: 100% ;
+        text-align: left;
+    }
+
+    #Kunena td.kcol-first.kcol-ktopicreplies strong {
+        display: inline;
+    }
+
+    #Kunena td.kcol-mid.kcol-ktopiclastpost > div {
+        float: left;
+    }
+
+    #Kunena .ktopic-details-kcategory,
+    #Kunena .ktopic-date{
+        display: none;
+    }
+
+    #Kunena .klist-markallcatsread,
+    #Kunena .klist-bottom{
+        display:none;
+    }
+
+    #Kunena ul.kpagination {
+        padding-right: 30px;
+    }
+	
+	
+    #Kunena .kpagination span,
+    #Kunena .kpagination a {
+        padding: 7px 12px;
+    }
+
+
+
+    #Kunena .knewchar {
+        display: inline-block;
+        margin-top:25px;
+    }
+
+
+    /* Topic */
+    #Kunena .kmsgdate.kmsgdate-left,
+    #Kunena .kmsgdate.kmsgdate-right,
+    #Kunena ul.kpost-profile .kpost-userrank,
+    #Kunena ul.kpost-profile .kpost-usertyr,
+    #Kunena ul.kpost-profile .kpost-karma,
+    #Kunena ul.kpost-profile .kpost-smallicons{
+        display: none;
+    }
+
+    #Kunena ul.kpost-profile {
+        min-height: 60px;
+        display: block ;
+        padding-left: 80px;
+        position: relative ;
+    }
+
+    #Kunena ul.kpost-profile li {
+        line-height: 100%;
+        margin-right: 10px;
+        display: inline-block;
+    }
+
+    #Kunena ul.kpost-profile .kpost-avatar {
+        margin: 0;
+    }
+
+    #Kunena ul.kpost-profile .kpost-userposts {
+        clear: both;
+        margin-top: 3px;
+    }
+
+    #Kunena ul.kpost-profile .kpost-avatar img {
+        position: absolute ;
+        top: 0;
+        left: 10px;
+        max-width: 50px !important;
+        min-height: 50px !important;
+        margin: 0;
+    }
+
+    
+    #Kunena td.klist-actions-forum,
+    #Kunena div.kmessage-buttons-row {
+        height: auto;
+    }
+
+    #Kunena .kicon-button {
+        display: -ms-inline-flexbox;
+				display: inline-flexbox;
+    }
+
+
+    /* SUBMIT */
+
+    #Kunena #kpost-message td.kcol-first {
+        text-align: left;
+    }
+
+    #Kunena .kiconsel {
+        white-space: normal;
+    }
+
+    #Kunena table#kpostmessage td {
+        width: 95% !important;
+    }
+
+    #Kunena #kpost-topicicons td {
+        overflow: auto;
+    }
+
+    #Kunena td.kpostbuttons {
+        height: 40px;
+    }
+
+    #Kunena textarea#kbbcode-message,
+    #Kunena .kattachment .kbutton{
+        float: none;
+    }
+
+
+    /* TAB MENU */
+    #Kunena #ktab ul.menu {
+        width: 100%;
+    }
+
+    #Kunena #ktab ul.menu li,
+    #Kunena #ktab ul.menu li a{
+        float: none;
+    }
+
+    #Kunena #ktab ul.menu li{
+        margin: 0 !important;
+        display: block ;
+        border-top: 1px solid #ddd;
+    }
+
+    #Kunena #ktab ul.menu li a {
+        display: block;
+        border-radius: 0;
+        color: #555 !important;
+        background-color: transparent !important;
+    }
+
+    #Kunena #ktab ul.menu li:nth-child(odd) a {
+        background-color: #f9f9f9 !important;
+    }
+
+
+    #Kunena #ktab ul.menu li a span {
+        line-height: 150% ;
+        color: #555 !important;
+    }
+
+    #Kunena #ktab ul.menu li a:hover,
+    #Kunena #ktab ul.menu li a:hover span{
+        background-color: #5388B4 !important;
+        color: #fff !important;
+    }
+
+
+    /* STATISTIC */
+    #Kunena ul#kstatslistright {
+        top: -33px;
+        width: 100%;
+    }
+
+    #Kunena ul#kstatslistright li:nth-child(3),
+    #Kunena ul#kstatslistright li:nth-child(4) {
+        text-align: left;
+    }
+
+  #Kunena div.kmsgbody div.kmsgtext {
+  padding-right: 25px;
+	margin-bottom: 40px !important;
+  }
+	
+	
+	
+	/* HIDE STUFF PHONE */
+	#Kunena .hidden-phone {
+	display:none;
+	}
+	
+	/* add actions buttons */
+	#Kunena div.kmessage-buttons-cover {
+	float:none;	
+	}
+	
+	#Kunena div.kmsgbody {
+	display: block;
+	table-layout: fixed;
+	width: 100%;
+	padding-bottom:40px;
+	}
+
+	#Kunena .kblock .kmsgbody {
+		min-height: 100px ;
+	}
+	
+	#Kunena .kmessage-buttons-cover {
+		margin-right:20px;
+	}
+	
+	#Kunena td.kbuttonbar-left,
+	#Kunena td.kbuttonbar-right {
+		height:auto;
+	}
+	
+	#Kunena img.kavatar {
+		width:100%;
+	}
+	
+	#Kunena td.kcol-mid {
+		border:0px !important;
+	}
+	
+	#Kunena .ktopicattach {
+		padding-right:10px !important;
+	}
+	
+	#Kunena .klist-pages-all, #Kunena .klist-times-all {
+		border:none;
+	}
+	
+	#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li {
+		padding:4px;
+	}
+	
+	#Kunena div.klatest-subject, #Kunena div.klatest-subject-by {
+		margin-left:0px;
+	}
+	
+	#Kunena table.kblocktable {
+		padding-right:10px;
+	}
+	
+	#Kunena .klatest-post-info {
+		text-align:right;
+		padding-right:30px;
+	}
+	
+	#Kunena td.ktopicmoderation {
+    margin-top: -30px;
+	}
+	
+	#Kunena .kcheck {
+		margin-left:60px;
+	}
+	
+	#Kunena div.kmessage-buttons-row {
+		white-space:normal;
+		padding-right:10px;
+	}
+	
+	#Kunena tr.krow2 td {
+		padding: 2px 8px;
+	}
+	
+	#Kunena .klist-actions-forum {
+		border:none;
+	}
+	
+	#Kunena div.kmsgsignature {
+		
+		white-space: normal;
+		padding-right:10px;
+	}
+	
+	#Kunena div.kmsgattach {
+		padding-right:10px;
+		margin-bottom:120px;
+	}
+	
+	#Kunena div.kpost-thankyou {
+		margin-bottom:5px;
+		margin-top:0px;
+	}
+	
+	#Kunena .krow2-stickymsg,
+	#Kunena .krow1-stickymsg {
+		padding-right:10px;
+	}
+	
+}

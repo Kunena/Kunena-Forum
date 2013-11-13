@@ -1,22 +1,24 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topic
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
+?>
+<div class="row-fluid">
+	<div class="span2 hidden-phone <?php echo $this->profile->isMyself() ? 'pull-left' : 'pull-right'; ?>">
+		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default'); ?>
+	</div>
+	<div class="span10">
+		<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
+		<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
+		<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>
+	</div>
+</div>
 
-echo $this->subLayout('Message/Item')
-	->set('profile', $this->profile)
-	->set('topic', $this->topic)
-	->set('message', $this->message)
-	->set('numLink', $this->numLink)
-	->set('view', $this)
-	->set('signatureHtml', $this->signatureHtml)
-	->set('reportMessageLink', $this->reportMessageLink)
-	->set('ipLink', isset($this->ipLink) ? $this->ipLink : null)
-	->set('attachments', $this->attachments);
+<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_msg_' . $this->location); ?>

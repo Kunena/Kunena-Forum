@@ -156,7 +156,7 @@ class KunenaBbcodeEditor {
 
 		$js .= "});\n";
 		$template = KunenaTemplate::getInstance();
-		$template->addScript('js/editor.js');
+		$template->addScript('editor.js');
 		JFactory::getDocument()->addScriptDeclaration( "// <![CDATA[\n{$js}\n// ]]>");
 	}
 

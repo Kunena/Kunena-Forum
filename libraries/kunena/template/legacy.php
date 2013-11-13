@@ -19,6 +19,8 @@ class KunenaTemplateLegacy {
 
 $app = JFactory::getApplication('Site');
 
+if (!defined('DS')) define('DS', '/');
+
 // Default values
 define('KUNENA_TEMPLATE_DEFAULT', 'blue_eagle');
 

@@ -28,7 +28,7 @@ class KunenaProfileKunena extends KunenaProfile {
 	public function getProfileURL($user, $task='', $xhtml = true)
 	{
 		if ($user == 0) return false;
-		$user = KunenaFactory::getUser($user);
+		if (!($user instanceof KunenaUser)) $user = KunenaUserHelper::get($user);
 		if ($user === false) return false;
 		$userid = "&userid={$user->userid}";
 		if ($task && $task != 'edit') {
@@ -37,7 +37,8 @@ class KunenaProfileKunena extends KunenaProfile {
 			return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
 		} else {
 			$layout = $task ? '&layout='.$task : '';
-			return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}", $xhtml);
+			if ($layout) return KunenaRoute::_("index.php?option=com_kunena&view=user{$layout}{$userid}", $xhtml);
+			else return KunenaRoute::getUserUrl($user, $xhtml);
 		}
 	}
 

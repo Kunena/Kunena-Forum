@@ -16,7 +16,7 @@ jimport('joomla.error.profiler');
  *
  * All SEF URLs are formatted like this:
  *
- * http://site.com/menuitem/1-category-name/10-subject/[view]/[layout]/[param1]-value1/[param2]-value2?param3=value3&param4=value4
+ * http://site.com/menuitem/category/10-subject/[view]/[layout]/[param1]-value1/[param2]-value2?param3=value3&param4=value4
  *
  * - If catid exists, category will always be in the first segment
  * - If there is no catid, second segment for message will not be used (param-value: id-10)
@@ -79,8 +79,9 @@ function KunenaBuildRoute(&$query) {
 
 	// We may have catid also in the menu item (it will not be in URI)
 	$numeric = !empty ( $menuitem->query ['catid'] );
+	$pos = 0;
 
-	// Support URIs like: /forum/12-my_category
+	// Support URIs like: /forum/category
 	if (!empty ( $query ['catid'] ) && ($view == 'category' || $view == 'topic' || $view == 'home')) {
 		// TODO: ensure that we have view=category/topic
 		$catid = ( int ) $query ['catid'];
@@ -94,11 +95,17 @@ function KunenaBuildRoute(&$query) {
 			if ($view == 'category') {
 				unset ( $query ['view'] );
 			}
+		} elseif ($query['catid'] == '@') {
+			$numeric = true;
+			$segments[] = '%'.++$pos.'$s';
+			if ($view == 'category') {
+				unset($query['view']);
+			}
 		}
 		unset ( $query ['catid'] );
 	}
 
-	// Support URIs like: /forum/12-category/123-topic
+	// Support URIs like: /forum/category/123-topic
 	if (!empty ( $query ['id'] ) && $numeric) {
 		$id = (int) $query ['id'];
 		if ($id) {
@@ -112,8 +119,14 @@ function KunenaBuildRoute(&$query) {
 			if ($view == 'topic') {
 				unset ( $query ['view'] );
 			}
+		} elseif ($query['id'] == '@') {
+			$segments[] = '%'.++$pos.'$s';
+			// This segment fully defines topic view so the variable is no longer needed
+			if ($view == 'topic') {
+				unset($query['view']);
+			}
 		}
-		unset ( $query ['id'] );
+		unset($query['id']);
 	} else {
 		// No id available, do not use numeric variable for mesid
 		$numeric = false;
@@ -125,22 +138,30 @@ function KunenaBuildRoute(&$query) {
 		$segments [] = $view;
 	}
 
-	// Support URIs like: /forum/12-category/123-topic/reply
+	// Support URIs like: /forum/category/123-topic/reply
 	if (!empty ( $query ['layout'] )) {
 		// Use filtered value
 		$segments [] = (string) preg_replace( '/[^a-z]/', '', $query ['layout'] );
 	}
 
-	// Support URIs like: /forum/12-category/123-topic/reply/124
+	// Support URIs like: /forum/category/123-topic/reply/124
 	if (isset ( $query ['mesid'] ) && $numeric) {
-		$segments [] = (int) $query ['mesid'];
-		unset ( $query ['mesid'] );
+		if ($query['mesid'] == '@') {
+			$segments[] = '%'.++$pos.'$s';
+		} else {
+			$segments[] = (int) $query['mesid'];
+		}
+		unset($query['mesid']);
 	}
 
 	// Support URIs like: /forum/user/128-matias
-	if (isset ( $query ['userid'] ) && $view == 'user') {
-		$segments [] = (int) $query ['userid'] .'-'.KunenaRoute::stringURLSafe ( KunenaUserHelper::get((int)$query ['userid'])->getName() );
-		unset ( $query ['userid'] );
+	if (isset($query['userid']) && $view == 'user') {
+		if ($query['userid'] == '@') {
+			$segments[] = '%'.++$pos.'$s';
+		} else {
+			$segments[] = (int) $query['userid'] .'-'.KunenaRoute::stringURLSafe(KunenaUserHelper::get((int)$query['userid'])->getName());
+		}
+		unset($query['userid']);
 	}
 
 	unset ( $query ['view'], $query ['layout'] );
@@ -151,6 +172,10 @@ function KunenaBuildRoute(&$query) {
 			$segments [] = "{$var}-{$query[$var]}";
 			unset ( $query [$var] );
 		}
+	}
+
+	if (isset($query['start']) && $query['start'] == '@') {
+		$query['start'] = '%'.++$pos.'$d';
 	}
 
 	KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;

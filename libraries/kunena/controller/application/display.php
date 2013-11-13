@@ -1,8 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Controllers.Misc
+ * @package Kunena.Framework
+ * @subpackage Controller
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,14 +10,18 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-abstract class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
+class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
+	/**
+	 * @var KunenaLayout
+	 */
+	protected $page;
 	/**
 	 * @var KunenaLayout
 	 */
 	protected $content;
 	/**
-	 * @var JBreadchrumb
+	 * @var JPathway
 	 */
 	protected $breadcrumb;
 	/**
@@ -27,7 +31,7 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 	/**
 	 * @var KunenaConfig
 	 */
-	protected $config;
+	public $config;
 	/**
 	 * @var KunenaTemplate
 	 */
@@ -37,13 +41,43 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 	 */
 	protected $document;
 
+	public function exists()
+	{
+		if ($this->input->getWord('format', 'html') != 'html')
+		{
+			// TODO: we need to deal with other formats in the future.
+			return false;
+		}
+		$name = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
+		$this->page = KunenaLayoutPage::factory($name);
+
+		return (bool) $this->page->getPath();
+	}
+
+	protected function display() {
+		// Display layout with given parameters.
+		$this->page
+			->set('input', $this->input)
+			->setLayout($this->input->getWord('layout', 'default'))
+			->setOptions($this->getOptions());
+
+		return $this->page;
+	}
+
 	public function execute() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+
 		// Run before executing action.
-		$this->before();
+		$result = $this->before();
+		if ($result === false) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+		}
 
 		// Wrapper layout.
-		$this->output = KunenaLayout::factory('Page');
+		$this->output = KunenaLayout::factory('Page')
+			->set('me', $this->me)
+			->setOptions($this->getOptions());
 
 		if ($this->config->board_offline && !$this->me->isAdmin ()) {
 			// Forum is offline.
@@ -65,7 +99,28 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 
 		} else {
 			// Display real content.
-			$this->content = $this->display();
+			try {
+				$content = $this->display()->set('breadcrumb', $this->breadcrumb);
+				$this->content = $content->render();
+
+			} catch (KunenaExceptionAuthorise $e) {
+				$this->setResponseStatus($e->getCode());
+				$this->output->setLayout('unauthorized');
+				$this->document->setTitle($e->getResponseStatus());
+
+				$this->content = KunenaLayout::factory('Page/Custom')
+					->set('header', $e->getResponseStatus())
+					->set('body', $e->getMessage());
+
+			} catch (Exception $e) {
+				$this->setResponseStatus($e->getCode());
+				$this->output->setLayout('unauthorized');
+				$this->document->setTitle($e->getMessage());
+
+				$this->content = KunenaLayout::factory('Page/Custom')
+					->set('header', 'Error while rendering layout')
+					->set('body', isset($content) ? $content->renderError($e) : $this->content->renderError($e));
+			}
 		}
 
 		// Display wrapper layout with given parameters.
@@ -82,9 +137,17 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 
 	protected function before() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+
+		if (!$this->exists()) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+			throw new RuntimeException("Layout '{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}' does not exist!", 404);
+		}
+
 		// Load language files.
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.templates');
+		KunenaFactory::loadLanguage('com_kunena.models');
+		KunenaFactory::loadLanguage('com_kunena.views');
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaConfig::getInstance();
@@ -154,13 +217,12 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 			case 410:
 				JResponse::setHeader('Status', '410 Gone', 'true');
 				break;
-			case 500:
-				JResponse::setHeader('Status', '500 Internal Server Error', 'true');
-				break;
 			case 503:
 				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
 				break;
+			case 500:
 			default:
+				JResponse::setHeader('Status', '500 Internal Server Error', 'true');
 		}
 	}
 
@@ -175,7 +237,7 @@ abstract class KunenaControllerApplicationDisplay extends KunenaControllerDispla
 		$credits .= ' <a href="http://www.kunena.org" rel="follow"
 			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA').'</a>';
-		if ($templateText) {
+		if (trim($templateText)) {
 			$credits .= ' :: <a href ="'. $templateLink. '" rel="follow" target="_blank" style="text-decoration: none;">'
 				. $templateText .' '. $templateName .'</a>';
 		}

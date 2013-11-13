@@ -12,24 +12,39 @@ defined ( '_JEXEC' ) or die ();
 
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
+	protected $name = 'Empty';
+
 	public $output = null;
+	public $layout = 'default';
+	public $config;
+	protected $primary = false;
 
 	/**
 	 * @see KunenaControllerBase::execute()
 	 */
 	public function execute() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
-		// Run before executing action.
-		$result = $this->before();
-		if ($result === false) {
-			return KunenaLayout::factory('Empty');
+		try {
+			// Run before executing action.
+			$result = $this->before();
+			if ($result === false) {
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
+			}
+
+			// Display layout with given parameters.
+			$this->output = $this->display();
+
+			// Run after executing action.
+			$this->after();
+		} catch (KunenaExceptionAuthorise $e) {
+			if ($this->primary) {
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+				throw $e;
+			} else {
+				$this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
+			}
 		}
-
-		// Display layout with given parameters.
-		$this->output = $this->display();
-
-		// Run after executing action.
-		$this->after();
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 		return $this->output;
@@ -40,17 +55,45 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @return KunenaLayout
 	 */
-	abstract protected function display();
+	protected function display()
+	{
+		// Display layout with given parameters.
+		$content = KunenaLayout::factory($this->name)
+			->setProperties($this->getProperties())
+			->setOptions($this->getOptions());
+
+		return $content;
+	}
+
+	/**
+	 * @internal
+	 */
+	public function setPrimary() {
+		$this->primary = true;
+
+		return $this;
+	}
 
 	/**
 	 * Executed before display.
 	 */
-	protected function before() {}
+	protected function before() {
+		$this->layout = $this->input->getCmd('layout', 'default');
+		$this->config = KunenaConfig::getInstance();
+		if ($this->primary) $this->document = JFactory::getDocument();
+	}
 
 	/**
 	 * Executed after display.
 	 */
-	protected function after() {}
+	protected function after() {
+		if ($this->primary) $this->prepareDocument();
+	}
+
+	/**
+	 * Prepare title, description, keywords, breadcrumb etc.
+	 */
+	protected function prepareDocument() {}
 
 	/**
 	 * Return view as a string.
@@ -58,9 +101,33 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 * @return string
 	 */
 	public function __toString() {
-		$output = (string) $this->execute();
+		try {
+			$output = $this->execute();
 
-		return $output;
+		} catch (KunenaExceptionAuthorise $e) {
+			if (!$this->primary) return KunenaLayout::factory('Empty');
+
+			$document = JFactory::getDocument();
+			$document->setTitle($e->getResponseStatus());
+			JResponse::setHeader('Status', $e->getResponseStatus(), 'true');
+			$output = KunenaLayout::factory('Misc/Default', 'pages')
+				->set('header', $e->getResponseStatus())
+				->set('body', $e->getMessage());
+
+		} catch (Exception $e) {
+			// TODO: error message?
+			if (!$this->primary) return KunenaLayout::factory('Empty');
+
+			$title = '500 Internal Server Error';
+			$document = JFactory::getDocument();
+			$document->setTitle($title);
+			JResponse::setHeader('Status', $title, 'true');
+			$output = KunenaLayout::factory('Misc/Default', 'pages')
+				->set('header', $title)
+				->set('body', $e->getMessage());
+		}
+
+		return (string) $output;
 	}
 
 	/**
@@ -79,6 +146,30 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
+	 * Set the object properties based on a named array/hash.
+	 *
+	 * @param   mixed  $properties  Either an associative array or another object.
+	 *
+	 * @return  KunenaControllerDisplay  Method supports chaining.
+	 *
+	 * @see     set()
+	 * @throws \InvalidArgumentException
+	 */
+	public function setProperties($properties)
+	{
+		if (!is_array($properties) && !is_object($properties)) {
+			throw new \InvalidArgumentException('Parameter should be either array or an object.');
+		}
+
+		foreach ((array) $properties as $k => $v) {
+			// Use the set function which might be overridden.
+			if ($k[0] != "\0") $this->$k = $v;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Shortcut for $this->input->set()
 	 *
 	 * @param $key
@@ -87,7 +178,37 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function set($key, $value)
 	{
-		$this->input->set($key, (string) $value);
+		$this->input->set($key, $value);
 		return $this;
+	}
+
+
+	protected function setTitle($title, $replace=false)
+	{
+		if (!$replace) {
+			// Obey Joomla configuration.
+			if ($this->app->getCfg('sitename_pagetitles', 0) == 1) {
+				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+
+			} elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2) {
+				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
+
+			} else {
+				$title = KunenaFactory::getConfig()->board_title .' - '. $title;
+			}
+		}
+
+		$title = strip_tags($title);
+		$this->document->setTitle($title);
+	}
+
+	protected function setKeywords($keywords)
+	{
+		if (!empty($keywords)) $this->document->setMetadata('keywords', $keywords);
+	}
+
+	protected function setDescription($description)
+	{
+		$this->document->setMetadata('description',  $description);
 	}
 }

@@ -19,11 +19,6 @@ class KunenaController extends JControllerLegacy {
 	public $me = null;
 	public $config = null;
 
-	var $_escape = 'htmlspecialchars';
-	var $_redirect = null;
-	var $_message= null;
-	var $_messageType = null;
-
 	public function __construct($config = array()) {
 		parent::__construct ($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
@@ -102,6 +97,38 @@ class KunenaController extends JControllerLegacy {
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * Execute task.
+	 *
+	 * @param string $task
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public function execute($task)
+	{
+		$dot = strpos($task, '.');
+		$this->task = $dot ? substr($task, $dot + 1) : $task;
+
+		$task = strtolower($this->task);
+		if (isset($this->taskMap[$this->task]))
+		{
+			$doTask = $this->taskMap[$this->task];
+		}
+		elseif (isset($this->taskMap['__default']))
+		{
+			$doTask = $this->taskMap['__default'];
+		}
+		else
+		{
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
+		}
+
+		// Record the actual task being fired
+		$this->doTask = $doTask;
+
+		return $this->$doTask();
 	}
 
 	/**
@@ -214,59 +241,63 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Escapes a value for output in a view script.
 	 *
-	 * If escaping mechanism is one of htmlspecialchars or htmlentities.
-	 *
 	 * @param  string $var The output to escape.
 	 *
 	 * @return string The escaped value.
 	 */
 	public function escape($var) {
-		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
-			return call_user_func ( $this->_escape, $var, ENT_COMPAT, 'UTF-8' );
-		}
-		return call_user_func ( $this->_escape, $var );
-	}
-
-	/**
-	 * Sets the _escape() callback.
-	 *
-	 * @param mixed $spec The callback for _escape() to use.
-	 */
-	public function setEscape($spec) {
-		$this->_escape = $spec;
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getRedirect() {
-		return $this->_redirect;
+		return $this->redirect;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getMessage() {
-		return $this->_message;
+		return $this->message;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getMessageType() {
-		return $this->_messageType;
+		return $this->messageType;
 	}
 
 	/**
+	 * Redirect back to the referrer page.
+	 *
+	 * If there's no referrer or it's external, Kunena will return to forum home page.
+	 * Also redirects back to tasks are prevented.
+	 *
 	 * @param string $anchor
 	 */
-	protected function redirectBack($anchor = '') {
-		$default = $this->app->isSite() ? KunenaRoute::_() : JUri::base(true);
-		$uri = JUri::getInstance($this->input->server->getString('HTTP_REFERER', $default));
-		if (!JUri::isInternal($uri->toString())) $uri = JUri::getInstance($default);
+	protected function setRedirectBack($anchor = '') {
+		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$referrer = $this->input->server->getString('HTTP_REFERER');
+
+		$uri = JUri::getInstance($referrer ? $referrer : $default);
+		if (JUri::isInternal($uri->toString())) {
+			// Parse route.
+			$vars = $this->app->getRouter()->parse($uri);
+			$uri = new JUri('index.php');
+			$uri->setQuery($vars);
+
+			// Make sure we do not return into a task.
+			$uri->delVar('task');
+			$uri->delVar(JSession::getFormToken());
+		} else {
+			$uri = JUri::getInstance($default);
+		}
+
 		if ($anchor) $uri->setFragment($anchor);
 
-		JFactory::getApplication()->redirect($uri->toString());
+		$this->setRedirect(JRoute::_($uri->toString()));
 	}
-
 }

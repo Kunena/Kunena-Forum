@@ -24,16 +24,20 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
 	`id` int(11) NOT NULL auto_increment,
 	`mesid` int(11) NOT NULL default '0',
 	`userid` int(11) NOT NULL default '0',
+	`protected` tinyint(4) NOT NULL default '0',
 	`hash` char(32) NULL,
 	`size` int(11) NULL,
 	`folder` varchar(255) NOT NULL,
 	`filetype` varchar(20) NOT NULL,
 	`filename` varchar(255) NOT NULL,
+	`filename_real` varchar(255) NOT NULL default '' COMMENT 'Filename for downloads',
+	`caption` varchar(255) NOT NULL default '',
 	PRIMARY KEY (id),
 	KEY `mesid` (mesid),
 	KEY `userid` (userid),
 	KEY `hash` (hash),
-	KEY `filename` (filename) ) DEFAULT CHARACTER SET utf8;
+	KEY `filename` (filename),
+	KEY `filename_real` (filename_real) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 	`id` int(11) NOT NULL auto_increment,
@@ -129,7 +133,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 	KEY `first_post_userid` (first_post_userid),
 	KEY `last_post_userid` (last_post_userid),
 	KEY `first_post_time` (first_post_time),
-	KEY `last_post_time` (last_post_time) ) DEFAULT CHARACTER SET utf8;
+	KEY `last_post_time` (last_post_time)
+	KEY `last_post_id` (last_post_id) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
 	`id` int(11) NOT NULL auto_increment,
@@ -155,11 +160,11 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
 	KEY `thread` (thread),
 	KEY `ip` (ip),
 	KEY `userid` (userid),
-	KEY `time` (time),
 	KEY `locked` (locked),
-	KEY `hold_time` (hold,time),
 	KEY `parent_hits` (parent,hits),
-	KEY `catid_parent` (catid,parent) ) DEFAULT CHARACTER SET utf8;
+	KEY `catid_parent` (catid,parent),
+	KEY `time_hold` (time,hold),
+	KEY `hold` (hold)) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_messages_text` (
 	`mesid` int(11) NOT NULL default '0',

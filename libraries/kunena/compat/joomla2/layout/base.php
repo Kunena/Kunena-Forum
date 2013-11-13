@@ -17,26 +17,37 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	/**
 	 * Options object
 	 *
-	 * @var  JRegistry
+	 * @var    JRegistry
+	 * @since  3.2
 	 */
 	protected $options = null;
+
+	/**
+	 * Debug information messages
+	 *
+	 * @var    array
+	 * @since  3.2
+	 */
+	protected $debugMessages = array();
 
 	/**
 	 * Set the options
 	 *
 	 * @param   mixed  $options  Array / JRegistry object with the options to load
 	 *
-	 * @return  JLayoutBase      An instance of itself for chaining
+	 * @return  JLayoutBase  Instance of $this to allow chaining.
+	 *
+	 * @since   3.2
 	 */
-	public function bindOptions($options = null)
+	public function setOptions($options = null)
 	{
 		// Received JRegistry
 		if ($options instanceof JRegistry)
 		{
 			$this->options = $options;
 		}
+		// Received array
 		elseif (is_array($options))
-			// Received array
 		{
 			$this->options = new JRegistry($options);
 		}
@@ -52,6 +63,8 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	 * Get the options
 	 *
 	 * @return  JRegistry  Object with the options
+	 *
+	 * @since   3.2
 	 */
 	public function getOptions()
 	{
@@ -67,13 +80,13 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	/**
 	 * Function to empty all the options
 	 *
-	 * @return  JLayoutBase  An instance of itself for chaining
+	 * @return  JLayoutBase  Instance of $this to allow chaining.
+	 *
+	 * @since   3.2
 	 */
 	public function resetOptions()
 	{
-		$this->options = new JRegistry;
-
-		return $this;
+		return $this->setOptions(null);
 	}
 
 	/**
@@ -91,6 +104,18 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	}
 
 	/**
+	 * Get the debug messages array
+	 *
+	 * @return  array
+	 *
+	 * @since   3.2
+	 */
+	public function getDebugMessages()
+	{
+		return $this->debugMessages;
+	}
+
+	/**
 	 * Method to render the layout.
 	 *
 	 * @param   object  $displayData  Object which properties are used inside the layout file to build displayed output
@@ -102,5 +127,31 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	public function render($displayData)
 	{
 		return '';
+	}
+
+	/**
+	 * Render the list of debug messages
+	 *
+	 * @return  string  Output text/HTML code
+	 *
+	 * @since   3.2
+	 */
+	public function renderDebugMessages()
+	{
+		return implode($this->debugMessages, "\n");
+	}
+
+	/**
+	 * Add a debug message to the debug messages array
+	 *
+	 * @param   string  $message  Message to save
+	 *
+	 * @return  void
+	 *
+	 * @since   3.2
+	 */
+	public function addDebugMessage($message)
+	{
+		$this->debugMessages[] = $message;
 	}
 }

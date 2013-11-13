@@ -32,18 +32,21 @@ abstract class KunenaForumMessageHelper {
 		if ($identifier instanceof KunenaForumMessage) {
 			return $identifier;
 		}
-		$id = intval ( $identifier );
+		$id = (int) $identifier;
 		if ($id < 1)
-			return new KunenaForumMessage ();
+			return new KunenaForumMessage;
 
-		if (empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumMessage ( array('id'=>$id) );
-			self::$_instances [$id]->load();
+		if (empty(self::$_instances[$id])) {
+			$instance = new KunenaForumMessage;
+			// Only load messages which haven't been preloaded before (including missing ones).
+			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->id = $id;
+			self::$_instances[$id] = $instance;
 		} elseif ($reload) {
-			self::$_instances [$id]->load();
+			self::$_instances[$id]->load();
 		}
 
-		return self::$_instances [$id];
+		return self::$_instances[$id];
 	}
 
 	/**
@@ -286,6 +289,9 @@ abstract class KunenaForumMessageHelper {
 		}
 	}
 
+	/**
+	 * Free up memory by cleaning up all cached items.
+	 */
 	public static function cleanup() {
 		self::$_instances = array();
 		self::$_location = array();

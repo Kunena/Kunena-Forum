@@ -51,7 +51,19 @@ class KunenaAdminModelUser extends KunenaModel {
 		$subslist = (array) $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return array();
 
-		return $subslist;
+		$topic_list = array();
+
+		if ( !empty($subslist) )
+		{
+			foreach ($subslist as $sub)
+			{
+				$topic_list[] = $sub->thread;
+			}
+
+			$topic_list = KunenaForumTopicHelper::getTopics($topic_list);
+		}
+
+		return $topic_list;
 	}
 
 	public function getCatsubcriptions() {

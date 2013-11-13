@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension type="file" version="2.5" method="upgrade">
+	<name>Kunena Language - Basque (Spain)</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>translations@kunena.org</authorEmail>
+	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/eu_ES/</authorUrl>
+	<copyright>(C) 2008 - 2013 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<description>Basque (Spain) language file for Kunena Forum Component</description>
+
+	<fileset>
+		<files folder="admin" target="administrator/language/eu-ES">
+			<filename>eu-ES.com_kunena.controllers.ini</filename>
+			<filename>eu-ES.com_kunena.ini</filename>
+			<filename>eu-ES.com_kunena.libraries.ini</filename>
+			<filename>eu-ES.com_kunena.models.ini</filename>
+			<filename>eu-ES.com_kunena.sys.ini</filename>
+			<filename>eu-ES.com_kunena.views.ini</filename>
+			<filename>eu-ES.plg_kunena_alphauserpoints.sys.ini</filename>
+			<filename>eu-ES.plg_kunena_community.sys.ini</filename>
+			<filename>eu-ES.plg_kunena_comprofiler.sys.ini</filename>
+			<filename>eu-ES.plg_kunena_gravatar.sys.ini</filename>
+			<filename>eu-ES.plg_kunena_joomla.sys.ini</filename>
+			<filename>eu-ES.plg_kunena_kunena.sys.ini</filename>
+			<filename>eu-ES.plg_kunena_uddeim.sys.ini</filename>
+			<filename>eu-ES.plg_quickicon_kunena.sys.ini</filename>
+			<filename>eu-ES.plg_system_kunena.sys.ini</filename>
+		</files>
+		<files folder="site" target="language/eu-ES">
+			<filename>eu-ES.com_kunena.controllers.ini</filename>
+			<filename>eu-ES.com_kunena.ini</filename>
+			<filename>eu-ES.com_kunena.models.ini</filename>
+			<filename>eu-ES.com_kunena.templates.ini</filename>
+			<filename>eu-ES.com_kunena.tpl_blue_eagle.ini</filename>
+			<filename>eu-ES.com_kunena.views.ini</filename>
+		</files>
+	</fileset>
+</extension>

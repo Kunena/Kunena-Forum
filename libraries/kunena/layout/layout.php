@@ -36,6 +36,14 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
+	 * @param $key
+	 * @return string
+	 */
+	public function text($key) {
+		return JText::_($key);
+	}
+
+	/**
 	 * Method to render the view.
 	 *
 	 * @param   string  Layout.
@@ -46,7 +54,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 */
 	public function render($layout = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->name}'") : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->_name}'") : null;
 
 		try {
 			$output = parent::render($layout);
@@ -54,11 +62,11 @@ class KunenaLayout extends KunenaLayoutBase
 				$output .= (string) $content;
 			}
 		} catch (Exception $e) {
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 			throw $e;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->name}'") : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 		return $output;
 	}
 
@@ -107,6 +115,8 @@ class KunenaLayout extends KunenaLayoutBase
 				return null;
 			}
 		}
+
+		return $this->closures[$property]();
 	}
 
 	/**
@@ -147,12 +157,34 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Add legacy template support.
 	 *
+	 * @param   string  $property  The name of the property.
+	 * @param   mixed   $value     The value of the property to set.
+	 *
+	 * @return  KunenaLayout  Method supports chaining.
+	 */
+	public function set($property, $value = null)
+	{
+		$isFactory = is_object($value) && method_exists($value, '__invoke');
+		if ($isFactory) {
+			$this->closures[$property] = $value;
+		} elseif ($this->legacy) {
+			$this->legacy->{$property} = $value;
+		} else {
+			$this->{$property} = $value;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Add legacy template support.
+	 *
 	 * @param   $path
 	 * @return  KunenaLayout
 	 */
 	public function subLayout($path)
 	{
-		return parent::subLayout($path)->setLegacy($this->legacy);
+		return parent::subLayout($path)->setLegacy($this->legacy)->setLayout($this->layout);
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
@@ -193,13 +225,20 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		if (!$content) $content = $this->escape($category->name);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
+		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $link;
 	}
 
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL) {
-		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		$url = $topic->getUrl($category ? $category : (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
 		if ($title === null) {
 			if ($action instanceof KunenaForumMessage) {
@@ -220,6 +259,23 @@ class KunenaLayout extends KunenaLayoutBase
 				}
 			}
 		}
+		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $link;
+	}
+
+	public function getLastPostLink($category, $content = null, $title = null, $class = null) {
+		$lastTopic = $category->getLastTopic();
+		$channels = $category->getChannels();
+		if (!isset($channels[$lastTopic->category_id])) $category = $lastTopic->getCategory();
+		$uri = $lastTopic->getUrl($category, true, 'last');
+
+		if (!$content) {
+			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE').' ' : '';
+			$content .= KunenaHtmlParser::parseText($lastTopic->subject, 30);
+		}
+		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 }

@@ -26,7 +26,8 @@ class KunenaAdminControllerTrash extends KunenaController {
 	function purge() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -61,20 +62,23 @@ class KunenaAdminControllerTrash extends KunenaController {
 			}
 			$this->app->setUserState('com_kunena.purge', null);
 			$this->app->setUserState('com_kunena.type', null);
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_MESSAGES_SELECTED' ), 'notice' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
-		$this->app->redirect(KunenaRoute::_($this->baseurl."&layout=purge", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=purge", false));
 	}
 
 	function restore() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -82,7 +86,8 @@ class KunenaAdminControllerTrash extends KunenaController {
 
 		if (empty ( $cid )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_MESSAGES_SELECTED' ), 'notice' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$nb_items = 0;
@@ -114,6 +119,6 @@ class KunenaAdminControllerTrash extends KunenaController {
 		KunenaForumTopicHelper::recount();
 		KunenaForumCategoryHelper::recount ();
 
-		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

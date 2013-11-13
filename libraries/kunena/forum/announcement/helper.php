@@ -112,4 +112,11 @@ abstract class KunenaForumAnnouncementHelper {
 
 		return $total;
 	}
+
+	/**
+	 * Free up memory by cleaning up all cached items.
+	 */
+	public static function cleanup() {
+		self::$_instances = array();
+	}
 }

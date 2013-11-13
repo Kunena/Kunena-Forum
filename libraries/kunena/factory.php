@@ -32,7 +32,7 @@ abstract class KunenaFactory {
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
 	 * @param	string	$name
-	 * @return object KunenaTemplate
+	 * @return KunenaTemplate
 	 */
 	public static function getTemplate($name = null) {
 		return KunenaTemplate::getInstance($name);
@@ -44,7 +44,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @return object KunenaTemplate
+	 * @return KunenaTemplate
 	 */
 	public static function getAdminTemplate() {
 		if (version_compare(JVERSION, '3.0', '>')) {
@@ -67,7 +67,7 @@ abstract class KunenaFactory {
 	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to Id automatically.
 	 * @param	bool	$reload
 	 *
-	 * @return object KunenaUser
+	 * @return KunenaUser
 	 */
 	public static function getUser($id = null, $reload = false) {
 		return KunenaUserHelper::get($id, $reload);
@@ -79,7 +79,7 @@ abstract class KunenaFactory {
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
 	 * @param array|bool $update	An array containing session options
-	 * @return object KunenaSession
+	 * @return KunenaSession
 	 */
 	public static function getSession($update = false) {
 		if (!is_object(KunenaFactory::$session)) {
@@ -93,7 +93,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't already exist.
 	 *
-	 * @return object KunenaAvatar
+	 * @return KunenaAvatar
 	 */
 	public static function getAvatarIntegration() {
 		return KunenaAvatar::getInstance();
@@ -104,7 +104,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
 	 *
-	 * @return object KunenaPrivate
+	 * @return KunenaPrivate
 	 */
 	public static function getPrivateMessaging() {
 		return KunenaPrivate::getInstance();
@@ -115,7 +115,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaActivity} object, only creating it if it doesn't already exist.
 	 *
-	 * @return object KunenaActivity
+	 * @return KunenaActivity
 	 */
 	public static function getActivityIntegration() {
 		return KunenaActivity::getInstance();
@@ -126,7 +126,7 @@ abstract class KunenaFactory {
 	 *
 	 * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
 	 *
-	 * @return object KunenaProfile
+	 * @return KunenaProfile
 	 */
 	public static function getProfile() {
 		return KunenaProfile::getInstance();

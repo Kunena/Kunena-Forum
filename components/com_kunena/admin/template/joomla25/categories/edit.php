@@ -66,15 +66,36 @@ $paneOptions = array(
 						<article class="data-block">
 							<div class="data-container">
 								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></a></li>
-									<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></a></li>
+									<li class="active">
+										<a href="#tab-general" data-toggle="tab">
+											<?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?>
+										</a>
+									</li>
+									<li>
+										<a href="#tab-access" data-toggle="tab">
+											<?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?>
+										</a>
+									</li>
 									<?php if (!$this->category->id || !$this->category->isSection()) : ?>
-										<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></a></li>
-										<li><a href="#tab4" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></a></li>
+									<li><a href="#tab-settings" data-toggle="tab">
+											<?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?>
+										</a>
+									</li>
+									<?php endif; ?>
+									<li>
+										<a href="#tab-display" data-toggle="tab">
+											<?php echo JText::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?>
+										</a>
+									</li>
+									<?php if (!$this->category->id || !$this->category->isSection()) : ?>
+									<li><a href="#tab-mods" data-toggle="tab">
+											<?php echo JText::_('COM_KUNENA_MODHEADER'); ?>
+										</a>
+									</li>
 									<?php endif; ?>
 								</ul>
 								<div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
-									<div class="tab-pane active" id="tab1">
+									<div class="tab-pane active" id="tab-general">
 										<fieldset>
 											<table class="table table-striped">
 												<tr>
@@ -94,16 +115,14 @@ $paneOptions = array(
 													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 													<td>
 														<input class="inputbox" type="text" name="alias" size="80" value="<?php echo $this->escape ( $this->category->alias ); ?>" />
+														<?php if ($this->options ['aliases']) : ?>
+														<div>
+															<?php echo $this->options ['aliases']; ?>
+														</div>
+														<?php endif ?>
 													</td>
 												</tr>
-												<?php if ($this->options ['aliases']) : ?>
-													<tr>
-														<td></td>
-														<td>
-															<?php echo $this->options ['aliases']; ?>
-														</td>
-													</tr>
-												<?php endif ?>
+
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?>:</td>
 													<td><?php echo $this->options ['published']; ?></td>
@@ -131,7 +150,7 @@ $paneOptions = array(
 										</fieldset>
 									</div>
 
-									<div class="tab-pane" id="tab2">
+									<div class="tab-pane" id="tab-access">
 										<fieldset>
 											<table class="table table-striped">
 												<thead>
@@ -153,83 +172,102 @@ $paneOptions = array(
 									</div>
 
 									<?php if (!$this->category->id || !$this->category->isSection()) : ?>
-										<div class="tab-pane" id="tab3">
-											<fieldset>
-												<table class="table table-striped">
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
-														<td><?php echo $this->options ['forumLocked']; ?></td>
-														<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_REV'); ?></td>
-														<td><?php echo $this->options ['forumReview']; ?></td>
-														<td><?php echo JText::_('COM_KUNENA_REVDESC'); ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:</td>
-														<td><?php echo $this->options ['allow_anonymous']; ?></td>
-														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:</td>
-														<td><?php echo $this->options ['post_anonymous']; ?></td>
-														<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:</td>
-														<td><?php echo $this->options ['allow_polls']; ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
-													</tr>
-													<?php /*
-									<tr>
-										<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
-										<td><?php echo $this->options ['channels']; ?></td>
-										<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS_DESC'); ?></td>
-									</tr>
-									<tr>
-										<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>:</td>
-										<td><?php echo $this->options ['topic_ordering']; ?></td>
-										<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
-									</tr>
-									<tr>
-										<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
-										<td><?php echo $this->options ['category_iconset']; ?></td>
-										<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
-									</tr>
-	*/ ?>
-												</table>
-											</fieldset>
-										</div>
-										<div class="tab-pane" id="tab4">
-											<fieldset>
-												<legend><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></legend>
+									<div class="tab-pane" id="tab-settings">
+										<fieldset>
+											<table class="table table-striped">
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
+													<td><?php echo $this->options ['forumLocked']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_REV'); ?></td>
+													<td><?php echo $this->options ['forumReview']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_REVDESC'); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:</td>
+													<td><?php echo $this->options ['allow_anonymous']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:</td>
+													<td><?php echo $this->options ['post_anonymous']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:</td>
+													<td><?php echo $this->options ['allow_polls']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
+												</tr>
+												<?php /*
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
+													<td><?php echo $this->options ['channels']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>:</td>
+													<td><?php echo $this->options ['topic_ordering']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
+													<td><?php echo $this->options ['category_iconset']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
+												</tr>
+												*/ ?>
+											</table>
+										</fieldset>
+									</div>
+									<?php endif; ?>
+									<div class="tab-pane" id="tab-display">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_INDEX_LEGEND'); ?></legend>
+											<table class="table table-striped">
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_PARENT'); ?></td>
+													<td><?php echo $this->options ['display_parent']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_PARENT_DESC'); ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_CHILDREN'); ?></td>
+													<td><?php echo $this->options ['display_children']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_CHILDREN_DESC'); ?></td>
+												</tr>
+											</table>
+										</fieldset>
+									</div>
+									<?php if (!$this->category->id || !$this->category->isSection()) : ?>
+									<div class="tab-pane" id="tab-mods">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></legend>
 
-												<table class="table table-bordered table-striped">
-													<thead>
-													<tr>
-														<th><?php echo JText::_('COM_KUNENA_USERNAME'); ?></th>
-														<th><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?></th>
-														<th class="span1"><?php echo JText::_('JGRID_HEADING_ID'); ?></th>
-													</tr>
-													</thead>
+											<table class="table table-bordered table-striped">
+												<thead>
+												<tr>
+													<th><?php echo JText::_('COM_KUNENA_USERNAME'); ?></th>
+													<th><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?></th>
+													<th class="span1"><?php echo JText::_('JGRID_HEADING_ID'); ?></th>
+												</tr>
+												</thead>
 
-													<tbody>
-													<?php $i=0; if (empty($this->moderators)) : ?>
-														<tr>
-															<td colspan="5" align="center"><?php echo JText::_('COM_KUNENA_NOMODS') ?></td>
-														</tr>
-													<?php else : foreach ( $this->moderators as $ml ) : ?>
-														<tr>
-															<td><?php echo $this->escape($ml->username); ?></td>
-															<td><?php echo $this->escape($ml->name); ?></td>
-															<td><?php echo $this->escape($ml->userid); ?></td>
-														</tr>
-													<?php endforeach; endif; ?>
-													</tbody>
-												</table>
-											</fieldset>
-										</div>
+												<tbody>
+												<?php $i=0; if (empty($this->moderators)) : ?>
+													<tr>
+														<td colspan="5" align="center"><?php echo JText::_('COM_KUNENA_NOMODS') ?></td>
+													</tr>
+												<?php else : foreach ( $this->moderators as $ml ) : ?>
+													<tr>
+														<td><?php echo $this->escape($ml->username); ?></td>
+														<td><?php echo $this->escape($ml->name); ?></td>
+														<td><?php echo $this->escape($ml->userid); ?></td>
+													</tr>
+												<?php endforeach; endif; ?>
+												</tbody>
+											</table>
+										</fieldset>
+									</div>
 									<?php endif; ?>
 								</div>
 							</div>

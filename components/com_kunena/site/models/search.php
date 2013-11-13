@@ -74,6 +74,17 @@ class KunenaModelSearch extends KunenaModel {
 		}
 		$this->setState ( 'query.catids', $value );
 
+		// FIXME: support search topic
+		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
+			$value = JRequest::getVar ( 'ids', array (0), 'post', 'array' );
+			JArrayHelper::toInteger($value);
+		} else {
+			$value = JRequest::getString ( 'ids', '0', 'get' );
+			$value = explode ( ' ', $value );
+			JArrayHelper::toInteger($value);
+		}
+		$this->setState ('query.ids', $value );
+
 		$value = JRequest::getInt ( 'show', 0 );
 		$this->setState ( 'query.show', $value );
 

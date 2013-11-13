@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
 /**

@@ -1,30 +1,30 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage User
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die;
 ?>
+<h3>
+	<?php echo $this->headerText; ?>
+</h3>
 
-<div>
-	<h3><span><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE'); ?></span></h3>
-</div>
-<div>
-	<div>
-		<table id="kflattable">
-			<tbody>
-				<?php $i=1; foreach ($this->settings as $setting) : ?>
-					<tr class="krow<?php echo (++$i & 1)+1 ?>">
-						<td><?php echo $setting->label ?></td>
-						<td> <?php echo $setting->field ?> </td>
-					</tr>
-				<?php endforeach ?>
-			</tbody>
-		</table>
-	</div>
-</div>
+<table class="table table-bordered table-striped table-hover">
+	<tbody>
+		<?php foreach ($this->settings as $field) : ?>
+			<tr>
+				<td class="span3">
+					<?php echo $field->label; ?>
+				</td>
+				<td>
+					<?php echo $field->field; ?>
+				</td>
+			</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>

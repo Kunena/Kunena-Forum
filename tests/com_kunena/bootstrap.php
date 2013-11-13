@@ -17,13 +17,9 @@ define('JPATH_BASE', dirname(dirname(dirname(__FILE__))));
 require_once JPATH_BASE.'/includes/defines.php';
 require_once JPATH_BASE.'/includes/framework.php';
 jimport('joomla.filesystem.path');
-jimport('joomla.log.log');
 jimport('joomla.environment.request');
-jimport('joomla.session.session');
 
 // We need also these:
-jimport('joomla.plugin.helper');
-
 $_SERVER['HTTP_HOST'] = 'http://localhost';
 $_SERVER['REQUEST_URI'] = '/index.php';
 //$_SERVER['REMOTE_ADDR'] = '127.0.0.1';

@@ -46,12 +46,13 @@ class KunenaControllerUser extends KunenaController {
 	public function change() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 
 		$layout = JRequest::getString ( 'topic_layout', 'default' );
 		$this->me->setTopicLayout ( $layout );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function karmaup() {
@@ -66,7 +67,8 @@ class KunenaControllerUser extends KunenaController {
 		// TODO: allow moderators to save another users profile (without account info)
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 
 		// perform security checks
@@ -96,7 +98,12 @@ class KunenaControllerUser extends KunenaController {
 	function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JSession::checkToken('post')) {
-			$this->app->redirect ( $user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
+			$this->setRedirect($user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			return;
+		}
+		$ban = KunenaUserBan::getInstanceByUserid($user->userid, true);
+		if (!$ban->canBan()) {
+			$this->setRedirect($user->getUrl(false), $ban->getError(), 'error');
 			return;
 		}
 
@@ -107,7 +114,6 @@ class KunenaControllerUser extends KunenaController {
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
-		$ban = KunenaUserBan::getInstanceByUserid ( $user->userid, true );
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
 			$success = $ban->save ();
@@ -201,17 +207,19 @@ class KunenaControllerUser extends KunenaController {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );
 		}
 
-		$this->app->redirect ( $user->getUrl(false) );
+		$this->setRedirect($user->getUrl(false));
 	}
 
 	function cancel() {
 		$user = KunenaFactory::getUser();
-		$this->app->redirect ( $user->getUrl(false) );
+		$this->setRedirect($user->getUrl(false));
 	}
 
 	function login() {
 		if(!JFactory::getUser()->guest || !JSession::checkToken('post')) {
-			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+			return;
 		}
 
 		$username = JRequest::getString ( 'username', '', 'POST' );
@@ -226,15 +234,18 @@ class KunenaControllerUser extends KunenaController {
 		if (!$error && $return && JURI::isInternal($return))
 		{
 			// Redirect the user.
-			$this->app->redirect(JRoute::_($return, false));
+			$this->setRedirect(JRoute::_($return, false));
+			return;
 		}
 
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function logout() {
 		if(!JSession::checkToken('request')) {
-			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+			return;
 		}
 
 		$login = KunenaLogin::getInstance();
@@ -245,10 +256,11 @@ class KunenaControllerUser extends KunenaController {
 		if ($return && JURI::isInternal($return))
 		{
 			// Redirect the user.
-			$this->app->redirect(JRoute::_($return, false));
+			$this->setRedirect(JRoute::_($return, false));
+			return;
 		}
 
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	// Internal functions:
@@ -256,7 +268,8 @@ class KunenaControllerUser extends KunenaController {
 	protected function karma($karmaDelta) {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 		$karma_delay = '14400'; // 14400 seconds = 6 hours
 		$userid = JRequest::getInt ( 'userid', 0 );
@@ -265,13 +278,15 @@ class KunenaControllerUser extends KunenaController {
 
 		if (!$this->config->showkarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_ERROR_KARMA' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 
 		$now = JFactory::getDate()->toUnix();
 		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_WAIT' ), 'notice' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 
 		if ($karmaDelta > 0) {
@@ -292,17 +307,19 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->karma_time = $now;
 		if ($this->me->userid != $target->userid && !$this->me->save()) {
 			$this->app->enqueueMessage($this->me->getError(), 'notice');
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 		$target->karma += $karmaDelta;
 		if (!$target->save()) {
 			$this->app->enqueueMessage($target->getError(), 'notice');
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterKarma($target->userid, $this->me->userid, $karmaDelta);
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	// Mostly copied from Joomla 1.5
@@ -311,9 +328,7 @@ class KunenaControllerUser extends KunenaController {
 
 		// we only allow users to edit few fields
 		$allow = array('name', 'email', 'password', 'password2', 'params');
-		if ($this->config->usernamechange) {
-			if (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1)) $allow[] = 'username';
-		}
+		if (JComponentHelper::getParams('com_users')->get('change_login_name', 1)) $allow[] = 'username';
 
 		//clean request
 		$post = JRequest::get( 'post' );
@@ -333,10 +348,12 @@ class KunenaControllerUser extends KunenaController {
 			if(strlen($post['password']) < 5 && strlen($post['password2']) < 5 ) {
 				if($post['password'] != $post['password2']) {
 					$msg = JText::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH');
-					$this->app->redirect ( $err_return, $msg, 'error' );
+					$this->setRedirect($err_return, $msg, 'error');
+					return;
 				}
 				$msg = JText::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM');
-				$this->app->redirect ( $err_return, $msg, 'error' );
+				$this->setRedirect($err_return, $msg, 'error');
+				return;
 			}
 		}
 
@@ -462,6 +479,7 @@ class KunenaControllerUser extends KunenaController {
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=".$userid." GROUP BY ip ORDER BY `time` DESC", 0, 1 );
 		$ip = $db->loadResult();
 
+		// TODO: replace this code by using JHttpTransport class
 		$data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$this->config->stopforumspam_key;
 		$fp = fsockopen("www.stopforumspam.com",80);
 		fputs($fp, "POST /add.php HTTP/1.1\n" );
@@ -470,14 +488,38 @@ class KunenaControllerUser extends KunenaController {
 		fputs($fp, "Content-length: ".strlen($data)."\n" );
 		fputs($fp, "Connection: close\n\n" );
 		fputs($fp, $data);
+		// Create a buffer which holds the response
+		$response = '';
+		// Read the response
+		while (!feof($fp))
+		{
+			$response .= fread($fp, 1024);
+		}
+		// The file pointer is no longer needed. Close it
 		fclose($fp);
-		return true;
+
+		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
+		{
+			// Report accepted. There is no need to display the reason
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+			return true;
+		}
+		else
+		{
+			// Report failed or refused
+			$reasons = array();
+			preg_match('/<p>.*<\/p>/', $response, $reasons);
+			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])),'error');
+			return false;
+		}
 	}
 
 	public function delfile() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
@@ -491,14 +533,16 @@ class KunenaControllerUser extends KunenaController {
 
 			if ( $number > 0 ) {
 				$this->app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
-				$this->redirectBack ();
+				$this->setRedirectBack();
+				return;
 			} else {
 				$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_DELETE_FAILED') );
-				$this->redirectBack ();
+				$this->setRedirectBack();
+				return;
 			}
-		} else {
-			$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED') );
-			$this->redirectBack ();
 		}
+
+		$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED') );
+		$this->setRedirectBack();
 	}
 }

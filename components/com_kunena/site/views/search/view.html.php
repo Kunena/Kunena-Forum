@@ -19,7 +19,7 @@ class KunenaViewSearch extends KunenaView {
 //TODO: Need to move the select markup outside of view.  Otherwise difficult to stylize
 
 		$this->searchwords = $this->get('SearchWords');
-		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus($this->me));
 
 		$this->results = array ();
 		$this->total = $this->get('Total');

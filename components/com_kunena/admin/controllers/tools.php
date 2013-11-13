@@ -154,76 +154,261 @@ class KunenaAdminControllerTools extends KunenaController {
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
-	function recount() {
-		$state = $this->app->getUserState ( 'com_kunena.admin.recount', null );
+	/**
+	 * Begin category recount.
+	 *
+	 * @return void
+	 */
+	public function recount()
+	{
+		$ajax = $this->input->getWord('format', 'html') == 'json';
 
-		if ($state === null) {
+		if (!JSession::checkToken())
+		{
+			$this->setResponse(
+				array(
+					'success' => false,
+					'header' => 'An Error Occurred',
+					'message' => 'Please see more details below.',
+					'error' => JText::_('COM_KUNENA_ERROR_TOKEN')
+				),
+				$ajax
+			);
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$state = $this->app->getUserState('com_kunena.admin.recount', null);
+
+		if ($state === null)
+		{
 			// First run: get last message id (if topics were created with <K2.0)
-			$query = "SELECT MAX(id) FROM #__kunena_messages";
-			$db = JFactory::getDBO();
-			$db->setQuery ( $query );
 			$state = new StdClass();
 			$state->step = 0;
-			$state->maxId = (int) $db->loadResult ();
 			$state->start = 0;
+			$state->current = 0;
 			$state->reload = 0;
 
-			$state->topics = JRequest::getBool('topics', false);
-			$state->usertopics = JRequest::getBool('usertopics', false);
-			$state->categories = JRequest::getBool('categories', false);
-			$state->users = JRequest::getBool('users', false);
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('MAX(thread)')->from('#__kunena_messages');
+			$db->setQuery($query);
+			// Topic count
+			$state->maxId = (int) $db->loadResult();
+			$state->total = $state->maxId * 2 + 10000;
+
+			$state->topics = $this->input->getBool('topics', false);
+			$state->usertopics = $this->input->getBool('usertopics', false);
+			$state->categories = $this->input->getBool('categories', false);
+			$state->users = $this->input->getBool('users', false);
+
+			$this->app->setUserState ( 'com_kunena.admin.recount', $state );
+
+			$msg = JText::_('COM_KUNENA_AJAX_INIT');
+		}
+		else
+		{
+			$msg = JText::_('COM_KUNENA_AJAX_RECOUNT_CONTINUE');
 		}
 
-		$this->checkTimeout();
-		while (1) {
-			$count = mt_rand(95000, 105000);
-			switch ($state->step) {
-				case 0:
-					if ($state->topics) {
-						// Update topic statistics
-						KunenaForumTopicHelper::recount(false, $state->start, $state->start+$count);
-						$state->start += $count;
-						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId) );
-					}
-					break;
-				case 1:
-					if ($state->usertopics) {
-						// Update usertopic statistics
-						KunenaForumTopicUserHelper::recount(false, $state->start, $state->start+$count);
-						$state->start += $count;
-						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId) );
-					}
-					break;
-				case 2:
-					if ($state->categories) {
-						// Update category statistics
-						KunenaForumCategoryHelper::recount();
-						KunenaForumCategoryHelper::fixAliases();
-						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORY') );
-					}
-					break;
-				case 3:
-					if ($state->users) {
-						// Update user statistics
-						KunenaUserHelper::recount();
-						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USER') );
-					}
-					break;
-				default:
-					$this->app->setUserState ( 'com_kunena.admin.recount', null );
-					$this->app->enqueueMessage (JText::_('COM_KUNENA_RECOUNTFORUMS_DONE'));
-					$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-					return;
-			}
-			if (!$state->start || $state->start > $state->maxId) {
-				$state->step++;
-				$state->start = 0;
-			}
-			if ($this->checkTimeout()) break;
+		$token = JSession::getFormToken() .'=1';
+		$redirect = KunenaRoute::_("{$this->baseurl}&task=dorecount&i={$state->reload}&{$token}", false);
+		$this->setResponse(
+			array(
+				'success' => true,
+				'status' => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+				'header' => JText::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
+				'message' => $msg,
+				'href' => $redirect
+			),
+			$ajax
+		);
+	}
+
+	/**
+	 * Perform recount on statistics in smaller chunks.
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function dorecount()
+	{
+		$ajax = $this->input->getWord('format', 'html') == 'json';
+
+		if (!JSession::checkToken('request'))
+		{
+			$this->setResponse(
+				array(
+					'success' => false,
+					'header' => JText::_('COM_KUNENA_AJAX_ERROR'),
+					'message' => JText::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
+					'error' => JText::_('COM_KUNENA_ERROR_TOKEN')
+				),
+				$ajax
+			);
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
 		}
-		$state->reload++;
-		$this->app->setUserState ( 'com_kunena.admin.recount', $state );
-		$this->setRedirect(KunenaRoute::_("{$this->baseurl}&task=recount&i={$state->reload}", false));
+
+		$state = $this->app->getUserState('com_kunena.admin.recount', null);
+
+		try
+		{
+			$this->checkTimeout();
+
+			while (1)
+			{
+				// Topic count per run.
+				// TODO: count isn't accurate as it can overflow total.
+				$count = mt_rand(4500, 5500);
+
+				switch ($state->step)
+				{
+					case 0:
+						if ($state->topics)
+						{
+							// Update topic statistics
+							KunenaForumTopicHelper::recount(false, $state->start, $state->start + $count);
+							$state->start += $count;
+							$msg = JText::sprintf(
+								'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
+								round(min(100*$state->start/$state->maxId+1, 100)).'%'
+							);
+						}
+
+						break;
+					case 1:
+						if ($state->usertopics)
+						{
+							// Update user's topic statistics
+							KunenaForumTopicUserHelper::recount(false, $state->start, $state->start + $count);
+							$state->start += $count;
+							$msg = JText::sprintf(
+								'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
+								round(min(100*$state->start/$state->maxId+1, 100)).'%'
+							);
+						}
+
+						break;
+					case 2:
+						if ($state->categories)
+						{
+							// Update category statistics
+							KunenaForumCategoryHelper::recount();
+							KunenaForumCategoryHelper::fixAliases();
+							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORIES_X', '100%');
+						}
+
+						break;
+					case 3:
+						if ($state->users)
+						{
+							// Update user statistics
+							KunenaUserHelper::recount();
+							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
+						}
+
+						break;
+					default:
+						$header = JText::_('COM_KUNENA_RECOUNTFORUMS_DONE');
+						$msg = JText::_('COM_KUNENA_AJAX_REQUESTED_RECOUNTED');
+						$this->app->setUserState('com_kunena.admin.recount', null);
+						$this->setResponse(
+							array(
+								'success' => true,
+								'status' => '100%',
+								'header' => $header,
+								'message' => $msg
+							),
+							$ajax
+						);
+						$this->setRedirect(KunenaRoute::_($this->baseurl, false), $header);
+
+						return;
+				}
+
+				$state->current = min($state->current + $count, $state->total);
+
+				if (!$state->start || $state->start > $state->maxId)
+				{
+					$state->step++;
+					$state->start = 0;
+				}
+
+				if ($this->checkTimeout())
+				{
+					break;
+				}
+			}
+
+			$state->reload++;
+			$this->app->setUserState('com_kunena.admin.recount', $state);
+		}
+
+		catch (Exception $e)
+		{
+			if (!$ajax)
+			{
+				throw $e;
+			}
+
+			$this->setResponse(
+				array(
+					'success' => false,
+					'status' => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+					'header' => JText::_('COM_KUNENA_AJAX_ERROR'),
+					'message' => JText::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
+					'error' => $e->getMessage()
+				),
+				$ajax
+			);
+		}
+
+		$token = JSession::getFormToken() .'=1';
+		$redirect = KunenaRoute::_("{$this->baseurl}&task=dorecount&i={$state->reload}&{$token}", false);
+		$this->setResponse(
+			array(
+				'success' => true,
+				'status' => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+				'header' => JText::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
+				'message' => $msg,
+				'href' => $redirect
+			), $ajax
+		);
+	}
+
+	/**
+	 * Set proper response for both AJAX and traditional calls.
+	 *
+	 * @param $response
+	 * @param $ajax
+	 *
+	 * @return void
+	 */
+	protected function setResponse($response, $ajax)
+	{
+		if (!$ajax)
+		{
+			if (!empty($response['error']))
+			{
+				$this->setMessage($response['error'], 'error');
+			}
+
+			if (!empty($response['href']))
+			{
+				$this->setRedirect($response['href']);
+			}
+		}
+		else
+		{
+			while (@ob_end_clean());
+			header('Content-type: application/json');
+			echo json_encode($response);
+			flush();
+			jexit();
+		}
 	}
 
 	public function trashmenu() {
@@ -321,7 +506,7 @@ class KunenaAdminControllerTools extends KunenaController {
 			$start = $time;
 			return false;
 		}
-		if ($time - $start < 1)
+		if ($time - $start < 14)
 			return false;
 
 		return true;

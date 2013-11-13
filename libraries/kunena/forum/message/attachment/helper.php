@@ -255,7 +255,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 		else $orderby = ' ORDER BY id ASC';
 
 		$db = JFactory::getDBO ();
-		$query = "SELECT * FROM #__kunena_attachments WHERE userid='$user->userid' $filetype $orderby";
+		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
 		$db->setQuery ( $query, 0, $params['limit'] );
 		$results = $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();

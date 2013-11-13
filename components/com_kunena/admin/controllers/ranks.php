@@ -26,7 +26,8 @@ class KunenaAdminControllerRanks extends KunenaController {
 	function add() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=rank&layout=add', false));
@@ -35,14 +36,16 @@ class KunenaAdminControllerRanks extends KunenaController {
 	function edit() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$id = array_shift($cid);
 		if (!$id) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_RANKS_SELECTED' ), 'notice' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		} else {
 			$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=rank&layout=edit&id={$id}", false));
 		}
@@ -53,7 +56,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
@@ -83,13 +86,13 @@ class KunenaAdminControllerRanks extends KunenaController {
 		}
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_RANK_SAVED') );
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function rankupload() {
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
@@ -102,7 +105,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_RANKS_UPLOAD_ERROR_UNABLE') );
 		}
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function remove() {
@@ -110,7 +113,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
@@ -123,6 +126,6 @@ class KunenaAdminControllerRanks extends KunenaController {
 		}
 
 		$this->app->enqueueMessage (JText::_('COM_KUNENA_RANK_DELETED') );
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

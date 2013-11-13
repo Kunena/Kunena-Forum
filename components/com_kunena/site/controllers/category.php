@@ -33,7 +33,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	function markread() {
 		if (! JSession::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 
 		$catid = JRequest::getInt('catid', 0);
@@ -51,14 +52,14 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			$category = KunenaForumCategoryHelper::get($catid);
 			if (!$category->authorise('read')) {
 				$this->app->enqueueMessage ( $category->getError(), 'error' );
-				$this->redirectBack ();
+				$this->setRedirectBack();
+				return;
 			}
 
 			$session = KunenaFactory::getSession();
 			if ($session->userid) {
 				// Mark all unread topics in the category to read
 				$userinfo = $category->getUserInfo();
-				// FIXME: Joomla 2.5 ->toSql()
 				$userinfo->allreadtime = JFactory::getDate()->toSql();
 				if (!$userinfo->save()) {
 					$this->app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
@@ -67,19 +68,21 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 				}
 			}
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function subscribe() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 
 		$category = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
 		if (!$category->authorise('read')) {
 			$this->app->enqueueMessage ( $category->getError(), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 
 		if ($this->me->exists()) {
@@ -89,13 +92,14 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			}
 		}
 
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function unsubscribe() {
 		if (! JSession::checkToken ('request') ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
+			return;
 		}
 
 		$catid = JRequest::getInt('catid', 0);
@@ -115,6 +119,6 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			}
 		}
 
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 }

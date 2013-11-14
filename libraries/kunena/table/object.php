@@ -834,6 +834,7 @@ abstract class KunenaTableObject {
 	 * @throws UnexpectedValueException
 	 */
 	protected function getKeyValues($fields = null, $throw = true) {
+		// FIXME: bug...
 		static $fieldNames = null;
 
 		$tableKeys = static::$tbl_keys;

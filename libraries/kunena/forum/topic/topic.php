@@ -298,11 +298,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	 * @return KunenaForumTopicPoll
 	 */
 	public function getPoll() {
-		static $poll = null;
-		if (!$poll) {
-			$poll = KunenaForumTopicPollHelper::get($this->poll_id);
-			$poll->threadid = $this->id;
-		}
+		$poll = KunenaForumTopicPollHelper::get($this->poll_id);
+		$poll->threadid = $this->id;
+
 		return $poll;
 	}
 

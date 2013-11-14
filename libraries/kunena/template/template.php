@@ -73,6 +73,8 @@ class KunenaTemplate extends JObject
 	protected $compiled_style_variables = null;
 	protected $scripts = array();
 	protected $xml = null;
+	protected $map;
+	protected $hmvc;
 
 	/**
 	* Constructor
@@ -532,25 +534,22 @@ HTML;
 	 * @deprecated 3.1
 	 */
 	public function mapLegacyView($search) {
-		static $map;
-
-		if (!isset($map)) {
+		if (!isset($this->map)) {
 			$file = JPATH_SITE .'/'. $this->getFile('mapping.php');
 			if (is_file($file)) {
 				include $file;
 			}
 		}
 		$search = rtrim($search, '_');
-		if (isset($map[$search])) return $map[$search];
+		if (isset($this->map[$search])) return $this->map[$search];
 		return array($search, 'default');
 	}
 
 	public function isHmvc() {
-		static $hmvc;
-		if (is_null($hmvc)) {
-			$hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
+		if (is_null($this->hmvc)) {
+			$this->hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
 		}
-		return $hmvc;
+		return $this->hmvc;
 	}
 
 	/**

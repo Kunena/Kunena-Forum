@@ -279,10 +279,10 @@ class KunenaController extends JControllerLegacy {
 	 * @param string $anchor
 	 */
 	protected function setRedirectBack($anchor = '') {
-		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : 'index.php?option=com_kunena');
 		$referrer = $this->input->server->getString('HTTP_REFERER');
 
-		$uri = JUri::getInstance($referrer ? $referrer : $default);
+		$uri = new JUri($referrer ? $referrer : $default);
 		if (JUri::isInternal($uri->toString())) {
 			// Parse route.
 			$vars = $this->app->getRouter()->parse($uri);
@@ -292,12 +292,14 @@ class KunenaController extends JControllerLegacy {
 			// Make sure we do not return into a task.
 			$uri->delVar('task');
 			$uri->delVar(JSession::getFormToken());
+		} elseif ($this->app->isAdmin()) {
+			// Pass..
 		} else {
 			$uri = JUri::getInstance($default);
 		}
 
 		if ($anchor) $uri->setFragment($anchor);
 
-		$this->setRedirect(JRoute::_($uri->toString()));
+		$this->setRedirect(JRoute::_('index.php'.$uri->toString(array('query', 'fragment')), false));
 	}
 }

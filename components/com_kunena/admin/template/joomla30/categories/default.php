@@ -80,6 +80,13 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 					</select>
 				</div>
+				<div class="btn-group pull-right">
+					<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+					<select name="levellimit" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+						<option value=""><?php echo JText::_('JOPTION_SELECT_MAX_LEVELS');?></option>
+						<?php echo JHtml::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
+					</select>
+				</div>
 				<div class="clearfix"></div>
 			</div>
 

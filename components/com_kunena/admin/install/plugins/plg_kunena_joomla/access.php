@@ -210,8 +210,8 @@ class KunenaAccessJoomla {
 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid) {
 		$groups = (array) JAccess::getGroupsByUser($userid, true);
-		$post = array_intersect($groups, $category->params->get('access_post', array(2,6,8)));
-		$reply = array_intersect($groups, $category->params->get('access_reply', array(2,6,8)));
+		$post = array_intersect($groups, (array) $category->params->get('access_post', array(2,6,8)));
+		$reply = array_intersect($groups, (array) $category->params->get('access_reply', array(2,6,8)));
 		return array ('topic.create'=>!empty($post), 'topic.reply'=>!empty($reply), 'topic.post.reply'=>!empty($reply));
 	}
 

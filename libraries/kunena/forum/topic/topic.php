@@ -1152,7 +1152,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			return false;
 		}
 
-		if ($exists && $message->userid && abs($postdelta) == 1) {
+		if ($exists && $message->userid && abs($postdelta) <= 1) {
 			// Update user topic
 			$usertopic = $this->getUserTopic($message->userid);
 			if (!$usertopic->update($message, $postdelta)) {

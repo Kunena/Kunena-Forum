@@ -32,7 +32,7 @@ class KunenaPath extends JPath
 	{
 		if (!self::$tmpdir) {
 			// Find Apache writable temporary directory defaulting to Joomla.
-			$temp = @tempnam(JFactory::getConfig()->tmp_path, 'jj');
+			$temp = @tempnam(JFactory::getConfig()->get('tmp_path'), 'jj');
 
 			// If the previous call fails, let's try system default instead.
 			if ($temp === false) {
@@ -59,7 +59,7 @@ class KunenaPath extends JPath
 	public static function isOwner($path)
 	{
 		if (!self::$owner) {
-			$dir = JFactory::getConfig()->tmp_path;
+			$dir = JFactory::getConfig()->get('tmp_path');
 			$tmp = 'jj'.md5(mt_rand());
 
 			$test = $dir . '/' . $tmp;

@@ -45,11 +45,6 @@ class KunenaModel extends JModelLegacy {
 	 */
 	protected $embedded = false;
 
-	/**
-	 * @var string
-	 */
-	protected $_escape = 'htmlspecialchars';
-
 	public function __construct($config = array()) {
 		$this->option = 'com_kunena';
 		parent::__construct($config);
@@ -82,25 +77,11 @@ class KunenaModel extends JModelLegacy {
 	/**
 	 * Escapes a value for output in a view script.
 	 *
-	 * If escaping mechanism is one of htmlspecialchars or htmlentities.
-	 *
 	 * @param  mixed $var The output to escape.
 	 * @return mixed The escaped value.
 	 */
 	public function escape($var) {
-		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
-			return call_user_func ( $this->_escape, $var, ENT_COMPAT, 'UTF-8' );
-		}
-		return call_user_func ( $this->_escape, $var );
-	}
-
-	/**
-	 * Sets the _escape() callback.
-	 *
-	 * @param mixed $spec The callback for _escape() to use.
-	 */
-	public function setEscape($spec) {
-		$this->_escape = $spec;
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	protected function getParameters() {

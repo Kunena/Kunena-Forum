@@ -37,7 +37,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 
 				<?php if (!empty($this->announcementsUrl)) : ?>
 				<div>
-					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
+					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-small btn-link">
 						<i class="icon-pencil-2"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>

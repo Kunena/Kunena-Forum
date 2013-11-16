@@ -51,7 +51,6 @@ $categoryActions = $this->getCategoryActions();
 				<td colspan="1" class="center">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
-						<span class="divider"></span>
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>

@@ -110,6 +110,11 @@ jQuery(document).ready(function() {
 		} else {
 			jQuery("#kchecktarget").attr('disabled', true);
 		}
-	}); 
+	});
+	
+	/* Hide search form when there are search results found */
+	if ( jQuery('#kunena_search_results').is(':visible') ) {
+		jQuery('#search').hide();
+	}
 });
 

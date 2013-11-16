@@ -56,7 +56,7 @@
 
 		<field
 			name="ordering"
-			type="ordering"
+			type="Pluginordering"
 			class="inputbox"
 			label="JFIELD_ORDERING_LABEL"
 			description="JFIELD_ORDERING_DESC" />

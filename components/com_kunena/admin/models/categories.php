@@ -125,13 +125,13 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$orphans = array();
 
 			if ($catid) {
-				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'filter.levels' ), array('unpublished'=>1, 'action'=>'none'));
+				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'filter.levels' )-1, array('unpublished'=>1, 'action'=>'none'));
 				$categories[] = KunenaForumCategoryHelper::get($catid);
 			} else {
-				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'filter.levels' ), $params);
+				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'filter.levels' )-1, $params);
 			}
 
-			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'filter.levels' ), $params));
+			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'filter.levels' )-1, $params));
 			$categories = array_merge($orphans, $categories);
 
 			$categories = KunenaForumCategoryHelper::getIndentation($categories);

@@ -310,7 +310,7 @@ class KunenaForumMessageAttachment extends JObject {
 			$this->protected = (int) $protection;
 			$this->hash =$fileinfo ['hash'];
 			$this->size = $fileinfo ['size'];
-			$this->folder = '/media/kunena/attachments/' . $this->userid;
+			$this->folder = 'media/kunena/attachments/' . $this->userid;
 			$this->filetype = $fileinfo ['mime'];
 			$this->filename = $fileinfo ['name'];
 			$this->filename_real = $fileinfo ['real'];
@@ -319,6 +319,92 @@ class KunenaForumMessageAttachment extends JObject {
 		}
 		$this->setError( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo ['name'] ) . ': ' . $fileinfo ['error'] );
 		return false;
+	}
+
+	/**
+	 * Set attachment file.
+	 *
+	 * Copies the attachment into proper location and makes sure that all the unset fields get properly assigned.
+	 *
+	 * @param  string  $source     Absolute path to the upcoming attachment.
+	 * @param  string  $basename   Filename without extension.
+	 * @param  string  $extension  File extension.
+	 * @param  bool    $unlink     Whether to delete the original file or not.
+	 * @param  bool    $overwrite  If not allowed, throw exception if the file exists.
+	 *
+	 * @return bool
+	 * @throws InvalidArgumentException
+	 * @throws RuntimeException
+	 * @since 3.1
+	 */
+	public function saveFile($source, $basename = null, $extension = null, $unlink = false, $overwrite = false)
+	{
+		if (!file_exists($source))
+		{
+			throw new InvalidArgumentException(__CLASS__.'::'.__METHOD__.'(): Attachment file not found.');
+		}
+
+		// Hash, size and MIME are set during saving, so let's deal with all other variables.
+		$this->userid = is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
+		$this->folder = is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
+		$this->protected = is_null($this->protected) ? (bool) KunenaConfig::getInstance()->attachment_protection : $this->protected;
+
+		if (!$this->filename_real)
+		{
+			$this->filename_real = $this->filename;
+		}
+
+		if (!$this->filename || $this->filename == $this->filename_real)
+		{
+			if (!$basename || !$extension)
+			{
+				throw new InvalidArgumentException(__CLASS__.'::'.__METHOD__.'(): Parameters $basename or $extension not provided.');
+			}
+
+			// Find available filename.
+			$this->filename = KunenaForumMessageAttachmentHelper::getAvailableFilename(
+				$this->folder, $basename, $extension, $this->protected
+			);
+		}
+
+		// Create target directory if it does not exist.
+		if (!KunenaFolder::exists(JPATH_ROOT . "/{$this->folder}") && !KunenaFolder::create(JPATH_ROOT . "/{$this->folder}"))
+		{
+			throw new RuntimeException(JText::_('Failed to create attachment directory.'));
+		}
+
+		$destination = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
+
+		// Move the file into the final location (if not already in there).
+		if ($source != $destination)
+		{
+			// Create target directory if it does not exist.
+			if (!$overwrite && file_exists($destination))
+			{
+				throw new RuntimeException(JText::sprintf('Attachment %s already exists.'), $this->filename_real);
+			}
+
+			if ($unlink)
+			{
+				@chmod($source, 0644);
+			}
+
+			$success = JFile::copy($source, $destination);
+
+			if (!$success)
+			{
+				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $destination));
+			}
+
+			JPath::setPermissions($destination);
+
+			if ($unlink)
+			{
+				unlink($source);
+			}
+		}
+
+		return $this->save();
 	}
 
 	/**

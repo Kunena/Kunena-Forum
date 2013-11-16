@@ -1,6 +1,6 @@
 <?php
 /**
- * Kunena Component - CKunenaAjaxHelper class
+ * Kunena Component
  * @package Kunena.Site
  * @subpackage Lib
  *
@@ -12,15 +12,12 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-require_once(KPATH_SITE.'/lib/kunena.file.class.php');
-require_once (KPATH_SITE.'/lib/kunena.image.class.php');
-
 /**
  * Class to handle file uploads and process the uploaded files.
  *
  * @since		1.6
+ * @deprecated 3.1
  */
-
 class CKunenaUpload {
 	protected $_db;
 	protected $_my;
@@ -298,7 +295,13 @@ class CKunenaUpload {
 
 		// Special processing for images
 		if ($this->_isimage){
-			$this->imageInfo = CKunenaImageHelper::getProperties( $this->fileTemp );
+			try {
+				$this->imageInfo = JImage::getImageFileProperties($this->fileTemp);
+			} catch (Exception $e) {
+				// TODO: better error message.
+				$this->fail(JText::_($e->getMessage()));
+				return false;
+			}
 
 			// Let see if we need to check the MIME type
 			if ($this->_config->checkmimetypes){
@@ -315,20 +318,25 @@ class CKunenaUpload {
 
 			// If image is not inside allowed size limits, resize it
 			if ($this->fileSize > $this->imagesize || $this->imageInfo->width > $this->imagewidth || $this->imageInfo->height > $this->imageheight) {
-				$options = array('quality' => $this->imagequality);
+				// Calculate quality for both JPG and PNG.
+				$quality = $this->imagequality;
+				if ($quality < 1 || $quality > 100) $quality = 70;
+				if ($this->imageInfo->type == IMAGETYPE_PNG) $quality = intval(($quality-1)/10);
+				$options = array('quality' => $quality);
 
-				$imageRaw = new CKunenaImage($this->fileTemp);
-				if ($imageRaw->getError()) {
-					$this->fail(JText::_($imageRaw->getError()));
+				try {
+					$image = new JImage($this->fileTemp);
+					$image = $image->resize($this->imagewidth, $this->imageheight, false);
+					$image->toFile($this->fileTemp, $this->imageInfo->type, $options);
+					unset($image);
+				} catch (Exception $e) {
+					// TODO: better error message.
+					$this->fail(JText::_($e->getMessage()));
 					return false;
 				}
-				$image = $imageRaw->resize($this->imagewidth, $this->imageheight);
-				$type = $imageRaw->getType();
-				unset($imageRaw);
-				$image->toFile($this->fileTemp,$type,$options);
-				clearstatcache();
 
 				// Re-calculate physical file size: image has been shrunk
+				clearstatcache();
 				$stat = stat($this->fileTemp);
 				if (! $stat) {
 					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $this->fileTemp));

@@ -67,6 +67,13 @@ class KunenaUser extends JObject {
 	protected $_allowed = null;
 	protected $_link = array();
 
+	protected $_time;
+	protected $_pm;
+	protected $_email;
+	protected $_website;
+	protected $_personalText;
+	protected $_signature;
+
 	protected $_exists = false;
 	protected $_db = null;
 
@@ -107,11 +114,13 @@ class KunenaUser extends JObject {
 	}
 
 	/**
+	 * Is the user me?
+	 *
 	 * @return bool
 	 */
 	public function isMyself() {
-		static $result = null;
-		if ($result === null) $result = KunenaUserHelper::getMyself()->userid == $this->userid;
+		$result = KunenaUserHelper::getMyself()->userid == $this->userid;
+
 		return $result;
 	}
 
@@ -327,18 +336,13 @@ class KunenaUser extends JObject {
 	 * @return string
 	 */
 	public function getMessageOrdering() {
-		static $ordering = null;
-		if (is_null($ordering)) {
-			if ($this->ordering != '0') {
-				$ordering = $this->ordering == '1' ? 'desc' : 'asc';
-			} else {
-				$ordering = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
-			}
-			if ($ordering != 'asc') {
-				$ordering = 'desc';
-			}
+		static $default;
+
+		if (is_null($default)) {
+			$default = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
 		}
-		return $ordering;
+
+		return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
 	}
 
 	/**
@@ -647,9 +651,7 @@ class KunenaUser extends JObject {
 	 */
 	public function getTime()
 	{
-		static $time;
-
-		if (!isset($time))
+		if (!isset($this->_time))
 		{
 			$timezone = JFactory::getApplication()->getCfg('offset', null);
 
@@ -659,12 +661,12 @@ class KunenaUser extends JObject {
 				$timezone = $user->getParam('timezone', $timezone);
 			}
 
-			$time = new KunenaDate('now', $timezone);
+			$this->_time = new KunenaDate('now', $timezone);
 
 			try
 			{
 				$offset = new DateTimeZone($timezone);
-				$time->setTimezone($offset);
+				$this->_time->setTimezone($offset);
 			}
 			catch (Exception $e)
 			{
@@ -672,7 +674,7 @@ class KunenaUser extends JObject {
 			}
 		}
 
-		return $time;
+		return $this->_time;
 	}
 
 	/**
@@ -749,30 +751,28 @@ class KunenaUser extends JObject {
 	 */
 	public function getPrivateMsgLink()
 	{
-		static $pm;
-
-		if (!isset($pm))
+		if (!isset($this->_pm))
 		{
 			$private = KunenaFactory::getPrivateMessaging();
 
 			if (!$this->userid)
 			{
-				$pm = '';
+				$this->_pm = '';
 			}
 			elseif ($this->isMyself())
 			{
 				$count = $private->getUnreadCount($this->userid);
-				$pm = $private->getInboxLink($count
+				$this->_pm = $private->getInboxLink($count
 					? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
 					: JText::_('COM_KUNENA_PMS_INBOX'));
 			}
 			else
 			{
-				$pm = $private->getInboxLink(JText::_('COM_KUNENA_PM_WRITE'));
+				$this->_pm = $private->getInboxLink(JText::_('COM_KUNENA_PM_WRITE'));
 			}
 		}
 
-		return $pm;
+		return $this->_pm;
 	}
 
 	/**
@@ -784,21 +784,19 @@ class KunenaUser extends JObject {
 	 */
 	public function getEmailLink()
 	{
-		static $email;
-
-		if (!isset($email))
+		if (!isset($this->_email))
 		{
 			$config = KunenaConfig::getInstance();
 			$me = KunenaUserHelper::getMyself();
 
-			$email = '';
+			$this->_email = '';
 			if ($this->email && (($config->showemail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
 			{
-				$email = JHtml::_('email.cloak', $this->email);
+				$this->_email = JHtml::_('email.cloak', $this->email);
 			}
 		}
 
-		return $email;
+		return $this->_email;
 	}
 
 	/**
@@ -810,11 +808,9 @@ class KunenaUser extends JObject {
 	 */
 	public function getWebsiteLink()
 	{
-		static $html;
-
-		if (!isset($html) && $this->websiteurl)
+		if (!isset($this->_website) && $this->websiteurl)
 		{
-			$html = '';
+			$this->_website = '';
 			$url = $this->websiteurl;
 
 			if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
@@ -824,10 +820,10 @@ class KunenaUser extends JObject {
 
 			$name = trim($this->websitename) ? $this->websitename : $this->websiteurl;
 
-			$html = '<a href="' . $this->escape($url) . '" target="_blank">' . $this->escape($name) . '</a>';
+			$this->_website = '<a href="' . $this->escape($url) . '" target="_blank">' . $this->escape($name) . '</a>';
 		}
 
-		return (string) $html;
+		return (string) $this->_website;
 	}
 
 	/**
@@ -864,11 +860,10 @@ class KunenaUser extends JObject {
 	 * @since 3.1
 	 */
 	public function getPersonalText() {
-		static $html;
-		if (!isset($html)) {
-			$html = KunenaHtmlParser::parseText($this->personalText);
+		if (!isset($this->_personalText)) {
+			$this->_personalText = KunenaHtmlParser::parseText($this->personalText);
 		}
-		return $html;
+		return $this->_personalText;
 	}
 
 	/**
@@ -879,11 +874,10 @@ class KunenaUser extends JObject {
 	 * @since 3.1
 	 */
 	public function getSignature() {
-		static $html;
-		if (!isset($html)) {
-			$html = KunenaHtmlParser::parseBBCode($this->signature, $this, KunenaConfig::getInstance()->maxsig);
+		if (!isset($this->_signature)) {
+			$this->_signature = KunenaHtmlParser::parseBBCode($this->signature, $this, KunenaConfig::getInstance()->maxsig);
 		}
-		return $html;
+		return $this->_signature;
 	}
 
 	/**

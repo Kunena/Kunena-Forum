@@ -1234,9 +1234,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 */
 	public function DoMap($bbcode, $action, $name, $default, $params, $content)
 	{
-		static $id = false;
-		static $sensor = true;
-
 		if ($action == BBCODE_CHECK)
 		{
 			return true;
@@ -1261,6 +1258,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// TODO: Remove in Kunena 4.0
+		static $id = false;
+		static $sensor = true;
+
 		if ($id === false) {
 			$document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
 			$id = 0;

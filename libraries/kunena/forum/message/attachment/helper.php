@@ -109,6 +109,62 @@ abstract class KunenaForumMessageAttachmentHelper {
 	}
 
 	/**
+	 * Find filename which isn't already taken in the filesystem.
+	 *
+	 * @param  string  $folder      Relative path from JPATH_ROOT.
+	 * @param  string  $basename    Filename without extension.
+	 * @param  string  $extension   File extension.
+	 * @param  bool    $protected   True to randomize the filename. If not given, uses Kunena configuration setting.
+	 *
+	 * @return string
+	 *
+	 * @since 3.1
+	 */
+	public static function getAvailableFilename($folder, $basename, $extension, $protected = null)
+	{
+		if (is_null($protected))
+		{
+			$protected = (bool) KunenaConfig::getInstance()->attachment_protection;
+		}
+
+		if ($protected)
+		{
+			// Ignore proposed filename and return totally random and unique name without file extension.
+			do {
+				$name = md5(rand());
+			}
+			while (file_exists(JPATH_ROOT . "/$folder/$name"));
+
+			return $name;
+		}
+
+		// Lets find out if we need to rename the filename.
+		$basename = preg_replace('/[[:space:]]/', '', KunenaFile::makeSafe($basename));
+		$extension = trim($extension, '.');
+
+		if (empty($basename))
+		{
+			$basename = 'file_'.substr(md5(rand()), 2, 7);
+		}
+
+		$newName = "{$basename}.{$extension}";
+		$date = date('Y-m-d');
+
+		// Rename file if there is already one with the same name
+		if (file_exists(JPATH_ROOT . "/{$folder}/{$newName}"))
+		{
+			$newName = "{$basename}_{$date}.{$extension}";
+
+			for ($i=2; file_exists(JPATH_ROOT . "/{$folder}/{$newName}"); $i++)
+			{
+				$newName = "{$basename}_{$date}-{$i}.{$extension}";
+			}
+		}
+
+		return $newName;
+	}
+
+	/**
 	 * @param mixed $category
 	 * @param null $user
 	 *

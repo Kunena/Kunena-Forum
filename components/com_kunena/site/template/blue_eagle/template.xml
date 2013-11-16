@@ -150,9 +150,10 @@
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
 
-		<field name="templatebyText" type="hidden" default="" />
-		<field name="templatebyName" type="hidden" default="" />
-		<field name="templatebyLink" type="hidden" default="" />
+    <!-- Required for third party templates, the default value need to be set to avoid issues in template manager
+    <field name="templatebyText" type="hidden" default="" />
+    <field name="templatebyName" type="hidden" default="" />
+    <field name="templatebyLink" type="hidden" default="" /> -->
 
 		<!-- Required avatar sizes -->
 		<field name="avatarSizeXThumb" type="hidden" default="36" />

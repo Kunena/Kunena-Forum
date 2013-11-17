@@ -39,10 +39,8 @@ class KunenaIntegrationActivity
 	}
 
 	public function __call($method, $arguments) {
-		JFactory::getApplication()->enqueueMessage("HIT: ". $method);
 		foreach ($this->instances as $instance) {
 			if (method_exists($instance, $method)) {
-				JFactory::getApplication()->enqueueMessage("CALL: ". get_class($instance).'->'.$method);
 				call_user_func_array(array($instance, $method), $arguments);
 			}
 		}

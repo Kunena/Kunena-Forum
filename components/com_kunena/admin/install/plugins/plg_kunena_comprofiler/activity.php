@@ -68,7 +68,7 @@ class KunenaActivityComprofiler extends KunenaActivity {
 		KunenaIntegrationComprofiler::trigger ( 'onAfterUndelete', $params );
 	}
 
-	public function onAfterThankyou($target, $actor, $message) {
+	public function onAfterThankyou($actor, $target, $message) {
 		$params = array ('actor' => $actor, 'target' => $target, 'message' => $message );
 		KunenaIntegrationComprofiler::trigger ( 'onAfterThankyou', $params );
 	}

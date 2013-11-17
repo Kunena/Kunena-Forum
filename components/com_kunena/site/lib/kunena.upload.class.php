@@ -167,6 +167,8 @@ class CKunenaUpload {
 	function uploadFile($uploadPath, $input='kattachment', $filename='', $ajax=true) {
 		$this->resetStatus();
 
+		jimport('joomla.filesystem.folder');
+
 		// create upload directory if it does not exist
 		if (!JFolder::exists($uploadPath)) {
 			if (!JFolder::create($uploadPath)) {

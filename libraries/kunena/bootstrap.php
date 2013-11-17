@@ -43,7 +43,6 @@ JLoader::register('KunenaProfiler', KPATH_FRAMEWORK . '/profiler.php');
 JLoader::register('KunenaSession', KPATH_FRAMEWORK . '/session.php');
 JLoader::register('KunenaTree', KPATH_FRAMEWORK . '/tree.php');
 JLoader::register('KunenaView', KPATH_FRAMEWORK . '/view.php');
-JLoader::register('KunenaActivity', KPATH_FRAMEWORK . '/integration/activity.php');
 JLoader::register('KunenaAvatar', KPATH_FRAMEWORK . '/integration/avatar.php');
 JLoader::register('KunenaPrivate', KPATH_FRAMEWORK . '/integration/private.php');
 JLoader::register('KunenaProfile', KPATH_FRAMEWORK . '/integration/profile.php');

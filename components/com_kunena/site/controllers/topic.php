@@ -506,6 +506,8 @@ class KunenaControllerTopic extends KunenaController {
 		// Update Tags
 		$this->updateTags($message->thread, $fields['tags'], $fields['mytags']);
 
+		$activity->onAfterEdit($message);
+
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
 		if ($message->hold == 1) {
 			// If user cannot approve message by himself, send email to moderators.
@@ -561,7 +563,7 @@ class KunenaControllerTopic extends KunenaController {
 				$this->setRedirectBack();
 				return;
 			}
-			$activityIntegration->onAfterUnThankyou($userid, $this->me->userid, $message);
+			$activityIntegration->onAfterUnThankyou($this->me->userid, $userid, $message);
 		}
 		$this->setRedirect($message->getUrl($category->exists() ? $category->id : $message->catid, false));
 	}

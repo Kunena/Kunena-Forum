@@ -113,12 +113,12 @@ abstract class KunenaFactory {
 	/**
 	 * Get Kunena activity integration object
 	 *
-	 * Returns the global {@link KunenaActivity} object, only creating it if it doesn't already exist.
+	 * Returns the global {@link KunenaIntegrationActivity} object, only creating it if it doesn't already exist.
 	 *
-	 * @return KunenaActivity
+	 * @return KunenaIntegrationActivity
 	 */
 	public static function getActivityIntegration() {
-		return KunenaActivity::getInstance();
+		return KunenaIntegrationActivity::getInstance();
 	}
 
 	/**

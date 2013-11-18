@@ -13,6 +13,7 @@
 	<license>GNU/GPLv3 or later</license>
 	<description>Kunena Framework.</description>
 	<files>
+        <folder>activity</folder>
 		<folder>bbcode</folder>
 		<folder>cache</folder>
 		<folder>compat</folder>

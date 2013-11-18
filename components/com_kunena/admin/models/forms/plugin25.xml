@@ -56,7 +56,7 @@
 
 		<field addfieldpath="administrator/components/com_plugins/models/fields"
 			name="ordering"
-			type="Pluginordering"
+			type="ordering"
 			class="inputbox"
 			label="JFIELD_ORDERING_LABEL"
 			description="JFIELD_ORDERING_DESC" />

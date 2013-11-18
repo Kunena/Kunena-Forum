@@ -30,6 +30,7 @@ class KunenaTemplate extends JObject
 
 	protected $pathTypes = array();
 	protected $pathTypeDefaults = array(
+		'avatars' => 'media/avatars',
 		'emoticons' => 'media/emoticons',
 		'ranks' => 'media/ranks',
 		'icons' => 'media/icons',
@@ -39,6 +40,7 @@ class KunenaTemplate extends JObject
 		'css' => 'media/css'
 	);
 	protected $pathTypeOld = array(
+		'avatars' => 'images/avatars',
 		'emoticons' => 'images/emoticons',
 		'ranks' => 'images/ranks',
 		'icons' => 'images/icons',
@@ -353,6 +355,10 @@ HTML;
 			}
 		}
 		return ($url ? JUri::root(true).'/' : '').$this->filecache[$filepath];
+	}
+
+	public function getAvatarPath($filename='', $url = false) {
+		return $this->getFile($filename, $url, $this->pathTypes['avatars'], 'media/kunena/avatars');
 	}
 
 	public function getSmileyPath($filename='', $url = false) {

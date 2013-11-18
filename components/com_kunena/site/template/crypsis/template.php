@@ -142,8 +142,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 				'flat'=>'layout-flat', 'threaded'=>'layout-threaded', 'indented'=>'layout-indented',
 				'list'=>'reply');
 
-		// need special style for buttons in drop-down list
-		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete' );
+		// Need special style for buttons in drop-down list
+		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented');
 
 		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");

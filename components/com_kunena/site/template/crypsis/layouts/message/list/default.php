@@ -12,10 +12,12 @@ defined('_JEXEC') or die;
 
 $colspan = empty($this->postActions) ? 4 : 5;
 ?>
+<?php if (!empty($this->embedded)) : ?>
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
       method="post" target="_self" class="pull-right">
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
+<?php endif; ?>
 
 <h3>
 	<?php echo $this->headerText; ?>
@@ -34,6 +36,7 @@ $colspan = empty($this->postActions) ? 4 : 5;
 			</td>
 		</tr>
 		<?php else : ?>
+		<?php if (!empty($this->embedded)) : ?>
 		<thead>
 			<tr>
 				<td colspan="4">
@@ -51,6 +54,7 @@ $colspan = empty($this->postActions) ? 4 : 5;
 
 			</tr>
 		</thead>
+		<?php endif; ?>
 
 		<?php if (!empty($this->postActions)) : ?>
 		<tfoot>

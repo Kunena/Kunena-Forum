@@ -31,7 +31,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			->set('topics', $this->topics)
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
-			->set('state', $this->state);
+			->set('state', $this->state)
+			->set('actions', $this->actions);
 
 		return $content;
 	}
@@ -127,6 +128,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			$this->prepareTopics();
 		}
 
+		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		switch ($this->state->get('list.mode'))
 		{
 			case 'posted' :
@@ -137,9 +139,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				break;
 			case 'favorites' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+				$actions = array('unfavorite');
 				break;
 			case 'subscriptions' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+				$actions = array('unsubscribe');
 				break;
 			case 'plugin' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
@@ -147,5 +151,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			default :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 		}
+
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 	}
 }

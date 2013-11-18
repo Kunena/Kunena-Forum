@@ -56,6 +56,9 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			$this->prepareTopics();
 		}
 
+		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$this->actions = $this->getTopicActions($this->topics, $actions);
+
 		// TODO <-
 		$this->headerText = JText::_('Topics Needing Attention');
 	}

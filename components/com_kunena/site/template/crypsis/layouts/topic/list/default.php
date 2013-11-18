@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-$colspan = empty($this->topicActions) ? 5 : 6;
+$colspan = empty($this->actions) ? 5 : 6;
 ?>
 
 <?php if (!empty($this->embedded)) : ?>
@@ -49,7 +49,7 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 					<div class="clearfix"></div>
 				</td>
 
-				<?php if (!empty($this->topicActions)) : ?>
+				<?php if (!empty($this->actions)) : ?>
 				<td>
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />
@@ -61,24 +61,22 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 		</thead>
 		<?php endif; ?>
 
-		<?php // FIXME: topic actions ?>
-		<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
+		<?php if (!empty($this->actions) || !empty($this->embedded)) : ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $colspan; ?>">
 					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
-					<?php if (!empty($this->topicActions)) : ?>
-						<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
-						<?php if ($this->actionMove) :
-							$options = array (JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
-							echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
-						endif;?>
-						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+					<?php if (!empty($this->actions)) : ?>
+					<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+					<?php if (isset($this->actions['move'])) :
+						$options = array (JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
+						echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+					endif;?>
+					<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
-
 				</td>
 			</tr>
-			</tfoot>
+		</tfoot>
 		<?php endif; ?>
 
 		<tbody>
@@ -87,7 +85,7 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 				echo $this->subLayout('Topic/Row')
 					->set('topic', $topic)
 					->set('position', 'kunena_topic_' . $i)
-					->set('checkbox', !empty($this->topicActions));
+					->set('checkbox', !empty($this->actions));
 			}
 			?>
 		</tbody>

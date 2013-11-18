@@ -282,7 +282,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	protected function setup() {
 		// Initialize CLI
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (file_exists($api)) {
+		if (is_file($api)) {
 			require_once $api;
 		}
 

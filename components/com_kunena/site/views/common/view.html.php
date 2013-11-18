@@ -372,8 +372,32 @@ class KunenaViewCommon extends KunenaView {
 		return $profile->getUserListURL ( $action, $xhtml );
 	}
 
-	function getRSSURL($params = '', $xhtml = true) {
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml );
+	/**
+	 * Method to get Kunena URL RSS feed by taking config option to define the data to display
+	 *
+	 * @param   string  $params  Add extras params to the URL
+	 * @param   string  $xhtml   Replace & by & for XML compilance.
+	 *
+	 * @return string
+	 */
+	private function getRSSURL($params = '', $xhtml = true)
+	{
+		$mode = KunenaFactory::getConfig()->rss_type;
+
+		switch ($mode)
+		{
+			case 'topic' :
+				$rss_type = 'topics';
+				break;
+			case 'recent' :
+				$rss_type = 'replies';
+				break;
+			case 'post' :
+				$rss_type = 'latest';
+				break;
+		}
+
+		return KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&mode={$rss_type}{$params}", $xhtml);
 	}
 
 	function getRSSLink($name, $rel = 'follow', $params = '') {

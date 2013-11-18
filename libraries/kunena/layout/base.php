@@ -111,11 +111,11 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		foreach ($this->includePaths as $path) {
 			$file = $path .'/'. $this->layout . '.php';;
 
-			if (!file_exists($file)) {
+			if (!is_file($file)) {
 				$html .= 'NOT exists: ' . $file . '<br />';
 
 				$file = $path . '/default.php';
-				if (!file_exists($file)) {
+				if (!is_file($file)) {
 					$html .= 'NOT exists: ' . $file . '<br />';
 				} else {
 					$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
@@ -297,8 +297,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			$paths[] = $path;
 		}
 		// Find the layout file path.
-		$path = JPath::find($paths, "{$layout}.php");
-		if (!$path) $path = JPath::find($paths, 'default.php');
+		$path = KunenaPath::find($paths, "{$layout}.php");
+		if (!$path) $path = KunenaPath::find($paths, 'default.php');
 
 		return $path;
 	}

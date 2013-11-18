@@ -167,11 +167,9 @@ class CKunenaUpload {
 	function uploadFile($uploadPath, $input='kattachment', $filename='', $ajax=true) {
 		$this->resetStatus();
 
-		jimport('joomla.filesystem.folder');
-
 		// create upload directory if it does not exist
-		if (!JFolder::exists($uploadPath)) {
-			if (!JFolder::create($uploadPath)) {
+		if (!is_dir($uploadPath)) {
+			if (!KunenaFolder::create($uploadPath)) {
 				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' ));
 				return false;
 			}
@@ -179,7 +177,7 @@ class CKunenaUpload {
 		KunenaFolder::createIndex($uploadPath);
 
 		// Get file name and validate with path type
-		$this->realName = JFile::makeSafe(JRequest::getString ( $input.'_name', '', 'post' ));
+		$this->realName = KunenaFile::makeSafe(JRequest::getString ( $input.'_name', '', 'post' ));
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );
@@ -362,7 +360,7 @@ class CKunenaUpload {
 			// Use random non-existing filename.
 			do {
 				$this->fileName = md5(rand());
-			} while (file_exists("{$uploadPath}/{$this->fileName}"));
+			} while (is_file("{$uploadPath}/{$this->fileName}"));
 		} else {
 			// Override filename if given in the parameter
 			if($filename) $uploadedFileBasename = $filename;
@@ -371,9 +369,9 @@ class CKunenaUpload {
 
 			// Rename file if there is already one with the same name
 			$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
-			if (file_exists($uploadPath .'/'. $newFileName)) {
+			if (is_file($uploadPath .'/'. $newFileName)) {
 				$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
-				for ($i=2; file_exists("{$uploadPath}/{$newFileName}"); $i++) {
+				for ($i=2; is_file("{$uploadPath}/{$newFileName}"); $i++) {
 					$newFileName = $uploadedFileBasename . date('_Y-m-d') . "-$i." . $uploadedFileExtension;
 				}
 			}
@@ -383,13 +381,13 @@ class CKunenaUpload {
 
 		// All the processing is complete - now we need to move the file(s) into the final location
 		@chmod($this->fileTemp, 0644);
-		if (! JFile::copy ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
+		if (! KunenaFile::copy($this->fileTemp, $uploadPath.'/'.$this->fileName)) {
 			$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/'.$this->fileName));
 			unlink($this->fileTemp);
 			return false;
 		}
 		unlink($this->fileTemp);
-		JPath::setPermissions($uploadPath.'/'.$this->fileName);
+		KunenaPath::setPermissions($uploadPath.'/'.$this->fileName);
 
 		$this->ready = true;
 		return $this->status = true;

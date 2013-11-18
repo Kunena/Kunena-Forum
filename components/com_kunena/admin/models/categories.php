@@ -282,8 +282,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 		// TODO:
 		/*
 		$topicicons = array ();
-		jimport( 'joomla.filesystem.folder' );
-		$topiciconslist = JFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
+		$topiciconslist = KunenaFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
 		foreach( $topiciconslist as $icon ) {
 			$topicicons[] = JHtml::_ ( 'select.option', $icon, $icon );
 		}

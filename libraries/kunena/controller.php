@@ -69,7 +69,7 @@ class KunenaController extends JControllerLegacy {
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
-		if (file_exists ( $path )) {
+		if (is_file($path)) {
 			require_once $path;
 		} else {
 			JError::raiseError ( 404, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER', ucfirst ( $view ) ) );

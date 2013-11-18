@@ -18,7 +18,7 @@ class KunenaAdminTemplate30 {
 	}
 
 	public function getTemplatePaths($path = '', $fullpath = false) {
-		if ($path) $path = JPath::clean("/$path");
+		if ($path) $path = KunenaPath::clean("/$path");
 		$array = array();
 		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE).'/template/joomla30'.$path;
 

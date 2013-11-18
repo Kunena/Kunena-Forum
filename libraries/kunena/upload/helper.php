@@ -19,7 +19,6 @@ class KunenaUploadHelper {
 	private function __construct() {}
 
 	public static function upload($file, $uploadfolder, $format) {
-		jimport( 'joomla.filesystem.folder' );
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
 
 		$err			= null;
@@ -29,13 +28,12 @@ class KunenaUploadHelper {
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Make the filename safe
-		jimport('joomla.filesystem.file');
-		$file['name']	= JFile::makeSafe($file['name']);
+		$file['name'] = KunenaFile::makeSafe($file['name']);
 
-		if ( !JFolder::exists($uploadfolder) ) return false;
+		if (!is_dir($uploadfolder)) return false;
 
 		if (isset($file['name'])) {
-			$filepath = JPath::clean($uploadfolder.'/'.strtolower($file['name']));
+			$filepath = KunenaPath::clean($uploadfolder.'/'.strtolower($file['name']));
 
 			if (!MediaHelper::canUpload( $file, $err )) {
 				if ($format == 'json') {
@@ -49,7 +47,7 @@ class KunenaUploadHelper {
 				}
 			}
 
-			if (JFile::exists($filepath)) {
+			if (is_file($filepath)) {
 				if ($format == 'json') {
 					//jimport('joomla.error.log');
 					//$log = JLog::getInstance('upload.error.php');
@@ -61,7 +59,7 @@ class KunenaUploadHelper {
 				}
 			}
 
-			if (!JFile::upload($file['tmp_name'], $filepath)) {
+			if (!KunenaFile::upload($file['tmp_name'], $filepath)) {
 				if ($format == 'json') {
 					//jimport('joomla.error.log');
 					//$log = JLog::getInstance('upload.error.php');

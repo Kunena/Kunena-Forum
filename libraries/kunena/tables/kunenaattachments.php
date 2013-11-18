@@ -53,7 +53,7 @@ class TableKunenaAttachments extends KunenaTable {
 			$this->filename_real = $this->filename;
 		}
 		$file = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
-		if (!file_exists($file)) {
+		if (!is_file($file)) {
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_FILE_MISSING', "{$this->folder}/{$this->filename}"));
 		} else {
 			if (!$this->hash) $this->hash = md5_file($file);

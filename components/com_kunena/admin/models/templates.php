@@ -116,7 +116,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 	}
 
 	function getFileContentParsed() {
-		jimport('joomla.filesystem.file');
 		$template = $this->app->getUserState ( 'kunena.edit.template');
 		$filename = $this->app->getUserState ( 'kunena.editcss.filename');
 		$content = file_get_contents(KPATH_SITE.'/template/'.$template.'/css/'.$filename);

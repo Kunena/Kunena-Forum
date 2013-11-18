@@ -129,7 +129,7 @@ class KunenaForumMessageAttachment extends JObject {
 		if (!$protect && !$this->protected) {
 			$file = $this->folder . '/' . $this->filename;
 			$thumbfile = $this->folder . '/thumb/' . $this->filename;
-			if (!file_exists(JPATH_ROOT . '/' . $thumbfile)) {
+			if (!is_file(JPATH_ROOT . '/' . $thumbfile)) {
 				$thumbfile = $file;
 			}
 			return JUri::root(true) .'/'. $this->escape($thumb ? $thumbfile : $file);
@@ -151,7 +151,7 @@ class KunenaForumMessageAttachment extends JObject {
 				// Check for thumbnail and if available, use for display
 				$thumbUrl = $this->getUrl(true);
 				$imageUrl = $this->getUrl();
-				if (file_exists(JPATH_ROOT . '/' . $this->folder . '/thumb/' . $this->filename)) {
+				if (is_file(JPATH_ROOT . '/' . $this->folder . '/thumb/' . $this->filename)) {
 					$imgsize = '';
 				} else {
 					$imgsize = 'width="' . $config->thumbwidth . 'px" height="' . $config->thumbheight . 'px"';
@@ -339,7 +339,7 @@ class KunenaForumMessageAttachment extends JObject {
 	 */
 	public function saveFile($source, $basename = null, $extension = null, $unlink = false, $overwrite = false)
 	{
-		if (!file_exists($source))
+		if (!is_file($source))
 		{
 			throw new InvalidArgumentException(__CLASS__.'::'.__METHOD__.'(): Attachment file not found.');
 		}
@@ -379,7 +379,7 @@ class KunenaForumMessageAttachment extends JObject {
 		if ($source != $destination)
 		{
 			// Create target directory if it does not exist.
-			if (!$overwrite && file_exists($destination))
+			if (!$overwrite && is_file($destination))
 			{
 				throw new RuntimeException(JText::sprintf('Attachment %s already exists.'), $this->filename_real);
 			}
@@ -389,14 +389,14 @@ class KunenaForumMessageAttachment extends JObject {
 				@chmod($source, 0644);
 			}
 
-			$success = JFile::copy($source, $destination);
+			$success = KunenaFile::copy($source, $destination);
 
 			if (!$success)
 			{
 				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $destination));
 			}
 
-			JPath::setPermissions($destination);
+			KunenaPath::setPermissions($destination);
 
 			if ($unlink)
 			{
@@ -535,19 +535,18 @@ class KunenaForumMessageAttachment extends JObject {
 	protected function deleteFile() {
 		if (self::$_directory != substr($this->folder, 0, strlen(self::$_directory)))
 			return;
-		jimport('joomla.filesystem.file');
 		$path = JPATH_ROOT."/{$this->folder}";
 		$filetoDelete = $path.'/'.$this->filename;
-		if (JFile::exists($filetoDelete)) {
-			JFile::delete($filetoDelete);
+		if (is_file($filetoDelete)) {
+			KunenaFile::delete($filetoDelete);
 		}
 		$filetoDelete = $path.'/raw/'.$this->filename;
-		if (JFile::exists($filetoDelete)) {
-			JFile::delete($filetoDelete);
+		if (is_file($filetoDelete)) {
+			KunenaFile::delete($filetoDelete);
 		}
 		$filetoDelete = $path.'/thumb/'.$this->filename;
-		if (JFile::exists($filetoDelete)) {
-			JFile::delete($filetoDelete);
+		if (is_file($filetoDelete)) {
+			KunenaFile::delete($filetoDelete);
 		}
 	}
 

@@ -57,7 +57,7 @@ function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/') {
 }
 
 function loadTranslations($file) {
-	if (!file_exists($file)) return array();
+	if (!is_file($file)) return array();
 	echo "Load $file\n";
 	$contents = file_get_contents($file);
 	$contents = preg_replace('#\r\n#u',"\n",$contents);

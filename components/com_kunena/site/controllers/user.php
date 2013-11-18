@@ -156,11 +156,10 @@ class KunenaControllerUser extends KunenaController {
 		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
 
 		if (! empty ( $DelAvatar ) || ! empty ( $DelProfileInfo )) {
-			jimport ( 'joomla.filesystem.file' );
 			$avatar_deleted = '';
 			// Delete avatar from file system
-			if (JFile::exists ( JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar ) && !stristr($user->avatar,'gallery/')) {
-				JFile::delete ( JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar );
+			if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar ) && !stristr($user->avatar,'gallery/')) {
+				KunenaFile::delete ( JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar );
 				$avatar_deleted = JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
 			}
 			$user->avatar = '';
@@ -425,15 +424,15 @@ class KunenaControllerUser extends KunenaController {
 
 			if (preg_match('|^users/|' , $this->me->avatar)) {
 				// Delete old uploaded avatars:
-				if ( JFolder::exists( KPATH_MEDIA.'/avatars/resized' ) ) {
-					$deletelist = JFolder::folders(KPATH_MEDIA.'/avatars/resized', '.', false, true);
+				if (is_dir( KPATH_MEDIA.'/avatars/resized')) {
+					$deletelist = KunenaFolder::folders(KPATH_MEDIA.'/avatars/resized', '.', false, true);
 					foreach ($deletelist as $delete) {
 						if (is_file($delete.'/'.$this->me->avatar))
-							JFile::delete($delete.'/'.$this->me->avatar);
+							KunenaFile::delete($delete.'/'.$this->me->avatar);
 					}
 				}
-				if ( JFile::exists( KPATH_MEDIA.'/avatars/'.$this->me->avatar ) ) {
-					JFile::delete(KPATH_MEDIA.'/avatars/'.$this->me->avatar);
+				if (is_file(KPATH_MEDIA.'/avatars/'.$this->me->avatar)) {
+					KunenaFile::delete(KPATH_MEDIA.'/avatars/'.$this->me->avatar);
 				}
 			}
 

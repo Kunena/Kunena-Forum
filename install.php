@@ -64,7 +64,7 @@ class Pkg_KunenaInstallerScript {
 
 		// Remove old log file before installation.
 		$logFile = JFactory::getConfig()->get('log_path').'/kunena.php';
-		if (file_exists($logFile)) {
+		if (is_file($logFile)) {
 			@unlink($logFile);
 		}
 
@@ -173,7 +173,7 @@ EOS;
 
 		// Always load Kunena API if it exists.
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (file_exists ( $api )) require_once $api;
+		if (is_file($api)) require_once $api;
 
 		// Do not install over Git repository (K1.6+).
 		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())

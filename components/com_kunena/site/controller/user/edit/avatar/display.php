@@ -49,8 +49,6 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
 		}
 
-		jimport('joomla.filesystem.folder');
-
 		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
 		$this->gallery = $this->input->getString('gallery', '');
 		$this->galleries = $this->getGalleries($path);
@@ -91,7 +89,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 		}
 
 		// TODO: Allow recursive paths.
-		$folders = JFolder::folders($path);
+		$folders = KunenaFolder::folders($path);
 
 		foreach ($folders as $folder)
 		{
@@ -118,7 +116,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	 */
 	protected function getGallery($path)
 	{
-		return JFolder::files($path, $this->imageFilter);
+		return KunenaFolder::files($path, $this->imageFilter);
 	}
 
 	/**

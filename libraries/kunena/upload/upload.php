@@ -415,7 +415,7 @@ class KunenaUpload
 	 */
 	public function cleanup()
 	{
-		if (!$this->filename || !file_exists($this->filename))
+		if (!$this->filename || !is_file($this->filename))
 		{
 			return;
 		}

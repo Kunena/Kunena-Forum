@@ -167,7 +167,7 @@ abstract class KunenaFactory {
 }
 
 	protected static function parseLanguage($lang, $filename) {
-		if (!file_exists($filename)) return false;
+		if (!is_file($filename)) return false;
 
 		$version = phpversion();
 

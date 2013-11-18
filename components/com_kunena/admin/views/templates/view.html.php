@@ -38,7 +38,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 
 		$this->templatefile = KPATH_SITE.'/template/'.$this->templatename.'/params.ini';
 
-		if ( !JFile::exists($this->templatefile))  {
+		if ( !is_file($this->templatefile))  {
 			$ourFileHandle = @fopen($this->templatefile, 'w');
 			if ($ourFileHandle) fclose($ourFileHandle);
 		}
@@ -50,8 +50,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$this->setToolBarChoosecss();
 		$this->templatename = $this->app->getUserState ( 'kunena.edit.template');
 		$this->dir = KPATH_SITE.'/template/'.$this->templatename.'/css';
-		jimport('joomla.filesystem.folder');
-		$this->files = JFolder::files($this->dir, '\.css$', false, false);
+		$this->files = KunenaFolder::files($this->dir, '\.css$', false, false);
 		$this->display();
 	}
 

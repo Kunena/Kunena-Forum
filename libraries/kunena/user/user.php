@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.utilities.date' );
-jimport ( 'joomla.filesystem.file' );
 
 /**
  * Class KunenaUser

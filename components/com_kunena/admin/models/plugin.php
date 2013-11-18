@@ -187,9 +187,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			$this->_cache[$pk]->params = $registry->toArray();
 
 			// Get the plugin XML.
-			$path = JPath::clean(JPATH_PLUGINS.'/'.$table->folder.'/'.$table->element.'/'.$table->element.'.xml');
+			$path = KunenaPath::clean(JPATH_PLUGINS.'/'.$table->folder.'/'.$table->element.'/'.$table->element.'.xml');
 
-			if (file_exists($path))
+			if (is_file($path))
 			{
 				$this->_cache[$pk]->xml = simplexml_load_file($path);
 			} else {
@@ -243,8 +243,6 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 */
 	protected function preprocessForm(JForm $form, $data, $group = 'content')
 	{
-		jimport('joomla.filesystem.path');
-
 		$folder		= $this->getState('item.folder');
 		$element	= $this->getState('item.element');
 		$lang		= JFactory::getLanguage();
@@ -271,8 +269,8 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			$app->redirect(JRoute::_('index.php?option=com_kunena&view=plugins', false));
 		}
 
-		$formFile = JPath::clean(JPATH_PLUGINS . '/' . $folder . '/' . $element . '/' . $element . '.xml');
-		if (!file_exists($formFile))
+		$formFile = KunenaPath::clean(JPATH_PLUGINS . '/' . $folder . '/' . $element . '/' . $element . '.xml');
+		if (!is_file($formFile))
 		{
 			throw new Exception(JText::sprintf('COM_PLUGINS_ERROR_FILE_NOT_FOUND', $element . '.xml'));
 		}
@@ -283,7 +281,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			||	$lang->load('plg_'.$folder.'_'.$element, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 			||	$lang->load('plg_'.$folder.'_'.$element, JPATH_PLUGINS.'/'.$folder.'/'.$element, $lang->getDefault(), false, false);
 
-		if (file_exists($formFile))
+		if (is_file($formFile))
 		{
 			// Get the plugin form.
 			if (!$form->loadFile($formFile, false, '//config'))

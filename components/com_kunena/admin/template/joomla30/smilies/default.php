@@ -17,6 +17,10 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
+if (version_compare(JVERSION, '3.2', '>'))
+{
+	JHtml::_('behavior.tabstate');
+}
 ?>
 
 <script type="text/javascript">

@@ -404,6 +404,7 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `hold_time`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `time_hold` ( `time` , `hold` );</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `hold` ( `hold` );</query>
+      <query mode="silenterror">ALTER TABLE `#__kunena_user_categories` CHANGE `allreadtime` `allreadtime` INT( 11 ) NULL DEFAULT NULL ;</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		 </version>

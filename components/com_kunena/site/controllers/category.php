@@ -58,8 +58,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			if ($session->userid) {
 				// Mark all unread topics in the category to read
 				$userinfo = $category->getUserInfo();
-				// FIXME: Joomla 2.5 ->toSql()
-				$userinfo->allreadtime = JFactory::getDate()->toSql();
+				$userinfo->allreadtime = JFactory::getDate()->toUnix();
 				if (!$userinfo->save()) {
 					$this->app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 				} else {

@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaInstaller {
 	// Minimum supported versions during downgrade.
-	protected static $downgrade = array('3.1' => '3.0.90-DEV', '3.0' => '3.0.0');
+	protected static $downgrade = array('3.1' => '3.0.95');
 
 	protected static $tables = null;
 

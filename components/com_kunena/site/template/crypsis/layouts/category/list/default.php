@@ -14,8 +14,9 @@ defined('_JEXEC') or die;
       name="kcategoryform" id="kcategoryform">
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<h2>
+	<h3>
 		<?php echo $this->escape($this->headerText); ?>
+		<span class="badge badge-info"><?php echo (int) $this->pagination->total; ?></span>
 
 		<?php if (!empty($this->actions)) : ?>
 		<div class="input-append pull-right">
@@ -25,7 +26,12 @@ defined('_JEXEC') or die;
 		</div>
 		<?php endif; ?>
 
-	</h2>
+		<?php if (!empty($this->embedded)) : ?>
+		<div class="pull-right">
+			<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+		</div>
+		<?php endif; ?>
+	</h3>
 
 	<table class="table table-striped table-bordered">
 
@@ -61,16 +67,16 @@ defined('_JEXEC') or die;
 			}
 			?>
 		</tbody>
+		<?php if (!empty($this->actions)) : ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo empty($this->actions) ? 3 : 4 ?>">
 					<?php // FIXME: Add category actions (unsubscribe selected) ?>
-					<div class="pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
 				</td>
 			</tr>
 		</tfoot>
+		<?php endif; ?>
+
 		<?php endif; ?>
 
 	</table>

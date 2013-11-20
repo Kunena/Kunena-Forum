@@ -32,8 +32,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
 			->set('state', $this->state)
-			->set('topicActions', $this->topicActions)
-			->set('actionMove', $this->actionMove);
+			->set('actions', $this->actions);
 
 		return $content;
 	}
@@ -143,6 +142,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			$this->prepareTopics();
 		}
 
+		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		switch ($this->state->get('list.mode'))
 		{
 			case 'topics' :
@@ -168,7 +168,6 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
 		}
 
-		$this->topicActions = $this->model->getTopicActions();
-		$this->actionMove = $this->model->getActionMove();
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 	}
 }

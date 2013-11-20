@@ -623,11 +623,11 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			return false;
 		}
 		$session = KunenaFactory::getSession ();
-		if ($this->last_post_time <= $session->lasttime) {
+		if ($this->last_post_time <= $session->getAllReadTime()) {
 			return false;
 		}
 		$userinfo = KunenaForumCategoryUserHelper::get($this->getCategory(), $user);
-		if ($userinfo->allreadtime && $this->last_post_time <= JFactory::getDate($userinfo->allreadtime)->toUnix()) {
+		if ($userinfo->allreadtime && $this->last_post_time <= $userinfo->allreadtime) {
 			return false;
 		}
 		$read = KunenaForumTopicUserReadHelper::get($this, $user);
@@ -1051,9 +1051,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			if (! $category->update($this, $topicDelta, $postDelta)) {
 				$this->setError ( $category->getError () );
 			}
-		}
-		if ($isNew) {
-			KunenaForumTopicUserReadHelper::purge();
 		}
 
 		return true;

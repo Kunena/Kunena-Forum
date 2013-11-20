@@ -112,11 +112,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			return false;
 		}
 		$session = KunenaFactory::getSession ();
-		if ($this->time < $session->lasttime) {
+		if ($this->time < $session->getAllReadTime()) {
 			return false;
 		}
 		$allreadtime = KunenaForumCategoryUserHelper::get($this->getCategory(), $user)->allreadtime;
-		if ($allreadtime && $this->time < JFactory::getDate($allreadtime)->toUnix()) {
+		if ($allreadtime && $this->time < $allreadtime) {
 			return false;
 		}
 		$read = KunenaForumTopicUserReadHelper::get($this->getTopic(), $user);

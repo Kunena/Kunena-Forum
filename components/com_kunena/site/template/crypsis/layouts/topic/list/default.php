@@ -47,7 +47,7 @@ $colspan = empty($this->topicActions) ? 5 : 6;
 				</td>
 
 				<?php if (!empty($this->topicActions)) : ?>
-				<td>
+				<td class="center">
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>

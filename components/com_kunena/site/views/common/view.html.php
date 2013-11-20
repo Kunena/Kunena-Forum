@@ -387,17 +387,17 @@ class KunenaViewCommon extends KunenaView {
 		switch ($mode)
 		{
 			case 'topic' :
-				$rss_type = 'topics';
+				$rss_type = 'mode=topics';
 				break;
 			case 'recent' :
-				$rss_type = 'replies';
+				$rss_type = 'mode=replies';
 				break;
 			case 'post' :
-				$rss_type = 'latest';
+				$rss_type = 'layout=posts';
 				break;
 		}
 
-		return KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&mode={$rss_type}{$params}", $xhtml);
+		return KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}{$params}", $xhtml);
 	}
 
 	function getRSSLink($name, $rel = 'follow', $params = '') {

@@ -14,6 +14,7 @@
 	<scriptfile>install/install.script.php</scriptfile>
 	<files folder="site">
 		<filename>index.html</filename>
+		<filename>jomsocial_rule.xml</filename>
 		<filename>kunena.php</filename>
 		<filename>router.php</filename>
 		<folder>controllers</folder>

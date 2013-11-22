@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
 	function create_new_field_now(optionid, options) {
 		var polldiv = jQuery('<div></div>').attr('class','polloption').appendTo('#kbbcode-poll-options');
 			
-		var label = jQuery('<label>').text(Joomla.JText._('KUNENA_POLL_OPTION_NAME')+' '+optionid+' ');
+		var label = jQuery('<label>').text(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+' '+optionid+' ');
 		polldiv.append(label);
 			
 		newInput = document.createElement('input');
@@ -22,7 +22,8 @@ jQuery(document).ready(function() {
 		newInput.setAttribute('id', 'field_option'+optionid);
 		newInput.setAttribute('class', 'inputbox');
 		newInput.setAttribute('maxlength', '25');
-		newInput.setAttribute('onmouseover', 'document.id("helpbox").set("value", "'+Joomla.JText._('KUNENA_EDITOR_HELPLINE_OPTION')+'")');
+		newInput.setAttribute('type', 'text');
+		newInput.setAttribute('onmouseover', 'document.id("helpbox").set("value", "'+Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_OPTION')+'")');
 		polldiv.append(newInput);
 	}
 	

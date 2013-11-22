@@ -32,7 +32,7 @@ define ( 'KURL_SITE', JUri::Root () . KPATH_COMPONENT_RELATIVE . '/' );
 define ( 'KURL_MEDIA', JUri::Root () . 'media/' . KUNENA_NAME . '/' );
 
 $libraryFile = JPATH_PLATFORM . '/kunena/bootstrap.php';
-if (file_exists($libraryFile)) {
+if (is_file($libraryFile)) {
 	require_once $libraryFile;
 }
 

@@ -143,8 +143,35 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 		if ($content instanceof Exception)
 		{
+			// Build data from exceptions.
+			$exceptions = array();
+			$e = $content;
+
+			do
+			{
+				$exception = array(
+					'code' => $e->getCode(),
+					'message' => $e->getMessage()
+				);
+
+				if (JDEBUG)
+				{
+					$exception += array(
+						'type' => get_class($e),
+						'file' => $e->getFile(),
+						'line' => $e->getLine()
+					);
+				}
+
+				$exceptions[] = $exception;
+				$e = $e->getPrevious();
+			}
+			while (JDEBUG && $e);
+
+			// Create response.
 			$response->success = false;
 			$response->message = $content->getcode() . ' ' . $content->getMessage();
+			$response->data = array('exceptions' => $exceptions);
 		}
 		else
 		{

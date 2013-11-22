@@ -113,4 +113,90 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 		$this->setTitle($headerText);
 	}
+
+	protected function getTopicActions(
+		array $topics,
+		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete')
+	)
+	{
+		if (!$actions) return null;
+
+		$options = array();
+		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options['unsubscribe'] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$options['unfavorite'] = JHtml::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
+		$options['move'] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		$options['approve'] = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		$options['delete'] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['permdelete'] = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		$options['undelete'] = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+
+		// Only display actions that are available to user.
+		$actions = array_combine($actions, array_fill(0, count($actions), false));
+		array_unshift($actions, $options['none']);
+
+		foreach ($topics as $topic)
+		{
+			foreach ($actions as $action => $value)
+			{
+				if ($value !== false)
+				{
+					continue;
+				}
+
+				switch ($action) {
+					case 'unsubscribe':
+					case 'unfavorite':
+						$actions[$action] = isset($options[$action]) ? $options[$action] : false;
+						break;
+					default:
+						$actions[$action] = isset($options[$action]) && $topic->isAuthorised($action) ? $options[$action] : false;
+				}
+			}
+		}
+
+		$actions = array_filter($actions, function($item) { return !empty($item); });
+
+		if (count($actions) == 1) return null;
+
+		return $actions;
+	}
+
+	protected function getMessageActions(
+		array $messages,
+		$actions = array('approve', 'undelete', 'delete', 'permdelete')
+	)
+	{
+		if (!$actions) return null;
+
+		$options = array();
+		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$options['approve'] = JHtml::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		$options['delete'] = JHtml::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['permdelete'] = JHtml::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		$options['undelete'] = JHtml::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+
+		// Only display actions that are available to user.
+		$actions = array_combine($actions, array_fill(0, count($actions), false));
+		array_unshift($actions, $options['none']);
+
+		foreach ($messages as $message)
+		{
+			foreach ($actions as $action => $value)
+			{
+				if ($value !== false)
+				{
+					continue;
+				}
+
+				$actions[$action] = isset($options[$action]) && $message->isAuthorised($action) ? $options[$action] : false;
+			}
+		}
+
+		$actions = array_filter($actions, function($item) { return !empty($item); });
+
+		if (count($actions) == 1) return null;
+
+		return $actions;
+	}
 }

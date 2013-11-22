@@ -1881,7 +1881,7 @@ class lessc {
 				$root = $in['root'];
 			} elseif (isset($in['files']) and is_array($in['files'])) {
 				foreach ($in['files'] as $fname => $ftime ) {
-					if (!file_exists($fname) or filemtime($fname) > $ftime) {
+					if (!is_file($fname) or filemtime($fname) > $ftime) {
 						// One of the files we knew about previously has changed
 						// so we should look at our incoming root again.
 						$root = $in['root'];

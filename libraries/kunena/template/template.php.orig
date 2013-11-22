@@ -332,8 +332,12 @@ HTML;
 	}
 
 	public function getTemplatePaths($path = '', $fullpath = false) {
+<<<<<<< HEAD
 		$app = JFactory::getApplication();
+		if ($path) $path = JPath::clean("/$path");
+=======
 		if ($path) $path = KunenaPath::clean("/$path");
+>>>>>>> 7aa09374faaeb0ad3cf6fa8336db19848a3d52bd
 		$array = array();
 		foreach (array_reverse($this->default) as $template) {
 			$array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE)."/template/".$template.$path;

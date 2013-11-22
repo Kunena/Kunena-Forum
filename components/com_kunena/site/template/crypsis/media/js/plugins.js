@@ -17,6 +17,14 @@ function hideMessage() {
 	div.style.display = "none";
 }
 
+/* Function used to ordering the data by clicking on column title */
+function kunenatableOrdering( order, dir, task, form ) {
+	var form=document.getElementById(form);
+	form.filter_order.value=order;
+	form.filter_order_Dir.value=dir;
+	form.submit( task );
+}
+
 /**
  *  Helper function for to perform JSON request for preview
  */
@@ -110,6 +118,11 @@ jQuery(document).ready(function() {
 		} else {
 			jQuery("#kchecktarget").attr('disabled', true);
 		}
-	}); 
+	});
+	
+	/* Hide search form when there are search results found */
+	if ( jQuery('#kunena_search_results').is(':visible') ) {
+		jQuery('#search').hide();
+	}
 });
 

@@ -84,7 +84,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			'post.undelete'=>array('Read'),
 			'post.permdelete'=>array('Read'),
 			'post.attachment.read'=>array('Read'),
-			'post.attachment.create'=>array('Read','Unlocked'),
+			'post.attachment.create'=>array('Own','Unlocked'),
 			'post.attachment.delete'=>array(), // TODO: In the future we might want to restrict this: array('Read','Unlocked'),
 		);
 
@@ -298,11 +298,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	 * @return KunenaForumTopicPoll
 	 */
 	public function getPoll() {
-		static $poll = null;
-		if (!$poll) {
-			$poll = KunenaForumTopicPollHelper::get($this->poll_id);
-			$poll->threadid = $this->id;
-		}
+		$poll = KunenaForumTopicPollHelper::get($this->poll_id);
+		$poll->threadid = $this->id;
+
 		return $poll;
 	}
 
@@ -625,11 +623,11 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			return false;
 		}
 		$session = KunenaFactory::getSession ();
-		if ($this->last_post_time <= $session->lasttime) {
+		if ($this->last_post_time <= $session->getAllReadTime()) {
 			return false;
 		}
 		$userinfo = KunenaForumCategoryUserHelper::get($this->getCategory(), $user);
-		if ($userinfo->allreadtime && $this->last_post_time <= JFactory::getDate($userinfo->allreadtime)->toUnix()) {
+		if ($userinfo->allreadtime && $this->last_post_time <= $userinfo->allreadtime) {
 			return false;
 		}
 		$read = KunenaForumTopicUserReadHelper::get($this, $user);
@@ -1053,9 +1051,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			if (! $category->update($this, $topicDelta, $postDelta)) {
 				$this->setError ( $category->getError () );
 			}
-		}
-		if ($isNew) {
-			KunenaForumTopicUserReadHelper::purge();
 		}
 
 		return true;

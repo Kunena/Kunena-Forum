@@ -36,7 +36,8 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			->set('messages', $this->messages)
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
-			->set('state', $this->state);
+			->set('state', $this->state)
+			->set('actions', $this->actions);
 
 		return $content;
 	}
@@ -156,19 +157,27 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		{
 			case 'unapproved':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				$actions = array('approve', 'delete', 'permdelete');
 				break;
 			case 'deleted':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				$actions = array('undelete', 'delete', 'permdelete');
 				break;
 			case 'mythanks':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				$actions = array();
 				break;
 			case 'thankyou':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				$actions = array();
 				break;
 			case 'recent':
 			default:
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+				$actions = array('delete', 'permdelete');
+
 		}
+
+		$this->actions = $this->getMessageActions($this->messages, $actions);
 	}
 }

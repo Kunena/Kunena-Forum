@@ -15,7 +15,8 @@ $mmm=0;
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
 ?>
-<div class="btn-toolbar pull-right">
+<div class="kfrontend">
+ <div class="btn-toolbar pull-right">
 
 	<?php if ($this->me->exists()) : ?>
 	<div class="btn-group">
@@ -39,7 +40,7 @@ foreach ($this->sections as $section) :
 	<?php endif; ?>
 
 </div>
-<h2>
+<h3>
 
 	<?php if ($section->parent_id) : ?>
 	<?php echo $this->getCategoryLink($section->getParent(), $this->escape($section->getParent()->name)); ?> /
@@ -48,7 +49,7 @@ foreach ($this->sections as $section) :
 	<?php echo $this->getCategoryLink($section, $this->escape($section->name)); ?>
 	<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 			$this->formatLargeNumber($section->getTopics())); ?>)</small>
-</h2>
+</h3>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 	<table class="table table-striped table-hover table-bordered table-condensed">
@@ -193,7 +194,7 @@ foreach ($this->sections as $section) :
 
 	</table>
 </div>
-
+</div>
 <!-- Begin: Category Module Position -->
 <?php echo $this->subLayout('Page/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 <!-- Finish: Category Module Position -->

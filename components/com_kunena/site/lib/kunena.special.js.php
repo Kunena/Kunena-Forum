@@ -12,10 +12,8 @@
 defined( '_JEXEC' ) or die();
 
 /**
- * Deprecated class placeholder. This file is keep for legacy users which still use blue eagle template.
+ * Deprecated. This file is keep for legacy users which still use blue eagle template.
  *
- * @package Kunena.Site
- * @subpackage Lib
  * @since 2.0.0
  * @deprecated 3.0.0
  */

@@ -85,8 +85,8 @@ abstract class KunenaCacheHelper {
 	public static function clearCacheFiles() {
 		// Delete all cached files.
 		$cacheDir = JPATH_CACHE.'/kunena';
-		if (is_dir($cacheDir)) JFolder::delete($cacheDir);
-		JFolder::create($cacheDir);
+		if (is_dir($cacheDir)) KunenaFolder::delete($cacheDir);
+		KunenaFolder::create($cacheDir);
 	}
 
 	/**
@@ -95,8 +95,8 @@ abstract class KunenaCacheHelper {
 	public static function clearTemplateFiles() {
 		// Delete all cached files.
 		$cacheDir = JPATH_ROOT."/media/kunena/cache";
-		if (is_dir($cacheDir)) JFolder::delete($cacheDir);
-		JFolder::create($cacheDir);
+		if (is_dir($cacheDir)) KunenaFolder::delete($cacheDir);
+		KunenaFolder::create($cacheDir);
 	}
 
 	/**

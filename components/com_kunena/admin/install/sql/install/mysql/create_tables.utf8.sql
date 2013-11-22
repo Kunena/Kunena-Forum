@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_categories` (
 	`user_id` int(11) NOT NULL,
 	`category_id` int(11) NOT NULL,
 	`role` tinyint(4) NOT NULL default '0',
-	`allreadtime` datetime NULL,
+	`allreadtime` int(11) NOT NULL default '0',
 	`subscribed` tinyint(4) NOT NULL default '0',
 	`params` text NOT NULL,
 	PRIMARY KEY (user_id,category_id),

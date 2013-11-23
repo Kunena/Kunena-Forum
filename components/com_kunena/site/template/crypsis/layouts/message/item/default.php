@@ -16,32 +16,31 @@ $attachments = $this->message->getAttachments();
 ?>
 
 <div class="chat row-fluid">
-	<div class="bubble <?php echo $this->profile->isMyself() ? 'me' : 'you'; ?> span12">
-		<h3>
+	<div class="bubble span12">
+		<h5>
 			<?php echo $this->profile->getLink(); ?>
 			<small>
-				<?php echo (!$isReply) ? 'Created the topic.' : 'Replied the topic.'; ?>
+				<?php echo (!$isReply) ? 'created the topic:' : 'replied the topic'; ?>
+				<?php if ($this->message->subject) : ?>
+			<?php echo $this->message->displayField('subject'); ?>
+		<?php endif; ?>
 			</small>
 			<small class="pull-right">
 				<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				<a href="#<?php echo $this->message->id; ?>">#<?php echo $this->location; ?></a>
 			</small>
-		</h3>
+		</h5>
 
-		<?php if ($this->message->subject) : ?>
-		<h3>
-			<?php echo ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $this->message->displayField('subject'); ?>
-		</h3>
-		<?php endif; ?>
-
+		<hr>
+		
 		<p class="kmsg">
 			<?php echo $this->message->displayField('message'); ?>
 		</p>
 
 		<?php if (!empty($attachments)) : ?>
-		<h4>
+		<h5>
 			<?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?>
-		</h4>
+		</h5>
 		<ul class="thumbnails">
 
 			<?php foreach($attachments as $attachment) : ?>
@@ -58,26 +57,32 @@ $attachments = $this->message->getAttachments();
 
 
 		<?php if ($signature) : ?>
+		<h5>
 		<div>
 			<p><?php echo $signature; ?></p>
 		</div>
+		</h5>
 		<?php endif ?>
 
 		<?php if (!empty($this->reportMessageLink)) : ?>
+		<h5>
 		<div class="pull-left">
 			<p>
 				<i class="icon-warning"></i>
 				<?php echo $this->reportMessageLink; ?>
 			</p>
 		</div>
+		</h5>
 		<?php endif; ?>
 
 		<?php if (!empty($this->ipLink)) : ?>
+		<h5>
 		<div class="pull-right">
 			<p>
 				<?php echo $this->ipLink; ?>
 			</p>
 		</div>
+		</h5>
 		<?php endif; ?>
 
 		<div class="clearfix"></div>

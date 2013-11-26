@@ -35,7 +35,7 @@ defined ( '_JEXEC' ) or die ();
 						<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
 						<td>
 							<div class="input-append">
-								<input class="span1" type="text" name="prune_days" value="30" />
+								<input class="span3" type="text" name="prune_days" value="30" />
 								<span class="add-on"><?php echo JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></span>
 							</div>
 						</td>

@@ -16,6 +16,11 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
+if (version_compare(JVERSION, '3.2', '>'))
+{
+	JHtml::_('behavior.tabstate');
+}
+
 $db = JFactory::getDBO();
 $document = JFactory::getDocument();
 $document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'

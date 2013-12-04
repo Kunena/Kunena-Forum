@@ -16,16 +16,12 @@ defined ( '_JEXEC' ) or die ();
 <div class="kblock">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="frontstats_tbody"></a></span>
-		<?php if (!$this->category->isSection()) : ?>
-			<h1><span><?php echo $this->category->name ?></span></h1>
-		<?php else: ?>
-			<h2><span><?php echo JText::_('COM_KUNENA_FORUM_HEADER'); ?></span></h2>
-		<?php endif; ?>
+		<h2><span><?php echo JText::_('COM_KUNENA_FORUM_HEADER'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="frontstats_tbody">
 		<div class="kbody">
 			<div class="kfheadercontent">
-				<h2><?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ); ?></h2>
+				<?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ); ?>
 			</div>
 		</div>
 	</div>

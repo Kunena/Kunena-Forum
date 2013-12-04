@@ -15,6 +15,11 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
+
+if (version_compare(JVERSION, '3.2', '>'))
+{
+	JHtml::_('behavior.tabstate');
+}
 ?>
 
 <div id="kunena" class="admin override">
@@ -603,6 +608,11 @@ JHtml::_('dropdown.init');
 												<td><?php echo JText::_('COM_KUNENA_A_IP_TRACKING') ?></td>
 												<td><?php echo $this->lists ['iptracking'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_IP_TRACKING_DESC') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED') ?></td>
+												<td><?php echo $this->lists ['statslink_allowed'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
 											</tr>
 										</tbody>
 									</table>

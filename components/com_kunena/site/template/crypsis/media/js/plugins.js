@@ -7,16 +7,6 @@
  * @link http://www.kunena.org
  **/
 
-function showMessage() {
-	div = document.getElementById('tow', 'test1', 'k', 'row');
-	div.style.display = "block";
-}
-
-function hideMessage() {
-	div = document.getElementById('tow','test2', 'k', 'row');
-	div.style.display = "none";
-}
-
 /* Function used to ordering the data by clicking on column title */
 function kunenatableOrdering( order, dir, task, form ) {
 	var form=document.getElementById(form);

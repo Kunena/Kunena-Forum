@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 /** @var KunenaUser $user */
 $user = $this->user;
-$avatar = $user->getAvatarImage('img-rounded', 120, 120);
+$avatar = $user->getAvatarImage('img-polaroid', 120, 120);
 $show = KunenaConfig::getInstance()->showuserstats;
 if ($show)
 {
@@ -24,10 +24,6 @@ if ($show)
 <ul class="unstyled center">
 	<li>
 		<strong><?php echo $user->getLink(); ?></strong>
-	</li>
-
-	<li>
-		( <?php echo JText::_($user->getType()); ?> )
 	</li>
 
 	<?php if ($avatar) : ?>
@@ -63,35 +59,35 @@ if ($show)
 
 	<?php if ($show) : ?>
 	<li>
-		<?php echo JText::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
+		<?php // Todo:: Make slide down field echo JText::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
 	</li>
 	<?php endif; ?>
 
 	<?php if ($show && isset($user->thankyou)) : ?>
 	<li>
-		<?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
+		<?php // Todo:: Make slide down field echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
 	</li>
 	<?php endif; ?>
 
 	<?php if ($show && isset($user->points)) : ?>
 	<li>
-		<?php echo JText::_('COM_KUNENA_AUP_POINTS') . ' ' . (int) $user->points; ?>
+		<?php // Todo:: Make slide down field echo JText::_('COM_KUNENA_AUP_POINTS') . ' ' . (int) $user->points; ?>
 	</li>
 	<?php endif; ?>
 
 	<?php if ($show && !empty($user->medals)) : ?>
 	<li>
-		<?php echo implode(' ', $user->medals); ?>
+		<?php // Todo:: Make slide down field echo implode(' ', $user->medals); ?>
 	</li>
 	<?php endif; ?>
 
 	<li>
-		<?php echo $user->profileIcon('gender'); ?>
-		<?php echo $user->profileIcon('birthdate'); ?>
-		<?php echo $user->profileIcon('location'); ?>
-		<?php echo $user->profileIcon('website'); ?>
-		<?php echo $user->profileIcon('private'); ?>
-		<?php echo $user->profileIcon('email'); ?>
+		<?php // Todo:: Make slide down field echo $user->profileIcon('gender'); ?>
+		<?php // Todo:: Make slide down field echo $user->profileIcon('birthdate'); ?>
+		<?php // Todo:: Make slide down field echo $user->profileIcon('location'); ?>
+		<?php // Todo:: Make slide down field echo $user->profileIcon('website'); ?>
+		<?php // Todo:: Make slide down field echo $user->profileIcon('private'); ?>
+		<?php // Todo:: Make slide down field echo $user->profileIcon('email'); ?>
 	</li>
 	<?php endif ?>
 </ul>

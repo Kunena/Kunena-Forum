@@ -108,7 +108,7 @@ class KunenaAdminControllerTrash extends KunenaController {
 			// Error...
 		}
 
-		if ( $nb_items > 0 ) $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nb_items), 'green' );
+		if ( $nb_items > 0 ) $this->app->enqueueMessage(JText::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nb_items));
 
 		KunenaUserHelper::recount();
 		KunenaForumTopicHelper::recount();

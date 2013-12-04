@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 	<div class="kcontainer" id="frontstats_tbody">
 		<div class="kbody">
 			<div class="kfheadercontent">
-				<h2><?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ); ?></h2>
+				<?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ); ?>
 			</div>
 		</div>
 	</div>
@@ -53,7 +53,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php if (!empty($this->topicActions)) : ?>
 		<span class="kcheckbox select-toggle"><input class="kcheckall" type="checkbox" name="toggle" value="" /></span>
 		<?php endif; ?>
-		<h3><span><?php echo $this->escape($this->headerText); ?></span></h3>
+		<span><?php echo $this->escape($this->headerText); ?></span>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">

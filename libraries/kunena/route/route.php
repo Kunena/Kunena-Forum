@@ -375,7 +375,7 @@ abstract class KunenaRoute {
 				$r = array();
 				break;
 			case 'search':
-				$r = array('q', 'titleonly', 'searchuser', 'starteronly', 'exactname', 'replyless',
+				$r = array('q', 'query', 'titleonly', 'searchuser', 'starteronly', 'exactname', 'replyless',
 					'replylimit', 'searchdate', 'beforeafter', 'sortby', 'order', 'childforums', 'catids',
 					'show', 'limitstart', 'limit');
 				break;

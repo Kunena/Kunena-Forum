@@ -45,7 +45,7 @@ window.addEvent('domready', function() {
 					</legend>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:
-						<input type="text" name="q"
+						<input type="text" name="query"
 						       value="<?php echo $this->escape($this->state->get('searchwords')); ?>" />
 					</label>
 					<?php $this->displayModeList('mode'); ?>

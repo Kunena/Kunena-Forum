@@ -33,7 +33,7 @@ if ($this->config->showuserstats)
 
 	<?php if ($avatar) : ?>
 	<div class="span3 center">
-		<div class="thumbnail" style="width: 200px; height: 200px;">
+		<div class="thumbnail" style="width: auto; height: auto;">
 			<?php echo $avatar; ?>
 		</div>
 	</div>

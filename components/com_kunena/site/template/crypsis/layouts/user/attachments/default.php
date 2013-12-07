@@ -91,7 +91,7 @@ $attachments = $this->attachments;
 
 					<?php if ($canDelete) : ?>
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
-						<img src="<?php echo $this->template->getImagePath('icons/publish_x.png'); ?>" alt="" title="" />
+						<i class="icon-remove hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 					</a>
 					<?php endif ?>
 

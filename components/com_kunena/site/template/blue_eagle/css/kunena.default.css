@@ -1091,3 +1091,10 @@ ul.autocompleter-choices li {
 	content: none !important;
 }
 /* --------------------------------------------------------------- */
+
+/* Fix to avoid broken controls with google maps
+----------------------------------------------------------------------------------------------- */
+#Kunena div.kmsgbody div.kmsgtext div.kgooglemap img { 
+	max-width: none !important;
+}
+/* --------------------------------------------------------------- */

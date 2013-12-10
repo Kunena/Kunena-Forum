@@ -137,7 +137,14 @@ defined ( '_JEXEC' ) or die ();
 							$instance = KunenaForumMessageAttachmentHelper::get($attachment->id);
 							$message = $instance->getMessage();
 							$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
-							if ( $instance->isImage($attachment->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+							if ( $instance->isImage($attachment->filetype) && is_file($path))
+							{
+								list($width, $height) = getimagesize( $path );
+							}
+							else {
+								$width = null;
+								$height = null;
+							}
 							?>
 								<tr <?php echo 'class = "row' . $k . '"';?>>
 									<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>

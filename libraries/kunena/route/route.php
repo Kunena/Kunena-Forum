@@ -123,6 +123,44 @@ abstract class KunenaRoute {
 		return self::$uris[$key];
 	}
 
+
+	/**
+	 * Get the referrer page.
+	 *
+	 * If there's no referrer or it's external, Kunena will return default page.
+	 * Also referrers back to tasks are removed.
+	 *
+	 * @param string $default  Default page to return into.
+	 * @param string $anchor   Anchor (location in the page).
+	 *
+	 * @return string
+	 */
+	public static function getReferrer($default = 'index.php?option=com_kunena', $anchor = null) {
+		$app = JFactory::getApplication();
+		$default = JUri::base() . ($app->isSite() ? ltrim(KunenaRoute::_($default), '/') : $default);
+		$referrer = $app->input->server->getString('HTTP_REFERER');
+
+		$uri = new JUri($referrer ? $referrer : $default);
+		if (JUri::isInternal($uri->toString())) {
+			// Parse route.
+			$vars = $app->getRouter()->parse($uri);
+			$uri = new JUri('index.php');
+			$uri->setQuery($vars);
+
+			// Make sure we do not return into a task.
+			$uri->delVar('task');
+			$uri->delVar(JSession::getFormToken());
+		} elseif ($app->isAdmin()) {
+			// Pass..
+		} else {
+			$uri = JUri::getInstance($default);
+		}
+
+		if ($anchor) $uri->setFragment($anchor);
+
+		return 'index.php'.$uri->toString(array('query', 'fragment'));
+	}
+
 	/**
 	 * @param JUri $uri
 	 * @param bool $object
@@ -305,13 +343,13 @@ abstract class KunenaRoute {
 				$get = self::$current->getQuery(true);
 				// If values are both in GET and POST, they are only stored in POST
 				foreach (JRequest::get( 'post' ) as $key=>$value) {
-					if (($key == 'view' || $key == 'layout' || $key == 'task') && !preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+					if (in_array($key, array('view', 'layout', 'task')) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
 						$get[$key] = $value;
 				}
 				// Make sure that request URI is not broken
 				foreach (JRequest::get( 'get' ) as $key=>$value) {
 					if (preg_match('/[^a-zA-Z]/', $key)) continue;
-					if ($key == 'q' || $key == 'searchuser') {
+					if (in_array($key, array('q', 'query', 'searchuser'))) {
 						// Allow all values
 					} elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
 						// Illegal value

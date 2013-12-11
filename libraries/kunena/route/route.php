@@ -343,13 +343,13 @@ abstract class KunenaRoute {
 				$get = self::$current->getQuery(true);
 				// If values are both in GET and POST, they are only stored in POST
 				foreach (JRequest::get( 'post' ) as $key=>$value) {
-					if (($key == 'view' || $key == 'layout' || $key == 'task') && !preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+					if (in_array($key, array('view', 'layout', 'task')) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
 						$get[$key] = $value;
 				}
 				// Make sure that request URI is not broken
 				foreach (JRequest::get( 'get' ) as $key=>$value) {
 					if (preg_match('/[^a-zA-Z]/', $key)) continue;
-					if ($key == 'q' || $key == 'searchuser') {
+					if (in_array($key, array('q', 'query', 'searchuser'))) {
 						// Allow all values
 					} elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
 						// Illegal value

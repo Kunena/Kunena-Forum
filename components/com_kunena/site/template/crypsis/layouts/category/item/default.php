@@ -32,12 +32,6 @@ $categoryActions = $this->getCategoryActions();
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<?php if (!empty($this->topicActions)) : ?>
-	<label class="pull-right">
-		<input class="kcheckall" type="checkbox" name="toggle" value="" />
-	</label>
-	<?php endif; ?>
-
 	<?php if (empty($this->topics)) : ?>
 	<div class="alert">
 		<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
@@ -54,19 +48,34 @@ $categoryActions = $this->getCategoryActions();
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>
-				<td colspan="3">
-					<ul class="inline pull-right">
+				<td colspan="1">
+					<ul class="inline no-margin">
 
 						<?php if ($categoryActions) : ?>
 						<li class="hidden-phone">
 							<?php echo implode($categoryActions); ?>
 						</li>
 						<?php endif; ?>
+					</ul>
+				</td>
+				<td colspan="2" class="center">
+					<ul class="inline no-margin">
 
-						<li>
+					  <li>
 							<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
 						</li>
 					</ul>
+				</td>
+				<td colspan="1">
+					<ul class="inline center no-margin">
+					<li>
+							<?php if (!empty($this->topicActions)) : ?>
+								<label>
+								<input class="kcheckall" type="checkbox" name="toggle" value="" />
+								</label>
+							<?php endif; ?>
+						</li>
+						</ul>
 				</td>
 			</tr>
 		</thead>

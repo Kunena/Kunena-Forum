@@ -76,7 +76,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 	</td>
 	<?php if (!empty($this->checkbox)) : ?>
-	<td class="span1">
+	<td class="span1 center">
 		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 	</td>
 	<?php endif; ?>

@@ -241,7 +241,7 @@ class KunenaForumTopicPoll extends JObject {
 			$votes = new StdClass();
 			$votes->new = false;
 			// Add a vote to the user
-			$votes->votes++;
+			$votes->votes = $votes+1;
 		}
 
 		$votes->lasttime = JFactory::getDate()->toSql();

@@ -142,22 +142,22 @@ class CKunenaUpload {
 	function getValidExtension($validExts) {
 		$ret = null;
 		// Go through every allowed extension, if the extension matches the file extension (case insensitive)
-		//then the file extension is ok
-		foreach ( $validExts as $ext ) {
-			$ext = trim ( $ext );
+		// then the file extension is good.
+		foreach ($validExts as $ext) {
+			$ext = JString::strtolower(trim($ext, ". \t\n\r\0\x0B"));
 			if (!$ext) {
 				// Do not allow empty extensions
 				continue;
 			}
-			if ($ext[0] != '.') {
-				// Add first dot if it is missing in extension list
-				$ext = '.'.$ext;
-			}
-			$extension = substr($this->realName, -strlen($ext));
-			if (strtolower($extension) == strtolower($ext)) {
+			// Make sure we check dot, too.
+			$ext = '.' . $ext;
+			$extLen = JString::strlen($ext);
+
+			$extension = JString::strtolower(JString::substr($this->realName, -$extLen));
+			if ($extension == $ext) {
 				// File must contain one letter before extension
-				$ret[] = substr($this->realName, 0, -strlen($ext));
-				$ret[] = substr($extension, 1);
+				$ret[] = JString::substr($this->realName, 0, -$extLen);
+				$ret[] = JString::substr($extension, 1);
 				break;
 			}
 		}
@@ -177,7 +177,7 @@ class CKunenaUpload {
 		KunenaFolder::createIndex($uploadPath);
 
 		// Get file name and validate with path type
-		$this->realName = KunenaFile::makeSafe(JRequest::getString ( $input.'_name', '', 'post' ));
+		$this->realName = JRequest::getString ( $input.'_name', '', 'post' );
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );

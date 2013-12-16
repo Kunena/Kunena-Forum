@@ -1,4 +1,3 @@
-
 [![Kunena](http://www.kunena.org/images/logo.png)](http://www.kunena.org)
 
 
@@ -65,9 +64,9 @@ The *Kunena* projects thrives on contributions from the community. Our dedicated
 
 1. [Create an account on kunena.org](http://www.kunena.org/registration)
 2. [Participate in our forum](http://www.kunena.org/forum)
-3. [Checkout our Git repository on github](https://github.com/Kunena)
+3. [Checkout our Git repositories on github](https://github.com/Kunena)
 4. [Read our documentation](http://www.kunena.org/docs)
-5. [Read our developer wiki](https://github.com/Kunena/Kunena-2.0/wiki)
+5. [Read our developer wiki](https://github.com/Kunena/Kunena-Forum/wiki)
 6. Send us a pull request
 
 

@@ -211,7 +211,7 @@ abstract class KunenaUserHelper {
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query
-				->select('userid, MAX(time)')
+				->select('userid, MAX(time) AS time')
 				->from('#__session')
 				->where('client_id=0 AND userid>0')
 				->group('userid')

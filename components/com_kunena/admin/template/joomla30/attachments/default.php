@@ -136,7 +136,15 @@ JHtml::_('dropdown.init');
 				$instance = KunenaForumMessageAttachmentHelper::get($row->id);
 				$message = $instance->getMessage();
 				$path = JPATH_ROOT.'/'.$row->folder.'/'.$row->filename;
-				if ( $instance->isImage($row->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+				if ( $instance->isImage($row->filetype) && is_file($path))
+				{
+					list($width, $height) = getimagesize($path);
+				}
+				else
+				{
+					$width = null;
+					$height = null;
+				}
 				?>
 					<tr>
 						<td><?php echo JHtml::_('grid.id', $i, intval($row->id)) ?></td>

@@ -35,8 +35,6 @@ class CKunenaUpload {
 	protected $fileSize = false;
 	protected $fileHash = false;
 	protected $imageInfo = false;
-	protected $name = false;
-	protected $extension = false;
 
 	protected $ready = false;
 	protected $status = true;
@@ -142,17 +140,28 @@ class CKunenaUpload {
 	}
 
 	function getValidExtension($validExts) {
-		// make the search case insensitive
-		foreach ( $validExts as &$ext ) {
-			$ext = strtolower($ext);
+		$ret = null;
+		// Go through every allowed extension, if the extension matches the file extension (case insensitive)
+		// then the file extension is good.
+		foreach ($validExts as $ext) {
+			$ext = JString::strtolower(trim($ext, ". \t\n\r\0\x0B"));
+			if (!$ext) {
+				// Do not allow empty extensions
+				continue;
+			}
+			// Make sure we check dot, too.
+			$ext = '.' . $ext;
+			$extLen = JString::strlen($ext);
+
+			$extension = JString::strtolower(JString::substr($this->fileName, -$extLen));
+			if ($extension == $ext) {
+				// File must contain one letter before extension
+				$ret[] = JString::substr($this->fileName, 0, -$extLen);
+				$ret[] = JString::substr($extension, 1);
+				break;
+			}
 		}
-		// search for the extension in the valid extensions list
-		if (in_array(strtolower($this->extension), $validExts)) {
-			// found
-			return array($this->name, $this->extension);
-		}
-		// not found
-		return null;
+		return $ret;
 	}
 
 	function uploadFile($uploadPath, $input='kattachment', $filename='', $ajax=true) {
@@ -168,7 +177,7 @@ class CKunenaUpload {
 		KunenaFolder::createIndex($uploadPath);
 
 		// Get file name and validate with path type
-		$this->fileName = JFile::makeSafe(JRequest::getString ( $input.'_name', '', 'post' ));
+		$this->fileName = JRequest::getString($input.'_name', '', 'post');
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );
@@ -187,10 +196,7 @@ class CKunenaUpload {
 			$this->fileSize = $file ['size'];
 			if (! $this->fileName) {
 				// Need to add additonal path type check as array getVar does not
-				$elements = pathinfo($file['name']);
-				$this->fileName = JFile::makeSafe($elements['basename']);
-				$this->name = JFile::makeSafe($elements['filename']);
-				$this->extension = JFile::makeSafe($elements['extension']);
+				$this->fileName = $file['name'];
 			}
 			//any errors the server registered on uploading
 			switch ($file ['error']) {
@@ -341,7 +347,7 @@ class CKunenaUpload {
 		$this->fileHash = md5_file ( $this->fileTemp );
 
 		// Override filename if given in the parameter
-		if($filename) $uploadedFileBasename = $filename;
+		if ($filename) $uploadedFileBasename = $filename;
 		$uploadedFileBasename = KunenaFile::makeSafe($uploadedFileBasename);
 		if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
 

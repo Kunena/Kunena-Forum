@@ -29,10 +29,22 @@ class KunenaAdminViewTools extends KunenaView {
 		$this->display ();
 	}
 
-	function displaySubscriptions() {
-		$this->id = JRequest::getInt('id');
+	function displaySubscriptions()
+	{
+		$id = $this->app->input->get('id', 0, 'int');
 
-		$this->display ();
+		$topic = KunenaForumTopicHelper::get($id);
+		$acl = KunenaAccess::getInstance();
+		$cat_subscribers = $acl->loadSubscribers($topic, KunenaAccess::CATEGORY_SUBSCRIPTION);
+
+		$this->cat_subscribers_users = KunenaUserHelper::loadUsers($cat_subscribers);
+
+		$topic_subscribers = $acl->loadSubscribers($topic, KunenaAccess::TOPIC_SUBSCRIPTION);
+		$this->topic_subscribers_users = KunenaUserHelper::loadUsers($topic_subscribers);
+
+		$this->cat_topic_subscribers = $acl->getSubscribers($topic->getCategory()->id, $id, KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION, 1, 1);
+
+		$this->display();
 	}
 
 	function displaySyncUsers() {

@@ -97,7 +97,12 @@ class KunenaViewUser extends KunenaView {
 			else $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_BACK').' &raquo;', JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow' );
 		}
 		$this->name = $this->user->username;
-		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
+		
+		if ($this->config->userlist_name) 
+		{
+			$this->name = $this->profile->getName() . ($this->me->isModerator() ? ' (' . $this->name . ')' : '');
+		}
+		
 		if ($this->config->showuserstats) {
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');

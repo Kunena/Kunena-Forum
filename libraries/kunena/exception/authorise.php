@@ -15,25 +15,21 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaExceptionAuthorise extends RuntimeException
 {
+	protected $responseCodes = array(
+		400 => '400 Bad Request',
+		401 => '401 Unauthorized',
+		403 => '403 Forbidden',
+		404 => '404 Not Found',
+		410 => '410 Gone',
+		500 => '500 Internal Server Error',
+		503 => '503 Service Temporarily Unavailable'
+	);
+
+	public function getResponseCode() {
+		return isset($this->responseCodes[$this->code]) ? (int) $this->code : 500;
+	}
+
 	public function getResponseStatus() {
-		$code = $this->getCode();
-		switch ($code) {
-			case 400:
-				return '400 Bad Request';
-			case 401:
-				return '401 Unauthorized';
-			case 403:
-				return '403 Forbidden';
-			case 404:
-				return '404 Not Found';
-			case 410:
-				return '410 Gone';
-			case 500:
-				return '500 Internal Server Error';
-			case 503:
-				return '503 Service Temporarily Unavailable';
-			default:
-				return "{$code} Error";
-		}
+		return $this->responseCodes[$this->getResponseCode()];
 	}
 }

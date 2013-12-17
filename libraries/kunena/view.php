@@ -105,7 +105,7 @@ class KunenaView extends JViewLegacy {
 		if (!$this->embedded && isset($this->common)) {
 			if ($this->config->board_offline && ! $this->me->isAdmin ()) {
 				// Forum is offline
-				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
 				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body = $this->config->offline_message;
 				$this->common->html = true;
@@ -114,7 +114,7 @@ class KunenaView extends JViewLegacy {
 				return;
 			} elseif ($this->config->regonly && ! $this->me->exists() && ! $this->teaser) {
 				// Forum is for registered users only
-				JResponse::setHeader('Status', '403 Forbidden', 'true');
+				JResponse::setHeader('Status', '403 Forbidden', true);
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body = JText::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
@@ -309,25 +309,25 @@ class KunenaView extends JViewLegacy {
 
 		switch ((int) $code) {
 			case 400:
-				JResponse::setHeader('Status', '400 Bad Request', 'true');
+				JResponse::setHeader('Status', '400 Bad Request', true);
 				break;
 			case 401:
-				JResponse::setHeader('Status', '401 Unauthorized', 'true');
+				JResponse::setHeader('Status', '401 Unauthorized', true);
 				break;
 			case 403:
-				JResponse::setHeader('Status', '403 Forbidden', 'true');
+				JResponse::setHeader('Status', '403 Forbidden', true);
 				break;
 			case 404:
-				JResponse::setHeader('Status', '404 Not Found', 'true');
+				JResponse::setHeader('Status', '404 Not Found', true);
 				break;
 			case 410:
-				JResponse::setHeader('Status', '410 Gone', 'true');
+				JResponse::setHeader('Status', '410 Gone', true);
 				break;
 			case 500:
-				JResponse::setHeader('Status', '500 Internal Server Error', 'true');
+				JResponse::setHeader('Status', '500 Internal Server Error', true);
 				break;
 			case 503:
-				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
 				break;
 			default:
 		}

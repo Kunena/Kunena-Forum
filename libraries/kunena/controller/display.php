@@ -109,7 +109,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			$document = JFactory::getDocument();
 			$document->setTitle($e->getResponseStatus());
-			JResponse::setHeader('Status', $e->getResponseStatus(), 'true');
+			JResponse::setHeader('Status', $e->getResponseStatus(), true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
@@ -121,7 +121,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$title = '500 Internal Server Error';
 			$document = JFactory::getDocument();
 			$document->setTitle($title);
-			JResponse::setHeader('Status', $title, 'true');
+			JResponse::setHeader('Status', $title, true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());

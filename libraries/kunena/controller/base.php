@@ -118,9 +118,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Execute the controller.
 	 *
-	 * @return  boolean  True if controller finished execution, false if the controller did not
-	 *                   finish execution. A controller might return false if some precondition for
-	 *                   the controller to run has not been satisfied.
+	 * @return  mixed
 	 *
 	 * @throws  LogicException
 	 * @throws  RuntimeException

@@ -13,7 +13,7 @@
 	<license>GNU/GPLv3 or later</license>
 	<description>Kunena Framework.</description>
 	<files>
-        <folder>activity</folder>
+		<folder>activity</folder>
 		<folder>bbcode</folder>
 		<folder>cache</folder>
 		<folder>compat</folder>
@@ -37,6 +37,7 @@
 		<folder>request</folder>
 		<folder>route</folder>
 		<folder>spam</folder>
+		<folder>table</folder>
 		<folder>tables</folder>
 		<folder>template</folder>
 		<folder>upload</folder>

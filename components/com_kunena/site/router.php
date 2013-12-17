@@ -251,5 +251,9 @@ function KunenaParseRoute($segments) {
 	if (empty($vars ['layout'])) $vars ['layout'] = 'default';
 	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
 
+	foreach ($vars as $var => $value) {
+		KunenaRoute::$current->setVar($var, $value);
+	}
+
 	return $vars;
 }

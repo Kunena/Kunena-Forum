@@ -218,9 +218,9 @@ class KunenaForumTopicPoll extends JObject {
 		}
 
 		$lastVoteId = $this->getLastVoteId($user->userid);
-		$votes = $this->getMyVotes($user);
+		$myvotes = $this->getMyVotes($user);
 
-		if (!$votes) {
+		if (!$myvotes) {
 			// First vote
 			$votes = new StdClass();
 			$votes->new = true;
@@ -240,8 +240,9 @@ class KunenaForumTopicPoll extends JObject {
 		} else {
 			$votes = new StdClass();
 			$votes->new = false;
+
 			// Add a vote to the user
-			$votes->votes = $votes+1;
+			$votes->votes = ++$myvotes;
 		}
 
 		$votes->lasttime = JFactory::getDate()->toSql();

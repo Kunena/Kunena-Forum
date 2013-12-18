@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 
-<form action="<?php echo KunenaRoute::_(); ?>" method="post" class="form-search">
+<form action="<?php echo KunenaRoute::_(); ?>" method="post" class="form-search pull-right">
 	<input type="hidden" name="view" value="search" />
 	<input type="hidden" name="task" value="results" />
 

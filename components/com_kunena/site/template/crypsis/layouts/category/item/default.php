@@ -59,24 +59,20 @@ $categoryActions = $this->getCategoryActions();
 					</ul>
 				</td>
 				<td colspan="2" class="center">
-					<ul class="inline no-margin">
+					<ul class="inline pull-right no-margin">
 
 					  <li>
 							<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
 						</li>
 					</ul>
 				</td>
+				<?php if (!empty($this->topicActions)) : ?>
 				<td colspan="1">
-					<ul class="inline center no-margin">
-					<li>
-							<?php if (!empty($this->topicActions)) : ?>
-								<label>
-								<input class="kcheckall" type="checkbox" name="toggle" value="" />
-								</label>
-							<?php endif; ?>
-						</li>
-						</ul>
+					<label>
+						<input class="kcheckall pull-right" type="checkbox" name="toggle" value="" />
+					</label>
 				</td>
+				<?php endif; ?>
 			</tr>
 		</thead>
 		<?php
@@ -104,6 +100,7 @@ $categoryActions = $this->getCategoryActions();
 				</a>
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
+			
 			<td colspan="3">
 
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>

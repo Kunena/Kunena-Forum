@@ -150,7 +150,7 @@ foreach ($this->sections as $section) :
 			<?php $last = $category->getLastTopic(); ?>
 
 			<?php if (!$last->exists()) : ?>
-			<td colspan="2" class="span4 hidden-phone"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
+			<td colspan="2" class="span3 hidden-phone"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
 			<?php else :
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();

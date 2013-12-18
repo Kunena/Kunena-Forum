@@ -83,10 +83,10 @@ if (!empty($this->spacing)) : ?>
 			<?php echo JText::_('COM_KUNENA_GEN_REPLIES') . ':' . $this->formatLargeNumber($topic->getReplies()); ?>
 		</span>
 	</td>
-	<td class="span1 center">
+	<td class="span1 center hidden-phone">
 
 		<?php if ($avatar) : ?>
-		<span class="hidden-phone">
+		<span>
 			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
 		</span>
 		<?php endif; ?>

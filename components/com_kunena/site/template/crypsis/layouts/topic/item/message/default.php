@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 <div class="row-fluid">
-	<div class="span2 hidden-phone <?php echo $this->profile->isMyself() ? 'pull-left' : 'pull-right'; ?>">
+	<div class="span2 hidden-phone">
 		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default'); ?>
 	</div>
 	<div class="span10">

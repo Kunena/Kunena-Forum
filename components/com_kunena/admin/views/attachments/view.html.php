@@ -18,7 +18,42 @@ class KunenaAdminViewAttachments extends KunenaView {
 		$this->setToolbar();
 		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
-		$this->pagination = $this->get ( 'Pagination' );
+		$this->pagination = $this->get('Pagination');
+
+		// Load attachments instances
+		$attachments_id = array();
+
+		foreach ($this->items as $item)
+		{
+			$attachments_id[] = $item->id;
+		}
+
+		$attachments = KunenaForumMessageAttachmentHelper::getById($attachments_id);
+		$this->attachments_instance = array();
+
+		foreach ($attachments as $attachment)
+		{
+			$object = new stdClass;
+			$object->attachment = $attachment;
+			$object->message = $attachment->getMessage();
+
+			$path = JPATH_ROOT . '/' . $attachment->folder . '/' . $attachment->filename;
+
+			if ( $attachment->isImage($attachment->filetype) && is_file($path))
+			{
+				list($width, $height) = getimagesize($path);
+			}
+			else
+			{
+				$width = null;
+				$height = null;
+			}
+
+			$object->width = $width;
+			$object->height = $height;
+
+			$this->attachments_instance[] = $object;
+		}
 
 		$this->sortFields = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();

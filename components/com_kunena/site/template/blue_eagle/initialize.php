@@ -45,17 +45,7 @@ if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.foru
 		$template->addStyleSheet ( 'css/kunena.skinner.css' );
 	} else {
 		$template->addStyleSheet ( 'css/kunena.default.css' );
-	}
-}
-$cssurl = JUri::root(true) . '/components/com_kunena/template/blue_eagle/css';
-?>
-<!--[if lte IE 7]>
-<link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
-<![endif]-->
-<?php
-$mediaurl = JUri::root(true) . "/components/com_kunena/template/{$template->name}/media";
-
-$styles = <<<EOF
+		$styles = <<<EOF
 	/* Kunena Custom CSS */
 EOF;
 
@@ -188,3 +178,13 @@ $styles .= <<<EOF
 EOF;
 
 $document->addStyleDeclaration($styles);
+
+	}
+}
+$cssurl = JUri::root(true) . '/components/com_kunena/template/blue_eagle/css';
+?>
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
+<![endif]-->
+<?php
+$mediaurl = JUri::root(true) . "/components/com_kunena/template/{$template->name}/media";

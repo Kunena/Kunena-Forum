@@ -45,15 +45,28 @@ if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.foru
 		$template->addStyleSheet ( 'css/kunena.skinner.css' );
 	} else {
 		$template->addStyleSheet ( 'css/kunena.default.css' );
-		$styles = <<<EOF
+	}
+}
+$cssurl = JUri::root(true) . '/components/com_kunena/template/blue_eagle/css';
+?>
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
+<![endif]-->
+<?php
+$mediaurl = JUri::root(true) . "/components/com_kunena/template/{$template->name}/media";
+
+$styles = <<<EOF
 	/* Kunena Custom CSS */
 EOF;
 
-$forumHeader = $template->params->get('forumHeadercolor', $skinner ? '' : '#5388B4');
+if ($skinner){
+		$forumHeader = ' ';
+	} elseif (!$skinner) {
+		$forumHeader = $template->params->get('forumHeadercolor');
+	}
 
 if ($forumHeader) {
 	$styles .= <<<EOF
-
 	#Kunena div.kblock > div.kheader,#Kunena .kblock div.kheader { background: {$forumHeader} !important; }
 	#Kunena #ktop { border-color: {$forumHeader}; }
 	#Kunena #ktop span.ktoggler { background: {$forumHeader}; }
@@ -68,7 +81,11 @@ if ($forumHeader) {
 EOF;
 }
 
-$forumLink = $template->params->get('forumLinkcolor', $skinner ? '' : '#5388B4');
+if ($skinner) {
+		$forumLink = ' ';
+	} elseif (!$skinner) {
+		$forumLink = $template->params->get('forumlinkcolor');
+	}
 
 if ($forumLink) {
 	$styles .= <<<EOF
@@ -79,7 +96,11 @@ if ($forumLink) {
 EOF;
 }
 
-$announcementHeader = $template->params->get('announcementHeadercolor', $skinner ? '' : '#5388B4');
+if ($skinner){
+		$announcementHeader = ' ';
+	} elseif (!$skinner) {
+		$announcementHeader = $template->params->get('announcementHeadercolor');
+	}
 
 if ($announcementHeader) {
 	$styles .= <<<EOF
@@ -87,7 +108,11 @@ if ($announcementHeader) {
 EOF;
 }
 
-$announcementBox = $template->params->get('announcementBoxbgcolor', $skinner ? '' : '#FFFFFF');
+if ($skinner){
+		$announcementBox = ' ';
+	} elseif (!$skinner) {
+		$announcementBox = $template->params->get('announcementBoxbgcolor');
+	}
 
 if ($announcementBox) {
 	$styles .= <<<EOF
@@ -95,7 +120,11 @@ if ($announcementBox) {
 EOF;
 }
 
-$frontStatsHeader = $template->params->get('frontstatsHeadercolor', $skinner ? '' : '#5388B4');
+if ($skinner){
+		$frontStatsHeader = ' ';
+	} elseif (!$skinner) {
+		$frontStatsHeader = $template->params->get('frontstatsHeadercolor');
+	}
 
 if ($frontStatsHeader) {
 	$styles .= <<<EOF
@@ -103,7 +132,11 @@ if ($frontStatsHeader) {
 EOF;
 }
 
-$onlineHeader = $template->params->get('whoisonlineHeadercolor', $skinner ? '' : '#5388B4');
+if ($skinner){
+		$onlineHeader = '';
+	} elseif (!$skinner) {
+		$onlineHeader = $template->params->get('whoisonlineHeadercolor');
+	}
 
 if ($onlineHeader) {
 	$styles .= <<<EOF
@@ -111,7 +144,11 @@ if ($onlineHeader) {
 EOF;
 }
 
-$inactiveTab = $template->params->get('inactiveTabcolor', $skinner ? '' : '#737373');
+if ($skinner){
+		$inactiveTab = '';
+	} elseif (!$skinner) {
+		$inactiveTab = $template->params->get('inactiveTabcolor');
+	}
 
 if ($inactiveTab) {
 	$styles .= <<<EOF
@@ -119,7 +156,11 @@ if ($inactiveTab) {
 EOF;
 }
 
-$activeTab = $template->params->get('activeTabcolor', $skinner ? '' : '#5388B4');
+if ($skinner){
+		$activeTab = '';
+	} elseif (!$skinner) {
+		$activeTab = $template->params->get('activeTabcolor');
+	}
 
 if ($activeTab) {
 	$styles .= <<<EOF
@@ -127,7 +168,11 @@ if ($activeTab) {
 EOF;
 }
 
-$hoverTab = $template->params->get('hoverTabcolor', $skinner ? '' : '#5388B4');
+if ($skinner){
+		$hoverTab = '';
+	} elseif (!$skinner) {
+		$hoverTab = $template->params->get('hoverTabcolor');
+	}
 
 if ($hoverTab) {
 	$styles .= <<<EOF
@@ -135,7 +180,11 @@ if ($hoverTab) {
 EOF;
 }
 
-$topBorder = $template->params->get('topBordercolor', $skinner ? '' : '#5388B4');
+if ($skinner){
+		$topBorder = '';
+	} elseif (!$skinner) {
+		$topBorder = $template->params->get('topBordercolor');
+	}
 
 if ($topBorder) {
 	$styles .= <<<EOF
@@ -143,14 +192,23 @@ if ($topBorder) {
 EOF;
 }
 
-$inactiveFont = $template->params->get('inactiveFontcolor', $skinner ? '' : '#FFFFFF');
+if ($skinner){
+		$inactiveFont = '';
+	} elseif (!$skinner) {
+		$inactiveFont = $template->params->get('inactiveFontcolor');
+	}
 
 if ($inactiveFont) {
 	$styles .= <<<EOF
 	#Kunena #ktab a span { color: {$inactiveFont} !important; }
 EOF;
 }
-$activeFont = $template->params->get('activeFontcolor', $skinner ? '' : '#FFFFFF');
+
+if ($skinner){
+		$activeFont = '';
+	} elseif (!$skinner) {
+		$activeFont = $template->params->get('activeFontcolor');
+	}
 
 if ($activeFont) {
 	$styles .= <<<EOF
@@ -158,7 +216,11 @@ if ($activeFont) {
 EOF;
 }
 
-$toggleButton = $template->params->get('toggleButtoncolor', $skinner ? '' : '#5388B4');
+if ($skinner){
+		$toggleButton = '';
+	} elseif (!$skinner) {
+		$toggleButton = $template->params->get('toggleButtoncolor');
+	}
 
 if ($toggleButton) {
 	$styles .= <<<EOF
@@ -178,13 +240,3 @@ $styles .= <<<EOF
 EOF;
 
 $document->addStyleDeclaration($styles);
-
-	}
-}
-$cssurl = JUri::root(true) . '/components/com_kunena/template/blue_eagle/css';
-?>
-<!--[if lte IE 7]>
-<link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
-<![endif]-->
-<?php
-$mediaurl = JUri::root(true) . "/components/com_kunena/template/{$template->name}/media";

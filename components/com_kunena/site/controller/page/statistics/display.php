@@ -48,7 +48,13 @@ class ComponentKunenaControllerPageStatisticsDisplay extends KunenaControllerDis
 		$this->setProperties($statistics);
 
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
-		$this->statisticsUrl = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
+		$this->statisticsUrl = '';
+
+		if ( !KunenaFactory::getConfig()->statslink_allowed && !JFactory::getUser()->guest )
+		{
+			$this->statisticsUrl = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
+		}
+
 		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
 
 		return true;

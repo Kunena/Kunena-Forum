@@ -154,6 +154,7 @@
 #Kunena .kbutton-back {
     color: inherit;
 }
+#Kunena input,
 #Kunena input.kinput,
 #Kunena .kfile-input-textbox {
     background:  0 0 no-repeat;

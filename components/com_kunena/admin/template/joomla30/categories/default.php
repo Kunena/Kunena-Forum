@@ -248,7 +248,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php echo JHtml::_('grid.id', $i, (int) $item->id); ?>
 						</td>
 						<td class="center">
-							<?php echo JHtml::_('jgrid.published', (bool) $item->published, $i, '','cb'); ?>
+							<?php echo JHtml::_('jgrid.published', $item->published, $i, '','cb'); ?>
 						</td>
 						<td class="center">
 							<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id)) : ?>

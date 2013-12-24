@@ -57,9 +57,13 @@ $attachments = $this->attachments;
 		</thead>
 		<tbody>
 			<?php
-				if (!$attachments) :
-					echo JText::_('COM_KUNENA_USER_NO_ATTACHMENTS');
-				else :
+				if (!$attachments) : ?>
+					<tr>
+						<td colspan="8">
+							<?php echo JText::_('COM_KUNENA_USER_NO_ATTACHMENTS'); ?>
+						</td>
+					</tr>
+				<?php else :
 					$i=0;
 					foreach ($attachments as $attachment) :
 						$message = $attachment->getMessage();

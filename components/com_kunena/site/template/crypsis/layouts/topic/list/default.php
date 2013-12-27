@@ -13,6 +13,11 @@ defined('_JEXEC') or die;
 $colspan = empty($this->actions) ? 5 : 6;
 ?>
 
+<?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
+<div class="pagination pull-right">
+	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+</div>
+<?php endif; ?>
 <?php if (!empty($this->embedded)) : ?>
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
       method="post" target="_self" class="pull-right">
@@ -38,25 +43,19 @@ $colspan = empty($this->actions) ? 5 : 6;
 		</tr>
 
 		<?php else : ?>
-
-		<?php if (!empty($this->embedded)) : ?>
+		
+		<?php if (!empty($this->actions)) : ?>
 		<thead>
 			<tr>
 				<td colspan="5">
-					<div class="pagination pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
-					<div class="clearfix"></div>
+					
 				</td>
-
-				<?php if (!empty($this->actions)) : ?>
-				<td class="center">
+					
+				<td class="span1 center">
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>
 				</td>
-				<?php endif; ?>
-
 			</tr>
 		</thead>
 		<?php endif; ?>

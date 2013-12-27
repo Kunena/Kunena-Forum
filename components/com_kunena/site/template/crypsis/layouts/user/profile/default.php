@@ -21,7 +21,7 @@ if ($show)
 	$personalText = $user->getPersonalText();
 }
 ?>
-<ul class="unstyled center">
+<ul class="unstyled center profilebox">
 	<li>
 		<strong><?php echo $user->getLink(); ?></strong>
 	</li>

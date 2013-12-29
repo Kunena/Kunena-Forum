@@ -81,13 +81,12 @@ class KunenaUserFinder
 	 * This function can be used more than once to chain order by.
 	 *
 	 * @param  string $by
-	 * @param  int $direction
+	 * @param  string $direction
 	 *
 	 * @return $this
 	 */
-	public function order($by, $direction = 1)
+	public function order($by, $direction = 'desc')
 	{
-		$direction = $direction > 0 ? 'ASC' : 'DESC';
 		$by = $this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 

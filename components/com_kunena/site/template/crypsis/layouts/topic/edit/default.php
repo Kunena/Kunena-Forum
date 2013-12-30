@@ -113,16 +113,17 @@ $this->k=0;
 						</div>
 					</div>
 					<?php if (!empty($this->topicIcons)) : ?>
-					<div class="control-group">
-						<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
-						<div class="controls">
-							<?php foreach ($this->topicIcons as $id=>$icon): ?>
-						<input type="radio" id="radio<?php echo $icon->id ?>" name="radio" value="0" checked>
-   					<label for="radio<?php echo $icon->id ?>"><img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" /></label>
-						<?php endforeach; ?>
-						</div>
-					</div>
-					<?php endif; ?>
+          <div class="control-group">
+          	<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
+          	<div class="controls">
+          		<?php foreach ($this->topicIcons as $id=>$icon): ?>
+            	<span class="kiconsel">
+              <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
+              <label for="radio<?php echo $icon->id ?>"><img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" /> </label></span>
+              <?php endforeach; ?>
+             </div>
+          </div>
+          <?php endif; ?>
 					<?php
 					// Show bbcode editor
 					echo $this->subLayout('Topic/Edit/Editor')->setProperties($this->getProperties());

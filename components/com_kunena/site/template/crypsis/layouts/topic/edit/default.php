@@ -117,10 +117,9 @@ $this->k=0;
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 						<div class="controls">
 							<?php foreach ($this->topicIcons as $id=>$icon): ?>
-							<span class="kiconsel">
-							<input type="radio" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
-							<img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" /> </span>
-							<?php endforeach; ?>
+						<input type="radio" id="radio<?php echo $icon->id ?>" name="radio" value="0" checked>
+   					<label for="radio<?php echo $icon->id ?>"><img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" /></label>
+						<?php endforeach; ?>
 						</div>
 					</div>
 					<?php endif; ?>
@@ -133,7 +132,7 @@ $this->k=0;
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
 							<div id="kattachment-id" class="kattachment"> <span class="kattachment-id-container"></span>
-								<input class="kfile-input-textbox" type="text" readonly="readonly" />
+								<input class="kfile-input-textbox" type="text" readonly />
 								<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
 									<input type="button" value="<?php echo	JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button btn" />
 									<input id="kupload" class="kfile-input" name="kattachment" type="file" />

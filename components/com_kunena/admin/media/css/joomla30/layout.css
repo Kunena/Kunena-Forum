@@ -75,3 +75,7 @@
     font-size: inherit;
     line-height: 150%
 }
+/* Fix span1 width isis */
+#adminForm > fieldset > table > tbody > tr:nth-child(2) > td:nth-child(2) > div {
+	display:inline !important;
+}

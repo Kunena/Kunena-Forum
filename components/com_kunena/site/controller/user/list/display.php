@@ -61,7 +61,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
 		$this->users = $finder
-			->order($this->state->get('list.ordering'), $this->state->get('list.direction'))
+			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : -1)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();

@@ -46,15 +46,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 		<?php if (!empty($this->actions)) : ?>
 		<thead>
 			<tr>
-				<td colspan="6">
-					<div class="pagination pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
-					<div class="clearfix"></div>
-				</td>
-
-				<?php if (!empty($this->actions)) : ?>
-				<td class="center">
+				<td colspan="6" class="center">
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>

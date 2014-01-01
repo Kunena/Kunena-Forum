@@ -101,6 +101,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::deleteList();
 		//}
 		JToolBarHelper::spacer();
+		JToolbarHelper::archiveList();
 		//JToolBarHelper::back ( JText::_ ( 'Home' ), 'index.php?option=com_kunena' );
 	}
 
@@ -109,11 +110,13 @@ class KunenaAdminViewCategories extends KunenaView {
 	 *
 	 * @return	string	The HTML code for the select tag
 	 */
-	public function publishedOptions() {
+	public function publishedOptions()
+	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
-		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_UNPUBLISHED'));
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_PUBLISHED'));
+		$options[]	= JHtml::_('select.option', '2', JText::_('COM_KUNENA_FIELD_LABEL_ARCHIVED'));
 
 		return $options;
 	}

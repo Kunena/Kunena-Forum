@@ -476,4 +476,22 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		return array($name, $alias);
 	}
+
+	/**
+	 * Method to archive one or multiples categories
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	public function archive()
+	{
+		$cid = $this->app->input->get('cid', array(), 'array');
+
+		if ( !empty($cid) )
+		{
+			$this->setVariable($cid, 'published', 2);
+			$this->setRedirectBack();
+		}
+	}
 }

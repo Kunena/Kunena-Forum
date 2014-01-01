@@ -226,7 +226,7 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 										</div>
 									</td>
 									<td><?php echo JHtml::_('grid.id', $i, intval($category->id)) ?></td>
-									<td class="center"><?php echo JHtml::_('grid.published', $category, $i) ?></td>
+									<td class="center"><?php echo JHtml::_('jgrid.published', $category->published, $i) ?></td>
 									<td class="left">
 										<?php
 										echo str_repeat('<span class="gi">&mdash;</span>', $category->level);

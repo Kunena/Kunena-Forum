@@ -62,7 +62,7 @@ $colspan = empty($this->actions) ? 4 : 5;
 				<td colspan="<?php echo $colspan; ?>">
 					<?php
 					if (!empty($this->moreUri)) {
-						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow');
+						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
 					}
 					?>
 

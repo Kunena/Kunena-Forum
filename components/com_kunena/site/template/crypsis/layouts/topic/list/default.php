@@ -43,11 +43,10 @@ $colspan = empty($this->actions) ? 5 : 6;
 		</tr>
 
 		<?php else : ?>
-
-		<?php if (!empty($this->embedded)) : ?>
+		<?php if (!empty($this->actions)) : ?>
 		<thead>
 			<tr>
-				<td colspan="5">
+				<td colspan="6">
 					<div class="pagination pull-right">
 						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
 					</div>
@@ -68,7 +67,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $colspan; ?>">
-					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
+					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 					<?php if (!empty($this->actions)) : ?>
 					<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 					<?php if (isset($this->actions['move'])) :

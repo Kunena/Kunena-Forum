@@ -37,7 +37,8 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
 			->set('state', $this->state)
-			->set('actions', $this->actions);
+			->set('actions', $this->actions)
+			->set('moreUri', $this->moreUri);
 
 		return $content;
 	}
@@ -56,6 +57,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode=' . $this->state->get('list.mode');
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
@@ -93,7 +95,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			case 'unapproved' :
 				$authorise = 'topic.post.approve';
 				$finder
-					->filterByUser($user, 'author')
+					->filterByUser(null, 'author')
 					->filterByHold(array(1));
 				break;
 			case 'deleted' :
@@ -165,17 +167,16 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 				break;
 			case 'mythanks':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
-				$actions = array();
+				$actions = array('approve', 'delete', 'permdelete');
 				break;
 			case 'thankyou':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
-				$actions = array();
+				$actions = array('approve', 'delete', 'permdelete');
 				break;
 			case 'recent':
 			default:
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 				$actions = array('delete', 'permdelete');
-
 		}
 
 		$this->actions = $this->getMessageActions($this->messages, $actions);

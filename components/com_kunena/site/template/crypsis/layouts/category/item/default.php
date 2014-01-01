@@ -32,13 +32,6 @@ $categoryActions = $this->getCategoryActions();
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<?php if (empty($this->topics)) : ?>
-	<div class="alert">
-		<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
-	</div>
-
-	<?php else : ?>
-
 	<table class="table table-striped table-bordered table-hover table-condensed">
 		<thead>
 			<tr>
@@ -58,6 +51,7 @@ $categoryActions = $this->getCategoryActions();
 						<?php endif; ?>
 					</ul>
 				</td>
+				<?php if (!empty($this->topics)) : ?>
 				<td colspan="2" class="center">
 					<ul class="inline pull-right no-margin">
 
@@ -66,6 +60,7 @@ $categoryActions = $this->getCategoryActions();
 						</li>
 					</ul>
 				</td>
+				<?php endif; ?>
 				<?php if (!empty($this->topicActions)) : ?>
 				<td colspan="1">
 					<label>
@@ -75,7 +70,13 @@ $categoryActions = $this->getCategoryActions();
 				<?php endif; ?>
 			</tr>
 		</thead>
-		<?php
+		<?php if (empty($this->topics)) : ?>
+		<div class="alert">
+			<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
+		</div>
+
+		<?php else :
+
 		/** @var KunenaForumTopic $previous */
 		$previous = null;
 
@@ -100,7 +101,7 @@ $categoryActions = $this->getCategoryActions();
 				</a>
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
-			
+
 			<td colspan="3">
 
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
@@ -133,8 +134,8 @@ $categoryActions = $this->getCategoryActions();
 			</td>
 		</tr>
 		</tfoot>
+		<?php endif; ?>
 	</table>
-	<?php endif; ?>
 
 </form>
 

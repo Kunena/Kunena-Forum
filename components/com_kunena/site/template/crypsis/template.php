@@ -100,8 +100,12 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('jquery.framework');
 		JHtml::_('formbehavior.chosen');
 
+		// Load script and CSS for autocomplete, emojiis...
+		$this->addScript('js/atwho.js');
+		$this->addStyleSheet('css/atwho.css');
+
 		// Load JavaScript.
-		$this->addScript ( 'plugins.js' );
+		$this->addScript('plugins.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('main.less', 'kunena.css');

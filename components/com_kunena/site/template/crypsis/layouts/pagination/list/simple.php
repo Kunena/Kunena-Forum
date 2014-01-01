@@ -18,8 +18,6 @@ $last = 0;
 <div class="pagination pagination-small">
 	<ul>
 		<?php
-		echo $this->subLayout('Pagination/Item')->set('item', $data->start);
-		echo $this->subLayout('Pagination/Item')->set('item', $data->previous);
 		foreach($data->pages as $k=>$item)
 		{
 			if ($last+1 != $k)
@@ -31,8 +29,6 @@ $last = 0;
 
 			echo $this->subLayout('Pagination/Item')->set('item', $item);
 		}
-		echo $this->subLayout('Pagination/Item')->set('item', $data->next);
-		echo $this->subLayout('Pagination/Item')->set('item', $data->end);
 		?>
 	</ul>
 </div>

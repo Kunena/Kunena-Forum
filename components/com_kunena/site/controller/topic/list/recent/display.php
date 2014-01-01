@@ -91,19 +91,19 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			case 'sticky' :
 				$finder
 					->filterByHold(array(0))
-					->filterBy('t.ordering', '>', 0)
+					->where('a.ordering', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'locked' :
 				$finder
 					->filterByHold(array(0))
-					->filterBy('t.locked', '>', 0)
+					->where('a.locked', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'noreplies' :
 				$finder
 					->filterByHold(array(0))
-					->filterBy('t.posts', '=', 1)
+					->where('a.posts', '=', 1)
 					->filterByTime($time);
 				break;
 			case 'unapproved' :

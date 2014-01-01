@@ -63,7 +63,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages); ?>
+			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 	</td>
 	<td class="span1 center hidden-phone">

@@ -13,18 +13,9 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaForumMessageFinder
  */
-class KunenaForumMessageFinder
+class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 {
-	/**
-	 * @var JDatabaseQuery
-	 */
-	protected $query;
-	/**
-	 * @var JDatabase
-	 */
-	protected $db;
-	protected $start = 0;
-	protected $limit = 20;
+	protected $table = '#__kunena_messages';
 	protected $hold = array(0);
 	protected $moved = null;
 
@@ -33,89 +24,22 @@ class KunenaForumMessageFinder
 	 */
 	public function __construct()
 	{
+		parent::__construct();
+
 		$this->limit = KunenaConfig::getInstance()->messages_per_page;
-		$this->db = JFactory::getDbo();
-		$this->query = $this->db->getQuery(true);
-		$this->query->from('#__kunena_messages AS m');
 	}
 
 	/**
-	 * Set limitstart for the query.
-	 *
-	 * @param int $limitstart
-	 *
-	 * @return $this
-	 */
-	public function start($limitstart = 0)
-	{
-		$this->start = $limitstart;
-
-		return $this;
-	}
-
-	/**
-	 * Set limit to the query.
-	 *
-	 * If this function isn't used, Kunena will use threads per page configuration setting.
-	 *
-	 * @param int $limit
+	 * @param $field
+	 * @param $operation
+	 * @param $value
 	 *
 	 * @return $this
+	 * @deprecated Use where() instead.
 	 */
-	public function limit($limit = null)
-	{
-		if (!isset($limit)) $limit = KunenaConfig::getInstance()->messages_per_page;
-		$this->limit = $limit;
-
-		return $this;
-	}
-
-	/**
-	 * Set order by field and direction.
-	 *
-	 * This function can be used more than once to chain order by.
-	 *
-	 * @param  string $by
-	 * @param  int $direction
-	 * @param  string $alias
-	 *
-	 * @return $this
-	 */
-	public function order($by, $direction = 1, $alias = 'm')
-	{
-		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = $alias.'.'.$this->db->quoteName($by);
-		$this->query->order("{$by} {$direction}");
-
-		return $this;
-	}
-
 	public function filterBy($field, $operation, $value)
 	{
-		$operation = strtoupper($operation);
-		switch ($operation)
-		{
-			case '>':
-			case '>=':
-			case '<':
-			case '<=':
-			case '=':
-				$this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($value)}");
-				break;
-			case 'IN':
-			case 'NOT IN':
-				$value = (array) $value;
-				if (empty($value)) {
-					// WHERE field IN (nothing).
-					$this->query->where('0');
-				} else {
-					$list = implode(',', $value);
-					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
-				}
-				break;
-		}
-
-		return $this;
+		return $this->where($field, $operation, $value);
 	}
 
 	/**
@@ -132,7 +56,7 @@ class KunenaForumMessageFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list = implode(',', $categories);
-		$this->query->where("m.catid IN ({$list})");
+		$this->query->where("a.catid IN ({$list})");
 
 		return $this;
 	}
@@ -158,7 +82,7 @@ class KunenaForumMessageFinder
 			else $list[] = (int) $category;
 		}
 		$list = implode(',', $list);
-		$this->query->where("m.catid IN ({$list})");
+		$this->query->where("a.catid IN ({$list})");
 
 		return $this;
 	}
@@ -174,11 +98,11 @@ class KunenaForumMessageFinder
 	public function filterByTime(JDate $starting = null, JDate $ending = null)
 	{
 		if ($starting && $ending) {
-			$this->query->where("m.time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
+			$this->query->where("a.time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
 		} elseif ($starting) {
-			$this->query->where("m.time > {$this->db->quote($starting->toUnix())}");
+			$this->query->where("a.time > {$this->db->quote($starting->toUnix())}");
 		} elseif ($ending) {
-			$this->query->where("m.time <= {$this->db->quote($ending->toUnix())}");
+			$this->query->where("a.time <= {$this->db->quote($ending->toUnix())}");
 		}
 
 		return $this;
@@ -204,28 +128,28 @@ class KunenaForumMessageFinder
 		switch ($action)
 		{
 			case 'author':
-				$this->query->where('m.userid='. (int) $user->userid);
+				$this->query->where('a.userid='. (int) $user->userid);
 				break;
 			case '!author':
-				$this->query->where('m.userid!='. (int) $user->userid);
+				$this->query->where('a.userid!='. (int) $user->userid);
 				break;
 			case 'editor':
-				$this->query->where('m.modified_by='. (int) $user->userid);
+				$this->query->where('a.modified_by='. (int) $user->userid);
 				break;
 			case '!editor':
-				$this->query->where('m.modified_by!='. (int) $user->userid);
+				$this->query->where('a.modified_by!='. (int) $user->userid);
 				break;
 			case 'thanker':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=m.id AND th.userid='. (int) $user->userid);
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.userid='. (int) $user->userid);
 				break;
 			case '!thanker':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=m.id AND th.userid!='. (int) $user->userid);
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.userid!='. (int) $user->userid);
 				break;
 			case 'thankee':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=m.id AND th.targetuserid='. (int) $user->userid);
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.targetuserid='. (int) $user->userid);
 				break;
 			case '!thankee':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=m.id AND th.targetuserid!='. (int) $user->userid);
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.targetuserid!='. (int) $user->userid);
 				break;
 		}
 
@@ -254,40 +178,19 @@ class KunenaForumMessageFinder
 	 */
 	public function find($access = 'read')
 	{
-		$query = clone $this->query;
-		$this->build($query);
-		$query->select('m.id');
-		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = (array) $this->db->loadColumn();
-		KunenaError::checkDatabaseError();
+		$results = parent::find();
 
 		return KunenaForumMessageHelper::getMessages($results, $access);
-	}
-
-	/**
-	 * Count messages.
-	 * @return int
-	 */
-	public function count()
-	{
-		$query = clone $this->query;
-		$this->build($query);
-		$query->select('COUNT(*)');
-		$this->db->setQuery($query);
-		$count = (int) $this->db->loadResult();
-		KunenaError::checkDatabaseError();
-
-		return $count;
 	}
 
 	protected function build($query)
 	{
 		// TODO: remove the field..
-		$query->where("m.moved=0");
+		$query->where("a.moved=0");
 		if (!empty($this->hold)) {
 			JArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
-			$query->where("m.hold IN ({$hold})");
+			$query->where("a.hold IN ({$hold})");
 		}
 	}
 }

@@ -183,7 +183,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		return KunenaForumMessageHelper::getMessages($results, $access);
 	}
 
-	protected function build($query)
+	protected function build(JDatabaseQuery $query)
 	{
 		// TODO: remove the field..
 		$query->where("a.moved=0");

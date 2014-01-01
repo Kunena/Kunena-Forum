@@ -278,7 +278,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		return KunenaForumTopicHelper::getTopics($results, $access);
 	}
 
-	protected function build($query)
+	protected function build(JDatabaseQuery $query)
 	{
 		if (!empty($this->hold)) {
 			JArrayHelper::toInteger($this->hold, 0);

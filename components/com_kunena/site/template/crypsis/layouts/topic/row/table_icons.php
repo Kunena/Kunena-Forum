@@ -42,7 +42,7 @@ if (!empty($this->spacing)) : ?>
 		</h4>
 
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages); ?>
+			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 
 		<ul class="inline hidden-phone">

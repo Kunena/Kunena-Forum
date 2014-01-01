@@ -16,5 +16,5 @@ defined('_JEXEC') or die;
 $target = ' target="' . $this->escape($this->target) . '"';
 ?>
 <a href="<?php echo $this->escape($this->url); ?>" class="bbcode_url" rel="nofollow"<?php echo $this->target; ?>>
-	<?php echo $this->escape($this->content); ?>
+	<?php echo $this->content; ?>
 </a>

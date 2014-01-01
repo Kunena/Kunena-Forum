@@ -225,3 +225,18 @@ width:80px;
 .ktxtarea {
 margin-left:-80px
 }
+input[type=radio] {
+	display:none; 
+	margin:10px;
+}
+input[type=radio] + label {
+	display:inline-block;
+	margin:-2px;
+	padding: 4px 12px;
+	background-color: transparent;
+	border-color: #ddd;
+}
+input[type=radio]:checked + label { 
+	background-image: none;
+	background-color:rgba(0, 0, 0, 0.1);
+}

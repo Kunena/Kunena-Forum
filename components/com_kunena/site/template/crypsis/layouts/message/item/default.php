@@ -87,4 +87,14 @@ $attachments = $this->message->getAttachments();
 
 		<div class="clearfix"></div>
 	</div>
+	
+	<?php if(!empty($this->thankyou)): ?>
+		<span class="kmessage-thankyou">
+			<?php
+				echo JText::_('COM_KUNENA_THANKYOU').': '.implode(', ', $this->thankyou).' ';
+				if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS',$this->more_thankyou);
+			?>
+		</span>
+	<?php endif; ?>
+	
 </div>

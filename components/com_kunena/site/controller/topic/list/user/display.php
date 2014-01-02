@@ -52,7 +52,12 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
-		$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user');
+		$this->moreUri = null;
+
+		if ( $this->getOptions()->get('embedded', false) )
+		{
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user');
+		}
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');

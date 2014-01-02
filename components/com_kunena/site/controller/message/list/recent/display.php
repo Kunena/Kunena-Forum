@@ -59,7 +59,11 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$this->me = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
-		if ( $this->getOptions()->get('embedded', false) )
+		if ( $this->getOptions()->get('embedded', false) && $this->state->get('list.mode')=='latest' )
+		{
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user');
+		}
+		else
 		{
 			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user');
 		}

@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $colspan = empty($this->actions) ? 4 : 5;
 ?>
-<?php if (!empty($this->embedded)) : ?>
+<?php if (!$this->embedded) : ?>
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
       method="post" target="_self" class="pull-right">
 	<?php $this->displayTimeFilter('sel'); ?>

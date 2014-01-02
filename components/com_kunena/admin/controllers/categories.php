@@ -494,4 +494,22 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$this->setRedirectBack();
 		}
 	}
+
+	/**
+	 * Method to put in trash one or multiple categories
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	public function trash()
+	{
+		$cid = $this->app->input->get('cid', array(), 'array');
+
+		if ( !empty($cid) )
+		{
+			$this->setVariable($cid, 'published', -2);
+			$this->setRedirectBack();
+		}
+	}
 }

@@ -32,7 +32,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
 			->set('state', $this->state)
-			->set('actions', $this->actions);
+			->set('actions', $this->actions)
+			->set('embedded', $this->embedded);
 
 		return $content;
 	}
@@ -51,6 +52,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->embedded = $this->state->get('embedded');
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');

@@ -38,7 +38,8 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			->set('pagination', $this->pagination)
 			->set('state', $this->state)
 			->set('actions', $this->actions)
-			->set('moreUri', $this->moreUri);
+			->set('moreUri', $this->moreUri)
+			->set('embedded', $this->embedded);
 
 		return $content;
 	}
@@ -57,6 +58,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->embedded = $this->state->get('embedded');
 		$this->moreUri = null;
 
 		if ( $this->getOptions()->get('embedded', false) )

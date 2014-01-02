@@ -96,13 +96,13 @@ class KunenaActivityCommunity extends KunenaActivity {
 	public function onAfterThankyou($actor, $target, $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $target );
-		$username = KunenaFactory::getUser($actor)->username;
+		$target_link = KunenaFactory::getUser($target)->getLink(KunenaFactory::getUser($target)->username, KunenaFactory::getUser($target)->username);
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = JFactory::getUser()->id;
 		$act->target = $target;
-		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf( 'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE', $username, ' <a href="' . $message->getPermaUrl() . '">' . $message->subject . '</a>' ) );
+		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf( 'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE', $target_link, ' <a href="' . $message->getPermaUrl() . '">' . $message->subject . '</a>' ) );
 		$act->content = NULL;
 		$act->app = 'kunena.thankyou';
 		$act->cid = $target;

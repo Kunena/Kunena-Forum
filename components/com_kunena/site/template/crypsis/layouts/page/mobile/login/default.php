@@ -13,7 +13,11 @@ defined ( '_JEXEC' ) or die ();
 
 $userConfig = JComponentHelper::getParams('com_users');
 ?>
-<ul class="nav pull-left">
+<ul class="nav navbar-nav pull-left">
+		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" style="float:left"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a>
+		<div class="nav-collapse"><?php echo $this->subRequest('Page/Menu'); ?></div>
+</ul>
+<ul class="pull-right">
 	<li class="dropdown">
 		<a href="#" class="btn btn-small mobile btn-navbar" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
@@ -74,8 +78,4 @@ $userConfig = JComponentHelper::getParams('com_users');
 			</form>
 		</div>
 	</li>
-</ul>
-<ul class="nav navbar-nav pull-right">
-		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a>
-		<div class="nav-collapse"><?php echo $this->subRequest('Page/Menu'); ?></div>
 </ul>

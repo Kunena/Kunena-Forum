@@ -58,7 +58,7 @@ foreach ($this->sections as $section) :
 		<thead class="hidden-phone">
 			<tr>
 				<td colspan="3">
-					<div><?php echo $section->displayField('description'); ?></div>
+					<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
 				</td>
 			</tr>
 		</thead>
@@ -106,7 +106,7 @@ foreach ($this->sections as $section) :
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
-					<div class="hidden-phone"><?php echo $category->displayField('description'); ?></div>
+					<div class="hidden-phone header-desc"><?php echo $category->displayField('description'); ?></div>
 				<?php endif; ?>
 
 				<?php
@@ -138,7 +138,7 @@ foreach ($this->sections as $section) :
 				<?php endif; ?>
 
 				<?php if (!empty($this->pending[$category->id])) : ?>
-				<div class="alert">
+				<div class="alert" style="max-width:150px;">
 					<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid='.intval($category->id),
 						intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'),
 						'', '', 'nofollow'); ?>
@@ -163,7 +163,7 @@ foreach ($this->sections as $section) :
 			</td>
 			<?php endif; ?>
 
-			<td class="span3 hidden-phone">
+			<td class="span3 hidden-phone last-post">
 				<div>
 					<?php echo $this->getLastPostLink($category) ?>
 				</div>

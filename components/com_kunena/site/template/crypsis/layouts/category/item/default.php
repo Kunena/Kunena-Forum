@@ -14,7 +14,7 @@ $categoryActions = $this->getCategoryActions();
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
-<div class="alert alert-info">
+<div class="alert alert-info kfrontend">
 	<a class="close" data-dismiss="alert" href="#">&times;</a>
 	<?php echo $this->category->displayField('headerdesc'); ?>
 </div>
@@ -62,9 +62,9 @@ $categoryActions = $this->getCategoryActions();
 				</td>
 				<?php endif; ?>
 				<?php if (!empty($this->topicActions)) : ?>
-				<td colspan="1">
+				<td class="span1 center">
 					<label>
-						<input class="kcheckall pull-right" type="checkbox" name="toggle" value="" />
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>
 				</td>
 				<?php endif; ?>

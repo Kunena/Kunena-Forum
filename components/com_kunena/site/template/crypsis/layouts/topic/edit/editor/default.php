@@ -243,7 +243,7 @@ if (!$this->config->disemoticons) : ?>
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span class="center" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></div>
 	<div class="controls">
-		<textarea class="input-xxlarge required" name="message" id="kbbcode-message" rows="12" tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="input-xxlarge qreply required" name="message" id="kbbcode-message" rows="12" tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 </div>
 

@@ -56,7 +56,7 @@ $colspan = empty($this->actions) ? 4 : 5;
 		</thead>
 		<?php endif; ?>
 
-		<?php if (!empty($this->actions) || !empty($this->embedded)) : ?>
+		<?php if (!empty($this->actions)|| !empty($this->embedded))  : ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $colspan; ?>">

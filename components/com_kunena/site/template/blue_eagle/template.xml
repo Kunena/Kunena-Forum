@@ -59,62 +59,62 @@
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>
 
-		<field name="forumHeadercolor" type="color" default="#5388B4"
+		<field name="forumHeadercolor" type="text" default=""
 			label="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND_DESC"
 		/>
 
-		<field name="announcementHeadercolor" type="color" default="#5388B4" 
+		<field name="announcementHeadercolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_HEADER_BACKGROUND" 
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
 		
-		<field name="announcementBoxbgcolor" type="color" default="#FFFFFF" 
+		<field name="announcementBoxbgcolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_BOX_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
 		
-		<field name="frontstatsHeadercolor" type="color" default="#5388B4" 
+		<field name="frontstatsHeadercolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" 
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" 
 		/>
 		
-		<field name="whoisonlineHeadercolor" type="color" default="#5388B4" 
+		<field name="whoisonlineHeadercolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
 
-		<field name="inactiveTabcolor" type="color" default="#737373" 
+		<field name="inactiveTabcolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR" 
 			description="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR_DESC" 
 		/>
 		
-		<field name="activeTabcolor" type="color" default="#5388B4" 
+		<field name="activeTabcolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR" 
 			description="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR_DESC" 
 		/>
 		
-		<field name="hoverTabcolor" type="color" default="#5388B4" 
+		<field name="hoverTabcolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR" 
 			description="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR_DESC" 
 		/>
 		
-		<field name="topBordercolor" type="color" default="#5388B4" 
+		<field name="topBordercolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR" 
 			description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC" 
 		/>
 		
-		<field name="inactiveFontcolor" type="color" default="#FFFFFF" 
+		<field name="inactiveFontcolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" 
 			description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" 
 		/>
 		
-		<field name="activeFontcolor" type="color" default="#FFFFFF" 
+		<field name="activeFontcolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" 
 			description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC"
 		/>
 		
-		<field name="toggleButtoncolor" type="color" default="#5388B4" 
+		<field name="toggleButtoncolor" type="text" default="" 
 			label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" 
 			description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" 
 		/>
@@ -150,9 +150,10 @@
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
 
-		<field name="templatebyText" type="hidden" default="" />
-		<field name="templatebyName" type="hidden" default="" />
-		<field name="templatebyLink" type="hidden" default="" />
+    <!-- Required for third party templates, the default value need to be set to avoid issues in template manager
+    <field name="templatebyText" type="hidden" default="" />
+    <field name="templatebyName" type="hidden" default="" />
+    <field name="templatebyLink" type="hidden" default="" /> -->
 
 		<!-- Required avatar sizes -->
 		<field name="avatarSizeXThumb" type="hidden" default="36" />

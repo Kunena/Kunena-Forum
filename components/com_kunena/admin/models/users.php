@@ -147,22 +147,22 @@ class KunenaAdminModelUsers extends JModelList {
 		}
 
 		// Filter by username or name.
-		$search = $this->getState('filter.username');
-		if (!empty($search)) {
-			$search = $db->Quote('%'.$db->escape($search, true).'%');
-			$query->where('a.username LIKE '.$search . 'OR a.name LIKE '.$search);
+		$username = $this->getState('filter.username');
+		if (!empty($username)) {
+			$username = $db->Quote('%'.$db->escape($username, true).'%');
+			$query->where('a.username LIKE ' . $username . ' OR a.name LIKE ' . $username);
 		}
 
 		// Filter by email.
-		$search = $this->getState('filter.email');
-		if (!empty($search)) {
-			$search = $db->Quote('%'.$db->escape($search, true).'%');
-			$query->where('a.email LIKE '.$search);
+		$email = $this->getState('filter.email');
+		if (!empty($email)) {
+			$email = $db->Quote('%'.$db->escape($email, true).'%');
+			$query->where('a.email LIKE ' . $email);
 		}
 
 		// Filter by signature.
 		$filter = $this->getState('filter.signature');
-		if ($filter !== null) {
+		if ($filter !== null  && $search===null) {
 			if ($filter) $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
 			else $query->where("ku.signature={$db->quote('')} OR ku.signature IS NULL");
 		}

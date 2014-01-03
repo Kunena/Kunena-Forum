@@ -21,10 +21,9 @@ class KunenaControllerMisc extends KunenaController {
 	}
 
 	public function template() {
-		jimport('joomla.filesystem.path');
 		$name = JRequest::getString ( 'name', JRequest::getString ( 'kunena_template', '', 'COOKIE' ) );
 		if ($name) {
-			$name = JPath::clean($name);
+			$name = KunenaPath::clean($name);
 			if (!is_readable ( KPATH_SITE . "/template/{$name}/template.xml" )) {
 				$name = 'blue_eagle';
 			}

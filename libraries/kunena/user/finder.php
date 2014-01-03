@@ -13,21 +13,9 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaUserFinder
  */
-class KunenaUserFinder
+class KunenaUserFinder extends KunenaDatabaseObjectFinder
 {
-	/**
-	 * @var JDatabaseQuery
-	 */
-	protected $query;
-	/**
-	 * @var JDatabase
-	 */
-	protected $db;
-	protected $start = 0;
-	protected $limit = 20;
-	protected $hold = array(0);
-	protected $moved = null;
-	protected $joinKunena = false;
+	protected $table = '#__users';
 	protected $config;
 
 	/**
@@ -35,91 +23,25 @@ class KunenaUserFinder
 	 */
 	public function __construct()
 	{
+		parent::__construct();
+
 		$this->config =  KunenaConfig::getInstance();
 		$this->limit = $this->config->userlist_rows;
-		$this->db = JFactory::getDbo();
-		$this->query = $this->db->getQuery(true);
-		$this->query
-			->from('#__users AS u')
-			->leftJoin('#__kunena_users AS ku ON ku.userid=u.id');
+
+		$this->query->leftJoin('#__kunena_users AS ku ON ku.userid=a.id');
 	}
 
 	/**
-	 * Set limitstart for the query.
-	 *
-	 * @param int $limitstart
-	 *
-	 * @return $this
-	 */
-	public function start($limitstart = 0)
-	{
-		$this->start = $limitstart;
-
-		return $this;
-	}
-
-	/**
-	 * Set limit to the query.
-	 *
-	 * If this function isn't used, Kunena will use threads per page configuration setting.
-	 *
-	 * @param int $limit
+	 * @param $field
+	 * @param $operation
+	 * @param $value
 	 *
 	 * @return $this
+	 * @deprecated Use where() instead.
 	 */
-	public function limit($limit = null)
-	{
-		if (!isset($limit)) $limit = $this->config->userlist_rows;
-		$this->limit = $limit;
-
-		return $this;
-	}
-
-	/**
-	 * Set order by field and direction.
-	 *
-	 * This function can be used more than once to chain order by.
-	 *
-	 * @param  string $by
-	 * @param  int $direction
-	 *
-	 * @return $this
-	 */
-	public function order($by, $direction = 1)
-	{
-		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = $this->db->quoteName($by);
-		$this->query->order("{$by} {$direction}");
-
-		return $this;
-	}
-
 	public function filterBy($field, $operation, $value)
 	{
-		$operation = strtoupper($operation);
-		switch ($operation)
-		{
-			case '>':
-			case '>=':
-			case '<':
-			case '<=':
-			case '=':
-				$this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($value)}");
-				break;
-			case 'IN':
-			case 'NOT IN':
-				$value = (array) $value;
-				if (empty($value)) {
-					// WHERE field IN (nothing).
-					$this->query->where('0');
-				} else {
-					$list = implode(',', $value);
-					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
-				}
-				break;
-		}
-
-		return $this;
+		return $this->where($field, $operation, $value);
 	}
 
 	/**
@@ -136,11 +58,11 @@ class KunenaUserFinder
 		$name = $register ? 'registerDate' : 'lastvisitDate';
 
 		if ($starting && $ending) {
-			$this->query->where("u.{$name} BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
+			$this->query->where("a.{$name} BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
 		} elseif ($starting) {
-			$this->query->where("u.{$name} > {$this->db->quote($starting->toUnix())}");
+			$this->query->where("a.{$name} > {$this->db->quote($starting->toUnix())}");
 		} elseif ($ending) {
-			$this->query->where("u.{$name} <= {$this->db->quote($ending->toUnix())}");
+			$this->query->where("a.{$name} <= {$this->db->quote($ending->toUnix())}");
 		}
 
 		return $this;
@@ -148,14 +70,14 @@ class KunenaUserFinder
 
 	public function filterByConfiguration(array $ignore = array()) {
 		if ($this->config->userlist_count_users == '1' ) {
-			$this->query->where('(u.block=0 OR u.activation="")');
+			$this->query->where('(a.block=0 OR a.activation="")');
 		} elseif ($this->config->userlist_count_users == '2' ) {
-			$this->query->where('(u.block=0 AND u.activation="")');
+			$this->query->where('(a.block=0 AND a.activation="")');
 		} elseif ($this->config->userlist_count_users == '3' ) {
-			$this->query->where('u.block=0');
+			$this->query->where('a.block=0');
 		}
 		// Hide super admins from the list
-		if ($ignore) $this->query->where('u.id NOT IN ('.implode(',', $ignore).')');
+		if ($ignore) $this->query->where('a.id NOT IN ('.implode(',', $ignore).')');
 
 		return $this;
 	}
@@ -163,9 +85,9 @@ class KunenaUserFinder
 	public function filterByName($search) {
 		if ($search) {
 			if ($this->config->username) {
-				$this->query->where("u.username LIKE '%{$this->db->escape($search)}%'");
+				$this->query->where("a.username LIKE '%{$this->db->escape($search)}%'");
 			} else {
-				$this->query->where("u.name LIKE '%{$this->db->escape($search)}%'");
+				$this->query->where("a.name LIKE '%{$this->db->escape($search)}%'");
 			}
 		}
 
@@ -179,34 +101,8 @@ class KunenaUserFinder
 	 */
 	public function find()
 	{
-		$query = clone $this->query;
-		$this->build($query);
-		$query->select('u.id');
-		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = (array) $this->db->loadColumn();
-		KunenaError::checkDatabaseError();
+		$results = parent::find();
 
 		return KunenaUserHelper::loadUsers($results);
-	}
-
-	/**
-	 * Count users.
-	 *
-	 * @return int
-	 */
-	public function count()
-	{
-		$query = clone $this->query;
-		$this->build($query);
-		$query->select('COUNT(*)');
-		$this->db->setQuery($query);
-		$count = (int) $this->db->loadResult();
-		KunenaError::checkDatabaseError();
-
-		return $count;
-	}
-
-	protected function build($query)
-	{
 	}
 }

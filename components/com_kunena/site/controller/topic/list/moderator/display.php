@@ -41,7 +41,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$finder->filterByUserAccess($this->me)
 			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
 			->filterByMoved(false)
-			->filterBy('locked', '=', 0);
+			->where('locked', '=', 0);
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
@@ -55,6 +55,9 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		{
 			$this->prepareTopics();
 		}
+
+		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 
 		// TODO <-
 		$this->headerText = JText::_('Topics Needing Attention');

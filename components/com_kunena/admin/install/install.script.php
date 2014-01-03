@@ -16,18 +16,18 @@ class Com_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
-			'0' => '5.4.20' // Preferred version
+			'0' => '5.4.23' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.2' => '3.2',
-			'3.1' => '3.1.5',
-			'3.0' => '3.1.5',
-			'2.5' => '2.5.14',
-			'0' => '3.1.5' // Preferred version
+			'3.2' => '3.2.1',
+			'3.1' => '3.2.1',
+			'3.0' => '3.2.1',
+			'2.5' => '2.5.17',
+			'0' => '3.2.1' // Preferred version
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
@@ -51,7 +51,7 @@ class Com_KunenaInstallerScript {
 	public function uninstall($parent) {
 		$adminpath = $parent->getParent()->getPath('extension_administrator');
 		$model = "{$adminpath}/install/model.php";
-		if (file_exists($model)) {
+		if (is_file($model)) {
 			require_once($model);
 			$installer = new KunenaModelInstall();
 			$installer->uninstall();
@@ -86,7 +86,7 @@ class Com_KunenaInstallerScript {
 
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";
-		if (file_exists($model)) {
+		if (is_file($model)) {
 			require_once($model);
 			$installer = new KunenaModelInstall();
 			$installer->install();
@@ -155,7 +155,7 @@ class Com_KunenaInstallerScript {
 
 		// Always load Kunena API if it exists.
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (file_exists($api)) require_once $api;
+		if (is_file($api)) require_once $api;
 
 		// Do not install over Git repository (K1.6+).
 		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())

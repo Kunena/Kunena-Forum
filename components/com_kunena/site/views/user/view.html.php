@@ -97,7 +97,12 @@ class KunenaViewUser extends KunenaView {
 			else $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_BACK').' &raquo;', JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow' );
 		}
 		$this->name = $this->user->username;
-		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
+		
+		if ($this->config->userlist_name) 
+		{
+			$this->name = $this->profile->getName() . ($this->me->isModerator() ? ' (' . $this->name . ')' : '');
+		}
+		
 		if ($this->config->showuserstats) {
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
@@ -351,17 +356,15 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function getAvatarGallery($path) {
-		jimport('joomla.filesystem.folder');
-		$files = JFolder::files($path,'(\.gif|\.png|\.jpg|\.jpeg)$');
+		$files = KunenaFolder::files($path,'(\.gif|\.png|\.jpg|\.jpeg)$');
 		return $files;
 	}
 
 	// This function was modified from the one posted to PHP.net by rockinmusicgv
 	// It is available under the readdir() entry in the PHP online manual
 	function getAvatarGalleries($path, $select_name) {
-		jimport('joomla.filesystem.folder');
 		jimport('joomla.utilities.string');
-		$folders = JFolder::folders($path,'.',true, true);
+		$folders = KunenaFolder::folders($path,'.',true, true);
 		$galleries = array();
 		if ($this->getAvatarGallery($path)) {
 			$galleries[] = JHtml::_('select.option', 'default', JText::_('COM_KUNENA_DEFAULT_GALLERY'));
@@ -441,9 +444,9 @@ class KunenaViewUser extends KunenaView {
 
 	function getAllImagesInGallery() {
 		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
-		$galleryFolders = JFolder::folders($path);
+		$galleryFolders = KunenaFolder::folders($path);
 		$files_list = array();
-		$defaultGallery = JFolder::files($path);
+		$defaultGallery = KunenaFolder::files($path);
 		$newdefaultGallery = array();
 
 		foreach($defaultGallery as $image) {
@@ -452,7 +455,7 @@ class KunenaViewUser extends KunenaView {
 		$files_list['default'] = json_encode($newdefaultGallery);
 
 		foreach($galleryFolders as $folder) {
-			$tmp = JFolder::files($path. '/' .$folder);
+			$tmp = KunenaFolder::files($path. '/' .$folder);
 			$newgalleryFolders = array();
 			foreach($tmp as $img) {
 				if( $img != 'index.html' )$newgalleryFolders[] = $img;

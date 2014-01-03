@@ -18,6 +18,8 @@ $last = 0;
 <div class="pagination pagination-small">
 	<ul>
 		<?php
+		echo $this->subLayout('Pagination/Item')->set('item', $data->start);
+		echo $this->subLayout('Pagination/Item')->set('item', $data->previous);
 		foreach($data->pages as $k=>$item)
 		{
 			if ($last+1 != $k)
@@ -27,23 +29,10 @@ $last = 0;
 
 			$last = $k;
 
-			if (!is_null($item->base))
-			{
-				// Check if the item can be clicked.
-				$limit = 'limitstart.value=' . (int) $item->base;
-				echo '<li><a href="' . $item->link . '" title="' . $item->text . '">' . $item->text . '</a></li>';
-			}
-			elseif (!empty($item->active))
-			{
-				// Check if the item is the active (or current) page.
-				echo '<li class="active"><a>' . $item->text . '</a></li>';
-			}
-			else
-			{
-				// Doesn't match any other condition, render disabled item.
-				echo '<li><a class="disabled">' . $item->text . '</a></li>';
-			}
+			echo $this->subLayout('Pagination/Item')->set('item', $item);
 		}
+		echo $this->subLayout('Pagination/Item')->set('item', $data->next);
+		echo $this->subLayout('Pagination/Item')->set('item', $data->end);
 		?>
 	</ul>
 </div>

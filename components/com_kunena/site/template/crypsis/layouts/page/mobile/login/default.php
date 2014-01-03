@@ -75,7 +75,7 @@ $userConfig = JComponentHelper::getParams('com_users');
 		</div>
 	</li>
 </ul>
-<ul class="nav pull-right">
-		<a class="btn btn-small mobile btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a>
-		<div class="nav-collapse collapse"><?php echo $this->subRequest('Page/Menu'); ?></div>
+<ul class="nav navbar-nav pull-right">
+		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a>
+		<div class="nav-collapse"><?php echo $this->subRequest('Page/Menu'); ?></div>
 </ul>

@@ -1234,9 +1234,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 */
 	public function DoMap($bbcode, $action, $name, $default, $params, $content)
 	{
-		static $id = false;
-		static $sensor = true;
-
 		if ($action == BBCODE_CHECK)
 		{
 			return true;
@@ -1261,6 +1258,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// TODO: Remove in Kunena 4.0
+		static $id = false;
+		static $sensor = true;
+
 		if ($id === false) {
 			$document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
 			$id = 0;
@@ -1486,7 +1486,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php'
 			);
 			foreach ($paths as $path) {
-				if (!class_exists('GeSHi') && file_exists($path)) {
+				if (!class_exists('GeSHi') && is_file($path)) {
 					require_once $path;
 				}
 			}
@@ -1847,7 +1847,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			// Hide between content from non registered users
 			return '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' ) . '</b>';
 		} else {
-			jimport ( 'joomla.filesystem.file' );
 			// Make sure that filename does not contain path or URL
 			$filename = basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content)));
 

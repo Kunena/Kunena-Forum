@@ -16,21 +16,25 @@ class KunenaSession extends JObject
 {
 	protected $_exists = false;
 	protected $_sessiontimeout = false;
+	protected $allreadtime;
+
 	private static $_instance;
 
 	public function __construct($identifier)
 	{
 		$this->load($identifier);
-		$now = JFactory::getDate()->toUnix();
+
 		if (!$this->currvisit) {
 			// For new users new indication displays 14 days
+			$now = JFactory::getDate()->toUnix();
 			$this->lasttime = $now - 14*24*60*60; // 14 days ago
+			$this->allreadtime = $this->lasttime;
 			$this->currvisit = $now;
 			$this->readtopics = 0;
 		} else {
-			// For existing users new indication expires after 2 months
-			$monthAgo = $now - 61*24*60*60;
-			$this->lasttime = ($this->lasttime > $monthAgo ? $this->lasttime : $monthAgo);
+			// Deal with users who do not (yet) have allreadtime set.
+			$userCategory = KunenaForumCategoryUserHelper::get(0, (int) $identifier);
+			$this->allreadtime = $userCategory->allreadtime ? $userCategory->allreadtime : $this->lasttime;
 		}
 	}
 
@@ -139,6 +143,13 @@ class KunenaSession extends JObject
 			$this->userid = $table->get('userid');
 		}
 
+		// Read indication has moved outside of the session table -- let's update it too.
+		$userCategory = KunenaForumCategoryUserHelper::get(0, $this->userid);
+		if ($userCategory->allreadtime != $this->allreadtime) {
+			$userCategory->allreadtime = $this->allreadtime;
+			$userCategory->save();
+		}
+
 		return $result;
 	}
 
@@ -175,9 +186,18 @@ class KunenaSession extends JObject
 		return $this->_sessiontimeout;
 	}
 
+	public function getAllReadTime()
+	{
+		// For existing users new indication expires after 3 months
+		$monthsAgo = JFactory::getDate()->toUnix() - 91*24*60*60;
+		$allreadtime = ($this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo);
+
+		return $allreadtime;
+	}
+
 	public function markAllCategoriesRead()
 	{
-		$this->lasttime = JFactory::getDate()->toUnix();
+		$this->allreadtime = JFactory::getDate()->toUnix();
 		$this->readtopics = 0;
 	}
 

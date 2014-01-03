@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 	<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE'); ?>
  	<span class="btn btn-small pull-right" data-toggle="collapse" data-target="#kwho">&times;</span>
 </h3>
- 
+
 <div class="collapse in" id="kwho">
 <div class="well well-small">
 	<p>
@@ -23,47 +23,47 @@ defined('_JEXEC') or die;
 	</p>
 
 	<?php if (!empty($this->onlineList)) : ?>
-	<ul class="inline">
+	<p>
 
 	<?php foreach ($this->onlineList as $user) : ?>
-		<li><?php echo $user->getLink(); ?></li>
+		<span><?php echo $user->getLink(); ?></span>
 	<?php endforeach; ?>
 
-	</ul>
+	</p>
 	<?php endif; ?>
 
 	<?php if (!empty($this->hiddenList)) : ?>
-	<ul class="inline">
-		<li><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</li>
+	<p>
+		<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
 
 	<?php foreach ($this->hiddenList as $user) : ?>
-		<li><?php echo $user->getLink(); ?></li>
+		<span><?php echo $user->getLink(); ?></span>
 	<?php endforeach; ?>
 
-	</ul>
+	</p>
 	<?php endif; ?>
 
-	<ul class="inline">
-		<li><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</li>
-		<li class="kwho-admin">
+	<p>
+		<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
+		<span class="kwho-admin">
 			<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
-		</li>
-		<li class="kwho-globalmoderator">
+		</span>
+		<span class="kwho-globalmoderator">
 			<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
-		</li>
-		<li class="kwho-moderator">
+		</span>
+		<span class="kwho-moderator">
 			<?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
-		</li>
-		<li class="kwho-banned">
+		</span>
+		<span class="kwho-banned">
 			<?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
-		</li>
-		<li class="kwho-user">
+		</span>
+		<span class="kwho-user">
 			<?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
-		</li>
-		<li class="kwho-guest">
+		</span>
+		<span class="kwho-guest">
 			<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
-		</li>
-	</ul>
+		</span>
+	</p>
 </div>
 </div>
 </div>

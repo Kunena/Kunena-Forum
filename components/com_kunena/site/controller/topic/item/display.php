@@ -115,7 +115,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$hold = KunenaAccess::getInstance()->getAllowedHold($this->me, $this->category->id, false);
 		$finder = new KunenaForumMessageFinder;
 		$finder
-			->filterBy('thread', '=', $this->topic->id)
+			->where('thread', '=', $this->topic->id)
 			->filterByHold($hold);
 
 		$start = $mesid ? $this->topic->getPostLocation($mesid) : $start;

@@ -54,9 +54,9 @@
 			class="inputbox"
 			size="1" />
 
-		<field
+		<field addfieldpath="administrator/components/com_plugins/models/fields"
 			name="ordering"
-			type="ordering"
+			type="Pluginordering"
 			class="inputbox"
 			label="JFIELD_ORDERING_LABEL"
 			description="JFIELD_ORDERING_DESC" />

@@ -17,7 +17,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 
 	public function __construct($step = null) {
 		// Joomla 2.5 support
-		if (file_exists(JPATH_LIBRARIES.'/cms/version/version.php')) require_once JPATH_LIBRARIES.'/cms/version/version.php';
+		if (is_file(JPATH_LIBRARIES.'/cms/version/version.php')) require_once JPATH_LIBRARIES.'/cms/version/version.php';
 
 		if (!defined('JVERSION')) {
 			$version = new JVersion();

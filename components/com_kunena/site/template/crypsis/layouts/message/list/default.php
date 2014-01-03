@@ -66,7 +66,7 @@ $colspan = empty($this->actions) ? 4 : 5;
 					}
 					?>
 
-					<?php if (!empty($this->actions)) : ?>
+					<?php if (!empty($this->actions)|| !empty($this->embedded))  : ?>
 						<?php echo JHtml::_(
 							'select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" size="1"',
 							'value', 'text', 0, 'kchecktask'

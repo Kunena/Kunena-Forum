@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 				<input type="hidden" name="task" value="login" />
 				<?php echo JHtml::_('form.token'); ?>
 
-				<div id="form-login-username" class="control-group">
+				<div id="form-login-username" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">
 							<span class="add-on">
@@ -36,7 +36,7 @@ defined('_JEXEC') or die;
 						</div>
 					</div>
 				</div>
-				<div id="form-login-password" class="control-group">
+				<div id="form-login-password" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">
 							<span class="add-on">

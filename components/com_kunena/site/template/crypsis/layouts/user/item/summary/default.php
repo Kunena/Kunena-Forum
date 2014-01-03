@@ -39,7 +39,7 @@ if ($this->config->showuserstats)
 	</div>
 	<?php endif; ?>
 
-	<div class="span4">
+	<div class="span6">
 		<div class="badge badge-success">
 			<?php echo JText::sprintf('COM_KUNENA_X_POSTS', (int) $profile->posts); ?>
 		</div>
@@ -199,7 +199,7 @@ if ($this->config->showuserstats)
 		</dl>
 	</div>
 
-	<div class="span4">
+	<div class="span3">
 		<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?>
 	</div>
 </div>

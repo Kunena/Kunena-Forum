@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
+$userTopic = $topic->getUserTopic();
+$avatar = $topic->getAuthor()->getAvatarImage('img-polaroid', 48);
 
 $cols = empty($this->checkbox) ? 5 : 6;
 
@@ -24,14 +26,11 @@ if (!empty($this->spacing)) : ?>
 <?php endif; ?>
 
 <tr>
-	<td class="span1 center hidden-phone">
-		<strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong>
-		<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
-	</td>
+
 	<td class="span1 center hidden-phone">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td>
+	<td class="span6">
 		
 		<div>
 			<?php echo $this->getTopicLink($topic); ?>
@@ -68,24 +67,29 @@ if (!empty($this->spacing)) : ?>
 	</td>
 	<td class="span1 center hidden-phone">
 		<?php echo $this->formatLargeNumber($topic->hits); ?>
-		<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 	</td>
-	
-		<?php if (!empty($topic->avatar)) : ?>
 	<td class="span1 center hidden-phone">
-		<?php echo $topic->getLastPostAuthor()->getLink($topic->avatar); ?>
+		<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
-		<?php endif; ?>
 	
-	<td>
-		<?php
-			echo $this->getTopicLink($topic, 'last');
-			echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink();
-		?>
-		<br />
-		<span title="<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat_hover'); ?>">
+	<td class="span1 center hidden-phone">
+		<?php echo $topic->getAuthor()->getLink($avatar); ?>
+	</td>
+	
+	<td class="span3">
+		<div class="klatest-post-info">
+			<?php if (!empty($this->topic->avatar)) : ?>
+			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
+			<?php endif; ?>
+
+			<span class="ktopic-latest-post">
+			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
+
+			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+			<br>
 			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
-		</span>
+			</span>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
@@ -104,4 +108,3 @@ if (!empty($this->spacing)) : ?>
 			->setLayout('table_row');
 	?>
 </tr>
-

@@ -74,6 +74,7 @@ class KunenaTemplate extends JObject
 	protected $xml = null;
 	protected $map;
 	protected $hmvc;
+	protected $override;
 
 	/**
 	* Constructor
@@ -129,6 +130,7 @@ class KunenaTemplate extends JObject
 
 		// Set lookup paths.
 		$this->pathTypes += $this->isHmvc() ? $this->pathTypeDefaults : $this->pathTypeOld;
+		$this->isOverride();
 	}
 
 	public function getConfigXml() {
@@ -337,7 +339,7 @@ HTML;
 		$array = array();
 		foreach (array_reverse($this->default) as $template) {
 			$array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE)."/template/".$template.$path;
-			$array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE)."/template/{$app->getTemplate()}/com_kunena/layouts/".$path;
+			$array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE)."/templates/{$app->getTemplate()}/html/com_kunena".$path;
 		}
 		return $array;
 	}
@@ -551,10 +553,25 @@ HTML;
 	}
 
 	public function isHmvc() {
+		$app = JFactory::getApplication();
 		if (is_null($this->hmvc)) {
-			$this->hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
+			if (is_dir(JPATH_THEMES."/{$app->getTemplate()}/com_kunena/pages")) {
+				$this->hmvc = is_dir(JPATH_THEMES."/{$app->getTemplate()}/com_kunena/pages");
+			} else {
+				$this->hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
+			}
 		}
 		return $this->hmvc;
+	}
+
+	public function isOverride() {
+		$app = JFactory::getApplication();
+		if (is_null($this->override)) {
+			if (is_dir(JPATH_THEMES."/{$app->getTemplate()}/com_kunena")) {
+				$this->override = is_dir(JPATH_THEMES."/{$app->getTemplate()}/com_kunena/pages");
+			}
+		}
+		return $this->override;
 	}
 
 	/**
@@ -578,6 +595,7 @@ HTML;
 			if (!is_file(KPATH_SITE . "/template/{$templatename}/template.xml")
 				&& !is_file(KPATH_SITE . "/template/{$templatename}/config.xml")) {
 				// If template xml doesn't exist, raise warning and use blue eagle instead
+				$file = JPATH_THEMES."/{$app->getTemplate()}/html/com_kunena/template.php";
 				$templatename = 'blue_eagle';
 				$classname = "KunenaTemplate{$templatename}";
 

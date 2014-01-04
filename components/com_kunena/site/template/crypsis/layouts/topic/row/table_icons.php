@@ -42,7 +42,7 @@ if (!empty($this->spacing)) : ?>
 		</h4>
 
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages); ?>
+			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 
 		<ul class="inline hidden-phone">
@@ -76,7 +76,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 	</td>
 	<?php if (!empty($this->checkbox)) : ?>
-	<td class="span1">
+	<td class="span1 center">
 		<input class ="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 	</td>
 	<?php endif; ?>

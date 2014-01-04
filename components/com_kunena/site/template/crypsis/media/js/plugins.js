@@ -7,16 +7,6 @@
  * @link http://www.kunena.org
  **/
 
-function showMessage() {
-	div = document.getElementById('tow', 'test1', 'k', 'row');
-	div.style.display = "block";
-}
-
-function hideMessage() {
-	div = document.getElementById('tow','test2', 'k', 'row');
-	div.style.display = "none";
-}
-
 /* Function used to ordering the data by clicking on column title */
 function kunenatableOrdering( order, dir, task, form ) {
 	var form=document.getElementById(form);
@@ -124,5 +114,38 @@ jQuery(document).ready(function() {
 	if ( jQuery('#kunena_search_results').is(':visible') ) {
 		jQuery('#search').hide();
 	}
+	
+	/* Provide autocomplete user list in search form and in user list */
+	if (  jQuery( '#kurl_users' ).length > 0 ) {
+		var users_url = jQuery( '#kurl_users' ).val();
+		
+		jQuery('#kusersearch').atwho({
+			at: "", 
+			tpl: '<li data-value="${username}"><i class="icon-user"></i>${name} <small>${username}</small></li>',
+			limit: 7, 
+			callbacks: {
+				remote_filter: function(query, callback)  {
+					jQuery.ajax({
+						url: users_url,
+						data: {
+							search : query
+						},
+						success: function(data) {
+							callback(data.names);
+						}
+					});
+				}
+			}
+		});
+	}
 });
 
+	/* Show more profilebox */
+	jQuery(document).ready(function() {
+  jQuery(".content").hide();
+  //toggle the componenet with class msg_body
+  jQuery(".heading").click(function()
+  {
+    jQuery(this).next(".content").slideToggle(500);
+  });
+});

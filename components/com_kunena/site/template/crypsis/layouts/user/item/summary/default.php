@@ -33,7 +33,7 @@ if ($this->config->showuserstats)
 
 	<?php if ($avatar) : ?>
 	<div class="span3 center">
-		<div class="thumbnail" style="width: 200px; height: 200px;">
+		<div class="thumbnail" style="width: auto; height: auto;">
 			<?php echo $avatar; ?>
 		</div>
 	</div>
@@ -41,10 +41,10 @@ if ($this->config->showuserstats)
 
 	<div class="span4">
 		<div class="badge badge-success">
-			<?php echo JText::sprintf('COM_KUNENA_X_VIEWS', (int) $profile->uhits); ?>
+			<?php echo JText::sprintf('COM_KUNENA_X_POSTS', (int) $profile->posts); ?>
 		</div>
 		<div class="badge badge-info">
-			<?php echo JText::sprintf('COM_KUNENA_X_POSTS', (int) $profile->posts); ?>
+			<?php echo JText::sprintf('COM_KUNENA_X_VIEWS', (int) $profile->uhits); ?>
 		</div>
 		<div class="badge badge-warning">
 			<?php echo JText::sprintf('COM_KUNENA_X_THANKS', (int) $profile->thankyou); ?>

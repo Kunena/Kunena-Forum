@@ -135,7 +135,15 @@ JHtml::_('dropdown.init');
 				foreach($this->items as $id=>$attachment) :
 				$message = $attachment->getMessage();
 				$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
-				if ( $attachment->isImage($attachment->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+				if ( $attachment->isImage($attachment->filetype) && is_file($path))
+				{
+					list($width, $height) = getimagesize($path);
+				}
+				else
+				{
+					$width = null;
+					$height = null;
+				}
 				?>
 					<tr>
 						<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>

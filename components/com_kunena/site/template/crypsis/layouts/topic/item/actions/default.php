@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 
-<div class="btn-toolbar">
+<div class="btn-toolbar" style="min-height:25px">
 	<div>
 		<?php if ($this->topicButtons->get('reply')
 			|| $this->topicButtons->get('subscribe')
@@ -57,7 +57,7 @@ defined('_JEXEC') or die;
 		</div>
 		<?php endif ?>
 
-		<div class="btn-group">
+		<div class="btn-group pull-right">
 			<?php echo $this->subLayout('Search/Button')
 				->set('id', $this->topic->id)
 				->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC')); ?>

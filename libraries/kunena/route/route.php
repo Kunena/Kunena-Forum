@@ -47,7 +47,7 @@ abstract class KunenaRoute {
 	static $menus = false;
 	static $menu = false;
 	static $default = false;
-	static $active = false;
+	static $active = null;
 	static $home = false;
 	static $search = false;
 	static $current = null;
@@ -121,6 +121,44 @@ abstract class KunenaRoute {
 		self::$urisSave = true;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$uris[$key];
+	}
+
+
+	/**
+	 * Get the referrer page.
+	 *
+	 * If there's no referrer or it's external, Kunena will return default page.
+	 * Also referrers back to tasks are removed.
+	 *
+	 * @param string $default  Default page to return into.
+	 * @param string $anchor   Anchor (location in the page).
+	 *
+	 * @return string
+	 */
+	public static function getReferrer($default = 'index.php?option=com_kunena', $anchor = null) {
+		$app = JFactory::getApplication();
+		$default = JUri::base() . ($app->isSite() ? ltrim(KunenaRoute::_($default), '/') : $default);
+		$referrer = $app->input->server->getString('HTTP_REFERER');
+
+		$uri = new JUri($referrer ? $referrer : $default);
+		if (JUri::isInternal($uri->toString())) {
+			// Parse route.
+			$vars = $app->getRouter()->parse($uri);
+			$uri = new JUri('index.php');
+			$uri->setQuery($vars);
+
+			// Make sure we do not return into a task.
+			$uri->delVar('task');
+			$uri->delVar(JSession::getFormToken());
+		} elseif ($app->isAdmin()) {
+			// Pass..
+		} else {
+			$uri = JUri::getInstance($default);
+		}
+
+		if ($anchor) $uri->setFragment($anchor);
+
+		return 'index.php'.$uri->toString(array('query', 'fragment'));
 	}
 
 	/**
@@ -277,17 +315,66 @@ abstract class KunenaRoute {
 		self::$menus = JFactory::getApplication()->getMenu ();
 		self::$menu = self::$menus->getMenu ();
 		self::$default = self::$menus->getDefault();
-		$active = self::$menus->getActive ();
-		if ($active && $active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view'])) {
-			self::$active = $active;
-		} else {
-			self::$active = null;
-		}
-		self::$home = self::getHome(self::$active);
+		$active = self::$menus->getActive();
+
+		// Get the full request URI.
+		$uri = clone JUri::getInstance();
 
 		// Get current route.
 		self::$current = new JUri('index.php');
-		self::$current->setQuery(JFactory::getApplication()->getRouter()->getVars());
+
+		if ($active)
+		{
+			foreach ($active->query as $key => $value)
+			{
+				self::$current->setVar($key, $value);
+			}
+
+			self::$current->setVar('Itemid', (int) $active->id);
+
+			if ($active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view']))
+			{
+				self::$active = $active;
+			}
+		}
+
+		// If values are both in GET and POST, they are only stored in POST
+		foreach (JRequest::get('post') as $key => $value)
+		{
+			if (in_array($key, array('view', 'layout', 'task')) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
+			{
+				self::$current->setVar($key, $value);
+			}
+		}
+
+		// Make sure that request URI is not broken
+		foreach (JRequest::get('get') as $key => $value)
+		{
+			if (preg_match('/[^a-zA-Z]/', $key))
+			{
+				continue;
+			}
+
+			if (in_array($key, array('q', 'query', 'searchuser')))
+			{
+				// Allow all values
+			}
+			elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+			{
+				// Illegal value
+				continue;
+			}
+
+			self::$current->setVar($key, $value);
+		}
+
+		if (self::$current->getVar('start'))
+		{
+			self::$current->setVar('limitstart', self::$current->getVar('start'));
+			self::$current->delVar('start');
+		}
+
+		self::$home = self::getHome(self::$active);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
@@ -303,23 +390,6 @@ abstract class KunenaRoute {
 		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
 			if (!isset($current[$uri])) {
 				$get = self::$current->getQuery(true);
-				// If values are both in GET and POST, they are only stored in POST
-				foreach (JRequest::get( 'post' ) as $key=>$value) {
-					if (($key == 'view' || $key == 'layout' || $key == 'task') && !preg_match('/[^a-zA-Z0-9_ ]/i', $value))
-						$get[$key] = $value;
-				}
-				// Make sure that request URI is not broken
-				foreach (JRequest::get( 'get' ) as $key=>$value) {
-					if (preg_match('/[^a-zA-Z]/', $key)) continue;
-					if ($key == 'q' || $key == 'searchuser') {
-						// Allow all values
-					} elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
-						// Illegal value
-						continue;
-					}
-					$get[$key] = $value;
-				}
-
 				$uri = $current[$uri] = JUri::getInstance('index.php?'.http_build_query($get).$uri);
 				self::setItemID($uri);
 				$uri->delVar ( 'defaultmenu' );

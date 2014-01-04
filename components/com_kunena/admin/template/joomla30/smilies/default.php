@@ -17,6 +17,10 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
+if (version_compare(JVERSION, '3.2', '>'))
+{
+	JHtml::_('behavior.tabstate');
+}
 ?>
 
 <script type="text/javascript">
@@ -57,7 +61,7 @@ JHtml::_('dropdown.init');
 					<div id="filter-bar" class="btn-toolbar">
 						<div class="filter-search btn-group pull-left">
 							<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
-							<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
+							<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>" />
 						</div>
 						<div class="btn-group pull-left">
 							<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?></button>

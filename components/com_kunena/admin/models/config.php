@@ -397,6 +397,9 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists['legacy_urls'] = JHtml::_('select.genericlist', $options, 'cfg_legacy_urls', 'class="inputbox" size="1"', 'value', 'text', $this->config->legacy_urls);
 		$lists['attachment_protection'] = JHtml::_('select.genericlist', $yesno, 'cfg_attachment_protection', 'class="inputbox" size="1"', 'value', 'text', $this->config->attachment_protection);
 
+		// Option to select if the stats link need to be showed for all users or only for registred users
+		$lists ['statslink_allowed'] = JHtml::_('select.genericlist', $yesno, 'cfg_statslink_allowed', 'class="inputbox" size="1"', 'value', 'text', $this->config->statslink_allowed);
+
 		return $lists;
 	}
 }

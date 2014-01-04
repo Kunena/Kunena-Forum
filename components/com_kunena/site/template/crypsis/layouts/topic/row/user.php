@@ -24,16 +24,15 @@ if (!empty($this->spacing)) : ?>
 <?php endif; ?>
 
 <tr>
-	<td>
+	<td class="span1 center hidden-phone">
 		<strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong>
 		<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
 	</td>
-	<td class="hidden-phone">
+	<td class="span1 center hidden-phone">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td>
-		<?php if ($topic->attachments) echo $this->getIcon('ktopicattach', JText::_('COM_KUNENA_ATTACH')); ?>
-		<?php if ($topic->poll_id) echo $this->getIcon('ktopicpoll', JText::_('COM_KUNENA_ADMIN_POLLS')); ?>
+		
 		<div>
 			<?php echo $this->getTopicLink($topic); ?>
 
@@ -51,6 +50,8 @@ if (!empty($this->spacing)) : ?>
 				echo $this->getIcon('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
 			}
 			?>
+		<?php if ($topic->attachments) echo $this->getIcon('icon-flag-2', JText::_('COM_KUNENA_ATTACH')); ?>
+		<?php if ($topic->poll_id) echo $this->getIcon('icon-bars', JText::_('COM_KUNENA_ADMIN_POLLS')); ?>
 		</div>
 		<div>
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
@@ -62,20 +63,20 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages); ?>
+			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 	</td>
-	<td>
+	<td class="span1 center hidden-phone">
 		<?php echo $this->formatLargeNumber($topic->hits); ?>
 		<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 	</td>
-	<td>
-
+	
 		<?php if (!empty($topic->avatar)) : ?>
+	<td class="span1 center hidden-phone">
 		<?php echo $topic->getLastPostAuthor()->getLink($topic->avatar); ?>
-		<?php endif; ?>
-
 	</td>
+		<?php endif; ?>
+	
 	<td>
 		<?php
 			echo $this->getTopicLink($topic, 'last');
@@ -88,7 +89,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-	<td>
+	<td class="span1 center">
 		<label>
 			<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 		</label>

@@ -273,33 +273,13 @@ class KunenaController extends JControllerLegacy {
 	/**
 	 * Redirect back to the referrer page.
 	 *
-	 * If there's no referrer or it's external, Kunena will return to forum home page.
+	 * If there's no referrer or it's external, Kunena will return to the default page.
 	 * Also redirects back to tasks are prevented.
 	 *
+	 * @param string $default
 	 * @param string $anchor
 	 */
-	protected function setRedirectBack($anchor = '') {
-		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : 'index.php?option=com_kunena');
-		$referrer = $this->input->server->getString('HTTP_REFERER');
-
-		$uri = new JUri($referrer ? $referrer : $default);
-		if (JUri::isInternal($uri->toString())) {
-			// Parse route.
-			$vars = $this->app->getRouter()->parse($uri);
-			$uri = new JUri('index.php');
-			$uri->setQuery($vars);
-
-			// Make sure we do not return into a task.
-			$uri->delVar('task');
-			$uri->delVar(JSession::getFormToken());
-		} elseif ($this->app->isAdmin()) {
-			// Pass..
-		} else {
-			$uri = JUri::getInstance($default);
-		}
-
-		if ($anchor) $uri->setFragment($anchor);
-
-		$this->setRedirect(JRoute::_('index.php'.$uri->toString(array('query', 'fragment')), false));
+	protected function setRedirectBack($default = 'index.php?option=com_kunena', $anchor = null) {
+		$this->setRedirect(JRoute::_(KunenaRoute::getReferrer($default, $anchor), false));
 	}
 }

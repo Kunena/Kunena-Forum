@@ -208,85 +208,82 @@ abstract class KunenaUserHelper {
 	/**
 	 * @return array
 	 */
-	public static function getOnlineUsers() {
-		if (self::$_online === null) {
-			// Need to calculate the time less the time selected by user, user
-			$querytime = '';
-			if ( KunenaFactory::getConfig()->show_session_starttime != 0 ) {
-				$time = JFactory::getDate()->toUnix() - KunenaFactory::getConfig()->show_session_starttime;
-				$querytime = 'AND time > '.$time;
-			}
+	public static function getOnlineUsers()
+	{
+		if (self::$_online === null)
+		{
+			$app = JFactory::getApplication();
+			$config = KunenaFactory::getConfig();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query
+				->select('userid, MAX(time) AS time')
+				->from('#__session')
+				->where('client_id=0 AND userid>0')
+				->group('userid')
+				->order('time DESC');
 
-			$db = JFactory::getDBO ();
-			$query = "SELECT s.userid, s.time
-				FROM #__session AS s
-				WHERE s.client_id=0 AND s.userid>0
-				".$querytime."
-				GROUP BY s.userid
-				ORDER BY s.time DESC";
+			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
+			{
+				// Calculate x minutes by using Kunena setting.
+				$time = JFactory::getDate()->toUnix() - $config->show_session_starttime;
+				$query->where('time > ' . $time);
+			}
+			elseif ($config->show_session_type > 0)
+			{
+				// Calculate Joomla session expiration point.
+				$time = JFactory::getDate()->toUnix() - ($app->getCfg('lifetime', 15) * 60);
+				$query->where('time > ' . $time);
+			}
 
 			$db->setQuery($query);
 			self::$_online = (array) $db->loadObjectList('userid');
 			KunenaError::checkDatabaseError();
 		}
+
 		return self::$_online;
 	}
 
 	/**
 	 * @return array
 	 */
-	public static function getOnlineCount() {
-		static $count = null;
+	public static function getOnlineCount()
+	{
+		static $counts = null;
 
-		// FIXME: does this really work (returns $result, not $count)?
-		$result = array ();
-		if ($count === null) {
-			$kunena_config = KunenaFactory::getConfig ();
-			$kunena_app = JFactory::getApplication ();
-			$db = JFactory::getDBO ();
+		if ($counts === null)
+		{
+			$app = JFactory::getApplication();
+			$config = KunenaFactory::getConfig();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query
+				->select('COUNT(*)')
+				->from('#__session')
+				->where('client_id=0 AND userid=0');
 
-			$user_array = 0;
-			$guest_array = 0;
-
-			// Need to calcute the time less the time selected by user, user
-			$querytime = '';
-			if ( $kunena_config->show_session_starttime != 0 ) {
-				$time = JFactory::getDate()->toUnix() - $kunena_config->show_session_starttime;
-				$querytime = 'AND time > '.$time;
+			if ($config->show_session_type == 2 && $config->show_session_starttime != 0)
+			{
+				// Calculate x minutes by using Kunena setting.
+				$time = JFactory::getDate()->toUnix() - $config->show_session_starttime;
+				$query->where('time > ' . $time);
+			}
+			elseif ($config->show_session_type > 0)
+			{
+				// Calculate Joomla session expiration point.
+				$time = JFactory::getDate()->toUnix() - ($app->getCfg('lifetime', 15) * 60);
+				$query->where('time > ' . $time);
 			}
 
-			$query = 'SELECT guest, time, client_id
-				FROM #__session
-				WHERE client_id = 0 ' . $querytime;
-			$db->setQuery ( $query );
-			$sessions = (array) $db->loadObjectList ();
-			KunenaError::checkDatabaseError ();
+			$db->setQuery($query);
+			$count = $db->loadResult();
+			KunenaError::checkDatabaseError();
 
-			// need to calculate the joomla session lifetime in timestamp, to check if the sessions haven't expired
-			$j_session_lifetime = JFactory::getDate()->toUnix() - ( $kunena_app->getCfg('lifetime') * 60 );
-
-			if (count($sessions)) {
-				foreach ($sessions as $session) {
-					// we check that the session hasn't expired
-					if ( $kunena_config->show_session_type == 0 || $kunena_config->show_session_type == 2 || ($session->time > $j_session_lifetime && $kunena_config->show_session_type == 1 ) ) {
-						// if guest increase guest count by 1
-						if ($session->guest == 1) {
-							$guest_array ++;
-						}
-						// if member increase member count by 1
-						if ($session->guest == 0) {
-							$user_array ++;
-						}
-					}
-				}
-			}
-
-			$result ['user'] = $user_array;
-			$result ['guest'] = $guest_array;
+			$counts = array();
+			$counts['user'] = count(self::getOnlineUsers());
+			$counts['guest'] = $count;
 		}
-		//require_once JPATH_ROOT.'/modules/mod_whosonline/helper.php';
-		//$count = modWhosonlineHelper::getOnlineCount();
-		return $result;
+		return $counts;
 	}
 
 	/**

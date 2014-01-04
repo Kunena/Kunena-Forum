@@ -32,7 +32,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			->set('headerText', $this->headerText)
 			->set('pagination', $this->pagination)
 			->set('state', $this->state)
-			->set('actions', $this->actions);
+			->set('actions', $this->actions)
+			->set('moreUri', $this->moreUri);
 
 		return $content;
 	}
@@ -51,6 +52,12 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->moreUri = null;
+
+		if ( $this->getOptions()->get('embedded', false) )
+		{
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user');
+		}
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
@@ -129,6 +136,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		}
 
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+
 		switch ($this->state->get('list.mode'))
 		{
 			case 'posted' :

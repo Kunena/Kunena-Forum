@@ -58,7 +58,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages); ?>
+			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 
 		<div>
@@ -83,10 +83,10 @@ if (!empty($this->spacing)) : ?>
 			<?php echo JText::_('COM_KUNENA_GEN_REPLIES') . ':' . $this->formatLargeNumber($topic->getReplies()); ?>
 		</span>
 	</td>
-	<td class="span1 center">
+	<td class="span1 center hidden-phone">
 
 		<?php if ($avatar) : ?>
-		<span class="hidden-phone">
+		<span>
 			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
 		</span>
 		<?php endif; ?>
@@ -103,7 +103,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-	<td class="span1">
+	<td class="span1 center">
 		<label>
 			<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 		</label>

@@ -213,6 +213,9 @@ class KunenaPagination
 			$this->pagesStop = $this->pagesStart + $displayed - 1 - $end;
 		}
 
+		$this->pagesStop = max(1, $this->pagesStop);
+		$this->pagesTotal = max(1, $this->pagesTotal);
+
 		return $this;
 	}
 

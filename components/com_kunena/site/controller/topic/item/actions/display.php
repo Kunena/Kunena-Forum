@@ -53,7 +53,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		{
 			// Add Reply topic button.
 			$this->topicButtons->set('reply',
-				$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication')
+				$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', true)
 			);
 		}
 
@@ -159,16 +159,17 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	/**
 	 * Get button.
 	 *
-	 * @param   string       $link   Target link (do not route it).
+	 * @param   string       $url    Target link (do not route it).
 	 * @param   string       $name   Name of the button.
 	 * @param   string       $scope  Scope of the button.
 	 * @param   string       $type   Type of the button.
-	 * @param   string|null  $id     HTML Id.
+	 * @param   bool         $primary  True if primary button.
 	 *
 	 * @return  string
 	 */
-	public function getButton($link, $name, $scope, $type, $id = null)
+	public function getButton($url, $name, $scope, $type, $primary = false)
 	{
-		return $this->template->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
+		return KunenaLayout::factory('Page/Button')
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'primary' => $primary));
 	}
 }

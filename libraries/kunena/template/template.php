@@ -74,7 +74,6 @@ class KunenaTemplate extends JObject
 	protected $xml = null;
 	protected $map;
 	protected $hmvc;
-	protected $override;
 
 	/**
 	* Constructor
@@ -130,7 +129,6 @@ class KunenaTemplate extends JObject
 
 		// Set lookup paths.
 		$this->pathTypes += $this->isHmvc() ? $this->pathTypeDefaults : $this->pathTypeOld;
-		$this->isOverride();
 	}
 
 	public function getConfigXml() {
@@ -562,16 +560,6 @@ HTML;
 			}
 		}
 		return $this->hmvc;
-	}
-
-	public function isOverride() {
-		$app = JFactory::getApplication();
-		if (is_null($this->override)) {
-			if (is_dir(JPATH_THEMES."/{$app->getTemplate()}/com_kunena")) {
-				$this->override = is_dir(JPATH_THEMES."/{$app->getTemplate()}/com_kunena/pages");
-			}
-		}
-		return $this->override;
 	}
 
 	/**

@@ -104,7 +104,7 @@ class KunenaControllerTopic extends KunenaController {
 					$imageInfo = JImage::getImageFileProperties($uploadFile);
 					$config = KunenaConfig::getInstance();
 
-					if ($imageInfo->width > $config->imagewidth || $imageInfo->heigth > $config->imageheight)
+					if ($imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
 					{
 						// Calculate quality for both JPG and PNG.
 						$quality = $config->imagequality;

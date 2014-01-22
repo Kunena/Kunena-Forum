@@ -215,14 +215,15 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create{$catid}", $xhtml);
 	}
 
-	public function getMarkReadUrl($xhtml = true) {
+	public function getMarkReadUrl($children = false, $xhtml = true) {
 		if (!KunenaUserHelper::getMyself()->exists()) {
 			return null;
 		}
 
+		$children = $children ? "&children=1" : '';
 		$catid = $this->id ? "&catid={$this->id}" : '';
 		$token = '&' . JSession::getFormToken() . '=1';
-		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$token}", $xhtml);
+		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$children}{$token}", $xhtml);
 	}
 
 	/**

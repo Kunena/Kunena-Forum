@@ -515,6 +515,10 @@ abstract class KunenaRoute {
 		return KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
 	}
 
+	public static function getCategoryItemid(KunenaForumCategory $category) {
+		return KunenaRoute::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
+	}
+
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null,
 	                                   KunenaForumCategory $category = null) {
 		if (!$category) $category = $topic->getCategory();

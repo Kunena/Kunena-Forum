@@ -111,6 +111,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$this->compileLess('main.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
+		JHtml::_('jquery.ui');
+
 		$config = KunenaFactory::getConfig();
 
 		// If polls are enabled, load also poll JavaScript.
@@ -200,5 +202,15 @@ HTML;
 		$html .= '</ul></div><div class="clearfix"></div>';
 
 		return $html;
+	}
+
+	/**
+	 * Method to laod upload scripts only where needed
+	 */
+	public function loadUploadScript()
+	{
+		$this->addStyleSheet('css/dropzone.css');
+		$this->addScript('js/dropzone.js');
+		$this->addScript('js/upload.js');
 	}
 }

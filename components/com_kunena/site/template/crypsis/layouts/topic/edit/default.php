@@ -19,6 +19,10 @@ $this->addScriptDeclaration('config_attachment_limit = '.$this->config->attachme
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
+$this->template->loadUploadScript();
+
+$this->addScriptDeclaration("kunena_upload_files_url = " . KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=upload&format=raw', false) );
+
 $this->addScriptDeclaration("window.addEvent('domready', function() {
 	if ( typeof pollcategoriesid != 'undefined' ) {
 		var catid = $('kcategory_poll').get('value');
@@ -65,6 +69,8 @@ $this->k=0;
 	<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 	<?php endif; ?>
 	<?php echo JHtml::_( 'form.token' ); ?>
+
+	<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
 
 	<h2>
 		<?php echo $this->escape($this->headerText)?>
@@ -205,6 +211,15 @@ if (!$this->message->name) {
 }
 ?>
 </form>
+
+<div id="dropzone">
+	<div id="kunena-upload" class="dropzone dz-clickable">
+		<div class="dz-default dz-message">
+			<span>Drop files here to upload</span>
+		</div>
+	</div>
+</div>
+
 <?php
 if ($this->config->showhistory && $this->topic->exists())
 	echo $this->subRequest('Topic/Form/History', new JInput(array('id'=>$this->topic->id)));

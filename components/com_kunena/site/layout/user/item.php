@@ -52,7 +52,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 				'userid' => $this->profile->userid,
 				'mode' => 'latest',
-				'sel' => 720,
+				'sel' => -1,
 				'limit' => 6,
 				'filter_order' => 'time',
 				'limitstart' => 0,

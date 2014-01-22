@@ -507,13 +507,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	 */
 	public function getUri($category = null, $action = null) {
 		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
+		$Itemid = KunenaRoute::getCategoryItemid($category);
 		if (!$this->exists() || !$category->exists()) return null;
 		if ($action instanceof KunenaForumMessage) {
 			$message = $action;
 			$action = 'post'.$message->id;
 		}
 
-		$uri = JUri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}");
+		$uri = JUri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}&Itemid={$Itemid}");
 		if ($uri->getVar('action') !== null) {
 			$uri->delVar('action');
 			$mesid = 0;

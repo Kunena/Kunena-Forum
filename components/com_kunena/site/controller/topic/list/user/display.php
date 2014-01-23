@@ -35,7 +35,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		if ($this->getOptions()->get('embedded', false))
 		{
-			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=user&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&sel=' . $this->state->get('list.time'));
+			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=user&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&sel=' . $this->state->get('list.time') . '&limit=' . $this->state->get('list.limit'));
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 

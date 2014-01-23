@@ -135,30 +135,35 @@ abstract class KunenaRoute {
 	 *
 	 * @return string
 	 */
-	public static function getReferrer($default = 'index.php?option=com_kunena', $anchor = null) {
+	public static function getReferrer($default = 'index.php?option=com_kunena', $anchor = null)
+	{
 		$app = JFactory::getApplication();
-		$default = JUri::base() . ($app->isSite() ? ltrim(KunenaRoute::_($default), '/') : $default);
 		$referrer = $app->input->server->getString('HTTP_REFERER');
 
-		$uri = new JUri($referrer ? $referrer : $default);
-		if (JUri::isInternal($uri->toString())) {
-			// Parse route.
-			$vars = $app->getRouter()->parse($uri);
-			$uri = new JUri('index.php');
-			$uri->setQuery($vars);
+		if ($referrer && JUri::isInternal($referrer))
+		{
+			$uri = JUri::getInstance($referrer);
 
 			// Make sure we do not return into a task.
 			$uri->delVar('task');
 			$uri->delVar(JSession::getFormToken());
-		} elseif ($app->isAdmin()) {
+		}
+		elseif ($app->isAdmin())
+		{
 			// Pass..
-		} else {
+		}
+		else
+		{
+			$default = self::_($default);
 			$uri = JUri::getInstance($default);
 		}
 
-		if ($anchor) $uri->setFragment($anchor);
+		if ($anchor)
+		{
+			$uri->setFragment($anchor);
+		}
 
-		return 'index.php'.$uri->toString(array('query', 'fragment'));
+		return 'index.php' . $uri->toString(array('query', 'fragment'));
 	}
 
 	/**

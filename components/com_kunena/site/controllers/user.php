@@ -71,51 +71,59 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		// perform security checks
+		// Make sure that the user exists.
 		if (!$this->me->exists()) {
 			JError::raiseError(403, JText::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'));
+			$this->setRedirectBack();
 			return;
 		}
 
-		// Get the redirect.
-		$err_return = JRoute::_(KunenaRoute::getReferrer('index.php?option=com_kunena&view=user&layout=edit'));
+		// Set default redirect.
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		if ($return && JURI::isInternal($return)) {
+			$this->setRedirect(JRoute::_($return, false));
+		} else {
+			$this->setRedirect($this->me->getURL(false));
+		}
+
+		// Define error redirect.
+		$err_return = KunenaRoute::getReferrer('index.php?option=com_kunena&view=user&layout=edit');
 
 		$this->user = JFactory::getUser();
-		if (!$this->saveUser()) {
-			$this->setRedirect($err_return);
-			return;
-		} elseif (!$this->saveAvatar()) {
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_AVATAR_NOT_SAVED'), 'notice');
-			$this->setRedirect($err_return);
-			return;
-		} else {
-			$this->saveProfile();
-			$this->saveSettings();
-			$success = $this->me->save();
-			if (!$success) {
-				$this->app->enqueueMessage($this->me->getError(), 'notice');
-				$this->setRedirect($err_return);
-				return;
-			} else {
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
-			}
 
-			JPluginHelper::importPlugin( 'system' );
-			// Renamme into JEventDispatcher when dropping Joomla! 2.5 support
-			$dispatcher = JDispatcher::getInstance();
-			$results = $dispatcher->trigger( 'OnAfterKunenaProfileUpdate', array( $this->me, $success ) );
+		// Save Joomla user.
+		$success = $this->saveUser();
+
+		if (!$success) {
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
+			$this->setRedirect($err_return);
 		}
 
-		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
-		if ($return && JURI::isInternal($return))
-		{
-			// Redirect the user.
-			$this->setRedirect(JRoute::_($return, false));
-			return;
+		// Save avatar.
+		$success = $this->saveAvatar();
+
+		if (!$success) {
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_AVATAR_NOT_SAVED'), 'error');
+			$this->setRedirect($err_return);
 		}
 
-		$this->setRedirect($this->me->getURL(false));
+		// Save Kunena user.
+		$this->saveProfile();
+		$this->saveSettings();
+		$success = $this->me->save();
+		if (!$success) {
+			$this->app->enqueueMessage($this->me->getError(), 'error');
+			$this->setRedirect($err_return);
+		}
+
+		if ($this->redirect != $err_return) {
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
+		}
+
+		JPluginHelper::importPlugin('system');
+		// TODO: Rename into JEventDispatcher when dropping Joomla! 2.5 support
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->trigger('OnAfterKunenaProfileUpdate', array($this->me, $success));
 	}
 
 	function ban() {
@@ -396,7 +404,11 @@ class KunenaControllerUser extends KunenaController {
 
 	protected function saveProfile() {
 		$this->me->personalText = JRequest::getVar ( 'personaltext', '' );
-		$this->me->birthdate = JRequest::getInt ( 'birthdate1', '0000' ).'-'.JRequest::getInt ( 'birthdate2', '00' ).'-'.JRequest::getInt ( 'birthdate3', '00' );
+		$birthdate = JRequest::getString('birthdate');
+		if (!$birthdate) {
+			$birthdate = JRequest::getInt('birthdate1', '0000').'-'.JRequest::getInt('birthdate2', '00').'-'.JRequest::getInt ('birthdate3', '00');
+		}
+		$this->me->birthdate = $birthdate;
 		$this->me->location = trim(JRequest::getVar ( 'location', '' ));
 		$this->me->gender = JRequest::getInt ( 'gender', '' );
 		$this->me->icq = trim(JRequest::getString ( 'icq', '' ));

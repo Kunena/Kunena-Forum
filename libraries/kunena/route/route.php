@@ -148,10 +148,6 @@ abstract class KunenaRoute {
 			$uri->delVar('task');
 			$uri->delVar(JSession::getFormToken());
 		}
-		elseif ($app->isAdmin())
-		{
-			// Pass..
-		}
 		else
 		{
 			$default = self::_($default);
@@ -163,7 +159,7 @@ abstract class KunenaRoute {
 			$uri->setFragment($anchor);
 		}
 
-		return 'index.php' . $uri->toString(array('query', 'fragment'));
+		return $uri->toString(array('path', 'query', 'fragment'));
 	}
 
 	/**

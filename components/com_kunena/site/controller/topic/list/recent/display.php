@@ -33,6 +33,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$this->me = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
+		$this->embedded = $this->getOptions()->get('embedded', false);
+
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
 

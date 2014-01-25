@@ -71,6 +71,7 @@ $this->k=0;
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
+	<input type="hidden" id="kunena_tmp_dir" name="kunena_tmp_dir" value="" />
 
 	<h2>
 		<?php echo $this->escape($this->headerText)?>
@@ -139,12 +140,21 @@ $this->k=0;
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
 							<div id="kattachment-id" class="kattachment"> <span class="kattachment-id-container"></span>
-								<input class="kfile-input-textbox" type="text" readonly="readonly" />
-								<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
-									<input type="button" value="<?php echo	JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button btn" />
-									<input id="kupload" class="kfile-input" name="kattachment" type="file" />
+								<div id="alert_upload_box">
+									<div class="alert alert-info">
+										<button class="close" data-dismiss="alert" type="button">×</button>
+										<strong><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?></strong> :
+										<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>
+									</div>
 								</div>
-								<a href="#" class="kattachment-remove btn" style="display: none"><?php echo	JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a> <a href="#" class="kattachment-insert btn" style="display: none"><?php echo	JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a> </div>
+								<div id="dropzone">
+									<div id="demo-upload" class="dropzone dz-clickable">
+										<div class="dz-default dz-message">
+											<span>Drop files here to upload</span>
+										</div>
+									</div>
+								</div>
+
 							<?php
 							if (!empty($this->attachments))
 								echo $this->subLayout('Topic/Edit/Attachments')

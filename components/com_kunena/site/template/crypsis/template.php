@@ -205,12 +205,20 @@ HTML;
 	}
 
 	/**
-	 * Method to laod upload scripts only where needed
+	 * Method to load upload scripts only where needed
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
 	 */
 	public function loadUploadScript()
 	{
 		$this->addStyleSheet('css/dropzone.css');
 		$this->addScript('js/dropzone.js');
+
+		JText::script('COM_KUNENA_EDITOR_INSERT');
+		JText::script('COM_KUNENA_GEN_REMOVE_FILE');
+
 		$this->addScript('js/upload.js');
 	}
 }

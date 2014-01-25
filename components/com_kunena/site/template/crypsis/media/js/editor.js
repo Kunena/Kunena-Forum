@@ -644,47 +644,6 @@ function cancelForm() {
 	return true;
 }
 
-var __attachment_limit = 0;
-
-function newAttachment() {
-	if (__attachment_limit < config_attachment_limit) __attachment_limit++;
-	else return false;
-	
-	var __kattachment = document.id('kattachment-id');
-	if (!__kattachment) return;
-	__kattachment.setStyle('display', 'none');
-	__kattachment.getElement('input').setProperty('value', '');
-	
-	var __id = __kattachment.retrieve('nextid',1);
-	__kattachment.store('nextid',__id+1);
-	var __file = __kattachment.clone().inject(__kattachment,'before').set('id','kattachment'+__id).setStyle('display');
-	__file.getElement('span.kattachment-id-container').set('text', __id+'. ');
-	var input = __file.getElement('input.kfile-input').set('name', 'kattachment'+__id).removeProperty('onchange');
-	input.addEvent('change', function() {
-		this.removeEvents('change');
-		var __filename = this.get('value');
-		if (__filename.lastIndexOf('\\') > -1) {
-			__filename = __filename.substring(1 + __filename.lastIndexOf('\\'));
-		}
-		this.addEvent('change', function() {
-			__file.getElement('input.kfile-input-textbox').set('value', __filename);
-		});
-		__file.getElement('input.kfile-input-textbox').set('value', __filename);
-		
-		__file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment:'+ __id +']'+ __filename +'[/attachment]\n', 'after', false); return false; } );
-		__file.getElement('.kattachment-remove').removeProperty('style').addEvent('click', function() {__file.dispose(); return false; } );
-		newAttachment();
-	});
-}
-
-function bindAttachments() {
-	var __kattachment = $$('.kattachment-old');
-	if (!__kattachment) return;
-	__kattachment.each(function(el) {
-		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment='+ el.getElement('input[type="checkbox"]').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', false); return false; } );
-	});
-}
-
 // 
 // Helper function for various IE7 and IE8 work arounds
 //
@@ -764,8 +723,6 @@ function kEditorInitialize() {
 		});
 	}
 
-	bindAttachments();
-	newAttachment();
 	//This is need to retrieve the video provider selected by the user in the dropdownlist
 	if (document.id('kvideoprovider') != undefined) {
 		document.id('kvideoprovider').addEvent('change', function() {

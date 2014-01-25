@@ -46,7 +46,7 @@ class KunenaViewTopic extends KunenaView {
 		// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
 		if ($category->id) $category->tryAuthorise('topic.post.attachment.create');
 
-		require 'UploadHandler.php';
+		require 'KunenaUploadHandler.php';
 		$upload_handler = new KunenaUploadHandler;
 	}
 }

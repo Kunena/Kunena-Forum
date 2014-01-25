@@ -17,14 +17,27 @@ jQuery(function() {
 	
 	var index =0;
 	
+	var response_stored = null;
+	
 	// Limit the total number of files allowed to upload to follow Kunena configuration
 	if ( config_attachment_limit != 0 ) {
 		myDropzone.options.maxFiles = config_attachment_limit;
 	}
 	
-	myDropzone.on("complete", function(file) {
+	myDropzone.on("success", function(file, response) {
 		/* Maybe display some more file information on your page */
-		jQuery('#kunena_tmp_dir').val(response.tmp_dir);
+		
+		var response_object = jQuery.parseJSON( response );
+		
+		jQuery('#kunena_tmp_dir').val(response_object.tmp_dir);
+		
+		response_stored = response_object;
+	});
+	
+	myDropzone.on("maxfilesreached", function(file, response) {
+		jQuery('#alert_upload_box').empty();
+		var alert_maxfiles = jQuery('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>You have reached the maximum number of files allowed</div>');
+		jQuery('#alert_upload_box').append(alert_maxfiles);
 	});
 	
 	myDropzone.on("sending", function(file, xhr, formData) {
@@ -36,7 +49,7 @@ jQuery(function() {
 		index = index+1;
 		
 		// Create the remove button
-		var insertButton = Dropzone.createElement('<button class="btn btn-primary">Insert</button>');
+		var insertButton = Dropzone.createElement('<button class="btn btn-primary">'+Joomla.JText._('COM_KUNENA_EDITOR_INSERT')+'</button>');
 		
 		insertButton.addEventListener("click", function(e) {
 			// Make sure the button click doesn't submit the form:
@@ -50,7 +63,7 @@ jQuery(function() {
 		file.previewElement.appendChild(insertButton);
 		
 		// Create the remove button
-		var removeButton = Dropzone.createElement('<button class="btn btn-danger delete">Remove file</button>');
+		var removeButton = Dropzone.createElement('<button class="btn btn-danger delete">'+Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE')+'</button>');
 
 		// Capture the Dropzone instance as closure.
 		var _this = this;
@@ -63,8 +76,15 @@ jQuery(function() {
 
 			// Remove the file preview.
 			_this.removeFile(file);
-			// If you want to the delete the file on the server as well,
-			// you can do the AJAX request here.
+			
+			// Ajax Request to delete the file from filesystem
+			jQuery.ajax({
+				url: kunena_upload_files_url+'&file='+response_stored.file_name,
+				type: 'DELETE',
+				success: function(result) {
+					// Do something with the result
+				}
+			});
 		});
 
 		// Add the button to the file preview element.

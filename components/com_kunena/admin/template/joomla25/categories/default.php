@@ -244,7 +244,7 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 										</small>
 									</td>
 									<td class="center">
-										<span><?php echo $this->escape ( $category->accessname ); ?></span>
+										<span><?php echo $category->accessname; ?></span>
 										<small>
 											<?php echo JText::sprintf('(Access: %s)', $this->escape( $category->accesstype ));?>
 										</small>

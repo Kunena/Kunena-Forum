@@ -153,7 +153,11 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$access = $acl->getCategoryAccess($category);
 				$category->accessname = array();
 				foreach ($access as $item) {
-					$category->accessname[] = $item['title'];
+					if (!empty($item['admin.link'])) {
+						$category->accessname[] = '<a href="' . htmlentities($item['admin.link'], ENT_COMPAT, 'utf-8') . '">' . htmlentities($item['title'], ENT_COMPAT, 'utf-8') .'</a>';
+					} else {
+						$category->accessname[] = htmlentities($item['title'], ENT_COMPAT, 'utf-8');
+					}
 				}
 				$category->accessname = implode(' / ', $category->accessname);
 

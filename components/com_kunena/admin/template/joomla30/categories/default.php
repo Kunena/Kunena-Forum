@@ -278,7 +278,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							</small>
 						</td>
 						<td class="center hidden-phone">
-							<span><?php echo $this->escape($item->accessname); ?></span>
+							<span><?php echo $item->accessname; ?></span>
 							<small>
 								<?php echo JText::sprintf('(Access: %s)', $this->escape( $item->accesstype ));?>
 							</small>

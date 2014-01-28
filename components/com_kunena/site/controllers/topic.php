@@ -211,7 +211,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Redirect to full reply instead.
-		if (JRequest::getString('fullreply') !== null) {
+		if (JRequest::getString('fullreply')) {
 			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=reply&catid={$fields->catid}&id={$parent->getTopic()->id}&mesid={$parent->id}", false));
 			return;
 		}

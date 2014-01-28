@@ -210,6 +210,12 @@ class KunenaControllerTopic extends KunenaController {
 			$category = $topic->getCategory();
 		}
 
+		// Redirect to full reply instead.
+		if (JRequest::getString('fullreply') !== null) {
+			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=reply&catid={$fields->catid}&id={$parent->getTopic()->id}&mesid={$parent->id}", false));
+			return;
+		}
+
 		// Flood protection
 		if ($this->config->floodprotection && ! $this->me->isModerator($category)) {
 			$timelimit = JFactory::getDate()->toUnix() - $this->config->floodprotection;

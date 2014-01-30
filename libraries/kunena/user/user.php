@@ -84,6 +84,8 @@ class KunenaUser extends JObject {
 	public function __construct($identifier = 0) {
 		// Always load the user -- if user does not exist: fill empty data
 		if ($identifier !== false) $this->load ( $identifier );
+		if (!isset($this->userid)) $this->userid = 0;
+
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = KunenaFactory::getConfig ();

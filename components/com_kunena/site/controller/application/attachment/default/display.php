@@ -134,7 +134,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		}
 
 		header('Content-Transfer-Encoding: binary');
-		header('Content-Length: ' . $attachment->size);
+		header('Content-Length: ' . filesize($path));
 		flush();
 
 		// Output the file contents.

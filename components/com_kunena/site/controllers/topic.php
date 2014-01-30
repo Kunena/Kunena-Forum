@@ -104,7 +104,7 @@ class KunenaControllerTopic extends KunenaController {
 					$imageInfo = JImage::getImageFileProperties($uploadFile);
 					$config = KunenaConfig::getInstance();
 
-					if ($imageInfo->width > $config->imagewidth || $imageInfo->heigth > $config->imageheight)
+					if ($imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
 					{
 						// Calculate quality for both JPG and PNG.
 						$quality = $config->imagequality;
@@ -208,6 +208,12 @@ class KunenaControllerTopic extends KunenaController {
 			}
 			list ($topic, $message) = $parent->newReply($fields);
 			$category = $topic->getCategory();
+		}
+
+		// Redirect to full reply instead.
+		if (JRequest::getString('fullreply')) {
+			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=reply&catid={$fields->catid}&id={$parent->getTopic()->id}&mesid={$parent->id}", false));
+			return;
 		}
 
 		// Flood protection

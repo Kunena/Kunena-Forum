@@ -145,7 +145,7 @@ class KunenaForumStatistics {
 			$this->sectionCount = $this->categoryCount = 0;
 			$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 			foreach ($categories as $category) {
-				if (!$category->published) continue;
+				if ($category->published != 1) continue;
 				if ($category->isSection())
 					$this->sectionCount ++;
 				else {

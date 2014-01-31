@@ -214,8 +214,15 @@ class KunenaController extends JControllerLegacy {
 			if ($content instanceof Exception)
 			{
 				$app->enqueueMessage($content->getMessage(), 'error');
+
+				if (!$this->redirect)
+				{
+					// On exceptions always return back to the referrer page.
+					$this->setRedirect(KunenaRoute::getReferrer());
+				}
 			}
 
+			// The following code gets only called for successful tasks.
 			if (!$this->redirect)
 			{
 				// If controller didn't set a new redirect, try if request has return url in it.

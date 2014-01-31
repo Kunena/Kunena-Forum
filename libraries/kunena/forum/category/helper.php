@@ -328,7 +328,7 @@ abstract class KunenaForumCategoryHelper {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return array();
 			}
-			if (!$unpublished && !self::$_instances [$parent]->published) {
+			if (!$unpublished && self::$_instances[$parent]->published != 1) {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return array();
 			}

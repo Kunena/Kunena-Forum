@@ -203,8 +203,6 @@ class KunenaController extends JControllerLegacy {
 				throw $content;
 			}
 
-			echo $content;
-
 			return;
 		}
 

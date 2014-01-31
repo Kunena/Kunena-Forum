@@ -105,7 +105,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$output = $this->execute();
 
 		} catch (KunenaExceptionAuthorise $e) {
-			if (!$this->primary) return KunenaLayout::factory('Empty');
+			if (!$this->primary) return (string) KunenaLayout::factory('Empty');
 
 			$document = JFactory::getDocument();
 			$document->setTitle($e->getResponseStatus());
@@ -116,7 +116,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 		} catch (Exception $e) {
 			// TODO: error message?
-			if (!$this->primary) return KunenaLayout::factory('Empty');
+			if (!$this->primary) {
+				return "<b>Exception</b> in layout <b>{$this->name}!</b>" . (!JDEBUG ? $e->getMessage() : '');
+			}
 
 			$title = '500 Internal Server Error';
 			$document = JFactory::getDocument();

@@ -34,6 +34,7 @@
 		<folder>module</folder>
 		<folder>pagination</folder>
 		<folder>path</folder>
+		<folder>response</folder>
 		<folder>request</folder>
 		<folder>route</folder>
 		<folder>spam</folder>

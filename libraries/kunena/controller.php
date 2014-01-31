@@ -279,7 +279,7 @@ class KunenaController extends JControllerLegacy {
 	 * @param string $default
 	 * @param string $anchor
 	 */
-	protected function setRedirectBack($default = 'index.php?option=com_kunena', $anchor = null) {
+	protected function setRedirectBack($default = null, $anchor = null) {
 		$this->setRedirect(KunenaRoute::getReferrer($default, $anchor));
 	}
 }

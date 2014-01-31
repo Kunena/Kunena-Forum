@@ -135,23 +135,40 @@ abstract class KunenaRoute {
 	 *
 	 * @return string
 	 */
-	public static function getReferrer($default = 'index.php?option=com_kunena', $anchor = null)
+	public static function getReferrer($default = null, $anchor = null)
 	{
 		$app = JFactory::getApplication();
+
 		$referrer = $app->input->server->getString('HTTP_REFERER');
 
-		if ($referrer && JUri::isInternal($referrer))
+		if ($referrer)
 		{
-			$uri = JUri::getInstance($referrer);
+			$uri = new JUri($referrer);
 
-			// Make sure we do not return into a task.
+			// Make sure we do not return into a task -- or if task is SEF encoded, make sure it fails.
 			$uri->delVar('task');
 			$uri->delVar(JSession::getFormToken());
+
+			// Check that referrer was from the same domain and came from the Joomla frontend or backend.
+			$base = $uri->toString(array('scheme', 'host', 'port', 'path'));
+			$host = $uri->toString(array('scheme', 'host', 'port'));
+
+			// Referrer should always have host set and it should come from the same base address.
+			if (empty($host) || stripos($base, JUri::base()) !== 0)
+			{
+				$uri = null;
+			}
 		}
-		else
+
+		if (!isset($uri))
 		{
+			if ($default == null)
+			{
+				$default = $app->isSite() ? 'index.php?option=com_kunena' : 'administrator/index.php?option=com_kunena';
+			}
+
 			$default = self::_($default);
-			$uri = JUri::getInstance($default);
+			$uri = new JUri($default);
 		}
 
 		if ($anchor)

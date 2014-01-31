@@ -43,6 +43,21 @@ class KunenaControllerUser extends KunenaController {
 		parent::display();
 	}
 
+	public function search() {
+		$model = $this->getModel('user');
+
+		$uri = new JUri('index.php?option=com_kunena&view=user&layout=list');
+
+		$state = $model->getState();
+		$search = $state->get('list.search');
+		$limitstart = $state->get('list.start');
+
+		if ($search) $uri->setVar('search', $search);
+		if ($limitstart) $uri->setVar('limitstart', $search);
+
+		$this->setRedirect(KunenaRoute::_($uri, false));
+	}
+
 	public function change() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );

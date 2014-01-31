@@ -156,7 +156,7 @@ abstract class KunenaForumCategoryHelper {
 		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
 		$where = isset($params['where']) ? (string) $params['where'] : '';
-		$allowed = implode(',', KunenaAccess::getInstance()->getAllowedCategories ());
+		$allowed = implode(',', array_keys(KunenaAccess::getInstance()->getAllowedCategories()));
 
 		if (!$userids || !$allowed) return array(0, array());
 

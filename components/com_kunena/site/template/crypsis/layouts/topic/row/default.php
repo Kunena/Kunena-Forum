@@ -62,17 +62,16 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div>
+			<?php /** TODO: New Feature - LABELS
 			<span class="label label-info">
 				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-			</span>
-
+			</span>	*/ ?>
 			<?php if ($topic->locked != 0) : ?>
 			<span class="label label-important">
 				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
 			</span>
 			<?php endif; ?>
-
-			in <?php echo $this->getCategoryLink($topic->getCategory(), null, null, 'hasTooltip'); ?>
+			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 		</div>
 	</td>
 	<td class="span1 hidden-phone center">

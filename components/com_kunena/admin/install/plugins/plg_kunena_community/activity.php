@@ -96,7 +96,8 @@ class KunenaActivityCommunity extends KunenaActivity {
 	public function onAfterThankyou($actor, $target, $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $target );
-		$target_link = KunenaFactory::getUser($target)->getLink(KunenaFactory::getUser($target)->username, KunenaFactory::getUser($target)->username);
+		$targetUser = KunenaFactory::getUser($target);
+		$target_link = $targetUser->getLink($targetUser->getName(), $targetUser->getName());
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';

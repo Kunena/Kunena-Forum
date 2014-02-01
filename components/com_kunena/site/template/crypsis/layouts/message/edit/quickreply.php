@@ -60,7 +60,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			<input type="text" name="subject" size="35" class="inputbox"
 			       maxlength="<?php echo (int) $config->maxsubject; ?>"
 			       value="<?php echo $message->displayField('subject'); ?>" />
-			<textarea class="span12" name="message" rows="6" cols="60"></textarea>
+			<textarea class="span12 qreply" name="message" rows="6" cols="60"></textarea>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<input type="checkbox" name="subscribeMe" value="1"

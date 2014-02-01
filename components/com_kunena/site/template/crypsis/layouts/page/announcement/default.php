@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 
 	</h4>
-	<h6>
+	<h5>
 		<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
 
 		<?php if (!empty($this->announcement->description)) : ?>
@@ -31,5 +31,5 @@ defined('_JEXEC') or die;
 				null, 'follow'); ?></p>
 		<?php endif; ?>
 
-	</h6>
+	</h5>
 </div>

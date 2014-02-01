@@ -1742,7 +1742,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$cache = JFactory::getCache('Kunena_tweet_quote');
 		$cache->setCaching(true);
-		$cache->setLifeTime($twCacheTime);
+		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
 		$tweet_quote = $cache->get( array( $this, 'getTweet' ), array( $tweetid ) );
 
 		return '<div>'.$tweet_quote.'</div>';

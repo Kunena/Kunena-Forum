@@ -18,7 +18,7 @@ class KunenaAdminViewAttachments extends KunenaView {
 		$this->setToolbar();
 		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
-		$this->pagination = $this->get ( 'Pagination' );
+		$this->pagination = $this->get('Pagination');
 
 		$this->sortFields = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();

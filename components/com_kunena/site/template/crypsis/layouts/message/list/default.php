@@ -55,8 +55,36 @@ $colspan = empty($this->actions) ? 4 : 5;
 			</tr>
 		</thead>
 		<?php endif; ?>
-
-		<?php if (!empty($this->actions)|| !empty($this->embedded))  : ?>
+<thead>
+			<tr>
+				<td class="span1 center hidden-phone">
+					<a id="forumtop"> </a>
+					<a href="#forumbottom">
+						<i class="icon-arrow-down hasTooltip"></i>
+					</a>
+				</td>
+				<td class="span1">
+				<?php echo JText::_('Message'); ?>
+				</td>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
+				</td>
+				<td class="span1 center hidden-phone">
+				Author
+				</td>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php if (!empty($this->actions)) : ?>
+				<td class="span1 center">
+					<label>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
+					</label>
+				</td>
+				<?php endif; ?>
+			</tr>
+		</thead>
+		<?php if (!empty($this->actions)) : ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $colspan; ?>">
@@ -66,7 +94,7 @@ $colspan = empty($this->actions) ? 4 : 5;
 					}
 					?>
 
-					<?php if (!empty($this->actions)) : ?>
+					<?php if (!empty($this->actions)|| !empty($this->embedded))  : ?>
 						<?php echo JHtml::_(
 							'select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" size="1"',
 							'value', 'text', 0, 'kchecktask'

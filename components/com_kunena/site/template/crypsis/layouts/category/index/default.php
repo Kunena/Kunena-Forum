@@ -74,7 +74,17 @@ foreach ($this->sections as $section) :
 		</tr>
 
 		<?php else : ?>
-
+		<?php if (!empty($this->categories[$section->id]) && empty($this->categories->getLastTopic)) : ?>
+				<td class="span1 hidden-phone">
+				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+				</td>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR');?>
+				</td>
+				<td class="span1 hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php endif; ?>
 		<?php
 			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
@@ -149,9 +159,7 @@ foreach ($this->sections as $section) :
 
 			<?php $last = $category->getLastTopic(); ?>
 
-			<?php if (!$last->exists()) : ?>
-			<td colspan="2" class="span3 hidden-phone"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
-			<?php else :
+			<?php if ($last->exists()) : 
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();
 				$avatar = $this->config->avataroncat > 0 ? $author->getAvatarImage('img-polaroid', 48) : null;

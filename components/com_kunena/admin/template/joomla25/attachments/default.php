@@ -129,8 +129,7 @@ defined ( '_JEXEC' ) or die ();
 							</tfoot>
 							<tbody>
 							<?php
-							$k = 0;
-							$i = 0;
+							$k = $i = 0;
 							$n = count($this->items);
 							if($this->pagination->total > 0) :
 							foreach ($this->attachments_instance as $attachment)

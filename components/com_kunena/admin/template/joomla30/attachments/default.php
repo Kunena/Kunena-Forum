@@ -130,7 +130,7 @@ JHtml::_('dropdown.init');
 				</tfoot>
 				<tbody>
 				<?php
-				$i = 0;
+				$k = $i = 0;
 				if($this->pagination->total > 0) :
 				foreach ($this->attachments_instance as $attachment)
 				{

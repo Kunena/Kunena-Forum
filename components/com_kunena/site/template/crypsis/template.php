@@ -179,7 +179,7 @@ HTML;
 		else
 		{
 			return <<<HTML
-				<a $id class="btn" style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
 				<span class="{$name}"></span>
 				{$text}
 				</a>

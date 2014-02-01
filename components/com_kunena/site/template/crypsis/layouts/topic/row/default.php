@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getAuthor()->getAvatarImage();
+$avatar = $topic->getAuthor()->getAvatarImage('img-polaroid', 48);
 
 $cols = empty($this->checkbox) ? 5 : 6;
 
@@ -75,31 +75,35 @@ if (!empty($this->spacing)) : ?>
 			in <?php echo $this->getCategoryLink($topic->getCategory(), null, null, 'hasTooltip'); ?>
 		</div>
 	</td>
-	<td class="span1 hidden-phone">
-		<span>
-			<?php echo JText::_('COM_KUNENA_GEN_HITS') . ':' . $this->formatLargeNumber($topic->hits); ?>
-		</span>
-		<span>
-			<?php echo JText::_('COM_KUNENA_GEN_REPLIES') . ':' . $this->formatLargeNumber($topic->getReplies()); ?>
-		</span>
+	<td class="span1 hidden-phone center">
+			<?php echo  $this->formatLargeNumber($topic->hits); ?>
+		</td>
+	<td class="span1 hidden-phone center">
+			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
 	<td class="span1 center hidden-phone">
 
 		<?php if ($avatar) : ?>
 		<span>
-			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
+			<?php echo $topic->getAuthor()->getLink($avatar); ?>
 		</span>
 		<?php endif; ?>
 
 	</td>
-	<td class="span2">
-		<span class="hasTooltip" title="<?php echo $topic->getLastPostAuthor()->getName(); ?>">
-			<?php echo $topic->getLastPostAuthor()->getLink(); ?>
-		</span>
-		<br />
-		<span class="hasTooltip" title="<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat_hover'); ?>">
-			<?php echo $this->getTopicLink($topic, 'last', $topic->getLastPostTime()->toKunena('config_post_dateformat')); ?>
-		</span>
+	<td class="span3">
+		<div class="klatest-post-info">
+			<?php if (!empty($this->topic->avatar)) : ?>
+			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
+			<?php endif; ?>
+
+			<span class="ktopic-latest-post">
+			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
+
+			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+			<br>
+			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+			</span>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

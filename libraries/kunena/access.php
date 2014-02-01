@@ -388,7 +388,7 @@ window.addEvent('domready', function(){
 				$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 				foreach ( $categories as $category ) {
 					// Remove unpublished categories
-					if (!$category->published) {
+					if ($category->published != 1) {
 						unset($categories[$category->id]);
 					}
 					// Moderators have always access

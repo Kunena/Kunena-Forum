@@ -415,7 +415,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($this->_channels === false) {
 			$this->_channels['none'] = array();
-			if (!$this->published || $this->parent_id == 0 || (!$this->numTopics && $this->locked)) {
+			if ($this->published != 1 || $this->parent_id == 0 || (!$this->numTopics && $this->locked)) {
 				// Unpublished categories and sections do not have channels
 			} elseif (empty($this->channels) || $this->channels == $this->id) {
 				// No channels defined

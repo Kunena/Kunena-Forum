@@ -19,6 +19,7 @@
 		<folder>compat</folder>
 		<folder>controller</folder>
 		<folder>database</folder>
+		<folder>email</folder>
 		<folder>exception</folder>
 		<folder>external</folder>
 		<folder>file</folder>
@@ -34,6 +35,7 @@
 		<folder>module</folder>
 		<folder>pagination</folder>
 		<folder>path</folder>
+		<folder>response</folder>
 		<folder>request</folder>
 		<folder>route</folder>
 		<folder>spam</folder>

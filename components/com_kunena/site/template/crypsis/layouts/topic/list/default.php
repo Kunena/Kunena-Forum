@@ -15,7 +15,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
 <div class="pagination pull-right">
-	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
 </div>
 <?php endif; ?>
 <?php if (!empty($this->embedded)) : ?>
@@ -28,6 +28,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 <h3>
 	<?php echo $this->escape($this->headerText); ?>
 	<span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
+	<span class="badge badge-success"><?php // To Do:: echo $this->topics->count->unread; ?></span>
 </h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
@@ -43,21 +44,49 @@ $colspan = empty($this->actions) ? 5 : 6;
 		</tr>
 
 		<?php else : ?>
-		<?php if (!empty($this->actions)) : ?>
+
 		<thead>
 			<tr>
-				<td colspan="6" class="center">
+				<td class="span1 center hidden-phone">
+					<a id="forumtop"> </a>
+					<a href="#forumbottom">
+						<i class="icon-arrow-down hasTooltip"></i>
+					</a>
+				</td>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
+				</td>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
+				</td>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
+				</td>
+				<td class="span1 center hidden-phone">
+				Author
+				</td>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php if (!empty($this->actions)) : ?>
+				<td class="span1 center">
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>
 				</td>
+				<?php endif; ?>
 			</tr>
 		</thead>
-		<?php endif; ?>
-
 		<?php if (!empty($this->actions) || !empty($this->embedded)) : ?>
 		<tfoot>
-			<tr>
+		 <tr>
+			<td class="center">
+				<a id="forumbottom"> </a>
+				<a href="#forumtop" rel="nofollow">
+					<i class="icon-arrow-up hasTooltip"></i>
+				</a>
+				<?php // FIXME: $this->displayCategoryActions() ?>
+			</td>
 				<td colspan="<?php echo $colspan; ?>">
 					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 					<?php if (!empty($this->actions)) : ?>
@@ -87,3 +116,8 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 	</table>
 </form>
+
+<?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
+	<div class="pagination pull-right"><?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
+<?php endif; ?>
+<div class="clearfix"></div>

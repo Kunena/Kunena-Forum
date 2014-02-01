@@ -76,9 +76,12 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 	/**
 	 * Executed before display.
+	 *
+	 * @return void
 	 */
-	protected function before() {
-		$this->layout = $this->input->getCmd('layout', 'default');
+	protected function before()
+	{
+		$this->layout = $this->input->getCmd('topic_layout', 'default');
 		$this->config = KunenaConfig::getInstance();
 		if ($this->primary) $this->document = JFactory::getDocument();
 	}

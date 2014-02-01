@@ -287,6 +287,9 @@ class KunenaViewCategory extends KunenaView {
 		}
 	}
 
+	/**
+	 * @deprecated	3.1
+	 */
 	function getCategoryActions() {
 		$token = '&' . JSession::getFormToken() . '=1';
 		$this->categoryButtons = array();

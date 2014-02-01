@@ -496,7 +496,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Display arbitrary MVC triad from current layout.
 	 *
-	 * By using $this->subLayout() instead of KunenaRequest::factory() you can make your template files both
+	 * By using $this->subRequest() instead of KunenaRequest::factory() you can make your template files both
 	 * easier to read and gain some context awareness.
 	 *
 	 * @param   $path
@@ -508,7 +508,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	public function subRequest($path, Jinput $input = null, $options = null)
 	{
 		return KunenaRequest::factory($path.'/Display', $input, $options)
-			->set('layout', $this->getLayout());
+			->setLayout($this->getLayout());
 	}
 
 	/**

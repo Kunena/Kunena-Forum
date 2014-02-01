@@ -133,6 +133,32 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
+	 * Method to get the view layout.
+	 *
+	 * @return  string  The layout name.
+	 */
+	public function getLayout()
+	{
+		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
+		return $layout ? $layout : 'default';
+	}
+
+	/**
+	 * Method to set the view layout.
+	 *
+	 * @param   string  $layout  The layout name.
+	 *
+	 * @return  KunenaLayout  Method supports chaining.
+	 */
+	public function setLayout($layout)
+	{
+		if (!$layout) $layout = 'default';
+		$this->layout = $layout;
+
+		return $this;
+	}
+
+	/**
 	 * Returns an associative array of public object properties.
 	 *
 	 * @return  array

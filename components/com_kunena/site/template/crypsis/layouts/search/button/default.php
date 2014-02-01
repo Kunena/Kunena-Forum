@@ -30,7 +30,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 
 	<div class="input-append">
 		<label>
-			<input class="input-medium search-query" type="text" name="q" value="" placeholder="" />
+			<input class="input-medium search-query" type="text" name="query" value="" placeholder="" />
 		</label>
 
 		<button type="submit" class="btn"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></button>

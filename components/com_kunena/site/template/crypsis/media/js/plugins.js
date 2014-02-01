@@ -174,14 +174,18 @@ jQuery(document).ready(function() {
 			});
 		});
 	});
+	
+	/* Button to show more info on profilebox */
+	jQuery(".heading").click(function() {
+            if ( !jQuery(this).hasClass('heading-less') ) {
+                    jQuery(this).prev(".heading").show();
+                    jQuery(this).hide();
+                    jQuery(this).next(".content").slideToggle(500);
+            } else {
+                    var content = jQuery(this).next(".heading").show();
+                    jQuery(this).hide();
+                    content.next(".content").slideToggle(500);
+            }
+    });
 });
 
-	/* Show more profilebox */
-	jQuery(document).ready(function() {
-  jQuery(".content").hide();
-  //toggle the componenet with class msg_body
-  jQuery(".heading").click(function()
-  {
-    jQuery(this).next(".content").slideToggle(500);
-  });
-});

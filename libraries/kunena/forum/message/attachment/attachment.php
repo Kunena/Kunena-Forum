@@ -33,6 +33,11 @@ class KunenaForumMessageAttachment extends JObject {
 	protected $_textLink = null;
 	protected $_imagelink = null;
 	protected $_thumblink = null;
+
+	protected $path;
+	protected $width;
+	protected $height;
+
 	/**
 	 * @var bool
 	 */
@@ -59,6 +64,36 @@ class KunenaForumMessageAttachment extends JObject {
 	public function __destruct() {
 		if (!$this->exists()) {
 			$this->deleteFile();
+		}
+	}
+
+	public function __get($property) {
+		if ($this->path == null) $this->initialize();
+		switch ($property) {
+			case 'width':
+				return $this->width;
+			case 'height':
+				return $this->height;
+			case 'path':
+				return $this->path;
+		}
+
+		throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
+	}
+
+	protected function initialize()
+	{
+		$path = JPATH_ROOT . '/' . $this->folder . '/' . $this->filename;
+
+		$this->path = is_file($path) ? $path : false;
+
+		if ($this->path && $this->isImage($this->filetype))
+		{
+			list($this->width, $this->height) = getimagesize($path);
+		}
+		else
+		{
+			$this->width = $this->height = false;
 		}
 	}
 

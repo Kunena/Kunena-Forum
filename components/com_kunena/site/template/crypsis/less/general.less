@@ -65,21 +65,6 @@ active, a:focus {
 #tow {
 	display: none;
 }
-.chat {
-	width: auto;
-	min-height: 150px;
-	margin-right: 10px;
-	padding-top:20px;
-}
-.bubble {
-	background-color: #FFF;
-	border-radius: 5px;
-	box-shadow: 0 0 6px #B2B2B2;
-	display: inline-block;
-	padding: 0px 18px;
-	position: relative;
-	vertical-align: top;
-}
 #messages li {
 	float: left;
 	margin-bottom: 30px;
@@ -233,6 +218,7 @@ inline {
 }
 ul,ol {
 	padding:0 !important;
+	margin:0 !important;
 }
 a:focus, 
 .btn:focus {
@@ -242,7 +228,42 @@ a:focus,
 	min-height:150px !important;
 	width:98%;
 }
+.padding-table,
 .last-post,
 .header-desc {
-	padding: 4px 8px;;
+	padding: 4px 8px;
+}
+[class*="badger"] {
+    position: relative;
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+		box-shadow: 0 0 6px #B2B2B2;
+}
+
+[class*="badger"]:after {
+ 		content: attr(data-badger);
+    position: absolute;
+    top: 0;
+    padding: 8px 12px;
+    font-weight: bold;
+    background: transparent;
+		border-right:1px solid #e5e5e5;
+		border-bottom:1px solid #e5e5e5;}
+
+.badger-left:after {
+    left: 0;
+    border-radius: 6px 0 6px 0;
+}
+
+.badger-info:after {
+		background: rgba(229, 229, 229, 0.5);
+}
+
+@media (max-width: 480px) { 
+ .pagination .test ul > li > a, .pagination ul > li > span {
+	display:none;
+ }
 }

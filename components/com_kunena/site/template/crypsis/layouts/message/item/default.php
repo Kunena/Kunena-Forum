@@ -13,25 +13,18 @@ defined('_JEXEC') or die;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $this->message->getAttachments();
+$avatarname = $this->profile->getname();
 ?>
-
-<div class="chat row-fluid">
-	<div class="bubble span12">
-		<h5>
-			<?php echo $this->profile->getLink(); ?>
-			<small>
-				<?php echo (!$isReply) ? 'created the topic:' : 'replied the topic'; ?>
-				<?php if ($this->message->subject) : ?>
-			<?php echo $this->message->displayField('subject'); ?>
-		<?php endif; ?>
-			</small>
-			<small class="pull-right">
+<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
+			<span class="icon icon-clock"></span>
 				<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				<a href="#<?php echo $this->message->id; ?>">#<?php echo $this->location; ?></a>
-			</small>
-		</h5>
-
-		<hr>
+</small>
+<div class="badger-left badger-info" data-badger="<?php echo (!$isReply) ? $avatarname .' created the topic: ' : $avatarname . ' replied the topic: '; ?>
+				<?php if ($this->message->subject) : ?>
+			<?php echo $this->message->displayField('subject'); ?>
+		<?php endif; ?> ">
+			
 		
 		<p class="kmsg">
 			<?php echo $this->message->displayField('message'); ?>
@@ -65,28 +58,22 @@ $attachments = $this->message->getAttachments();
 		<?php endif ?>
 
 		<?php if (!empty($this->reportMessageLink)) : ?>
-		<h5>
-		<div class="pull-left">
-			<p>
-				<i class="icon-warning"></i>
-				<?php echo $this->reportMessageLink; ?>
-			</p>
-		</div>
-		</h5>
+			<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT')?></a>
+			<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id);?>
+			</div>
+			</div>
 		<?php endif; ?>
 
 		<?php if (!empty($this->ipLink)) : ?>
-		<h5>
 		<div class="pull-right">
 			<p>
 				<?php echo $this->ipLink; ?>
 			</p>
 		</div>
-		</h5>
 		<?php endif; ?>
-
-		<div class="clearfix"></div>
-	</div>
 	
 	<?php if(!empty($this->thankyou)): ?>
 		<span class="kmessage-thankyou">
@@ -96,5 +83,4 @@ $attachments = $this->message->getAttachments();
 			?>
 		</span>
 	<?php endif; ?>
-	
 </div>

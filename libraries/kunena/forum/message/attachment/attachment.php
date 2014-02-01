@@ -193,19 +193,20 @@ class KunenaForumMessageAttachment extends JObject {
 				}
 
 				$img = '<img title="' . $this->getFilename() . '" ' . $imgsize . ' src="' . $thumbUrl . '" alt="' . $this->getFilename() . '" />';
-				$this->_thumblink = $this->_getAttachementLink($imageUrl, $img, $this->getFilename(), ($config->lightbox)? 'lightbox[thumb' . intval($this->mesid) . ']' : '');
+				$this->_thumblink = $this->_getAttachementLink($this->escape($this->folder), $this->escape($this->filename), $img, $this->escape($this->filename), ($config->lightbox)? 'lightbox[thumb' . intval($this->mesid) . ']':'');
 
 				$img = '<img title="' . $this->getFilename() . '" src="' . $imageUrl . '" alt="' . $this->getFilename() . '" />';
-				$this->_imagelink = $this->_getAttachementLink($imageUrl, $img, $this->getFilename(), ($config->lightbox)?'lightbox[imagelink' . intval($this->mesid) .']' : '');
+				$this->_imagelink = $this->_getAttachementLink($this->escape($this->folder), $this->escape($this->filename), $img, $this->escape($this->filename), ($config->lightbox)?'lightbox[imagelink' . intval($this->mesid) . ']':'');
 
-				$this->_textLink = $this->_getAttachementLink($imageUrl, $this->escape($this->_shortname), $this->getFilename(), ($config->lightbox)?'lightbox[simple' . intval($this->mesid) . ']' . ' nofollow':' nofollow' ) . ' (' . number_format(intval($this->size) / 1024, 0, '', ',') . 'KB)';
+				$this->_textLink = $this->_getAttachementLink($this->escape($this->folder), $this->escape($this->filename), $this->escape($this->_shortname), $this->escape($this->filename), ($config->lightbox)?'lightbox[simple' . $this->mesid . ']' . ' nofollow':' nofollow') . ' (' . number_format(intval($this->size) / 1024, 0, '', ',') . 'KB)';
 
 			} else {
 				$fileUrl = $this->getUrl();
+
 				// Filetype without thumbnail or icon support - use default file icon
 				$img = '<img src="' . JUri::root(true). '/media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
-				$this->_thumblink = $this->_getAttachementLink($fileUrl, $img, $this->getFilename(), 'nofollow');
-				$this->_textLink = $this->_getAttachementLink ($fileUrl, $this->escape($this->_shortname), $this->getFilename(), 'nofollow') . ' (' . number_format(intval($this->size) / 1024, 0, '', ',') . 'KB)';
+				$this->_thumblink = $this->_getAttachementLink($this->escape($this->folder), $this->escape($this->filename), $img, $this->escape($this->filename), 'nofollow');
+				$this->_textLink = $this->_getAttachementLink($this->escape($this->folder), $this->escape($this->filename), $this->escape($this->_shortname), $this->escape($this->filename), 'nofollow') . ' (' . number_format(intval($this->size) / 1024, 0, '', ',') . 'KB)';
 			}
 
 			$this->disabled = false;
@@ -647,14 +648,30 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	/**
-	 * @param string $path
-	 * @param string $name
-	 * @param string $title
-	 * @param string $rel
+	 * Method to return the link of attachment
+	 *
+	 * @param   string  $folder    The folder where is located the attachment
+	 * @param   string  $filename  The filename of the attachment
+	 * @param   string  $name      The name for the link
+	 * @param   string  $title     The title for the link
+	 * @param   string  $rel       The rel attribute
+	 * @param   string  $class     The class attribute
 	 *
 	 * @return string
 	 */
-	protected function _getAttachementLink($path, $name, $title = '', $rel = 'nofollow') {
-		return '<a href="'.$path.'" title="'.$title.'" rel="'.$rel.'">'.$name.'</a>';
+	protected function _getAttachementLink($folder, $filename, $name, $title = '', $rel = 'nofollow', $class='')
+	{
+		$link = JURI::ROOT() . "{$folder}/{$filename}";
+
+		$layout = KunenaLayout::factory('message/attachment')->setLayout('link');
+
+		if ($layout->getPath() && KunenaFactory::getConfig()->lightbox)
+		{
+			return $layout->set('link', $link)->set('title', $title)->set('name', $name);
+		}
+		else
+		{
+			return '<a href="' . $link . '" title="' . $title . '" rel="' . $rel . '">' . $name . '</a>';
+		}
 	}
 }

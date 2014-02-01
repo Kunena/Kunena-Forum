@@ -121,12 +121,24 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addScript('poll.js');
 		}
 
-		// If enabled, load also MediaBox advanced.
-		if ($config->lightbox == 1)
+		if ( $config->lightbox == 1 )
 		{
-			// TODO: replace with bootstrap compatible version
-			$this->addScript( 'mediaboxAdv.js' );
-			//$this->addStyleSheet ( 'mediaboxAdv.css');
+			// Load fancybox library if enabled in configuration
+			$this->addScript('js/fancybox.js');
+			$this->addStyleSheet('css/fancybox.css');
+			JFactory::getDocument()->addScriptDeclaration('
+				jQuery(document).ready(function() {
+					jQuery(".fancybox-button").fancybox({
+						prevEffect		: \'none\',
+						nextEffect		: \'none\',
+						closeBtn		:  true,
+						helpers		: {
+							title	: { type : \'inside\' },
+							buttons	: {}
+						}
+					});
+				});
+			');
 		}
 
 		parent::initialize();

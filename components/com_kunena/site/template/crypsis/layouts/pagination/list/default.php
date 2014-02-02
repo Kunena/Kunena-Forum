@@ -15,7 +15,7 @@ if (count($data->pages) <= 1) return;
 $last = 0;
 ?>
 
-<div class="pagination pagination-small">
+<div class="pagination hidden-phone">
 	<ul>
 		<?php
 		echo $this->subLayout('Pagination/Item')->set('item', $data->start);
@@ -33,6 +33,17 @@ $last = 0;
 		}
 		echo $this->subLayout('Pagination/Item')->set('item', $data->next);
 		echo $this->subLayout('Pagination/Item')->set('item', $data->end);
+		?>
+	</ul>
+</div>
+
+<div class="pagination test visible-phone">
+	<ul>
+		<?php
+	foreach($data->pages as $k=>$item)
+		{
+			echo $this->subLayout('Pagination/Item')->set('item', $item);
+		}
 		?>
 	</ul>
 </div>

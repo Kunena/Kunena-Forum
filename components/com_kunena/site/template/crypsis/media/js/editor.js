@@ -647,8 +647,10 @@ function cancelForm() {
 var __attachment_limit = 0;
 
 function newAttachment() {
-	if (__attachment_limit < config_attachment_limit) __attachment_limit++;
-	else return false;
+	if ( config_attachment_limit > 0 ) {
+		if (__attachment_limit < config_attachment_limit) __attachment_limit++;
+		else return false;
+	}
 	
 	var __kattachment = document.id('kattachment-id');
 	if (!__kattachment) return;

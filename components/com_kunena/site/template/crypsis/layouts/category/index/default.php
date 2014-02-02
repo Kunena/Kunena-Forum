@@ -58,7 +58,7 @@ foreach ($this->sections as $section) :
 		<thead class="hidden-phone">
 			<tr>
 				<td colspan="3">
-					<div><?php echo $section->displayField('description'); ?></div>
+					<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
 				</td>
 			</tr>
 		</thead>
@@ -74,7 +74,17 @@ foreach ($this->sections as $section) :
 		</tr>
 
 		<?php else : ?>
-
+		<?php if (!empty($this->categories[$section->id]) && empty($this->categories->getLastTopic)) : ?>
+				<td class="span1 hidden-phone">
+				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+				</td>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR');?>
+				</td>
+				<td class="span1 hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php endif; ?>
 		<?php
 			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
@@ -106,7 +116,7 @@ foreach ($this->sections as $section) :
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
-					<div class="hidden-phone"><?php echo $category->displayField('description'); ?></div>
+					<div class="hidden-phone header-desc"><?php echo $category->displayField('description'); ?></div>
 				<?php endif; ?>
 
 				<?php
@@ -138,7 +148,7 @@ foreach ($this->sections as $section) :
 				<?php endif; ?>
 
 				<?php if (!empty($this->pending[$category->id])) : ?>
-				<div class="alert">
+				<div class="alert" style="max-width:150px;">
 					<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid='.intval($category->id),
 						intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'),
 						'', '', 'nofollow'); ?>
@@ -149,9 +159,7 @@ foreach ($this->sections as $section) :
 
 			<?php $last = $category->getLastTopic(); ?>
 
-			<?php if (!$last->exists()) : ?>
-			<td colspan="2" class="span3 hidden-phone"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
-			<?php else :
+			<?php if ($last->exists()) : 
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();
 				$avatar = $this->config->avataroncat > 0 ? $author->getAvatarImage('img-polaroid', 48) : null;
@@ -163,7 +171,7 @@ foreach ($this->sections as $section) :
 			</td>
 			<?php endif; ?>
 
-			<td class="span3 hidden-phone">
+			<td class="span3 hidden-phone last-post">
 				<div>
 					<?php echo $this->getLastPostLink($category) ?>
 				</div>

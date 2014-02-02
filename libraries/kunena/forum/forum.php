@@ -141,7 +141,7 @@ abstract class KunenaForum {
 		$options = array('logger'=>'w3c', 'text_file'=>'kunena.php');
 		$categories = array('kunena');
 		$levels = JDEBUG || $config->debug ? JLog::ALL :
-			JLog::EMERGENCY & JLog::ALERT & JLog::CRITICAL & JLog::ERROR;
+			JLog::EMERGENCY | JLog::ALERT | JLog::CRITICAL | JLog::ERROR;
 		JLog::addLogger($options, $levels, $categories);
 	}
 

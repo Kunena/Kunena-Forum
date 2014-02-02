@@ -112,12 +112,24 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addScript('poll.js');
 		}
 
-		// If enabled, load also MediaBox advanced.
-		if ($config->lightbox == 1)
+		if ( $config->lightbox == 1 )
 		{
-			// TODO: replace with bootstrap compatible version
-			$this->addScript( 'mediaboxAdv.js' );
-			//$this->addStyleSheet ( 'mediaboxAdv.css');
+			// Load fancybox library if enabled in configuration
+			$this->addScript('js/fancybox.js');
+			$this->addStyleSheet('css/fancybox.css');
+			JFactory::getDocument()->addScriptDeclaration('
+				jQuery(document).ready(function() {
+					jQuery(".fancybox-button").fancybox({
+						prevEffect		: \'none\',
+						nextEffect		: \'none\',
+						closeBtn		:  true,
+						helpers		: {
+							title	: { type : \'inside\' },
+							buttons	: {}
+						}
+					});
+				});
+			');
 		}
 
 		parent::initialize();
@@ -158,7 +170,7 @@ HTML;
 		else
 		{
 			return <<<HTML
-				<a $id class="btn" style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
 				<span class="{$name}"></span>
 				{$text}
 				</a>
@@ -176,20 +188,4 @@ HTML;
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
 	}
 
-	public function getPaginationListRender($list)
-	{
-		$html = '<div class="pagination pagination-small" ><ul class="pagination-small">';
-		$last = 0;
-
-		foreach($list['pages'] as $i=>$page)
-		{
-			if ($last+1 != $i) $html .= '<li><a class="disabled">...</a></li>';
-			$html .= '<li>'.$page['data'].'</li>';
-			$last = $i;
-		}
-
-		$html .= '</ul></div><div class="clearfix"></div>';
-
-		return $html;
-	}
 }

@@ -38,9 +38,9 @@ if ($show)
 		<span class="label label-<?php echo $user->isOnline('success', 'important') ?>">
 			<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
 		</span>
-		
+
 	</li>
-	
+
 	<?php if (!empty($rankTitle)) : ?>
 	<li>
 		<?php echo $this->escape($rankTitle); ?>
@@ -60,13 +60,14 @@ if ($show)
 	<?php endif; ?>
 </ul>
 <div class="profile-expand center">
-	<span class="heading btn btn-small" style="width:50px;"><i class="icon-arrow-down-4"></i> More</span>
-	<div class="content">
+	<span class="heading btn btn-small heading-less" style="width:50px;display:none;"><i class="icon-arrow-up-4"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+	<span class="heading btn btn-small" style="width:50px;"><i class="icon-arrow-down-4"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+	<div class="content" style="display:none;">
 		<ul>
 			<li>
 				<?php echo JText::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
-			</li> 
-			
+			</li>
+
 			<?php if ($show && isset($user->thankyou)) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>

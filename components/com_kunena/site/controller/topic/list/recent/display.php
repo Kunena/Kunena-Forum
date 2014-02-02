@@ -18,26 +18,6 @@ defined('_JEXEC') or die;
 class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
 {
 	/**
-	 * Return display layout.
-	 *
-	 * @return KunenaLayout
-	 */
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Topic/List')
-			->set('me', $this->me)
-			->set('config', $this->config)
-			->set('topics', $this->topics)
-			->set('headerText', $this->headerText)
-			->set('pagination', $this->pagination)
-			->set('state', $this->state)
-			->set('actions', $this->actions);
-
-		return $content;
-	}
-
-	/**
 	 * Prepare recent topics list.
 	 *
 	 * @return void
@@ -51,6 +31,9 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->moreUri = null;
+
+		$this->embedded = $this->getOptions()->get('embedded', false);
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
@@ -130,6 +113,11 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$finder->filterByCategories($categories);
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
 
 		$this->topics = $finder
 			->order($order, -1)

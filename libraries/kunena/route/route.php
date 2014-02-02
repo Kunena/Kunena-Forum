@@ -135,30 +135,48 @@ abstract class KunenaRoute {
 	 *
 	 * @return string
 	 */
-	public static function getReferrer($default = 'index.php?option=com_kunena', $anchor = null) {
+	public static function getReferrer($default = null, $anchor = null)
+	{
 		$app = JFactory::getApplication();
-		$default = JUri::base() . ($app->isSite() ? ltrim(KunenaRoute::_($default), '/') : $default);
+
 		$referrer = $app->input->server->getString('HTTP_REFERER');
 
-		$uri = new JUri($referrer ? $referrer : $default);
-		if (JUri::isInternal($uri->toString())) {
-			// Parse route.
-			$vars = $app->getRouter()->parse($uri);
-			$uri = new JUri('index.php');
-			$uri->setQuery($vars);
+		if ($referrer)
+		{
+			$uri = new JUri($referrer);
 
-			// Make sure we do not return into a task.
+			// Make sure we do not return into a task -- or if task is SEF encoded, make sure it fails.
 			$uri->delVar('task');
 			$uri->delVar(JSession::getFormToken());
-		} elseif ($app->isAdmin()) {
-			// Pass..
-		} else {
-			$uri = JUri::getInstance($default);
+
+			// Check that referrer was from the same domain and came from the Joomla frontend or backend.
+			$base = $uri->toString(array('scheme', 'host', 'port', 'path'));
+			$host = $uri->toString(array('scheme', 'host', 'port'));
+
+			// Referrer should always have host set and it should come from the same base address.
+			if (empty($host) || stripos($base, JUri::base()) !== 0)
+			{
+				$uri = null;
+			}
 		}
 
-		if ($anchor) $uri->setFragment($anchor);
+		if (!isset($uri))
+		{
+			if ($default == null)
+			{
+				$default = $app->isSite() ? 'index.php?option=com_kunena' : 'administrator/index.php?option=com_kunena';
+			}
 
-		return 'index.php'.$uri->toString(array('query', 'fragment'));
+			$default = self::_($default);
+			$uri = new JUri($default);
+		}
+
+		if ($anchor)
+		{
+			$uri->setFragment($anchor);
+		}
+
+		return $uri->toString(array('path', 'query', 'fragment'));
 	}
 
 	/**
@@ -513,6 +531,10 @@ abstract class KunenaRoute {
 
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true) {
 		return KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
+	}
+
+	public static function getCategoryItemid(KunenaForumCategory $category) {
+		return KunenaRoute::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
 	}
 
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null,

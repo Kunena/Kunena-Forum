@@ -84,6 +84,8 @@ class KunenaUser extends JObject {
 	public function __construct($identifier = 0) {
 		// Always load the user -- if user does not exist: fill empty data
 		if ($identifier !== false) $this->load ( $identifier );
+		if (!isset($this->userid)) $this->userid = 0;
+
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = KunenaFactory::getConfig ();
@@ -168,19 +170,19 @@ class KunenaUser extends JObject {
 			case 'read' :
 				if (!isset($this->registerDate) || (!$user->exists() && !$config->pubprofile))
 				{
-					$exception = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 403);
+					$exception = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), $user->exists() ? 403 : 401);
 				}
 				break;
 			case 'edit' :
 				if (!isset($this->registerDate) || !$this->isMyself())
 				{
-					$exception = new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), 403);
+					$exception = new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
 				}
 				break;
 			case 'ban' :
 				$banInfo = KunenaUserBan::getInstanceByUserid($this->userid, true);
 				if (!$banInfo->canBan()) {
-					$exception =  new KunenaExceptionAuthorise($banInfo->getError(), 403);
+					$exception =  new KunenaExceptionAuthorise($banInfo->getError(), $user->exists() ? 403 : 401);
 				}
 				break;
 			default :

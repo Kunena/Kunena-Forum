@@ -9,6 +9,7 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+// TODO: Move from widget to announcement
 ?>
 <div class="alert alert-info">
 	<a class="close" data-dismiss="alert" href="#">&times;</a>

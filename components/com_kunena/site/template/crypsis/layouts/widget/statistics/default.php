@@ -9,6 +9,7 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+// TODO: Move from widget to statistics
 ?>
 <div class="kfrontend">
 <h3 class="btn-link">

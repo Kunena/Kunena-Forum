@@ -9,16 +9,6 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
-/** @var KunenaLayout $this */
 ?>
-<div id="kunena" class="layout">
-	<?php
-	echo $this->subLayout('Widget/MenuBar');
-
-	// Display current view/layout
-	echo $this->content;
-
-	echo $this->subLayout('Widget/Footer');
-	?>
-</div>
+<h2><?php echo $this->header; ?></h2>
+<div class="well well-small"><?php echo $this->body; ?></div>

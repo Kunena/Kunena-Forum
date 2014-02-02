@@ -204,6 +204,6 @@ foreach ($this->sections as $section) :
 </div>
 </div>
 <!-- Begin: Category Module Position -->
-<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 <!-- Finish: Category Module Position -->
 <?php endforeach; ?>

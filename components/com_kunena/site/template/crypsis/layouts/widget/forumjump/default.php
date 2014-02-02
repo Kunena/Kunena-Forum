@@ -9,16 +9,10 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
-/** @var KunenaLayout $this */
 ?>
-<div id="kunena" class="layout">
-	<?php
-	echo $this->subLayout('Widget/MenuBar');
-
-	// Display current view/layout
-	echo $this->content;
-
-	echo $this->subLayout('Widget/Footer');
-	?>
-</div>
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" id="jumpto" name="jumpto" method="post"
+      target="_self">
+	<input type="hidden" name="view" value="category" />
+	<input type="hidden" name="task" value="jump" />
+	<span><?php echo $this->categorylist; ?></span>
+</form>

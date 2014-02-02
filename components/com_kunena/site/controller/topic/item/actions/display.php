@@ -169,7 +169,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false)
 	{
-		return KunenaLayout::factory('Page/Button')
+		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'primary' => $primary));
 	}
 }

@@ -12,6 +12,6 @@ defined('_JEXEC') or die;
 
 // No breadcrumb - this page can only be accessed by creating a menu item for it.
 
-echo $this->subLayout('Page/Custom')
+echo $this->subLayout('Widget/Custom')
 	->set('header', $this->header)
 	->set('body', $this->body);

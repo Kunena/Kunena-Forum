@@ -10,15 +10,12 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaLayout $this */
+$modules = $this->renderPosition();
+if (!$modules) return;
 ?>
-<div id="kunena" class="layout">
-	<?php
-	echo $this->subLayout('Widget/MenuBar');
-
-	// Display current view/layout
-	echo $this->content;
-
-	echo $this->subLayout('Widget/Footer');
-	?>
-</div>
+<!-- Module position: <?php echo $this->position; ?> -->
+<tr>
+	<td colspan="<?php echo $this->cols; ?>">
+		<?php echo $modules; ?>
+	</td>
+</tr>

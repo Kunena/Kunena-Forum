@@ -9,16 +9,15 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
-/** @var KunenaLayout $this */
 ?>
-<div id="kunena" class="layout">
-	<?php
-	echo $this->subLayout('Widget/MenuBar');
-
-	// Display current view/layout
-	echo $this->content;
-
-	echo $this->subLayout('Widget/Footer');
-	?>
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="hidden-phone">
+			<?php echo $this->subRequest('Widget/Menu'); ?>
+			<?php echo $this->subRequest('Widget/Login'); ?>
+		</div>
+		<div class="visible-phone hidden-tablet">
+			<?php echo $this->subLayout('Widget/Mobile/Login'); ?>
+		</div>
+	</div>
 </div>

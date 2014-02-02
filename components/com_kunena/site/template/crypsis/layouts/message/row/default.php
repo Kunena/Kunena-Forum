@@ -97,7 +97,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 
 	<?php
 	if (!empty($this->position))
-		echo $this->subLayout('Page/Module')
+		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
 			->setLayout('table_row');

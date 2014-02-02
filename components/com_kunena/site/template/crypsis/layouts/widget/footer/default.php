@@ -9,16 +9,14 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
-/** @var KunenaLayout $this */
 ?>
-<div id="kunena" class="layout">
-	<?php
-	echo $this->subLayout('Widget/MenuBar');
+<?php if (isset($this->rss)) : ?>
+<div class="pull-right"><?php echo $this->rss; ?></div>
+<div class="clearfix"></div>
+<?php endif; ?>
 
-	// Display current view/layout
-	echo $this->content;
-
-	echo $this->subLayout('Widget/Footer');
-	?>
+<?php if (($time = $this->getTime()) !== null) : ?>
+<div class="center">
+	<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
 </div>
+<?php endif; ?>

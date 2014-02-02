@@ -194,6 +194,13 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getIcon() {
+		return KunenaFactory::getTemplate()->getCategoryIcon($this);
+	}
+
+	/**
 	 * @param mixed		$category	Fake category (or null).
 	 * @param bool 		$xhtml		True if URL needs to be escaped for XHTML.
 	 * @param int|null	$action		Limitstart.

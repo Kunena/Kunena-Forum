@@ -22,7 +22,8 @@
 			<folder>js</folder>
 			<folder>less</folder>
 			<folder>ranks</folder>
-			<folder>topicicons</folder>
+			<folder>topic_icons</folder>
+			<folder>category_icons</folder>
 		</files>
 	</fileset>
 </extension>

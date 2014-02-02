@@ -34,7 +34,8 @@ class KunenaTemplate extends JObject
 		'emoticons' => 'media/emoticons',
 		'ranks' => 'media/ranks',
 		'icons' => 'media/icons',
-		'topicicons' => 'media/topicicons',
+		'topicicons' => 'media/topic_icons',
+		'categoryicons' => 'media/category_icons',
 		'images' => 'media/images',
 		'js' => 'media/js',
 		'css' => 'media/css'
@@ -66,6 +67,7 @@ class KunenaTemplate extends JObject
 		'blocked'=>'kuser-blocked'
 	);
 	public $topicIcons = array();
+	public $categoryIcons = array();
 
 	protected $stylesheets = array();
 	protected $style_variables = array();
@@ -373,7 +375,12 @@ HTML;
 
 	public function getTopicIconPath($filename='', $url = true) {
 		$set = $this->isHmvc() ? '/default' : '';
-		return $this->getFile($filename, $url, $this->pathTypes['topicicons'].$set, 'media/kunena/topicicons/default');
+		return $this->getFile($filename, $url, $this->pathTypes['topicicons'].$set, 'media/kunena/topic_icons/default');
+	}
+
+	public function getCategoryIconPath($filename='', $url = true) {
+		$set = $this->isHmvc() ? '/default' : '';
+		return $this->getFile($filename, $url, $this->pathTypes['categoryicons'].$set, 'media/kunena/category_icons/default');
 	}
 
 	public function getImagePath($filename='', $url = true) {
@@ -438,6 +445,64 @@ HTML;
 		return $icons;
 	}
 
+	public function getCategoryIcons($all = false, $checked = 0) {
+		if (empty($this->categoryIcons)) {
+			$xmlfile = $this->getCategoryIconPath('categoryicons.xml', false);
+			if (is_file($xmlfile)) {
+				$xml = simplexml_load_file($xmlfile);
+				if (isset($xml->icons)) {
+					foreach($xml->icons as $icons) {
+						$type = (string) $icons->attributes()->type;
+						$width = (int) $icons->attributes()->width;
+						$height = (int) $icons->attributes()->height;
+						foreach($icons->icon as $icon) {
+							$attributes = $icon->attributes();
+							$icon = new stdClass();
+							$icon->id = (int) $attributes->id;
+							$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
+							$icon->name = (string) $attributes->name;
+							if ($icon->type != 'user') {
+								$icon->id = $icon->type.'_'.$icon->name;
+							}
+							$icon->published = (int) $attributes->published;
+							$icon->title = (string) $attributes->title;
+							$icon->filename = (string) $attributes->src;
+							$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
+							$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
+							$this->categoryIcons[$icon->id] = $icon;
+						}
+					}
+				}
+			}
+			// Make sure that default icon exists (use user/default.png in current template)
+			if (!isset($this->categoryIcons[0])) {
+				$icon = new StdClass();
+				$icon->id = 0;
+				$icon->type = 'user';
+				$icon->name = 'default';
+				$icon->published = 0;
+				$icon->title = 'Default';
+				$icon->filename = 'default.png';
+				$icon->width = 48;
+				$icon->height = 48;
+				$icon->relpath = $this->getCategoryIconPath("user/{$icon->filename}", false);
+				$this->categoryIcons[0] = $icon;
+			}
+		}
+		if ($all) {
+			$icons = $this->categoryIcons;
+		} else {
+			$icons = array();
+			foreach ($this->categoryIcons as $icon) {
+				if ($icon->published && is_numeric($icon->id)) {
+					$icons[$icon->id] = clone $icon;
+					$icons[$icon->id]->checked = ($checked == $icon->id);
+				}
+			}
+		}
+		return $icons;
+	}
+
 	public function getTopicIconIndexPath($index, $url = false) {
 		if (empty($this->topicIcons)) {
 			$this->getTopicIcons();
@@ -450,8 +515,24 @@ HTML;
 		return $this->getTopicIconPath($icon->filename, $url);
 	}
 
-	public function getTopicIcon($topic ) {
-		$config = KunenaFactory::getConfig ();
+	public function getCategoryIconIndexPath($index, $url = false) {
+		if (empty($this->categoryIcons)) {
+			$this->getCategoryIcons();
+		}
+		if (empty($this->categoryIcons[$index]->published)) {
+			$index = 0;
+		}
+		$icon = $this->categoryIcons[$index];
+
+		return $this->getCategoryIconPath($icon->filename, $url);
+	}
+
+	/**
+	 * @param KunenaForumTopic	$topic
+	 * @return string
+	 */
+	public function getTopicIcon($topic) {
+		$config = KunenaFactory::getConfig();
 		if ($config->topicicons) {
 			// TODO: use xml file instead
 			if ($topic->moved_id) $icon = 'system_moved';
@@ -475,6 +556,25 @@ HTML;
 
 			// FIXME: hardcoded to system type...
 			$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
+		}
+		$html = '<img src="'.$iconurl.'" alt="emo" />';
+		return $html;
+	}
+
+	/**
+	 * @param KunenaForumCategory	$category
+	 * @return string
+	 */
+	public function getCategoryIcon($category) {
+		$config = KunenaFactory::getConfig();
+		if ($config->categoryicons) {
+			// TODO: use xml file instead
+			$icon = $category->icon_id;
+			$iconurl = $this->getCategoryIconIndexPath($icon, true);
+		} else {
+			$icon = 'folder';
+			// FIXME: hardcoded to system type...
+			$iconurl = $this->getCategoryIconPath("system/{$icon}.png", true);
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;

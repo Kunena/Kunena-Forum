@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<!DOCTYPE kunena-categoryicons>
+<kunena-categoryicons>
+	<name>default</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPL</license>
+	<description>System category icons for Kunena</description>
+	
+	<icons type="user" width="48" height="48">
+		<icon id="0" name="default" published="1" title="COM_KUNENA_ICON_DEFAULT" src="user/default.png" />
+	</icons>
+
+	<categoryicon width="48" height="48">
+		<main>
+			<icon type="user" />
+		</main>
+	</categoryicon>
+</kunena-categoryicons>

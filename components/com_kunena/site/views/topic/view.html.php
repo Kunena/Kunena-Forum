@@ -219,7 +219,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid) $this->poll = $this->topic->getPoll();
 
@@ -280,7 +280,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->_prepareDocument('reply');
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
@@ -328,7 +328,7 @@ class KunenaViewTopic extends KunenaView {
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($saved) {
 			// Update message contents
@@ -892,7 +892,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
 		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count ( $this->history );
-		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
+		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = array();
 		foreach ($this->history as $message) {
 			$userlist[(int) $message->userid] = (int) $message->userid;

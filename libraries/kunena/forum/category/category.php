@@ -823,7 +823,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount($this->id);
-		KunenaForumMessageAttachmentHelper::cleanup();
+		KunenaAttachmentHelper::cleanup();
 
 		return $count;
 	}
@@ -1319,7 +1319,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	protected function authoriseUpload(KunenaUser $user) {
 		// Check if attachments are allowed
-		if (KunenaForumMessageAttachmentHelper::getExtensions($this, $user) === false) {
+		if (KunenaAttachmentHelper::getExtensions($this, $user) === false) {
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
 		}
 		return null;

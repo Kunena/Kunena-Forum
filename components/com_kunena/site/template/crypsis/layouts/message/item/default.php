@@ -46,8 +46,8 @@ $attachments = $this->message->getAttachments();
 			<?php foreach($attachments as $attachment) : ?>
 				<li class="span4">
 					<div class="thumbnail">
-						<?php echo $attachment->getThumbnailLink(); ?>
-						<?php echo $attachment->getTextLink(); ?>
+						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+						<?php echo $attachment->getLayout()->render('textlink'); ?>
 					</div>
 				</li>
 			<?php endforeach; ?>

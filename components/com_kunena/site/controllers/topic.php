@@ -74,7 +74,7 @@ class KunenaControllerTopic extends KunenaController {
 			);
 
 			// Upload!
-			$upload->addExtensions(KunenaForumMessageAttachmentHelper::getExtensions($category->id, $me->userid));
+			$upload->addExtensions(KunenaAttachmentHelper::getExtensions($category->id, $me->userid));
 			$response = (object) $upload->ajaxUpload($options);
 
 			if (!empty($response->completed))
@@ -82,7 +82,7 @@ class KunenaControllerTopic extends KunenaController {
 				// We have it all, lets create the attachment.
 				$uploadFile = $upload->getProtectedFile();
 				list($basename, $extension) = $upload->splitFilename();
-				$attachment = new KunenaForumMessageAttachment;
+				$attachment = new KunenaAttachment;
 				$attachment->bind(
 					array(
 						'mesid' => 0,

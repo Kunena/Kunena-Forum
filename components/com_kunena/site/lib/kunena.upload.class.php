@@ -50,8 +50,8 @@ class CKunenaUpload {
 		$this->_isimage = false;
 		$this->_isfile = false;
 		$me = KunenaUserHelper::getMyself();
-		$this->validImageExts = (array) KunenaForumMessageAttachmentHelper::getImageExtensions($catid,$me->userid);
-		$this->validFileExts = (array) KunenaForumMessageAttachmentHelper::getFileExtensions($catid,$me->userid);
+		$this->validImageExts = (array) KunenaAttachmentHelper::getImageExtensions($catid, $me->userid);
+		$this->validFileExts = (array) KunenaAttachmentHelper::getFileExtensions($catid, $me->userid);
 		$this->setImageResize(intval($this->_config->imagesize)*1024, intval($this->_config->imagewidth), intval($this->_config->imageheight), intval($this->_config->imagequality));
 	}
 

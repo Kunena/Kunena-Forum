@@ -116,10 +116,10 @@ abstract class KunenaMenuHelper {
 						$item->flink = JRoute::_($item->flink, false);
 					}
 
-					$item->title = htmlspecialchars($item->title);
-					$item->anchor_css = htmlspecialchars($item->params->get('menu-anchor_css', ''));
-					$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''));
-					$item->menu_image = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', '')) : '';
+					$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8');
+					$item->anchor_css = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8');
+					$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8');
+					$item->menu_image = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8') : '';
 				}
 
 				if (isset($lastitem)) {

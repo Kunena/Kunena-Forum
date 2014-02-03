@@ -521,7 +521,7 @@ class KunenaViewUser extends KunenaView {
 	function canManageAttachments () {
 		if ( $this->config->show_imgfiles_manage_profile ) {
 			$params = array('file' => '1', 'image' => '1', 'orderby' => 'desc', 'limit' => '30');
-			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
+			$this->userattachs = KunenaAttachmentHelper::getByUserid($this->profile, $params);
 
 			if ($this->userattachs) {
 				 if ( $this->me->isModerator() || $this->profile->userid == $this->me->userid ) return true;

@@ -39,7 +39,7 @@ class KunenaAdminControllerAttachments extends KunenaController {
 		}
 
 		foreach( $cids as $id ) {
-			$attachment = KunenaForumMessageAttachmentHelper::get($id);
+			$attachment = KunenaAttachmentHelper::get($id);
 			$attachment->delete();
 		}
 

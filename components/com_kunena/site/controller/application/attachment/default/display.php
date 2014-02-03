@@ -45,9 +45,9 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		$download = $this->input->getBool('download', false);
 
 		// Run before executing action.
-		$result = $this->before();
+		$this->before();
 
-		if ($result === false || $format != 'raw' || !$id)
+		if ($format != 'raw' || !$id)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}

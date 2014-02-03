@@ -216,8 +216,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
 		KunenaUserHelper::loadUsers($userlist);
 
-		// Get attachments
-		KunenaForumMessageAttachmentHelper::getByMessage($this->messages);
+		// Prefetch attachments.
+		KunenaAttachmentHelper::getByMessage($this->messages);
 	}
 
 	/**

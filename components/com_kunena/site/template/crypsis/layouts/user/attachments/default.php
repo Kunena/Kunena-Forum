@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var array|KunenaForumMessageAttachment[] $attachments */
+/** @var array|KunenaAttachment[] $attachments */
 $attachments = $this->attachments;
 ?>
 <h3>
@@ -89,7 +89,7 @@ $attachments = $this->attachments;
 					<?php echo $this->getTopicLink($message->getTopic(), $message); ?>
 				</td>
 				<td class="center">
-					<?php echo $attachment->getThumbnailLink() ; ?>
+					<?php echo $attachment->getLayout()->render('thumbnail') ; ?>
 				</td>
 				<td class="center">
 

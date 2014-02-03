@@ -40,7 +40,7 @@ foreach ($this->list as $i => $item) :
 
 	echo '<li'.$id.$class.'>';
 
-	$flink = ' href="'.htmlspecialchars($item->flink).'" ';
+	$flink = ' href="'.htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8').'" ';
 	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : '';
 	$title = $item->anchor_title ? ' title="'.$item->anchor_title.'" ' : '';
 	if ($item->menu_image) {

@@ -1130,7 +1130,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			if ($recount) {
 				KunenaUserHelper::recount();
 				KunenaForumCategoryHelper::recount();
-				KunenaForumMessageAttachmentHelper::cleanup();
+				KunenaAttachmentHelper::cleanup();
 				KunenaForumMessageThankyouHelper::recount();
 			}
 		}

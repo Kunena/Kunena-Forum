@@ -90,7 +90,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		list ($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;

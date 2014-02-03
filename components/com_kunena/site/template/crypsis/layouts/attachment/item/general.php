@@ -2,7 +2,7 @@
 /**
  * Kunena Component
 * @package Kunena.Template.Crypsis
-* @subpackage Topic
+* @subpackage BBCode
 *
 * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,6 +10,10 @@
 **/
 defined ( '_JEXEC' ) or die ();
 
+/** @var KunenaAttachment $attachment */
+$attachment = $this->attachment;
 ?>
 
-<a href="<?php echo $this->link ?>" title="<?php echo $this->title ?>" class="fancybox-button" rel="fancybox-button"><?php echo $this->name ?></a>
+<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
+	<?php echo $this->escape($attachment->getShortName()); ?>
+</a>

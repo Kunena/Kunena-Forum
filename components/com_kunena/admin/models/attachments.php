@@ -98,13 +98,16 @@ class KunenaAdminModelAttachments extends JModelList {
 	{
 		$this->_db->setQuery($query, $limitstart, $limit);
 		$ids = $this->_db->loadColumn();
-		$results = KunenaForumMessageAttachmentHelper::getById($ids);
+		$results = KunenaAttachmentHelper::getById($ids);
 		$userids = array();
 		$mesids = array();
-		foreach ($results as $result) {
+
+		foreach ($results as $result)
+		{
 			$userids[$result->userid] = $result->userid;
 			$mesids[$result->mesid] = $result->mesid;
 		}
+
 		KunenaUserHelper::loadUsers($userids);
 		KunenaForumMessageHelper::getMessages($mesids);
 

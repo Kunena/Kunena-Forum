@@ -70,7 +70,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($saved)
 		{

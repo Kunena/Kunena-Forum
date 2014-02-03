@@ -121,9 +121,9 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addScript('poll.js');
 		}
 
-		if ( $config->lightbox == 1 )
+		// Load FancyBox library if enabled in configuration
+		if ($config->lightbox == 1)
 		{
-			// Load fancybox library if enabled in configuration
 			$this->addScript('js/fancybox.js');
 			$this->addStyleSheet('css/fancybox.css');
 			JFactory::getDocument()->addScriptDeclaration('

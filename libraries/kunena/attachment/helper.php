@@ -43,13 +43,18 @@ abstract class KunenaAttachmentHelper {
 		if ($identifier instanceof KunenaAttachment) {
 			return $identifier;
 		}
-		$id = intval($identifier);
+		$id = (int) $identifier;
 		if ($id < 1)
 			return new KunenaAttachment;
 
-		if ($reload || empty(self::$_instances[$id])) {
-			self::$_instances[$id] = KunenaAttachmentHelper::get($id);
-			self::$_messages[self::$_instances[$id]->mesid][$id] = self::$_instances[$id];
+		if (empty(self::$_instances[$id])) {
+			$instance = new KunenaAttachment;
+			// Only load messages which haven't been preloaded before (including missing ones).
+			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->id = $id;
+			self::$_instances[$id] = $instance;
+		} elseif ($reload) {
+			self::$_instances[$id]->load();
 		}
 
 		return self::$_instances[$id];

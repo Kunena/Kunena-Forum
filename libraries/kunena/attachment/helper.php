@@ -43,16 +43,16 @@ abstract class KunenaAttachmentHelper {
 		if ($identifier instanceof KunenaAttachment) {
 			return $identifier;
 		}
-		$id = intval ( $identifier );
+		$id = intval($identifier);
 		if ($id < 1)
-			return new KunenaAttachment ();
+			return new KunenaAttachment;
 
-		if ($reload || empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaAttachment ( $id );
-			self::$_messages [self::$_instances [$id]->mesid][$id] = self::$_instances [$id];
+		if ($reload || empty(self::$_instances[$id])) {
+			self::$_instances[$id] = KunenaAttachmentHelper::get($id);
+			self::$_messages[self::$_instances[$id]->mesid][$id] = self::$_instances[$id];
 		}
 
-		return self::$_instances [$id];
+		return self::$_instances[$id];
 	}
 
 	/**
@@ -266,22 +266,20 @@ abstract class KunenaAttachmentHelper {
 		$db = JFactory::getDBO ();
 		// Find up to 50 orphan attachments and delete them
 		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
-		$db->setQuery ( $query, 0, 50 );
-		$results = (array) $db->loadAssocList ('id');
-		if (KunenaError::checkDatabaseError ()) return false;
+		$db->setQuery($query, 0, 50);
+		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
+		if (KunenaError::checkDatabaseError()) return false;
 		if (empty($results)) return true;
-		foreach ($results as $result) {
-			$instance = new KunenaAttachment ();
-			$instance->bind ( $result );
+		foreach ($results as $instance) {
 			$instance->exists(false);
-			unset ($instance);
+			unset($instance);
 		}
 		$ids = implode(',', array_keys($results));
-		unset ($results);
+		unset($results);
 		$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
-		$db->setQuery ( $query );
-		$db->query ();
-		return KunenaError::checkDatabaseError ();
+		$db->setQuery($query);
+		$db->execute();
+		return KunenaError::checkDatabaseError();
 	}
 
 	/**
@@ -324,20 +322,16 @@ abstract class KunenaAttachmentHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
 		$db->setQuery ( $query, 0, $params['limit'] );
-		$results = $db->loadAssocList ('id');
+		$results = $db->loadObjectList('id', 'KunenaAttachment');
 		KunenaError::checkDatabaseError ();
 
 		$list = array();
-		foreach ( $results as $result ) {
-			$id = $result['id'];
-			if (!isset(self::$_instances [$id])) {
-				$instance = new KunenaAttachment ();
-				$instance->bind ( $result );
-				$instance->exists(true);
-				self::$_instances [$id] = $instance;
-				self::$_messages [$instance->mesid][$id] = $instance;
+		foreach ($results as $instance) {
+			if (!isset(self::$_instances[$instance->id])) {
+				self::$_instances [$instance->id] = $instance;
+				self::$_messages [$instance->mesid][$instance->id] = $instance;
 			}
-			$list[] = self::$_instances[$id];
+			$list[] = self::$_instances[$instance->id];
 		}
 
 		return $list;
@@ -360,18 +354,16 @@ abstract class KunenaAttachmentHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
 		$db->setQuery ( $query );
-		$results = (array) $db->loadAssocList ('id');
+		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
 		KunenaError::checkDatabaseError ();
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaAttachment ();
-				$instance->bind ( $results[$id] );
-				$instance->exists(true);
-				self::$_instances [$id] = $instance;
-				self::$_messages [$instance->mesid][$id] = $instance;
+				$instance = $results[$id];
+				self::$_instances[$id] = $instance;
+				self::$_messages[$instance->mesid][$id] = $instance;
 			} else {
-				self::$_instances [$id] = null;
+				self::$_instances[$id] = null;
 			}
 		}
 		unset ($results);
@@ -393,7 +385,7 @@ abstract class KunenaAttachmentHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
 		$db->setQuery ( $query );
-		$results = (array) $db->loadAssocList ('id');
+		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
 		KunenaError::checkDatabaseError ();
 
 		foreach ( $ids as $mesid ) {
@@ -401,10 +393,7 @@ abstract class KunenaAttachmentHelper {
 				self::$_messages [$mesid] = array();
 			}
 		}
-		foreach ( $results as $id=>$result ) {
-			$instance = new KunenaAttachment ();
-			$instance->bind ( $result );
-			$instance->exists(true);
+		foreach ( $results as $id=>$instance ) {
 			self::$_instances [$id] = $instance;
 			self::$_messages [$instance->mesid][$id] = $instance;
 		}

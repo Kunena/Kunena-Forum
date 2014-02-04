@@ -21,7 +21,7 @@ $editor->initialize('id');
 
 $this->template->loadUploadScript();
 
-$this->addScriptDeclaration("kunena_upload_files_url = " . KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=upload&format=raw', false) );
+$this->addScriptDeclaration("kunena_upload_files_url = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=upload&format=raw', false). "'" );
 
 $this->addScriptDeclaration("window.addEvent('domready', function() {
 	if ( typeof pollcategoriesid != 'undefined' ) {
@@ -148,7 +148,7 @@ $this->k=0;
 									</div>
 								</div>
 								<div id="dropzone">
-									<div id="demo-upload" class="dropzone dz-clickable">
+									<div id="kunena-upload" class="dropzone dz-clickable">
 										<div class="dz-default dz-message">
 											<span>Drop files here to upload</span>
 										</div>
@@ -221,14 +221,6 @@ if (!$this->message->name) {
 }
 ?>
 </form>
-
-<div id="dropzone">
-	<div id="kunena-upload" class="dropzone dz-clickable">
-		<div class="dz-default dz-message">
-			<span>Drop files here to upload</span>
-		</div>
-	</div>
-</div>
 
 <?php
 if ($this->config->showhistory && $this->topic->exists())

@@ -393,7 +393,7 @@ window.addEvent('domready', function(){
 					}
 					// Moderators have always access
 					if (self::isModerator($user, $category->id)) {
-						$$list[$category->id] = $category->id;
+						$list[$category->id] = $category->id;
 						unset($categories[$category->id]);
 					}
 				}

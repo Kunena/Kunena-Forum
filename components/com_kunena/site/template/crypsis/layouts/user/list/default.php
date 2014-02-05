@@ -75,17 +75,13 @@ $cols = 1;
 
 				<?php if ($this->config->userlist_posts) : $cols++; ?>
 				<th class="center">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JText::_('COM_KUNENA_USRL_POSTS'); ?>
 				</th>
 				<?php endif; ?>
 
 				<?php if ($this->config->userlist_karma) : $cols++; ?>
 				<th class="center">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JText::_('COM_KUNENA_USRL_KARMA'); ?>
 				</th>
 				<?php endif; ?>
 
@@ -115,9 +111,7 @@ $cols = 1;
 
 				<?php if ($this->config->userlist_userhits) : $cols++; ?>
 				<th class="center">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JText::_('COM_KUNENA_USRL_HITS'); ?>
 				</th>
 				<?php endif; ?>
 

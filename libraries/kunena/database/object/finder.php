@@ -103,7 +103,8 @@ abstract class KunenaDatabaseObjectFinder
 	public function order($by, $direction = 1, $alias = 'a')
 	{
 		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = $alias . '.' . $this->db->quoteName($by);
+		$by = $alias . '.' . $by;
+		$by = $this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 
 		return $this;

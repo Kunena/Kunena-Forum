@@ -62,6 +62,7 @@ abstract class KunenaRouteLegacy {
 		'pdf'=>1,
 		'thankyou'=>1,
 		'fb_pdf'=>1,
+		'solved'=>1,
 	);
 
 	public static function isLegacy($view) {
@@ -516,6 +517,12 @@ abstract class KunenaRouteLegacy {
 					}
 					$uri->setVar ( 'id', $id );
 				}
+				break;
+			case 'solved' :
+				$changed = true;
+				$uri->setVar('view', 'topic');
+				$uri->setVar('task', 'solved');
+
 				break;
 			case 'karma':
 				$changed = true;

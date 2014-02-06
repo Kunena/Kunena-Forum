@@ -903,4 +903,72 @@ class KunenaControllerTopic extends KunenaController {
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS' ) );
 		$this->app->redirect ( $topic->getUrl($this->return, false) );
 	}
+
+	/**
+	 * Sorthcut method to set the topic solved
+	 *
+	 * @return void
+	 */
+	public function solved()
+	{
+		$type = $this->app->input->getString('task');
+		$this->setSolved($type);
+	}
+
+	/**
+	 * Sorthcut method to set the topic unsolved
+	 *
+	 * @return void
+	 */
+	public function unsolved()
+	{
+		$type = $this->app->input->getString('task');
+		$this->setSolved($type);
+	}
+
+	/**
+	 * Method to set solved or unsolved
+	 *
+	 * @param   string  $type  Define if you want set solved or unsolved
+	 *
+	 * @return void
+	 */
+	protected function setSolved($type)
+	{
+		if (! JSession::checkToken('get'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->redirectBack();
+		}
+
+		$topic = KunenaForumTopicHelper::get($this->id);
+
+		if (!$topic->authorise('solved'))
+		{
+			$this->app->enqueueMessage($topic->getError(), 'notice');
+		}
+		else
+		{
+			if ( $type == 'solved' )
+			{
+				$topic->icon_id = 8;
+				$topic->subject = JText::_('COM_KUNENA_TOPIC_SOLVED_LABEL_SUBJECT') . ' ' . $topic->subject;
+				$topic->solved = 1;
+				$topic->save();
+
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_SOLVED_ADDED_SUCCESS'));
+			}
+			else
+			{
+				$topic->icon_id = 0;
+				$topic->subject = str_replace(JText::_('COM_KUNENA_TOPIC_SOLVED_LABEL_SUBJECT'), '', $topic->subject);
+				$topic->solved = 0;
+				$topic->save();
+
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_SOLVED_REMOVED_SUCCESS'));
+			}
+
+			$this->redirectBack();
+		}
+	}
 }

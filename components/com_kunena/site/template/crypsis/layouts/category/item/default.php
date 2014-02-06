@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
+$colspan = empty($this->actions) ? 5 : 6;
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
@@ -35,33 +36,28 @@ $categoryActions = $this->getCategoryActions();
 	<table class="table table-striped table-bordered table-hover table-condensed">
 		<thead>
 			<tr>
-				<td colspan="1" class="center">
+				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>
-				<td colspan="1">
-					<ul class="inline no-margin">
-
-						<?php if ($categoryActions) : ?>
-						<li class="hidden-phone">
-							<?php echo implode($categoryActions); ?>
-						</li>
-						<?php endif; ?>
-					</ul>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<?php if (!empty($this->topics)) : ?>
-				<td colspan="2" class="center">
-					<ul class="inline pull-right no-margin">
-
-					  <li>
-							<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-						</li>
-					</ul>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
-				<?php endif; ?>
-				<?php if (!empty($this->topicActions)) : ?>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
+				</td>
+				<td class="span1 center hidden-phone">
+				Author
+				</td>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php if (!empty($this->actions)) : ?>
 				<td class="span1 center">
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />
@@ -86,7 +82,7 @@ $categoryActions = $this->getCategoryActions();
 				->set('spacing', $previous && $previous->ordering != $topic->ordering)
 				->set('position', 'kunena_topic_' . $position)
 				->set('checkbox', !empty($this->topicActions))
-				->setLayout('table_icons');
+				->setLayout('category');
 			$previous = $topic;
 		}
 

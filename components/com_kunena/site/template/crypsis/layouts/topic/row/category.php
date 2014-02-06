@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 /** @var KunenaLayout $this */
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
-$topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
+$topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getAuthor()->getAvatarImage('img-polaroid', 48);
 
 $cols = empty($this->checkbox) ? 5 : 6;
@@ -26,51 +26,68 @@ if (!empty($this->spacing)) : ?>
 <?php endif; ?>
 
 <tr>
-
-	<td class="span1 center hidden-phone">
+	<td class="hidden-phone span1 center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td class="span6">
-		
 		<div>
-			<?php echo $this->getTopicLink($topic); ?>
+			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip'); ?>
+
+			<?php if ($userTopic->favorite) : ?>
+				<i class="icon-star hasTooltip"><?php JText::_('COM_KUNENA_FAVORITE'); ?></i>
+			<?php endif; ?>
+
+			<?php if ($userTopic->posts) : ?>
+				<i class="icon-flag hasTooltip"><?php JText::_('COM_KUNENA_MYPOSTS'); ?></i>
+			<?php endif; ?>
+			
+			<?php if ($this->topic->attachments) : ?>
+				<i class="icon-flag-2 hasTooltip"><?php JText::_('COM_KUNENA_ATTACH'); ?></i>
+			<?php endif; ?>
+			
+			<?php if ($this->topic->poll_id) : ?>
+				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
+			<?php endif; ?>
 
 			<?php
-			if ($topic->getUserTopic()->favorite) {
-				echo $this->getIcon('kfavoritestar', JText::_('COM_KUNENA_FAVORITE'));
-			}
-
 			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr" class="knewchar">('
-					. (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
-			}
-
-			if ($topic->locked != 0) {
-				echo $this->getIcon('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
+				echo $this->getTopicLink($topic, 'unread',
+					'<sup dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 			?>
-		<?php if ($topic->attachments) echo $this->getIcon('icon-flag-2', JText::_('COM_KUNENA_ATTACH')); ?>
-		<?php if ($topic->poll_id) echo $this->getIcon('icon-bars', JText::_('COM_KUNENA_ADMIN_POLLS')); ?>
-		</div>
-		<div>
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 		</div>
 
 		<div class="pull-right">
 			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
+
+		<div>
+			<?php /** TODO: New Feature - LABELS
+			<span class="label label-info">
+				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
+			</span>	*/ ?>
+			<?php if ($topic->locked != 0) : ?>
+			<span class="label label-important">
+				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+			</span>
+			<?php endif; ?>
+		</div>
+	</td>
+	<td class="span1 hidden-phone center">
+			<?php echo  $this->formatLargeNumber($topic->hits); ?>
+		</td>
+	<td class="span1 hidden-phone center">
+			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
 	<td class="span1 center hidden-phone">
-		<?php echo $this->formatLargeNumber($topic->hits); ?>
+
+		<?php if ($avatar) : ?>
+		<span>
+			<?php echo $topic->getAuthor()->getLink($avatar); ?>
+		</span>
+		<?php endif; ?>
+
 	</td>
-	<td class="span1 center hidden-phone">
-		<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
-	</td>
-	
-	<td class="span1 center hidden-phone">
-		<?php echo $topic->getAuthor()->getLink($avatar); ?>
-	</td>
-	
 	<td class="span3">
 		<div class="klatest-post-info">
 			<?php if (!empty($this->topic->avatar)) : ?>

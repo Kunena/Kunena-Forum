@@ -48,7 +48,7 @@ $avatarname = $this->profile->getname();
 		</ul>
 		<?php endif; ?>
 
-
+		<div class="msgfooter">
 		<?php if ($signature) : ?>
 		<h5>
 		<div>
@@ -74,7 +74,7 @@ $avatarname = $this->profile->getname();
 			</p>
 		</div>
 		<?php endif; ?>
-	
+	</div>
 	<?php if(!empty($this->thankyou)): ?>
 		<span class="kmessage-thankyou">
 			<?php

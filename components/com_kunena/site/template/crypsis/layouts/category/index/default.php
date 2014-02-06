@@ -74,14 +74,14 @@ foreach ($this->sections as $section) :
 		</tr>
 
 		<?php else : ?>
-		<?php if (!empty($this->categories[$section->id]) && empty($this->categories->getLastTopic)) : ?>
-				<td class="span1 hidden-phone">
+		<?php if (!empty($this->categories[$section->id]) &&  $this->config->avataroncat > 0) : ?>
+				<td  colspan="1" class="hidden-phone">
 				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 				</td>
-				<td class="span1 center hidden-phone">
+				<td colspan="1" class="span1 center hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR');?>
 				</td>
-				<td class="span1 hidden-phone">
+				<td colspan="1" class="span1 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php endif; ?>

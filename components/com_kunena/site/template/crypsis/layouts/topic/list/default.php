@@ -68,7 +68,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
-				<?php if (!empty($this->actions)) : ?>
+				<?php if (!empty($this->actions) || !empty($this->embedded)) : ?>
 				<td class="span1 center">
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />

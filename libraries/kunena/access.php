@@ -411,8 +411,8 @@ window.addEvent('domready', function(){
 				// Clean up and filter the resulting list by using only array keys.
 				$list = array_keys($list);
 				JArrayHelper::toInteger($list);
-				unset($list[0]);
 				$read[$id] = array_combine($list, $list);
+				unset($read[$id][0]);
 				$app->setUserState("com_kunena.user{$id}_read", $read[$id]);
 			}
 		}

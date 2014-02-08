@@ -64,27 +64,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	);
 
 	/**
-	 * Logic to load language strings for the template.
-	 *
-	 * By default language files are also loaded from the parent templates.
-	 *
-	 * @return void
-	 */
-	public function loadLanguage()
-	{
-		$lang = JFactory::getLanguage();
-		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
-
-		foreach (array_reverse($this->default) as $template)
-		{
-			$file = "kunena_tmpl_{$template}";
-			$lang->load($file, JPATH_SITE)
-				|| $lang->load($file, KPATH_SITE)
-				|| $lang->load($file, KPATH_SITE . "/template/{$template}");
-		}
-	}
-
-	/**
 	 * Template initialization.
 	 *
 	 * @return void

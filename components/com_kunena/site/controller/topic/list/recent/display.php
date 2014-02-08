@@ -18,27 +18,6 @@ defined('_JEXEC') or die;
 class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
 {
 	/**
-	 * Return display layout.
-	 *
-	 * @return KunenaLayout
-	 */
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Topic/List')
-			->set('me', $this->me)
-			->set('config', $this->config)
-			->set('topics', $this->topics)
-			->set('headerText', $this->headerText)
-			->set('pagination', $this->pagination)
-			->set('state', $this->state)
-			->set('topicActions', $this->topicActions)
-			->set('actionMove', $this->actionMove);
-
-		return $content;
-	}
-
-	/**
 	 * Prepare recent topics list.
 	 *
 	 * @return void
@@ -52,6 +31,9 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->moreUri = null;
+
+		$this->embedded = $this->getOptions()->get('embedded', false);
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
@@ -92,19 +74,19 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			case 'sticky' :
 				$finder
 					->filterByHold(array(0))
-					->filterBy('t.ordering', '>', 0)
+					->where('a.ordering', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'locked' :
 				$finder
 					->filterByHold(array(0))
-					->filterBy('t.locked', '>', 0)
+					->where('a.locked', '>', 0)
 					->filterByTime($time);
 				break;
 			case 'noreplies' :
 				$finder
 					->filterByHold(array(0))
-					->filterBy('t.posts', '=', 1)
+					->where('a.posts', '=', 1)
 					->filterByTime($time);
 				break;
 			case 'unapproved' :
@@ -132,6 +114,11 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
+
 		$this->topics = $finder
 			->order($order, -1)
 			->start($this->pagination->limitstart)
@@ -143,6 +130,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			$this->prepareTopics();
 		}
 
+		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		switch ($this->state->get('list.mode'))
 		{
 			case 'topics' :
@@ -168,7 +156,6 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
 		}
 
-		$this->topicActions = $this->model->getTopicActions();
-		$this->actionMove = $this->model->getActionMove();
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 	}
 }

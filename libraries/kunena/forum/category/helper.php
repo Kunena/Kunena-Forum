@@ -156,12 +156,12 @@ abstract class KunenaForumCategoryHelper {
 		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
 		$where = isset($params['where']) ? (string) $params['where'] : '';
-		$allowed = implode(',', KunenaAccess::getInstance()->getAllowedCategories ());
+		$allowed = implode(',', array_keys(KunenaAccess::getInstance()->getAllowedCategories()));
 
 		if (!$userids || !$allowed) return array(0, array());
 
 		// Get total count
-		$query = "SELECT COUNT(*) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id";
+		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where}";
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$total) {
@@ -209,8 +209,8 @@ abstract class KunenaForumCategoryHelper {
 			FROM #__kunena_topics AS t
 			LEFT JOIN #__kunena_user_categories AS uc ON uc.category_id=t.category_id AND uc.user_id={$db->Quote($user->userid)}
 			LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=t.id AND ur.user_id={$db->Quote($user->userid)}
-			WHERE t.category_id IN ($catlist) AND t.hold='0' AND t.last_post_time>{$db->Quote($session->lasttime)}
-				AND (uc.allreadtime IS NULL OR t.last_post_time>UNIX_TIMESTAMP(uc.allreadtime))
+			WHERE t.category_id IN ($catlist) AND t.hold='0' AND t.last_post_time>{$db->Quote($session->getAllReadTime())}
+				AND (uc.allreadtime IS NULL OR t.last_post_time>uc.allreadtime)
 				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)
 			GROUP BY category_id";
 		$db->setQuery ( $query );
@@ -328,7 +328,7 @@ abstract class KunenaForumCategoryHelper {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return array();
 			}
-			if (!$unpublished && !self::$_instances [$parent]->published) {
+			if (!$unpublished && self::$_instances[$parent]->published != 1) {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return array();
 			}

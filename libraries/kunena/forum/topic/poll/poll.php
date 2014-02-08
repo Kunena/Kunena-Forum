@@ -21,6 +21,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaForumTopicPoll extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
+	protected $_total = null;
 	protected $options = false;
 	protected $newOptions = false;
 	protected $usercount = false;
@@ -97,15 +98,14 @@ class KunenaForumTopicPoll extends JObject {
 	 * @return int
 	 */
 	public function getTotal() {
-		static $total = false;
-		if ($total === false) {
-			$total = 0;
+		if (is_null($this->_total)) {
+			$this->_total = 0;
 			$options = $this->getOptions();
 			foreach ($options as $option) {
-				$total += $option->votes;
+				$this->_total += $option->votes;
 			}
 		}
-		return $total;
+		return $this->_total;
 	}
 
 	/**
@@ -218,9 +218,9 @@ class KunenaForumTopicPoll extends JObject {
 		}
 
 		$lastVoteId = $this->getLastVoteId($user->userid);
-		$votes = $this->getMyVotes($user);
+		$myvotes = $this->getMyVotes($user);
 
-		if (!$votes) {
+		if (!$myvotes) {
 			// First vote
 			$votes = new StdClass();
 			$votes->new = true;
@@ -240,8 +240,9 @@ class KunenaForumTopicPoll extends JObject {
 		} else {
 			$votes = new StdClass();
 			$votes->new = false;
+
 			// Add a vote to the user
-			$votes->votes++;
+			$votes->votes = ++$myvotes;
 		}
 
 		$votes->lasttime = JFactory::getDate()->toSql();

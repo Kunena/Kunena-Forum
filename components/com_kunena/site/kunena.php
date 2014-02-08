@@ -14,7 +14,7 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1') || !Kunena
 	$lang = JFactory::getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
-	JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+	JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
 ?>
 	<h2><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC')?></h2>
 	<div><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_DESC')?></div>
@@ -73,11 +73,14 @@ $view = $input->getWord('func', $input->getWord('view', 'home'));
 $subview = $input->getWord('layout', 'default');
 $task = $input->getCmd('task', 'display');
 
+// Import plugins and event listeners.
+JPluginHelper::importPlugin('kunena');
+
 // Get HMVC controller and if exists, execute it.
 $controller = KunenaControllerApplication::getInstance($view, $subview, $task, $input, $app);
 if ($controller) {
 	KunenaRoute::cacheLoad();
-	echo $controller->execute();
+	$contents = $controller->execute();
 	KunenaRoute::cacheStore();
 
 } elseif (is_file(KPATH_SITE . "/controllers/{$view}.php")) {
@@ -85,7 +88,9 @@ if ($controller) {
 	// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.
 	$controller = KunenaController::getInstance();
 	KunenaRoute::cacheLoad();
+	ob_start();
 	$controller->execute($task);
+	$contents = ob_get_clean();
 	KunenaRoute::cacheStore();
 	$controller->redirect();
 } else {
@@ -98,6 +103,13 @@ if ($controller) {
 		return JError::raiseError(404, "Kunena view '{$view}' not found");
 	}
 }
+
+// Prepare and display the output.
+$dispatcher = JDispatcher::getInstance();
+$dispatcher->trigger('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
+$contents = (string) $contents;
+$dispatcher->trigger('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));
+echo $contents;
 
 // Remove custom error handlers.
 KunenaError::cleanup ();

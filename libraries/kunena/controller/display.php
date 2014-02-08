@@ -28,6 +28,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Run before executing action.
 			$result = $this->before();
 			if ($result === false) {
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
 			}
 
@@ -38,6 +39,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$this->after();
 		} catch (KunenaExceptionAuthorise $e) {
 			if ($this->primary) {
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 				throw $e;
 			} else {
 				$this->output = KunenaLayout::factory('Empty')->setOptions($this->getOptions());
@@ -103,29 +105,57 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$output = $this->execute();
 
 		} catch (KunenaExceptionAuthorise $e) {
-			if (!$this->primary) return KunenaLayout::factory('Empty');
+			if (!$this->primary) return (string) KunenaLayout::factory('Empty');
 
 			$document = JFactory::getDocument();
 			$document->setTitle($e->getResponseStatus());
-			JResponse::setHeader('Status', $e->getResponseStatus(), 'true');
+			JResponse::setHeader('Status', $e->getResponseStatus(), true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
 
 		} catch (Exception $e) {
 			// TODO: error message?
-			if (!$this->primary) return KunenaLayout::factory('Empty');
+			if (!$this->primary) {
+				return "<b>Exception</b> in layout <b>{$this->name}!</b>" . (!JDEBUG ? $e->getMessage() : '');
+			}
 
 			$title = '500 Internal Server Error';
 			$document = JFactory::getDocument();
 			$document->setTitle($title);
-			JResponse::setHeader('Status', $title, 'true');
+			JResponse::setHeader('Status', $title, true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());
 		}
 
 		return (string) $output;
+	}
+
+	/**
+	 * Method to get the view layout.
+	 *
+	 * @return  string  The layout name.
+	 */
+	public function getLayout()
+	{
+		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
+		return $layout ? $layout : 'default';
+	}
+
+	/**
+	 * Method to set the view layout.
+	 *
+	 * @param   string  $layout  The layout name.
+	 *
+	 * @return  KunenaLayout  Method supports chaining.
+	 */
+	public function setLayout($layout)
+	{
+		if (!$layout) $layout = 'default';
+		$this->layout = $layout;
+
+		return $this;
 	}
 
 	/**

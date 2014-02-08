@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getAuthor()->getAvatarImage();
+$avatar = $topic->getAuthor()->getAvatarImage('img-polaroid', 48);
 
 $cols = empty($this->checkbox) ? 5 : 6;
 
@@ -40,6 +40,14 @@ if (!empty($this->spacing)) : ?>
 			<?php if ($userTopic->posts) : ?>
 				<i class="icon-flag hasTooltip"><?php JText::_('COM_KUNENA_MYPOSTS'); ?></i>
 			<?php endif; ?>
+			
+			<?php if ($this->topic->attachments) : ?>
+				<i class="icon-flag-2 hasTooltip"><?php JText::_('COM_KUNENA_ATTACH'); ?></i>
+			<?php endif; ?>
+			
+			<?php if ($this->topic->poll_id) : ?>
+				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
+			<?php endif; ?>
 
 			<?php
 			if ($topic->unread) {
@@ -50,52 +58,55 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages); ?>
+			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 
 		<div>
+			<?php /** TODO: New Feature - LABELS
 			<span class="label label-info">
 				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-			</span>
-
+			</span>	*/ ?>
 			<?php if ($topic->locked != 0) : ?>
 			<span class="label label-important">
 				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
 			</span>
 			<?php endif; ?>
-
-			in <?php echo $this->getCategoryLink($topic->getCategory(), null, null, 'hasTooltip'); ?>
+			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 		</div>
 	</td>
-	<td class="span1 hidden-phone">
-		<span>
-			<?php echo JText::_('COM_KUNENA_GEN_HITS') . ':' . $this->formatLargeNumber($topic->hits); ?>
-		</span>
-		<span>
-			<?php echo JText::_('COM_KUNENA_GEN_REPLIES') . ':' . $this->formatLargeNumber($topic->getReplies()); ?>
-		</span>
+	<td class="span1 hidden-phone center">
+			<?php echo  $this->formatLargeNumber($topic->hits); ?>
+		</td>
+	<td class="span1 hidden-phone center">
+			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
-	<td class="span1 center">
+	<td class="span1 center hidden-phone">
 
 		<?php if ($avatar) : ?>
-		<span class="hidden-phone">
-			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
+		<span>
+			<?php echo $topic->getAuthor()->getLink($avatar); ?>
 		</span>
 		<?php endif; ?>
 
 	</td>
-	<td class="span2">
-		<span class="hasTooltip" title="<?php echo $topic->getLastPostAuthor()->getName(); ?>">
-			<?php echo $topic->getLastPostAuthor()->getLink(); ?>
-		</span>
-		<br />
-		<span class="hasTooltip" title="<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat_hover'); ?>">
-			<?php echo $this->getTopicLink($topic, 'last', $topic->getLastPostTime()->toKunena('config_post_dateformat')); ?>
-		</span>
+	<td class="span3">
+		<div class="klatest-post-info">
+			<?php if (!empty($this->topic->avatar)) : ?>
+			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
+			<?php endif; ?>
+
+			<span class="ktopic-latest-post">
+			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
+
+			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+			<br>
+			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+			</span>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-	<td class="span1">
+	<td class="span1 center">
 		<label>
 			<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 		</label>

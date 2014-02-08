@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var array|KunenaForumMessageAttachment[] $attachments */
+/** @var array|KunenaAttachment[] $attachments */
 $attachments = $this->attachments;
 ?>
 <h3>
@@ -57,9 +57,13 @@ $attachments = $this->attachments;
 		</thead>
 		<tbody>
 			<?php
-				if (!$attachments) :
-					echo JText::_('COM_KUNENA_USER_NO_ATTACHMENTS');
-				else :
+				if (!$attachments) : ?>
+					<tr>
+						<td colspan="8">
+							<?php echo JText::_('COM_KUNENA_USER_NO_ATTACHMENTS'); ?>
+						</td>
+					</tr>
+				<?php else :
 					$i=0;
 					foreach ($attachments as $attachment) :
 						$message = $attachment->getMessage();
@@ -85,13 +89,13 @@ $attachments = $this->attachments;
 					<?php echo $this->getTopicLink($message->getTopic(), $message); ?>
 				</td>
 				<td class="center">
-					<?php echo $attachment->getThumbnailLink() ; ?>
+					<?php echo $attachment->getLayout()->render('thumbnail') ; ?>
 				</td>
 				<td class="center">
 
 					<?php if ($canDelete) : ?>
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
-						<img src="<?php echo $this->template->getImagePath('icons/publish_x.png'); ?>" alt="" title="" />
+						<i class="icon-remove hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 					</a>
 					<?php endif ?>
 

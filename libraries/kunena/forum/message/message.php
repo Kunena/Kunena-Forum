@@ -43,11 +43,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	protected $_table = 'KunenaMessages';
 	protected $_db = null;
 	/**
-	 * @var KunenaForumMessageAttachment[]
+	 * @var KunenaAttachment[]
 	 */
 	protected $_attachments_add = array();
 	/**
-	 * @var KunenaForumMessageAttachment[]
+	 * @var KunenaAttachment[]
 	 */
 	protected $_attachments_del = array();
 	protected $_topic = null;
@@ -112,11 +112,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			return false;
 		}
 		$session = KunenaFactory::getSession ();
-		if ($this->time < $session->lasttime) {
+		if ($this->time < $session->getAllReadTime()) {
 			return false;
 		}
 		$allreadtime = KunenaForumCategoryUserHelper::get($this->getCategory(), $user)->allreadtime;
-		if ($allreadtime && $this->time < JFactory::getDate($allreadtime)->toUnix()) {
+		if ($allreadtime && $this->time < $allreadtime) {
 			return false;
 		}
 		$read = KunenaForumTopicUserReadHelper::get($this->getTopic(), $user);
@@ -444,8 +444,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
-				return $html ? KunenaHtmlParser::parseBBCode($this->message) : KunenaHtmlParser::stripBBCode
-					($this->message, null, false);
+				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
+					($this->message, $this, $html);
 		}
 		return '';
 	}
@@ -592,8 +592,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return bool
 	 */
 	public function uploadAttachment($tmpid, $postvar, $catid=null) {
-		$attachment = new KunenaForumMessageAttachment();
-		$attachment->mesid = $this->id;
+		$attachment = new KunenaAttachment();
 		$attachment->userid = $this->userid;
 		$success = $attachment->upload($postvar, $catid);
 		$this->_attachments_add[$tmpid] = $attachment;
@@ -601,29 +600,65 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	/**
-	 * @param bool|array $ids
+	 * Add listed attachments to the message.
+	 *
+	 * If attachment is already pointing to the message, this function has no effect.
+	 * Currently only orphan attachments can be added.
+	 *
+	 * @param array $ids
+	 * @since 3.1
 	 */
-	public function removeAttachment($ids=false) {
-		if ($ids === false) {
-			$this->_attachments_del = $this->getAttachments();
-		} elseif (is_array($ids)) {
-			if (!empty($ids)) $this->_attachments_del += array_combine($ids, $ids);
-		} else {
-			$this->_attachments_del[$ids] = $ids;
-		}
+	public function addAttachments(array $ids)
+	{
+		$this->_attachments_add += $this->getAttachments($ids, 'none');
 	}
 
 	/**
-	 * @param bool|array $ids
+	 * Remove listed attachments from the message.
 	 *
-	 * @return KunenaForumMessageAttachment[]
+	 * @param array $ids
+	 * @since 3.1
 	 */
-	public function getAttachments($ids=false) {
+	public function removeAttachments(array $ids)
+	{
+		$this->_attachments_del += $this->getAttachments($ids, 'none');
+	}
+
+	/**
+	 * Remove listed attachments from the message.
+	 *
+	 * @param bool|int|array $ids
+	 * @deprecated 3.1
+	 */
+	public function removeAttachment($ids)
+	{
+		if ($ids === false)
+		{
+			$ids = array_keys($this->getAttachments());
+		}
+		elseif (!is_array($ids))
+		{
+			$ids = array((int) $ids);
+		}
+		$this->removeAttachments($ids);
+	}
+
+	/**
+	 * @param  bool|array  $ids
+	 * @param  string      $action
+	 *
+	 * @return KunenaAttachment[]
+	 */
+	public function getAttachments($ids=false, $action = 'read') {
 		if ($ids === false) {
-			return KunenaForumMessageAttachmentHelper::getByMessage($this->id);
+			return KunenaAttachmentHelper::getByMessage($this->id, $action);
 		} else {
-			$attachments = KunenaForumMessageAttachmentHelper::getById($ids);
-			foreach ($attachments as $id=>$attachment) if ($attachment->mesid != $this->id) unset($attachments[$id]);
+			$attachments = KunenaAttachmentHelper::getById($ids, $action);
+			foreach ($attachments as $id=>$attachment) {
+				if ($attachment->mesid && $attachment->mesid != $this->id) {
+					unset($attachments[$id]);
+				}
+			}
 			return $attachments;
 		}
 	}
@@ -635,21 +670,37 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		// Save new attachments and update message text
 		$message = $this->message;
 		foreach ($this->_attachments_add as $tmpid=>$attachment) {
+			if ($attachment->exists() && $attachment->mesid) {
+				// Attachment exists and already belongs to a message => skip it.
+				continue;
+			}
 			$attachment->mesid = $this->id;
+			$exception = $attachment->tryAuthorise('create', null, false);
+			if ($exception) {
+				$this->setError($exception->getMessage());
+				continue;
+			}
 			if (!$attachment->save()) {
-				$this->setError ( $attachment->getError() );
+				$this->setError($attachment->getError());
+				continue;
 			}
 			// Update attachments count and fix attachment name inside message
-			if ($attachment->exists()) {
-				$this->getTopic()->attachments++;
-				$this->message = preg_replace('/\[attachment\:'.$tmpid.'\].*?\[\/attachment\]/u', "[attachment={$attachment->id}]{$attachment->filename}[/attachment]", $this->message);
-			}
+			$this->getTopic()->attachments++;
+			$this->message = preg_replace('/\[attachment\:'.$tmpid.'\].*?\[\/attachment\]/u', "[attachment={$attachment->id}]{$attachment->filename}[/attachment]", $this->message);
 		}
 		// Delete removed attachments and update attachments count and message text
-		$attachments = $this->getAttachments(array_keys($this->_attachments_del));
-		foreach ($attachments as $attachment) {
+		foreach ($this->_attachments_del as $attachment) {
+			if ($attachment->mesid && $attachment->mesid != $this->id) {
+				// Attachment doesn't belong to this message => skip it.
+				continue;
+			}
+			$exception = $attachment->tryAuthorise('delete', null, false);
+			if ($exception) {
+				$this->setError($exception->getMessage());
+				continue;
+			}
 			if (!$attachment->delete()) {
-				$this->setError ( $attachment->getError() );
+				$this->setError($attachment->getError());
 			} else {
 				$this->getTopic()->attachments--;
 			}

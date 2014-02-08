@@ -16,7 +16,6 @@ define('DS', DIRECTORY_SEPARATOR);
 define('JPATH_BASE', dirname(dirname(dirname(__FILE__))));
 require_once JPATH_BASE.'/includes/defines.php';
 require_once JPATH_BASE.'/includes/framework.php';
-jimport('joomla.filesystem.path');
 jimport('joomla.environment.request');
 
 // We need also these:

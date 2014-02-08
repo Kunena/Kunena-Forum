@@ -1,7 +1,6 @@
-@charset "utf-8";
 /**
 * Kunena Component
-* @package Kunena.Template.Bootstrap
+* @package Kunena.Template.Crypsis
 *
 * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -50,7 +49,7 @@ img.kbbcode {
 		margin: 0;
 		padding: 0;
 		a {
-			background-image: url("../media/iconsets/editor/default/default.png");
+			background-image: url("iconsets/editor/default/default.png");
 			background-repeat: no-repeat;
 			display: block;
 			height: 18px;
@@ -208,7 +207,7 @@ img.kbbcode:hover {
 #kattachments {
 	line-height: 18px;
 	a {
-		background-image: url("../media/iconsets/editor/default/default.png");
+		background-image: url("iconsets/editor/default/default.png");
 		background-repeat: no-repeat;
 		display: inline-block;
 		height: 18px;
@@ -225,4 +224,19 @@ width:80px;
 }
 .ktxtarea {
 margin-left:-80px
+}
+input[type=radio] {
+	display:none; 
+	margin:10px;
+}
+input[type=radio] + label {
+	display:inline-block;
+	margin:-2px;
+	padding: 4px 12px;
+	background-color: transparent;
+	border-color: #ddd;
+}
+input[type=radio]:checked + label { 
+	background-image: none;
+	background-color:rgba(0, 0, 0, 0.1);
 }

@@ -57,7 +57,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 		global $_CB_framework;
 
 		$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
-		if (file_exists($cbpath)) require_once($cbpath);
+		if (is_file($cbpath)) require_once($cbpath);
 		else return null;
 
 		$userid = $_CB_framework->myId();

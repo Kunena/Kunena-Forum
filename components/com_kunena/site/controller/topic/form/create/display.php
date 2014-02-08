@@ -86,10 +86,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if (!$this->topic->category_id)
 		{
-			$msg = JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError());
-			$this->app->enqueueMessage($msg, 'notice');
-
-			return false;
+			throw new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 
 		$options = array();
@@ -120,7 +117,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid)
 		{

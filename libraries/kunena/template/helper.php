@@ -25,7 +25,6 @@ abstract class KunenaTemplateHelper {
 	public static function parseXmlFiles($templateBaseDir = null) {
 		// Read the template folder to find templates
 		if (!$templateBaseDir) $templateBaseDir = KPATH_SITE.'/template';
-		jimport('joomla.filesystem.folder');
 
 		$data = self::parseXmlFile('', $templateBaseDir);
 		if ($data) {
@@ -35,7 +34,7 @@ abstract class KunenaTemplateHelper {
 			// Template found from the root (folder cannot contain more than one template)
 			return array('' => $data);
 		}
-		$templateDirs = JFolder::folders($templateBaseDir);
+		$templateDirs = KunenaFolder::folders($templateBaseDir);
 		$rows = array();
 		// Check that the directory contains an xml file
 		foreach ($templateDirs as $templateDir)

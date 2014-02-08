@@ -10,19 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-if ($this->me->exists()) {
-	// FIXME: autocompleter isn't working, breaks mootools..
-	/*$this->addScriptDeclaration(
-"// <![CDATA[
-document.addEvent('domready', function() {
-	// Attach auto completer to the following ids:
-	new Autocompleter.Request.JSON('kusersearch', '"
-	. KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&format=raw')
-	. "', { 'postVar': 'search' });
-});
-// ]]>"
-	);*/
-}
 $cols = 1;
 ?>
 <h2>
@@ -31,6 +18,9 @@ $cols = 1;
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>" method="post"
 	      name="usrlform" id="usrlform" class="form-search pull-right">
 		<input type="hidden" name="view" value="user" />
+		<?php if ($this->me->exists()): ?>
+			<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
+		<?php endif; ?>
 		<?php echo JHtml::_('form.token'); ?>
 
 		<div class="input-append">

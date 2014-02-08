@@ -70,9 +70,7 @@ class KunenaAdminModelUser extends KunenaModel {
 		$db = JFactory::getDBO ();
 		$userid = $this->getState($this->getName() . '.id');
 
-		$db->setQuery ( "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$userid}" );
-		$subscatslist = (array) $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return array();
+		$subscatslist = KunenaForumCategoryHelper::getSubscriptions($userid);
 
 		return $subscatslist;
 	}

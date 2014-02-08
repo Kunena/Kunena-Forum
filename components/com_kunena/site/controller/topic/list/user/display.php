@@ -18,25 +18,6 @@ defined('_JEXEC') or die;
 class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaControllerTopicListDisplay
 {
 	/**
-	 * Return display layout.
-	 *
-	 * @return KunenaLayout
-	 */
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Topic/List')
-			->set('me', $this->me)
-			->set('config', $this->config)
-			->set('topics', $this->topics)
-			->set('headerText', $this->headerText)
-			->set('pagination', $this->pagination)
-			->set('state', $this->state);
-
-		return $content;
-	}
-
-	/**
 	 * Prepare user's topic list.
 	 *
 	 * @return void
@@ -50,6 +31,15 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->moreUri = null;
+
+		$this->embedded = $this->getOptions()->get('embedded', false);
+
+		if ($this->embedded)
+		{
+			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=user&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&sel=' . $this->state->get('list.time') . '&limit=' . $this->state->get('list.limit'));
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
+		}
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
@@ -116,6 +106,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
+
 		$this->topics = $finder
 			->order($order, -1)
 			->start($this->pagination->limitstart)
@@ -127,6 +122,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			$this->prepareTopics();
 		}
 
+		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+
 		switch ($this->state->get('list.mode'))
 		{
 			case 'posted' :
@@ -137,9 +134,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				break;
 			case 'favorites' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+				$actions = array('unfavorite');
 				break;
 			case 'subscriptions' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+				$actions = array('unsubscribe');
 				break;
 			case 'plugin' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
@@ -147,5 +146,7 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 			default :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 		}
+
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 	}
 }

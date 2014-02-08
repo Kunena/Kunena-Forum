@@ -38,7 +38,7 @@ class KunenaRequest
 	 * @param	JInput	$input
 	 * @param	mixed	$options
 	 *
-	 * @return  KunenaControllerBase
+	 * @return  KunenaControllerBase|KunenaControllerDisplay
 	 * @throws	InvalidArgumentException
 	 */
 	public static function factory($path, JInput $input = null, $options = null) {

@@ -32,24 +32,11 @@ if ($this->config->showuserstats)
 <div class="row-fluid">
 
 	<?php if ($avatar) : ?>
-	<div class="span3 center">
-		<div class="thumbnail" style="width: 200px; height: 200px;">
+	<div class="span3">
+		<div class="thumbnail" style="width: auto; height: auto;">
 			<?php echo $avatar; ?>
 		</div>
-	</div>
-	<?php endif; ?>
-
-	<div class="span4">
-		<div class="badge badge-success">
-			<?php echo JText::sprintf('COM_KUNENA_X_VIEWS', (int) $profile->uhits); ?>
-		</div>
-		<div class="badge badge-info">
-			<?php echo JText::sprintf('COM_KUNENA_X_POSTS', (int) $profile->posts); ?>
-		</div>
-		<div class="badge badge-warning">
-			<?php echo JText::sprintf('COM_KUNENA_X_THANKS', (int) $profile->thankyou); ?>
-		</div>
-
+		<div>
 		<dl class="dl-horizontal">
 
 			<dt>
@@ -144,7 +131,24 @@ if ($this->config->showuserstats)
 				<?php echo $email; ?>
 			</dd>
 			<?php endif; ?>
+			</dl>
+	</div>
+	<?php endif; ?>
+	</div>
 
+	<div class="span6">
+		<div class="badge badge-success">
+			<?php echo JText::sprintf('COM_KUNENA_X_POSTS', (int) $profile->posts); ?>
+		</div>
+		<div class="badge badge-info">
+			<?php echo JText::sprintf('COM_KUNENA_X_VIEWS', (int) $profile->uhits); ?>
+		</div>
+		<div class="badge badge-warning">
+			<?php echo JText::sprintf('COM_KUNENA_X_THANKS', (int) $profile->thankyou); ?>
+		</div>
+
+		
+<dl class="dl-horizontal">
 
 			<?php if ($www) : ?>
 				<dt>
@@ -199,7 +203,7 @@ if ($this->config->showuserstats)
 		</dl>
 	</div>
 
-	<div class="span4">
+	<div class="span3">
 		<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?>
 	</div>
 </div>

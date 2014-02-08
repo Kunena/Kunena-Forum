@@ -125,13 +125,13 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$orphans = array();
 
 			if ($catid) {
-				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'filter.levels' ), array('unpublished'=>1, 'action'=>'none'));
+				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'filter.levels' )-1, array('unpublished'=>1, 'action'=>'none'));
 				$categories[] = KunenaForumCategoryHelper::get($catid);
 			} else {
-				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'filter.levels' ), $params);
+				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'filter.levels' )-1, $params);
 			}
 
-			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'filter.levels' ), $params));
+			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'filter.levels' )-1, $params));
 			$categories = array_merge($orphans, $categories);
 
 			$categories = KunenaForumCategoryHelper::getIndentation($categories);
@@ -153,7 +153,11 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$access = $acl->getCategoryAccess($category);
 				$category->accessname = array();
 				foreach ($access as $item) {
-					$category->accessname[] = $item['title'];
+					if (!empty($item['admin.link'])) {
+						$category->accessname[] = '<a href="' . htmlentities($item['admin.link'], ENT_COMPAT, 'utf-8') . '">' . htmlentities($item['title'], ENT_COMPAT, 'utf-8') .'</a>';
+					} else {
+						$category->accessname[] = htmlentities($item['title'], ENT_COMPAT, 'utf-8');
+					}
 				}
 				$category->accessname = implode(' / ', $category->accessname);
 
@@ -282,8 +286,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 		// TODO:
 		/*
 		$topicicons = array ();
-		jimport( 'joomla.filesystem.folder' );
-		$topiciconslist = JFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
+		$topiciconslist = KunenaFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
 		foreach( $topiciconslist as $icon ) {
 			$topicicons[] = JHtml::_ ( 'select.option', $icon, $icon );
 		}

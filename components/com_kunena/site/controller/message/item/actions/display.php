@@ -156,16 +156,17 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	/**
 	 * Get button.
 	 *
-	 * @param   string       $link   Target link (do not route it).
+	 * @param   string       $url    Target link (do not route it).
 	 * @param   string       $name   Name of the button.
 	 * @param   string       $scope  Scope of the button.
 	 * @param   string       $type   Type of the button.
-	 * @param   string|null  $id     HTML Id.
+	 * @param   bool         $id     Id of the button.
 	 *
 	 * @return  string
 	 */
-	public function getButton($link, $name, $scope, $type, $id = null)
+	public function getButton($url, $name, $scope, $type, $id = null)
 	{
-		return $this->template->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
+		return KunenaLayout::factory('Page/Button')
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id));
 	}
 }

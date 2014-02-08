@@ -28,52 +28,52 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function lock() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'locked', 1);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function unlock() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'locked', 0);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function review() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'review', 1);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function unreview() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'review', 0);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function allow_anonymous() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'allow_anonymous', 1);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function deny_anonymous() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'allow_anonymous', 0);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function allow_polls() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'allow_polls', 1);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function deny_polls() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'allow_polls', 0);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function publish() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'published', 1);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 	function unpublish() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'published', 0);
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function add() {
@@ -81,7 +81,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -95,7 +95,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -103,7 +103,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$id = array_shift($cid);
 		if (!$id) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		} else {
 			$this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=edit&catid={$id}", false));
@@ -151,7 +151,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -240,7 +240,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -248,7 +248,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (empty ( $cid )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -276,7 +276,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		if ($count > 1)
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_DELETED', $count ) );
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function cancel() {
@@ -284,7 +284,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -306,7 +306,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -315,7 +315,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (empty ( $cid )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -341,7 +341,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		if ($success) {
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_NEW_ORDERING_SAVED' ) );
 		}
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	/**
@@ -355,7 +355,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	{
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -378,13 +378,13 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function orderup() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->orderUpDown ( array_shift($cid), -1 );
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function orderdown() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->orderUpDown ( array_shift($cid), 1 );
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	protected function orderUpDown($id, $direction) {
@@ -475,5 +475,41 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		return array($name, $alias);
+	}
+
+	/**
+	 * Method to archive one or multiples categories
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	public function archive()
+	{
+		$cid = $this->app->input->get('cid', array(), 'array');
+
+		if ( !empty($cid) )
+		{
+			$this->setVariable($cid, 'published', 2);
+			$this->setRedirectBack();
+		}
+	}
+
+	/**
+	 * Method to put in trash one or multiple categories
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	public function trash()
+	{
+		$cid = $this->app->input->get('cid', array(), 'array');
+
+		if ( !empty($cid) )
+		{
+			$this->setVariable($cid, 'published', -2);
+			$this->setRedirectBack();
+		}
 	}
 }

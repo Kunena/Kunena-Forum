@@ -447,9 +447,9 @@ abstract class KunenaForumTopicHelper {
 
 		$ids = array();
 		foreach ($topics as $topic) {
-			if ($topic->last_post_time < $session->lasttime) continue;
+			if ($topic->last_post_time < $session->getAllReadTime()) continue;
 			$allreadtime = $topic->getCategory()->getUserInfo()->allreadtime;
-			if ($allreadtime && $topic->last_post_time < JFactory::getDate($allreadtime)->toUnix()) continue;
+			if ($allreadtime && $topic->last_post_time < $allreadtime) continue;
 			$ids[] = $topic->id;
 		}
 
@@ -460,7 +460,7 @@ abstract class KunenaForumTopicHelper {
 			$db->setQuery ( "SELECT m.thread AS id, MIN(m.id) AS lastread, SUM(1) AS unread
 				FROM #__kunena_messages AS m
 				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->Quote($user->userid)}
-				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->Quote($session->lasttime)} AND (ur.time IS NULL OR m.time>ur.time)
+				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->Quote($session->getAllReadTime())} AND (ur.time IS NULL OR m.time>ur.time)
 				GROUP BY thread" );
 			$topiclist = (array) $db->loadObjectList ('id');
 			KunenaError::checkDatabaseError ();

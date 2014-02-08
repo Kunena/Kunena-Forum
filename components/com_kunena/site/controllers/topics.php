@@ -19,14 +19,13 @@ class KunenaControllerTopics extends KunenaController {
 
 	function none() {
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CONTROLLER_NO_TASK' ) );
-		$this->redirectBack ();
-		return;
+		$this->setRedirectBack();
 	}
 
 	function permdel() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -47,13 +46,13 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if ($message) $this->app->enqueueMessage ( $message );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function delete() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -71,13 +70,13 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if ($message) $this->app->enqueueMessage ( $message );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function restore() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -95,13 +94,13 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if ($message) $this->app->enqueueMessage ( $message );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function approve() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -120,13 +119,13 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if ($message) $this->app->enqueueMessage ( $message );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function move() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -148,13 +147,13 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if (!empty($message)) $this->app->enqueueMessage ( $message );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function unfavorite() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -164,13 +163,13 @@ class KunenaControllerTopics extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC') );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function unsubscribe() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -180,13 +179,13 @@ class KunenaControllerTopics extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC') );
 		}
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function approve_posts() {
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -205,13 +204,13 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if ($success) $this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ) );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	public function delete_posts() {
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -229,13 +228,13 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if ($success) $this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ) );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function restore_posts() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -253,13 +252,13 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if ($success) $this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' ) );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function permdel_posts() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -277,6 +276,6 @@ class KunenaControllerTopics extends KunenaController {
 			}
 		}
 		if ($success) $this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' ) );
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 }

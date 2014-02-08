@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 
-<form action="<?php echo KunenaRoute::_(); ?>" method="post" class="form-search">
+<form action="<?php echo KunenaRoute::_(); ?>" method="post" class="form-search pull-right">
 	<input type="hidden" name="view" value="search" />
 	<input type="hidden" name="task" value="results" />
 
@@ -30,9 +30,9 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 
 	<div class="input-append">
 		<label>
-			<input class="input-medium search-query" type="text" name="q" value="" placeholder="" />
+			<input class="input-medium search-query" type="text" name="query" value="" placeholder="" />
 		</label>
 
-		<button type="submit" class="btn"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></button>
+		<button class="btn btn-default" type="submit"><span class="icon icon-search"></span></button>
 	</div>
 </form>

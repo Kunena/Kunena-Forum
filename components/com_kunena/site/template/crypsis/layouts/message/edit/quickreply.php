@@ -28,7 +28,7 @@ $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 ?>
 
-<div class="modal hide fade" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 0; left: -20px; right: -10px; width:auto; margin:5px; z-index: 1;">
+<div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>
@@ -60,7 +60,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			<input type="text" name="subject" size="35" class="inputbox"
 			       maxlength="<?php echo (int) $config->maxsubject; ?>"
 			       value="<?php echo $message->displayField('subject'); ?>" />
-			<textarea class="span12" name="message" rows="6" cols="60"></textarea>
+			<textarea class="span12 qreply" name="message" rows="6" cols="60"></textarea>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<input type="checkbox" name="subscribeMe" value="1"

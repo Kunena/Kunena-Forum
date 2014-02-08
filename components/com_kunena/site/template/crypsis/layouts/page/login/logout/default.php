@@ -23,7 +23,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div class="center">
 					<a href="<?php  echo $this->me->getURL(); ?>">
-						<?php echo $this->me->getAvatarImage('img-polaroid'); ?>
+						<?php echo $this->me->getAvatarImage('img-polaroid', 128); ?>
 					</a>
 					<p>
 						<strong><?php echo $this->escape($this->me->getName()); ?></strong>
@@ -37,7 +37,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 
 				<?php if (!empty($this->announcementsUrl)) : ?>
 				<div>
-					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
+					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-small btn-link">
 						<i class="icon-pencil-2"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>

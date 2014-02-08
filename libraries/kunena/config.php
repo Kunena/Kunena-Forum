@@ -224,6 +224,8 @@ class KunenaConfig extends JObject {
 	// New for 3.0.0
 	public $autolink = 1;
 	public $access_component = 1;
+	// New for 3.0.4
+	public $statslink_allowed = 1;
 	// New for 3.1.0
 	public $legacy_urls = 1;
 	public $attachment_protection = 0;

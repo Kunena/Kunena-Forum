@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.formvalidation');
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:
@@ -19,7 +18,7 @@ JHtml::_('behavior.formvalidation');
 
 <div class="well well-small">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
-	      name="editform" class="form-validate form-horizontal" id="editform">
+	      name="editform" class="form-horizontal" id="editform">
 		<input type="hidden" name="task" value="save" />
 		<?php echo $this->displayInput('id'); ?>
 		<?php echo JHtml::_('form.token'); ?>
@@ -29,7 +28,7 @@ JHtml::_('behavior.formvalidation');
 				<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
 			</label>
 			<div class="controls" id="ann-title">
-				<?php echo $this->displayInput('title', 'class="input-xxlarge required"'); ?>
+				<?php echo $this->displayInput('title', 'class="input-xxlarge" required placeholder="' . JText::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_TITLE') . '"'); ?>
 			</div>
 		</div>
 
@@ -38,7 +37,7 @@ JHtml::_('behavior.formvalidation');
 				<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-short">
-				<?php echo $this->displayInput('sdescription', 'class="input-xxlarge required"'); ?>
+				<?php echo $this->displayInput('sdescription', 'class="input-xxlarge" required placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
 			</div>
 		</div>
 
@@ -47,7 +46,7 @@ JHtml::_('behavior.formvalidation');
 				<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-long">
-				<?php echo $this->displayInput('description', 'rows="5" class="input-xxlarge"'); ?>
+				<?php echo $this->displayInput('description', 'rows="5" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
 			</div>
 		</div>
 

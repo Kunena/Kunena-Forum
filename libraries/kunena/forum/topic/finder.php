@@ -13,18 +13,9 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaForumTopicFinder
  */
-class KunenaForumTopicFinder
+class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 {
-	/**
-	 * @var JDatabaseQuery
-	 */
-	protected $query;
-	/**
-	 * @var JDatabase
-	 */
-	protected $db;
-	protected $start = 0;
-	protected $limit = 20;
+	protected $table = '#__kunena_topics';
 	protected $hold = array(0);
 	protected $moved = null;
 
@@ -33,89 +24,22 @@ class KunenaForumTopicFinder
 	 */
 	public function __construct()
 	{
+		parent::__construct();
+
 		$this->limit = KunenaConfig::getInstance()->threads_per_page;
-		$this->db = JFactory::getDbo();
-		$this->query = $this->db->getQuery(true);
-		$this->query->from('#__kunena_topics AS t');
 	}
 
 	/**
-	 * Set limitstart for the query.
-	 *
-	 * @param int $limitstart
-	 *
-	 * @return $this
-	 */
-	public function start($limitstart = 0)
-	{
-		$this->start = $limitstart;
-
-		return $this;
-	}
-
-	/**
-	 * Set limit to the query.
-	 *
-	 * If this function isn't used, Kunena will use threads per page configuration setting.
-	 *
-	 * @param int $limit
+	 * @param $field
+	 * @param $operation
+	 * @param $value
 	 *
 	 * @return $this
+	 * @deprecated Use where() instead.
 	 */
-	public function limit($limit = null)
-	{
-		if (!isset($limit)) $limit = KunenaConfig::getInstance()->threads_per_page;
-		$this->limit = $limit;
-
-		return $this;
-	}
-
-	/**
-	 * Set order by field and direction.
-	 *
-	 * This function can be used more than once to chain order by.
-	 *
-	 * @param  string $by
-	 * @param  int $direction
-	 * @param  string $alias
-	 *
-	 * @return $this
-	 */
-	public function order($by, $direction = 1, $alias = 't')
-	{
-		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = $alias.'.'.$this->db->quoteName($by);
-		$this->query->order("{$by} {$direction}");
-
-		return $this;
-	}
-
 	public function filterBy($field, $operation, $value)
 	{
-		$operation = strtoupper($operation);
-		switch ($operation)
-		{
-			case '>':
-			case '>=':
-			case '<':
-			case '<=':
-			case '=':
-				$this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($value)}");
-				break;
-			case 'IN':
-			case 'NOT IN':
-				$value = (array) $value;
-				if (empty($value)) {
-					// WHERE field IN (nothing).
-					$this->query->where('0');
-				} else {
-					$list = implode(',', $value);
-					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
-				}
-				break;
-		}
-
-		return $this;
+		return $this->where($field, $operation, $value);
 	}
 
 	/**
@@ -132,7 +56,7 @@ class KunenaForumTopicFinder
 	{
 		$categories = $user->getAllowedCategories();
 		$list = implode(',', $categories);
-		$this->query->where("t.category_id IN ({$list})");
+		$this->query->where("a.category_id IN ({$list})");
 
 		return $this;
 	}
@@ -162,7 +86,7 @@ class KunenaForumTopicFinder
 		// Handle empty list as impossible filter value.
 		if (!$list) $list = -1;
 
-		$this->query->where("t.category_id IN ({$list})");
+		$this->query->where("a.category_id IN ({$list})");
 
 		return $this;
 	}
@@ -181,11 +105,11 @@ class KunenaForumTopicFinder
 		$name = $lastPost ? 'last' : 'first';
 
 		if ($starting && $ending) {
-			$this->query->where("t.{$name}_post_time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
+			$this->query->where("a.{$name}_post_time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
 		} elseif ($starting) {
-			$this->query->where("t.{$name}_post_time > {$this->db->quote($starting->toUnix())}");
+			$this->query->where("a.{$name}_post_time > {$this->db->quote($starting->toUnix())}");
 		} elseif ($ending) {
-			$this->query->where("t.{$name}_post_time <= {$this->db->quote($ending->toUnix())}");
+			$this->query->where("a.{$name}_post_time <= {$this->db->quote($ending->toUnix())}");
 		}
 
 		return $this;
@@ -209,22 +133,22 @@ class KunenaForumTopicFinder
 	 */
 	public function filterByUser(KunenaUser $user, $action = 'owner')
 	{
-		$this->query->innerJoin('#__kunena_user_topics AS ut ON t.id=ut.topic_id');
+		$this->query->innerJoin('#__kunena_user_topics AS ut ON a.id=ut.topic_id');
 		$this->query->where("ut.user_id = {$this->db->quote($user->userid)}");
 
 		switch ($action)
 		{
 			case 'first_post':
-				$this->query->where('t.first_post_userid={$this->db->quote($user->userid)}');
+				$this->query->where('a.first_post_userid={$this->db->quote($user->userid)}');
 				break;
 			case '!first_post':
-				$this->query->where('t.first_post_userid!={$this->db->quote($user->userid)}');
+				$this->query->where('a.first_post_userid!={$this->db->quote($user->userid)}');
 				break;
 			case 'last_post':
-				$this->query->where('t.last_post_userid={$this->db->quote($user->userid)}');
+				$this->query->where('a.last_post_userid={$this->db->quote($user->userid)}');
 				break;
 			case '!last_post':
-				$this->query->where('t.last_post_userid!={$this->db->quote($user->userid)}');
+				$this->query->where('a.last_post_userid!={$this->db->quote($user->userid)}');
 				break;
 			case 'owner':
 				$this->query->where('ut.owner=1');
@@ -299,8 +223,8 @@ class KunenaForumTopicFinder
 			->order('st.last_post_id DESC');
 
 		// Hard limit on sub-query to make derived table faster to sort.
-		$this->query->innerJoin("({$subQuery} LIMIT 1000) AS uu ON uu.id=t.id");
-		$this->query->innerJoin("#__kunena_user_topics AS ut ON ut.topic_id=t.id AND ut.owner=1");
+		$this->query->innerJoin("({$subQuery} LIMIT 1000) AS uu ON uu.id=a.id");
+		$this->query->innerJoin("#__kunena_user_topics AS ut ON ut.topic_id=a.id AND ut.owner=1");
 
 		if ($negate) {
 			// Topic owner has posted after $users (or $users haven't replied at all).
@@ -349,43 +273,21 @@ class KunenaForumTopicFinder
 	 */
 	public function find($access = 'read')
 	{
-		$query = clone $this->query;
-		$this->build($query);
-		$query->select('t.id');
-		$this->db->setQuery($query, $this->start, $this->limit);
-		$results = (array) $this->db->loadColumn();
-		KunenaError::checkDatabaseError();
+		$results = parent::find();
 
 		return KunenaForumTopicHelper::getTopics($results, $access);
 	}
 
-	/**
-	 * Count topics.
-	 * @return int
-	 */
-	public function count()
-	{
-		$query = clone $this->query;
-		$this->build($query);
-		$query->select('COUNT(*)');
-		$query->clear('order');
-		$this->db->setQuery($query);
-		$count = (int) $this->db->loadResult();
-		KunenaError::checkDatabaseError();
-
-		return $count;
-	}
-
-	protected function build($query)
+	protected function build(JDatabaseQuery $query)
 	{
 		if (!empty($this->hold)) {
 			JArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
-			$query->where("t.hold IN ({$hold})");
+			$query->where("a.hold IN ({$hold})");
 		}
 
 		if (isset($this->moved)) {
-			$query->where('t.moved_id' . ($this->moved ? '>0' : '=0'));
+			$query->where('a.moved_id' . ($this->moved ? '>0' : '=0'));
 		}
 	}
 }

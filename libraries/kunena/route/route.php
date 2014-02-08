@@ -47,7 +47,7 @@ abstract class KunenaRoute {
 	static $menus = false;
 	static $menu = false;
 	static $default = false;
-	static $active = false;
+	static $active = null;
 	static $home = false;
 	static $search = false;
 	static $current = null;
@@ -121,6 +121,62 @@ abstract class KunenaRoute {
 		self::$urisSave = true;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$uris[$key];
+	}
+
+
+	/**
+	 * Get the referrer page.
+	 *
+	 * If there's no referrer or it's external, Kunena will return default page.
+	 * Also referrers back to tasks are removed.
+	 *
+	 * @param string $default  Default page to return into.
+	 * @param string $anchor   Anchor (location in the page).
+	 *
+	 * @return string
+	 */
+	public static function getReferrer($default = null, $anchor = null)
+	{
+		$app = JFactory::getApplication();
+
+		$referrer = $app->input->server->getString('HTTP_REFERER');
+
+		if ($referrer)
+		{
+			$uri = new JUri($referrer);
+
+			// Make sure we do not return into a task -- or if task is SEF encoded, make sure it fails.
+			$uri->delVar('task');
+			$uri->delVar(JSession::getFormToken());
+
+			// Check that referrer was from the same domain and came from the Joomla frontend or backend.
+			$base = $uri->toString(array('scheme', 'host', 'port', 'path'));
+			$host = $uri->toString(array('scheme', 'host', 'port'));
+
+			// Referrer should always have host set and it should come from the same base address.
+			if (empty($host) || stripos($base, JUri::base()) !== 0)
+			{
+				$uri = null;
+			}
+		}
+
+		if (!isset($uri))
+		{
+			if ($default == null)
+			{
+				$default = $app->isSite() ? 'index.php?option=com_kunena' : 'administrator/index.php?option=com_kunena';
+			}
+
+			$default = self::_($default);
+			$uri = new JUri($default);
+		}
+
+		if ($anchor)
+		{
+			$uri->setFragment($anchor);
+		}
+
+		return $uri->toString(array('path', 'query', 'fragment'));
 	}
 
 	/**
@@ -277,17 +333,66 @@ abstract class KunenaRoute {
 		self::$menus = JFactory::getApplication()->getMenu ();
 		self::$menu = self::$menus->getMenu ();
 		self::$default = self::$menus->getDefault();
-		$active = self::$menus->getActive ();
-		if ($active && $active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view'])) {
-			self::$active = $active;
-		} else {
-			self::$active = null;
-		}
-		self::$home = self::getHome(self::$active);
+		$active = self::$menus->getActive();
+
+		// Get the full request URI.
+		$uri = clone JUri::getInstance();
 
 		// Get current route.
 		self::$current = new JUri('index.php');
-		self::$current->setQuery(JFactory::getApplication()->getRouter()->getVars());
+
+		if ($active)
+		{
+			foreach ($active->query as $key => $value)
+			{
+				self::$current->setVar($key, $value);
+			}
+
+			self::$current->setVar('Itemid', (int) $active->id);
+
+			if ($active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view']))
+			{
+				self::$active = $active;
+			}
+		}
+
+		// If values are both in GET and POST, they are only stored in POST
+		foreach (JRequest::get('post') as $key => $value)
+		{
+			if (in_array($key, array('view', 'layout', 'task')) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
+			{
+				self::$current->setVar($key, $value);
+			}
+		}
+
+		// Make sure that request URI is not broken
+		foreach (JRequest::get('get') as $key => $value)
+		{
+			if (preg_match('/[^a-zA-Z]/', $key))
+			{
+				continue;
+			}
+
+			if (in_array($key, array('q', 'query', 'searchuser')))
+			{
+				// Allow all values
+			}
+			elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+			{
+				// Illegal value
+				continue;
+			}
+
+			self::$current->setVar($key, $value);
+		}
+
+		if (self::$current->getVar('start'))
+		{
+			self::$current->setVar('limitstart', self::$current->getVar('start'));
+			self::$current->delVar('start');
+		}
+
+		self::$home = self::getHome(self::$active);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
@@ -303,23 +408,6 @@ abstract class KunenaRoute {
 		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
 			if (!isset($current[$uri])) {
 				$get = self::$current->getQuery(true);
-				// If values are both in GET and POST, they are only stored in POST
-				foreach (JRequest::get( 'post' ) as $key=>$value) {
-					if (($key == 'view' || $key == 'layout' || $key == 'task') && !preg_match('/[^a-zA-Z0-9_ ]/i', $value))
-						$get[$key] = $value;
-				}
-				// Make sure that request URI is not broken
-				foreach (JRequest::get( 'get' ) as $key=>$value) {
-					if (preg_match('/[^a-zA-Z]/', $key)) continue;
-					if ($key == 'q' || $key == 'searchuser') {
-						// Allow all values
-					} elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
-						// Illegal value
-						continue;
-					}
-					$get[$key] = $value;
-				}
-
 				$uri = $current[$uri] = JUri::getInstance('index.php?'.http_build_query($get).$uri);
 				self::setItemID($uri);
 				$uri->delVar ( 'defaultmenu' );
@@ -443,6 +531,10 @@ abstract class KunenaRoute {
 
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true) {
 		return KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
+	}
+
+	public static function getCategoryItemid(KunenaForumCategory $category) {
+		return KunenaRoute::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
 	}
 
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null,

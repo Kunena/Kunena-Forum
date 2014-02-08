@@ -16,19 +16,13 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
-if (!$this->me->exists()) {
-	$this->addScriptDeclaration( "// <![CDATA[
-window.addEvent('domready', function() {
-	// Attach auto completer to the following ids:
-	new Autocompleter.Request.JSON('kusername', '"
-	. KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&format=raw') . "', { 'postVar': 'search' });
-});
-// ]]>");
-}
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">
 	<input type="hidden" name="task" value="results" />
+	<?php if ($this->me->exists()): ?>
+		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
+	<?php endif; ?>
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#search">&times;</div>
@@ -45,7 +39,7 @@ window.addEvent('domready', function() {
 					</legend>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:
-						<input type="text" name="q"
+						<input type="text" name="query"
 						       value="<?php echo $this->escape($this->state->get('searchwords')); ?>" />
 					</label>
 					<?php $this->displayModeList('mode'); ?>
@@ -57,7 +51,7 @@ window.addEvent('domready', function() {
 					</legend>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
-						<input type="text" name="searchuser"
+						<input id="kusersearch" type="text" name="searchuser"
 						       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" />
 					</label>
 

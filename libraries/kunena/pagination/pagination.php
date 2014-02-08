@@ -213,6 +213,9 @@ class KunenaPagination
 			$this->pagesStop = $this->pagesStart + $displayed - 1 - $end;
 		}
 
+		$this->pagesStop = max(1, $this->pagesStop);
+		$this->pagesTotal = max(1, $this->pagesTotal);
+
 		return $this;
 	}
 
@@ -701,8 +704,7 @@ class KunenaPagination
 
 		if (!$this->uri)
 		{
-			$this->uri = new JUri('index.php');
-			$this->uri->setQuery(JFactory::getApplication()->getRouter()->getVars());
+			$this->uri = KunenaRoute::$current;
 		}
 
 		// Build the additional URL parameters string.
@@ -715,7 +717,7 @@ class KunenaPagination
 		$data->all = new JPaginationObject(JText::_('JLIB_HTML_VIEW_ALL'), $this->prefix);
 		if (!$this->viewall)
 		{
-			$this->uri->setVar($limitstartKey, '');
+			$this->uri->delVar($limitstartKey, '');
 			$data->all->base = '0';
 			$data->all->link = JRoute::_((string) $this->uri);
 		}

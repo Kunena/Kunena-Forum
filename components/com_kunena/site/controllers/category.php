@@ -33,11 +33,12 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	function markread() {
 		if (! JSession::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
 		$catid = JRequest::getInt('catid', 0);
+		$children = JRequest::getBool('children', 0);
 		if (!$catid) {
 			// All categories
 			$session = KunenaFactory::getSession();
@@ -52,36 +53,42 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			$category = KunenaForumCategoryHelper::get($catid);
 			if (!$category->authorise('read')) {
 				$this->app->enqueueMessage ( $category->getError(), 'error' );
-				$this->redirectBack ();
+				$this->setRedirectBack();
 				return;
 			}
 
 			$session = KunenaFactory::getSession();
 			if ($session->userid) {
-				// Mark all unread topics in the category to read
-				$userinfo = $category->getUserInfo();
-				$userinfo->allreadtime = JFactory::getDate()->toSql();
-				if (!$userinfo->save()) {
-					$this->app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
+				$categories = array($category->id => $category);
+				if ($children) {
+					// Include all child categories.
+					$categories += $category->getChildren(-1);
+				}
+
+				// Mark all unread topics in selected categories as read.
+				KunenaForumCategoryUserHelper::markRead(array_keys($categories));
+				if (count($categories) > 1) {
+					$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_ALL_MARKED'));
 				} else {
-					$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
+					$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_FORUM_MARKED'));
 				}
 			}
 		}
-		$this->redirectBack ();
+
+		$this->setRedirectBack();
 	}
 
 	function subscribe() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
 		$category = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
 		if (!$category->authorise('read')) {
 			$this->app->enqueueMessage ( $category->getError(), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -92,13 +99,13 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			}
 		}
 
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	function unsubscribe() {
 		if (! JSession::checkToken ('request') ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
+			$this->setRedirectBack();
 			return;
 		}
 
@@ -119,11 +126,13 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			}
 		}
 
-		$this->redirectBack ();
+		$this->setRedirectBack();
 	}
 
 	/**
 	 * Method to approve topics in selected categories on the index page
+	 *
+	 * @since 3.1
 	 *
 	 * @return void
 	 */
@@ -132,7 +141,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
 
 			return;
 		}
@@ -180,6 +189,6 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_CATEGORIES_NOTHING_TO_APPROVE'));
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 }

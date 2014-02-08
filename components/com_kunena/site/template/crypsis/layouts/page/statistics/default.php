@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 <div class="kfrontend">
-<h3>
+<h3 class="btn-link">
 
 	<?php if ($this->statisticsUrl) : ?>
 	<a href="<?php echo $this->statisticsUrl; ?>">
@@ -24,7 +24,7 @@ defined('_JEXEC') or die;
 	<span class="btn btn-small pull-right" data-toggle="collapse" data-target="#kstats">&times;</span>
 </h3>
 
-<div class="collapse in" id="kstats">
+	<div class="collapse in" id="kstats">
 	<div class="well well-small">
 	<div class="row-fluid">
 		<ul class="unstyled span6">

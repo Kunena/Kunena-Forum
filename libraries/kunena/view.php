@@ -105,7 +105,7 @@ class KunenaView extends JViewLegacy {
 		if (!$this->embedded && isset($this->common)) {
 			if ($this->config->board_offline && ! $this->me->isAdmin ()) {
 				// Forum is offline
-				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
 				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body = $this->config->offline_message;
 				$this->common->html = true;
@@ -114,13 +114,13 @@ class KunenaView extends JViewLegacy {
 				return;
 			} elseif ($this->config->regonly && ! $this->me->exists() && ! $this->teaser) {
 				// Forum is for registered users only
-				JResponse::setHeader('Status', '403 Forbidden', 'true');
+				JResponse::setHeader('Status', '403 Forbidden', true);
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body = JText::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
-			} elseif (!method_exists($this, $layoutFunction) && !file_exists(KPATH_SITE."/views/{$view}/{$layout}.php")) {
+			} elseif (!method_exists($this, $layoutFunction) && !is_file(KPATH_SITE."/views/{$view}/{$layout}.php")) {
 				// Layout was not found (don't allow Joomla to raise an error)
 				$this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
@@ -270,7 +270,9 @@ class KunenaView extends JViewLegacy {
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL) {
 		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
+		$rel = 'follow';
 		if ($title === null) {
+			$rel = 'nofollow';
 			if ($action instanceof KunenaForumMessage) {
 				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
 			} else {
@@ -289,7 +291,7 @@ class KunenaView extends JViewLegacy {
 				}
 			}
 		}
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
 	}
 
 	public function addStyleSheet($filename) {
@@ -307,25 +309,25 @@ class KunenaView extends JViewLegacy {
 
 		switch ((int) $code) {
 			case 400:
-				JResponse::setHeader('Status', '400 Bad Request', 'true');
+				JResponse::setHeader('Status', '400 Bad Request', true);
 				break;
 			case 401:
-				JResponse::setHeader('Status', '401 Unauthorized', 'true');
+				JResponse::setHeader('Status', '401 Unauthorized', true);
 				break;
 			case 403:
-				JResponse::setHeader('Status', '403 Forbidden', 'true');
+				JResponse::setHeader('Status', '403 Forbidden', true);
 				break;
 			case 404:
-				JResponse::setHeader('Status', '404 Not Found', 'true');
+				JResponse::setHeader('Status', '404 Not Found', true);
 				break;
 			case 410:
-				JResponse::setHeader('Status', '410 Gone', 'true');
+				JResponse::setHeader('Status', '410 Gone', true);
 				break;
 			case 500:
-				JResponse::setHeader('Status', '500 Internal Server Error', 'true');
+				JResponse::setHeader('Status', '500 Internal Server Error', true);
 				break;
 			case 503:
-				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
 				break;
 			default:
 		}
@@ -419,8 +421,8 @@ class KunenaView extends JViewLegacy {
 
 		if ($template) $template = '_'.$template;
 		$file = "{$layout}{$template}.php";
-		$file = JPath::find($this->_path['template_'.$view], $file);
-		if (!file_exists($file)) JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
+		$file = KunenaPath::find($this->_path['template_'.$view], $file);
+		if (!is_file($file)) JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
 
 		ob_start();
 		include $file;
@@ -465,14 +467,13 @@ class KunenaView extends JViewLegacy {
 			$tpl  = isset($tpl)? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
 
 			// Load the template script
-			jimport('joomla.filesystem.path');
 			$filetofind	= $this->_createFileName('template', array('name' => $file));
-			$this->templatefiles[$file] = JPath::find($this->_path['template'], $filetofind);
+			$this->templatefiles[$file] = KunenaPath::find($this->_path['template'], $filetofind);
 		}
 		$this->_template = $this->templatefiles[$file];
 
 		if ($this->_template != false) {
-			$templatefile = preg_replace('%'.JPath::clean(JPATH_ROOT,'/').'/%', '', JPath::clean($this->_template, '/'));
+			$templatefile = preg_replace('%'.KunenaPath::clean(JPATH_ROOT,'/').'/%', '', KunenaPath::clean($this->_template, '/'));
 
 			// Unset so as not to introduce into template scope
 			unset($tpl);
@@ -552,9 +553,19 @@ class KunenaView extends JViewLegacy {
 	public function setDescription($description) {
 		if ($this->inLayout) throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
 
-		if (!$this->state->get('embedded')) {
+		if (!$this->state->get('embedded')) 
+		{
 			// TODO: allow translations/overrides
-			$this->document->setMetadata ( 'description',  $description );
+			$lang = JFactory::getLanguage();
+			$length = JString::strlen($lang->getName());
+			$length = 137 - $length;
+
+			if (JString::strlen($description) > $length)
+			{
+				$description = JString::substr($description, 0, $length) . '...';
+			}
+
+			$this->document->setMetadata('description', $description . ' - ' . $lang->getName());
 		}
 	}
 }

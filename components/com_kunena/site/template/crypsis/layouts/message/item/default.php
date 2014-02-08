@@ -13,42 +13,34 @@ defined('_JEXEC') or die;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $this->message->getAttachments();
+$avatarname = $this->profile->getname();
 ?>
-
-<div class="chat row-fluid">
-	<div class="bubble <?php echo $this->profile->isMyself() ? 'me' : 'you'; ?> span12">
-		<h3>
-			<?php echo $this->profile->getLink(); ?>
-			<small>
-				<?php echo (!$isReply) ? 'Created the topic.' : 'Replied the topic.'; ?>
-			</small>
-			<small class="pull-right">
+<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
+			<span class="icon icon-clock"></span>
 				<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				<a href="#<?php echo $this->message->id; ?>">#<?php echo $this->location; ?></a>
-			</small>
-		</h3>
-
-		<?php if ($this->message->subject) : ?>
-		<h3>
-			<?php echo ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $this->message->displayField('subject'); ?>
-		</h3>
-		<?php endif; ?>
-
+</small>
+<div class="badger-left badger-info" data-badger="<?php echo (!$isReply) ? $avatarname .' created the topic: ' : $avatarname . ' replied the topic: '; ?>
+				<?php if ($this->message->subject) : ?>
+			<?php echo $this->message->displayField('subject'); ?>
+		<?php endif; ?> ">
+			
+		
 		<p class="kmsg">
 			<?php echo $this->message->displayField('message'); ?>
 		</p>
 
 		<?php if (!empty($attachments)) : ?>
-		<h4>
+		<h5>
 			<?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?>
-		</h4>
+		</h5>
 		<ul class="thumbnails">
 
 			<?php foreach($attachments as $attachment) : ?>
 				<li class="span4">
 					<div class="thumbnail">
-						<?php echo $attachment->getThumbnailLink(); ?>
-						<?php echo $attachment->getTextLink(); ?>
+						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+						<?php echo $attachment->getLayout()->render('textlink'); ?>
 					</div>
 				</li>
 			<?php endforeach; ?>
@@ -58,18 +50,21 @@ $attachments = $this->message->getAttachments();
 
 
 		<?php if ($signature) : ?>
-		<div class="pull-left">
-			<?php echo $signature; ?>
+		<h5>
+		<div>
+			<p><?php echo $signature; ?></p>
 		</div>
+		</h5>
 		<?php endif ?>
 
 		<?php if (!empty($this->reportMessageLink)) : ?>
-		<div class="pull-left">
-			<p>
-				<i class="icon-warning-sign"></i>
-				<?php echo $this->reportMessageLink; ?>
-			</p>
-		</div>
+			<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT')?></a>
+			<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id);?>
+			</div>
+			</div>
 		<?php endif; ?>
 
 		<?php if (!empty($this->ipLink)) : ?>
@@ -79,7 +74,13 @@ $attachments = $this->message->getAttachments();
 			</p>
 		</div>
 		<?php endif; ?>
-
-		<div class="clearfix"></div>
-	</div>
+	
+	<?php if(!empty($this->thankyou)): ?>
+		<span class="kmessage-thankyou">
+			<?php
+				echo JText::_('COM_KUNENA_THANKYOU').': '.implode(', ', $this->thankyou).' ';
+				if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS',$this->more_thankyou);
+			?>
+		</span>
+	<?php endif; ?>
 </div>

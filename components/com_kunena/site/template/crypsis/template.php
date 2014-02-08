@@ -25,6 +25,23 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	protected $default = array('crypsis');
 
+	/**
+	 * Relative paths to various file types in this template.
+	 *
+	 * These will override default files in JROOT/media/kunena
+	 *
+	 * @var array
+	 */
+	protected $pathTypes = array(
+		'emoticons' => 'media/emoticons',
+		'ranks' => 'media/ranks',
+		'icons' => 'media/icons',
+		'topicicons' => 'media/topicicons',
+		'images' => 'media/images',
+		'js' => 'media/js',
+		'css' => 'media/css'
+	);
+
 	protected $userClasses = array(
 		'kwho-',
 		'admin'=>'kwho-admin',
@@ -83,12 +100,16 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('jquery.framework');
 		JHtml::_('formbehavior.chosen');
 
+		// Load script and CSS for autocomplete, emojiis...
+		$this->addScript('js/atwho.js');
+		$this->addStyleSheet('css/atwho.css');
+
 		// Load JavaScript.
-		$this->addScript ( 'js/plugins.js' );
+		$this->addScript('plugins.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('main.less', 'kunena.css');
-		$this->addStyleSheet ( 'css/kunena.css' );
+		$this->addStyleSheet('kunena.css');
 
 		$config = KunenaFactory::getConfig();
 
@@ -97,15 +118,27 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		{
 			JText::script('COM_KUNENA_POLL_OPTION_NAME');
 			JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-			$this->addScript( 'js/kunena.poll.js' );
+			$this->addScript('poll.js');
 		}
 
-		// If enabled, load also MediaBox advanced.
+		// Load FancyBox library if enabled in configuration
 		if ($config->lightbox == 1)
 		{
-			// TODO: replace with bootstrap compatible version
-			$this->addScript( 'js/mediaboxAdv.js' );
-			//$this->addStyleSheet ( 'css/mediaboxAdv.css');
+			$this->addScript('js/fancybox.js');
+			$this->addStyleSheet('css/fancybox.css');
+			JFactory::getDocument()->addScriptDeclaration('
+				jQuery(document).ready(function() {
+					jQuery(".fancybox-button").fancybox({
+						prevEffect		: \'none\',
+						nextEffect		: \'none\',
+						closeBtn		:  true,
+						helpers		: {
+							title	: { type : \'inside\' },
+							buttons	: {}
+						}
+					});
+				});
+			');
 		}
 
 		parent::initialize();
@@ -113,8 +146,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 	public function addStyleSheet($filename, $group='forum')
 	{
-		$filename = $filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}");
-		return JFactory::getDocument ()->addStyleSheet ( JUri::root(true)."/{$filename}" );
+		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
+		return JFactory::getDocument()->addStyleSheet(JUri::root(true)."/{$filename}");
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null)
@@ -125,8 +158,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 				'flat'=>'layout-flat', 'threaded'=>'layout-threaded', 'indented'=>'layout-indented',
 				'list'=>'reply');
 
-		// need special style for buttons in drop-down list
-		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete' );
+		// Need special style for buttons in drop-down list
+		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented');
 
 		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -146,7 +179,7 @@ HTML;
 		else
 		{
 			return <<<HTML
-				<a $id class="btn" style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
 				<span class="{$name}"></span>
 				{$text}
 				</a>
@@ -164,20 +197,4 @@ HTML;
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
 	}
 
-	public function getPaginationListRender($list)
-	{
-		$html = '<div class="pagination pagination-small" ><ul class="pagination-small">';
-		$last = 0;
-
-		foreach($list['pages'] as $i=>$page)
-		{
-			if ($last+1 != $i) $html .= '<li><a class="disabled">...</a></li>';
-			$html .= '<li>'.$page['data'].'</li>';
-			$last = $i;
-		}
-
-		$html .= '</ul></div><div class="clearfix"></div>';
-
-		return $html;
-	}
 }

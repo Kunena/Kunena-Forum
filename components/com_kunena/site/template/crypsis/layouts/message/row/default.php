@@ -21,7 +21,7 @@ $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;
 ?>
 <tr>
-	<td class="span1 hidden-phone">
+	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td class="span4">
@@ -60,11 +60,11 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 		</div>
 	</td>
-	<td class="span4">
+	<td class="span1 center">
 		<div>
 			<?php
 			if ($config->avataroncat > 0) {
-				$avatar = $author->getAvatarImage('klist-avatar', 'list');
+				$avatar = $author->getAvatarImage('img-polaroid', 48);
 
 				if ($avatar)
 				{
@@ -72,6 +72,10 @@ $cols = empty($this->checkbox) ? 4 : 5;
 				}
 			}
 			?>
+		</div>
+	</td>
+	<td class="span3">
+		<div>
 			<span title="<?php echo KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_POSTED_AT')
 					. ' ' . KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat'); ?>
@@ -86,7 +90,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-	<td class="span1">
+	<td class="span1 center">
 		<input class ="kcheck" type="checkbox" name="posts[<?php echo $message->id?>]" value="1" />
 	</td>
 	<?php endif; ?>

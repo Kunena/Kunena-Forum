@@ -159,7 +159,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->captchaHtml = $captcha->getHtml();
 			if ( !$this->captchaHtml ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->redirectBack();
+				return;
 			}
 		}
 
@@ -218,7 +219,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid) $this->poll = $this->topic->getPoll();
 
@@ -237,7 +238,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->captchaHtml = $captcha->getHtml();
 			if ( !$this->captchaHtml ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->redirectBack();
+				return;
 			}
 		}
 
@@ -278,7 +280,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->_prepareDocument('reply');
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
@@ -326,7 +328,7 @@ class KunenaViewTopic extends KunenaView {
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($saved) {
 			// Update message contents
@@ -501,9 +503,9 @@ class KunenaViewTopic extends KunenaView {
 			JPATH_ROOT.'/plugins/content/geshi/geshi/geshi'
 		);
 		foreach ($paths as $path) {
-			if (!file_exists($path)) continue;
+			if (!is_dir($path)) continue;
 
-			$files = JFolder::files($path, ".php");
+			$files = KunenaFolder::files($path, ".php");
 			$options = array();
 			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 			foreach ($files as $file) {
@@ -890,7 +892,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
 		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count ( $this->history );
-		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
+		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = array();
 		foreach ($this->history as $message) {
 			$userlist[(int) $message->userid] = (int) $message->userid;
@@ -911,10 +913,35 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplateFile ( 'history' );
 	}
 
-	function redirectBack() {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
-		while (@ob_end_clean());
-		$this->app->redirect ( $httpReferer );
+	/**
+	 * Redirect back to the referrer page.
+	 *
+	 * If there's no referrer or it's external, Kunena will return to forum home page.
+	 * Also redirects back to tasks are prevented.
+	 *
+	 * @param string $anchor
+	 */
+	protected function redirectBack($anchor = '') {
+		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$referrer = $this->input->server->getString('HTTP_REFERER');
+
+		$uri = JUri::getInstance($referrer ? $referrer : $default);
+		if (JUri::isInternal($uri->toString())) {
+			// Parse route.
+			$vars = $this->app->getRouter()->parse($uri);
+			$uri = new JUri('index.php');
+			$uri->setQuery($vars);
+
+			// Make sure we do not return into a task.
+			$uri->delVar('task');
+			$uri->delVar(JSession::getFormToken());
+		} else {
+			$uri = JUri::getInstance($default);
+		}
+
+		if ($anchor) $uri->setFragment($anchor);
+
+		$this->app->redirect(JRoute::_($uri->toString()));
 	}
 
 	public function getNumLink($mesid, $replycnt) {

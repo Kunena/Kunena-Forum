@@ -42,7 +42,7 @@ $user = JFactory::getUser();
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugins'); ?>" method="post" name="adminForm" id="adminForm">
+		<form action="index.php?option=com_kunena&view=plugins" method="post" name="adminForm" id="adminForm">
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />

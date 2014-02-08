@@ -215,14 +215,15 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create{$catid}", $xhtml);
 	}
 
-	public function getMarkReadUrl($xhtml = true) {
+	public function getMarkReadUrl($children = false, $xhtml = true) {
 		if (!KunenaUserHelper::getMyself()->exists()) {
 			return null;
 		}
 
+		$children = $children ? "&children=1" : '';
 		$catid = $this->id ? "&catid={$this->id}" : '';
 		$token = '&' . JSession::getFormToken() . '=1';
-		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$token}", $xhtml);
+		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$children}{$token}", $xhtml);
 	}
 
 	/**
@@ -414,7 +415,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($this->_channels === false) {
 			$this->_channels['none'] = array();
-			if (!$this->published || $this->parent_id == 0 || (!$this->numTopics && $this->locked)) {
+			if ($this->published != 1 || $this->parent_id == 0 || (!$this->numTopics && $this->locked)) {
 				// Unpublished categories and sections do not have channels
 			} elseif (empty($this->channels) || $this->channels == $this->id) {
 				// No channels defined
@@ -822,7 +823,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount($this->id);
-		KunenaForumMessageAttachmentHelper::cleanup();
+		KunenaAttachmentHelper::cleanup();
 
 		return $count;
 	}
@@ -1318,7 +1319,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	protected function authoriseUpload(KunenaUser $user) {
 		// Check if attachments are allowed
-		if (KunenaForumMessageAttachmentHelper::getExtensions($this, $user) === false) {
+		if (KunenaAttachmentHelper::getExtensions($this, $user) === false) {
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
 		}
 		return null;

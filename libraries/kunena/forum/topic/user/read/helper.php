@@ -173,8 +173,8 @@ abstract class KunenaForumTopicUserReadHelper {
 	 *
 	 * @return bool
 	 */
-	static public function purge($days = 2) {
-		// Purge items that are older than x days (defaulting to 2)
+	static public function purge($days = 365) {
+		// Purge items that are older than x days (defaulting to a year)
 		$db = JFactory::getDBO ();
 		$timestamp = JFactory::getDate()->toUnix() - 60*60*24*$days;
 		$query = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";

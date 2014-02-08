@@ -77,6 +77,47 @@ abstract class KunenaForumCategoryUserHelper {
 		return $list;
 	}
 
+	static public function markRead(array $ids, $user=null) {
+		$user = KunenaUserHelper::get($user);
+
+		$items = KunenaForumCategoryUserHelper::getCategories($ids, $user);
+		$updateList = array();
+		$insertList = array();
+
+		$db = JFactory::getDbo();
+		$time = JFactory::getDate()->toUnix();
+
+		foreach ($items as $item) {
+			if ($item->exists()) {
+				$updateList[] = (int) $item->category_id;
+			} else {
+				$insertList[] = "{$db->quote($user->userid)}, {$db->quote($item->category_id)}, {$db->quote($time)}";
+			}
+		}
+
+		if ($updateList) {
+			$idlist = implode(',', $updateList);
+			$query = $db->getQuery(true);
+			$query
+				->update('#__kunena_user_categories')
+				->set("allreadtime={$db->quote($time)}")
+				->where("user_id={$db->quote($user->userid)}")
+				->where("category_id IN ({$idlist})");
+			$db->setQuery($query);
+			$db->execute();
+		}
+
+		if ($insertList) {
+			$query = $db->getQuery(true);
+			$query
+				->insert('#__kunena_user_categories')
+				->columns('user_id, category_id, allreadtime')
+				->values($insertList);
+			$db->setQuery($query);
+			$db->execute();
+		}
+	}
+
 	// Internal functions
 
 	/**

@@ -16,7 +16,7 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.1') && KunenaForum::installed())) return;
 
 		$aup = JPATH_SITE . '/components/com_alphauserpoints/helper.php';
-		if (! file_exists ( $aup ))
+		if (!is_file($aup))
 			return;
 		require_once ($aup);
 

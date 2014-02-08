@@ -22,7 +22,7 @@ $tabs = $this->getTabs();
 
 	<?php if ($this->profile->isAuthorised('edit')) : ?>
 	<?php echo $this->profile->getLink(
-		'<i class="icon-arrow-right"></i> ' . JText::_('COM_KUNENA_EDIT'),
+		'<i class="icon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
 		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn pull-right'
 	); ?>
 	<?php endif; ?>
@@ -35,7 +35,7 @@ echo $this->subLayout('User/Item/Summary')
 	->set('config', $this->config);
 ?>
 
-<div class="tabs-left">
+<div class="tabs">
 	<ul class="nav nav-tabs">
 
 		<?php foreach ($tabs as $name => $tab) : ?>

@@ -28,6 +28,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 
 		$this->me = KunenaUserHelper::getMyself();
 		$access = KunenaAccess::getInstance();
+		$this->moreUri = null;
 
 		$start = $this->input->getInt('limitstart', 0);
 		$limit = $this->input->getInt('limit', 0);
@@ -41,9 +42,14 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$finder->filterByUserAccess($this->me)
 			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
 			->filterByMoved(false)
-			->filterBy('locked', '=', 0);
+			->where('locked', '=', 0);
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
 
 		$this->topics = $finder
 			->order('last_post_time', -1)
@@ -55,6 +61,9 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		{
 			$this->prepareTopics();
 		}
+
+		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 
 		// TODO <-
 		$this->headerText = JText::_('Topics Needing Attention');

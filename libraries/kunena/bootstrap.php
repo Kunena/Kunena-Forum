@@ -52,7 +52,6 @@ JLoader::register('KunenaProfiler', KPATH_FRAMEWORK . '/profiler.php');
 JLoader::register('KunenaSession', KPATH_FRAMEWORK . '/session.php');
 JLoader::register('KunenaTree', KPATH_FRAMEWORK . '/tree.php');
 JLoader::register('KunenaView', KPATH_FRAMEWORK . '/view.php');
-JLoader::register('KunenaActivity', KPATH_FRAMEWORK . '/integration/activity.php');
 JLoader::register('KunenaAvatar', KPATH_FRAMEWORK . '/integration/avatar.php');
 JLoader::register('KunenaPrivate', KPATH_FRAMEWORK . '/integration/private.php');
 JLoader::register('KunenaProfile', KPATH_FRAMEWORK . '/integration/profile.php');
@@ -60,7 +59,6 @@ JLoader::register('KunenaForumAnnouncement', KPATH_FRAMEWORK . '/forum/announcem
 JLoader::register('KunenaForumCategory', KPATH_FRAMEWORK . '/forum/category/category.php');
 JLoader::register('KunenaForumCategoryUser', KPATH_FRAMEWORK . '/forum/category/user/user.php');
 JLoader::register('KunenaForumMessage', KPATH_FRAMEWORK . '/forum/message/message.php');
-JLoader::register('KunenaForumMessageAttachment', KPATH_FRAMEWORK . '/forum/message/attachment/attachment.php');
 JLoader::register('KunenaForumMessageThankyou', KPATH_FRAMEWORK . '/forum/message/thankyou/thankyou.php');
 JLoader::register('KunenaForumTopic', KPATH_FRAMEWORK . '/forum/topic/topic.php');
 JLoader::register('KunenaForumTopicPoll', KPATH_FRAMEWORK . '/forum/topic/poll/poll.php');

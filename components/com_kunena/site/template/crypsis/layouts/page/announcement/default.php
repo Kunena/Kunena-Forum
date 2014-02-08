@@ -22,13 +22,14 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 
 	</h4>
-	<h6>
-		<?php echo $this->announcement->displayField('sdescription'); ?>
+	<h5>
+		<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
 
 		<?php if (!empty($this->announcement->description)) : ?>
+		<p>
 		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), JText::_('COM_KUNENA_ANN_READMORE'),
-				null, 'follow'); ?>
+				null, 'follow'); ?></p>
 		<?php endif; ?>
 
-	</h6>
+	</h5>
 </div>

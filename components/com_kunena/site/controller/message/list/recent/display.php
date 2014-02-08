@@ -17,29 +17,12 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaControllerTopicListDisplay
 {
+	protected $name = 'Message/List';
+
 	/**
 	 * @var array|KunenaForumMessage[]
 	 */
-	protected $messages;
-
-	/**
-	 * Return display layout.
-	 *
-	 * @return KunenaLayout
-	 */
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Message/List')
-			->set('me', $this->me)
-			->set('config', $this->config)
-			->set('messages', $this->messages)
-			->set('headerText', $this->headerText)
-			->set('pagination', $this->pagination)
-			->set('state', $this->state);
-
-		return $content;
-	}
+	public $messages;
 
 	/**
 	 * Prepare category list display.
@@ -55,6 +38,15 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->moreUri = null;
+
+		$this->embedded = $this->getOptions()->get('embedded', false);
+
+		if ($this->embedded)
+		{
+			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&sel=' . $this->state->get('list.time') . '&limit=' . $this->state->get('list.limit'));
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
+		}
 
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
@@ -92,7 +84,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 			case 'unapproved' :
 				$authorise = 'topic.post.approve';
 				$finder
-					->filterByUser($user, 'author')
+					->filterByUser(null, 'author')
 					->filterByHold(array(1));
 				break;
 			case 'deleted' :
@@ -122,6 +114,11 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		$finder->filterByCategories($categories);
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
 
 		$this->messages = $finder
 			->order($order, -1)
@@ -156,19 +153,26 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		{
 			case 'unapproved':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				$actions = array('approve', 'delete', 'permdelete');
 				break;
 			case 'deleted':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				$actions = array('undelete', 'delete', 'permdelete');
 				break;
 			case 'mythanks':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				$actions = array('approve', 'delete', 'permdelete');
 				break;
 			case 'thankyou':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				$actions = array('approve', 'delete', 'permdelete');
 				break;
 			case 'recent':
 			default:
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+				$actions = array('delete', 'permdelete');
 		}
+
+		$this->actions = $this->getMessageActions($this->messages, $actions);
 	}
 }

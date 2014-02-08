@@ -37,12 +37,12 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 
 		foreach ($paths as $path)
 		{
-			if (!file_exists($path))
+			if (!is_dir($path))
 			{
 				continue;
 			}
 
-			$files = JFolder::files($path, ".php");
+			$files = KunenaFolder::files($path, ".php");
 			$options = array();
 			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 

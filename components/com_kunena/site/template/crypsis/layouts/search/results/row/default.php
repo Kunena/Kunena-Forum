@@ -16,7 +16,7 @@ $topic = $message->getTopic();
 $category = $topic->getCategory();
 $author = $message->getAuthor();
 ?>
-<div class="row-fluid">
+<div id="kunena_search_results" class="row-fluid">
 	<div class="span2 center thumbnail">
 		<div><?php echo $author->getLink($author->getAvatarImage('', 120)); ?></div>
 		<div><?php echo $author->getLink(); ?></div>

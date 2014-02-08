@@ -15,7 +15,8 @@ $mmm=0;
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
 ?>
-<div class="btn-toolbar pull-right">
+<div class="kfrontend">
+ <div class="btn-toolbar pull-right">
 
 	<?php if ($this->me->exists()) : ?>
 	<div class="btn-group">
@@ -38,7 +39,7 @@ foreach ($this->sections as $section) :
 	<?php endif; ?>
 
 </div>
-<h2>
+<h3>
 
 	<?php if ($section->parent_id) : ?>
 	<?php echo $this->getCategoryLink($section->getParent(), $this->escape($section->getParent()->name)); ?> /
@@ -47,7 +48,7 @@ foreach ($this->sections as $section) :
 	<?php echo $this->getCategoryLink($section, $this->escape($section->name)); ?>
 	<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 			$this->formatLargeNumber($section->getTopics())); ?>)</small>
-</h2>
+</h3>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 	<table class="table table-striped table-hover table-bordered table-condensed">
@@ -56,7 +57,7 @@ foreach ($this->sections as $section) :
 		<thead class="hidden-phone">
 			<tr>
 				<td colspan="3">
-					<div><?php echo $section->displayField('description'); ?></div>
+					<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
 				</td>
 			</tr>
 		</thead>
@@ -72,7 +73,21 @@ foreach ($this->sections as $section) :
 		</tr>
 
 		<?php else : ?>
+
 		 <form id="kcategoriesapprove" name="ktopicsform" method="post" action="<?php echo JRoute::_('index.php?option=com_kunena&view=category&task=approvetopicsincategories') ?>">
+
+		<?php if (!empty($this->categories[$section->id]) && empty($this->categories->getLastTopic)) : ?>
+				<td class="span1 hidden-phone">
+				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+				</td>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR');?>
+				</td>
+				<td class="span1 hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php endif; ?>
+
 		<?php
 			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
@@ -104,7 +119,7 @@ foreach ($this->sections as $section) :
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
-					<div class="hidden-phone"><?php echo $category->displayField('description'); ?></div>
+					<div class="hidden-phone header-desc"><?php echo $category->displayField('description'); ?></div>
 				<?php endif; ?>
 
 				<?php
@@ -123,11 +138,11 @@ foreach ($this->sections as $section) :
 						?>
 					</li>
 					<?php endforeach; ?>
-					<?php if (!empty($this->more[$section->id])) : ?>
+					<?php if (!empty($this->more[$category->id])) : ?>
 					<li>
 						<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE')); ?>
 						<small class="hidden-phone muted">
-							(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]);?>)
+							(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>)
 						</small>
 					</li>
 					<?php endif; ?>
@@ -136,7 +151,7 @@ foreach ($this->sections as $section) :
 				<?php endif; ?>
 
 				<?php if (!empty($this->pending[$category->id])) : ?>
-				<div class="alert">
+				<div class="alert" style="max-width:150px;">
 					<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid='.intval($category->id),
 						intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'),
 						'', '', 'nofollow'); ?>
@@ -147,9 +162,7 @@ foreach ($this->sections as $section) :
 
 			<?php $last = $category->getLastTopic(); ?>
 
-			<?php if (!$last->exists()) : ?>
-			<td colspan="2" class="span4 hidden-phone"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
-			<?php else :
+			<?php if ($last->exists()) :
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();
 				$avatar = $this->config->avataroncat > 0 ? $author->getAvatarImage('img-polaroid', 48) : null;
@@ -161,7 +174,7 @@ foreach ($this->sections as $section) :
 			</td>
 			<?php endif; ?>
 
-			<td class="span3 hidden-phone">
+			<td class="span3 hidden-phone last-post">
 				<div>
 					<?php echo $this->getLastPostLink($category) ?>
 				</div>
@@ -197,8 +210,8 @@ foreach ($this->sections as $section) :
 		<tr>
 			<td colspan="3">
 				<h4>
-					<?php echo $this->getCategoryLink($category, JText::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
-					<small>(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]);?>)</small>
+					<?php echo $this->getCategoryLink($section, JText::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
+					<small>(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$section->id]); ?>)</small>
 				</h4>
 			</td>
 		</tr>
@@ -206,7 +219,7 @@ foreach ($this->sections as $section) :
 
 	</table>
 </div>
-
+</div>
 <!-- Begin: Category Module Position -->
 <?php echo $this->subLayout('Page/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 <!-- Finish: Category Module Position -->

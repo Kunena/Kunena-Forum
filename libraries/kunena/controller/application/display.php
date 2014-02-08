@@ -41,9 +41,16 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 */
 	protected $document;
 
-	public function exists() {
+	public function exists()
+	{
+		if ($this->input->getWord('format', 'html') != 'html')
+		{
+			// TODO: we need to deal with other formats in the future.
+			return false;
+		}
 		$name = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
 		$this->page = KunenaLayoutPage::factory($name);
+
 		return (bool) $this->page->getPath();
 	}
 
@@ -63,6 +70,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		// Run before executing action.
 		$result = $this->before();
 		if ($result === false) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
@@ -92,11 +100,12 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		} else {
 			// Display real content.
 			try {
+				// Split into two lines for exception handling.
 				$content = $this->display()->set('breadcrumb', $this->breadcrumb);
 				$this->content = $content->render();
 
 			} catch (KunenaExceptionAuthorise $e) {
-				$this->setResponseStatus($e->getCode());
+				$this->setResponseStatus($e->getResponseCode());
 				$this->output->setLayout('unauthorized');
 				$this->document->setTitle($e->getResponseStatus());
 
@@ -131,6 +140,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 
 		if (!$this->exists()) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 			throw new RuntimeException("Layout '{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}' does not exist!", 404);
 		}
 
@@ -194,26 +204,26 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	public function setResponseStatus($code = 404) {
 		switch ((int) $code) {
 			case 400:
-				JResponse::setHeader('Status', '400 Bad Request', 'true');
+				JResponse::setHeader('Status', '400 Bad Request', true);
 				break;
 			case 401:
-				JResponse::setHeader('Status', '401 Unauthorized', 'true');
+				JResponse::setHeader('Status', '401 Unauthorized', true);
 				break;
 			case 403:
-				JResponse::setHeader('Status', '403 Forbidden', 'true');
+				JResponse::setHeader('Status', '403 Forbidden', true);
 				break;
 			case 404:
-				JResponse::setHeader('Status', '404 Not Found', 'true');
+				JResponse::setHeader('Status', '404 Not Found', true);
 				break;
 			case 410:
-				JResponse::setHeader('Status', '410 Gone', 'true');
+				JResponse::setHeader('Status', '410 Gone', true);
 				break;
 			case 503:
-				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
 				break;
 			case 500:
 			default:
-				JResponse::setHeader('Status', '500 Internal Server Error', 'true');
+				JResponse::setHeader('Status', '500 Internal Server Error', true);
 		}
 	}
 

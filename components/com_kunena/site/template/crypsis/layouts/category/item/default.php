@@ -14,7 +14,7 @@ $categoryActions = $this->getCategoryActions();
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
-<div class="alert alert-info">
+<div class="alert alert-info kfrontend">
 	<a class="close" data-dismiss="alert" href="#">&times;</a>
 	<?php echo $this->category->displayField('headerdesc'); ?>
 </div>
@@ -32,46 +32,51 @@ $categoryActions = $this->getCategoryActions();
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<?php if (!empty($this->topicActions)) : ?>
-	<label class="pull-right">
-		<input class="kcheckall" type="checkbox" name="toggle" value="" />
-	</label>
-	<?php endif; ?>
-
-	<?php if (empty($this->topics)) : ?>
-	<div class="alert">
-		<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
-	</div>
-
-	<?php else : ?>
-
 	<table class="table table-striped table-bordered table-hover table-condensed">
 		<thead>
 			<tr>
 				<td colspan="1" class="center">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
-						<span class="divider"></span>
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>
-				<td colspan="3">
-					<ul class="inline pull-right">
+				<td colspan="1">
+					<ul class="inline no-margin">
 
 						<?php if ($categoryActions) : ?>
 						<li class="hidden-phone">
 							<?php echo implode($categoryActions); ?>
 						</li>
 						<?php endif; ?>
+					</ul>
+				</td>
+				<?php if (!empty($this->topics)) : ?>
+				<td colspan="2" class="center">
+					<ul class="inline pull-right no-margin">
 
-						<li>
+					  <li>
 							<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
 						</li>
 					</ul>
 				</td>
+				<?php endif; ?>
+				<?php if (!empty($this->topicActions)) : ?>
+				<td class="span1 center">
+					<label>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
+					</label>
+				</td>
+				<?php endif; ?>
 			</tr>
 		</thead>
-		<?php
+		<?php if (empty($this->topics)) : ?>
+		<div class="alert">
+			<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
+		</div>
+
+		<?php else :
+
 		/** @var KunenaForumTopic $previous */
 		$previous = null;
 
@@ -96,9 +101,9 @@ $categoryActions = $this->getCategoryActions();
 				</a>
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
+
 			<td colspan="3">
 
-				<?php // FIXME: implement topic actions part... ?>
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
@@ -129,8 +134,8 @@ $categoryActions = $this->getCategoryActions();
 			</td>
 		</tr>
 		</tfoot>
+		<?php endif; ?>
 	</table>
-	<?php endif; ?>
 
 </form>
 

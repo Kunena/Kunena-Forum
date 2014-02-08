@@ -300,4 +300,16 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			}
 		}
 	}
+
+	/**
+	 * Method to just redirect to main manager in case of use of cancel button
+	 *
+	 * @return void
+	 *
+	 * @since 3.0.5
+	 */
+	public function cancel()
+	{
+		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+	}
 }

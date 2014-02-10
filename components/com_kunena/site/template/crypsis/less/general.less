@@ -61,10 +61,6 @@ active, a:focus {
 	margin-left: 20px;
 	box-shadow: 0 0 6px #B2B2B2;
 }
-.kmsg {
-	padding-top:10px;
-	min-height:120px;
-}
 .kmsgattach {
 	padding-left: 30px;
 	padding-top: 10px;
@@ -229,6 +225,7 @@ a:focus,
     padding: 39px 19px 14px;
     border-radius: 6px;
 		box-shadow: 0 0 6px #B2B2B2;
+	min-height:120px;
 }
 [class*="badger"]:after {
  		content: attr(data-badger);
@@ -252,12 +249,13 @@ legend {
 div.kmsgtext-article,
 div.kmsgtext-quote,
 div.kmsgtext-hide,
+div.kmsgtext-code,
+.highlight,
 div.kmsgtext-confidential {
-	margin-top:-100px;
-	background-color: transparent;
-  border-left: 5px solid rgba(0, 0, 0, 0.1);
-  padding: 0.5em 10px;
-	content:open-quote;
+		margin:0 5px;
+    border-left: 4px solid #319ce2 ;
+    color: #b1b1b1;
+		border-radius:4px;
 }
 #kwho > div > p,
 #kstats > div > p {
@@ -266,6 +264,25 @@ div.kmsgtext-confidential {
 .msgfooter {
 	padding-top:10px;
 	border-top:1px solid rgba(0, 0, 0, 0.1);
+}
+#nav1 > li {
+  float: left;
+}
+#nav1 > li > a {
+  float: none;
+  padding: 10px 15px 10px;
+  color: inherit !important;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #ffffff;
+}
+.knewchar {
+	color:green;
+}
+form {
+  margin: 0 0 10px 0;
+}
+.timefilter {
+	padding-right:10px;
 }
 @media (max-width: 480px) { 
  .pagination .test ul > li > a, .pagination ul > li > span {

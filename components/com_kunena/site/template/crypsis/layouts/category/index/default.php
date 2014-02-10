@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 $mmm=0;
+
 /** @var KunenaForumCategory $section */
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
@@ -98,8 +99,8 @@ foreach ($this->sections as $section) :
 					<h3>
 						<?php echo $this->getCategoryLink($category); ?>
 						<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
-								$this->formatLargeNumber($category->getTopics())); ?>)</small>
-					</h3>
+								$this->formatLargeNumber($category->getTopics())); ?>)
+					
 					<span>
 						<?php
 						if (($new = $category->getNewCount()) > 0) {
@@ -112,7 +113,7 @@ foreach ($this->sections as $section) :
 							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
 						}
 						?>
-					</span>
+					</span></small></h3>
 				</div>
 
 				<?php if (!empty($category->description)) : ?>

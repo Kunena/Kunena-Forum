@@ -73,21 +73,22 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 		</div>
 	</td>
+	
+	<td class="span1 center hidden-phone">
+		<?php if ($avatar) : ?>
+		<span>
+			<?php echo $topic->getAuthor()->getLink($avatar); ?>
+		</span>
+		<?php endif; ?>
+	</td>
+	
 	<td class="span1 hidden-phone center">
 			<?php echo  $this->formatLargeNumber($topic->hits); ?>
 		</td>
 	<td class="span1 hidden-phone center">
 			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
-	<td class="span1 center hidden-phone">
-
-		<?php if ($avatar) : ?>
-		<span>
-			<?php echo $topic->getAuthor()->getLink($avatar); ?>
-		</span>
-		<?php endif; ?>
-
-	</td>
+	
 	<td class="span3">
 		<div class="klatest-post-info">
 			<?php if (!empty($this->topic->avatar)) : ?>

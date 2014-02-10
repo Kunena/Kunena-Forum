@@ -46,13 +46,13 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
 				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?>
+				</td>
+				<td class="span1 center hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
 				<td class="span1 center hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
-				</td>
-				<td class="span1 center hidden-phone">
-				Author
 				</td>
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>

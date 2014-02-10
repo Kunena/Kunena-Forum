@@ -60,15 +60,16 @@ if (!empty($this->spacing)) : ?>
 			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 	</td>
+	
+	<td class="span1 center hidden-phone">
+		<?php echo $topic->getAuthor()->getLink($avatar); ?>
+	</td>
+	
 	<td class="span1 center hidden-phone">
 		<?php echo $this->formatLargeNumber($topic->hits); ?>
 	</td>
 	<td class="span1 center hidden-phone">
 		<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
-	</td>
-	
-	<td class="span1 center hidden-phone">
-		<?php echo $topic->getAuthor()->getLink($avatar); ?>
 	</td>
 	
 	<td class="span3">

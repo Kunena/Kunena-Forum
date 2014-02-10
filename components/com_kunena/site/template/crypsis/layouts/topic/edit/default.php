@@ -182,7 +182,7 @@ $this->k=0;
 						value="<?php echo (' ' . JText::_('COM_KUNENA_SUBMIT') . ' ');?>"
 						title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" tabindex="4" />
 						<input type="button" name="preview" class="btn"
-						onclick="kToggleOrSwapPreview('kbbcode-preview-bottom')"
+						onclick="kToggleOrSwapPreview('kbbcode-preview-bottom controls')"
 						value="<?php echo (' ' . JText::_('COM_KUNENA_PREVIEW') . ' ');?>"
 						title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW'));?>:: "tabindex="3" />
 						<input type="button" name="cancel" class="btn"

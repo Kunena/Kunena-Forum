@@ -187,5 +187,26 @@ jQuery(document).ready(function() {
                     content.next(".content").slideToggle(500);
             }
     });
+	
+	/* To enabled emojis in kunena textera feature like on github */
+	if ( jQuery('#kemojis_allowed').val() ) {
+		jQuery('#kbbcode-message').atwho({
+			at: ":",
+			tpl:"<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
+			callbacks: {
+				remote_filter: function(query, callback) {
+					jQuery.ajax({
+						url: jQuery( "#kurl_emojis" ).val(),
+						data: {
+							search : query
+						},
+						success: function(data) {
+							callback(data.emojis);
+						}
+					});
+				}
+			}
+		});
+	}
 });
 

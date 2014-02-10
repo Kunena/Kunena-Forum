@@ -137,9 +137,9 @@ JHtml::_('dropdown.init');
 				?>
 					<tr>
 						<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
-						<td><?php echo $attachment->getThumbnailLink() . '<br />' . $attachment->getFilename() ?></td>
+						<td><?php echo $attachment->getLayout()->render('thumbnail') . '<br />' . $attachment->getFilename() ?></td>
 						<td><?php echo $this->escape($attachment->filetype); ?></td>
-						<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_ATTACHMENTS_KILOBYTE'); ?></td>
+						<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' ' . JText::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
 						<td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height  : '' ?></td>
 						<td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
 						<td><?php echo $this->escape($message->subject); ?></td>

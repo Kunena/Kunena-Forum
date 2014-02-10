@@ -91,6 +91,8 @@ class KunenaTemplate extends JObject
 		// Create template inheritance
 		if (!is_array($this->default)) $this->default = (array) $this->default;
 		array_unshift($this->default, $name);
+		array_unshift($this->default, 'system');
+
 		$this->default = array_unique($this->default);
 
 		// Find configuration file.

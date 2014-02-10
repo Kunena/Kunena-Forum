@@ -152,8 +152,8 @@ class KunenaModelTopic extends KunenaModel {
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
 			KunenaUserHelper::loadUsers($userlist);
 
-			// Get attachments
-			KunenaForumMessageAttachmentHelper::getByMessage($this->messages);
+			// Prefetch all attachments.
+			KunenaAttachmentHelper::getByMessage($this->messages);
 		}
 
 		return $this->messages;

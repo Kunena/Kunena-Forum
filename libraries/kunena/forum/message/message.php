@@ -43,11 +43,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	protected $_table = 'KunenaMessages';
 	protected $_db = null;
 	/**
-	 * @var KunenaForumMessageAttachment[]
+	 * @var KunenaAttachment[]
 	 */
 	protected $_attachments_add = array();
 	/**
-	 * @var KunenaForumMessageAttachment[]
+	 * @var KunenaAttachment[]
 	 */
 	protected $_attachments_del = array();
 	protected $_topic = null;
@@ -592,7 +592,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return bool
 	 */
 	public function uploadAttachment($tmpid, $postvar, $catid=null) {
-		$attachment = new KunenaForumMessageAttachment();
+		$attachment = new KunenaAttachment();
 		$attachment->userid = $this->userid;
 		$success = $attachment->upload($postvar, $catid);
 		$this->_attachments_add[$tmpid] = $attachment;
@@ -647,13 +647,13 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @param  bool|array  $ids
 	 * @param  string      $action
 	 *
-	 * @return KunenaForumMessageAttachment[]
+	 * @return KunenaAttachment[]
 	 */
 	public function getAttachments($ids=false, $action = 'read') {
 		if ($ids === false) {
-			return KunenaForumMessageAttachmentHelper::getByMessage($this->id, $action);
+			return KunenaAttachmentHelper::getByMessage($this->id, $action);
 		} else {
-			$attachments = KunenaForumMessageAttachmentHelper::getById($ids, $action);
+			$attachments = KunenaAttachmentHelper::getById($ids, $action);
 			foreach ($attachments as $id=>$attachment) {
 				if ($attachment->mesid && $attachment->mesid != $this->id) {
 					unset($attachments[$id]);

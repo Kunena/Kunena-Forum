@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Framework
- * @subpackage Forum.Message.Attachment
+ * @subpackage Attachment
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -11,33 +11,44 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Message Attachment Helper Class
+ * Kunena Attachment Helper Class
  */
-abstract class KunenaForumMessageAttachmentHelper {
+abstract class KunenaAttachmentHelper {
 	/**
-	 * @var KunenaForumMessageAttachment[]
+	 * @var KunenaAttachment[]
 	 */
 	protected static $_instances = array();
 	protected static $_messages = array();
 
 	/**
-	 * Returns KunenaForumMessageAttachment object.
+	 * Check if mime type is image.
+	 *
+	 * @param  string  $mime
+	 *
+	 * @return  bool  True if mime is image.
+	 */
+	public function isImageMime($mime) {
+		return (stripos($mime, 'image/') !== false);
+	}
+
+	/**
+	 * Returns KunenaAttachment object.
 	 *
 	 * @param int $identifier	The attachment to load - Can be only an integer.
 	 * @param bool $reload
 	 *
-	 * @return KunenaForumMessageAttachment
+	 * @return KunenaAttachment
 	 */
 	static public function get($identifier = null, $reload = false) {
-		if ($identifier instanceof KunenaForumMessageAttachment) {
+		if ($identifier instanceof KunenaAttachment) {
 			return $identifier;
 		}
 		$id = intval ( $identifier );
 		if ($id < 1)
-			return new KunenaForumMessageAttachment ();
+			return new KunenaAttachment ();
 
 		if ($reload || empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumMessageAttachment ( $id );
+			self::$_instances [$id] = new KunenaAttachment ( $id );
 			self::$_messages [self::$_instances [$id]->mesid][$id] = self::$_instances [$id];
 		}
 
@@ -48,7 +59,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 	 * @param bool|array|int   $ids
 	 * @param string $authorise
 	 *
-	 * @return KunenaForumMessageAttachment[]
+	 * @return KunenaAttachment[]
 	 */
 	static public function getById($ids = false, $authorise='read') {
 		if ($ids === false) {
@@ -63,7 +74,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 
 		$list = array ();
 		foreach ( $ids as $id ) {
-			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise, null, true)) {
+			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise)) {
 				$list [$id] = self::$_instances [$id];
 			}
 		}
@@ -75,7 +86,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 	 * @param bool|array|int   $ids
 	 * @param string $authorise
 	 *
-	 * @return KunenaForumMessageAttachment[]
+	 * @return KunenaAttachment[]
 	 */
 	static public function getByMessage($ids = false, $authorise='read') {
 		if ($ids === false) {
@@ -98,8 +109,8 @@ abstract class KunenaForumMessageAttachmentHelper {
 
 			if (!empty(self::$_messages [$id])) {
 				foreach (self::$_messages [$id] as $instance) {
-					/** @var KunenaForumMessageAttachment $instance */
-					if ($instance->authorise($authorise, null, true)) {
+					/** @var KunenaAttachment $instance */
+					if ($instance->isAuthorised($authorise)) {
 						$list [$instance->id] = $instance;
 					}
 				}
@@ -260,7 +271,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 		if (KunenaError::checkDatabaseError ()) return false;
 		if (empty($results)) return true;
 		foreach ($results as $result) {
-			$instance = new KunenaForumMessageAttachment ();
+			$instance = new KunenaAttachment ();
 			$instance->bind ( $result );
 			$instance->exists(false);
 			unset ($instance);
@@ -299,7 +310,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 	 * @param mixed $user
 	 * @param array $params
 	 *
-	 * @return KunenaForumMessageAttachment[]
+	 * @return KunenaAttachment[]
 	 */
 	public static function getByUserid($user, array $params) {
 		if ( $params['file'] == '1' && $params['image'] != '1'  ) $filetype = " AND filetype=''";
@@ -320,7 +331,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 		foreach ( $results as $result ) {
 			$id = $result['id'];
 			if (!isset(self::$_instances [$id])) {
-				$instance = new KunenaForumMessageAttachment ();
+				$instance = new KunenaAttachment ();
 				$instance->bind ( $result );
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
@@ -354,7 +365,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumMessageAttachment ();
+				$instance = new KunenaAttachment ();
 				$instance->bind ( $results[$id] );
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
@@ -391,7 +402,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 			}
 		}
 		foreach ( $results as $id=>$result ) {
-			$instance = new KunenaForumMessageAttachment ();
+			$instance = new KunenaAttachment ();
 			$instance->bind ( $result );
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;

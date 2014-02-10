@@ -64,7 +64,7 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
 		$this->path = isset($this->active) ? $this->active->tree : array();
 		$this->showAll = $parameters->get('showAllChildren');
-		$this->class_sfx = htmlspecialchars($parameters->get('class_sfx'));
+		$this->class_sfx = htmlspecialchars($parameters->get('class_sfx'), ENT_COMPAT, 'UTF-8');
 
 		return true;
 	}

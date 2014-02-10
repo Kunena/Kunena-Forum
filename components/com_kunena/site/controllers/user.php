@@ -562,8 +562,8 @@ class KunenaControllerUser extends KunenaController {
 			$number = 0;
 
 			foreach( $cids as $id ) {
-				$attachment = KunenaForumMessageAttachmentHelper::get($id);
-				if ($attachment->authorise('delete') && $attachment->delete()) $number++;
+				$attachment = KunenaAttachmentHelper::get($id);
+				if ($attachment->isAuthorised('delete') && $attachment->delete()) $number++;
 			}
 
 			if ( $number > 0 ) {

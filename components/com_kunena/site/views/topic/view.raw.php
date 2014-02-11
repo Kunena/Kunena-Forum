@@ -56,7 +56,7 @@ class KunenaViewTopic extends KunenaView {
 			foreach ($smileys as $smiley)
 			{
 				$emojis['key'] = $smiley->code;
-				$emojis['name'] = $smiley->location;
+				$emojis['name'] = $smiley->code;
 				$emojis['url'] = JUri::root() . 'media/kunena/emoticons/' . $smiley->location;
 
 				$response['emojis'][] = $emojis;

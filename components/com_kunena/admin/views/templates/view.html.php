@@ -102,7 +102,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 		}
 		JToolBarHelper::spacer();
 */
-		JToolBarHelper::cancel('templates');
+		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 	}
 
@@ -116,7 +116,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 		}
 		JToolBarHelper::spacer();
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('templates');
+		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 	}
 
@@ -126,7 +126,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 		JToolBarHelper::save('savecss');
 		JToolBarHelper::spacer();
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('templates');
+		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 	}
 }

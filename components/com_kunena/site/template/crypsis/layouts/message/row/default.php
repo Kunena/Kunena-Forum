@@ -47,7 +47,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			}
 
 			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr">(' . (int) $topic->unread
+				echo $this->getTopicLink($topic, 'unread', '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
 					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 

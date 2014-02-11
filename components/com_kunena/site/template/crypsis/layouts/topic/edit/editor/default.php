@@ -247,10 +247,10 @@ defined ( '_JEXEC' ) or die ();
 	<div class="controls">
 		<textarea class="input-xxlarge qreply" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
+	<!-- Hidden preview placeholder -->
+	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
 
-<!-- Hidden preview placeholder -->
-<div id="kbbcode-preview" style="display: none;"></div>
 <?php if ($this->message->exists()) : ?>
 <div class="clr"> </div>
 <fieldset>
@@ -258,3 +258,4 @@ defined ( '_JEXEC' ) or die ();
 	<input class="kinputbox" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>" />
 </fieldset>
 <?php endif; ?>
+

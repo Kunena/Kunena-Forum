@@ -17,10 +17,8 @@ $colspan = empty($this->actions) ? 5 : 6;
 <div class="pagination pull-right">
 	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
 </div>
-<?php endif; ?>
-<?php if (!empty($this->embedded)) : ?>
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-      method="post" target="_self" class="pull-right">
+      method="post" target="_self" class="timefilter pull-right">
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
 <?php endif; ?>
@@ -57,18 +55,18 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
 				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?>
+				</td>
+				<td class="span1 center hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
 				<td class="span1 center hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
 				</td>
-				<td class="span1 center hidden-phone">
-				Author
-				</td>
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
-				<?php if (!empty($this->actions)) : ?>
+				<?php if (!empty($this->actions) || !empty($this->embedded)) : ?>
 				<td class="span1 center">
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />

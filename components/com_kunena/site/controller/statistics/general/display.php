@@ -37,9 +37,9 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		if ( !$this->config->statslink_allowed && JFactory::getUser()->guest )
+		if (!$this->config->statslink_allowed && JFactory::getUser()->guest)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_STATS_NOT_ALLOWED_TOSEE_STATS'), '404');
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_STATS_NOT_ALLOWED_TOSEE_STATS'), '401');
 		}
 
 		$statistics = KunenaForumStatistics::getInstance();

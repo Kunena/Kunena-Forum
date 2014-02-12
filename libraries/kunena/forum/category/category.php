@@ -565,8 +565,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 				throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
 			}
 
-			// Load custom authorisation from the plugins.
-			if (!isset($this->authorised[$user->userid])) {
+			// Load custom authorisation from the plugins (except for admins and moderators).
+			if (!$user->isModerator($this) && !isset($this->authorised[$user->userid])) {
 				$this->authorised[$user->userid] = KunenaAccess::getInstance()->authoriseActions($this, $user->userid);
 			}
 

@@ -129,16 +129,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getPath($thumb = false)
 	{
-		$filename = $this->getFilename(false);
-
 		if ($thumb)
 		{
-			$path = JPATH_ROOT . "/{$this->folder}/thumb/{$filename}";
+			$path = JPATH_ROOT . "/{$this->folder}/thumb/{$this->filename}";
 			$path = is_file($path) ? $path : false;
 		}
 		else
 		{
-			$path = JPATH_ROOT . "/{$this->folder}/{$filename}";
+			$path = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
 			$path = is_file($path) ? $path : false;
 		}
 

@@ -18,8 +18,6 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Deprecated class placeholder. You should use methods in topic, message and user classes instead to get links.
  *
- * @package Kunena.Site
- * @subpackage Lib
  * @since 1.0.7
  * @deprecated 3.0.0
  */

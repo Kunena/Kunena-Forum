@@ -29,10 +29,22 @@ class KunenaAdminViewTools extends KunenaView {
 		$this->display ();
 	}
 
-	function displaySubscriptions() {
-		$this->id = JRequest::getInt('id');
+	function displaySubscriptions()
+	{
+		$id = $this->app->input->get('id', 0, 'int');
 
-		$this->display ();
+		$topic = KunenaForumTopicHelper::get($id);
+		$acl = KunenaAccess::getInstance();
+		$cat_subscribers = $acl->loadSubscribers($topic, KunenaAccess::CATEGORY_SUBSCRIPTION);
+
+		$this->cat_subscribers_users = KunenaUserHelper::loadUsers($cat_subscribers);
+
+		$topic_subscribers = $acl->loadSubscribers($topic, KunenaAccess::TOPIC_SUBSCRIPTION);
+		$this->topic_subscribers_users = KunenaUserHelper::loadUsers($topic_subscribers);
+
+		$this->cat_topic_subscribers = $acl->getSubscribers($topic->getCategory()->id, $id, KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION, 1, 1);
+
+		$this->display();
 	}
 
 	function displaySyncUsers() {
@@ -89,7 +101,21 @@ class KunenaAdminViewTools extends KunenaView {
 	protected function setToolBarRecount() {
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
+
+		if (version_compare(JVERSION, '3.0', '>')) {
+			$bar = JToolbar::getInstance('toolbar');
+			$uri = 'index.php?option=com_kunena&view=tools&task=recount&format=json&' . JSession::getFormToken() .'=1';
+
+			$layout = KunenaLayout::factory('Button/AjaxTask')
+				->set('title', JText::_('COM_KUNENA_A_RECOUNT'))
+				->set('uri', $uri)
+				->set('dataTarget', '#recountModal')
+				->set('dataForm', '#adminForm');
+
+			$bar->appendButton('Custom', $layout, 'recount');
+		} else {
+			JToolBarHelper::custom('recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
+		}
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();

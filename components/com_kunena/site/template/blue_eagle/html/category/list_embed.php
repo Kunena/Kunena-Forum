@@ -46,7 +46,8 @@ foreach ( $this->sections as $section ) :
 			<div class="kthead-title kl">
 			<?php
 				// Show new posts, locked, review
-				echo $this->getCategoryLink($category);
+				echo $this->getCategoryLink($category); ?>
+				<?php
 				if ($category->getNewCount()) {
 					echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}

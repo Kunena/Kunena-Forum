@@ -9,6 +9,11 @@
  * @link http://www.kunena.org
  **/
 
+/**
+ * Deprecated. This file is keep for legacy users which still use blue eagle template.
+ *
+ * @deprecated 3.0.0
+ */
 defined( '_JEXEC' ) or die();
 
 $kunena_config = KunenaFactory::getConfig ();

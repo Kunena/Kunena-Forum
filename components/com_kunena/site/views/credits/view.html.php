@@ -51,7 +51,7 @@ class KunenaViewCredits extends KunenaView {
 
 		$this->_prepareDocument();
 
-		parent::display ();
+		$this->render('Credits', $tpl);
 	}
 
 	protected function _prepareDocument(){

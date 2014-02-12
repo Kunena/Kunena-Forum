@@ -22,8 +22,15 @@ class KunenaViewStatistics extends KunenaView {
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->userlist = $this->_getUserListLink('', intval($this->get('memberCount')));
 
+		if ( !KunenaFactory::getConfig()->statslink_allowed && JFactory::getUser()->guest )
+		{
+			return $this->app->enqueueMessage(JText::_('COM_KUNENA_STATS_NOT_ALLOWED_TOSEE_STATS'));
+		}
+
+
 		$this->_prepareDocument();
-		parent::display ();
+
+		$this->render('Statistics/General', $tpl);
 	}
 
 	protected function _getUserListLink($action, $name, $title = null, $rel = 'nofollow'){

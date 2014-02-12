@@ -110,7 +110,7 @@ kunena_url_ajax= ".json_encode(KunenaRoute::_("index.php?option=com_kunena&view=
 				</div>
 				<div>
 					<input type="submit" class="button" value="<?php echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' ); ?>" />
-					<a href="history.back();" class="button" ><span class="kbutton-back"><?php echo JText::_ ( 'COM_KUNENA_BACK' ); ?></span></a>
+					<a href="javascript:window.history.back();" class="button" ><span class="kbutton-back"><?php echo JText::_ ( 'COM_KUNENA_BACK' ); ?></span></a>
 				</div>
 			</form>
 		</div>

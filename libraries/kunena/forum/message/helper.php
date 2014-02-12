@@ -53,7 +53,7 @@ abstract class KunenaForumMessageHelper {
 	 * @param bool|array|int   $ids
 	 * @param string $authorise
 	 *
-	 * @return KunenaForumTopic[]
+	 * @return KunenaForumMessage[]
 	 */
 	static public function getMessages($ids = false, $authorise='read') {
 		if ($ids === false) {
@@ -84,7 +84,7 @@ abstract class KunenaForumMessageHelper {
 	 * @param int    $hold
 	 * @param bool   $orderbyid
 	 *
-	 * @return KunenaForumTopic[]
+	 * @return KunenaForumMessage[]
 	 */
 	static public function getMessagesByTopic($topic, $start=0, $limit=0, $ordering='ASC', $hold=0, $orderbyid = false) {
 		$topic = KunenaForumTopicHelper::get($topic);

@@ -16,6 +16,11 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
+if (version_compare(JVERSION, '3.2', '>'))
+{
+	JHtml::_('behavior.tabstate');
+}
+
 $db = JFactory::getDBO();
 $document = JFactory::getDocument();
 $document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'
@@ -297,11 +302,10 @@ function textCounter(field, target) {
 									</thead>
 									<?php
 										if (!empty($this->subscatslist)) : foreach($this->subscatslist as $cat) :
-											$category = KunenaForumCategoryHelper::get($cat->category_id);
 									?>
 									<tr>
-										<td><?php echo $this->escape($category->name); ?> <small><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($category->alias)); ?></small></td>
-										<td><?php echo $this->escape($category->id); ?></td>
+										<td><?php echo $this->escape($cat->name); ?> <small><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small></td>
+										<td><?php echo $this->escape($cat->id); ?></td>
 									</tr>
 									<?php endforeach; else : ?>
 									<tr>
@@ -315,7 +319,7 @@ function textCounter(field, target) {
 						<div class="tab-pane" id="tab5">
 							<fieldset>
 								<legend><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
-								<table class="kadmin-adminform">
+								<table class="table table-striped">
 									<thead>
 										<tr>
 	<?php /*
@@ -329,8 +333,7 @@ function textCounter(field, target) {
 									</thead>
 
 									<?php
-										if ($this->sub) : foreach ( $this->sub as $sub ) :
-											$topic = KunenaForumTopicHelper::get($sub->thread);
+										if ($this->sub) : foreach ( $this->sub as $topic ) :
 									?>
 									<tr>
 										<td><?php echo $this->escape($topic->subject); ?></td>
@@ -348,7 +351,7 @@ function textCounter(field, target) {
 						<div class="tab-pane" id="tab6">
 							<fieldset>
 								<legend><?php echo JText::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
-								<table class="kadmin-adminform">
+								<table class="table table-striped">
 									<?php
 									$i=0; foreach ($this->ipslist as $ip => $list) :
 										$userlist = array();

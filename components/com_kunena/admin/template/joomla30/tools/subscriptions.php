@@ -27,12 +27,7 @@ defined ( '_JEXEC' ) or die ();
 					<th><?php echo JText::_('Active Category Subscriptions'); ?></th>
 				</tr>
 				<?php
-					$topic = KunenaForumTopicHelper::get($this->id);
-					$acl = KunenaAccess::getInstance();
-					$subscribers = $acl->loadSubscribers($topic, KunenaAccess::CATEGORY_SUBSCRIPTION);
-					foreach ($subscribers as $sub) :
-						// FIXME: inefficient to load users one by one
-						$user = JFactory::getUser($sub);
+					foreach ($this->cat_subscribers_users as $user) :
 				?>
 				<tr>
 					<td><?php echo $user->id ?></td>
@@ -44,10 +39,7 @@ defined ( '_JEXEC' ) or die ();
 					<th><?php echo JText::_('Active Topic Subscriptions'); ?></th>
 				</tr>
 				<?php
-					$acl = KunenaAccess::getInstance();
-					$subscribers = $acl->loadSubscribers($topic, KunenaAccess::TOPIC_SUBSCRIPTION);
-					foreach ($subscribers as $sub) :
-						$user = JFactory::getUser($sub);
+					foreach ($this->topic_subscribers_users as $user) :
 				?>
 				<tr>
 					<td><?php echo $user->id ?></td>
@@ -59,8 +51,7 @@ defined ( '_JEXEC' ) or die ();
 					<th><?php echo JText::_('E-mails sent to'); ?></th>
 				</tr>
 				<?php
-					$subscribers = $acl->getSubscribers($topic->getCategory()->id, $this->id, KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION, 1, 1);
-					foreach ($subscribers as $sub) :
+					foreach ($this->cat_topic_subscribers as $sub) :
 				?>
 				<tr>
 					<td><?php echo $sub->id ?></td>

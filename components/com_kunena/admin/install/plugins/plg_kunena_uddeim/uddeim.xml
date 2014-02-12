@@ -13,7 +13,6 @@
 	<files>
 		<filename plugin="uddeim">uddeim.php</filename>
 		<filename>private.php</filename>
-		<filename>index.html</filename>
 		<folder>language</folder>
 	</files>
 	<config>

@@ -31,7 +31,8 @@ class KunenaAdminControllerConfig extends KunenaController {
 	function save($url=null) {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$properties = $this->config->getProperties();
@@ -54,19 +55,24 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$this->config->save ();
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
-		if (empty($url)) $this->app->redirect ( KunenaRoute::_($this->kunenabaseurl, false) );
-		else $this->app->redirect ( KunenaRoute::_($url, false) );
+		if (empty($url)) {
+			$this->setRedirect(KunenaRoute::_($this->kunenabaseurl, false));
+			return;
+		}
+
+		$this->setRedirect(KunenaRoute::_($url, false));
 	}
 
 	function setdefault() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$this->config->reset();
 		$this->config->save();
 
-		$this->app->redirect ( 'index.php?option=com_kunena&view=config', JText::_('COM_KUNENA_CONFIG_DEFAULT') );
+		$this->setRedirect('index.php?option=com_kunena&view=config', JText::_('COM_KUNENA_CONFIG_DEFAULT'));
 	}
 }

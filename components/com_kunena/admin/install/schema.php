@@ -389,7 +389,7 @@ class KunenaModelSchema extends JModelLegacy
 	{
 		if (($input instanceof DOMNode)) $schema = $input;
 		else if ($input === KUNENA_INPUT_DATABASE) $schema = $this->getSchemaFromDatabase();
-		else if (is_string($input) && file_exists($input)) $schema = $this->getSchemaFromFile($input);
+		else if (is_string($input) && is_file($input)) $schema = $this->getSchemaFromFile($input);
 		else if (is_string($input)) { $schema = new DOMDocument('1.0', 'utf-8'); $schema->loadXML($input); }
 		if (!isset($schema)  || $schema == false) return null;
 		$schema->formatOutput = true;

@@ -147,22 +147,22 @@ class KunenaAdminModelUsers extends JModelList {
 		}
 
 		// Filter by username or name.
-		$search = $this->getState('filter.username');
-		if (!empty($search)) {
-			$search = $db->Quote('%'.$db->escape($search, true).'%');
-			$query->where('a.username LIKE '.$search . 'OR a.name LIKE '.$search);
+		$username = $this->getState('filter.username');
+		if (!empty($username)) {
+			$username = $db->Quote('%'.$db->escape($username, true).'%');
+			$query->where('a.username LIKE ' . $username . ' OR a.name LIKE ' . $username);
 		}
 
 		// Filter by email.
-		$search = $this->getState('filter.email');
-		if (!empty($search)) {
-			$search = $db->Quote('%'.$db->escape($search, true).'%');
-			$query->where('a.email LIKE '.$search);
+		$email = $this->getState('filter.email');
+		if (!empty($email)) {
+			$email = $db->Quote('%'.$db->escape($email, true).'%');
+			$query->where('a.email LIKE ' . $email);
 		}
 
 		// Filter by signature.
 		$filter = $this->getState('filter.signature');
-		if ($filter !== null) {
+		if ($filter !== null  && $search===null) {
 			if ($filter) $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
 			else $query->where("ku.signature={$db->quote('')} OR ku.signature IS NULL");
 		}
@@ -218,6 +218,52 @@ class KunenaAdminModelUsers extends JModelList {
 
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
+	}
+
+	/**
+	 * Method to get User objects of data items.
+	 *
+	 * @return  KunenaUser  List of KunenaUser objects found.
+	 *
+	 * @since   3.0
+	*/
+	public function getItems() {
+		// Get a storage key.
+		$store = $this->getStoreId();
+
+		// Try to load the data from internal storage.
+		if (isset($this->cache[$store])) {
+			return $this->cache[$store];
+		}
+
+		// Load the list items.
+		$query = $this->_getListQuery();
+		$items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			 $this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		$instances = array();
+		$e_userids = array();
+		foreach ( $items as $user ) {
+			$e_userids[] = $user->id;
+			$user->blocked = $user->block;
+			$instance = new KunenaUser (false);
+			$instance->setProperties ( $user );
+			$instance->exists(true);
+			$instances [$instance->userid] = $instance;
+		}
+
+		// Preload avatars if configured
+		$avatars = KunenaFactory::getAvatarIntegration();
+		$avatars->load($e_userids);
+
+		// Add the items to the internal cache.
+		$this->cache[$store] = $instances;
+		return $this->cache[$store];
 	}
 
 	/**

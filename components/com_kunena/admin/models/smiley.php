@@ -57,12 +57,12 @@ class KunenaAdminModelSmiley extends KunenaModel {
 		$selected = $this->getSmiley();
 
 		$smileypath = $template->getSmileyPath();
-		$files1 = (array) JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
+		$files1 = (array) KunenaFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
 		$files1 = (array) array_flip($files1);
 		foreach ($files1 as $key=>&$path) $path = $smileypath.$key;
 
 		$smileypath = 'media/kunena/emoticons/';
-		$files2 = (array) JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
+		$files2 = (array) KunenaFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
 		$files2 = (array) array_flip($files2);
 		foreach ($files2 as $key=>&$path) $path = $smileypath.$key;
 

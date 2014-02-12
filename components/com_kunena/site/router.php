@@ -79,6 +79,7 @@ function KunenaBuildRoute(&$query) {
 
 	// We may have catid also in the menu item (it will not be in URI)
 	$numeric = !empty ( $menuitem->query ['catid'] );
+	$pos = 0;
 
 	// Support URIs like: /forum/category
 	if (!empty ( $query ['catid'] ) && ($view == 'category' || $view == 'topic' || $view == 'home')) {
@@ -93,6 +94,12 @@ function KunenaBuildRoute(&$query) {
 			// This segment fully defines category view so the variable is no longer needed
 			if ($view == 'category') {
 				unset ( $query ['view'] );
+			}
+		} elseif ($query['catid'] == '@') {
+			$numeric = true;
+			$segments[] = '%'.++$pos.'$s';
+			if ($view == 'category') {
+				unset($query['view']);
 			}
 		}
 		unset ( $query ['catid'] );
@@ -112,8 +119,14 @@ function KunenaBuildRoute(&$query) {
 			if ($view == 'topic') {
 				unset ( $query ['view'] );
 			}
+		} elseif ($query['id'] == '@') {
+			$segments[] = '%'.++$pos.'$s';
+			// This segment fully defines topic view so the variable is no longer needed
+			if ($view == 'topic') {
+				unset($query['view']);
+			}
 		}
-		unset ( $query ['id'] );
+		unset($query['id']);
 	} else {
 		// No id available, do not use numeric variable for mesid
 		$numeric = false;
@@ -133,14 +146,22 @@ function KunenaBuildRoute(&$query) {
 
 	// Support URIs like: /forum/category/123-topic/reply/124
 	if (isset ( $query ['mesid'] ) && $numeric) {
-		$segments [] = (int) $query ['mesid'];
-		unset ( $query ['mesid'] );
+		if ($query['mesid'] == '@') {
+			$segments[] = '%'.++$pos.'$s';
+		} else {
+			$segments[] = (int) $query['mesid'];
+		}
+		unset($query['mesid']);
 	}
 
 	// Support URIs like: /forum/user/128-matias
-	if (isset ( $query ['userid'] ) && $view == 'user') {
-		$segments [] = (int) $query ['userid'] .'-'.KunenaRoute::stringURLSafe ( KunenaUserHelper::get((int)$query ['userid'])->getName() );
-		unset ( $query ['userid'] );
+	if (isset($query['userid']) && $view == 'user') {
+		if ($query['userid'] == '@') {
+			$segments[] = '%'.++$pos.'$s';
+		} else {
+			$segments[] = (int) $query['userid'] .'-'.KunenaRoute::stringURLSafe(KunenaUserHelper::get((int)$query['userid'])->getName());
+		}
+		unset($query['userid']);
 	}
 
 	unset ( $query ['view'], $query ['layout'] );
@@ -151,6 +172,10 @@ function KunenaBuildRoute(&$query) {
 			$segments [] = "{$var}-{$query[$var]}";
 			unset ( $query [$var] );
 		}
+	}
+
+	if (isset($query['start']) && $query['start'] == '@') {
+		$query['start'] = '%'.++$pos.'$d';
 	}
 
 	KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;
@@ -250,6 +275,10 @@ function KunenaParseRoute($segments) {
 	}
 	if (empty($vars ['layout'])) $vars ['layout'] = 'default';
 	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
+
+	foreach ($vars as $var => $value) {
+		KunenaRoute::$current->setVar($var, $value);
+	}
 
 	return $vars;
 }

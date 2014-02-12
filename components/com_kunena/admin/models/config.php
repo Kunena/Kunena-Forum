@@ -162,7 +162,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['userlist_joindate'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_userlist_joindate', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_joindate );
 		$lists ['userlist_lastvisitdate'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_userlist_lastvisitdate', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_lastvisitdate );
 		$lists ['userlist_userhits'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_userhits );
-		$lists ['usernamechange'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_usernamechange', 'class="inputbox" size="1"', 'value', 'text', $this->config->usernamechange );
 		$lists ['reportmsg'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $this->config->reportmsg );
 		$lists ['captcha'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $this->config->captcha );
 		$lists ['mailfull'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailfull );
@@ -380,10 +379,26 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['iptracking'] = JHtml::_('select.genericlist', $yesno, 'cfg_iptracking', 'class="inputbox" size="1"', 'value', 'text', $this->config->iptracking);
 
 		// Added new options into Kunena 3.0.0
-		$config = JFactory::getConfig();
 		$lists ['autolink'] = JHtml::_('select.genericlist', $yesno, 'cfg_autolink', 'class="inputbox" size="1"', 'value', 'text', $this->config->autolink);
 		$lists ['access_component'] = JHtml::_('select.genericlist', $yesno, 'cfg_access_component', 'class="inputbox" size="1"', 'value', 'text', $this->config->access_component);
-		$lists ['componentUrl'] = preg_replace('|/+|', '/', JUri::root() . ($config->get('sef_rewrite') ? '' : 'index.php'). ($config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
+		$lists ['componentUrl'] = preg_replace('|/+|', '/', JUri::root() . ($this->config->get('sef_rewrite') ? '' : 'index.php'). ($this->config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
+
+		// Added new options into Kunena 3.1.0
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('version')->from('#__kunena_version')->order('id');
+		$db->setQuery($query, 0, 1);
+		$lists['legacy_urls_version'] = $db->loadResult();
+
+		$options = array();
+		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+		$options[] = JHtml::_('select.option', '1', 'Kunena 1.x');
+		$lists['legacy_urls_desc'] = version_compare($lists['legacy_urls_version'], '2.0', '<') ? JText::_('COM_KUNENA_CFG_LEGACY_URLS_DESC_YES') : JText::_('COM_KUNENA_CFG_LEGACY_URLS_DESC_NO');
+		$lists['legacy_urls'] = JHtml::_('select.genericlist', $options, 'cfg_legacy_urls', 'class="inputbox" size="1"', 'value', 'text', $this->config->legacy_urls);
+		$lists['attachment_protection'] = JHtml::_('select.genericlist', $yesno, 'cfg_attachment_protection', 'class="inputbox" size="1"', 'value', 'text', $this->config->attachment_protection);
+
+		// Option to select if the stats link need to be showed for all users or only for registred users
+		$lists ['statslink_allowed'] = JHtml::_('select.genericlist', $yesno, 'cfg_statslink_allowed', 'class="inputbox" size="1"', 'value', 'text', $this->config->statslink_allowed);
 
 		return $lists;
 	}

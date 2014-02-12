@@ -16,9 +16,11 @@ defined ( '_JEXEC' ) or die ();
 class KunenaViewTopic extends KunenaView {
 	public $topicButtons = null;
 	public $messageButtons = null;
+	public $inline_attachments = array();
 
 	var $poll = null;
 	var $mmm = 0;
+	var $k = 0;
 	var $cache = true;
 
 	public function displayDefault($tpl = null) {
@@ -75,7 +77,7 @@ class KunenaViewTopic extends KunenaView {
 		// If page does not exist, redirect to the last page (no redirect in embedded mode).
 		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start')) {
 			while (@ob_end_clean());
-			$this->app->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
+			$this->app->redirect($this->topic->getUrl(null, false, (int)(($this->total-1) / $this->state->get('list.limit'))));
 		}
 
 		// Run events
@@ -114,7 +116,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->_prepareDocument('default');
 
-		$this->display($tpl);
+		$this->render('Topic/Item', $tpl);
 		$this->topic->markRead ();
 	}
 
@@ -157,7 +159,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->captchaHtml = $captcha->getHtml();
 			if ( !$this->captchaHtml ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->redirectBack();
+				return;
 			}
 		}
 
@@ -216,7 +219,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($arraypollcatid) $this->poll = $this->topic->getPoll();
 
@@ -224,7 +227,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	protected function DisplayReply($tpl = null) {
@@ -235,7 +238,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->captchaHtml = $captcha->getHtml();
 			if ( !$this->captchaHtml ) {
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
-				$this->redirectBack ();
+				$this->redirectBack();
+				return;
 			}
 		}
 
@@ -276,13 +280,13 @@ class KunenaViewTopic extends KunenaView {
 		$this->_prepareDocument('reply');
 		$this->action = 'post';
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	protected function displayEdit($tpl = null) {
@@ -324,7 +328,7 @@ class KunenaViewTopic extends KunenaView {
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($saved) {
 			// Update message contents
@@ -335,7 +339,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->display($tpl);
+		$this->render('Topic/Edit', $tpl);
 	}
 
 	function displayVote($tpl = null) {
@@ -359,7 +363,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->usersvoted = $this->get('PollUsers');
 		$this->voted = $this->get('MyVotes');
 
-		$this->display($tpl);
+		$this->render('Topic/Vote', $tpl);
 	}
 
 	protected function displayReport($tpl = null) {
@@ -386,7 +390,7 @@ class KunenaViewTopic extends KunenaView {
 			}
 			$this->topic = $this->message->getTopic();
 		}
-		$this->display($tpl);
+		$this->render('Topic/Report', $tpl);
 	}
 
 	protected function displayModerate($tpl = null) {
@@ -452,7 +456,7 @@ class KunenaViewTopic extends KunenaView {
 			if (KunenaError::checkDatabaseError()) return;
 		}
 
-		$this->display($tpl);
+		$this->render('Topic/Moderate', $tpl);
 	}
 
 	function displayPoll() {
@@ -465,8 +469,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->topic = $this->get ( 'Topic' );
 		}
 		$this->poll = $this->get('Poll');
-		$this->usercount = $this->get('PollUserCount');
 		$this->usersvoted = $this->get('PollUsers');
+		$this->usercount = count($this->usersvoted);
 		$this->voted = $this->get('MyVotes');
 
 		$this->users_voted_list = array();
@@ -489,6 +493,30 @@ class KunenaViewTopic extends KunenaView {
 
 		if ($this->voted || !$this->topic->authorise('poll.vote', null, true)) echo $this->loadTemplateFile("pollresults");
 		else echo $this->loadTemplateFile("poll");
+	}
+
+	function getCodeTypes() {
+		if (!$this->config->highlightcode) return null;
+
+		$paths = array(
+			JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi',
+			JPATH_ROOT.'/plugins/content/geshi/geshi/geshi'
+		);
+		foreach ($paths as $path) {
+			if (!is_dir($path)) continue;
+
+			$files = KunenaFolder::files($path, ".php");
+			$options = array();
+			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
+			foreach ($files as $file) {
+				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
+			}
+			$javascript = "document.id('helpbox').set('value', '".JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true)."')";
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" onmouseover="'.$javascript.'"' , 'value', 'text', '-1' );
+
+			return $list;
+		}
+		return null;
 	}
 
 	function displayMessageProfile() {
@@ -553,7 +581,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 
 				$contents = trim(KunenaFactory::getProfile()->showProfile($this, $params));
-				if (!$contents) $contents = $this->loadTemplateFile('profile');
+				if (!$contents) $contents = (string) $this->loadTemplateFile('profile');
 				$contents .= implode(' ', $dispatcher->trigger('onKunenaDisplay', array ('topic.profile', $this, $params)));
 
 				// FIXME: enable caching after fixing the issues (also external profile stuff affects this)
@@ -638,7 +666,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
-		return $this->loadTemplateFile('actions');
+		return (string) $this->loadTemplateFile('actions');
 	}
 
 	function displayMessageActions() {
@@ -694,7 +722,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
-		return $this->loadTemplateFile("message_actions");
+		return (string) $this->loadTemplateFile("message_actions");
 	}
 
 	function displayMessage($id, $message, $template=null) {
@@ -732,10 +760,17 @@ class KunenaViewTopic extends KunenaView {
 				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
 				else $canUnthankyou=false;
 
+				$userids_thankyous = array();
 				foreach( $thankyous as $userid=>$time){
+					$userids_thankyous[] = $userid;
+				}
+
+				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
+
+				foreach($loaded_users as $userid=>$user) {
 					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
-					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
+					$this->thankyou[] = $loaded_users[$userid]->getLink().$thankyou_delete;
 				}
 			}
 		}
@@ -787,7 +822,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->msgsuffix = '-new';
 			}
 
-			$contents = $this->loadTemplateFile($template);
+			$contents = (string) $this->loadTemplateFile($template);
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
 			// FIXME: enable caching after fixing the issues
 			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
@@ -825,17 +860,21 @@ class KunenaViewTopic extends KunenaView {
 		}
 	}
 
-	function getPagination($maxpages) {
+	function getPaginationObject($maxpages) {
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
-        $uri = KunenaRoute::normalize(null, true);
-        if ($uri) {
-            $uri->delVar('mesid');
-            $pagination->setUri($uri);
-        }
+		$uri = KunenaRoute::normalize(null, true);
+		if ($uri) {
+			$uri->delVar('mesid');
+			$pagination->setUri($uri);
+		}
 
-        return $pagination->getPagesLinks();
+		return $pagination;
+	}
+
+	function getPagination($maxpages) {
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	// Helper functions
@@ -851,8 +890,9 @@ class KunenaViewTopic extends KunenaView {
 			return;
 
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
+		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count ( $this->history );
-		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
+		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = array();
 		foreach ($this->history as $message) {
 			$userlist[(int) $message->userid] = (int) $message->userid;
@@ -873,10 +913,35 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplateFile ( 'history' );
 	}
 
-	function redirectBack() {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
-		while (@ob_end_clean());
-		$this->app->redirect ( $httpReferer );
+	/**
+	 * Redirect back to the referrer page.
+	 *
+	 * If there's no referrer or it's external, Kunena will return to forum home page.
+	 * Also redirects back to tasks are prevented.
+	 *
+	 * @param string $anchor
+	 */
+	protected function redirectBack($anchor = '') {
+		$default = JUri::base() . ($this->app->isSite() ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
+		$referrer = $this->input->server->getString('HTTP_REFERER');
+
+		$uri = JUri::getInstance($referrer ? $referrer : $default);
+		if (JUri::isInternal($uri->toString())) {
+			// Parse route.
+			$vars = $this->app->getRouter()->parse($uri);
+			$uri = new JUri('index.php');
+			$uri->setQuery($vars);
+
+			// Make sure we do not return into a task.
+			$uri->delVar('task');
+			$uri->delVar(JSession::getFormToken());
+		} else {
+			$uri = JUri::getInstance($default);
+		}
+
+		if ($anchor) $uri->setFragment($anchor);
+
+		$this->app->redirect(JRoute::_($uri->toString()));
 	}
 
 	public function getNumLink($mesid, $replycnt) {

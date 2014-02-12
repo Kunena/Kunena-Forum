@@ -205,4 +205,3 @@ $cols = 1;
 		</tfoot>
 	</table>
 </form>
-

@@ -32,7 +32,11 @@ abstract class KunenaUserHelper {
 
 	public static function initialize() {
 		$id = JFactory::getUser()->id;
-		self::$_me = self::$_instances [$id] = new KunenaUser ( $id );
+		self::$_me = self::$_instances [$id] = new KunenaUser($id);
+
+		// Initialize avatar if configured.
+		$avatars = KunenaFactory::getAvatarIntegration();
+		$avatars->load(array($id));
 	}
 
 	/**
@@ -71,6 +75,10 @@ abstract class KunenaUserHelper {
 		}
 		else if ($reload || empty ( self::$_instances [$id] )) {
 			self::$_instances [$id] = new KunenaUser ( $id );
+
+			// Preload avatar if configured.
+			$avatars = KunenaFactory::getAvatarIntegration();
+			$avatars->load(array($id));
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

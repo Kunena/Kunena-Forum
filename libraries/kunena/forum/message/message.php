@@ -592,7 +592,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return bool
 	 */
 	public function uploadAttachment($tmpid, $postvar, $catid=null) {
-		$attachment = new KunenaAttachment();
+		$attachment = new KunenaAttachment;
 		$attachment->userid = $this->userid;
 		$success = $attachment->upload($postvar, $catid);
 		$this->_attachments_add[$tmpid] = $attachment;

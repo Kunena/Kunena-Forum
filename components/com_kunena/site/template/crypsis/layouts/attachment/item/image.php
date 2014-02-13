@@ -21,8 +21,6 @@ $attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-bu
 $attributesImg = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
 
-<div class="kmsgimage">
-	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
-	</a>
-</div>
+<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>"<?php echo $attributesLink; ?>>
+	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
+</a>

@@ -122,8 +122,8 @@ defined ( '_JEXEC' ) or die ();
 				<input type="hidden" name="number_total_options" id="numbertotal"
 						value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			</div>
-		<?php endif; ?>
-		<?php
+		<?php endif;
+
 			if (($codeTypes = $this->getCodeTypes())) :
 			?>
 			<div id="kbbcode-code-options" style="display: none;">
@@ -235,6 +235,8 @@ if (!$this->config->disemoticons) : ?>
 	<div class="controls">
 		<input type="text" name="helpbox" id="helpbox" size="88" class="input-xxlarge required" disabled="disabled"
 		value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" />
+		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $this->config->disemoticons ?>" />
 	</div>
 </div>
 <div class="control-group">

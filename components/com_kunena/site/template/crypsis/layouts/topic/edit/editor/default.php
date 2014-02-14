@@ -124,6 +124,20 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		<?php endif;
 
+		if (!$this->config->disemoticons) : ?>
+			<div class="control-group" id="kbbcode-smilies-options" style="display: none;">
+				<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_EMOTICONS_LABEL') ?></label>
+				<div class="controls">
+					<?php
+					$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
+					foreach ( $emoticons as $emo_code=>$emo_url ) {
+						echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
+					}
+					?>
+				</div>
+			</div>
+		<?php endif;
+
 			if (($codeTypes = $this->getCodeTypes())) :
 			?>
 			<div id="kbbcode-code-options" style="display: none;">
@@ -215,20 +229,7 @@ defined ( '_JEXEC' ) or die ();
 </tr>
 <?php
 		}
-
-if (!$this->config->disemoticons) : ?>
-	<div class="control-group">
-		<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_EMOTICONS_LABEL') ?></label>
-		<div class="controls">
-			<?php
-			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
-			foreach ( $emoticons as $emo_code=>$emo_url ) {
-				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
-			}
-			?>
-		</div>
-	</div>
-<?php endif; ?>
+?>
 
 <!-- end of extendable secondary toolbar -->
 <div class="control-group">

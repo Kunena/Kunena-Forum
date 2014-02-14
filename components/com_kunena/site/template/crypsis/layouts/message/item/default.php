@@ -15,9 +15,9 @@ $signature = $this->profile->getSignature();
 $attachments = $this->message->getAttachments();
 $avatarname = $this->profile->getname();
 ?>
-<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
+<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
 			<span class="icon icon-clock"></span>
-				<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
+				<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>			
 				<a href="#<?php echo $this->message->id; ?>">#<?php echo $this->location; ?></a>
 </small>
 <div class="badger-left badger-info" data-badger="<?php echo (!$isReply) ? $avatarname .' created the topic: ' : $avatarname . ' replied the topic: '; ?>

@@ -68,7 +68,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 
 				if ($avatar)
 				{
-					echo $author->getLink($avatar);
+					echo $author->getLink();
 				}
 			}
 			?>

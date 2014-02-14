@@ -57,7 +57,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
-				<?php if (!empty($this->actions)) : ?>
+				<?php if (!empty($this->topicActions)) : ?>
 				<td class="span1 center">
 					<label>
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />
@@ -89,7 +89,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 		?>
 		<tfoot>
 		<tr>
-			<td class="center">
+			<td class="center hidden-phone">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<span class="divider"></span>
@@ -98,7 +98,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 
-			<td colspan="3">
+			<td colspan="6">
 
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
@@ -123,10 +123,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php endif; ?>
 
 				<?php endif; ?>
-
-				<div class="pull-right">
-					<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-				</div>
+                
 			</td>
 		</tr>
 		</tfoot>
@@ -134,6 +131,10 @@ $colspan = empty($this->actions) ? 5 : 6;
 	</table>
 
 </form>
+
+<div class="pull-right">
+	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+</div>
 
 <?php
 if (!empty($this->moderators))

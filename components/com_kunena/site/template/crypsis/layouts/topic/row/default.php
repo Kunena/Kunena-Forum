@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getAuthor()->getAvatarImage('img-polaroid', 48);
+$avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
 
 $cols = empty($this->checkbox) ? 5 : 6;
 
@@ -78,7 +78,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="span1 center hidden-phone">
 		<?php if ($avatar) : ?>
 		<span>
-			<?php echo $topic->getAuthor()->getLink($avatar); ?>
+			<?php echo $topic->getAuthor()->getLink(); ?>
 		</span>
 		<?php endif; ?>
 	</td>
@@ -91,18 +91,22 @@ if (!empty($this->spacing)) : ?>
 	</td>
 	
 	<td class="span3">
-		<div class="klatest-post-info">
-			<?php if (!empty($this->topic->avatar)) : ?>
-			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
-			<?php endif; ?>
-
-			<span class="ktopic-latest-post">
+			<?php if ($avatar) : ?>
+						<div class="pull-left hidden-phone" style="padding-left:3%;">
+							<?php echo $avatar; ?>
+						</div>
+						<div class="last-post-message">
+						<?php else :	?>
+						<div>
+					<?php endif; ?>
+			<div class="ktopic-latest-post">
 			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
 
 			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
 			<br>
 			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
-			</span>
+			</div>
+		</div>
 		</div>
 	</td>
 

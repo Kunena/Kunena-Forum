@@ -136,6 +136,7 @@ defined ( '_JEXEC' ) or die ();
 					?>
 				</div>
 			</div>
+		</div>
 		<?php endif;
 
 			if (($codeTypes = $this->getCodeTypes())) :
@@ -227,9 +228,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 	</td>
 </tr>
-<?php
-		}
-?>
+<?php } ?>
 
 <!-- end of extendable secondary toolbar -->
 <div class="control-group">
@@ -251,7 +250,6 @@ defined ( '_JEXEC' ) or die ();
 	<!-- Hidden preview placeholder -->
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
-
 <?php if ($this->message->exists()) : ?>
 <div class="clr"> </div>
 <fieldset>
@@ -259,4 +257,3 @@ defined ( '_JEXEC' ) or die ();
 	<input class="kinputbox" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>" />
 </fieldset>
 <?php endif; ?>
-

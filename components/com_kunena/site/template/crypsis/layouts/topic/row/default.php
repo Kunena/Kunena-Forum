@@ -52,7 +52,7 @@ if (!empty($this->spacing)) : ?>
 			<?php
 			if ($topic->unread) {
 				echo $this->getTopicLink($topic, 'unread',
-					'<sup dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 			?>
 		</div>
@@ -74,21 +74,22 @@ if (!empty($this->spacing)) : ?>
 			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 		</div>
 	</td>
+	
+	<td class="span1 center hidden-phone">
+		<?php if ($avatar) : ?>
+		<span>
+			<?php echo $topic->getAuthor()->getLink($avatar); ?>
+		</span>
+		<?php endif; ?>
+	</td>
+	
 	<td class="span1 hidden-phone center">
 			<?php echo  $this->formatLargeNumber($topic->hits); ?>
 		</td>
 	<td class="span1 hidden-phone center">
 			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
-	<td class="span1 center hidden-phone">
-
-		<?php if ($avatar) : ?>
-		<span>
-			<?php echo $topic->getAuthor()->getLink($avatar); ?>
-		</span>
-		<?php endif; ?>
-
-	</td>
+	
 	<td class="span3">
 		<div class="klatest-post-info">
 			<?php if (!empty($this->topic->avatar)) : ?>

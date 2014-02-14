@@ -62,16 +62,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 	</td>
 	<td class="span1 center">
 		<div>
-			<?php
-			if ($config->avataroncat > 0) {
-				$avatar = $author->getAvatarImage('img-polaroid', 48);
-
-				if ($avatar)
-				{
-					echo $author->getLink();
-				}
-			}
-			?>
+			<?php echo $author->getLink(); ?>
 		</div>
 	</td>
 	<td class="span3">

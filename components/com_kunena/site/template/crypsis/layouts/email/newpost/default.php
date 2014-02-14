@@ -10,7 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
-// New post email for subscribers (plain text)
+// New post email for subscribers (HTML)
+
+$this->mail->isHtml(true);
 
 $author = $this->message->getAuthor();
 $config = KunenaConfig::getInstance();
@@ -24,7 +26,6 @@ $more = ($this->once ?
 	JText::_($this->message->parent? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
 		'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE'). "\n" : '');
 
-// New post email for subscribers (HTML)
 ?>
 <h2><?php echo $msg1 . " " . $config->board_title; ?></h2>
 
@@ -45,7 +46,6 @@ $more = ($this->once ?
 <?php endif; ?>
 <div><?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?></div>
 
------=====-----
 <?php
 // Email as plain text:
 
@@ -57,7 +57,7 @@ $full = !$config->mailfull ? '' : <<<EOS
 
 EOS;
 
-$text = <<<EOS
+$alt = <<<EOS
 {$msg1} {$config->board_title}
 
 {$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
@@ -70,4 +70,4 @@ URL : {$this->messageUrl}
 
 {$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
 EOS;
-echo $text;
+$this->mail->AltBody = $alt;

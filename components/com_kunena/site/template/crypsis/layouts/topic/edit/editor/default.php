@@ -107,7 +107,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo JHtml::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN', true).'\')')); ?>
 				<div id="kpoll-alert-error" class="alert" style="display:none;">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<strong>Warning!</strong> <?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>
+					<strong><?php echo JText::_('COM_KUNENA_POLL_WARNING_LABEL') ?></strong> <?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>
 				</div>
 				<?php
 					if($this->poll->exists()) {
@@ -122,21 +122,6 @@ defined ( '_JEXEC' ) or die ();
 				<input type="hidden" name="number_total_options" id="numbertotal"
 						value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			</div>
-		<?php endif;
-
-		if (!$this->config->disemoticons) : ?>
-		<div id="kbbcode-smilies-options" style="display: none;">
-			<label class="control-label">Emoticons</label>
-			<div class="controls">
-
-			<?php
-				$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
-				foreach ( $emoticons as $emo_code=>$emo_url ) {
-					echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
-				}
-			?>
-			</div>
-		</div>
 		<?php endif;
 
 			if (($codeTypes = $this->getCodeTypes())) :
@@ -228,7 +213,22 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 	</td>
 </tr>
-<?php } ?>
+<?php
+		}
+
+if (!$this->config->disemoticons) : ?>
+	<div class="control-group">
+		<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_EMOTICONS_LABEL') ?></label>
+		<div class="controls">
+			<?php
+			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
+			foreach ( $emoticons as $emo_code=>$emo_url ) {
+				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
+			}
+			?>
+		</div>
+	</div>
+<?php endif; ?>
 
 <!-- end of extendable secondary toolbar -->
 <div class="control-group">

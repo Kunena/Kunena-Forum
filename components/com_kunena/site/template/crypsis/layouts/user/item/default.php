@@ -16,10 +16,7 @@ $tabs = $this->getTabs();
 <h2>
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
-	<sup class="label label-<?php echo $this->profile->isOnline('success', 'important') ?>">
-		<?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-	</sup>
-
+	
 	<?php if ($this->profile->isAuthorised('edit')) : ?>
 	<?php echo $this->profile->getLink(
 		'<i class="icon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
@@ -35,7 +32,10 @@ echo $this->subLayout('User/Item/Summary')
 	->set('config', $this->config);
 ?>
 
-<div class="tabs">
+<div class="tabs hidden-phone">
+ <br />
+<br />
+
 	<ul class="nav nav-tabs">
 
 		<?php foreach ($tabs as $name => $tab) : ?>

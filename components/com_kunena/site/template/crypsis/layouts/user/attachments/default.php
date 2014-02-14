@@ -80,7 +80,7 @@ $attachments = $this->attachments;
 						: JUri::root(true).'/media/kunena/icons/file.png'; ?>" alt="" title="" />
 				</td>
 				<td>
-					<?php echo $attachment->getFilename(); ?>
+					<?php echo $attachment->getShortName(5, 5); ?>
 				</td>
 				<td>
 					<?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>

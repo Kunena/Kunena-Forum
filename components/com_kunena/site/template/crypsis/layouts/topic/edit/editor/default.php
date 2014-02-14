@@ -230,7 +230,7 @@ defined ( '_JEXEC' ) or die ();
 </tr>
 <?php } ?>
 
-if (!$this->config->disemoticons) : ?>
+<?php if (!$this->config->disemoticons) : ?>
 	<div class="control-group">
 		<label class="control-label">Emoticons</label>
 		<div class="controls">

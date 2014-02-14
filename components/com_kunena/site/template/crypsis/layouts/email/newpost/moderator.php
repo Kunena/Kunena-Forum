@@ -10,12 +10,13 @@
  **/
 defined('_JEXEC') or die;
 
-// New post email for moderators (plain text)
+// New post email for subscribers (HTML)
+
+$this->mail->isHtml(true);
 
 $config = KunenaConfig::getInstance();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
 $author = $this->message->getAuthor();
-// New post email for subscribers (HTML)
 ?>
 
 <h2><?php echo JText::_('COM_KUNENA_POST_EMAIL_MOD1') . " " . $config->board_title; ?></h2>
@@ -35,7 +36,6 @@ $author = $this->message->getAuthor();
 
 <div><?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?></div>
 
------=====-----
 <?php
 // Email as plain text:
 
@@ -47,7 +47,7 @@ $full = !$config->mailfull ? '' : <<<EOS
 
 EOS;
 
-$text = <<<EOS
+$alt = <<<EOS
 {$this->text('COM_KUNENA_POST_EMAIL_MOD1')} {$config->board_title}
 
 {$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}
@@ -60,4 +60,4 @@ URL : {$this->messageUrl}
 
 {$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
 EOS;
-echo $text;
+$this->mail->AltBody = $alt;

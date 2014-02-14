@@ -107,7 +107,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo JHtml::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN', true).'\')')); ?>
 				<div id="kpoll-alert-error" class="alert" style="display:none;">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<strong>Warning!</strong> <?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>
+					<strong><?php echo JText::_('COM_KUNENA_POLL_WARNING_LABEL') ?></strong> <?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>
 				</div>
 				<?php
 					if($this->poll->exists()) {
@@ -122,8 +122,8 @@ defined ( '_JEXEC' ) or die ();
 				<input type="hidden" name="number_total_options" id="numbertotal"
 						value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			</div>
-		<?php endif; ?>
-		<?php
+		<?php endif;
+
 			if (($codeTypes = $this->getCodeTypes())) :
 			?>
 			<div id="kbbcode-code-options" style="display: none;">
@@ -218,7 +218,7 @@ defined ( '_JEXEC' ) or die ();
 
 if (!$this->config->disemoticons) : ?>
 	<div class="control-group">
-		<label class="control-label">Emoticons</label>
+		<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_EMOTICONS_LABEL') ?></label>
 		<div class="controls">
 			<?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
@@ -235,6 +235,8 @@ if (!$this->config->disemoticons) : ?>
 	<div class="controls">
 		<input type="text" name="helpbox" id="helpbox" size="88" class="input-xxlarge required" disabled="disabled"
 		value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" />
+		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $this->config->disemoticons ?>" />
 	</div>
 </div>
 <div class="control-group">

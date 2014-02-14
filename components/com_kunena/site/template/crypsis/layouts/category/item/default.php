@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
+$colspan = empty($this->actions) ? 5 : 6;
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
@@ -35,32 +36,27 @@ $categoryActions = $this->getCategoryActions();
 	<table class="table table-striped table-bordered table-hover table-condensed">
 		<thead>
 			<tr>
-				<td colspan="1" class="center">
+				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>
-				<td colspan="1">
-					<ul class="inline no-margin">
-
-						<?php if ($categoryActions) : ?>
-						<li class="hidden-phone">
-							<?php echo implode($categoryActions); ?>
-						</li>
-						<?php endif; ?>
-					</ul>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<?php if (!empty($this->topics)) : ?>
-				<td colspan="2" class="center">
-					<ul class="inline pull-right no-margin">
-
-					  <li>
-							<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-						</li>
-					</ul>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?>
 				</td>
-				<?php endif; ?>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
+				</td>
+				<td class="span1 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
+				</td>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
 				<?php if (!empty($this->topicActions)) : ?>
 				<td class="span1 center">
 					<label>
@@ -86,14 +82,14 @@ $categoryActions = $this->getCategoryActions();
 				->set('spacing', $previous && $previous->ordering != $topic->ordering)
 				->set('position', 'kunena_topic_' . $position)
 				->set('checkbox', !empty($this->topicActions))
-				->setLayout('table_icons');
+				->setLayout('category');
 			$previous = $topic;
 		}
 
 		?>
 		<tfoot>
 		<tr>
-			<td class="center">
+			<td class="center hidden-phone">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<span class="divider"></span>
@@ -102,7 +98,7 @@ $categoryActions = $this->getCategoryActions();
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 
-			<td colspan="3">
+			<td colspan="6">
 
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
@@ -127,10 +123,7 @@ $categoryActions = $this->getCategoryActions();
 				<?php endif; ?>
 
 				<?php endif; ?>
-
-				<div class="pull-right">
-					<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-				</div>
+                
 			</td>
 		</tr>
 		</tfoot>
@@ -138,6 +131,10 @@ $categoryActions = $this->getCategoryActions();
 	</table>
 
 </form>
+
+<div class="pull-right">
+	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+</div>
 
 <?php
 if (!empty($this->moderators))

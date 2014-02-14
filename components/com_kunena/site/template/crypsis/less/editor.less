@@ -228,9 +228,8 @@ width:80px;
 .ktxtarea {
 margin-left:-80px
 }
-input[type=radio] {
+#postform input[type=radio] {
 	display:none; 
-	margin:10px;
 }
 input[type=radio] + label {
 	display:inline-block;
@@ -241,5 +240,20 @@ input[type=radio] + label {
 }
 input[type=radio]:checked + label { 
 	background-image: none;
-	background-color:rgba(0, 0, 0, 0.1);
+	background-color:rgba(0, 0, 0, 0.07);
+	border:1px solid rgba(0, 0, 0, 0.2);;
+	border-radius:4px;
+}
+label img{
+    pointer-events: none;
+}
+#kbbcode-smilies-button {
+    background-position: -108px -18px;
+}
+.kbbcode-preview-bottom {
+  border: 1px solid #dddddd;
+	padding:4px 12px;
+	margin:10px;
+	border-radius:4px;
+	min-height:150px;
 }

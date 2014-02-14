@@ -71,7 +71,6 @@ if (!empty($this->spacing)) : ?>
 				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
 			</span>
 			<?php endif; ?>
-			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 		</div>
 	</td>
 	
@@ -91,22 +90,18 @@ if (!empty($this->spacing)) : ?>
 	</td>
 	
 	<td class="span3">
-			<?php if ($avatar) : ?>
-						<div class="pull-left hidden-phone" style="padding-left:3%;">
-							<?php echo $avatar; ?>
-						</div>
-						<div class="last-post-message">
-						<?php else :	?>
-						<div>
-					<?php endif; ?>
-			<div class="ktopic-latest-post">
+		<div class="klatest-post-info">
+			<?php if (!empty($this->topic->avatar)) : ?>
+			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
+			<?php endif; ?>
+
+			<span class="ktopic-latest-post">
 			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
 
 			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
 			<br>
 			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
-			</div>
-		</div>
+			</span>
 		</div>
 	</td>
 

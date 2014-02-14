@@ -124,6 +124,21 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		<?php endif;
 
+		if (!$this->config->disemoticons) : ?>
+		<div id="kbbcode-smilies-options" style="display: none;">
+			<label class="control-label">Emoticons</label>
+			<div class="controls">
+
+			<?php
+				$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
+				foreach ( $emoticons as $emo_code=>$emo_url ) {
+					echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
+				}
+			?>
+			</div>
+		</div>
+		<?php endif;
+
 			if (($codeTypes = $this->getCodeTypes())) :
 			?>
 			<div id="kbbcode-code-options" style="display: none;">
@@ -213,12 +228,11 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 	</td>
 </tr>
-<?php
-		}
+<?php } ?>
 
 if (!$this->config->disemoticons) : ?>
 	<div class="control-group">
-		<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_EMOTICONS_LABEL') ?></label>
+		<label class="control-label">Emoticons</label>
 		<div class="controls">
 			<?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
@@ -245,12 +259,11 @@ if (!$this->config->disemoticons) : ?>
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span class="center" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></div>
 	<div class="controls">
-		<textarea class="input-xxlarge qreply" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="input-xxlarge qreply" placeholder="<?php echo JText::_('Enter here the message') ?>" name="message" id="kbbcode-message" rows="12" tabindex="3" required><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
+	<!-- Hidden preview placeholder -->
+	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
-
-<!-- Hidden preview placeholder -->
-<div id="kbbcode-preview" style="display: none;"></div>
 <?php if ($this->message->exists()) : ?>
 <div class="clr"> </div>
 <fieldset>

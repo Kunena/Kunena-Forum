@@ -13,24 +13,23 @@ defined('_JEXEC') or die;
 $colspan = empty($this->actions) ? 5 : 6;
 ?>
 
-<?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-<div class="pagination pull-right">
-	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
-</div>
-<?php endif; ?>
-<?php if (!empty($this->embedded)) : ?>
-<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-      method="post" target="_self" class="pull-right">
-	<?php $this->displayTimeFilter('sel'); ?>
-</form>
-<?php endif; ?>
 
-<h3>
-	<?php echo $this->escape($this->headerText); ?>
-	<span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
-	<span class="badge badge-success"><?php // To Do:: echo $this->topics->count->unread; ?></span>
+<h3> <?php echo $this->escape($this->headerText); ?> <span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
+<?php //To Do:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+		<div class="pull-right" style="font-size:60%">
+		<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+      method="post" target="_self" class="hidden-phone">
+				<?php $this->displayTimeFilter('sel'); ?>
+		</form>
+		</div>
 </h3>
-
+<div class="clearfix"></div>
+<span class="pull-left">
+		<?php echo $this->subLayout('Search/Button')->set('catid', 'all'); ?>
+	</span>
+<?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
+<div class="pagination pull-right"> <?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?> </div>
+<?php endif; ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 
@@ -63,7 +62,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
 				</td>
 				<td class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_TOPICLIST_AUTHOR_LABEL'); ?>
+				Author
 				</td>
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
@@ -95,29 +94,30 @@ $colspan = empty($this->actions) ? 5 : 6;
 						$options = array (JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
 						echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 					endif;?>
-					<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-					<?php endif; ?>
-				</td>
-			</tr>
-		</tfoot>
-		<?php endif; ?>
-
-		<tbody>
-			<?php
+										<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+										<?php endif; ?></td>
+						</tr>
+				</tfoot>
+				<?php endif; ?>
+				<tbody>
+						<?php
 			foreach ($this->topics as $i => $topic) {
+				?>
+								<?php
 				echo $this->subLayout('Topic/Row')
 					->set('topic', $topic)
 					->set('position', 'kunena_topic_' . $i)
 					->set('checkbox', !empty($this->actions));
+					?>
+						<?php
 			}
 			?>
-		</tbody>
-		<?php endif; ?>
-
-	</table>
+				</tbody>
+				<?php endif; ?>
+		</table>
 </form>
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-	<div class="pagination pull-right"><?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
+<div class="pagination pull-right"><?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
 <?php endif; ?>
 <div class="clearfix"></div>

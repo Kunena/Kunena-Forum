@@ -40,11 +40,11 @@ if (!empty($this->spacing)) : ?>
 			<?php if ($userTopic->posts) : ?>
 				<i class="icon-flag hasTooltip"><?php JText::_('COM_KUNENA_MYPOSTS'); ?></i>
 			<?php endif; ?>
-			
+
 			<?php if ($this->topic->attachments) : ?>
 				<i class="icon-flag-2 hasTooltip"><?php JText::_('COM_KUNENA_ATTACH'); ?></i>
 			<?php endif; ?>
-			
+
 			<?php if ($this->topic->poll_id) : ?>
 				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 			<?php endif; ?>
@@ -82,9 +82,13 @@ if (!empty($this->spacing)) : ?>
 	</td>
 	<td class="span1 center hidden-phone">
 
-		<?php if ($avatar) : ?>
+		<?php if ($avatar && KunenaConfig::getInstance()->avataroncat > 0) : ?>
 		<span>
 			<?php echo $topic->getAuthor()->getLink($avatar); ?>
+		</span>
+		<?php else : ?>
+		<span>
+			<?php echo $topic->getAuthor()->getLink($topic->getAuthor()->getName()); ?>
 		</span>
 		<?php endif; ?>
 

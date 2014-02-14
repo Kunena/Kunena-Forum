@@ -70,6 +70,8 @@ $cols = empty($this->checkbox) ? 4 : 5;
 				{
 					echo $author->getLink($avatar);
 				}
+			} else {
+				echo $author->getLink($author->getName());
 			}
 			?>
 		</div>

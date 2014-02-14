@@ -44,18 +44,6 @@ $colspan = empty($this->actions) ? 4 : 5;
 			</td>
 		</tr>
 		<?php else : ?>
-		<?php if (!empty($this->embedded)) : ?>
-		<thead>
-			<tr>
-				<td colspan="6">
-					<div class="pagination pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
-					<div class="clearfix"></div>
-				</td>
-			</tr>
-		</thead>
-		<?php endif; ?>
 <thead>
 			<tr>
 				<td class="span1 center hidden-phone">

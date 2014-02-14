@@ -35,15 +35,15 @@ active, a:focus {
 .kprofile .kinfo1 {
 	visibility: hidden;
 }
-.navbar .nav > li > a {
-	padding: 11px 8px 11px;
+.navbar-inner {
+	padding-left:0px;
 }
 .table th,
 .table td {
 	vertical-align: middle !important;
 }
-.navbar-inner {
-	border:1px solid rgba(255, 255, 255, 0.07);
+.navbar .nav > li > a {
+	padding: 11px 8px 11px;
 }
 #tow {
 	display: none;
@@ -59,6 +59,7 @@ active, a:focus {
 .kreply-form {
 	display: none;
 	margin-left: 20px;
+	margin-bottom:30px;
 	box-shadow: 0 0 6px #B2B2B2;
 }
 .kmsgattach {
@@ -136,7 +137,7 @@ img {
 	height: auto;
 }
 .table {
-	margin-bottom: 0px;
+	float:left;
 }
 .form-search {
 	margin: 0px;
@@ -177,7 +178,13 @@ form > table > thead > tr > td > ul {
 .profilebox {
 	margin-top:15px;
 }
-h1,h2,h3,h4,h5,h6,h7 {
+.kfrontend h1,
+.kfrontend h2,
+.kfrontend h3,
+.kfrontend h4,
+.kfrontend h5,
+.kfrontend h6,
+.kfrontend h7 {
 	margin:5px !important;
 }
 ul li {
@@ -202,10 +209,6 @@ input[type='checkbox'] {
 	filter: alpha(opacity=50);
 	opacity:0.5;
 }
-.nav:not(.nav-list) {
-	padding:0 !important;
-	margin:0 0 0 -20px !important;
-}
 a:focus, 
 .btn:focus {
 	outline: none !important;
@@ -225,7 +228,8 @@ a:focus,
     padding: 39px 19px 14px;
     border-radius: 6px;
 		box-shadow: 0 0 6px #B2B2B2;
-	min-height:120px;
+		min-height:120px;
+	
 }
 [class*="badger"]:after {
  		content: attr(data-badger);
@@ -254,16 +258,25 @@ div.kmsgtext-code,
 div.kmsgtext-confidential {
 		margin:0 5px;
     border-left: 4px solid #319ce2 ;
-    color: #b1b1b1;
-		border-radius:4px;
+  background: #fafafa;
+  color: #444444;
+  font-size: 12px;
+  line-height: 18px;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  border-radius: 3px;
 }
 #kwho > div > p,
 #kstats > div > p {
 	margin:0px;
 }
 .msgfooter {
-	padding-top:10px;
+	position: absolute; 
+	bottom: 40px;
+	padding:5px;
 	border-top:1px solid rgba(0, 0, 0, 0.1);
+	width:95%;
+	height:20px;
 }
 #nav1 > li {
   float: left;
@@ -284,8 +297,99 @@ form {
 .timefilter {
 	padding-right:10px;
 }
+.kmsg {
+  height:100%;
+  margin: 20px 0px;
+}
+.input-xxlarge {
+	width:98%;
+	height:100%;
+}
+.kprofile-down {
+	margin-top:13px;
+	border:1px solid rgba(0, 0, 0, 0.1);
+	background: rgba(0, 0, 0, 0.02);
+	border-radius:5px;
+}
+ul, ol {
+	padding:0;
+}
+.dl-horizontal dd {
+	margin-left:40px;
+	width:145px;
+	padding-left:40px;
+}
+.dl-horizontal dt {
+	width:auto;
+}
+.row-fluid > .span12 > .row-fluid > .span12  {
+	width:110%;
+	margin-right:-60px;
+}
+#sel {
+width: 100px;
+}
+#kchecktarget:disabled {
+display:none;
+}
+div.navbar > div > div.visible-phone.hidden-tablet > ul {
+    padding-bottom: 15px;
+    padding-left: 10px;
+}
+#ktopicsform {
+	padding-bottom:10px;
+}
+.last-post-message {
+	padding-left:25%;
+}
 @media (max-width: 480px) { 
  .pagination .test ul > li > a, .pagination ul > li > span {
 	display:none;
  }
+ [class*="badger"] {
+    padding: 25% 19px 14px;
+ }
+ .form-search {
+	padding-bottom:0;
+ }
+ .msgfooter {
+	 width:85%;
+ }
+ .pull-right,
+ span > form {
+	 float:none;
+ }
+ .table td.span1, .table th.span1 {
+	 width:0;
+ }
+ div.navbar > div > div.visible-phone.hidden-tablet > ul.nav.navbar-nav.pull-left > a > i {
+	 cursor:pointer;
+	 vertical-align:super;
+ }
+ #postform > div > div > div > fieldset > div > div {
+	 margin-left:-8px;
+ }
+ .last-post-message {
+	padding-left:5px;
+ }
+ #postcatid {
+	 width:100%;
+ }
+ .input-xxlarge {
+	 width:94%;
+ }
+ .kfile-input-textbox {
+	 width:52%;
+ }
+ .kattachment-remove,
+ .kattachment-insert {
+	 margin-left:15px;
+	 margin-top:10px;
+ }
+}
+@media (max-width: 320px) {
+	#postform .btn {
+		width:60%;
+		margin-bottom:10px;
+	}
 }

@@ -122,8 +122,23 @@ defined ( '_JEXEC' ) or die ();
 				<input type="hidden" name="number_total_options" id="numbertotal"
 						value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			</div>
-		<?php endif; ?>
-		<?php
+		<?php endif;
+
+		if (!$this->config->disemoticons) : ?>
+		<div id="kbbcode-smilies-options" style="display: none;">
+			<label class="control-label">Emoticons</label>
+			<div class="controls">
+
+			<?php
+				$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
+				foreach ( $emoticons as $emo_code=>$emo_url ) {
+					echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
+				}
+			?>
+			</div>
+		</div>
+		<?php endif;
+
 			if (($codeTypes = $this->getCodeTypes())) :
 			?>
 			<div id="kbbcode-code-options" style="display: none;">
@@ -213,28 +228,15 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 	</td>
 </tr>
-<?php
-		}
-
-if (!$this->config->disemoticons) : ?>
-	<div class="control-group">
-		<label class="control-label">Emoticons</label>
-		<div class="controls">
-			<?php
-			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
-			foreach ( $emoticons as $emo_code=>$emo_url ) {
-				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
-			}
-			?>
-		</div>
-	</div>
-<?php endif; ?>
+<?php } ?>
 
 <!-- end of extendable secondary toolbar -->
 <div class="control-group">
 	<div class="controls">
 		<input type="text" name="helpbox" id="helpbox" size="88" class="input-xxlarge required" disabled="disabled"
 		value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" />
+		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $this->config->disemoticons ?>" />
 	</div>
 </div>
 <div class="control-group">
@@ -243,12 +245,11 @@ if (!$this->config->disemoticons) : ?>
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span class="center" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></div>
 	<div class="controls">
-		<textarea class="input-xxlarge qreply" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="input-xxlarge qreply" placeholder="<?php echo JText::_('Enter here the message') ?>" name="message" id="kbbcode-message" rows="12" tabindex="3" required><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 	<!-- Hidden preview placeholder -->
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
-
 <?php if ($this->message->exists()) : ?>
 <div class="clr"> </div>
 <fieldset>
@@ -256,4 +257,3 @@ if (!$this->config->disemoticons) : ?>
 	<input class="kinputbox" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>" />
 </fieldset>
 <?php endif; ?>
-

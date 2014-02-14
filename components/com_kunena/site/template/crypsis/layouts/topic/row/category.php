@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getAuthor()->getAvatarImage('img-polaroid', 48);
+$avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
 
 $cols = empty($this->checkbox) ? 5 : 6;
 
@@ -52,7 +52,7 @@ if (!empty($this->spacing)) : ?>
 			<?php
 			if ($topic->unread) {
 				echo $this->getTopicLink($topic, 'unread',
-					'<sup dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 			?>
 		</div>
@@ -77,7 +77,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="span1 center hidden-phone">
 		<?php if ($avatar) : ?>
 		<span>
-			<?php echo $topic->getAuthor()->getLink($avatar); ?>
+			<?php echo $topic->getAuthor()->getLink(); ?>
 		</span>
 		<?php endif; ?>
 	</td>

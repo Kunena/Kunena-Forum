@@ -25,10 +25,10 @@ $colspan = empty($this->actions) ? 5 : 6;
 </h3>
 <div class="clearfix"></div>
 <span class="pull-left">
-		<?php echo $this->subLayout('Search/Button')->set('catid', 'all'); ?>
+		<?php echo $this->subLayout('Widget/Search')->set('catid', 'all'); ?>
 	</span>
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-<div class="pagination pull-right"> <?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?> </div>
+<div class="pagination pull-right"> <?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?> </div>
 <?php endif; ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
 		<?php echo JHtml::_('form.token'); ?>
@@ -89,6 +89,6 @@ $colspan = empty($this->actions) ? 5 : 6;
 </form>
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-<div class="pagination pull-right"><?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
+<div class="pagination pull-right"><?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
 <?php endif; ?>
 <div class="clearfix"></div>

@@ -198,7 +198,7 @@ $cols = 1;
 			<tr>
 				<td colspan="<?php echo $cols; ?>">
 					<div class="pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 					</div>
 				</td>
 			</tr>

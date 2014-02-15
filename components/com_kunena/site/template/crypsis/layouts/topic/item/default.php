@@ -22,7 +22,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <?php endif; ?>
 
 <div class="pull-right">
-	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 </div>
 
 <h3>
@@ -47,7 +47,7 @@ foreach ($this->messages as $id => $message)
 ?>
 
 <div class="pull-right">
-	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 </div>
 <?php echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id); ?>
 <div class="clearfix"></div>

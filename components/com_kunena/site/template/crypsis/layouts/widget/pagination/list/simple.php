@@ -29,7 +29,7 @@ $last = 0;
 
 			$last = $k;
 
-			echo $this->subLayout('Pagination/Item')->set('item', $item);
+			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}
 		?>
 	</ul>

@@ -80,7 +80,7 @@ $options = $this->getOptions();
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">
 					<div class="pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 					</div>
 				</td>
 			</tr>

@@ -96,12 +96,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 				foreach ($loaded_users as $userid => $user)
 				{
-					$thankyou_delete = $this->message->isAuthorised('unthankyou') ?
-						' <a title="' . JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
-						. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")) . '"><img src="'
-						. $this->ktemplate->getImagePath('icons/publish_x.png') . '" title="" alt="" /></a>'
-						: '';
-					$this->thankyou[] = $loaded_users[$userid]->getLink() . $thankyou_delete;
+					$this->thankyou[] = $loaded_users[$userid]->getLink();
 				}
 			}
 		}

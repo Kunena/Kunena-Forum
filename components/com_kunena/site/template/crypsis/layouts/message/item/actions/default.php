@@ -51,6 +51,7 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 
 	<?php echo $this->messageButtons->get('thankyou'); ?>
+	<?php echo $this->messageButtons->get('unthankyou'); ?>
 </div>
 
 <?php else : ?>

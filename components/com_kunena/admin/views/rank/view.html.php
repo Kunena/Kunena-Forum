@@ -29,6 +29,6 @@ class KunenaAdminViewRank extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('ranks');
+		JToolBarHelper::cancel();
 	}
 }

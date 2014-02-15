@@ -90,7 +90,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('unthankyou',
-					$this->getButton(sprintf($task, 'unthankyou'), 'unthankyou', 'message', 'user', null, false)
+					$this->getButton(sprintf($task, 'unthankyou&userid='.$me->userid), 'unthankyou', 'message', 'user', null, false)
 			);
 		}
 

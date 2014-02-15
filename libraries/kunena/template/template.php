@@ -154,15 +154,28 @@ class KunenaTemplate extends JObject
 		return $xml;
 	}
 
-	public function loadLanguage() {
-		// Loading language strings for the template
+	/**
+	 * Loading language strings for the template
+	 *
+	 * @return void
+	 */
+	public function loadLanguage()
+	{
+		jimport('joomla.filesystem.file');
 		$lang = JFactory::getLanguage();
 		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
-		foreach (array_reverse($this->default) as $template) {
-			$file = 'com_kunena.tpl_'.$template;
-			$lang->load($file, JPATH_SITE)
-				|| $lang->load($file, KPATH_SITE)
-				|| $lang->load($file, KPATH_SITE.'/template/'.$template);
+
+		foreach (array_reverse($this->default) as $template)
+		{
+			// Try to load language file for legacy templates
+			if (!$lang->load('com_kunena.tpl_' . $template, JPATH_SITE)
+				|| !$lang->load('com_kunena.tpl_' . $template, KPATH_SITE)
+				|| !$lang->load('com_kunena.tpl_' . $template, KPATH_SITE . '/template/' . $template))
+			{
+				$lang->load('kunena_tmpl_' . $template, JPATH_SITE)
+				|| $lang->load('kunena_tmpl_' . $template, KPATH_SITE)
+				|| $lang->load('kunena_tmpl_' . $template, KPATH_SITE . '/template/' . $template);
+			}
 		}
 	}
 

@@ -10,8 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-// TODO: Move from pagination to widget
-
 $item = $this->item;
 
 if (!is_null($item->base))

@@ -15,7 +15,7 @@ $colspan = empty($this->actions) ? 4 : 5;
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
 <div class="pagination pull-right">
-	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
 </div>
 <?php endif; ?>
 
@@ -49,7 +49,7 @@ $colspan = empty($this->actions) ? 4 : 5;
 			<tr>
 				<td colspan="6">
 					<div class="pagination pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 					</div>
 					<div class="clearfix"></div>
 				</td>

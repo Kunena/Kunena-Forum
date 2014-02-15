@@ -10,8 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-// TODO: Move from pagination to widget
-
 $data = $this->pagination->getData();
 if (count($data->pages) <= 1) return;
 $last = 0;
@@ -20,8 +18,8 @@ $last = 0;
 <div class="pagination hidden-phone">
 	<ul>
 		<?php
-		echo $this->subLayout('Pagination/Item')->set('item', $data->start);
-		echo $this->subLayout('Pagination/Item')->set('item', $data->previous);
+		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
+		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous);
 		foreach($data->pages as $k=>$item)
 		{
 			if ($last+1 != $k)
@@ -31,10 +29,10 @@ $last = 0;
 
 			$last = $k;
 
-			echo $this->subLayout('Pagination/Item')->set('item', $item);
+			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}
-		echo $this->subLayout('Pagination/Item')->set('item', $data->next);
-		echo $this->subLayout('Pagination/Item')->set('item', $data->end);
+		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->next);
+		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end);
 		?>
 	</ul>
 </div>
@@ -44,7 +42,7 @@ $last = 0;
 		<?php
 	foreach($data->pages as $k=>$item)
 		{
-			echo $this->subLayout('Pagination/Item')->set('item', $item);
+			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}
 		?>
 	</ul>

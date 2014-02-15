@@ -25,7 +25,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 <h2>
 	<a><?php echo $this->escape($this->headerText); ?></a>
 	<span class="pull-right">
-		<?php echo $this->subLayout('Search/Button')->set('catid', $this->category->id); ?>
+		<?php echo $this->subLayout('Widget/Search')->set('catid', $this->category->id); ?>
 	</span>
 </h2>
 
@@ -133,7 +133,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 </form>
 
 <div class="pull-right">
-	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 </div>
 
 <?php

@@ -10,8 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-// TODO: Move from pagination to widget
-
 $data = $this->pagination->getData();
 if (count($data->pages) <= 1) return;
 $last = 0;
@@ -29,7 +27,7 @@ $last = 0;
 
 			$last = $k;
 
-			echo $this->subLayout('Pagination/Item')->set('item', $item);
+			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}
 		?>
 	</ul>

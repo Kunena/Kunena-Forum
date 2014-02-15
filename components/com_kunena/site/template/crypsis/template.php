@@ -36,7 +36,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		'emoticons' => 'media/emoticons',
 		'ranks' => 'media/ranks',
 		'icons' => 'media/icons',
-		'topicicons' => 'media/topicicons',
+		'topicicons' => 'media/topic_icons',
+		'categoryicons' => 'media/category_icons',
 		'images' => 'media/images',
 		'js' => 'media/js',
 		'css' => 'media/css'
@@ -51,16 +52,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		'guest'=>'kwho-guest',
 		'banned'=>'kwho-banned',
 		'blocked'=>'kwho-blocked'
-	);
-
-	/**
-	 * Default category icons.
-	 *
-	 * @var array
-	 */
-	public $categoryIcons = array(
-		'kreadforum',
-		'kunreadforum'
 	);
 
 	/**

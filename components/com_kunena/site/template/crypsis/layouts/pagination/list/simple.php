@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+// TODO: Move from pagination to widget
+
 $data = $this->pagination->getData();
 if (count($data->pages) <= 1) return;
 $last = 0;

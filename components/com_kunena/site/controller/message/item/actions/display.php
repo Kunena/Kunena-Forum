@@ -166,7 +166,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{
-		return KunenaLayout::factory('Page/Button')
+		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id));
 	}
 }

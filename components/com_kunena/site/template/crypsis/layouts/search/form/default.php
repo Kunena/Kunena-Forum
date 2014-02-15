@@ -12,6 +12,9 @@ defined('_JEXEC') or die;
 
 // FIXME: change into JForm.
 
+// TODO: Add generic form version
+// TODO: Move new generic form version, from search to widget
+
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');

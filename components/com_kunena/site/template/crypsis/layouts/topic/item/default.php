@@ -33,9 +33,9 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <div class="clearfix"></div>
 
 <?php
-echo $this->subLayout('Page/Module')->set('position', 'kunena_topictitle');
+echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
 echo $this->subRequest('Topic/Poll')->set('id', $this->topic->id);
-echo $this->subLayout('Page/Module')->set('position', 'kunena_poll');
+echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
 echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id);
 
 foreach ($this->messages as $id => $message)

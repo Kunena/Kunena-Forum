@@ -28,47 +28,48 @@ defined('_JEXEC') or die;
 	<div class="collapse in" id="kstats">
 	<div class="well well-small">
 	<div class="row-fluid">
-		<ul class="unstyled span6">
+		<ul class="unstyled span3">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
 				<strong><?php echo (int) $this->messageCount; ?></strong>
-				<span class="divider">|</span>
-				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
-				<strong><?php echo (int) $this->topicCount; ?></strong>
 			</li>
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
 				<strong><?php echo (int) $this->sectionCount; ?></strong>
-				<span class="divider">|</span>
-				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
-				<strong><?php echo (int) $this->categoryCount; ?></strong>
 			</li>
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
 				<strong><?php echo (int) $this->todayTopicCount; ?></strong>
-				<span class="divider">|</span>
-				<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
-				<strong><?php echo (int) $this->yesterdayTopicCount; ?></strong>
 			</li>
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
 				<strong><?php echo (int) $this->todayReplyCount; ?></strong>
-				<span class="divider">|</span>
+			</li>
+		</ul>
+		<ul class="unstyled span3">
+			<li>
+				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
+				<strong><?php echo (int) $this->topicCount; ?></strong>
+			</li>
+			<li>
+				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
+				<strong><?php echo (int) $this->categoryCount; ?></strong>
+			</li>
+			<li>
+				<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
+				<strong><?php echo (int) $this->yesterdayTopicCount; ?></strong>
+			</li>
+			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
 				<strong><?php echo (int) $this->yesterdayReplyCount; ?></strong>
 			</li>
 		</ul>
-		<ul class="unstyled span6">
+		<ul class="unstyled span3">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
-
-				<?php if ($this->userlistUrl) : ?>
-				<strong><a href="<?php echo $this->userlistUrl; ?>"><?php echo $this->memberCount; ?></a></strong>
-				<?php else : ?>
 				<strong><?php echo $this->memberCount; ?></strong>
-				<?php endif; ?>
-
-				<span class="divider">|</span>
+			</li>
+			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
 				<strong><?php echo $this->latestMemberLink; ?></strong>
 			</li>

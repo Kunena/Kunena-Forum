@@ -60,8 +60,14 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$this->total = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
+		$alias = 'ku';
+		$aliasList = array('id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate');
+		if (in_array($this->state->get('list.ordering'), $aliasList)) {
+			$alias = 'a';
+		}
+
 		$this->users = $finder
-			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : -1)
+			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : -1, $alias)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();

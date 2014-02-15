@@ -46,7 +46,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-long">
-				<?php echo $this->displayInput('description', 'rows="5" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
+				<?php echo $this->displayInput('description', 'rows="9" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
 			</div>
 		</div>
 

@@ -26,7 +26,7 @@ defined('_JEXEC') or die;
 	<p>
 
 	<?php foreach ($this->onlineList as $user) : ?>
-		<span><?php echo $user->getLink(); ?></span>
+		<span><?php echo $user->getLink(); ?>,</span>
 	<?php endforeach; ?>
 
 	</p>

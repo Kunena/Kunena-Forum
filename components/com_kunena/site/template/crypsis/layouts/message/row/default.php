@@ -47,7 +47,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			}
 
 			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr">(' . (int) $topic->unread
+				echo $this->getTopicLink($topic, 'unread', '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
 					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 
@@ -62,16 +62,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 	</td>
 	<td class="span1 center">
 		<div>
-			<?php
-			if ($config->avataroncat > 0) {
-				$avatar = $author->getAvatarImage('img-polaroid', 48);
-
-				if ($avatar)
-				{
-					echo $author->getLink($avatar);
-				}
-			}
-			?>
+			<?php echo $author->getLink(); ?>
 		</div>
 	</td>
 	<td class="span3">

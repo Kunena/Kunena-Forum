@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 $mmm=0;
+
 /** @var KunenaForumCategory $section */
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
@@ -74,14 +75,11 @@ foreach ($this->sections as $section) :
 		</tr>
 
 		<?php else : ?>
-		<?php if (!empty($this->categories[$section->id]) && empty($this->categories->getLastTopic)) : ?>
-				<td class="span1 hidden-phone">
+		<?php if (!empty($this->categories[$section->id])) : ?>
+				<td  colspan="1" class="hidden-phone">
 				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 				</td>
-				<td class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR');?>
-				</td>
-				<td class="span1 hidden-phone">
+				<td colspan="1" class="span1 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php endif; ?>
@@ -98,8 +96,8 @@ foreach ($this->sections as $section) :
 					<h3>
 						<?php echo $this->getCategoryLink($category); ?>
 						<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
-								$this->formatLargeNumber($category->getTopics())); ?>)</small>
-					</h3>
+								$this->formatLargeNumber($category->getTopics())); ?>)
+					
 					<span>
 						<?php
 						if (($new = $category->getNewCount()) > 0) {
@@ -112,7 +110,7 @@ foreach ($this->sections as $section) :
 							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
 						}
 						?>
-					</span>
+					</span></small></h3>
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
@@ -162,24 +160,29 @@ foreach ($this->sections as $section) :
 			<?php if ($last->exists()) : 
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();
-				$avatar = $this->config->avataroncat > 0 ? $author->getAvatarImage('img-polaroid', 48) : null;
+				$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 48) : null;
 			?>
-
-			<?php if ($avatar) : ?>
-			<td class="span1 center hidden-phone">
-				<?php echo $author->getLink($avatar); ?>
-			</td>
-			<?php endif; ?>
-
+			
 			<td class="span3 hidden-phone last-post">
-				<div>
-					<?php echo $this->getLastPostLink($category) ?>
-				</div>
-				<div>
-					<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
-				</div>
-				<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
+				
+					<?php if ($avatar) : ?>
+						<div class="pull-left hidden-phone" style="padding-left:3%;">
+							<?php echo $author->getLink($avatar); ?>
+						</div>
+						<div class="last-post-message">
+						<?php else :	?>
+						<div>
+					<?php endif; ?>
+				
+					<div>
+						<?php echo $this->getLastPostLink($category) ?>
+					</div>
+					<div>
+						<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
+					</div>
+					<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
 					<?php echo $time->toKunena('config_post_dateformat'); ?>
+					</div>
 				</div>
 			</td>
 			<?php endif; ?>

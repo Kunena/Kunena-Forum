@@ -53,7 +53,7 @@ foreach ($this->sections as $section) :
 </h3>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
-	<table class="table table-striped table-hover table-bordered table-condensed">
+	<table class="table table-hover table-bordered table-condensed">
 
 		<?php if (!empty($section->description)) : ?>
 		<thead class="hidden-phone">
@@ -76,7 +76,7 @@ foreach ($this->sections as $section) :
 
 		<?php else : ?>
 		<?php if (!empty($this->categories[$section->id])) : ?>
-				<td  colspan="1" class="hidden-phone">
+				<td  colspan="2" class="hidden-phone">
 				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 				</td>
 				<td colspan="1" class="span1 hidden-phone">
@@ -87,10 +87,9 @@ foreach ($this->sections as $section) :
 			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
 		<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
-			<?php /* FIXME: implement category icons.
 			<td class="span1">
 				<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
-			</td> */ ?>
+			</td>
 			<td class="span8">
 				<div>
 					<h3>
@@ -108,6 +107,10 @@ foreach ($this->sections as $section) :
 						}
 						if ($category->review) {
 							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
+						}
+						// FIXME: fix rss.
+						if ($this->rss) {
+							echo $this->rss; 
 						}
 						?>
 					</span></small></h3>
@@ -144,7 +147,18 @@ foreach ($this->sections as $section) :
 
 				</ul>
 				<?php endif; ?>
-
+			<?php if (!empty($category->moderators)) : ?>
+			<div class="kthead-moderators ks">
+				<?php
+				// get the Moderator list for display
+				$modslist = array();
+				foreach ( $category->moderators as $moderator ) {
+					$modslist[] = KunenaFactory::getUser($moderator)->getLink();
+				}
+				echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
+					?>
+			</div>
+			<?php endif; ?>
 				<?php if (!empty($this->pending[$category->id])) : ?>
 				<div class="alert" style="max-width:150px;">
 					<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid='.intval($category->id),
@@ -183,6 +197,12 @@ foreach ($this->sections as $section) :
 					<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
 					<?php echo $time->toKunena('config_post_dateformat'); ?>
 					</div>
+				</div>
+			</td>
+			<?php else : ?>
+			 <td colspan="1" class="hidden-phone">
+				<div class="last-post-message">
+					<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>
 				</div>
 			</td>
 			<?php endif; ?>

@@ -112,7 +112,13 @@ jQuery(document).ready(function() {
 
 	/* To submit form for approve categories in index page */
 	jQuery('#cat_approve_post').click(function() {
-		jQuery('#kcategoriesapprove').submit();
+		if (jQuery('#kcategoriesapprove').length > 0) {
+			jQuery('#kcategoriesapprove').submit();
+		}
+		
+		if (jQuery('#ktopicsapprove').length > 0) {
+			jQuery('#ktopicsapprove').submit();
+		}
 	});
 
 	/* Hide search form when there are search results found */

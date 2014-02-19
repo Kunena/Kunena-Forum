@@ -324,6 +324,55 @@ abstract class KunenaForumMessageHelper {
 		return $db->getAffectedRows ();
 	}
 
+	/**
+	 * Load all messages from given topics which are published or in other state
+	 *
+	 * @params $message_ids
+	 * @params $topic_ids
+	 * @params $hold
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	static public function loadMessagesInTopics(array $message_ids, array $topic_ids, $hold)
+	{
+		$db = JFactory::getDBO ();
+		$query = $db->getQuery(true);
+
+		$query->select('m.*, t.message');
+		$query->from($db->quoteName('#__kunena_messages').' AS m');
+		$query->innerJoin($db->quoteName('#__kunena_messages_text').' AS t ON m.id=t.mesid');
+
+		if ($message_ids) {
+			$message_ids_list = implode(',', $message_ids);
+			$query->where($db->quoteName('m.id').' IN ('.$message_ids_list.') AND '.$db->quoteName('m.hold').' IN ('.$hold.')');
+		} else {
+			$topic_ids_list = implode(',', $topic_ids);
+			$query->where($db->quoteName('m.thread').' IN ('.$topic_ids_list.') AND '.$db->quoteName('m.hold').' IN ('.$hold.')');
+		}
+
+		$db->setQuery($query);
+		$results = (array) $db->loadAssocList('id');
+		KunenaError::checkDatabaseError();
+
+		// Load KunenaForumMessage instance when item exist
+		$instance_list = array();
+
+		if (isset($results))
+		{
+			foreach ( $results as $item )
+			{
+				$instance = new KunenaForumMessage($item);
+				$instance->exists(true);
+				$instance_list[] = $instance;
+			}
+		}
+		unset ($results);
+
+		return $instance_list;
+	}
+
 	// Internal functions
 
 	/**

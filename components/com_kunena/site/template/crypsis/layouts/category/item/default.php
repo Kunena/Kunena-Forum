@@ -28,7 +28,7 @@ $categoryActions = $this->getCategoryActions();
 	</span>
 </h2>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
+<form id="ktopicsapprove" action="<?php echo KunenaRoute::_('index.php?option=com_kunena&task=approvetopicsincategories'); ?>" method="post">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
@@ -91,6 +91,8 @@ $categoryActions = $this->getCategoryActions();
 		}
 
 		?>
+
+</form>
 		<tfoot>
 		<tr>
 			<td class="center">
@@ -103,7 +105,7 @@ $categoryActions = $this->getCategoryActions();
 			</td>
 
 			<td colspan="3">
-
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post">
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
@@ -131,13 +133,14 @@ $categoryActions = $this->getCategoryActions();
 				<div class="pull-right">
 					<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
 				</div>
+				<?php echo JHtml::_( 'form.token' ); ?>
+				</form>
 			</td>
 		</tr>
 		</tfoot>
 		<?php endif; ?>
 	</table>
 
-</form>
 
 <?php
 if (!empty($this->moderators))

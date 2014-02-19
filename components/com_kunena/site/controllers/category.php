@@ -148,11 +148,13 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 
 		$categories = $this->app->input->get('categories', array ( 0 ), 'array');
 
+		$success = 0;
+
 		$cats = array_keys($categories);
 
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id')->from('#__kunena_topics')->where('category_id IN (' . implode(',', $cats) . ')')->where('hold!=0');
+		$query->select('id')->from('#__kunena_messages')->where('catid IN (' . implode(',', $cats) . ')')->where('hold!=0');
 		$db->setQuery($query);
 		$topics_id = $db->loadObjectList();
 
@@ -161,20 +163,16 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			return array(0, array());
 		}
 
-		$topics_list = array();
-
-		foreach ($topics_id as $id)
-		{
-			$topics_list[] = $id->id;
+		$topic_id_list = array();
+		foreach($topics_id as $id) {
+			$topic_id_list[] = $id->id;
 		}
 
-		$topics = KunenaForumTopicHelper::getTopics($topics_list);
+		$messages_objects = KunenaForumMessageHelper::loadMessagesInTopics($topic_id_list, array(), 1);
 
-		$success = 0;
-
-		foreach ( $topics as $topic )
+		foreach($messages_objects as $message)
 		{
-			if ($topic->authorise('approve') && $topic->publish(KunenaForum::PUBLISHED))
+			if ($message->authorise('approve') && $message->publish(KunenaForum::PUBLISHED))
 			{
 				$success++;
 			}

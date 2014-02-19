@@ -97,6 +97,9 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		// Load JavaScript.
 		$this->addScript('plugins.js');
+		
+		// Keep the data on qreply/new topic.
+		$this->addScript('formyeah.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('main.less', 'kunena.css');

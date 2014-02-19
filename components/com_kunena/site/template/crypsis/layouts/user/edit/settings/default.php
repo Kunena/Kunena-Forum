@@ -26,5 +26,11 @@ defined('_JEXEC') or die;
 				</td>
 			</tr>
 		<?php endforeach ?>
+		<tr>
+			<td class="span3">Clear Cache</td>
+				<td>
+					<button type="button" class="btn btn-small" onClick="window.localStorage.clear()" data-loading-text="Loading...">Clear Cache</button>
+				</td>
+		</tr>	
 	</tbody>
 </table>

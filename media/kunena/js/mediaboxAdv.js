@@ -204,7 +204,16 @@ var Mediabox;
 			setup(true);
 			top = window.getScrollTop() + (window.getHeight()/2);
 			left = window.getScrollLeft() + (window.getWidth()/2);
-			margin = center.getStyle('padding-left').toInt()+media.getStyle('margin-left').toInt()+media.getStyle('padding-left').toInt();
+			
+			// Fix <IE10 center image
+			var cp = center.getStyle('padding-left').toInt();
+			if (isNaN(cp)) cp = 0;
+			var mm = media.getStyle('margin-left').toInt();
+			if (isNaN(mm)) mm = 0;
+			var mp = media.getStyle('padding-left').toInt();
+			if (isNaN(mp)) mp = 0;
+			margin = cp+mm+mp;
+			
 			marginBottom = bottom.getStyle('margin-left').toInt()+bottom.getStyle('padding-left').toInt()+bottom.getStyle('margin-right').toInt()+bottom.getStyle('padding-right').toInt();
 
 /****/		center.setStyles({top: top, left: left, width: options.initialWidth, height: options.initialHeight, marginTop: -(options.initialHeight/2)-margin, marginLeft: -(options.initialWidth/2)-margin, display: ""});

@@ -71,7 +71,7 @@ if ($this->config->showuserstats)
 				<?php if ($this->config->userlist_lastvisitdate || $me->isModerator()) : ?>
 					<li>
 						<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong>
-						<span title="<?php echo $profile->getLastVisitDate()->toKunena('ago'); ?>"> <?php echo $profile->getLastVisitDate()->toKunena('date_today', 'utc'); ?> </span>
+						<span title="<?php echo $profile->getLastVisitDate()->toKunena('ago'); ?>"> <?php echo $profile->getLastVisitDate()->toKunena('config_post_dateformat', 'ago'); ?> </span>
 					</li>
 				<?php endif; ?>
 				<li>

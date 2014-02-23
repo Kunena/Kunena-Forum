@@ -18,8 +18,6 @@ defined('_JEXEC') or die;
  */
 class KunenaLayoutWidgetFooter extends KunenaLayout
 {
-	public $rss = null;
-
 	/**
 	 * Method to get the time of page generation
 	 *
@@ -38,5 +36,39 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 		$time = $profiler->getTime('Total Time');
 
 		return sprintf('%0.3f', $time);
+	}
+
+	/**
+	 * Method to get the RSS URL link with image
+	 *
+	 * @return string
+	 */
+	protected function getRSS()
+	{
+		$config = KunenaFactory::getConfig();
+
+		if ($config->enablerss)
+		{
+			$mode = $config->rss_type;
+
+			switch ($mode)
+			{
+				case 'topic' :
+					$rss_type = 'mode=topics';
+					break;
+				case 'recent' :
+					$rss_type = 'mode=replies';
+					break;
+				case 'post' :
+					$rss_type = 'layout=posts';
+					break;
+			}
+
+			return '<a href="' . KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}", true) . '">' . $this->getIcon('krss', JText::_('COM_KUNENA_LISTCAT_RSS')) . '</a>';
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

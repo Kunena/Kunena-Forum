@@ -36,6 +36,21 @@ function kPreviewHelper() {
 }
 
 jQuery(document).ready(function() {
+	/* To hide or open collapse localStorage */
+	jQuery('.collapse').on('hidden', function() {
+				if (this.id) {
+						localStorage[this.id] = 'true';
+				}
+		}).on('shown', function() {
+				if (this.id) {
+						localStorage.removeItem(this.id);
+				}
+		}).each(function() {
+				if (this.id && localStorage[this.id] === 'true' ) {
+						jQuery(this).collapse('hide');
+				}
+	});
+	
 	/* To hide or open spoiler on click */
 	jQuery('.kspoiler').each(function( ) {	
 		jQuery('.kspoiler-header').click(function() {

@@ -11,8 +11,9 @@
 defined('_JEXEC') or die;
 // TODO: Move from widget to announcement
 ?>
-<div class="alert alert-info">
-	<a class="close" data-dismiss="alert" href="#">&times;</a>
+<div class=" collapse in" id="announcement<?php echo $this->announcement->id; ?>">
+	<div class="alert alert-info">
+	<div class="close" data-toggle="collapse" data-target="#announcement<?php echo $this->announcement->id; ?>">&times;</div>
 	<h4>
 		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(),
 			$this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'),
@@ -33,4 +34,5 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 
 	</h5>
+	</div>
 </div>

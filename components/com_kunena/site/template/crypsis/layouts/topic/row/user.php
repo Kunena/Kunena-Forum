@@ -17,6 +17,7 @@ $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_
 $userTopic = $topic->getUserTopic();
 $avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
 $cols = empty($this->checkbox) ? 5 : 6;
+$category = $this->topic->getCategory();
 
 if (!empty($this->spacing)) : ?>
 <tr>
@@ -24,7 +25,7 @@ if (!empty($this->spacing)) : ?>
 </tr>
 <?php endif; ?>
 
-<tr>
+<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
 
 	<td class="span1 center hidden-phone">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>

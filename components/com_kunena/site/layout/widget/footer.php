@@ -31,7 +31,7 @@ class KunenaLayoutWidgetFooter extends KunenaLayout
 
 		if (!$config->time_to_create_page)
 		{
-			return '';
+			return null;
 		}
 
 		$profiler = KunenaProfiler::instance('Kunena');

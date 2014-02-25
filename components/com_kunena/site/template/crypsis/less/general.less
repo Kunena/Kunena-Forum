@@ -6,8 +6,13 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/ 
-a:active, a:focus {
-	outline: 0;
+a:active,
+a:focus,
+select:focus, 
+input[type='file']:focus,
+input[type='radio']:focus,
+input[type='checkbox']:focus {
+	outline: 0 !important;
 }
 .kgooglemap {
 	width: 100%;
@@ -247,6 +252,12 @@ a:focus,
 .badger-info:after {
 		background: rgba(229, 229, 229, 0.4);
 }
+.badger-moderator {
+	border:2px solid rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+ -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+ box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+}
 legend {
 	color:inherit;
 }
@@ -272,9 +283,8 @@ div.kmsgtext-confidential {
 }
 .msgfooter {
 	position: absolute; 
-	bottom: 40px;
+	bottom: 0;
 	padding:5px;
-	border-top:1px solid rgba(0, 0, 0, 0.1);
 	width:95%;
 	height:20px;
 }
@@ -341,6 +351,18 @@ div.navbar > div > div.visible-phone.hidden-tablet > ul {
 }
 .last-post-message {
 	padding-left:25%;
+}
+.topic-item-unread {
+	border-left:3px solid green;
+	border-radius:2px 0 2px 0;
+}
+.kmessage {
+	height:100%;
+}
+.ksig {
+	padding-top:15px;
+	margin-top:5px;
+	min-height:20px;
 }
 @media (max-width: 480px) { 
  .pagination .test ul > li > a, .pagination ul > li > span {

@@ -14,16 +14,20 @@ defined ( '_JEXEC' ) or die ();
 $userConfig = JComponentHelper::getParams('com_users');
 ?>
 <ul class="nav navbar-nav pull-left">
-		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" style="float:left"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a>
-		<div class="nav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
+		<a data-toggle="collapse" data-target=".nav-collapse" style="float:left"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a>
+		<div class="nav-collapse"><?php echo $this->subRequest('Page/Menu'); ?></div>
 </ul>
-<ul class="pull-right">
+<ul>
 	<li class="dropdown">
-		<a href="#" class="btn btn-small mobile btn-navbar" data-toggle="dropdown">
+		<a href="#" class="mobile" data-toggle="dropdown" style="float:right">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
 		<div class="dropdown-menu well well-small">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
+				<input type="hidden" name="view" value="user" />
+				<input type="hidden" name="task" value="login" />
+				<?php echo JHtml::_('form.token'); ?>
+				
 				<div id="form-login-username" class="control-group">
 					<div class="controls">
 						<div class="input-prepend input-append">
@@ -71,10 +75,6 @@ $userConfig = JComponentHelper::getParams('com_users');
 					</p>
 					<?php endif; ?>
 				</div>
-
-				<input type="hidden" name="view" value="user" />
-				<input type="hidden" name="task" value="login" />
-				<?php echo JHtml::_('form.token'); ?>
 			</form>
 		</div>
 	</li>

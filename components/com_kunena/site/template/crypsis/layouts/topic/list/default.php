@@ -25,14 +25,15 @@ $colspan = empty($this->actions) ? 5 : 6;
 </h3>
 <div class="clearfix"></div>
 <span class="pull-left">
-		<?php echo $this->subLayout('Widget/Search')->set('catid', 'all'); ?>
-	</span>
+	<?php echo $this->subLayout('Widget/Search')->set('catid', 'all'); ?>
+</span>
+
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
 <div class="pagination pull-right"> <?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?> </div>
 <?php endif; ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
 		<?php echo JHtml::_('form.token'); ?>
-		<table class="table table-striped table-bordered table-condensed">
+		<table class="table table-bordered table-condensed">
 				<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 				<tr>
 						<td colspan="<?php echo $colspan; ?>"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS'); ?></td>

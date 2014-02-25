@@ -10,8 +10,8 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<?php if (isset($this->rss)) : ?>
-<div class="pull-right"><?php echo $this->rss; ?></div>
+<?php if (($rss = $this->getRSS()) !== null) : ?>
+<div class="pull-right"><?php echo $rss; ?></div>
 <div class="clearfix"></div>
 <?php endif; ?>
 

@@ -52,6 +52,7 @@ class KunenaAdminModelUsers extends JModelList {
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.users';
 		if ($layout) {
 			$this->context .= '.'.$layout;
 		}

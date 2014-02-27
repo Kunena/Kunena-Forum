@@ -53,7 +53,7 @@ class KunenaAdminViewUser extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('users', 'COM_KUNENA_CANCEL');
+		JToolBarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
 		JToolBarHelper::spacer();
 	}
 
@@ -63,7 +63,7 @@ class KunenaAdminViewUser extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('users');
+		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 	}
 }

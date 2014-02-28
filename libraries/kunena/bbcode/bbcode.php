@@ -1101,7 +1101,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode($content)."</i></strong></p>';
+					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode(addslashes($content))."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}

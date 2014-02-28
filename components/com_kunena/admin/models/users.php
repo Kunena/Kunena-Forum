@@ -59,27 +59,27 @@ class KunenaAdminModelUsers extends JModelList {
 		$filter_active = '';
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
-		$this->setState ( 'filter.search', $value !== '' ? $value : null );
+		$this->setState('filter.search', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.username', 'filter_username', '', 'string' );
-		$this->setState ( 'filter.username', $value !== '' ? $value : null );
+		$this->setState('filter.username', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.email', 'filter_email', '', 'string' );
-		$this->setState ( 'filter.email', $value !== '' ? $value : null );
+		$this->setState('filter.email', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.signature', 'filter_signature', '', 'string' );
-		$this->setState ( 'filter.signature', $value !== '' ? (int) $value : null  );
+		$this->setState('filter.signature', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.block', 'filter_block', '', 'string' );
-		$this->setState ( 'filter.block', $value !== '' ? (int) $value : null  );
+		$this->setState('filter.block', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.banned', 'filter_banned', '', 'string' );
-		$this->setState ( 'filter.banned', $value !== '' ? (int) $value : null  );
+		$this->setState('filter.banned', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.moderator', 'filter_moderator', '', 'string' );
-		$this->setState ( 'filter.moderator', $value !== '' ? (int) $value : null  );
+		$this->setState('filter.moderator', $value);
 
-		$this->setState ( 'filter.active',!empty($filter_active));
+		$this->setState('filter.active', !empty($filter_active));
 
 		// List state information.
 		parent::populateState('username', 'asc');
@@ -125,13 +125,12 @@ class KunenaAdminModelUsers extends JModelList {
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.*'
+				'a.id'
 			)
 		);
 		$query->from('#__users AS a');
 
 		// Join over the users for the linked user.
-		$query->select('ku.*');
 		$query->join('LEFT', '#__kunena_users AS ku ON a.id=ku.userid');
 
 		// Filter by search.
@@ -162,20 +161,20 @@ class KunenaAdminModelUsers extends JModelList {
 
 		// Filter by signature.
 		$filter = $this->getState('filter.signature');
-		if ($filter !== null  && $search===null) {
+		if ($filter !== ''  && !empty($search)) {
 			if ($filter) $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
 			else $query->where("ku.signature={$db->quote('')} OR ku.signature IS NULL");
 		}
 
 		// Filter by block state.
 		$filter = $this->getState('filter.block');
-		if ($filter !== null) {
+		if ($filter !== '') {
 			$query->where('a.block='.(int) $filter);
 		}
 
 		// Filter by banned state.
 		$filter = $this->getState('filter.banned');
-		if ($filter !== null) {
+		if ($filter !== '') {
 			$now = new JDate ();
 			if ($filter) $query->where("ku.banned={$db->quote($db->getNullDate())} OR ku.banned>{$db->quote($now->toSql())}");
 			else $query->where("ku.banned IS NULL OR (ku.banned>{$db->quote($db->getNullDate())} AND ku.banned<{$db->quote($now->toSql())})");
@@ -183,7 +182,7 @@ class KunenaAdminModelUsers extends JModelList {
 
 		// Filter by moderator state.
 		$filter = $this->getState('filter.moderator');
-		if ($filter !== null) {
+		if ($filter !== '') {
 			$query->where('ku.moderator ='.(int) $filter);
 		}
 
@@ -246,20 +245,12 @@ class KunenaAdminModelUsers extends JModelList {
 			return false;
 		}
 
-		$instances = array();
-		$e_userids = array();
-		foreach ( $items as $user ) {
-			$e_userids[] = $user->id;
-			$user->blocked = $user->block;
-			$instance = new KunenaUser (false);
-			$instance->setProperties ( $user );
-			$instance->exists(true);
-			$instances [$instance->userid] = $instance;
-		}
+		$ids = array();
+		foreach ($items as $item) {
+			$ids[] = $item->id;
+ 		}
 
-		// Preload avatars if configured
-		$avatars = KunenaFactory::getAvatarIntegration();
-		$avatars->load($e_userids);
+		$instances = KunenaUserHelper::loadUsers($ids);
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $instances;

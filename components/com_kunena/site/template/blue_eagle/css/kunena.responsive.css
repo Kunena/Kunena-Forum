@@ -117,11 +117,6 @@
         display: none;
     }
 
-    #Kunena .klink-block,
-    #Kunena .k_guest{
-        display: none;
-    }
-
 	#Kunena tr td:not(:last-child) {
 		border-bottom: none !important;
 	}

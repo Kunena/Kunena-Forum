@@ -84,7 +84,9 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	color: #FFFFFF;
 }
 #Kunena .kheader h2,
-#Kunena .kheader h2 a {
+#Kunena .kheader h2 a,
+#Kunena .kheader h3,
+#Kunena .kheader h3 a {
 	color: #fff !important;
 }
 

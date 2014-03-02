@@ -316,7 +316,7 @@ abstract class KunenaRoute {
 			{
 				// Allow all values
 			}
-			elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+			elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $key, $value))
 			{
 				// Illegal value
 				continue;

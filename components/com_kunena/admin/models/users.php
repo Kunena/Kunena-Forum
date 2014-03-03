@@ -162,7 +162,7 @@ class KunenaAdminModelUsers extends JModelList {
 
 		// Filter by signature.
 		$filter = $this->getState('filter.signature');
-		if ($filter !== ''  && !empty($search)) {
+		if ($filter !== '' && !empty($search)) {
 			if ($filter) $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
 			else $query->where("ku.signature={$db->quote('')} OR ku.signature IS NULL");
 		}
@@ -249,7 +249,8 @@ class KunenaAdminModelUsers extends JModelList {
 		$ids = array();
 		foreach ($items as $item) {
 			$ids[] = $item->id;
-		}
+ 		}
+
 		$instances = KunenaUserHelper::loadUsers($ids);
 
 		// Add the items to the internal cache.

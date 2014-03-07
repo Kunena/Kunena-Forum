@@ -62,7 +62,17 @@ class KunenaProfiler extends JProfiler {
 	}
 
 	public function getAll() {
-		return KunenaProfilerItem::getAll();
+		$items = KunenaProfilerItem::getAll();
+		$this->sort($items);
+		return $items;
+	}
+
+	function sort(&$array, $property = 'total')
+	{
+		return usort($array, function($a, $b) use ($property) {
+			if ($a->$property == $b->$property) return 0;
+			return $a->$property < $b->$property ? 1 : -1;
+		});
 	}
 }
 

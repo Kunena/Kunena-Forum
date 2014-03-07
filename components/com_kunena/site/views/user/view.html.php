@@ -28,7 +28,7 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEdit($tpl = null) {
 		$userid = JRequest::getInt('userid');
-		$this->usernamechange = $this->config->usernamechange && (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1));
+		$this->usernamechange = JComponentHelper::getParams('com_users')->get('change_login_name', 1);
 
 		if ($userid && $this->me->userid != $userid) {
 			$user = KunenaFactory::getUser( $userid );
@@ -47,13 +47,17 @@ class KunenaViewUser extends KunenaView {
 
 		$this->_prepareDocument('list');
 
-		parent::display($tpl);
+		$this->render('User/List', $tpl);
+	}
+
+	function getPaginationObject($maxpages) {
+		$pagination = new KunenaPagination($this->count, $this->state->get('list.start'), $this->state->get('list.limit'));
+		$pagination->setDisplayedPages($maxpages);
+		return $pagination;
 	}
 
 	function getPagination($maxpages) {
-		$pagination = new KunenaPagination($this->count, $this->state->get('list.start'), $this->state->get('list.limit'));
-		$pagination->setDisplayedPages($maxpages);
-		return $pagination->getPagesLinks();
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	protected function displayCommon($tpl = null) {
@@ -93,7 +97,12 @@ class KunenaViewUser extends KunenaView {
 			else $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_BACK').' &raquo;', JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow' );
 		}
 		$this->name = $this->user->username;
-		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
+		
+		if ($this->config->userlist_name) 
+		{
+			$this->name = $this->profile->getName() . ($this->me->isModerator() ? ' (' . $this->name . ')' : '');
+		}
+		
 		if ($this->config->showuserstats) {
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
@@ -174,7 +183,8 @@ class KunenaViewUser extends KunenaView {
 		}
 
 		$this->_prepareDocument('common');
-		parent::display();
+		$layout = $this->getLayout() != 'default' ? "User/{$this->getLayout()}" : 'User/Item';
+		$this->render($layout, $tpl);
 	}
 
 	function displayUnapprovedPosts() {
@@ -346,46 +356,28 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function getAvatarGallery($path) {
-		jimport('joomla.filesystem.folder');
-		$files = JFolder::files($path,'(\.gif|\.png|\.jpg|\.jpeg)$');
+		$files = KunenaFolder::files($path,'(\.gif|\.png|\.jpg|\.jpeg)$');
 		return $files;
 	}
 
 	// This function was modified from the one posted to PHP.net by rockinmusicgv
 	// It is available under the readdir() entry in the PHP online manual
 	function getAvatarGalleries($path, $select_name) {
-		jimport('joomla.filesystem.folder');
 		jimport('joomla.utilities.string');
-		$folders = JFolder::folders($path,'.',true, true);
-		foreach ($folders as $key => $folder) {
+		$folders = KunenaFolder::folders($path,'.',true, true);
+		$galleries = array();
+		if ($this->getAvatarGallery($path)) {
+			$galleries[] = JHtml::_('select.option', 'default', JText::_('COM_KUNENA_DEFAULT_GALLERY'));
+		}
+		foreach ($folders as $folder) {
 			$folder = substr($folder, strlen($path)+1);
-			$folders[$key] = $folder;
+			if (!$this->getAvatarGallery($path.'/'.$folder)) continue;
+			$galleries[] = JHtml::_('select.option', $folder, JString::ucwords(str_replace('/', ' / ', $folder)));
 		}
 
 		$selected = JString::trim($this->gallery);
-		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\">\n";
-		$str .=  "<option value=\"default\"";
 
-		if ($selected == "") {
-			$str .=  " selected=\"selected\"";
-		}
-
-		$str .=  ">" . JText::_ ( 'COM_KUNENA_DEFAULT_GALLERY' ) . "</option>\n";
-
-		asort ( $folders );
-
-		foreach ( $folders as $val ) {
-			$str .=  '<option value="' . urlencode($val) . '"';
-
-			if ($selected == $val) {
-				$str .=  " selected=\"selected\"";
-			}
-
-			$str .=  ">{$this->escape(JString::ucwords(str_replace('/', ' / ', $val)))}</option>\n";
-		}
-
-		$str .=  "</select>\n";
-		return $str;
+		return $galleries ? JHtml::_('select.genericlist', $galleries, $this->escape($select_name), '', 'value', 'text', $selected, 'avatar_category_select') : null;
 	}
 
 	function displayEditUser() {
@@ -452,9 +444,9 @@ class KunenaViewUser extends KunenaView {
 
 	function getAllImagesInGallery() {
 		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
-		$galleryFolders = JFolder::folders($path);
+		$galleryFolders = KunenaFolder::folders($path);
 		$files_list = array();
-		$defaultGallery = JFolder::files($path);
+		$defaultGallery = KunenaFolder::files($path);
 		$newdefaultGallery = array();
 
 		foreach($defaultGallery as $image) {
@@ -463,7 +455,7 @@ class KunenaViewUser extends KunenaView {
 		$files_list['default'] = json_encode($newdefaultGallery);
 
 		foreach($galleryFolders as $folder) {
-			$tmp = JFolder::files($path. '/' .$folder);
+			$tmp = KunenaFolder::files($path. '/' .$folder);
 			$newgalleryFolders = array();
 			foreach($tmp as $img) {
 				if( $img != 'index.html' )$newgalleryFolders[] = $img;
@@ -529,7 +521,7 @@ class KunenaViewUser extends KunenaView {
 	function canManageAttachments () {
 		if ( $this->config->show_imgfiles_manage_profile ) {
 			$params = array('file' => '1', 'image' => '1', 'orderby' => 'desc', 'limit' => '30');
-			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
+			$this->userattachs = KunenaAttachmentHelper::getByUserid($this->profile, $params);
 
 			if ($this->userattachs) {
 				 if ( $this->me->isModerator() || $this->profile->userid == $this->me->userid ) return true;

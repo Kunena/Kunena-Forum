@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-jimport ( 'joomla.filesystem.folder' );
-jimport ( 'joomla.filesystem.file' );
 
 /**
  * Reportconfiguration Model for Kunena
@@ -51,7 +49,7 @@ class KunenaAdminModelReport extends KunenaModel {
 			$jconfig_sef_rewrite = 'Disabled';
 		}
 
-		if (file_exists(JPATH_ROOT.'/.htaccess')) {
+		if (is_file(JPATH_ROOT.'/.htaccess')) {
 			$htaccess = 'Exists';
 		} else {
 			$htaccess = 'Missing';
@@ -345,7 +343,7 @@ class KunenaAdminModelReport extends KunenaModel {
 			$xmlfiles = array($path);
 		} elseif (is_dir($path)) {
 			// Get an array of all the XML files from the directory
-			$xmlfiles = JFolder::files($path, '\.xml$', 1, true);
+			$xmlfiles = KunenaFolder::files($path, '\.xml$', 1, true);
 		}
 		$version = null;
 		if (!empty($xmlfiles)) {

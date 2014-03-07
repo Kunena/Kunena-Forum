@@ -49,6 +49,14 @@ abstract class KunenaCacheHelper {
 	}
 
 	/**
+	 * Clear Category cache.
+	 */
+	public static function clearCategories() {
+		/** @var JCache|JCacheController $cache */
+		$cache = JFactory::getCache();
+		$cache->remove('categories', 'com_kunena');
+	}
+	/**
 	 * Crear Joomla system cache.
 	 */
 	public static function clearSystem() {
@@ -77,8 +85,8 @@ abstract class KunenaCacheHelper {
 	public static function clearCacheFiles() {
 		// Delete all cached files.
 		$cacheDir = JPATH_CACHE.'/kunena';
-		if (is_dir($cacheDir)) JFolder::delete($cacheDir);
-		JFolder::create($cacheDir);
+		if (is_dir($cacheDir)) KunenaFolder::delete($cacheDir);
+		KunenaFolder::create($cacheDir);
 	}
 
 	/**
@@ -87,8 +95,8 @@ abstract class KunenaCacheHelper {
 	public static function clearTemplateFiles() {
 		// Delete all cached files.
 		$cacheDir = JPATH_ROOT."/media/kunena/cache";
-		if (is_dir($cacheDir)) JFolder::delete($cacheDir);
-		JFolder::create($cacheDir);
+		if (is_dir($cacheDir)) KunenaFolder::delete($cacheDir);
+		KunenaFolder::create($cacheDir);
 	}
 
 	/**

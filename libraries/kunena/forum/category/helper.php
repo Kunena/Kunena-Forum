@@ -17,16 +17,32 @@ abstract class KunenaForumCategoryHelper {
 	/**
 	 * @var KunenaForumCategory[]
 	 */
-	public static $_instances = false;
-	protected static $_tree = array ();
+	public static $_instances;
+	protected static $_tree;
 	protected static $allowed;
 
 	/**
 	 * Initialize class.
 	 */
 	static public function initialize() {
-		self::loadCategories();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		if (KunenaConfig::getInstance()->get('cache_cat')) {
+			// FIXME: Experimental caching.
+			/** @var JCache|JCacheControllerCallback $cache */
+			$cache = JFactory::getCache('com_kunena', 'callback');
+			$cache->setLifeTime(180);
+			self::$_instances = $cache->call(array('KunenaForumCategoryHelper', 'loadCategories'));
+		} else {
+			self::$_instances = self::loadCategories();
+		}
+
+		if (is_null(self::$_tree)) {
+			self::buildTree(self::$_instances);
+		}
+
 		self::$allowed = KunenaAccess::getInstance()->getAllowedCategories();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
 	/**
@@ -140,12 +156,12 @@ abstract class KunenaForumCategoryHelper {
 		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
 		$where = isset($params['where']) ? (string) $params['where'] : '';
-		$allowed = implode(',', KunenaAccess::getInstance()->getAllowedCategories ());
+		$allowed = implode(',', array_keys(KunenaAccess::getInstance()->getAllowedCategories()));
 
 		if (!$userids || !$allowed) return array(0, array());
 
 		// Get total count
-		$query = "SELECT COUNT(*) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id";
+		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where}";
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$total) {
@@ -172,7 +188,7 @@ abstract class KunenaForumCategoryHelper {
 	}
 
 	/**
-	 * @param int $catids
+	 * @param int|array $catids
 	 */
 	static public function getNewTopics($catids) {
 		$user = KunenaUserHelper::getMyself();
@@ -193,8 +209,8 @@ abstract class KunenaForumCategoryHelper {
 			FROM #__kunena_topics AS t
 			LEFT JOIN #__kunena_user_categories AS uc ON uc.category_id=t.category_id AND uc.user_id={$db->Quote($user->userid)}
 			LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=t.id AND ur.user_id={$db->Quote($user->userid)}
-			WHERE t.category_id IN ($catlist) AND t.hold='0' AND t.last_post_time>{$db->Quote($session->lasttime)}
-				AND (uc.allreadtime IS NULL OR t.last_post_time>UNIX_TIMESTAMP(uc.allreadtime))
+			WHERE t.category_id IN ($catlist) AND t.hold='0' AND t.last_post_time>{$db->Quote($session->getAllReadTime())}
+				AND (uc.allreadtime IS NULL OR t.last_post_time>uc.allreadtime)
 				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)
 			GROUP BY category_id";
 		$db->setQuery ( $query );
@@ -243,18 +259,18 @@ abstract class KunenaForumCategoryHelper {
 	 * @param bool   $reverse
 	 * @param string $authorise
 	 *
-	 * @return KunenaForumCategory[]
+	 * @return array|KunenaForumCategory[]
 	 */
 	static public function getCategories($ids = false, $reverse = false, $authorise='read') {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
 		if ($ids === false) {
-			$ids = self::$_instances;
 			if ($authorise == 'none') {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-				return $ids;
+				return self::$_instances;
 			}
-		} elseif (is_array ($ids) ) {
+			$ids = self::$_instances;
+		} elseif (is_array($ids)) {
 			$ids = array_flip($ids);
 		} else {
 			$ids = array(intval($ids)=>1);
@@ -312,7 +328,7 @@ abstract class KunenaForumCategoryHelper {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return array();
 			}
-			if (!$unpublished && !self::$_instances [$parent]->published) {
+			if (!$unpublished && self::$_instances[$parent]->published != 1) {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return array();
 			}
@@ -333,6 +349,11 @@ abstract class KunenaForumCategoryHelper {
 	 */
 	static public function getChildren($parents = 0, $levels = 0, $params = array()) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		if (!is_array($parents) && !isset(self::$_tree[$parents])) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return array();
+		}
 
 		static $defaults = array(
 			'ordering'=>'ordering',
@@ -533,9 +554,7 @@ abstract class KunenaForumCategoryHelper {
 
 		if ($rows) {
 			// If something changed, clean our cache
-			$cache = JFactory::getCache('com_kunena', 'output');
-			// FIXME: enable caching after fixing the issues
-			//$cache->clean('categories');
+			KunenaCacheHelper::clearCategories();
 		}
 		return $rows;
 	}
@@ -593,42 +612,40 @@ abstract class KunenaForumCategoryHelper {
 
 	// Internal functions:
 
-	static protected function loadCategories() {
+	static public function &loadCategories() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery ( $query );
-		$results = (array) $db->loadObjectList('id', 'KunenaForumCategory');
+		$instances = (array) $db->loadObjectList('id', 'KunenaForumCategory');
 		KunenaError::checkDatabaseError ();
 
-		self::$_instances = array();
-		self::$_tree = array();
-
-		if (empty($results)) {
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return;
+		// TODO: remove this by adding level into table
+		self::buildTree($instances);
+		$heap = array(0);
+		while (($parent = array_shift($heap)) !== null) {
+			foreach (self::$_tree [$parent] as $id=>$children) {
+				if (!empty($children)) array_push($heap, $id);
+				$instances[$id]->level = $parent ? $instances[$parent]->level+1 : 0;
+			}
 		}
 
-		foreach ($results as $instance) {
-			self::$_instances [$instance->id] = $instance;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $instances;
+	}
 
+	static protected function buildTree(array &$instances) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		self::$_tree = array();
+		foreach ($instances as $instance) {
 			if (!isset(self::$_tree [(int)$instance->id])) {
 				self::$_tree [$instance->id] = array();
 			}
 			self::$_tree [$instance->parent_id][$instance->id] = &self::$_tree [(int)$instance->id];
 		}
-		unset ($results);
-		// TODO: remove this by adding level into table
-		$heap = array(0);
-		while (($parent = array_shift($heap)) !== null) {
-			foreach (self::$_tree [$parent] as $id=>$children) {
-				if (!empty($children)) array_push($heap, $id);
-				self::$_instances [$id]->level = $parent ? self::$_instances [$parent]->level+1 : 0;
-			}
-		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
-
 	/**
 	 * @param $a
 	 * @param $b

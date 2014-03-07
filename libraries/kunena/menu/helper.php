@@ -37,13 +37,17 @@ abstract class KunenaMenuHelper {
 		// If no active menu, use default
 		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
 
-		$levels = JFactory::getUser()->getAuthorisedViewLevels();
-		asort($levels);
-		$key = 'menu_items'.$params.implode(',', $levels).'.'.$active->id;
-		$cache = JFactory::getCache('com_kunena.menu', '');
-		// FIXME: enable caching after fixing the issues
-		$items = array();
-		if (true) { // !($items = $cache->get($key))) {
+		$items = false;
+		// FIXME: Experimental caching.
+		if (KunenaConfig::getInstance()->get('cache_menu')) {
+			$levels = JFactory::getUser()->getAuthorisedViewLevels();
+			asort($levels);
+			$key = 'menu_items'.$params.implode(',', $levels).'.'.$active->id;
+
+			$cache = JFactory::getCache('com_kunena.menu', '');
+			$items = $cache->get($key);
+		}
+		if ($items === false) {
 			// Initialise variables.
 			$path		= $active->tree;
 			$start		= (int) $params->get('startLevel');
@@ -112,10 +116,10 @@ abstract class KunenaMenuHelper {
 						$item->flink = JRoute::_($item->flink, false);
 					}
 
-					$item->title = htmlspecialchars($item->title);
-					$item->anchor_css = htmlspecialchars($item->params->get('menu-anchor_css', ''));
-					$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''));
-					$item->menu_image = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', '')) : '';
+					$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8');
+					$item->anchor_css = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8');
+					$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8');
+					$item->menu_image = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8') : '';
 				}
 
 				if (isset($lastitem)) {
@@ -125,8 +129,9 @@ abstract class KunenaMenuHelper {
 				}
 			}
 
-			// FIXME: enable caching after fixing the issues
-			//$cache->store($items, $key);
+			if (isset($cache)) {
+				$cache->store($items, $key);
+			}
 		}
 		return $items;
 	}

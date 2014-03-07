@@ -1,6 +1,6 @@
 <?php
 /**
- * Kunena Component - CKunenaAjaxHelper class
+ * Kunena Component
  * @package Kunena.Site
  * @subpackage Lib
  *
@@ -12,15 +12,12 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-require_once(KPATH_SITE.'/lib/kunena.file.class.php');
-require_once (KPATH_SITE.'/lib/kunena.image.class.php');
-
 /**
  * Class to handle file uploads and process the uploaded files.
  *
  * @since		1.6
+ * @deprecated 3.1
  */
-
 class CKunenaUpload {
 	protected $_db;
 	protected $_my;
@@ -30,6 +27,7 @@ class CKunenaUpload {
 	protected $_isimage;
 	protected $_isfile;
 
+	protected $realName = false;
 	protected $fileName = false;
 	protected $fileTemp = false;
 	protected $fileSize = false;
@@ -52,8 +50,8 @@ class CKunenaUpload {
 		$this->_isimage = false;
 		$this->_isfile = false;
 		$me = KunenaUserHelper::getMyself();
-		$this->validImageExts = (array) KunenaForumMessageAttachmentHelper::getImageExtensions($catid,$me->userid);
-		$this->validFileExts = (array) KunenaForumMessageAttachmentHelper::getFileExtensions($catid,$me->userid);
+		$this->validImageExts = (array) KunenaAttachmentHelper::getImageExtensions($catid, $me->userid);
+		$this->validFileExts = (array) KunenaAttachmentHelper::getFileExtensions($catid, $me->userid);
 		$this->setImageResize(intval($this->_config->imagesize)*1024, intval($this->_config->imagewidth), intval($this->_config->imageheight), intval($this->_config->imagequality));
 	}
 
@@ -97,6 +95,7 @@ class CKunenaUpload {
 			'status' => $this->status,
 			'ready' => $this->ready,
 			'name' => $this->fileName,
+			'real' => $this->realName,
 			'size' => $this->fileSize
 		);
 
@@ -137,27 +136,28 @@ class CKunenaUpload {
 	function uploaded($input='kattachment') {
 		$file = JRequest::getVar ( $input, NULL, 'FILES', 'array' );
 		if (is_uploaded_file ( $file ['tmp_name'] ) && $file ['error'] == 0) return true;
+		return false;
 	}
 
 	function getValidExtension($validExts) {
 		$ret = null;
 		// Go through every allowed extension, if the extension matches the file extension (case insensitive)
-		//then the file extension is ok
-		foreach ( $validExts as $ext ) {
-			$ext = trim ( $ext );
+		// then the file extension is good.
+		foreach ($validExts as $ext) {
+			$ext = JString::strtolower(trim($ext, ". \t\n\r\0\x0B"));
 			if (!$ext) {
 				// Do not allow empty extensions
 				continue;
 			}
-			if ($ext[0] != '.') {
-				// Add first dot if it is missing in extension list
-				$ext = '.'.$ext;
-			}
-			$extension = substr($this->fileName, -strlen($ext));
-			if (strtolower($extension) == strtolower($ext)) {
+			// Make sure we check dot, too.
+			$ext = '.' . $ext;
+			$extLen = JString::strlen($ext);
+
+			$extension = JString::strtolower(JString::substr($this->realName, -$extLen));
+			if ($extension == $ext) {
 				// File must contain one letter before extension
-				$ret[] = substr($this->fileName, 0, -strlen($ext));
-				$ret[] = substr($extension, 1);
+				$ret[] = JString::substr($this->realName, 0, -$extLen);
+				$ret[] = JString::substr($extension, 1);
 				break;
 			}
 		}
@@ -168,8 +168,8 @@ class CKunenaUpload {
 		$this->resetStatus();
 
 		// create upload directory if it does not exist
-		if (!JFolder::exists($uploadPath)) {
-			if (!JFolder::create($uploadPath)) {
+		if (!is_dir($uploadPath)) {
+			if (!KunenaFolder::create($uploadPath)) {
 				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' ));
 				return false;
 			}
@@ -177,7 +177,7 @@ class CKunenaUpload {
 		KunenaFolder::createIndex($uploadPath);
 
 		// Get file name and validate with path type
-		$this->fileName = JFile::makeSafe(JRequest::getString ( $input.'_name', '', 'post' ));
+		$this->realName = JRequest::getString ( $input.'_name', '', 'post' );
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );
@@ -194,9 +194,8 @@ class CKunenaUpload {
 			}
 			$this->fileTemp = $file ['tmp_name'];
 			$this->fileSize = $file ['size'];
-			if (! $this->fileName) {
-				// Need to add additonal path type check as array getVar does not
-				$this->fileName = JFile::makeSafe($file ['name']);
+			if (!$this->realName) {
+				$this->realName = $file['name'];
 			}
 			//any errors the server registered on uploading
 			switch ($file ['error']) {
@@ -234,7 +233,7 @@ class CKunenaUpload {
 		} else {
 			// Currently not in use: this is meant for experimental AJAX uploads
 			// Open temp file
-			$this->fileTemp = KunenaPath::tmpdir() . '/kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->fileName );
+			$this->fileTemp = KunenaPath::tmpdir() . '/kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->realName );
 			$out = fopen ($this->fileTemp, $chunk == 0 ? "wb" : "ab");
 			if ($out) {
 				// Read binary input stream and append it to temp file
@@ -296,7 +295,13 @@ class CKunenaUpload {
 
 		// Special processing for images
 		if ($this->_isimage){
-			$this->imageInfo = CKunenaImageHelper::getProperties( $this->fileTemp );
+			try {
+				$this->imageInfo = JImage::getImageFileProperties($this->fileTemp);
+			} catch (Exception $e) {
+				// TODO: better error message.
+				$this->fail(JText::_($e->getMessage()));
+				return false;
+			}
 
 			// Let see if we need to check the MIME type
 			if ($this->_config->checkmimetypes){
@@ -313,20 +318,25 @@ class CKunenaUpload {
 
 			// If image is not inside allowed size limits, resize it
 			if ($this->fileSize > $this->imagesize || $this->imageInfo->width > $this->imagewidth || $this->imageInfo->height > $this->imageheight) {
-				$options = array('quality' => $this->imagequality);
+				// Calculate quality for both JPG and PNG.
+				$quality = $this->imagequality;
+				if ($quality < 1 || $quality > 100) $quality = 70;
+				if ($this->imageInfo->type == IMAGETYPE_PNG) $quality = intval(($quality-1)/10);
+				$options = array('quality' => $quality);
 
-				$imageRaw = new CKunenaImage($this->fileTemp);
-				if ($imageRaw->getError()) {
-					$this->fail(JText::_($imageRaw->getError()));
+				try {
+					$image = new JImage($this->fileTemp);
+					$image = $image->resize($this->imagewidth, $this->imageheight, false);
+					$image->toFile($this->fileTemp, $this->imageInfo->type, $options);
+					unset($image);
+				} catch (Exception $e) {
+					// TODO: better error message.
+					$this->fail(JText::_($e->getMessage()));
 					return false;
 				}
-				$image = $imageRaw->resize($this->imagewidth, $this->imageheight);
-				$type = $imageRaw->getType();
-				unset($imageRaw);
-				$image->toFile($this->fileTemp,$type,$options);
-				clearstatcache();
 
 				// Re-calculate physical file size: image has been shrunk
+				clearstatcache();
 				$stat = stat($this->fileTemp);
 				if (! $stat) {
 					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $this->fileTemp));
@@ -346,31 +356,38 @@ class CKunenaUpload {
 		// Get a hash value from the file
 		$this->fileHash = md5_file ( $this->fileTemp );
 
-		// Override filename if given in the parameter
-		if($filename) $uploadedFileBasename = $filename;
-		$uploadedFileBasename = KunenaFile::makeSafe($uploadedFileBasename);
-		if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
+		if ($filename === null) {
+			// Use random non-existing filename.
+			do {
+				$this->fileName = md5(rand());
+			} while (is_file("{$uploadPath}/{$this->fileName}"));
+		} else {
+			// Override filename if given in the parameter
+			if($filename) $uploadedFileBasename = $filename;
+			$uploadedFileBasename = KunenaFile::makeSafe($uploadedFileBasename);
+			if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
 
-		// Rename file if there is already one with the same name
-		$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
-		if (file_exists($uploadPath .'/'. $newFileName)) {
-			$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
-			for ($i=2; file_exists("{$uploadPath}/{$newFileName}"); $i++) {
-				$newFileName = $uploadedFileBasename . date('_Y-m-d') . "-$i." . $uploadedFileExtension;
+			// Rename file if there is already one with the same name
+			$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
+			if (is_file($uploadPath .'/'. $newFileName)) {
+				$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
+				for ($i=2; is_file("{$uploadPath}/{$newFileName}"); $i++) {
+					$newFileName = $uploadedFileBasename . date('_Y-m-d') . "-$i." . $uploadedFileExtension;
+				}
 			}
+			$this->fileName = $newFileName;
+			$this->fileName = preg_replace('/[[:space:]]/', '',$this->fileName);
 		}
-		$this->fileName = $newFileName;
-		$this->fileName = preg_replace('/[[:space:]]/', '',$this->fileName);
 
 		// All the processing is complete - now we need to move the file(s) into the final location
 		@chmod($this->fileTemp, 0644);
-		if (! JFile::copy ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
+		if (! KunenaFile::copy($this->fileTemp, $uploadPath.'/'.$this->fileName)) {
 			$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/'.$this->fileName));
 			unlink($this->fileTemp);
 			return false;
 		}
 		unlink($this->fileTemp);
-		JPath::setPermissions($uploadPath.'/'.$this->fileName);
+		KunenaPath::setPermissions($uploadPath.'/'.$this->fileName);
 
 		$this->ready = true;
 		return $this->status = true;

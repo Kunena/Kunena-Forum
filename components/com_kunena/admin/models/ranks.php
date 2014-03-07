@@ -45,6 +45,7 @@ class KunenaAdminModelRanks extends JModelList {
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.ranks';
 		if ($layout) {
 			$this->context .= '.'.$layout;
 		}

@@ -65,6 +65,36 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
+	 * Return ban creation date.
+	 *
+	 * @return KunenaDate
+	 */
+	public function getCreationDate()
+	{
+		return KunenaDate::getInstance($this->created_time);
+	}
+
+	/**
+	 * Return ban expiration date.
+	 *
+	 * @return KunenaDate
+	 */
+	public function getExpirationDate()
+	{
+		return KunenaDate::getInstance($this->expiration);
+	}
+
+	/**
+	 * Return ban modification date.
+	 *
+	 * @return KunenaDate
+	 */
+	public function getModificationDate()
+	{
+		return KunenaDate::getInstance($this->modified_time);
+	}
+
+	/**
 	 * @param KunenaUserBan $instance
 	 */
 	private static function storeInstance($instance) {

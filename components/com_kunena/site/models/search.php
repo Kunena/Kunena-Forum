@@ -22,10 +22,18 @@ class KunenaModelSearch extends KunenaModel {
 
 	protected function populateState() {
 		// Get search word list
-		$value = JString::trim ( JRequest::getString ( 'q', '' ) );
-		if ($value == JText::_('COM_KUNENA_GEN_SEARCH_BOX')) {
+		$value = JString::trim($this->app->input->get('query', '', 'string'));
+
+		if (empty($value))
+		{
+			$value = JString::trim($this->app->input->get('q', '', 'string'));
+		}
+
+		if ($value == JText::_('COM_KUNENA_GEN_SEARCH_BOX'))
+		{
 			$value = '';
 		}
+
 		$this->setState ( 'searchwords', $value );
 
 		$value = JRequest::getInt ( 'titleonly', 0 );
@@ -64,7 +72,7 @@ class KunenaModelSearch extends KunenaModel {
 		$value = JRequest::getInt ( 'topic_id', 0 );
 		$this->setState ( 'query.topic_id', $value );
 
-		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
+		if (isset ( $_POST ['query'] ) || isset ( $_POST ['searchword'] )) {
 			$value = JRequest::getVar ( 'catids', array (0), 'post', 'array' );
 			JArrayHelper::toInteger($value);
 		} else {
@@ -73,6 +81,17 @@ class KunenaModelSearch extends KunenaModel {
 			JArrayHelper::toInteger($value);
 		}
 		$this->setState ( 'query.catids', $value );
+
+		// FIXME: support search topic
+		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
+			$value = JRequest::getVar ( 'ids', array (0), 'post', 'array' );
+			JArrayHelper::toInteger($value);
+		} else {
+			$value = JRequest::getString ( 'ids', '0', 'get' );
+			$value = explode ( ' ', $value );
+			JArrayHelper::toInteger($value);
+		}
+		$this->setState ('query.ids', $value );
 
 		$value = JRequest::getInt ( 'show', 0 );
 		$this->setState ( 'query.show', $value );
@@ -291,8 +310,12 @@ class KunenaModelSearch extends KunenaModel {
 			$limitstr .= "&limitstart=$limitstart";
 		if ($limit > 0 && $limit != $config->messages_per_page_search)
 			$limitstr .= "&limit=$limit";
+
 		if ($searchword)
-			$searchword = '&q=' . urlencode ( $searchword );
+		{
+			$searchword = '&query=' . urlencode($searchword);
+		}
+
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$searchword}{$params}{$limitstr}", $xhtml );
 	}
 }

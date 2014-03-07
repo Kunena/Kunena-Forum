@@ -26,15 +26,17 @@ class KunenaAdminControllerUsers extends KunenaController {
 	function edit() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$userid = (int)array_shift($cid);
 
-		if ($userid < 0 ) {
+		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$this->app->setUserState ( 'kunena.user.userid', $userid );
@@ -45,7 +47,8 @@ class KunenaAdminControllerUsers extends KunenaController {
 	function save() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$newview = JRequest::getString ( 'newview' );
@@ -85,13 +88,14 @@ class KunenaAdminControllerUsers extends KunenaController {
 				KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
 			}
 		}
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function trashusermessages() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$uids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -104,24 +108,27 @@ class KunenaAdminControllerUsers extends KunenaController {
 			}
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USERMES_TRASHED_DONE') );
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function move() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
 		if ( empty($userids) ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$this->app->setUserState ( 'kunena.usermove.userids', $userids );
@@ -132,7 +139,8 @@ class KunenaAdminControllerUsers extends KunenaController {
 	function movemessages () {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$catid = JRequest::getInt('catid');
@@ -159,7 +167,8 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		if ($error) {
@@ -167,95 +176,101 @@ class KunenaAdminControllerUsers extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USERMES_MOVED_DONE') );
 		}
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function logout() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$id = (int)array_shift($cid);
 
-		if ($id < 0 ) {
+		if ($id <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$options = array('clientid'=>0); // Just logout from site
 		$this->app->logout( (int) $id, $options);
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USER_LOGOUT_DONE') );
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function remove() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
 		if ( empty($cids) ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
+
+		$users = KunenaUserHelper::loadUsers($cids);
 
 		$my = JFactory::getUser();
 		$usernames = array();
-		foreach ( $cids as $userid ) {
-			$user = JFactory::getUser($userid);
-			$username = $user->username;
-			$groups = JUserHelper::getUserGroups($userid);
+		foreach ( $users as $user ) {
+			$groups = JUserHelper::getUserGroups($user->userid);
 
-			if ( $my->id == $userid ) {
+			if ( $my->id == $user->userid ) {
 				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_YOURSELF'), 'notice');
 				continue;
 			}
 
-			if ( $user->authorise('core.admin') )  {
+			$instance = JUser::getInstance($user->userid);
+
+			if ( $instance->authorise('core.admin') )  {
 				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'), 'notice');
 				continue;
 			}
 
-			$user = KunenaUserHelper::get($userid);
 			$result = $user->delete();
 			if ( !$result ) {
-				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $userid), 'notice' );
+				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $user->userid), 'notice' );
 				continue;
 			}
 
 			// Delete the user too from Joomla!
-			$instance = JUser::getInstance($userid);
 			$jresult = $instance->delete();
 			if ( !$jresult ) {
-				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $userid), 'notice' );
+				$this->app->enqueueMessage( JText::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $user->userid), 'notice' );
 				continue;
 			}
 
-			$usernames[] = $username;
+			$usernames[] = $user->username;
 		}
 
 		if ( !empty($usernames) )  $this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE_SUCCESSFULLY', implode(', ',$usernames)) );
 
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function ban() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$userid = (int)array_shift($cid);
 
-		if ($userid < 0 ) {
+		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
@@ -277,21 +292,23 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->enqueueMessage ( $message );
 		}
 
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function unban() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$userid = (int)array_shift($cid);
 
-		if ($userid < 0 ) {
+		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
@@ -313,21 +330,23 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->enqueueMessage ( $message );
 		}
 
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function block() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$userid = (int)array_shift($cid);
 
-		if ($userid < 0 ) {
+		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
@@ -350,21 +369,23 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->enqueueMessage ( $message );
 		}
 
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function unblock() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$userid = (int)array_shift($cid);
 
-		if ($userid < 0 ) {
+		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
@@ -386,13 +407,14 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->enqueueMessage ( $message );
 		}
 
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	public function batch_moderators() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -400,12 +422,14 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		if ( empty($userids) ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_USERS_SELECTED' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		if ( empty($catids) ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_CATEGORIES_SELECTED' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
 		}
 
 		// Update moderator rights
@@ -422,6 +446,30 @@ class KunenaAdminControllerUsers extends KunenaController {
 		}
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_SET_MODERATORS_DONE' ) );
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Method to just redirect to main manager in case of use of cancel button
+	 *
+	 * @return void
+	 *
+	 * @since 3.1
+	 */
+	public function cancel()
+	{
+		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Method to just redirect to main manager in case of use of cancel button
+	 *
+	 * @return void
+	 *
+	 * @since 3.1
+	 */
+	public function cancel()
+	{
+		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<!DOCTYPE kunena-topicicons>
+<kunena-topicicons>
+	<name>default</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPL</license>
+	<description>Default topic icons for Crypsis template.</description>
+	
+	<icons type="user" width="48" height="48">
+		<icon id="0" name="default" published="1" title="COM_KUNENA_ICON_DEFAULT" src="user/default.png" />
+		<icon id="1" name="exclamation" published="1" title="COM_KUNENA_ICON_EXCLAMATION" src="user/exclamation.png" />
+		<icon id="2" name="question" published="1" title="COM_KUNENA_ICON_QUESTION" src="user/question.png" />
+		<icon id="3" name="idea" published="1" title="COM_KUNENA_ICON_IDEA" src="user/idea.png" />
+		<icon id="4" name="love" published="1" title="COM_KUNENA_ICON_LOVE" src="user/love.png" />
+		<!-- icon id="5" name="grin" published="1" title="COM_KUNENA_ICON_GRIN" src="user/grin.png" / -->
+		<!-- icon id="6" name="shock" published="1" title="COM_KUNENA_ICON_SHOCK" src="user/shock.png" / -->
+		<!-- icon id="7" name="smile" published="1" title="COM_KUNENA_ICON_SMILE" src="user/smile.png" / -->
+		<icon id="9" name="merged" published="1" title="COM_KUNENA_ICON_MERGED" src="user/merged.png" />
+		<icon id="10" name="cross" published="1" title="COM_KUNENA_ICON_CROSS" src="user/cross.png" />
+		<icon id="8" name="solved" published="1" title="COM_KUNENA_ICON_SOLVED" src="user/solved.png" />
+	</icons>
+</kunena-topicicons>

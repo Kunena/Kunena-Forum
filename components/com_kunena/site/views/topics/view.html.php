@@ -34,7 +34,7 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->_prepareDocument('default');
 
-		$this->display($tpl);
+		$this->render('Topic/List', $tpl);
 	}
 
 	function displayUser($tpl = null) {
@@ -56,7 +56,7 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->_prepareDocument('user');
 
-		$this->display($tpl);
+		$this->render('Topic/List', $tpl);
 	}
 
 	function displayPosts($tpl = null) {
@@ -79,7 +79,7 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->_prepareDocument('posts');
 
-		$this->display($tpl);
+		$this->render('Message/List', $tpl);
 	}
 
 	function displayRows() {

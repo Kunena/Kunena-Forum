@@ -84,7 +84,9 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	color: #FFFFFF;
 }
 #Kunena .kheader h2,
-#Kunena .kheader h2 a {
+#Kunena .kheader h2 a,
+#Kunena .kheader h3,
+#Kunena .kheader h3 a {
 	color: #fff !important;
 }
 
@@ -1089,5 +1091,12 @@ ul.autocompleter-choices li {
 /* Fix Rockettheme issue arrow */
 .component-content h2::before {
 	content: none !important;
+}
+/* --------------------------------------------------------------- */
+
+/* Fix to avoid broken controls with google maps
+----------------------------------------------------------------------------------------------- */
+#Kunena div.kmsgbody div.kmsgtext div.kgooglemap img { 
+	max-width: none !important;
 }
 /* --------------------------------------------------------------- */

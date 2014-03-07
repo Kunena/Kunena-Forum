@@ -45,6 +45,7 @@ class KunenaAdminModelSmilies extends JModelList {
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.smilies';
 		if ($layout) {
 			$this->context .= '.'.$layout;
 		}

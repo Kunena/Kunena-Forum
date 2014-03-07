@@ -33,7 +33,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Item', $tpl);
 	}
 
 	function displayCreate($tpl = null) {
@@ -53,7 +53,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Edit', $tpl);
 	}
 
 	function displayEdit($tpl = null) {
@@ -73,7 +73,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Edit', $tpl);
 	}
 
 	function displayList($tpl = null) {
@@ -96,7 +96,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/List', $tpl);
 	}
 
 	function displayItems() {
@@ -165,11 +165,15 @@ class KunenaViewAnnouncement extends KunenaView {
 		return $this->announcement->authorise('delete');
 	}
 
-	function getPagination($maxpages) {
+	function getPaginationObject($maxpages) {
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
-		return $pagination->getPagesLinks();
+		return $pagination;
+	}
+
+	function getPagination($maxpages) {
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	protected function _prepareDocument(){

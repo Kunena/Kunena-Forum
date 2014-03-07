@@ -27,6 +27,7 @@ class KunenaAdminModelUser extends KunenaModel {
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.user';
 		if ($layout) {
 			$this->context .= '.'.$layout;
 		}
@@ -51,16 +52,26 @@ class KunenaAdminModelUser extends KunenaModel {
 		$subslist = (array) $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return array();
 
-		return $subslist;
+		$topic_list = array();
+
+		if ( !empty($subslist) )
+		{
+			foreach ($subslist as $sub)
+			{
+				$topic_list[] = $sub->thread;
+			}
+
+			$topic_list = KunenaForumTopicHelper::getTopics($topic_list);
+		}
+
+		return $topic_list;
 	}
 
 	public function getCatsubcriptions() {
 		$db = JFactory::getDBO ();
 		$userid = $this->getState($this->getName() . '.id');
 
-		$db->setQuery ( "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$userid}" );
-		$subscatslist = (array) $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return array();
+		$subscatslist = KunenaForumCategoryHelper::getSubscriptions($userid);
 
 		return $subscatslist;
 	}

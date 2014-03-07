@@ -20,11 +20,14 @@ class TableKunenaAttachments extends KunenaTable {
 	public $id = null;
 	public $userid = null;
 	public $mesid = null;
+	public $protected = null;
 	public $hash = null;
 	public $size = null;
 	public $folder = null;
 	public $filetype = null;
 	public $filename = null;
+	public $filename_real = null;
+	public $comment = null;
 
 	public function __construct($db) {
 		parent::__construct ( '#__kunena_attachments', 'id', $db );
@@ -36,7 +39,7 @@ class TableKunenaAttachments extends KunenaTable {
 		if ($this->userid != 0 && !$user->exists()) {
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_USER_INVALID', (int) $user->userid));
 		}
-		if (!$message->exists()) {
+		if ($message->id && !$message->exists()) {
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_MESSAGE_INVALID', (int) $message->id));
 		}
 		$this->folder = trim($this->folder, '/');
@@ -46,12 +49,16 @@ class TableKunenaAttachments extends KunenaTable {
 		if (!$this->filename) {
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_FILENAME'));
 		}
+		if (!$this->filename_real) {
+			$this->filename_real = $this->filename;
+		}
 		$file = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
-		if (!file_exists($file)) {
+		if (!is_file($file)) {
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_FILE_MISSING', "{$this->folder}/{$this->filename}"));
 		} else {
-			if (!$this->hash) $this->hash = md5_file ( $file );
-			if (!$this->size) $this->size = filesize ( $file );
+			if (!$this->hash) $this->hash = md5_file($file);
+			if (!$this->size) $this->size = filesize($file);
+			if (!$this->filetype) $this->filetype = KunenaFile::getMime($file);
 		}
 		return ($this->getError () == '');
 	}

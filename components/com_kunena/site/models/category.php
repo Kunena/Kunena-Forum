@@ -229,7 +229,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 				$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts
-				if (($lastpostlist || $lastreadlist) && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
+				if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
 					KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
 

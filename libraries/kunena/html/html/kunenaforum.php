@@ -15,6 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 abstract class JHtmlKunenaForum {
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {
+		$preselect = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
 		$sections = isset($params['sections']) ? (bool) $params['sections'] : 0;
 		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
@@ -63,7 +64,7 @@ abstract class JHtmlKunenaForum {
 			$me = KunenaUserHelper::getMyself();
 			$disabled = ($action == 'admin' && !$me->isAdmin());
 			$options [] = JHtml::_ ( 'select.option', '0', JText::_ ( $topleveltxt ), 'value', 'text', $disabled );
-			if (empty($selected) && !$disabled) {
+			if ($preselect && empty($selected) && !$disabled) {
 				$selected[] = 0;
 			}
 			$toplevel = 1;
@@ -73,14 +74,14 @@ abstract class JHtmlKunenaForum {
 
 		foreach ( $categories as $category ) {
 			$disabled = !$category->authorise ($action) || (! $sections && $category->isSection());
-			if (empty($selected) && !$disabled) {
+			if ($preselect && empty($selected) && !$disabled) {
 				$selected[] = $category->id;
 			}
 			$options [] = JHtml::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $disabled );
 		}
 		$disabled = false;
 		foreach ( $channels as $category ) {
-			if (empty($selected)) {
+			if ($preselect && empty($selected)) {
 				$selected[] = $category->id;
 			}
 			$options [] = JHtml::_ ( 'select.option', $category->id, '+ '. $category->getParent()->name.' / '.$category->name, 'value', 'text', $disabled );
@@ -121,14 +122,13 @@ abstract class JHtmlKunenaForum {
 	 * @return string
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '') {
-		$list['href'] = KunenaRoute::_($uri);
+		$list['href'] = (is_string($uri) && $uri[0]=='/') ? $uri : KunenaRoute::_($uri);
 		if ($title) $list['title'] = $title;
 		if ($class) $list['class'] = $class;
 		if ($rel) $list['rel'] = $rel;
 		if (is_array($attributes)) {
 			$list += $attributes;
 		}
-		ksort($list);
 
 		// Parse attributes
 		$attr = array();

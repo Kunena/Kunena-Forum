@@ -62,6 +62,7 @@ abstract class KunenaHtmlParser {
 
 	public static function parseBBCode($txt, $parent=null, $len=0) {
 		if (!$txt) return;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
@@ -70,6 +71,7 @@ abstract class KunenaHtmlParser {
 		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent ( $txt );
 
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $txt;
 	}
 

@@ -94,7 +94,6 @@ class KunenaConfig extends JObject {
 	public $popusercount = 5;
 	public $showpopsubjectstats = 1;
 	public $popsubjectcount = 5;
-	public $usernamechange = 0;
 	// New 1.0.5 config variables
 	// bbcode options
 	public $showspoilertag = 1;
@@ -225,8 +224,12 @@ class KunenaConfig extends JObject {
 	// New for 3.0.0
 	public $autolink = 1;
 	public $access_component = 1;
+	// New for 3.0.4
+	public $statslink_allowed = 1;
 	// New for 3.1.0
-	public $legacy_urls = 1; // TODO: Add configuration option
+	public $legacy_urls = 1;
+	public $attachment_protection = 0;
+	public $categoryicons = 1;
 
 	public function __construct() {
 		parent::__construct ();
@@ -234,9 +237,16 @@ class KunenaConfig extends JObject {
 
 	public static function getInstance() {
 		static $instance = null;
+
 		if (! $instance) {
-			$instance = new KunenaConfig ();
-			$instance->load ();
+			/** @var JCache|JCacheController $cache */
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$instance = $cache->get('configuration', 'com_kunena');
+			if (!$instance) {
+				$instance = new KunenaConfig();
+				$instance->load();
+			}
+			$cache->store($instance, 'configuration', 'com_kunena');
 		}
 		return $instance;
 	}

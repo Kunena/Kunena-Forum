@@ -35,9 +35,9 @@ class KunenaAdminTemplate25 {
 
 		// Load the cache.
 		$cacheDir = JPATH_CACHE.'/kunena';
-		if (!is_dir($cacheDir)) JFolder::create($cacheDir);
+		if (!is_dir($cacheDir)) KunenaFolder::create($cacheDir);
 		$cacheFile = "{$cacheDir}/kunena.bootstrap.{$inputFile}.cache";
-		if ( file_exists( $cacheFile ) ) {
+		if (is_file($cacheFile)) {
 			$cache = unserialize( file_get_contents( $cacheFile ) );
 		} else {
 			$cache = KPATH_MEDIA.'/less/bootstrap/'.$inputFile;
@@ -49,13 +49,13 @@ class KunenaAdminTemplate25 {
 		$newCache = $less->cachedCompile( $cache );
 		if ( !is_array( $cache ) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile) ) {
 			$cache = serialize( $newCache );
-			JFile::write( $cacheFile, $cache );
-			JFile::write( $outputFile, $newCache['compiled'] );
+			KunenaFile::write($cacheFile, $cache);
+			KunenaFile::write($outputFile, $newCache['compiled']);
 		}
 	}
 
 	public function getTemplatePaths($path = '', $fullpath = false) {
-		if ($path) $path = JPath::clean("/$path");
+		if ($path) $path = KunenaPath::clean("/$path");
 		$array = array();
 		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE).'/template/joomla25'.$path;
 

@@ -91,10 +91,10 @@ abstract class KunenaForum {
 	 * @return boolean True if online.
 	 */
 	public static function enabled($checkAdmin = true) {
-		if (!JComponentHelper::isEnabled ( 'com_kunena', true )) {
+		if (!JComponentHelper::isEnabled('com_kunena', true)) {
 			return false;
 		}
-		$config = KunenaFactory::getConfig ();
+		$config = KunenaFactory::getConfig();
 		return !$config->board_offline
 			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
 	}
@@ -141,7 +141,7 @@ abstract class KunenaForum {
 		$options = array('logger'=>'w3c', 'text_file'=>'kunena.php');
 		$categories = array('kunena');
 		$levels = JDEBUG || $config->debug ? JLog::ALL :
-			JLog::EMERGENCY & JLog::ALERT & JLog::CRITICAL & JLog::ERROR;
+			JLog::EMERGENCY | JLog::ALERT | JLog::CRITICAL | JLog::ERROR;
 		JLog::addLogger($options, $levels, $categories);
 	}
 

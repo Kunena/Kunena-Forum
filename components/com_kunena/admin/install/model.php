@@ -245,7 +245,7 @@ class KunenaModelInstall extends JModelLegacy {
 
 		$text = '';
 
-		if (file_exists ( $file )) {
+		if (is_file($file)) {
 			$success = true;
 			if (!JFolder::exists($dest)) {
 				$success = JFolder::create($dest);
@@ -285,8 +285,8 @@ class KunenaModelInstall extends JModelLegacy {
 				jimport('joomla.filesystem.folder');
 				$files = JFolder::files($installdir, '\.ini$');
 				foreach ($files as $filename) {
-					if (file_exists(JPATH_SITE."/language/{$tag}/{$filename}")) JFile::delete(JPATH_SITE."/language/{$tag}/{$filename}");
-					if (file_exists(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}")) JFile::delete(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}");
+					if (is_file(JPATH_SITE."/language/{$tag}/{$filename}")) JFile::delete(JPATH_SITE."/language/{$tag}/{$filename}");
+					if (is_file(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}")) JFile::delete(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}");
 				}
 			}
 		}
@@ -304,7 +304,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$success = false;
 
 		$dest = JPATH_ROOT."/tmp/kinstall_mod_{$name}";
-		if (file_exists($dest)) JFolder::delete($dest);
+		if (is_dir($dest)) JFolder::delete($dest);
 			if (is_dir(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
 			// Copy path
 			$success = JFolder::copy(KUNENA_INSTALLER_ADMINPATH .'/'. $path, $dest);
@@ -314,7 +314,6 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini")) {
 			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
 		}
@@ -338,7 +337,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$success = false;
 
 		$dest = JPATH_ROOT."/tmp/kinstall_plg_{$group}_{$name}";
-		if (file_exists($dest)) JFolder::delete($dest);
+		if (is_dir($dest)) JFolder::delete($dest);
 		if (is_dir(KUNENA_INSTALLER_PATH .'/'. $path)) {
 			// Copy path
 			$success = JFolder::copy(KUNENA_INSTALLER_PATH .'/'. $path, $dest);
@@ -348,7 +347,6 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
 			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
 		}
@@ -492,7 +490,7 @@ class KunenaModelInstall extends JModelLegacy {
 		// Extract archive files
 		if (isset($files[$task])) {
 			$file = $files[$task];
-			if (file_exists ( "{$path}/{$file['name']}{$ext}" )) {
+			if (is_file("{$path}/{$file['name']}{$ext}")) {
 				$dest = $file['dest'];
 				if (!empty($ignore[$dest])) {
 					// Delete all files and folders (cleanup)
@@ -797,7 +795,7 @@ class KunenaModelInstall extends JModelLegacy {
 				$filename = $action['name'];
 				$include = KUNENA_INSTALLER_PATH . "/sql/updates/php/{$filename}.php";
 				$function = 'kunena_'.strtr($filename, array('.'=>'', '-'=>'_'));
-				if(file_exists($include)) {
+				if(is_file($include)) {
 					require( $include );
 					if (is_callable($function)) {
 						$result = call_user_func($function, $this);
@@ -1069,13 +1067,13 @@ class KunenaModelInstall extends JModelLegacy {
 			$success = false;
 			$destfile = null;
 			if ($file) {
-				$file = JPath::clean ( $file, '/' );
+				$file = JPath::clean($file, '/');
 				$destfile = "{$destpath}/{$lastpath}/{$attachment->filename}";
 				if (JFile::exists ( $destfile )) {
 					$success = true;
 				} else {
 					@chmod ( $file, 0644 );
-					$success = JFile::copy ( $file, $destfile );
+					$success = JFile::copy($file, $destfile);
 				}
 				if ($success) {
 					$stats->migrated ++;
@@ -1137,7 +1135,7 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 
 		while (1) {
-			$count = mt_rand(95000, 105000);
+			$count = mt_rand(4500, 5500);
 			switch ($state->step) {
 				case 0:
 					// Update topic statistics
@@ -1170,7 +1168,7 @@ class KunenaModelInstall extends JModelLegacy {
 				$state->step++;
 				$state->start = 0;
 			}
-			if ($this->checkTimeout()) break;
+			if ($this->checkTimeout(false, 14)) break;
 		}
 		$app->setUserState ( 'com_kunena.install.recount', $state );
 		return false;
@@ -1720,7 +1718,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$cache->clean('mod_menu');
 	}
 
-	function checkTimeout($stop = false) {
+	function checkTimeout($stop = false, $timeout = 1) {
 		static $start = null;
 		if ($stop) $start = 0;
 		$time = microtime (true);
@@ -1728,7 +1726,7 @@ class KunenaModelInstall extends JModelLegacy {
 			$start = $time;
 			return false;
 		}
-		if ($time - $start < 1)
+		if ($time - $start < $timeout)
 			return false;
 
 		return true;

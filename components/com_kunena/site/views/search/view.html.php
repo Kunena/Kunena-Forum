@@ -40,7 +40,7 @@ class KunenaViewSearch extends KunenaView {
 
 		$this->_prepareDocument();
 
-		$this->display ();
+		$this->render('Search', $tpl);
 	}
 
 	function displaySearchResults() {
@@ -163,10 +163,14 @@ class KunenaViewSearch extends KunenaView {
 		}
 	}
 
-	function getPagination($maxpages) {
+	function getPaginationObject($maxpages) {
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
-		return $pagination->getPagesLinks();
+		return $pagination;
+	}
+
+	function getPagination($maxpages) {
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	protected function _prepareDocument(){

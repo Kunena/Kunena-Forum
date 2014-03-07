@@ -11,6 +11,13 @@
 
 defined( '_JEXEC' ) or die();
 
+/**
+ * Deprecated. This file is keep for legacy users which still use blue eagle template.
+ *
+ * @since 2.0.0
+ * @deprecated 3.0.0
+ */
+
 ob_start();
 if (!empty($this->poll)) :
 	$this->addScript('js/poll.js');

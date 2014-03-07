@@ -15,7 +15,7 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_kunena')) {
 }
 
 // Check if installation hasn't been completed.
-if (file_exists(__DIR__ . '/install.php')) {
+if (is_file(__DIR__ . '/install.php')) {
 	require_once __DIR__ . '/install.php';
 	if (class_exists('KunenaControllerInstall')) return;
 }

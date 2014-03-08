@@ -87,7 +87,7 @@ foreach ($this->sections as $section) :
 			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
 		<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
-			<td class="span1">
+			<td class="span1 center">
 				<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
 			</td>
 			<td class="span8">

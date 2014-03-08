@@ -123,13 +123,13 @@ class KunenaBbcode extends NBBC_BBCode {
 			if (isset($video)) {
 				$uri = JURI::getInstance();
 				if ( $uri->isSSL() ) {
-					return '<object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/'
+					return '<div class="vid"><object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/'
 							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/'
-									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object></div>';
 				} else {
-					return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
+					return '<div class="vid"><object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
 							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
-									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object></div>';
 				}
 			}
 		}

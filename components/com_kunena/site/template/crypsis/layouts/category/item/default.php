@@ -33,7 +33,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<table class="table table-striped table-bordered table-hover table-condensed">
+	<table class="table table-bordered ">
 		<thead>
 			<tr>
 				<td class="span1 center hidden-phone">
@@ -98,7 +98,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 
-			<td colspan="6">
+			<td colspan="6" class="hidden-phone">
 
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
@@ -142,3 +142,4 @@ if (!empty($this->moderators))
 ?>
 
 <?php endif; ?>
+<div class="clearfix"></div>

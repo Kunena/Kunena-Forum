@@ -316,10 +316,14 @@ abstract class KunenaRoute {
 			{
 				// Allow all values
 			}
-			elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+			// TODO: we need to find a way to here deal with arrays: &foo[]=bar
+			elseif (gettype($value)=='string')
 			{
+				if(preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+				{
 				// Illegal value
-				continue;
+  				continue;
+				}
 			}
 
 			self::$current->setVar($key, $value);

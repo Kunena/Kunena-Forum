@@ -40,11 +40,11 @@ if (!empty($this->spacing)) : ?>
 			<?php if ($userTopic->posts) : ?>
 				<i class="icon-flag hasTooltip"><?php JText::_('COM_KUNENA_MYPOSTS'); ?></i>
 			<?php endif; ?>
-			
+
 			<?php if ($this->topic->attachments) : ?>
 				<i class="icon-flag-2 hasTooltip"><?php JText::_('COM_KUNENA_ATTACH'); ?></i>
 			<?php endif; ?>
-			
+
 			<?php if ($this->topic->poll_id) : ?>
 				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 			<?php endif; ?>
@@ -73,7 +73,7 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 		</div>
 	</td>
-	
+
 	<td class="span1 center hidden-phone">
 		<?php if ($avatar) : ?>
 		<span>
@@ -81,14 +81,14 @@ if (!empty($this->spacing)) : ?>
 		</span>
 		<?php endif; ?>
 	</td>
-	
+
 	<td class="span1 hidden-phone center">
 			<?php echo  $this->formatLargeNumber($topic->hits); ?>
 		</td>
 	<td class="span1 hidden-phone center">
 			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
-	
+
 	<td class="span3">
 		<div class="klatest-post-info">
 			<?php if (!empty($this->topic->avatar)) : ?>

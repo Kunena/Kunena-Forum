@@ -400,6 +400,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		// Option to select if the stats link need to be showed for all users or only for registred users
 		$lists ['statslink_allowed'] = JHtml::_('select.genericlist', $yesno, 'cfg_statslink_allowed', 'class="inputbox" size="1"', 'value', 'text', $this->config->statslink_allowed);
 
+		$lists ['teaser'] = JHtml::_('select.genericlist', $yesno, 'cfg_teaser', 'class="inputbox" size="1"', 'value', 'text', $this->config->teaser);
+		
 		return $lists;
 	}
 }

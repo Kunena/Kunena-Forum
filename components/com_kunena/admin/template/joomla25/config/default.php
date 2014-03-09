@@ -571,6 +571,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS_DESC') ?></td>
 													</tr>
 													<tr>
+														<td><?php echo JText::_('COM_KUNENA_TEASER') ?></td>
+														<td><?php echo $this->lists ['teaser'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_TEASER_DESC') ?></td>
+													</tr>
+													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE') ?></td>
 														<td><?php echo $this->lists ['userdeletetmessage'] ?> </td>
 														<td><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE_DESC') ?></td>
@@ -914,6 +919,7 @@ defined ( '_JEXEC' ) or die ();
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLS') ?></td>
 														<td><?php echo $this->lists ['trimlongurls'] ?></td>
+
 														<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLS_DESC') ?></td>
 													</tr>
 													<tr>

@@ -52,16 +52,16 @@ jQuery(document).ready(function() {
 	});
 	
 	/* To hide or open spoiler on click */
-	jQuery('.kspoiler').each(function( ) {	
-		jQuery('.kspoiler-header').click(function() {
-			if ( jQuery('.kspoiler-content').attr('style')=='display:none' ) {
-				jQuery('.kspoiler-content').removeAttr('style');
-				jQuery('.kspoiler-expand').attr('style','display:none;');
-				jQuery('.kspoiler-hide').removeAttr('style');
+	jQuery('.kspoiler').each(function() {
+		jQuery('.kspoiler').click(function() {
+			if ( !jQuery('.kspoiler-content').is(':visible') ) {
+				jQuery(this).find('.kspoiler-content').show();
+				jQuery(this).find('.kspoiler-expand').hide();
+				jQuery(this).find('.kspoiler-hide').show();
 			} else {
-				jQuery('.kspoiler-content').attr('style','display:none;');
-				jQuery('.kspoiler-expand').removeAttr('style');
-				jQuery('.kspoiler-hide').attr('style','display:none;');
+				jQuery(this).find('.kspoiler-content').hide();
+				jQuery(this).find('.kspoiler-expand').show();
+				jQuery(this).find('.kspoiler-hide').hide();
 			}
 		});
 	});

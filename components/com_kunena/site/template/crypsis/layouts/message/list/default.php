@@ -9,8 +9,7 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
-
-$colspan = empty($this->actions) ? 4 : 5;
+$colspan = empty($this->actions) ? 5 : 6;
 ?>
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
@@ -36,7 +35,7 @@ $colspan = empty($this->actions) ? 4 : 5;
       name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 
-	<table class="table table-striped table-bordered table-condensed">
+	<table class="table table-bordered table-condensed">
 		<?php if (empty($this->messages)) : ?>
 		<tr>
 			<td colspan="<?php echo $colspan; ?>">
@@ -44,20 +43,8 @@ $colspan = empty($this->actions) ? 4 : 5;
 			</td>
 		</tr>
 		<?php else : ?>
-		<?php if (!empty($this->embedded)) : ?>
-		<thead>
-			<tr>
-				<td colspan="6">
-					<div class="pagination pull-right">
-						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
-					<div class="clearfix"></div>
-				</td>
-			</tr>
-		</thead>
-		<?php endif; ?>
 <thead>
-			<tr>
+			<tr class="category<?php echo $this->escape($topic->$category->class_sfx); ?>">
 				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">

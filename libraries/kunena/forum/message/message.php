@@ -490,7 +490,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
 				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
-					($this->message, $this, $html);
+					($this->message, 0, $html);
 		}
 		return '';
 	}
@@ -1193,7 +1193,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return string
 	 */
 	protected function attachEmailBody(JMail $mail, $subscription, $subject, $url, $once) {
-		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
+		$layout = KunenaLayout::factory('Email/Newpost')->debug(false)
 			->set('mail', $mail)
 			->set('message', $this)
 			->set('messageUrl', $url)

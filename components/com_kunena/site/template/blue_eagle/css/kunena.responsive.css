@@ -440,4 +440,11 @@
 		padding-right:10px;
 	}
 	
+<<<<<<< HEAD
 }
+=======
+	#Kunena div.kmsgsignature img {
+		max-width:90% !important;
+	}
+}
+>>>>>>> aaf2fb82acc0d0fd4305dc08c403f467060c32e9

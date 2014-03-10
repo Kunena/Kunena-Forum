@@ -193,7 +193,6 @@ $this->k=0;
 				</fieldset>
 			</div>
 		</div>
-	</div>
 	<?php
 if (!$this->message->name) {
 	echo '<script type="text/javascript">document.postform.authorname.focus();</script>';

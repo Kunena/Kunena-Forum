@@ -3,18 +3,8 @@
 <extension type="package" version="2.5" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-<<<<<<< HEAD
-<<<<<<< HEAD
 	<version>3.0.95-HMVC</version>
 	<versionname>Internal</versionname>
-=======
-	<version>3.0.6-DEV</version>
-	<versionname>Developer</versionname>
->>>>>>> aaf2fb82acc0d0fd4305dc08c403f467060c32e9
-=======
-	<version>3.0.95-HMVC</version>
-	<versionname>Internal</versionname>
->>>>>>> 623aad500504c60b5003960ca3bd189d012ed40f
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>

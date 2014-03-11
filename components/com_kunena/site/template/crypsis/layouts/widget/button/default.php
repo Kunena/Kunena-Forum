@@ -15,8 +15,9 @@ $title = JText::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");
 if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG") $title = '';
 $id = isset($this->id) ? ' id="'.$this->id.'"' : '';
 $primary = !empty($this->primary) ? ' btn-primary' : '';
+$normal = !empty($this->normal) ? 'btn-small' : 'btn';
 ?>
-<a<?php echo $id; ?> class="btn-small<?php echo $primary; ?>" href="<?php echo $this->url; ?>" rel="nofollow"
+<a<?php echo $id; ?> class="<?php echo $normal . $primary; ?>" href="<?php echo $this->url; ?>" rel="nofollow"
    title="<?php echo $title; ?>">
 	<span class="<?php echo $this->name; ?>"></span>
 	<?php echo $label; ?>

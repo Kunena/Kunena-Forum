@@ -234,6 +234,24 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * Method which  return the RSS feed URL for the actual category
+	 *
+	 * @param string $xhtml
+	 *
+	 * @result string
+	 */
+	public function getRSSUrl($xhtml = true)
+	{
+		if (KunenaFactory::getConfig()->enablerss)
+		{
+			$params = '&catid=' . ( int ) $this->id;
+			return KunenaRoute::_( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		}
+
+		return null;
+	}
+
+	/**
 	 * @param mixed		$category	Fake category (or null).
 	 * @param int|null	$action		Limitstart.
 	 *

@@ -107,12 +107,11 @@ foreach ($this->sections as $section) :
 						if ($category->review) {
 							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
 						}
-						// FIXME: fix rss.
-						if ($this->rss) {
-							echo $this->rss; 
-						}
+						if ( !empty($category->getRSSUrl()) ) :
 						?>
-					</span></small></h3>
+ 						<a href="<?php echo $category->getRSSUrl() ?>" rel="follow"><span class="kicon krss-small" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
+						<?php endif; ?>
+ 					</span></small></h3>
 				</div>
 
 				<?php if (!empty($category->description)) : ?>

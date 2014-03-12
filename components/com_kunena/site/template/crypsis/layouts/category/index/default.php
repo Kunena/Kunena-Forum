@@ -53,7 +53,7 @@ foreach ($this->sections as $section) :
 </h3>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
-	<table class="table table-hover table-bordered table-condensed">
+	<table class="table table-bordered table-condensed">
 
 		<?php if (!empty($section->description)) : ?>
 		<thead class="hidden-phone">
@@ -107,7 +107,7 @@ foreach ($this->sections as $section) :
 						if ($category->review) {
 							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
 						}
-						if ( !empty($category->getRSSUrl()) ) :
+						if ( !empty($category->getRSSUrl) ) :
 						?>
  						<a href="<?php echo $category->getRSSUrl() ?>" rel="follow"><span class="kicon krss-small" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
 						<?php endif; ?>

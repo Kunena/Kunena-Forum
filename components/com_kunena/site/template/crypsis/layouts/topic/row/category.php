@@ -16,8 +16,9 @@ $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
+$category = $topic->getCategory();
 
-$cols = empty($this->checkbox) ? 5 : 6;
+$cols = empty($this->checkbox) ? 6 : 7;
 
 if (!empty($this->spacing)) : ?>
 <tr>

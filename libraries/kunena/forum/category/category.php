@@ -251,7 +251,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return null;
 	}
 
-  /**
+	/**
  	 * @param mixed		$category	Fake category (or null).
 	 * @param int|null	$action		Limitstart.
 	 *

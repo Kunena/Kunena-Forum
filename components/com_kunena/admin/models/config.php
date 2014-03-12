@@ -134,7 +134,14 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['avataroncat'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $this->config->avataroncat );
 		$lists ['showchildcaticon'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_showchildcaticon', 'class="inputbox" size="1"', 'value', 'text', $this->config->showchildcaticon );
 		$lists ['showuserstats'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_showuserstats', 'class="inputbox" size="1"', 'value', 'text', $this->config->showuserstats );
-		$lists ['showwhoisonline'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_showwhoisonline', 'class="inputbox" size="1"', 'value', 'text', $this->config->showwhoisonline );
+
+		$showstats_list = array ();
+		$showstats_list[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_YES'));
+  		$showstats_list[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_OPTION_USERS_ONLY'));
+  		$showstats_list[] = JHtml::_('select.option', '3', JText::_('COM_KUNENA_OPTION_ADMINISTRATORS_ONLY'));
+		$showstats_list[] = JHtml::_('select.option', '4', JText::_('COM_KUNENA_A_NO'));
+
+		$lists ['showwhoisonline'] = JHtml::_ ( 'select.genericlist', $showstats_list, 'cfg_showwhoisonline', 'class="inputbox" size="1"', 'value', 'text', $this->config->showwhoisonline );
 		$lists ['showpopsubjectstats'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_showpopsubjectstats', 'class="inputbox" size="1"', 'value', 'text', $this->config->showpopsubjectstats );
 		$lists ['showgenstats'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_showgenstats', 'class="inputbox" size="1"', 'value', 'text', $this->config->showgenstats );
 		$lists ['showpopuserstats'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_showpopuserstats', 'class="inputbox" size="1"', 'value', 'text', $this->config->showpopuserstats );
@@ -145,7 +152,7 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['askemail'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_askemail', 'class="inputbox" size="1"', 'value', 'text', $this->config->askemail );
 		$lists ['allowavatarupload'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $this->config->allowavatarupload );
 		$lists ['allowavatargallery'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $this->config->allowavatargallery );
-		$lists ['showstats'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $this->config->showstats );
+		$lists ['showstats'] = JHtml::_ ( 'select.genericlist', $showstats_list, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $this->config->showstats );
 		$lists ['showranking'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $this->config->showranking );
 		$lists ['rankimages'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $this->config->rankimages );
 		$lists ['username'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_username', 'class="inputbox" size="1"', 'value', 'text', $this->config->username );

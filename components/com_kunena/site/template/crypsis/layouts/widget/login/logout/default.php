@@ -63,7 +63,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 
 				<?php if ($markAllReadUrl) : ?>
 				<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-small btn-link">
-					<i class="icon-out"></i>
+					<i class="icon-drawer"></i>
 					<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>
 				</a>
 				<?php endif ?>

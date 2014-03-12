@@ -16,11 +16,12 @@ $message = $this->message;
 $author = $message->getAuthor();
 $topic = $message->getTopic();
 $isReply = $message->id != $topic->first_post_id;
+$category = $message->getCategory();
 
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;
 ?>
-<tr>
+<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>

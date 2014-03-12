@@ -96,7 +96,6 @@ foreach ($this->sections as $section) :
 						<?php echo $this->getCategoryLink($category); ?>
 						<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 								$this->formatLargeNumber($category->getTopics())); ?>)
-					
 					<span>
 						<?php
 						if (($new = $category->getNewCount()) > 0) {
@@ -133,6 +132,9 @@ foreach ($this->sections as $section) :
 						echo $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
 							. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 							. ')</small>';
+							if (($new = $subcategory->getNewCount()) > 0) {
+							echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
+						}
 						?>
 					</li>
 					<?php endforeach; ?>

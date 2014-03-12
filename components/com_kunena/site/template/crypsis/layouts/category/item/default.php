@@ -151,3 +151,4 @@ if (!empty($this->moderators))
 ?>
 
 <?php endif; ?>
+<div class="clearfix"></div>

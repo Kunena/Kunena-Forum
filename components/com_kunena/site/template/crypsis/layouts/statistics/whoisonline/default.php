@@ -43,6 +43,7 @@ defined('_JEXEC') or die;
 	</p>
 	<?php endif; ?>
 
+	<?php if (!empty($this->onlineList)) : ?>
 	<p>
 		<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
 		<span class="kwho-admin">
@@ -64,6 +65,7 @@ defined('_JEXEC') or die;
 			<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
 		</span>
 	</p>
+	<?php endif; ?>
 </div>
 </div>
 </div>

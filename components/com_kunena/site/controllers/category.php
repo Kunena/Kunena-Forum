@@ -163,18 +163,21 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			return array(0, array());
 		}
 
-		$topic_id_list = array();
-		foreach($topics_id as $id) {
-			$topic_id_list[] = $id->id;
-		}
-
-		$messages_objects = KunenaForumMessageHelper::loadMessagesInTopics($topic_id_list, array(), 1);
-
-		foreach($messages_objects as $message)
+		if (!empty($topics_id) )
 		{
-			if ($message->authorise('approve') && $message->publish(KunenaForum::PUBLISHED))
+			$topic_id_list = array();
+			foreach($topics_id as $id) {
+				$topic_id_list[] = $id->id;
+			}
+
+			$messages_objects = KunenaForumMessageHelper::loadMessagesInTopics($topic_id_list, array(), 1);
+
+			foreach($messages_objects as $message)
 			{
-				$success++;
+				if ($message->authorise('approve') && $message->publish(KunenaForum::PUBLISHED))
+				{
+					$success++;
+				}
 			}
 		}
 

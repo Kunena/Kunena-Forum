@@ -16,11 +16,12 @@ $message = $this->message;
 $author = $message->getAuthor();
 $topic = $message->getTopic();
 $isReply = $message->id != $topic->first_post_id;
+$category = $message->getCategory();
 
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;
 ?>
-<tr>
+<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
@@ -47,7 +48,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			}
 
 			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', '<sup dir="ltr">(' . (int) $topic->unread
+				echo $this->getTopicLink($topic, 'unread', '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
 					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 
@@ -62,16 +63,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 	</td>
 	<td class="span1 center">
 		<div>
-			<?php
-			if ($config->avataroncat > 0) {
-				$avatar = $author->getAvatarImage('img-polaroid', 48);
-
-				if ($avatar)
-				{
-					echo $author->getLink($avatar);
-				}
-			}
-			?>
+			<?php echo $author->getLink(); ?>
 		</div>
 	</td>
 	<td class="span3">
@@ -97,7 +89,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 
 	<?php
 	if (!empty($this->position))
-		echo $this->subLayout('Page/Module')
+		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
 			->setLayout('table_row');

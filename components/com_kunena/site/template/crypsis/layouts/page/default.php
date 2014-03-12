@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Page
+ * @subpackage  Layout.Widget
  *
  * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -12,16 +12,16 @@ defined('_JEXEC') or die;
 ?>
 <div id="kunena" class="layout">
 	<?php
-	echo $this->subLayout('Page/MenuBar');
-	echo $this->subLayout('Page/Module')->set('position', 'kunena_top');
-	echo $this->subRequest('Page/Announcement');
-	echo $this->subLayout('Page/Module')->set('position', 'kunena_announcement');
+	echo $this->subLayout('Widget/MenuBar');
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
+	echo $this->subRequest('Widget/Announcement');
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
 
 	// Display current view/layout
 	echo $this->content;
 
-	echo $this->subLayout('Page/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
-	echo $this->subLayout('Page/Module')->set('position', 'kunena_bottom');
-	echo $this->subLayout('Page/Footer');
+	echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
+	echo $this->subLayout('Widget/Footer');
 	?>
 </div>

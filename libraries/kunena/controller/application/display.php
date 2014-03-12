@@ -84,7 +84,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			$this->setResponseStatus(503);
 			$this->output->setLayout('offline');
 
-			$this->content = KunenaLayout::factory('Page/Custom')
+			$this->content = KunenaLayout::factory('Widget/Custom')
 				->set('header', JText::_('COM_KUNENA_FORUM_IS_OFFLINE'))
 				->set('body', $this->config->offline_message);
 
@@ -93,7 +93,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			$this->setResponseStatus(403);
 			$this->output->setLayout('offline');
 
-			$this->content = KunenaLayout::factory('Page/Custom')
+			$this->content = KunenaLayout::factory('Widget/Custom')
 				->set('header', JText::_('COM_KUNENA_LOGIN_NOTIFICATION'))
 				->set('body', JText::_('COM_KUNENA_LOGIN_FORUM'));
 
@@ -109,7 +109,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$this->output->setLayout('unauthorized');
 				$this->document->setTitle($e->getResponseStatus());
 
-				$this->content = KunenaLayout::factory('Page/Custom')
+				$this->content = KunenaLayout::factory('Widget/Custom')
 					->set('header', $e->getResponseStatus())
 					->set('body', $e->getMessage());
 
@@ -118,7 +118,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$this->output->setLayout('unauthorized');
 				$this->document->setTitle($e->getMessage());
 
-				$this->content = KunenaLayout::factory('Page/Custom')
+				$this->content = KunenaLayout::factory('Widget/Custom')
 					->set('header', 'Error while rendering layout')
 					->set('body', isset($content) ? $content->renderError($e) : $this->content->renderError($e));
 			}

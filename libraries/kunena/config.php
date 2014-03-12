@@ -229,6 +229,7 @@ class KunenaConfig extends JObject {
 	// New for 3.1.0
 	public $legacy_urls = 1;
 	public $attachment_protection = 0;
+	public $categoryicons = 1;
 
 	public function __construct() {
 		parent::__construct ();

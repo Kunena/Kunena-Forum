@@ -102,6 +102,9 @@
 	<button tag="map" name="map" title="COM_KUNENA_EDITOR_MAP" alt="COM_KUNENA_EDITOR_HELPLINE_MAP">
 		<wrap-selection />
 	</button>
+	<button tag="smilies" name="smilies" title="COM_KUNENA_EDITOR_SMILIES" alt="COM_KUNENA_EDITOR_HELPLINE_SMILIES">
+		<display name="kbbcode-smilies-options" selection="kbbcode-smilies-options" />
+	</button>
 
 	<separator name="misc" />
 

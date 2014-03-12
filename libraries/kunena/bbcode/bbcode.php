@@ -1301,7 +1301,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode($content)."</i></strong></p>';
+					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode(addslashes($content))."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}
@@ -2018,7 +2018,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$cache = JFactory::getCache('Kunena_tweet_quote');
 		$cache->setCaching(true);
-		$cache->setLifeTime($twCacheTime);
+		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
 		$tweet_quote = $cache->get( array( $this, 'getTweet' ), array( $tweetid ) );
 
 		return '<div>'.$tweet_quote.'</div>';

@@ -21,4 +21,4 @@ defined('_JEXEC') or die;
 	</div>
 </div>
 
-<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_msg_' . $this->location); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_msg_' . $this->location); ?>

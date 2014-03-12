@@ -38,4 +38,4 @@ $stop = $this->pagination->limitstart + count($this->results);
 $range = $start . ' - ' . $stop;
 echo JText::sprintf('COM_KUNENA_FORUM_SEARCHRESULTS', $range, $this->pagination->total);
 ?>
-<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>

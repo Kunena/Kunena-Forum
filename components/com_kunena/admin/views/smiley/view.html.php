@@ -29,6 +29,6 @@ class KunenaAdminViewSmiley extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('smileys');
+		JToolBarHelper::cancel();
 	}
 }

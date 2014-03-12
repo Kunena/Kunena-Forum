@@ -15,9 +15,9 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
-$avatar = $topic->getAuthor()->getAvatarImage('img-polaroid', 48);
-
+$avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
 $cols = empty($this->checkbox) ? 5 : 6;
+$category = $this->topic->getCategory();
 
 if (!empty($this->spacing)) : ?>
 <tr>
@@ -25,7 +25,7 @@ if (!empty($this->spacing)) : ?>
 </tr>
 <?php endif; ?>
 
-<tr>
+<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
 
 	<td class="span1 center hidden-phone">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
@@ -55,16 +55,16 @@ if (!empty($this->spacing)) : ?>
 		<div>
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 		</div>
-		<div title="<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat_hover'); ?>">
-			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' '
-				. $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
-			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $topic->getFirstPostAuthor()->getLink(); ?>
-		</div>
 
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
+			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 	</td>
+	
+	<td class="span1 center hidden-phone">
+		<?php echo $topic->getAuthor()->getLink(); ?>
+	</td>
+	
 	<td class="span1 center hidden-phone">
 		<?php echo $this->formatLargeNumber($topic->hits); ?>
 	</td>
@@ -72,23 +72,23 @@ if (!empty($this->spacing)) : ?>
 		<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
 	
-	<td class="span1 center hidden-phone">
-		<?php echo $topic->getAuthor()->getLink($avatar); ?>
-	</td>
-	
 	<td class="span3">
-		<div class="klatest-post-info">
-			<?php if (!empty($this->topic->avatar)) : ?>
-			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
-			<?php endif; ?>
-
-			<span class="ktopic-latest-post">
+		<?php if ($avatar) : ?>
+						<div class="pull-left hidden-phone" style="padding-left:3%;">
+							<?php echo $avatar; ?>
+						</div>
+						<div class="last-post-message">
+						<?php else :	?>
+						<div>
+					<?php endif; ?>
+			<div class="ktopic-latest-post">
 			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
 
 			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
 			<br>
 			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
-			</span>
+			</div>
+		</div>
 		</div>
 	</td>
 
@@ -102,7 +102,7 @@ if (!empty($this->spacing)) : ?>
 
 	<?php
 	if (!empty($this->position))
-		echo $this->subLayout('Page/Module')
+		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
 			->setLayout('table_row');

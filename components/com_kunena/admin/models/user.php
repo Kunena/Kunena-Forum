@@ -27,6 +27,7 @@ class KunenaAdminModelUser extends KunenaModel {
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.user';
 		if ($layout) {
 			$this->context .= '.'.$layout;
 		}

@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 			|| $this->topicButtons->get('subscribe')
 			|| $this->topicButtons->get('favorite')) : ?>
 		<div class="btn-group">
-			<a class="btn" data-toggle="dropdown"><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?></a>
+			<a class="btn" data-toggle="dropdown"><i class="icon-pencil"></i> <?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_ACTION') ?></a>
 			<a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><?php echo $this->topicButtons->get('reply') ?></li>
@@ -32,7 +32,7 @@ defined('_JEXEC') or die;
 			|| $this->topicButtons->get('sticky')
 			|| $this->topicButtons->get('lock')) : ?>
 		<div class="btn-group">
-			<a class="btn btn-primary" data-toggle="dropdown"><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
+			<a class="btn btn-primary" data-toggle="dropdown"><i class=" icon-shuffle"></i>	<?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
 			<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><?php echo $this->topicButtons->get('delete') ?></li>
@@ -58,10 +58,9 @@ defined('_JEXEC') or die;
 		<?php endif ?>
 
 		<div class="btn-group pull-right">
-			<?php echo $this->subLayout('Search/Button')
+			<?php echo $this->subLayout('Widget/Search')
 				->set('id', $this->topic->id)
 				->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC')); ?>
 		</div>
 	</div>
 </div>
-

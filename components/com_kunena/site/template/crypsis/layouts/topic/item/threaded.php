@@ -22,7 +22,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <?php endif; ?>
 
 <div class="pull-right">
-	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 </div>
 
 <h3>
@@ -34,9 +34,9 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <div class="clearfix"></div>
 
 <?php
-echo $this->subLayout('Page/Module')->set('position', 'kunena_topictitle');
+echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
 echo $this->subRequest('Topic/Poll')->set('id', $this->topic->id);
-echo $this->subLayout('Page/Module')->set('position', 'kunena_poll');
+echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
 echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id);
 echo $this->subRequest('Topic/Item/Message')
 	->set('mesid', $this->message->id)
@@ -60,7 +60,7 @@ echo $this->subRequest('Topic/Item/Message')
 </table>
 
 <div class="pull-right">
-	<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 </div>
 <?php echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id); ?>
 <div class="clearfix"></div>

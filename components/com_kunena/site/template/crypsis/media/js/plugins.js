@@ -36,17 +36,32 @@ function kPreviewHelper() {
 }
 
 jQuery(document).ready(function() {
+	/* To hide or open collapse localStorage */
+	jQuery('.collapse').on('hidden', function() {
+				if (this.id) {
+						localStorage[this.id] = 'true';
+				}
+		}).on('shown', function() {
+				if (this.id) {
+						localStorage.removeItem(this.id);
+				}
+		}).each(function() {
+				if (this.id && localStorage[this.id] === 'true' ) {
+						jQuery(this).collapse('hide');
+				}
+	});
+	
 	/* To hide or open spoiler on click */
-	jQuery('.kspoiler').each(function( ) {	
-		jQuery('.kspoiler-header').click(function() {
-			if ( jQuery('.kspoiler-content').attr('style')=='display:none' ) {
-				jQuery('.kspoiler-content').removeAttr('style');
-				jQuery('.kspoiler-expand').attr('style','display:none;');
-				jQuery('.kspoiler-hide').removeAttr('style');
+	jQuery('.kspoiler').each(function() {
+		jQuery('.kspoiler').click(function() {
+			if ( !jQuery('.kspoiler-content').is(':visible') ) {
+				jQuery(this).find('.kspoiler-content').show();
+				jQuery(this).find('.kspoiler-expand').hide();
+				jQuery(this).find('.kspoiler-hide').show();
 			} else {
-				jQuery('.kspoiler-content').attr('style','display:none;');
-				jQuery('.kspoiler-expand').removeAttr('style');
-				jQuery('.kspoiler-hide').attr('style','display:none;');
+				jQuery(this).find('.kspoiler-content').hide();
+				jQuery(this).find('.kspoiler-expand').show();
+				jQuery(this).find('.kspoiler-hide').hide();
 			}
 		});
 	});
@@ -198,5 +213,28 @@ jQuery(document).ready(function() {
                     content.next(".content").slideToggle(500);
             }
     });
+	
+	/* To enabled emojis in kunena textera feature like on github */
+	if ( jQuery('#kemojis_allowed').val() ) {
+		jQuery('#kbbcode-message').atwho({
+			at: ":",
+			tpl:"<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
+			callbacks: {
+				remote_filter: function(query, callback) {
+					if(query.length > 0) {
+						jQuery.ajax({
+							url: jQuery( "#kurl_emojis" ).val(),
+							data: {
+								search : query
+							},
+							success: function(data) {
+								callback(data.emojis);
+							}
+						});
+					}
+				}
+			}
+		});
+	}
 });
 

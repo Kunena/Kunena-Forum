@@ -210,7 +210,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		}
 		if (empty($list)) {
 			$this->query->where('0');
-			return;
+			return $this;
 		}
 		$userlist = implode(',', $list);
 

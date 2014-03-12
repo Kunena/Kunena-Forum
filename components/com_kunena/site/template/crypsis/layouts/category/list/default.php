@@ -28,7 +28,7 @@ defined('_JEXEC') or die;
 
 		<?php if (!empty($this->embedded)) : ?>
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 		</div>
 		<?php endif; ?>
 	</h3>

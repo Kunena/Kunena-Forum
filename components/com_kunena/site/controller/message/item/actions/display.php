@@ -82,7 +82,15 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('thankyou',
-				$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user')
+				$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false)
+			);
+		}
+
+		// Unthank you
+		if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
+		{
+			$this->messageButtons->set('unthankyou',
+					$this->getButton(sprintf($task, 'unthankyou&userid='.$me->userid), 'unthankyou', 'message', 'user', null, false)
 			);
 		}
 
@@ -156,17 +164,18 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	/**
 	 * Get button.
 	 *
-	 * @param   string       $url    Target link (do not route it).
-	 * @param   string       $name   Name of the button.
-	 * @param   string       $scope  Scope of the button.
-	 * @param   string       $type   Type of the button.
-	 * @param   bool         $id     Id of the button.
+	 * @param   string  $url     Target link (do not route it).
+	 * @param   string  $name    Name of the button.
+	 * @param   string  $scope   Scope of the button.
+	 * @param   string  $type    Type of the button.
+	 * @param   int     $id      Id of the button.
+	 * @param   bool    $normal  Define if the button will have the class btn or btn-small
 	 *
 	 * @return  string
 	 */
-	public function getButton($url, $name, $scope, $type, $id = null)
+	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{
-		return KunenaLayout::factory('Page/Button')
-			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id));
+		return KunenaLayout::factory('Widget/Button')
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal));
 	}
 }

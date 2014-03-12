@@ -194,6 +194,13 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getIcon() {
+		return KunenaFactory::getTemplate()->getCategoryIcon($this);
+	}
+
+	/**
 	 * @param mixed		$category	Fake category (or null).
 	 * @param bool 		$xhtml		True if URL needs to be escaped for XHTML.
 	 * @param int|null	$action		Limitstart.
@@ -227,7 +234,25 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	/**
-	 * @param mixed		$category	Fake category (or null).
+	 * Method which  return the RSS feed URL for the actual category
+	 *
+	 * @param string $xhtml
+	 *
+	 * @result string
+	 */
+	public function getRSSUrl($xhtml = true)
+	{
+		if (KunenaFactory::getConfig()->enablerss)
+		{
+			$params = '&catid=' . ( int ) $this->id;
+			return KunenaRoute::_( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		}
+
+		return null;
+	}
+
+  /**
+ 	 * @param mixed		$category	Fake category (or null).
 	 * @param int|null	$action		Limitstart.
 	 *
 	 * @return JUri
@@ -558,8 +583,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 				throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
 			}
 
-			// Load custom authorisation from the plugins.
-			if (!isset($this->authorised[$user->userid])) {
+			// Load custom authorisation from the plugins (except for admins and moderators).
+			if (!$user->isModerator($this) && !isset($this->authorised[$user->userid])) {
 				$this->authorised[$user->userid] = KunenaAccess::getInstance()->authoriseActions($this, $user->userid);
 			}
 

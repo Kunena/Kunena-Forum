@@ -1,1 +1,1 @@
-# Page layouts
+# Widget layouts

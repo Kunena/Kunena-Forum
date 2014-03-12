@@ -19,4 +19,4 @@ $this->addBreadcrumb(
 
 echo $content;
 echo $this->subRequest('Statistics/WhoIsOnline');
-echo $this->subRequest('Page/Statistics');
+echo $this->subRequest('Widget/Statistics');

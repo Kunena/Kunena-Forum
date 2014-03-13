@@ -17,6 +17,7 @@ $author = $message->getAuthor();
 $topic = $message->getTopic();
 $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
+$category = $message->getCategory();
 
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;

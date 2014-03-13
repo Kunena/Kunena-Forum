@@ -93,8 +93,8 @@ if ($show)
 				<?php echo $user->profileIcon('website'); ?>
 				<?php  echo $user->profileIcon('private'); ?>
 				<?php  echo $user->profileIcon('email'); ?>
-			</li>
-			<?php endif; ?>
+			</li>			
 		</ul>
 	</div>
 </div>
+<?php endif; ?>

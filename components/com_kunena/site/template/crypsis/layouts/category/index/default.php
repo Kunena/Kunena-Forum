@@ -96,7 +96,6 @@ foreach ($this->sections as $section) :
 						<?php echo $this->getCategoryLink($category); ?>
 						<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 								$this->formatLargeNumber($category->getTopics())); ?>)
-					
 					<span>
 						<?php
 						if (($new = $category->getNewCount()) > 0) {
@@ -108,12 +107,11 @@ foreach ($this->sections as $section) :
 						if ($category->review) {
 							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
 						}
-						// FIXME: fix rss.
-						if ($this->rss) {
-							echo $this->rss; 
-						}
+						if (!empty($category->rssURL)) :
 						?>
-					</span></small></h3>
+ 						 <a href="<?php echo $category->rssURL ?>" rel="follow"><span class="kicon krss-small" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
+						<?php endif; ?>
+ 					</span></small></h3>
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
@@ -133,6 +131,9 @@ foreach ($this->sections as $section) :
 						echo $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
 							. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 							. ')</small>';
+							if (($new = $subcategory->getNewCount()) > 0) {
+							echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
+						}
 						?>
 					</li>
 					<?php endforeach; ?>
@@ -171,14 +172,14 @@ foreach ($this->sections as $section) :
 
 			<?php $last = $category->getLastTopic(); ?>
 
-			<?php if ($last->exists()) : 
+			<?php if ($last->exists()) :
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();
 				$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 48) : null;
 			?>
-			
+
 			<td class="span3 hidden-phone last-post">
-				
+
 					<?php if ($avatar) : ?>
 						<div class="pull-left hidden-phone" style="padding-left:3%;">
 							<?php echo $author->getLink($avatar); ?>
@@ -187,7 +188,7 @@ foreach ($this->sections as $section) :
 						<?php else :	?>
 						<div>
 					<?php endif; ?>
-				
+
 					<div>
 						<?php echo $this->getLastPostLink($category) ?>
 					</div>

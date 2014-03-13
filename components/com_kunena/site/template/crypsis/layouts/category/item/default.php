@@ -33,7 +33,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<table class="table table-bordered ">
+	<table class="table table-bordered">
 		<thead>
 			<tr>
 				<ul class="inline no-margin">

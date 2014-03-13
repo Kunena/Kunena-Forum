@@ -194,7 +194,7 @@ $cols = 1;
 			<?php endforeach; ?>
 
 		</tbody>
-		<?php if ($i >1) : ?>
+		<?php if ($i > 1) : ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $cols; ?>">

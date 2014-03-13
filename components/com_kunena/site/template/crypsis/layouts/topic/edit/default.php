@@ -203,7 +203,6 @@ if (!$this->message->name) {
 }
 ?>
 </form>
-<div>
 <?php
 if ($this->config->showhistory && $this->topic->exists())
 	echo $this->subRequest('Topic/Form/History', new JInput(array('id'=>$this->topic->id)));

@@ -136,6 +136,12 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 
 			$this->categories[$category->parent_id][] = $category;
+
+			$rssURL = $category->getRSSUrl();
+			if ( !empty($rssURL) )
+			{
+				$category->rssURL = $category->getRSSUrl();
+			}
 		}
 
 		$subcategories = KunenaForumCategoryHelper::getChildren($categoryIds);

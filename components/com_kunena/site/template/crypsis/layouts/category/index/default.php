@@ -107,9 +107,9 @@ foreach ($this->sections as $section) :
 						if ($category->review) {
 							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
 						}
-						if ( !empty($category->getRSSUrl()) ) :
+						if (!empty($category->rssURL)) :
 						?>
- 						<a href="<?php echo $category->getRSSUrl() ?>" rel="follow"><span class="kicon krss-small" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
+ 						 <a href="<?php echo $category->rssURL ?>" rel="follow"><span class="kicon krss-small" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
 						<?php endif; ?>
  					</span></small></h3>
 				</div>
@@ -172,14 +172,14 @@ foreach ($this->sections as $section) :
 
 			<?php $last = $category->getLastTopic(); ?>
 
-			<?php if ($last->exists()) : 
+			<?php if ($last->exists()) :
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();
 				$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 48) : null;
 			?>
-			
+
 			<td class="span3 hidden-phone last-post">
-				
+
 					<?php if ($avatar) : ?>
 						<div class="pull-left hidden-phone" style="padding-left:3%;">
 							<?php echo $author->getLink($avatar); ?>
@@ -188,7 +188,7 @@ foreach ($this->sections as $section) :
 						<?php else :	?>
 						<div>
 					<?php endif; ?>
-				
+
 					<div>
 						<?php echo $this->getLastPostLink($category) ?>
 					</div>

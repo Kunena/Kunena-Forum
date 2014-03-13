@@ -29,7 +29,7 @@ $cols = 1;
 				       value="<?php echo $this->escape($this->state->get('list.search')); ?>" placeholder="" />
 			</label>
 
-			<button type="submit" class="btn"><?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?></button>
+			<button type="submit" class="btn"><span class="icon icon-search"></span></button>
 		</div>
 	</form>
 </h2>
@@ -194,6 +194,7 @@ $cols = 1;
 			<?php endforeach; ?>
 
 		</tbody>
+		<?php if ($i >1) : ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $cols; ?>">
@@ -203,5 +204,7 @@ $cols = 1;
 				</td>
 			</tr>
 		</tfoot>
+		<?php endif; ?>
 	</table>
 </form>
+<div class="clearfix"></div>

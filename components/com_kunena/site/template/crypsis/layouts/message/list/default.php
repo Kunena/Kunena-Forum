@@ -9,6 +9,7 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 $colspan = empty($this->actions) ? 5 : 6;
 ?>
 
@@ -43,6 +44,18 @@ $colspan = empty($this->actions) ? 5 : 6;
 			</td>
 		</tr>
 		<?php else : ?>
+		<?php if (!empty($this->embedded)) : ?>
+		<thead>
+			<tr>
+				<td colspan="6">
+					<div class="pagination pull-right">
+						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+					</div>
+					<div class="clearfix"></div>
+				</td>
+			</tr>
+		</thead>
+		<?php endif; ?>
 <thead>
 			<tr class="category<?php echo $this->escape($topic->$category->class_sfx); ?>">
 				<td class="span1 center hidden-phone">

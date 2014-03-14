@@ -37,7 +37,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 	</div>
 
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
-	      enctype="multipart/form-data" name="postform" id="postform">
+	      enctype="multipart/form-data" name="postform" id="postform" class="formyeah" data-page-identifier="1">
 		<input type="hidden" name="task" value="post" />
 		<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
 		<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
@@ -57,10 +57,10 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			<input type="hidden" name="authorname" value="<?php echo $this->escape($me->getName()); ?>" />
 			<?php endif; ?>
 
-			<input type="text" name="subject" size="35" class="inputbox"
+			<input type="text" id="subject" name="subject" size="35" class="inputbox"
 			       maxlength="<?php echo (int) $config->maxsubject; ?>"
 			       value="<?php echo $message->displayField('subject'); ?>" />
-			<textarea class="span12 qreply" name="message" rows="6" cols="60"></textarea>
+			<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<input type="checkbox" name="subscribeMe" value="1"
@@ -68,17 +68,17 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 			<br />
 			<?php endif; ?>
-
+			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-small btn-link pull-right">Go to editor..</a>
 		</div>
 		<div class="modal-footer">
 			<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
 			<input type="submit" class="btn btn-primary kreply-submit" name="submit"
 			       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
 			       title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>" />
-			<button class="btn" data-dismiss="modal" aria-hidden="true"
-			        title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>">
-				<?php echo JText::_('COM_KUNENA_CANCEL'); ?>
-			</button>
+			<?php //TODO: remove data on cancel. ?>
+			<input type="reset" name="reset" class="btn"
+						value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
+						title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" data-dismiss="modal" aria-hidden="true" />
 		</div>
 	</form>
 </div>

@@ -82,6 +82,11 @@ foreach ($this->sections as $section) :
 				<td colspan="1" class="span1 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
+					<?php if ($this->me->isAdmin($section)) : ?>
+					<td>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
+					</td>
+					<?php endif; ?>
 				<?php endif; ?>
 		<?php
 			/** @var KunenaForumCategory $category */
@@ -207,7 +212,11 @@ foreach ($this->sections as $section) :
 				</div>
 			</td>
 			<?php endif; ?>
-
+			<?php if ($this->me->isAdmin($section)) : ?>
+			<td>
+				<input class="kcheck" type="checkbox" name="categories[<?php echo $category->id; ?>]" value="1" />
+			</td>
+			<?php endif; ?>
 		</tr>
 		<?php endforeach; ?>
 

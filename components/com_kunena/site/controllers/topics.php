@@ -278,4 +278,57 @@ class KunenaControllerTopics extends KunenaController {
 		if ($success) $this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' ) );
 		$this->setRedirectBack();
 	}
+
+	/**
+	 * Method to approve topics in selected categories on the index page
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	public function approveTopicsInCategories()
+	{
+		if (!JSession::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$success = 0;
+
+		$topic_id_list = $this->app->input->get('topics', array ( 0 ), 'array');
+
+		if ( !empty($topic_id_list) )
+		{
+			$topics = array();
+
+			foreach ($topic_id_list as $key => $value)
+			{
+				$topics[] = $key;
+			}
+
+			$messages_objects = KunenaForumMessageHelper::loadMessagesInTopics(array(), $topics, 1);
+
+			foreach ($messages_objects as $message)
+			{
+				if ($message->authorise('approve') && $message->publish(KunenaForum::PUBLISHED))
+				{
+					$success++;
+				}
+			}
+		}
+
+		if ($success)
+		{
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_CATEGORIES_APPROVE_SUCCESS', $success));
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_CATEGORIES_NOTHING_TO_APPROVE'));
+		}
+
+		$this->setRedirectBack();
+	}
 }

@@ -29,7 +29,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 	</span>
 </h2>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
+<form id="ktopicsapprove" action="<?php echo KunenaRoute::_('index.php?option=com_kunena&task=approvetopicsincategories'); ?>" method="post">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
@@ -96,6 +96,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 		}
 
 		?>
+</form>
 		<tfoot>
 		<tr>
 			<td class="center hidden-phone">
@@ -108,7 +109,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 			</td>
 
 			<td colspan="6" class="hidden-phone">
-
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post">
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
@@ -132,14 +133,13 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php endif; ?>
 
 				<?php endif; ?>
-
+				<?php echo JHtml::_( 'form.token' ); ?>
+				</form>
 			</td>
 		</tr>
 		</tfoot>
 		<?php endif; ?>
 	</table>
-
-</form>
 
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>

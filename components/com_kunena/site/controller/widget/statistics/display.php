@@ -50,7 +50,7 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsUrl = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 
-		if ( !KunenaFactory::getConfig()->statslink_allowed && !JFactory::getUser()->guest )
+		if ( !KunenaFactory::getConfig()->statslink_allowed && JFactory::getUser()->guest )
 		{
 			$this->statisticsUrl = '';
 		}

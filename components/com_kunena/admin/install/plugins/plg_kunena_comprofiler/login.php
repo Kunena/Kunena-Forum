@@ -17,7 +17,7 @@ class KunenaLoginComprofiler {
 		$this->params = $params;
 	}
 
-	public function loginUser($username, $password, $rememberme) {
+	public function loginUser($username, $password, $secretkey, $rememberme) {
 		cbimport ( 'cb.authentication' );
 		global $ueConfig;
 
@@ -28,7 +28,7 @@ class KunenaLoginComprofiler {
 		$redirect_url = KunenaRoute::current();
 
 		$loginType = ( isset( $ueConfig['login_type'] ) ? $ueConfig['login_type'] : 0 );
-		$resultError = $cbAuthenticate->login ( $username, $password, $rememberme, 1, $redirect_url, $messagesToUser, $alertmessages, $loginType );
+		$resultError = $cbAuthenticate->login ( $username, $password, $secretkey, $rememberme, 1, $redirect_url, $messagesToUser, $alertmessages, $loginType );
 
 		return $resultError ? $resultError : null;
 	}

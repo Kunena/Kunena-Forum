@@ -25,7 +25,7 @@ if (!empty($this->spacing)) : ?>
 </tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
+<tr class="category<?php echo $this->escape($topic->getCategory()->class_sfx); ?>">
 	<td class="hidden-phone span1 center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>

@@ -18,8 +18,8 @@ class KunenaLoginJoomla {
 		require_once JPATH_SITE.'/components/com_users/helpers/route.php';
 	}
 
-	public function loginUser($username, $password, $rememberme) {
-		$credentials = array('username' => $username, 'password' => $password);
+	public function loginUser($username, $password, $secretkey, $rememberme) {
+		$credentials = array('username' => $username, 'password' => $password, 'secretkey' => $secretkey);
 		$options = array('remember' => $rememberme);
 		$error = JFactory::getApplication()->login ( $credentials, $options );
 		return is_bool($error) ? '' : $error;

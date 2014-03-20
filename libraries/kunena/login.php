@@ -45,7 +45,7 @@ class KunenaLogin {
 	public function loginUser($username, $password, $rememberme=0, $return=null, $secretkey=null) {
 		foreach ($this->instances as $login) {
 			if (method_exists($login, 'loginUser')) {
-				return $login->loginUser($username, $password, $rememberme, $return, $secretkey);
+				return $login->loginUser($username, $password, $rememberme, $return, $secretkey=null);
 			}
 		}
 		return false;

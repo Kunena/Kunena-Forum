@@ -273,7 +273,7 @@ class KunenaControllerUser extends KunenaController {
 		$remember = JRequest::getBool ( 'remember', false, 'POST');
 
 		$login = KunenaLogin::getInstance();
-		$error = $login->loginUser($username, $password, $remember, $secretkey);
+		$error = $login->loginUser($username, $password, $remember, $secretkey=null);
 
 		// Get the return url from the request and validate that it is internal.
 		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));

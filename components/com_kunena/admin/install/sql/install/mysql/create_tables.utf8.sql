@@ -318,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users_banned` (
 	`userid` int(11) NULL,
 	`ip` varchar(128) NULL,
 	`blocked` tinyint(4) NOT NULL default '0',
-	`expiration` datetime NULL,
+	`expiration` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 	`created_by` int(11) NOT NULL,
 	`created_time` datetime NOT NULL,
 	`reason_private` text NULL,

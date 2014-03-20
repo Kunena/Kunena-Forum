@@ -373,16 +373,19 @@ class KunenaUser extends JObject {
 	}
 
 	/**
+	 * Check if an user is banned ot not
+	 *
 	 * @return bool
 	 */
 	public function isBanned() {
-		if (! $this->banned)
+		if (!$this->banned)
 			return false;
-		if ($this->blocked || $this->banned == $this->_db->getNullDate ())
+		if ($this->blocked || $this->banned)
 			return true;
 
-		$ban = new JDate ( $this->banned );
+		$ban = new JDate ($this->ban_expiration);
 		$now = new JDate ();
+
 		return ($ban->toUnix () > $now->toUnix ());
 	}
 
@@ -998,7 +1001,7 @@ class KunenaUser extends JObject {
 			case 'id':
 				return $this->userid;
 		}
-		
+
 		$trace = debug_backtrace();
 		trigger_error(
 			'Undefined property via __get(): ' . $name .

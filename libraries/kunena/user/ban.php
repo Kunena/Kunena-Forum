@@ -501,7 +501,8 @@ class KunenaUserBan extends JObject
 
 			// Change user state also in #__kunena_users
 			$profile = KunenaFactory::getUser($this->userid);
-			$profile->banned = $this->expiration;
+			$profile->ban_expiration = $this->expiration;
+			$profile->banned = true;
 			$profile->save(true);
 
 			if ($block) {

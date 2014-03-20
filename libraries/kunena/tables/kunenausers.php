@@ -47,10 +47,16 @@ class TableKunenaUsers extends KunenaTable {
 	public $moderator = null;
 
 	/**
-	* Banned until timestamp
+	* Define if the user is banned or not
 	* @var int
 	**/
 	public $banned = null;
+
+	/**
+	 * Banned until datetime
+	 * @var string
+	 **/
+	public $ban_expiration = null;
 
 	/**
 	* Ordering of posts

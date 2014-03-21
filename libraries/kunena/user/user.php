@@ -744,7 +744,47 @@ class KunenaUser extends JObject {
 	}
 
 	/**
-	 * Get URL to private messages.
+	 * Get the URL to private messages
+	 *
+	 * @return string
+	 */
+	public function getPrivateMsgURL()
+	{
+		$private = KunenaFactory::getPrivateMessaging();
+
+		return $private->getInboxURL();
+	}
+
+	/**
+	 * Get the label for URL to private messages
+	 *
+	 * @return string
+	 */
+	public function getPrivateMsgLabel()
+	{
+		$private = KunenaFactory::getPrivateMessaging();
+
+		if ($this->isMyself())
+		{
+			$count = $private->getUnreadCount($this->userid);
+
+			if ( $count )
+			{
+				return JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count);
+			}
+			else
+			{
+				return JText::_('COM_KUNENA_PMS_INBOX');
+			}
+		}
+		else
+		{
+			return JText::_('COM_KUNENA_PM_WRITE');
+		}
+	}
+
+	/**
+	 * Get link to private messages.
 	 *
 	 * @return string  URL.
 	 *
@@ -998,7 +1038,7 @@ class KunenaUser extends JObject {
 			case 'id':
 				return $this->userid;
 		}
-		
+
 		$trace = debug_backtrace();
 		trigger_error(
 			'Undefined property via __get(): ' . $name .

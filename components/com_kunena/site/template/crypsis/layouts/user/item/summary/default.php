@@ -17,7 +17,8 @@ $avatar = $profile->getAvatarImage('img-rounded', 128, 128);
 $banInfo = $this->config->showbannedreason
 	? KunenaUserBan::getInstanceByUserid($profile->userid)
 	: null;
-$private = $profile->getPrivateMsgLink();
+$private = $profile->getPrivateMsgURL();
+$privateLabel = $profile->getPrivateMsgLabel();
 $email = $profile->getEmailLink();
 $www = $profile->getWebsiteLink();
 $personalText = $profile->getPersonalText();
@@ -148,8 +149,10 @@ if ($this->config->showuserstats)
 		</blockquote>
 		<div>
 			<?php if (!empty($private)) : ?>
-				<?php // TODO: Fix mailto link ?>
-				<a class="btn" href="<?php echo $private; ?>"><i class="icon-comments-2"></i></a>
+				<a class="btn" href="<?php echo $private; ?>">
+					<i class="icon-comments-2"></i>
+					<?php echo $privateLabel ?>
+				</a>
 			<?php endif; ?>
 			<?php if ($email) : ?>
 				<?php // TODO: Fix mailto link ?>

@@ -76,6 +76,7 @@ $options = $this->getOptions();
 			</tr>
 		</thead>
 
+		<?php if ( $this->pagination->pagesTotal > 1 ): ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">
@@ -85,6 +86,7 @@ $options = $this->getOptions();
 				</td>
 			</tr>
 		</tfoot>
+		<?php endif; ?>
 
 		<tbody>
 

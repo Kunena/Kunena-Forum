@@ -61,13 +61,19 @@ class KunenaLoginComprofiler {
 		return cbSef ( 'index.php?option=com_comprofiler&task=logout' );
 	}
 
-    public function getRegistrationURL() {
-        global $ueConfig ;
-        $usersConfig = JComponentHelper::getParams ( 'com_comprofiler' );
-        if ($ueConfig['reg_admin_allowcbregistration']==1 || ($ueConfig['reg_admin_allowcbregistration']==0 && $usersConfig->get ( 'allowUserRegistration' )))
-            return cbSef ( 'index.php?option=com_comprofiler&task=registers' );
-        return null;
-    }
+	public function getRegistrationURL()
+	{
+		global $ueConfig;
+		$usersConfig = JComponentHelper::getParams('com_comprofiler');
+
+		if ($ueConfig['reg_admin_allowcbregistration'] == 1
+			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration')))
+		{
+			return cbSef('index.php?option=com_comprofiler&task=registers');
+		}
+
+		return null;
+	}
 
 	public function getResetURL() {
 		return cbSef ( 'index.php?option=com_comprofiler&task=lostPassword' );

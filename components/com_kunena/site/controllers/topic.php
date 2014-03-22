@@ -264,12 +264,35 @@ class KunenaControllerTopic extends KunenaController {
 		$message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
 		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
-		// Upload new attachments
-		foreach ($_FILES as $key=>$file) {
-			$intkey = 0;
-			if (preg_match('/\D*(\d+)/', $key, $matches))
-				$intkey = (int)$matches[1];
-			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key, $this->catid);
+		// Preliminary memory check to be sure that user configuration is able to handle resizing of images uploaded
+		$memory_needed = null;
+		$memory_size = ini_get('memory_limit');
+
+		foreach ($_FILES as $key => $file)
+		{
+			if ( stripos($file['type'], 'image/') !== false )
+			{
+				list($width, $height) = getimagesize($file['tmp_name']);
+
+				// Getting the image pixels, then multiply them by 4 (4 bytes per pixel at CMYK), then adding the “tweak factor” as the memory_limit function is not so precise, and adding 1MByte more
+				$memory_needed .= floor(($width * $height * 4 * 1.5 + 1048576) / 1048576);
+			}
+		}
+
+		if ($memory_needed < $memory_size )
+		{
+			// Upload new attachments
+			foreach ($_FILES as $key => $file)
+			{
+				$intkey = 0;
+				if (preg_match('/\D*(\d+)/', $key, $matches))
+				$intkey = (int) $matches[1];
+				if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key, $this->catid);
+			}
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_CONTROLLER_TOPIC_ERROR_MESSAGE_RESIZE_IMAGES_TOO_INSUFFICIENT_PHP_MEMORY') , 'error');
 		}
 
 		// Make sure that message has visible content (text, images or objects) to be shown.

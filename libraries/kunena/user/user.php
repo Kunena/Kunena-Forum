@@ -841,6 +841,39 @@ class KunenaUser extends JObject {
 	}
 
 	/**
+	 * Get website URL from the user.
+	 *
+	 * @return string  URL to the website.
+	 *
+	 * @since 3.1
+	 */
+	public function getWebsiteURL()
+	{
+		$url = $this->websiteurl;
+
+		if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
+		{
+			$url = 'http://' . $url;
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Get website name from the user.
+	 *
+	 * @return string  Name to the website or the URL if the name isn't set.
+	 *
+	 * @since 3.1
+	 */
+	public function getWebsiteName()
+	{
+		$name = trim($this->websitename) ? $this->websitename : $this->websiteurl;
+
+		return $name;
+	}
+
+	/**
 	 * Get website link from the user.
 	 *
 	 * @return string  Link to the website.
@@ -852,14 +885,10 @@ class KunenaUser extends JObject {
 		if (!isset($this->_website) && $this->websiteurl)
 		{
 			$this->_website = '';
-			$url = $this->websiteurl;
 
-			if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
-			{
-				$url = 'http://' . $url;
-			}
+			$url = $this->getWebsiteURL();
 
-			$name = trim($this->websitename) ? $this->websitename : $this->websiteurl;
+			$name = $this->getWebsiteName();
 
 			$this->_website = '<a href="' . $this->escape($url) . '" target="_blank">' . $this->escape($name) . '</a>';
 		}

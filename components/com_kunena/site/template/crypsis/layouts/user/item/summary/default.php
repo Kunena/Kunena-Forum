@@ -19,7 +19,8 @@ $banInfo = $this->config->showbannedreason
 	: null;
 $private = $profile->getPrivateMsgLink();
 $email = $profile->getEmailLink();
-$www = $profile->getWebsiteLink();
+$websiteURL = $profile->getWebsiteURL();
+$websiteName = $profile->getWebsiteName();
 $personalText = $profile->getPersonalText();
 $signature = $profile->getSignature();
 
@@ -155,9 +156,8 @@ if ($this->config->showuserstats)
 				<?php // TODO: Fix mailto link ?>
 				<a class="btn" href="mailto:<?php echo $email; ?>"><i class="icon-mail"></i></a>
 			<?php endif; ?>
-			<?php if ($www) : ?>
-				<?php // TODO: Fix link ?>
-				<a class="btn" href="<?php echo $www->url; ?>"><i class="icon-bookmark"></i></a>
+			<?php if ($websiteURL) : ?>
+				<a class="btn" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i><?php echo $websiteName ?></a>
 			<?php endif; ?>
 		</div>
 	</div>

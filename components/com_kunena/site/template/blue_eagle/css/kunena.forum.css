@@ -2386,6 +2386,7 @@ BBCODE BUTTONS
 #Kunena ul#kbbcode-toolbar li a#kbbcode-previewbottom-button {background-position:-252px -18px;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-previewright-button {background-position:-270px -18px;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-help-button {background-position:-396px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-smilies-button {display:none;}
 
 #Kunena .kspoiler {
 	cursor:pointer;

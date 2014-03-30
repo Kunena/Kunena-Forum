@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -692,7 +692,7 @@ class KunenaUser extends JObject {
 			case 'id':
 				return $this->userid;
 		}
-		
+
 		$trace = debug_backtrace();
 		trigger_error(
 			'Undefined property via __get(): ' . $name .

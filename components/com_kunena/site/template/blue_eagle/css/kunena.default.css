@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 *
@@ -12,8 +12,8 @@
 * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
-* 
-**/ 
+*
+**/
 
 /* ------------------------- COLOR PALETTE FOR BLUE EAGLE
 
@@ -41,7 +41,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 
 ----------------------------------------------------------*/
 
-/* 
+/*
 ----------------------------------------------------------------------------------------------- */
 
 /* MAIN STYLES
@@ -106,7 +106,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	background-color: #FFFFFF;
 	color: #000000;
 }
-#Kunena div.kblock div.khelprulesjump {	
+#Kunena div.kblock div.khelprulesjump {
 	border-color: #BFC3C6;
 	background-color: #FFFFFF;
 	color: #000000;
@@ -362,7 +362,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 #Kunena div.ktopic-title-cover ul.kpagination li.page {
 	color:#999;
-} 
+}
 #Kunena div.ktopic-title-cover ul.kpagination a {
 	border-color:#bcbcbc;
 	background-color: #ffffff;
@@ -486,7 +486,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	color: #999999;
 }
 
-/* SHOW CATEGORY 
+/* SHOW CATEGORY
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena img.catavatar {
@@ -683,7 +683,7 @@ POST PAGE
 -------------------------------------------------------------------- */
 
 #Kunena #kpost-message .postinput {
-	background-color: #FFFFFF; 
+	background-color: #FFFFFF;
 	color: #000000;
 	border-color: #BFC3C6;
 }
@@ -745,7 +745,7 @@ POST PAGE
 #Kunena div#video {
 	border-bottom-color: #BFC3C6;
 }
-	
+
 /* FORUM ICON BUTTONS
 ----------------------------------------------------------------------------------------------- */
 
@@ -822,7 +822,7 @@ Multi file upload for bbcode editor
 #Kunena #kbbcode-filelist .file .file-size {
 	color: #666;
 }
- 
+
 #Kunena #kbbcode-filelist .file .file-error {
 	color: #8a1f11;
 }
@@ -838,7 +838,7 @@ POLLS
 	background-color:#FFFFFF;
 }
 
-/* PATHWAY 
+/* PATHWAY
 ----------------------------------------------------------------------------------------------- */
 #Kunena .kforum-pathway {
 	border-left-color: #BFC3C6;
@@ -900,7 +900,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 -------------------------------------------------------------------- */
 
 #Kunena div#kmod-container {
-	/*border-color: #BFC3C6;*/ 
+	/*border-color: #BFC3C6;*/
 }
 #Kunena div.kmoderate-message {
 	border-color:#CCCCCC;
@@ -909,18 +909,18 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 /*       PROFILE
 -------------------------------------------------------------------- */
 
-#Kunena div.kavatar-lg { 
-	background-color: #FFF; 
-	border-color: #999999; 
+#Kunena div.kavatar-lg {
+	background-color: #FFF;
+	border-color: #999999;
 }
 #Kunena div#kprofile-stats ul li span.konline-status-yes {
 	color: #fff;
 }
 #Kunena div#kprofile-stats ul li span.konline-status-no {
 	color:#fff;
-}	
+}
 #Kunena div.clrline {
-	border-top-color: #BFC3C6; 
+	border-top-color: #BFC3C6;
 }
 #Kunena div.kprofile-rightcol1 h4 { color: #333333;}
 
@@ -1075,13 +1075,13 @@ ul.autocompleter-choices li {
 
 /* for form-validation
 ------------------------------------------------------ */
-	
-#Kunena #kpost-message .invalid { 
+
+#Kunena #kpost-message .invalid {
 	border-color: red !important;
 	background-color: #FFDDDD !important;
 }
 
-/* SHOW ICONS 
+/* SHOW ICONS
 ----------------------------------------------------------------------------------------------- */
 
 .kgooglemap {
@@ -1096,7 +1096,7 @@ ul.autocompleter-choices li {
 
 /* Fix to avoid broken controls with google maps
 ----------------------------------------------------------------------------------------------- */
-#Kunena div.kmsgbody div.kmsgtext div.kgooglemap img { 
+#Kunena div.kmsgbody div.kmsgtext div.kgooglemap img {
 	max-width: none !important;
 }
 /* --------------------------------------------------------------- */

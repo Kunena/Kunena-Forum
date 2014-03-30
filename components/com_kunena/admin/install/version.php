@@ -101,7 +101,7 @@ class KunenaVersion
 	/**
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
-	* @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2013 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2014 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
 	static function getLongVersionHTML()
 	{

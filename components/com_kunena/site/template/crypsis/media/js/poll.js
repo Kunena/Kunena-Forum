@@ -2,7 +2,7 @@
 * Kunena Component
 * @package Kunena.Template.Crypsis
 *
-* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -13,10 +13,10 @@ jQuery(document).ready(function() {
 	 */
 	function create_new_field_now(optionid, options) {
 		var polldiv = jQuery('<div></div>').attr('class','polloption').appendTo('#kbbcode-poll-options');
-			
+
 		var label = jQuery('<label>').text(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+' '+optionid+' ');
 		polldiv.append(label);
-			
+
 		newInput = document.createElement('input');
 		newInput.setAttribute('name', 'polloptionsID[new'+optionid+']');
 		newInput.setAttribute('id', 'field_option'+optionid);
@@ -26,12 +26,12 @@ jQuery(document).ready(function() {
 		newInput.setAttribute('onmouseover', 'document.id("helpbox").set("value", "'+Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_OPTION')+'")');
 		polldiv.append(newInput);
 	}
-	
+
 	if( jQuery('#kbutton-poll-add') != undefined ) {
 		jQuery('#kbutton-poll-add').click(function() {
 			var nboptionsmax = jQuery('#nb_options_allowed').val();
 			var koptions = jQuery('#kbbcode-poll-options').children('div.polloption');
-				
+
 			if(!nboptionsmax || (koptions.length < nboptionsmax && koptions.length > 1 ) ){
 				create_new_field_now(koptions.length+1,nboptionsmax);
 			} else if ( !nboptionsmax || koptions.length < 1 ) {
@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-	
+
 	if( jQuery('#postcatid') != undefined ) {
 		jQuery('#postcatid').change(function() {
 			var catid = jQuery('select#postcatid option').filter(':selected').val();

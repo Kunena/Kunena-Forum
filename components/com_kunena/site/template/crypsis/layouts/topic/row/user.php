@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -31,7 +31,7 @@ if (!empty($this->spacing)) : ?>
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td class="span6">
-		
+
 		<div>
 			<?php echo $this->getTopicLink($topic); ?>
 
@@ -60,18 +60,18 @@ if (!empty($this->spacing)) : ?>
 			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 	</td>
-	
+
 	<td class="span1 center hidden-phone">
 		<?php echo $topic->getAuthor()->getLink(); ?>
 	</td>
-	
+
 	<td class="span1 center hidden-phone">
 		<?php echo $this->formatLargeNumber($topic->hits); ?>
 	</td>
 	<td class="span1 center hidden-phone">
 		<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
-	
+
 	<td class="span3">
 		<?php if ($avatar) : ?>
 						<div class="pull-left hidden-phone" style="padding-left:3%;">

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -45,11 +45,11 @@ if (!empty($this->spacing)) : ?>
 			<?php if ($userTopic->posts) : ?>
 				<i class="icon-flag hasTooltip"><?php JText::_('COM_KUNENA_MYPOSTS'); ?></i>
 			<?php endif; ?>
-			
+
 			<?php if ($this->topic->attachments) : ?>
 				<i class="icon-flag-2 hasTooltip"><?php JText::_('COM_KUNENA_ATTACH'); ?></i>
 			<?php endif; ?>
-			
+
 			<?php if ($this->topic->poll_id) : ?>
 				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 			<?php endif; ?>
@@ -79,7 +79,7 @@ if (!empty($this->spacing)) : ?>
 			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 		</div>
 	</td>
-	
+
 	<td class="span1 center hidden-phone">
 		<?php if ($avatar) : ?>
 		<span>
@@ -87,14 +87,14 @@ if (!empty($this->spacing)) : ?>
 		</span>
 		<?php endif; ?>
 	</td>
-	
+
 	<td class="span1 hidden-phone center">
 			<?php echo  $this->formatLargeNumber($topic->hits); ?>
 		</td>
 	<td class="span1 hidden-phone center">
 			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
-	
+
 	<td class="span3">
 			<?php if ($avatar) : ?>
 						<div class="pull-left hidden-phone" style="padding-left:3%;">

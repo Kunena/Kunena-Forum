@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Message
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -18,7 +18,7 @@ $avatarname = $this->profile->getname();
 
 <small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <span class="icon icon-clock"></span> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?> <a href="#<?php echo $this->message->id; ?>">#<?php echo $this->location; ?></a> </small>
 <?php if ($this->message->getAuthor()->isModerator()) : ?>
-<div class="badger-left badger-info badger-moderator" data-badger="<?php echo (!$isReply) ? $avatarname .' created the topic: ' : $avatarname . ' replied the topic: '; ?>			
+<div class="badger-left badger-info badger-moderator" data-badger="<?php echo (!$isReply) ? $avatarname .' created the topic: ' : $avatarname . ' replied the topic: '; ?>
 		<?php echo $this->message->displayField('subject'); ?>">
 <?php else : ?>
 <div class="badger-left badger-info" data-badger="<?php echo (!$isReply) ? $avatarname .' created the topic: ' : $avatarname . ' replied the topic: '; ?>

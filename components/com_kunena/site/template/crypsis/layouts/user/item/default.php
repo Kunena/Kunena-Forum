@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -16,7 +16,7 @@ $tabs = $this->getTabs();
 <h2>
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
-	
+
 	<?php if ($this->profile->isAuthorised('edit')) : ?>
 	<?php echo $this->profile->getLink(
 		'<i class="icon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),

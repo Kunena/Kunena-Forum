@@ -49,9 +49,12 @@ class KunenaAvatarKunena extends KunenaAvatar {
 			$resized = "resized/size{$sizex}x{$sizey}/{$dir}";
 		}
 
+		// TODO: make timestamp configurable?
+		$timestamp = '';
 		if ( !is_file( "{$path}/{$resized}/{$file}" ) ) {
-			KunenaImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex, $sizey, intval($config->avatarquality));
+			KunenaImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex, $sizey, intval($config->avatarquality), KunenaImage::SCALE_INSIDE, intval($config->avatarcrop));
+			$timestamp = '?'.round(microtime(true));
 		}
-		return KURL_MEDIA . "avatars/{$resized}/{$file}";
+		return KURL_MEDIA . "avatars/{$resized}/{$file}{$timestamp}";
 	}
 }

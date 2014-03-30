@@ -355,14 +355,14 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			if (!empty($receivers[1]))
 			{
 				$this->attachEmailBody($mail, 1, $subject, $url, $once);
-				$this->sendEmail($mail, $receivers[1]);
+				KunenaEmail::send($mail, $receivers[1]);
 			}
 
 			// Send email to all moderators.
 			if (!empty($receivers[0]))
 			{
 				$this->attachEmailBody($mail, 0, $subject, $url, $once);
-				$this->sendEmail($mail, $receivers[0]);
+				KunenaEmail::send($mail, $receivers[0]);
 			}
 
 			// Update subscriptions.
@@ -1144,43 +1144,6 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			return -1;
 		}
 		return 0;
-	}
-
-	/**
-	 * @param object $mail
-	 * @param array  $receivers
-	 */
-	protected function sendEmail($mail, array $receivers) {
-		$config = KunenaFactory::getConfig();
-		$email_recipient_count = !empty($config->email_recipient_count) ? $config->email_recipient_count : 1;
-		$email_recipient_privacy = !empty($config->email_recipient_privacy) ? $config->email_recipient_privacy : 'bcc';
-
-		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam
-		if ($email_recipient_count > 1 && $email_recipient_privacy == 'bcc'
-			&& !empty($config->email_visible_address) && JMailHelper::isEmailAddress ( $config->email_visible_address )) {
-			$mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress ( $config->board_title ));
-			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit)
-			if ($email_recipient_count > 9) $email_recipient_count--;
-		}
-
-		$chunks = array_chunk($receivers, $email_recipient_count);
-		foreach ($chunks as $emails) {
-			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to') {
-				$mail->ClearAddresses();
-				$mail->addRecipient($emails);
-			} elseif ($email_recipient_privacy == 'cc') {
-				$mail->ClearCCs();
-				$mail->addCC($emails);
-			} else {
-				$mail->ClearBCCs();
-				$mail->addBCC($emails);
-			}
-			try {
-				$mail->Send();
-			} catch (Exception $e) {
-				JLog::add($e->getMessage(), JLog::WARNING, 'kunena');
-			}
-		}
 	}
 
 	/**

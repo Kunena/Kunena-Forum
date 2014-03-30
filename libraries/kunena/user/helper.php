@@ -30,6 +30,12 @@ abstract class KunenaUserHelper {
 	protected static $_topposters = null;
 	protected static $_me = null;
 
+	public static function cleanup()
+	{
+		self::$_instances = array();
+		self::$_instances_name = array();
+	}
+
 	public static function initialize() {
 		$id = JFactory::getUser()->id;
 		self::$_me = self::$_instances [$id] = new KunenaUser($id);

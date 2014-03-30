@@ -1,3 +1,5 @@
+		return KunenaLayout::factory('Page/Button')
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'primary' => $primary));
 <?php
 /**
  * Kunena Component
@@ -57,6 +59,11 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
+
+			$this->messageButtons->set('reply',
+				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', null, true)
+			);
+
 			if ($me->exists() && !KunenaSpamRecaptcha::getInstance()->enabled())
 			{
 				$this->messageButtons->set('quickreply',
@@ -64,9 +71,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				);
 			}
 
-			$this->messageButtons->set('reply',
-				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication')
-			);
 			$this->messageButtons->set('quote',
 				$this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication')
 			);
@@ -79,11 +83,13 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		// Thank you.
-		if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
-		{
-			$this->messageButtons->set('thankyou',
-				$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false)
-			);
+		if (isset($this->message->thankyou)) {
+			if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
+			{
+				$this->messageButtons->set('thankyou',
+					$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false)
+				);
+			}
 		}
 
 		// Unthank you
@@ -173,9 +179,9 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 *
 	 * @return  string
 	 */
-	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
+	public function getButton($url, $name, $scope, $type, $id = null, $primary = false)
 	{
 		return KunenaLayout::factory('Widget/Button')
-			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal));
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'primary' => $primary));
 	}
 }

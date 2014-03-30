@@ -34,6 +34,9 @@ class KunenaModelTopics extends KunenaModel {
 		$layout = $this->getWord ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 
+		$display = $this->getUserStateFromRequest( 'com_kunena.users_display', 'display', 'topics');
+		$this->setState ( 'display', $display);
+
 		$userid = $this->getInt ( 'userid', -1 );
 		if ($userid < 0) {
 			$userid = $this->me->userid;

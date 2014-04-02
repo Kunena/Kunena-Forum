@@ -2,14 +2,14 @@
  * Kunena Component
  * @package Kunena.Administrator.Joomla25
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 
 @CHARSET "UTF-8";
 
-/** Joomla 1.6 backend fix **/ 
+/** Joomla 1.6 backend fix **/
 DIV#element-box,
 DIV.m {
 	background-color:#FFF !important;
@@ -21,7 +21,7 @@ text-align:center;
 float:left;
 background-repeat:no-repeat !important;
 }
-div.pagetitle {	
+div.pagetitle {
 display: block !important;
 }
 /** end Joomla 1.6 backend fix **/

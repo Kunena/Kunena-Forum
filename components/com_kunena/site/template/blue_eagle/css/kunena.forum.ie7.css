@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 *
@@ -12,14 +12,14 @@
 * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
-* 
-**/ 
+*
+**/
 #Kunena ul.kpagination{  overflow: hidden; }
 #Kunena .kpagination li{ margin:0 2px;  display:inline; }
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited { display:inline; float: left; overflow: hidden; }
 #Kunena .kpagination .active { margin: 2px 2px 0; }
-#Kunena .kpagination li.page { line-height: .917em; height: .917em; padding:2px; } 
+#Kunena .kpagination li.page { line-height: .917em; height: .917em; padding:2px; }
 #Kunena .kpagination li.more { line-height: .667em; }
 #Kunena td.klist-pages-all .kpagination li { margin:0 1px; }
 #Kunena td.kcol-ktopiclastpost { width: 25%; display: block; }

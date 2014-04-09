@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
 $category = $this->topic->getCategory();
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();

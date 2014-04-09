@@ -17,7 +17,11 @@ defined('_JEXEC') or die;
 			<?php echo $this->subRequest('Widget/Login'); ?>
 		</div>
 		<div class="visible-phone hidden-tablet">
-			<?php echo $this->subLayout('Widget/Mobile/Login'); ?>
+			<?php if (JFactory::getUser()->guest) :
+			 	echo $this->subLayout('Widget/Mobile/Login');
+			else:
+			 	echo $this->subLayout('Widget/Mobile/Logout');	
+			endif; ?>
 		</div>
 	</div>
 </div>

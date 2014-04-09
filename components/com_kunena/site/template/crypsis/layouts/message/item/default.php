@@ -37,12 +37,12 @@ $avatarname = $this->profile->getname();
 				</ul>
 				<?php endif; ?>
 		</div>
+		<?php if ($signature) : ?>
 		<div class="ksig">
-				<hr>
-				<?php if ($signature) : ?>
-				<span class="ksig"><?php echo $signature; ?></span>
-				<?php endif ?>
+			<hr>			
+			<span class="ksig"><?php echo $signature; ?></span>			
 		</div>
+		<?php endif ?>
 		<div class="msgfooter">
 				<?php if (!empty($this->reportMessageLink)) : ?>
 				<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT')?></a>

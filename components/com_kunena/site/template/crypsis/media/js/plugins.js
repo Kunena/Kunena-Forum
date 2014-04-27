@@ -52,19 +52,17 @@ jQuery(document).ready(function() {
 	});
 
 	/* To hide or open spoiler on click */
-	jQuery('.kspoiler').each(function() {
-		jQuery('.kspoiler').click(function() {
-			if ( !jQuery('.kspoiler-content').is(':visible') ) {
-				jQuery(this).find('.kspoiler-content').show();
-				jQuery(this).find('.kspoiler-expand').hide();
-				jQuery(this).find('.kspoiler-hide').show();
-			} else {
-				jQuery(this).find('.kspoiler-content').hide();
-				jQuery(this).find('.kspoiler-expand').show();
-				jQuery(this).find('.kspoiler-hide').hide();
-			}
-		});
-	});
+	jQuery('.kspoiler').click(function() {
+		if ( !jQuery('.kspoiler-content').is(':visible') ) {
+			jQuery(this).find('.kspoiler-content').show();
+			jQuery(this).find('.kspoiler-expand').hide();
+			jQuery(this).find('.kspoiler-hide').show();
+		} else {
+			jQuery(this).find('.kspoiler-content').hide();
+			jQuery(this).find('.kspoiler-expand').show();
+			jQuery(this).find('.kspoiler-hide').hide();
+		}
+	});	
 
 	/* To check or uncheck boxes to select items */
 	jQuery('input.kcheckall').click(function() {

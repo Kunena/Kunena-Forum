@@ -141,7 +141,12 @@ class KunenaControllerUser extends KunenaController {
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
 	}
 
-	function ban() {
+	/**
+	 * Method to handle bans when use this feature in user profile
+	 *
+	 * @return void
+	 */
+	public function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JSession::checkToken('post')) {
 			$this->setRedirect($user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -245,10 +250,18 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		if (! empty ( $banDelPosts )) {
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $user->userid));
+			$params = array('starttime' => '-1','user' => $user->userid,'mode' => 'unapproved');
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
+
+			$parmas_recent = array('starttime' => '-1','user' => $user->userid);
+			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+
+			$messages = array_merge($messages_recent, $messages);
+
 			foreach($messages as $mes) {
 				$mes->publish(KunenaForum::DELETED);
 			}
+
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );
 		}
 

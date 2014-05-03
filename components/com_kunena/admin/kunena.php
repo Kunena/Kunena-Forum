@@ -31,6 +31,25 @@ if (JRequest::getCmd('view') == 'install' || !class_exists('KunenaForum') || !Ku
 	return;
 }
 
+if (JRequest::getCmd('view') == 'uninstall')
+{
+	$app = JFactory::getApplication();
+
+	$allowed = $app->getUserState('com_kunena.uninstall.allowed');
+
+	if ($allowed)
+	{
+		require_once __DIR__ . '/install/controller.php';
+		$controller = new KunenaControllerInstall;
+		$controller->execute('uninstall');
+		$controller->redirect();
+
+		$app->setUserState('com_kunena.uninstall.allowed', null);
+
+		return;
+	}
+}
+
 // Initialize Kunena Framework.
 KunenaForum::setup();
 

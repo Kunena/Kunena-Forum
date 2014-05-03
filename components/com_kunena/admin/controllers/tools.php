@@ -523,4 +523,44 @@ class KunenaAdminControllerTools extends KunenaController {
 	{
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
+
+	/**
+	 * Method to completly remove kunena by checking before if the user is a super-administrator
+	 *
+	 * @return void
+	 *
+	 * @since 3.1.0
+	 */
+	public function uninstall()
+	{
+		if (!JSession::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		// Check if the user has the super-administrator rights
+		$username = $this->app->input->getString('username');
+		$password = $this->app->input->getString('password');
+
+		$login = KunenaLogin::getInstance();
+		$error = $login->loginUser($username, $password);
+
+		$user = JFactory::getUser();
+		$isroot = $user->authorise('core.admin');
+
+		if (!$error && $isroot)
+		{
+			$this->app->setUserState('com_kunena.uninstall.allowed', true);
+
+			$this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&view=uninstall&' . JSession::getFormToken() . '=1', false));
+
+			return;
+		}
+
+		$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_FAILED'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
 }

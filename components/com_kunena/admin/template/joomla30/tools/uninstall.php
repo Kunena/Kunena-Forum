@@ -13,12 +13,19 @@ defined ( '_JEXEC' ) or die ();
 /** @var KunenaAdminViewTools $this */
 ?>
 
+<div class="alert alert-error">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<h4><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_ALERTBOX_WARNING') ?></h4>
+	<?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_ALERTBOX_DESC') ?>
+</div>
+
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
 			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
 		</div>
 	</div>
+
 	<div id="j-main-container" class="span10">
 
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
@@ -47,6 +54,16 @@ defined ( '_JEXEC' ) or die ();
 							</div>
 						</td>
 					</tr>
+					<?php if ($this->isTFAEnabled): ?>
+					<tr>
+						<td width="20%"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_SECRETKEY') ?></td>
+						<td>
+							<div>
+								<input class="span3" type="text" name="secretkey" value="" />
+							</div>
+						</td>
+					</tr>
+					<?php endif; ?>
 					<tr>
 						<td></td>
 						<td> <button type="submit" class="btn btn-danger"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button></td>

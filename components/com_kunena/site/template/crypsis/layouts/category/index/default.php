@@ -53,7 +53,7 @@ foreach ($this->sections as $section) :
 </h3>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
-	<table class="table table-hover table-bordered table-condensed">
+	<table class="table table-bordered">
 
 		<?php if (!empty($section->description)) : ?>
 		<thead class="hidden-phone">

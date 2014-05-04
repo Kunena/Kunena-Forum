@@ -34,7 +34,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		$showSubscriptions = $this->config->allowsubscriptions && $myProfile;
 		$showFavorites = $this->config->allowfavorites && $myProfile;
 		$showThankYou = $this->config->showthankyou && $this->me->exists();
-		$showUnapproved = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus();
+		$showUnapproved = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 		$showAttachments = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
 		$showBanManager = $moderator && $myProfile;
 		$showBanHistory = $banInfo->canBan();
@@ -57,6 +57,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'filter_order' => 'time',
 				'limitstart' => 0,
 				'filter_order_Dir' => 'desc',
+				'display' => $this->state->get('display','')
 			);
 
 			$tab = new stdClass;

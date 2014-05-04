@@ -667,6 +667,14 @@ abstract class KunenaForumCategoryHelper {
 		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b])) return 0;
 		return JString::strcasecmp(self::$_instances[$b]->name, self::$_instances[$a]->name);
 	}
+
+	static public function stripName($original, $strip) {
+		$strip = trim($strip);
+		if (strpos($original, $strip) !== false) {
+			$original = str_replace($strip, '', $original);
+		}
+		return $original;
+	}
 }
 
 KunenaForumCategoryHelper::initialize();

@@ -49,7 +49,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaForumAuthorise
+	 * @throws KunenaExceptionAuthorise
 	 */
 	protected function before()
 	{
@@ -146,7 +146,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->captcha = KunenaSpamRecaptcha::getInstance();
 		$this->quickReply = ($this->topic->isAuthorised('reply') && $this->me->exists() && !$this->captcha->enabled());
 
-		$this->headerText = JText::_('COM_KUNENA_TOPIC') . $this->topic->displayField('subject');
+		$this->headerText = JText::_('COM_KUNENA_TOPIC') . ' ' . html_entity_decode($this->topic->displayField('subject'));
 	}
 
 	/**

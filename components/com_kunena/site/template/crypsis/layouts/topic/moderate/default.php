@@ -180,7 +180,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 			<div class="controls">
 				<input type="submit" class="btn btn-primary"
 				       value="<?php echo JText::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>" />
-				<a href="window.history.back();" class="btn">
+				<a href="javascript:window.history.back();" class="btn">
 					<?php echo JText::_('COM_KUNENA_BACK'); ?>
 				</a>
 			</div>

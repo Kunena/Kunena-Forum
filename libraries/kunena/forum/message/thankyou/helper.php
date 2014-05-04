@@ -20,6 +20,11 @@ abstract class KunenaForumMessageThankyouHelper {
 	 */
 	protected static $_instances = array();
 
+	public static function cleanup()
+	{
+		self::$_instances = array();
+	}
+
 	/**
 	 * @param int  $identifier	The message to load - Can be only an integer.
 	 * @param bool $reload

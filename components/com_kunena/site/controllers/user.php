@@ -85,6 +85,8 @@ class KunenaControllerUser extends KunenaController {
 	 */
 	public function save()
 	{
+		$return = null;
+
 		if (!JSession::checkToken('post'))
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ERROR_TOKEN'), 403);
@@ -111,8 +113,15 @@ class KunenaControllerUser extends KunenaController {
 		// Save avatar.
 		$success = $this->saveAvatar();
 
-		if (!$success)
-		{
+		if ($success) {
+			if ($this->format == 'json') {
+				// Pre-create both 28px and 100px avatars so we have them available for AJAX
+				$avatars = array();
+				$avatars['small'] = $this->me->getAvatarUrl(28, 28);
+				$avatars['medium'] = $this->me->getAvatarUrl(100, 100);
+				$return = array('avatars' => $avatars);
+			}
+		} else 	{
 			$errors++;
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_AVATAR_NOT_SAVED'), 'error');
 		}
@@ -139,6 +148,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
+		if ($return) return $return;
 	}
 
 	function ban() {
@@ -160,13 +170,18 @@ class KunenaControllerUser extends KunenaController {
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
+		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
+		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
+		$DelSignature = JRequest::getVar ( 'delsignature', '' );
+		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
+
+		$delban = JRequest::getString ( 'delban', '' );
+
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
 			$success = $ban->save ();
 			$this->report($user->userid);
 		} else {
-			$delban = JRequest::getString ( 'delban', '' );
-
 			if ( $delban ) {
 				$ban->unBan($comment);
 				$success = $ban->save ();
@@ -179,15 +194,17 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		if ($block) {
-			if ($ban->isEnabled ())
+			if ($ban->isEnabled ()) {
 				$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
-			else
+			} else {
 				$message = JText::_ ( 'COM_KUNENA_USER_UNBLOCKED_DONE' );
+			}
 		} else {
-			if ($ban->isEnabled ())
+			if ($ban->isEnabled ()) {
 				$message = JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' );
-			else
+			} else {
 				$message = JText::_ ( 'COM_KUNENA_USER_UNBANNED_DONE' );
+			}
 		}
 
 		if (! $success) {
@@ -195,11 +212,6 @@ class KunenaControllerUser extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( $message );
 		}
-
-		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
-		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
-		$DelSignature = JRequest::getVar ( 'delsignature', '' );
-		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
 
 		if (! empty ( $DelAvatar ) || ! empty ( $DelProfileInfo )) {
 			$avatar_deleted = '';
@@ -418,13 +430,15 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	protected function saveProfile() {
-		$this->me->personalText = JRequest::getVar ( 'personaltext', '' );
+		if (JRequest::getVar('signature', null) === null) return;
+
+		$this->me->personalText = JRequest::getString ( 'personaltext', '' );
 		$birthdate = JRequest::getString('birthdate');
 		if (!$birthdate) {
 			$birthdate = JRequest::getInt('birthdate1', '0000').'-'.JRequest::getInt('birthdate2', '00').'-'.JRequest::getInt ('birthdate3', '00');
 		}
 		$this->me->birthdate = $birthdate;
-		$this->me->location = trim(JRequest::getVar ( 'location', '' ));
+		$this->me->location = trim(JRequest::getString ( 'location', '' ));
 		$this->me->gender = JRequest::getInt ( 'gender', '' );
 		$this->me->icq = trim(JRequest::getString ( 'icq', '' ));
 		$this->me->aim = trim(JRequest::getString ( 'aim', '' ));
@@ -497,9 +511,11 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	protected function saveSettings() {
-		$this->me->ordering = JRequest::getInt('messageordering', '', 'post', 'messageordering');
-		$this->me->hideEmail = JRequest::getInt('hidemail', '', 'post', 'hidemail');
-		$this->me->showOnline = JRequest::getInt('showonline', '', 'post', 'showonline');
+		if (JRequest::getVar('hidemail', null) === null) return;
+
+		$this->me->ordering = JRequest::getInt('messageordering', '');
+		$this->me->hideEmail = JRequest::getInt('hidemail', '');
+		$this->me->showOnline = JRequest::getInt('showonline', '');
 	}
 
 	// Reports a user to stopforumspam.com

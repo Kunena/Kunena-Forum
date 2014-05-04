@@ -51,6 +51,7 @@ class KunenaTemplate extends JObject
 		'css' => 'css'
 	);
 	protected $default = array();
+	protected $paths = array();
 	protected $css_compile = true;
 	protected $filecache = array();
 	protected $smileyPath = array();
@@ -335,6 +336,10 @@ HTML;
 		return JFactory::getDocument()->addScript($filename);
 	}
 
+	public function addPath($path) {
+		$this->paths[] = KunenaPath::clean("/$path");
+	}
+
 	public function getTemplatePaths($path = '', $fullpath = false) {
 		$app = JFactory::getApplication();
 		if ($path) $path = KunenaPath::clean("/$path");
@@ -343,6 +348,10 @@ HTML;
 			$array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE)."/template/".$template.$path;
 			$array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE)."/templates/{$app->getTemplate()}/html/com_kunena".$path;
 		}
+		foreach (array_reverse($this->paths) as $template) {
+			$array[] = ($fullpath ? JPATH_SITE : '').$template.$path;
+		}
+
 		return $array;
 	}
 

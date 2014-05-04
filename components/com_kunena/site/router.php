@@ -136,6 +136,26 @@ function KunenaBuildRoute(&$query) {
 	if (!empty ( $query ['view'] )) {
 		// Use filtered value
 		$segments [] = $view;
+
+		// Handle attachment ID
+		if ($view == 'attachment') {
+			if (!empty($query['id'])) {
+				// Use filtered value
+				$segments [] = (int) $query['id'];
+				unset($query['id']);
+			}
+			if (!empty($query['thumb'])) {
+				// Use filtered value
+				$segments [] = 'thumb';
+				unset($query['thumb']);
+			}
+			unset($query['format']);
+
+			if (!empty($query['filename'])) {
+				$segments [] = $query['filename'];
+				unset($query['filename']);
+			}
+		}
 	}
 
 	// Support URIs like: /forum/category/123-topic/reply
@@ -272,6 +292,18 @@ function KunenaParseRoute($segments) {
 			}
 		}
 		$vars [$var] = $value;
+
+		// Handle attachment ID
+		if ($var == 'view' && $value == 'attachment') {
+			$segment = array_shift($segments);
+			$vars['id'] = (int) $segment;
+			$segment = array_shift($segments);
+			if ($segment) {
+				$vars[$segment] = 1;
+			}
+			$vars['format'] = 'raw';
+		}
+
 	}
 	if (empty($vars ['layout'])) $vars ['layout'] = 'default';
 	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;

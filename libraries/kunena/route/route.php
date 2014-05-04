@@ -123,7 +123,6 @@ abstract class KunenaRoute {
 		return self::$uris[$key];
 	}
 
-
 	/**
 	 * Get the referrer page.
 	 *

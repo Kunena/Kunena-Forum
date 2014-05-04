@@ -61,7 +61,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			if ($session->userid) {
 				$categories = array($category->id => $category);
 				if ($children) {
-					// Include all child categories.
+					// Include all levels of child categories.
 					$categories += $category->getChildren(-1);
 				}
 

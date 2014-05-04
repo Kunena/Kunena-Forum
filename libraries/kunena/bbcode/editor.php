@@ -327,11 +327,11 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 		foreach (array('title', 'alt') as $type) {
 			if ($this->$type) {
 				$value = JText::_($this->$type, true);
-				$js .= "\n	'{$type}': '{$value}',";
+				$js .= "'{$type}': '{$value}', ";
 			}
 		}
 
-		$js .= "\n	'{$identifier}': '{$class}'";
+		$js .= "'{$identifier}': '{$class}'";
 		$js .= "\n});\n";
 
 		return $js;

@@ -53,6 +53,7 @@ class KunenaForumStatistics {
 		$this->_config = KunenaFactory::getConfig ();
 
 		$show = $this->_config->showstats;
+		$show = ($this->_config->statslink_allowed) ? $show : (KunenaUserHelper::get()->exists() ? $show : false);
 		if ($show) {
 			$this->showgenstats = (bool) $this->_config->showgenstats;
 			$this->showpopuserstats = (bool) $this->_config->showpopuserstats;

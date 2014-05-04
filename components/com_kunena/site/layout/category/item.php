@@ -108,7 +108,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @return string
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null)
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length=20)
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels = $category->getChannels();
@@ -122,7 +122,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if (!$content)
 		{
-			$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 20);
+			$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
 		}
 
 		if ($title === null)

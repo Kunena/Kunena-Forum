@@ -23,6 +23,9 @@ class KunenaModelUser extends KunenaModel {
 		$layout = $this->getCmd ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 
+		$display = $this->getUserStateFromRequest( 'com_kunena.users_display', 'display', 'topics');
+		$this->setState ( 'display', $display);
+
 		$config = KunenaFactory::getConfig();
 
 		// List state information

@@ -38,4 +38,16 @@ abstract class KunenaForumTopicPollHelper {
 
 		return self::$_instances [$id];
 	}
+
+	static public function recount() {
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query
+			->update('#__kunena_topics AS a')
+			->innerJoin('#__kunena_polls AS b ON a.id=b.threadid')
+			->set('a.poll_id=b.id');
+
+		$db->setQuery($query);
+		$db->execute();
+	}
 }

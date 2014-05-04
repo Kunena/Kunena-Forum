@@ -202,6 +202,7 @@ class KunenaAdminControllerTools extends KunenaController {
 			$state->usertopics = $this->input->getBool('usertopics', false);
 			$state->categories = $this->input->getBool('categories', false);
 			$state->users = $this->input->getBool('users', false);
+			$state->polls = $this->input->getBool('polls', false);
 
 			$this->app->setUserState ( 'com_kunena.admin.recount', $state );
 
@@ -308,6 +309,15 @@ class KunenaAdminControllerTools extends KunenaController {
 							// Update user statistics
 							KunenaUserHelper::recount();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
+						}
+
+						break;
+					case 4:
+						if ($state->polls)
+						{
+							// Update user statistics
+							KunenaForumTopicPollHelper::recount();
+							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_POLLS_X', '100%');
 						}
 
 						break;

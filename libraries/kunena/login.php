@@ -42,16 +42,16 @@ class KunenaLogin {
 		return self::$instance;
 	}
 
-	public function loginUser($username, $password, $rememberme=0, $return=null) {
+	public function loginUser($username, $password, $rememberme=0, $secretkey = null, $return = null) {
 		foreach ($this->instances as $login) {
 			if (method_exists($login, 'loginUser')) {
-				return $login->loginUser($username, $password, $rememberme, $return);
+				return $login->loginUser($username, $password, $rememberme, $secretkey = null, $return);
 			}
 		}
 		return false;
 	}
 
-	public function logoutUser($return=null) {
+	public function logoutUser($return = null) {
 		foreach ($this->instances as $login) {
 			if (method_exists($login, 'logoutUser')) {
 				return $login->logoutUser($return);

@@ -51,12 +51,35 @@ defined('_JEXEC') or die;
 					</div>
 				</div>
 
+				<?php $tfa = JPluginHelper::getPlugin('twofactorauth'); ?>
+				<?php if (!is_null($tfa) && $tfa != array()): ?>
+				<div id="form-login-tfa" class="control-group center">
+					<div class="controls">
+						<div class="input-prepend input-append">
+							<span class="add-on"> 
+								<i class="icon-star tip" title="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"></i>
+								<label for="k-lgn-secretkey" class="element-invisible">
+									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
+								</label>
+						  </span>
+							<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" tabindex="3" 
+										size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
+						</div>
+					</div>
+				</div>
+				<?php endif; ?>
+				
 				<?php if ($this->rememberMe) : ?>
-					<div id="form-login-remember" class="control-group checkbox">
+					<div id="form-login-remember" class="control-group checkbox center">
+						<div class="controls">
+						<div class="input-prepend input-append">
+							<span class="add-on">
 						<label for="login-remember" class="control-label">
 							<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
-						</label>
+						</label>						
 						<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
+						</span></div>
+					</div>
 					</div>
 				<?php endif; ?>
 

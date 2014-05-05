@@ -43,23 +43,19 @@ $avatarname = $this->profile->getname();
 				<span class="ksignature"><?php echo $signature; ?></span>
 		</div>
 		<?php endif ?>
-		<?php if (!empty($this->reportMessageLink) & !empty($this->ipLink)) : ?>
+		<?php if (!empty($this->reportMessageLink)) : ?>
 		<div class="msgfooter">
-				<?php if (!empty($this->reportMessageLink)) : ?>
 				<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT')?></a>
 				<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 						<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 								<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id);?> </div>
 				</div>
-				<?php endif; ?>
-				<?php if (!empty($this->ipLink)) : ?>
 				<div class="pull-right">
 						<p> <?php echo $this->ipLink; ?> </p>
 				</div>
-				<?php endif; ?>
 		</div>
-		<?php endif ?>
+		<?php endif; ?>
 </div>
 
 <?php if ($this->message->modified_by && $this->config->editmarkup) : 

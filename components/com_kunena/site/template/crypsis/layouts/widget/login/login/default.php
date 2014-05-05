@@ -70,17 +70,18 @@ defined('_JEXEC') or die;
 				<?php endif; ?>
 				
 				<?php if ($this->rememberMe) : ?>
-					<div id="form-login-remember" class="control-group checkbox center">
-						<div class="controls">
+				<div id="form-login-remember" class="control-group center">
+					<div class="controls">
 						<div class="input-prepend input-append">
-							<span class="add-on">
-						<label for="login-remember" class="control-label">
-							<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
-						</label>						
-						<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
-						</span></div>
+							<div class="add-on">						
+								<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
+								<label for="login-remember" class="control-label">
+									<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
+								</label>
+							</div>
+						</div>
 					</div>
-					</div>
+				</div>
 				<?php endif; ?>
 
 				<div id="form-login-submit" class="control-group center">

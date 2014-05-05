@@ -61,17 +61,18 @@ if (!empty($this->spacing)) : ?>
 			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 
+		<?php if ($topic->locked != 0) : ?>
 		<div>
 			<?php /** TODO: New Feature - LABELS
 			<span class="label label-info">
 				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 			</span>	*/ ?>
-			<?php if ($topic->locked != 0) : ?>
+			
 			<span class="label label-important">
 				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
 			</span>
-			<?php endif; ?>
 		</div>
+		<?php endif; ?>
 	</td>
 
 	<td class="span1 center hidden-phone">

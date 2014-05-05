@@ -57,7 +57,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 		</thead>
 		<?php endif; ?>
 <thead>
-			<tr class="category<?php echo $this->escape($topic->$category->class_sfx); ?>">
+			<tr class="category">
 				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">

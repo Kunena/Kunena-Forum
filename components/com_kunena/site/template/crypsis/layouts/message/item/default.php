@@ -37,12 +37,12 @@ $avatarname = $this->profile->getname();
 				</ul>
 				<?php endif; ?>
 		</div>
+		<?php if ($signature) : ?>
 		<div class="ksig">
 				<hr>
-				<?php if ($signature) : ?>
 				<span class="ksig"><?php echo $signature; ?></span>
-				<?php endif ?>
 		</div>
+		<?php endif ?>
 		<div class="msgfooter">
 				<?php if (!empty($this->reportMessageLink)) : ?>
 				<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT')?></a>
@@ -59,6 +59,19 @@ $avatarname = $this->profile->getname();
 				<?php endif; ?>
 		</div>
 </div>
+
+<?php if ($this->message->modified_by && $this->config->editmarkup) : 
+				$dateshown = $datehover = '';
+				if ($this->message->modified_time) {
+					$datehover = 'title="'.KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat_hover').'"';
+					$dateshown = KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat' ).' ';
+				} ?>
+	<span class="alert alert-info hidden-phone" <?php echo $datehover ?>>
+		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
+		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
+	</span>
+<?php endif; ?>
+
 <?php if(!empty($this->thankyou)): ?>
 <span class="kmessage-thankyou">
 <?php

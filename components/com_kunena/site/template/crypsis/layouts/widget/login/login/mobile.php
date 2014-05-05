@@ -75,7 +75,3 @@ $userConfig = JComponentHelper::getParams('com_users');
 		</div>
 	</li>
 </ul>
-<ul class="nav navbar-nav pull-left">
-		<a data-toggle="collapse" data-target=".nav-collapse" style="float:left"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a>
-		<div class="nav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
-</ul>

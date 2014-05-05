@@ -169,5 +169,21 @@ class KunenaImage extends JImage
         return true;
     }
 
+    /**
+     * Method to destroy an image handle and
+     * free the memory associated with the handle
+     *
+     * @return  boolean  True on success, false on failure or if no image is loaded
+     *
+     * @since 3.1
+     */
+	public function destroy()
+	{
+		if ($this->isLoaded())
+		{
+			return imagedestroy($this->handle);
+		}
 
+		return false;
+	}
 }

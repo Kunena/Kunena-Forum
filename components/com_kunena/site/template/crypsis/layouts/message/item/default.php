@@ -43,7 +43,7 @@ $avatarname = $this->profile->getname();
 				<span class="ksignature"><?php echo $signature; ?></span>
 		</div>
 		<?php endif ?>
-		<?php if (!empty($this->reportMessageLink) & !empty($this->reportMessageLink)) : ?>
+		<?php if (!empty($this->reportMessageLink) & !empty($this->ipLink)) : ?>
 		<div class="msgfooter">
 				<?php if (!empty($this->reportMessageLink)) : ?>
 				<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT')?></a>

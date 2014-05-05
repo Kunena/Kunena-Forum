@@ -121,11 +121,10 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
 		if (class_exists('KunenaForum') && !KunenaForum::isDev()) {
-			jimport('joomla.filesystem.folder');
 			jimport('joomla.application.component.helper');
-			$installer = new JInstaller();
+			$installer = new JInstaller;
 			$component = JComponentHelper::getComponent('com_kunena');
-			$installer->uninstall ( 'component', $component->id );
+			$installer->uninstall('component', $component->id);
 			$this->setRedirect('index.php?option=com_installer');
 		} else {
 			$this->setRedirect('index.php?option=com_kunena&view=install');

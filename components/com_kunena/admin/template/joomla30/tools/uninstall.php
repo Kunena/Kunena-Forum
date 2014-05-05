@@ -66,7 +66,23 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif; ?>
 					<tr>
 						<td></td>
-						<td> <button type="submit" class="btn btn-danger"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button></td>
+						<td>
+							<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h3>
+								</div>
+								<div class="modal-body">
+									<p><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_DESC') ?></p>
+								</div>
+								<div class="modal-footer">
+									<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+									<button type="submit" class="btn btn-danger"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+								</div>
+							</div>
+
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+						</td>
 					</tr>
 				</table>
 			</fieldset>

@@ -545,14 +545,13 @@ class KunenaAdminControllerTools extends KunenaController {
 		$username = $this->app->input->getString('username');
 		$password = $this->app->input->getString('password');
 
-		$user = JFactory::getUser();
+		$logged = JFactory::getApplication()->login(array('username' => $username, 'password' => $password));
 
-		$login = KunenaLogin::getInstance();
-		$error = $login->loginUser($username, $password);
+		$user = JFactory::getUser(JUserHelper::getUserId($username));
 
 		$isroot = $user->authorise('core.admin');
 
-		if (!$error && $isroot)
+		if ($logged && $isroot)
 		{
 			if ( version_compare(JVERSION, '3.2', '>') && $this->isValidTFA($user->id) )
 			{

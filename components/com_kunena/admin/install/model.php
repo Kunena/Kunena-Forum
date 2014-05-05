@@ -121,6 +121,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('finder', 'kunena');
 		$this->uninstallPlugin('quickicon', 'kunena');
+		$this->uninstallPlugin('content', 'kunena');
 
 		// Uninstall menu module.
 		$this->uninstallModule('mod_kunenamenu');

@@ -136,6 +136,14 @@ class KunenaViewUser extends KunenaView {
 				$this->genderclass = 'female';
 				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE');
 				break;
+			case 3:
+				$this->genderclass = 'trans';
+				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_TRANS');
+				break;
+			case 4:
+				$this->genderclass = 'female';
+				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_CIS');
+				break;
 			default:
 				$this->genderclass = 'unknown';
 				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN');

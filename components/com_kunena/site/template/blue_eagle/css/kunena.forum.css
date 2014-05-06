@@ -2925,6 +2925,8 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena .kicon-profile-flickr 			{ background-position: 0 -189px; }
 #Kunena .kicon-profile-friendfeed 		{ background-position: 0 -210px; }
 #Kunena .kicon-profile-gender-unknown 	{ background-position: 0 -231px; }
+#Kunena .kicon-profile-gender-trans 	{ background-position: 0 -231px; }
+#Kunena .kicon-profile-gender-cis 	{ background-position: 0 -231px; }
 #Kunena .kicon-profile-gtalk 			{ background-position: 0 -252px; }
 #Kunena .kicon-profile-icq 				{ background-position: 0 -273px; }
 #Kunena .kicon-profile-karmaminus 		{ background-position: 0 -294px; }

@@ -19,6 +19,7 @@ $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
 $category = $this->topic->getCategory();
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
+$config = KunenaConfig::getInstance();
 
 if (!empty($this->spacing)) : ?>
 <tr>
@@ -96,7 +97,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span3">
-			<?php if (KunenaConfig::getInstance()->avataroncat) : ?>
+			<?php if ($config->avataroncat) : ?>
 				<div class="pull-left hidden-phone" style="padding-left:3%;">
 					<?php echo $avatar; ?>
 				</div>

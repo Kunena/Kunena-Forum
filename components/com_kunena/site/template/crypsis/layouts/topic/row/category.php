@@ -16,7 +16,7 @@ $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
-
+$config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 6 : 7;
 
 if (!empty($this->spacing)) : ?>
@@ -90,7 +90,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span3">
-		<?php if (KunenaConfig::getInstance()->avataroncat) : ?>
+		<?php if ($config->avataroncat) : ?>
 			<div class="pull-left hidden-phone" style="padding-left:3%;">
 				<?php echo $avatar; ?>
 			</div>

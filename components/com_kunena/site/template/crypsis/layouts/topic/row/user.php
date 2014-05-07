@@ -18,6 +18,7 @@ $userTopic = $topic->getUserTopic();
 $avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
+$config = KunenaConfig::getInstance();
 
 if (!empty($this->spacing)) : ?>
 <tr>
@@ -73,14 +74,14 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span3">
-		<?php if ($avatar) : ?>
-						<div class="pull-left hidden-phone" style="padding-left:3%;">
-							<?php echo $avatar; ?>
-						</div>
-						<div class="last-post-message">
-						<?php else :	?>
-						<div>
-					<?php endif; ?>
+		<?php if ($config->avataroncat) : ?>
+			<div class="pull-left hidden-phone" style="padding-left:3%;">
+				<?php echo $avatar; ?>
+			</div>
+			<div class="last-post-message">
+		<?php else :	?>
+			<div>
+		<?php endif; ?>
 			<div class="ktopic-latest-post">
 			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
 
@@ -88,8 +89,7 @@ if (!empty($this->spacing)) : ?>
 			<br>
 			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
 			</div>
-		</div>
-		</div>
+			</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

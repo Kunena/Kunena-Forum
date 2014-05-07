@@ -189,22 +189,18 @@ $cols = 1;
 					<?php echo (int) $user->uhits; ?>
 				</td>
 				<?php endif; ?>
-
-			</tr>
-			<?php endforeach; ?>
-
+		
+				<?php endforeach; ?>
+				
+				</tr>						
 		</tbody>
-		<?php if ($i > 1) : ?>
-		<tfoot>
-			<tr>
-				<td colspan="<?php echo $cols; ?>">
-					<div class="pull-right">
-						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
-				</td>
-			</tr>
-		</tfoot>
-		<?php endif; ?>
+		
 	</table>
+	
+	<?php if ($i > 1) : ?>		
+		<div class="pull-right">
+			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+		</div>
+	<?php endif; ?>
 </form>
 <div class="clearfix"></div>

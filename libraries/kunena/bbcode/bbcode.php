@@ -1128,7 +1128,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// TODO: Remove in Kunena 4.0
-		if ($hidden)
+		if (!$hidden)
 		{
 			// Static version
 			return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title

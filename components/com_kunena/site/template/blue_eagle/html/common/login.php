@@ -34,7 +34,15 @@ defined ( '_JEXEC' ) or die ();
 						</span>
 						<span>
 							<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD'); ?>
-							<input type="password" name="password" class="inputbox ks" size="18" alt="password" /></span>
+							<input type="password" name="password" class="inputbox ks" size="18" alt="password" />
+						</span>
+						<?php $tfa = JPluginHelper::getPlugin('twofactorauth'); ?>
+						<?php if (!is_null($tfa) && $tfa != array()): ?>
+						<span>
+						<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
+						<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" size="18" />
+						</span>
+						<?php endif; ?>
 						<span>
 							<?php if($this->remember) : ?>
 							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME'); ?>

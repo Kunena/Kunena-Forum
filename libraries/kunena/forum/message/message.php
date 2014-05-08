@@ -874,6 +874,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		KunenaForumMessageThankyouHelper::recount();
+		KunenaAttachmentHelper::recount($this->thread);
 
 		return true;
 	}

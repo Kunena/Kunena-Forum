@@ -76,7 +76,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="span3">
 		<?php if ($config->avataroncat) : ?>
 			<div class="pull-left hidden-phone" style="padding-left:3%;">
-				<?php echo $avatar; ?>
+				<?php echo $this->topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48); ?>
 			</div>
 			<div class="last-post-message">
 		<?php else :	?>

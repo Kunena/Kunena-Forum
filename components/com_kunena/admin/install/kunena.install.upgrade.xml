@@ -417,9 +417,8 @@
             <query>ALTER TABLE `#__kunena_user_categories` CHANGE `allreadtime_new` `allreadtime` INT(11) NOT NULL DEFAULT '0';</query>
             <query>UPDATE #__kunena_user_categories AS c INNER JOIN #__kunena_sessions AS s ON c.user_id=s.userid SET c.allreadtime=s.lasttime WHERE c.category_id=0 AND s.lasttime>c.allreadtime;</query>
         </version>
-		<version version="3.0.95" versiondate="2014-03-20" versionname="Internal">
+		<version version="3.0.96" versiondate="2014-03-20" versionname="Internal">
 			<query>ALTER TABLE `#__kunena_users_banned` CHANGE `expiration` `expiration` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00';</query>
-			<query>ALTER TABLE `#__kunena_users` CHANGE `banned` `banned` INT(11) NULL DEFAULT NULL;</query>
 			<query>ALTER TABLE `#__kunena_users` ADD `ban_expiration` DATETIME NULL AFTER `banned`;</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">

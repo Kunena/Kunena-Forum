@@ -27,6 +27,8 @@ class KunenaUserBan extends JObject
 	protected static $_now = null;
 	protected static $_my = null;
 
+	protected static $ban_state = null;
+
 	protected $_db = null;
 	protected $_exists = false;
 
@@ -408,12 +410,16 @@ class KunenaUserBan extends JObject
 		// Cannot change expiration if ban is not enabled
 		if (!$this->isEnabled() && $this->id) return;
 
-		if (!$expiration || $expiration == $this->_db->getNullDate()) {
+		if (!$expiration || $expiration == $this->_db->getNullDate())
+		{
 			$this->expiration = $this->_db->getNullDate();
-		} else {
+		}
+		else
+		{
 			$date = new JDate($expiration);
 			$this->expiration = $date->toUnix() > self::$_now->toUnix() ? $date->toSql() : self::$_now->toSql();
 		}
+
 		if ($this->_exists) {
 			$this->modified_time = self::$_now->toSql();
 			$this->modified_by = self::$_my->id;
@@ -422,6 +428,8 @@ class KunenaUserBan extends JObject
 	}
 
 	public function ban($userid=null, $ip=null, $block=0, $expiration=null, $reason_private='', $reason_public='', $comment='') {
+		self::$ban_state = 1;
+
 		$this->userid = intval($userid) > 0 ? (int)$userid : null;
 		$this->ip = $ip ? (string)$ip : null;
 		$this->blocked = (int)$block;
@@ -432,6 +440,8 @@ class KunenaUserBan extends JObject
 	}
 
 	public function unBan($comment = '') {
+		self::$ban_state = 0;
+
 		// Cannot change expiration if ban is not enabled
 		if (!$this->isEnabled()) return;
 
@@ -500,10 +510,20 @@ class KunenaUserBan extends JObject
 			}
 
 			// Change user state also in #__kunena_users
-			$profile = KunenaFactory::getUser($this->userid);
-			$profile->ban_expiration = $this->expiration;
-			$profile->banned = true;
-			$profile->save(true);
+			if ( self::$ban_state )
+			{
+				$profile = KunenaFactory::getUser($this->userid);
+				$profile->ban_expiration = $this->expiration;
+				$profile->banned = true;
+				$profile->save(true);
+			}
+			else
+			{
+				$profile = KunenaFactory::getUser($this->userid);
+				$profile->ban_expiration = $this->expiration;
+				$profile->banned = false;
+				$profile->save(true);
+			}
 
 			if ($block) {
 				// Logout blocked user

@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Widget
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -38,9 +38,9 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 
 		$this->config = KunenaConfig::getInstance();
 
-		if (!$this->config->get('showstats'))
+		if (!$this->config->get('showstats') || (!$this->config->statslink_allowed && !KunenaUserHelper::get()->exists()))
 		{
-			return false;
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
 		$statistics = KunenaForumStatistics::getInstance();
@@ -48,13 +48,7 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 		$this->setProperties($statistics);
 
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
-		$this->statisticsUrl = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
-
-		if ( !KunenaFactory::getConfig()->statslink_allowed && !JFactory::getUser()->guest )
-		{
-			$this->statisticsUrl = '';
-		}
-
+		$this->statisticsUrl = KunenaFactory::getProfile()->getStatisticsURL();
 		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
 
 		return true;

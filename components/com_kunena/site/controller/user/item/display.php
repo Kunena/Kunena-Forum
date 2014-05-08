@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -58,6 +58,11 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		}
 
 		$userid = $this->input->getInt('userid');
+
+		require_once KPATH_SITE . '/models/user.php';
+		$this->model = new KunenaModelUser(array(), $this->input);
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->state = $this->model->getState();
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->user = JFactory::getUser($userid);

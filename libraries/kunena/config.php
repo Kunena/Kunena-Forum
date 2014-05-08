@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -230,6 +230,9 @@ class KunenaConfig extends JObject {
 	public $legacy_urls = 1;
 	public $attachment_protection = 0;
 	public $categoryicons = 1;
+	public $avatarresizemethod = 1;
+	public $avatarcrop = 0;
+	public $superadmin_userlist = 0;
 
 	public function __construct() {
 		parent::__construct ();

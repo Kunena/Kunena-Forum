@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Announcement
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -76,6 +76,7 @@ $options = $this->getOptions();
 			</tr>
 		</thead>
 
+		<?php if ( $this->pagination->pagesTotal > 1 ): ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">
@@ -85,6 +86,7 @@ $options = $this->getOptions();
 				</td>
 			</tr>
 		</tfoot>
+		<?php endif; ?>
 
 		<tbody>
 

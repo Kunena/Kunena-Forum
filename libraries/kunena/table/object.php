@@ -2,9 +2,9 @@
 /**
  * Kunena Component
  * @package Kunena.Framework
- * @subpackage Table.Object
+ * @subpackage Table
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -666,7 +666,7 @@ abstract class KunenaTableObject {
 			return true;
 		}
 
-		$kkk = static::$tbl_keys;
+		$k = static::$tbl_keys;
 		$pk = (is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.
@@ -711,7 +711,7 @@ abstract class KunenaTableObject {
 			return true;
 		}
 
-		$kkk = static::$tbl_keys;
+		$k= static::$tbl_keys;
 		$pk = (is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.

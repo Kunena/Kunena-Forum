@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -53,7 +53,7 @@ foreach ($this->sections as $section) :
 </h3>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
-	<table class="table table-hover table-bordered table-condensed">
+	<table class="table table-bordered">
 
 		<?php if (!empty($section->description)) : ?>
 		<thead class="hidden-phone">

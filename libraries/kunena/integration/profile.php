@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -37,6 +37,14 @@ class KunenaProfile
 	public function getTopHits($limit=0) {
 		if (!$limit) $limit = KunenaFactory::getConfig ()->popusercount;
 		return (array) $this->_getTopHits($limit);
+	}
+
+	public function getStatisticsURL($action='', $xhtml = true)
+	{
+		$config = KunenaFactory::getConfig();
+		$my = JFactory::getUser();
+		if ($config->statslink_allowed == 0 && $my->id == 0) return false;
+		return KunenaRoute::_('index.php?option=com_kunena&view=statistics'.$action, $xhtml);
 	}
 
 	public function getUserListURL($action='', $xhtml = true) {}

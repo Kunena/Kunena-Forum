@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -29,6 +29,12 @@ abstract class KunenaUserHelper {
 	protected static $_total = null;
 	protected static $_topposters = null;
 	protected static $_me = null;
+
+	public static function cleanup()
+	{
+		self::$_instances = array();
+		self::$_instances_name = array();
+	}
 
 	public static function initialize() {
 		$id = JFactory::getUser()->id;

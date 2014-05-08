@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Kunena
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -49,9 +49,12 @@ class KunenaAvatarKunena extends KunenaAvatar {
 			$resized = "resized/size{$sizex}x{$sizey}/{$dir}";
 		}
 
+		// TODO: make timestamp configurable?
+		$timestamp = '';
 		if ( !is_file( "{$path}/{$resized}/{$file}" ) ) {
-			KunenaImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex, $sizey, intval($config->avatarquality));
+			KunenaImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex, $sizey, intval($config->avatarquality), KunenaImage::SCALE_INSIDE, intval($config->avatarcrop));
+			$timestamp = '?'.round(microtime(true));
 		}
-		return KURL_MEDIA . "avatars/{$resized}/{$file}";
+		return KURL_MEDIA . "avatars/{$resized}/{$file}{$timestamp}";
 	}
 }

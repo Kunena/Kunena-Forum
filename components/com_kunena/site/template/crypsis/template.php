@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Template
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -91,7 +91,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('jquery.framework');
 		JHtml::_('formbehavior.chosen');
 
-		// Load script and CSS for autocomplete, emojiis...
+		// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+		$this->addScript('js/caret.js');
 		$this->addScript('js/atwho.js');
 		$this->addStyleSheet('css/atwho.css');
 

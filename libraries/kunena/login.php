@@ -42,12 +42,37 @@ class KunenaLogin {
 		return self::$instance;
 	}
 
-	public function loginUser($username, $password, $rememberme=0, $return=null) {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'loginUser')) {
-				return $login->loginUser($username, $password, $rememberme, $return);
+	/**
+	 * Method to login user by leverage Kunena plugin enabled
+	 *
+	 * @param   string  $username    The username of user which need to be logged
+	 * @param   string  $password    The password of user which need to be logged
+	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
+	 * @param   string  $return      The URL where the user will be redirected
+	 * @param   int     $secretkey   The secretkey given ot use TFA feature
+	 *
+	 * @return boolean
+	 */
+	public function loginUser($username, $password, $rememberme = 0, $return = null, $secretkey = null)
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'loginUser'))
+			{
+				if ( $this->isTFAEnabled() )
+				{
+					if ( $this->isValidTFA($secretkey) )
+					{
+						return $login->loginUser($username, $password, $rememberme, $return);
+					}
+				}
+				else
+				{
+					return $login->loginUser($username, $password, $rememberme, $return);
+				}
 			}
 		}
+
 		return false;
 	}
 
@@ -125,7 +150,7 @@ class KunenaLogin {
 	 */
 	public function isTFAEnabled($userId = null)
 	{
-		if ( !version_compare(JVERSION, '3.2', '>') )
+		if ( !version_compare(JVERSION, '3.2', '>=') )
 		{
 			return false;
 		}

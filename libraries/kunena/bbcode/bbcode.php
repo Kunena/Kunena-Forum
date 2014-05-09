@@ -1128,7 +1128,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// TODO: Remove in Kunena 4.0
-		if ($hidden)
+		if (!$hidden)
 		{
 			// Static version
 			return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title
@@ -1473,12 +1473,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$type = isset ( $params ["type"] ) ? $params ["type"] : "php";
+		$type = isset($params["type"]) ? $params["type"] : (isset($default) ? $default : "php");
 		if ($type == 'js') {
 			$type = 'javascript';
 		} elseif ($type == 'html') {
 			$type = 'html4strict';
 		}
+
+		if ($type == 'less' || $type == 'scss' || $type == 'sass') $type = 'css';
+
 		$highlight = KunenaFactory::getConfig()->highlightcode && empty($bbcode->parent->forceMinimal);
 		if ($highlight && !class_exists('GeSHi')) {
 			$paths = array(
@@ -1762,6 +1765,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		$attachments = null;
 		if ($bbcode->parent instanceof KunenaForumMessage) {
 			$attachments = $bbcode->parent->getAttachments();
 		} elseif (is_object($bbcode->parent) && isset($bbcode->parent->attachments)) {
@@ -1956,7 +1960,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		if (JFactory::getUser()->id == 0 && $config->showimgforguest == 0) {
 			// Hide between content from non registered users.
-			return (string) $layout->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'));
+			return (string) $layout->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
 		}
 
 		// Obey image security settings.

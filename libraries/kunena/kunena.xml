@@ -17,6 +17,7 @@
 		<folder>attachment</folder>
 		<folder>bbcode</folder>
 		<folder>cache</folder>
+		<folder>collection</folder>
 		<folder>compat</folder>
 		<folder>controller</folder>
 		<folder>database</folder>

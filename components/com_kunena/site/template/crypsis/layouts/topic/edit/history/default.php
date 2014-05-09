@@ -42,7 +42,7 @@ $k = 0;
 			</div>
 		</div>
 		<div class="span10">
-			<div class="well well-small">
+			<div class="well well-small khistory">
 				<div class="pull-right">
 					<?php echo $this->getNumLink($this->message->id,$this->replycount--) ?>
 				</div>

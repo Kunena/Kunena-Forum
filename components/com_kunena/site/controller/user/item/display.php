@@ -59,6 +59,11 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 
 		$userid = $this->input->getInt('userid');
 
+		require_once KPATH_SITE . '/models/user.php';
+		$this->model = new KunenaModelUser(array(), $this->input);
+		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+		$this->state = $this->model->getState();
+
 		$this->me = KunenaUserHelper::getMyself();
 		$this->user = JFactory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);

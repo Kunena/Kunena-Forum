@@ -159,6 +159,22 @@ class KunenaAttachment extends KunenaDatabaseObject
 		return $escape ? htmlspecialchars($filename, ENT_COMPAT, 'UTF-8') : $filename;
 	}
 
+	/**
+	 * Get extension of file for output.
+	 *
+	 * @param bool $escape
+	 *
+	 * @return string
+	 *
+	 * @since 3.1
+	 */
+	public function getExtension($escape = true)
+	{
+		$filename  = $this->protected ? $this->filename_real : $this->filename;
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+		return $escape ? htmlspecialchars($extension, ENT_COMPAT, 'UTF-8') : $extension;
+	}
 
 	/**
 	 * This function shortens long filenames for display purposes.
@@ -223,8 +239,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Route attachment through Kunena.
 		$thumb = $thumb ? '&thumb=1' : '';
 		$download = $inline ? '' : '&download=1';
+		$filename = urlencode($this->getFilename(false));
 
-		return KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
+		return KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&filename={$filename}&format=raw", $escape);
 	}
 
 	/**
@@ -581,7 +598,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Checks if attachment exists
 		if (!$this->exists())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
 		return null;
@@ -599,7 +616,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Checks if attachment exists
 		if (!$this->exists())
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
 		if (!$user->exists())
@@ -632,7 +649,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		// Checks if attachment is users own or user is moderator in the category (or global)
 		if (($user->userid && $this->userid != $user->userid) && !$user->isModerator($this->getMessage()->getCategory()))
 		{
-			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 403);
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
 		return null;

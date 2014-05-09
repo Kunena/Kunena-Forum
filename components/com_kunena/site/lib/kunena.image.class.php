@@ -16,4 +16,4 @@ defined('JPATH_BASE') or die;
  * Class CKunenaImage
  * @deprecated 3.1
  */
-class CKunenaImage extends JImage {}
+class CKunenaImage extends KunenaImage {}

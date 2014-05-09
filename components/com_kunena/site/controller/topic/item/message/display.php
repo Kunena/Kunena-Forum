@@ -48,6 +48,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->location = $this->input->getInt('location', 0);
+		$this->detail = $this->input->get('detail', false);
 		$this->message = KunenaForumMessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 

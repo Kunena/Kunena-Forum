@@ -48,9 +48,11 @@ class KunenaDate extends JDate {
 			if (2 == ++$tick) break;
 		}
 		if (!$output) {
-			$output .= '0 '.JText::_('COM_KUNENA_DATE_MINUTES');
+			$output .= JText::_('COM_KUNENA_LIB_TIME_NOW');
+		} else {
+			$output = JText::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
 		}
-		$output = JText::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
+
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $output;
 	}

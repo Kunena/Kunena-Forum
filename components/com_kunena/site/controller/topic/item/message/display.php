@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -48,6 +48,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->location = $this->input->getInt('location', 0);
+		$this->detail = $this->input->get('detail', false);
 		$this->message = KunenaForumMessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 

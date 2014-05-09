@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -101,7 +101,7 @@ class KunenaControllerTopic extends KunenaController {
 				// Resize image if needed.
 				if ($attachment->isImage())
 				{
-					$imageInfo = JImage::getImageFileProperties($uploadFile);
+					$imageInfo = KunenaImage::getImageFileProperties($uploadFile);
 					$config = KunenaConfig::getInstance();
 
 					if ($imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
@@ -111,7 +111,7 @@ class KunenaControllerTopic extends KunenaController {
 						if ($quality < 1 || $quality > 100) $quality = 70;
 						if ($imageInfo->type == IMAGETYPE_PNG) $quality = intval(($quality-1)/10);
 
-						$image = new JImage($uploadFile);
+						$image = new KunenaImage($uploadFile);
 						$image = $image->resize($config->imagewidth, $config->imageheight, false);
 
 						$options = array('quality' => $quality);
@@ -178,6 +178,9 @@ class KunenaControllerTopic extends KunenaController {
 			$this->setRedirectBack();
 			return;
 		}
+
+		// Load language file from the template.
+		KunenaFactory::getTemplate()->loadLanguage();
 
 		$captcha = KunenaSpamRecaptcha::getInstance();
 		if ($captcha->enabled()) {
@@ -354,8 +357,9 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' ) );
 		}
+
 		$category = KunenaForumCategoryHelper::get($this->return);
-		if ($message->authorise('read', null, false)) {
+		if ($message->authorise('read', null, false) && $this->id) {
 			$this->setRedirect ( $message->getUrl($category, false) );
 		} elseif ($topic->authorise('read', null, false)) {
 			$this->setRedirect ( $topic->getUrl($category, false) );
@@ -397,6 +401,9 @@ class KunenaControllerTopic extends KunenaController {
 			$this->setRedirectBack();
 			return;
 		}
+
+		// Load language file from the template.
+		KunenaFactory::getTemplate()->loadLanguage();
 
 		// Update message contents
 		$message->edit ( $fields );
@@ -837,6 +844,9 @@ class KunenaControllerTopic extends KunenaController {
 			return;
 		}
 
+		// Load language file from the template.
+		KunenaFactory::getTemplate()->loadLanguage();
+
 		if ($this->mesid) {
 			// Approve message
 			$target = KunenaForumMessageHelper::get($this->mesid);
@@ -867,15 +877,16 @@ class KunenaControllerTopic extends KunenaController {
 
 		$topicId = JRequest::getInt('id', 0);
 		$messageId = JRequest::getInt('mesid', 0);
-		$targetTopic = JRequest::getInt ( 'targetid', JRequest::getInt ( 'targettopic', 0 ));
-		$targetCategory = JRequest::getInt ( 'targetcategory', 0 );
+		$targetCategory = JRequest::getInt('targetcategory', 0);
+		$targetTopic = JRequest::getInt('targettopic', 0);
+		if ($targetTopic < 0) $targetTopic = JRequest::getInt('targetid', 0);
 
 		if ($messageId) {
-			$object = KunenaForumMessageHelper::get ( $messageId );
-			$topic = $object->getTopic();
+			$message = $object = KunenaForumMessageHelper::get ( $messageId );
+			$topic = $message->getTopic();
 		} else {
-			$object = KunenaForumTopicHelper::get ( $topicId );
-			$topic = $object;
+			$topic = $object = KunenaForumTopicHelper::get ( $topicId );
+			$message = KunenaForumMessageHelper::get($topic->first_post_id);
 		}
 		if ($targetTopic) {
 			$target = KunenaForumTopicHelper::get( $targetTopic );
@@ -975,6 +986,14 @@ class KunenaControllerTopic extends KunenaController {
 		$reason = JRequest::getString ( 'reason' );
 		$text = JRequest::getString ( 'text' );
 
+		$template = KunenaTemplate::getInstance();
+		if (method_exists($template, 'reportMessage')) {
+			$template->reportMessage($message, $reason, $text);
+		}
+
+		// Load language file from the template.
+		KunenaFactory::getTemplate()->loadLanguage();
+
 		if (empty ( $reason ) && empty ( $text )) {
 			// Do nothing: empty subject or reason is empty
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_FORG0T_SUB_MES' ) );
@@ -996,8 +1015,13 @@ class KunenaControllerTopic extends KunenaController {
 				jimport ( 'joomla.environment.uri' );
 				$msglink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
+				$mail = JFactory::getMailer();
+				$mail->setSender(array($this->me->username, $this->me->email));
+				$mail->setSubject($mailsubject);
+
 				// Render the email.
 				$layout = KunenaLayout::factory('Email/Report')->debug(false)
+					->set('mail', $mail)
 					->set('message', $message)
 					->set('me', $this->me)
 					->set('title', $reason)
@@ -1005,10 +1029,8 @@ class KunenaControllerTopic extends KunenaController {
 					->set('messageLink', $msglink);
 
 				try {
-					$output = $layout->render();
-					list($mailmessage, $alt) = explode('-----=====-----', $output);
-					$mailmessage = trim((string) $mailmessage);
-					$alt = trim((string) $alt);
+					$body = trim($layout->render());
+					$mail->setBody($body);
 
 				} catch (Exception $e) {
 					// TODO: Deprecated in 3.1, remove in 4.0
@@ -1026,27 +1048,19 @@ class KunenaControllerTopic extends KunenaController {
 					$mailmessage .= "\n-----\n\n";
 					$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_LINK' ) . " " . $msglink;
 					$mailmessage = JMailHelper::cleanBody ( strtr ( $mailmessage, array ('&#32;' => '' ) ) );
+
+					$mail->setBody($mailmessage);
 				}
 
+				$receivers = array();
 				foreach ( $emailToList as $emailTo ) {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 						continue;
 
-					try {
-						$mail = JFactory::getMailer();
-						$mail->setSender(array($this->me->username,$this->me->email));
-						if (!empty($alt)) {
-							$mail->isHtml(true);
-							$mail->AltBody = $alt;
-						}
-						$mail->setBody($mailmessage);
-						$mail->setSubject($mailsubject);
-						$mail->addRecipient($emailTo->email);
-						$mail->send();
-					} catch (Exception $e) {
-						JLog::add($e->getMessage(), JLog::WARNING, 'kunena');
-					}
+					$receivers[] = $emailTo->email;
 				}
+
+				KunenaEmail::send($mail, $receivers);
 
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );
 			} else {

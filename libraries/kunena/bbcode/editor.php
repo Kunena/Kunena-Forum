@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage BBCode
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -327,11 +327,11 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 		foreach (array('title', 'alt') as $type) {
 			if ($this->$type) {
 				$value = JText::_($this->$type, true);
-				$js .= "\n	'{$type}': '{$value}',";
+				$js .= "'{$type}': '{$value}', ";
 			}
 		}
 
-		$js .= "\n	'{$identifier}': '{$class}'";
+		$js .= "'{$identifier}': '{$class}'";
 		$js .= "\n});\n";
 
 		return $js;

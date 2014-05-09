@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Application
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -39,6 +39,41 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 */
 	public function execute()
 	{
+		try
+		{
+			$this->display();
+		}
+		catch (Exception $e)
+		{
+			// In case of an error we want to set HTTP error code.
+			// We want to wrap the exception to be able to display correct HTTP status code.
+			$error = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
+			header('HTTP/1.1 ' . $error->getResponseStatus(), true);
+
+			echo $error->getResponseStatus();
+
+			if (JDEBUG)
+			{
+				echo "<pre>{$e->getTraceAsString()}</pre>";
+			}
+		}
+
+		flush();
+		$this->app->close();
+	}
+
+	/**
+	 * Display attachment.
+	 *
+	 * @return void
+	 *
+	 * @throws RuntimeException
+	 * @throws KunenaExceptionAuthorise
+	 */
+	public function display()
+	{
+		KunenaFactory::loadLanguage('com_kunena');
+
 		$format = $this->input->getWord('format', 'html');
 		$id = $this->input->getInt('id', 0);
 		$thumb = $this->input->getBool('thumb', false);
@@ -110,9 +145,22 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		if (!$download && $attachment->isImage())
 		{
 			// By default display images inline.
-			$maxage = 60 * 60;
-			header('Cache-Control: maxage=' . $maxage);
-			header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT');
+			$guest = new KunenaUser;
+
+			// If guests can access the image, we allow it to be cached for an hour.
+			if ($attachment->isAuthorised('read', $guest))
+			{
+				$maxage = 60 * 60;
+				header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT');
+				header('Cache-Control: maxage=' . $maxage);
+			}
+			// No guest access -- force re-validate.
+			else
+			{
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			}
+
 			header('Content-type: ' . $attachment->filetype);
 			header('Content-Disposition: inline; filename="' . $attachment->getFilename(false) . '"');
 		}

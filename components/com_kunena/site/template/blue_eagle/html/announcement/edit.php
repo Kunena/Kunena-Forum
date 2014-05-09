@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Announcement
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -47,7 +47,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 				<div>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_DATE') ?>:
-						<?php echo $this->displayInput('created', '', 'kanncreated') ?>
+						<?php echo $this->displayInput('created', 'addcreated', 'kanncreated') ?>
 					</label>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE') ?>:

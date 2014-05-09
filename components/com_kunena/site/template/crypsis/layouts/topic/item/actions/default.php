@@ -4,13 +4,14 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
 
+<div class="clearfix"></div>
 <div class="btn-toolbar" style="min-height:25px">
 	<div>
 		<?php if ($this->topicButtons->get('reply')

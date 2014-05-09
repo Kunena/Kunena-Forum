@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Statistics
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -39,7 +39,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 
 		if (!$this->config->statslink_allowed && JFactory::getUser()->guest)
 		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_STATS_NOT_ALLOWED_TOSEE_STATS'), '401');
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$statistics = KunenaForumStatistics::getInstance();

@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -30,6 +30,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$access = KunenaAccess::getInstance();
 		$this->moreUri = null;
 
+		$params = $this->app->getParams('com_kunena');
 		$start = $this->input->getInt('limitstart', 0);
 		$limit = $this->input->getInt('limit', 0);
 
@@ -38,8 +39,24 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			$limit = $this->config->threads_per_page;
 		}
 
+		// Get configuration from menu item.
+		$categoryIds = $params->get('topics_categories', array());
+		$reverse = !$params->get('topics_catselection', 1);
+
+		// Make sure that category list is an array.
+		if (!is_array($categoryIds)) {
+			$categoryIds = explode (',', $categoryIds);
+		}
+
+		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds)) {
+			$categoryIds = false;
+		}
+
+		$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse);
+
 		$finder = new KunenaForumTopicFinder;
-		$finder->filterByUserAccess($this->me)
+		$finder
+			->filterByCategories($categories)
 			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
 			->filterByMoved(false)
 			->where('locked', '=', 0);

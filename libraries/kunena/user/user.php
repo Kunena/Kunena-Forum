@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -492,7 +492,7 @@ class KunenaUser extends JObject {
 			'user'=>'COM_KUNENA_VIEW_USER',
 			'guest'=>'COM_KUNENA_VIEW_VISITOR',
 			'banned'=>'COM_KUNENA_VIEW_BANNED',
-			'blocked'=>'COM_KUNENA_VIEW_BANNED'
+			'blocked'=>'COM_KUNENA_VIEW_BLOCKED'
 		);
 
 		$adminCategories = KunenaAccess::getInstance()->getAdminStatus($this);
@@ -579,6 +579,17 @@ class KunenaUser extends JObject {
 					break;
 
 				case 'blocked' :
+					$rank->rank_title = JText::_('COM_KUNENA_RANK_BLOCKED');
+					$rank->rank_special = 1;
+					$rank->rank_image = 'rankdisabled.gif';
+					foreach (self::$_ranks as $cur) {
+						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'disabled')) {
+							$rank = $cur;
+							break;
+						}
+					}
+					break;
+
 				case 'banned' :
 					$rank->rank_title = JText::_('COM_KUNENA_RANK_BANNED');
 					$rank->rank_special = 1;

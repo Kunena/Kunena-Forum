@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.Category.Item
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -108,7 +108,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @return string
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null)
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length=20)
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels = $category->getChannels();
@@ -122,7 +122,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if (!$content)
 		{
-			$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 20);
+			$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
 		}
 
 		if ($title === null)

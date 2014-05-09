@@ -328,12 +328,7 @@ class CKunenaUpload {
 					$image = new KunenaImage($this->fileTemp);
 					$image = $image->resize($this->imagewidth, $this->imageheight, false);
 					$image->toFile($this->fileTemp, $this->imageInfo->type, $options);
-
-					// TODO: when Joomla! 2.5 support is dropped use directly $image->destroy()
-					if ( $image->isLoaded() )
-					{
-						imagedestroy($image->handle);
-					}
+					$image->destroy();
 
 					unset($image);
 				} catch (Exception $e) {

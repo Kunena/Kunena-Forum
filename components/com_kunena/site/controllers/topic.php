@@ -116,6 +116,7 @@ class KunenaControllerTopic extends KunenaController {
 
 						$options = array('quality' => $quality);
 						$image->toFile($uploadFile, $imageInfo->type, $options);
+						$image->destroy();
 
 						unset($image);
 

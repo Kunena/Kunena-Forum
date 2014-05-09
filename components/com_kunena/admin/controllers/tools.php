@@ -554,16 +554,19 @@ class KunenaAdminControllerTools extends KunenaController {
 		// Check if the user has the super-administrator rights
 		$username = $this->app->input->getString('username');
 		$password = $this->app->input->getString('password');
+		$code = $this->app->input->getString('secretkey');
 
-		$logged = JFactory::getApplication()->login(array('username' => $username, 'password' => $password));
+		$login = KunenaLogin::getInstance();
+
+		$error = $login->loginUser($username, $password);
 
 		$user = JFactory::getUser(JUserHelper::getUserId($username));
 
 		$isroot = $user->authorise('core.admin');
 
-		if ($logged && $isroot)
+		if (!$error && $isroot)
 		{
-			if ( version_compare(JVERSION, '3.2', '>') && $this->isValidTFA($user->id) )
+			if ( version_compare(JVERSION, '3.2', '>') && $login->isValidTFA($code, $user->id) )
 			{
 				$this->app->setUserState('com_kunena.uninstall.allowed', true);
 			}
@@ -579,36 +582,5 @@ class KunenaAdminControllerTools extends KunenaController {
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_FAILED'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Checks if the provided secret code is a valid two factor authentication
-	 * code for the user whose $userId is provided. If TFA is disabled globally
-	 * or for the specific user you will receive true.
-	 *
-	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
-	 *
-	 * @return  boolean  True if you should accept the code
-	 */
-	protected function isValidTFA($userId = null)
-	{
-		// Include the necessary user model
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
-
-		$code = $this->app->input->getString('secretkey');
-
-		// Do we need to get the User ID?
-		if (empty($userId))
-		{
-			$userId = JFactory::getUser()->id;
-		}
-
-		// Check the secret code
-		$model = new UsersModelUser;
-		$options = array(
-				'warn_if_not_req'		=> false,
-		);
-
-		return $model->isValidSecretKey($userId, $code, $options);
 	}
 }

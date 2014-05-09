@@ -79,7 +79,10 @@ class KunenaAdminViewTools extends KunenaView {
 	function displayUninstall()
 	{
 		$this->setToolBarUninstall();
-		$this->isTFAEnabled = $this->isTFAEnabled();
+
+		$login = KunenaLogin::getInstance();
+		$this->isTFAEnabled = $login->isTFAEnabled();
+
 		$this->display();
 	}
 
@@ -164,46 +167,5 @@ class KunenaAdminViewTools extends KunenaView {
 	{
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
-	}
-
-	/**
-	 * Checks if the Two Factor Authentication method is globally enabled and if the
-	 * user has enabled a specific TFA method on their account. Only if both conditions
-	 * are met will this method return true;
-	 *
-	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
-	 *
-	 * @return  boolean  True if TFA is enabled for this user
-	 */
-	protected function isTFAEnabled($userId = null)
-	{
-		if ( !version_compare(JVERSION, '3.2', '>') )
-		{
-			return false;
-		}
-
-		// Include the necessary user model and helper
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
-
-		// Is TFA globally turned off?
-		$twoFactorMethods = UsersHelper::getTwoFactorMethods();
-
-		if (count($twoFactorMethods) <= 1)
-		{
-			return false;
-		}
-
-		// Do we need to get the User ID?
-		if (empty($userId))
-		{
-			$userId = JFactory::getUser()->id;
-		}
-
-		// Has this user turned on TFA on their account?
-		$model = new UsersModelUser;
-		$otpConfig = $model->getOtpConfig($userId);
-
-		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));
 	}
 }

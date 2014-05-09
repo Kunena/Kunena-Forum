@@ -20,6 +20,8 @@ if (is_file(__DIR__ . '/install.php')) {
 	if (class_exists('KunenaControllerInstall')) return;
 }
 
+$app = JFactory::getApplication();
+
 // Safety check to prevent fatal error if 'System - Kunena Forum' plug-in has been disabled.
 if (JRequest::getCmd('view') == 'install' || !class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1')) {
 	// Run installer instead..
@@ -31,10 +33,8 @@ if (JRequest::getCmd('view') == 'install' || !class_exists('KunenaForum') || !Ku
 	return;
 }
 
-if (JRequest::getCmd('view') == 'uninstall')
+if ($app->input->getCmd('view') == 'uninstall')
 {
-	$app = JFactory::getApplication();
-
 	$allowed = $app->getUserState('com_kunena.uninstall.allowed');
 
 	if ($allowed)

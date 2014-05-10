@@ -24,7 +24,16 @@ abstract class KunenaEmail
 	public static function send(JMail $mail, array $receivers)
 	{
 		$config = KunenaFactory::getConfig();
-		$email_recipient_count = $config->get('email_recipient_count', 1);
+
+		if (!empty($config->email_recipient_count))
+		{
+			$email_recipient_count = $config->email_recipient_count;
+		}
+		else
+		{
+			$email_recipient_count = 1;
+		}
+
 		$email_recipient_privacy = $config->get('email_recipient_privacy', 'bcc');
 
 		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.

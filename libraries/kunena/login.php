@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -42,12 +42,37 @@ class KunenaLogin {
 		return self::$instance;
 	}
 
-	public function loginUser($username, $password, $rememberme=0, $return=null) {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'loginUser')) {
-				return $login->loginUser($username, $password, $rememberme, $return);
+	/**
+	 * Method to login user by leverage Kunena plugin enabled
+	 *
+	 * @param   string  $username    The username of user which need to be logged
+	 * @param   string  $password    The password of user which need to be logged
+	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
+	 * @param   string  $return      The URL where the user will be redirected
+	 * @param   int     $secretkey   The secretkey given ot use TFA feature
+	 *
+	 * @return boolean
+	 */
+	public function loginUser($username, $password, $rememberme = 0, $return = null, $secretkey = null)
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'loginUser'))
+			{
+				if ( $this->isTFAEnabled() )
+				{
+					if ( $this->isValidTFA($secretkey) )
+					{
+						return $login->loginUser($username, $password, $rememberme, $return);
+					}
+				}
+				else
+				{
+					return $login->loginUser($username, $password, $rememberme, $return);
+				}
 			}
 		}
+
 		return false;
 	}
 
@@ -112,5 +137,76 @@ class KunenaLogin {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Checks if the Two Factor Authentication method is globally enabled and if the
+	 * user has enabled a specific TFA method on their account. Only if both conditions
+	 * are met will this method return true;
+	 *
+	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
+	 *
+	 * @return boolean True if TFA is enabled for this user
+	 */
+	public function isTFAEnabled($userId = null)
+	{
+		if ( !version_compare(JVERSION, '3.2', '>=') )
+		{
+			return false;
+		}
+
+		// Include the necessary user model and helper
+		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
+
+		// Is TFA globally turned off?
+		$twoFactorMethods = UsersHelper::getTwoFactorMethods();
+
+		if (count($twoFactorMethods) <= 1)
+		{
+			return false;
+		}
+
+		// Do we need to get the User ID?
+		if (empty($userId))
+		{
+			$userId = JFactory::getUser()->id;
+		}
+
+		// Has this user turned on TFA on their account?
+		$model = new UsersModelUser;
+		$otpConfig = $model->getOtpConfig($userId);
+
+		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));
+	}
+
+	/**
+	 * Checks if the provided secret code is a valid two factor authentication
+	 * code for the user whose $userId is provided. If TFA is disabled globally
+	 * or for the specific user you will receive true.
+	 *
+	 * @param   string   $code    The secret code to check
+	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
+	 *
+	 * @return boolean True if you should accept the code
+	 */
+	public function isValidTFA($code, $userId = null)
+	{
+		// Include the necessary user model
+		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
+
+		// Do we need to get the User ID?
+		if (empty($userId))
+		{
+			$userId = JFactory::getUser()->id;
+		}
+
+		// Check the secret code
+		$model = new UsersModelUser;
+		$options = array(
+				'warn_if_not_req'	=> false,
+		);
+
+		return $model->isValidSecretKey($userId, $code, $options);
 	}
 }

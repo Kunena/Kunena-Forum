@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -447,18 +447,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_SET_MODERATORS_DONE' ) );
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Method to just redirect to main manager in case of use of cancel button
-	 *
-	 * @return void
-	 *
-	 * @since 3.1
-	 */
-	public function cancel()
-	{
-		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**

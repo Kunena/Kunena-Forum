@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,6 +33,9 @@ class KunenaModelTopics extends KunenaModel {
 		$active = $active ? (int) $active->id : 0;
 		$layout = $this->getWord ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
+
+		$display = $this->getUserStateFromRequest( 'com_kunena.users_display', 'display', 'topics');
+		$this->setState ( 'display', $display);
 
 		$userid = $this->getInt ( 'userid', -1 );
 		if ($userid < 0) {

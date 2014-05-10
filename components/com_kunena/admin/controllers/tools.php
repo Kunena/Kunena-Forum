@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -202,6 +202,7 @@ class KunenaAdminControllerTools extends KunenaController {
 			$state->usertopics = $this->input->getBool('usertopics', false);
 			$state->categories = $this->input->getBool('categories', false);
 			$state->users = $this->input->getBool('users', false);
+			$state->polls = $this->input->getBool('polls', false);
 
 			$this->app->setUserState ( 'com_kunena.admin.recount', $state );
 
@@ -308,6 +309,15 @@ class KunenaAdminControllerTools extends KunenaController {
 							// Update user statistics
 							KunenaUserHelper::recount();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
+						}
+
+						break;
+					case 4:
+						if ($state->polls)
+						{
+							// Update user statistics
+							KunenaForumTopicPollHelper::recount();
+							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_POLLS_X', '100%');
 						}
 
 						break;

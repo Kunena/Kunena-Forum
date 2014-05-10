@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 *
@@ -12,12 +12,12 @@
 * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
-* 
+*
 **/
 
 /* --------------------------------------------------------
 
-	This is the skinner override file for the default 
+	This is the skinner override file for the default
 	Kunena template. Activating Skinner in the template
 	parameters will load this file and make it adopt
 	the colors of the main site template.

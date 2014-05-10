@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -16,8 +16,9 @@ $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
-
-$cols = empty($this->checkbox) ? 5 : 6;
+$avatarLastAuthor = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
+$config = KunenaConfig::getInstance();
+$cols = empty($this->checkbox) ? 6 : 7;
 
 if (!empty($this->spacing)) : ?>
 <tr>
@@ -25,7 +26,7 @@ if (!empty($this->spacing)) : ?>
 </tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
+<tr class="category<?php echo $this->escape($topic->getCategory()->class_sfx); ?>">
 	<td class="hidden-phone span1 center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
@@ -61,17 +62,18 @@ if (!empty($this->spacing)) : ?>
 			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 
+		<?php if ($topic->locked != 0) : ?>
 		<div>
 			<?php /** TODO: New Feature - LABELS
 			<span class="label label-info">
 				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 			</span>	*/ ?>
-			<?php if ($topic->locked != 0) : ?>
+			
 			<span class="label label-important">
 				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
 			</span>
-			<?php endif; ?>
 		</div>
+		<?php endif; ?>
 	</td>
 
 	<td class="span1 center hidden-phone">
@@ -90,19 +92,22 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span3">
-		<div class="klatest-post-info">
-			<?php if (!empty($this->topic->avatar)) : ?>
-			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
-			<?php endif; ?>
-
-			<span class="ktopic-latest-post">
+		<?php if ($config->avataroncat) : ?>
+			<div class="pull-left hidden-phone" style="padding-left:3%;">
+				<?php echo $avatarLastAuthor; ?>
+			</div>
+			<div class="last-post-message">
+		<?php else :	?>
+			<div>
+		<?php endif; ?>
+			<div class="ktopic-latest-post">
 			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
 
 			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
 			<br>
 			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
-			</span>
-		</div>
+			</div>
+			</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

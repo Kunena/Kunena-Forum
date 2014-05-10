@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -17,9 +17,11 @@ $avatar = $profile->getAvatarImage('img-rounded', 128, 128);
 $banInfo = $this->config->showbannedreason
 	? KunenaUserBan::getInstanceByUserid($profile->userid)
 	: null;
-$private = $profile->getPrivateMsgLink();
+$private = $profile->getPrivateMsgURL();
+$privateLabel = $profile->getPrivateMsgLabel();
 $email = $profile->getEmailLink();
-$www = $profile->getWebsiteLink();
+$websiteURL = $profile->getWebsiteURL();
+$websiteName = $profile->getWebsiteName();
 $personalText = $profile->getPersonalText();
 $signature = $profile->getSignature();
 
@@ -148,16 +150,17 @@ if ($this->config->showuserstats)
 		</blockquote>
 		<div>
 			<?php if (!empty($private)) : ?>
-				<?php // TODO: Fix mailto link ?>
-				<a class="btn" href="<?php echo $private; ?>"><i class="icon-comments-2"></i></a>
+				<a class="btn" href="<?php echo $private; ?>">
+					<i class="icon-comments-2"></i>
+					<?php echo $privateLabel ?>
+				</a>
 			<?php endif; ?>
 			<?php if ($email) : ?>
 				<?php // TODO: Fix mailto link ?>
 				<a class="btn" href="mailto:<?php echo $email; ?>"><i class="icon-mail"></i></a>
 			<?php endif; ?>
-			<?php if ($www) : ?>
-				<?php // TODO: Fix link ?>
-				<a class="btn" href="<?php echo $www->url; ?>"><i class="icon-bookmark"></i></a>
+			<?php if ($websiteURL) : ?>
+				<a class="btn" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i><?php echo $websiteName ?></a>
 			<?php endif; ?>
 		</div>
 	</div>

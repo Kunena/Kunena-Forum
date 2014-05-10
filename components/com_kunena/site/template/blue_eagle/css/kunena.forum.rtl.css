@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @Copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -153,7 +153,7 @@
 
 /* Pagination */
 
-#Kunena ul.kpagination{ 
+#Kunena ul.kpagination{
 	padding:0 0 0 5px;
 }
 #Kunena .kpagination li.page {
@@ -166,12 +166,12 @@
 }
 
 /* Inline pagination in topics */
-#Kunena div.ktopic-title-cover ul.kpagination { 
+#Kunena div.ktopic-title-cover ul.kpagination {
 	text-align:right;
 }
 #Kunena div.ktopic-title-cover ul.kpagination li.page {
 	float:right;
-	padding:4px 0 0 3px; 
+	padding:4px 0 0 3px;
 }
 #Kunena #kflattable ul.kpagination li {
 	/* TODO: override right rule(?) */
@@ -181,13 +181,13 @@
 	float:right;
 }
 #Kunena span.ktopic-category {
-	float:right; 
+	float:right;
 	clear:right;
 }
-#Kunena span.ktopic-by { 
+#Kunena span.ktopic-by {
 	float:right;
 }
-#Kunena span.ktopic-locked { 
+#Kunena span.ktopic-locked {
 	/* TODO: override left rule(?) */
 	margin-right: 3px;
 	text-align: right;
@@ -450,7 +450,7 @@
 	/* TODO: override right rule(?) */
 	padding-left:5px;
 }
-#Kunena li.kpost-online-status-top-no {	
+#Kunena li.kpost-online-status-top-no {
 	float: right;
 	/* TODO: override right rule(?) */
 	padding-left:5px;
@@ -601,7 +601,7 @@
 	margin-right: 20px;
 }
 #Kunena .kfile-input {
-	left: 0px; 
+	left: 0px;
 }
 #Kunena #kbbcode-filelist .file-invalid {
 	/* TODO: override left rule(?) */
@@ -716,7 +716,7 @@ label.kpoll-term-lbl {
 
 /* PROFILE */
 
-#Kunena .kicon-profile { 
+#Kunena .kicon-profile {
 	/* TODO: override right rule(?) */
 	margin-left: 3px;
 }

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -33,7 +33,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<table class="table table-striped table-bordered table-hover table-condensed">
+	<table class="table table-bordered">
 		<thead>
 			<tr>
 				<ul class="inline no-margin">
@@ -107,7 +107,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 
-			<td colspan="6">
+			<td colspan="6" class="hidden-phone">
 
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -355,14 +355,14 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			if (!empty($receivers[1]))
 			{
 				$this->attachEmailBody($mail, 1, $subject, $url, $once);
-				$this->sendEmail($mail, $receivers[1]);
+				KunenaEmail::send($mail, $receivers[1]);
 			}
 
 			// Send email to all moderators.
 			if (!empty($receivers[0]))
 			{
 				$this->attachEmailBody($mail, 0, $subject, $url, $once);
-				$this->sendEmail($mail, $receivers[0]);
+				KunenaEmail::send($mail, $receivers[0]);
 			}
 
 			// Update subscriptions.
@@ -490,7 +490,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
 				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
-					($this->message, $this, $html);
+					($this->message, 0, $html);
 		}
 		return '';
 	}
@@ -1147,43 +1147,6 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	/**
-	 * @param object $mail
-	 * @param array  $receivers
-	 */
-	protected function sendEmail($mail, array $receivers) {
-		$config = KunenaFactory::getConfig();
-		$email_recipient_count = !empty($config->email_recipient_count) ? $config->email_recipient_count : 1;
-		$email_recipient_privacy = !empty($config->email_recipient_privacy) ? $config->email_recipient_privacy : 'bcc';
-
-		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam
-		if ($email_recipient_count > 1 && $email_recipient_privacy == 'bcc'
-			&& !empty($config->email_visible_address) && JMailHelper::isEmailAddress ( $config->email_visible_address )) {
-			$mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress ( $config->board_title ));
-			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit)
-			if ($email_recipient_count > 9) $email_recipient_count--;
-		}
-
-		$chunks = array_chunk($receivers, $email_recipient_count);
-		foreach ($chunks as $emails) {
-			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to') {
-				$mail->ClearAddresses();
-				$mail->addRecipient($emails);
-			} elseif ($email_recipient_privacy == 'cc') {
-				$mail->ClearCCs();
-				$mail->addCC($emails);
-			} else {
-				$mail->ClearBCCs();
-				$mail->addBCC($emails);
-			}
-			try {
-				$mail->Send();
-			} catch (Exception $e) {
-				JLog::add($e->getMessage(), JLog::WARNING, 'kunena');
-			}
-		}
-	}
-
-	/**
 	 * @param JMail $mail
 	 * @param int $subscription
 	 * @param string $subject
@@ -1193,7 +1156,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return string
 	 */
 	protected function attachEmailBody(JMail $mail, $subscription, $subject, $url, $once) {
-		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
+		$layout = KunenaLayout::factory('Email/Newpost')->debug(false)
 			->set('mail', $mail)
 			->set('message', $this)
 			->set('messageUrl', $url)

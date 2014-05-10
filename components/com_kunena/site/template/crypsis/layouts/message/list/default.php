@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Message
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -37,6 +37,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-condensed">
+		<thead>
 		<?php if (empty($this->messages)) : ?>
 		<tr>
 			<td colspan="<?php echo $colspan; ?>">
@@ -44,20 +45,8 @@ $colspan = empty($this->actions) ? 5 : 6;
 			</td>
 		</tr>
 		<?php else : ?>
-		<?php if (empty($this->embedded)) : ?>
-		<thead>
-			<tr>
-				<td colspan="6">
-					<div class="pagination pull-right">
-						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
-					<div class="clearfix"></div>
-				</td>
-			</tr>
-		</thead>
-		<?php endif; ?>
-<thead>
-			<tr>
+		
+			<tr class="category">
 				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
@@ -82,8 +71,9 @@ $colspan = empty($this->actions) ? 5 : 6;
 						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>
 				</td>
+				</tr>
 				<?php endif; ?>
-			</tr>
+			
 		</thead>
 		<?php if (!empty($this->actions)) : ?>
 		<tfoot>

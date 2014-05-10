@@ -18,7 +18,25 @@ define('MIME_PNG','image/png');
  */
 class KunenaImage extends JImage
 {
-/**
+	/**
+	 * @const  integer
+	 * @since  12.2
+	 */
+	const CROP = 4;
+
+	/**
+	 * @const  integer
+	 * @since  12.3
+	 */
+	const CROP_RESIZE = 5;
+
+	/**
+	 * @const  integer
+	 * @since  3.2
+	 */
+	const SCALE_FIT = 6;
+
+	/**
 	 * Method to resize the current image.
 	 *
 	 * @param   mixed    $width        The width of the resized image in pixels or a percentage.

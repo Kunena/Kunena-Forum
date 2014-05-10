@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -94,7 +94,7 @@ if ($show)
 				<?php  echo $user->profileIcon('private'); ?>
 				<?php  echo $user->profileIcon('email'); ?>
 			</li>
-			<?php endif; ?>
 		</ul>
 	</div>
 </div>
+<?php endif; ?>

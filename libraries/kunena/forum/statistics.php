@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -53,6 +53,7 @@ class KunenaForumStatistics {
 		$this->_config = KunenaFactory::getConfig ();
 
 		$show = $this->_config->showstats;
+		$show = ($this->_config->statslink_allowed) ? $show : (KunenaUserHelper::get()->exists() ? $show : false);
 		if ($show) {
 			$this->showgenstats = (bool) $this->_config->showgenstats;
 			$this->showpopuserstats = (bool) $this->_config->showpopuserstats;

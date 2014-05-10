@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -15,9 +15,11 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
 $category = $this->topic->getCategory();
 $cols = empty($this->checkbox) ? 5 : 6;
+$category = $this->topic->getCategory();
+$config = KunenaConfig::getInstance();
 
 if (!empty($this->spacing)) : ?>
 <tr>
@@ -44,11 +46,11 @@ if (!empty($this->spacing)) : ?>
 			<?php if ($userTopic->posts) : ?>
 				<i class="icon-flag hasTooltip"><?php JText::_('COM_KUNENA_MYPOSTS'); ?></i>
 			<?php endif; ?>
-			
+
 			<?php if ($this->topic->attachments) : ?>
 				<i class="icon-flag-2 hasTooltip"><?php JText::_('COM_KUNENA_ATTACH'); ?></i>
 			<?php endif; ?>
-			
+
 			<?php if ($this->topic->poll_id) : ?>
 				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 			<?php endif; ?>
@@ -78,7 +80,7 @@ if (!empty($this->spacing)) : ?>
 			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 		</div>
 	</td>
-	
+
 	<td class="span1 center hidden-phone">
 		<?php if ($avatar) : ?>
 		<span>
@@ -86,32 +88,31 @@ if (!empty($this->spacing)) : ?>
 		</span>
 		<?php endif; ?>
 	</td>
-	
+
 	<td class="span1 hidden-phone center">
 			<?php echo  $this->formatLargeNumber($topic->hits); ?>
 		</td>
 	<td class="span1 hidden-phone center">
 			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
-	
-	<td class="span3">
-			<?php if ($avatar) : ?>
-						<div class="pull-left hidden-phone" style="padding-left:3%;">
-							<?php echo $avatar; ?>
-						</div>
-						<div class="last-post-message">
-						<?php else :	?>
-						<div>
-					<?php endif; ?>
-			<div class="ktopic-latest-post">
-			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
 
-			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
-			<br>
-			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+	<td class="span3">
+			<?php if ($config->avataroncat) : ?>
+				<div class="pull-left hidden-phone" style="padding-left:3%;">
+					<?php echo $avatar; ?>
+				</div>
+				<div class="last-post-message">
+			<?php else :	?>
+				<div>
+			<?php endif; ?>
+			<div class="ktopic-latest-post">
+				<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
+	
+				<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+				<br>
+				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
 			</div>
-		</div>
-		</div>
+			</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

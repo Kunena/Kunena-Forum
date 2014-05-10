@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -666,6 +666,14 @@ abstract class KunenaForumCategoryHelper {
 	static public function compareByNameDesc($a, $b) {
 		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b])) return 0;
 		return JString::strcasecmp(self::$_instances[$b]->name, self::$_instances[$a]->name);
+	}
+
+	static public function stripName($original, $strip) {
+		$strip = trim($strip);
+		if (strpos($original, $strip) !== false) {
+			$original = str_replace($strip, '', $original);
+		}
+		return $original;
 	}
 }
 

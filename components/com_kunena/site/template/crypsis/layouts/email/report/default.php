@@ -4,14 +4,13 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Email
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
-// New post email for subscribers (HTML)
-
+// Report moderator email (HTML)
 $this->mail->isHtml(true);
 
 $user = $this->message->getAuthor();
@@ -33,7 +32,8 @@ $user = $this->message->getAuthor();
 	<a href="<?php echo $this->messageLink; ?>"><?php echo $this->messageLink; ?></a>
 </div>
 
-<?php // Email as plain text:
+<?php
+// Email as plain text:
 
 $alt = <<<EOS
 {$this->text('COM_KUNENA_REPORT_RSENDER')} {$this->me->username} ({$this->me->name})

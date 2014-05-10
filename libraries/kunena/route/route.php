@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Route
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -122,7 +122,6 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$uris[$key];
 	}
-
 
 	/**
 	 * Get the referrer page.
@@ -377,10 +376,14 @@ abstract class KunenaRoute {
 			{
 				// Allow all values
 			}
-			elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+			// TODO: we need to find a way to here deal with arrays: &foo[]=bar
+			elseif (gettype($value)=='string')
 			{
+				if(preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+				{
 				// Illegal value
-				continue;
+  				continue;
+				}
 			}
 
 			self::$current->setVar($key, $value);

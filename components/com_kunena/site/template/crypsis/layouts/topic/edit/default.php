@@ -4,7 +4,7 @@
  * @package Kunena.Template.Crypsis
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -193,7 +193,6 @@ $this->k=0;
 				</fieldset>
 			</div>
 		</div>
-	</div>
 	<?php
 if (!$this->message->name) {
 	echo '<script type="text/javascript">document.postform.authorname.focus();</script>';

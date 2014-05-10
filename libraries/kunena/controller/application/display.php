@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -114,13 +114,22 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					->set('body', $e->getMessage());
 
 			} catch (Exception $e) {
-				$this->setResponseStatus($e->getCode());
+				if (!($e instanceof KunenaExceptionAuthorise)) {
+					$header = 'Error while rendering layout';
+					$content = isset($content) ? $content->renderError($e) : $this->content->renderError($e);
+					$e = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
+				} else {
+					$header = $e->getResponseStatus();
+					$content = $e->getMessage();
+				}
+
+				$this->setResponseStatus($e->getResponseCode());
 				$this->output->setLayout('unauthorized');
-				$this->document->setTitle($e->getMessage());
+				$this->document->setTitle($header);
 
 				$this->content = KunenaLayout::factory('Widget/Custom')
-					->set('header', 'Error while rendering layout')
-					->set('body', isset($content) ? $content->renderError($e) : $this->content->renderError($e));
+					->set('header', $header)
+					->set('body', $content);
 			}
 		}
 

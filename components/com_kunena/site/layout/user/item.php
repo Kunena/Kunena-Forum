@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -34,7 +34,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		$showSubscriptions = $this->config->allowsubscriptions && $myProfile;
 		$showFavorites = $this->config->allowfavorites && $myProfile;
 		$showThankYou = $this->config->showthankyou && $this->me->exists();
-		$showUnapproved = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus();
+		$showUnapproved = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 		$showAttachments = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
 		$showBanManager = $moderator && $myProfile;
 		$showBanHistory = $banInfo->canBan();
@@ -57,6 +57,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'filter_order' => 'time',
 				'limitstart' => 0,
 				'filter_order_Dir' => 'desc',
+				'display' => $this->state->get('display','')
 			);
 
 			$tab = new stdClass;

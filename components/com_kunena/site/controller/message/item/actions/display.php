@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Message
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -57,6 +57,11 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
+
+			$this->messageButtons->set('reply',
+				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', null, true)
+			);
+
 			if ($me->exists() && !KunenaSpamRecaptcha::getInstance()->enabled())
 			{
 				$this->messageButtons->set('quickreply',
@@ -64,9 +69,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				);
 			}
 
-			$this->messageButtons->set('reply',
-				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication')
-			);
 			$this->messageButtons->set('quote',
 				$this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication')
 			);
@@ -79,10 +81,20 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		// Thank you.
-		if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
+		if (isset($this->message->thankyou)) {
+			if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
+			{
+				$this->messageButtons->set('thankyou',
+					$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false)
+				);
+			}
+		}
+
+		// Unthank you
+		if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 		{
-			$this->messageButtons->set('thankyou',
-				$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user')
+			$this->messageButtons->set('unthankyou',
+					$this->getButton(sprintf($task, 'unthankyou&userid='.$me->userid), 'unthankyou', 'message', 'user', null, false)
 			);
 		}
 
@@ -156,17 +168,18 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	/**
 	 * Get button.
 	 *
-	 * @param   string       $url    Target link (do not route it).
-	 * @param   string       $name   Name of the button.
-	 * @param   string       $scope  Scope of the button.
-	 * @param   string       $type   Type of the button.
-	 * @param   bool         $id     Id of the button.
+	 * @param   string  $url     Target link (do not route it).
+	 * @param   string  $name    Name of the button.
+	 * @param   string  $scope   Scope of the button.
+	 * @param   string  $type    Type of the button.
+	 * @param   int     $id      Id of the button.
+	 * @param   bool    $normal  Define if the button will have the class btn or btn-small
 	 *
 	 * @return  string
 	 */
-	public function getButton($url, $name, $scope, $type, $id = null)
+	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{
 		return KunenaLayout::factory('Widget/Button')
-			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id));
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal));
 	}
 }

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -29,7 +29,7 @@ $cols = 1;
 				       value="<?php echo $this->escape($this->state->get('list.search')); ?>" placeholder="" />
 			</label>
 
-			<button type="submit" class="btn"><?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?></button>
+			<button type="submit" class="btn"><span class="icon icon-search"></span></button>
 		</div>
 	</form>
 </h2>
@@ -189,19 +189,18 @@ $cols = 1;
 					<?php echo (int) $user->uhits; ?>
 				</td>
 				<?php endif; ?>
-
-			</tr>
-			<?php endforeach; ?>
-
+		
+				<?php endforeach; ?>
+				
+				</tr>						
 		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="<?php echo $cols; ?>">
-					<div class="pull-right">
-						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
-				</td>
-			</tr>
-		</tfoot>
+		
 	</table>
+	
+	<?php if ($i > 1) : ?>		
+		<div class="pull-right">
+			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+		</div>
+	<?php endif; ?>
 </form>
+<div class="clearfix"></div>

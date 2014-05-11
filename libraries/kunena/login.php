@@ -53,7 +53,7 @@ class KunenaLogin {
 	 *
 	 * @return boolean
 	 */
-	public function loginUser($username, $password, $rememberme = 0, $return = null, $secretkey = null)
+	public function loginUser($username, $password, $rememberme = 0, $return = null, $secretkey = 0)
 	{
 		foreach ($this->instances as $login)
 		{
@@ -61,10 +61,7 @@ class KunenaLogin {
 			{
 				if ( $this->isTFAEnabled() )
 				{
-					if ( $this->isValidTFA($secretkey) )
-					{
-						return $login->loginUser($username, $password, $rememberme, $return);
-					}
+					return $login->loginUser($username, $password, $rememberme, $return, $secretkey);
 				}
 				else
 				{
@@ -178,35 +175,5 @@ class KunenaLogin {
 		$otpConfig = $model->getOtpConfig($userId);
 
 		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));
-	}
-
-	/**
-	 * Checks if the provided secret code is a valid two factor authentication
-	 * code for the user whose $userId is provided. If TFA is disabled globally
-	 * or for the specific user you will receive true.
-	 *
-	 * @param   string   $code    The secret code to check
-	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
-	 *
-	 * @return boolean True if you should accept the code
-	 */
-	public function isValidTFA($code, $userId = null)
-	{
-		// Include the necessary user model
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
-
-		// Do we need to get the User ID?
-		if (empty($userId))
-		{
-			$userId = JFactory::getUser()->id;
-		}
-
-		// Check the secret code
-		$model = new UsersModelUser;
-		$options = array(
-				'warn_if_not_req'	=> false,
-		);
-
-		return $model->isValidSecretKey($userId, $code, $options);
 	}
 }

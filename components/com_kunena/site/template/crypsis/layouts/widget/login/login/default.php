@@ -51,13 +51,37 @@ defined('_JEXEC') or die;
 					</div>
 				</div>
 
-				<?php if ($this->rememberMe) : ?>
-					<div id="form-login-remember" class="control-group checkbox">
-						<label for="login-remember" class="control-label">
-							<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
-						</label>
-						<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
+				<?php $login = KunenaLogin::getInstance(); ?>
+      	<?php if ($login->$secretkey): ?>
+				<div id="form-login-tfa" class="control-group center">
+					<div class="controls">
+						<div class="input-prepend input-append">
+							<span class="add-on"> 
+								<i class="icon-star tip" title="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"></i>
+								<label for="k-lgn-secretkey" class="element-invisible">
+									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
+								</label>
+						  </span>
+							<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" tabindex="3" 
+										size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
+						</div>
 					</div>
+				</div>
+				<?php endif; ?>
+				
+				<?php if ($this->rememberMe) : ?>
+				<div id="form-login-remember" class="control-group center">
+					<div class="controls">
+						<div class="input-prepend input-append">
+							<div class="add-on">						
+								<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
+								<label for="login-remember" class="control-label">
+									<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
 				<?php endif; ?>
 
 				<div id="form-login-submit" class="control-group center">

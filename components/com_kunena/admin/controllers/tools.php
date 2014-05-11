@@ -554,11 +554,20 @@ class KunenaAdminControllerTools extends KunenaController {
 		// Check if the user has the super-administrator rights
 		$username = $this->app->input->getString('username');
 		$password = $this->app->input->getString('password');
-		$code = $this->app->input->getString('secretkey');
+		$code = $this->app->input->getInt('secretkey');
 
 		$login = KunenaLogin::getInstance();
 
-		$error = $login->loginUser($username, $password);
+		if ( $login->isTFAEnabled() )
+		{
+			if ( empty($code) || $code == 0 )
+			{
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_SECRETKEY_INVALID'));
+				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			}
+		}
+
+		$error = $login->loginUser($username, $password, 0, null, $code);
 
 		$user = JFactory::getUser(JUserHelper::getUserId($username));
 
@@ -566,14 +575,7 @@ class KunenaAdminControllerTools extends KunenaController {
 
 		if (!$error && $isroot)
 		{
-			if ( version_compare(JVERSION, '3.2', '>') && $login->isValidTFA($code, $user->id) )
-			{
-				$this->app->setUserState('com_kunena.uninstall.allowed', true);
-			}
-			else
-			{
-				$this->app->setUserState('com_kunena.uninstall.allowed', true);
-			}
+			$this->app->setUserState('com_kunena.uninstall.allowed', true);
 
 			$this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&view=uninstall&' . JSession::getFormToken() . '=1', false));
 

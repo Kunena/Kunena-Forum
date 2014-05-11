@@ -72,7 +72,7 @@ if ($this->config->showuserstats)
 				<?php endif; ?>
 				<?php if ($this->config->userlist_lastvisitdate || $me->isModerator()) : ?>
 					<li>
-						<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong>
+						<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LASTLOGIN'); ?>:</strong>
 						<span title="<?php echo $profile->getLastVisitDate()->toKunena('ago'); ?>"> <?php echo $profile->getLastVisitDate()->toKunena('config_post_dateformat', 'ago'); ?> </span>
 					</li>
 				<?php endif; ?>

@@ -65,10 +65,10 @@ class KunenaImageHelper
 
 				if ($crop && $info->width > $info->height) {
 					$image = $image->resize($info->width * $maxHeight / $info->height, $maxHeight , false, $scale);
-					$image = $image->crop($maxWidth, $maxHeight);
+					$image = $image->crop($maxWidth, $maxHeight, null, null);
 				} elseif ($crop && $info->width < $info->height) {
 					$image = $image->resize($maxWidth, $info->height * $maxWidth / $info->width, false, $scale);
-					$image = $image->crop($maxWidth, $maxHeight);
+					$image = $image->crop($maxWidth, $maxHeight, null, null);
 				} else {
 					$image = $image->resize($maxWidth, $maxHeight, false, $scale);
 				}

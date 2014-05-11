@@ -403,7 +403,12 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$resizeoptions = array();
 		$resizeoptions[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_RESIZE_RESIZE'));
 		$resizeoptions[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_RESIZE_INTERPOLATION'));
-		$resizeoptions[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_RESIZE_BICUBIC'));
+
+		/*
+		 *  FIXME: enable when method imageCopyResampledBicubic in KunenaImage class works correctly before enable this setting
+		 *  $resizeoptions[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_RESIZE_BICUBIC'));
+		*/
+
 		$lists ['avatarresizemethod'] = JHtml::_('select.genericlist', $resizeoptions, 'cfg_avatarresizemethod', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarresizemethod);
 		$lists ['avatarcrop'] = JHtml::_('select.genericlist', $yesno, 'cfg_avatarcrop', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarcrop);
 

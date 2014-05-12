@@ -435,12 +435,6 @@ class KunenaUser extends JObject {
 	}
 
 	/**
-	 * @param null|string   $name
-	 * @param null|string   $title
-	 * @param string $rel
-	 * @param string $task
-	 * @param string $class
-	 *
 	 * @return string
 	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null) {
@@ -460,6 +454,38 @@ class KunenaUser extends JObject {
 				$this->_link[$key] = "<span class=\"{$class}\">{$name}</span>";
 		}
 
+		return $this->_link[$key];
+	}
+	
+	/**
+	 * Get users type as a string inside the specified category.
+	 *
+	 * @param int  $catid   Category id or 0 for global.
+	 * @param bool $code    True if we want to return the code, otherwise return translation key.
+	 *
+	 * @return string
+	 */
+	public function getLinkNoStyle($name = null, $title = null, $class = null, $rel = 'nofollow') {
+		if ( $this->_config->optionnal_username == 0 || !$this->userid ) return;
+
+		if (!$name) {
+			if ( $this->_config->optionnal_username == 1 ) {
+				$name = $this->username;
+			} elseif ( $this->_config->optionnal_username == 2 ) {
+				$name = $this->name;
+			}
+		}
+		$key = "{$name}.{$title}.{$rel}";
+		if (empty($this->_link[$key])) {
+			if (!$title) {
+				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
+			}
+			$link = $this->getURL ();
+			if (! empty ( $link ))
+				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
+			else
+				$this->_link[$key] = "<span class=\"{$class}\">{$name}</span>";
+		}
 		return $this->_link[$key];
 	}
 

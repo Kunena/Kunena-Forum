@@ -233,6 +233,7 @@ class KunenaConfig extends JObject {
 	public $avatarresizemethod = 1;
 	public $avatarcrop = 0;
 	public $superadmin_userlist = 0;
+	public $optionnal_username = 0;
 
 	public function __construct() {
 		parent::__construct ();

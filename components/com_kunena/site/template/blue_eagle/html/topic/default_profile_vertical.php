@@ -14,6 +14,11 @@ defined ( '_JEXEC' ) or die ();
 		<li class="kpost-username">
 			<?php echo $this->profile->getLink() ?>
 		</li>
+		<?php if ($config->optionnal_username = 2) : ?>
+		<li>
+		[<?php echo $this->profile->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
+		</li>
+		<?php endif ?>
 		<?php if (!empty($this->usertype)) : ?>
 		<li class="kpost-usertype">
 			<span class = "kmsgusertype">( <?php echo JText::_($this->usertype) ?> )</span>

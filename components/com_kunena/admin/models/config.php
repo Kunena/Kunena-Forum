@@ -408,8 +408,7 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['avatarcrop'] = JHtml::_('select.genericlist', $yesno, 'cfg_avatarcrop', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarcrop);
 		
 		$optionnal_username_list[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_COM_A_OPTIONNAL_USERNAME_HIDE'));
-		$optionnal_username_list[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_COM_A_OPTIONNAL_USERNAME_USERNAME'));
-		$optionnal_username_list[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_COM_A_OPTIONNAL_USERNAME_REALNAME'));
+		$optionnal_username_list[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_COM_A_OPTIONNAL_USERNAME_REALNAME'));
 		$lists ['optionnal_username'] = JHTML::_('select.genericlist', $optionnal_username_list, 'cfg_optionnal_username', 'class="inputbox" size="1"', 'value', 'text', $this->config->optionnal_username);
 
 		return $lists;

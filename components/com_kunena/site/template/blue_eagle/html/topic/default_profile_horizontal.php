@@ -48,7 +48,7 @@ $config = KunenaConfig::getInstance();
 		<li class="kpost-username">
 			<?php echo $this->profile->getLink() ?>
 		</li>
-		<?php if ($config->optionnal_username = 2) : ?>
+		<?php if ($config->optionnal_username) : ?>
 		<li>
 		[<?php echo $this->profile->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
 		</li>

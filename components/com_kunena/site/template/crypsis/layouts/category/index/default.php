@@ -79,7 +79,7 @@ foreach ($this->sections as $section) :
 				<td  colspan="2" class="hidden-phone">
 				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 				</td>
-				<td colspan="1" class="span1 hidden-phone">
+				<td class="span3 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php endif; ?>

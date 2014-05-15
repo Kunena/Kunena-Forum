@@ -152,7 +152,7 @@ function KunenaBuildRoute(&$query) {
 			unset($query['format']);
 
 			if (!empty($query['filename'])) {
-				$segments [] = $query['filename'];
+				//FIXME: $segments [] = $query['filename'];
 				unset($query['filename']);
 			}
 		}

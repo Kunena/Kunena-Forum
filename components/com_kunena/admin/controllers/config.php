@@ -52,6 +52,8 @@ class KunenaAdminControllerConfig extends KunenaController {
 			}
 		}
 
+		$path = JPATH_ROOT."/cache/com_kunena";
+		if (is_dir($path)) KunenaFolder::delete($path);
 		$this->config->save ();
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));

@@ -9,6 +9,8 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+$config = KunenaConfig::getInstance();
 ?>
 
 <?php if (empty($this->message_closed)) : ?>
@@ -27,6 +29,9 @@ defined('_JEXEC') or die;
 			<li><?php echo $this->messageButtons->get('reply'); ?></li>
 			<li><?php echo $this->messageButtons->get('quote'); ?></li>
 			<li><?php echo $this->messageButtons->get('edit'); ?></li>
+			<?php if ($config->userdeletetmessage > 0) : ?>
+			<li><?php echo $this->messageButtons->get('delete'); ?></li>
+			<?php endif; ?>
 		</ul>
 	</div>
 

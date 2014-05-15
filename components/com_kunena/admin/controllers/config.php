@@ -53,6 +53,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 		}
 
 		$this->config->save ();
+		KunenaAccess::getInstance()->clearCache();
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
 		if (empty($url)) {

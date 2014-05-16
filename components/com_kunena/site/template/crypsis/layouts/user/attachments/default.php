@@ -29,12 +29,14 @@ $attachments = $this->attachments;
 				<th>
 					#
 				</th>
+				<?php if ($this->config->useredit) : ?>
 				<th width="5">
 					<label>
 						<input type="checkbox" name="checkall-toggle" value="cid"
 						       title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</label>
 				</th>
+				<?php endif; ?>
 				<th>
 					<?php echo JText::_('COM_KUNENA_FILETYPE'); ?>
 				</th>
@@ -50,9 +52,11 @@ $attachments = $this->attachments;
 				<th>
 					<?php echo JText::_('COM_KUNENA_PREVIEW'); ?>
 				</th>
+				<?php if ($this->config->useredit) : ?>
 				<th>
 					<?php echo JText::_('COM_KUNENA_DELETE'); ?>
 				</th>
+				<?php endif; ?>
 			</tr>
 		</thead>
 		<tbody>
@@ -67,13 +71,15 @@ $attachments = $this->attachments;
 					$i=0;
 					foreach ($attachments as $attachment) :
 						$message = $attachment->getMessage();
-						$canDelete = $attachment->isAuthorised('delete');
+						$canDelete = $attachment->isAuthorised('delete') && $this->config->useredit;
 			?>
 			<tr>
 				<td><?php echo ++$i; ?></td>
+				<?php if ($canDelete) : ?>
 				<td>
-					<?php if ($canDelete) echo JHtml::_('grid.id', $i, intval($attachment->id)); ?>
+					<?php echo JHtml::_('grid.id', $i, intval($attachment->id)); ?>
 				</td>
+				<?php endif; ?>
 				<td class="center">
 					<img src="<?php echo $attachment->isImage()
 						? JUri::root(true).'/media/kunena/icons/image.png'
@@ -91,15 +97,15 @@ $attachments = $this->attachments;
 				<td class="center">
 					<?php echo $attachment->getLayout()->render('thumbnail') ; ?>
 				</td>
+				
+				<?php if ($canDelete) : ?>
 				<td class="center">
-
-					<?php if ($canDelete) : ?>
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
 						<i class="icon-remove hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 					</a>
-					<?php endif ?>
-
 				</td>
+				<?php endif ?>
+				
 			</tr>
 			<?php
 					endforeach;
@@ -107,6 +113,7 @@ $attachments = $this->attachments;
 			?>
 		</tbody>
 	</table>
-
+	<?php if ($canDelete) : ?>
 	<input class="btn pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>" />
+	<?php endif;?>
 </form>

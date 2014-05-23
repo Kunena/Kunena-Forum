@@ -138,6 +138,7 @@ function KunenaBuildRoute(&$query) {
 		$segments [] = $view;
 
 		// Handle attachment ID
+		$config = KunenaConfig::getInstance();
 		if ($view == 'attachment') {
 			if (!empty($query['id'])) {
 				// Use filtered value
@@ -152,8 +153,10 @@ function KunenaBuildRoute(&$query) {
 			unset($query['format']);
 
 			if (!empty($query['filename'])) {
-				//FIXME: $segments [] = $query['filename'];
-				unset($query['filename']);
+				$segments [] = (int) $query['filename'];
+				if ($config->lightbox == 0) {
+				 unset($query['filename']);
+				}
 			}
 		}
 	}

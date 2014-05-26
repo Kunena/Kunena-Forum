@@ -293,7 +293,7 @@ class KunenaControllerTopic extends KunenaController {
 		
 		$countlink = $http += $href += $url;
 		
-		if ($countlink >=$this->config->max_links +1)  {
+		if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
 			$this->setRedirectBack();
 			return;
@@ -476,7 +476,7 @@ class KunenaControllerTopic extends KunenaController {
 		
 		$countlink = $http += $href += $url;
 		
-		if ($countlink >=$this->config->max_links +1)  {
+		if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
 			$this->setRedirectBack();
 			return;

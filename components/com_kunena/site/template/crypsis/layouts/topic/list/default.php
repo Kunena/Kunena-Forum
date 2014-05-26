@@ -59,7 +59,10 @@ $colspan = empty($this->actions) ? 5 : 6;
 						<tr>
 								<td class="center hidden-phone"><a id="forumbottom"> </a> <a href="#forumtop" rel="nofollow"> <i class="icon-arrow-up hasTooltip"></i> </a>
 										<?php // FIXME: $this->displayCategoryActions() ?></td>
-								<td colspan="<?php echo $colspan; ?>"><?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
+								<td colspan="<?php echo $colspan; ?>">
+								<span class="btn-toolbar">
+									<span class="btn-group input-append">
+				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 										<?php if (!empty($this->actions)) : ?>
 										<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 										<?php if (isset($this->actions['move'])) :
@@ -67,7 +70,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 						echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 					endif;?>
 										<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-										<?php endif; ?></td>
+										<?php endif; ?></span></span></td>
 						</tr>
 				</tfoot>
 				<?php endif; ?>

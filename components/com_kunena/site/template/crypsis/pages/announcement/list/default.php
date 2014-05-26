@@ -10,11 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
-$content = $this->execute('Announcement/List');
+echo $this->subRequest('Announcement/List');
+?>
 
-$this->addBreadcrumb(
-	JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
-	'index.php?option=com_kunena&view=announcement&layout=list'
-);
+<div class="clearfix"></div>
 
-echo $content;

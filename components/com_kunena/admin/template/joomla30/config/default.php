@@ -619,6 +619,11 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<td><?php echo $this->lists ['statslink_allowed'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS') ?></td>
+												<td><input type="text" name="cfg_max_links" value="<?php echo $this->escape ( $this->config->max_links ) ?>" /></td>
+												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC') ?></td>
+											</tr>
 										</tbody>
 									</table>
 								</fieldset>

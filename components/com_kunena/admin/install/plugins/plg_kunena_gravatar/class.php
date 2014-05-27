@@ -263,6 +263,40 @@ class KunenaGravatar {
 	}
 
 	/**
+	 * Check if the mail return an avatar or an error 404 when there is no avatars by doing a request to gravatar server
+	 *
+	 * @return boolean
+	 */
+	public function hasAvatar($hash_email)
+	{
+		jimport('joomla.http.transport');
+
+		$this->setDefaultImage('404');
+		$gravatarURL = $this->buildGravatarURL( $hash_email );
+
+		$this->options = isset($options) ? $options : new JRegistry;
+		$this->transport = isset($transport) ? $transport : new JHttpTransportStream($this->options);
+
+		// Make sure the user agent string is defined.
+		$this->options->def('api.useragent', 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201');
+
+		// Set the default timeout to 30 seconds.
+		$this->options->def('api.timeout', 30);
+
+		// Send the request
+		$response = $this->transport->request('GET', new JUri($gravatarURL), null, null, $this->options->get('api.timeout'), $this->options->get('api.useragent'));
+
+		if ($response->code=='404')
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	/**
 	 * toString
 	 */
 	public function __toString() {

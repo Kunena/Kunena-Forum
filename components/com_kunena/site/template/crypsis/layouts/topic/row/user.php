@@ -15,8 +15,7 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
-$avatar = $topic->getAuthor()->getAvatarImage('img-rounded', 48);
-$avatarLastAuthor = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
@@ -77,7 +76,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="span3">
 		<?php if ($config->avataroncat) : ?>
 			<div class="pull-left hidden-phone" style="padding-left:3%;">
-				<?php echo $avatarLastAuthor; ?>
+				<?php echo $avatar; ?>
 			</div>
 			<div class="last-post-message">
 		<?php else :	?>

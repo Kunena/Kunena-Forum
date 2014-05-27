@@ -759,6 +759,7 @@ class KunenaUser extends JObject {
 	 *
 	 * @return string
 	 */
+
 	public function getPrivateMsgURL()
 	{
 		$private = KunenaFactory::getPrivateMessaging();
@@ -926,6 +927,12 @@ class KunenaUser extends JObject {
 			case 2 :
 				$gender = 'female';
 				break;
+			case 3 :
+				$gender = 'trans';
+				break;
+			case 4 :
+				$gender = 'cis';
+				break;
 			default :
 				$gender = 'unknown';
 		}
@@ -975,6 +982,12 @@ class KunenaUser extends JObject {
 						break;
 					case 2 :
 						$gender = 'female';
+						break;
+					case 3 :
+						$gender = 'trans';
+						break;
+					case 4 :
+						$gender = 'cis';
 						break;
 					default :
 						$gender = 'unknown';

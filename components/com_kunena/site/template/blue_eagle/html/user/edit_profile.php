@@ -52,6 +52,10 @@ JHtml::_('behavior.tooltip');
 				$gender[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
 				$gender[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
 				$gender[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+				if (KunenaConfig::getInstance()->moregenders) {
+				$gender[] = JHtml::_('select.option', 3, JText::_('COM_KUNENA_MYPROFILE_GENDER_TRANS'));
+				$gender[] = JHtml::_('select.option', 4, JText::_('COM_KUNENA_MYPROFILE_GENDER_CIS'));
+				}
 				// build the html select list
 				echo JHtml::_('select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->profile->gender));
 				?>

@@ -40,6 +40,10 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 		$this->genders[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
 		$this->genders[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
 		$this->genders[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+		if (KunenaConfig::getInstance()->moregenders) {
+		$this->genders[] = JHtml::_('select.option', 3, JText::_('COM_KUNENA_MYPROFILE_GENDER_TRANS'));
+		$this->genders[] = JHtml::_('select.option', 4, JText::_('COM_KUNENA_MYPROFILE_GENDER_CIS'));
+		}
 
 		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
 			'friendfeed', 'digg', 'yim', 'aim', 'gtalk', 'icq', 'msn', 'blogspot', 'flickr', 'bebo');

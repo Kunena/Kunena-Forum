@@ -26,9 +26,7 @@ $options = $this->getOptions();
 				<div class="btn-group input-append">
 					<?php echo JHtml::_('select.genericlist', $options, 'task', '', 'value', 'text', 0, 'kchecktask'); ?>
 					<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-				</div>
-				<div class="btn-group input-append">
-					<a class="btn btn-small"
+					<a class="btn btn-primary"
 					   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
 						<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
 					</a>

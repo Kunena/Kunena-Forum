@@ -55,7 +55,7 @@ defined('_JEXEC') or die;
 
 <?php else : ?>
 
-<div>
+<span>
 	<?php echo $this->message_closed; ?>
-</div>
+</span>
 <?php endif;  ?>

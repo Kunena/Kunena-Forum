@@ -25,9 +25,11 @@ defined('_JEXEC') or die;
 	<?php if (!empty($this->onlineList)) : ?>
 	<p>
 
-	<?php foreach ($this->onlineList as $user) : ?>
-	<span><?php $onlinelist[] = $user->getLink(); ?></span>
-	<?php endforeach; ?>
+	<?php 
+	foreach ($this->onlineList as $user) {
+		$onlinelist[] = $user->getLink();
+	}
+	?>
 	<?php echo implode(', ', $onlinelist); ?>
 	</p>
 	<?php endif; ?>
@@ -36,10 +38,12 @@ defined('_JEXEC') or die;
 	<p>
 		<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
 
-	<?php foreach ($this->hiddenList as $user) : ?>
-		<span><?php echo $user->getLink(); ?></span>
-	<?php endforeach; ?>
-
+	<?php
+	foreach ($this->hiddenList as $user) {
+		$hiddenlist[] = $user->getLink();
+	}
+	?>
+	<?php echo implode(', ', $hiddenlist); ?>
 	</p>
 	<?php endif; ?>
 

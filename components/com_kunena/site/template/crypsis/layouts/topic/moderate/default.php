@@ -10,11 +10,17 @@
  **/
 defined('_JEXEC') or die;
 
+if (version_compare(JVERSION, '3.2', '>'))
+{
+	JHtml::_('behavior.tabstate');
+}
+
+$banInfo = KunenaUserBan::getInstanceByUserid(JFactory::getUser()->id, true);
+
 $this->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")."';
 // ]]>");
 ?>
-
 <h2> <?php echo !isset($this->message)
 		? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC')
 		: JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?>
@@ -29,9 +35,17 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 		<?php endif; ?>
 		<?php echo JHtml::_( 'form.token' ); ?>
 		<div> 
-			<?php echo JHtml::_('bootstrap.startTabSet', 'ID-Tabs-J31-Group', $this->tabsOptionsJ31);?> 
-				<?php echo JHtml::_('bootstrap.addTab', 'ID-Tabs-J31-Group', 'tab1_j31_id', JText::_('Basic info')); ?>
-				<dl class="dl-horizontal">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1" data-toggle="tab"><?php echo JText::_('Basic info'); ?></a></li>
+				<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('Move Options'); ?></a></li>
+				<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('Ban History'); ?></a></li>
+				<li><a href="#tab4" data-toggle="tab"><?php echo JText::_('New Ban'); ?></a></li>
+			</ul>
+			
+			<div class="tab-content">
+			<div class="tab-pane active" id="tab1">
+			
+			<dl class="dl-horizontal">
 						<dt> <?php echo JText::_('COM_KUNENA_MENU_TOPIC'); ?> </dt>
 						<dd> <?php echo $this->topic->displayField('subject'); ?> </dd>
 						<dt> <?php echo JText::_('COM_KUNENA_CATEGORY'); ?> </dt>
@@ -62,11 +76,10 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 			<?php echo $this->message->displayField('message'); ?>
 		</div>
 
-		<hr />
 		<?php endif; ?>
-		
-				<?php echo JHtml::_('bootstrap.endTab');?> 
-				<?php echo JHtml::_('bootstrap.addTab', 'ID-Tabs-J31-Group', 'tab2_j31_id', JText::_('Move Options')); ?>
+		</div>
+
+			<div class="tab-pane" id="tab2">
 				<h3> <?php echo JText::_('COM_KUNENA_MODERATION_DEST'); ?> </h3>
 				<div class="control-group">
 						<label class="control-label" for="modcategorieslist"> <?php echo JText::_('COM_KUNENA_MODERATION_DEST_CATEGORY'); ?> </label>
@@ -84,8 +97,6 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 								<input type="text" size="7" name="targetid" value="" />
 						</div>
 				</div>
-				<?php echo JHtml::_('bootstrap.endTab');?>
-				<?php echo JHtml::_('bootstrap.addTab', 'ID-Tabs-J31-Group', 'tab3_j31_id', JText::_('Subject Options')); ?>
 				<div class="control-group" id="kmod_subject">
 						<label class="control-label" for="kmod_subject"> <?php echo JText::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
 						<div class="controls">
@@ -106,6 +117,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 						</div>
 				</div>
 				<?php endif; ?>
+				
 				<div class="control-group">
 						<div class="controls">
 								<label class="checkbox">
@@ -123,152 +135,22 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 						</div>
 				</div>
 				<?php endif; ?>
-				<?php echo JHtml::_('bootstrap.endTab');?> 
-				
-				<?php echo JHtml::_('bootstrap.addTab', 'ID-Tabs-J31-Group', 'tab4_j31_id', JText::_('Ban User')); ?>
-					<table class="table table-bordered table-striped table-hover">
-		<tbody>
-			<tr>
-				<td class="span4">
-					<label><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></label>
-				</td>
-				<td class="span8">
-					<?php echo $this->user; ?>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label><?php echo JText::_('COM_KUNENA_BAN_USERID'); ?></label>
-				</td>
-				<td>
-					<?php echo $this->escape($this->profile->userid); ?>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ban-level"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></label>
-				</td>
-				<td>
-					<?php
-					// make the select list for the view type
-					$block[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
-					$block[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
-					// build the html select list
-					echo JHtml::_('select.genericlist', $block, 'block', '', 'value', 'text',
-						$this->escape($this->banInfo->blocked), 'ban-level');
-					?>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ban-expiration"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></label>
-					<small><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></small>
-				</td>
-				<td>
-					<?php echo JHtml::_('calendar', $this->escape($this->banInfo->expiration), 'expiration',
-						'ban-expiration', '%Y-%m-%d'
-					); ?>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ban-public"><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON'); ?></label>
-					<small><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON_DESC'); ?></small>
-				</td>
-				<td>
-					<textarea id="ban-public" class="required" name="reason_public" id="reason_public"
-						><?php echo $this->escape($this->banInfo->reason_public) ?></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ban-private"><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></label>
-					<small><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON_DESC'); ?></small>
-				</td>
-				<td>
-					<textarea id="ban-private" class="required" name="reason_private" id="reason_private"
-						><?php echo $this->escape($this->banInfo->reason_private) ?></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ban-comment"><?php echo JText::_('COM_KUNENA_BAN_ADDCOMMENT'); ?></label>
-					<small><?php echo JText::_('COM_KUNENA_BAN_ADDCOMMENT_DESC'); ?></small>
-				</td>
-				<td>
-					<textarea id="ban-comment" class="required" name="comment" id="comment"></textarea>
-				</td>
-			</tr>
+				</div>
 
-		
-				<tr>
-					<td>
-						<label for="ban-remove"><?php echo JText::_('COM_KUNENA_MODERATE_REMOVE_BAN'); ?></label>
-					</td>
-					<td>
-						<input id="ban-remove" type="checkbox" id="ban-delban" name="delban" value="delban" class="" />
-					</td>
-				</tr>
-	
-
-			<tr>
-				<td>
-					<label for="ban-delsignature">
-						<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_SIGNATURE'); ?>
-					</label>
-				</td>
-				<td>
-					<input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ban-delavatar">
-						<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_AVATAR'); ?>
-					</label>
-				</td>
-				<td>
-					<input type="checkbox" id="ban-delavatar" name="delavatar" value="delavatar" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ban-delprofileinfo">
-						<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_PROFILEINFO'); ?>
-					</label>
-				</td>
-				<td>
-					<input type="checkbox" id="ban-delprofileinfo" name="delprofileinfo" value="delprofileinfo" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="ban-delposts">
-						<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_ALL_POSTS'); ?>
-					</label>
-				</td>
-				<td>
-					<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" />
-				</td>
-			</tr>
-			<tr>
-				<td class="center" colspan="2">
-					<input class="btn btn-primary" type="submit" value="<?php echo $this->banInfo->id
-						? JText::_('COM_KUNENA_BAN_EDIT')
-						: JText::_('COM_KUNENA_BAN_NEW'); ?>" name="Submit" />
-				</td>
-			</tr>
-		</tbody>
-	</table>
-				<?php echo JHtml::_('bootstrap.endTab');?>
-				
-				<?php echo JHtml::_('bootstrap.endTabSet');?>
-				<div class="control-group">
-						<div class="controls">
+			<div class="tab-pane" id="tab3">
+				<?php echo $this->subLayout('User/Ban/History')->set('profile', $this->message->getAuthor()); ?>
+			</div>
+			
+			<div class="tab-pane" id="tab4">
+				<?php echo $this->subLayout('User/Ban/Form')->set('profile', $this->message->getAuthor())->set('banInfo', $banInfo); ?> 
+			</div>
+			<hr />
+				<br/>
+				<div class="control-group center">
 								<input type="submit" class="btn btn-primary"
 				       value="<?php echo JText::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>" />
 								<a href="javascript:window.history.back();" class="btn"> <?php echo JText::_('COM_KUNENA_BACK'); ?> </a> 
-						</div>
 				</div>
+			</div>
 		</div>
 </form>

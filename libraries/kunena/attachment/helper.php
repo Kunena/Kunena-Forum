@@ -360,31 +360,14 @@ abstract class KunenaAttachmentHelper {
 
 		$db = JFactory::getDBO();
 
-		$query = "SELECT m.thread,COUNT(*) AS attach FROM {$db->quoteName('#__kunena_attachments')} AS a INNER JOIN {$db->quoteName('#__kunena_messages')} AS m ON a.mesid=m.id WHERE m.thread={$topicid} GROUP BY m.parent";
+		$query = "UPDATE {$db->quoteName('#__kunena_topics')} AS tt INNER JOIN (
+						SELECT COUNT(*) AS attach FROM {$db->quoteName('#__kunena_attachments')} AS a INNER JOIN {$db->quoteName('#__kunena_messages')} AS m ON a.mesid=m.id WHERE m.thread={$topicid}
+					) AS sub SET tt.attachments=sub.attach WHERE tt.id={$topicid}";
 		$db->setQuery($query);
-		$results = $db->loadObjectList();
+		$db->query();
 		KunenaError::checkDatabaseError();
 
-		if ( !empty($results) )
-		{
-			$query = "UPDATE {$db->quoteName('#__kunena_topics')} AS tt INNER JOIN (
-						" . $sub_query . "
-					) AS sub SET tt.attachments=sub.attach WHERE sub.thread=tt.id";
-			$db->setQuery($query);
-			$db->query();
-			KunenaError::checkDatabaseError();
-
-			$rows = $db->getAffectedRows();
-		}
-		else
-		{
-			$query = "UPDATE {$db->quoteName('#__kunena_topics')} SET attachments=0 WHERE attachments != 0";
-			$db->setQuery($query);
-			$db->query();
-			KunenaError::checkDatabaseError();
-
-			$rows = $db->getAffectedRows();
-		}
+		$rows = $db->getAffectedRows();
 
 		return $rows;
 	}

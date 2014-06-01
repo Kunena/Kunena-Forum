@@ -250,7 +250,7 @@ if (version_compare(JVERSION, '3.2', '>'))
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS') ?></td>
 												<td><?php echo $this->lists ['listcat_show_moderators'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS_DESC') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS_INDEX_PAGE_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH') ?></td>

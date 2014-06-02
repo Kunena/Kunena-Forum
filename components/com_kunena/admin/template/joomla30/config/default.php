@@ -1082,7 +1082,7 @@ if (version_compare(JVERSION, '3.2', '>'))
 
 							<div class="tab-pane" id="tab_extra">
 								<fieldset>
-									<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
+									<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_SETTINGS') ?></legend>
 									<table class="table table-striped">
 										<thead>
 										<tr>

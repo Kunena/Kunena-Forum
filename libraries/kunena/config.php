@@ -1108,6 +1108,12 @@ class KunenaConfig extends JObject {
 	 * @since  3.1.0
 	 */
 	public $superadmin_userlist = 0;
+	
+	/**
+	 * @var    integer  Max Links limit; input, number
+	 * @since  3.1.0
+	 */
+	public $max_links = 6;
 
 	public function __construct() {
 		parent::__construct ();

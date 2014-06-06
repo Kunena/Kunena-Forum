@@ -79,7 +79,7 @@ foreach ($this->sections as $section) :
 				<td  colspan="2" class="hidden-phone">
 				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 				</td>
-				<td class="span3 hidden-phone">
+				<td class="span3 hidden-phone post-info">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php endif; ?>
@@ -175,30 +175,26 @@ foreach ($this->sections as $section) :
 			<?php if ($last->exists()) :
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();
-				$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 48) : null;
+				$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-thumbnail', 48) : null;
 			?>
 
-			<td class="span3 hidden-phone last-post">
-
-					<?php if ($avatar) : ?>
-						<div class="pull-left hidden-phone" style="padding-left:3%;">
-							<?php echo $author->getLink($avatar); ?>
-						</div>
-						<div class="last-post-message">
-						<?php else :	?>
-						<div>
-					<?php endif; ?>
-
-					<div>
-						<?php echo $this->getLastPostLink($category) ?>
-					</div>
-					<div>
-						<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
-					</div>
-					<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
-					<?php echo $time->toKunena('config_post_dateformat'); ?>
-					</div>
+			<td class="span3 hidden-phone post-info">
+				<?php if ($avatar) : ?>
+				<div class="post-image">
+					<?php echo $author->getLink($avatar); ?>
 				</div>
+				<?php endif; ?>
+						<div class="post-meta">
+							<div>
+								<?php echo $this->getLastPostLink($category) ?>
+							</div>
+							<div>
+								<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
+							</div>
+							<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
+								<?php echo $time->toKunena('config_post_dateformat'); ?>
+							</div>
+						</div>
 			</td>
 			<?php else : ?>
 			 <td colspan="1" class="hidden-phone">

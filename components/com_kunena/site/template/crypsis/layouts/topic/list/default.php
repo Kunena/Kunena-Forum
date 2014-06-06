@@ -61,7 +61,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 										<?php // FIXME: $this->displayCategoryActions() ?></td>
 								<td colspan="<?php echo $colspan; ?>">
 								<span class="btn-toolbar">
-									<span class="btn-group input-append">
+									<span class="btn-group">
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 										<?php if (!empty($this->actions)) : ?>
 										<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>

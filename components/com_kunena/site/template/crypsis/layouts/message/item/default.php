@@ -64,17 +64,17 @@ $avatarname = $this->profile->getname();
 					$datehover = 'title="'.KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat_hover').'"';
 					$dateshown = KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat' ).' ';
 				} ?>
-	<span class="alert alert-info hidden-phone" <?php echo $datehover ?>>
+	<div class="alert alert-info hidden-phone" <?php echo $datehover ?>>
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
 		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
-	</span>
+	</div>
 <?php endif; ?>
 
 <?php if(!empty($this->thankyou)): ?>
-<span class="kmessage-thankyou">
+<div class="kmessage-thankyou">
 <?php
 				echo JText::_('COM_KUNENA_THANKYOU').': '.implode(', ', $this->thankyou).' ';
 				if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS',$this->more_thankyou);
 			?>
-</span>
+</div>
 <?php endif; ?>

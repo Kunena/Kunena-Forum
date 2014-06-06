@@ -96,22 +96,19 @@ if (!empty($this->spacing)) : ?>
 			<?php echo $this->formatLargeNumber($topic->getReplies()); ?>
 	</td>
 
-	<td class="span3">
+	<td class="span3 post-info">
 			<?php if ($config->avataroncat) : ?>
-				<div class="pull-left hidden-phone" style="padding-left:3%;">
-					<?php echo $avatar; ?>
+				<div class="post-image">
+					<div class="img-thumbnail">
+						<?php echo $avatar; ?>
+					</div>
 				</div>
-				<div class="last-post-message">
-			<?php else :	?>
-				<div>
 			<?php endif; ?>
-			<div class="ktopic-latest-post">
+			<div class="post-desc">
 				<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Post'); ?>
-	
 				<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
 				<br>
 				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
-			</div>
 			</div>
 	</td>
 

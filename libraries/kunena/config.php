@@ -27,7 +27,7 @@ class KunenaConfig extends JObject {
 	 * @since  1.5.2
 	 */
 	public $id = 0;
-	
+
 	/**
 	 * @var    string  Board Title; input, text
 	 * @since  1.0.0
@@ -823,6 +823,7 @@ class KunenaConfig extends JObject {
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
+     * @deprecated 3.1 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 

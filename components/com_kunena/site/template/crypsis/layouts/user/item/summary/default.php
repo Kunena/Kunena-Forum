@@ -91,11 +91,11 @@ if ($this->config->showuserstats)
 					<span> <?php echo JText::sprintf((int)$profile->posts); ?> </span>
 				</li>
 				<li>
-					<strong> <?php echo JText::_('Profile views'); ?>:</strong>
+					<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
 					<span> <?php echo JText::sprintf((int)$profile->uhits); ?> </span>
 				</li>
 				<li>
-					<strong> <?php echo JText::_('Thank you received'); ?>:</strong>
+					<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 					<span> <?php echo JText::sprintf((int)$profile->thankyou); ?> </span>
 				</li>
 				<?php if (isset($profile->points)) : ?>

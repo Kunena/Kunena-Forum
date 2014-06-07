@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,95 +16,82 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerStatisticsWhoisonlineDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Statistics/WhoIsOnline';
+class ComponentKunenaControllerStatisticsWhoisonlineDisplay extends KunenaControllerDisplay {
 
-	/**
-	 * Prepare Who is online display.
-	 *
-	 * @return void
-	 *
-	 * @throws KunenaExceptionAuthorise
-	 */
-	protected function before()
-	{
-		parent::before();
+    protected $name = 'Statistics/WhoIsOnline';
 
-		$this->config = KunenaConfig::getInstance();
+    /**
+     * Prepare Who is online display.
+     *
+     * @return void
+     *
+     * @throws KunenaExceptionAuthorise
+     */
+    protected function before() {
+        parent::before();
 
-		if (!$this->config->get('showwhoisonline'))
-		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
-		}
+        $this->config = KunenaConfig::getInstance();
 
-		$me = KunenaUserHelper::getMyself();
-		$moderator = intval($me->isModerator()) + intval($me->isAdmin());
+        if (!$this->config->get('showwhoisonline')) {
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
+        }
 
-		$users = KunenaUserHelper::getOnlineUsers();
-		KunenaUserHelper::loadUsers(array_keys($users));
-		$onlineusers = KunenaUserHelper::getOnlineCount();
+        $me = KunenaUserHelper::getMyself();
+        $moderator = intval($me->isModerator()) + intval($me->isAdmin());
 
-		$who = '<strong>' . $onlineusers['user'] . ' </strong>';
+        $users = KunenaUserHelper::getOnlineUsers();
+        KunenaUserHelper::loadUsers(array_keys($users));
+        $onlineusers = KunenaUserHelper::getOnlineCount();
 
-		if ($onlineusers['user'] == 1)
-		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
-		}
-		else
-		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
-		}
+        $who = '<strong>' . $onlineusers['user'] . ' </strong>';
 
-		$who .= JText::_('COM_KUNENA_WHO_AND');
-		$who .= '<strong> ' . $onlineusers['guest'] . ' </strong>';
+        if ($onlineusers['user'] == 1) {
+            $who .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
+        } else {
+            $who .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
+        }
 
-		if ($onlineusers['guest'] == 1)
-		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
-		}
-		else
-		{
-			$who .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
-		}
+        $who .= JText::_('COM_KUNENA_WHO_AND');
+        $who .= '<strong> ' . $onlineusers['guest'] . ' </strong>';
 
-		$who .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
-		$this->membersOnline = $who;
+        if ($onlineusers['guest'] == 1) {
+            $who .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
+        } else {
+            $who .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
+        }
 
-		$this->onlineList = array();
-		$this->hiddenList = array();
+        $who .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+        $this->membersOnline = $who;
 
-		foreach ($users as $userid => $usertime)
-		{
-			$user = KunenaUserHelper::get($userid);
+        $this->onlineList = array();
+        $this->hiddenList = array();
 
-			if (!$user->showOnline)
-			{
-				if ($moderator)
-				{
-					$this->hiddenList[$user->getName()] = $user;
-				}
-			}
-			else
-			{
-				$this->onlineList[$user->getName()] = $user;
-			}
-		}
+        foreach ($users as $userid => $usertime) {
+            $user = KunenaUserHelper::get($userid);
 
-		ksort($this->onlineList);
-		ksort($this->hiddenList);
+            if (!$user->showOnline) {
+                if ($moderator) {
+                    $this->hiddenList[$user->getName()] = $user;
+                }
+            } else {
+                $this->onlineList[$user->getName()] = $user;
+            }
+        }
 
-		$profile = KunenaFactory::getProfile();
-		$this->usersUrl = $profile->getUserListURL('');
-	}
+        ksort($this->onlineList);
+        ksort($this->hiddenList);
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$this->setTitle(JText::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
-	}
+        $profile = KunenaFactory::getProfile();
+        $this->usersUrl = $profile->getUserListURL('');
+    }
+
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $this->setTitle(JText::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
+    }
+
 }

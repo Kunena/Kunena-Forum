@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,53 +16,46 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Announcement/List';
+class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerDisplay {
 
-	public $announcements;
+    protected $name = 'Announcement/List';
+    public $announcements;
+    public $pagination;
 
-	public $pagination;
+    /**
+     * Prepare announcement list display.
+     *
+     * @return void
+     */
+    protected function before() {
+        parent::before();
 
-	/**
-	 * Prepare announcement list display.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		parent::before();
+        $limit = $this->input->getInt('limit', 0);
 
-		$limit = $this->input->getInt('limit', 0);
+        if ($limit < 1 || $limit > 100) {
+            $limit = 20;
+        }
 
-		if ($limit < 1 || $limit > 100)
-		{
-			$limit = 20;
-		}
+        $limitstart = $this->input->getInt('limitstart', 0);
 
-		$limitstart = $this->input->getInt('limitstart', 0);
+        if ($limitstart < 0) {
+            $limitstart = 0;
+        }
 
-		if ($limitstart < 0)
-		{
-			$limitstart = 0;
-		}
+        $moderator = KunenaUserHelper::getMyself()->isModerator();
+        $this->pagination = new KunenaPagination(KunenaForumAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
+        $this->announcements = KunenaForumAnnouncementHelper::getAnnouncements(
+                        $this->pagination->limitstart, $this->pagination->limit, !$moderator
+        );
+    }
 
-		$moderator = KunenaUserHelper::getMyself()->isModerator();
-		$this->pagination = new KunenaPagination(KunenaForumAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
-		$this->announcements = KunenaForumAnnouncementHelper::getAnnouncements(
-			$this->pagination->limitstart,
-			$this->pagination->limit,
-			!$moderator
-		);
-	}
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
-	}
 }

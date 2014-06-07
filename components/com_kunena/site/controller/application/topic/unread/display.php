@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,42 +16,41 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaControllerApplicationDisplay
-{
-	/**
-	 * Return true if layout exists.
-	 *
-	 * @return bool
-	 */
-	public function exists()
-	{
-		return KunenaFactory::getTemplate()->isHmvc();
-	}
+class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaControllerApplicationDisplay {
 
-	/**
-	 * Redirect unread layout to the page that contains the first unread message.
-	 *
-	 * @return void
-	 *
-	 * @throws KunenaExceptionAuthorise
-	 */
-	protected function before()
-	{
-		$catid = $this->input->getInt('catid', 0);
-		$id = $this->input->getInt('id', 0);
+    /**
+     * Return true if layout exists.
+     *
+     * @return bool
+     */
+    public function exists() {
+        return KunenaFactory::getTemplate()->isHmvc();
+    }
 
-		$category = KunenaForumCategoryHelper::get($catid);
-		$category->tryAuthorise();
+    /**
+     * Redirect unread layout to the page that contains the first unread message.
+     *
+     * @return void
+     *
+     * @throws KunenaExceptionAuthorise
+     */
+    protected function before() {
+        $catid = $this->input->getInt('catid', 0);
+        $id = $this->input->getInt('id', 0);
 
-		$topic = KunenaForumTopicHelper::get($id);
-		$topic->tryAuthorise();
+        $category = KunenaForumCategoryHelper::get($catid);
+        $category->tryAuthorise();
 
-		KunenaForumTopicHelper::fetchNewStatus(array($topic->id => $topic));
-		$message = KunenaForumMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
-		$message->tryAuthorise();
+        $topic = KunenaForumTopicHelper::get($id);
+        $topic->tryAuthorise();
 
-		while (@ob_end_clean());
+        KunenaForumTopicHelper::fetchNewStatus(array($topic->id => $topic));
+        $message = KunenaForumMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
+        $message->tryAuthorise();
 
-		$this->app->redirect($topic->getUrl($category, false, $message));
-	}
+        while (@ob_end_clean());
+
+        $this->app->redirect($topic->getUrl($category, false, $message));
+    }
+
 }

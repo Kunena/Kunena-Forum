@@ -11,17 +11,27 @@
 defined ( '_JEXEC' ) or die ();
 
 $template = KunenaTemplate::getInstance();
+ $data['userlist']= intval($this->userlist) ; 
+ $data['messageCount']= intval($this->messageCount);
+ $data['sectionCount']=  intval($this->sectionCount);
+ $data['categoryCount']= intval($this->categoryCount); 
+ $data['todayTopicCount']= intval($this->todayTopicCount);
+ $data['yesterdayTopicCount']= intval($this->yesterdayTopicCount);
+ $data['todayReplyCount']= intval($this->todayReplyCount);
+ $data['yesterdayReplyCount']= intval($this->yesterdayReplyCount);
 ?>
 <!-- BEGIN: GENERAL STATS -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ 
 <?php if($this->config->showgenstats): ?>
-<div class="kblock kgenstats">
+<div class="kblock kgenstats" >
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kgenstats_tbody"></a></span>
 		<h2><span><?php echo $this->escape($this->config->board_title); ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kgenstats_tbody">
 		<div class="kbody">
-	<table  class = "kblocktable">
+	<table  class = "kblocktable" id="div_test">
 		<tbody>
 			<tr class = "ksth">
 				<th colspan="2"><?php echo JText::_('COM_KUNENA_STAT_GENERAL_STATS'); ?></th>
@@ -43,8 +53,9 @@ $template = KunenaTemplate::getInstance();
 					<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>: <b> <?php echo intval($this->yesterdayTopicCount); ?></b> &nbsp;
 					<?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>: <b> <?php echo intval($this->todayReplyCount); ?></b> &nbsp;
 					<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>: <b> <?php echo intval($this->yesterdayReplyCount); ?></b>
-
+                                        
 				</td>
+                            <button type="button"  class="test" >Export Data</button>    
 			</tr>
 		</tbody>
 	</table>
@@ -95,3 +106,18 @@ $k = 0;
 </div>
 <?php endforeach; ?>
 <?php $this->displayWhoIsOnline(); ?>
+
+   <?php    $name = md5(uniqid() . microtime(TRUE) . mt_rand()) . '.csv'; 
+    
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename=' . $name);
+            header('Pragma: no-cache');
+            header("Expires: 0");
+            $outstream = fopen("php://output", "w");
+            foreach ($data as $result) {
+                fputcsv($outstream, $result);
+            }
+    
+            fclose($outstream);
+   
+

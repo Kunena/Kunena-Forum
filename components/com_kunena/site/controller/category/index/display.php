@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,240 +16,196 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Category/Index';
+class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisplay {
 
-	/**
-	 * @var KunenaUser
-	 */
-	public $me;
+    protected $name = 'Category/Index';
 
-	public $sections = array();
+    /**
+     * @var KunenaUser
+     */
+    public $me;
+    public $sections = array();
+    public $categories = array();
+    public $pending = array();
+    public $more = array();
 
-	public $categories = array();
+    /**
+     * Prepare category index display.
+     *
+     * @return void
+     */
+    protected function before() {
+        parent::before();
 
-	public $pending = array();
+        $this->me = KunenaUserHelper::getMyself();
 
-	public $more = array();
+        // Get sections to display.
+        $catid = $this->input->getInt('catid', 0);
 
-	/**
-	 * Prepare category index display.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		parent::before();
+        if ($catid) {
+            $sections = KunenaForumCategoryHelper::getCategories($catid);
+        } else {
+            $sections = KunenaForumCategoryHelper::getChildren();
+        }
 
-		$this->me = KunenaUserHelper::getMyself();
+        $sectionIds = array();
 
-		// Get sections to display.
-		$catid = $this->input->getInt('catid', 0);
+        $this->more[$catid] = 0;
+        foreach ($sections as $key => $category) {
+            $this->categories[$category->id] = array();
+            $this->more[$category->id] = 0;
 
-		if ($catid)
-		{
-			$sections = KunenaForumCategoryHelper::getCategories($catid);
-		}
-		else
-		{
-			$sections = KunenaForumCategoryHelper::getChildren();
-		}
+            // Display only categories which are supposed to show up.
+            if ($catid || $category->params->get('display.index.parent', 3) > 0) {
+                if ($catid || $category->params->get('display.index.children', 3) > 1) {
+                    $sectionIds[] = $category->id;
+                } else {
+                    $this->more[$category->id] ++;
+                }
+            } else {
+                $this->more[$category->parent_id] ++;
+                unset($sections[$key]);
+                continue;
+            }
+        }
 
-		$sectionIds = array();
+        // Get categories and subcategories.
+        if (empty($sections)) {
+            return;
+        }
 
-		$this->more[$catid] = 0;
-		foreach ($sections as $key => $category)
-		{
-			$this->categories[$category->id] = array();
-			$this->more[$category->id] = 0;
+        $this->sections = $sections;
+        $categories = KunenaForumCategoryHelper::getChildren($sectionIds);
 
-			// Display only categories which are supposed to show up.
-			if ($catid || $category->params->get('display.index.parent', 3) > 0)
-			{
-				if ($catid || $category->params->get('display.index.children', 3) > 1)
-				{
-					$sectionIds[] = $category->id;
-				}
-				else
-				{
-					$this->more[$category->id]++;
-				}
-			}
-			else
-			{
-				$this->more[$category->parent_id]++;
-				unset($sections[$key]);
-				continue;
-			}
-		}
+        if (empty($categories)) {
+            return;
+        }
 
-		// Get categories and subcategories.
-		if (empty($sections))
-		{
-			return;
-		}
+        $categoryIds = array();
+        $topicIds = array();
+        $userIds = array();
+        $postIds = array();
 
-		$this->sections = $sections;
-		$categories = KunenaForumCategoryHelper::getChildren($sectionIds);
+        foreach ($categories as $key => $category) {
+            $this->more[$category->id] = 0;
 
-		if (empty($categories))
-		{
-			return;
-		}
+            // Display only categories which are supposed to show up.
+            if ($catid || $category->params->get('display.index.parent', 3) > 1) {
+                if ($catid || ($category->getParent()->params->get('display.index.children', 3) > 2 && $category->params->get('display.index.children', 3) > 2)) {
+                    $categoryIds[] = $category->id;
+                } else {
+                    $this->more[$category->id] ++;
+                }
+            } else {
+                $this->more[$category->parent_id] ++;
+                unset($categories[$key]);
+                continue;
+            }
 
-		$categoryIds = array();
-		$topicIds = array();
-		$userIds = array();
-		$postIds = array();
+            // Get list of topics.
+            $last = $category->getLastCategory();
 
-		foreach ($categories as $key => $category)
-		{
-			$this->more[$category->id] = 0;
+            if ($last->last_topic_id) {
+                $topicIds[$last->last_topic_id] = $last->last_topic_id;
+            }
 
-			// Display only categories which are supposed to show up.
-			if ($catid || $category->params->get('display.index.parent', 3) > 1)
-			{
-				if ($catid
-					|| ($category->getParent()->params->get('display.index.children', 3) > 2
-						&& $category->params->get('display.index.children', 3) > 2))
-				{
-					$categoryIds[] = $category->id;
-				}
-				else
-				{
-					$this->more[$category->id]++;
-				}
-			}
-			else
-			{
-				$this->more[$category->parent_id]++;
-				unset($categories[$key]);
-				continue;
-			}
+            $this->categories[$category->parent_id][] = $category;
 
-			// Get list of topics.
-			$last = $category->getLastCategory();
+            $rssURL = $category->getRSSUrl();
+            if (!empty($rssURL)) {
+                $category->rssURL = $category->getRSSUrl();
+            }
+        }
 
-			if ($last->last_topic_id)
-			{
-				$topicIds[$last->last_topic_id] = $last->last_topic_id;
-			}
+        $subcategories = KunenaForumCategoryHelper::getChildren($categoryIds);
 
-			$this->categories[$category->parent_id][] = $category;
+        foreach ($subcategories as $category) {
+            // Display only categories which are supposed to show up.
+            if ($catid || $category->params->get('display.index.parent', 3) > 2) {
+                $this->categories[$category->parent_id][] = $category;
+            } else {
+                $this->more[$category->parent_id] ++;
+            }
+        }
 
-			$rssURL = $category->getRSSUrl();
-			if ( !empty($rssURL) )
-			{
-				$category->rssURL = $category->getRSSUrl();
-			}
-		}
+        // Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
+        $topics = KunenaForumTopicHelper::getTopics($topicIds, 'none');
 
-		$subcategories = KunenaForumCategoryHelper::getChildren($categoryIds);
+        // Pre-fetch users (and get last post ids for moderators).
+        foreach ($topics as $topic) {
+            $userIds[$topic->last_post_userid] = $topic->last_post_userid;
+            $postIds[$topic->id] = $topic->last_post_id;
+        }
 
-		foreach ($subcategories as $category)
-		{
-			// Display only categories which are supposed to show up.
-			if ($catid || $category->params->get('display.index.parent', 3) > 2)
-			{
-				$this->categories[$category->parent_id][] = $category;
-			}
-			else
-			{
-				$this->more[$category->parent_id]++;
-			}
-		}
+        KunenaUserHelper::loadUsers($userIds);
+        KunenaForumMessageHelper::getMessages($postIds);
 
-		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
-		$topics = KunenaForumTopicHelper::getTopics($topicIds, 'none');
+        // Pre-fetch user related stuff.
+        $this->pending = array();
 
-		// Pre-fetch users (and get last post ids for moderators).
-		foreach ($topics as $topic)
-		{
-			$userIds[$topic->last_post_userid] = $topic->last_post_userid;
-			$postIds[$topic->id] = $topic->last_post_id;
-		}
+        if ($this->me->exists() && !$this->me->isBanned()) {
+            // Load new topic counts.
+            KunenaForumCategoryHelper::getNewTopics(array_keys($categories + $subcategories));
 
-		KunenaUserHelper::loadUsers($userIds);
-		KunenaForumMessageHelper::getMessages($postIds);
+            // Get categories which are moderated by current user.
+            $access = KunenaAccess::getInstance();
+            $moderate = $access->getAdminStatus($this->me) + $access->getModeratorStatus($this->me);
 
-		// Pre-fetch user related stuff.
-		$this->pending = array();
+            if (!empty($moderate[0])) {
+                // Global moderators.
+                $moderate = $categories;
+            } else {
+                // Category moderators.
+                $moderate = array_intersect_key($categories, $moderate);
+            }
 
-		if ($this->me->exists() && !$this->me->isBanned())
-		{
-			// Load new topic counts.
-			KunenaForumCategoryHelper::getNewTopics(array_keys($categories + $subcategories));
-
-			// Get categories which are moderated by current user.
-			$access = KunenaAccess::getInstance();
-			$moderate = $access->getAdminStatus($this->me) + $access->getModeratorStatus($this->me);
-
-			if (!empty($moderate[0]))
-			{
-				// Global moderators.
-				$moderate = $categories;
-			}
-			else
-			{
-				// Category moderators.
-				$moderate = array_intersect_key($categories, $moderate);
-			}
-
-			if (!empty($moderate))
-			{
-				// Get pending messages.
-				$catlist = implode(',', array_keys($moderate));
-				$db = JFactory::getDbo();
-				$db->setQuery(
-					"SELECT catid, COUNT(*) AS count
+            if (!empty($moderate)) {
+                // Get pending messages.
+                $catlist = implode(',', array_keys($moderate));
+                $db = JFactory::getDbo();
+                $db->setQuery(
+                        "SELECT catid, COUNT(*) AS count
 					FROM #__kunena_messages
 					WHERE catid IN ({$catlist}) AND hold=1
 					GROUP BY catid"
-				);
-				$pending = $db->loadAssocList();
-				KunenaError::checkDatabaseError();
+                );
+                $pending = $db->loadAssocList();
+                KunenaError::checkDatabaseError();
 
-				foreach ($pending as $item)
-				{
-					if ($item['count'])
-					{
-						$this->pending[$item['catid']] = $item['count'];
-					}
-				}
+                foreach ($pending as $item) {
+                    if ($item['count']) {
+                        $this->pending[$item['catid']] = $item['count'];
+                    }
+                }
 
-				if ($this->me->ordering != 0)
-				{
-					$topic_ordering = $this->me->ordering == 1 ? true : false;
-				}
-				else
-				{
-					$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
-				}
+                if ($this->me->ordering != 0) {
+                    $topic_ordering = $this->me->ordering == 1 ? true : false;
+                } else {
+                    $topic_ordering = $this->config->default_sort == 'asc' ? false : true;
+                }
 
-				// Fix last post position when user can see unapproved or deleted posts.
-				if (!$topic_ordering)
-				{
-					KunenaForumMessageHelper::loadLocation($postIds);
-				}
-			}
-		}
-	}
+                // Fix last post position when user can see unapproved or deleted posts.
+                if (!$topic_ordering) {
+                    KunenaForumMessageHelper::loadLocation($postIds);
+                }
+            }
+        }
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
-		$this->setTitle($title);
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
+        $this->setTitle($title);
 
-		$keywords = JText::_('COM_KUNENA_CATEGORIES');
-		$this->setKeywords($keywords);
+        $keywords = JText::_('COM_KUNENA_CATEGORIES');
+        $this->setKeywords($keywords);
 
-		$description = JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title;
-		$this->setDescription($description);
-	}
+        $description = JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title;
+        $this->setDescription($description);
+    }
+
 }

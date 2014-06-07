@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package Kunena.Framework
@@ -7,75 +8,62 @@
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- **/
-defined ( '_JEXEC' ) or die ();
+ * */
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaEmail
  */
-abstract class KunenaEmail
-{
-	/**
-	 * @param  JMail  $mail
-	 * @param  array  $receivers
-	 *
-	 * @return boolean
-	 */
-	public static function send(JMail $mail, array $receivers)
-	{
-		$config = KunenaFactory::getConfig();
-		$email_recipient_count = $config->get('email_recipient_count', 1);
-		$email_recipient_privacy = $config->get('email_recipient_privacy', 'bcc');
+abstract class KunenaEmail {
 
-		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
-		if ($email_recipient_count > 1
-			&& $email_recipient_privacy == 'bcc'
-			&& JMailHelper::isEmailAddress($config->get('email_visible_address')))
-		{
-			$mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress($config->board_title));
+    /**
+     * @param  JMail  $mail
+     * @param  array  $receivers
+     *
+     * @return boolean
+     */
+    public static function send(JMail $mail, array $receivers) {
+        $config = KunenaFactory::getConfig();
+        $email_recipient_count = $config->get('email_recipient_count', 1);
+        $email_recipient_privacy = $config->get('email_recipient_privacy', 'bcc');
 
-			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
-			if ($email_recipient_count > 9)
-			{
-				$email_recipient_count--;
-			}
-		}
+        // If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
+        if ($email_recipient_count > 1 && $email_recipient_privacy == 'bcc' && JMailHelper::isEmailAddress($config->get('email_visible_address'))) {
+            $mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress($config->board_title));
 
-		$chunks = array_chunk($receivers, $email_recipient_count);
+            // Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
+            if ($email_recipient_count > 9) {
+                $email_recipient_count--;
+            }
+        }
 
-		$success = true;
-		foreach ($chunks as $emails)
-		{
-			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to')
-			{
-				echo 'TO ';
-				$mail->ClearAddresses();
-				$mail->addRecipient($emails);
-			}
-			elseif ($email_recipient_privacy == 'cc')
-			{
-				echo 'CC ';
-				$mail->ClearCCs();
-				$mail->addCC($emails);
-			}
-			else
-			{
-				echo 'BCC ';
-				$mail->ClearBCCs();
-				$mail->addBCC($emails);
-			}
+        $chunks = array_chunk($receivers, $email_recipient_count);
 
-			try
-			{
-				$mail->Send();
-			}
-			catch (Exception $e)
-			{
-				$success = false;
-				JLog::add($e->getMessage(), JLog::ERROR, 'kunena');
-			}
-		}
+        $success = true;
+        foreach ($chunks as $emails) {
+            if ($email_recipient_count == 1 || $email_recipient_privacy == 'to') {
+                echo 'TO ';
+                $mail->ClearAddresses();
+                $mail->addRecipient($emails);
+            } elseif ($email_recipient_privacy == 'cc') {
+                echo 'CC ';
+                $mail->ClearCCs();
+                $mail->addCC($emails);
+            } else {
+                echo 'BCC ';
+                $mail->ClearBCCs();
+                $mail->addBCC($emails);
+            }
 
-		return $success;
-	}
+            try {
+                $mail->Send();
+            } catch (Exception $e) {
+                $success = false;
+                JLog::add($e->getMessage(), JLog::ERROR, 'kunena');
+            }
+        }
+
+        return $success;
+    }
+
 }

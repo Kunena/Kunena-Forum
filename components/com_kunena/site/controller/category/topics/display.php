@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,146 +16,136 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Category/Item';
+class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDisplay {
 
-	public $headerText;
+    protected $name = 'Category/Item';
+    public $headerText;
 
-	/**
-	 * @var KunenaForumCategory
-	 */
-	public $category;
+    /**
+     * @var KunenaForumCategory
+     */
+    public $category;
+    public $total;
+    public $topics;
 
-	public $total;
+    /**
+     * @var KunenaPagination
+     */
+    public $pagination;
 
-	public $topics;
+    /**
+     * @var KunenaUser
+     */
+    public $me;
 
-	/**
-	 * @var KunenaPagination
-	 */
-	public $pagination;
+    /**
+     * Prepare category display.
+     *
+     * @return void
+     *
+     * @throws KunenaExceptionAuthorise
+     */
+    protected function before() {
+        parent::before();
 
-	/**
-	 * @var KunenaUser
-	 */
-	public $me;
+        require_once KPATH_SITE . '/models/category.php';
+        $this->model = new KunenaModelCategory;
 
-	/**
-	 * Prepare category display.
-	 *
-	 * @return void
-	 *
-	 * @throws KunenaExceptionAuthorise
-	 */
-	protected function before()
-	{
-		parent::before();
+        $this->me = KunenaUserHelper::getMyself();
 
-		require_once KPATH_SITE . '/models/category.php';
-		$this->model = new KunenaModelCategory;
+        $catid = $this->input->getInt('catid');
+        $limitstart = $this->input->getInt('limitstart', 0);
+        $limit = $this->input->getInt('limit', 0);
 
-		$this->me = KunenaUserHelper::getMyself();
+        if ($limit < 1 || $limit > 100) {
+            $limit = $this->config->threads_per_page;
+        }
 
-		$catid = $this->input->getInt('catid');
-		$limitstart = $this->input->getInt('limitstart', 0);
-		$limit = $this->input->getInt('limit', 0);
+        // TODO:
+        $direction = 'DESC';
 
-		if ($limit < 1 || $limit > 100)
-		{
-			$limit = $this->config->threads_per_page;
-		}
+        $this->category = KunenaForumCategoryHelper::get($catid);
+        $this->category->tryAuthorise();
 
-		// TODO:
-		$direction = 'DESC';
+        $this->headerText = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
 
-		$this->category = KunenaForumCategoryHelper::get($catid);
-		$this->category->tryAuthorise();
+        $topic_ordering = $this->category->topic_ordering;
 
-		$this->headerText = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
+        $access = KunenaAccess::getInstance();
+        $hold = $access->getAllowedHold($this->me, $catid);
+        $moved = 1;
+        $params = array(
+            'hold' => $hold,
+            'moved' => $moved
+        );
 
-		$topic_ordering = $this->category->topic_ordering;
+        switch ($topic_ordering) {
+            case 'alpha':
+                $params['orderby'] = 'tt.ordering DESC, tt.subject ASC ';
+                break;
+            case 'creation':
+                $params['orderby'] = 'tt.ordering DESC, tt.first_post_time ' . $direction;
+                break;
+            case 'lastpost':
+            default:
+                $params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction;
+        }
 
-		$access = KunenaAccess::getInstance();
-		$hold = $access->getAllowedHold($this->me, $catid);
-		$moved = 1;
-		$params = array(
-			'hold' => $hold,
-			'moved' => $moved
-		);
+        list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
-		switch ($topic_ordering)
-		{
-			case 'alpha':
-				$params['orderby'] = 'tt.ordering DESC, tt.subject ASC ';
-				break;
-			case 'creation':
-				$params['orderby'] = 'tt.ordering DESC, tt.first_post_time ' . $direction;
-				break;
-			case 'lastpost':
-			default:
-				$params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction;
-		}
+        if ($this->total > 0) {
+            // Collect user ids for avatar prefetch when integrated.
+            $userlist = array();
+            $lastpostlist = array();
 
-		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
+            foreach ($this->topics as $topic) {
+                $userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
+                $userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
+                $lastpostlist[intval($topic->last_post_id)] = intval($topic->last_post_id);
+            }
 
-		if ($this->total > 0)
-		{
-			// Collect user ids for avatar prefetch when integrated.
-			$userlist = array();
-			$lastpostlist = array();
+            // Prefetch all users/avatars to avoid user by user queries during template iterations.
+            if (!empty($userlist)) {
+                KunenaUserHelper::loadUsers($userlist);
+            }
 
-			foreach ($this->topics as $topic)
-			{
-				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
-				$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
-				$lastpostlist[intval($topic->last_post_id)] = intval($topic->last_post_id);
-			}
+            KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
+            KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
+            $lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
-			// Prefetch all users/avatars to avoid user by user queries during template iterations.
-			if (!empty($userlist))
-			{
-				KunenaUserHelper::loadUsers($userlist);
-			}
+            // Fetch last / new post positions when user can see unapproved or deleted posts.
+            if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
+                KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
+            }
+        }
 
-			KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
-			KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
-			$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
+        $this->topicActions = $this->model->getTopicActions();
+        $this->actionMove = $this->model->getActionMove();
 
-			// Fetch last / new post positions when user can see unapproved or deleted posts.
-			if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())
-			{
-				KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
-			}
-		}
+        $this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
+        $this->pagination->setDisplayedPages(5);
+    }
 
-		$this->topicActions = $this->model->getTopicActions();
-		$this->actionMove = $this->model->getActionMove();
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $page = $this->pagination->pagesCurrent;
+        $pages = $this->pagination->pagesTotal;
+        $pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
+        $parentText = $this->category->getParent()->displayField('name');
+        $categoryText = $this->category->displayField('name');
 
-		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
-		$this->pagination->setDisplayedPages(5);
-	}
+        $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', "{$parentText} / {$categoryText}{$pagesText}");
+        $this->setTitle($title);
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$page = $this->pagination->pagesCurrent;
-		$pages = $this->pagination->pagesTotal;
-		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
-		$parentText = $this->category->getParent()->displayField('name');
-		$categoryText = $this->category->displayField('name');
+        $keywords = JText::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
+        $this->setKeywords($keywords);
 
-		$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', "{$parentText} / {$categoryText}{$pagesText}");
-		$this->setTitle($title);
+        $description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
+        $this->setDescription($description);
+    }
 
-		$keywords = JText::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
-		$this->setKeywords($keywords);
-
-		$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
-		$this->setDescription($description);
-	}
 }

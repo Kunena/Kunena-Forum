@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package Kunena.Framework
@@ -7,10 +8,10 @@
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- **/
-defined ( '_JEXEC' ) or die ();
+ * */
+defined('_JEXEC') or die();
 
-jimport ( 'joomla.html.pagination' );
+jimport('joomla.html.pagination');
 
 /**
  * Pagination Class.  Provides a common interface for content pagination for the
@@ -19,10 +20,12 @@ jimport ( 'joomla.html.pagination' );
  * @since		2.0
  * @deprecated	3.0
  */
-class KunenaHtmlPagination extends KunenaPagination
-{
-	public function setDisplay($displayedPages = 7, $uri = null) {
-		$this->setDisplayedPages($displayedPages);
-		if ($uri instanceof JUri) $this->setUri($uri);
-	}
+class KunenaHtmlPagination extends KunenaPagination {
+
+    public function setDisplay($displayedPages = 7, $uri = null) {
+        $this->setDisplayedPages($displayedPages);
+        if ($uri instanceof JUri)
+            $this->setUri($uri);
+    }
+
 }

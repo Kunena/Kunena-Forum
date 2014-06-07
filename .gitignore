@@ -6,3 +6,4 @@
 build/tmp
 components/com_kunena/site/template/**/params.ini
 components/com_kunena/site/template/crypsis/css/kunena.css
+/nbproject/private/

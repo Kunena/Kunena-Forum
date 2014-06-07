@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -17,140 +18,125 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends KunenaControllerApplicationDisplay
-{
-	/**
-	 * Return true if layout exists.
-	 *
-	 * @return bool
-	 */
-	public function exists()
-	{
-		return true;
-	}
+class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends KunenaControllerApplicationDisplay {
 
-	/**
-	 * Display attachment.
-	 *
-	 * @return void
-	 *
-	 * @throws RuntimeException
-	 * @throws KunenaExceptionAuthorise
-	 */
-	public function execute()
-	{
-		$format = $this->input->getWord('format', 'html');
-		$id = $this->input->getInt('id', 0);
-		$thumb = $this->input->getBool('thumb', false);
-		$download = $this->input->getBool('download', false);
+    /**
+     * Return true if layout exists.
+     *
+     * @return bool
+     */
+    public function exists() {
+        return true;
+    }
 
-		// Run before executing action.
-		$this->before();
+    /**
+     * Display attachment.
+     *
+     * @return void
+     *
+     * @throws RuntimeException
+     * @throws KunenaExceptionAuthorise
+     */
+    public function execute() {
+        $format = $this->input->getWord('format', 'html');
+        $id = $this->input->getInt('id', 0);
+        $thumb = $this->input->getBool('thumb', false);
+        $download = $this->input->getBool('download', false);
 
-		if ($format != 'raw' || !$id)
-		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
-		}
-		elseif ($this->config->board_offline && !$this->me->isAdmin())
-		{
-			// Forum is offline.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
-		}
-		elseif ($this->config->regonly && !$this->me->exists())
-		{
-			// Forum is for registered users only.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
-		}
+        // Run before executing action.
+        $this->before();
 
-		$attachment = KunenaAttachmentHelper::get($id);
-		$attachment->tryAuthorise();
+        if ($format != 'raw' || !$id) {
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+        } elseif ($this->config->board_offline && !$this->me->isAdmin()) {
+            // Forum is offline.
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+        } elseif ($this->config->regonly && !$this->me->exists()) {
+            // Forum is for registered users only.
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+        }
 
-		$path = $attachment->getPath($thumb);
+        $attachment = KunenaAttachmentHelper::get($id);
+        $attachment->tryAuthorise();
 
-		if ($thumb && !$path)
-		{
-			$path = $attachment->getPath(false);
-		}
+        $path = $attachment->getPath($thumb);
 
-		if (!$path)
-		{
-			// File doesn't exist.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
-		}
+        if ($thumb && !$path) {
+            $path = $attachment->getPath(false);
+        }
 
-		if (headers_sent())
-		{
-			throw new KunenaExceptionAuthorise('HTTP headers were already sent. Sending attachment failed.', 500);
-		}
+        if (!$path) {
+            // File doesn't exist.
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
 
-		// Close all output buffers, just in case.
-		while(@ob_end_clean());
+        if (headers_sent()) {
+            throw new KunenaExceptionAuthorise('HTTP headers were already sent. Sending attachment failed.', 500);
+        }
 
-		// Handle 304 Not Modified
-		if (isset($_SERVER['HTTP_IF_NONE_MATCH']))
-		{
-			$etag = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
+        // Close all output buffers, just in case.
+        while (@ob_end_clean());
 
-			if ($etag == $attachment->hash)
-			{
-				header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT', true, 304);
+        // Handle 304 Not Modified
+        if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+            $etag = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
 
-				// Give fast response.
-				flush();
-				$this->app->close();
-			}
-		}
+            if ($etag == $attachment->hash) {
+                header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT', true, 304);
+
+                // Give fast response.
+                flush();
+                $this->app->close();
+            }
+        }
 
 
-		// Set file headers.
-		header('ETag: ' . $attachment->hash);
-		header('Pragma: public');
-		header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
+        // Set file headers.
+        header('ETag: ' . $attachment->hash);
+        header('Pragma: public');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
 
-		if (!$download && $attachment->isImage())
-		{
-			// By default display images inline.
-			$maxage = 60 * 60;
-			header('Cache-Control: maxage=' . $maxage);
-			header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT');
-			header('Content-type: ' . $attachment->filetype);
-			header('Content-Disposition: inline; filename="' . $attachment->getFilename(false) . '"');
-		}
-		else
-		{
-			// Otherwise force file download.
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/force-download');
-			header('Content-Type: application/octet-stream');
-			header('Content-Type: application/download');
-			header('Content-Disposition: attachment; filename="' . $attachment->getFilename(false) . '"');
-		}
+        if (!$download && $attachment->isImage()) {
+            // By default display images inline.
+            $maxage = 60 * 60;
+            header('Cache-Control: maxage=' . $maxage);
+            header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT');
+            header('Content-type: ' . $attachment->filetype);
+            header('Content-Disposition: inline; filename="' . $attachment->getFilename(false) . '"');
+        } else {
+            // Otherwise force file download.
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/force-download');
+            header('Content-Type: application/octet-stream');
+            header('Content-Type: application/download');
+            header('Content-Disposition: attachment; filename="' . $attachment->getFilename(false) . '"');
+        }
 
-		header('Content-Transfer-Encoding: binary');
-		header('Content-Length: ' . filesize($path));
-		flush();
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: ' . filesize($path));
+        flush();
 
-		// Output the file contents.
-		@readfile($path);
-		flush();
+        // Output the file contents.
+        @readfile($path);
+        flush();
 
-		$this->app->close();
-	}
+        $this->app->close();
+    }
 
-	/**
-	 * Prepare attachment display.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		// Load language files.
-		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+    /**
+     * Prepare attachment display.
+     *
+     * @return void
+     */
+    protected function before() {
+        // Load language files.
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
-		$this->document = JFactory::getDocument();
-	}
+        $this->me = KunenaUserHelper::getMyself();
+        $this->config = KunenaConfig::getInstance();
+        $this->document = JFactory::getDocument();
+    }
+
 }

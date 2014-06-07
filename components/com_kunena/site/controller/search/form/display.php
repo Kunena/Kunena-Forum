@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,42 +16,41 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Search/Form';
+class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay {
 
-	/**
-	 * @var KunenaModelSearch
-	 */
-	public $model;
+    protected $name = 'Search/Form';
 
-	/**
-	 * Prepare search form display.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * @var KunenaModelSearch
+     */
+    public $model;
 
-		require_once KPATH_SITE . '/models/search.php';
-		$this->model = new KunenaModelSearch(array(), $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
+    /**
+     * Prepare search form display.
+     *
+     * @return void
+     */
+    protected function before() {
+        parent::before();
 
-		$this->me = KunenaUserHelper::getMyself();
+        require_once KPATH_SITE . '/models/search.php';
+        $this->model = new KunenaModelSearch(array(), $this->input);
+        $this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+        $this->state = $this->model->getState();
 
-		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$this->error = $this->model->getError();
-	}
+        $this->me = KunenaUserHelper::getMyself();
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
-	}
+        $this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+        $this->error = $this->model->getError();
+    }
+
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+    }
+
 }

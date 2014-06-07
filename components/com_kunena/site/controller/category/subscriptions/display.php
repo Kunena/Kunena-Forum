@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,116 +16,104 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Category/List';
+class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaControllerDisplay {
 
-	public $total;
+    protected $name = 'Category/List';
+    public $total;
+    public $pagination;
+    public $categories = array();
 
-	public $pagination;
+    /**
+     * Prepare category subscriptions display.
+     *
+     * @return void
+     *
+     * @throws KunenaExceptionAuthorise
+     */
+    protected function before() {
+        parent::before();
 
-	public $categories = array();
+        $me = KunenaUserHelper::getMyself();
 
-	/**
-	 * Prepare category subscriptions display.
-	 *
-	 * @return void
-	 *
-	 * @throws KunenaExceptionAuthorise
-	 */
-	protected function before()
-	{
-		parent::before();
+        if (!$me->exists()) {
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
+        }
 
-		$me = KunenaUserHelper::getMyself();
+        $limit = $this->input->getInt('limit', 0);
 
-		if (!$me->exists())
-		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 401);
-		}
+        if ($limit < 1 || $limit > 100) {
+            $limit = 20;
+        }
 
-		$limit = $this->input->getInt('limit', 0);
+        $limitstart = $this->input->getInt('limitstart', 0);
 
-		if ($limit < 1 || $limit > 100)
-		{
-			$limit = 20;
-		}
+        if ($limitstart < 0) {
+            $limitstart = 0;
+        }
 
-		$limitstart = $this->input->getInt('limitstart', 0);
+        list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($me->userid);
 
-		if ($limitstart < 0)
-		{
-			$limitstart = 0;
-		}
+        $topicIds = array();
+        $userIds = array();
+        $postIds = array();
 
-		list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($me->userid);
+        foreach ($this->categories as $category) {
+            // Get list of topics.
+            if ($category->last_topic_id) {
+                $topicIds[$category->last_topic_id] = $category->last_topic_id;
+            }
+        }
 
-		$topicIds = array();
-		$userIds = array();
-		$postIds = array();
+        // Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
+        $topics = KunenaForumTopicHelper::getTopics($topicIds, 'none');
 
-		foreach ($this->categories as $category)
-		{
-			// Get list of topics.
-			if ($category->last_topic_id)
-			{
-				$topicIds[$category->last_topic_id] = $category->last_topic_id;
-			}
-		}
+        // Pre-fetch users (and get last post ids for moderators).
+        foreach ($topics as $topic) {
+            $userIds[$topic->last_post_userid] = $topic->last_post_userid;
+            $postIds[$topic->id] = $topic->last_post_id;
+        }
 
-		// Pre-fetch topics (also display unauthorized topics as they are in allowed categories).
-		$topics = KunenaForumTopicHelper::getTopics($topicIds, 'none');
+        KunenaUserHelper::loadUsers($userIds);
+        KunenaForumMessageHelper::getMessages($postIds);
 
-		// Pre-fetch users (and get last post ids for moderators).
-		foreach ($topics as $topic)
-		{
-			$userIds[$topic->last_post_userid] = $topic->last_post_userid;
-			$postIds[$topic->id] = $topic->last_post_id;
-		}
+        // Pre-fetch user related stuff.
+        if ($me->exists() && !$me->isBanned()) {
+            // Load new topic counts.
+            KunenaForumCategoryHelper::getNewTopics(array_keys($this->categories));
+        }
 
-		KunenaUserHelper::loadUsers($userIds);
-		KunenaForumMessageHelper::getMessages($postIds);
+        $this->pagination = new JPagination($total, $limitstart, $limit);
 
-		// Pre-fetch user related stuff.
-		if ($me->exists() && !$me->isBanned())
-		{
-			// Load new topic counts.
-			KunenaForumCategoryHelper::getNewTopics(array_keys($this->categories));
-		}
+        $this->headerText = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+    }
 
-		$this->pagination = new JPagination($total, $limitstart, $limit);
+    /**
+     * Get topic action option list.
+     *
+     * @return array
+     */
+    public function getActions() {
+        $options = array();
+        $options[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+        $options[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
-		$this->headerText = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
-	}
+        return $options;
+    }
 
-	/**
-	 * Get topic action option list.
-	 *
-	 * @return array
-	 */
-	public function getActions()
-	{
-		$options = array();
-		$options[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$options[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
+        $this->setTitle($title);
 
-		return $options;
-	}
+        $keywords = JText::_('COM_KUNENA_CATEGORIES');
+        $this->setKeywords($keywords);
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
-		$this->setTitle($title);
+        $description = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
+        $this->setDescription($description);
+    }
 
-		$keywords = JText::_('COM_KUNENA_CATEGORIES');
-		$this->setKeywords($keywords);
-
-		$description = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
-		$this->setDescription($description);
-	}
 }

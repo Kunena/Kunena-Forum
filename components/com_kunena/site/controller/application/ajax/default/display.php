@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,142 +16,123 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaControllerApplicationDisplay
-{
-	/**
-	 * Return true if layout exists.
-	 *
-	 * @return bool
-	 */
-	public function exists()
-	{
-		return KunenaFactory::getTemplate()->isHmvc();
-	}
+class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaControllerApplicationDisplay {
 
-	/**
-	 * Return AJAX for the requested layout.
-	 *
-	 * @return string  String in JSON or RAW.
-	 *
-	 * @throws RuntimeException
-	 * @throws KunenaExceptionAuthorise
-	 */
-	public function execute()
-	{
-		$format = $this->input->getWord('format', 'html');
-		$function = 'display' . ucfirst($format);
+    /**
+     * Return true if layout exists.
+     *
+     * @return bool
+     */
+    public function exists() {
+        return KunenaFactory::getTemplate()->isHmvc();
+    }
 
-		if (!method_exists($this, $function))
-		{
-			// Invalid page request.
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
-		}
+    /**
+     * Return AJAX for the requested layout.
+     *
+     * @return string  String in JSON or RAW.
+     *
+     * @throws RuntimeException
+     * @throws KunenaExceptionAuthorise
+     */
+    public function execute() {
+        $format = $this->input->getWord('format', 'html');
+        $function = 'display' . ucfirst($format);
 
-		// Run before executing action.
-		$result = $this->before();
+        if (!method_exists($this, $function)) {
+            // Invalid page request.
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
 
-		if ($result === false)
-		{
-			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
-		}
-		elseif (!JSession::checkToken())
-		{
-			// Invalid access token.
-			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ERROR_TOKEN'), 403);
-		}
-		elseif ($this->config->board_offline && !$this->me->isAdmin())
-		{
-			// Forum is offline.
-			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
-		}
-		elseif ($this->config->regonly && !$this->me->exists())
-		{
-			// Forum is for registered users only.
-			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
-		}
-		else
-		{
-			$display = $this->input->getCmd('display', 'Undefined') . '/Display';
+        // Run before executing action.
+        $result = $this->before();
 
-			try
-			{
-				$content = KunenaRequest::factory($display, $this->input, $this->options)
-					->setPrimary()->execute()->render();
-			}
-			catch (Exception $e)
-			{
-				$content = $e;
-			}
-		}
+        if ($result === false) {
+            $content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+        } elseif (!JSession::checkToken()) {
+            // Invalid access token.
+            $content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ERROR_TOKEN'), 403);
+        } elseif ($this->config->board_offline && !$this->me->isAdmin()) {
+            // Forum is offline.
+            $content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+        } elseif ($this->config->regonly && !$this->me->exists()) {
+            // Forum is for registered users only.
+            $content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
+        } else {
+            $display = $this->input->getCmd('display', 'Undefined') . '/Display';
 
-		return $this->$function($content);
-	}
+            try {
+                $content = KunenaRequest::factory($display, $this->input, $this->options)
+                                ->setPrimary()->execute()->render();
+            } catch (Exception $e) {
+                $content = $e;
+            }
+        }
 
-	/**
-	 * Prepare AJAX display.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		// Load language files.
-		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
-		KunenaFactory::loadLanguage('com_kunena.templates');
-		KunenaFactory::loadLanguage('com_kunena.models');
-		KunenaFactory::loadLanguage('com_kunena.views');
+        return $this->$function($content);
+    }
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
-		$this->document = JFactory::getDocument();
-		$this->template = KunenaFactory::getTemplate();
-		$this->template->initialize();
-	}
+    /**
+     * Prepare AJAX display.
+     *
+     * @return void
+     */
+    protected function before() {
+        // Load language files.
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        KunenaFactory::loadLanguage('com_kunena.templates');
+        KunenaFactory::loadLanguage('com_kunena.models');
+        KunenaFactory::loadLanguage('com_kunena.views');
 
-	/**
-	 * Display output as RAW.
-	 *
-	 * @param   mixed  $content  Content to be returned.
-	 *
-	 * @return  string
-	 */
-	public function displayRaw($content)
-	{
-		if ($content instanceof Exception)
-		{
-			$this->setResponseStatus($content->getCode());
+        $this->me = KunenaUserHelper::getMyself();
+        $this->config = KunenaConfig::getInstance();
+        $this->document = JFactory::getDocument();
+        $this->template = KunenaFactory::getTemplate();
+        $this->template->initialize();
+    }
 
-			return $content->getCode() . ' ' . $content->getMessage();
-		}
+    /**
+     * Display output as RAW.
+     *
+     * @param   mixed  $content  Content to be returned.
+     *
+     * @return  string
+     */
+    public function displayRaw($content) {
+        if ($content instanceof Exception) {
+            $this->setResponseStatus($content->getCode());
 
-		return (string) $content;
-	}
+            return $content->getCode() . ' ' . $content->getMessage();
+        }
 
-	/**
-	 * Display output as JSON.
-	 *
-	 * @param   mixed  $content  Content to be returned.
-	 *
-	 * @return  string
-	 */
-	public function displayJson($content)
-	{
-		// Tell the browser that our response is in JSON.
-		header('Content-type: application/json', true);
+        return (string) $content;
+    }
 
-		// Create JSON response.
-		$response = new KunenaResponseJson($content);
+    /**
+     * Display output as JSON.
+     *
+     * @param   mixed  $content  Content to be returned.
+     *
+     * @return  string
+     */
+    public function displayJson($content) {
+        // Tell the browser that our response is in JSON.
+        header('Content-type: application/json', true);
 
-		// In case of an error we want to set HTTP error code.
-		if (!$response->success)
-		{
-			// We want to wrap the exception to be able to display correct HTTP status code.
-			$error = new KunenaExceptionAuthorise($response->message, $response->code);
-			header('HTTP/1.1 ' . $error->getResponseStatus(), true);
-		}
+        // Create JSON response.
+        $response = new KunenaResponseJson($content);
 
-		echo json_encode($response);
+        // In case of an error we want to set HTTP error code.
+        if (!$response->success) {
+            // We want to wrap the exception to be able to display correct HTTP status code.
+            $error = new KunenaExceptionAuthorise($response->message, $response->code);
+            header('HTTP/1.1 ' . $error->getResponseStatus(), true);
+        }
 
-		// It's much faster and safer to exit now than let Joomla to send the response.
-		JFactory::getApplication()->close();
-	}
+        echo json_encode($response);
+
+        // It's much faster and safer to exit now than let Joomla to send the response.
+        JFactory::getApplication()->close();
+    }
+
 }

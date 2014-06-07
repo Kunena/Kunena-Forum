@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package Kunena.Framework
@@ -7,21 +8,22 @@
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
-if (!class_exists('JLoader')) return;
+if (!class_exists('JLoader'))
+    return;
 
 // Define Kunena framework path.
 define('KPATH_FRAMEWORK', __DIR__);
 
 // Register the Joomla compatibility layer.
 if (version_compare(JVERSION, '3.2', '>')) {
-	JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla32');
+    JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla32');
 } elseif (version_compare(JVERSION, '3', '>')) {
-	JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla3');
+    JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla3');
 } else {
-	JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla2');
+    JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla2');
 }
 
 // Register the library base path for Kunena Framework.
@@ -67,5 +69,5 @@ JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/forum/topic/us
 
 // Register CKunenaLink class in order to allow old templates to work
 if (defined('KPATH_SITE')) {
-	JLoader::register('CKunenaLink', KPATH_SITE . '/lib/kunena.link.class.php');
+    JLoader::register('CKunenaLink', KPATH_SITE . '/lib/kunena.link.class.php');
 }

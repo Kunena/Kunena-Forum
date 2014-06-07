@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,62 +16,58 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Search/Results';
+class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay {
 
-	/**
-	 * @var KunenaModelSearch
-	 */
-	public $model;
+    protected $name = 'Search/Results';
 
-	/**
-	 * @var int
-	 */
-	public $total;
+    /**
+     * @var KunenaModelSearch
+     */
+    public $model;
 
-	public $data = array();
+    /**
+     * @var int
+     */
+    public $total;
+    public $data = array();
 
-	/**
-	 * Prepare search results display.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare search results display.
+     *
+     * @return void
+     */
+    protected function before() {
+        parent::before();
 
-		require_once KPATH_SITE . '/models/search.php';
-		$this->model = new KunenaModelSearch(array(), $this->input);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
+        require_once KPATH_SITE . '/models/search.php';
+        $this->model = new KunenaModelSearch(array(), $this->input);
+        $this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+        $this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->message_ordering = $this->me->getMessageOrdering();
+        $this->me = KunenaUserHelper::getMyself();
+        $this->message_ordering = $this->me->getMessageOrdering();
 
-		$this->searchwords = $this->model->getSearchWords();
-		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+        $this->searchwords = $this->model->getSearchWords();
+        $this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
-		$this->results = array();
-		$this->total = $this->model->getTotal();
-		$this->results = $this->model->getResults();
+        $this->results = array();
+        $this->total = $this->model->getTotal();
+        $this->results = $this->model->getResults();
 
-		$this->pagination = new KunenaPagination(
-			$this->total,
-			$this->state->get('list.start'),
-			$this->state->get('list.limit')
-		);
+        $this->pagination = new KunenaPagination(
+                $this->total, $this->state->get('list.start'), $this->state->get('list.limit')
+        );
 
-		$this->error = $this->model->getError();
-	}
+        $this->error = $this->model->getError();
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
-	}
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+    }
+
 }

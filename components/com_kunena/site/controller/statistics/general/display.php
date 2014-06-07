@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,48 +16,45 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Statistics/General';
+class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaControllerDisplay {
 
-	/**
-	 * Prepare general statistics display.
-	 *
-	 * @return void
-	 *
-	 * @throws KunenaExceptionAuthorise
-	 */
-	protected function before()
-	{
-		parent::before();
+    protected $name = 'Statistics/General';
 
-		$this->config = KunenaConfig::getInstance();
+    /**
+     * Prepare general statistics display.
+     *
+     * @return void
+     *
+     * @throws KunenaExceptionAuthorise
+     */
+    protected function before() {
+        parent::before();
 
-		if (!$this->config->get('showstats'))
-		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
-		}
+        $this->config = KunenaConfig::getInstance();
 
-		if (!$this->config->statslink_allowed && JFactory::getUser()->guest)
-		{
-			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_STATS_NOT_ALLOWED_TOSEE_STATS'), '401');
-		}
+        if (!$this->config->get('showstats')) {
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
+        }
 
-		$statistics = KunenaForumStatistics::getInstance();
-		$statistics->loadAll();
-		$this->setProperties($statistics);
+        if (!$this->config->statslink_allowed && JFactory::getUser()->guest) {
+            throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_STATS_NOT_ALLOWED_TOSEE_STATS'), '401');
+        }
 
-		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink();
-		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
-	}
+        $statistics = KunenaForumStatistics::getInstance();
+        $statistics->loadAll();
+        $this->setProperties($statistics);
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));
-	}
+        $this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink();
+        $this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
+    }
+
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));
+    }
+
 }

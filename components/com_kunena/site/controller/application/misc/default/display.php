@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,65 +16,56 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerApplicationDisplay
-{
-	public $header;
+class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaControllerApplicationDisplay {
 
-	public $body;
+    public $header;
+    public $body;
 
-	/**
-	 * Return custom display layout.
-	 *
-	 * @return KunenaLayout
-	 */
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayoutPage::factory('Misc/Default')
-			->set('header', $this->header)
-			->set('body', $this->body);
+    /**
+     * Return custom display layout.
+     *
+     * @return KunenaLayout
+     */
+    protected function display() {
+        // Display layout with given parameters.
+        $content = KunenaLayoutPage::factory('Misc/Default')
+                ->set('header', $this->header)
+                ->set('body', $this->body);
 
-		return $content;
-	}
+        return $content;
+    }
 
-	/**
-	 * Prepare custom text output.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare custom text output.
+     *
+     * @return void
+     */
+    protected function before() {
+        parent::before();
 
-		$params = $this->app->getParams('com_kunena');
-		$this->header = $params->get('page_title');
+        $params = $this->app->getParams('com_kunena');
+        $this->header = $params->get('page_title');
 
-		$body = $params->get('body');
-		$format = $params->get('body_format');
+        $body = $params->get('body');
+        $format = $params->get('body_format');
 
-		$this->header = htmlspecialchars($this->header, ENT_COMPAT, 'UTF-8');
+        $this->header = htmlspecialchars($this->header, ENT_COMPAT, 'UTF-8');
 
-		if ($format == 'html')
-		{
-			$this->body = trim($body);
-		}
-		elseif ($format == 'text')
-		{
-			$this->body = function () use ($body)
-			{
-				return htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
-			};
-		}
-		else
-		{
-			$this->body = function () use ($body)
-			{
-				/** @var JCache|JCacheControllerCallback $cache */
-				$cache = JFactory::getCache('com_kunena', 'callback');
-				$cache->setLifeTime(180);
+        if ($format == 'html') {
+            $this->body = trim($body);
+        } elseif ($format == 'text') {
+            $this->body = function () use ($body) {
+                return htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
+            };
+        } else {
+            $this->body = function () use ($body) {
+                /** @var JCache|JCacheControllerCallback $cache */
+                $cache = JFactory::getCache('com_kunena', 'callback');
+                $cache->setLifeTime(180);
 
-				return $cache->call(array('KunenaHtmlParser','parseBBCode'), $body);
-			};
-		}
-	}
+                return $cache->call(array('KunenaHtmlParser', 'parseBBCode'), $body);
+            };
+        }
+    }
+
 }

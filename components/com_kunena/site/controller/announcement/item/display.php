@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,34 +16,32 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerDisplay
-{
-	protected $name = 'Announcement/Item';
+class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerDisplay {
 
-	public $announcement;
+    protected $name = 'Announcement/Item';
+    public $announcement;
 
-	/**
-	 * Prepare announcement display.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare announcement display.
+     *
+     * @return void
+     */
+    protected function before() {
+        parent::before();
 
-		$id = $this->input->getInt('id', null);
+        $id = $this->input->getInt('id', null);
 
-		$this->announcement = KunenaForumAnnouncementHelper::get($id);
-		$this->announcement->tryAuthorise();
-	}
+        $this->announcement = KunenaForumAnnouncementHelper::get($id);
+        $this->announcement->tryAuthorise();
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 */
-	protected function prepareDocument()
-	{
-		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
-	}
+    /**
+     * Prepare document.
+     *
+     * @return void
+     */
+    protected function prepareDocument() {
+        $this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
+    }
+
 }

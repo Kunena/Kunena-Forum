@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package     Kunena.Site
@@ -7,7 +8,7 @@
  * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
- **/
+ * */
 defined('_JEXEC') or die;
 
 /**
@@ -15,30 +16,29 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaControllerApplicationDisplay
-{
-	/**
-	 * Return true if layout exists.
-	 *
-	 * @return bool
-	 */
-	public function exists()
-	{
-		$this->page = KunenaLayoutPage::factory("{$this->input->getCmd('view')}/default");
+class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaControllerApplicationDisplay {
 
-		return (bool) $this->page->getPath();
-	}
+    /**
+     * Return true if layout exists.
+     *
+     * @return bool
+     */
+    public function exists() {
+        $this->page = KunenaLayoutPage::factory("{$this->input->getCmd('view')}/default");
 
-	/**
-	 * Change topic layout to threaded.
-	 *
-	 * @return void
-	 */
-	protected function before()
-	{
-		$layout = $this->input->getWord('layout');
-		KunenaUserHelper::getMyself()->setTopicLayout($layout);
+        return (bool) $this->page->getPath();
+    }
 
-		parent::before();
-	}
+    /**
+     * Change topic layout to threaded.
+     *
+     * @return void
+     */
+    protected function before() {
+        $layout = $this->input->getWord('layout');
+        KunenaUserHelper::getMyself()->setTopicLayout($layout);
+
+        parent::before();
+    }
+
 }

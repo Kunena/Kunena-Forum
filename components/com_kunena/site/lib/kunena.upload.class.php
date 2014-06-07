@@ -328,6 +328,8 @@ class CKunenaUpload {
 					$image = new KunenaImage($this->fileTemp);
 					$image = $image->resize($this->imagewidth, $this->imageheight, false);
 					$image->toFile($this->fileTemp, $this->imageInfo->type, $options);
+					$image->destroy();
+
 					unset($image);
 				} catch (Exception $e) {
 					// TODO: better error message.

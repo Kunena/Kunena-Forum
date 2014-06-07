@@ -75,6 +75,8 @@ class KunenaImageHelper
 
 				$temp = KunenaPath::tmpdir() . '/kunena_' . md5(rand());
 				$image->toFile($temp, $info->type, $options);
+				$image->destroy();
+
 				unset($image);
 
 				// Move new file to its proper location.

@@ -48,25 +48,17 @@ class KunenaLogin {
 	 * @param   string  $username    The username of user which need to be logged
 	 * @param   string  $password    The password of user which need to be logged
 	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
-	 * @param   string  $return      The URL where the user will be redirected
-	 * @param   int     $secretkey   The secretkey given ot use TFA feature
+	 * @param   string  $secretkey   The secret key for the TFA feature
 	 *
 	 * @return boolean
 	 */
-	public function loginUser($username, $password, $rememberme = 0, $return = null, $secretkey = 0)
+	public function loginUser($username, $password, $rememberme = 0, $secretkey = null)
 	{
 		foreach ($this->instances as $login)
 		{
 			if (method_exists($login, 'loginUser'))
 			{
-				if ( $this->isTFAEnabled() )
-				{
-					return $login->loginUser($username, $password, $rememberme, $return, $secretkey);
-				}
-				else
-				{
-					return $login->loginUser($username, $password, $rememberme, $return);
-				}
+				return $login->loginUser($username, $password, $rememberme, $secretkey);
 			}
 		}
 

@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 							<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD'); ?>
 							<input type="password" name="password" class="inputbox ks" size="18" alt="password" />
 						</span>						
-						<?php if ($this->login->secretkey): ?>
+						<?php if(JPluginHelper::isEnabled('twofactorauth', '')): ?>
 						<span>
 							<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 							<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" size="18" />

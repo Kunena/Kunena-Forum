@@ -52,7 +52,7 @@ defined('_JEXEC') or die;
 					</div>
 				</div>
 				
-				<?php if ($this->login->secretkey): ?>
+				<?php if(JPluginHelper::isEnabled('twofactorauth', '')): ?>
 				<div id="form-login-tfa" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">

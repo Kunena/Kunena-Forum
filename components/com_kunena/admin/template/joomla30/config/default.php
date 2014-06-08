@@ -483,6 +483,11 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT') ?></td>
+												<td><?php echo $this->lists ['user_report'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT_DESC') ?></td>
+											</tr>
 										</tbody>
 									</table>
 								</fieldset>

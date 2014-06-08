@@ -107,11 +107,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH_DESC') ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK') ?></td>
-														<td><?php echo $this->lists ['version_check'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?></td>
-													</tr>
-													<tr>
 														<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?></td>
 														<td><?php echo $this->lists ['time_to_create_page'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE_DESC') ?></td>

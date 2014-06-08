@@ -52,7 +52,8 @@ defined('_JEXEC') or die;
 					</div>
 				</div>
 				
-				<?php if(JPluginHelper::isEnabled('twofactorauth', '')): ?>
+				<?php $login = KunenaLogin::getInstance(); ?>
+				<?php if ($login->getTwoFactorMethods() > 1) : ?>
 				<div id="form-login-tfa" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">

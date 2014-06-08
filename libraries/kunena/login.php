@@ -168,4 +168,21 @@ class KunenaLogin {
 
 		return !(empty($otpConfig->method) || ($otpConfig->method == 'none'));
 	}
+
+	/**
+	 * Method to check if TFA is enabled when user ins't logged
+	 *
+	 * @return int
+	 */
+	public static function getTwoFactorMethods()
+	{
+		if ( !version_compare(JVERSION, '3.2', '>=') )
+		{
+			return null;
+		}
+
+		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
+
+		return count(UsersHelper::getTwoFactorMethods());
+	}
 }

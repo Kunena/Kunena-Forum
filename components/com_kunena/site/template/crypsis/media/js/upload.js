@@ -56,7 +56,9 @@ jQuery(function() {
 			e.preventDefault();
 			e.stopPropagation();
 			
-			jQuery('#kbbcode-message').append('[attachment:'+index+']'+file.name+'[/attachment]');
+			var value = jQuery('#kbbcode-message').val();
+		
+			jQuery('#kbbcode-message').val(value+' [attachment:'+index+']'+file.name+'[/attachment]');
 		});
 
 		// Add the button to the file preview element.

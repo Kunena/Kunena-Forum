@@ -21,7 +21,7 @@ $editor->initialize('id');
 
 $this->template->loadUploadScript();
 
-$this->addScriptDeclaration("kunena_upload_files_url = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=upload&format=raw', false). "'" );
+$this->addScriptDeclaration("kunena_upload_files_url = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=upload&format=raw&'. JUtility::getToken() .'=1', false). "'" );
 
 $this->addScriptDeclaration("window.addEvent('domready', function() {
 	if ( typeof pollcategoriesid != 'undefined' ) {

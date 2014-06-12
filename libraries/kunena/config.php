@@ -785,12 +785,6 @@ class KunenaConfig extends JObject {
 	public $showbannedreason = 0;
 
 	/**
-	 * @var    integer Version Check; select, boolean
-	 * @since  1.6.0
-	 */
-	public $version_check = 1;
-
-	/**
 	 * @var    integer  Show thank you; select, boolean
 	 * @since  1.6.0
 	 */

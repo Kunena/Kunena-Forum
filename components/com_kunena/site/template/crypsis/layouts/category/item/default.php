@@ -108,7 +108,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 			</td>
 
 			<td colspan="6" class="hidden-phone">
-
+				<div class="form-horizontal">
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
@@ -116,14 +116,14 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 				<?php if (!empty($this->topicActions)) : ?>
 				<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
-							'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+							'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
 				<?php if ($this->actionMove) :
 								$options = array (
 									JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))
 								);
 								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(),
-									'size="1" disabled="disabled"', 'value', 'text', 0,
+									' disabled="disabled"', 'value', 'text', 0,
 									'kchecktarget');
 							?>
 				<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
@@ -132,7 +132,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php endif; ?>
 
 				<?php endif; ?>
-
+			</div>
 			</td>
 		</tr>
 		</tfoot>

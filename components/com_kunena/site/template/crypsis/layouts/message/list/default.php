@@ -79,6 +79,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $colspan; ?>">
+					<div class="form-horizontal">
 					<?php
 					if (!empty($this->moreUri)) {
 						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
@@ -87,11 +88,12 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 					<?php if (!empty($this->actions)|| !empty($this->embedded))  : ?>
 						<?php echo JHtml::_(
-							'select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" size="1"',
+							'select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask"',
 							'value', 'text', 0, 'kchecktask'
 						); ?>
 						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
+				</div>
 				</td>
 			</tr>
 		</tfoot>

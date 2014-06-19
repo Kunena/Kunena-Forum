@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="control-group">
 	<label class="control-label"><?php echo JText::_('COM_KUNENA_BOARDCODE');?></label>
 	<div class="controls">
-		<ul id="kbbcode-toolbar">
+		<ul id="kbbcode-toolbar" class="inline">
 			<li>
 				<script type="text/javascript">document.write('<?php echo JText::_('COM_KUNENA_BBCODE_EDITOR_JAVASCRIPT_LOADING', true) ?>')</script>
 				<noscript>
@@ -233,7 +233,7 @@ defined ( '_JEXEC' ) or die ();
 <!-- end of extendable secondary toolbar -->
 <div class="control-group">
 	<div class="controls">
-		<input type="text" name="helpbox" id="helpbox" size="88" class="input-xxlarge required" disabled="disabled"
+		<input type="text" name="helpbox" id="helpbox" size="88" class="span12 required" disabled="disabled"
 		value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" />
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $this->config->disemoticons ?>" />
@@ -245,7 +245,7 @@ defined ( '_JEXEC' ) or die ();
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span class="center" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></div>
 	<div class="controls">
-		<textarea class="input-xxlarge qreply" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="span12 qreply" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 	<!-- Hidden preview placeholder -->
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
@@ -255,7 +255,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="control-group">
 	<label class="control-label"><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 	<div class="controls">
-		<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+		<textarea class="input-xlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
 	</div>
 </div>
 <?php endif; ?>

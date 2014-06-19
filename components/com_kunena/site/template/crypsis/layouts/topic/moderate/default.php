@@ -166,7 +166,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 			<div class="controls">
 
 				<?php foreach ($this->topicIcons as $id => $icon): ?>
-					<label class="checkbox">
+					<label class="checkbox inline">
 						<input type="radio" name="topic_emoticon" value="<?php echo $icon->id; ?>"
 							<?php if ($icon->id == $this->topic->icon_id) echo ' checked="checked"'; ?> />
 						<img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true); ?>"

@@ -150,17 +150,17 @@ if ($this->config->showuserstats)
 		</blockquote>
 		<div>
 			<?php if (!empty($private)) : ?>
-				<a class="btn" href="<?php echo $private; ?>">
+				<a class="btn btn-small" href="<?php echo $private; ?>">
 					<i class="icon-comments-2"></i>
 					<?php echo $privateLabel ?>
 				</a>
 			<?php endif; ?>
 			<?php if ($email) : ?>
 				<?php // TODO: Fix mailto link ?>
-				<a class="btn" href="mailto:<?php echo $email; ?>"><i class="icon-mail"></i></a>
+				<a class="btn btn-small" href="mailto:<?php echo $email; ?>"><i class="icon-mail"></i></a>
 			<?php endif; ?>
 			<?php if ($websiteURL) : ?>
-				<a class="btn" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i><?php echo $websiteName ?></a>
+				<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i><?php echo $websiteName ?></a>
 			<?php endif; ?>
 		</div>
 	</div>

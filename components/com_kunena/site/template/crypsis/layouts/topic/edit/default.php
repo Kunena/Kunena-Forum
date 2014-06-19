@@ -93,14 +93,14 @@ $this->k=0;
 						<?php if ( $this->me->userid && !$this->category->allow_anonymous ): ?>style="display:none;"<?php endif; ?>>
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 						<div class="controls">
-							<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xxlarge" maxlength="35" value="<?php echo $this->escape($this->message->name);?>" required />
+							<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" value="<?php echo $this->escape($this->message->name);?>" required />
 						</div>
 					</div>
 					<?php if ($this->config->askemail && !$this->me->userid) : ?>
 					<div class="control-group">
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></label>
 						<div class="controls">
-							<input type="text" id="email" name="email"	size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xxlarge" maxlength="35" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
+							<input type="text" id="email" name="email"	size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xlarge" maxlength="35" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
 							<br />
 							<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?> </div>
 					</div>
@@ -108,7 +108,7 @@ $this->k=0;
 					<div class="control-group">
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 						<div class="controls">
-							<input class="input-xxlarge" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->message->subject); ?>" tabindex="1" required />
+							<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->message->subject); ?>" tabindex="1" required />
 						</div>
 					</div>
 					<?php if (!empty($this->topicIcons)) : ?>
@@ -118,7 +118,7 @@ $this->k=0;
           		<?php foreach ($this->topicIcons as $id=>$icon): ?>
             	<span class="kiconsel">
               <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
-              <label for="radio<?php echo $icon->id ?>"><img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" /> </label></span>
+              <label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" /> </label></span>
               <?php endforeach; ?>
              </div>
           </div>
@@ -131,9 +131,12 @@ $this->k=0;
 					<div class="control-group krow<?php echo 1 + $this->k^=1;?>" id="kpost-attachments">
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
-							<div id="kattachment-id" class="kattachment"> <span class="kattachment-id-container"></span>
+							<div id="kattachment-id" class="kattachment"> 
+							<div class="control-group">
+								<span class="kattachment-id-container"></span>
 								<input class="kfile-input-textbox" type="text" readonly />
-								<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
+							</div>
+								<div class="kfile-hide hasTip control-group" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
 									<input type="button" value="<?php echo	JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button btn" />
 									<input id="kupload" class="kfile-input" name="kattachment" type="file" />
 								</div>

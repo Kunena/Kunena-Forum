@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<div class="row-fluid message-<?php echo $this->message->getState(); ?>">
+<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
 	<div class="span2 hidden-phone">
 		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default'); ?>
 	</div>

@@ -74,6 +74,10 @@ input[type='checkbox']:focus {
 	padding-left: 30px;
 	padding-top: 10px;
 }
+ .kattach {
+ 	margin-bottom: -30px;
+ 	margin-top: -30px;
+ }
 .pagination {
 	margin: 0;
 }
@@ -135,11 +139,6 @@ input[type='checkbox']:focus {
 	height: 12px;
 	vertical-align: middle;
 }
-.kmessagepadding {
-	padding-left: 20px;
-	padding-top: 20px;
-	padding-bottom: 10px;
-}
 img {
 	max-width: 100%;
 	width: auto \9;
@@ -161,6 +160,28 @@ img {
 	border-color: #ddd;
 	border-radius: 4px;
 }
+.topic-starter {
+		background: rgba(229,229,229,0.4);
+		position: relative;
+		display: block;
+		height: 15px;
+		line-height: 0.8em;
+		margin-left: 9px;
+		border-radius: 0 0 4px 4px;
+		white-space: nowrap;
+		padding-top: 4px;
+		border: 1px solid #ddd;
+		border-top: 0 none;
+
+		&.topic-starter:after {
+			content: "Topic Author";
+			color: #3a87ad;
+			line-height: 1em;
+			font-size: 10px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
 select, textarea, input[type='text'], input[type='password'], input[type='datetime'], input[type='datetime-local'], input[type='date'], input[type='month'], input[type='time'], input[type='week'], input[type='number'], input[type='email'], input[type='url'], input[type='search'], input[type='tel'], input[type='color'], .uneditable-input {
 	margin-bottom:0px;
 }

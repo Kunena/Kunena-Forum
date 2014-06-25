@@ -488,6 +488,17 @@ margin-top: 5px;
 	padding:4px;
 	position: relative;
 }
+.row-fluid {
+  ul.thumbnails {
+  	word-break: break-all;
+    li.span12 + li { margin-left : 0px; }
+    li.span6:nth-child(2n + 3) { margin-left : 0px; }
+    li.span4:nth-child(3n + 4) { margin-left : 0px; }
+    li.span3:nth-child(4n + 5) { margin-left : 0px; }
+    li.span2:nth-child(6n + 7) { margin-left : 0px; }
+    li.span1:nth-child(12n + 13) { margin-left : 0px; }
+  }
+}
 .message-deleted {
 	background-color:rgba(0, 0, 0, 0.1);
 	padding:8px;

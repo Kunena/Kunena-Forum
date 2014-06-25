@@ -26,17 +26,19 @@ $avatarname = $this->profile->getname();
 		<?php endif; ?>
 		<div class="kmessage">
 				<p class="kmsg"> <?php echo $this->message->displayField('message'); ?> </p>
-				<?php if (!empty($attachments)) : ?>
-				<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
-				<ul class="thumbnails">
-						<?php foreach($attachments as $attachment) : ?>
-						<li class="span4">
-								<div class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?> <?php echo $attachment->getLayout()->render('textlink'); ?> </div>
-						</li>
-						<?php endforeach; ?>
-				</ul>
-				<?php endif; ?>
 		</div>
+		<?php if (!empty($attachments)) : ?>
+		<div class="kattach">
+		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+		<ul class="thumbnails">
+			<?php foreach($attachments as $attachment) : ?>
+			<li class="span4">
+				<div class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?> <?php echo $attachment->getLayout()->render('textlink'); ?> </div>
+			</li>
+		<?php endforeach; ?>
+		</ul>
+		</div>
+		<?php endif; ?>
 		<?php if ($signature) : ?>
 		<div class="ksig">
 				<hr>

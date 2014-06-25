@@ -29,6 +29,9 @@ if ($show)
 	<?php if ($avatar) : ?>
 	<li>
 		<?php echo $user->getLink($avatar); ?>
+		<?php if (isset($this->topic_starter) && $this->topic_starter): ?>
+				<span class="topic-starter"></span>
+		<?php endif;?>
 	</li>
 	<?php endif; ?>
 

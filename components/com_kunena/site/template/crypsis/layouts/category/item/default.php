@@ -32,18 +32,15 @@ $colspan = empty($this->actions) ? 5 : 6;
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
-
+	<ul class="inline no-margin">
+		<?php if ($categoryActions) : ?>
+			<li class="hidden-phone">
+				<?php echo implode($categoryActions); ?>
+			</li>
+		<?php endif; ?>
+	</ul>
 	<table class="table table-bordered">
 		<thead>
-			<tr>
-				<ul class="inline no-margin">
-					<?php if ($categoryActions) : ?>
-						<li class="hidden-phone">
-							<?php echo implode($categoryActions); ?>
-						</li>
-						<?php endif; ?>
-				</ul>
-			</tr>
 			<tr>
 				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>

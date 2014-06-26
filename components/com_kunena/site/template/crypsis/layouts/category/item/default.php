@@ -24,21 +24,28 @@ $colspan = empty($this->actions) ? 5 : 6;
 <?php if (!$this->category->isSection()) : ?>
 <h2>
 	<a><?php echo $this->escape($this->headerText); ?></a>
-	<span class="pull-right">
-		<?php echo $this->subLayout('Widget/Search')->set('catid', $this->category->id); ?>
-	</span>
 </h2>
+
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+</div>
+
+<div class="pull-right">
+	<?php echo $this->subLayout('Widget/Search')->set('catid', $this->category->id); ?>
+</div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
-	<ul class="inline no-margin">
-		<?php if ($categoryActions) : ?>
+	<div class="kbuttons">
+		<ul class="inline">
+			<?php if ($categoryActions) : ?>
 			<li class="hidden-phone">
 				<?php echo implode($categoryActions); ?>
 			</li>
 		<?php endif; ?>
 	</ul>
+	</div>
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -51,14 +58,8 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<td class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?>
-				</td>
-				<td class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
-				</td>
-				<td class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
+				<td class="span3 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
@@ -138,7 +139,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 </form>
 
-<div class="pull-right">
+<div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 </div>
 

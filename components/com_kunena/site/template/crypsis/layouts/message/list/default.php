@@ -54,13 +54,10 @@ $colspan = empty($this->actions) ? 5 : 6;
 					</a>
 				</td>
 				<td class="span1">
-				<?php echo JText::_('Message'); ?>
+				<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
 				<td class="span1">
-				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
-				</td>
-				<td class="span1 center hidden-phone">
-				Author
+				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?> / <?php echo JText::_('COM_KUNENA_CATEGORY'); ?>
 				</td>
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>

@@ -23,10 +23,10 @@ $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx); ?>">
-	<td class="span1 hidden-phone center">
+	<td class="span2 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span4">
+	<td class="span5">
 		<?php
 		// FIXME:
 		/*if ($message->attachments) {
@@ -34,13 +34,13 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		}*/
 		?>
 		<div>
+			<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?>:
 			<?php echo $this->getTopicLink(
 				$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
 			); ?>
 		</div>
-	</td>
-	<td class="span3">
 		<div>
+			<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 			<?php
 			echo $this->getTopicLink($topic);
 
@@ -58,13 +58,13 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			}
 			?>
 		</div>
+	</td>
+	<td class="span3">
+		<div>
+			<?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?>: <?php echo $author->getLink(); ?>
+		</div>
 		<div>
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
-		</div>
-	</td>
-	<td class="span1 center">
-		<div>
-			<?php echo $author->getLink(); ?>
 		</div>
 	</td>
 	<td class="span3">
@@ -75,7 +75,6 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			</span>
 
 			<?php if ($message->userid) : ?>
-			<br />
 			<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 			<?php endif; ?>
 

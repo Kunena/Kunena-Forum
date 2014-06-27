@@ -15,13 +15,13 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 
 <h3> <?php echo $this->escape($this->headerText); ?> <span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
-<?php //To Do:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-		<div class="pull-right" style="font-size:60%">
+	<?php //To Do:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+	<div class="pull-right" style="font-size:60%">
 		<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-      method="post" target="_self" class="hidden-phone">
-				<?php $this->displayTimeFilter('sel'); ?>
+			method="post" target="_self" class="hidden-phone">
+			<?php $this->displayTimeFilter('sel'); ?>
 		</form>
-		</div>
+	</div>
 </h3>
 <div class="clearfix"></div>
 

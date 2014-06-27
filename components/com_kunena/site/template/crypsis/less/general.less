@@ -218,16 +218,26 @@ form > table > thead > tr > td > ul {
 ul li {
 	list-style:none;
 }
-inline {
-	display: inline-block;
-  width: 200px;
-  height: 100px;
-  margin: 1em;
+.kbuttons .inline {
+	padding: 5px 0;
+	clear: both;
+	li {
+		padding: 0;
+	}
+}
+.labels, .numbers {
+	padding: 0;
 }
 .modal-header,
 .modal-body,
 .modal-footer {
   padding: 15px;
+}
+.topictitle {
+	font-size: 120%;
+}
+.replies, .repliesnum {
+	font-size: 110%;
 }
 .breadcrumb {
 	padding:8px 15px;
@@ -249,6 +259,9 @@ a:focus,
 .last-post,
 .header-desc {
 	padding: 4px 8px;
+}
+.desc {
+	display: block;
 }
 [class*="badger"] {
     position: relative;
@@ -459,9 +472,7 @@ div.navbar > div > div.visible-phone.hidden-tablet > ul {
 select#mode {
 margin-left: 65px;
 }
-select {
-margin-top: 5px;
-}
+
 .message-deleted {
 	background-color:rgba(0, 0, 0, 0.1);
 	padding:10px;
@@ -473,12 +484,6 @@ margin-top: 5px;
 	margin-right: 10px;
 	padding-top:2%;
 	padding-bottom:2%;
-}
-.post-desc {
-	padding:15px 0;
-}
-.post-info {
-	min-width:230px;
 }
 .img-thumbnail {
 	-moz-border-radius: 8px;

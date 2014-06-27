@@ -15,22 +15,24 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 
 <h3> <?php echo $this->escape($this->headerText); ?> <span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
-<?php //To Do:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-		<div class="pull-right" style="font-size:60%">
+	<?php //To Do:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+	<div class="pull-right" style="font-size:60%">
 		<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-      method="post" target="_self" class="hidden-phone">
-				<?php $this->displayTimeFilter('sel'); ?>
+			method="post" target="_self" class="hidden-phone">
+			<?php $this->displayTimeFilter('sel'); ?>
 		</form>
-		</div>
+	</div>
 </h3>
 <div class="clearfix"></div>
-<span class="pull-left">
-	<?php echo $this->subLayout('Widget/Search')->set('catid', 'all'); ?>
-</span>
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-<div class="pagination pull-right"> <?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?> </div>
+<div class="pagination pull-left"> <?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?> </div>
 <?php endif; ?>
+
+<div class="pull-right">
+	<?php echo $this->subLayout('Widget/Search')->set('catid', 'all'); ?>
+</div>
+
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
 		<?php echo JHtml::_('form.token'); ?>
 		<table class="table table-bordered table-condensed">
@@ -40,20 +42,31 @@ $colspan = empty($this->actions) ? 5 : 6;
 				</tr>
 				<?php else : ?>
 				<thead>
-						<tr>
-								<td class="span1 center hidden-phone"><a id="forumtop"> </a> <a href="#forumbottom"> <i class="icon-arrow-down hasTooltip"></i> </a></td>
-								<td class="span1"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></td>
-								<td class="span1 center hidden-phone"><?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?></td>
-								<td class="span1 center hidden-phone"><?php echo JText::_('COM_KUNENA_GEN_HITS');?></td>
-								<td class="span1 center hidden-phone"><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?></td>
-								<td class="span1"><?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?></td>
-								<?php if (!empty($this->actions)) : ?>
-								<td class="span1 center"><label>
-												<input class="kcheckall" type="checkbox" name="toggle" value="" />
-										</label></td>
-								<?php endif; ?>
-						</tr>
-				</thead>
+			<tr>
+				<td class="span1 center hidden-phone">
+					<a id="forumtop"> </a>
+					<a href="#forumbottom">
+						<i class="icon-arrow-down hasTooltip"></i>
+					</a>
+				</td>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
+				</td>
+				<td class="span3 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
+				</td>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php if (!empty($this->topicActions)) : ?>
+				<td class="span1 center">
+					<label>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
+					</label>
+				</td>
+				<?php endif; ?>
+			</tr>
+		</thead>
 				<?php if (!empty($this->actions) || !empty($this->embedded)) : ?>
 				<tfoot>
 					<tr>
@@ -94,6 +107,6 @@ $colspan = empty($this->actions) ? 5 : 6;
 </form>
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-<div class="pagination pull-right"><?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
+<div class="pagination pull-left"><?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
 <?php endif; ?>
 <div class="clearfix"></div>

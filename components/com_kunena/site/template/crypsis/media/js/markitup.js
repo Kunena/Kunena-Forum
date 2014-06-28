@@ -149,7 +149,7 @@
 
 				// add the header before the textarea
 				header = $('<div class="markItUpHeader"></div>').insertBefore($$);
-				$(dropMenus(options.markupSet)).appendTo(header);
+				$(dropMenus(options.markupSet)).appendTo(header);  
 
 				// add the footer after the textarea
 				footer = $('<div class="markItUpFooter"></div>').insertAfter($$);
@@ -236,7 +236,7 @@
 						if (button.dropMenu) {
 							levels.push(i);
 							$(li).addClass('markItUpDropMenu').append(dropMenus(button.dropMenu));
-						}
+						} 
 					}
 				}); 
 				levels.pop();

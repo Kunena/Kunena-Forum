@@ -15,6 +15,17 @@ JHtml::_('behavior.keepalive');
 
 $this->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
 
+$this->addStyleSheet('css/markitup.style.css');
+$this->addStyleSheet('css/markitup.set.style.css');
+
+$this->addScript('js/markitup.js');
+$this->addScript('js/markitup.set.js');
+JFactory::getDocument()->addScriptDeclaration('
+	jQuery(document).ready(function() {
+		jQuery(\'#kbbcode-message\').markItUp(bbcodeSettings);
+	});
+');
+
 $this->k=0;
 ?>
 

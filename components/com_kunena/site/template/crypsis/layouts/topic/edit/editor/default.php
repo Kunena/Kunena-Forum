@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 // Kunena bbcode editor
 ?>
 
-<!-- Start extendable secondary toolbar -->
+<!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -136,7 +136,7 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 </div>
 
-<!-- end of extendable secondary toolbar -->
+<!-- end of Bootstrap modal to be used with bbcode editor -->
 <div class="control-group">
 	<div class="controls">
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />

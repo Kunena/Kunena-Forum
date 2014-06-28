@@ -15,33 +15,6 @@ JHtml::_('behavior.keepalive');
 
 $this->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
 
-$editor = KunenaBbcodeEditor::getInstance();
-$editor->initialize('id');
-
-$this->addScriptDeclaration("window.addEvent('domready', function() {
-	if ( typeof pollcategoriesid != 'undefined' ) {
-		var catid = $('kcategory_poll').get('value');
-		if ( pollcategoriesid[catid] !== undefined ) {
-			kbbcode.addFunction('Poll', function() {
-				kToggleOrSwap('kbbcode-poll-options');
-			}, {'id': 'kbbcode-poll-button',
-				'class': 'kbbcode-poll-button',
-				'title': Joomla.JText._('COM_KUNENA_EDITOR_POLL'),
-				'alt': Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_POLL')});
-
-		} else {
-			kbbcode.addFunction('Poll', function() {
-				kToggleOrSwap('kbbcode-poll-options');
-			}, {'id': 'kbbcode-poll-button',
-				'class': 'kbbcode-poll-button',
-				'style':'display: none;',
-				'title': Joomla.JText._('COM_KUNENA_EDITOR_POLL'),
-				'alt': Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_POLL')});
-		}
-	}
-	kEditorInitialize();
-});");
-
 $this->k=0;
 ?>
 
@@ -131,7 +104,7 @@ $this->k=0;
 					<div class="control-group krow<?php echo 1 + $this->k^=1;?>" id="kpost-attachments">
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
-							<div id="kattachment-id" class="kattachment"> 
+							<div id="kattachment-id" class="kattachment">
 							<div class="control-group">
 								<span class="kattachment-id-container"></span>
 								<input class="kfile-input-textbox" type="text" readonly />

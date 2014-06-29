@@ -21,7 +21,8 @@ $editor->initialize('id');
 
 $this->template->loadUploadScript();
 
-$this->addScriptDeclaration("kunena_upload_files_url = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=upload&format=raw&'. JUtility::getToken() .'=1', false). "'" );
+$this->addScriptDeclaration("kunena_upload_files_url = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&'. JSession::getFormToken() .'=1', false). "'" );
+$this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=remove&format=json&'. JSession::getFormToken() .'=1', false). "'" );
 
 $this->addScriptDeclaration("window.addEvent('domready', function() {
 	if ( typeof pollcategoriesid != 'undefined' ) {
@@ -150,16 +151,12 @@ $this->k=0;
 								<div id="dropzone">
 									<div id="kunena-upload" class="dropzone dz-clickable">
 										<div class="dz-default dz-message">
-											<span>Drop files here to upload</span>
+											<span>Drag & Drop files from your desktop to here</span>
 										</div>
 									</div>
 								</div>
-
-							<?php
-							if (!empty($this->attachments))
-								echo $this->subLayout('Topic/Edit/Attachments')
-									->set('attachments', $this->attachments);
-							?>
+								<div id="kattach-list">
+								</div>
 						</div>
 					</div>
 					<?php endif; ?>

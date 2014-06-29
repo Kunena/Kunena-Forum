@@ -25,6 +25,45 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	/**
+	 * Remove files with AJAX.
+	 *
+	 * @throws RuntimeException
+	 */
+	public function remove() {
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
+		if (!JSession::checkToken('request'))
+		{
+			throw new RuntimeException(JText::_('Forbidden'), 403);
+		}
+
+		$attach_id = $this->input->getInt('file_id', 0);
+
+		$success = array();
+
+		$instance = KunenaForumMessageAttachmentHelper::get($attach_id);
+		$success['result']  = $instance->delete();
+		unset($instance);
+
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+
+		while(@ob_end_clean());
+
+		echo json_encode($success);
+
+		jexit();
+	}
+
+	/**
 	 * Upload files with AJAX.
 	 *
 	 * @throws RuntimeException

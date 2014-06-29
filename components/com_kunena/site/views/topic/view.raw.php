@@ -28,25 +28,4 @@ class KunenaViewTopic extends KunenaView {
 
 		echo json_encode( $response );
 	}
-
-	/**
-	 * Method to handle files ajax upload on topic edition
-	 *
-	 * @since 3.1
-	 *
-	 * @return void
-	 */
-	public function displayUpload()
-	{
-		$me = KunenaUserHelper::getMyself();
-		$catid = JFactory::getApplication()->input->get('catid', 0, 'int');
-		$path = JPATH_ROOT . '/media/kunena/attachments/' . $me->id;
-
-		$category = KunenaForumCategoryHelper::get($catid);
-		// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
-		if ($category->id) $category->tryAuthorise('topic.post.attachment.create');
-
-		require 'KunenaUploadHandler.php';
-		$upload_handler = new KunenaUploadHandler;
-	}
 }

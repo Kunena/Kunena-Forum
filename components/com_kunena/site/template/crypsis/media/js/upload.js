@@ -17,7 +17,7 @@ jQuery(function() {
 	
 	var index =0;
 	
-	var response_stored = null;
+	var attach_id = 0;
 	
 	// Limit the total number of files allowed to upload to follow Kunena configuration
 	if ( config_attachment_limit != 0 ) {
@@ -25,13 +25,11 @@ jQuery(function() {
 	}
 	
 	myDropzone.on("success", function(file, response) {
-		/* Maybe display some more file information on your page */
-		
-		var response_object = jQuery.parseJSON( response );
-		
-		jQuery('#kunena_tmp_dir').val(response_object.tmp_dir);
-		
-		response_stored = response_object;
+		attach_id = response['data']['id'];
+
+		// The attachment has been right uploaded, so now we need to put into input hidden to added to message 
+		jQuery('#kattach-list').append('<input type="hidden" name="attachments['+response['data']['id']+']" value="1" />');
+		jQuery('#kattach-list').append('<input type="hidden" name="attachment['+response['data']['id']+']" value="1" />');
 	});
 	
 	myDropzone.on("maxfilesreached", function(file, response) {
@@ -43,6 +41,9 @@ jQuery(function() {
 	myDropzone.on("sending", function(file, xhr, formData) {
 		// Add extra parameters here to pass to ajax query
 		formData.append('catid', jQuery('#kunena_upload').val());
+		formData.append('filename', file["name"]);
+		formData.append('size', file["size"]);
+		formData.append('mime', file["type"]);
 	});
 	
 	myDropzone.on("addedfile", function(file) {
@@ -76,12 +77,14 @@ jQuery(function() {
 			e.preventDefault();
 			e.stopPropagation();
 
+			jQuery('#kattach-list').append('<input type="hidden" name="attachments['+attach_id+']" value="1" />');
+
 			// Remove the file preview.
 			_this.removeFile(file);
 			
 			// Ajax Request to delete the file from filesystem
 			jQuery.ajax({
-				url: kunena_upload_files_url+'&file='+response_stored.file_name,
+				url: kunena_upload_files_rem+'&fil_id='+attach_id,
 				type: 'DELETE',
 				success: function(result) {
 					// Do something with the result

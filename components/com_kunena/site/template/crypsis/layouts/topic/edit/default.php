@@ -131,7 +131,7 @@ $this->k=0;
 					<div class="control-group krow<?php echo 1 + $this->k^=1;?>" id="kpost-attachments">
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
-							<div id="kattachment-id" class="kattachment"> 
+							<div id="kattachment-id" class="kattachment">
 							<div class="control-group">
 								<span class="kattachment-id-container"></span>
 								<input class="kfile-input-textbox" type="text" readonly />
@@ -184,8 +184,7 @@ $this->k=0;
 						<input type="submit" name="ksubmit" class="btn btn-primary"
 						value="<?php echo (' ' . JText::_('COM_KUNENA_SUBMIT') . ' ');?>"
 						title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" tabindex="4" />
-						<input type="button" name="preview" class="btn"
-						onclick="kToggleOrSwapPreview('kbbcode-preview-bottom controls')"
+						<input id="kbutton-preview" type="button" name="preview" class="btn"
 						value="<?php echo (' ' . JText::_('COM_KUNENA_PREVIEW') . ' ');?>"
 						title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW'));?>:: "tabindex="3" />
 						<input type="button" name="cancel" class="btn"

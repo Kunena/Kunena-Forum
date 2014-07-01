@@ -250,7 +250,7 @@ jQuery(document).ready(function() {
 		}
 	});
 	
-	jQuery('#kbbcode-message').change(function() {
+	jQuery('#kbbcode-message').bind('input propertychange', function() {
 		kPreviewHelper(previewActive);
 	});
 });

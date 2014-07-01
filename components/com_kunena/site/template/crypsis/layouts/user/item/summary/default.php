@@ -135,8 +135,9 @@ if ($this->config->showuserstats)
 		</div>
 	</div>
 </div>
-<div class="span11">
-	<div class="span6"> </br>
+<div class="row-fluid">
+<div class="span12">
+	<div class="span6">
 		<blockquote>
 			<?php if ($signature) : ?>
 				<span><?php echo $signature; ?></span>
@@ -166,5 +167,6 @@ if ($this->config->showuserstats)
 	</div>
 	<div class="span6">
 		<div class="well"> <?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?> </div>
+	</div>
 	</div>
 </div>

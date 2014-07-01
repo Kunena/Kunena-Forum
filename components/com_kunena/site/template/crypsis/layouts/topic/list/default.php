@@ -52,7 +52,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<td class="span3 center hidden-phone">
+				<td class="span2 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
 				<td class="span1">

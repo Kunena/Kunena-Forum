@@ -199,7 +199,7 @@ foreach ($this->sections as $section) :
 						</div>
 			</td>
 			<?php else : ?>
-			 <td colspan="1" class="hidden-phone">
+			 <td class="span3 hidden-phone">
 				<div class="last-post-message">
 					<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>
 				</div>

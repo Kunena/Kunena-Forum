@@ -105,11 +105,13 @@ foreach ($this->sections as $section) :
 							echo $this->getIcon('kforumlocked', JText::_('COM_KUNENA_LOCKED_CATEGORY'));
 						}
 						if ($category->review) {
-							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
+							?>
+							<span class="icon-shield" title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
+							<?php
 						}
 						if (!empty($category->rssURL)) :
 						?>
- 						 <a href="<?php echo $category->rssURL ?>" rel="follow"><span class="kicon krss-small" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
+ 						 <a href="<?php echo $category->rssURL ?>" rel="follow"><span class="icon-feed" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
 						<?php endif; ?>
  					</span></small></h3>
 				</div>

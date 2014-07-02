@@ -24,6 +24,29 @@ jQuery(function() {
 		myDropzone.options.maxFiles = config_attachment_limit;
 	}
 	
+	// Load attachments when the message is edited
+	if ( jQuery('#kmessageid').val() > 0 ) {
+		jQuery.ajax({
+			type: 'POST',
+			url: kunena_upload_files_preload,
+			async: false,
+			dataType: 'json',
+			data: {mes_id : jQuery('#kmessageid').val() },
+			success: function(data){
+				jQuery.each(data, function(index, value) {
+					var item = jQuery('<div class="dz-preview dz-processing dz-image-preview dz-success"></div>');
+					jQuery('#kunena-upload').append(item);
+					var details = jQuery('<div class="dz-details"></div>').appendTo(item);
+					var filename = jQuery('<div class="dz-filename"></div>').appendTo(details);
+					jQuery('<span data-dz-name="">'+this['filename']+'</span>').appendTo(filename);
+					var size = jQuery('<div class="dz-size" data-dz-size=""></div>').appendTo(details);
+					jQuery('<strong>'+this['size']+' kB</strong>').appendTo(size);
+					jQuery('<img data-dz-thumbnail="" alt="'+this['filename']+'" src="'+this['url']+'">').appendTo(details);
+				})
+			}
+		});	
+	}
+	
 	myDropzone.on("success", function(file, response) {
 		attach_id = response['data']['id'];
 

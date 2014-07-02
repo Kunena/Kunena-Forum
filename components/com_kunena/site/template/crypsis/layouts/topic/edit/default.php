@@ -23,6 +23,7 @@ $this->template->loadUploadScript();
 
 $this->addScriptDeclaration("kunena_upload_files_url = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&'. JSession::getFormToken() .'=1', false). "'" );
 $this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=remove&format=json&'. JSession::getFormToken() .'=1', false). "'" );
+$this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&'. JSession::getFormToken() .'=1', false). "'" );
 
 $this->addScriptDeclaration("window.addEvent('domready', function() {
 	if ( typeof pollcategoriesid != 'undefined' ) {
@@ -58,7 +59,7 @@ $this->k=0;
 	<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
 	<?php if ($this->message->exists()) : ?>
 	<input type="hidden" name="task" value="edit" />
-	<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
+	<input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
 	<?php else: ?>
 	<input type="hidden" name="task" value="post" />
 	<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />

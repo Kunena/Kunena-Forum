@@ -102,12 +102,14 @@ foreach ($this->sections as $section) :
 							echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
 						}
 						if ($category->locked) {
-							echo $this->getIcon('kforumlocked', JText::_('COM_KUNENA_LOCKED_CATEGORY'));
+						?>
+							<span class="icon-lock" title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"></span>
+						<?php
 						}
 						if ($category->review) {
-							?>
+						?>
 							<span class="icon-shield" title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
-							<?php
+						<?php
 						}
 						if (!empty($category->rssURL)) :
 						?>

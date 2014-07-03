@@ -63,7 +63,7 @@ jQuery(function() {
 	
 	myDropzone.on("maxfilesreached", function(file, response) {
 		jQuery('#alert_upload_box').empty();
-		var alert_maxfiles = jQuery('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>You have reached the maximum number of files allowed</div>');
+		var alert_maxfiles = jQuery('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUNBER_FILES')+'</div>');
 		jQuery('#alert_upload_box').append(alert_maxfiles);
 	});
 	
@@ -105,6 +105,15 @@ jQuery(function() {
 			// Make sure the button click doesn't submit the form:
 			e.preventDefault();
 			e.stopPropagation();
+
+			// Remove the input added previously on insertion of attachment
+			if ( jQuery('#kattachs-'+attach_id).length > 0 ) {
+				jQuery('#kattachs-'+attach_id).remove();
+			}
+
+			if ( jQuery('#kattach-'+attach_id).length > 0 ) {
+				jQuery('#kattach-'+attach_id).remove();
+			}
 
 			// Remove the file preview.
 			_this.removeFile(file);

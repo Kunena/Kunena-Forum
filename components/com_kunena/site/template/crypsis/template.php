@@ -218,6 +218,7 @@ HTML;
 
 		JText::script('COM_KUNENA_EDITOR_INSERT');
 		JText::script('COM_KUNENA_GEN_REMOVE_FILE');
+		JText::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUNBER_FILES');
 
 		$this->addScript('js/upload.js');
 	}

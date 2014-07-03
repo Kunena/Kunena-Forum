@@ -229,6 +229,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 		catch (Exception $response)
 		{
+			header('HTTP/1.1 500 Internal Server Error');
 			$upload->cleanup();
 
 			// Use the exception as the response.

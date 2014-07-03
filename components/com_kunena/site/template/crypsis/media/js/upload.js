@@ -26,6 +26,12 @@ jQuery(function() {
 	
 	// Load attachments when the message is edited
 	if ( jQuery('#kmessageid').val() > 0 ) {
+		item = jQuery( '#kunena-upload' ).find('div');
+		
+		if ( item.hasClass('dz-default') ) {
+			item.css( 'background-image', 'none' );
+		}
+
 		jQuery.ajax({
 			type: 'POST',
 			url: kunena_upload_files_preload,
@@ -42,7 +48,7 @@ jQuery(function() {
 					var size = jQuery('<div class="dz-size" data-dz-size=""></div>').appendTo(details);
 					jQuery('<strong>'+this['size']+' kB</strong>').appendTo(size);
 					jQuery('<img data-dz-thumbnail="" alt="'+this['filename']+'" src="'+this['url']+'">').appendTo(details);
-				})
+				});
 			}
 		});	
 	}
@@ -51,8 +57,8 @@ jQuery(function() {
 		attach_id = response['data']['id'];
 
 		// The attachment has been right uploaded, so now we need to put into input hidden to added to message 
-		jQuery('#kattach-list').append('<input type="hidden" name="attachments['+response['data']['id']+']" value="1" />');
-		jQuery('#kattach-list').append('<input type="hidden" name="attachment['+response['data']['id']+']" value="1" />');
+		jQuery('#kattach-list').append('<input id="kattachs-'+response['data']['id']+'" type="hidden" name="attachments['+response['data']['id']+']" value="1" />');
+		jQuery('#kattach-list').append('<input id="kattach-'+response['data']['id']+'" type="hidden" name="attachment['+response['data']['id']+']" value="1" />');
 	});
 	
 	myDropzone.on("maxfilesreached", function(file, response) {
@@ -99,8 +105,6 @@ jQuery(function() {
 			// Make sure the button click doesn't submit the form:
 			e.preventDefault();
 			e.stopPropagation();
-
-			jQuery('#kattach-list').append('<input type="hidden" name="attachments['+attach_id+']" value="1" />');
 
 			// Remove the file preview.
 			_this.removeFile(file);

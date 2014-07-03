@@ -452,6 +452,8 @@ class KunenaUpload
 					'message' => $e->getMessage()
 				);
 
+				$response->error = $e->getMessage();
+
 				if (JDEBUG)
 				{
 					$exception += array(

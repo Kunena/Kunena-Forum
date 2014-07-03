@@ -26,10 +26,8 @@ jQuery(function() {
 	
 	// Load attachments when the message is edited
 	if ( jQuery('#kmessageid').val() > 0 ) {
-		item = jQuery( '#kunena-upload' ).find('div');
-		
-		if ( item.hasClass('dz-default') ) {
-			item.css( 'background-image', 'none' );
+		if ( jQuery('#kunena-upload > div').hasClass('dz-default') ) {
+			jQuery('#kunena-upload > div').css( 'background-image', 'none' );
 		}
 
 		jQuery.ajax({

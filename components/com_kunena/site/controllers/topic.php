@@ -53,6 +53,7 @@ class KunenaControllerTopic extends KunenaController {
 		foreach ($attachments as $attach)
 		{
 			$object = new stdClass;
+			$object->id = $attach->id;
 			$object->size = round($attach->size / '1024', 0);
 			$object->filename = $attach->filename;
 			$object->folder = $attach->folder;

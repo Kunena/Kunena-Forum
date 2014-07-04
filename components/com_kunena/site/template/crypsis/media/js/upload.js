@@ -25,28 +25,69 @@ jQuery(function() {
 	}
 	
 	// Load attachments when the message is edited
-	if ( jQuery('#kmessageid').val() > 0 ) {
-		if ( jQuery('#kunena-upload > div').hasClass('dz-default') ) {
-			jQuery('#kunena-upload > div').css( 'background-image', 'none' );
-		}
+	jQuery.ajax({
+		type: 'POST',
+		url: kunena_upload_files_preload,
+		async: false,
+		dataType: 'json',
+		data: {mes_id : jQuery('#kmessageid').val() },
+		success: function(data){
+			jQuery.each(data, function(index, value) {
+				var myattach = this;
+				
+				var item = jQuery('<div class="dz-preview dz-processing dz-image-preview dz-success"></div>');
+				jQuery('#kunena-upload').append(item);
+				var details = jQuery('<div class="dz-details"></div>').appendTo(item);
+				var filename = jQuery('<div class="dz-filename"></div>').appendTo(details);
+				jQuery('<span data-dz-name="">'+this['filename']+'</span>').appendTo(filename);
+				var size = jQuery('<div class="dz-size" data-dz-size=""></div>').appendTo(details);
+				jQuery('<strong>'+this['size']+' kB</strong>').appendTo(size);
+				jQuery('<img data-dz-thumbnail="" alt="'+this['filename']+'" src="'+this['url']+'">').appendTo(details); 
+				
+				var insertButton = jQuery('<button class="btn btn-primary">'+Joomla.JText._('COM_KUNENA_EDITOR_INSERT')+'</button>');
+				var removeButton = jQuery('<button class="btn btn-danger delete">'+Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE')+'</button>');
 
-		jQuery.ajax({
-			type: 'POST',
-			url: kunena_upload_files_preload,
-			async: false,
-			dataType: 'json',
-			data: {mes_id : jQuery('#kmessageid').val() },
-			success: function(data){
-				jQuery.each(data, function(index, value) {
-					var item = jQuery('<div class="dz-preview dz-processing dz-image-preview dz-success"></div>');
-					jQuery('#kunena-upload').append(item);
-					var details = jQuery('<div class="dz-details"></div>').appendTo(item);
-					var filename = jQuery('<div class="dz-filename"></div>').appendTo(details);
-					jQuery('<span data-dz-name="">'+this['filename']+'</span>').appendTo(filename);
-					var size = jQuery('<div class="dz-size" data-dz-size=""></div>').appendTo(details);
-					jQuery('<strong>'+this['size']+' kB</strong>').appendTo(size);
-					jQuery('<img data-dz-thumbnail="" alt="'+this['filename']+'" src="'+this['url']+'">').appendTo(details);
+				insertButton.appendTo(item);
+				removeButton.appendTo(item);
+
+				insertButton.bind("click", function(e) {
+				// Make sure the button click doesn't submit the form:
+				e.preventDefault();
+				e.stopPropagation();
+			
+				var value = jQuery('#kbbcode-message').val();
+		
+				jQuery('#kbbcode-message').val(value+' [attachment:'+index+']'+this['filename']+'[/attachment]');
+			})
+
+			// Listen to the click event
+			removeButton.bind("click", function(e) {
+				// Make sure the button click doesn't submit the form:
+				e.preventDefault();
+				e.stopPropagation();
+				
+				// Remove the input added
+				if ( jQuery('#kattachs-'+attach_id).length > 0 ) {
+					jQuery('#kattachs-'+attach_id).remove();
+				}
+		
+				if ( jQuery('#kattach-'+attach_id).length > 0 ) {
+					jQuery('#kattach-'+attach_id).remove();
+				}
+				
+				// Remove the file preview.
+				item.remove();
+				
+				// Ajax Request to delete the file from filesystem
+				jQuery.ajax({
+					url: kunena_upload_files_rem+'&fil_id='+myattach['id'],
+					type: 'DELETE',
+					success: function(result) {
+						// Do something with the result
+					}
 				});
+			});
+		});
 			}
 		});	
 	}

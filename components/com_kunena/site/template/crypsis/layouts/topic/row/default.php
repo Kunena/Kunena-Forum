@@ -31,14 +31,15 @@ if (!empty($this->spacing)) : ?>
 <?php if ($topic->unread) : ?>
 	<td class="hidden-phone span1 center topic-item-unread">
 	<?php else :  ?>
-	<td class="hidden-phone span2 center">
+	<td class="hidden-phone span1 center">
 	<?php endif;?>
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span6">
-		<div>
+	<td class="span7">
+			<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
-
+			</div>
+			<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
 				<i class="icon-star hasTooltip"><?php JText::_('COM_KUNENA_FAVORITE'); ?></i>
 			<?php endif; ?>
@@ -67,27 +68,27 @@ if (!empty($this->spacing)) : ?>
 			<?php echo $topic->getAuthor()->getLink(); ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?>
+			<div class="pull-right">
+				<?php /** TODO: New Feature - LABELS
+				<span class="label label-info">
+				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
+				</span>	*/ ?>
+				<?php if ($topic->locked != 0) : ?>
+					<span class="label label-important">
+						<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+					</span>
+				<?php endif; ?>
+			</div>
 		</div>
 
 		<div class="pull-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 
-		<div>
-			<?php /** TODO: New Feature - LABELS
-			<span class="label label-info">
-				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
-			</span>	*/ ?>
-			<?php if ($topic->locked != 0) : ?>
-			<span class="label label-important">
-				<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
-			</span>
-			<?php endif; ?>
-			
-		</div>
+
 	</td>
 
-	<td class="span3 hidden-phone">
+	<td class="span1 hidden-phone">
 		<table cellpadding="0" cellspacing="0">
 			<tbody>
 				<tr>
@@ -98,14 +99,14 @@ if (!empty($this->spacing)) : ?>
 					<td style="width:100%;text-align:right;border: 0 none;" class="numbers">
 						<div class="repliesnum"><strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong></div>
 						<div class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></div>
-						
+
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</td>
 
-	<td class="span5 post-info">
+	<td class="span3 post-info">
 		<?php if ($config->avataroncat) : ?>
 			<div class="post-image">
 				<div class="img-thumbnail">

@@ -128,15 +128,15 @@ class CKunenaUpload {
 			$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNDEFINED' ));
 		} else if (($this->_isfile && ($fileSize > $this->_config->filesize*1024))||
 			($this->_isimage && ($fileSize > $this->_config->imagesize*1024))){
-			$this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_SIZE_X', $fileSize ));
+			$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', (int) $fileSize));
 		}
 
 		return $this->getStatus();
 	}
 
 	function uploaded($input='kattachment') {
-		$file = JRequest::getVar ( $input, NULL, 'FILES', 'array' );
-		if (is_uploaded_file ( $file ['tmp_name'] ) && $file ['error'] == 0) return true;
+		$file = JRequest::getVar($input, null, 'files', 'array'); // File upload
+		if (!empty($file['tmp_name']) && is_uploaded_file($file['tmp_name']) && empty($file['error'])) return true;
 	}
 
 	function getValidExtension($validExts) {
@@ -187,7 +187,7 @@ class CKunenaUpload {
 
 		//If uploaded by using normal form (no AJAX)
 		if ($ajax == false || isset ( $_REQUEST ["multipart"])) {
-			$file = JRequest::getVar ( $input, NULL, 'FILES', 'array' );
+			$file = JRequest::getVar($input, null, 'files', 'array'); // File upload
 			if (!is_uploaded_file ( $file ['tmp_name'] )) {
 				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED' ));
 				return false;
@@ -205,7 +205,8 @@ class CKunenaUpload {
 
 				case 1 : // UPLOAD_ERR_INI_SIZE :
 				case 2 : // UPLOAD_ERR_FORM_SIZE :
-					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_SIZE' ) . "DEBUG: file[error]". $file ['error']);
+					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_SIZE') . 'DEBUG: file[error]'
+						. htmlspecialchars($file['error'], ENT_COMPAT, 'UTF-8'));
 					break;
 
 				case 3 : // UPLOAD_ERR_PARTIAL :
@@ -286,10 +287,10 @@ class CKunenaUpload {
 		if ($extOk == false) {
 			$imglist = implode(', ',$this->validImageExts);
 			$filelist = implode(', ',$this->validFileExts);
-			if ($imglist && $filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION', $imglist, $filelist ));
-			else if ($imglist && !$filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', $this->_config->filetypes ));
-			else if (!$imglist && $filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_IMAGE', $this->_config->imagetypes ));
-			else $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_NOT_ALLOWED', $filelist ));
+			if ($imglist && $filelist) $this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION', $imglist, $filelist ));
+			else if ($imglist && !$filelist) $this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', $this->_config->filetypes ));
+			else if (!$imglist && $filelist) $this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_IMAGE', $this->_config->imagetypes ));
+			else $this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_NOT_ALLOWED', $filelist ));
 			$this->not_valid_img_ext = false;
 			return false;
 		}
@@ -329,7 +330,9 @@ class CKunenaUpload {
 				// Re-calculate physical file size: image has been shrunk
 				$stat = stat($this->fileTemp);
 				if (! $stat) {
-					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $this->fileTemp));
+					$this->fail(
+						JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', htmlspecialchars($this->fileTemp, ENT_COMPAT, 'UTF-8'))
+					);
 					return false;
 				}
 				$this->fileSize = $stat['size'];
@@ -365,7 +368,11 @@ class CKunenaUpload {
 		// All the processing is complete - now we need to move the file(s) into the final location
 		@chmod($this->fileTemp, 0644);
 		if (! JFile::copy ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
-			$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/'.$this->fileName));
+			$this->fail(
+				JText::sprintf(
+					'COM_KUNENA_UPLOAD_ERROR_NOT_MOVED',
+					htmlspecialchars($uploadPath . '/' . $this->fileName, ENT_COMPAT, 'UTF-8'))
+			);
 			unlink($this->fileTemp);
 			return false;
 		}

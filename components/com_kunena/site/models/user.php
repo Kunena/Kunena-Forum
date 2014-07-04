@@ -63,16 +63,16 @@ class KunenaModelUser extends KunenaModel {
 		$where = '';
 
 		// Hide super admins from the list
-		if ( KunenaFactory::getConfig()->superadmin_userlist )
+		if ( !KunenaFactory::getConfig()->superadmin_userlist )
 		{
-		$db = JFactory::getDBO();
-		$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
-		$db->setQuery ( $query );
-		$superadmins = (array) $db->loadColumn();
-		if (!$superadmins) $superadmins = array(0);
-		$this->setState ( 'list.exclude', implode(',', $superadmins));
+			$db = JFactory::getDBO();
+			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
+			$db->setQuery ( $query );
+			$superadmins = (array) $db->loadColumn();
+			if (!$superadmins) $superadmins = array(0);
+			$this->setState ( 'list.exclude', implode(',', $superadmins));
 
-		$where = ' u.id NOT IN ('.$this->getState ( 'list.exclude' ).') AND ';
+			$where = ' u.id NOT IN ('.$this->getState ( 'list.exclude' ).') AND ';
 		}
 
 		if ($this->config->userlist_count_users == '1' ) $where .= '(u.block=0 OR u.activation="")';

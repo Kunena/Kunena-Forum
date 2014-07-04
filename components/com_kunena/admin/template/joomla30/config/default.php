@@ -352,6 +352,11 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<td><?php echo $this->lists ['default_sort'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_COM_A_OPTIONAL_USERNAME') ?></td>
+												<td><?php echo $this->lists ['optionnal_username'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_COM_A_OPTIONAL_USERNAME_DESC') ?></td>
+											</tr>
 										</tbody>
 									</table>
 								</fieldset>

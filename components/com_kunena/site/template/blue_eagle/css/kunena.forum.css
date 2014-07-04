@@ -1771,6 +1771,10 @@ PX		EM			PCT			PT
 }
 
 #Kunena ul.kpost-profile li.kpost-username {font-size: 1.333em;}
+#Kunena ul.kpost-profile li.kpost-username-optional {
+	font-size: 1.022em;
+	color: #A9A9A9;
+}
 #Kunena ul.kpost-profile li.kpost-usertype {}
 #Kunena ul.kpost-profile li.kpost-avatar{}
 #Kunena ul.kpost-profile li.kpost-userrank{}

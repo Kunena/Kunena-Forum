@@ -38,7 +38,9 @@ class KunenaAdminControllerSmilies extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$id = array_shift($cid);
 		if (!$id) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_SMILEYS_SELECTED' ), 'notice' );
@@ -90,7 +92,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		}
 
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
-		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
+		$format			= JRequest::getCmd( 'format', 'html');
 
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT.'/'.KunenaFactory::getTemplate()->getSmileyPath(), $format);
 		if ( $upload ) {
@@ -111,9 +113,10 @@ class KunenaAdminControllerSmilies extends KunenaController {
 			return;
 		}
 
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		JArrayHelper::toInteger($cids);
-		$cids = implode ( ',', $cids );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
+		$cids = implode ( ',', $cid );
 		if ($cids) {
 			$db->setQuery ( "DELETE FROM #__kunena_smileys WHERE id IN ($cids)" );
 			$db->query ();

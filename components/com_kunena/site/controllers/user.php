@@ -105,7 +105,7 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		$ip = JRequest::getVar ( 'ip', '' );
+		$ip = JRequest::getString ( 'ip', '' );
 		$block = JRequest::getInt ( 'block', 0 );
 		$expiration = JRequest::getString ( 'expiration', '' );
 		$reason_private = JRequest::getString ( 'reason_private', '' );
@@ -148,10 +148,10 @@ class KunenaControllerUser extends KunenaController {
 			$this->app->enqueueMessage ( $message );
 		}
 
-		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
-		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
-		$DelSignature = JRequest::getVar ( 'delsignature', '' );
-		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
+		$banDelPosts = JRequest::getString('bandelposts', '');
+		$DelAvatar = JRequest::getString('delavatar', '');
+		$DelSignature = JRequest::getString('delsignature', '');
+		$DelProfileInfo = JRequest::getString('delprofileinfo', '');
 
 		if (! empty ( $DelAvatar ) || ! empty ( $DelProfileInfo )) {
 			jimport ( 'joomla.filesystem.file' );
@@ -235,7 +235,7 @@ class KunenaControllerUser extends KunenaController {
 		$error = $login->loginUser($username, $password, $remember);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64')); // Internal URI
 		if (!$error && $return && JURI::isInternal($return))
 		{
 			// Redirect the user.
@@ -254,7 +254,7 @@ class KunenaControllerUser extends KunenaController {
 		if (!JFactory::getUser()->guest) $login->logoutUser();
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64')); // Internal URI
 		if ($return && JURI::isInternal($return))
 		{
 			// Redirect the user.
@@ -330,8 +330,8 @@ class KunenaControllerUser extends KunenaController {
 
 		//clean request
 		$post = JRequest::get( 'post' );
-		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
-		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
+		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
 		if (empty($post['password']) || empty($post['password2'])) {
 			unset($post['password'], $post['password2']);
 		}
@@ -383,9 +383,9 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	protected function saveProfile() {
-		$this->me->personalText = JRequest::getVar ( 'personaltext', '' );
+		$this->me->personalText = JRequest::getString ( 'personaltext', '' );
 		$this->me->birthdate = JRequest::getInt ( 'birthdate1', '0000' ).'-'.JRequest::getInt ( 'birthdate2', '00' ).'-'.JRequest::getInt ( 'birthdate3', '00' );
-		$this->me->location = trim(JRequest::getVar ( 'location', '' ));
+		$this->me->location = trim(JRequest::getString ( 'location', '' ));
 		$this->me->gender = JRequest::getInt ( 'gender', '' );
 		$this->me->icq = trim(JRequest::getString ( 'icq', '' ));
 		$this->me->aim = trim(JRequest::getString ( 'aim', '' ));
@@ -405,7 +405,7 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->bebo = trim(JRequest::getString ( 'bebo', '' ));
 		$this->me->websitename = JRequest::getString ( 'websitename', '' );
 		$this->me->websiteurl = JRequest::getString ( 'websiteurl', '' );
-		$this->me->signature = JRequest::getVar ( 'signature', '', 'post', 'string', JREQUEST_ALLOWRAW );
+		$this->me->signature = JRequest::getVar('signature', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
 	}
 
 	protected function saveAvatar() {
@@ -516,12 +516,13 @@ class KunenaControllerUser extends KunenaController {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
 
-		if ( !empty($cids) ) {
+		if (!empty($cid)) {
 			$number = 0;
 
-			foreach( $cids as $id ) {
+			foreach($cid as $id) {
 				$attachment = KunenaForumMessageAttachmentHelper::get($id);
 				if ($attachment->authorise('delete') && $attachment->delete()) $number++;
 			}

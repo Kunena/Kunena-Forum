@@ -424,7 +424,7 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEditAvatar() {
 		if (!$this->editavatar) return;
-		$this->gallery = JRequest::getVar('gallery', 'default');
+		$this->gallery = JRequest::getString('gallery', 'default');
 		if ($this->gallery == 'default') {
 			$this->gallery = '';
 		}

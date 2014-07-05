@@ -40,13 +40,12 @@ class KunenaControllerTopic extends KunenaController {
 			'icon_id' => JRequest::getInt ( 'topic_emoticon', null ),
 			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
 			'poll_title' => JRequest::getString ( 'poll_title', '' ),
-			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'), // Array of integers
+			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'), // Array of key => string
 			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
 			'tags' => JRequest::getString ( 'tags', null ),
 			'mytags' => JRequest::getString ( 'mytags', null ),
 			'subscribe' => JRequest::getInt ( 'subscribeMe', 0 )
 		);
-		JArrayHelper::toInteger($fields['poll_options']);
 
 		$this->app->setUserState('com_kunena.postfields', $fields);
 
@@ -236,12 +235,11 @@ class KunenaControllerTopic extends KunenaController {
 			'icon_id' => JRequest::getInt ( 'topic_emoticon', $topic->icon_id ),
 			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
 			'poll_title' => JRequest::getString ( 'poll_title', null ),
-			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'), // Array of integers
+			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'), // Array of key => string
 			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
 			'tags' => JRequest::getString ( 'tags', null ),
 			'mytags' => JRequest::getString ( 'mytags', null )
 		);
-		JArrayHelper::toInteger($fields['poll_options']);
 
 		if (! JSession::checkToken('post')) {
 			$this->app->setUserState('com_kunena.postfields', $fields);

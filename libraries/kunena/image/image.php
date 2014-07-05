@@ -23,19 +23,19 @@ class KunenaImage extends JImage
 	 * @since  11.3
 	 */
 	const SCALE_FILL = 1;
-	
+
 	/**
 	 * @const  integer
 	 * @since  11.3
 	*/
 	const SCALE_INSIDE = 2;
-	
+
 	/**
 	 * @const  integer
 	 * @since  11.3
 	 */
 	const SCALE_OUTSIDE = 3;
-		
+
 	/**
 	 * @const  integer
 	 * @since  12.2

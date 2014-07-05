@@ -46,7 +46,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		$mes_id = $this->input->getInt('mes_id', 0);
 
-		$attachments = KunenaForumMessageAttachmentHelper::getByMessage($mes_id);
+		$attachments = KunenaAttachmentHelper::getByMessage($mes_id);
 
 		$list = array();
 
@@ -100,7 +100,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		$success = array();
 
-		$instance = KunenaForumMessageAttachmentHelper::get($attach_id);
+		$instance = KunenaAttachmentHelper::get($attach_id);
 		$success['result']  = $instance->delete();
 		unset($instance);
 

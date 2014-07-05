@@ -257,18 +257,7 @@ var kbbcode = new Class({
 				// End fixing IE
 			});
 		}
-		if(this.options.interceptTabs) {
-
-			this.el.addEvent('keypress', function(event){
-				event = new Event(event);
-				if(event.key == "tab") {
-					event.preventDefault();
-					this.replaceSelection("\t");
-				}
-			}.bind(this));
-
-		}
-
+		
 		if(list == null || list == "") {
 			list = new Element('li');
 			list.inject(this.el, 'before');

@@ -151,7 +151,7 @@ $this->k=0;
 								<div id="dropzone">
 									<div id="kunena-upload" class="dropzone dz-clickable">
 										<div class="dz-default dz-message">
-											<span>Drag & Drop files from your desktop to here</span>
+											<span><?php echo JText::_('COM_KUNENA_TOPIC_LABEL_UPLOAD_DRAGDROPFILES') ?></span>
 										</div>
 									</div>
 								</div>

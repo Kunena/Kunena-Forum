@@ -48,18 +48,22 @@ class KunenaActivityCommunity extends KunenaActivity {
 		CActivityStream::add ( $act );
 	}
 
-	public function onAfterReply($message) {
+	public function onAfterReply(KunenaForumMessage $message) {
 		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 			CFactory::load ( 'libraries', 'userpoints' );
 			CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
 		}
 
-		$subscribers = $this->_getSubscribers($message);
+		// Get users who have subscribed to the topic, excluding current user.
+		$acl = KunenaAccess::getInstance();
+		$subscribers = $acl->getSubscribers(
+			$message->catid, $message->thread, KunenaAccess::TOPIC_SUBSCRIPTION, false, false, array($message->userid)
+		);
 
-		foreach ($subscribers as $user) {
+		foreach ($subscribers as $userid) {
 
 			$actor = CFactory::getUser($message->userid);
-			$target = CFactory::getUser($user->userid);
+			$target = CFactory::getUser($userid);
 
 			$params = new CParameter('');
 			$params->set('actorName', $actor->getDisplayName());
@@ -171,22 +175,6 @@ class KunenaActivityCommunity extends KunenaActivity {
 			$access = 40;
 		}
 		return $access;
-	}
-
-	/**
-	 *
-	 * @param type $message
-	 * @return type
-	 */
-	private function _getSubscribers($message) {
-		$db		= JFactory::getDBO();
-		$query	= 'SELECT DISTINCT '.$db->quoteName('userid').' FROM ' . $db->quoteName('#__kunena_messages')
-			. ' WHERE '.$db->quoteName('thread').'=' . $db->Quote( $message->thread );
-
-		$db->setQuery( $query );
-		$repliers = $db->loadObjectList();
-
-		return $repliers;
 	}
 
 	private function buildContent($message) {

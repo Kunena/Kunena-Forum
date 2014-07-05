@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /** @var KunenaUser $profile */
 $profile = $this->profile;
 $me = KunenaUserHelper::getMyself();
-$avatar = $profile->getAvatarImage('img-rounded', 128, 128);
+$avatar = $profile->getAvatarImage('img-polaroid', 128, 128);
 $banInfo = $this->config->showbannedreason
 	? KunenaUserBan::getInstanceByUserid($profile->userid)
 	: null;
@@ -42,20 +42,21 @@ if ($this->config->showuserstats)
 						<sup class="label label-<?php echo $this->profile->isOnline('success', 'important') ?>"> <?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?> </sup></div>
 				</div>
 			<?php endif; ?>
+			<br />
 			<ul class="unstyled span2">
 				<li>
 					<strong> <?php echo JText::_('COM_KUNENA_USERTYPE'); ?>:</strong>
 					<span class="<?php echo $profile->getType(0, true); ?>"> <?php echo JText::_($profile->getType()); ?> </span>
 				</li>
 				<?php if ($banInfo && $banInfo->reason_public) : ?>
-				<li>
-					<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong>
-					<span> <?php echo $this->escape($banInfo->reason_public); ?> </span>
-				</li>
+					<li>
+						<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong>
+						<span> <?php echo $this->escape($banInfo->reason_public); ?> </span>
+					</li>
 				<?php endif ?>
 				<?php if ($this->config->showuserstats) : ?>
-				<li>
-					<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
+					<li>
+						<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 						<span>
 							<?php echo $this->escape($rankTitle); ?>
 							<?php echo $rankImage; ?>
@@ -135,38 +136,39 @@ if ($this->config->showuserstats)
 		</div>
 	</div>
 </div>
+<br />
 <div class="row-fluid">
-<div class="span12">
-	<div class="span6">
-		<blockquote>
-			<?php if ($signature) : ?>
-				<span><?php echo $signature; ?></span>
-			<?php endif; ?>
-		</blockquote>
-		<blockquote>
-			<?php if ($personalText) : ?>
-				<span> <?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?> </span>
-				<span> <?php echo $personalText; ?> </span>
-			<?php endif; ?>
-		</blockquote>
-		<div>
-			<?php if (!empty($private)) : ?>
-				<a class="btn btn-small" href="<?php echo $private; ?>">
-					<i class="icon-comments-2"></i>
-					<?php echo $privateLabel ?>
-				</a>
-			<?php endif; ?>
-			<?php if ($email) : ?>
-				<?php // TODO: Fix mailto link ?>
-				<a class="btn btn-small" href="mailto:<?php echo $email; ?>"><i class="icon-mail"></i></a>
-			<?php endif; ?>
-			<?php if ($websiteURL) : ?>
-				<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i><?php echo $websiteName ?></a>
-			<?php endif; ?>
+	<div class="span12">
+		<div class="span6">
+			<blockquote>
+				<?php if ($signature) : ?>
+					<span><?php echo $signature; ?></span>
+				<?php endif; ?>
+			</blockquote>
+			<blockquote>
+				<?php if ($personalText) : ?>
+					<span> <?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?> </span>
+					<span> <?php echo $personalText; ?> </span>
+				<?php endif; ?>
+			</blockquote>
+			<div>
+				<?php if (!empty($private)) : ?>
+					<a class="btn btn-small" href="<?php echo $private; ?>">
+						<i class="icon-comments-2"></i>
+						<?php echo $privateLabel ?>
+					</a>
+				<?php endif; ?>
+				<?php if ($email) : ?>
+					<?php // TODO: Fix mailto link ?>
+					<a class="btn btn-small" href="mailto:<?php echo $email; ?>"><i class="icon-mail"></i></a>
+				<?php endif; ?>
+				<?php if ($websiteURL) : ?>
+					<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i><?php echo $websiteName ?></a>
+				<?php endif; ?>
+			</div>
 		</div>
-	</div>
-	<div class="span6">
-		<div class="well"> <?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?> </div>
-	</div>
+		<div class="span6">
+			<div class="well"> <?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?> </div>
+		</div>
 	</div>
 </div>

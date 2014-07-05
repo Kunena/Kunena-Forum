@@ -66,11 +66,9 @@ jQuery(function() {
 				e.preventDefault();
 				e.stopPropagation();
 				
+				jQuery('#kattach-list').append('<input id="kattachs-'+myattach['id']+'" type="hidden" name="attachments['+myattach['id']+']" value="1" />');
+				
 				// Remove the input added
-				if ( jQuery('#kattachs-'+attach_id).length > 0 ) {
-					jQuery('#kattachs-'+attach_id).remove();
-				}
-		
 				if ( jQuery('#kattach-'+attach_id).length > 0 ) {
 					jQuery('#kattach-'+attach_id).remove();
 				}

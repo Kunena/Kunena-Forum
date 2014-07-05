@@ -227,6 +227,8 @@ class KunenaConfig extends JObject {
 	public $access_component = 1;
 	// New for 3.0.4
 	public $statslink_allowed = 1;
+	// New for 3.0.6
+	public $superadmin_userlist = 0;
 
 	public function __construct() {
 		parent::__construct ();

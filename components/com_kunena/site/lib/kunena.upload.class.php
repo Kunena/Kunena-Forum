@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Lib
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -50,8 +50,8 @@ class CKunenaUpload {
 		$this->_isimage = false;
 		$this->_isfile = false;
 		$me = KunenaUserHelper::getMyself();
-		$this->validImageExts = (array) KunenaForumMessageAttachmentHelper::getImageExtensions($catid,$me->userid);
-		$this->validFileExts = (array) KunenaForumMessageAttachmentHelper::getFileExtensions($catid,$me->userid);
+		$this->validImageExts = (array) KunenaAttachmentHelper::getImageExtensions($catid, $me->userid);
+		$this->validFileExts = (array) KunenaAttachmentHelper::getFileExtensions($catid, $me->userid);
 		$this->setImageResize(intval($this->_config->imagesize)*1024, intval($this->_config->imagewidth), intval($this->_config->imageheight), intval($this->_config->imagequality));
 	}
 
@@ -296,7 +296,7 @@ class CKunenaUpload {
 		// Special processing for images
 		if ($this->_isimage){
 			try {
-				$this->imageInfo = JImage::getImageFileProperties($this->fileTemp);
+				$this->imageInfo = KunenaImage::getImageFileProperties($this->fileTemp);
 			} catch (Exception $e) {
 				// TODO: better error message.
 				$this->fail(JText::_($e->getMessage()));
@@ -325,7 +325,7 @@ class CKunenaUpload {
 				$options = array('quality' => $quality);
 
 				try {
-					$image = new JImage($this->fileTemp);
+					$image = new KunenaImage($this->fileTemp);
 					$image = $image->resize($this->imagewidth, $this->imageheight, false);
 					$image->toFile($this->fileTemp, $this->imageInfo->type, $options);
 					unset($image);

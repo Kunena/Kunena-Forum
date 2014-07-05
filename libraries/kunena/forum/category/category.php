@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -91,7 +91,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'topic.post.read'=>array('Read'),
 			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.post.thankyou' =>array('Read', 'NotBanned'),
-			'topic.post.unthankyou' =>array('Read', 'NotBanned', 'GlobalModerate'),
+			'topic.post.unthankyou' =>array('Read', 'NotBanned'),
 			'topic.post.edit'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.post.approve'=>array('Read', 'NotBanned', 'Moderate'),
@@ -194,6 +194,13 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getIcon() {
+		return KunenaFactory::getTemplate()->getCategoryIcon($this);
+	}
+
+	/**
 	 * @param mixed		$category	Fake category (or null).
 	 * @param bool 		$xhtml		True if URL needs to be escaped for XHTML.
 	 * @param int|null	$action		Limitstart.
@@ -215,18 +222,37 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create{$catid}", $xhtml);
 	}
 
-	public function getMarkReadUrl($xhtml = true) {
+	public function getMarkReadUrl($children = false, $xhtml = true) {
 		if (!KunenaUserHelper::getMyself()->exists()) {
 			return null;
 		}
 
+		$children = $children ? "&children=1" : '';
 		$catid = $this->id ? "&catid={$this->id}" : '';
 		$token = '&' . JSession::getFormToken() . '=1';
-		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$token}", $xhtml);
+		return KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread{$catid}{$children}{$token}", $xhtml);
 	}
 
 	/**
-	 * @param mixed		$category	Fake category (or null).
+	 * Method which  return the RSS feed URL for the actual category
+	 *
+	 * @param string $xhtml
+	 *
+	 * @result string
+	 */
+	public function getRSSUrl($xhtml = true)
+	{
+		if (KunenaFactory::getConfig()->enablerss)
+		{
+			$params = '&catid=' . ( int ) $this->id;
+			return KunenaRoute::_( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		}
+
+		return null;
+	}
+
+	/**
+ 	 * @param mixed		$category	Fake category (or null).
 	 * @param int|null	$action		Limitstart.
 	 *
 	 * @return JUri
@@ -414,7 +440,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($this->_channels === false) {
 			$this->_channels['none'] = array();
-			if (!$this->published || $this->parent_id == 0 || (!$this->numTopics && $this->locked)) {
+			if ($this->published != 1 || $this->parent_id == 0 || (!$this->numTopics && $this->locked)) {
 				// Unpublished categories and sections do not have channels
 			} elseif (empty($this->channels) || $this->channels == $this->id) {
 				// No channels defined
@@ -557,8 +583,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 				throw new InvalidArgumentException(JText::sprintf('COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action), 500);
 			}
 
-			// Load custom authorisation from the plugins.
-			if (!isset($this->authorised[$user->userid])) {
+			// Load custom authorisation from the plugins (except for admins and moderators).
+			if (!$user->isModerator($this) && !isset($this->authorised[$user->userid])) {
 				$this->authorised[$user->userid] = KunenaAccess::getInstance()->authoriseActions($this, $user->userid);
 			}
 
@@ -822,7 +848,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount($this->id);
-		KunenaForumMessageAttachmentHelper::cleanup();
+		KunenaAttachmentHelper::cleanup();
 
 		return $count;
 	}
@@ -1318,7 +1344,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	protected function authoriseUpload(KunenaUser $user) {
 		// Check if attachments are allowed
-		if (KunenaForumMessageAttachmentHelper::getExtensions($this, $user) === false) {
+		if (KunenaAttachmentHelper::getExtensions($this, $user) === false) {
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
 		}
 		return null;

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -48,8 +48,8 @@ defined('_JEXEC') or die;
 			<div class="controls">
 				<input class="btn btn-primary" type="submit" name="Submit"
 				       value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>"/>
-				<input class="btn" onclick="window.history.back()" type="button" name="button"
-				       value="<?php echo JText::_('COM_KUNENA_BACK'); ?>"/>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">
+						<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>
 		</div>
 	</div>

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -84,7 +84,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			$this->setResponseStatus(503);
 			$this->output->setLayout('offline');
 
-			$this->content = KunenaLayout::factory('Page/Custom')
+			$this->content = KunenaLayout::factory('Widget/Custom')
 				->set('header', JText::_('COM_KUNENA_FORUM_IS_OFFLINE'))
 				->set('body', $this->config->offline_message);
 
@@ -93,7 +93,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			$this->setResponseStatus(403);
 			$this->output->setLayout('offline');
 
-			$this->content = KunenaLayout::factory('Page/Custom')
+			$this->content = KunenaLayout::factory('Widget/Custom')
 				->set('header', JText::_('COM_KUNENA_LOGIN_NOTIFICATION'))
 				->set('body', JText::_('COM_KUNENA_LOGIN_FORUM'));
 
@@ -109,18 +109,27 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$this->output->setLayout('unauthorized');
 				$this->document->setTitle($e->getResponseStatus());
 
-				$this->content = KunenaLayout::factory('Page/Custom')
+				$this->content = KunenaLayout::factory('Widget/Custom')
 					->set('header', $e->getResponseStatus())
 					->set('body', $e->getMessage());
 
 			} catch (Exception $e) {
-				$this->setResponseStatus($e->getCode());
-				$this->output->setLayout('unauthorized');
-				$this->document->setTitle($e->getMessage());
+				if (!($e instanceof KunenaExceptionAuthorise)) {
+					$header = 'Error while rendering layout';
+					$content = isset($content) ? $content->renderError($e) : $this->content->renderError($e);
+					$e = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
+				} else {
+					$header = $e->getResponseStatus();
+					$content = $e->getMessage();
+				}
 
-				$this->content = KunenaLayout::factory('Page/Custom')
-					->set('header', 'Error while rendering layout')
-					->set('body', isset($content) ? $content->renderError($e) : $this->content->renderError($e));
+				$this->setResponseStatus($e->getResponseCode());
+				$this->output->setLayout('unauthorized');
+				$this->document->setTitle($header);
+
+				$this->content = KunenaLayout::factory('Widget/Custom')
+					->set('header', $header)
+					->set('body', $content);
 			}
 		}
 

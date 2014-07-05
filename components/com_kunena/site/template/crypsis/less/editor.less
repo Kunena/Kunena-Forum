@@ -2,10 +2,10 @@
 * Kunena Component
 * @package Kunena.Template.Crypsis
 *
-* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
-**/ 
+**/
 
 /*------------------------------------------------------------------
 BBCODE BUTTONS
@@ -54,7 +54,6 @@ img.kbbcode {
 			display: block;
 			height: 18px;
 			width: 18px;
-			margin-right: 2px;
 		}
 		a:hover {
 			cursor: pointer;
@@ -163,6 +162,9 @@ img.kbbcode {
 #kbbcode-sup-button {
 	background-position: -90px 0;
 }
+#kbbcode-smilies-button {
+	background-position: -108px -18px;
+}
 #kbbcode-separator1,
 #kbbcode-separator2,
 #kbbcode-separator3,
@@ -225,9 +227,8 @@ width:80px;
 .ktxtarea {
 margin-left:-80px
 }
-input[type=radio] {
-	display:none; 
-	margin:10px;
+#postform input[type=radio] {
+	display:none;
 }
 input[type=radio] + label {
 	display:inline-block;
@@ -236,7 +237,22 @@ input[type=radio] + label {
 	background-color: transparent;
 	border-color: #ddd;
 }
-input[type=radio]:checked + label { 
+input[type=radio]:checked + label {
 	background-image: none;
-	background-color:rgba(0, 0, 0, 0.1);
+	background-color:rgba(0, 0, 0, 0.07);
+	border:1px solid rgba(0, 0, 0, 0.2);;
+	border-radius:4px;
+}
+label img{
+    pointer-events: none;
+}
+#kbbcode-smilies-button {
+    background-position: -108px -18px;
+}
+.kbbcode-preview-bottom {
+  border: 1px solid #dddddd;
+	padding:4px 12px;
+	margin:10px;
+	border-radius:4px;
+	min-height:150px;
 }

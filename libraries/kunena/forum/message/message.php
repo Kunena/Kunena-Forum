@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -43,11 +43,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	protected $_table = 'KunenaMessages';
 	protected $_db = null;
 	/**
-	 * @var KunenaForumMessageAttachment[]
+	 * @var KunenaAttachment[]
 	 */
 	protected $_attachments_add = array();
 	/**
-	 * @var KunenaForumMessageAttachment[]
+	 * @var KunenaAttachment[]
 	 */
 	protected $_attachments_del = array();
 	protected $_topic = null;
@@ -70,7 +70,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		'undelete'=>array('Read'),
 		'permdelete'=>array('Read'),
 		'attachment.read'=>array('Read'),
-		'attachment.create'=>array('Read','Own','EditTime'),
+		'attachment.create'=>array('Read','Own'),
 		'attachment.delete'=>array(), // TODO: In the future we might want to restrict this: array('Read','EditTime'),
 	);
 
@@ -240,104 +240,149 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 *
 	 * @return bool|null
 	 */
-	public function sendNotification($url=null) {
+	public function sendNotification($url = null)
+	{
 		$config = KunenaFactory::getConfig();
-		if (!$config->get('send_emails')) {
+
+		if (!$config->get('send_emails'))
+		{
 			return null;
 		}
 
-		if ($this->hold > 1) {
+		if ($this->hold > 1)
+		{
 			return null;
-		} elseif ($this->hold == 1) {
+		}
+		elseif ($this->hold == 1)
+		{
 			$mailsubs = 0;
 			$mailmods = $config->mailmod >= 0;
 			$mailadmins = $config->mailadmin >= 0;
-		} else {
+		}
+		else
+		{
 			$mailsubs = (bool) $config->allowsubscriptions;
 			$mailmods = $config->mailmod >= 1;
 			$mailadmins = $config->mailadmin >= 1;
 		}
 
 		$once = false;
-		if ($mailsubs) {
-			if (!$this->parent) {
+
+		if ($mailsubs)
+		{
+			if (!$this->parent)
+			{
 				// New topic: Send email only to category subscribers
 				$mailsubs = $config->category_subscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
 				$once = $config->category_subscriptions == 'topic';
-			} elseif ($config->category_subscriptions != 'post') {
+			}
+			elseif ($config->category_subscriptions != 'post')
+			{
 				// Existing topic: Send email only to topic subscribers
 				$mailsubs = $config->topic_subscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
 				$once = $config->topic_subscriptions == 'first';
-			} else {
+			}
+			else
+			{
 				// Existing topic: Send email to both category and topic subscribers
-				$mailsubs = $config->topic_subscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
-				// FIXME: category subcription can override topic
+				$mailsubs = $config->topic_subscriptions == 'disabled'
+					? KunenaAccess::CATEGORY_SUBSCRIPTION
+					: KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
+				// FIXME: category subscription can override topic
 				$once = $config->topic_subscriptions == 'first';
 			}
 		}
 
-		if (!$url) {
-			$url = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl(null);
+		if (!$url)
+		{
+			$url = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl();
 		}
-		//get all subscribers, moderators and admins who will get the email
-		$me = KunenaUserHelper::get();
-		$acl = KunenaAccess::getInstance();
-		$emailToList = $acl->getSubscribers($this->catid, $this->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
 
-		$topic = $this->getTopic();
-		if (count ( $emailToList )) {
-			if (! $config->getEmail() ) {
-				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ) );
-				return false;
-			} elseif ( ! JMailHelper::isEmailAddress ( $config->getEmail() ) ) {
-				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ) );
+		// Get all subscribers, moderators and admins who should get the email.
+		$emailToList = KunenaAccess::getInstance()->getSubscribers(
+			$this->catid,
+			$this->thread,
+			$mailsubs,
+			$mailmods,
+			$mailadmins,
+			KunenaUserHelper::getMyself()->userid
+		);
+
+		if ($emailToList)
+		{
+			if (!$config->getEmail())
+			{
+				KunenaError::warning(JText::_('COM_KUNENA_EMAIL_DISABLED'));
+
 				return false;
 			}
-			// clean up the message for review
-			$message = KunenaHtmlParser::stripBBCode ( $this->message, 0, false );
+			elseif (!JMailHelper::isEmailAddress($config->getEmail()))
+			{
+				KunenaError::warning(JText::_('COM_KUNENA_EMAIL_INVALID'));
 
-			$mailsender = JMailHelper::cleanAddress ( $config->board_title );
-			$mailsubject = JMailHelper::cleanSubject ( "[" . $config->board_title . "] " . $topic->subject . " (" . $this->getCategory()->name . ")" );
-			$subject = $this->subject ? $this->subject : $topic->subject;
+				return false;
+			}
 
-			// Make a list from all receivers
+			$topic = $this->getTopic();
+
+			// Make a list from all receivers; split the receivers into two distinct groups.
 			$sentusers = array();
-			$receivers = array(0=>array(), 1=>array());
-			foreach ( $emailToList as $emailTo ) {
-				if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email )) {
+			$receivers = array(0 => array(), 1 => array());
+
+			foreach($emailToList as $emailTo)
+			{
+				if (!$emailTo->email || !JMailHelper::isEmailAddress($emailTo->email))
+				{
 					continue;
 				}
+
 				$receivers[$emailTo->subscription][] = $emailTo->email;
 				$sentusers[] = $emailTo->id;
 			}
 
-			// Create email
+			$mailsender = JMailHelper::cleanAddress($config->board_title);
+			$mailsubject = JMailHelper::cleanSubject(
+				"[{$config->board_title}] {$topic->subject} ({$this->getCategory()->name})"
+			);
+			$subject = $this->subject ? $this->subject : $topic->subject;
+
+			// Create email.
 			$mail = JFactory::getMailer();
 			$mail->setSubject($mailsubject);
 			$mail->setSender(array($config->getEmail(), $mailsender));
 
-			// Send email to all subscribers
-			if (!empty($receivers[1])) {
-				$this->attachEmailBody($mail, 1, $subject, $url, $message, $once);
-				$this->sendEmail($mail, $receivers[1]);
+			// Send email to all subscribers.
+			if (!empty($receivers[1]))
+			{
+				$this->attachEmailBody($mail, 1, $subject, $url, $once);
+				KunenaEmail::send($mail, $receivers[1]);
 			}
 
-			// Send email to all moderators
-			if (!empty($receivers[0])) {
-				$this->attachEmailBody($mail, 0, $subject, $url, $message, $once);
-				$this->sendEmail($mail, $receivers[0]);
+			// Send email to all moderators.
+			if (!empty($receivers[0]))
+			{
+				$this->attachEmailBody($mail, 0, $subject, $url, $once);
+				KunenaEmail::send($mail, $receivers[0]);
 			}
 
-			// Update subscriptions
-			if ($once && $sentusers) {
+			// Update subscriptions.
+			if ($once && $sentusers)
+			{
 				$sentusers = implode (',', $sentusers);
-				$db = JFactory::getDBO();
-				$query = "UPDATE #__kunena_user_topics SET subscribed=2 WHERE topic_id={$this->thread} AND user_id IN ({$sentusers}) AND subscribed=1";
-				$db->setQuery ($query);
-				$db->query ();
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true)
+					->update('#__kunena_user_topics')
+					->set('subscribed=2')
+					->where("topic_id={$this->thread}")
+					->where("user_id IN ({$sentusers})")
+					->where('subscribed=1');
+
+				$db->setQuery($query);
+				$db->execute();
 				KunenaError::checkDatabaseError();
 			}
 		}
+
 		return true;
 	}
 
@@ -592,7 +637,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @return bool
 	 */
 	public function uploadAttachment($tmpid, $postvar, $catid=null) {
-		$attachment = new KunenaForumMessageAttachment();
+		$attachment = new KunenaAttachment;
 		$attachment->userid = $this->userid;
 		$success = $attachment->upload($postvar, $catid);
 		$this->_attachments_add[$tmpid] = $attachment;
@@ -647,20 +692,20 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 * @param  bool|array  $ids
 	 * @param  string      $action
 	 *
-	 * @return KunenaForumMessageAttachment[]
+	 * @return KunenaAttachment[]
 	 */
 	public function getAttachments($ids=false, $action = 'read') {
 		if ($ids === false) {
-			return KunenaForumMessageAttachmentHelper::getByMessage($this->id, $action);
+			$attachments = KunenaAttachmentHelper::getByMessage($this->id, $action);
 		} else {
-			$attachments = KunenaForumMessageAttachmentHelper::getById($ids, $action);
+			$attachments = KunenaAttachmentHelper::getById($ids, $action);
 			foreach ($attachments as $id=>$attachment) {
 				if ($attachment->mesid && $attachment->mesid != $this->id) {
 					unset($attachments[$id]);
 				}
 			}
-			return $attachments;
 		}
+		return $attachments;
 	}
 
 	/**
@@ -671,7 +716,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$message = $this->message;
 		foreach ($this->_attachments_add as $tmpid=>$attachment) {
 			if ($attachment->exists() && $attachment->mesid) {
-				// Attachment exists and already belongs to a message => skip it.
+				// Attachment exists and already belongs to a message => update.
+				if (!$attachment->save()) {
+					$this->setError($attachment->getError());
+					continue;
+				}
 				continue;
 			}
 			$attachment->mesid = $this->id;
@@ -1098,71 +1147,29 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	/**
-	 * @param object $mail
-	 * @param array  $receivers
-	 */
-	protected function sendEmail($mail, array $receivers) {
-		$config = KunenaFactory::getConfig();
-		$email_recipient_count = !empty($config->email_recipient_count) ? $config->email_recipient_count : 1;
-		$email_recipient_privacy = !empty($config->email_recipient_privacy) ? $config->email_recipient_privacy : 'bcc';
-
-		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam
-		if ($email_recipient_count > 1 && $email_recipient_privacy == 'bcc'
-			&& !empty($config->email_visible_address) && JMailHelper::isEmailAddress ( $config->email_visible_address )) {
-			$mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress ( $config->board_title ));
-			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit)
-			if ($email_recipient_count > 9) $email_recipient_count--;
-		}
-
-		$chunks = array_chunk($receivers, $email_recipient_count);
-		foreach ($chunks as $emails) {
-			if ($email_recipient_count == 1 || $email_recipient_privacy == 'to') {
-				$mail->ClearAddresses();
-				$mail->addRecipient($emails);
-			} elseif ($email_recipient_privacy == 'cc') {
-				$mail->ClearCCs();
-				$mail->addCC($emails);
-			} else {
-				$mail->ClearBCCs();
-				$mail->addBCC($emails);
-			}
-			try {
-				$mail->Send();
-			} catch (Exception $e) {
-				JLog::add($e->getMessage(), JLog::WARNING, 'kunena');
-			}
-		}
-	}
-
-	/**
 	 * @param JMail $mail
 	 * @param int $subscription
 	 * @param string $subject
 	 * @param string $url
-	 * @param string $message
 	 * @param bool $once
 	 *
 	 * @return string
 	 */
-	protected function attachEmailBody(JMail $mail, $subscription, $subject, $url, $message, $once) {
-		$layout = KunenaLayout::factory('Email/NewPost')->debug(false)
+	protected function attachEmailBody(JMail $mail, $subscription, $subject, $url, $once) {
+		$layout = KunenaLayout::factory('Email/Subscription')->debug(false)
+			->set('mail', $mail)
 			->set('message', $this)
 			->set('messageUrl', $url)
 			->set('once', $once);
 
 		try {
-			$output = $layout->render($subscription ? 'default' : 'moderator');
-			list($msg, $alt) = explode('-----=====-----', $output);
-			$msg = trim((string) $msg);
-			$alt = trim((string) $alt);
-
-			if ($alt) {
-				$mail->isHtml(true);
-				$mail->AltBody = $alt;
-			}
+			$msg = trim($layout->render($subscription ? 'default' : 'moderator'));
 
 		} catch (Exception $e) {
 			// TODO: Deprecated in 3.1, remove in 4.0
+			// Clean up the message for review.
+			$message = KunenaHtmlParser::stripBBCode($this->message, 0, false);
+
 			$config = KunenaFactory::getConfig();
 			if ($subscription) {
 				$msg1 = $this->get ( 'parent' ) ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT' );

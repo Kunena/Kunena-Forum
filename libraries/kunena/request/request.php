@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -38,7 +38,7 @@ class KunenaRequest
 	 * @param	JInput	$input
 	 * @param	mixed	$options
 	 *
-	 * @return  KunenaControllerBase
+	 * @return  KunenaControllerBase|KunenaControllerDisplay
 	 * @throws	InvalidArgumentException
 	 */
 	public static function factory($path, JInput $input = null, $options = null) {

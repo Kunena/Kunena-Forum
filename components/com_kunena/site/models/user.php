@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -22,6 +22,9 @@ class KunenaModelUser extends KunenaModel {
 
 		$layout = $this->getCmd ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
+
+		$display = $this->getUserStateFromRequest( 'com_kunena.users_display', 'display', 'topics');
+		$this->setState ( 'display', $display);
 
 		$config = KunenaFactory::getConfig();
 
@@ -48,19 +51,26 @@ class KunenaModelUser extends KunenaModel {
 	}
 
 	public function getQueryWhere() {
-		$db = JFactory::getDBO();
-		$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
-		$db->setQuery ( $query );
-		$superadmins = (array) $db->loadColumn();
-		if (!$superadmins) $superadmins = array(0);
-		$this->setState ( 'list.exclude', implode(',', $superadmins));
+		$where = '';
 
-		if ($this->config->userlist_count_users == '1' ) $where = '(u.block=0 OR u.activation="")';
-		elseif ($this->config->userlist_count_users == '2' ) $where = '(u.block=0 AND u.activation="")';
-		elseif ($this->config->userlist_count_users == '3' ) $where = 'u.block=0';
-		else $where = '1';
 		// Hide super admins from the list
-		$where .= ' AND u.id NOT IN ('.$this->getState ( 'list.exclude' ).')';
+		if ( KunenaFactory::getConfig()->superadmin_userlist )
+		{
+			$db = JFactory::getDBO();
+			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
+			$db->setQuery ( $query );
+			$superadmins = (array) $db->loadColumn();
+			if (!$superadmins) $superadmins = array(0);
+			$this->setState ( 'list.exclude', implode(',', $superadmins));
+
+			$where = ' u.id NOT IN ('.$this->getState ( 'list.exclude' ).') AND ';
+		}
+
+		if ($this->config->userlist_count_users == '1' ) $where .= '(u.block=0 OR u.activation="")';
+		elseif ($this->config->userlist_count_users == '2' ) $where .= '(u.block=0 AND u.activation="")';
+		elseif ($this->config->userlist_count_users == '3' ) $where .= 'u.block=0';
+		else $where .= '1';
+
 		return $where;
 	}
 

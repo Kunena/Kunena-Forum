@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,11 +23,11 @@ class Com_KunenaInstallerScript {
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.2' => '3.2.1',
-			'3.1' => '3.2.1',
-			'3.0' => '3.2.1',
-			'2.5' => '2.5.17',
-			'0' => '3.2.1' // Preferred version
+			'3.2' => '3.2.3',
+			'3.1' => '3.2.3',
+			'3.0' => '3.2.3',
+			'2.5' => '2.5.19',
+			'0' => '3.2.3' // Preferred version
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');

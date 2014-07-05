@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -29,6 +29,9 @@ if ($show)
 	<?php if ($avatar) : ?>
 	<li>
 		<?php echo $user->getLink($avatar); ?>
+		<?php if (isset($this->topic_starter) && $this->topic_starter): ?>
+				<span class="topic-starter"></span>
+		<?php endif;?>
 	</li>
 	<?php endif; ?>
 
@@ -38,9 +41,9 @@ if ($show)
 		<span class="label label-<?php echo $user->isOnline('success', 'important') ?>">
 			<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
 		</span>
-		
+
 	</li>
-	
+
 	<?php if (!empty($rankTitle)) : ?>
 	<li>
 		<?php echo $this->escape($rankTitle); ?>
@@ -60,13 +63,14 @@ if ($show)
 	<?php endif; ?>
 </ul>
 <div class="profile-expand center">
-	<span class="heading btn btn-small" style="width:50px;"><i class="icon-arrow-down-4"></i> More</span>
-	<div class="content">
+	<span class="heading btn btn-small heading-less" style="width:50px;display:none;"><i class="icon-arrow-up-4"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+	<span class="heading btn btn-small" style="width:50px;"><i class="icon-arrow-down-4"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+	<div class="content" style="display:none;">
 		<ul>
 			<li>
 				<?php echo JText::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
-			</li> 
-			
+			</li>
+
 			<?php if ($show && isset($user->thankyou)) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
@@ -93,7 +97,7 @@ if ($show)
 				<?php  echo $user->profileIcon('private'); ?>
 				<?php  echo $user->profileIcon('email'); ?>
 			</li>
-			<?php endif; ?>
 		</ul>
 	</div>
 </div>
+<?php endif; ?>

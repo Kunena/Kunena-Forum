@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Config
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -105,11 +105,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH') ?></td>
 														<td><?php echo $this->lists ['fallback_english'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK') ?></td>
-														<td><?php echo $this->lists ['version_check'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?></td>
@@ -469,6 +464,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['show_imgfiles_manage_profile'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
+														<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -698,6 +698,16 @@ defined ( '_JEXEC' ) or die ();
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_AVATAR_QUALITY') ?></td>
 														<td class="nowrap"><input type="text" name="cfg_avatarquality" class="ksm-field" value="<?php echo $this->escape($this->config->avatarquality) ?>" /> %</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_AVATAR_RESIZE_METHOD') ?></td>
+														<td class="nowrap"><input type="text" name="cfg_avatarresizemethod" class="ksm-field" value="<?php echo $this->escape($this->config->avatarresizemethod) ?>" /> %</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_AVATAR_CROP') ?></td>
+														<td><?php echo $this->lists ['avatarcrop'] ?></td>
 														<td></td>
 													</tr>
 												</tbody>
@@ -1058,7 +1068,7 @@ defined ( '_JEXEC' ) or die ();
 
 									<div class="tab-pane" id="tab_extra">
 										<fieldset>
-											<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
+											<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_SETTINGS') ?></legend>
 											<table class="table table-striped">
 												<thead>
 													<tr>

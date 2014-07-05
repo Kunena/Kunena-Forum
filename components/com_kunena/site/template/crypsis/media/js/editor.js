@@ -2,14 +2,14 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 
 /*
  * Fix some Mootools bugs
- * 
+ *
  * provides: [Element.Forms]
  */
 
@@ -21,7 +21,7 @@ Element.implement({
 	getTextInRange: function(start, end) {
 		return this.get('value').substring(start, end);
 	},
-	
+
 	getSelectedText: function() {
 		if (this.setSelectionRange) return this.getTextInRange(this.getSelectionStart(), this.getSelectionEnd());
 		this.focus();
@@ -241,7 +241,7 @@ var kbbcode = new Class({
 				'blur': function(event) {
 					this.timer = clearInterval(this.timer);
 				}.bind(this),
-				
+
 				// Fixing IE
 				'select': function(event) {
 					this.selection = this.el.getSelectedRange();
@@ -250,7 +250,7 @@ var kbbcode = new Class({
 				'click': function(event) {
 					this.selection = this.el.getSelectedRange();
 				}.bind(this),
-				
+
 				'keyup': function(event) {
 					this.selection = this.el.getSelectedRange();
 				}.bind(this)
@@ -309,7 +309,7 @@ var kbbcode = new Class({
 			this.el.fireEvent('change');
 		}
 	},
-	
+
 	/*
 			function focus
 				Gets focus in IE7-10
@@ -580,7 +580,7 @@ function kGenerateColorPalette(width, height)
 	numberList[4] = 'FF';
 
 	document.writeln('<table id="kbbcode-colortable" class="kbbcode-colortable" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
-	
+
 	for (r = 0; r < 5; r++)
 	{
 		document.writeln('<tr>');
@@ -598,7 +598,7 @@ function kGenerateColorPalette(width, height)
 function kInsertCode() {
 	var kcodetype = document.id('kcodetype').get('value');
 	if (kcodetype != '') kcodetype = ' type='+kcodetype;
-	kbbcode.focus().wrapSelection('[code'+kcodetype+']', '[/code]', false); 
+	kbbcode.focus().wrapSelection('[code'+kcodetype+']', '[/code]', false);
 	kToggleOrSwap("kbbcode-code-options");
 }
 
@@ -644,13 +644,12 @@ function cancelForm() {
 	return true;
 }
 
-// 
 // Helper function for various IE7 and IE8 work arounds
 //
 function IEcompatibility() {
 	// Only do anything if this is IE
 	if(Browser.ie){
-		var __fix = $$("#kbbcode-size-options", "#kbbcode-size-options span", 
+		var __fix = $$("#kbbcode-size-options", "#kbbcode-size-options span",
 						"#kbbcode-colortable", "#kbbcode-colortable td");
 		if (__fix) {
 			__fix.setProperty('unselectable', 'on');

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -384,16 +384,16 @@ window.addEvent('domready', function(){
 			// TODO: handle guests/bots with no userstate
 			$read[$id] = $app->getUserState("com_kunena.user{$id}_read");
 			if ($read[$id] === null) {
-				$read[$id] = array();
+				$list = array();
 				$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 				foreach ( $categories as $category ) {
 					// Remove unpublished categories
-					if (!$category->published) {
+					if ($category->published != 1) {
 						unset($categories[$category->id]);
 					}
 					// Moderators have always access
 					if (self::isModerator($user, $category->id)) {
-						$read[$id][$category->id] = $category->id;
+						$list[$category->id] = $category->id;
 						unset($categories[$category->id]);
 					}
 				}
@@ -403,10 +403,16 @@ window.addEvent('domready', function(){
 					/** @var KunenaAccess $access */
 					foreach ($this->accesstypes['all'] as $access) {
 						if (method_exists($access, 'authoriseCategories')) {
-							$read[$id] += $access->authoriseCategories($id, $categories);
+							$list += $access->authoriseCategories($id, $categories);
 						}
 					}
 				}
+
+				// Clean up and filter the resulting list by using only array keys.
+				$list = array_keys($list);
+				JArrayHelper::toInteger($list);
+				$read[$id] = array_combine($list, $list);
+				unset($read[$id][0]);
 				$app->setUserState("com_kunena.user{$id}_read", $read[$id]);
 			}
 		}

@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.Category.Item
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -61,7 +61,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if ($url)
 		{
-			$actions['create'] = $this->subLayout('Page/Button')
+			$actions['create'] = $this->subLayout('Widget/Button')
 				->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'primary' => true));
 		}
 
@@ -70,7 +70,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if ($url)
 		{
-			$actions['markread'] = $this->subLayout('Page/Button')
+			$actions['markread'] = $this->subLayout('Widget/Button')
 				->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user'));
 		}
 
@@ -82,13 +82,13 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			if (!$subscribed)
 			{
 				$url = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-				$actions['subscribe'] = $this->subLayout('Page/Button')
+				$actions['subscribe'] = $this->subLayout('Widget/Button')
 					->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user'));
 			}
 			else
 			{
 				$url = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-				$actions['unsubscribe'] = $this->subLayout('Page/Button')
+				$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 					->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user'));
 			}
 		}
@@ -108,7 +108,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 *
 	 * @return string
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null)
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length=20)
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels = $category->getChannels();
@@ -122,7 +122,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		if (!$content)
 		{
-			$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 20);
+			$content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
 		}
 
 		if ($title === null)

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Pages.Category
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -19,4 +19,4 @@ $this->addBreadcrumb(
 
 echo $content;
 echo $this->subRequest('Statistics/WhoIsOnline');
-echo $this->subRequest('Page/Statistics');
+echo $this->subRequest('Widget/Statistics');

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -244,7 +244,7 @@ $changeOrder = ($this->listOrdering == 'ordering' && $this->listDirection == 'as
 										</small>
 									</td>
 									<td class="center">
-										<span><?php echo $this->escape ( $category->accessname ); ?></span>
+										<span><?php echo $category->accessname; ?></span>
 										<small>
 											<?php echo JText::sprintf('(Access: %s)', $this->escape( $category->accesstype ));?>
 										</small>

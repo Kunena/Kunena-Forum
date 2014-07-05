@@ -4,7 +4,7 @@
  * @package Kunena.Modules
  * @subpackage Menu
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
@@ -38,7 +38,7 @@ foreach ($this->list as $i => $item) :
 
 	echo '<li'.$class.'>';
 
-	$flink = ' href="'.htmlspecialchars($item->flink).'" ';
+	$flink = ' href="'.htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8').'" ';
 	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : '';
 	$title = $item->anchor_title ? ' title="'.$item->anchor_title.'" ' : '';
 	if ($item->menu_image) {

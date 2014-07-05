@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -141,7 +141,7 @@ abstract class KunenaForum {
 		$options = array('logger'=>'w3c', 'text_file'=>'kunena.php');
 		$categories = array('kunena');
 		$levels = JDEBUG || $config->debug ? JLog::ALL :
-			JLog::EMERGENCY & JLog::ALERT & JLog::CRITICAL & JLog::ERROR;
+			JLog::EMERGENCY | JLog::ALERT | JLog::CRITICAL | JLog::ERROR;
 		JLog::addLogger($options, $levels, $categories);
 	}
 

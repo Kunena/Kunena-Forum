@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.Category.Index
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -58,7 +58,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 					return '<img src="' . $uri . $file . '" border="0" class="kforum-cat-image" alt=" " />';
 				}
 
-				return $this->getIcon($this->ktemplate->categoryIcons[1], JText::_('COM_KUNENA_GEN_FORUM_NEWPOST'));
+				return $this->getIcon('kunreadforum', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST'));
 			}
 			else
 			{
@@ -70,7 +70,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 					return '<img src="' . $uri . $file . '" border="0" class="kforum-cat-image" alt=" " />';
 				}
 
-				return $this->getIcon($this->ktemplate->categoryIcons[0], JText::_('COM_KUNENA_GEN_FORUM_NOTNEW'));
+				return $this->getIcon('kreadforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW'));
 			}
 		}
 		elseif ($this->config->showchildcaticon)
@@ -85,7 +85,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 					return '<img src="' . $uri . $file . '" border="0" class="kforum-cat-image" alt=" " />';
 				}
 
-				return $this->getIcon($this->ktemplate->categoryIcons[1] . '-sm', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST'));
+				return $this->getIcon('kunreadforum-sm', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST'));
 			}
 			else
 			{
@@ -97,7 +97,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 					return '<img src="' . $uri . $file . '" border="0" class="kforum-cat-image" alt=" " />';
 				}
 
-				return $this->getIcon($this->ktemplate->categoryIcons[0] . '-sm', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW'));
+				return $this->getIcon('kunreadforum-sm', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW'));
 			}
 		}
 

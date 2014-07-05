@@ -4,17 +4,18 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
+$colspan = empty($this->actions) ? 5 : 6;
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
-<div class="alert alert-info">
+<div class="alert alert-info kfrontend">
 	<a class="close" data-dismiss="alert" href="#">&times;</a>
 	<?php echo $this->category->displayField('headerdesc'); ?>
 </div>
@@ -23,48 +24,50 @@ $categoryActions = $this->getCategoryActions();
 <?php if (!$this->category->isSection()) : ?>
 <h2>
 	<a><?php echo $this->escape($this->headerText); ?></a>
-	<span class="pull-right">
-		<?php echo $this->subLayout('Search/Button')->set('catid', $this->category->id); ?>
-	</span>
 </h2>
+
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+</div>
+
+<div class="pull-right">
+	<?php echo $this->subLayout('Widget/Search')->set('catid', $this->category->id); ?>
+</div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
-
-	<table class="table table-striped table-bordered table-hover table-condensed">
+	<div class="kbuttons">
+		<ul class="inline">
+			<?php if ($categoryActions) : ?>
+			<li class="hidden-phone">
+				<?php echo implode($categoryActions); ?>
+			</li>
+		<?php endif; ?>
+	</ul>
+	</div>
+	<table class="table table-bordered">
 		<thead>
 			<tr>
-				<td colspan="1" class="center">
+				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>
-				<td colspan="1">
-					<ul class="inline no-margin">
-
-						<?php if ($categoryActions) : ?>
-						<li class="hidden-phone">
-							<?php echo implode($categoryActions); ?>
-						</li>
-						<?php endif; ?>
-					</ul>
+				<td class="span6">
+				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<?php if (!empty($this->topics)) : ?>
-				<td colspan="2" class="center">
-					<ul class="inline pull-right no-margin">
-
-					  <li>
-							<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-						</li>
-					</ul>
+				<td class="span2 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
-				<?php endif; ?>
+				<td class="span1">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
 				<?php if (!empty($this->topicActions)) : ?>
-				<td colspan="1">
+				<td class="span1 center">
 					<label>
-						<input class="kcheckall pull-right" type="checkbox" name="toggle" value="" />
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>
 				</td>
 				<?php endif; ?>
@@ -86,14 +89,14 @@ $categoryActions = $this->getCategoryActions();
 				->set('spacing', $previous && $previous->ordering != $topic->ordering)
 				->set('position', 'kunena_topic_' . $position)
 				->set('checkbox', !empty($this->topicActions))
-				->setLayout('table_icons');
+				->setLayout('category');
 			$previous = $topic;
 		}
 
 		?>
 		<tfoot>
 		<tr>
-			<td class="center">
+			<td class="center hidden-phone">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<span class="divider"></span>
@@ -102,8 +105,8 @@ $categoryActions = $this->getCategoryActions();
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 
-			<td colspan="3">
-
+			<td colspan="6" class="hidden-phone">
+				<div class="form-horizontal">
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
@@ -111,14 +114,14 @@ $categoryActions = $this->getCategoryActions();
 
 				<?php if (!empty($this->topicActions)) : ?>
 				<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
-							'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+							'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
 				<?php if ($this->actionMove) :
 								$options = array (
 									JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))
 								);
 								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(),
-									'size="1" disabled="disabled"', 'value', 'text', 0,
+									' disabled="disabled"', 'value', 'text', 0,
 									'kchecktarget');
 							?>
 				<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
@@ -127,10 +130,7 @@ $categoryActions = $this->getCategoryActions();
 				<?php endif; ?>
 
 				<?php endif; ?>
-
-				<div class="pull-right">
-					<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-				</div>
+			</div>
 			</td>
 		</tr>
 		</tfoot>
@@ -139,9 +139,14 @@ $categoryActions = $this->getCategoryActions();
 
 </form>
 
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+</div>
+
 <?php
 if (!empty($this->moderators))
 	echo $this->subLayout('Category/Moderators')->set('moderators', $this->moderators);
 ?>
 
 <?php endif; ?>
+<div class="clearfix"></div>

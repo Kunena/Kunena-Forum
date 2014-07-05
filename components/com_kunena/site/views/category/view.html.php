@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -138,13 +138,13 @@ class KunenaViewCategory extends KunenaView {
 		$this->render('Category/Edit', $tpl);
 	}
 
-	function getLastPostLink($category, $content = null, $title = null, $class = null) {
+	function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 20) {
 		$lastTopic = $category->getLastTopic();
 		$channels = $category->getChannels();
 		if (!isset($channels[$lastTopic->category_id])) $category = $lastTopic->getCategory();
 		$uri = $lastTopic->getUri($category, 'last');
 
-		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 20);
+		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
@@ -152,7 +152,7 @@ class KunenaViewCategory extends KunenaView {
 	public function getCategoryIcon($category, $thumb = false) {
 		$path	= JPATH_ROOT . '/media/kunena/' . $this->config->catimagepath . '/';
 		$uri	= JUri::root(true) . '/media/kunena/' . $this->config->catimagepath . '/';
-		
+
 		if (!$thumb) {
 			if ($category->getNewCount()) {
 				// Check Unread Cat Images
@@ -191,16 +191,16 @@ class KunenaViewCategory extends KunenaView {
 		}
 		return '';
 	}
-	
+
 	private function getCategoryIconFile($filename, $path = '') {
 		$types	= array('.gif', '.png', '.jpg');
-		
+
 		foreach ($types as $ext) {
 			if (is_file($path . $filename . $ext)) {
 				return $filename . $ext;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -287,6 +287,9 @@ class KunenaViewCategory extends KunenaView {
 		}
 	}
 
+	/**
+	 * @deprecated	3.1
+	 */
 	function getCategoryActions() {
 		$token = '&' . JSession::getFormToken() . '=1';
 		$this->categoryButtons = array();

@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -17,27 +17,6 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaControllerTopicListDisplay
 {
-	/**
-	 * Return display layout.
-	 *
-	 * @return KunenaLayout
-	 */
-	protected function display()
-	{
-		// Display layout with given parameters.
-		$content = KunenaLayout::factory('Topic/List')
-			->set('me', $this->me)
-			->set('config', $this->config)
-			->set('topics', $this->topics)
-			->set('headerText', $this->headerText)
-			->set('pagination', $this->pagination)
-			->set('state', $this->state)
-			->set('actions', $this->actions)
-			->set('moreUri', $this->moreUri);
-
-		return $content;
-	}
-
 	/**
 	 * Prepare user's topic list.
 	 *
@@ -54,9 +33,12 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$this->me = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
-		if ( $this->getOptions()->get('embedded', false) )
+		$this->embedded = $this->getOptions()->get('embedded', false);
+
+		if ($this->embedded)
 		{
-			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user');
+			$this->moreUri = new JUri('index.php?option=com_kunena&view=topics&layout=user&mode=' . $this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&sel=' . $this->state->get('list.time') . '&limit=' . $this->state->get('list.limit'));
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
 		$start = $this->state->get('list.start');
@@ -123,6 +105,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		$finder->filterByCategories($categories);
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
 
 		$this->topics = $finder
 			->order($order, -1)

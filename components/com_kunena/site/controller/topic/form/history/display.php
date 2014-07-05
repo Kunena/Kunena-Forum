@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -39,7 +39,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count($this->history);
-		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
+		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = array();
 
 		foreach ($this->history as $message)
@@ -61,7 +61,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->history, &$params, 0));
 
 		// FIXME: need to improve BBCode class on this...
-		$this->attachments = KunenaForumMessageAttachmentHelper::getByMessage($this->history);
+		$this->attachments = KunenaAttachmentHelper::getByMessage($this->history);
 		$this->inline_attachments = array();
 
 		$this->headerText = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;

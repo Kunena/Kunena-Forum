@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,8 +18,10 @@ function kunenatableOrdering( order, dir, task, form ) {
 /**
  *  Helper function for to perform JSON request for preview
  */
-function kPreviewHelper() {
-	if (_previewActive == true){
+var previewActive=false;
+
+function kPreviewHelper(previewActive) {
+	if (previewActive == true){
 		if ( jQuery('#kbbcode-message').val() != null ) {
 			jQuery.ajax({
 				type: 'POST',
@@ -36,50 +38,63 @@ function kPreviewHelper() {
 }
 
 jQuery(document).ready(function() {
-	/* To hide or open spoiler on click */
-	jQuery('.kspoiler').each(function( ) {	
-		jQuery('.kspoiler-header').click(function() {
-			if ( jQuery('.kspoiler-content').attr('style')=='display:none' ) {
-				jQuery('.kspoiler-content').removeAttr('style');
-				jQuery('.kspoiler-expand').attr('style','display:none;');
-				jQuery('.kspoiler-hide').removeAttr('style');
-			} else {
-				jQuery('.kspoiler-content').attr('style','display:none;');
-				jQuery('.kspoiler-expand').removeAttr('style');
-				jQuery('.kspoiler-hide').attr('style','display:none;');
-			}
-		});
+	/* To hide or open collapse localStorage */
+	jQuery('.collapse').on('hidden', function() {
+				if (this.id) {
+						localStorage[this.id] = 'true';
+				}
+		}).on('shown', function() {
+				if (this.id) {
+						localStorage.removeItem(this.id);
+				}
+		}).each(function() {
+				if (this.id && localStorage[this.id] === 'true' ) {
+						jQuery(this).collapse('hide');
+				}
 	});
-	
+
+	/* To hide or open spoiler on click */
+	jQuery('.kspoiler').click(function() {
+		if ( !jQuery('.kspoiler-content').is(':visible') ) {
+			jQuery(this).find('.kspoiler-content').show();
+			jQuery(this).find('.kspoiler-expand').hide();
+			jQuery(this).find('.kspoiler-hide').show();
+		} else {
+			jQuery(this).find('.kspoiler-content').hide();
+			jQuery(this).find('.kspoiler-expand').show();
+			jQuery(this).find('.kspoiler-hide').hide();
+		}
+	});	
+
 	/* To check or uncheck boxes to select items */
 	jQuery('input.kcheckall').click(function() {
-		jQuery( '.kcheck' ).each(function( ) {			
+		jQuery( '.kcheck' ).each(function( ) {
 			jQuery(this).prop('checked',!jQuery(this).prop('checked'));
 		});
 	});
-		
+
 	/* To allow to close or open the quick-reply modal box */
 	jQuery('.openmodal').click(function() {
 		var boxToOpen = jQuery(this).attr('href');
 		jQuery(boxToOpen ).css('visibility', 'visible');
 	});
-	
+
 	/* Change avatar in gallery */
-	if ( jQuery('#avatar_category_select') != undefined ) { 
+	if ( jQuery('#avatar_category_select') != undefined ) {
 		jQuery('#avatar_category_select').change(function() {
-			// we getting the name of gallery selected in drop-down by user 
+			// we getting the name of gallery selected in drop-down by user
 			var avatar_selected =	jQuery('#avatar_category_select').chosen().val();
 			var td_avatar = jQuery('#kgallery_avatar_list');
-			
+
 			// we remove avatar which exist in td tag to allow us to put new one items
-			jQuery('#kgallery_avatar_list').empty(); 
+			jQuery('#kgallery_avatar_list').empty();
 			// we getting from hidden input the url of kunena image gallery
 			var url_gallery_main = jQuery('#Kunena_Image_Gallery_URL').val();
-			var id_to_select = jQuery('#Kunena_'+avatar_selected);      
+			var id_to_select = jQuery('#Kunena_'+avatar_selected);
 			var name_to_select = id_to_select.attr('name');
 			// Convert JSON to object
 			var image_object = JSON.decode(id_to_select.val());
-						
+
 			// Re-create all HTML items with avatars images from gallery selected by user
 			for(var i = 0, len = image_object.length; i < len; ++i) {
 				if ( name_to_select != 'default' ) {
@@ -87,7 +102,7 @@ jQuery(document).ready(function() {
 				} else {
 					var name_img = image_object[i];
 				}
-				
+
 				jQuery('<span></span>', {
 				'id': 'kspan_gallery'+i}).appendTo(td_avatar);
 				jQuery('<label></label>', {
@@ -99,7 +114,7 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-	
+
 	/* Allow to make working drop-down choose destination */
 	jQuery('#kchecktask').change(function() {
 		var task = jQuery("select#kchecktask").val();
@@ -109,20 +124,20 @@ jQuery(document).ready(function() {
 			jQuery("#kchecktarget").attr('disabled', true);
 		}
 	});
-	
+
 	/* Hide search form when there are search results found */
 	if ( jQuery('#kunena_search_results').is(':visible') ) {
 		jQuery('#search').hide();
 	}
-	
+
 	/* Provide autocomplete user list in search form and in user list */
 	if (  jQuery( '#kurl_users' ).length > 0 ) {
 		var users_url = jQuery( '#kurl_users' ).val();
-		
+
 		jQuery('#kusersearch').atwho({
-			at: "", 
+			at: "",
 			tpl: '<li data-value="${username}"><i class="icon-user"></i>${name} <small>${username}</small></li>',
-			limit: 7, 
+			limit: 7,
 			callbacks: {
 				remote_filter: function(query, callback)  {
 					jQuery.ajax({
@@ -138,14 +153,105 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
+
+	/* On moderate page display subject or field to enter manually the topic ID */
+	jQuery('#kmod_topics').change(function() {
+		var id_item_selected = jQuery(this).val();
+
+		if (id_item_selected != 0) {
+			jQuery('#kmod_subject').hide();
+		} else {
+			jQuery('#kmod_subject').show();
+		}
+
+		if (id_item_selected == -1) {
+			jQuery('#kmod_targetid').show();
+		} else {
+			jQuery('#kmod_targetid').hide();
+		}
+	});
+
+	jQuery('#kmod_categories').change(function() {
+		jQuery.getJSON(
+			kunena_url_ajax, { catid: jQuery(this).val() }
+		).done(function( json ) {
+			var first_item = jQuery('#kmod_topics option:nth(0)').clone();
+			var second_item = jQuery('#kmod_topics option:nth(1)').clone();
+
+			jQuery('#kmod_topics').empty();
+			first_item.appendTo('#kmod_topics');
+			second_item.appendTo('#kmod_topics');
+
+			jQuery.each(json,function(index, object) {
+				jQuery.each(object, function(key, element) {
+					jQuery('#kmod_topics').append('<option value="'+element['id']+'">'+element['subject']+'</option>');
+				});
+			});
+		});
+	});
+
+	/* Button to show more info on profilebox */
+	jQuery(".heading").click(function() {
+            if ( !jQuery(this).hasClass('heading-less') ) {
+                    jQuery(this).prev(".heading").show();
+                    jQuery(this).hide();
+                    jQuery(this).next(".content").slideToggle(500);
+            } else {
+                    var content = jQuery(this).next(".heading").show();
+                    jQuery(this).hide();
+                    content.next(".content").slideToggle(500);
+            }
+    });
+
+	/* To enabled emojis in kunena textera feature like on github */
+	if ( jQuery('#kemojis_allowed').val() ) {
+		jQuery('#kbbcode-message').atwho({
+			at: ":",
+			tpl:"<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
+			callbacks: {
+				remote_filter: function(query, callback) {
+					if(query.length > 0) {
+						jQuery.ajax({
+							url: jQuery( "#kurl_emojis" ).val(),
+							data: {
+								search : query
+							},
+							success: function(data) {
+								callback(data.emojis);
+							}
+						});
+					}
+				}
+			}
+		});
+	}
+	
+	/* To display preview area when clicking on preview button */
+	jQuery("#kbutton-preview").click(function() {
+		var preview = jQuery("#kbbcode-preview");
+		var message = jQuery("#kbbcode-message");
+	
+		if ( preview.length > 0 ) {
+			if ( !preview.is(":visible") ) {
+				preview.css('display', 'block');
+	
+				message.css('width', '95%');
+				
+				previewActive = true;
+				kPreviewHelper(previewActive);
+			} else {
+				previewActive = false;
+				preview.css('display', 'none');
+				message.css('width', '95%');  			
+			}
+			preview.attr('class', 'kbbcode-preview-bottom controls');
+			var height = message.css('height');
+			preview.css('height', message.css('height'));
+		}
+	});
+	
+	jQuery('#kbbcode-message').bind('input propertychange', function() {
+		kPreviewHelper(previewActive);
+	});
 });
 
-	/* Show more profilebox */
-	jQuery(document).ready(function() {
-  jQuery(".content").hide();
-  //toggle the componenet with class msg_body
-  jQuery(".heading").click(function()
-  {
-    jQuery(this).next(".content").slideToggle(500);
-  });
-});

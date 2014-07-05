@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -84,6 +84,8 @@ class KunenaUser extends JObject {
 	public function __construct($identifier = 0) {
 		// Always load the user -- if user does not exist: fill empty data
 		if ($identifier !== false) $this->load ( $identifier );
+		if (!isset($this->userid)) $this->userid = 0;
+
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = KunenaFactory::getConfig ();
@@ -168,19 +170,19 @@ class KunenaUser extends JObject {
 			case 'read' :
 				if (!isset($this->registerDate) || (!$user->exists() && !$config->pubprofile))
 				{
-					$exception = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 403);
+					$exception = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), $user->exists() ? 403 : 401);
 				}
 				break;
 			case 'edit' :
 				if (!isset($this->registerDate) || !$this->isMyself())
 				{
-					$exception = new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), 403);
+					$exception = new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
 				}
 				break;
 			case 'ban' :
 				$banInfo = KunenaUserBan::getInstanceByUserid($this->userid, true);
 				if (!$banInfo->canBan()) {
-					$exception =  new KunenaExceptionAuthorise($banInfo->getError(), 403);
+					$exception =  new KunenaExceptionAuthorise($banInfo->getError(), $user->exists() ? 403 : 401);
 				}
 				break;
 			default :
@@ -490,7 +492,7 @@ class KunenaUser extends JObject {
 			'user'=>'COM_KUNENA_VIEW_USER',
 			'guest'=>'COM_KUNENA_VIEW_VISITOR',
 			'banned'=>'COM_KUNENA_VIEW_BANNED',
-			'blocked'=>'COM_KUNENA_VIEW_BANNED'
+			'blocked'=>'COM_KUNENA_VIEW_BLOCKED'
 		);
 
 		$adminCategories = KunenaAccess::getInstance()->getAdminStatus($this);
@@ -577,6 +579,17 @@ class KunenaUser extends JObject {
 					break;
 
 				case 'blocked' :
+					$rank->rank_title = JText::_('COM_KUNENA_RANK_BLOCKED');
+					$rank->rank_special = 1;
+					$rank->rank_image = 'rankdisabled.gif';
+					foreach (self::$_ranks as $cur) {
+						if ($cur->rank_special == 1 && strstr($cur->rank_image, 'disabled')) {
+							$rank = $cur;
+							break;
+						}
+					}
+					break;
+
 				case 'banned' :
 					$rank->rank_title = JText::_('COM_KUNENA_RANK_BANNED');
 					$rank->rank_special = 1;
@@ -742,7 +755,47 @@ class KunenaUser extends JObject {
 	}
 
 	/**
-	 * Get URL to private messages.
+	 * Get the URL to private messages
+	 *
+	 * @return string
+	 */
+	public function getPrivateMsgURL()
+	{
+		$private = KunenaFactory::getPrivateMessaging();
+
+		return $private->getInboxURL();
+	}
+
+	/**
+	 * Get the label for URL to private messages
+	 *
+	 * @return string
+	 */
+	public function getPrivateMsgLabel()
+	{
+		$private = KunenaFactory::getPrivateMessaging();
+
+		if ($this->isMyself())
+		{
+			$count = $private->getUnreadCount($this->userid);
+
+			if ( $count )
+			{
+				return JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count);
+			}
+			else
+			{
+				return JText::_('COM_KUNENA_PMS_INBOX');
+			}
+		}
+		else
+		{
+			return JText::_('COM_KUNENA_PM_WRITE');
+		}
+	}
+
+	/**
+	 * Get link to private messages.
 	 *
 	 * @return string  URL.
 	 *
@@ -799,6 +852,39 @@ class KunenaUser extends JObject {
 	}
 
 	/**
+	 * Get website URL from the user.
+	 *
+	 * @return string  URL to the website.
+	 *
+	 * @since 3.1
+	 */
+	public function getWebsiteURL()
+	{
+		$url = $this->websiteurl;
+
+		if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
+		{
+			$url = 'http://' . $url;
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Get website name from the user.
+	 *
+	 * @return string  Name to the website or the URL if the name isn't set.
+	 *
+	 * @since 3.1
+	 */
+	public function getWebsiteName()
+	{
+		$name = trim($this->websitename) ? $this->websitename : $this->websiteurl;
+
+		return $name;
+	}
+
+	/**
 	 * Get website link from the user.
 	 *
 	 * @return string  Link to the website.
@@ -810,14 +896,10 @@ class KunenaUser extends JObject {
 		if (!isset($this->_website) && $this->websiteurl)
 		{
 			$this->_website = '';
-			$url = $this->websiteurl;
 
-			if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl))
-			{
-				$url = 'http://' . $url;
-			}
+			$url = $this->getWebsiteURL();
 
-			$name = trim($this->websitename) ? $this->websitename : $this->websiteurl;
+			$name = $this->getWebsiteName();
 
 			$this->_website = '<a href="' . $this->escape($url) . '" target="_blank">' . $this->escape($name) . '</a>';
 		}
@@ -996,7 +1078,7 @@ class KunenaUser extends JObject {
 			case 'id':
 				return $this->userid;
 		}
-		
+
 		$trace = debug_backtrace();
 		trigger_error(
 			'Undefined property via __get(): ' . $name .

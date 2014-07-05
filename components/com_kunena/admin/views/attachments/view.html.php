@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,7 +18,7 @@ class KunenaAdminViewAttachments extends KunenaView {
 		$this->setToolbar();
 		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
-		$this->pagination = $this->get ( 'Pagination' );
+		$this->pagination = $this->get('Pagination');
 
 		$this->sortFields = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();

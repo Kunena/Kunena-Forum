@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -34,7 +34,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 		$showSubscriptions = $this->config->allowsubscriptions && $myProfile;
 		$showFavorites = $this->config->allowfavorites && $myProfile;
 		$showThankYou = $this->config->showthankyou && $this->me->exists();
-		$showUnapproved = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus();
+		$showUnapproved = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 		$showAttachments = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
 		$showBanManager = $moderator && $myProfile;
 		$showBanHistory = $banInfo->canBan();
@@ -52,11 +52,12 @@ class KunenaLayoutUserItem extends KunenaLayout
 
 				'userid' => $this->profile->userid,
 				'mode' => 'latest',
-				'sel' => 720,
-				'limit' => 6,
+				'sel' => -1,
+				'limit' => 10,
 				'filter_order' => 'time',
 				'limitstart' => 0,
 				'filter_order_Dir' => 'desc',
+				'display' => $this->state->get('display','')
 			);
 
 			$tab = new stdClass;
@@ -77,7 +78,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 					'embedded' => 1,
 
 					'userid' => $this->profile->userid,
-					'limit' => 6,
+					'limit' => 10,
 					'filter_order' => 'time',
 					'limitstart' => 0,
 					'filter_order_Dir' => 'desc',
@@ -95,7 +96,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 					'userid' => $this->profile->userid,
 					'mode' => 'subscriptions',
 					'sel' => -1,
-					'limit' => 6,
+					'limit' => 10,
 					'filter_order' => 'time',
 					'limitstart' => 0,
 					'filter_order_Dir' => 'desc',
@@ -121,7 +122,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'userid' => $this->profile->userid,
 				'mode' => 'favorites',
 				'sel' => -1,
-				'limit' => 6,
+				'limit' => 10,
 				'filter_order' => 'time',
 				'limitstart' => 0,
 				'filter_order_Dir' => 'desc',
@@ -148,7 +149,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'userid' => $this->profile->userid,
 				'mode' => 'mythanks',
 				'sel' => -1,
-				'limit' => 6,
+				'limit' => 10,
 				'filter_order' => 'time',
 				'limitstart' => 0,
 				'filter_order_Dir' => 'desc',
@@ -163,7 +164,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'userid' => $this->profile->userid,
 				'mode' => 'thankyou',
 				'sel' => -1,
-				'limit' => 6,
+				'limit' => 10,
 				'filter_order' => 'time',
 				'limitstart' => 0,
 				'filter_order_Dir' => 'desc',
@@ -184,7 +185,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 				'userid' => $this->profile->userid,
 				'mode' => 'unapproved',
 				'sel' => -1,
-				'limit' => 6,
+				'limit' => 10,
 				'filter_order' => 'time',
 				'limitstart' => 0,
 				'filter_order_Dir' => 'desc',

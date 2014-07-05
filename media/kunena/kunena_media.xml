@@ -8,7 +8,7 @@
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
-	<copyright>(C) 2008 - 2013 Kunena Team. All rights reserved.</copyright>
+	<copyright>(C) 2008 - 2014 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPLv3 or later</license>
 	<description>Kunena media files.</description>
 	<fileset>
@@ -22,7 +22,8 @@
 			<folder>js</folder>
 			<folder>less</folder>
 			<folder>ranks</folder>
-			<folder>topicicons</folder>
+			<folder>topic_icons</folder>
+			<folder>category_icons</folder>
 		</files>
 	</fileset>
 </extension>

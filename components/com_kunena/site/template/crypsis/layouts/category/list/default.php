@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -28,7 +28,7 @@ defined('_JEXEC') or die;
 
 		<?php if (!empty($this->embedded)) : ?>
 		<div class="pull-right">
-			<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 		</div>
 		<?php endif; ?>
 	</h3>

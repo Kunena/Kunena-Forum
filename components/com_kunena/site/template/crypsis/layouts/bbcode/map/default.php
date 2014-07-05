@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.BBCode
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -30,7 +30,7 @@ $map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
 if (!in_array($map_type, $map_typeId)) $map_type = 'ROADMAP';
 $map_zoom = isset($params['zoom']) ? (int) $params['zoom'] : 10;
 $map_control = isset($params['control']) ? (int) $params['control'] : 0;
-$content = json_encode($this->content);
+$content = json_encode(addslashes($this->content));
 $contentString = JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
 
 $this->addScriptDeclaration("
@@ -38,33 +38,33 @@ $this->addScriptDeclaration("
 	var geocoder;
 	var {$mapid};
 
-	window.addEvent('domready', function() {
+	jQuery(document).ready(function() {
 		geocoder = new google.maps.Geocoder();
-	var latlng = new google.maps.LatLng(37.333586,-121.894684);
-	var myOptions = {
+		var latlng = new google.maps.LatLng(60.173602,24.940978);
+		var myOptions = {
 		zoom: {$map_zoom},
-		disableDefaultUI: {$map_control},
-		center: latlng,
-		mapTypeId: google.maps.MapTypeId.{$map_type}
-	};
-	$mapid = new google.maps.Map(document.id('{$mapid}'), myOptions);
+			disableDefaultUI: {$map_control},
+			center: latlng,
+			mapTypeId: google.maps.MapTypeId.{$map_type}
+		};
+		$mapid = new google.maps.Map(document.id('{$mapid}'), myOptions);
 
-	var address = {$content};
-	if (geocoder) {
-		geocoder.geocode( { 'address': address}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-			{$mapid}.setCenter(results[0].geometry.location);
-			var marker = new google.maps.Marker({
-				position: results[0].geometry.location,
-		        map: {$mapid}
+		var address = {$content};
+		if (geocoder) {
+			geocoder.geocode( { 'address': address}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					{$mapid}.setCenter(results[0].geometry.location);
+					var marker = new google.maps.Marker({
+						position: results[0].geometry.location,
+						map: {$mapid}
+					});
+				} else {
+					var contentString = '<p><strong>{$contentString} <i>{$content}</i></strong></p>';
+					var infowindow{$mapid} = new google.maps.InfoWindow({ content: contentString });
+					infowindow{$mapid}.open({$mapid});
+				}
 			});
-		} else {
-			var contentString = '<p><strong>{$contentString} <i>{$content}</i></strong></p>';
-			var infowindow{$mapid} = new google.maps.InfoWindow({ content: contentString });
-				infowindow{$mapid}.open({$mapid});
 		}
-		});
-	}
 	});
 // ]]>"
 );

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -210,7 +210,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		}
 		if (empty($list)) {
 			$this->query->where('0');
-			return;
+			return $this;
 		}
 		$userlist = implode(',', $list);
 

@@ -4,13 +4,13 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
-/** @var array|KunenaForumMessageAttachment[] $attachments */
+/** @var array|KunenaAttachment[] $attachments */
 $attachments = $this->attachments;
 ?>
 <h3>
@@ -72,7 +72,7 @@ $attachments = $this->attachments;
 			<tr>
 				<td><?php echo ++$i; ?></td>
 				<td>
-					<?php if ($canDelete) echo JHtml::_('grid.id', $i-1, intval($attachment->id)); ?>
+					<?php if ($canDelete) echo JHtml::_('grid.id', $i, intval($attachment->id)); ?>
 				</td>
 				<td class="center">
 					<img src="<?php echo $attachment->isImage()
@@ -80,7 +80,7 @@ $attachments = $this->attachments;
 						: JUri::root(true).'/media/kunena/icons/file.png'; ?>" alt="" title="" />
 				</td>
 				<td>
-					<?php echo $attachment->getFilename(); ?>
+					<?php echo $attachment->getShortName(5, 5); ?>
 				</td>
 				<td>
 					<?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
@@ -89,7 +89,7 @@ $attachments = $this->attachments;
 					<?php echo $this->getTopicLink($message->getTopic(), $message); ?>
 				</td>
 				<td class="center">
-					<?php echo $attachment->getThumbnailLink() ; ?>
+					<?php echo $attachment->getLayout()->render('thumbnail') ; ?>
 				</td>
 				<td class="center">
 

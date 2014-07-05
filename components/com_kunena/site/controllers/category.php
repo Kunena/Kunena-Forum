@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -38,6 +38,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 		}
 
 		$catid = JRequest::getInt('catid', 0);
+		$children = JRequest::getBool('children', 0);
 		if (!$catid) {
 			// All categories
 			$session = KunenaFactory::getSession();
@@ -58,16 +59,22 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 
 			$session = KunenaFactory::getSession();
 			if ($session->userid) {
-				// Mark all unread topics in the category to read
-				$userinfo = $category->getUserInfo();
-				$userinfo->allreadtime = JFactory::getDate()->toSql();
-				if (!$userinfo->save()) {
-					$this->app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
+				$categories = array($category->id => $category);
+				if ($children) {
+					// Include all levels of child categories.
+					$categories += $category->getChildren(-1);
+				}
+
+				// Mark all unread topics in selected categories as read.
+				KunenaForumCategoryUserHelper::markRead(array_keys($categories));
+				if (count($categories) > 1) {
+					$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_ALL_MARKED'));
 				} else {
-					$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
+					$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_FORUM_MARKED'));
 				}
 			}
 		}
+
 		$this->setRedirectBack();
 	}
 

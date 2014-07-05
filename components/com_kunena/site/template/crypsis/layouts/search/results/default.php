@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Search
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -38,4 +38,4 @@ $stop = $this->pagination->limitstart + count($this->results);
 $range = $start . ' - ' . $stop;
 echo JText::sprintf('COM_KUNENA_FORUM_SEARCHRESULTS', $range, $this->pagination->total);
 ?>
-<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>

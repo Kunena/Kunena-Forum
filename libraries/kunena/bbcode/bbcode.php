@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage BBCode
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -123,13 +123,13 @@ class KunenaBbcode extends NBBC_BBCode {
 			if (isset($video)) {
 				$uri = JURI::getInstance();
 				if ( $uri->isSSL() ) {
-					return '<object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/'
+					return '<div class="vid"><object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/'
 							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/'
-									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object></div>';
 				} else {
-					return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
+					return '<div class="vid"><object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
 							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
-									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object></div>';
 				}
 			}
 		}
@@ -939,7 +939,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// TODO: Remove in Kunena 4.0
-		return JHtml::_('email.cloak', htmlspecialchars($email), $mailto, htmlspecialchars($text), $textCloak);
+		return JHtml::_('email.cloak', htmlspecialchars($email, ENT_COMPAT, 'UTF-8'), $mailto, htmlspecialchars($text, ENT_COMPAT, 'UTF-8'), $textCloak);
 	}
 
 	/**
@@ -976,7 +976,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		if (!$bbcode->IsValidURL($url, false, true))
 		{
-			return htmlspecialchars($params['_tag']) . $content . htmlspecialchars($params['_endtag']);
+			return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
 		}
 
 		if ($bbcode->url_targetable !== false && isset ($params['target']))
@@ -1001,8 +1001,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// TODO: Remove in Kunena 4.0
-		$target = ' target="' . htmlspecialchars($target) . '"';
-		return '<a href="' . htmlspecialchars($url) . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
+		$target = ' target="' . htmlspecialchars($target, ENT_COMPAT, 'UTF-8') . '"';
+		return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
 	}
 
 	// Format a [size] tag by producing a <span> with a style with a different font-size.
@@ -1128,7 +1128,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// TODO: Remove in Kunena 4.0
-		if ($hidden)
+		if (!$hidden)
 		{
 			// Static version
 			return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title
@@ -1301,7 +1301,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode($content)."</i></strong></p>';
+					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode(addslashes($content))."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}
@@ -1473,12 +1473,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$type = isset ( $params ["type"] ) ? $params ["type"] : "php";
+		$type = isset($params["type"]) ? $params["type"] : (isset($default) ? $default : "php");
 		if ($type == 'js') {
 			$type = 'javascript';
 		} elseif ($type == 'html') {
 			$type = 'html4strict';
 		}
+
+		if ($type == 'less' || $type == 'scss' || $type == 'sass') $type = 'css';
+
 		$highlight = KunenaFactory::getConfig()->highlightcode && empty($bbcode->parent->forceMinimal);
 		if ($highlight && !class_exists('GeSHi')) {
 			$paths = array(
@@ -1762,6 +1765,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		$attachments = null;
 		if ($bbcode->parent instanceof KunenaForumMessage) {
 			$attachments = $bbcode->parent->getAttachments();
 		} elseif (is_object($bbcode->parent) && isset($bbcode->parent->attachments)) {
@@ -1773,12 +1777,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return '[' . JText::_('COM_KUNENA_FILEATTACH') . ' ' . basename(!empty($params["name"]) ? $params["name"] : $filename) . ']';
 		}
 
+		/** @var KunenaAttachment $att */
+		/** @var KunenaAttachment $attachment */
+
 		$attachment = null;
 		if (! empty ( $default )) {
-			$attachment = KunenaForumMessageAttachmentHelper::get ($default);
-			if (is_object ( $attachment )) {
-				unset ( $attachments [$attachment->id] );
-			}
+			$attachment = KunenaAttachmentHelper::get($default);
+			unset ( $attachments [$attachment->id] );
 		} elseif (empty ( $content )) {
 			$attachment = array_shift ( $attachments );
 		} elseif (!empty ( $attachments )) {
@@ -1799,29 +1804,37 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 		}
 
-		if (!is_object ( $attachment )) {
-			return htmlspecialchars($content);
-
-		} elseif ($attachment->exists() && (!$attachment->authorise() || $attachment->disabled)) {
-			// Hide between content from non registered users
-			$link = $attachment->getTextLink();
-			return '<div class="kmsgattach">' . $link . '</div>';
-
-		} elseif ($attachment->exists() && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
-			$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-			// TODO: use absolute / relative url depending on where BBCode is shown
-			$link = $attachment->getUrl();
-			$image = $attachment->getImageLink();
-			if (empty ( $image )) {
-				return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->getFilename() . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
-			} else {
-				return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
-			}
-
-		} else {
-			return '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', htmlspecialchars($content) ) . '</h4></div>';
-
+		if (!$attachment)
+		{
+			return $bbcode->HTMLEncode($content);
 		}
+
+		return $this->renderAttachment($attachment, $bbcode);
+	}
+
+	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
+	{
+		$layout = KunenaLayout::factory('BBCode/Attachment')
+			->set('attachment', $attachment)
+			->set('canLink', $bbcode->autolink_disable == 0);
+
+		if (!$attachment->exists() || !$attachment->getPath())
+		{
+			return (string) $layout->setLayout('deleted');
+		}
+		elseif (!$attachment->isAuthorised())
+		{
+			return (string) $layout->setLayout('unauthorised');
+		}
+
+		$bbcode->parent->inline_attachments[$attachment->id] = $attachment;
+
+		if ($displayImage && $attachment->isImage())
+		{
+			$layout->setLayout('image');
+		}
+
+		return (string) $layout;
 	}
 
 	/**
@@ -1843,40 +1856,58 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return '[ '.basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content))).' ]';
 		}
 
-		if (JFactory::getUser()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0) {
-			// Hide between content from non registered users
-			return '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' ) . '</b>';
-		} else {
-			// Make sure that filename does not contain path or URL
-			$filename = basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content)));
+		// Make sure that filename does not contain path or URL.
+		$filename = basename(!empty($params['name']) ? $params['name'] : $bbcode->UnHTMLEncode(trim(strip_tags($content))));
+		$path = "attachments/legacy/files/{$filename}";
+		$filepath = KPATH_MEDIA . '/' . $path;
+		$fileurl = KURL_MEDIA . '/' . $path;
 
-			$filepath = "attachments/legacy/files/{$filename}";
-			if (! is_file ( KPATH_MEDIA . '/' . $filepath )) {
-				// File does not exist (or URL was pointing somewhere else)
-				return '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', $bbcode->HTMLEncode ( $filename ) ) . '</h4></div>';
-			} else {
-				if (isset ( $bbcode->parent->attachments )) {
-					// Remove attachment from the attachments list
-					$attachments = &$bbcode->parent->attachments;
-					foreach ( $attachments as $att ) {
-						if ($att->filename == $filename && $att->folder == 'media/kunena/attachments/legacy/files') {
-							$attachment = $att;
-							unset ( $attachments [$att->id] );
-							$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-							break;
-						}
-					}
+		// Legacy attachments support.
+		if (isset($bbcode->parent->attachments)) {
+			/** @var array|KunenaAttachment[] $attachments */
+			$attachments = &$bbcode->parent->attachments;
+			foreach ($attachments as $id => $attachment) {
+				if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/files') {
+					unset($attachments[$id]);
+
+					return $this->renderAttachment($attachment, $bbcode, false);
 				}
-
-				$fileurl = KURL_MEDIA . $filepath;
-				$filesize = isset ( $params ["size"] ) ? $params ["size"] : filesize ( KPATH_MEDIA . '/' . $filepath );
-
-				$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>";
-				$tag_new .= JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $bbcode->HTMLEncode ( $fileurl ) . "\" target=\"_blank\" rel=\"nofollow\">" . $bbcode->HTMLEncode ( $filename ) . "</a><br />";
-				$tag_new .= JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . $bbcode->HTMLEncode ( $filesize ) . "</div>";
-				return $tag_new;
 			}
 		}
+
+		$layout = KunenaLayout::factory('BBCode/File')
+			->set('url', null)
+			->set('filename', null)
+			->set('size', 0)
+			->set('canLink', $bbcode->autolink_disable == 0);
+
+		if (JFactory::getUser()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0)
+		{
+			// Hide between content from non registered users
+			return (string) $layout
+				->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'))
+				->setLayout('unauthorised');
+		}
+
+		$layout->set('filename', $filename);
+		$layout->set('size', isset($params['size']) ? $params['size'] : 0);
+
+		if (!is_file($filepath))
+		{
+			// File does not exist (or URL was pointing somewhere else).
+			$layout
+				->set('title', JText::sprintf('COM_KUNENA_ATTACHMENT_DELETED', $bbcode->HTMLEncode($filename)))
+				->setLayout('deleted');
+		}
+		else
+		{
+			$layout
+				->set('title', JText::_('COM_KUNENA_FILEATTACH'))
+				->set('url', $fileurl)
+				->set('size', filesize($filepath));
+		}
+
+		return (string) $layout;
 	}
 
 	/**
@@ -1893,63 +1924,62 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$fileurl = trim(strip_tags($content));
+		$fileurl = $bbcode->UnHTMLEncode(trim(strip_tags($content)));
+		$filename = basename($fileurl);
 
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal)) {
-			return "<a href=\"" . $fileurl . "\" rel=\"nofollow\" target=\"_blank\">" . basename($fileurl) . '</a>';
+			return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow\" target=\"_blank\">" . $bbcode->HTMLEncode($filename) . '</a>';
+		}
+
+		// Legacy attachments support.
+		if (isset($bbcode->parent->attachments) && strpos($fileurl, '/media/kunena/attachments/legacy/images/')) {
+
+			// Remove attachment from the attachments list and show it if it exists.
+			/** @var array|KunenaAttachment[] $attachments */
+			$attachments = &$bbcode->parent->attachments;
+			foreach ($attachments as $id => $attachment)
+			{
+				if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/images')
+				{
+					unset($attachments[$id]);
+
+					return $this->renderAttachment($attachment, $bbcode);
+				}
+			}
 		}
 
 		$config = KunenaFactory::getConfig();
+		$layout = KunenaLayout::factory('BBCode/Image')
+			->set('title', JText::_('COM_KUNENA_FILEATTACH'))
+			->set('url', null)
+			->set('filename', null)
+			->set('size', isset($params['size']) ? $params['size'] : 0)
+			->set('canLink', $bbcode->autolink_disable == 0);
+
+
 		if (JFactory::getUser()->id == 0 && $config->showimgforguest == 0) {
-			// Hide between content from non registered users
-			return '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' ) . '</b>';
+			// Hide between content from non registered users.
+			return (string) $layout->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
 		}
 
+		// Obey image security settings.
 		if ($config->bbcode_img_secure != 'image') {
 			if ($bbcode->autolink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
-				// If the image has not legal extension, return it as link or text
-				$fileurl = $bbcode->HTMLEncode ( $fileurl );
+				// If the image has not legal extension, return it as link or text.
 				if ($config->bbcode_img_secure == 'link') {
 					if (! preg_match ( '`^(/|https?://)`', $fileurl )) {
 						$fileurl = 'http://' . $fileurl;
 					}
-					return "<a href=\"" . $fileurl . "\" rel=\"nofollow\" target=\"_blank\">" . $fileurl . '</a>';
+					// TODO: call URL layout instead..
+					return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow\" target=\"_blank\">" . $bbcode->HTMLEncode($fileurl) . '</a>';
 				} else {
-					return $fileurl;
+					return $bbcode->HTMLEncode($fileurl);
 				}
 			}
 		}
 
-		// Legacy attachments support (mostly used to remove image from attachments list), but also fixes broken links
-		if (isset ( $bbcode->parent->attachments ) && strpos ( $fileurl, '/media/kunena/attachments/legacy/images/' )) {
-			// Make sure that filename does not contain path or URL
-			$filename = basename($fileurl);
-
-			// Remove attachment from the attachments list and show it if it exists
-			/** @var array|KunenaForumMessageAttachment[] $attachments */
-			$attachments = &$bbcode->parent->attachments;
-			$attachment = null;
-			foreach ( $attachments as $att ) {
-				if ($att->filename == $filename && $att->folder == 'media/kunena/attachments/legacy/images') {
-					$attachment = $att;
-					unset ( $attachments [$att->id] );
-					$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
-				}
-			}
-			// No match -- assume that we have normal img tag
-		}
-
-		// Make sure we add image size if specified
-		$width = ($params ['size'] ? ' width="' . (int) $params ['size'] . '"' : '');
-		$fileurl = $bbcode->HTMLEncode ( $fileurl );
-
-		// Need to check if we are nested inside a URL code
-		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
-			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.$width.' style="max-height:'.$config->imageheight.'px;" alt="" /></a></div>';
-		}
-		return '<div class="kmsgimage"><img src="' . $fileurl .'"'. $width .' style="max-height:'.$config->imageheight.'px;" alt="" /></div>';
+		return (string) $layout->set('url', $fileurl);
 	}
 
 	public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
@@ -1992,7 +2022,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$cache = JFactory::getCache('Kunena_tweet_quote');
 		$cache->setCaching(true);
-		$cache->setLifeTime($twCacheTime);
+		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
 		$tweet_quote = $cache->get( array( $this, 'getTweet' ), array( $tweetid ) );
 
 		return '<div>'.$tweet_quote.'</div>';

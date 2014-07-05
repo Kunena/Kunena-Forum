@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -92,7 +92,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( $this->context.".filter.levels", 'levellimit', 10, 'int' );
 		$this->setState ( 'filter.levels', $value );
 
-		$catid = $this->getInt ( 'catid', 0 );
+		$catid = $this->getUserStateFromRequest ( $this->context.'.filter.catid', 'catid', 0, 'int' );
 		$layout = $this->getWord ( 'layout', 'edit' );
 		$parent_id = 0;
 		if ($layout == 'create') {
@@ -153,7 +153,11 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$access = $acl->getCategoryAccess($category);
 				$category->accessname = array();
 				foreach ($access as $item) {
-					$category->accessname[] = $item['title'];
+					if (!empty($item['admin.link'])) {
+						$category->accessname[] = '<a href="' . htmlentities($item['admin.link'], ENT_COMPAT, 'utf-8') . '">' . htmlentities($item['title'], ENT_COMPAT, 'utf-8') .'</a>';
+					} else {
+						$category->accessname[] = htmlentities($item['title'], ENT_COMPAT, 'utf-8');
+					}
 				}
 				$category->accessname = implode(' / ', $category->accessname);
 

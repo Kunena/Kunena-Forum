@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Search
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -17,23 +17,27 @@ $category = $topic->getCategory();
 $author = $message->getAuthor();
 ?>
 <div id="kunena_search_results" class="row-fluid">
-	<div class="span2 center thumbnail">
-		<div><?php echo $author->getLink($author->getAvatarImage('', 120)); ?></div>
-		<div><?php echo $author->getLink(); ?></div>
+	<div class="span2 center">
+		<ul class="unstyled center profilebox">
+			<li><strong><?php echo $author->getLink(); ?></strong></li>
+			<li><?php echo $author->getLink($author->getAvatarImage('img-polaroid', 120, 120)); ?></li>
+		</ul>
 	</div>
 
-	<div class="span10 well">
-		<h3>
-			<?php echo $this->getTopicLink($topic, $message); ?>
-			<small><?php echo $message->getTime()->toSpan(); ?></small>
-		</h3>
+	<div class="span10">
+		<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <span class="icon icon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
+		<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->displayField('subject'); ?>">
+			<h3>
+				<?php echo $this->getTopicLink($topic, $message); ?>
+			</h3>
 
-		<p>
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($category)); ?>
-		</p>
+			<p>
+				<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($category)); ?>
+			</p>
 
-		<div>
-			<?php echo $message->displayField('message'); ?>
+			<div class="kmessage">
+				<?php echo $message->displayField('message'); ?>
+			</div>
 		</div>
 	</div>
 </div>

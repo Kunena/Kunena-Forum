@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -29,7 +29,7 @@ $cols = 1;
 				       value="<?php echo $this->escape($this->state->get('list.search')); ?>" placeholder="" />
 			</label>
 
-			<button type="submit" class="btn"><?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?></button>
+			<button type="submit" class="btn"><span class="icon icon-search"></span></button>
 		</div>
 	</form>
 </h2>
@@ -76,14 +76,6 @@ $cols = 1;
 				<?php if ($this->config->userlist_posts) : $cols++; ?>
 				<th class="center">
 					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
-				</th>
-				<?php endif; ?>
-
-				<?php if ($this->config->userlist_karma) : $cols++; ?>
-				<th class="center">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
@@ -160,12 +152,6 @@ $cols = 1;
 				</td>
 				<?php endif; ?>
 
-				<?php if ($this->config->userlist_karma) : ?>
-				<td class="center">
-					<?php echo (int) $user->karma; ?>
-				</td>
-				<?php endif; ?>
-
 				<?php if ($this->config->userlist_email) : ?>
 				<td>
 					<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
@@ -189,20 +175,18 @@ $cols = 1;
 					<?php echo (int) $user->uhits; ?>
 				</td>
 				<?php endif; ?>
-
-			</tr>
-			<?php endforeach; ?>
-
+		
+				<?php endforeach; ?>
+				
+				</tr>						
 		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="<?php echo $cols; ?>">
-					<div class="pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
-					</div>
-				</td>
-			</tr>
-		</tfoot>
+		
 	</table>
+	
+	<?php if ($i > 1) : ?>		
+		<div class="pull-right">
+			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+		</div>
+	<?php endif; ?>
 </form>
-
+<div class="clearfix"></div>

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -48,9 +48,11 @@ class KunenaDate extends JDate {
 			if (2 == ++$tick) break;
 		}
 		if (!$output) {
-			$output .= '0 '.JText::_('COM_KUNENA_DATE_MINUTES');
+			$output .= JText::_('COM_KUNENA_LIB_TIME_NOW');
+		} else {
+			$output = JText::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
 		}
-		$output = JText::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
+
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $output;
 	}

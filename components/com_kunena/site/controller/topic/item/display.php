@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -49,7 +49,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 *
-	 * @throws KunenaForumAuthorise
+	 * @throws KunenaExceptionAuthorise
 	 */
 	protected function before()
 	{
@@ -146,7 +146,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->captcha = KunenaSpamRecaptcha::getInstance();
 		$this->quickReply = ($this->topic->isAuthorised('reply') && $this->me->exists() && !$this->captcha->enabled());
 
-		$this->headerText = JText::_('COM_KUNENA_TOPIC') . $this->topic->displayField('subject');
+		$this->headerText = JText::_('COM_KUNENA_TOPIC') . ' ' . html_entity_decode($this->topic->displayField('subject'));
 	}
 
 	/**
@@ -216,8 +216,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
 		KunenaUserHelper::loadUsers($userlist);
 
-		// Get attachments
-		KunenaForumMessageAttachmentHelper::getByMessage($this->messages);
+		// Prefetch attachments.
+		KunenaAttachmentHelper::getByMessage($this->messages);
 	}
 
 	/**

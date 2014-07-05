@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Object
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,8 +28,11 @@ abstract class KunenaDatabaseObject extends JObject {
 	 * @param  boolean  $reload      Force object reload from the database.
 	 *
 	 * @return  KunenaDatabaseObject
+	 * @throws  Exception
 	 */
-	static public function getInstance($identifier = null, $reload = false) {}
+	static public function getInstance($identifier = null, $reload = false) {
+		throw new Exception(__CLASS__ . '::' . __FUNCTION__ . '(): Not defined.');
+	}
 
 	/**
 	 * Returns true if the object exists in the database.
@@ -211,13 +214,27 @@ abstract class KunenaDatabaseObject extends JObject {
 	 * @return  KunenaDatabaseObject
 	 * @internal
 	 */
-	public function __construct(array $properties = null)
+	public function __construct($properties = null)
 	{
-		if (!$this->_name) $this->_name = get_class ($this);
-		if ($properties) {
-			$this->bind ($properties);
-		} else {
-			$this->load ();
+		if (!$this->_name)
+		{
+			$this->_name = get_class($this);
+		}
+
+		// Load properties from database.
+		if (!empty($this->id))
+		{
+			$this->_exists = true;
+		}
+		// Bind properties provided as parameters.
+		elseif ($properties !== null)
+		{
+			$this->bind($properties);
+		}
+		// Initialize new object.
+		else
+		{
+			$this->load();
 		}
 	}
 

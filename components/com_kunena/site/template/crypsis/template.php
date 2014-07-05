@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Template
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -36,7 +36,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		'emoticons' => 'media/emoticons',
 		'ranks' => 'media/ranks',
 		'icons' => 'media/icons',
-		'topicicons' => 'media/topicicons',
+		'topicicons' => 'media/topic_icons',
+		'categoryicons' => 'media/category_icons',
 		'images' => 'media/images',
 		'js' => 'media/js',
 		'css' => 'media/css'
@@ -51,16 +52,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		'guest'=>'kwho-guest',
 		'banned'=>'kwho-banned',
 		'blocked'=>'kwho-blocked'
-	);
-
-	/**
-	 * Default category icons.
-	 *
-	 * @var array
-	 */
-	public $categoryIcons = array(
-		'kreadforum',
-		'kunreadforum'
 	);
 
 	/**
@@ -100,7 +91,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('jquery.framework');
 		JHtml::_('formbehavior.chosen');
 
-		// Load script and CSS for autocomplete, emojiis...
+		// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+		$this->addScript('js/caret.js');
 		$this->addScript('js/atwho.js');
 		$this->addStyleSheet('css/atwho.css');
 
@@ -123,12 +115,24 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 			$this->addScript('poll.js');
 		}
 
-		// If enabled, load also MediaBox advanced.
+		// Load FancyBox library if enabled in configuration
 		if ($config->lightbox == 1)
 		{
-			// TODO: replace with bootstrap compatible version
-			$this->addScript( 'mediaboxAdv.js' );
-			//$this->addStyleSheet ( 'mediaboxAdv.css');
+			$this->addScript('js/fancybox.js');
+			$this->addStyleSheet('css/fancybox.css');
+			JFactory::getDocument()->addScriptDeclaration('
+				jQuery(document).ready(function() {
+					jQuery(".fancybox-button").fancybox({
+						prevEffect		: \'none\',
+						nextEffect		: \'none\',
+						closeBtn		:  true,
+						helpers		: {
+							title	: { type : \'inside\' },
+							buttons	: {}
+						}
+					});
+				});
+			');
 		}
 
 		parent::initialize();
@@ -169,7 +173,7 @@ HTML;
 		else
 		{
 			return <<<HTML
-				<a $id class="btn" style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
 				<span class="{$name}"></span>
 				{$text}
 				</a>
@@ -185,23 +189,6 @@ HTML;
 	public function getImage($image, $alt='')
 	{
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
-	}
-
-	public function getPaginationListRender($list)
-	{
-		$html = '<div class="pagination pagination-small" ><ul class="pagination-small">';
-		$last = 0;
-
-		foreach($list['pages'] as $i=>$page)
-		{
-			if ($last+1 != $i) $html .= '<li><a class="disabled">...</a></li>';
-			$html .= '<li>'.$page['data'].'</li>';
-			$last = $i;
-		}
-
-		$html .= '</ul></div><div class="clearfix"></div>';
-
-		return $html;
 	}
 
 	/**

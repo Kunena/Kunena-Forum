@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -100,13 +100,15 @@ class KunenaController extends JControllerLegacy {
 	}
 
 	/**
-	 * Execute task.
+	 * Execute task (slightly modified from Joomla).
 	 *
 	 * @param string $task
 	 * @return mixed
 	 * @throws Exception
+	 *
+	 * @todo Check if the parent function override is still needed.
 	 */
-	public function execute($task)
+	protected function executeTask($task)
 	{
 		$dot = strpos($task, '.');
 		$this->task = $dot ? substr($task, $dot + 1) : $task;
@@ -129,6 +131,137 @@ class KunenaController extends JControllerLegacy {
 		$this->doTask = $doTask;
 
 		return $this->$doTask();
+	}
+
+	/**
+	 * Calls a task and creates HTML or JSON response from it.
+	 *
+	 * If response is in HTML, we just redirect and enqueue message if there's an exception.
+	 * NOTE: legacy display task is a special case and reverts to original Joomla behavior.
+	 *
+	 * If response is in JSON, we return JSON response, which follows JResponseJson with some extra data:
+	 *
+	 * Default:   {code, location=null, success, message, messages, data={step, location, html}}
+	 * Redirect:  {code, location=[string], success, message, messages=null, data}
+	 * Exception: {code, location=[null|string], success=false, message, messages, data={exceptions=[{code, message}...]}}
+	 *
+	 * code = [int]: Usually HTTP status code, but can also error code from the exception (informal only).
+	 * location = [null|string]: If set, JavaScript should always redirect to another page.
+	 * success = [bool]: Determines whether the request (or action) was successful. Can be false without being an error.
+	 * message = [string|null]: The main response message.
+	 * messages = [array|null]: Array of enqueue'd messages.
+	 * data = [mixed]: The response data.
+	 *
+	 * @param  string  $task  Task to be run.
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function execute($task)
+	{
+		if (!$task)
+		{
+			$task = 'display';
+		}
+
+		$app = JFactory::getApplication();
+		$this->format = $this->input->getWord('format', 'html');
+
+		try
+		{
+			// TODO: This would be great, but we would need to store POST before doing it in here...
+/*
+			if ($task != 'display')
+			{
+				// Make sure that Kunena is online before running any tasks (doesn't affect admins).
+				if (!KunenaForum::enabled(true))
+				{
+					throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+				}
+
+				// If forum is for registered users only, prevent guests from accessing tasks.
+				if ($this->config->regonly && !$this->me->exists())
+				{
+					throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+				}
+			}
+*/
+
+			// Execute the task.
+			$content = static::executeTask($task);
+		}
+		catch (Exception $e)
+		{
+			$content = $e;
+		}
+
+		// Legacy view support.
+		if ($task == 'display')
+		{
+			if ($content instanceof Exception)
+			{
+				throw $content;
+			}
+
+			return;
+		}
+
+		// Create HTML redirect.
+		if ($this->format == 'html')
+		{
+			if ($content instanceof Exception)
+			{
+				$app->enqueueMessage($content->getMessage(), 'error');
+
+				if (!$this->redirect)
+				{
+					// On exceptions always return back to the referrer page.
+					$this->setRedirect(KunenaRoute::getReferrer());
+				}
+			}
+
+			// The following code gets only called for successful tasks.
+			if (!$this->redirect)
+			{
+				// If controller didn't set a new redirect, try if request has return url in it.
+				$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+
+				// Only allow internal urls to be used.
+				if ($return && JUri::isInternal($return))
+				{
+					$redirect = JRoute::_($return, false);
+				}
+				// Otherwise return back to the referrer.
+				else
+				{
+					$redirect = KunenaRoute::getReferrer();
+				}
+
+				$this->setRedirect($redirect);
+			}
+
+			return;
+		}
+
+		// Otherwise tell the browser that our response is in JSON.
+		header('Content-type: application/json', true);
+
+		// Create JSON response and set the redirect.
+		$response = new KunenaResponseJson($content, null, false, !empty($this->redirect));
+		$response->location = $this->redirect;
+
+		// In case of an error we want to set HTTP error code.
+		if ($content instanceof Exception)
+		{
+			// We want to wrap the exception to be able to display correct HTTP status code.
+			$exception = new KunenaExceptionAuthorise($content->getMessage(), $content->getCode(), $content);
+			header('HTTP/1.1 ' . $exception->getResponseStatus(), true);
+		}
+
+		echo json_encode($response);
+
+		// It's much faster and safer to exit now than let Joomla to send the response.
+		JFactory::getApplication()->close();
 	}
 
 	/**
@@ -279,7 +412,7 @@ class KunenaController extends JControllerLegacy {
 	 * @param string $default
 	 * @param string $anchor
 	 */
-	protected function setRedirectBack($default = 'index.php?option=com_kunena', $anchor = null) {
-		$this->setRedirect(JRoute::_(KunenaRoute::getReferrer($default, $anchor), false));
+	protected function setRedirectBack($default = null, $anchor = null) {
+		$this->setRedirect(KunenaRoute::getReferrer($default, $anchor));
 	}
 }

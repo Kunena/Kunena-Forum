@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -156,12 +156,12 @@ abstract class KunenaForumCategoryHelper {
 		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
 		$where = isset($params['where']) ? (string) $params['where'] : '';
-		$allowed = implode(',', KunenaAccess::getInstance()->getAllowedCategories ());
+		$allowed = implode(',', array_keys(KunenaAccess::getInstance()->getAllowedCategories()));
 
 		if (!$userids || !$allowed) return array(0, array());
 
 		// Get total count
-		$query = "SELECT COUNT(*) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id";
+		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where}";
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$total) {
@@ -328,7 +328,7 @@ abstract class KunenaForumCategoryHelper {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return array();
 			}
-			if (!$unpublished && !self::$_instances [$parent]->published) {
+			if (!$unpublished && self::$_instances[$parent]->published != 1) {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return array();
 			}
@@ -666,6 +666,14 @@ abstract class KunenaForumCategoryHelper {
 	static public function compareByNameDesc($a, $b) {
 		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b])) return 0;
 		return JString::strcasecmp(self::$_instances[$b]->name, self::$_instances[$a]->name);
+	}
+
+	static public function stripName($original, $strip) {
+		$strip = trim($strip);
+		if (strpos($original, $strip) !== false) {
+			$original = str_replace($strip, '', $original);
+		}
+		return $original;
 	}
 }
 

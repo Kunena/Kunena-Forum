@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -49,19 +49,25 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$start = $this->state->get('list.start');
 		$limit = $this->state->get('list.limit');
 
-		// Exclude super admins.
-		$superadmins = JAccess::getUsersByGroup(8);
+		// Exclude super admins if configured to do so.
+		$filter = $this->config->superadmin_userlist ? JAccess::getUsersByGroup(8) : array();
 
 		$finder = new KunenaUserFinder;
 		$finder
-			->filterByConfiguration($superadmins)
+			->filterByConfiguration($filter)
 			->filterByName($this->state->get('list.search'));
 
 		$this->total = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
+		$alias = 'ku';
+		$aliasList = array('id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate');
+		if (in_array($this->state->get('list.ordering'), $aliasList)) {
+			$alias = 'a';
+		}
+
 		$this->users = $finder
-			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : -1)
+			->order($this->state->get('list.ordering'), $this->state->get('list.direction') == 'asc' ? 1 : -1, $alias)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();

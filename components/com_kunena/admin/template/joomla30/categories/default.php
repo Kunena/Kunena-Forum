@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template.Joomla30
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -278,7 +278,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							</small>
 						</td>
 						<td class="center hidden-phone">
-							<span><?php echo $this->escape($item->accessname); ?></span>
+							<span><?php echo $item->accessname; ?></span>
 							<small>
 								<?php echo JText::sprintf('(Access: %s)', $this->escape( $item->accesstype ));?>
 							</small>

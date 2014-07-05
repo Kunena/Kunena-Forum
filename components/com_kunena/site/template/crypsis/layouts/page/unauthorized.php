@@ -2,9 +2,9 @@
 /**
  * Kunena Component
  * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Page
+ * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -14,11 +14,11 @@ defined('_JEXEC') or die;
 ?>
 <div id="kunena" class="layout">
 	<?php
-	echo $this->subLayout('Page/MenuBar');
+	echo $this->subLayout('Widget/MenuBar');
 
 	// Display current view/layout
 	echo $this->content;
 
-	echo $this->subLayout('Page/Footer');
+	echo $this->subLayout('Widget/Footer');
 	?>
 </div>

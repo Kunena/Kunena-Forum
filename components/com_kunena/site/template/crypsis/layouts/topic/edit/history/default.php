@@ -4,7 +4,7 @@
  * @package Kunena.Template.Crypsis
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,53 +28,46 @@ $k = 0;
 
 	<div class="row-fluid">
 		<div class="span2 center">
-			<h4>
-				<?php echo $this->message->getAuthor()->getLink() ?>
-			</h4>
-			<div>
-				<?php
+			<ul class="unstyled center profilebox">
+				<li>
+					<strong><?php echo $this->message->getAuthor()->getLink() ?></strong>
+				</li>
+				<li>
+					<?php
 					$profile = KunenaFactory::getUser(intval($this->message->userid));
 					$useravatar = $profile->getAvatarImage('img-polaroid','profile');
 					if ($useravatar) :
 						echo $this->message->getAuthor()->getLink( $useravatar );
 					endif;
 					?>
-			</div>
+				</li>
+			</ul>
 		</div>
 		<div class="span10">
-			<div class="well well-small">
-				<div class="pull-right">
-					<?php echo $this->getNumLink($this->message->id,$this->replycount--) ?>
+			<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <span class="icon icon-clock"></span> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?> <?php echo $this->getNumLink($this->message->id,$this->replycount--) ?> </small>
+			<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->displayField('subject'); ?>">
+				<div class="kmessage">
+					<p class="kmsg"><?php echo KunenaHtmlParser::parseBBCode($this->message->message, $this) ?></p>
 				</div>
-				<div>
-					<?php echo KunenaDate::getInstance($this->message->time)->toSpan('config_post_dateformat', 'config_post_dateformat_hover') ?>
-				</div>
-				<hr />
-				<div class="kmsgtext">
-					<?php echo KunenaHtmlParser::parseBBCode($this->message->message, $this) ?>
-				</div>
-				<hr />
 				<?php
 				$attachments = $this->message->getAttachments();
 				if (!empty($attachments)) : ?>
-					<div class="row-fluid">
-						<h4>
-							<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
-						</h4>
-						<ul class="thumbnails">
-							<?php foreach($attachments as $attachment) : ?>
-								<li class="span4">
-									<div class="thumbnail">
-										<?php echo $attachment->getThumbnailLink(); ?>
-										<?php echo $attachment->getTextLink(); ?>
-									</div>
-								</li>
-							<?php endforeach; ?>
-						</ul>
-					</div>
-				<?php endif; ?>
+				<div class="kattach">
+					<h4><?php echo JText::_('COM_KUNENA_ATTACHMENTS');?></h4>
+					<ul class="thumbnails">
+						<?php foreach($attachments as $attachment) : ?>
+						<li class="span4">
+							<div class="thumbnail">
+								<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+								<?php echo $attachment->getLayout()->render('textlink'); ?>
+							</div>
+						</li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
-		</div>
+		<?php endif; ?>
 	</div>
+</div>
+</div>
 <?php endforeach; ?>
 </div>

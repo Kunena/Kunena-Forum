@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -30,9 +30,19 @@ abstract class KunenaUserHelper {
 	protected static $_topposters = null;
 	protected static $_me = null;
 
+	public static function cleanup()
+	{
+		self::$_instances = array();
+		self::$_instances_name = array();
+	}
+
 	public static function initialize() {
 		$id = JFactory::getUser()->id;
-		self::$_me = self::$_instances [$id] = new KunenaUser ( $id );
+		self::$_me = self::$_instances [$id] = new KunenaUser($id);
+
+		// Initialize avatar if configured.
+		$avatars = KunenaFactory::getAvatarIntegration();
+		$avatars->load(array($id));
 	}
 
 	/**
@@ -71,6 +81,10 @@ abstract class KunenaUserHelper {
 		}
 		else if ($reload || empty ( self::$_instances [$id] )) {
 			self::$_instances [$id] = new KunenaUser ( $id );
+
+			// Preload avatar if configured.
+			$avatars = KunenaFactory::getAvatarIntegration();
+			$avatars->load(array($id));
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

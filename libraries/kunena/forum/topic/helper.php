@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -498,12 +498,14 @@ abstract class KunenaForumTopicHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
 		$db->setQuery ( $query );
-		$results = (array) $db->loadObjectList('id', 'KunenaForumTopic');
+		$results = (array) $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				self::$_instances [$id] = $results[$id];
+				$instance = new KunenaForumTopic ($results[$id]);
+ 				$instance->exists(true);
+ 				self::$_instances [$id] = $instance;
 			} else {
 				self::$_instances [$id] = null;
 			}

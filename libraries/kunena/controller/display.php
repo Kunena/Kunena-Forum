@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -105,7 +105,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$output = $this->execute();
 
 		} catch (KunenaExceptionAuthorise $e) {
-			if (!$this->primary) return KunenaLayout::factory('Empty');
+			if (!$this->primary) return (string) KunenaLayout::factory('Empty');
 
 			$document = JFactory::getDocument();
 			$document->setTitle($e->getResponseStatus());
@@ -116,7 +116,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 		} catch (Exception $e) {
 			// TODO: error message?
-			if (!$this->primary) return KunenaLayout::factory('Empty');
+			if (!$this->primary) {
+				return "<b>Exception</b> in layout <b>{$this->name}!</b>" . (!JDEBUG ? $e->getMessage() : '');
+			}
 
 			$title = '500 Internal Server Error';
 			$document = JFactory::getDocument();
@@ -128,6 +130,32 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		}
 
 		return (string) $output;
+	}
+
+	/**
+	 * Method to get the view layout.
+	 *
+	 * @return  string  The layout name.
+	 */
+	public function getLayout()
+	{
+		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
+		return $layout ? $layout : 'default';
+	}
+
+	/**
+	 * Method to set the view layout.
+	 *
+	 * @param   string  $layout  The layout name.
+	 *
+	 * @return  KunenaLayout  Method supports chaining.
+	 */
+	public function setLayout($layout)
+	{
+		if (!$layout) $layout = 'default';
+		$this->layout = $layout;
+
+		return $this;
 	}
 
 	/**

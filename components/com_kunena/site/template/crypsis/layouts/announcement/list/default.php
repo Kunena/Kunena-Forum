@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Announcement
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -22,18 +22,14 @@ $options = $this->getOptions();
 		<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
 
 		<?php if (!empty($options)) : ?>
-			<div class="btn-toolbar pull-right">
-				<div class="btn-group input-append">
-					<?php echo JHtml::_('select.genericlist', $options, 'task', '', 'value', 'text', 0, 'kchecktask'); ?>
-					<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-				</div>
-				<div class="btn-group input-append">
-					<a class="btn btn-small"
-					   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
-						<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
-					</a>
-				</div>
-			</div>
+		<div class="form-horizontal pull-right">
+			<?php echo JHtml::_('select.genericlist', $options, 'task', '', 'value', 'text', 0, 'kchecktask'); ?>
+			<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+			<a class="btn btn-primary"
+			href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
+			<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
+		</a>
+	</div>
 		<?php endif; ?>
 
 	</h2>
@@ -76,15 +72,17 @@ $options = $this->getOptions();
 			</tr>
 		</thead>
 
+		<?php if ( $this->pagination->pagesTotal > 1 ): ?>
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">
 					<div class="pull-right">
-						<?php echo $this->subLayout('Pagination/List')->set('pagination', $this->pagination); ?>
+						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 					</div>
 				</td>
 			</tr>
 		</tfoot>
+		<?php endif; ?>
 
 		<tbody>
 

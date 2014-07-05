@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -43,6 +43,21 @@ class KunenaControllerUser extends KunenaController {
 		parent::display();
 	}
 
+	public function search() {
+		$model = $this->getModel('user');
+
+		$uri = new JUri('index.php?option=com_kunena&view=user&layout=list');
+
+		$state = $model->getState();
+		$search = $state->get('list.search');
+		$limitstart = $state->get('list.start');
+
+		if ($search) $uri->setVar('search', $search);
+		if ($limitstart) $uri->setVar('limitstart', $search);
+
+		$this->setRedirect(KunenaRoute::_($uri, false));
+	}
+
 	public function change() {
 		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -63,59 +78,77 @@ class KunenaControllerUser extends KunenaController {
 		$this->karma(-1);
 	}
 
-	public function save() {
-		// TODO: allow moderators to save another users profile (without account info)
-		if (! JSession::checkToken('post')) {
-			$this->app->enqueueMessage (JText::_ ('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
-			return;
-		}
+	/**
+	 * @throws KunenaExceptionAuthorise
+	 *
+	 * @todo Allow moderators to save another users profile (without account info).
+	 */
+	public function save()
+	{
+		$return = null;
 
-		// perform security checks
-		if (!$this->me->exists()) {
-			JError::raiseError(403, JText::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'));
-			return;
-		}
-
-		// Get the redirect.
-		$err_return = JRoute::_(KunenaRoute::getReferrer('index.php?option=com_kunena&view=user&layout=edit'));
-
-		$this->user = JFactory::getUser();
-		if (!$this->saveUser()) {
-			$this->setRedirect($err_return);
-			return;
-		} elseif (!$this->saveAvatar()) {
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_AVATAR_NOT_SAVED'), 'notice');
-			$this->setRedirect($err_return);
-			return;
-		} else {
-			$this->saveProfile();
-			$this->saveSettings();
-			$success = $this->me->save();
-			if (!$success) {
-				$this->app->enqueueMessage($this->me->getError(), 'notice');
-				$this->setRedirect($err_return);
-				return;
-			} else {
-				$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
-			}
-
-			JPluginHelper::importPlugin( 'system' );
-			// Renamme into JEventDispatcher when dropping Joomla! 2.5 support
-			$dispatcher = JDispatcher::getInstance();
-			$results = $dispatcher->trigger( 'OnAfterKunenaProfileUpdate', array( $this->me, $success ) );
-		}
-
-		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
-		if ($return && JURI::isInternal($return))
+		if (!JSession::checkToken('post'))
 		{
-			// Redirect the user.
-			$this->setRedirect(JRoute::_($return, false));
-			return;
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
 
-		$this->setRedirect($this->me->getURL(false));
+		// Make sure that the user exists.
+		if (!$this->me->exists())
+		{
+			throw new KunenaExceptionAuthorise(JText::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
+		$errors = 0;
+
+		// Save Joomla user.
+		$this->user = JFactory::getUser();
+		$success = $this->saveUser();
+
+		if (!$success)
+		{
+			$errors++;
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
+		}
+
+		// Save avatar.
+		$success = $this->saveAvatar();
+
+		if ($success) {
+			if ($this->format == 'json') {
+				// Pre-create both 28px and 100px avatars so we have them available for AJAX
+				$avatars = array();
+				$avatars['small'] = $this->me->getAvatarUrl(28, 28);
+				$avatars['medium'] = $this->me->getAvatarUrl(100, 100);
+				$return = array('avatars' => $avatars);
+			}
+		} else 	{
+			$errors++;
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_AVATAR_NOT_SAVED'), 'error');
+		}
+
+		// Save Kunena user.
+		$this->saveProfile();
+		$this->saveSettings();
+		$success = $this->me->save();
+
+		if (!$success)
+		{
+			$errors++;
+			$this->app->enqueueMessage($this->me->getError(), 'error');
+		}
+
+		JPluginHelper::importPlugin('system');
+		// TODO: Rename into JEventDispatcher when dropping Joomla! 2.5 support
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->trigger('OnAfterKunenaProfileUpdate', array($this->me, $success));
+
+		if ($errors)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
+		}
+
+		$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
+		if ($return) return $return;
 	}
 
 	function ban() {
@@ -137,13 +170,18 @@ class KunenaControllerUser extends KunenaController {
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
+		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
+		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
+		$DelSignature = JRequest::getVar ( 'delsignature', '' );
+		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
+
+		$delban = JRequest::getString ( 'delban', '' );
+
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
 			$success = $ban->save ();
 			$this->report($user->userid);
 		} else {
-			$delban = JRequest::getString ( 'delban', '' );
-
 			if ( $delban ) {
 				$ban->unBan($comment);
 				$success = $ban->save ();
@@ -156,15 +194,17 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		if ($block) {
-			if ($ban->isEnabled ())
+			if ($ban->isEnabled ()) {
 				$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
-			else
+			} else {
 				$message = JText::_ ( 'COM_KUNENA_USER_UNBLOCKED_DONE' );
+			}
 		} else {
-			if ($ban->isEnabled ())
+			if ($ban->isEnabled ()) {
 				$message = JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' );
-			else
+			} else {
 				$message = JText::_ ( 'COM_KUNENA_USER_UNBANNED_DONE' );
+			}
 		}
 
 		if (! $success) {
@@ -172,11 +212,6 @@ class KunenaControllerUser extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( $message );
 		}
-
-		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
-		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
-		$DelSignature = JRequest::getVar ( 'delsignature', '' );
-		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
 
 		if (! empty ( $DelAvatar ) || ! empty ( $DelProfileInfo )) {
 			$avatar_deleted = '';
@@ -247,9 +282,10 @@ class KunenaControllerUser extends KunenaController {
 		$username = JRequest::getString ( 'username', '', 'POST' );
 		$password = JRequest::getString ( 'password', '', 'POST', JREQUEST_ALLOWRAW );
 		$remember = JRequest::getBool ( 'remember', false, 'POST');
+		$secretkey = JRequest::getString ( 'secretkey', null, 'POST');
 
 		$login = KunenaLogin::getInstance();
-		$error = $login->loginUser($username, $password, $remember);
+		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
 		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
@@ -395,9 +431,15 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	protected function saveProfile() {
-		$this->me->personalText = JRequest::getVar ( 'personaltext', '' );
-		$this->me->birthdate = JRequest::getInt ( 'birthdate1', '0000' ).'-'.JRequest::getInt ( 'birthdate2', '00' ).'-'.JRequest::getInt ( 'birthdate3', '00' );
-		$this->me->location = trim(JRequest::getVar ( 'location', '' ));
+		if (JRequest::getVar('signature', null) === null) return;
+
+		$this->me->personalText = JRequest::getString ( 'personaltext', '' );
+		$birthdate = JRequest::getString('birthdate');
+		if (!$birthdate) {
+			$birthdate = JRequest::getInt('birthdate1', '0000').'-'.JRequest::getInt('birthdate2', '00').'-'.JRequest::getInt ('birthdate3', '00');
+		}
+		$this->me->birthdate = $birthdate;
+		$this->me->location = trim(JRequest::getString ( 'location', '' ));
 		$this->me->gender = JRequest::getInt ( 'gender', '' );
 		$this->me->icq = trim(JRequest::getString ( 'icq', '' ));
 		$this->me->aim = trim(JRequest::getString ( 'aim', '' ));
@@ -470,9 +512,11 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	protected function saveSettings() {
-		$this->me->ordering = JRequest::getInt('messageordering', '', 'post', 'messageordering');
-		$this->me->hideEmail = JRequest::getInt('hidemail', '', 'post', 'hidemail');
-		$this->me->showOnline = JRequest::getInt('showonline', '', 'post', 'showonline');
+		if (JRequest::getVar('hidemail', null) === null) return;
+
+		$this->me->ordering = JRequest::getInt('messageordering', '');
+		$this->me->hideEmail = JRequest::getInt('hidemail', '');
+		$this->me->showOnline = JRequest::getInt('showonline', '');
 	}
 
 	// Reports a user to stopforumspam.com
@@ -535,8 +579,8 @@ class KunenaControllerUser extends KunenaController {
 			$number = 0;
 
 			foreach( $cids as $id ) {
-				$attachment = KunenaForumMessageAttachmentHelper::get($id);
-				if ($attachment->authorise('delete') && $attachment->delete()) $number++;
+				$attachment = KunenaAttachmentHelper::get($id);
+				if ($attachment->isAuthorised('delete') && $attachment->delete()) $number++;
 			}
 
 			if ( $number > 0 ) {

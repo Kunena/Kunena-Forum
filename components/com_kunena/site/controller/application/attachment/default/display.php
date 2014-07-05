@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Application
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -39,48 +39,83 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	 */
 	public function execute()
 	{
+		try
+		{
+			$this->display();
+		}
+		catch (Exception $e)
+		{
+			// In case of an error we want to set HTTP error code.
+			// We want to wrap the exception to be able to display correct HTTP status code.
+			$error = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
+			header('HTTP/1.1 ' . $error->getResponseStatus(), true);
+
+			echo $error->getResponseStatus();
+
+			if (JDEBUG)
+			{
+				echo "<pre>{$e->getTraceAsString()}</pre>";
+			}
+		}
+
+		flush();
+		$this->app->close();
+	}
+
+	/**
+	 * Display attachment.
+	 *
+	 * @return void
+	 *
+	 * @throws RuntimeException
+	 * @throws KunenaExceptionAuthorise
+	 */
+	public function display()
+	{
+		KunenaFactory::loadLanguage('com_kunena');
+
 		$format = $this->input->getWord('format', 'html');
 		$id = $this->input->getInt('id', 0);
 		$thumb = $this->input->getBool('thumb', false);
 		$download = $this->input->getBool('download', false);
 
 		// Run before executing action.
-		$result = $this->before();
+		$this->before();
 
-		if ($result === false || $format != 'raw' || !$id)
+		if ($format != 'raw' || !$id)
 		{
-			throw new RuntimeException(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 		elseif ($this->config->board_offline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
-			throw new RuntimeException(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
 		elseif ($this->config->regonly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
-			throw new RuntimeException(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
 		}
 
-		$attachment = KunenaForumMessageAttachmentHelper::get($id);
+		$attachment = KunenaAttachmentHelper::get($id);
 		$attachment->tryAuthorise();
 
-		$path = JPATH_ROOT . '/' . $attachment->folder . '/thumb/' . $attachment->filename;
+		$path = $attachment->getPath($thumb);
 
-		if (!$thumb || !is_file($path))
+		if ($thumb && !$path)
 		{
-			$path = JPATH_ROOT . '/' . $attachment->folder . '/' . $attachment->filename;
+			$path = $attachment->getPath(false);
 		}
 
-		if (!is_file($path))
+		if (!$path)
 		{
-			// Forum is for registered users only.
-			throw new RuntimeException(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			// File doesn't exist.
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		if (headers_sent())
 		{
-			throw new RuntimeException('HTTP headers were already sent. Sending attachment failed.', 500);
+			throw new KunenaExceptionAuthorise('HTTP headers were already sent. Sending attachment failed.', 500);
 		}
 
 		// Close all output buffers, just in case.
@@ -101,25 +136,33 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 			}
 		}
 
-		// Safety check, just in case..
-		if (!$attachment->filename_real)
-		{
-			$attachment->filename_real = $attachment->filename;
-		}
 
 		// Set file headers.
 		header('ETag: ' . $attachment->hash);
 		header('Pragma: public');
 		header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
 
-		if (!$download && $attachment->isImage($attachment->filetype))
+		if (!$download && $attachment->isImage())
 		{
 			// By default display images inline.
-			$maxage = 60 * 60;
-			header('Cache-Control: maxage=' . $maxage);
-			header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT');
+			$guest = new KunenaUser;
+
+			// If guests can access the image, we allow it to be cached for an hour.
+			if ($attachment->isAuthorised('read', $guest))
+			{
+				$maxage = 60 * 60;
+				header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT');
+				header('Cache-Control: maxage=' . $maxage);
+			}
+			// No guest access -- force re-validate.
+			else
+			{
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			}
+
 			header('Content-type: ' . $attachment->filetype);
-			header('Content-Disposition: inline; filename="' . $attachment->filename_real . '"');
+			header('Content-Disposition: inline; filename="' . $attachment->getFilename(false) . '"');
 		}
 		else
 		{
@@ -130,16 +173,17 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 			header('Content-Type: application/force-download');
 			header('Content-Type: application/octet-stream');
 			header('Content-Type: application/download');
-			header('Content-Disposition: attachment; filename="' . $attachment->filename_real . '"');
+			header('Content-Disposition: attachment; filename="' . $attachment->getFilename(false) . '"');
 		}
 
 		header('Content-Transfer-Encoding: binary');
-		header('Content-Length: ' . $attachment->size);
+		header('Content-Length: ' . filesize($path));
 		flush();
 
 		// Output the file contents.
 		@readfile($path);
 		flush();
+
 		$this->app->close();
 	}
 

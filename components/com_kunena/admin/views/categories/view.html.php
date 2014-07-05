@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -84,6 +84,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::cancel();
 		JToolbarHelper::spacer();
 	}
+
 	protected function setToolBarDefault() {
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination = $this->get ( 'AdminNavigation' );
@@ -98,7 +99,15 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::publish();
 		JToolBarHelper::unpublish();
 		JToolBarHelper::divider();
-		JToolBarHelper::deleteList();
+
+		if ($this->state->get('filter.published') == -2)
+		{
+			JToolBarHelper::deleteList();
+		}
+		else
+		{
+			JToolbarHelper::trash('trash');
+		}
 		//}
 		JToolBarHelper::spacer();
 		JToolbarHelper::archiveList();
@@ -117,6 +126,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_UNPUBLISHED'));
 		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_PUBLISHED'));
 		$options[]	= JHtml::_('select.option', '2', JText::_('COM_KUNENA_FIELD_LABEL_ARCHIVED'));
+		$options[]	= JHtml::_('select.option', '-2', JText::_('COM_KUNENA_FIELD_LABEL_TRASHED'));
 
 		return $options;
 	}

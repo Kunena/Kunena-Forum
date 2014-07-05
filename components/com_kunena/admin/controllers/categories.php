@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -491,6 +491,24 @@ class KunenaAdminControllerCategories extends KunenaController {
 		if ( !empty($cid) )
 		{
 			$this->setVariable($cid, 'published', 2);
+			$this->setRedirectBack();
+		}
+	}
+
+	/**
+	 * Method to put in trash one or multiple categories
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	public function trash()
+	{
+		$cid = $this->app->input->get('cid', array(), 'array');
+
+		if ( !empty($cid) )
+		{
+			$this->setVariable($cid, 'published', -2);
 			$this->setRedirectBack();
 		}
 	}

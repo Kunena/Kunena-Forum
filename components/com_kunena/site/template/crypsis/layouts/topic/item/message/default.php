@@ -4,15 +4,16 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+$topicStarter = $this->topic->first_post_userid == $this->message->userid;
 ?>
-<div class="row-fluid">
+<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
 	<div class="span2 hidden-phone">
-		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default'); ?>
+		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter); ?>
 	</div>
 	<div class="span10">
 		<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
@@ -21,4 +22,4 @@ defined('_JEXEC') or die;
 	</div>
 </div>
 
-<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_msg_' . $this->location); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_msg_' . $this->location); ?>

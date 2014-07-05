@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -16,13 +16,10 @@ $tabs = $this->getTabs();
 <h2>
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
-	<sup class="label label-<?php echo $this->profile->isOnline('success', 'important') ?>">
-		<?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-	</sup>
 
 	<?php if ($this->profile->isAuthorised('edit')) : ?>
 	<?php echo $this->profile->getLink(
-		'<i class="icon-arrow-right"></i> ' . JText::_('COM_KUNENA_EDIT'),
+		'<i class="icon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
 		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn pull-right'
 	); ?>
 	<?php endif; ?>
@@ -35,7 +32,10 @@ echo $this->subLayout('User/Item/Summary')
 	->set('config', $this->config);
 ?>
 
-<div class="tabs">
+<div class="tabs hidden-phone">
+ <br />
+<br />
+
 	<ul class="nav nav-tabs">
 
 		<?php foreach ($tabs as $name => $tab) : ?>

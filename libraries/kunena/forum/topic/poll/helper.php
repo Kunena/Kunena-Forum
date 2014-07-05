@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.Poll
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -37,5 +37,17 @@ abstract class KunenaForumTopicPollHelper {
 		}
 
 		return self::$_instances [$id];
+	}
+
+	static public function recount() {
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query
+			->update('#__kunena_topics AS a')
+			->innerJoin('#__kunena_polls AS b ON a.id=b.threadid')
+			->set('a.poll_id=b.id');
+
+		$db->setQuery($query);
+		$db->execute();
 	}
 }

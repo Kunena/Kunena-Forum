@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -97,12 +97,12 @@ class KunenaViewUser extends KunenaView {
 			else $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_BACK').' &raquo;', JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow' );
 		}
 		$this->name = $this->user->username;
-		
-		if ($this->config->userlist_name) 
+
+		if ($this->config->userlist_name)
 		{
 			$this->name = $this->profile->getName() . ($this->me->isModerator() ? ' (' . $this->name . ')' : '');
 		}
-		
+
 		if ($this->config->showuserstats) {
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
@@ -521,7 +521,7 @@ class KunenaViewUser extends KunenaView {
 	function canManageAttachments () {
 		if ( $this->config->show_imgfiles_manage_profile ) {
 			$params = array('file' => '1', 'image' => '1', 'orderby' => 'desc', 'limit' => '30');
-			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
+			$this->userattachs = KunenaAttachmentHelper::getByUserid($this->profile, $params);
 
 			if ($this->userattachs) {
 				 if ( $this->me->isModerator() || $this->profile->userid == $this->me->userid ) return true;

@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Application
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -43,7 +43,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		if (!method_exists($this, $function))
 		{
 			// Invalid page request.
-			throw new RuntimeException(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
 		// Run before executing action.
@@ -51,22 +51,22 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 
 		if ($result === false)
 		{
-			$content = new RuntimeException(JText::_('COM_KUNENA_NO_ACCESS'), 404);
+			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 		elseif (!JSession::checkToken())
 		{
 			// Invalid access token.
-			$content = new RuntimeException(JText::_('COM_KUNENA_ERROR_TOKEN'), 401);
+			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_ERROR_TOKEN'), 403);
 		}
 		elseif ($this->config->board_offline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
-			$content = new RuntimeException(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
 		}
 		elseif ($this->config->regonly && !$this->me->exists())
 		{
 			// Forum is for registered users only.
-			$content = new RuntimeException(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+			$content = new KunenaExceptionAuthorise(JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
 		}
 		else
 		{
@@ -134,70 +134,23 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	 */
 	public function displayJson($content)
 	{
-		// TODO: Joomla 3.1+ uses JResponseJson (we just emulate it for now).
-		$response = new StdClass;
-		$response->success = true;
-		$response->message = null;
-		$response->messages = null;
-		$response->data = null;
+		// Tell the browser that our response is in JSON.
+		header('Content-type: application/json', true);
 
-		if ($content instanceof Exception)
+		// Create JSON response.
+		$response = new KunenaResponseJson($content);
+
+		// In case of an error we want to set HTTP error code.
+		if (!$response->success)
 		{
-			// Build data from exceptions.
-			$exceptions = array();
-			$e = $content;
-
-			do
-			{
-				$exception = array(
-					'code' => $e->getCode(),
-					'message' => $e->getMessage()
-				);
-
-				if (JDEBUG)
-				{
-					$exception += array(
-						'type' => get_class($e),
-						'file' => $e->getFile(),
-						'line' => $e->getLine()
-					);
-				}
-
-				$exceptions[] = $exception;
-				$e = $e->getPrevious();
-			}
-			while (JDEBUG && $e);
-
-			// Create response.
-			$response->success = false;
-			$response->message = $content->getcode() . ' ' . $content->getMessage();
-			$response->data = array('exceptions' => $exceptions);
-		}
-		else
-		{
-			$response->data = (string) $content;
+			// We want to wrap the exception to be able to display correct HTTP status code.
+			$error = new KunenaExceptionAuthorise($response->message, $response->code);
+			header('HTTP/1.1 ' . $error->getResponseStatus(), true);
 		}
 
-		$messages = $this->app->getMessageQueue();
+		echo json_encode($response);
 
-		// Build the sorted messages list
-		if (is_array($messages) && count($messages))
-		{
-			foreach ($messages as $message)
-			{
-				if (isset($message['type']) && isset($message['message']))
-				{
-					$lists[$message['type']][] = $message['message'];
-				}
-			}
-		}
-
-		// If messages exist add them to the output
-		if (isset($lists) && is_array($lists))
-		{
-			$response->messages = $lists;
-		}
-
-		return json_encode($response);
+		// It's much faster and safer to exit now than let Joomla to send the response.
+		JFactory::getApplication()->close();
 	}
 }

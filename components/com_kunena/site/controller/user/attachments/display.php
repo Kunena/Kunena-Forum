@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -30,7 +30,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 	public $profile;
 
 	/**
-	 * @var array|KunenaForumMessageAttachments[]
+	 * @var array|KunenaAttachments[]
 	 */
 	public $attachments;
 
@@ -51,7 +51,7 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		$this->template = KunenaFactory::getTemplate();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->profile = KunenaUserHelper::get($userid);
-		$this->attachments = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
+		$this->attachments = KunenaAttachmentHelper::getByUserid($this->profile, $params);
 
 		// Pre-load messages.
 		$messageIds = array();

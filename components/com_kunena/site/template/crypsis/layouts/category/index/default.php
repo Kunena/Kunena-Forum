@@ -4,13 +4,14 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 $mmm=0;
+
 /** @var KunenaForumCategory $section */
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
@@ -52,13 +53,13 @@ foreach ($this->sections as $section) :
 </h3>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
-	<table class="table table-striped table-hover table-bordered table-condensed">
+	<table class="table table-bordered">
 
 		<?php if (!empty($section->description)) : ?>
 		<thead class="hidden-phone">
 			<tr>
 				<td colspan="3">
-					<div><?php echo $section->displayField('description'); ?></div>
+					<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
 				</td>
 			</tr>
 		</thead>
@@ -74,39 +75,51 @@ foreach ($this->sections as $section) :
 		</tr>
 
 		<?php else : ?>
-
+		<?php if (!empty($this->categories[$section->id])) : ?>
+				<td  colspan="2" class="hidden-phone">
+				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+				</td>
+				<td class="span3 hidden-phone post-info">
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php endif; ?>
 		<?php
 			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
 		<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
-			<?php /* FIXME: implement category icons.
-			<td class="span1">
+			<td class="span1 center">
 				<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
-			</td> */ ?>
+			</td>
 			<td class="span8">
 				<div>
 					<h3>
 						<?php echo $this->getCategoryLink($category); ?>
 						<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
-								$this->formatLargeNumber($category->getTopics())); ?>)</small>
-					</h3>
+								$this->formatLargeNumber($category->getTopics())); ?>)
 					<span>
 						<?php
 						if (($new = $category->getNewCount()) > 0) {
 							echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
 						}
 						if ($category->locked) {
-							echo $this->getIcon('kforumlocked', JText::_('COM_KUNENA_LOCKED_CATEGORY'));
+						?>
+							<span class="icon-lock" title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"></span>
+						<?php
 						}
 						if ($category->review) {
-							echo $this->getIcon('kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED'));
-						}
 						?>
-					</span>
+							<span class="icon-shield" title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
+						<?php
+						}
+						if (!empty($category->rssURL)) :
+						?>
+ 						 <a href="<?php echo $category->rssURL ?>" rel="follow"><span class="icon-feed" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
+						<?php endif; ?>
+ 					</span></small></h3>
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
-					<div class="hidden-phone"><?php echo $category->displayField('description'); ?></div>
+					<div class="hidden-phone header-desc"><?php echo $category->displayField('description'); ?></div>
 				<?php endif; ?>
 
 				<?php
@@ -122,6 +135,9 @@ foreach ($this->sections as $section) :
 						echo $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
 							. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 							. ')</small>';
+							if (($new = $subcategory->getNewCount()) > 0) {
+							echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
+						}
 						?>
 					</li>
 					<?php endforeach; ?>
@@ -136,9 +152,20 @@ foreach ($this->sections as $section) :
 
 				</ul>
 				<?php endif; ?>
-
+			<?php if (!empty($category->moderators)) : ?>
+			<div class="kthead-moderators ks">
+				<?php
+				// get the Moderator list for display
+				$modslist = array();
+				foreach ( $category->moderators as $moderator ) {
+					$modslist[] = KunenaFactory::getUser($moderator)->getLink();
+				}
+				echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
+					?>
+			</div>
+			<?php endif; ?>
 				<?php if (!empty($this->pending[$category->id])) : ?>
-				<div class="alert">
+				<div class="alert" style="max-width:150px;">
 					<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid='.intval($category->id),
 						intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'),
 						'', '', 'nofollow'); ?>
@@ -149,29 +176,34 @@ foreach ($this->sections as $section) :
 
 			<?php $last = $category->getLastTopic(); ?>
 
-			<?php if (!$last->exists()) : ?>
-			<td colspan="2" class="span3 hidden-phone"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
-			<?php else :
+			<?php if ($last->exists()) :
 				$author = $last->getLastPostAuthor();
 				$time = $last->getLastPostTime();
-				$avatar = $this->config->avataroncat > 0 ? $author->getAvatarImage('img-polaroid', 48) : null;
+				$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-thumbnail', 48) : null;
 			?>
 
-			<?php if ($avatar) : ?>
-			<td class="span1 center hidden-phone">
-				<?php echo $author->getLink($avatar); ?>
+			<td class="span3 hidden-phone post-info">
+				<?php if ($avatar) : ?>
+				<div class="post-image">
+					<?php echo $author->getLink($avatar); ?>
+				</div>
+				<?php endif; ?>
+						<div class="post-meta">
+							<div>
+								<?php echo $this->getLastPostLink($category) ?>
+							</div>
+							<div>
+								<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
+							</div>
+							<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
+								<?php echo $time->toKunena('config_post_dateformat'); ?>
+							</div>
+						</div>
 			</td>
-			<?php endif; ?>
-
-			<td class="span3 hidden-phone">
-				<div>
-					<?php echo $this->getLastPostLink($category) ?>
-				</div>
-				<div>
-					<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
-				</div>
-				<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
-					<?php echo $time->toKunena('config_post_dateformat'); ?>
+			<?php else : ?>
+			 <td class="span3 hidden-phone">
+				<div class="last-post-message">
+					<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>
 				</div>
 			</td>
 			<?php endif; ?>
@@ -196,6 +228,6 @@ foreach ($this->sections as $section) :
 </div>
 </div>
 <!-- Begin: Category Module Position -->
-<?php echo $this->subLayout('Page/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 <!-- Finish: Category Module Position -->
 <?php endforeach; ?>

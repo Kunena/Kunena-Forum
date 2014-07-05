@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -48,6 +48,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->location = $this->input->getInt('location', 0);
+		$this->detail = $this->input->get('detail', false);
 		$this->message = KunenaForumMessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 
@@ -96,12 +97,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 				foreach ($loaded_users as $userid => $user)
 				{
-					$thankyou_delete = $this->message->isAuthorised('unthankyou') ?
-						' <a title="' . JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
-						. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")) . '"><img src="'
-						. $this->ktemplate->getImagePath('icons/publish_x.png') . '" title="" alt="" /></a>'
-						: '';
-					$this->thankyou[] = $loaded_users[$userid]->getLink() . $thankyou_delete;
+					$this->thankyou[] = $loaded_users[$userid]->getLink();
 				}
 			}
 		}

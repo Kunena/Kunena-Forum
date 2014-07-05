@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -99,18 +99,25 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 				<?php echo JText::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?>
 			</label>
 			<div class="controls" id="modtopicslist">
-				<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none" />
 				<?php echo JHtml::_(
 					'select.genericlist', $this->getTopicOptions(), 'targettopic', '', 'value', 'text', 0, 'kmod_topics'
 				); ?>
 			</div>
 		</div>
-		<div class="control-group">
+		<div class="control-group" id="kmod_targetid" style="display: none">
+			<label class="control-label" for="modtopicslist">
+				<?php echo JText::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?>
+			</label>
+			<div class="controls">
+				<input type="text" size="7" name="targetid" value="" />
+			</div>
+		</div>
+		<div class="control-group" id="kmod_subject">
 			<label class="control-label" for="kmod_subject">
 				<?php echo JText::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?>
 			</label>
-			<div class="controls" id="kmod_subject">
-				<input type="text" name="subject" value="<?php echo !isset($this->message)
+			<div class="controls">
+				<input type="text" name="subject" id="ktitle_moderate_subject" value="<?php echo !isset($this->message)
 					? $this->topic->displayField('subject')
 					: $this->message->displayField('subject'); ?>" />
 			</div>
@@ -159,7 +166,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 			<div class="controls">
 
 				<?php foreach ($this->topicIcons as $id => $icon): ?>
-					<label class="checkbox">
+					<label class="checkbox inline">
 						<input type="radio" name="topic_emoticon" value="<?php echo $icon->id; ?>"
 							<?php if ($icon->id == $this->topic->icon_id) echo ' checked="checked"'; ?> />
 						<img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true); ?>"
@@ -173,7 +180,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 			<div class="controls">
 				<input type="submit" class="btn btn-primary"
 				       value="<?php echo JText::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>" />
-				<a href="window.history.back();" class="btn">
+				<a href="javascript:window.history.back();" class="btn">
 					<?php echo JText::_('COM_KUNENA_BACK'); ?>
 				</a>
 			</div>

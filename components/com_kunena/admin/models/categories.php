@@ -33,11 +33,12 @@ class KunenaAdminModelCategories extends KunenaModel {
 	 * Method to auto-populate the model state.
 	 */
 	protected function populateState() {
+		$this->context = 'com_kunena.admin.categories';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
-		$this->context = 'com_kunena.admin.categories';
 		if ($layout) {
 			$this->context .= '.'.$layout;
 		}

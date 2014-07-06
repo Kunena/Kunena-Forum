@@ -48,6 +48,8 @@ class KunenaAdminModelUsers extends JModelList {
 	 * Method to auto-populate the model state.
 	 */
 	protected function populateState($ordering = null, $direction = null) {
+		$this->context = 'com_kunena.admin.users';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.

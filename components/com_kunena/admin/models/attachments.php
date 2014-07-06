@@ -44,6 +44,8 @@ class KunenaAdminModelAttachments extends JModelList {
 	 * @since	1.6
 	 */
 	protected function populateState($ordering = null, $direction = null) {
+		$this->context = 'com_kunena.admin.attachments';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.

@@ -140,10 +140,6 @@ window.kunenainstall = function() {
 		noCache: true,
 		secure: false,
 		onRequest: function() {
-			if (window.parent.SqueezeBox) {
-				window.parent.SqueezeBox.closeBtn.setStyle('display','none');
-				window.parent.SqueezeBox.asset.set('scrolling', 'no');
-			}
 			kunenaProgress.setStyle('width', '1%');
 		},
 		onSuccess: function(responseJSON, responseText) {

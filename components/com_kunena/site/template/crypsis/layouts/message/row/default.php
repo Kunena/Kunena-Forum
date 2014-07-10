@@ -23,7 +23,7 @@ $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx); ?>">
-	<td class="span2 hidden-phone center">
+	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
 	<td class="span5">
@@ -36,7 +36,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		<div>
 			<?php echo $this->getTopicLink(
 				$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
-				); ?>
+			); ?>
 			<?php
 
 			if ($topic->getUserTopic()->favorite) {
@@ -59,20 +59,20 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 		</div>
 	</td>
-	<td class="span3 hidden-phone">
+	<td class="span2 hidden-phone">
 		<table cellpadding="0" cellspacing="0">
 			<tbody>
-				<tr>
-					<td style="border: 0 none;" class="labels">
-						<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong></div>
-						<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</div>
-					</td>
-					<td style="width:100%;text-align:right;border: 0 none;" class="numbers">
-						<div class="repliesnum"><strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong></div>
-						<div class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></div>
-						
-					</td>
-				</tr>
+			<tr>
+				<td style="border: 0 none;" class="labels">
+					<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong></div>
+					<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</div>
+				</td>
+				<td style="width:100%;text-align:right;border: 0 none;" class="numbers">
+					<div class="repliesnum"><strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong></div>
+					<div class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></div>
+
+				</td>
+			</tr>
 			</tbody>
 		</table>
 	</td>
@@ -80,7 +80,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		<div class="post-desc">
 			<?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
 			<?php if ($message->userid) : ?>
-			<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+				<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 			<?php endif; ?>
 			<br />
 			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
@@ -88,9 +88,9 @@ $cols = empty($this->checkbox) ? 4 : 5;
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-	<td class="span1 center">
-		<input class ="kcheck" type="checkbox" name="posts[<?php echo $message->id?>]" value="1" />
-	</td>
+		<td class="span1 center">
+			<input class ="kcheck" type="checkbox" name="posts[<?php echo $message->id?>]" value="1" />
+		</td>
 	<?php endif; ?>
 
 	<?php

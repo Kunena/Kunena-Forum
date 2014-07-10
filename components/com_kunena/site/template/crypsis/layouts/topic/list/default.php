@@ -106,6 +106,6 @@ $colspan = empty($this->actions) ? 5 : 6;
 </form>
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-	<div class="pagination pull-left"><?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
+	<div class="pagination"><?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?></div>
 <?php endif; ?>
 <div class="clearfix"></div>

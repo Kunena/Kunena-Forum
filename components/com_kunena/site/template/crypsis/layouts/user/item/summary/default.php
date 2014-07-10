@@ -140,18 +140,18 @@ if ($this->config->showuserstats)
 <div class="row-fluid">
 	<div class="span12">
 		<div class="span6">
+			<?php if ($signature) : ?>
 			<blockquote>
-				<?php if ($signature) : ?>
 					<span><?php echo $signature; ?></span>
-				<?php endif; ?>
 			</blockquote>
+			<?php endif; ?>
+			<?php if ($personalText) : ?>
 			<blockquote>
-				<?php if ($personalText) : ?>
 					<span> <?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?> </span>
 					<span> <?php echo $personalText; ?> </span>
-				<?php endif; ?>
 			</blockquote>
-			<div>
+			<?php endif; ?>
+			<div class="btn-toolbar">
 				<?php if (!empty($private)) : ?>
 					<a class="btn btn-small" href="<?php echo $private; ?>">
 						<i class="icon-comments-2"></i>

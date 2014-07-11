@@ -140,7 +140,9 @@ $colspan = empty($this->actions) ? 5 : 6;
 </form>
 
 <div class="pull-left">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination)
+		->set('display', true); ?>
 </div>
 
 <?php

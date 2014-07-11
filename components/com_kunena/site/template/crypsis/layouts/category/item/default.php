@@ -23,11 +23,11 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 <?php if (!$this->category->isSection()) : ?>
 <h2>
-	<a><?php echo $this->escape($this->headerText); ?></a>
+	<?php echo $this->escape($this->headerText); ?>
 </h2>
 
 <div class="pull-left">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination)->set('display', true); ?>
 </div>
 
 <div class="pull-right">

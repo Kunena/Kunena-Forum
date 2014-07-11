@@ -57,11 +57,5 @@ defined('_JEXEC') or die;
 			</ul>
 		</div>
 		<?php endif ?>
-
-		<div class="btn-group pull-right">
-			<?php echo $this->subLayout('Widget/Search')
-				->set('id', $this->topic->id)
-				->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC')); ?>
-		</div>
 	</div>
 </div>

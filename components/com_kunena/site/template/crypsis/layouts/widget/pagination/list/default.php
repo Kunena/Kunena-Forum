@@ -10,8 +10,14 @@
  **/
 defined('_JEXEC') or die;
 
+$display = $this->display;
+
 $data = $this->pagination->getData();
-if (count($data->pages) <= 1) return;
+
+$count = count($data->pages);
+
+if ($count == 0) return;
+elseif ($count == 1 && !isset($display)) return;
 $last = 0;
 ?>
 

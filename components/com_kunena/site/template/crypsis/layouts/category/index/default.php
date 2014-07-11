@@ -41,16 +41,16 @@ foreach ($this->sections as $section) :
 	<?php endif; ?>
 
 </div>
-<h3>
+<h2>
 
 	<?php if ($section->parent_id) : ?>
 	<?php echo $this->getCategoryLink($section->getParent(), $this->escape($section->getParent()->name)); ?> /
 	<?php endif; ?>
 
-	<?php echo $this->getCategoryLink($section, $this->escape($section->name)); ?>
+	<?php echo $this->escape($section->name); ?>
 	<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 			$this->formatLargeNumber($section->getTopics())); ?>)</small>
-</h3>
+</h2>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 	<table class="table table-bordered">

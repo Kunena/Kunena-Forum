@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-polaroid', 48);
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 6 : 7;
 
@@ -29,7 +29,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span7">
+	<td class="span5">
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 		</div>
@@ -59,9 +59,10 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div>
-			<?php echo $topic->getAuthor()->getLink(); ?>,
-			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?>
+			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>,
+			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
+			<?php echo JText::_('COM_KUNENA_BY') ?>
+			<?php echo $topic->getAuthor()->getLink(); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -98,7 +99,7 @@ if (!empty($this->spacing)) : ?>
 		</table>
 	</td>
 
-	<td class="span3 post-info">
+	<td class="span4 post-info">
 		<?php if ($config->avataroncat) : ?>
 			<div class="post-image">
 				<div class="img-thumbnail">

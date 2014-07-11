@@ -211,8 +211,7 @@ form > table > thead > tr > td > ul {
 .kfrontend h3,
 .kfrontend h4,
 .kfrontend h5,
-.kfrontend h6,
-.kfrontend h7 {
+.kfrontend h6 {
 	margin:5px !important;
 }
 ul li {
@@ -481,16 +480,12 @@ margin-left: 65px;
 }
 .post-image {
 	float: left;
-	margin-right: 10px;
-	padding-top:2%;
-	padding-bottom:2%;
+	margin: -7px 10px -7px -7px;
 }
 .img-thumbnail {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
-	border:1px solid #ddd;
-	padding:4px;
 	position: relative;
 }
 .row-fluid {
@@ -504,9 +499,16 @@ margin-left: 65px;
     li.span1:nth-child(12n + 13) { margin-left : 0px; }
   }
 }
+.table th, .table td {
+	line-height: 20px;
+}
 .message-deleted {
 	background-color:rgba(0, 0, 0, 0.1);
 	padding:8px;
 	margin-bottom:15px;
 	border-radius:5px;
 }
+.btn-toolbar {
+	margin: 0;
+}
+

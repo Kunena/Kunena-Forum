@@ -21,14 +21,21 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 </div>
 <?php endif; ?>
 
-<div class="pull-right">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
-</div>
-
 <h3>
 	<?php echo $this->topic->getIcon(); ?>
 	<?php echo $this->topic->displayField('subject'); ?>
 </h3>
+
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination)
+		->set('display', true); ?>
+</div>
+<div class="pull-right">
+	<?php echo $this->subLayout('Widget/Search')
+		->set('id', $this->topic->id)
+		->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC')); ?>
+</div>
 
 <div class="clearfix"></div>
 
@@ -36,7 +43,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
 echo $this->subRequest('Topic/Poll')->set('id', $this->topic->id);
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
-echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id);
+if($this->me->exists) echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id);
 
 foreach ($this->messages as $id => $message)
 {
@@ -46,9 +53,17 @@ foreach ($this->messages as $id => $message)
 }
 ?>
 
-<div class="pull-right">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination)
+		->set('display', true);; ?>
 </div>
+<div class="pull-right">
+	<?php echo $this->subLayout('Widget/Search')
+		->set('id', $this->topic->id)
+		->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC')); ?>
+</div>
+
 <?php echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id); ?>
 <div class="clearfix"></div>
 

@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
-$colspan = empty($this->actions) ? 5 : 6;
+$cols = empty($this->checkbox) ? 4 : 5;
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
@@ -26,12 +26,12 @@ $colspan = empty($this->actions) ? 5 : 6;
 	<?php echo $this->escape($this->headerText); ?>
 </h2>
 
-<div class="pull-left">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination)->set('display', true); ?>
-</div>
-
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')->set('catid', $this->category->id); ?>
+</div>
+
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination)->set('display', true); ?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
@@ -55,13 +55,13 @@ $colspan = empty($this->actions) ? 5 : 6;
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>
-				<td class="span6">
+				<td class="span<?php echo $cols?>">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
 				<td class="span2 center hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
-				<td class="span1">
+				<td class="span4">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php if (!empty($this->topicActions)) : ?>
@@ -95,44 +95,42 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 		?>
 		<tfoot>
-		<tr>
-			<td class="center hidden-phone">
-				<a id="forumbottom"> </a>
-				<a href="#forumtop" rel="nofollow">
-					<span class="divider"></span>
-					<i class="icon-arrow-up hasTooltip"></i>
-				</a>
-				<?php // FIXME: $this->displayCategoryActions() ?>
-			</td>
-
-			<td colspan="6" class="hidden-phone">
-				<div class="form-horizontal">
+			<tr>
+				<td class="center hidden-phone">
+					<a id="forumbottom"> </a>
+					<a href="#forumtop" rel="nofollow">
+						<span class="divider"></span>
+						<i class="icon-arrow-up hasTooltip"></i>
+					</a>
+					<?php // FIXME: $this->displayCategoryActions() ?>
+				</td>
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
+					<td colspan="6" class="hidden-phone">
+						<div class="form-horizontal">
 
-				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
-						JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
+						<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
+								JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
 
-				<?php if (!empty($this->topicActions)) : ?>
-				<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
-							'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
+							<?php if (!empty($this->topicActions)) : ?>
+								<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
+										'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
-				<?php if ($this->actionMove) :
-								$options = array (
-									JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))
-								);
-								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(),
-									' disabled="disabled"', 'value', 'text', 0,
-									'kchecktarget');
-							?>
-				<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
+								<?php if ($this->actionMove) : ?>
+									<?php
+										$options = array (JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+										echo JHtml::_(
+											'kunenaforum.categorylist', 'target', 0, $options, array(),
+											' disabled="disabled"', 'value', 'text', 0,
+											'kchecktarget'
+										);
+									?>
+									<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
+								<?php endif; ?>
+							<?php endif; ?>
+						</div>
+					</td>
 				<?php endif; ?>
-
-				<?php endif; ?>
-
-				<?php endif; ?>
-			</div>
-			</td>
-		</tr>
+			</tr>
 		</tfoot>
 		<?php endif; ?>
 	</table>
@@ -147,7 +145,8 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 <?php
 if (!empty($this->moderators))
-	echo $this->subLayout('Category/Moderators')->set('moderators', $this->moderators);
+	echo $this->subLayout('Category/Moderators')
+		->set('moderators', $this->moderators);
 ?>
 
 <?php endif; ?>

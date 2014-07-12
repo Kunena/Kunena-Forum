@@ -29,7 +29,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span5">
+	<td>
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
@@ -80,7 +80,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 	</td>
 
-	<td class="span1 hidden-phone">
+	<td class="hidden-phone">
 		<table cellpadding="0" cellspacing="0">
 			<tbody>
 			<tr>
@@ -98,7 +98,7 @@ if (!empty($this->spacing)) : ?>
 		</table>
 	</td>
 
-	<td class="span4 post-info">
+	<td class="ost-info">
 		<?php if ($config->avataroncat) : ?>
 			<div class="post-image">
 				<div class="img-thumbnail">
@@ -115,7 +115,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-		<td class="span1 center">
+		<td class="center">
 			<label>
 				<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 			</label>

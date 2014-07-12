@@ -16,9 +16,15 @@ defined('_JEXEC') or die;
 			<div class="btn btn-small" data-toggle="collapse" data-target="#kwho">&times;</div>
 		</div>
 	</div>
-<h3 class="btn-link">
-	<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE'); ?>
-</h3>
+<h2 class="btn-link">
+	<?php if ($this->usersUrl) : ?>
+		<a href="<?php echo $this->usersUrl; ?>">
+			<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE'); ?>
+		</a>
+	<?php else : ?>
+		<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE'); ?>
+	<?php endif; ?>
+</h2>
 
 <div class="row-fluid collapse in" id="kwho">
 <div class="well well-small">

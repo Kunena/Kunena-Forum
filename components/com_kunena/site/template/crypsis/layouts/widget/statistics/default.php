@@ -9,22 +9,20 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
-// TODO: Move from widget to statistics
 ?>
+
 <div class="kfrontend">
-<h3 class="btn-link">
+	<h2>
+		<?php if ($this->statisticsUrl) : ?>
+			<a href="<?php echo $this->statisticsUrl; ?>">
+				<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
+			</a>
+		<?php else : ?>
+			<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
+		<?php endif; ?>
 
-	<?php if ($this->statisticsUrl) : ?>
-	<a href="<?php echo $this->statisticsUrl; ?>">
-		<?php echo $this->config->board_title . ' ' . JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
-	</a>
-	<?php else : ?>
-	<?php echo $this->config->board_title . ' ' . JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
-	<?php endif; ?>
-
-	<span class="btn btn-small pull-right" data-toggle="collapse" data-target="#kstats">&times;</span>
-</h3>
-
+		<span class="btn btn-small pull-right" data-toggle="collapse" data-target="#kstats">&times;</span>
+	</h2>
 	<div class="collapse in" id="kstats">
 	<div class="well well-small">
 	<div class="row-fluid">
@@ -73,23 +71,6 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
 				<strong><?php echo $this->latestMemberLink; ?></strong>
 			</li>
-
-			<?php if ($this->userlistUrl) : ?>
-			<li>
-				<a href="<?php echo $this->userlistUrl; ?>">
-					<?php echo JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;'; ?>
-				</a>
-			</li>
-			<?php endif; ?>
-
-			<?php if ($this->statisticsUrl) : ?>
-			<li>
-				<a href="<?php echo $this->statisticsUrl; ?>">
-					<?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;'; ?>
-				</a>
-			</li>
-			<?php endif; ?>
-
 		</ul>
 	</div>
 	</div>

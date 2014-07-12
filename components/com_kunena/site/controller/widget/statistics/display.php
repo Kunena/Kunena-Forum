@@ -25,8 +25,6 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 
 	public $statisticsUrl;
 
-	public $userlistUrl;
-
 	/**
 	 * Prepare statistics box display.
 	 *
@@ -49,8 +47,6 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsUrl = KunenaFactory::getProfile()->getStatisticsURL();
-		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
-
 		return true;
 	}
 }

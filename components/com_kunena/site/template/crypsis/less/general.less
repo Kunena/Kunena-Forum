@@ -6,6 +6,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
+
 a:active,
 a:focus,
 select:focus,
@@ -389,7 +390,7 @@ div.kmsgtext-confidential {
 }
 
 form {
-	margin: 0 0 10px 0;
+	margin: 0;
 }
 
 .timefilter {
@@ -494,70 +495,7 @@ div.navbar > div > div.visible-phone.hidden-tablet > ul {
 	margin: 0
 }
 
-@media (max-width: 480px) {
-	.pagination .test ul > li > a, .pagination ul > li > span {
-		display: none;
-	}
 
-	[class*="badger"] {
-		padding: 25% 19px 14px;
-	}
-
-	.form-search {
-		padding-bottom: 0;
-	}
-
-	.msgfooter {
-		width: 85%;
-	}
-
-	.pull-right,
-	span > form {
-		float: none;
-	}
-
-	.table td.span1, .table th.span1 {
-		width: 0;
-	}
-
-	div.navbar > div > div.visible-phone.hidden-tablet > ul.nav.navbar-nav.pull-left > a > i {
-		cursor: pointer;
-		vertical-align: super;
-	}
-
-	#postform > div > div > div > fieldset > div > div {
-		margin-left: -8px;
-	}
-
-	.last-post-message {
-		padding-left: 5px;
-	}
-
-	#postcatid {
-		width: 100%;
-	}
-
-	.input-xxlarge {
-		width: 94%;
-	}
-
-	.kfile-input-textbox {
-		width: 52%;
-	}
-
-	.kattachment-remove,
-	.kattachment-insert {
-		margin-left: 15px;
-		margin-top: 10px;
-	}
-}
-
-@media (max-width: 320px) {
-	#postform .btn {
-		width: 60%;
-		margin-bottom: 10px;
-	}
-}
 
 select#mode {
 	margin-left: 65px;
@@ -622,4 +560,23 @@ select#mode {
 
 .btn-toolbar {
 	margin: 0;
+}
+
+.form-search .input-append {
+	margin: 3px 0;
+}
+
+table .well {
+	margin-bottom: 0;
+}
+
+.filter-state {
+	font-size: 150%;
+}
+
+.filter-state .btn {
+	padding: 0 6px;
+	vertical-align: inherit;
+	font-size: inherit;
+	line-height: 150%
 }

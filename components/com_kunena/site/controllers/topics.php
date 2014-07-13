@@ -202,7 +202,7 @@ class KunenaControllerTopics extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
 		JArrayHelper::toInteger($ids);
 
 		$success = 0;
@@ -229,7 +229,7 @@ class KunenaControllerTopics extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
 		JArrayHelper::toInteger($ids);
 
 		$success = 0;
@@ -255,7 +255,7 @@ class KunenaControllerTopics extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
 		JArrayHelper::toInteger($ids);
 
 		$success = 0;
@@ -281,7 +281,7 @@ class KunenaControllerTopics extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
 		JArrayHelper::toInteger($ids);
 
 		$success = 0;

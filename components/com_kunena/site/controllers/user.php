@@ -442,8 +442,21 @@ class KunenaControllerUser extends KunenaController {
 			}
 			if (!$fileinfo['status']) {
 				$this->me->avatar = $current_avatar;
-				if (!$fileinfo['not_valid_img_ext']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'), 'error' );
-				else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
+				if (!$fileinfo['not_valid_img_ext'])
+				{
+					$this->app->enqueueMessage(
+						JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
+						. ': ' . JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'),
+						'error'
+					);
+				}
+				else
+				{
+					$this->app->enqueueMessage(
+						JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
+						. ': ' . $fileinfo['error'], 'error'
+					);
+				}
 				return false;
 			} else {
 				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );

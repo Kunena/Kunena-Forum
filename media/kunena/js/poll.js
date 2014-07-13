@@ -19,7 +19,8 @@ window.addEvent('domready', function() {
 		var input = new Element('input', {
 			name:'polloptionsID[new'+optionid+']',
 			id:'field_option'+optionid,
-			maxlength:'25',
+			type: 'text',
+			maxlength:'35',
 			onmouseover: 'document.id("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
 		});
 		mydiv.inject(polldiv);

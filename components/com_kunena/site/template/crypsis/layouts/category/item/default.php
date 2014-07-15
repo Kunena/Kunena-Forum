@@ -27,11 +27,15 @@ $cols = empty($this->checkbox) ? 4 : 5;
 </h2>
 
 <div class="pull-right">
-	<?php echo $this->subLayout('Widget/Search')->set('catid', $this->category->id); ?>
+	<?php echo $this->subLayout('Widget/Search')
+		->set('catid', $this->category->id)
+		->setLayout('topic'); ?>
 </div>
 
 <div class="pull-left">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination)->set('display', true); ?>
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination)
+		->set('display', true); ?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">

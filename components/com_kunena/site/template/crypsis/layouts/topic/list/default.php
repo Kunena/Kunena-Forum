@@ -26,14 +26,15 @@ $colspan = empty($this->actions) ? 5 : 4;
 </h2>
 
 <div class="pull-right">
-	<?php echo $this->subLayout('Widget/Search')->set('catid', 'all'); ?>
+	<?php echo $this->subLayout('Widget/Search')
+		->set('catid', 'all')
+		->setLayout('topic'); ?>
 </div>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true);
-	?>
+		->set('display', true);	?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">

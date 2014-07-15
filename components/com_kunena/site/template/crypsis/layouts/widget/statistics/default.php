@@ -15,10 +15,10 @@ defined('_JEXEC') or die;
 	<h2>
 		<?php if ($this->statisticsUrl) : ?>
 			<a href="<?php echo $this->statisticsUrl; ?>">
-				<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
+				<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
 			</a>
 		<?php else : ?>
-			<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
+			<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
 		<?php endif; ?>
 
 		<span class="btn btn-small pull-right" data-toggle="collapse" data-target="#kstats">&times;</span>

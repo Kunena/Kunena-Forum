@@ -18,4 +18,3 @@ $this->addBreadcrumb(
 );
 
 echo $content;
-echo $this->subRequest('Widget/WhoIsOnline');

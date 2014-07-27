@@ -1073,8 +1073,12 @@ class KunenaConfig extends JObject {
 	 * @since  3.0.4
 	 */
 	public $statslink_allowed = 1;
-	// New for 3.0.6
-	public $superadmin_userlist = 0;
+
+    /**
+     * @var    integer  Super admin user list; select, boolean
+     * @since  3.0.6
+     */
+    public $superadmin_userlist = 0;
 
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
@@ -1105,12 +1109,6 @@ class KunenaConfig extends JObject {
 	 * @since  3.1.0
 	 */
 	public $avatarcrop = 0;
-
-	/**
-	 * @var    integer  Super admin user list; select, boolean
-	 * @since  3.1.0
-	 */
-	public $superadmin_userlist = 0;
 
 	public function __construct() {
 		parent::__construct ();

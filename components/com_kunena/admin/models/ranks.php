@@ -41,6 +41,8 @@ class KunenaAdminModelRanks extends JModelList {
 	 * @return	void
 	 */
 	protected function populateState($ordering = null, $direction = null) {
+		$this->context = 'com_kunena.admin.ranks';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.

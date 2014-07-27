@@ -1073,6 +1073,8 @@ class KunenaConfig extends JObject {
 	 * @since  3.0.4
 	 */
 	public $statslink_allowed = 1;
+	// New for 3.0.6
+	public $superadmin_userlist = 0;
 
 	/**
 	 * @var    integer  Legacy URLs; select, boolean

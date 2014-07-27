@@ -51,6 +51,8 @@ class KunenaAdminModelPlugins extends JModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
+		$this->context = 'com_kunena.admin.plugins';
+
 		$filter_active = '';
 
 		// Load the filter state.

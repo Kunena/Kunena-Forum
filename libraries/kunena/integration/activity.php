@@ -38,10 +38,18 @@ class KunenaIntegrationActivity
 		return self::$instance;
 	}
 
+	/**
+	 * Method magical to call the right method in plugin integration
+	 *
+	 * @param   string  $method     Name of method to call
+	 * @param   string  $arguments  Arguments need to be passed to the method
+	 *
+	 * @return mixed
+	 */
 	public function __call($method, $arguments) {
 		foreach ($this->instances as $instance) {
 			if (method_exists($instance, $method)) {
-				call_user_func_array(array($instance, $method), $arguments);
+				return call_user_func_array(array($instance, $method), $arguments);
 			}
 		}
 	}

@@ -30,12 +30,14 @@ class KunenaAdminControllerTrash extends KunenaController {
 			return;
 		}
 
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$type = JRequest::getCmd ( 'type', 'topics', 'post' );
 		$md5 = JRequest::getString ( 'md5', null );
 
-		if ( !empty($cids) ) {
-			$this->app->setUserState('com_kunena.purge', $cids);
+		if ( !empty($cid) ) {
+			$this->app->setUserState('com_kunena.purge', $cid);
 			$this->app->setUserState('com_kunena.type', $type);
 
 		} elseif ( $md5 ) {
@@ -81,7 +83,9 @@ class KunenaAdminControllerTrash extends KunenaController {
 			return;
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$type = JRequest::getCmd ( 'type', 'topics', 'post' );
 
 		if (empty ( $cid )) {

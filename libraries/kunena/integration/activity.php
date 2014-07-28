@@ -49,7 +49,9 @@ class KunenaIntegrationActivity
 	public function __call($method, $arguments) {
 		foreach ($this->instances as $instance) {
 			if (method_exists($instance, $method)) {
-				return call_user_func_array(array($instance, $method), $arguments);
+				$ret = call_user_func_array(array($instance, $method), $arguments);
+				if($ret !== null)
+					return $ret;
 			}
 		}
 	}

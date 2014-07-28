@@ -40,17 +40,19 @@ abstract class JHtmlKunenaForum {
 		if (!isset($categories)) {
 			if(is_array($parent)) {
 				$categories = array();
+				$channels = array();
 				foreach($parent as $p) {
 					$category = KunenaForumCategoryHelper::get($p);
 					$children = KunenaForumCategoryHelper::getChildren($p, $levels, $params);
 					if ($params['action'] == 'topic.create') {
-						$channels = $category->getChannels();
-						if (empty($children) && !isset($channels[$category->id])) $category = KunenaForumCategoryHelper::get();
-						foreach ($channels as $id=>$channel) {
-							if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise ($action)) unset ($channels[$id]);
+						$channels_local = $category->getChannels();
+						if (empty($children) && !isset($channels_local[$category->id])) $category = KunenaForumCategoryHelper::get();
+						foreach ($channels_local as $id=>$channel) {
+							if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise ($action)) unset ($channels_local[$id]);
 						}
 					}
 					$categories += $category->id > 0 ? array($category->id=>$category)+$children : $children;
+					$channels += $channels_local;
 				}
 			} else {
 				$category = KunenaForumCategoryHelper::get($parent);

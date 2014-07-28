@@ -38,16 +38,32 @@ abstract class JHtmlKunenaForum {
 		}
 		$channels = array();
 		if (!isset($categories)) {
-			$category = KunenaForumCategoryHelper::get($parent);
-			$children = KunenaForumCategoryHelper::getChildren($parent, $levels, $params);
-			if ($params['action'] == 'topic.create') {
-				$channels = $category->getChannels();
-				if (empty($children) && !isset($channels[$category->id])) $category = KunenaForumCategoryHelper::get();
-				foreach ($channels as $id=>$channel) {
-					if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise ($action)) unset ($channels[$id]);
+			if(is_array($parent)) {
+				$categories = array();
+				foreach($parent as $p) {
+					$category = KunenaForumCategoryHelper::get($p);
+					$children = KunenaForumCategoryHelper::getChildren($p, $levels, $params);
+					if ($params['action'] == 'topic.create') {
+						$channels = $category->getChannels();
+						if (empty($children) && !isset($channels[$category->id])) $category = KunenaForumCategoryHelper::get();
+						foreach ($channels as $id=>$channel) {
+							if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise ($action)) unset ($channels[$id]);
+						}
+					}
+					$categories += $category->id > 0 ? array($category->id=>$category)+$children : $children;
 				}
+			} else {
+				$category = KunenaForumCategoryHelper::get($parent);
+				$children = KunenaForumCategoryHelper::getChildren($parent, $levels, $params);
+				if ($params['action'] == 'topic.create') {
+					$channels = $category->getChannels();
+					if (empty($children) && !isset($channels[$category->id])) $category = KunenaForumCategoryHelper::get();
+					foreach ($channels as $id=>$channel) {
+						if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise ($action)) unset ($channels[$id]);
+					}
+				}
+				$categories = $category->id > 0 ? array($category->id=>$category)+$children : $children;
 			}
-			$categories = $category->id > 0 ? array($category->id=>$category)+$children : $children;
 			if ($hide_lonely && count($categories)+count($channels) <= 1) return;
 		}
 		if (!is_array($options)) {

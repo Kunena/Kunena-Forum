@@ -890,8 +890,8 @@ class KunenaViewTopic extends KunenaView {
 			return;
 
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
-		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count ( $this->history );
+        $this->replycount = $this->topic->getReplies();
 		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = array();
 		foreach ($this->history as $message) {

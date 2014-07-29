@@ -225,6 +225,8 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 */
 	protected function populateState()
 	{
+		$this->context = 'com_kunena.admin.plugin';
+
 		// Execute the parent method.
 		parent::populateState();
 

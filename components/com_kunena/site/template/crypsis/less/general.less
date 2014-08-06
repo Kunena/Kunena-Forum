@@ -7,6 +7,38 @@
 * @link http://www.kunena.org
 **/
 
+.red {
+	color : rgba(232, 15, 34, 1);
+}
+
+.orange {
+	color: rgba(235, 99, 1, 1);
+}
+
+.yellow {
+	color: rgba(252, 209, 21, 1);
+}
+
+.green {
+	color: rgba(128, 186, 1, 1);
+}
+
+.lightblue {
+	color: rgba(185, 232, 250, 1);
+}
+
+.blue {
+	color :rgba(0, 114, 198, 1);
+}
+
+.purple {
+	color: rgba(163, 40, 125, 1);
+}
+
+.filter {
+	width: auto;
+}
+
 a:active,
 a:focus,
 select:focus,
@@ -49,11 +81,6 @@ input[type='checkbox']:focus {
 
 .navbar-inner {
 	padding-left: 0px;
-}
-
-.table th,
-.table td {
-	vertical-align: middle !important;
 }
 
 .navbar .nav > li > a {
@@ -427,8 +454,8 @@ ul, ol {
 	margin-right: -60px;
 }
 
-#sel {
-	width: 100px;
+.chzn-container, .chzn-drop {
+	max-width: 100% !important;
 }
 
 #kchecktarget:disabled {
@@ -509,7 +536,6 @@ select#mode {
 }
 
 .post-image {
-	float: left;
 	margin: -7px 10px -7px -7px;
 }
 
@@ -579,4 +605,8 @@ table .well {
 	vertical-align: inherit;
 	font-size: inherit;
 	line-height: 150%
+}
+
+.modal {
+	z-index: 2000;
 }

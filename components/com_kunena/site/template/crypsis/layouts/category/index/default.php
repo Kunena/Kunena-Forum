@@ -51,7 +51,13 @@ foreach ($this->sections as $section) :
 		<?php echo $this->getCategoryLink($section->getParent(), $this->escape($section->getParent()->name)); ?> /
 	<?php endif; ?>
 
-	<?php echo $this->getCategoryLink($section, $this->escape($section->name)); ?>
+	<?php
+		if ($section->parent_id == 0)  {
+			echo $this->getCategoryLink($section, $this->escape($section->name));
+		} else {
+			echo $this->escape($section->name);
+		}
+	?>
 	<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 			$this->formatLargeNumber($section->getTopics())); ?>)</small>
 </h2>
@@ -95,8 +101,8 @@ foreach ($this->sections as $section) :
 				<div>
 					<h3>
 						<?php echo $this->getCategoryLink($category); ?>
-						<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
-								$this->formatLargeNumber($category->getTopics())); ?>)
+						<small class="hidden-phone">
+							(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
 							<span>
 								<?php if (($new = $category->getNewCount()) > 0) : ?>
 									<sup class="knewchar"> (<?php echo $new . JText::_('COM_KUNENA_A_GEN_NEWCHAR') ?>)</sup>
@@ -119,7 +125,7 @@ foreach ($this->sections as $section) :
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
-					<div class="hidden-phone header-desc"><?php echo $category->displayField('description'); ?></div>
+					<div class="hidden-phone header-desc"><?php echo $category->description; ?></div>
 				<?php endif; ?>
 
 				<?php

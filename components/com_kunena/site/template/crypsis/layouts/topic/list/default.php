@@ -10,17 +10,22 @@
  **/
 defined('_JEXEC') or die;
 
-$cols = empty($this->actions) ? 6 : 5;
-$colspan = empty($this->actions) ? 5 : 4;
+$cols = !empty($this->actions) ? 6 : 5;
+$colspan = !empty($this->actions) ? 5 : 4;
 ?>
 
 <h2>
-	<?php echo $this->escape($this->headerText); ?> <span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
+	<?php echo $this->escape($this->headerText); ?>
+	<small class="hidden-phone">
+		(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
+	</small>
 	<?php //To Do:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-	<div class="pull-right" style="font-size:60%">
+	<div class="pull-right">
 		<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 			  method="post" target="_self" class="form-inline hidden-phone">
-			<?php $this->displayTimeFilter('sel'); ?>
+			<div>
+				<?php $this->displayTimeFilter('sel'); ?>
+			</div>
 		</form>
 	</div>
 </h2>
@@ -48,7 +53,7 @@ $colspan = empty($this->actions) ? 5 : 4;
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>
-				<td class="span<?php echo $colspan ?>">
+				<td class="span<?php echo $cols ?>">
 					<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
 				<td class="span2 hidden-phone">
@@ -76,7 +81,7 @@ $colspan = empty($this->actions) ? 5 : 4;
 						</a>
 						<?php // FIXME: $this->displayCategoryActions() ?>
 					</td>
-					<td colspan="<?php echo $cols; ?>">
+					<td colspan="<?php echo $colspan; ?>">
 						<div class="input-append">
 							<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 							<?php if (!empty($this->actions)) : ?>
@@ -95,7 +100,7 @@ $colspan = empty($this->actions) ? 5 : 4;
 		<tbody>
 			<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 				<tr>
-					<td colspan="5">
+					<td colspan="<?php echo $colspan; ?>">
 						<div class="well center filter-state">
 							<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
 								<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>

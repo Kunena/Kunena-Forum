@@ -29,7 +29,7 @@ if ($show)
 	<?php if ($avatar) : ?>
 	<li>
 		<?php echo $user->getLink($avatar); ?>
-		<?php if (isset($this->topic_starter) && $this->topic_starter): ?>
+		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
 				<span class="topic-starter"></span>
 		<?php endif;?>
 	</li>
@@ -91,13 +91,12 @@ if ($show)
 
 			<li>
 				<?php echo $user->profileIcon('gender'); ?>
-				<?php  echo $user->profileIcon('birthdate'); ?>
-				<?php  echo $user->profileIcon('location'); ?>
+				<?php echo $user->profileIcon('birthdate'); ?>
+				<?php echo $user->profileIcon('location'); ?>
 				<?php echo $user->profileIcon('website'); ?>
-				<?php  echo $user->profileIcon('private'); ?>
-				<?php  echo $user->profileIcon('email'); ?>
+				<?php echo $user->profileIcon('private'); ?>
+				<?php echo $user->profileIcon('email'); ?>
 			</li>
 		</ul>
 	</div>
 </div>
-<?php endif; ?>

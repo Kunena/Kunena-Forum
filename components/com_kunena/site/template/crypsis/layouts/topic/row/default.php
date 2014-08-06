@@ -108,7 +108,7 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="post-info">
 		<?php if ($config->avataroncat) : ?>
-			<div class="post-image">
+			<div class="post-image pull-left">
 				<div class="img-thumbnail">
 					<?php echo $avatar; ?>
 				</div>

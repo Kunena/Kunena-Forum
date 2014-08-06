@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 /** @var KunenaLayout $this */
 /** @var KunenaForumTopic $topic */
 $topic = $this->topic;
+$category = $topic->getCategory();
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-polaroid', 48);
@@ -25,7 +26,7 @@ if (!empty($this->spacing)) : ?>
 	</tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($topic->getCategory()->class_sfx); ?>">
+<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
@@ -81,36 +82,45 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="hidden-phone">
-		<table cellpadding="0" cellspacing="0">
-			<tbody>
-			<tr>
-				<td style="border: 0 none;" class="labels">
-					<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong></div>
-					<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</div>
-				</td>
-				<td style="width:100%;text-align:right;border: 0 none;" class="numbers">
-					<div class="repliesnum"><strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong></div>
-					<div class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></div>
-
-				</td>
-			</tr>
-			</tbody>
-		</table>
+		<div>
+			<div class="repliesnum pull-right">
+				<span class="topictitle"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span>
+			</div>
+			<div class="replies pull-left">
+				<span class="topictitle"><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</span>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div>
+			<div class="viewsnum pull-right">
+				<?php echo  $this->formatLargeNumber($topic->hits); ?>
+			</div>
+			<div class="views pull-left">
+				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>:
+			</div>
+		</div>
 	</td>
 
-	<td class="ost-info">
+	<td class="post-info">
 		<?php if ($config->avataroncat) : ?>
-			<div class="post-image">
+			<div class="post-image pull-left">
 				<div class="img-thumbnail">
 					<?php echo $avatar; ?>
 				</div>
 			</div>
 		<?php endif; ?>
 		<div class="post-desc">
-			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
-			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
-			<br>
-			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+			<div>
+				<span class="topictitle">
+					<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
+					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(); ?>
+				</span>
+			</div>
+			<div>
+				<span>
+					<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+				</span>
+			</div>
 		</div>
 	</td>
 

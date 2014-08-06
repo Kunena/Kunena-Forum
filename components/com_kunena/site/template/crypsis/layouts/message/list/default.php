@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-$colspan = empty($this->actions) ? 5 : 6;
+$colspan = !empty($this->actions) ? 6 : 5;
 ?>
 
 <h3>

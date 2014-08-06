@@ -39,9 +39,12 @@ $cols = 1;
 	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th class="center">
-					#
-				</th>
+				<td class="span1 center hidden-phone">
+					<a id="forumtop"> </a>
+					<a href="#forumbottom">
+						<i class="icon-arrow-down hasTooltip"></i>
+					</a>
+				</td>
 
 				<?php if ($config->userlist_online) : $cols++; ?>
 				<th class="center">
@@ -117,7 +120,7 @@ $cols = 1;
 
 		/** @var KunenaUser $user */
 		foreach ($this->users as $user) :
-			$avatar = $config->userlist_avatar ? $user->getAvatarImage('img-rounded', 'list') : null;
+			$avatar = $config->userlist_avatar ? $user->getAvatarImage('img-polaroid', 48, 48) : null;
 		?>
 			<tr>
 				<td class="center">
@@ -134,7 +137,11 @@ $cols = 1;
 
 				<?php if ($avatar) : ?>
 				<td class="center">
-					<?php echo $avatar; ?>
+					<div class="post-image">
+						<div class="img-thumbnail">
+							<?php echo $avatar; ?>
+						</div>
+					</div>
 				</td>
 				<?php endif; ?>
 

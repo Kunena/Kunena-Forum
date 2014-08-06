@@ -115,7 +115,7 @@ $this->k=0;
 						<div class="control-group">
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 
-							<div class="controls">
+							<div class="controls controls-select">
 								<?php foreach ($this->topicIcons as $id => $icon): ?>
 									<span class="kiconsel">
 										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />

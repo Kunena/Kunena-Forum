@@ -22,10 +22,10 @@
 -->
 <project name="Kunena" default="dist" basedir=".">
 	<description>Ant Build File for Kunena</description>
-	<condition property="project_dir" value="..">
+	<condition property="project_dir" value="../../">
 		<not><isset property="project_dir" /></not>
 	</condition>
-	<condition property="package_dir" value="../../packages">
+	<condition property="package_dir" value="../../../packages">
 		<not><isset property="package_dir" /></not>
 	</condition>
 	<condition property="tmp_dir" value="tmp">
@@ -66,12 +66,16 @@
 		-->
 		<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
 			<classpath>
-				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.7.jar" />
-				<pathelement path="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
+				<pathelement location="${project_dir}/build/lib/yuicompressor-2.4.7.jar" />
+				<pathelement location="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
 			</classpath>
 		</taskdef>
 
-		<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${project_dir}/build/lib/ant-contrib-1.0b3.jar"/>
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${project_dir}/build/lib/ant-contrib-1.0b3.jar" />
+			</classpath>
+		</taskdef>
 
 		<xmlproperty file="${project_dir}/pkg_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<tstamp>
@@ -346,7 +350,7 @@
 		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
 	</target>
 
-	<target name="info" depends="copy">
+	<target name="info">
 		<echo message="Ant Version:     ${ant.version}" />
 		<echo message="Project:         ${cfg.name}" />
 		<echo message="XML Name:        ${xml.name}" />

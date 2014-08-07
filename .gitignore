@@ -1,8 +1,14 @@
 .buildpath
 .project
 .settings
-.externalToolBuilders/build.kunena.2.0.launch
 .idea/
-build/tmp
+build/phing/cache
+build/ant/packages
+build/ant/tmp
+build/phing/composer.lock
+build/phing/cache
+build/phing/vendor
+build/phing/package
+build/phing/tmp
 components/com_kunena/site/template/**/params.ini
 components/com_kunena/site/template/crypsis/css/kunena.css

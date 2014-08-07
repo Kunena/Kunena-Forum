@@ -1,0 +1,5 @@
+{
+    "require": {
+        "phing/phing": "2.*"
+    }
+}

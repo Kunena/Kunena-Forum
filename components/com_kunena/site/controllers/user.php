@@ -151,7 +151,7 @@ class KunenaControllerUser extends KunenaController {
 		if ($return) return $return;
 	}
 
-	function ban() {
+	public function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JSession::checkToken('post')) {
 			$this->setRedirect($user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -267,12 +267,12 @@ class KunenaControllerUser extends KunenaController {
 		$this->setRedirect($user->getUrl(false));
 	}
 
-	function cancel() {
+	public function cancel() {
 		$user = KunenaFactory::getUser();
 		$this->setRedirect($user->getUrl(false));
 	}
 
-	function login() {
+	public function login() {
 		if(!JFactory::getUser()->guest || !JSession::checkToken('post')) {
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -299,7 +299,7 @@ class KunenaControllerUser extends KunenaController {
 		$this->setRedirectBack();
 	}
 
-	function logout() {
+	public function logout() {
 		if(!JSession::checkToken('request')) {
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -318,6 +318,71 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
+		$this->setRedirectBack();
+	}
+
+	public function status() {
+		if(!JSession::checkToken('request')) {
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+			return;
+		}
+		$status = JRequest::getInt ( 'status', 0 );
+		$me = KunenaUserHelper::getMyself();
+		$me->status = $status;
+		if (!$me->save()) {
+			$this->app->enqueueMessage ( $me->getError(), 'error' );
+		} else {
+			$this->app->enqueueMessage ( JText::_( 'Successfully Saved Status') );
+		}
+		$this->setRedirectBack();
+	}
+
+	public function statusText() {
+		if(!JSession::checkToken('request')) {
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+			return;
+		}
+		$status_text = JRequest::getString ( 'status_text', null, 'POST');
+		$me = KunenaUserHelper::getMyself();
+		$me->status_text = $status_text;
+		if (!$me->save()) {
+			$this->app->enqueueMessage ( $me->getError(), 'error' );
+		} else {
+			$this->app->enqueueMessage ( JText::_( 'Successfully Saved Status Text') );
+		}
+		$this->setRedirectBack();
+	}
+
+	public function delfile() {
+		if (! JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->setRedirectBack();
+			return;
+		}
+		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+
+		if ( !empty($cids) ) {
+			$number = 0;
+
+			foreach( $cids as $id ) {
+				$attachment = KunenaAttachmentHelper::get($id);
+				if ($attachment->isAuthorised('delete') && $attachment->delete()) $number++;
+			}
+
+			if ( $number > 0 ) {
+				$this->app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
+				$this->setRedirectBack();
+				return;
+			} else {
+				$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_DELETE_FAILED') );
+				$this->setRedirectBack();
+				return;
+			}
+		}
+
+		$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED') );
 		$this->setRedirectBack();
 	}
 
@@ -565,36 +630,5 @@ class KunenaControllerUser extends KunenaController {
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])),'error');
 			return false;
 		}
-	}
-
-	public function delfile() {
-		if (! JSession::checkToken('post')) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->setRedirectBack();
-			return;
-		}
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-
-		if ( !empty($cids) ) {
-			$number = 0;
-
-			foreach( $cids as $id ) {
-				$attachment = KunenaAttachmentHelper::get($id);
-				if ($attachment->isAuthorised('delete') && $attachment->delete()) $number++;
-			}
-
-			if ( $number > 0 ) {
-				$this->app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
-				$this->setRedirectBack();
-				return;
-			} else {
-				$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_DELETE_FAILED') );
-				$this->setRedirectBack();
-				return;
-			}
-		}
-
-		$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED') );
-		$this->setRedirectBack();
 	}
 }

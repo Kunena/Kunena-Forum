@@ -129,9 +129,8 @@ $cols = 1;
 
 				<?php if ($config->userlist_online) : ?>
 				<td class="center">
-					<span class="label label-<?php echo $user->isOnline('success', 'important'); ?>">
-						<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-					</span>
+					<?php echo $this->subLayout('User/Item/Status')
+						->set('user', $user); ?>
 				</td>
 				<?php endif; ?>
 

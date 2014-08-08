@@ -82,14 +82,14 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	public function initialize()
 	{
-		// Template requires Mootools 1.4+ framework.
-		$this->loadMootools();
-		JHtml::_('behavior.tooltip');
-		JHtml::_('bootstrap.modal');
+		// Template requires Bootstrap javascript
+		JHtml::_('bootstrap.framework');
 
 		// Template also requires jQuery framework.
 		JHtml::_('jquery.framework');
 		//JHtml::_('formbehavior.chosen', 'select');
+
+		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
 
 		// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 		$this->addScript('js/caret.js');

@@ -15,9 +15,11 @@ defined('_JEXEC') or die;
  *
  * @since  3.1
  */
-class ComponentKunenaControllerStatisticsWhoisonlineDisplay extends KunenaControllerDisplay
+class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaControllerDisplay
 {
-	protected $name = 'Statistics/WhoIsOnline';
+	protected $name = 'Widget/WhoIsOnline';
+
+	public $usersUrl;
 
 	/**
 	 * Prepare Who is online display.
@@ -94,7 +96,7 @@ class ComponentKunenaControllerStatisticsWhoisonlineDisplay extends KunenaContro
 		ksort($this->hiddenList);
 
 		$profile = KunenaFactory::getProfile();
-		$this->usersUrl = $profile->getUserListURL('');
+		$this->usersUrl = $profile->getUserListURL();
 	}
 
 	/**

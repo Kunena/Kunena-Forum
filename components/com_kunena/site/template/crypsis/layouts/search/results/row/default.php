@@ -20,13 +20,13 @@ $author = $message->getAuthor();
 	<div class="span2 center">
 		<ul class="unstyled center profilebox">
 			<li><strong><?php echo $author->getLink(); ?></strong></li>
-			<li><?php echo $author->getLink($author->getAvatarImage('img-polaroid', 120, 120)); ?></li>
+			<li><?php echo $author->getLink($author->getAvatarImage('img-polaroid', 128, 128)); ?></li>
 		</ul>
 	</div>
 
 	<div class="span10">
 		<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <span class="icon icon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
-		<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->displayField('subject'); ?>">
+		<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->subject; ?>">
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message); ?>
 			</h3>
@@ -36,7 +36,7 @@ $author = $message->getAuthor();
 			</p>
 
 			<div class="kmessage">
-				<?php echo $message->displayField('message'); ?>
+				<?php echo $message->message; ?>
 			</div>
 		</div>
 	</div>

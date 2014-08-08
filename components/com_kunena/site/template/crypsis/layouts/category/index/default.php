@@ -8,83 +8,90 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
+
+/** @var KunenaForumCategory $section */
+/** @var KunenaForumCategory $category */
+/** @var KunenaForumCategory $subcategory */
+
 defined('_JEXEC') or die;
 
 $mmm=0;
 
-/** @var KunenaForumCategory $section */
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
 ?>
 <div class="kfrontend">
- <div class="btn-toolbar pull-right">
+	<div class="btn-toolbar pull-right">
 
-	<?php if ($this->me->exists()) : ?>
-	<div class="btn-group">
+		<?php if ($this->me->exists()) : ?>
+			<div class="btn-group">
 
-		<?php if ($markReadUrl) : ?>
-		<a class="btn btn-small" href="<?php echo $markReadUrl; ?>">
-			<?php echo JText::_('COM_KUNENA_MARK_CATEGORIES_READ') ?>
-		</a>
+				<?php if ($markReadUrl) : ?>
+				<a class="btn btn-small" href="<?php echo $markReadUrl; ?>">
+					<?php echo JText::_('COM_KUNENA_MARK_CATEGORIES_READ') ?>
+				</a>
+				<?php endif; ?>
+
+				<?php if ($this->me->isAdmin($section)) : ?>
+				<?php // FIXME: translate and implement. ?>
+				<button class="btn btn-small">Approve Posts</button>
+				<?php endif; ?>
+
+			</div>
 		<?php endif; ?>
 
-		<?php if ($this->me->isAdmin($section)) : ?>
-		<?php // FIXME: translate and implement. ?>
-		<button class="btn btn-small">Approve Posts</button>
+		<?php if (count($this->sections) > 0) : ?>
+		<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>">&times;</div>
 		<?php endif; ?>
 
 	</div>
-	<?php endif; ?>
-
-	<?php if (count($this->sections) > 0) : ?>
-	<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>">&times;</div>
-	<?php endif; ?>
-
-</div>
-<h3>
+<h2>
 
 	<?php if ($section->parent_id) : ?>
-	<?php echo $this->getCategoryLink($section->getParent(), $this->escape($section->getParent()->name)); ?> /
+		<?php echo $this->getCategoryLink($section->getParent(), $this->escape($section->getParent()->name)); ?> /
 	<?php endif; ?>
 
-	<?php echo $this->getCategoryLink($section, $this->escape($section->name)); ?>
+	<?php
+		if ($section->parent_id == 0)  {
+			echo $this->getCategoryLink($section, $this->escape($section->name));
+		} else {
+			echo $this->escape($section->name);
+		}
+	?>
 	<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 			$this->formatLargeNumber($section->getTopics())); ?>)</small>
-</h3>
+</h2>
 
 <div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 	<table class="table table-bordered">
-
 		<?php if (!empty($section->description)) : ?>
-		<thead class="hidden-phone">
-			<tr>
-				<td colspan="3">
-					<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
-				</td>
-			</tr>
-		</thead>
+			<thead class="hidden-phone">
+				<tr>
+					<td colspan="3">
+						<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
+					</td>
+				</tr>
+			</thead>
 		<?php endif; ?>
 
 		<?php if ($section->isSection() && empty($this->categories[$section->id]) && empty($this->more[$section->id])) : ?>
-		<tr>
-			<td>
-				<h4>
-					<?php echo JText::_('COM_KUNENA_GEN_NOFORUMS'); ?>
-				</h4>
-			</td>
-		</tr>
-
+			<tr>
+				<td>
+					<h4>
+						<?php echo JText::_('COM_KUNENA_GEN_NOFORUMS'); ?>
+					</h4>
+				</td>
+			</tr>
 		<?php else : ?>
-		<?php if (!empty($this->categories[$section->id])) : ?>
+			<?php if (!empty($this->categories[$section->id])) : ?>
 				<td  colspan="2" class="hidden-phone">
-				<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+					<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 				</td>
 				<td class="span3 hidden-phone post-info">
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+					<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
-				<?php endif; ?>
+			<?php endif; ?>
 		<?php
-			/** @var KunenaForumCategory $category */
 			foreach ($this->categories[$section->id] as $category) : ?>
 		<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
 			<td class="span1 center">
@@ -94,32 +101,31 @@ foreach ($this->sections as $section) :
 				<div>
 					<h3>
 						<?php echo $this->getCategoryLink($category); ?>
-						<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
-								$this->formatLargeNumber($category->getTopics())); ?>)
-					<span>
-						<?php
-						if (($new = $category->getNewCount()) > 0) {
-							echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
-						}
-						if ($category->locked) {
-						?>
-							<span class="icon-lock" title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"></span>
-						<?php
-						}
-						if ($category->review) {
-						?>
-							<span class="icon-shield" title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
-						<?php
-						}
-						if (!empty($category->rssURL)) :
-						?>
- 						 <a href="<?php echo $category->rssURL ?>" rel="follow"><span class="icon-feed" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>"></span></a>
-						<?php endif; ?>
- 					</span></small></h3>
+						<small class="hidden-phone">
+							(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
+							<span>
+								<?php if (($new = $category->getNewCount()) > 0) : ?>
+									<sup class="knewchar"> (<?php echo $new . JText::_('COM_KUNENA_A_GEN_NEWCHAR') ?>)</sup>
+								<?php endif; ?>
+								<?php if ($category->locked) : ?>
+									<span class="icon-lock" title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"></span>
+								<?php endif; ?>
+								<?php if ($category->review) : ?>
+									<span class="icon-shield" title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
+								<?php endif; ?>
+								<?php if (!empty($category->rssURL)) : ?>
+									 <a href="<?php echo $category->rssURL ?>" rel="follow">
+										 <span class="icon-feed" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>">
+										 </span>
+									</a>
+								<?php endif; ?>
+							</span>
+						</small>
+					</h3>
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
-					<div class="hidden-phone header-desc"><?php echo $category->displayField('description'); ?></div>
+					<div class="hidden-phone header-desc"><?php echo $category->description; ?></div>
 				<?php endif; ?>
 
 				<?php
@@ -188,17 +194,17 @@ foreach ($this->sections as $section) :
 					<?php echo $author->getLink($avatar); ?>
 				</div>
 				<?php endif; ?>
-						<div class="post-meta">
-							<div>
-								<?php echo $this->getLastPostLink($category) ?>
-							</div>
-							<div>
-								<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
-							</div>
-							<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
-								<?php echo $time->toKunena('config_post_dateformat'); ?>
-							</div>
-						</div>
+				<div class="post-meta">
+					<div>
+						<?php echo $this->getLastPostLink($category) ?>
+					</div>
+					<div>
+						<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
+					</div>
+					<div title="<?php echo $time->toKunena('config_post_dateformat_hover'); ?>">
+						<?php echo $time->toKunena('config_post_dateformat'); ?>
+					</div>
+				</div>
 			</td>
 			<?php else : ?>
 			 <td class="span3 hidden-phone">

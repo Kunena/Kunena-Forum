@@ -15,7 +15,7 @@ $attachment = $this->attachment;
 
 $config = KunenaConfig::getInstance();
 
-$attributesLink = $attachment->isImage() && $config->lightbox ? ' rel="lightbox[thumb' . $attachment->mesid . ']"' : '';
+$attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
 $attributesImg = ' style="max-height: '. (int) $config->thumbheight . 'px;"';
 ?>
 <a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>"<?php echo $attributesLink; ?>>

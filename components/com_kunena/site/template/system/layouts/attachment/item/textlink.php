@@ -15,9 +15,10 @@ $attachment = $this->attachment;
 
 $config = KunenaConfig::getInstance();
 
-$attributesLink = $attachment->isImage() && $config->lightbox ? ' rel="lightbox[simple' . $attachment->mesid . ']"' : '';
+$attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
+$attributesImg = ' style="max-height: '. (int) $config->thumbheight . 'px;"';
 ?>
-<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
+<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>" <?php echo $attributesLink; ?>>
 	<?php echo $attachment->getShortName(); ?>
 </a>
 (<?php echo number_format($attachment->size / 1024, 0, '', ',') . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>)

@@ -81,7 +81,7 @@ JHtml::_('behavior.tooltip');
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th align="center" width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
+									<th align="center" width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->users ); ?>);" /></th>
 									<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->listDirection, $this->listOrdering ); ?></th>
 									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->listDirection, $this->listOrdering ); ?></th>
 									<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->listDirection, $this->listOrdering ); ?></th>

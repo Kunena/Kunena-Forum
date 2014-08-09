@@ -56,7 +56,7 @@ class KunenaSpamRecaptcha {
 		$this->config = KunenaFactory::getConfig();
 		$this->publickey = $this->config->recaptcha_publickey;
 		$this->privatekey = $this->config->recaptcha_privatekey;
-		$this->host = JRequest::getVar('REMOTE_ADDR', null, 'server');
+		$this->host = JRequest::getString('REMOTE_ADDR', null, 'server');
 	}
 
 	public static function getInstance() {

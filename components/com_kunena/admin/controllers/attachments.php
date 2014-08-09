@@ -30,15 +30,16 @@ class KunenaAdminControllerAttachments extends KunenaController {
 			return;
 		}
 
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
 
-		if (! $cids) {
+		if (! $cid) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ATTACHMENTS_SELECTED' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
-		foreach( $cids as $id ) {
+		foreach( $cid as $id ) {
 			$attachment = KunenaAttachmentHelper::get($id);
 			$attachment->delete();
 		}

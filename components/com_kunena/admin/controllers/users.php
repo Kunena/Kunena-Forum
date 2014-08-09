@@ -30,8 +30,9 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$userid = (int)array_shift($cid);
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+		$userid = array_shift($cid);
 
 		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
@@ -59,7 +60,8 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$uid = JRequest::getInt ( 'uid' );
 		$deleteAvatar = JRequest::getInt ( 'deleteAvatar' );
 		$neworder = JRequest::getInt ( 'neworder' );
-		$modCatids = $moderator ? JRequest::getVar ( 'catid', array () ) : array();
+		$modCatids = $moderator ? JRequest::getVar('catid', array(), 'post', 'array') : array(); // Array of integers
+		JArrayHelper::toInteger($modCatids);
 
 		if ( $uid ) {
 			$user = KunenaFactory::getUser($uid);
@@ -98,9 +100,11 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$uids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		if ($uids) {
-			foreach($uids as $id) {
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
+		if ($cid) {
+			foreach($cid as $id) {
 				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $id));
 				foreach($messages as $mes) {
 					$mes->publish(KunenaForum::DELETED);
@@ -123,15 +127,16 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
 
-		if ( empty($userids) ) {
+		if ( empty($cid) ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
-		$this->app->setUserState ( 'kunena.usermove.userids', $userids );
+		$this->app->setUserState ( 'kunena.usermove.userids', $cid );
 
 		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=user&layout=move", false));
 	}
@@ -186,8 +191,9 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$id = (int)array_shift($cid);
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+		$id = array_shift($cid);
 
 		if ($id <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
@@ -209,15 +215,16 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
 
-		if ( empty($cids) ) {
+		if ( empty($cid) ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
-		$users = KunenaUserHelper::loadUsers($cids);
+		$users = KunenaUserHelper::loadUsers($cid);
 
 		$my = JFactory::getUser();
 		$usernames = array();
@@ -264,8 +271,9 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$userid = (int)array_shift($cid);
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+		$userid = array_shift($cid);
 
 		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
@@ -302,8 +310,9 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$userid = (int)array_shift($cid);
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+		$userid = array_shift($cid);
 
 		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
@@ -340,8 +349,9 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$userid = (int)array_shift($cid);
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+		$userid = array_shift($cid);
 
 		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
@@ -379,8 +389,9 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$userid = (int)array_shift($cid);
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+		$userid = array_shift($cid);
 
 		if ($userid <= 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
@@ -417,10 +428,12 @@ class KunenaAdminControllerUsers extends KunenaController {
 			return;
 		}
 
-		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$catids = JRequest::getVar ( 'catid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+		$catids = JRequest::getVar('catid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($catids);
 
-		if ( empty($userids) ) {
+		if ( empty($cid) ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERS_BATCH_NO_USERS_SELECTED' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
@@ -434,7 +447,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		// Update moderator rights
 		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
-		$users = KunenaUserHelper::loadUsers($userids);
+		$users = KunenaUserHelper::loadUsers($cid);
 		foreach ($users as $user) {
 			foreach ($categories as $category) {
 				if (in_array($category->id, $catids)) $category->setModerator($user, true);

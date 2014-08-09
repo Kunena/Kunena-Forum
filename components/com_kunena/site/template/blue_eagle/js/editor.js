@@ -646,6 +646,18 @@ function cancelForm() {
 
 var __attachment_limit = 0;
 
+function setLimitOnEdit() {
+	var attachs_available = $$('li.kattachment-old');
+	
+	if (attachs_available.length > 0) {
+		__attachment_limit = attachs_available.length;
+	}
+	
+	if (__attachment_limit == config_attachment_limit || __attachment_limit > config_attachment_limit) {
+		document.id('kattachment-id').setStyle('display', 'none');
+	}
+}
+
 function newAttachment() {
 	if ( config_attachment_limit > 0 ) {
 		if (__attachment_limit < config_attachment_limit) __attachment_limit++;
@@ -767,6 +779,7 @@ function kEditorInitialize() {
 	}
 
 	bindAttachments();
+	setLimitOnEdit();
 	newAttachment();
 	//This is need to retrieve the video provider selected by the user in the dropdownlist
 	if (document.id('kvideoprovider') != undefined) {

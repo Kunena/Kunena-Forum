@@ -23,6 +23,8 @@ class KunenaAdminModelRank extends KunenaModel {
 	 * Method to auto-populate the model state.
 	 */
 	protected function populateState() {
+		$this->context = 'com_kunena.admin.rank';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.

@@ -30,6 +30,7 @@ class KunenaUploadHelper {
 		// Make the filename safe
 		$file['name'] = KunenaFile::makeSafe($file['name']);
 
+		if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) return false;
 		if (!is_dir($uploadfolder)) return false;
 
 		if (isset($file['name'])) {

@@ -64,18 +64,26 @@ class KunenaForumTopicPoll extends JObject {
 	}
 
 	/**
+	 * Filters and sets poll options.
+	 *
 	 * @param array $options	array(id=>name, id=>name)
 	 */
 	public function setOptions($options) {
-		if (!is_array($options)) return;
+		if (!is_array($options)) {
+			return;
+		}
+
+		$filter = JFilterInput::getInstance();
+		$newOptions = array();
+
 		foreach ($options as $key => &$value) {
-			$value = trim($value);
-			if (empty($value)) {
-				// Remove empty options
-				unset($options[$key]);
+			$value = trim($filter->clean($value, 'html'));
+
+			if (!empty($value)) {
+				$newOptions[$key] = $value;
 			}
 		}
-		$this->newOptions = $options;
+		$this->newOptions = $newOptions;
 	}
 
 	/**

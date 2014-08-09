@@ -269,6 +269,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_topics` (
 
 CREATE TABLE IF NOT EXISTS `#__kunena_users` (
 	`userid` int(11) NOT NULL default '0',
+	`status` tinyint(1) NOT NULL DEFAULT '0',
+	`status_text` varchar(255) NOT NULL DEFAULT '',
 	`view` varchar(8) NOT NULL default '',
 	`signature` text NULL,
 	`moderator` int(11) NULL default '0',

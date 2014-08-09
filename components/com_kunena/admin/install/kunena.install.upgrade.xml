@@ -419,7 +419,7 @@
         </version>
 		<version version="3.0.97" versiondate="2013-11-20" versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `status` tinyint(1) NOT NULL DEFAULT '0' AFTER `userid`</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `status_text` varchar(255) DEFAULT 'NULL' AFTER `userid`</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `status_text` varchar(255) NOT NULL DEFAULT '' AFTER `userid`</query>
 		</version>
         <version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>

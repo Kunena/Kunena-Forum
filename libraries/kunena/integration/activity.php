@@ -47,12 +47,14 @@ class KunenaIntegrationActivity
 	 * @return mixed
 	 */
 	public function __call($method, $arguments) {
+		$ret = null;
 		foreach ($this->instances as $instance) {
 			if (method_exists($instance, $method)) {
-				$ret = call_user_func_array(array($instance, $method), $arguments);
-				if($ret !== null)
-					return $ret;
+				$r = call_user_func_array(array($instance, $method), $arguments);
+				if($r !== null & $ret === null)
+					$ret = $r;
 			}
 		}
+		return $ret;
 	}
 }

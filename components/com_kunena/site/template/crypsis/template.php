@@ -103,6 +103,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$this->compileLess('main.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
+		JHtml::_('jquery.ui');
+
 		$config = KunenaFactory::getConfig();
 
 		// If polls are enabled, load also poll JavaScript.
@@ -189,4 +191,22 @@ HTML;
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
 	}
 
+	/**
+	 * Method to load upload scripts only where needed
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	public function loadUploadScript()
+	{
+		$this->addStyleSheet('css/dropzone.css');
+		$this->addScript('js/dropzone.js');
+
+		JText::script('COM_KUNENA_EDITOR_INSERT');
+		JText::script('COM_KUNENA_GEN_REMOVE_FILE');
+		JText::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUNBER_FILES');
+
+		$this->addScript('js/upload.js');
+	}
 }

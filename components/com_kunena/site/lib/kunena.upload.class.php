@@ -188,49 +188,58 @@ class CKunenaUpload {
 		//If uploaded by using normal form (no AJAX)
 		if ($ajax == false || isset ( $_REQUEST ["multipart"])) {
 			$file = JRequest::getVar($input, null, 'files', 'array'); // File upload
-			if (!is_uploaded_file ( $file ['tmp_name'] )) {
-				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED' ));
+
+			if ( !empty($file['error']) )
+			{
+				// Any errors the server registered on uploading
+				switch ($file ['error']) {
+					case 0 : // UPLOAD_ERR_OK :
+						break;
+
+					case 1 : // UPLOAD_ERR_INI_SIZE :
+					case 2 : // UPLOAD_ERR_FORM_SIZE :
+						$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_SIZE') . 'DEBUG: file[error]'
+								. htmlspecialchars($file['error'], ENT_COMPAT, 'UTF-8'));
+						break;
+
+					case 3 : // UPLOAD_ERR_PARTIAL :
+						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PARTIAL' ));
+						break;
+
+					case 4 : // UPLOAD_ERR_NO_FILE :
+						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_FILE' ));
+						break;
+
+					case 5 : // UPLOAD_ERR_NO_TMP_DIR :
+						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR' ));
+						break;
+
+					case 7 : // UPLOAD_ERR_CANT_WRITE, PHP 5.1.0
+						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CANT_WRITE' ));
+						break;
+
+					case 8 : // UPLOAD_ERR_EXTENSION, PHP 5.2.0
+						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION' ));
+						break;
+
+					default :
+						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNKNOWN' ));
+				}
+
 				return false;
 			}
+			elseif (!is_uploaded_file ( $file ['tmp_name'] ))
+			{
+				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED' ));
+
+				return false;
+			}
+
 			$this->fileTemp = $file ['tmp_name'];
 			$this->fileSize = $file ['size'];
 			if (! $this->fileName) {
 				// Need to add additonal path type check as array getVar does not
 				$this->fileName = $file['name'];
-			}
-			//any errors the server registered on uploading
-			switch ($file ['error']) {
-				case 0 : // UPLOAD_ERR_OK :
-					break;
-
-				case 1 : // UPLOAD_ERR_INI_SIZE :
-				case 2 : // UPLOAD_ERR_FORM_SIZE :
-					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_SIZE') . 'DEBUG: file[error]'
-						. htmlspecialchars($file['error'], ENT_COMPAT, 'UTF-8'));
-					break;
-
-				case 3 : // UPLOAD_ERR_PARTIAL :
-					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PARTIAL' ));
-					break;
-
-				case 4 : // UPLOAD_ERR_NO_FILE :
-					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_FILE' ));
-					break;
-
-				case 5 : // UPLOAD_ERR_NO_TMP_DIR :
-					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR' ));
-					break;
-
-				case 7 : // UPLOAD_ERR_CANT_WRITE, PHP 5.1.0
-					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CANT_WRITE' ));
-					break;
-
-				case 8 : // UPLOAD_ERR_EXTENSION, PHP 5.2.0
-					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION' ));
-					break;
-
-				default :
-					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNKNOWN' ));
 			}
 		} else {
 			// Currently not in use: this is meant for experimental AJAX uploads

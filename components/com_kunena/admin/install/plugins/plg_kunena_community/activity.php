@@ -45,7 +45,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 		// Do not add private activities
 		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
-		CActivityStream::add ( $act );
+        $table = CActivityStream::add($act);
+        if(is_object($table)) {
+            $table->like_id = $table->id;
+            $table->store();
+        }
 	}
 
 	public function onAfterReply(KunenaForumMessage $message) {
@@ -99,7 +103,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 		// Do not add private activities
 		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
-		CActivityStream::add ( $act );
+        $table = CActivityStream::add($act);
+        if(is_object($table)) {
+            $table->like_id = $table->id;
+            $table->store();
+        }
 	}
 
 	public function onAfterThankyou($actor, $target, $message) {
@@ -143,7 +151,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 		// Do not add private activities
 		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
-		CActivityStream::add ( $act );
+        $table = CActivityStream::add($act);
+        if(is_object($table)) {
+            $table->like_id = $table->id;
+            $table->store();
+        }
 	}
 
 	public function onAfterDeleteTopic($target) {

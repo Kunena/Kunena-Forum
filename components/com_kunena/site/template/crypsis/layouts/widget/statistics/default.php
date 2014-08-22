@@ -12,7 +12,12 @@ defined('_JEXEC') or die;
 ?>
 
 <div class="kfrontend">
-	<h2>
+	<div class="btn-toolbar pull-right">
+		<div class="btn-group">
+			<div class="btn btn-small" data-toggle="collapse" data-target="#kstats">&times;</div>
+		</div>
+	</div>
+	<h2 class="btn-link">
 		<?php if ($this->statisticsUrl) : ?>
 			<a href="<?php echo $this->statisticsUrl; ?>">
 				<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
@@ -20,12 +25,9 @@ defined('_JEXEC') or die;
 		<?php else : ?>
 			<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
 		<?php endif; ?>
-
-		<span class="btn btn-small pull-right" data-toggle="collapse" data-target="#kstats">&times;</span>
 	</h2>
-	<div class="collapse in" id="kstats">
-	<div class="well well-small">
-	<div class="row-fluid">
+	<div class="row-fluid collapse in" id="kstats">
+	<div class="well well-small span12">
 		<ul class="unstyled span4">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
@@ -74,5 +76,4 @@ defined('_JEXEC') or die;
 		</ul>
 	</div>
 	</div>
-</div>
 </div>

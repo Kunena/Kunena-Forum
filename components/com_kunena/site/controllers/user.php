@@ -475,54 +475,54 @@ class KunenaControllerUser extends KunenaController {
 		$action = JRequest::getString('avatar', 'keep');
 		$current_avatar = $this->me->avatar;
 
-		require_once (KPATH_SITE.'/lib/kunena.upload.class.php');
-		$upload = new CKunenaUpload();
-		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
+		$avatarFile = $this->app->input->files->get('avatarfile');
 
-		if ( $upload->uploaded('avatarfile') ) {
-			$filename = 'avatar'.$this->me->userid;
-
+		if ( !empty($avatarFile['tmp_name']) ) {
 			if (preg_match('|^users/|' , $this->me->avatar)) {
 				// Delete old uploaded avatars:
-				if (is_dir( KPATH_MEDIA.'/avatars/resized')) {
-					$deletelist = KunenaFolder::folders(KPATH_MEDIA.'/avatars/resized', '.', false, true);
+				if (is_dir( KPATH_MEDIA . '/avatars/resized')) {
+					$deletelist = KunenaFolder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
 					foreach ($deletelist as $delete) {
-						if (is_file($delete.'/'.$this->me->avatar))
-							KunenaFile::delete($delete.'/'.$this->me->avatar);
+						if (is_file($delete . '/' . $this->me->avatar))
+							KunenaFile::delete($delete . '/' . $this->me->avatar);
 					}
 				}
-				if (is_file(KPATH_MEDIA.'/avatars/'.$this->me->avatar)) {
-					KunenaFile::delete(KPATH_MEDIA.'/avatars/'.$this->me->avatar);
+				if (is_file(KPATH_MEDIA . '/avatars/' . $this->me->avatar)) {
+					KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $this->me->avatar);
 				}
 			}
 
-			$upload->setImageResize(intval($this->config->avatarsize)*1024, 200, 200, $this->config->avatarquality);
-			$upload->uploadFile(KPATH_MEDIA . '/avatars/users' , 'avatarfile', $filename, false);
-			$fileinfo = $upload->getFileInfo();
+			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
 
-			if ($fileinfo['ready'] === true) {
-				$this->me->avatar = 'users/'.$fileinfo['name'];
+			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid);
+
+			if ( !empty($uploaded) )
+			{
+				$imageInfo = KunenaImage::getImageFileProperties($uploaded->destination);
+
+				// If image is not inside allowed size limits, resize it
+				if ($uploaded->size > intval($this->config->avatarsize) * 1024 || $imageInfo->width > '200' || $imageInfo->height > '200')
+				{
+					if ($this->config->avatarquality < 1 || $this->config->avatarquality > 100)
+					{
+						$quality = 70;
+					}
+					else
+					{
+						$quality = $this->config->avatarquality;
+					}
+
+					$resized = KunenaImageHelper::version($uploaded->destination, KPATH_MEDIA . '/avatars/users', 'avatar' . $this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop);
+				}
+
+				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_PROFILE_AVATAR_UPLOADED'));
+				$this->me->avatar = 'users/avatar' . $this->me->userid . '.' . $uploaded->ext;
 			}
-			if (!$fileinfo['status']) {
+			else
+			{
 				$this->me->avatar = $current_avatar;
-				if (!$fileinfo['not_valid_img_ext'])
-				{
-					$this->app->enqueueMessage(
-						JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
-						. ': ' . JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'),
-						'error'
-					);
-				}
-				else
-				{
-					$this->app->enqueueMessage(
-						JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
-						. ': ' . $fileinfo['error'], 'error'
-					);
-				}
+
 				return false;
-			} else {
-				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
 			}
 		} else if ( $action == 'delete' ) {
 			//set default avatar

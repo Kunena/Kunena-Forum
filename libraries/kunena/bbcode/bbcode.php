@@ -1012,10 +1012,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		if (JFactory::getUser ()->id == 0) {
 			// Hide between content from non registered users
-			return JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
+			return '</br>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
 		} else {
 			// Display but highlight the fact that it is hidden from guests
-			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDE_IN_MESSAGE' ) . '</b>' . '<div class="kmsgtext-hide">' . $content . '</div>';
+			return '</br><b>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDE_IN_MESSAGE' ) . '</b>' . '<div class="kmsgtext-hide">' . $content . '</div>';
 		}
 	}
 

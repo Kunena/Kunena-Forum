@@ -1168,6 +1168,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			KunenaForumTopicUserHelper::recount($this->id);
 			// FIXME: optimize
 			KunenaUserHelper::recount();
+			KunenaForumCategoryHelper::recount();
 		}
 
 		return true;
@@ -1201,7 +1202,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 					return false;
 				if ($result) {
 					// Information in the database was wrong, recount topic
-					$this->hold = $result->hold;
+					$this->hold = $result['hold'];
 					$this->recount();
 				}
 				return true;

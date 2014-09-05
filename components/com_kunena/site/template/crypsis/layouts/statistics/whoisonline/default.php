@@ -11,12 +11,16 @@
 defined('_JEXEC') or die;
 ?>
 <div class="kfrontend">
+	<div class="btn-toolbar pull-right">
+		<div class="btn-group">
+			<div class="btn btn-small" data-toggle="collapse" data-target="#kwho">&times;</div>
+		</div>
+	</div>
 <h3 class="btn-link">
 	<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE'); ?>
- 	<span class="btn btn-small pull-right" data-toggle="collapse" data-target="#kwho">&times;</span>
 </h3>
 
-<div class="collapse in" id="kwho">
+<div class="row-fluid collapse in" id="kwho">
 <div class="well well-small">
 	<p>
 		<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
@@ -25,7 +29,7 @@ defined('_JEXEC') or die;
 	<?php if (!empty($this->onlineList)) : ?>
 	<p>
 
-	<?php 
+	<?php
 	foreach ($this->onlineList as $user) {
 		$onlinelist[] = $user->getLink();
 	}

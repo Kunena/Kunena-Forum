@@ -27,10 +27,15 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * Method to auto-populate the model state.
 	 */
 	protected function populateState() {
+		$this->context = 'com_kunena.admin.trash';
+
 		$layout = $this->getUserStateFromRequest ( "com_kunena.admin.trash.layout", 'layout', 'messages', 'cmd' );
 		// Set default view on messages
 		if ($layout != 'messages') $layout='topics';
 		$this->setState ( 'layout', $layout );
+		if ($layout) {
+			$this->context .= '.'.$layout;
+		}
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );

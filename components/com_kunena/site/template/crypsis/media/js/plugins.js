@@ -18,8 +18,10 @@ function kunenatableOrdering( order, dir, task, form ) {
 /**
  *  Helper function for to perform JSON request for preview
  */
-function kPreviewHelper() {
-	if (_previewActive == true){
+var previewActive=false;
+
+function kPreviewHelper(previewActive) {
+	if (previewActive == true){
 		if ( jQuery('#kbbcode-message').val() != null ) {
 			jQuery.ajax({
 				type: 'POST',
@@ -223,5 +225,33 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
+	
+	/* To display preview area when clicking on preview button */
+	jQuery("#kbutton-preview").click(function() {
+		var preview = jQuery("#kbbcode-preview");
+		var message = jQuery("#kbbcode-message");
+	
+		if ( preview.length > 0 ) {
+			if ( !preview.is(":visible") ) {
+				preview.css('display', 'block');
+	
+				message.css('width', '95%');
+				
+				previewActive = true;
+				kPreviewHelper(previewActive);
+			} else {
+				previewActive = false;
+				preview.css('display', 'none');
+				message.css('width', '95%');  			
+			}
+			preview.attr('class', 'kbbcode-preview-bottom controls');
+			var height = message.css('height');
+			preview.css('height', message.css('height'));
+		}
+	});
+	
+	jQuery('#kbbcode-message').bind('input propertychange', function() {
+		kPreviewHelper(previewActive);
+	});
 });
 

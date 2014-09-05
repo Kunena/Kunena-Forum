@@ -60,7 +60,7 @@ $config = KunenaConfig::getInstance();
 
 <?php else : ?>
 
-<span>
+<div class="kreplymessage">
 	<?php echo $this->message_closed; ?>
-</span>
+</div>
 <?php endif;  ?>

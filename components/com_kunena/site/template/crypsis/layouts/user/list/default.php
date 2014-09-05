@@ -81,14 +81,6 @@ $cols = 1;
 				</th>
 				<?php endif; ?>
 
-				<?php if ($this->config->userlist_karma) : $cols++; ?>
-				<th class="center">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
-				</th>
-				<?php endif; ?>
-
 				<?php if ($this->config->userlist_email) : $cols++; ?>
 				<th>
 					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
@@ -157,12 +149,6 @@ $cols = 1;
 				<?php if ($this->config->userlist_posts) : ?>
 				<td class="center">
 					<?php echo (int) $user->posts; ?>
-				</td>
-				<?php endif; ?>
-
-				<?php if ($this->config->userlist_karma) : ?>
-				<td class="center">
-					<?php echo (int) $user->karma; ?>
 				</td>
 				<?php endif; ?>
 

@@ -16,44 +16,8 @@ define('MIME_PNG','image/png');
 /**
  * Helper class for image manipulation.
  */
-class KunenaImage extends JImage
+class KunenaImage extends KunenaCompatImage
 {
-	/**
-	 * @const  integer
-	 * @since  11.3
-	 */
-	const SCALE_FILL = 1;
-	
-	/**
-	 * @const  integer
-	 * @since  11.3
-	*/
-	const SCALE_INSIDE = 2;
-	
-	/**
-	 * @const  integer
-	 * @since  11.3
-	 */
-	const SCALE_OUTSIDE = 3;
-		
-	/**
-	 * @const  integer
-	 * @since  12.2
-	 */
-	const CROP = 4;
-
-	/**
-	 * @const  integer
-	 * @since  12.3
-	 */
-	const CROP_RESIZE = 5;
-
-	/**
-	 * @const  integer
-	 * @since  3.2
-	 */
-	const SCALE_FIT = 6;
-
 	/**
 	 * Method to resize the current image.
 	 *
@@ -72,12 +36,6 @@ class KunenaImage extends JImage
 	{
 		$config = KunenaFactory::getConfig();
 
-		// Make sure the resource handle is valid.
-		if (!$this->isLoaded())
-		{
-			throw new LogicException('No valid image was loaded.');
-		}
-
 		switch ($config->avatarresizemethod) {
 			case '0':
 				$resizemethod = 'imagecopyresized';
@@ -86,9 +44,14 @@ class KunenaImage extends JImage
 				$resizemethod = 'imagecopyresampled';
 				break;
 			default:
-				// $resizemethod = 'KunenaImage::imageCopyResampledBicubic';
 				$resizemethod = array('KunenaImage','imageCopyResampledBicubic');
 				break;
+		}
+
+		// Make sure the resource handle is valid.
+		if (!$this->isLoaded())
+		{
+			throw new LogicException('No valid image was loaded.');
 		}
 
 		// Sanitize width.
@@ -204,22 +167,4 @@ class KunenaImage extends JImage
         // we should return true since ImageCopyResampled/ImageCopyResized do it
         return true;
     }
-
-    /**
-     * Method to destroy an image handle and
-     * free the memory associated with the handle
-     *
-     * @return  boolean  True on success, false on failure or if no image is loaded
-     *
-     * @since 3.1
-     */
-	public function destroy()
-	{
-		if ($this->isLoaded())
-		{
-			return imagedestroy($this->handle);
-		}
-
-		return false;
-	}
 }

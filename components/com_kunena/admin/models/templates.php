@@ -30,10 +30,11 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 	 * Method to auto-populate the model state.
 	 */
 	protected function populateState() {
+		$this->context = 'com_kunena.admin.templates';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
-		$this->context = 'com_kunena.admin.categories';
 		$layout = $app->input->get('layout');
 		if ($layout) {
 			$this->context .= '.'.$layout;

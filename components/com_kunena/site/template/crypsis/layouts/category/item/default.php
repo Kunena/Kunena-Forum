@@ -24,26 +24,30 @@ $colspan = empty($this->actions) ? 5 : 6;
 <?php if (!$this->category->isSection()) : ?>
 <h2>
 	<a><?php echo $this->escape($this->headerText); ?></a>
-	<span class="pull-right">
-		<?php echo $this->subLayout('Widget/Search')->set('catid', $this->category->id); ?>
-	</span>
 </h2>
+
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+</div>
+
+<div class="pull-right">
+	<?php echo $this->subLayout('Widget/Search')->set('catid', $this->category->id); ?>
+</div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_( 'form.token' ); ?>
-
+	<div class="kbuttons">
+		<ul class="inline">
+			<?php if ($categoryActions) : ?>
+			<li class="hidden-phone">
+				<?php echo implode($categoryActions); ?>
+			</li>
+		<?php endif; ?>
+	</ul>
+	</div>
 	<table class="table table-bordered">
 		<thead>
-			<tr>
-				<ul class="inline no-margin">
-					<?php if ($categoryActions) : ?>
-						<li class="hidden-phone">
-							<?php echo implode($categoryActions); ?>
-						</li>
-						<?php endif; ?>
-				</ul>
-			</tr>
 			<tr>
 				<td class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
@@ -51,17 +55,11 @@ $colspan = empty($this->actions) ? 5 : 6;
 						<i class="icon-arrow-down hasTooltip"></i>
 					</a>
 				</td>
-				<td class="span1">
+				<td class="span6">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
-				<td class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?>
-				</td>
-				<td class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>
-				</td>
-				<td class="span1 center hidden-phone">
-				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>
+				<td class="span2 center hidden-phone">
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
@@ -108,7 +106,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 			</td>
 
 			<td colspan="6" class="hidden-phone">
-
+				<div class="form-horizontal">
 				<?php if (!empty($this->topicActions) || !empty($this->embedded)) : ?>
 
 				<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
@@ -116,14 +114,14 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 				<?php if (!empty($this->topicActions)) : ?>
 				<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
-							'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+							'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
 				<?php if ($this->actionMove) :
 								$options = array (
 									JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))
 								);
 								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(),
-									'size="1" disabled="disabled"', 'value', 'text', 0,
+									' disabled="disabled"', 'value', 'text', 0,
 									'kchecktarget');
 							?>
 				<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
@@ -132,7 +130,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 				<?php endif; ?>
 
 				<?php endif; ?>
-
+			</div>
 			</td>
 		</tr>
 		</tfoot>
@@ -141,7 +139,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 </form>
 
-<div class="pull-right">
+<div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 </div>
 

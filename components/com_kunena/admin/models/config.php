@@ -227,8 +227,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists['showbannedreason'] = JHtml::_('select.genericlist', $yesno, 'cfg_showbannedreason', 'class="inputbox" size="1"', 'value', 'text', $this->config->showbannedreason);
 
-		$lists['version_check'] = JHtml::_('select.genericlist', $yesno, 'cfg_version_check', 'class="inputbox" size="1"', 'value', 'text', $this->config->version_check);
-
 		$lists['time_to_create_page'] = JHtml::_('select.genericlist', $yesno, 'cfg_time_to_create_page', 'class="inputbox" size="1"', 'value', 'text', $this->config->time_to_create_page);
 
 		$lists['showpopthankyoustats'] = JHtml::_('select.genericlist', $yesno, 'cfg_showpopthankyoustats', 'class="inputbox" size="1"', 'value', 'text', $this->config->showpopthankyoustats);

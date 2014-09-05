@@ -91,11 +91,11 @@ if ($this->config->showuserstats)
 					<span> <?php echo JText::sprintf((int)$profile->posts); ?> </span>
 				</li>
 				<li>
-					<strong> <?php echo JText::_('Profile views'); ?>:</strong>
+					<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
 					<span> <?php echo JText::sprintf((int)$profile->uhits); ?> </span>
 				</li>
 				<li>
-					<strong> <?php echo JText::_('Thank you received'); ?>:</strong>
+					<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 					<span> <?php echo JText::sprintf((int)$profile->thankyou); ?> </span>
 				</li>
 				<?php if (isset($profile->points)) : ?>
@@ -135,8 +135,9 @@ if ($this->config->showuserstats)
 		</div>
 	</div>
 </div>
-<div class="span11">
-	<div class="span6"> </br>
+<div class="row-fluid">
+<div class="span12">
+	<div class="span6">
 		<blockquote>
 			<?php if ($signature) : ?>
 				<span><?php echo $signature; ?></span>
@@ -150,21 +151,22 @@ if ($this->config->showuserstats)
 		</blockquote>
 		<div>
 			<?php if (!empty($private)) : ?>
-				<a class="btn" href="<?php echo $private; ?>">
+				<a class="btn btn-small" href="<?php echo $private; ?>">
 					<i class="icon-comments-2"></i>
 					<?php echo $privateLabel ?>
 				</a>
 			<?php endif; ?>
 			<?php if ($email) : ?>
 				<?php // TODO: Fix mailto link ?>
-				<a class="btn" href="mailto:<?php echo $email; ?>"><i class="icon-mail"></i></a>
+				<a class="btn btn-small" href="mailto:<?php echo $email; ?>"><i class="icon-mail"></i></a>
 			<?php endif; ?>
 			<?php if ($websiteURL) : ?>
-				<a class="btn" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i><?php echo $websiteName ?></a>
+				<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i><?php echo $websiteName ?></a>
 			<?php endif; ?>
 		</div>
 	</div>
 	<div class="span6">
 		<div class="well"> <?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?> </div>
+	</div>
 	</div>
 </div>

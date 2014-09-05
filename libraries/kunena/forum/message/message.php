@@ -70,7 +70,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		'undelete'=>array('Read'),
 		'permdelete'=>array('Read'),
 		'attachment.read'=>array('Read'),
-		'attachment.create'=>array('Read','Own','EditTime'),
+		'attachment.create'=>array('Read','Own'),
 		'attachment.delete'=>array(), // TODO: In the future we might want to restrict this: array('Read','EditTime'),
 	);
 

@@ -13,8 +13,14 @@ defined('_JEXEC') or die;
 $colspan = empty($this->actions) ? 5 : 6;
 ?>
 
+<h3>
+	<?php echo $this->escape($this->headerText); ?>
+	<span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
+	<span class="badge badge-success"><?php // To Do:: echo $this->topics->count->unread; ?></span>
+</h3>
+
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-<div class="pagination pull-right">
+<div class="pagination pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
 </div>
 <?php endif; ?>
@@ -25,12 +31,6 @@ $colspan = empty($this->actions) ? 5 : 6;
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
 <?php endif; ?>
-
-<h3>
-	<?php echo $this->escape($this->headerText); ?>
-	<span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
-	<span class="badge badge-success"><?php // To Do:: echo $this->topics->count->unread; ?></span>
-</h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
       name="ktopicsform" id="ktopicsform">
@@ -54,13 +54,10 @@ $colspan = empty($this->actions) ? 5 : 6;
 					</a>
 				</td>
 				<td class="span1">
-				<?php echo JText::_('Message'); ?>
+				<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 				</td>
 				<td class="span1">
-				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
-				</td>
-				<td class="span1 center hidden-phone">
-				Author
+				<?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?> / <?php echo JText::_('COM_KUNENA_CATEGORY'); ?>
 				</td>
 				<td class="span1">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
@@ -79,6 +76,7 @@ $colspan = empty($this->actions) ? 5 : 6;
 		<tfoot>
 			<tr>
 				<td colspan="<?php echo $colspan; ?>">
+					<div class="form-horizontal">
 					<?php
 					if (!empty($this->moreUri)) {
 						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
@@ -87,11 +85,12 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 					<?php if (!empty($this->actions)|| !empty($this->embedded))  : ?>
 						<?php echo JHtml::_(
-							'select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" size="1"',
+							'select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask"',
 							'value', 'text', 0, 'kchecktask'
 						); ?>
 						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
+				</div>
 				</td>
 			</tr>
 		</tfoot>
@@ -110,3 +109,16 @@ $colspan = empty($this->actions) ? 5 : 6;
 
 	</table>
 </form>
+
+<?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
+<div class="pagination pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
+</div>
+<?php endif; ?>
+
+<?php if (!empty($this->embedded)) : ?>
+<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+      method="post" target="_self" class="timefilter pull-right">
+	<?php $this->displayTimeFilter('sel'); ?>
+</form>
+<?php endif; ?>

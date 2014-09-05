@@ -48,28 +48,17 @@ class KunenaLogin {
 	 * @param   string  $username    The username of user which need to be logged
 	 * @param   string  $password    The password of user which need to be logged
 	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
-	 * @param   string  $return      The URL where the user will be redirected
-	 * @param   int     $secretkey   The secretkey given ot use TFA feature
+	 * @param   string  $secretkey   The secret key for the TFA feature
 	 *
 	 * @return boolean
 	 */
-	public function loginUser($username, $password, $rememberme = 0, $return = null, $secretkey = null)
+	public function loginUser($username, $password, $rememberme = 0, $secretkey = null)
 	{
 		foreach ($this->instances as $login)
 		{
 			if (method_exists($login, 'loginUser'))
 			{
-				if ( $this->isTFAEnabled() )
-				{
-					if ( $this->isValidTFA($secretkey) )
-					{
-						return $login->loginUser($username, $password, $rememberme, $return);
-					}
-				}
-				else
-				{
-					return $login->loginUser($username, $password, $rememberme, $return);
-				}
+				return $login->loginUser($username, $password, $rememberme, $secretkey);
 			}
 		}
 
@@ -181,32 +170,19 @@ class KunenaLogin {
 	}
 
 	/**
-	 * Checks if the provided secret code is a valid two factor authentication
-	 * code for the user whose $userId is provided. If TFA is disabled globally
-	 * or for the specific user you will receive true.
+	 * Method to check if TFA is enabled when user ins't logged
 	 *
-	 * @param   string   $code    The secret code to check
-	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
-	 *
-	 * @return boolean True if you should accept the code
+	 * @return int
 	 */
-	public function isValidTFA($code, $userId = null)
+	public static function getTwoFactorMethods()
 	{
-		// Include the necessary user model
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
-
-		// Do we need to get the User ID?
-		if (empty($userId))
+		if ( !version_compare(JVERSION, '3.2', '>=') )
 		{
-			$userId = JFactory::getUser()->id;
+			return null;
 		}
 
-		// Check the secret code
-		$model = new UsersModelUser;
-		$options = array(
-				'warn_if_not_req'	=> false,
-		);
+		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
 
-		return $model->isValidSecretKey($userId, $code, $options);
+		return count(UsersHelper::getTwoFactorMethods());
 	}
 }

@@ -51,19 +51,26 @@ class KunenaModelUser extends KunenaModel {
 	}
 
 	public function getQueryWhere() {
-		$db = JFactory::getDBO();
-		$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
-		$db->setQuery ( $query );
-		$superadmins = (array) $db->loadColumn();
-		if (!$superadmins) $superadmins = array(0);
-		$this->setState ( 'list.exclude', implode(',', $superadmins));
+		$where = '';
 
-		if ($this->config->userlist_count_users == '1' ) $where = '(u.block=0 OR u.activation="")';
-		elseif ($this->config->userlist_count_users == '2' ) $where = '(u.block=0 AND u.activation="")';
-		elseif ($this->config->userlist_count_users == '3' ) $where = 'u.block=0';
-		else $where = '1';
 		// Hide super admins from the list
-		$where .= ' AND u.id NOT IN ('.$this->getState ( 'list.exclude' ).')';
+		if ( KunenaFactory::getConfig()->superadmin_userlist )
+		{
+			$db = JFactory::getDBO();
+			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
+			$db->setQuery ( $query );
+			$superadmins = (array) $db->loadColumn();
+			if (!$superadmins) $superadmins = array(0);
+			$this->setState ( 'list.exclude', implode(',', $superadmins));
+
+			$where = ' u.id NOT IN ('.$this->getState ( 'list.exclude' ).') AND ';
+		}
+
+		if ($this->config->userlist_count_users == '1' ) $where .= '(u.block=0 OR u.activation="")';
+		elseif ($this->config->userlist_count_users == '2' ) $where .= '(u.block=0 AND u.activation="")';
+		elseif ($this->config->userlist_count_users == '3' ) $where .= 'u.block=0';
+		else $where .= '1';
+
 		return $where;
 	}
 

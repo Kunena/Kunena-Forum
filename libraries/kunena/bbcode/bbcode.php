@@ -1262,7 +1262,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		static $sensor = true;
 
 		if ($id === false) {
-			$document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
+			$document->addScript('https://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
 			$id = 0;
 		}
 

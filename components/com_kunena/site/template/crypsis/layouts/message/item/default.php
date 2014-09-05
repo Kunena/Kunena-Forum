@@ -14,6 +14,7 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $this->message->getAttachments();
 $avatarname = $this->profile->getname();
+$config = KunenaConfig::getInstance();
 ?>
 
 <small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <span class="icon icon-clock"></span> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?> <a href="#<?php echo $this->message->id; ?>">#<?php echo $this->location; ?></a> </small>
@@ -25,9 +26,14 @@ $avatarname = $this->profile->getname();
 		<?php echo $this->message->displayField('subject'); ?>">
 		<?php endif; ?>
 		<div class="kmessage">
-				<p class="kmsg"> <?php echo $this->message->displayField('message'); ?> </p>
-		</div>
-		<?php if (!empty($attachments)) : ?>
+			<p class="kmsg">
+				<?php  if (!$this->userid && !$isReply) :
+					echo $this->message->displayField('message');
+ 				else:
+					echo (!$this->me->userid && $config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+ 				endif;?>
+			</p>
+			<?php if (!empty($attachments)) : ?>
 		<div class="kattach">
 		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 		<ul class="thumbnails">
@@ -60,7 +66,7 @@ $avatarname = $this->profile->getname();
 		<?php endif; ?>
 </div>
 
-<?php if ($this->message->modified_by && $this->config->editmarkup) : 
+<?php if ($this->message->modified_by && $this->config->editmarkup) :
 				$dateshown = $datehover = '';
 				if ($this->message->modified_time) {
 					$datehover = 'title="'.KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat_hover').'"';

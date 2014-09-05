@@ -605,6 +605,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['statslink_allowed'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_TEASER') ?></td>
+														<td><?php echo $this->lists ['teaser'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_TEASER_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>

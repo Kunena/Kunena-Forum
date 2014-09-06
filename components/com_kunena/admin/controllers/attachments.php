@@ -44,6 +44,7 @@ class KunenaAdminControllerAttachments extends KunenaController {
 		}
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY') );
+		KunenaForumTopicHelper::recount();
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

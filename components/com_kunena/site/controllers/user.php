@@ -584,6 +584,7 @@ class KunenaControllerUser extends KunenaController {
 
 			if ( $number > 0 ) {
 				$this->app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
+				KunenaForumTopicHelper::recount();
 				$this->setRedirectBack();
 				return;
 			} else {

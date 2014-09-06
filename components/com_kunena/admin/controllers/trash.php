@@ -120,4 +120,9 @@ class KunenaAdminControllerTrash extends KunenaController {
 
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
+
+	public function cancel()
+	{
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
 }

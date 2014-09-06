@@ -342,6 +342,36 @@ abstract class KunenaAttachmentHelper {
 		return $list;
 	}
 
+	/**
+	 * Method to recount attachments to update topics table on deleting messages
+	 *
+	 * @param   integer  $topicid  The ID of topic where attachments will be recounted
+	 *
+	 * @since 3.1
+	 *
+	 * @return void
+	 */
+	public static function recount($topicid)
+	{
+		if ( empty($topicid) )
+		{
+			return;
+		}
+
+		$db = JFactory::getDBO();
+
+		$query = "UPDATE {$db->quoteName('#__kunena_topics')} AS tt INNER JOIN (
+						SELECT COUNT(*) AS attach FROM {$db->quoteName('#__kunena_attachments')} AS a INNER JOIN {$db->quoteName('#__kunena_messages')} AS m ON a.mesid=m.id WHERE m.thread={$topicid}
+					) AS sub SET tt.attachments=sub.attach WHERE tt.id={$topicid}";
+		$db->setQuery($query);
+		$db->query();
+		KunenaError::checkDatabaseError();
+
+		$rows = $db->getAffectedRows();
+
+		return $rows;
+	}
+
 	// Internal functions
 
 	/**

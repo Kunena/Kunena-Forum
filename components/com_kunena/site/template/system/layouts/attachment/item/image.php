@@ -21,6 +21,6 @@ $attributesLink = $config->lightbox ? ' rel="lightbox[imagelink' . $attachment->
 $attributesImg = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
 
-<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0,7); ?>"<?php echo $attributesLink; ?>>
+<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName($attachment->getFilename(), 0,7); ?>"<?php echo $attributesLink; ?>>
 	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
 </a>

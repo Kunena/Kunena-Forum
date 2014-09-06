@@ -356,14 +356,15 @@ class CKunenaUpload {
 
 		// Rename file if there is already one with the same name
 		$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
+		$newFileName = preg_replace('/[[:space:]]/', '',$newFileName);
+		$uploadedFileBasename = preg_replace('/[[:space:]]/', '',$uploadedFileBasename);
 		if (file_exists($uploadPath .'/'. $newFileName)) {
-			$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
+			$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
 			for ($i=2; file_exists("{$uploadPath}/{$newFileName}"); $i++) {
-				$newFileName = $uploadedFileBasename . date('_Y-m-d') . "-$i." . $uploadedFileExtension;
+				$newFileName = $uploadedFileBasename . "-$i." . $uploadedFileExtension;
 			}
 		}
 		$this->fileName = $newFileName;
-		$this->fileName = preg_replace('/[[:space:]]/', '',$this->fileName);
 
 		// All the processing is complete - now we need to move the file(s) into the final location
 		@chmod($this->fileTemp, 0644);

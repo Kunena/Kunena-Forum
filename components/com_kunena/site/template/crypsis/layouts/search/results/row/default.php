@@ -26,7 +26,8 @@ $author = $message->getAuthor();
 
 	<div class="span10">
 		<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;"> <span class="icon icon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
-		<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->subject; ?>">
+		<?php //TODO: Find a better way for inline elements like this can displayField contain HTML which would not be valid inside the attribute. ?>
+		<div class="badger-left badger-info khistory" data-badger="<?php echo $message->displayField('message'); ?>">
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message); ?>
 			</h3>
@@ -36,7 +37,7 @@ $author = $message->getAuthor();
 			</p>
 
 			<div class="kmessage">
-				<?php echo $message->message; ?>
+				<?php echo $message->displayField('message'); ?>
 			</div>
 		</div>
 	</div>

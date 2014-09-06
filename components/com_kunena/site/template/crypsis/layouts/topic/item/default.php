@@ -21,13 +21,13 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">
 	<a class="close" data-dismiss="alert" href="#">&times;</a>
-	<?php echo $this->category->headerdesc; ?>
+	<?php echo $this->category->displayField('headerdesc'); ?>
 </div>
 <?php endif; ?>
 
 <h3>
 	<?php echo $topic->getIcon(); ?>
-	<?php echo $topic->subject; ?>
+	<?php echo $topic->displayField('subject'); ?>
 </h3>
 
 <div class="pull-left">

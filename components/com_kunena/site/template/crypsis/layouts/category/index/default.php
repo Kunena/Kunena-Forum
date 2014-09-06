@@ -125,7 +125,7 @@ foreach ($this->sections as $section) :
 				</div>
 
 				<?php if (!empty($category->description)) : ?>
-					<div class="hidden-phone header-desc"><?php echo $category->description; ?></div>
+					<div class="hidden-phone header-desc"><?php echo $category->displayField('description'); ?></div>
 				<?php endif; ?>
 
 				<?php

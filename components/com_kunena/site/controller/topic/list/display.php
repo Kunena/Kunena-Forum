@@ -98,6 +98,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$this->setTitle($headerText);
 	}
 
+	/**
+	 * Get Topic Actions.
+	 *
+	 * @return array
+	 */
 	protected function getTopicActions(
 		array $topics,
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete')
@@ -146,6 +151,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		return $actions;
 	}
 
+	/**
+	 * Get Message Actions.
+	 *
+	 * @return array
+	 */
 	protected function getMessageActions(
 		array $messages,
 		$actions = array('approve', 'undelete', 'delete', 'permdelete')

@@ -19,7 +19,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu well well-small">
+		<div class="dropdown-menu">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div class="center">
 					<a href="<?php  echo $this->me->getURL(); ?>">

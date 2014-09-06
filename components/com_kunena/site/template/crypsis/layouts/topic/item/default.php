@@ -10,6 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
+/** @var KunenaForumTopic $topic */
+$topic = $this->topic;
+$me = KunenaUserHelper::getMyself();
+
 $this->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
@@ -21,22 +25,30 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 </div>
 <?php endif; ?>
 
-<div class="pull-right">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
-</div>
-
 <h3>
-	<?php echo $this->topic->getIcon(); ?>
-	<?php echo $this->topic->displayField('subject'); ?>
+	<?php echo $topic->getIcon(); ?>
+	<?php echo $topic->displayField('subject'); ?>
 </h3>
+
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination)
+		->set('display', true); ?>
+</div>
+<div class="pull-right">
+	<?php echo $this->subLayout('Widget/Search')
+		->set('id', $topic->id)
+		->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
+		->setLayout('topic'); ?>
+</div>
 
 <div class="clearfix"></div>
 
 <?php
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
-echo $this->subRequest('Topic/Poll')->set('id', $this->topic->id);
+echo $this->subRequest('Topic/Poll')->set('id', $topic->id);
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
-echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id);
+if($me->exists()) echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id);
 
 foreach ($this->messages as $id => $message)
 {
@@ -46,10 +58,19 @@ foreach ($this->messages as $id => $message)
 }
 ?>
 
-<div class="pull-right">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination)
+		->set('display', true);; ?>
 </div>
-<?php echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id); ?>
+<div class="pull-right">
+	<?php echo $this->subLayout('Widget/Search')
+		->set('id', $topic->id)
+		->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
+		->setLayout('topic'); ?>
+</div>
+
+<?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?>
 <div class="clearfix"></div>
 
 <?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?>

@@ -21,9 +21,9 @@ $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
 
 if (!empty($this->spacing)) : ?>
-<tr>
-	<td colspan="<?php echo $cols; ?>">&nbsp;</td>
-</tr>
+	<tr>
+		<td colspan="<?php echo $cols; ?>">&nbsp;</td>
+	</tr>
 <?php endif; ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx); ?>">
@@ -33,6 +33,12 @@ if (!empty($this->spacing)) : ?>
 	<td class="span7">
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
+			<?php
+			if ($topic->unread) {
+				echo $this->getTopicLink($topic, 'unread',
+					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+			}
+			?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
@@ -50,13 +56,6 @@ if (!empty($this->spacing)) : ?>
 			<?php if ($this->topic->poll_id) : ?>
 				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 			<?php endif; ?>
-
-			<?php
-			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread',
-					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
-			}
-			?>
 		</div>
 
 		<div>

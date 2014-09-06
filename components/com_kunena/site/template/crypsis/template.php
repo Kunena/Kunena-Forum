@@ -89,7 +89,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		// Template also requires jQuery framework.
 		JHtml::_('jquery.framework');
-		JHtml::_('formbehavior.chosen');
+		//JHtml::_('formbehavior.chosen', 'select');
 
 		// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 		$this->addScript('js/caret.js');
@@ -100,7 +100,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$this->addScript('plugins.js');
 
 		// Compile CSS from LESS files.
-		$this->compileLess('main.less', 'kunena.css');
+		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
 		$config = KunenaFactory::getConfig();

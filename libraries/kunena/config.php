@@ -27,7 +27,7 @@ class KunenaConfig extends JObject {
 	 * @since  1.5.2
 	 */
 	public $id = 0;
-	
+
 	/**
 	 * @var    string  Board Title; input, text
 	 * @since  1.0.0
@@ -817,6 +817,7 @@ class KunenaConfig extends JObject {
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
+     * @deprecated 3.1 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 
@@ -1067,6 +1068,12 @@ class KunenaConfig extends JObject {
 	 */
 	public $statslink_allowed = 1;
 
+    /**
+     * @var    integer  Super admin user list; select, boolean
+     * @since  3.0.6
+     */
+    public $superadmin_userlist = 0;
+
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
 	 * @since  3.1.0
@@ -1096,12 +1103,6 @@ class KunenaConfig extends JObject {
 	 * @since  3.1.0
 	 */
 	public $avatarcrop = 0;
-
-	/**
-	 * @var    integer  Super admin user list; select, boolean
-	 * @since  3.1.0
-	 */
-	public $superadmin_userlist = 0;
 
 	public function __construct() {
 		parent::__construct ();

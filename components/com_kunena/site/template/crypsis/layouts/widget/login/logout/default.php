@@ -28,7 +28,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu well well-small">
+		<div class="dropdown-menu">
 
 			<div class="center">
 				<a href="<?php  echo $this->me->getURL(); ?>">

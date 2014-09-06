@@ -23,17 +23,20 @@ if (version_compare(JVERSION, '3.2', '>'))
 
 $db = JFactory::getDBO();
 $document = JFactory::getDocument();
-$document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'
-var max_count = '.(int) $this->config->maxsig.'
+$document->addScriptDeclaration(' var max_count = '.(int) $this->config->maxsig.'
+jQuery(function($) {
+	jQuery(\'#user-signature\').keypress(function (e) {
+		var len = jQuery(this).val().length;
+		if (len > max_count) {
+			e.preventDefault();
+		} else if (len <= max_count) {
+			var char = max_count - len;
 
-function textCounter(field, target) {
-	if (field.value.length > max_count) {
-		field.value = field.value.substring(0, max_count);
-	} else {
-		current_count = max_count - field.value.length;
-		target.value = current_count;
-	}
-}');
+			jQuery(\'#current_count\').val(char);
+		}
+	});
+});
+');
 ?>
 
 <div id="kunena" class="admin override">
@@ -77,15 +80,15 @@ function textCounter(field, target) {
 								<fieldset>
 									<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
 									<div>
-										<textarea class="input-xxlarge" name="signature" cols="4" rows="6"
-											onkeyup="textCounter(this, this.form.current_count);"><?php echo $this->escape( $this->user->signature ); ?></textarea>
+										<textarea id="user-signature" class="input-xxlarge" name="signature" cols="4" rows="6"
+											><?php echo $this->escape( $this->user->signature ); ?></textarea>
 									</div>
 									<div>
 										<label><input type="checkbox" value="1" name="deleteSig" /> <?php echo JText::_('COM_KUNENA_DELSIG'); ?></label>
 									</div>
 									<div>
 										<?php echo JText::sprintf('COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-											'<input class="span1" readonly="readonly" type="text" name="current_count" value="'.(intval($this->config->maxsig)-JString::strlen($this->user->signature)).'" />');?>
+											'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="'.(intval($this->config->maxsig)-JString::strlen($this->user->signature)).'" />');?>
 									</div>
 								</fieldset>
 							</div>

@@ -39,6 +39,7 @@ if ($show)
 		<?php echo $this->subLayout('User/Item/Status')
 			->set('user', $user); ?>
 	</li>
+	<?php endif; ?>
 
 	<?php if (!empty($rankTitle)) : ?>
 	<li>

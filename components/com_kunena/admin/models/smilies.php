@@ -41,6 +41,8 @@ class KunenaAdminModelSmilies extends JModelList {
 	 * @return	void
 	 */
 	protected function populateState($ordering = null, $direction = null) {
+		$this->context = 'com_kunena.admin.smilies';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.

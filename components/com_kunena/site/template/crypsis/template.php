@@ -116,8 +116,14 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Load FancyBox library if enabled in configuration
 		if ($config->lightbox == 1)
 		{
+			$template = KunenaTemplate::getInstance();
+			if ( $template->params->get('lightboxColor') == 'white') {
+				$this->addStyleSheet('css/fancybox-white.css');
+			}
+			else  {
+				$this->addStyleSheet('css/fancybox-black.css');
+			}
 			$this->addScript('js/fancybox.js');
-			$this->addStyleSheet('css/fancybox.css');
 			JFactory::getDocument()->addScriptDeclaration('
 				jQuery(document).ready(function() {
 					jQuery(".fancybox-button").fancybox({

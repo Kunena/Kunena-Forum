@@ -37,7 +37,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-short">
-				<?php echo $this->displayInput('sdescription', 'class="input-xxlarge" required placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
+				<?php echo $this->displayInput('sdescription', 'rows="9" class="input-xxlarge" required placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
 			</div>
 		</div>
 
@@ -46,7 +46,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-long">
-				<?php echo $this->displayInput('description', 'rows="9" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
+				<?php echo $this->displayInput('description', 'rows="12" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
 			</div>
 		</div>
 

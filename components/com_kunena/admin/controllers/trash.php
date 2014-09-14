@@ -121,8 +121,22 @@ class KunenaAdminControllerTrash extends KunenaController {
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * Method to redirect user on cancel on purge page
+	 *
+	 * @return void
+	 */
 	public function cancel()
 	{
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$type = $this->app->getUserState('com_kunena.type');
+
+		if ($type == 'messages')
+		{
+			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
+		}
+		else
+		{
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
 	}
 }

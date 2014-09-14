@@ -44,7 +44,7 @@ class KunenaImage extends KunenaCompatImage
 				$resizemethod = 'imagecopyresampled';
 				break;
 			default:
-				$resizemethod = array('KunenaImage','imageCopyResampledBicubic');
+				$resizemethod = 'self::imageCopyResampledBicubic';
 				break;
 		}
 
@@ -106,7 +106,7 @@ class KunenaImage extends KunenaCompatImage
 			}
 		}
 
-		$resizemethod($handle, $this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight());
+		call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
 
 		// If we are resizing to a new image, create a new KunenaImage object.
 		if ($createNew)

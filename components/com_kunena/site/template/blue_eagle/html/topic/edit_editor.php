@@ -74,7 +74,7 @@ defined ( '_JEXEC' ) or die ();
 				<input name="text2" id="kbbcode-link_text" type="text" size="30" maxlength="150"
 					onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT', true); ?>')" />
 				<input type="button" name="insterLink" value="<?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?>"
-					onclick="kbbcode.focus().replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_text').get('value') + '[/url]', false); kToggleOrSwap('kbbcode-link-options');"
+                    onclick="var res = document.id('kbbcode-link_url').get('value'); res=res.replace(/\[/g, '%5B'); res = res.replace(/\]/g, '%5D');kbbcode.focus().replaceSelection('[url=' + res + ']' + document.id('kbbcode-link_text').get('value') + '[/url]', false); kToggleOrSwap('kbbcode-link-options');"
 					onmouseover="document.id('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKAPPLY', true); ?>')" />
 			</div>
 

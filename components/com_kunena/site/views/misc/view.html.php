@@ -39,6 +39,28 @@ class KunenaViewMisc extends KunenaView {
 		$this->setTitle($this->header);
 
 		// TODO: set keywords and description
+
+		$active = $this->app->getMenu()->getActive();
+
+		if ( version_compare(JVERSION, '3.0', '<') )
+		{
+			$menuMetaDescription = $this->app->getMenu()->getParams($active->id)->getValue('menu-meta_description');
+			$menuMetaKeywords = $this->app->getMenu()->getParams($active->id)->getValue('menu-meta_keywords');
+		}
+		else
+		{
+			$menuMetaDescription = $this->app->getMenu()->getParams($active->id)->get('menu-meta_description');
+			$menuMetaKeywords = $this->app->getMenu()->getParams($active->id)->get('menu-meta_keywords');
+		}
+		if ( !empty($menuMetaDescription) )
+		{
+			$this->setDescription($menuMetaDescription);
+		}
+
+		if ( !empty($menuMetaKeywords) )
+		{
+			$this->setKeywords($menuMetaKeywords);
+		}
 	}
 
 }

@@ -13,8 +13,6 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.keepalive');
 
-$this->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
-
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
@@ -43,6 +41,10 @@ $this->addScriptDeclaration("window.addEvent('domready', function() {
 });");
 
 $this->k=0;
+
+$this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&'. JSession::getFormToken() .'=1', false). "'" );
+$this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&'. JSession::getFormToken() .'=1', false). "'" );
+$this->addScriptDeclaration("kunena_upload_files_maxfiles = '" .$this->config->attachment_limit. "' ");
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal"
@@ -52,7 +54,7 @@ $this->k=0;
 	<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
 	<?php if ($this->message->exists()) : ?>
 	<input type="hidden" name="task" value="edit" />
-	<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
+	<input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
 	<?php else: ?>
 	<input type="hidden" name="task" value="post" />
 	<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
@@ -63,6 +65,8 @@ $this->k=0;
 	<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
 	<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 	<?php endif; ?>
+	<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
+	<input type="hidden" id="kunena_upload_files_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&'. JSession::getFormToken() .'=1', false) ?>" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<h2>
@@ -133,21 +137,22 @@ $this->k=0;
 					<div class="control-group krow<?php echo 1 + $this->k^=1;?>" id="kpost-attachments">
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
-							<div id="kattachment-id" class="kattachment">
-								<span class="kattachment-id-container"></span>
-								<input class="kfile-input-textbox" type="text" readonly="readonly" />
-								<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
-									<input type="button" value="<?php echo JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button btn" />
-									<input id="kupload" class="kfile-input" name="kattachment" type="file" />
-								</div>
-								<a href="#" class="kattachment-remove btn" style="display: none"><?php echo JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
-								<a href="#" class="kattachment-insert btn" style="display: none"><?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
+							<!-- The fileinput-button span is used to style the file input field as button -->
+							<span class="btn btn-success fileinput-button">
+								<i class="glyphicon glyphicon-plus"></i>
+								<span>Add files...</span>
+								<!-- The file input field used as target for the file upload widget -->
+								<input id="fileupload" type="file" name="files[]" multiple>
+							</span>
+							<br>
+							<br>
+							<!-- The global progress bar -->
+							<div id="progress" class="progress progress-striped">
+								<div class="bar"></div>
 							</div>
-							<?php
-							if (!empty($this->attachments))
-								echo $this->subLayout('Topic/Edit/Attachments')
-									->set('attachments', $this->attachments);
-							?>
+							<!-- The container for the uploaded files -->
+							<div id="files" class="files"></div>
+							<br>
 						</div>
 					</div>
 					<?php endif; ?>
@@ -206,6 +211,7 @@ if (!$this->message->name) {
 	echo '<script type="text/javascript">document.postform.message.focus();</script>';
 }
 ?>
+<div id="kattach-list"></div>
 </form>
 <?php
 if ($this->config->showhistory && $this->topic->exists())

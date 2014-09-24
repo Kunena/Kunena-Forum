@@ -679,13 +679,13 @@ function newAttachment() {
 	});
 }
 
-function bindAttachments() {
+/*function bindAttachments() {
 	var __kattachment = $$('.kattachment-old');
 	if (!__kattachment) return;
 	__kattachment.each(function(el) {
 		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment='+ el.getElement('input[type="checkbox"]').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', false); return false; } );
 	});
-}
+}*/
 
 //
 // Helper function for various IE7 and IE8 work arounds
@@ -766,8 +766,6 @@ function kEditorInitialize() {
 		});
 	}
 
-	bindAttachments();
-	newAttachment();
 	//This is need to retrieve the video provider selected by the user in the dropdownlist
 	if (document.id('kvideoprovider') != undefined) {
 		document.id('kvideoprovider').addEvent('change', function() {

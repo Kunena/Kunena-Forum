@@ -25,6 +25,90 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	/**
+	 * Get attachments attached to a message with AJAX.
+	 *
+	 * @throws RuntimeException
+	 *
+	 * @return string
+	 */
+	public function loadattachments()
+	{
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
+		if (!JSession::checkToken('request'))
+		{
+			throw new RuntimeException(JText::_('Forbidden'), 403);
+		}
+
+		$mes_id = $this->input->getInt('mes_id', 0);
+		$attachments = KunenaAttachmentHelper::getByMessage($mes_id);
+		$list = array();
+
+		foreach ($attachments as $attach)
+		{
+			$object = new stdClass;
+			$object->id = $attach->id;
+			$object->size = round($attach->size / '1024', 0);
+			$object->name = $attach->filename;
+			$object->folder = $attach->folder;
+			$object->caption = $attach->caption;
+			$object->type = $attach->filetype;
+			$object->path = $attach->getUrl(true);
+			$list['files'][] = $object;
+		}
+
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+		while(@ob_end_clean());
+		echo json_encode($list);
+		jexit();
+	}
+
+	/**
+	 * Remove files with AJAX.
+	 *
+	 * @throws RuntimeException
+	 *
+	 * @return string
+	 */
+	public function removeattachments()
+	{
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
+		if (!JSession::checkToken('request'))
+		{
+			throw new RuntimeException(JText::_('Forbidden'), 403);
+		}
+
+		$attach_id = $this->input->getInt('file_id', 0);
+		$success = array();
+		$instance = KunenaAttachmentHelper::get($attach_id);
+		$success['result'] = $instance->delete();
+		unset($instance);
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+		while(@ob_end_clean());
+		echo json_encode($success);
+		jexit();
+	}
+
+	/**
 	 * Upload files with AJAX.
 	 *
 	 * @throws RuntimeException
@@ -269,11 +353,12 @@ class KunenaControllerTopic extends KunenaController {
 		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
 		// Upload new attachments
-		foreach ($_FILES as $key=>$file) {
+		foreach ($_FILES as $key => $file)
+		{
 			$intkey = 0;
 			if (preg_match('/\D*(\d+)/', $key, $matches))
 				$intkey = (int)$matches[1];
-			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key, $this->catid);
+			if ($file['error'] == 0) $message->uploadAttachment($intkey, $key, $this->catid);
 		}
 
 		// Make sure that message has visible content (text, images or objects) to be shown.

@@ -74,7 +74,7 @@ $attachments = $this->attachments;
 							<?php if ($canDelete) echo JHtml::_('grid.id', $i, intval($attachment->id)); ?>
 						</td>
 						<td class="center">
-							<?php echo $attachment->isImage()	? '<i class="large-kicon icon-image"></i>' : '<i class="large-kicon icon-file"></i>'; ?>
+							<?php echo $attachment->isImage()	? '<i class="large-kicon icon-picture"></i>' : '<i class="large-kicon icon-file"></i>'; ?>
 						</td>
 						<td>
 							<?php echo $attachment->getShortName(5, 5); ?>

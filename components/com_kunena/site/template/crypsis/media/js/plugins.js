@@ -64,7 +64,7 @@ jQuery(document).ready(function() {
 			jQuery(this).find('.kspoiler-expand').show();
 			jQuery(this).find('.kspoiler-hide').hide();
 		}
-	});	
+	});
 
 	/* To check or uncheck boxes to select items */
 	jQuery('input.kcheckall').click(function() {
@@ -225,33 +225,37 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-	
+
 	/* To display preview area when clicking on preview button */
 	jQuery("#kbutton-preview").click(function() {
 		var preview = jQuery("#kbbcode-preview");
 		var message = jQuery("#kbbcode-message");
-	
+
 		if ( preview.length > 0 ) {
 			if ( !preview.is(":visible") ) {
 				preview.css('display', 'block');
-	
+
 				message.css('width', '95%');
-				
+
 				previewActive = true;
 				kPreviewHelper(previewActive);
 			} else {
 				previewActive = false;
 				preview.css('display', 'none');
-				message.css('width', '95%');  			
+				message.css('width', '95%');
 			}
 			preview.attr('class', 'kbbcode-preview-bottom controls');
 			var height = message.css('height');
 			preview.css('height', message.css('height'));
 		}
 	});
-	
+
 	jQuery('#kbbcode-message').bind('input propertychange', function() {
 		kPreviewHelper(previewActive);
+	});
+
+	jQuery(document).ready(function() {
+		jQuery('[rel=popover]').popover();
 	});
 });
 

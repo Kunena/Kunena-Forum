@@ -25,6 +25,7 @@ class KunenaImageHelper
 	 * @param  int     $maxHeight   Maximum height for the image.
 	 * @param  int     $quality     Quality for the file (1-100).
 	 * @param  int     $scale       See available KunenaImage constants.
+	 * @param  int     $crop        Define if you want crop the image.
 	 *
 	 * @return bool    True on success.
 	 */

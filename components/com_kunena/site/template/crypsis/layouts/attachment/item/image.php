@@ -21,6 +21,6 @@ $attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-bu
 $attributesImg = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
 
-<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0,7); ?>"<?php echo $attributesLink; ?>>
+<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0,7); ?>"<?php echo $attributesLink; ?>>
 	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
 </a>

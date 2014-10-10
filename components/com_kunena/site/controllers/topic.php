@@ -319,7 +319,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$poll_title = $fields['poll_title'];
-		if ($poll_title !== null) {
+		if ($poll_title !== null && $message->id == $topic->first_post_id) {
 			// Save changes into poll
 			$poll_options = $fields['poll_options'];
 			$poll = $topic->getPoll();

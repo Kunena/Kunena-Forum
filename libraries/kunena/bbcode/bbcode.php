@@ -132,12 +132,9 @@ class KunenaBbcode extends NBBC_BBCode {
 			if ($path[1] == 'itm') {
 				if (isset($path[3]) && is_numeric($path[3])) $itemid = intval($path[3]);
 				elseif (isset($path[2]) && is_numeric($path[2])) $itemid = intval($path[2]);
-				if (isset($itemid)) {
-					// convert ebay item to embedded widget
-					return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
-						. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
-						. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid='.$config->ebay_affiliate_id.'"></embed></object>';
-				}
+
+				return $this->getEbayItem($itemid);
+
 				/*
 				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*QQitemZ([0-9]+).+#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
 				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*ViewItem.+Item=([0-9]+).*#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
@@ -1129,13 +1126,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$ebay_maxwidth = (int) (($config->rtewidth * 9) / 10); // Max 90% of text width
 		$ebay_maxheight = (int) ($config->rteheight); // max. display size
 
-		if (is_numeric ( $content )) {
-			// Numeric: we have to assume this is an item id
-			return '<object width="'.$ebay_maxwidth.'" height="'.$ebay_maxheight.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=' . $content . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=' . $content . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
-		} else {
-			// Non numeric: we have to assume this is a search
-			return '<object width="'.$ebay_maxwidth.'" height="'.$ebay_maxheight.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=' . $content . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=' . $content . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
-		}
+		return $this->getEbayItem($content);
 	}
 
 	function DoArticle($bbcode, $action, $name, $default, $params, $content) {
@@ -1716,5 +1707,47 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$colortext = isset($params ["colortext"]) ? $params ["colortext"] : '#ffffff';
 
 		return "<div class=\"highlight\"><pre style=\"font-family:monospace;background-color:#444444;\"><span style=\"color:{$colortext};\">{$content}</span></pre></div>";
+	}
+
+	protected function getEbayItem($ItemID)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (is_numeric ($ItemID)  && $config->ebay_api_key)
+		{
+			$http = new JHttp;
+
+			$options = new JRegistry;
+
+			$transport = new JHttpTransportStream($options);
+
+			// Create a 'stream' transport.
+			$http = new JHttp($options, $transport);
+
+			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=71&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
+
+			if($response->code == '200')
+			{
+				$resp = json_decode($response->body);
+
+				$ebay_object = 'eBay Auction';
+				$ebay_object = '<br />';
+				$ebay_object .= '<img src="' . $resp->Item->PictureURL[0] . '" /><br />';
+				$ebay_object .= $resp->Item->PrimaryCategoryName;
+				$ebay_object .= '<br />';
+				$ebay_object .= $resp->Item->Location;
+				$ebay_object .= '<br />';
+				$ebay_object .= $resp->Item->BidCount;
+				$ebay_object .= '<br />';
+				$ebay_object .= $resp->Item->ConvertedCurrentPrice->Value . '  ' . $resp->Item->ConvertedCurrentPrice->CurrencyID;
+				$ebay_object .= '<br />';
+				// Convert to human understanble time
+				$ebay_object .= $resp->Item->EndTime;
+				$ebay_object .= '<br />';
+				$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">Place bid</a>';
+
+				return $ebay_object;
+			}
+		}
 	}
 }

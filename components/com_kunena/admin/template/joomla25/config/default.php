@@ -888,11 +888,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_A_SHOWEBAYTAG_DESC') ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE') ?></td>
-														<td><input type="text" name="cfg_ebaylanguagecode" value="<?php echo $this->escape($this->config->ebaylanguagecode) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE_DESC') ?></td>
-													</tr>
-													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLS') ?></td>
 														<td><?php echo $this->lists ['trimlongurls'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLS_DESC') ?></td>
@@ -933,9 +928,19 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_DESC') ?></td>
 													</tr>
 													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE') ?></td>
+														<td><?php echo $this->lists ['ebaylanguagecode'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE_DESC') ?></td>
+													</tr>
+													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID') ?></td>
 														<td><input type="text" name="cfg_ebay_affiliate_id" value="<?php echo $this->escape($this->config->ebay_affiliate_id) ?>" /></td>
 														<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_LABEL') ?></td>
+														<td><input type="text" name="cfg_ebay_api_key" value="<?php echo $this->escape($this->config->ebay_api_key) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
 													</tr>
 													<?php /*
 													// TODO: If you uncomment this feature, please remove forced disable from the KunenaConfig class.

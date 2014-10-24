@@ -389,6 +389,32 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['statslink_allowed'] = JHtml::_('select.genericlist', $yesno, 'cfg_statslink_allowed', 'class="inputbox" size="1"', 'value', 'text', $this->config->statslink_allowed);
 		$lists ['superadmin_userlist'] = JHtml::_('select.genericlist', $yesno, 'cfg_superadmin_userlist', 'class="inputbox" size="1"', 'value', 'text', $this->config->superadmin_userlist);
 
+		// List of eBay language code
+		$ebaylanguagecode = array();
+		$ebaylanguagecode[] = JHtml::_('select.option', '0', 'en-US');
+		$ebaylanguagecode[] = JHtml::_('select.option', '2', 'en-CA');
+		$ebaylanguagecode[] = JHtml::_('select.option', '3', 'en-GB');
+		$ebaylanguagecode[] = JHtml::_('select.option', '15', 'en-AU');
+		$ebaylanguagecode[] = JHtml::_('select.option', '16', 'de-AT');
+		$ebaylanguagecode[] = JHtml::_('select.option', '23', 'fr-BE');
+		$ebaylanguagecode[] = JHtml::_('select.option', '71', 'fr-FR');
+		$ebaylanguagecode[] = JHtml::_('select.option', '77', 'de-DE');
+		$ebaylanguagecode[] = JHtml::_('select.option', '101', 'it-IT');
+		$ebaylanguagecode[] = JHtml::_('select.option', '123', 'nl-BE');
+		$ebaylanguagecode[] = JHtml::_('select.option', '146', 'nl-NL');
+		$ebaylanguagecode[] = JHtml::_('select.option', '186', 'es-ES');
+		$ebaylanguagecode[] = JHtml::_('select.option', '193', 'ch-CH');
+		$ebaylanguagecode[] = JHtml::_('select.option', '201', 'hk-HK');
+		$ebaylanguagecode[] = JHtml::_('select.option', '203', 'in-IN');
+		$ebaylanguagecode[] = JHtml::_('select.option', '205', 'ie-IE');
+		$ebaylanguagecode[] = JHtml::_('select.option', '207', 'my-MY');
+		$ebaylanguagecode[] = JHtml::_('select.option', '210', 'fr-CA');
+		$ebaylanguagecode[] = JHtml::_('select.option', '211', 'ph-PH');
+		$ebaylanguagecode[] = JHtml::_('select.option', '212', 'pl-PL');
+		$ebaylanguagecode[] = JHtml::_('select.option', '216', 'sg-SG');
+
+		$lists['ebaylanguagecode'] = JHtml::_('select.genericlist', $ebaylanguagecode, 'cfg_ebaylanguagecode', 'class="inputbox" size="1"', 'value', 'text', $this->config->ebaylanguagecode);
+
 		return $lists;
 	}
 }

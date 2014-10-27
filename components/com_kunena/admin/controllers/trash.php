@@ -93,7 +93,7 @@ class KunenaAdminControllerTrash extends KunenaController {
 		if ( $type=='messages' ) {
 			$messages = KunenaForumMessageHelper::getMessages($cid, 'none');
 			foreach ( $messages as $target ) {
-				if ( $target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED) ) {
+				if ( $target->publish(KunenaForum::PUBLISHED) ) {
 					$nb_items++;
 				} else {
 					$this->app->enqueueMessage ( $target->getError(), 'notice' );
@@ -102,7 +102,7 @@ class KunenaAdminControllerTrash extends KunenaController {
 		} elseif ( $type=='topics' ) {
 			$topics = KunenaForumTopicHelper::getTopics($cid, 'none');
 			foreach ( $topics as $target ) {
-				if ( $target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED) ) {
+				if ( $target->publish(KunenaForum::PUBLISHED) ) {
 					$nb_items++;
 				} else {
 					$this->app->enqueueMessage ( $target->getError(), 'notice' );

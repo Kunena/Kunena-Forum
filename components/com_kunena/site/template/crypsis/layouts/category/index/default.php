@@ -189,13 +189,13 @@ foreach ($this->sections as $section) :
 							$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-thumbnail', 48) : null;
 							?>
 
-							<td class="span3 hidden-phone" id="category-index">
+							<td class="span3 hidden-phone" id="recent-topics">
 								<div class="row-fluid">
 									<?php if ($avatar) : ?>
-									<div class="span3">
+									<div class="span2">
 										<?php echo $author->getLink($avatar); ?>
 									</div>
-									<div class="span9">
+									<div class="span6">
 										<?php else : ?>
 										<div class="span12 last-posts">
 											<?php endif; ?>

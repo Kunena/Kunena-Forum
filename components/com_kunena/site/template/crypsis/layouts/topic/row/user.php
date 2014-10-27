@@ -99,12 +99,12 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="span2" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-		<div class="span3">
+		<div class="span1">
 			<?php echo $avatar; ?>
 		</div>
-		<div class="span9 last-posts">
+		<div class="span11">
 			<?php else : ?>
-			<div class="span12 last-posts">
+			<div class="span12">
 				<?php endif; ?>
 				<span><?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
 					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>

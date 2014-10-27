@@ -1724,27 +1724,23 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			// Create a 'stream' transport.
 			$http = new JHttp($options, $transport);
 
-			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=71&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
+			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
 
 			if($response->code == '200')
 			{
 				$resp = json_decode($response->body);
 
-				$ebay_object = 'eBay Auction';
-				$ebay_object = '<br />';
-				$ebay_object .= '<img src="' . $resp->Item->PictureURL[0] . '" /><br />';
-				$ebay_object .= $resp->Item->PrimaryCategoryName;
-				$ebay_object .= '<br />';
-				$ebay_object .= $resp->Item->Location;
-				$ebay_object .= '<br />';
-				$ebay_object .= $resp->Item->BidCount;
-				$ebay_object .= '<br />';
-				$ebay_object .= $resp->Item->ConvertedCurrentPrice->Value . '  ' . $resp->Item->ConvertedCurrentPrice->CurrencyID;
-				$ebay_object .= '<br />';
-				// Convert to human understanble time
-				$ebay_object .= $resp->Item->EndTime;
-				$ebay_object .= '<br />';
-				$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">Place bid</a>';
+				$ebay_object .= '<div style="border: 1px solid #e5e5e5;margin:10px;padding:10px;border-radius:5px">';
+				$ebay_object .= '<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif" />';
+				$ebay_object .= '<div style="margin:10px 0" /></div>';
+				$ebay_object .= '<div style="text-align: center;"><a href="' . $resp->Item->ViewItemURLForNaturalSearch . '"> <img  src="' . $resp->Item->PictureURL[0] . '" /></a></div>';
+				$ebay_object .= '<div style="margin:10px 0" /></div>';
+				$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">'. $resp->Item->Title. '</a>';
+				$ebay_object .= '<div style="margin:10px 0" /></div>';
+				$ebay_object .=  $resp->Item->ConvertedCurrentPrice->CurrencyID. '  ' . $resp->Item->ConvertedCurrentPrice->Value;
+				$ebay_object .= '<div style="margin:10px 0" /></div>';
+				$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '">Place bid</a>';
+				$ebay_object .= '</div>';
 
 				return $ebay_object;
 			}

@@ -192,18 +192,20 @@ foreach ($this->sections as $section) :
 							<td class="span3 hidden-phone" id="category-index">
 								<div class="row-fluid">
 									<?php if ($avatar) : ?>
-										<div class="span3">
-											<?php echo $author->getLink($avatar); ?>
-										</div>
-									<?php endif; ?>
-									<div class="span9">
-										<?php echo $this->getLastPostLink($category) ?>
-										<br>
-										<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
-										<br>
-										<?php echo $time->toKunena('config_post_dateformat'); ?>
+									<div class="span3">
+										<?php echo $author->getLink($avatar); ?>
 									</div>
-								</div>
+									<div class="span9">
+										<?php else : ?>
+										<div class="span12 last-posts">
+											<?php endif; ?>
+											<?php echo $this->getLastPostLink($category) ?>
+											<br>
+											<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
+											<br>
+											<?php echo $time->toKunena('config_post_dateformat'); ?>
+										</div>
+									</div>
 							</td>
 						<?php else : ?>
 							<td class="span3 center hidden-phone">

@@ -245,7 +245,7 @@ defined ( '_JEXEC' ) or die ();
 							   style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span class="center" onclick="kGrowShrinkMessage(-100);"
 																																	  style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></div>
 	<div class="controls">
-		<textarea class="span12 qreply" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 	<!-- Hidden preview placeholder -->
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
@@ -255,7 +255,7 @@ defined ( '_JEXEC' ) or die ();
 	<div class="control-group">
 		<label class="control-label"><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 		<div class="controls">
-			<textarea class="input-xxlarge" style="width: 96%;" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
 		</div>
 	</div>
 <?php endif; ?>

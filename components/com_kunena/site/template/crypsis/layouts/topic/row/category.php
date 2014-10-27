@@ -18,7 +18,7 @@ $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-polaroid', 48);
 $config = KunenaConfig::getInstance();
-$cols = empty($this->checkbox) ? 6 : 7;
+$cols = empty($this->checkbox) ? 5 : 6;
 
 if (!empty($this->spacing)) : ?>
 	<tr>
@@ -30,7 +30,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td>
+	<td class="span<?php echo $cols?>">
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
@@ -84,10 +84,10 @@ if (!empty($this->spacing)) : ?>
 	<td class="span2 hidden-phone">
 		<div>
 			<div class="repliesnum pull-right">
-				<span class="topictitle"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span>
+				<span class="topictitle"><strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong></span>
 			</div>
 			<div class="replies pull-left">
-				<span class="topictitle"><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</span>
+				<span class="topictitle"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong></span>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -103,16 +103,18 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="span2" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="span2">
-				<?php echo $avatar; ?>
-			</div>
-		<?php endif; ?>
+		<div class="span3">
+			<?php echo $avatar; ?>
+		</div>
 		<div class="span9 last-posts">
+			<?php else : ?>
+			<div class="span12 last-posts">
+				<?php endif; ?>
 				<span><?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
 					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>
-			<br>
-			<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
-		</div>
+				<br>
+				<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
+			</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

@@ -30,7 +30,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span7">
+	<td class="span<?php echo $cols; ?>">
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
@@ -59,9 +59,8 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div>
-			<?php echo $topic->getAuthor()->getLink(); ?>,
-			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?>
+			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?>,
+			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -100,16 +99,18 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="span2" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="span2">
-				<?php echo $avatar; ?>
-			</div>
-		<?php endif; ?>
+		<div class="span3">
+			<?php echo $avatar; ?>
+		</div>
 		<div class="span9 last-posts">
+			<?php else : ?>
+			<div class="span12 last-posts">
+				<?php endif; ?>
 				<span><?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
 					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>
-			<br>
-			<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
-		</div>
+				<br>
+				<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
+			</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

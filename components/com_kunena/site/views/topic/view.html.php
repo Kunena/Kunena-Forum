@@ -781,9 +781,12 @@ class KunenaViewTopic extends KunenaView {
 		$cachegroup = 'com_kunena.messages';
 
 		if ($this->config->reportmsg && $this->me->exists()) {
-			$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid='.intval($this->category->id).'&id='.intval($this->message->thread).'&mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
-		} else {
-			$this->reportMessageLink = null;
+			if (!$this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator()) {
+				$this->reportMessageLink = null;
+			}
+			else {
+				$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid='.intval($this->category->id).'&id='.intval($this->message->thread).'&mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
+			}
 		}
 
 		$contents = false; //$cache->get($cachekey, $cachegroup);

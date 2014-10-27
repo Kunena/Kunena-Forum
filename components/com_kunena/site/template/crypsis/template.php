@@ -89,7 +89,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		// Template also requires jQuery framework.
 		JHtml::_('jquery.framework');
-		JHtml::_('formbehavior.chosen');
+		//JHtml::_('formbehavior.chosen', 'select');
 
 		// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 		$this->addScript('js/caret.js');
@@ -100,7 +100,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$this->addScript('plugins.js');
 
 		// Compile CSS from LESS files.
-		$this->compileLess('main.less', 'kunena.css');
+		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
 		$config = KunenaFactory::getConfig();
@@ -116,8 +116,14 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Load FancyBox library if enabled in configuration
 		if ($config->lightbox == 1)
 		{
+			$template = KunenaTemplate::getInstance();
+			if ( $template->params->get('lightboxColor') == 'white') {
+				$this->addStyleSheet('css/fancybox-white.css');
+			}
+			else  {
+				$this->addStyleSheet('css/fancybox-black.css');
+			}
 			$this->addScript('js/fancybox.js');
-			$this->addStyleSheet('css/fancybox.css');
 			JFactory::getDocument()->addScriptDeclaration('
 				jQuery(document).ready(function() {
 					jQuery(".fancybox-button").fancybox({

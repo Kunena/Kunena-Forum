@@ -133,7 +133,7 @@ class KunenaBbcode extends NBBC_BBCode {
 				if (isset($path[3]) && is_numeric($path[3])) $itemid = intval($path[3]);
 				elseif (isset($path[2]) && is_numeric($path[2])) $itemid = intval($path[2]);
 
-				return $this->getEbayItem($itemid);
+				return $this->getEbayItemFromCache($itemid);
 
 				/*
 				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*QQitemZ([0-9]+).+#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
@@ -1126,7 +1126,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$ebay_maxwidth = (int) (($config->rtewidth * 9) / 10); // Max 90% of text width
 		$ebay_maxheight = (int) ($config->rteheight); // max. display size
 
-		return $this->getEbayItem($content);
+		return $this->getEbayItemFromCache($content);
 	}
 
 	function DoArticle($bbcode, $action, $name, $default, $params, $content) {
@@ -1709,11 +1709,35 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return "<div class=\"highlight\"><pre style=\"font-family:monospace;background-color:#444444;\"><span style=\"color:{$colortext};\">{$content}</span></pre></div>";
 	}
 
-	protected function getEbayItem($ItemID)
+	/**
+	 * Load eBay objet item from cache
+	 *
+	 * @param   int  $ItemID  The eBay ID of object to query
+	 *
+	 * @return string
+	 */
+	protected function getEbayItemFromCache($ItemID)
+	{
+		$cache = JFactory::getCache('Kunena_ebay_request');
+		$cache->setCaching(true);
+		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
+		$ebay_item = $cache->get(array($this, 'getEbayItem'), array($ItemID));
+
+		return $ebay_item;
+	}
+
+	/**
+	 * Query from eBay API the JSON stream of item id given to render
+	 *
+	 * @param   int  $ItemID  The eBay ID of object to query
+	 *
+	 * @return string
+	 */
+	public function getEbayItem($ItemID)
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (is_numeric ($ItemID)  && $config->ebay_api_key)
+		if (is_numeric($ItemID)  && $config->ebay_api_key)
 		{
 			$http = new JHttp;
 
@@ -1724,9 +1748,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			// Create a 'stream' transport.
 			$http = new JHttp($options, $transport);
 
-			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
+			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebaylanguagecode . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
 
-			if($response->code == '200')
+			if ($response->code == '200')
 			{
 				$resp = json_decode($response->body);
 
@@ -1735,11 +1759,20 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$ebay_object .= '<div style="margin:10px 0" /></div>';
 				$ebay_object .= '<div style="text-align: center;"><a href="' . $resp->Item->ViewItemURLForNaturalSearch . '"> <img  src="' . $resp->Item->PictureURL[0] . '" /></a></div>';
 				$ebay_object .= '<div style="margin:10px 0" /></div>';
-				$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">'. $resp->Item->Title. '</a>';
+				$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . $resp->Item->Title . '</a>';
 				$ebay_object .= '<div style="margin:10px 0" /></div>';
-				$ebay_object .=  $resp->Item->ConvertedCurrentPrice->CurrencyID. '  ' . $resp->Item->ConvertedCurrentPrice->Value;
+				$ebay_object .= $resp->Item->ConvertedCurrentPrice->CurrencyID . '  ' . $resp->Item->ConvertedCurrentPrice->Value;
 				$ebay_object .= '<div style="margin:10px 0" /></div>';
-				$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '">Place bid</a>';
+
+				if ($resp->Item->ListingStatus == "Active")
+				{
+					$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') . '</a>';
+				}
+				else
+				{
+					$ebay_object .= JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED');
+				}
+
 				$ebay_object .= '</div>';
 
 				return $ebay_object;

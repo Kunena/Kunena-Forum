@@ -1331,9 +1331,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		if (!$content) {
+		if (KunenaFactory::getConfig()->autolink_disable) {
 			$bbcode->autolink_disable--;
-			return;
+			return '';
+		}
+
+		if (!$content) {
+			return '';
 		}
 
 		// Display tag in activity streams etc..
@@ -1361,7 +1365,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			unset ( $vid_players );
 		}
 		if (! $vid ["type"]) {
-			$vid_auto = preg_match ( '#^http://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
+			$vid_auto = preg_match ( '#^https?://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
 			if ($vid_auto) {
 				$vid ["type"] = JString::strtolower ( $vid_regs [1] );
 				switch ($vid ["type"]) {

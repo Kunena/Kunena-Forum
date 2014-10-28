@@ -1331,9 +1331,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$bbcode->autolink_disable--;
-		if (! $content)
+		if (!$content) {
+			$bbcode->autolink_disable--;
 			return;
+		}
 
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal)) {

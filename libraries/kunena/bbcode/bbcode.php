@@ -1330,12 +1330,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$bbcode->autolink_disable++;
 			return true;
 		}
-
-		if (!KunenaFactory::getConfig()->autoembedyoutube) {
-			$bbcode->autolink_disable--;
-			return '';
-		}
-
+		
 		if (!$content) {
 			return '';
 		}

@@ -111,7 +111,7 @@ class KunenaModelTopics extends KunenaModel {
 		//$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_start", 'limitstart', 0, 'int' );
+		$value = JFactory::getApplication()->input->get('limitstart', 0, 'int');
 		//$value = $this->getInt ( 'limitstart', 0 );
 		$this->setState ( 'list.start', $value );
 

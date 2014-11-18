@@ -58,7 +58,7 @@ foreach ($this->sections as $section) :
 			echo $this->escape($section->name);
 		}
 		?>
-		<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
+		<small class="hidden-phone nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 				$this->formatLargeNumber($section->getTopics())); ?>)
 		</small>
 	</h2>

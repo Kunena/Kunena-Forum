@@ -308,6 +308,7 @@ ul li {
 
 .breadcrumb {
 	padding: 0;
+	margin-bottom: 20px;
 	background-color: transparent;
 }
 
@@ -661,7 +662,7 @@ table .well {
 }
 
 .table .pagination  {
-	max-height: 15px;
+	max-height: 25px;
 }
 
 .dropdown-menu .form-inline {
@@ -692,12 +693,17 @@ h2 .pull-right select {
 }
 
 .pagination {
-	margin: 0;
 	padding: 0;
 }
 
 .pagination ul > li {
 	display: inline;
+}
+
+.pagination-small ul > li > a,
+.pagination-small ul > li > span {
+	padding: 4px 6px !important;
+	line-height: 15px !important;
 }
 
 .pagination ul > li > a,
@@ -713,4 +719,13 @@ h2 .pull-right select {
 #recent-topics img.img-thumbnail {
 	vertical-align: text-top;
 	margin-right: 10px;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+div.btn-toolbar .font-size-is-default {
+	font-size: 16px;
+	line-height: 1.7em;
 }

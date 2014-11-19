@@ -23,7 +23,6 @@ defined ( '_JEXEC' ) or die ();
 		<section class="content-block" role="main">
 			<div class="row-fluid">
 				<div class="span7">
-
 					<div class="well well-small">
 						<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_WELCOME') ?></div>
 						<hr class="hr-condensed">
@@ -71,46 +70,58 @@ defined ( '_JEXEC' ) or die ();
 						</div>
 						<div class="clearfix"></div>
 					</div>
+					<div class="well well-small">
+						<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
+						<hr class="hr-condensed">
+						<ul class="pull-left">
+							<li><i class="icon icon-question"></i> <a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a href="http://www.kunena.org/forum" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
 				</div>
 
 				<div class="span5">
 					<div class="well well-small">
-						<div class="center">
+						<div class="module-title nav-header center">
 							<img src="components/com_kunena/media/icons/kunena_logo.png" />
 						</div>
-						<hr class="hr-condensed">
-						<dl class="dl-horizontal">
-							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_VERSION') ?>:</dt>
-							<dd><?php echo KunenaForum::version(); ?></dd>
-							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CODENAME') ?>:</dt>
-							<dd><?php echo KunenaForum::versionName(); ?></dd>
-							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_DATE') ?>:</dt>
-							<dd><?php echo KunenaForum::versionDate(); ?></dd>
-							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_AUTHOR') ?>:</dt>
-							<dd><a href="http://www.kunena.org/team" target="_blank">Kunena Team</a></dd>
-							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</dt>
-							<dd>&copy; 2008 - 2014 Kunena, All rights reserved.</dd>
-							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_LABEL_LICENSE') ?>:</dt>
-							<dd>GNU General Public License</dd>
-						</dl>
+						<table class="table table-striped" style="margin-bottom:0px;">
+							<tr>
+								<td><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_VERSION') ?>:</td>
+								<td><?php echo KunenaForum::version(); ?></td>
+							</tr>
+							<tr>
+								<td><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CODENAME') ?>:</td>
+								<td><?php echo KunenaForum::versionName(); ?></td>
+							</tr>
+							<tr>
+								<td><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_DATE') ?>:</td>
+								<td><?php echo KunenaForum::versionDate(); ?></td>
+							</tr>
+							<tr>
+								<td><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_AUTHOR') ?>:</td>
+								<td><a href="http://www.kunena.org/team" target="_blank">Kunena Team</a></td>
+							</tr>
+							<tr>
+								<td><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</td>
+								<td>&copy; 2008 - 2014 Kunena, All rights reserved.</td>
+							</tr>
+							<tr>
+								<td><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_LABEL_LICENSE') ?>:</td>
+								<td>GNU General Public License</td>
+							</tr>
+							<tr>
+								<td><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_MOREINFO') ?>:</td>
+								<td><a href="http://www.kunena.org/terms-of-use" target="_blank">http://www.kunena.org/terms-of-use</a></td>
+							</tr>
+						</table>
 					</div>
-
-					<!--<div class="well well-small">
-						<div class="module-title nav-header"><?php //echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
-						<hr class="hr-condensed">
-						<ul class="pull-left">
-							<li><a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank"><?php //echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
-							<li><a href="http://www.kunena.org/forum/K-2-0-Support/125990-kunena-2-0-3-known-issues" target="_blank"><?php //echo JText::_('COM_KUNENA_CPANEL_DESC_KNOWNINGERRORS') ?> </a></li>
-							<li><a href="http://www.kunena.org/forum" target="_blank"><?php //echo JText::_('COM_KUNENA_CPANEL_DESC_FREEORPAIDSUPPORT') ?> </a></li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>-->
-
 				</div>
-			</div>
 		</section>
-	</div>
-	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		<div class="pull-right small">
+			<?php echo KunenaVersion::getLongVersionHTML(); ?>
+		</div>
 	</div>
 </div>

@@ -51,7 +51,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		//$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_list_start", 'limitstart', 0, 'int' );
+		$value = JFactory::getApplication()->input->get('limitstart', 0, 'int');
 		$this->setState ( 'list.start', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_direction", 'filter_order_Dir', 'desc', 'word' );

@@ -20,7 +20,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$this->params = $params;
 	}
 
-	public function onAfterPost($message) {
+	public function onAfterPost(KunenaForumMessage $message) {
 		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 			CFactory::load ( 'libraries', 'userpoints' );
 			CUserPoints::assignPoint ( 'com_kunena.thread.new' );
@@ -30,7 +30,10 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
-		$act->title = JText::_ ( '{actor} ' . JText::sprintf ( 'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE', ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>') );
+		$act->title = JText::_('{actor} ' . JText::sprintf(
+			'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
+			' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
+		);
 		$act->content = $this->buildContent($message);
 		$act->app = 'kunena.thread.post';
 		$act->cid = $message->thread;
@@ -69,9 +72,9 @@ class KunenaActivityCommunity extends KunenaActivity {
 			$params->set('actorName', $actor->getDisplayName());
 			$params->set('recipientName', $target->getDisplayName());
 			$params->set('url',  JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null)); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
-			$params->set('title', $message->subject); // (title) tag in language file
+			$params->set('title', $message->displayField('subject')); // (title) tag in language file
 			$params->set('title_url' , $message->getPermaUrl() ); // Make the title in notification - linkable
-			$params->set('message', $message->message); // (message) tag in language file
+			$params->set('message', $message->displayField('message')); // (message) tag in language file
 			$params->set('actor', $actor->getDisplayName()); // Actor in the stream
 			$params->set('actor_url', 'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 
@@ -102,7 +105,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		CActivityStream::add ( $act );
 	}
 
-	public function onAfterThankyou($actor, $target, $message) {
+	public function onAfterThankyou($actor, $target, KunenaForumMessage $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $target );
 
@@ -115,7 +118,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$params->set('recipientName',   $target->getDisplayName());
 		$params->set('recipientUrl',	'index.php?option=com_community&view=profile&userid=' . $target->id); // Actor Link
 		$params->set('url',			 JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null)); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
-		$params->set('title',		   $message->subject); // (title) tag in language file
+		$params->set('title',		   $message->displayField('subject')); // (title) tag in language file
 		$params->set('title_url' ,	  $message->getPermaUrl() ); // Make the title in notification - linkable
 		$params->set('message',		 $message->message); // (message) tag in language file
 		$params->set('actor',		   $actor->getDisplayName()); // Actor in the stream

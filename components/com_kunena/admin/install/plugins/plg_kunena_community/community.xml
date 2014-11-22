@@ -24,7 +24,7 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-                <!-- JomSocial group support for Kunena categories
+                <!-- JomSocial group support for Kunena categories -->
 				<field name="access" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACCESS" description="PLG_KUNENA_COMMUNITY_ACCESS_DESC" class="btn-group">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>

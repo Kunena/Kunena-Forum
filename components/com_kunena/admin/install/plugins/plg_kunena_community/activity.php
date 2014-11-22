@@ -83,7 +83,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 			$params->set('actor_url', 'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 
 			// Finally, send notifications
-			CNotificationLibrary::add( 'kunena_reply', $actor->id, $target->id, JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE'), JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TEXT'), '', $params );
+			CNotificationLibrary::add( 'kunena_reply', $actor->id, $target->id, JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE_ACT'), JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TEXT'), '', $params );
 		}
 
 		/* Activity stream */
@@ -133,7 +133,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$params->set('actor_url',	   'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 
 		// Finally, send notifications
-		CNotificationLibrary::add('kunena_thankyou' , $actor->id , $target->id , JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE') , JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT') , '' , $params );
+		CNotificationLibrary::add('kunena_thankyou' , $actor->id , $target->id , JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT') , JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT') , '' , $params );
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';

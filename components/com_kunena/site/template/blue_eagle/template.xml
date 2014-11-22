@@ -166,5 +166,7 @@
 		<field name="avatarSizeYPost" type="hidden" default="144" />
 		<field name="avatarSizeXProfile" type="hidden" default="200" />
 		<field name="avatarSizeYProfile" type="hidden" default="200" />
+		
+		<field name="lastPostSubjectLength" type="text" default="20" label="COM_KUNENA_TEMPLATE_LAST_POST_SUBJECT_LENGTH" description="COM_KUNENA_TEMPLATE_LAST_POST_SUBJECT_LENGTH_DESC" />
 	</config>
 </kinstall>

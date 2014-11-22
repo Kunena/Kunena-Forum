@@ -1201,7 +1201,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 					return false;
 				if ($result) {
 					// Information in the database was wrong, recount topic
-					$this->hold = $result->hold;
+					$this->hold = $result['hold'];
 					$this->recount();
 				}
 				return true;

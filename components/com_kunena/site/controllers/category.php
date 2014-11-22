@@ -99,7 +99,10 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 		}
 
 		$catid = JRequest::getInt('catid', 0);
-		$catids = $catid ? array($catid) : array_keys(JRequest::getVar('categories', array(), 'post', 'array'));
+		$catids = $catid
+			? array($catid)
+			: array_keys(JRequest::getVar('categories', array(), 'post', 'array')); // Array or integer keys
+		JArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
 		foreach($categories as $category) {

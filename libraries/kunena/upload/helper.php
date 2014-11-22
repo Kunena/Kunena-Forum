@@ -32,7 +32,8 @@ class KunenaUploadHelper {
 		jimport('joomla.filesystem.file');
 		$file['name']	= JFile::makeSafe($file['name']);
 
-		if ( !JFolder::exists($uploadfolder) ) return false;
+		if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) return false;
+		if (!JFolder::exists($uploadfolder)) return false;
 
 		if (isset($file['name'])) {
 			$filepath = JPath::clean($uploadfolder.'/'.strtolower($file['name']));

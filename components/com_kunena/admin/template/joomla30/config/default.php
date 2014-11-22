@@ -478,11 +478,6 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<td><?php echo $this->lists ['show_imgfiles_manage_profile'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?></td>
 											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
-												<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
-											</tr>
 										</tbody>
 									</table>
 								</fieldset>
@@ -1112,6 +1107,11 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS') ?></td>
 												<td><?php echo $this->lists ['userlist_userhits'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
+												<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
 											</tr>
 										</tbody>
 									</table>

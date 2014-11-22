@@ -49,7 +49,11 @@ class KunenaAdminControllerTools extends KunenaController {
 			return;
 		}
 
-		$categories = KunenaForumCategoryHelper::getCategories(JRequest::getVar ( 'prune_forum', array(0) ), false, 'admin');
+		$ids = JRequest::getVar('prune_forum', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($ids);
+
+		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
+
 		if (!$categories) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CHOOSEFORUMTOPRUNE' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

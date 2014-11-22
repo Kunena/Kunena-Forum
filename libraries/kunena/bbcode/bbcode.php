@@ -1012,10 +1012,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		if (JFactory::getUser ()->id == 0) {
 			// Hide between content from non registered users
-			return JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
+			return '</br>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
 		} else {
 			// Display but highlight the fact that it is hidden from guests
-			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDE_IN_MESSAGE' ) . '</b>' . '<div class="kmsgtext-hide">' . $content . '</div>';
+			return '</br><b>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDE_IN_MESSAGE' ) . '</b>' . '<div class="kmsgtext-hide">' . $content . '</div>';
 		}
 	}
 
@@ -1521,11 +1521,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-			// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments )) {
-			$filename = basename(trim(strip_tags($content)));
-			return '['.JText::_('COM_KUNENA_FILEATTACH').' '.basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content))).']';
-		}
 		$attachments = &$bbcode->parent->attachments;
 		$attachment = null;
 		if (! empty ( $default )) {
@@ -1544,6 +1539,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				}
 			}
 		}
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments )) {
+			$filename = basename(trim(strip_tags($content)));
+			return $attachment->getThumbnailLink();
+		}
+
 		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments )) {
 			foreach ( $bbcode->parent->inline_attachments as $att ) {
 				if ($att->filename == trim(strip_tags($content))) {

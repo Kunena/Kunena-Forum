@@ -4,7 +4,8 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @Copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2013 - 2014 iJoomla, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -29,6 +30,7 @@ class plgKunenaCommunity extends JPlugin {
 	 * Get Kunena access control object.
 	 *
 	 * @return KunenaAccess
+	 * @todo Should we remove category ACL integration?
 	 */
 	public function onKunenaGetAccessControl() {
 		if (!$this->params->get('access', 1)) return null;
@@ -37,10 +39,10 @@ class plgKunenaCommunity extends JPlugin {
 		return new KunenaAccessCommunity($this->params);
 	}
 
-	/*
+	/**
 	 * Get Kunena login integration object.
 	 *
-	 * @return KunenaLogin
+	 * @return \KunenaLoginCommunity|null
 	 */
 	public function onKunenaGetLogin() {
 		if (!$this->params->get('login', 1)) return null;
@@ -49,10 +51,10 @@ class plgKunenaCommunity extends JPlugin {
 		return new KunenaLoginCommunity($this->params);
 	}
 
-	/*
+	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return KunenaAvatar
+	 * @return \KunenaAvatarCommunity|null
 	 */
 	public function onKunenaGetAvatar() {
 		if (!$this->params->get('avatar', 1)) return null;
@@ -61,10 +63,10 @@ class plgKunenaCommunity extends JPlugin {
 		return new KunenaAvatarCommunity($this->params);
 	}
 
-	/*
+	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return KunenaProfile
+	 * @return \KunenaProfileCommunity|null
 	 */
 	public function onKunenaGetProfile() {
 		if (!$this->params->get('profile', 1)) return null;
@@ -73,10 +75,10 @@ class plgKunenaCommunity extends JPlugin {
 		return new KunenaProfileCommunity($this->params);
 	}
 
-	/*
+	/**
 	 * Get Kunena private message integration object.
 	 *
-	 * @return KunenaPrivate
+	 * @return \KunenaPrivateCommunity|null
 	 */
 	public function onKunenaGetPrivate() {
 		if (!$this->params->get('private', 1)) return null;
@@ -85,10 +87,10 @@ class plgKunenaCommunity extends JPlugin {
 		return new KunenaPrivateCommunity($this->params);
 	}
 
-	/*
+	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return KunenaActivity
+	 * @return \KunenaActivityCommunity|null
 	 */
 	public function onKunenaGetActivity() {
 		if (!$this->params->get('activity', 1)) return null;

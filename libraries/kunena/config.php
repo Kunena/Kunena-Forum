@@ -105,7 +105,6 @@ class KunenaConfig extends JObject {
 	public $trimlongurlsback = 20;
 	public $autoembedyoutube = 1;
 	public $autoembedebay = 1;
-	public $ebaylanguagecode = 0;
 	public $sessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
 	public $highlightcode = 0;
@@ -230,6 +229,7 @@ class KunenaConfig extends JObject {
 	// New for 3.0.6
 	public $superadmin_userlist = 0;
 	// New for 3.0.7
+	public $ebay_language = 0;
 	public $ebay_api_key = '';
 
 	public function __construct() {

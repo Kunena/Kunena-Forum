@@ -938,7 +938,7 @@ if (version_compare(JVERSION, '3.2', '>'))
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE') ?></td>
-												<td><?php echo $this->lists ['ebaylanguagecode'] ?></td>
+												<td><?php echo $this->lists ['ebay_language'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE_DESC') ?></td>
 											</tr>
 											<tr>

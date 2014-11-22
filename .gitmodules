@@ -1,0 +1,6 @@
+[submodule "media/kunena/external/font-awesome"]
+	path = media/kunena/external/font-awesome
+	url = https://github.com/FortAwesome/Font-Awesome.git
+[submodule "media/kunena/external/tw-bootstrap"]
+	path = media/kunena/external/tw-bootstrap
+	url = https://github.com/twbs/bootstrap.git

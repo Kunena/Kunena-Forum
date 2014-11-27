@@ -48,7 +48,7 @@ $avatarname = $this->profile->getname();
 		</div>
 	<?php endif ?>
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
-		if ($this->me->isModerator() || $this->config->user_report || !$this->config->user_report && $this->me->userid !== $this->message->userid)  : ?>
+		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
 			<div class="msgfooter">
 				<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
 				<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">

@@ -76,6 +76,9 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function postflight($type, $parent) {
+
+		echo "<script src='". JPATH_ROOT ."/media/system/js/mootools-core.js' language='JavaScript'></script>";
+
 		$this->fixUpdateSite();
 
 		// Clear Joomla system cache.

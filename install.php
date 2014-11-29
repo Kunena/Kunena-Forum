@@ -95,6 +95,7 @@ class Pkg_KunenaInstallerScript {
 
 		$app = JFactory::getApplication();
 		if (version_compare(JVERSION, '3.0', '>')) {
+			echo "<script src='". JPATH_ROOT ."/media/system/js/mootools-core.js' language='JavaScript'></script>";
 			$modal = <<<EOS
 <div id="kunena-modal" class="modal hide fade"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;

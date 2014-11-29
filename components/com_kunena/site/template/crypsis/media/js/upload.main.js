@@ -36,6 +36,8 @@ jQuery(function($) {
 		.on('click', function () {
 			var $this = $(this),
 				data = $this.data(); 
+			
+			$('#klabel_info_drop_browse').show();
 
 			// Check if file exist on server
 			if(data.onserver!==false)
@@ -47,9 +49,7 @@ jQuery(function($) {
 					file_id = data.file_id;
 				}
 
-				if ( jQuery('#kattachs-'+file_id).length > 0 ) {
-					jQuery('#kattachs-'+file_id).remove();
-				}
+				jQuery('#kattach-list').append('<input id="kattachs-'+file_id+'" type="hidden" name="attachments['+file_id+']" value="1" />');
 
 				if ( jQuery('#kattach-'+file_id).length > 0 ) {
 					jQuery('#kattach-'+file_id).remove();
@@ -75,13 +75,10 @@ jQuery(function($) {
 		return $('#files').children().not('.processing').length;
 	}
 
-	var maxFiles = kunena_upload_files_maxfiles;
-
 	$('#fileupload').fileupload({
 		url: jQuery('#kunena_upload_files_url').val(),
 		dataType: 'json',
 		autoUpload: false,
-		singleFileUploads: false,
 		// Enable image resizing, except for Android and Opera,
 		// which actually support image resizing, but fail to
 		// send Blob objects via XHR requests:
@@ -98,16 +95,27 @@ jQuery(function($) {
 
 		data.formData = params;
 	})
+	.bind('fileuploaddrop', function (e, data) {
+		var fileCount = getNumberOfFiles()+1; 
+
+		if (fileCount > kunena_upload_files_maxfiles) {
+			$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES')+'</div>').insertBefore( $('#progress') );
+
+			return false; 
+		}
+	})
 	.bind('fileuploadchange', function (e, data) {
 		var fileCount = getNumberOfFiles()+1; 
 
-		if (fileCount > maxFiles) {
+		if (fileCount > kunena_upload_files_maxfiles) {
 			$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES')+'</div>').insertBefore( $('#progress') );
 
 			return false; 
 		}
 	})  
 	.on('fileuploadadd', function (e, data) {
+		$('#klabel_info_drop_browse').hide();
+		
 		$('#progress .bar').css(
 			'width',
 			'0%'
@@ -190,7 +198,7 @@ jQuery(function($) {
 		} 
 	}).on('fileuploadfail', function (e, data) {
 		$.each(data.files, function (index, file) {
-			// TODO: replace text with error message from server fi possible
+			// TODO: replace text with error message from server if possible
 			var error = $('<span class="text-danger"/>').text('File upload failed.');
 			$(data.context.children()[index])
 				.append('<br>')
@@ -200,20 +208,29 @@ jQuery(function($) {
 		.parent().addClass($.support.fileInput ? undefined : 'disabled');
 
 	// Load attachments when the message is edited
-	if ( jQuery('#kmessageid').val() > 0 ) {      
-		jQuery.ajax({
+	if ( $('#kmessageid').val() > 0 ) {
+		$.ajax({
 			type: 'POST',
 			url: kunena_upload_files_preload,
 			async: false,
 			dataType: 'json',
-			data: {mes_id : jQuery('#kmessageid').val() },
+			data: {mes_id : $('#kmessageid').val() },
 			success: function(data){
 				$( data.files ).each(function( index, file ) {
 					var object = $( '<div><p><img src="'+file.path+'" width="100" height="100" /><br /><span>'+file.name+'</span><br /></p></div>' );
 					data.onserver = true;
 					data.result= false;
 					data.file_id = file.id;
-					object.append(removeButton.clone(true).data(data));
+					object.append(removeButton.clone(true).data(data));var insertButton = $('<button>').addClass("btn btn-primary").text(Joomla.JText._('COM_KUNENA_EDITOR_INSERT'));
+
+					insertButton.click(function(e) {
+						// Make sure the button click doesn't submit the form:
+						e.preventDefault();
+						e.stopPropagation();
+
+						insertInMessage(file.id,file.name);
+					});  
+					object.append(insertButton);
 					object.appendTo( "#files" );
 				});
 			}

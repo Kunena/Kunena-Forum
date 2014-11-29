@@ -103,6 +103,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
 		JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 		JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
+		JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 
 		$this->addScript('js/jquery.ui.widget.js');
 		$this->addScript('js/load-image.min.js');
@@ -134,8 +135,14 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Load FancyBox library if enabled in configuration
 		if ($config->lightbox == 1)
 		{
+			$template = KunenaTemplate::getInstance();
+			if ( $template->params->get('lightboxColor') == 'white') {
+				$this->addStyleSheet('css/fancybox-white.css');
+			}
+			else  {
+				$this->addStyleSheet('css/fancybox-black.css');
+			}
 			$this->addScript('js/fancybox.js');
-			$this->addStyleSheet('css/fancybox.css');
 			JFactory::getDocument()->addScriptDeclaration('
 				jQuery(document).ready(function() {
 					jQuery(".fancybox-button").fancybox({

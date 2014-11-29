@@ -18,7 +18,7 @@ $topic = $message->getTopic();
 $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
-
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 48);
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;
 ?>
@@ -76,8 +76,13 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			</tbody>
 		</table>
 	</td>
-	<td class="span3">
-		<div class="post-desc">
+	<td class="span2" id="recent-topics">
+		<?php if ($config->avataroncat) : ?>
+			<div class="span2">
+				<?php echo $avatar; ?>
+			</div>
+		<?php endif; ?>
+		<div class="span9 last-posts">
 			<?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
 			<?php if ($message->userid) : ?>
 				<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>

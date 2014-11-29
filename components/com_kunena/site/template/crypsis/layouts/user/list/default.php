@@ -111,7 +111,6 @@ $cols = 1;
 						'kuserlist-form'); ?>
 				</th>
 				<?php endif; ?>
-
 			</tr>
 		</thead>
 		<tbody>
@@ -138,9 +137,7 @@ $cols = 1;
 				<?php if ($avatar) : ?>
 				<td class="center">
 					<div class="post-image">
-						<div class="img-thumbnail">
 							<?php echo $avatar; ?>
-						</div>
 					</div>
 				</td>
 				<?php endif; ?>
@@ -178,12 +175,22 @@ $cols = 1;
 					<?php echo (int) $user->uhits; ?>
 				</td>
 				<?php endif; ?>
-		
+
 				<?php endforeach; ?>
-				
-				</tr>						
+
+				</tr>
 		</tbody>
-		
+		<tfoot>
+		<td class="span1 center hidden-phone">
+			<a id="forumbottom"> </a>
+			<a href="#forumtop">
+				<i class="icon-arrow-up hasTooltip"></i>
+			</a>
+		</td>
+		<td colspan="7">
+		</td>
+		</tfoot>
+
 	</table>
 
 	<div class="pull-left">

@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Upload
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -217,19 +217,6 @@ class KunenaUpload
 	}
 
 	/**
-	 *
-	 * @param string $name
-	 * @return array
-	 */
-	protected function getFileInput($name)
-	{
-		$jinput = JFactory::getApplication()->input;
-		$files = $jinput->files->get($name);
-
-		return $files;
-	}
-
-	/**
 	 * Upload a file via AJAX, supports chunks and fallback to regular file upload.
 	 *
 	 * @param  array   $options   Upload options.
@@ -272,8 +259,7 @@ class KunenaUpload
 			$contentType = '';
 		}
 
-		try
-		{
+		try {
 			// Set filename for future queries.
 			$this->filename = $options['filename'];
 
@@ -299,115 +285,75 @@ class KunenaUpload
 
 			if (strpos($contentType, 'multipart') !== false)
 			{
-				$files = $this->getFileInput('files');
+				// Older WebKit browsers didn't support multi-part in HTML5.
+				$exception = $this->checkUpload($_FILES['file']);
 
-				foreach($files as $file)
+				if ($exception)
 				{
-					$file = JArrayHelper::toObject($file);
-					$exception = $this->checkUpload($file);
+					throw $exception;
+				}
 
-					if ($exception)
-					{
-						throw $exception;
-					}
+				$in = fopen($_FILES['file']['tmp_name'], 'rb');
+			}
+			else
+			{
+				// Multi-part upload.
+				$in = fopen('php://input', 'rb');
+			}
 
-					$in = fopen($file->tmp_name, 'rb');
+			if (!$in)
+			{
+				throw new RuntimeException(JText::_('Failed to open upload input stream.'), 500);
+			}
 
-					if (!$in)
-					{
-						throw new RuntimeException(JText::_('Failed to open upload input stream.'), 500);
-					}
+			// Open temporary file.
+			$out = fopen($outFile, !$options['chunkStart'] ? 'wb' : 'r+b');
 
-					// Open temporary file.
-					$out = fopen($outFile, !$options['chunkStart'] ? 'wb' : 'r+b');
+			if (!$out)
+			{
+				throw new RuntimeException(JText::_('Failed to open upload output stream.'), 500);
+			}
 
-					if (!$out)
-					{
-						throw new RuntimeException(JText::_('Failed to open upload output stream.'), 500);
-					}
+			// Get current size for the file.
+			$stat = fstat($out);
 
-					// Get current size for the file.
-					$stat = fstat($out);
+			if (!$stat) {
+				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $options['filename']), 500);
+			}
 
-					if (!$stat) {
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $options['filename']), 500);
-					}
+			$size = $stat['size'];
 
-					$size = $stat['size'];
+			if ($options['chunkStart'] > $size) {
+				throw new RuntimeException(JText::sprintf('Missing data chunk at location %d.', $size), 500);
+			}
 
-					if ($options['chunkStart'] > $size) {
-						throw new RuntimeException(JText::sprintf('Missing data chunk at location %d.', $size), 500);
-					}
+			fseek($out, $options['chunkStart']);
 
-					fseek($out, $options['chunkStart']);
+			while (!feof($in))
+			{
+				// Set script execution time to 8 seconds in order to interrupt stalled file transfers (< 1kb/sec).
+				// Not sure if it works, though, needs some testing. :)
+				@set_time_limit(8);
 
-					while (!feof($in))
-					{
-						// Set script execution time to 8 seconds in order to interrupt stalled file transfers (< 1kb/sec).
-						// Not sure if it works, though, needs some testing. :)
-						@set_time_limit(8);
+				$buff = fread($in, 8192);
 
-						$buff = fread($in, 8192);
+				if ($buff === false)
+				{
+					throw new RuntimeException(JText::_('Failed to read from upload input stream.'), 500);
+				}
 
-						if ($buff === false)
-						{
-							throw new RuntimeException(JText::_('Failed to read from upload input stream.'), 500);
-						}
+				$bytes = fwrite($out, $buff);
 
-						$bytes = fwrite($out, $buff);
+				if ($bytes === false)
+				{
+					throw new RuntimeException(JText::_('Failed to write into upload output stream.'), 500);
+				}
 
-						if ($bytes === false)
-						{
-							throw new RuntimeException(JText::_('Failed to write into upload output stream.'), 500);
-						}
+				$size += $bytes;
 
-						$size += $bytes;
-
-						if ($size > max($config->filesize, $config->imagesize) * 1024)
-						{
-							throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $size), 400);
-						}
-					}
-
-					// Reset script execution time.
-					@set_time_limit(25);
-
-					if ($in)
-					{
-						fclose($in);
-					}
-
-					if ($out)
-					{
-						fclose($out);
-					}
-
-					// Generate response.
-					if ((is_null($options['size']) && $size) || $size === $options['size'])
-					{
-						$options['size'] = (int) $size;
-						$options['completed'] = true;
-					}
-
-					$options['chunkStart'] = (int) $size;
-					$options['chunkEnd'] = min(
-						$size + 1024*1024,
-						$size + $this->getMaxSize(),
-						max($size, $options['size'], is_null($options['size']) ? $this->getMaxSize() : 0)
-					) - 1;
-
-					if ($options['completed'])
-					{
-						$options['mime'] = KunenaFile::getMime($outFile);
-						$options['hash'] = md5_file($outFile);
-
-					}
-					else
-					{
-						if ($size) $options['mime'] = KunenaFile::getMime($outFile);
-					}
-
-					$final_files[] = $options;
+				if ($size > max($config->filesize, $config->imagesize) * 1024)
+				{
+					throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $size), 400);
 				}
 			}
 		}
@@ -415,11 +361,48 @@ class KunenaUpload
 		{
 		}
 
+		// Reset script execution time.
+		@set_time_limit(25);
+
+		if ($in)
+		{
+			fclose($in);
+		}
+
+		if ($out)
+		{
+			fclose($out);
+		}
+
 		if ($exception instanceof Exception)
 		{
 			$this->cleanup();
 
 			throw $exception;
+		}
+
+		// Generate response.
+		if ((is_null($options['size']) && $size) || $size === $options['size'])
+		{
+			$options['size'] = (int) $size;
+			$options['completed'] = true;
+		}
+
+		$options['chunkStart'] = (int) $size;
+		$options['chunkEnd'] = min(
+				$size + 1024*1024,
+				$size + $this->getMaxSize(),
+				max($size, $options['size'], is_null($options['size']) ? $this->getMaxSize() : 0)
+			) - 1;
+
+		if ($options['completed'])
+		{
+			$options['mime'] = KunenaFile::getMime($outFile);
+			$options['hash'] = md5_file($outFile);
+
+		} else
+		{
+			if ($size) $options['mime'] = KunenaFile::getMime($outFile);
 		}
 
 		return $options;
@@ -497,6 +480,103 @@ class KunenaUpload
 	}
 
 	/**
+	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
+	 *
+	 * @param   int      $filesize  The size of file in bytes
+	 * @param   boolean  $avatar    If the file is an avatar
+	 *
+	 * @return boolean
+	 */
+	protected function checkFileSize($filesize, $avatar)
+	{
+		if ( !$avatar )
+		{
+			if ( $filesize > $this->getMaxSize() )
+			{
+				return false;
+			}
+		}
+		else if ( $avatar && $filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024 )
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Upload file by passing it by HTML input
+	 *
+	 * @param   array   $fileInput    The file object returned by JInput
+	 * @param   string  $destination  The path of destination of file uploaded
+	 *
+	 * @return object
+	 */
+	public function upload($fileInput, $destination)
+	{
+		$file = new stdClass;
+		$file->ext = JFile::getExt($fileInput['name']);
+		$file->size = $fileInput['size'];
+		$file->tmp_name = $fileInput['tmp_name'];
+		$file->error = $fileInput['error'];
+		$file->destination = $destination . '.' . $file->ext;
+		$file->success = false;
+
+		if ( !is_uploaded_file($file->tmp_name) )
+		{
+			$exception = $this->checkUpload($fileInput);
+
+			if ($exception)
+			{
+				throw $exception;
+			}
+		}
+		elseif ( $file->error != 0 )
+		{
+			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 500);
+		}
+
+		// Check if file extension matches any allowed extensions (case insensitive)
+		foreach ($this->validExtensions as $ext)
+		{
+			$extension = JString::substr($file->tmp_name, -JString::strlen($ext));
+
+			if (JString::strtolower($extension) == JString::strtolower($ext))
+			{
+				// File must contain one letter before extension
+				$name = JString::substr($file->tmp_name, 0, -JString::strlen($ext));
+				$extension = JString::substr($extension, 1);
+
+				if (!$name)
+				{
+					throw new RuntimeException(
+						JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+						400
+					);
+				}
+			}
+		}
+
+		if ( !$this->checkFileSize($file->size, true) )
+		{
+			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+		}
+
+		if (! KunenaFile::copy($file->tmp_name, $file->destination))
+		{
+			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_RIGHT_MEDIA_DIR'), 500);
+		}
+
+		unlink($file->tmp_name);
+
+		KunenaPath::setPermissions($file->destination);
+
+		$file->success = true;
+
+		return $file;
+	}
+
+	/**
 	 * Check for upload errors.
 	 *
 	 * @param  array  $file  Entry from $_FILES array.
@@ -507,39 +587,41 @@ class KunenaUpload
 	{
 		$exception = null;
 
-		switch ($file->error)
+		switch ($file['error'])
 		{
-			case '0' :
+			case UPLOAD_ERR_OK :
 				break;
 
-			case '1' :
-			case '2' :
+			case UPLOAD_ERR_INI_SIZE :
+			case UPLOAD_ERR_FORM_SIZE :
 				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_SIZE'), 400);
 				break;
 
-			case '3' :
+			case UPLOAD_ERR_PARTIAL :
 				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_PARTIAL'), 400);
 				break;
 
-			case '4' :
+			case UPLOAD_ERR_NO_FILE :
 				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_FILE'), 400);
 				break;
 
-			case '6' :
+			case UPLOAD_ERR_NO_TMP_DIR :
 				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR'), 500);
 				break;
 
-			case '7' :
+			case UPLOAD_ERR_CANT_WRITE :
 				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_CANT_WRITE'), 500);
 				break;
 
-			case '8' :
+			case UPLOAD_ERR_EXTENSION :
 				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION'), 500);
 				break;
 
+			default :
+				$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_UNKNOWN'), 500);
 		}
 
-		if (!$exception && (!isset($file->tmp_name) || !is_uploaded_file($file->tmp_name)))
+		if (!$exception && (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])))
 		{
 			$exception = new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 400);
 		}

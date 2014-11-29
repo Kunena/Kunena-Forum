@@ -490,7 +490,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
 				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
-					($this->message, $this, $html);
+					($this->message, $this->parent, $html);
 		}
 		return '';
 	}
@@ -729,9 +729,12 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 				$this->setError($exception->getMessage());
 				continue;
 			}
-			if (!$attachment->save()) {
-				$this->setError($attachment->getError());
-				continue;
+			if ($attachment->exists())
+			{
+				if (!$attachment->save()) {
+					$this->setError($attachment->getError());
+					continue;
+				}
 			}
 			// Update attachments count and fix attachment name inside message
 			$this->getTopic()->attachments++;

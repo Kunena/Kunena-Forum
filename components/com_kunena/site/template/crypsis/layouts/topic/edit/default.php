@@ -137,12 +137,14 @@ $this->addScriptDeclaration("kunena_upload_files_maxfiles = '" .$this->config->a
 					<div class="control-group krow<?php echo 1 + $this->k^=1;?>" id="kpost-attachments">
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
+							<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
+							<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT')?>: <?php echo $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT')?>: <?php echo $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT') ?></span><br /><br />
 							<!-- The fileinput-button span is used to style the file input field as button -->
-							<span class="btn btn-success fileinput-button">
-								<i class="glyphicon glyphicon-plus"></i>
-								<span>Add files...</span>
+							<span class="btn btn-primary fileinput-button">
+								<i class="icon-plus"></i>
+								<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
 								<!-- The file input field used as target for the file upload widget -->
-								<input id="fileupload" type="file" name="files[]" multiple>
+								<input id="fileupload" type="file" name="file" multiple>
 							</span>
 							<br>
 							<br>
@@ -152,6 +154,7 @@ $this->addScriptDeclaration("kunena_upload_files_maxfiles = '" .$this->config->a
 							</div>
 							<!-- The container for the uploaded files -->
 							<div id="files" class="files"></div>
+							<span id="klabel_info_drop_browse" class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
 							<br>
 						</div>
 					</div>

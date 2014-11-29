@@ -358,7 +358,11 @@ class KunenaControllerTopic extends KunenaController {
 			$intkey = 0;
 			if (preg_match('/\D*(\d+)/', $key, $matches))
 				$intkey = (int)$matches[1];
-			if ($file['error'] == 0) $message->uploadAttachment($intkey, $key, $this->catid);
+
+			if ($file['error'] == 0 && $intkey != 0)
+			{
+				$message->uploadAttachment($intkey, $key, $this->catid);
+			}
 		}
 
 		// Make sure that message has visible content (text, images or objects) to be shown.

@@ -260,7 +260,6 @@ var kbbcode = new Class({
 		if(this.options.interceptTabs) {
 
 			this.el.addEvent('keypress', function(event){
-				event = new Event(event);
 				if(event.key == "tab") {
 					event.preventDefault();
 					this.replaceSelection("\t");

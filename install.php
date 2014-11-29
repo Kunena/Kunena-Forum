@@ -97,7 +97,7 @@ class Pkg_KunenaInstallerScript {
 		$this->enablePlugin('quickicon', 'kunena');
 
 		$app = JFactory::getApplication();
-		if (version_compare(JVERSION, '3.4', '>')) {
+		if (version_compare(JVERSION, '3.4', '>=')) {
 			echo "<script src='". JPATH_ROOT ."/media/system/js/mootools-core.js' language='JavaScript'></script>";
 		}
 		if (version_compare(JVERSION, '3.0', '>')) {

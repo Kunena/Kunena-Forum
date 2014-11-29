@@ -9,7 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-JHtml::_('behavior.framework', true);
 ?>
 <style>
 #kunena h4 {

@@ -9,7 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-JHtml::_('behavior.framework', true);
 ?>
 <div id="kunena" style="max-width:530px">
 	<div id="kunena-install">

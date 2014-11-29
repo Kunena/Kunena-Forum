@@ -20,17 +20,20 @@ class Pkg_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
-			'0' => '5.4.14' // Preferred version
+			'0' => '5.4.23' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.1' => '3.1.1',
-			'3.0' => '3.0.3',
+			'3.4' => '3.4.0',
+			'3.3' => '3.3.1',
+			'3.2' => '3.2.4',
+			'3.1' => '3.1.5',
+			'3.0' => '3.0.4',
 			'2.5' => '2.5.9',
-			'0' => '2.5.11' // Preferred version
+			'0' => '3.3.6' // Preferred version
 		)
 	);
 	/**
@@ -94,8 +97,10 @@ class Pkg_KunenaInstallerScript {
 		$this->enablePlugin('quickicon', 'kunena');
 
 		$app = JFactory::getApplication();
-		if (version_compare(JVERSION, '3.0', '>')) {
+		if (version_compare(JVERSION, '3.4', '>')) {
 			echo "<script src='". JPATH_ROOT ."/media/system/js/mootools-core.js' language='JavaScript'></script>";
+		}
+		if (version_compare(JVERSION, '3.0', '>')) {
 			$modal = <<<EOS
 <div id="kunena-modal" class="modal hide fade"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;

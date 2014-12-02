@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -155,6 +155,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		}
 		// Fix last post position when user can see unapproved or deleted posts
 		if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
+			KunenaForumMessageHelper::getMessages($lastpostlist);
 			KunenaForumMessageHelper::loadLocation($lastpostlist);
 		}
 

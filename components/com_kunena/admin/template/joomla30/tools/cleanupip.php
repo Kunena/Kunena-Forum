@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Prune
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -32,7 +32,7 @@ defined ( '_JEXEC' ) or die ();
 						<td width="20%"><?php echo JText::_('COM_KUNENA_CLEANUP_IP_LEGEND_FROMDAYS') ?></td>
 						<td>
 							<div class="input-append">
-								<input class="span1" type="text" name="cleanup_ip_days" value="30" />
+								<input class="span3" type="text" name="cleanup_ip_days" value="30" />
 								<span class="add-on"><?php echo JText::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?></span>
 							</div>
 						</td>

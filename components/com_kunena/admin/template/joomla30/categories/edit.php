@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,6 +16,11 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
+
+if (version_compare(JVERSION, '3.2', '>'))
+{
+	JHtml::_('behavior.tabstate');
+}
 ?>
 
 <div id="kunena" class="admin override">

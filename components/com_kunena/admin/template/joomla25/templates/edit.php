@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Templates
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -67,7 +67,7 @@ JHtml::_('behavior.tooltip');
 										<td>
 											<ul class="adminformlist">
 											</ul>
-											<?php if (count($this->form->getFieldset())) : ?>
+											<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
 												<table class="table table-bordered table-striped">
 													<?php foreach($this->form->getFieldset() as $field) : if (!$field->hidden) : ?>
 														<tr>

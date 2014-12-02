@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -360,8 +360,32 @@ class KunenaViewCommon extends KunenaView {
 		return $profile->getUserListURL ( $action, $xhtml );
 	}
 
-	function getRSSURL($params = '', $xhtml = true) {
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=topics&format=feed&layout=default&mode=topics{$params}", $xhtml );
+	/**
+	 * Method to get Kunena URL RSS feed by taking config option to define the data to display
+	 *
+	 * @param   string  $params  Add extras params to the URL
+	 * @param   string  $xhtml   Replace & by & for XML compilance.
+	 *
+	 * @return string
+	 */
+	private function getRSSURL($params = '', $xhtml = true)
+	{
+		$mode = KunenaFactory::getConfig()->rss_type;
+
+		switch ($mode)
+		{
+			case 'topic' :
+				$rss_type = 'mode=topics';
+				break;
+			case 'recent' :
+				$rss_type = 'mode=replies';
+				break;
+			case 'post' :
+				$rss_type = 'layout=posts';
+				break;
+		}
+
+		return KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&layout=default&{$rss_type}{$params}", $xhtml);
 	}
 
 	function getRSSLink($name, $rel = 'follow', $params = '') {
@@ -369,7 +393,14 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	public function getStatsLink($name, $class = '', $rel = 'follow') {
-		return '<a href="'. KunenaRoute::_ ( 'index.php?option=com_kunena&view=statistics' ) .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
+		$my = KunenaFactory::getUser();
+
+		if (KunenaFactory::getConfig()->statslink_allowed == 0 && $my->userid == 0)
+		{
+			return false;
+		}
+
+		return '<a href="' . KunenaRoute::_('index.php?option=com_kunena&view=statistics') . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
 	}
 
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '') {

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -346,7 +346,7 @@ class KunenaUser extends JObject {
 	/**
 	 * @param string $class
 	 * @param string|int $sizex
-	 * @param int    $sizey
+	 * @param int	$sizey
 	 *
 	 * @return string
 	 */
@@ -357,7 +357,7 @@ class KunenaUser extends JObject {
 
 	/**
 	 * @param string|int $sizex
-	 * @param int    $sizey
+	 * @param int	$sizey
 	 *
 	 * @return string
 	 */
@@ -400,7 +400,8 @@ class KunenaUser extends JObject {
 	 * @return mixed
 	 */
 	public function getURL($xhtml = true, $task = '') {
-		if (!$this->exists()) return;
+		// Note: We want to link also existing users who have never visited Kunena before.
+		if (!$this->userid || !$this->registerDate) return;
 		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, $task, $xhtml );
 	}
 
@@ -597,9 +598,9 @@ class KunenaUser extends JObject {
 				break;
 			case 'birthdate' :
 				if ($this->birthdate) {
-					$date = new JDate ( $this->birthdate );
+					$date = new KunenaDate($this->birthdate);
 					if ($date->format('%Y')<1902) break;
-					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . KunenaDate::getInstance($this->birthdate)->toKunena( 'date', 0 ) . '"></span>';
+					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . $this->birthdate->toKunena('date', 'GMT') . '"></span>';
 				}
 				break;
 			case 'location' :
@@ -607,7 +608,8 @@ class KunenaUser extends JObject {
 					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . $this->escape ( $this->location ) . '"></span>';
 				break;
 			case 'website' :
-				$url = 'http://' . $this->websiteurl;
+				$url = $this->websiteurl;
+				if (!preg_match("~^(?:f|ht)tps?://~i", $this->websiteurl)) $url = 'http://' . $this->websiteurl;
 				if (! $this->websitename)
 					$websitename = $this->websiteurl;
 				else
@@ -680,5 +682,23 @@ class KunenaUser extends JObject {
 	 */
 	public function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	/**
+	 * @param string $name
+	 */
+	public function __get($name) {
+		switch ($name) {
+			case 'id':
+				return $this->userid;
+		}
+
+		$trace = debug_backtrace();
+		trigger_error(
+			'Undefined property via __get(): ' . $name .
+			' in ' . $trace[0]['file'] .
+			' on line ' . $trace[0]['line'],
+			E_USER_NOTICE);
+		return null;
 	}
 }

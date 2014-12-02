@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Joomla16
  *
- * @Copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -210,8 +210,8 @@ class KunenaAccessJoomla {
 	 */
 	public function getAuthoriseActions(KunenaForumCategory $category, $userid) {
 		$groups = (array) JAccess::getGroupsByUser($userid, true);
-		$post = array_intersect($groups, $category->params->get('access_post', array(2,6,8)));
-		$reply = array_intersect($groups, $category->params->get('access_reply', array(2,6,8)));
+		$post = array_intersect($groups, (array) $category->params->get('access_post', array(2,6,8)));
+		$reply = array_intersect($groups, (array) $category->params->get('access_reply', array(2,6,8)));
 		return array ('topic.create'=>!empty($post), 'topic.reply'=>!empty($reply), 'topic.post.reply'=>!empty($reply));
 	}
 

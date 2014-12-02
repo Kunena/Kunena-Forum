@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -75,7 +75,7 @@ class KunenaViewTopic extends KunenaView {
 		// If page does not exist, redirect to the last page (no redirect in embedded mode).
 		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start')) {
 			while (@ob_end_clean());
-			$this->app->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
+			$this->app->redirect($this->topic->getUrl(null, false, (int)(($this->total-1) / $this->state->get('list.limit'))));
 		}
 
 		// Run events
@@ -465,23 +465,54 @@ class KunenaViewTopic extends KunenaView {
 			$this->topic = $this->get ( 'Topic' );
 		}
 		$this->poll = $this->get('Poll');
-		$this->usercount = $this->get('PollUserCount');
 		$this->usersvoted = $this->get('PollUsers');
+		$this->usercount = count($this->usersvoted);
 		$this->voted = $this->get('MyVotes');
 
 		$this->users_voted_list = array();
 		$this->users_voted_morelist = array();
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
-			$i = 0;
+			$userids_votes = array();
 			foreach($this->usersvoted as $userid=>$vote) {
-				if ( $i <= '4' ) $this->users_voted_list[] = KunenaFactory::getUser(intval($userid))->getLink();
-				else $this->users_voted_morelist[] = KunenaFactory::getUser(intval($userid))->getLink();
+				$userids_votes[] = $userid;
+			}
+
+			$loaded_users = KunenaUserHelper::loadUsers($userids_votes);
+
+			$i = 0;
+			foreach($loaded_users as $userid=>$user) {
+				if ( $i <= '4' ) $this->users_voted_list[] = $loaded_users[$userid]->getLink();
+				else $this->users_voted_morelist[] = $loaded_users[$userid]->getLink();
 				$i++;
 			}
 		}
 
 		if ($this->voted || !$this->topic->authorise('poll.vote', null, true)) echo $this->loadTemplateFile("pollresults");
 		else echo $this->loadTemplateFile("poll");
+	}
+
+	function getCodeTypes() {
+		if (!$this->config->highlightcode) return null;
+
+		$paths = array(
+			JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi',
+			JPATH_ROOT.'/plugins/content/geshi/geshi/geshi'
+		);
+		foreach ($paths as $path) {
+			if (!file_exists($path)) continue;
+
+			$files = JFolder::files($path, ".php");
+			$options = array();
+			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
+			foreach ($files as $file) {
+				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
+			}
+			$javascript = "document.id('helpbox').set('value', '".JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true)."')";
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" onmouseover="'.$javascript.'"' , 'value', 'text', '-1' );
+
+			return $list;
+		}
+		return null;
 	}
 
 	function displayMessageProfile() {
@@ -725,10 +756,17 @@ class KunenaViewTopic extends KunenaView {
 				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
 				else $canUnthankyou=false;
 
+				$userids_thankyous = array();
 				foreach( $thankyous as $userid=>$time){
+					$userids_thankyous[] = $userid;
+				}
+
+				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
+
+				foreach($loaded_users as $userid=>$user) {
 					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
-					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
+					$this->thankyou[] = $loaded_users[$userid]->getLink().$thankyou_delete;
 				}
 			}
 		}
@@ -845,6 +883,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
 		$this->historycount = count ( $this->history );
+		$this->replycount = $this->topic->getTotal();
 		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
 		$userlist = array();
 		foreach ($this->history as $message) {

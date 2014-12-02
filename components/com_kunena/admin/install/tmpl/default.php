@@ -4,12 +4,11 @@
  * @package Kunena.Installer
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-JHtml::_('behavior.framework', true);
 ?>
 <div id="kunena" style="max-width:530px">
 	<div id="kunena-install">
@@ -96,12 +95,12 @@ jQuery( document ).ready(function() {
 		jQuery('#kunena-container').toggleClass('hidden');
 		e.preventDefault();
 	});
-	jQuery('.kunena-close').click(function(e) {
-		if (this.get('id') == 'kunena-component') window.location.href='<?php echo JRoute::_('index.php?option=com_kunena', false)?>';
-		if (jQuery('#kunena-modal')) {
-		} else if (this.get('id') == 'kunena-installer') {
-			window.location.href='<?php echo JRoute::_('index.php?option=com_installer&view=install', false)?>';
-		}
+	jQuery('#kunena-component').click(function(e) {
+		window.location.href='<?php echo JRoute::_('index.php?option=com_kunena', false)?>';
+		e.preventDefault();
+	});
+	jQuery('#kunena-installer').click(function(e) {
+		window.location.href='#Close';
 		e.preventDefault();
 	});
 	window.kunenainstall();

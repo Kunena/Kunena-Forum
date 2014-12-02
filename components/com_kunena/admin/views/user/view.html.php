@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -53,7 +53,7 @@ class KunenaAdminViewUser extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('users', 'COM_KUNENA_CANCEL');
+		JToolBarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
 		JToolBarHelper::spacer();
 	}
 
@@ -63,7 +63,7 @@ class KunenaAdminViewUser extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('users');
+		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 	}
 }

@@ -4,7 +4,7 @@
  * @package Kunena.Template.Crypsis
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -44,7 +44,7 @@ $this->k=0;
         <fieldset class="pull-left">
           <legend><?php echo $this->escape($this->title)?></legend>
           <?php if (isset($this->selectcatlist)): ?>
-          <div class="control-group"> 
+          <div class="control-group">
             <!-- Username -->
             <label class="control-label"><?php echo JText::_('COM_KUNENA_CATEGORY')?></label>
             <div class="controls"> <?php echo $this->selectcatlist?> </div>

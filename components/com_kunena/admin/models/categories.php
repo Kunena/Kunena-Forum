@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,11 +33,12 @@ class KunenaAdminModelCategories extends KunenaModel {
 	 * Method to auto-populate the model state.
 	 */
 	protected function populateState() {
+		$this->context = 'com_kunena.admin.categories';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
-		$this->context = 'com_kunena.admin.categories';
 		if ($layout) {
 			$this->context .= '.'.$layout;
 		}

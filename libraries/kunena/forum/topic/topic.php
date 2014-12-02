@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -1152,7 +1152,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			return false;
 		}
 
-		if ($exists && $message->userid && abs($postdelta) == 1) {
+		if ($exists && $message->userid && abs($postdelta) <= 1) {
 			// Update user topic
 			$usertopic = $this->getUserTopic($message->userid);
 			if (!$usertopic->update($message, $postdelta)) {
@@ -1201,7 +1201,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 					return false;
 				if ($result) {
 					// Information in the database was wrong, recount topic
-					$this->hold = $result->hold;
+					$this->hold = $result['hold'];
 					$this->recount();
 				}
 				return true;

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,7 +28,9 @@ class KunenaControllerAnnouncement extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		foreach ($cid as $id) {
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 			if ($announcement->published == 1) continue;
@@ -48,7 +50,9 @@ class KunenaControllerAnnouncement extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		foreach ($cid as $id) {
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 			if ($announcement->published == 0) continue;
@@ -63,7 +67,9 @@ class KunenaControllerAnnouncement extends KunenaController {
 	}
 
 	public function edit() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
 
 		$this->setRedirect ($announcement->getUrl('edit', false));
@@ -75,7 +81,9 @@ class KunenaControllerAnnouncement extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$cid = JRequest::getVar ( 'cid', (array) JRequest::getInt ('id'), 'post', 'array' );
+		$cid = JRequest::getVar('cid', (array) JRequest::getInt('id'), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		foreach ($cid as $id) {
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 			if (!$announcement->authorise('delete') || !$announcement->delete()) {

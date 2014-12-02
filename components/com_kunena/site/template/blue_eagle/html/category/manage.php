@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -36,9 +36,9 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 				<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 			</td>
 			<td class="kright">
-				<button onclick="javascript: submitbutton('add')"><?php echo JText::_( 'COM_KUNENA_NEW' ); ?></button>
-				<button onclick="javascript: submitbutton('edit')"><?php echo JText::_( 'COM_KUNENA_EDIT' ); ?></button>
-				<button onclick="javascript: submitbutton('remove')"><?php echo JText::_( 'COM_KUNENA_DELETE' ); ?></button>
+				<button onclick="submitbutton('add')"><?php echo JText::_( 'COM_KUNENA_NEW' ); ?></button>
+				<button onclick="submitbutton('edit')"><?php echo JText::_( 'COM_KUNENA_EDIT' ); ?></button>
+				<button onclick="submitbutton('remove')"><?php echo JText::_( 'COM_KUNENA_DELETE' ); ?></button>
 			</td>
 		</tr>
 	</table>

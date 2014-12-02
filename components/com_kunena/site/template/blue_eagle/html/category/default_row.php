@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,11 +23,11 @@ $this->cache = false;
 
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
 
-	<td class="kcol-first kcol-ktopicreplies">
+	<td class="kcol-first kcol-ktopicreplies hidden-phone">
 		<strong><?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
 	</td>
 
-	<td class="kcol-mid kcol-ktopicicon">
+	<td class="kcol-mid kcol-ktopicicon hidden-phone">
 		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
 	</td>
 
@@ -38,8 +38,8 @@ $this->cache = false;
 
 		<div class="ktopic-title-cover">
 			<?php
-			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
-			if ($this->topic->getUserTopic()->favorite) {
+			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' ); ?>
+			<?php if ($this->topic->getUserTopic()->favorite) {
 				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
 			}
 			if ($this->me->exists() && $this->topic->getUserTopic()->posts) {

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -26,52 +26,72 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function lock() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'locked', 1);
 		$this->redirectBack();
 	}
 	function unlock() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'locked', 0);
 		$this->redirectBack();
 	}
 	function review() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'review', 1);
 		$this->redirectBack();
 	}
 	function unreview() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'review', 0);
 		$this->redirectBack();
 	}
 	function allow_anonymous() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'allow_anonymous', 1);
 		$this->redirectBack();
 	}
 	function deny_anonymous() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'allow_anonymous', 0);
 		$this->redirectBack();
 	}
 	function allow_polls() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'allow_polls', 1);
 		$this->redirectBack();
 	}
 	function deny_polls() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'allow_polls', 0);
 		$this->redirectBack();
 	}
 	function publish() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'published', 1);
 		$this->redirectBack();
 	}
 	function unpublish() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->setVariable($cid, 'published', 0);
 		$this->redirectBack();
 	}
@@ -84,8 +104,10 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$this->redirectBack();
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$id = (int)array_shift($cid);
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
+		$id = array_shift($cid);
 		$this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=create&catid={$id}", false));
 	}
 
@@ -97,7 +119,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$this->redirectBack();
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$id = array_shift($cid);
 		if (!$id) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
@@ -238,7 +262,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$this->redirectBack();
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
 
 		if (empty ( $cid )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
@@ -300,8 +325,10 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$this->redirectBack();
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$order = JRequest::getVar ( 'order', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+		$order = JRequest::getVar('order', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($order);
 
 		if (empty ( $cid )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
@@ -364,13 +391,17 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function orderup() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->orderUpDown ( array_shift($cid), -1 );
 		$this->redirectBack();
 	}
 
 	function orderdown() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$this->orderUpDown ( array_shift($cid), 1 );
 		$this->redirectBack();
 	}

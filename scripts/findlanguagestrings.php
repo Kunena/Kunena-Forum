@@ -65,8 +65,6 @@ foreach ($keys as $key => $location) {
 	} elseif (preg_match('#^components/com_kunena/views/#', $location)) {
 		$files['site/en-GB.com_kunena.views.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^components/com_kunena/template/#', $location)) {
-		if (preg_match('#/mirage/#', $location))
-			$files['site/en-GB.com_kunena.tpl_mirage.ini'][$location][$key] = $location;
 		if (preg_match('#/blue_eagle/#', $location))
 			$files['site/en-GB.com_kunena.tpl_blue_eagle.ini'][$location][$key] = $location;
 		else

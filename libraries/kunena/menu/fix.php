@@ -4,14 +4,12 @@
  * @package Kunena.Framework
  * @subpackage Forum.Menu
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-jimport ('joomla.database.table');
 
 KunenaMenuFix::initialize();
 

@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -49,7 +49,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php if (!empty($this->topicActions)) : ?>
 		<span class="kcheckbox select-toggle"><input class="kcheckall" type="checkbox" name="toggle" value="" /></span>
 		<?php endif; ?>
-		<h2><span><?php echo $this->escape($this->headerText); ?></span></h2>
+		<h3><span><?php echo $this->escape($this->headerText); ?></span></h3>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">

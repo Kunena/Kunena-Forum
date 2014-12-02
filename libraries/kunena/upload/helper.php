@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Upload
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -32,7 +32,8 @@ class KunenaUploadHelper {
 		jimport('joomla.filesystem.file');
 		$file['name']	= JFile::makeSafe($file['name']);
 
-		if ( !JFolder::exists($uploadfolder) ) return false;
+		if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) return false;
+		if (!JFolder::exists($uploadfolder)) return false;
 
 		if (isset($file['name'])) {
 			$filepath = JPath::clean($uploadfolder.'/'.strtolower($file['name']));

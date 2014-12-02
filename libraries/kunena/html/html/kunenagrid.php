@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage HTML
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -249,8 +249,6 @@ abstract class JHtmlKunenaGrid
 		if (!$loaded)
 		{
 			JHtml::_('behavior.tooltip');
-			// FIXME: is this needed in J!2.5?
-			KunenaTemplate::getInstance()->addScript ( 'js/grid.js' );
 
 			// Build the behavior script.
 			$js = '

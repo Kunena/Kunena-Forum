@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Gravatar
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,6 +27,7 @@ class KunenaAvatarGravatar extends KunenaAvatar {
 		$user = KunenaFactory::getUser($user);
 		$gravatar = new KunenaGravatar($user->email);
 		$gravatar->setAvatarSize(min($sizex, $sizey));
+		$gravatar->setDefaultImage(false);
 		$gravatar->setMaxRating('g');
 		return $gravatar->buildGravatarURL( true );
 	}

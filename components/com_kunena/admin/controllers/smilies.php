@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -38,7 +38,9 @@ class KunenaAdminControllerSmilies extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$id = array_shift($cid);
 		if (!$id) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_SMILEYS_SELECTED' ), 'notice' );
@@ -89,8 +91,8 @@ class KunenaAdminControllerSmilies extends KunenaController {
 			return;
 		}
 
-		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
-		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
+		$file 			= JRequest::getVar('Filedata', null, 'files', 'array'); // File upload
+		$format			= JRequest::getCmd( 'format', 'html');
 
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT.'/'.KunenaFactory::getTemplate()->getSmileyPath(), $format);
 		if ( $upload ) {
@@ -111,9 +113,10 @@ class KunenaAdminControllerSmilies extends KunenaController {
 			return;
 		}
 
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		JArrayHelper::toInteger($cids);
-		$cids = implode ( ',', $cids );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
+		$cids = implode ( ',', $cid );
 		if ($cids) {
 			$db->setQuery ( "DELETE FROM #__kunena_smileys WHERE id IN ($cids)" );
 			$db->query ();
@@ -122,5 +125,17 @@ class KunenaAdminControllerSmilies extends KunenaController {
 
 		$this->app->enqueueMessage (JText::_('COM_KUNENA_SMILEY_DELETED') );
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+	}
+
+	/**
+	 * Method to just redirect to main manager in case of use of cancel button
+	 *
+	 * @return void
+	 *
+	 * @since 3.1
+	 */
+	public function cancel()
+	{
+		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

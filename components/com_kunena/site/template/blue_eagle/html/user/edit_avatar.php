@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -47,7 +47,7 @@ $i=0;
 		</td>
 	</tr>
 <?php endif; ?>
-<?php if ($this->config->allowavatargallery):?>
+<?php if ($this->config->allowavatargallery && $this->galleries):?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -49,7 +49,11 @@ class KunenaAdminControllerTools extends KunenaController {
 			return;
 		}
 
-		$categories = KunenaForumCategoryHelper::getCategories(JRequest::getVar ( 'prune_forum', array(0) ), false, 'admin');
+		$ids = JRequest::getVar('prune_forum', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($ids);
+
+		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
+
 		if (!$categories) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CHOOSEFORUMTOPRUNE' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -176,7 +180,7 @@ class KunenaAdminControllerTools extends KunenaController {
 
 		$this->checkTimeout();
 		while (1) {
-			$count = mt_rand(95000, 105000);
+			$count = mt_rand(4500, 5500);
 			switch ($state->step) {
 				case 0:
 					if ($state->topics) {
@@ -321,9 +325,21 @@ class KunenaAdminControllerTools extends KunenaController {
 			$start = $time;
 			return false;
 		}
-		if ($time - $start < 1)
+		if ($time - $start < 14)
 			return false;
 
 		return true;
+	}
+
+	/**
+	 * Method to just redirect to main manager in case of use of cancel button
+	 *
+	 * @return void
+	 *
+	 * @since 3.1.0
+	 */
+	public function cancel()
+	{
+		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

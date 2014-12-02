@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Route
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -46,10 +46,10 @@ abstract class KunenaRoute {
 	static $menus = false;
 	static $menu = false;
 	static $default = false;
-	static $active = false;
+	static $active = null;
 	static $home = false;
 	static $search = false;
-	static $routeVars = null;
+	static $current = null;
 
 	static $childlist = false;
 	static $subtree = array();
@@ -272,23 +272,77 @@ abstract class KunenaRoute {
 		self::$menus = JFactory::getApplication()->getMenu ();
 		self::$menu = self::$menus->getMenu ();
 		self::$default = self::$menus->getDefault();
-		$active = self::$menus->getActive ();
-		if ($active && $active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view'])) {
-			self::$active = $active;
-		} else {
-			self::$active = null;
-		}
-		self::$home = self::getHome(self::$active);
+		$active = self::$menus->getActive();
 
-		$uri = clone JURI::getInstance();
-		$router = JFactory::getApplication()->getRouter();
-		self::$routeVars = $router->parse($uri);
+		// Get the full request URI.
+		$uri = clone JUri::getInstance();
+
+		// Get current route.
+		self::$current = new JUri('index.php');
+
+		if ($active)
+		{
+			foreach ($active->query as $key => $value)
+			{
+				self::$current->setVar($key, $value);
+			}
+
+			self::$current->setVar('Itemid', (int) $active->id);
+
+			if ($active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view']))
+			{
+				self::$active = $active;
+			}
+		}
+
+		// If values are both in GET and POST, they are only stored in POST
+		foreach (JRequest::get('post') as $key => $value)
+		{
+			if (in_array($key, array('view', 'layout', 'task')) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
+			{
+				self::$current->setVar($key, $value);
+			}
+		}
+
+		// Make sure that request URI is not broken
+		foreach (JRequest::get('get') as $key => $value)
+		{
+			if (preg_match('/[^a-zA-Z]/', $key))
+			{
+				continue;
+			}
+
+			if (in_array($key, array('q', 'query', 'searchuser')))
+			{
+				// Allow all values
+			}
+			// TODO: we need to find a way to here deal with arrays: &foo[]=bar
+			elseif (gettype($value)=='string')
+			{
+				if(preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+				{
+				// Illegal value
+  				continue;
+				}
+			}
+
+			self::$current->setVar($key, $value);
+		}
+
+		if (self::$current->getVar('start'))
+		{
+			self::$current->setVar('limitstart', self::$current->getVar('start'));
+			self::$current->delVar('start');
+		}
+
+		self::$home = self::getHome(self::$active);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
 	public static function cleanup() {
 		self::$filtered = array();
+		self::$uris = array();
 	}
 
 	protected static function prepare($uri = null) {
@@ -296,24 +350,7 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
 			if (!isset($current[$uri])) {
-				$get = self::$routeVars;
-				// If values are both in GET and POST, they are only stored in POST
-				foreach (JRequest::get( 'post' ) as $key=>$value) {
-					if (($key == 'view' || $key == 'layout' || $key == 'task') && !preg_match('/[^a-zA-Z0-9_ ]/i', $value))
-						$get[$key] = $value;
-				}
-				// Make sure that request URI is not broken
-				foreach (JRequest::get( 'get' ) as $key=>$value) {
-					if (preg_match('/[^a-zA-Z]/', $key)) continue;
-					if ($key == 'q' || $key == 'searchuser') {
-						// Allow all values
-					} elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
-						// Illegal value
-						continue;
-					}
-					$get[$key] = $value;
-				}
-
+				$get = self::$current->getQuery(true);
 				$uri = $current[$uri] = JUri::getInstance('index.php?'.http_build_query($get).$uri);
 				self::setItemID($uri);
 				$uri->delVar ( 'defaultmenu' );
@@ -331,7 +368,7 @@ abstract class KunenaRoute {
 		} elseif ($uri instanceof JUri) {
 			// Nothing to do
 		} else {
-			$uri = JUri::getInstance ( (string)$uri );
+			$uri = new JUri((string) $uri);
 		}
 		$option = $uri->getVar('option');
 		$Itemid = $uri->getVar('Itemid');
@@ -374,7 +411,7 @@ abstract class KunenaRoute {
 				$r = array();
 				break;
 			case 'search':
-				$r = array('q', 'titleonly', 'searchuser', 'starteronly', 'exactname', 'replyless',
+				$r = array('q', 'query', 'titleonly', 'searchuser', 'starteronly', 'exactname', 'replyless',
 					'replylimit', 'searchdate', 'beforeafter', 'sortby', 'order', 'childforums', 'catids',
 					'show', 'limitstart', 'limit');
 				break;

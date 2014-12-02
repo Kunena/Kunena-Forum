@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -48,7 +48,7 @@ class KunenaModelUser extends KunenaModel {
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_search", 'search', '' );
+		$value = $this->app->input->get ( 'search', null, 'string' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
 
 		$db = JFactory::getDBO();
@@ -60,12 +60,26 @@ class KunenaModelUser extends KunenaModel {
 	}
 
 	public function getQueryWhere() {
-		if ($this->config->userlist_count_users == '1' ) $where = '(u.block=0 OR u.activation="")';
-		elseif ($this->config->userlist_count_users == '2' ) $where = '(u.block=0 AND u.activation="")';
-		elseif ($this->config->userlist_count_users == '3' ) $where = 'u.block=0';
-		else $where = '1';
+		$where = '';
+
 		// Hide super admins from the list
-		$where .= ' AND u.id NOT IN ('.$this->getState ( 'list.exclude' ).')';
+		if ( !KunenaFactory::getConfig()->superadmin_userlist )
+		{
+			$db = JFactory::getDBO();
+			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
+			$db->setQuery ( $query );
+			$superadmins = (array) $db->loadColumn();
+			if (!$superadmins) $superadmins = array(0);
+			$this->setState ( 'list.exclude', implode(',', $superadmins));
+
+			$where = ' u.id NOT IN ('.$this->getState ( 'list.exclude' ).') AND ';
+		}
+
+		if ($this->config->userlist_count_users == '1' ) $where .= '(u.block=0 OR u.activation="")';
+		elseif ($this->config->userlist_count_users == '2' ) $where .= '(u.block=0 AND u.activation="")';
+		elseif ($this->config->userlist_count_users == '3' ) $where .= 'u.block=0';
+		else $where .= '1';
+
 		return $where;
 	}
 
@@ -105,7 +119,7 @@ class KunenaModelUser extends KunenaModel {
 			$search = $this->getQuerySearch();
 			$query = "SELECT COUNT(*)
 				FROM #__users AS u
-				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
+				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
 			$db->setQuery ( $query );
 			$total = $db->loadResult ();
@@ -130,19 +144,18 @@ class KunenaModelUser extends KunenaModel {
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
-			$moderator = intval($this->me->isModerator());
-			$query = "SELECT *, IF(ku.hideEmail=0 OR {$moderator},u.email,'') AS email
+			$query = "SELECT u.id
 				FROM #__users AS u
-				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
+				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
 			$query .= " ORDER BY {$db->quoteName($this->getState ( 'list.ordering'))} {$this->getState ( 'list.direction')}";
 
 			$db->setQuery ( $query, $limitstart, $limit );
-			$items = $db->loadObjectList ('id');
+			$items = $db->loadColumn();
 			KunenaError::checkDatabaseError();
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			KunenaUserHelper::loadUsers(array_keys($items));
+			$items = KunenaUserHelper::loadUsers($items);
 		}
 		return $items;
 	}

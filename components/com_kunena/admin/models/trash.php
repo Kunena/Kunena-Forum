@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,10 +27,15 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * Method to auto-populate the model state.
 	 */
 	protected function populateState() {
+		$this->context = 'com_kunena.admin.trash';
+
 		$layout = $this->getUserStateFromRequest ( "com_kunena.admin.trash.layout", 'layout', 'messages', 'cmd' );
 		// Set default view on messages
 		if ($layout != 'messages') $layout='topics';
 		$this->setState ( 'layout', $layout );
+		if ($layout) {
+			$this->context .= '.'.$layout;
+		}
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );

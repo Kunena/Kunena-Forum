@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -56,7 +56,7 @@ class KunenaSpamRecaptcha {
 		$this->config = KunenaFactory::getConfig();
 		$this->publickey = $this->config->recaptcha_publickey;
 		$this->privatekey = $this->config->recaptcha_privatekey;
-		$this->host = JRequest::getVar('REMOTE_ADDR', null, 'server');
+		$this->host = JRequest::getString('REMOTE_ADDR', null, 'server');
 	}
 
 	public static function getInstance() {

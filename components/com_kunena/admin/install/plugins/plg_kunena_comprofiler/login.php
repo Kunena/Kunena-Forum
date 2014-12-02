@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -61,10 +61,17 @@ class KunenaLoginComprofiler {
 		return cbSef ( 'index.php?option=com_comprofiler&task=logout' );
 	}
 
-	public function getRegistrationURL() {
-		$usersConfig = JComponentHelper::getParams ( 'com_users' );
-		if ($usersConfig->get ( 'allowUserRegistration' ))
-			return cbSef ( 'index.php?option=com_comprofiler&task=registers' );
+	public function getRegistrationURL()
+	{
+		global $ueConfig;
+		$usersConfig = JComponentHelper::getParams('com_comprofiler');
+
+		if ($ueConfig['reg_admin_allowcbregistration'] == 1
+			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration')))
+		{
+			return cbSef('index.php?option=com_comprofiler&task=registers');
+		}
+
 		return null;
 	}
 

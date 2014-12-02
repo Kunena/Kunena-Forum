@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Attachments
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -129,25 +129,21 @@ defined ( '_JEXEC' ) or die ();
 							</tfoot>
 							<tbody>
 							<?php
-							$k = 0;
-							$i = 0;
+							$k = $i = 0;
 							$n = count($this->items);
 							if($this->pagination->total > 0) :
-							foreach($this->items as $id=>$attachment) {
-							$instance = KunenaForumMessageAttachmentHelper::get($attachment->id);
-							$message = $instance->getMessage();
-							$path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
-							if ( $instance->isImage($attachment->filetype) && is_file($path)) list($width, $height) = getimagesize( $path );
+							foreach ($this->attachments_instance as $attachment)
+							{
 							?>
 								<tr <?php echo 'class = "row' . $k . '"';?>>
-									<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
-									<td><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
-									<td><?php echo $this->escape($attachment->filetype); ?></td>
-									<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
-									<td><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
-									<td><?php echo $this->escape($message->name); ?></td>
-									<td><?php echo $this->escape($message->subject); ?></td>
-									<td><?php echo intval($attachment->id); ?></td>
+									<td><?php echo JHtml::_('grid.id', $i, intval($attachment->attachment->id)) ?></td>
+									<td><?php echo $attachment->attachment->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->attachment->filename, 10, 15) ?></td>
+									<td><?php echo $this->escape($attachment->attachment->filetype); ?></td>
+									<td><?php echo number_format ( intval ( $attachment->attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
+									<td><?php echo isset($attachment->width) && isset($attachment->height) ? $attachment->width . ' x ' . $attachment->height  : '' ?></td>
+									<td><?php echo $this->escape($attachment->message->name); ?></td>
+									<td><?php echo $this->escape($attachment->message->subject); ?></td>
+									<td><?php echo intval($attachment->attachment->id); ?></td>
 								</tr>
 							<?php
 							$i++;

@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,7 +17,7 @@ function hideMessage() {
 	div.style.display = "none";
 }
 
-window.addEvent('domready', function(){	
+window.addEvent('domready', function(){
 	$$('.kspoiler').each(function(el){
 		var contentElement = el.getElement('.kspoiler-content');
 		var expandElement = el.getElement('.kspoiler-expand');
@@ -34,7 +34,7 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
-	
+
   /* To check or uncheck boxes to select items */
 	$$('input.kcheckall').addEvent('click', function(e){
 		this.getParent('form').getElements('input.kcheck').each(function(el){
@@ -45,9 +45,9 @@ window.addEvent('domready', function(){
 				el.set('value','0');
 				el.set('checked',false);
 			}
-		}); 
+		});
 	});
-  
+
   /* To close quick-reply form on hit on cancel button */
   $$('.kreply-cancel').addEvent('click', function(e){
 		$$('.kreply-form').setStyle('display', 'none');

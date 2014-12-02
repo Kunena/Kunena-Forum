@@ -4,10 +4,10 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
-**/ 
+**/
 
 /* Layout */
 
@@ -160,11 +160,11 @@
 }
 
 /* Menu fixes for Gantry */
-#Kunena ul.menu li#current.active > a:before, 
-#Kunena ul.menu li#current.active > .item:before, 
+#Kunena ul.menu li#current.active > a:before,
+#Kunena ul.menu li#current.active > .item:before,
 #Kunena ul.menu li#current.active > .separator:before,
-#Kunena ul.menu li a:before, 
-#Kunena ul.menu li .item:before, 
+#Kunena ul.menu li a:before,
+#Kunena ul.menu li .item:before,
 #Kunena ul.menu li .separator:before {
 	content: "";
 	margin: 0;

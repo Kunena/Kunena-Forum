@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage BBCode
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -113,9 +113,16 @@ class KunenaBbcode extends NBBC_BBCode {
 				$video = $path[1];
 			}
 			if (isset($video)) {
-				return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
-					.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
-					.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+				$uri = JURI::getInstance();
+				if ( $uri->isSSL() ) {
+					return '<object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/'
+							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/'
+									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+				} else {
+					return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
+							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
+									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+				}
 			}
 		}
 		if ($config->autoembedebay && empty($this->parent->forceMinimal) && isset($params['host']) && strstr($params['host'], '.ebay.')) {
@@ -1005,10 +1012,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		if (JFactory::getUser ()->id == 0) {
 			// Hide between content from non registered users
-			return JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
+			return '</br>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
 		} else {
 			// Display but highlight the fact that it is hidden from guests
-			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDE_IN_MESSAGE' ) . '</b>' . '<div class="kmsgtext-hide">' . $content . '</div>';
+			return '</br><b>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDE_IN_MESSAGE' ) . '</b>' . '<div class="kmsgtext-hide">' . $content . '</div>';
 		}
 	}
 
@@ -1055,7 +1062,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		if ($id === false) {
-			$document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
+			$document->addScript('https://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
 			$id = 0;
 		}
 
@@ -1094,7 +1101,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode($content)."</i></strong></p>';
+					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode(addslashes($content))."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}
@@ -1243,8 +1250,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @return bool|string
 	 */
 	function DoCode($bbcode, $action, $name, $default, $params, $content) {
-		static $enabled = false;
-
 		if ($action == BBCODE_CHECK) {
 			return true;
 		}
@@ -1255,16 +1260,20 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		} elseif ($type == 'html') {
 			$type = 'html4strict';
 		}
-		if (empty($bbcode->parent->forceMinimal) && $enabled === false && KunenaFactory::getConfig ()->highlightcode) {
-			$enabled = true;
-
-			$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
-			if (file_exists($path)) {
-				require_once $path;
+		$highlight = KunenaFactory::getConfig()->highlightcode && empty($bbcode->parent->forceMinimal);
+		if ($highlight && !class_exists('GeSHi')) {
+			$paths = array(
+				JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi.php',
+				JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php'
+			);
+			foreach ($paths as $path) {
+				if (!class_exists('GeSHi') && file_exists($path)) {
+					require_once $path;
+				}
 			}
 
 		}
-		if ($enabled && class_exists('GeSHi')) {
+		if ($highlight && class_exists('GeSHi')) {
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();
@@ -1321,10 +1330,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$bbcode->autolink_disable++;
 			return true;
 		}
-
-		$bbcode->autolink_disable--;
-		if (! $content)
-			return;
+		
+		if (!$content) {
+			return '';
+		}
 
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal)) {
@@ -1351,7 +1360,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			unset ( $vid_players );
 		}
 		if (! $vid ["type"]) {
-			$vid_auto = preg_match ( '#^http://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
+			$vid_auto = preg_match ( '#^https?://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
 			if ($vid_auto) {
 				$vid ["type"] = JString::strtolower ( $vid_regs [1] );
 				switch ($vid ["type"]) {
@@ -1412,6 +1421,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			else
 				return;
 		}
+
+		$uri = JURI::getInstance();
+		if ( $uri->isSSL() && $vid ["type"] == 'youtube' ) $vid_source = preg_replace("/^http:/", "https:", $vid_source);
 		$vid_source = preg_replace ( '/%vcode%/', $content, $vid_source );
 		if (! is_array ( $vid_par2 ))
 			$vid_par2 = array ();
@@ -1509,11 +1521,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-			// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments )) {
-			$filename = basename(trim(strip_tags($content)));
-			return '['.JText::_('COM_KUNENA_FILEATTACH').' '.basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content))).']';
-		}
 		$attachments = &$bbcode->parent->attachments;
 		$attachment = null;
 		if (! empty ( $default )) {
@@ -1532,6 +1539,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				}
 			}
 		}
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments )) {
+			$filename = basename(trim(strip_tags($content)));
+			return $attachment->getThumbnailLink();
+		}
+
 		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments )) {
 			foreach ( $bbcode->parent->inline_attachments as $att ) {
 				if ($att->filename == trim(strip_tags($content))) {

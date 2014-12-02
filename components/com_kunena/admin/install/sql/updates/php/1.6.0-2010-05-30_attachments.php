@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ function kunena_160_2010_05_30_attachments($parent) {
 	$db = JFactory::getDbo();
 
 	// First check if attachments table has legacy field
-	$fields = array_pop ( $db->getTableColumns ( '#__kunena_attachments' ) );
+	$fields = $db->getTableColumns ( '#__kunena_attachments' );
 	if (! isset ( $fields ['filelocation'] )) {
 		// Already converted, there is nothing to do
 		return null;

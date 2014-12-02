@@ -100,6 +100,9 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$log = ob_get_contents();
 		ob_end_clean();
 
+		JFactory::getDocument()->setMimeEncoding( 'application/json' );
+		JResponse::setHeader('Content-Disposition','attachment;filename="kunena-install.json"');
+
 		$percent = intval(99 * $this->step / count($this->steps));
 		if ($error) {
 			echo json_encode(array('success'=>false, 'status'=>"{$percent}%", 'error'=>$error, 'log'=>$log));
@@ -109,6 +112,8 @@ class KunenaControllerInstall extends JControllerLegacy {
 		} else {
 			echo json_encode(array('success'=>true, 'status'=>'100%', 'current'=>JText::_('COM_KUNENA_CONTROLLER_INSTALL_INSTALLATION_COMPLETE'), 'log'=>$log));
 		}
+
+		JFactory::getApplication()->close();
 	}
 
 	function uninstall() {

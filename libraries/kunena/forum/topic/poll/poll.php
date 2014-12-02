@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.Poll
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -63,18 +63,26 @@ class KunenaForumTopicPoll extends JObject {
 	}
 
 	/**
+	 * Filters and sets poll options.
+	 *
 	 * @param array $options	array(id=>name, id=>name)
 	 */
 	public function setOptions($options) {
-		if (!is_array($options)) return;
+		if (!is_array($options)) {
+			return;
+		}
+
+		$filter = JFilterInput::getInstance();
+		$newOptions = array();
+
 		foreach ($options as $key => &$value) {
-			$value = trim($value);
-			if (empty($value)) {
-				// Remove empty options
-				unset($options[$key]);
+			$value = trim($filter->clean($value, 'html'));
+
+			if (!empty($value)) {
+				$newOptions[$key] = $value;
 			}
 		}
-		$this->newOptions = $options;
+		$this->newOptions = $newOptions;
 	}
 
 	/**
@@ -218,9 +226,9 @@ class KunenaForumTopicPoll extends JObject {
 		}
 
 		$lastVoteId = $this->getLastVoteId($user->userid);
-		$votes = $this->getMyVotes($user);
+		$myvotes = $this->getMyVotes($user);
 
-		if (!$votes) {
+		if (!$myvotes) {
 			// First vote
 			$votes = new StdClass();
 			$votes->new = true;
@@ -240,8 +248,9 @@ class KunenaForumTopicPoll extends JObject {
 		} else {
 			$votes = new StdClass();
 			$votes->new = false;
+
 			// Add a vote to the user
-			$votes->votes++;
+			$votes->votes = ++$myvotes;
 		}
 
 		$votes->lasttime = JFactory::getDate()->toSql();

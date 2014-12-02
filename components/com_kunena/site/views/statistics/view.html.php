@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,6 +21,12 @@ class KunenaViewStatistics extends KunenaView {
 		$this->assign($kunena_stats);
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->userlist = $this->_getUserListLink('', intval($this->get('memberCount')));
+
+		if ( !KunenaFactory::getConfig()->statslink_allowed && JFactory::getUser()->guest )
+		{
+			return $this->app->enqueueMessage(JText::_('COM_KUNENA_STATS_NOT_ALLOWED_TOSEE_STATS'));
+		}
+
 
 		$this->_prepareDocument();
 		parent::display ();

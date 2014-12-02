@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Lib
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -561,7 +561,7 @@ class CKunenaImageFilter
 	 * @return	array	An array with directory elements
 	 * @since	1.0
 	 */
-	function addIncludePath($path='')
+	public static function addIncludePath($path='')
 	{
 		static $paths=null;
 

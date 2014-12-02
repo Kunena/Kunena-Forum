@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -40,7 +40,7 @@ defined ( '_JEXEC' ) or die ();
 	<div class="kbutton-container">
 		<button class="kbutton ks validate" type="submit"><?php echo JText::_('COM_KUNENA_SAVE'); ?></button>
 		<input type="button" name="cancel" class="kbutton" value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
-			onclick="javascript:window.history.back();"
+			onclick="window.history.back();"
 			title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
 	</div>
 </div>

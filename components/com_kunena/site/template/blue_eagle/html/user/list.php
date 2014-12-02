@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -158,7 +158,7 @@ document.addEvent('domready', function() {
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_userhits) : ?>
-						<td class="kcol-mid"><?php echo $this->escape($profile->uhits) ?></td>
+						<td class="kcol-mid"><?php echo intval($profile->uhits) ?></td>
 						<?php endif; ?>
 					</tr>
 					<?php endforeach; ?>

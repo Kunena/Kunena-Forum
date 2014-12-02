@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -54,8 +54,8 @@ $paneOptions = array(
 		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div class="kbuttons">
-			<button onclick="javascript: submitbutton('save')"><?php echo JText::_( 'Save' ); ?></button>
-			<button onclick="javascript: submitbutton('cancel')"><?php echo JText::_( 'Cancel' ); ?></button>
+			<button onclick="submitbutton('save')"><?php echo JText::_( 'Save' ); ?></button>
+			<button onclick="submitbutton('cancel')"><?php echo JText::_( 'Cancel' ); ?></button>
 		</div>
 		<?php
 			echo JHtml::_('tabs.start', 'pane', $paneOptions);

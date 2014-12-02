@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Search
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -38,7 +38,7 @@ window.addEvent('domready', function() {
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
 						<label class="searchlabel" for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
-						<input id="keywords" type="text" class="ks input" name="q" size="30" value="<?php echo $this->escape($this->state->get('searchwords')) ?>" />
+						<input id="keywords" type="text" class="ks input" name="query" size="30" value="<?php echo $this->escape($this->state->get('searchwords')) ?>" />
 						<?php $this->displayModeList('mode', 'class="ks"') ?>
 					</fieldset>
 				</td>

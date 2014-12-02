@@ -4,14 +4,11 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-jimport ('joomla.user.helper');
-jimport ('joomla.mail.helper');
 
 /**
  * Class KunenaForumMessage
@@ -249,7 +246,6 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		$topic = $this->getTopic();
 		if (count ( $emailToList )) {
-			jimport('joomla.mail.helper');
 			if (! $config->getEmail() ) {
 				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ) );
 				return false;
@@ -456,7 +452,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		// Update rest of the information
 		$category = $this->getCategory();
-		$this->hold = $category->review ? (int)!$category->authorise ('moderate', $user, true) : 0;
+		$this->hold = $category->review && !$category->authorise('moderate', $user, true) ? 1 : $this->hold;
 		$this->modified_by = $user->userid;
 		$this->modified_time = JFactory::getDate()->toUnix();
 	}
@@ -630,7 +626,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		// Cascade changes to other tables
-		$this->update();
+		$this->update($newTopic);
 
 		return true;
 	}
@@ -752,7 +748,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			}
 		}
 
-		if (!$this->exists()) {
+		if (!$this->exists() && !$this->getCategory()->authorise('moderate')) {
 			// Ignore identical messages (posted within 5 minutes)
 			$duplicatetimewindow = JFactory::getDate ()->toUnix() - 5 * 60;
 			$this->_db->setQuery ( "SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
@@ -776,7 +772,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 	// Internal functions
 
-	protected function update() {
+	protected function update($newTopic = false) {
 		// If post was published and then moved, we need to update old topic
 		if (!$this->_hold && $this->_thread && $this->_thread != $this->thread) {
 			$topic = KunenaForumTopicHelper::get($this->_thread);
@@ -787,7 +783,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		$postDelta = $this->delta(true);
 		$topic = $this->getTopic();
-		// Create / update topic
+		// New topic
+		if ($newTopic) {
+			$topic->hold = 0;
+		}
+		// Update topic
 		if (!$this->hold && $topic->hold && $topic->exists()) {
 			// We published message -> publish and recount topic
 			$topic->hold = 0;

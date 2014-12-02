@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage AlphaUserPoints
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -68,12 +68,12 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		}
 	}
 
-	public function onAfterThankyou($target, $actor, $message) {
-		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . KunenaFactory::getUser($target)->username );
-		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . KunenaFactory::getUser($actor)->username );
-		if ( $this->_checkPermissions($message) ) {
-			$auptarget = AlphaUserPointsHelper::getAnyUserReferreID( $target );
-			$aupactor = AlphaUserPointsHelper::getAnyUserReferreID( $actor );
+	public function onAfterThankyou($actor, $target, $message) {
+		$infoTargetUser = JText::_('COM_KUNENA_THANKYOU_GOT_FROM').': ' . KunenaFactory::getUser($actor)->username;
+		$infoRootUser = JText::_('COM_KUNENA_THANKYOU_SAID_TO').': ' . KunenaFactory::getUser($target)->username;
+		if ($this->_checkPermissions($message)) {
+			$aupactor = AlphaUserPointsHelper::getAnyUserReferreID($actor);
+			$auptarget = AlphaUserPointsHelper::getAnyUserReferreID($target);
 
 			$ruleName = 'plgaup_kunena_message_thankyou';
 

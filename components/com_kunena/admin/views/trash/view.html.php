@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -65,6 +65,8 @@ class KunenaAdminViewTrash extends KunenaView {
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('purge','delete.png','delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 	}
 

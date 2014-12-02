@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -35,17 +35,18 @@ class KunenaControllerTopic extends KunenaController {
 			'catid' => $this->catid,
 			'name' => JRequest::getString ( 'authorname', $this->me->getName () ),
 			'email' => JRequest::getString ( 'email', null ),
-			'subject' => JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
-			'message' => JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
+			'subject' => JRequest::getVar('subject', null, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
+			'message' => JRequest::getVar('message', null, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
 			'icon_id' => JRequest::getInt ( 'topic_emoticon', null ),
 			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
 			'poll_title' => JRequest::getString ( 'poll_title', '' ),
-			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
+			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'), // Array of key => string
 			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
 			'tags' => JRequest::getString ( 'tags', null ),
 			'mytags' => JRequest::getString ( 'mytags', null ),
 			'subscribe' => JRequest::getInt ( 'subscribeMe', 0 )
 		);
+
 		$this->app->setUserState('com_kunena.postfields', $fields);
 
 		if (! JSession::checkToken('post')) {
@@ -228,13 +229,13 @@ class KunenaControllerTopic extends KunenaController {
 		$fields = array (
 			'name' => JRequest::getString ( 'authorname', $message->name ),
 			'email' => JRequest::getString ( 'email', $message->email ),
-			'subject' => JRequest::getVar ( 'subject', $message->subject, 'POST', 'string', JREQUEST_ALLOWRAW ),
-			'message' => JRequest::getVar ( 'message', $message->message, 'POST', 'string', JREQUEST_ALLOWRAW ),
+			'subject' => JRequest::getVar('subject', $message->subject, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
+			'message' => JRequest::getVar('message', $message->message, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
 			'modified_reason' => JRequest::getString ( 'modified_reason', $message->modified_reason ),
 			'icon_id' => JRequest::getInt ( 'topic_emoticon', $topic->icon_id ),
 			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
 			'poll_title' => JRequest::getString ( 'poll_title', null ),
-			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
+			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'), // Array of key => string
 			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
 			'tags' => JRequest::getString ( 'tags', null ),
 			'mytags' => JRequest::getString ( 'mytags', null )
@@ -260,9 +261,12 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Mark attachments to be deleted
-		$attachments = JRequest::getVar ( 'attachments', array(), 'post', 'array' );
-		$attachkeeplist = JRequest::getVar ( 'attachment', array(), 'post', 'array' );
-		$message->removeAttachment(array_keys(array_diff_key($attachments, $attachkeeplist)));
+		$attachments = JRequest::getVar('attachments', array(), 'post', 'array'); // Array of integer keys
+		$attachkeeplist = JRequest::getVar('attachment', array(), 'post', 'array'); // Array of integer keys
+		$removeList = array_keys(array_diff_key($attachments, $attachkeeplist));
+		JArrayHelper::toInteger($removeList);
+
+		$message->removeAttachment($removeList);
 
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {
@@ -315,7 +319,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$poll_title = $fields['poll_title'];
-		if ($poll_title !== null) {
+		if ($poll_title !== null && $message->id == $topic->first_post_id) {
 			// Save changes into poll
 			$poll_options = $fields['poll_options'];
 			$poll = $topic->getPoll();
@@ -360,8 +364,12 @@ class KunenaControllerTopic extends KunenaController {
 		// Update Tags
 		$this->updateTags($message->thread, $fields['tags'], $fields['mytags']);
 
+		$activity->onAfterEdit($message);
+
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
 		if ($message->hold == 1) {
+			// If user cannot approve message by himself, send email to moderators.
+			if (!$topic->authorise('approve')) $message->sendNotification();
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
 		$this->app->redirect ( $message->getUrl($this->return, false ) );
@@ -408,7 +416,7 @@ class KunenaControllerTopic extends KunenaController {
 				$this->app->enqueueMessage ( $thankyou->getError() );
 				$this->redirectBack ();
 			}
-			$activityIntegration->onAfterUnThankyou($userid, $this->me->userid, $message);
+			$activityIntegration->onAfterUnThankyou($this->me->userid, $userid, $message);
 		}
 		$this->setRedirect($message->getUrl($category->exists() ? $category->id : $message->catid, false));
 	}
@@ -667,13 +675,18 @@ class KunenaControllerTopic extends KunenaController {
 		if ($this->mesid) {
 			// Approve message
 			$target = KunenaForumMessageHelper::get($this->mesid);
+			$message = $target;
 		} else {
 			// Approve topic
 			$target = KunenaForumTopicHelper::get($this->id);
+			$message = KunenaForumMessageHelper::get($target->first_post_id);
 		}
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED)) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ) );
-			$target->sendNotification();
+			// Only email if message wasn't modified by the author before approval
+			// TODO: this is just a workaround for #1862, we need to find better solution.
+			$modifiedByAuthor = ($message->modified_by == $message->userid);
+			if (!$modifiedByAuthor) $target->sendNotification();
 		} else {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
@@ -765,7 +778,6 @@ class KunenaControllerTopic extends KunenaController {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ), 'notice' );
 			$this->redirectBack ();
 		}
-		jimport ( 'joomla.mail.helper' );
 		if (! $this->config->getEmail() || ! JMailHelper::isEmailAddress ( $this->config->getEmail() )) {
 			// Error: email address is invalid
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );

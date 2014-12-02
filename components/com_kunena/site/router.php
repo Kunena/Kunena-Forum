@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Site
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -250,6 +250,10 @@ function KunenaParseRoute($segments) {
 	}
 	if (empty($vars ['layout'])) $vars ['layout'] = 'default';
 	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
+
+	foreach ($vars as $var => $value) {
+		KunenaRoute::$current->setVar($var, $value);
+	}
 
 	return $vars;
 }

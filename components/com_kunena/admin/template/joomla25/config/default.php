@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Config
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -605,6 +605,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['iptracking'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_IP_TRACKING_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED') ?></td>
+														<td><?php echo $this->lists ['statslink_allowed'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -1008,9 +1013,9 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_A_RSS_AUTHOR_IN_TITLE_DESC') ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT') ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT') ?></td>
 														<td><?php echo $this->lists ['rss_word_count'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT_DESC') ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES') ?></td>
@@ -1093,6 +1098,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS') ?></td>
 														<td><?php echo $this->lists ['userlist_userhits'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
+														<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
 													</tr>
 												</tbody>
 											</table>

@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -58,7 +58,7 @@ JHtml::_('behavior.multiselect');
 						<td class="kcol-mid"><?php if ($item->authorise('delete')) echo JHtml::_('grid.id', $i, intval($item->id)) ?></td>
 						<td align="center" class="kcol-mid"><img src="<?php echo $item->filetype != '' ? JUri::root(true).'/media/kunena/icons/image.png' : JUri::root(true).'/media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
-						<td class="kcol-mid"><?php echo $item->filename; ?></td>
+						<td class="kcol-mid"><?php echo KunenaForumMessageAttachmentHelper::shortenFileName($item->filename, 5, 5); ?></td>
 
 						<td class="kcol-mid"><?php echo number_format ( intval ( $item->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?></td>
 

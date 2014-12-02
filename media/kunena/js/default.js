@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Blue_Eagle
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -592,11 +592,11 @@ Autocompleter.Request = new Class({
 Autocompleter.Request.JSON = new Class({
 	Extends: Autocompleter.Request,
 
-	secure: false, 
+	secure: false,
 	initialize: function(el, url, options) {
 		this.parent(el, options);
 		this.request = new Request.JSON(Object.merge({
-			'secure': false, 
+			'secure': false,
 			'url': url,
 			'link': 'cancel'
 		}, this.options.ajaxOptions)).addEvent('onComplete', this.queryResponse.bind(this));
@@ -695,7 +695,7 @@ function kRequestShowTopics(catid, select, list)
 	list.each(function(item) {
 		var option = new Element('option', {'value':item.id, 'html':item.subject});
 		select.grab(option);
-	});	
+	});
 }
 
 function kRequestGetTopics(el)
@@ -726,7 +726,7 @@ function kunenatableOrdering( order, dir, task, form ) {
 
 //----------------- New Mootools based behaviors ----------------------
 
-window.addEvent('domready', function(){	
+window.addEvent('domready', function(){
 	/* Quick reply */
 	$$('.kqreply').each(function(el){
 		el.addEvent('click', function(e){
@@ -745,11 +745,11 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
-	
+
 	$$('.kreply-cancel').addEvent('click', function(e){
 		$$('.kreply-form').setStyle('display', 'none');
 	});
-	
+
 	/* Logic for bulkactions */
 	$$('input.kcheckall').addEvent('click', function(e){
 		this.getParent('form').getElements('input.kcheck').each(function(el){
@@ -760,7 +760,7 @@ window.addEvent('domready', function(){
 				el.set('value','0');
 				el.set('checked',false);
 			}
-		}); 
+		});
 	});
 
 	$$('select.kchecktask').addEvent('change', function(e){
@@ -771,7 +771,7 @@ window.addEvent('domready', function(){
 			ktarget.setProperty('disabled','disabled');
 		}
 	});
-	
+
 	if(document.id('kmod_categories') != undefined){
 		document.id('kmod_categories').addEvent('change', function(e){
 			kRequestGetTopics(this);
@@ -796,7 +796,7 @@ window.addEvent('domready', function(){
 			document.id('kmod_targetid').set('value', targetid);
 		});
 	}
-	
+
 	// Get the kunena settings cookie data.
 	var KCookie = new Hash.Cookie('kunena_toggler', {path: '/', duration: 0});
 
@@ -808,7 +808,7 @@ window.addEvent('domready', function(){
 			link.set('title',kunena_toggler_open);
 			document.id(link.getProperty('rel')).setStyle('display', 'none');
 		}
-		
+
 		// Add the onclick event.
 		link.addEvent('click', function(){
 			if (this.hasClass('close')) {
@@ -825,7 +825,7 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
-	
+
 	// Set autocompleter to off
 	$$('.kautocomplete-off').each(function(){
 		this.setProperty('autocompleter', 'off');
@@ -834,7 +834,7 @@ window.addEvent('domready', function(){
 		document.id('kpassword').setProperty('autocompleter', 'off');
 		document.id('kpassword2').setProperty('autocompleter', 'off');
 	}
-	
+
 	if(document.id('kpoll-moreusers') != undefined){
 		document.id('kpoll-moreusers').addEvent('click', function(){
 			var displaytype = document.id('kpoll-moreusers-div').getStyle('display');
@@ -842,7 +842,7 @@ window.addEvent('domready', function(){
 			else document.id('kpoll-moreusers-div').setStyle('display', 'none');
 		});
 	}
-	
+
 	if ( document.id('kchecbox-all') != undefined ) {
 		document.id('kchecbox-all').addEvent('click', function(){
 			if ( document.id('kchecbox-all').getProperty('checked') == false ) {
@@ -854,9 +854,9 @@ window.addEvent('domready', function(){
 					box.setProperty('checked', 'checked');
 				});
 			}
-		});	
+		});
 	}
-	
+
 	if ( document.id('kmoderate-select') != undefined ) {
 		document.id('kmoderate-select').addEvent('click', function(){
 			if ( document.id('kmoderate-select').getSelected().get('value') == 'move' ) {
@@ -864,23 +864,23 @@ window.addEvent('domready', function(){
 			}
 		});
 	}
-	
-	if ( document.id('avatar_category_select') != undefined ) { 
+
+	if ( document.id('avatar_category_select') != undefined ) {
 		document.id('avatar_category_select').addEvent('change', function(e){
-			// we getting the name of gallery selected in drop-down by user 
+			// we getting the name of gallery selected in drop-down by user
 			var avatar_selected= document.id('avatar_category_select').getSelected();
-			
+
 			var td_avatar = document.id('kgallery_avatar_list');
-			
+
 			// we remove avatar which exist in td tag to allow us to put new one items
-			document.id('kgallery_avatar_list').empty(); 
+			document.id('kgallery_avatar_list').empty();
 			// we getting from hidden input the url of kunena image gallery
 			var url_gallery_main = document.id('Kunena_Image_Gallery_URL').get('value');
 			var id_to_select = document.id('Kunena_'+avatar_selected.get('value'));
 			var name_to_select = id_to_select.getProperty('name');
 			// Convert JSON to object
 			var image_object = JSON.decode(id_to_select.get('value'));
-			
+
 			// Re-create all HTML items with avatars images from gallery selected by user
 			for(var i = 0, len = image_object.length; i < len; ++i) {
 				var SpanElement  = new Element('span');
@@ -900,7 +900,7 @@ window.addEvent('domready', function(){
 			}
 		});
 	}
-	
+
 	$$('.kspoiler').each(function(el){
 		var contentElement = el.getElement('.kspoiler-content');
 		var expandElement = el.getElement('.kspoiler-expand');
@@ -917,7 +917,7 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
-	
+
 	/* For profile tabs */
 	$$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); });
 });

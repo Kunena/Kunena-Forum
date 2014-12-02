@@ -2,7 +2,7 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -19,7 +19,8 @@ window.addEvent('domready', function() {
 		var input = new Element('input', {
 			name:'polloptionsID[new'+optionid+']',
 			id:'field_option'+optionid,
-			maxlength:'25',
+			type: 'text',
+			maxlength:'35',
 			onmouseover: 'document.id("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
 		});
 		mydiv.inject(polldiv);
@@ -32,9 +33,9 @@ window.addEvent('domready', function() {
 		var polldiv = document.id('kbbcode-poll-options');
 		var hide_input = document.id('nb_options_allowed');
 		var mydiv = new Element('div');
-		
+
 		var span = new Element('span');
-		
+
 		var myimg = new Element('img', {
 			'src':KUNENA_ICON_ERROR
 		});

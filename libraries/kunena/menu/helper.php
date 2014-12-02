@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Menu
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
@@ -23,6 +23,7 @@ abstract class KunenaMenuHelper {
 
 	/**
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
+	 * This only method need to be used only in frontend part
 	 *
 	 * @param	JRegistry	$params	The module options.
 	 *
@@ -30,7 +31,8 @@ abstract class KunenaMenuHelper {
 	 * @see		modules/mod_menu/helper.php
 	 */
 	public static function getList(&$params) {
-		$menu = JFactory::getApplication()->getMenu();
+		$app = JFactory::getApplication();
+		$menu = $app->getMenu();
 
 		// If no active menu, use default
 		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
@@ -94,7 +96,7 @@ abstract class KunenaMenuHelper {
 							break;
 
 						default:
-							$router = JSite::getRouter();
+							$router = $app::getRouter();
 							if ($router->getMode() == JROUTER_MODE_SEF) {
 								$item->flink = 'index.php?Itemid='.$item->id;
 							}

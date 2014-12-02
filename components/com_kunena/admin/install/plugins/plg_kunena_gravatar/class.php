@@ -205,7 +205,8 @@ class KunenaGravatar {
 	 * @return boolean - Are we supposed to use the secure protocol?
 	 */
 	public function usingSecureURL() {
-		if ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on" ) return true;
+		$uri = JURI::getInstance();
+		if ( $uri->isSSL() ) return true;
 		else return false;
 	}
 

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -99,15 +99,19 @@ class KunenaControllerUser extends KunenaController {
 			$this->app->redirect ( $user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 			return;
 		}
+		$ban = KunenaUserBan::getInstanceByUserid($user->userid, true);
+		if (!$ban->canBan()) {
+			$this->setRedirect($user->getUrl(false), $ban->getError(), 'error');
+			return;
+		}
 
-		$ip = JRequest::getVar ( 'ip', '' );
+		$ip = JRequest::getString ( 'ip', '' );
 		$block = JRequest::getInt ( 'block', 0 );
 		$expiration = JRequest::getString ( 'expiration', '' );
 		$reason_private = JRequest::getString ( 'reason_private', '' );
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
-		$ban = KunenaUserBan::getInstanceByUserid ( $user->userid, true );
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
 			$success = $ban->save ();
@@ -144,10 +148,10 @@ class KunenaControllerUser extends KunenaController {
 			$this->app->enqueueMessage ( $message );
 		}
 
-		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
-		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
-		$DelSignature = JRequest::getVar ( 'delsignature', '' );
-		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
+		$banDelPosts = JRequest::getString('bandelposts', '');
+		$DelAvatar = JRequest::getString('delavatar', '');
+		$DelSignature = JRequest::getString('delsignature', '');
+		$DelProfileInfo = JRequest::getString('delprofileinfo', '');
 
 		if (! empty ( $DelAvatar ) || ! empty ( $DelProfileInfo )) {
 			jimport ( 'joomla.filesystem.file' );
@@ -194,7 +198,16 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		if (! empty ( $banDelPosts )) {
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $user->userid));
+			$params = array('starttime' => '-1','user' => $user->userid,'mode' => 'unapproved');
+
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
+
+			$parmas_recent = array('starttime' => '-1','user' => $user->userid);
+
+			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+
+			$messages = array_merge($messages_recent, $messages);
+
 			foreach($messages as $mes) {
 				$mes->publish(KunenaForum::DELETED);
 			}
@@ -222,7 +235,7 @@ class KunenaControllerUser extends KunenaController {
 		$error = $login->loginUser($username, $password, $remember);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64')); // Internal URI
 		if (!$error && $return && JURI::isInternal($return))
 		{
 			// Redirect the user.
@@ -241,7 +254,7 @@ class KunenaControllerUser extends KunenaController {
 		if (!JFactory::getUser()->guest) $login->logoutUser();
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64')); // Internal URI
 		if ($return && JURI::isInternal($return))
 		{
 			// Redirect the user.
@@ -317,8 +330,8 @@ class KunenaControllerUser extends KunenaController {
 
 		//clean request
 		$post = JRequest::get( 'post' );
-		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
-		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
+		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
 		if (empty($post['password']) || empty($post['password2'])) {
 			unset($post['password'], $post['password2']);
 		}
@@ -370,9 +383,9 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	protected function saveProfile() {
-		$this->me->personalText = JRequest::getVar ( 'personaltext', '' );
+		$this->me->personalText = JRequest::getString ( 'personaltext', '' );
 		$this->me->birthdate = JRequest::getInt ( 'birthdate1', '0000' ).'-'.JRequest::getInt ( 'birthdate2', '00' ).'-'.JRequest::getInt ( 'birthdate3', '00' );
-		$this->me->location = trim(JRequest::getVar ( 'location', '' ));
+		$this->me->location = trim(JRequest::getString ( 'location', '' ));
 		$this->me->gender = JRequest::getInt ( 'gender', '' );
 		$this->me->icq = trim(JRequest::getString ( 'icq', '' ));
 		$this->me->aim = trim(JRequest::getString ( 'aim', '' ));
@@ -392,7 +405,7 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->bebo = trim(JRequest::getString ( 'bebo', '' ));
 		$this->me->websitename = JRequest::getString ( 'websitename', '' );
 		$this->me->websiteurl = JRequest::getString ( 'websiteurl', '' );
-		$this->me->signature = JRequest::getVar ( 'signature', '', 'post', 'string', JREQUEST_ALLOWRAW );
+		$this->me->signature = JRequest::getVar('signature', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
 	}
 
 	protected function saveAvatar() {
@@ -429,8 +442,21 @@ class KunenaControllerUser extends KunenaController {
 			}
 			if (!$fileinfo['status']) {
 				$this->me->avatar = $current_avatar;
-				if (!$fileinfo['not_valid_img_ext']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'), 'error' );
-				else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
+				if (!$fileinfo['not_valid_img_ext'])
+				{
+					$this->app->enqueueMessage(
+						JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
+						. ': ' . JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'),
+						'error'
+					);
+				}
+				else
+				{
+					$this->app->enqueueMessage(
+						JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
+						. ': ' . $fileinfo['error'], 'error'
+					);
+				}
 				return false;
 			} else {
 				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
@@ -462,6 +488,7 @@ class KunenaControllerUser extends KunenaController {
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=".$userid." GROUP BY ip ORDER BY `time` DESC", 0, 1 );
 		$ip = $db->loadResult();
 
+		// TODO: replace this code by using JHttpTransport class
 		$data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$this->config->stopforumspam_key;
 		$fp = fsockopen("www.stopforumspam.com",80);
 		fputs($fp, "POST /add.php HTTP/1.1\n" );
@@ -470,8 +497,31 @@ class KunenaControllerUser extends KunenaController {
 		fputs($fp, "Content-length: ".strlen($data)."\n" );
 		fputs($fp, "Connection: close\n\n" );
 		fputs($fp, $data);
+		// Create a buffer which holds the response
+		$response = '';
+		// Read the response
+		while (!feof($fp))
+		{
+			$response .= fread($fp, 1024);
+		}
+		// The file pointer is no longer needed. Close it
 		fclose($fp);
-		return true;
+
+		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
+		{
+			// Report accepted. There is no need to display the reason
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+			return true;
+		}
+		else
+		{
+			// Report failed or refused
+			$reasons = array();
+			preg_match('/<p>.*<\/p>/', $response, $reasons);
+			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])),'error');
+			return false;
+		}
 	}
 
 	public function delfile() {
@@ -479,12 +529,13 @@ class KunenaControllerUser extends KunenaController {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
 
-		if ( !empty($cids) ) {
+		if (!empty($cid)) {
 			$number = 0;
 
-			foreach( $cids as $id ) {
+			foreach($cid as $id) {
 				$attachment = KunenaForumMessageAttachmentHelper::get($id);
 				if ($attachment->authorise('delete') && $attachment->delete()) $number++;
 			}

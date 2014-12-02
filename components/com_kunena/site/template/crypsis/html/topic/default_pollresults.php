@@ -4,7 +4,7 @@
  * @package Kunena.Template.Crypsis
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,7 +25,7 @@ $row = 0;
 							<?php foreach ( $this->poll->getOptions() as $option ) : ?>
 								<tr class="krow<?php echo (++$row)%2+1;?>">
 									<td class="kcol-option"><?php echo KunenaHtmlParser::parseText ($option->text); ?></td>
-                                    
+
 									<td class="span8"><div class="progress progress-striped active "><div class="bar" style="height:30px;width: <?php echo intval(($option->votes*100)/max($this->poll->getTotal(),1)); ?>%;"></div></div></td>
 									<td class="kcol-number">
 										<?php if(isset($option->votes) && ($option->votes > 0)) { echo $option->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?>

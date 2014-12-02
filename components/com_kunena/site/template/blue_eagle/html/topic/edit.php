@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -196,7 +196,7 @@ $this->k=0;
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW'));?>:: "tabindex="3" />
 				<input type="button" name="cancel" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
-				onclick="javascript:window.history.back();"
+				onclick="window.history.back();"
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" tabindex="5" />
 			</td>
 		</tr>

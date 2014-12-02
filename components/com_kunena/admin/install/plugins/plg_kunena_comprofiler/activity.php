@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -68,7 +68,7 @@ class KunenaActivityComprofiler extends KunenaActivity {
 		KunenaIntegrationComprofiler::trigger ( 'onAfterUndelete', $params );
 	}
 
-	public function onAfterThankyou($target, $actor, $message) {
+	public function onAfterThankyou($actor, $target, $message) {
 		$params = array ('actor' => $actor, 'target' => $target, 'message' => $message );
 		KunenaIntegrationComprofiler::trigger ( 'onAfterThankyou', $params );
 	}

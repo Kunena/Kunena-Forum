@@ -4,11 +4,16 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+jimport('joomla.filesystem.path');
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
+jimport('joomla.filesystem.archive');
 
 /**
  * Kunena Backend Templates Controller
@@ -54,8 +59,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function edit() {
-		jimport('joomla.filesystem.path');
-		jimport('joomla.filesystem.file');
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$template = array_shift($cid);
 
@@ -76,26 +79,29 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function install() {
-		jimport ( 'joomla.filesystem.folder' );
-		jimport ( 'joomla.filesystem.file' );
-		jimport ( 'joomla.filesystem.archive' );
 		$tmp = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
-		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
+		$file = JRequest::getVar('install_package', null, 'files', 'array'); // File upload
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
-			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
+		if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) {
+			$this->app->enqueueMessage(
+				JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $this->escape($file['name'])),
+				'notice'
+			);
 		}
 		else {
 			$success = JFile::upload($file ['tmp_name'], $tmp . $file ['name']);
 			if ($success) $success = JArchive::extract ( $tmp . $file ['name'], $tmp );
 			if (! $success) {
-				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
+				$this->app->enqueueMessage(
+					JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
+					'notice'
+				);
 			}
 			// Delete the tmp install directory
 			if (JFolder::exists($tmp)) {
@@ -134,7 +140,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function uninstall() {
-		jimport ( 'joomla.filesystem.folder' );
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
 		$template	= $id;
@@ -184,7 +189,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$template	= JRequest::getVar('id', '', 'method', 'cmd');
 		$filename	= JRequest::getVar('filename', '', 'method', 'cmd');
 
-		jimport('joomla.filesystem.file');
 		if (JFile::getExt($filename) !== 'css') {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl.'&layout=choosecss&id='.$template, false));
@@ -215,14 +219,12 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE.'/template/'.$template.'/css/'.$filename;
 		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_WRITABLE'));
 		}
-		jimport('joomla.filesystem.file');
 		$return = JFile::write($file, $filecontent);
 		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0555')) {
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_UNWRITABLE'));
@@ -290,20 +292,30 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$params= JRequest::getVar('jform', array(), 'post', 'array');
 
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE.'/template/'.$template.'/params.ini';
-		jimport('joomla.filesystem.file');
 		if ( count($params) ) {
 			$registry = new JRegistry();
 			$registry->loadArray($params);
-			$txt = $registry->toString();
+			$txt = $registry->toString('INI');
 			$return = JFile::write($file, $txt);
 			if (!$return) {
-				$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE.', $file));
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
 				$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			}
 		}
+	}
+
+	/**
+	 * Method to just redirect to main manager in case of use of cancel button
+	 *
+	 * @return void
+	 *
+	 * @since 3.0.5
+	 */
+	public function cancel()
+	{
+		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

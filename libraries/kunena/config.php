@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -225,6 +225,10 @@ class KunenaConfig extends JObject {
 	// New for 3.0.0
 	public $autolink = 1;
 	public $access_component = 1;
+	// New for 3.0.4
+	public $statslink_allowed = 1;
+	// New for 3.0.6
+	public $superadmin_userlist = 0;
 
 	public function __construct() {
 		parent::__construct ();
@@ -297,7 +301,8 @@ class KunenaConfig extends JObject {
 		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
 		foreach ($plugins as $name => $registry) {
-			if ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
+			if ($name == '38432UR24T5bBO6') $this->bind($registry->toArray());
+			elseif ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
 		}
 	}
 

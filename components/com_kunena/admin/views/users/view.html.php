@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAdminViewUsers extends KunenaView {
 	public function displayDefault() {
 		$this->setToolbar();
-		$this->items = $this->get('items');
+		$this->users = $this->get('items');
 		$this->pagination = $this->get('Pagination');
 		$this->modcatlist = $this->get('Modcatslist');
 

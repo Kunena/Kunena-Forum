@@ -3,13 +3,13 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-// Kunena 1.6.0: Migrate polls hack from K1.5
+// Kunena 1.6.0: Migrate polls data from K1.5
 function kunena_160_2010_05_30_polls($parent) {
 	//Import filesystem libraries.
 	jimport ( 'joomla.filesystem.folder' );
@@ -20,7 +20,7 @@ function kunena_160_2010_05_30_polls($parent) {
 	$tablelist = $db->getTableList ();
 	foreach ( $tablelist as $table ) {
 		if ($table == $db->getPrefix () . 'kunena_polls') {
-			$fields = array_pop ( $db->getTableColumns ( $db->getPrefix () . 'kunena_polls' ) );
+			$fields = $db->getTableColumns ( $db->getPrefix () . 'kunena_polls' );
 			if (isset ( $fields ['catid'] ) && isset ( $fields ['polltimetolive'] )) {
 				$query = "ALTER TABLE {$db->quoteName($db->getPrefix().'kunena_polls')} DROP COLUMN catid, MODIFY title varchar(50)";
 				$db->setQuery ( $query );
@@ -78,7 +78,7 @@ function kunena_160_2010_05_30_polls($parent) {
 		}
 
 		if ($table == $db->getPrefix () . 'kunena_polls_options') {
-			$fields = array_pop ( $db->getTableColumns ( $db->getPrefix () . 'kunena_polls_options' ) );
+			$fields = $db->getTableColumns ( $db->getPrefix () . 'kunena_polls_options' );
 			$query = "ALTER TABLE {$db->quoteName($db->getPrefix().'kunena_polls_options')} MODIFY text varchar(50)";
 			$db->setQuery ( $query );
 			$db->query ();
@@ -87,7 +87,7 @@ function kunena_160_2010_05_30_polls($parent) {
 		}
 
 		if ($table == $db->getPrefix () . 'kunena_polls_users') {
-			$fields = array_pop ( $db->getTableColumns ( $db->getPrefix () . 'kunena_polls_users' ) );
+			$fields = $db->getTableColumns ( $db->getPrefix () . 'kunena_polls_users' );
 			if (! isset ( $fields ['id'] ) && ! isset ( $fields ['lastvote'] )) {
 				$query = "ALTER TABLE {$db->quoteName($db->getPrefix().'kunena_polls_users')} MODIFY votes int(11), ADD lastvote int(11)";
 				$db->setQuery ( $query );

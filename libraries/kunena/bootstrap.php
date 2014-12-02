@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -19,11 +19,9 @@ define('KPATH_FRAMEWORK', __DIR__);
 JLoader::registerPrefix('Kunena', KPATH_FRAMEWORK);
 
 // Give access to all Kunena tables.
-jimport('joomla.database.table');
 JTable::addIncludePath(KPATH_FRAMEWORK . '/tables');
 
 // Give access to all Kunena JHtml functions.
-jimport('joomla.html.html');
 JHtml::addIncludePath(KPATH_FRAMEWORK . '/html/html');
 
 // Give access to all Kunena form fields.
@@ -45,7 +43,6 @@ JLoader::register('KunenaProfiler', KPATH_FRAMEWORK . '/profiler.php');
 JLoader::register('KunenaSession', KPATH_FRAMEWORK . '/session.php');
 JLoader::register('KunenaTree', KPATH_FRAMEWORK . '/tree.php');
 JLoader::register('KunenaView', KPATH_FRAMEWORK . '/view.php');
-JLoader::register('KunenaActivity', KPATH_FRAMEWORK . '/integration/activity.php');
 JLoader::register('KunenaAvatar', KPATH_FRAMEWORK . '/integration/avatar.php');
 JLoader::register('KunenaPrivate', KPATH_FRAMEWORK . '/integration/private.php');
 JLoader::register('KunenaProfile', KPATH_FRAMEWORK . '/integration/profile.php');
@@ -59,3 +56,6 @@ JLoader::register('KunenaForumTopic', KPATH_FRAMEWORK . '/forum/topic/topic.php'
 JLoader::register('KunenaForumTopicPoll', KPATH_FRAMEWORK . '/forum/topic/poll/poll.php');
 JLoader::register('KunenaForumTopicUser', KPATH_FRAMEWORK . '/forum/topic/user/user.php');
 JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/forum/topic/user/read/read.php');
+
+// Register CKunenaLink class in order to allow old templates to work
+JLoader::register('CKunenaLink', KPATH_SITE . '/lib/kunena.link.class.php');

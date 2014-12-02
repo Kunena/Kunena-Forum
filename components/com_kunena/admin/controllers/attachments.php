@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -29,14 +29,15 @@ class KunenaAdminControllerAttachments extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
 
-		if (! $cids) {
+		if (! $cid) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ATTACHMENTS_SELECTED' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		foreach( $cids as $id ) {
+		foreach( $cid as $id ) {
 			$attachment = KunenaForumMessageAttachmentHelper::get($id);
 			$attachment->delete();
 		}

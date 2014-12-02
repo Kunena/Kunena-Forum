@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,6 +18,8 @@ class KunenaTemplateLegacy {
 }
 
 $app = JFactory::getApplication('Site');
+
+if (!defined('DS')) define('DS', '/');
 
 // Default values
 define('KUNENA_TEMPLATE_DEFAULT', 'blue_eagle');

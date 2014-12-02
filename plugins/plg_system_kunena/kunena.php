@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage System
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,9 +33,10 @@ class plgSystemKunena extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is not installed
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed())) return;
 
-		$this->loadLanguage('plg_system_kunena.sys');
-
 		parent::__construct ( $subject, $config );
+
+		// ! Always load language after parent::construct else the name of plugin isn't yet set
+		$this->loadLanguage('plg_system_kunena.sys');
 	}
 
 	/**

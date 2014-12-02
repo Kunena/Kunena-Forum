@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -48,6 +48,8 @@ class KunenaAdminModelUsers extends JModelList {
 	 * Method to auto-populate the model state.
 	 */
 	protected function populateState($ordering = null, $direction = null) {
+		$this->context = 'com_kunena.admin.users';
+
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
@@ -59,27 +61,27 @@ class KunenaAdminModelUsers extends JModelList {
 		$filter_active = '';
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
-		$this->setState ( 'filter.search', $value !== '' ? $value : null );
+		$this->setState('filter.search', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.username', 'filter_username', '', 'string' );
-		$this->setState ( 'filter.username', $value !== '' ? $value : null );
+		$this->setState('filter.username', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.email', 'filter_email', '', 'string' );
-		$this->setState ( 'filter.email', $value !== '' ? $value : null );
+		$this->setState('filter.email', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.signature', 'filter_signature', '', 'string' );
-		$this->setState ( 'filter.signature', $value !== '' ? (int) $value : null  );
+		$this->setState('filter.signature', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.block', 'filter_block', '', 'string' );
-		$this->setState ( 'filter.block', $value !== '' ? (int) $value : null  );
+		$this->setState('filter.block', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.banned', 'filter_banned', '', 'string' );
-		$this->setState ( 'filter.banned', $value !== '' ? (int) $value : null  );
+		$this->setState('filter.banned', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest ( $this->context.'.filter.moderator', 'filter_moderator', '', 'string' );
-		$this->setState ( 'filter.moderator', $value !== '' ? (int) $value : null  );
+		$this->setState('filter.moderator', $value);
 
-		$this->setState ( 'filter.active',!empty($filter_active));
+		$this->setState('filter.active', !empty($filter_active));
 
 		// List state information.
 		parent::populateState('username', 'asc');
@@ -125,13 +127,12 @@ class KunenaAdminModelUsers extends JModelList {
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.*'
+				'a.id'
 			)
 		);
 		$query->from('#__users AS a');
 
 		// Join over the users for the linked user.
-		$query->select('ku.*');
 		$query->join('LEFT', '#__kunena_users AS ku ON a.id=ku.userid');
 
 		// Filter by search.
@@ -147,35 +148,35 @@ class KunenaAdminModelUsers extends JModelList {
 		}
 
 		// Filter by username or name.
-		$search = $this->getState('filter.username');
-		if (!empty($search)) {
-			$search = $db->Quote('%'.$db->escape($search, true).'%');
-			$query->where('a.username LIKE '.$search . 'OR a.name LIKE '.$search);
+		$username = $this->getState('filter.username');
+		if (!empty($username)) {
+			$username = $db->Quote('%'.$db->escape($username, true).'%');
+			$query->where('a.username LIKE ' . $username . ' OR a.name LIKE ' . $username);
 		}
 
 		// Filter by email.
-		$search = $this->getState('filter.email');
-		if (!empty($search)) {
-			$search = $db->Quote('%'.$db->escape($search, true).'%');
-			$query->where('a.email LIKE '.$search);
+		$email = $this->getState('filter.email');
+		if (!empty($email)) {
+			$email = $db->Quote('%'.$db->escape($email, true).'%');
+			$query->where('a.email LIKE ' . $email);
 		}
 
 		// Filter by signature.
 		$filter = $this->getState('filter.signature');
-		if ($filter !== null) {
+		if ($filter !== ''  && !empty($search)) {
 			if ($filter) $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
 			else $query->where("ku.signature={$db->quote('')} OR ku.signature IS NULL");
 		}
 
 		// Filter by block state.
 		$filter = $this->getState('filter.block');
-		if ($filter !== null) {
+		if ($filter !== '') {
 			$query->where('a.block='.(int) $filter);
 		}
 
 		// Filter by banned state.
 		$filter = $this->getState('filter.banned');
-		if ($filter !== null) {
+		if ($filter !== '') {
 			$now = new JDate ();
 			if ($filter) $query->where("ku.banned={$db->quote($db->getNullDate())} OR ku.banned>{$db->quote($now->toSql())}");
 			else $query->where("ku.banned IS NULL OR (ku.banned>{$db->quote($db->getNullDate())} AND ku.banned<{$db->quote($now->toSql())})");
@@ -183,7 +184,7 @@ class KunenaAdminModelUsers extends JModelList {
 
 		// Filter by moderator state.
 		$filter = $this->getState('filter.moderator');
-		if ($filter !== null) {
+		if ($filter !== '') {
 			$query->where('ku.moderator ='.(int) $filter);
 		}
 
@@ -218,6 +219,44 @@ class KunenaAdminModelUsers extends JModelList {
 
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
+	}
+
+	/**
+	 * Method to get User objects of data items.
+	 *
+	 * @return  KunenaUser  List of KunenaUser objects found.
+	 *
+	 * @since   3.0
+	*/
+	public function getItems() {
+		// Get a storage key.
+		$store = $this->getStoreId();
+
+		// Try to load the data from internal storage.
+		if (isset($this->cache[$store])) {
+			return $this->cache[$store];
+		}
+
+		// Load the list items.
+		$query = $this->_getListQuery();
+		$items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			 $this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		$ids = array();
+		foreach ($items as $item) {
+			$ids[] = $item->id;
+ 		}
+
+		$instances = KunenaUserHelper::loadUsers($ids);
+
+		// Add the items to the internal cache.
+		$this->cache[$store] = $instances;
+		return $this->cache[$store];
 	}
 
 	/**

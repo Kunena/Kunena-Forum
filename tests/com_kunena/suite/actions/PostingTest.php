@@ -4,7 +4,7 @@
  * @package Kunena.UnitTest
  * @subpackage Utilities
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,7 +21,6 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 	 * Sets up the fixture.
 	 */
 	public static function setUpBeforeClass() {
-		jimport('joomla.plugin.helper');
 		$queries[] = "TRUNCATE TABLE #__kunena_categories";
 		$queries[] = "TRUNCATE TABLE #__kunena_topics";
 		$queries[] = "TRUNCATE TABLE #__kunena_messages";

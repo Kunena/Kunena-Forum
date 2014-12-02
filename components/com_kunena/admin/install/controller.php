@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -127,10 +127,9 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
 		if (class_exists('KunenaForum') && !KunenaForum::isDev()) {
 			jimport('joomla.filesystem.folder');
-			JFolder::delete(KPATH_MEDIA);
-			jimport('joomla.installer.installer');
-			$installer = new JInstaller();
 			jimport('joomla.application.component.helper');
+			JFolder::delete(KPATH_MEDIA);
+			$installer = new JInstaller();
 			$component = JComponentHelper::getComponent('com_kunena');
 			$installer->uninstall ( 'component', $component->id );
 			$this->setRedirect('index.php?option=com_installer');

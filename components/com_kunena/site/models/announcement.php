@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -70,6 +70,7 @@ class KunenaModelAnnouncement extends KunenaModel {
 			$actions[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 			$actions[] = JHtml::_('select.option', 'unpublish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_UNPUBLISH'));
 			$actions[] = JHtml::_('select.option', 'publish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_PUBLISH'));
+			$actions[] = JHtml::_('select.option', 'edit', JText::_('COM_KUNENA_EDIT'));
 			$actions[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA__BULK_ANNOUNCEMENT_DELETE'));
 		}
 

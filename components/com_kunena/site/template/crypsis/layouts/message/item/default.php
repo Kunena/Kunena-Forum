@@ -28,10 +28,10 @@ $avatarname = $this->profile->getname();
 	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
-			<?php  if (!$this->me && !$isReply) :
+			<?php  if (!$this->me->userid && !$isReply) :
 				echo $message->displayField('message');
 			else:
-				echo (!$this->me && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
 			endif;?>
 		</p>
 	</div>

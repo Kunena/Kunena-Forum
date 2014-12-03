@@ -67,10 +67,11 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>
 				</a>
 				<?php endif ?>
+				<div class="divider"></div>
 
-				<button class="btn btn-small btn-link" name="submit" type="submit">
-					<i class="icon-out"></i>
-					<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
+				<button class="btn-link" name="submit" type="submit">
+					<a><i class="icon-out"></i>
+						<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?></a>
 				</button>
 
 				<input type="hidden" name="view" value="user" />

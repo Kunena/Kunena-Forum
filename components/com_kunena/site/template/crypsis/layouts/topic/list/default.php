@@ -59,7 +59,7 @@ $colspan = !empty($this->actions) ? 5 : 4;
 				<td class="span2 hidden-phone">
 					<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 				</td>
-				<td class="span4">
+				<td class="span3">
 					<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 				</td>
 				<?php if (!empty($this->actions)) : ?>
@@ -71,7 +71,6 @@ $colspan = !empty($this->actions) ? 5 : 4;
 				<?php endif; ?>
 			</tr>
 		</thead>
-		<?php if (!empty($this->actions) || !empty($this->embedded)) : ?>
 			<tfoot>
 				<tr>
 					<td class="center hidden-phone">
@@ -96,7 +95,6 @@ $colspan = !empty($this->actions) ? 5 : 4;
 					</td>
 				</tr>
 			</tfoot>
-		<?php endif; ?>
 		<tbody>
 			<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 				<tr>

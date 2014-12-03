@@ -19,6 +19,7 @@ class KunenaUploadHelper {
 	private function __construct() {}
 
 	public static function upload($file, $uploadfolder, $format) {
+		// TODO: remove when dropping Joomla! 2.5 support, replace with JHelperMedia
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
 
 		$err			= null;

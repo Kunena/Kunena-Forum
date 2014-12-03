@@ -10,16 +10,48 @@
  **/
 defined('_JEXEC') or die;
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
-?>
-<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
-	<div class="span2 hidden-phone">
-		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter); ?>
+$template = KunenaTemplate::getInstance();
+$direction = $template->params->get('avatarPosition');
+
+if ($direction === "left") : ?>
+	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
+		<div class="span2 hidden-phone">
+			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter); ?>
+		</div>
+		<div class="span10">
+			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
+			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
+			<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>
+		</div>
 	</div>
-	<div class="span10">
-		<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
-		<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
-		<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>
+<?php elseif ($direction === "right") : ?>
+	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
+		<div class="span10">
+			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
+			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
+			<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>
+		</div>
+		<div class="span2 hidden-phone">
+			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter); ?>
+		</div>
 	</div>
-</div>
+<?php elseif ($direction === "top") : ?>
+	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
+		<div class="span12" style="margin-left: 0;">
+			<?php echo $this->subLayout('Message/Item/Top')->setProperties($this->getProperties()); ?>
+			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
+			<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>
+		</div>
+	</div>
+<?php elseif ($direction === "bottom") : ?>
+	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
+		<div class="span12" style="margin-left: 0;">
+			<?php echo $this->subLayout('Message/Item/Bottom')->setProperties($this->getProperties()); ?>
+			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
+			<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>
+		</div>
+	</div>
+
+<?php endif; ?>
 
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_msg_' . $this->location); ?>

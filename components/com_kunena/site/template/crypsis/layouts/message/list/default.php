@@ -16,7 +16,7 @@ $colspan = !empty($this->actions) ? 6 : 5;
 <h3>
 	<?php echo $this->escape($this->headerText); ?>
 	<span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
-	<span class="badge badge-success"><?php // To Do:: echo $this->topics->count->unread; ?></span>
+	<?php // To Do:: echo $this->topics->count->unread;<span class="badge badge-success"> </span>?>
 </h3>
 
 <?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
@@ -72,27 +72,30 @@ $colspan = !empty($this->actions) ? 6 : 5;
 		<?php endif; ?>
 
 		</thead>
-		<?php if (!empty($this->actions)) : ?>
-			<tfoot>
-			<tr>
-				<td colspan="<?php echo $colspan; ?>">
-					<?php if (!empty($this->moreUri)) {
-						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
-					}
-					?>
-					<div class="input-append">
-						<?php if (!empty($this->actions)|| !empty($this->embedded))  : ?>
-							<?php echo JHtml::_(
-								'select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask"',
-								'value', 'text', 0, 'kchecktask'
-							); ?>
-							<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-						<?php endif; ?>
-					</div>
-				</td>
-			</tr>
-			</tfoot>
-		<?php endif; ?>
+		<tfoot>
+		<tr>
+			<td class="center hidden-phone">
+				<a id="forumbottom"> </a>
+				<a href="#forumtop" rel="nofollow">
+					<i class="icon-arrow-up hasTooltip"></i>
+				</a>
+				<?php // FIXME: $this->displayCategoryActions() ?>
+			</td>
+			<td colspan="<?php echo $colspan; ?>">
+				<div class="input-append">
+					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
+					<?php if (!empty($this->actions)) : ?>
+						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+						<?php if (isset($this->actions['move'])) :
+							$options = array (JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
+							echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+						endif;?>
+						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+					<?php endif; ?>
+				</div>
+			</td>
+		</tr>
+		</tfoot>
 
 		<tbody>
 		<?php

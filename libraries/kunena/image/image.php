@@ -44,7 +44,7 @@ class KunenaImage extends KunenaCompatImage
 				$resizemethod = 'imagecopyresampled';
 				break;
 			default:
-				$resizemethod = array('KunenaImage','imageCopyResampledBicubic');
+				$resizemethod = 'self::imageCopyResampledBicubic';
 				break;
 		}
 
@@ -101,12 +101,12 @@ class KunenaImage extends KunenaCompatImage
 			imagesavealpha($handle, true);
 			if ($this->isTransparent())
 			{
-	            $transparent = imagecolorallocatealpha($this->handle, 255, 255, 255, 127);
-	            imagefilledrectangle($this->handle, 0, 0, $width, $height, $transparent);
+				$transparent = imagecolorallocatealpha($this->handle, 255, 255, 255, 127);
+				imagefilledrectangle($this->handle, 0, 0, $width, $height, $transparent);
 			}
 		}
 
-		$resizemethod($handle, $this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight());
+		call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
 
 		// If we are resizing to a new image, create a new KunenaImage object.
 		if ($createNew)
@@ -131,40 +131,40 @@ class KunenaImage extends KunenaCompatImage
 	}
 
 	public static function imageCopyResampledBicubic(&$dst_image, &$src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)  {
-        // we should first cut the piece we are interested in from the source
-        $src_img = ImageCreateTrueColor($src_w, $src_h);
-        imagecopy($src_img, $src_image, 0, 0, $src_x, $src_y, $src_w, $src_h);
+		// We should first cut the piece we are interested in from the source
+		$src_img = ImageCreateTrueColor($src_w, $src_h);
+		imagecopy($src_img, $src_image, 0, 0, $src_x, $src_y, $src_w, $src_h);
 
-        // this one is used as temporary image
-        $dst_img = ImageCreateTrueColor($dst_w, $dst_h);
+		// This one is used as temporary image
+		$dst_img = ImageCreateTrueColor($dst_w, $dst_h);
 
-        ImagePaletteCopy($dst_img, $src_img);
-        $rX = $src_w / $dst_w;
-        $rY = $src_h / $dst_h;
-        $w = 0;
-        for ($y = 0; $y < $dst_h; $y++)  {
-            $ow = $w; $w = round(($y + 1) * $rY);
-            $t = 0;
-            for ($x = 0; $x < $dst_w; $x++)  {
-                $r = $g = $b = 0; $a = 0;
-                $ot = $t; $t = round(($x + 1) * $rX);
-                for ($u = 0; $u < ($w - $ow); $u++)  {
-                    for ($p = 0; $p < ($t - $ot); $p++)  {
-                        $c = ImageColorsForIndex($src_img, ImageColorAt($src_img, $ot + $p, $ow + $u));
-                        $r += $c['red'];
-                        $g += $c['green'];
-                        $b += $c['blue'];
-                        $a++;
-                    }
-                }
-                ImageSetPixel($dst_img, $x, $y, ImageColorClosest($dst_img, $r / $a, $g / $a, $b / $a));
-            }
-        }
+		ImagePaletteCopy($dst_img, $src_img);
+		$rX = $src_w / $dst_w;
+		$rY = $src_h / $dst_h;
+		$w = 0;
+		for ($y = 0; $y < $dst_h; $y++)  {
+			$ow = $w; $w = round(($y + 1) * $rY);
+			$t = 0;
+			for ($x = 0; $x < $dst_w; $x++)  {
+				$r = $g = $b = 0; $a = 0;
+				$ot = $t; $t = round(($x + 1) * $rX);
+				for ($u = 0; $u < ($w - $ow); $u++)  {
+					for ($p = 0; $p < ($t - $ot); $p++)  {
+						$c = ImageColorsForIndex($src_img, ImageColorAt($src_img, $ot + $p, $ow + $u));
+						$r += $c['red'];
+						$g += $c['green'];
+						$b += $c['blue'];
+						$a++;
+					}
+				}
+				ImageSetPixel($dst_img, $x, $y, ImageColorClosest($dst_img, $r / $a, $g / $a, $b / $a));
+			}
+		}
 
-        // apply the temp image over the returned image and use the destination x,y coordinates
-        imagecopy($dst_image, $dst_img, $dst_x, $dst_y, 0, 0, $dst_w, $dst_h);
+		// Apply the temp image over the returned image and use the destination x,y coordinates
+		imagecopy($dst_image, $dst_img, $dst_x, $dst_y, 0, 0, $dst_w, $dst_h);
 
-        // we should return true since ImageCopyResampled/ImageCopyResized do it
-        return true;
-    }
+		// We should return true since ImageCopyResampled/ImageCopyResized do it
+		return true;
+	}
 }

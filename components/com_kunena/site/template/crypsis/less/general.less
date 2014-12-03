@@ -260,14 +260,6 @@ form > table > thead > tr > td > ul {
 	border-top: 0px;
 }
 
-.profile-avatar {
-	margin: 5px;
-}
-
-.profilebox {
-	margin-top: -4px;
-	width: 106%;
-}
 
 .kfrontend h1,
 .kfrontend h2,
@@ -336,6 +328,52 @@ a:focus,
 
 .desc {
 	display: block;
+}
+.horizontal-message {
+	border: 1px solid #ddd;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	margin-top: 20px;
+	min-height: 140px;
+	margin-bottom: 20px;
+	border-radius: 4px;
+}
+.horizontal-message-top .kmsg {
+	padding-top: 40px;
+	min-height: 140px;
+	padding-left: 10px;
+}
+.horizontal-message-bottom .kmsg {
+	margin-top: 50px;
+	min-height: 140px;
+	padding-left: 10px;
+}
+.horizontal-message .kmessage {
+	padding: 10px;
+}
+[class*="horizontal-message-top"] {
+	position: relative;
+}
+.horizontal-message-top:after {
+	content: attr(data-badger);
+	position: absolute;
+	top: 0px;
+	font-weight: bold;
+	padding: 8px 12px;
+	margin-top: -10px;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+[class*="horizontal-message-bottom"] {
+	position: relative;
+}
+.horizontal-message-bottom:after {
+	content: attr(data-badger);
+	position: absolute;
+	top: 0;
+	font-weight: bold;
+	padding: 8px 12px;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
 [class*="badger"] {
@@ -472,11 +510,6 @@ div.navbar > div > div.visible-phone.hidden-tablet > ul {
 	padding-bottom: 10px;
 }
 
-.last-post-message {
-	padding-left: 30%;
-	vertical-align: middle !important;
-}
-
 .topic-item-unread {
 	border-left: 3px solid green;
 	border-radius: 2px 0 2px 0;
@@ -522,28 +555,36 @@ div.navbar > div > div.visible-phone.hidden-tablet > ul {
 	margin: 0
 }
 
-
-
 select#mode {
 	margin-left: 65px;
 }
 
-.message-deleted {
-	background-color: rgba(0, 0, 0, 0.1);
-	padding: 10px;
-	margin-bottom: 15px;
-	border-radius: 5px;
-}
-
-.post-image {
-	margin: -7px 10px -7px -7px;
-}
 
 .img-thumbnail {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
-	position: relative;
+	border:1px solid #ddd;
+}
+
+#recent-topics  {
+	.last-posts {
+		vertical-align:middle;
+		left:25px;
+		position: relative;
+	}
+	.span2 	.img-thumbnail {
+		position: absolute;
+		margin-top: -5px;
+	}
+}
+
+#category-index .row-fluid {
+	.img-thumbnail {
+		margin-right: 10px;
+		vertical-align:text-top;
+	}
+	min-width: 260px;
 }
 
 .row-fluid {
@@ -609,4 +650,40 @@ table .well {
 
 .modal {
 	z-index: 2000;
+}
+
+.nav .dropdown-menu a {
+	display: inline-block;
+	.btn-link {
+		margin-left:-120px;
+	}
+}
+
+.table td {
+	vertical-align: middle;
+}
+.profilebox {
+	margin-top: -5px;
+}
+.profile-horizontal-top {
+	padding: 10px 5px 5px 5px;
+	border-bottom: 1px  solid #ddd;
+	background-color: rgba(229, 229, 229, 0.4);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	margin-bottom: 10px;
+	min-height: 110px;
+}
+.profile-horizontal-bottom {
+	padding: 10px 5px 5px 5px;
+	border-top: 1px  solid #ddd;
+	background-color: rgba(229, 229, 229, 0.4);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	min-height: 110px;
+}
+
+.table .pagination  {
+	max-height: 15px;
+}
+.dropdown-menu .form-inline {
+	margin: 15px 0;
 }

@@ -63,8 +63,8 @@ if ($show)
 	<?php endif; ?>
 </ul>
 <div class="profile-expand center">
-	<span class="heading btn btn-small heading-less" style="width:50px;display:none;"><i class="icon-arrow-up-4"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-	<span class="heading btn btn-small" style="width:50px;"><i class="icon-arrow-down-4"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+	<span class="heading btn btn-small heading-less" style="width:50px;display:none;"><i class="icon-arrow-up"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+	<span class="heading btn btn-small" style="width:50px;"><i class="icon-arrow-down"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 	<div class="content" style="display:none;">
 		<ul>
 			<li>

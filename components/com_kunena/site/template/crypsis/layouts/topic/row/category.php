@@ -81,7 +81,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 	</td>
 
-	<td class="hidden-phone">
+	<td class="span2 hidden-phone">
 		<div>
 			<div class="repliesnum pull-right">
 				<span class="topictitle"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span>
@@ -101,26 +101,17 @@ if (!empty($this->spacing)) : ?>
 		</div>
 	</td>
 
-	<td class="post-info">
+	<td class="span2" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="post-image pull-left">
-				<div class="img-thumbnail">
-					<?php echo $avatar; ?>
-				</div>
+			<div class="span2">
+				<?php echo $avatar; ?>
 			</div>
 		<?php endif; ?>
-		<div class="post-desc">
-			<div>
-				<span class="topictitle">
-					<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
-					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(); ?>
-				</span>
-			</div>
-			<div>
-				<span>
-					<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
-				</span>
-			</div>
+		<div class="span9 last-posts">
+				<span><?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
+					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>
+			<br>
+			<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 		</div>
 	</td>
 

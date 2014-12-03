@@ -16,7 +16,6 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
-$config = KunenaConfig::getInstance();
 ?>
 
 <small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
@@ -29,10 +28,10 @@ $config = KunenaConfig::getInstance();
 	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
-			<?php  if (!$this->userid && !$isReply) :
+			<?php  if (!$this->me && !$isReply) :
 				echo $message->displayField('message');
 			else:
-				echo (!$this->me->userid && $config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+				echo (!$this->me && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
 			endif;?>
 		</p>
 	</div>

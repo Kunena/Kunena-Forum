@@ -103,3 +103,25 @@ div.span7 .module-title.nav-header,
 div.span10 .module-title.nav-header {
 	padding: 3px 0 0 5px;
 }
+
+.dl-horizontal {
+	margin-top: 0;
+}
+
+.dl-horizontal dt {
+	text-align: left !important;
+	margin-left: 10px;
+}
+
+.dl-horizontal dd {
+	margin-left: 120px !important;
+}
+
+dt {
+	font-weight: normal !important;
+}
+
+.dl-horizontal dt:nth-child(odd),
+.dl-horizontal dd:nth-child(even) {
+	background-color: #f9f9f9;
+}

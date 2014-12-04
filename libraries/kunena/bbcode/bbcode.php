@@ -130,8 +130,8 @@ class KunenaBbcode extends NBBC_BBCode {
 			$path = explode('/', $params['path']);
 
 			if ($path[1] == 'itm') {
-				if (isset($path[3]) && is_numeric($path[3])) $itemid = intval($path[3]);
-				elseif (isset($path[2]) && is_numeric($path[2])) $itemid = intval($path[2]);
+				if (isset($path[3]) && is_numeric($path[3])) $itemid = $path[3];
+				elseif (isset($path[2]) && is_numeric($path[2])) $itemid = $path[2];
 
 				return $this->getEbayItemFromCache($itemid);
 			}
@@ -249,67 +249,14 @@ class KunenaBbcode extends NBBC_BBCode {
 	 *
 	 * @return string
 	 */
-	protected function getEbayItemFromCache($ItemID)
+	public function getEbayItemFromCache($ItemID)
 	{
 		$cache = JFactory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
 		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
-		$ebay_item = $cache->get(array($this, 'getEbayItem'), array($ItemID));
+		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
 
 		return $ebay_item;
-	}
-
-	/**
-	 * Query from eBay API the JSON stream of item id given to render
-	 *
-	 * @param   int  $ItemID  The eBay ID of object to query
-	 *
-	 * @return string
-	 */
-	public function getEbayItem($ItemID)
-	{
-		$config = KunenaFactory::getConfig();
-
-		if (is_numeric($ItemID)  && $config->ebay_api_key)
-		{
-			$options = new JRegistry;
-
-			$transport = new JHttpTransportStream($options);
-
-			// Create a 'stream' transport.
-			$http = new JHttp($options, $transport);
-
-			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebay_language . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
-
-			if ($response->code == '200')
-			{
-				$resp = json_decode($response->body);
-
-				$ebay_object = '<div style="border: 1px solid #e5e5e5;margin:10px;padding:10px;border-radius:5px">';
-				$ebay_object .= '<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif" />';
-				$ebay_object .= '<div style="margin:10px 0" /></div>';
-				$ebay_object .= '<div style="text-align: center;"><a href="' . $resp->Item->ViewItemURLForNaturalSearch . '"> <img  src="' . $resp->Item->PictureURL[0] . '" /></a></div>';
-				$ebay_object .= '<div style="margin:10px 0" /></div>';
-				$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . $resp->Item->Title . '</a>';
-				$ebay_object .= '<div style="margin:10px 0" /></div>';
-				$ebay_object .= $resp->Item->ConvertedCurrentPrice->CurrencyID . '  ' . $resp->Item->ConvertedCurrentPrice->Value;
-				$ebay_object .= '<div style="margin:10px 0" /></div>';
-
-				if ($resp->Item->ListingStatus == "Active")
-				{
-					$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') . '</a>';
-				}
-				else
-				{
-					$ebay_object .= JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED');
-				}
-
-				$ebay_object .= '</div>';
-
-				return $ebay_object;
-			}
-		}
-		return '';
 	}
 }
 
@@ -1765,4 +1712,73 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		return "<div class=\"highlight\"><pre style=\"font-family:monospace;background-color:#444444;\"><span style=\"color:{$colortext};\">{$content}</span></pre></div>";
 	}
+
+	/**
+	 * Query from eBay API the JSON stream of item id given to render
+	 *
+	 * @param   int  $ItemID  The eBay ID of object to query
+	 *
+	 * @return string
+	 */
+	public static function getEbayItem($ItemID)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (is_numeric($ItemID)  && $config->ebay_api_key)
+		{
+			$options = new JRegistry;
+
+			$transport = new JHttpTransportStream($options);
+
+			// Create a 'stream' transport.
+			$http = new JHttp($options, $transport);
+
+			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebay_language . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
+
+			if ($response->code == '200')
+			{
+				$resp = json_decode($response->body);
+
+				if ($resp->Ack == 'Success')
+				{
+					$ebay_object = '<div style="border: 1px solid #e5e5e5;margin:10px;padding:10px;border-radius:5px">';
+					$ebay_object .= '<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif" />';
+					$ebay_object .= '<div style="margin:10px 0" /></div>';
+					$ebay_object .= '<div style="text-align: center;"><a href="' . $resp->Item->ViewItemURLForNaturalSearch . '"> <img  src="' . $resp->Item->PictureURL[0] . '" /></a></div>';
+					$ebay_object .= '<div style="margin:10px 0" /></div>';
+					$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . $resp->Item->Title . '</a>';
+					$ebay_object .= '<div style="margin:10px 0" /></div>';
+					$ebay_object .= $resp->Item->ConvertedCurrentPrice->CurrencyID . '  ' . $resp->Item->ConvertedCurrentPrice->Value;
+					$ebay_object .= '<div style="margin:10px 0" /></div>';
+
+					if ($resp->Item->ListingStatus == "Active")
+					{
+						$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') . '</a>';
+					}
+					else
+					{
+						$ebay_object .= JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED');
+					}
+
+					$ebay_object .= '</div>';
+
+					return $ebay_object;
+				}
+				else
+				{
+					return '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+				}
+			}
+		}
+		else
+		{
+			if (KunenaFactory::getUser()->isAdmin())
+			{
+				return '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_INVALID_APPID_KEY') . '</<b>';
+			}
+		}
+
+		return '';
+	}
+
 }

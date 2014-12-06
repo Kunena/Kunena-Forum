@@ -229,6 +229,8 @@ class KunenaConfig extends JObject {
 	public $statslink_allowed = 1;
 	// New for 3.0.6
 	public $superadmin_userlist = 0;
+	// New for 3.0.7
+	public $cloakemail=1;
 
 	public function __construct() {
 		parent::__construct ();

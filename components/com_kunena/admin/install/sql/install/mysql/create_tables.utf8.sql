@@ -297,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users` (
 	`bebo` varchar(50) NULL,
 	`websitename` varchar(50) NULL,
 	`websiteurl` varchar(50) NULL,
-	`rank` tinyint(4) NOT NULL default '0',
+	`rank` tinyint(4) NOT NULL default '1',
 	`hideEmail` tinyint(1) NOT NULL default '1',
 	`showOnline` tinyint(1) NOT NULL default '1',
 	`thankyou` int(11) NULL default '0',

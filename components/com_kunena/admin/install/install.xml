@@ -320,7 +320,7 @@
 		<field name="bebo" type="varchar(50)" null="1" />
 		<field name="websitename" type="varchar(50)" null="1" />
 		<field name="websiteurl" type="varchar(50)" null="1" />
-		<field name="rank" type="tinyint(4)" null="0" default="0" />
+		<field name="rank" type="tinyint(4)" null="0" default="1" />
 		<field name="hideEmail" type="tinyint(1)" null="0" default="1" />
 		<field name="showOnline" type="tinyint(1)" null="0" default="1" />
 		<field name="thankyou" type="int(11)" null="1" default="0" />

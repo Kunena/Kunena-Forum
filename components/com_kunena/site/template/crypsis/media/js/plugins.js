@@ -205,25 +205,34 @@ jQuery(document).ready(function() {
 
 	/* To enabled emojis in kunena textera feature like on github */
 	if ( jQuery('#kemojis_allowed').val() ) {
-		jQuery('#kbbcode-message').atwho({
-			at: ":",
-			tpl:"<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
-			callbacks: {
-				remote_filter: function(query, callback) {
-					if(query.length > 0) {
-						jQuery.ajax({
-							url: jQuery( "#kurl_emojis" ).val(),
-							data: {
-								search : query
-							},
-							success: function(data) {
-								callback(data.emojis);
-							}
-						});
+		var item = '';
+		if ( jQuery('#kbbcode-message').length > 0 ) {
+			item = '#kbbcode-message';
+		} else if ( jQuery('.qreply').length > 0 ) 	{
+			item = '.qreply';
+		}
+
+		if ( item!=undefined ) {
+			jQuery(item).atwho({
+				at: ":",
+				tpl:"<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
+				callbacks: {
+					remote_filter: function(query, callback) {
+						if(query.length > 0) {
+							jQuery.ajax({
+								url: jQuery( "#kurl_emojis" ).val(),
+								data: {
+									search : query
+								},
+								success: function(data) {
+									callback(data.emojis);
+								}
+							});
+						}
 					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 	/* To display preview area when clicking on preview button */

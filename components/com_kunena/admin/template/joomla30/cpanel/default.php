@@ -108,7 +108,7 @@ defined('_JEXEC') or die ();
 							<dd>GNU General Public License</dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_MOREINFO') ?>:</dt>
-							<dd><a href="http://www.kunena.org/terms-of-use" target="_blank">http://www.kunena.org/terms-of-use</dd>
+							<dd><a href="http://www.kunena.org/terms-of-use" target="_blank">http://www.kunena.org/terms-of-use</a></dd>
 						</dl>
 					</div>
 				</div>

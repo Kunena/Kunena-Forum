@@ -1072,6 +1072,8 @@ class KunenaUser extends JObject {
 
 	/**
 	 * @param string $name
+	 *
+	 * @return string
 	 */
 	public function __get($name) {
 		switch ($name) {
@@ -1087,4 +1089,29 @@ class KunenaUser extends JObject {
 			E_USER_NOTICE);
 		return null;
 	}
+
+	/**
+	 * Get user level for stats and whois.
+	 *
+	 * @return string
+	 *
+	 * @since 3.1
+	 */
+	public function getUserLevel() {
+		// bin dec  user level
+		// 00 | 0 | anonymous
+		// 01 | 1 | user
+		// 11 | 3 | administrator (implies user)
+
+		return (int)$this->isAdmin() < 1 | (int)$this->exists();
+
+		// The result value will be compared with a settings variable by the caller
+
+		// dec  configuration values
+		//  0 | Nobody
+		//  1 | Everyone
+		//  3 | Registered users only
+		//  4 | Administrators only
+	}
+
 }

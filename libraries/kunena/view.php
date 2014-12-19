@@ -377,14 +377,14 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function displayWhoIsOnline($tpl = null) {
-		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
+		if ($this->me->getUserLevel() >= KunenaFactory::getConfig()->showwhoisonline) {
 			echo $this->common->display('whosonline');
 		}
 	}
 
 	public function displayStatistics() {
 		$config = KunenaFactory::getConfig();
-		if ($config->showstats > 0 && ($config->statslink_allowed || KunenaUserHelper::get()->exists())) {
+		if ($this->me->getUserLevel() >= $config->showstats && ($config->statslink_allowed || KunenaUserHelper::get()->exists())) {
 				echo $this->common->display('statistics');
 		}
 	}

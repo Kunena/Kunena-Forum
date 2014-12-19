@@ -102,7 +102,7 @@ foreach ($this->sections as $section) :
 							<div>
 								<h3>
 									<?php echo $this->getCategoryLink($category); ?>
-									<small class="hidden-phone">
+									<small class="hidden-phone nowrap">
 										(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
 							<span>
 								<?php if (($new = $category->getNewCount()) > 0) : ?>

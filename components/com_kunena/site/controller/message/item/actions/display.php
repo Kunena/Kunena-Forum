@@ -73,20 +73,22 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				$this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication')
 			);
 		}
-		elseif (!$me->isModerator($this->topic->getCategory())) {
+
+		elseif (!$me->isModerator($this->topic->getCategory()))
+		{
 			// User is not allowed to write a post.
-			if ($me->exists() || $me->exists() && $this->message_closed = $this->topic->locked) {
-				echo '<p>'. JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED').'</p>';
+			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') :
+				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED'): JText::_(' '));
+		}
+
+		if (!$me->exists() && !$this->message_closed || !$me->exists() && !$this->topic->locked) {
+			$userconfig = JComponentHelper::getParams('com_users');
+			JHtml::_('behavior.modal');
+			echo '<p>'. JText::_('COM_KUNENA_LOGIN_PLEASE').' <a class="modal" href="index.php?option=com_users&view=login&tmpl=component"> ' . JText::_('COM_KUNENA_LOGIN_SIGNIN'). '</a>';
+			if ($userconfig->get('allowUserRegistration')) {
+				echo JText::_('COM_KUNENA_LOGIN_OR') .' <a class="modal" href="index.php?option=com_users&view=registration&tmpl=component">'. JText::_('COM_KUNENA_LOGIN_CREATE') . '</a>' . JText::_('COM_KUNENA_LOGIN_ACCOUNT');
 			}
-			elseif (!$me->exists() || $me->exists() ) {
-				$userconfig = JComponentHelper::getParams('com_users');
-				$login = KunenaLogin::getInstance();
-				echo '<p>Please <a href="'.$login->getLoginURL().'"> sign in</a>';
-				if ($userconfig->get('allowUserRegistration')) :
-					echo ' or <a href="'.$login->getRegistrationURL().'">create</a> an account ';
-				endif;
-				echo ' to join the conversation.</p>';
-			}
+			echo JText::_('COM_KUNENA_LOGIN_JOIN') .'</p>';
 		}
 
 		// Thank you.

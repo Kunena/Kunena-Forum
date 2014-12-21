@@ -15,15 +15,15 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
-$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 48);
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
 
 if (!empty($this->spacing)) : ?>
-<tr>
-	<td colspan="<?php echo $cols; ?>">&nbsp;</td>
-</tr>
+	<tr>
+		<td colspan="<?php echo $cols; ?>">&nbsp;</td>
+	</tr>
 <?php endif; ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx); ?>">
@@ -33,6 +33,12 @@ if (!empty($this->spacing)) : ?>
 	<td class="span7">
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
+			<?php
+			if ($topic->unread) {
+				echo $this->getTopicLink($topic, 'unread',
+					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+			}
+			?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
@@ -50,13 +56,6 @@ if (!empty($this->spacing)) : ?>
 			<?php if ($this->topic->poll_id) : ?>
 				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 			<?php endif; ?>
-
-			<?php
-			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread',
-					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
-			}
-			?>
 		</div>
 
 		<div>
@@ -99,19 +98,17 @@ if (!empty($this->spacing)) : ?>
 		</table>
 	</td>
 
-	<td class="span3 post-info">
+	<td class="span2" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="post-image">
-				<div class="img-thumbnail">
-					<?php echo $avatar; ?>
-				</div>
+			<div class="span2">
+				<?php echo $avatar; ?>
 			</div>
 		<?php endif; ?>
-		<div class="post-desc">
-			<?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
-			<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+		<div class="span9 last-posts">
+				<span><?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
+					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>
 			<br>
-			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+			<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 		</div>
 	</td>
 

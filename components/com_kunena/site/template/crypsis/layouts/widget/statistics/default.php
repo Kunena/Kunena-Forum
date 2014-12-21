@@ -9,25 +9,25 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
-// TODO: Move from widget to statistics
 ?>
+
 <div class="kfrontend">
-<h3 class="btn-link">
-
-	<?php if ($this->statisticsUrl) : ?>
-	<a href="<?php echo $this->statisticsUrl; ?>">
-		<?php echo $this->config->board_title . ' ' . JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
-	</a>
-	<?php else : ?>
-	<?php echo $this->config->board_title . ' ' . JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?>
-	<?php endif; ?>
-
-	<span class="btn btn-small pull-right" data-toggle="collapse" data-target="#kstats">&times;</span>
-</h3>
-
-	<div class="collapse in" id="kstats">
-	<div class="well well-small">
-	<div class="row-fluid">
+	<div class="btn-toolbar pull-right">
+		<div class="btn-group">
+			<div class="btn btn-small" data-toggle="collapse" data-target="#kstats">&times;</div>
+		</div>
+	</div>
+	<h2 class="btn-link">
+		<?php if ($this->statisticsUrl) : ?>
+			<a href="<?php echo $this->statisticsUrl; ?>">
+				<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
+			</a>
+		<?php else : ?>
+			<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
+		<?php endif; ?>
+	</h2>
+	<div class="row-fluid collapse in" id="kstats">
+	<div class="well well-small span12">
 		<ul class="unstyled span4">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
@@ -73,25 +73,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
 				<strong><?php echo $this->latestMemberLink; ?></strong>
 			</li>
-
-			<?php if ($this->userlistUrl) : ?>
-			<li>
-				<a href="<?php echo $this->userlistUrl; ?>">
-					<?php echo JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;'; ?>
-				</a>
-			</li>
-			<?php endif; ?>
-
-			<?php if ($this->statisticsUrl) : ?>
-			<li>
-				<a href="<?php echo $this->statisticsUrl; ?>">
-					<?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;'; ?>
-				</a>
-			</li>
-			<?php endif; ?>
-
 		</ul>
 	</div>
 	</div>
-</div>
 </div>

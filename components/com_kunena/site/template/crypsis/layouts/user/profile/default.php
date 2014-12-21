@@ -29,7 +29,7 @@ if ($show)
 	<?php if ($avatar) : ?>
 	<li>
 		<?php echo $user->getLink($avatar); ?>
-		<?php if (isset($this->topic_starter) && $this->topic_starter): ?>
+		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
 				<span class="topic-starter"></span>
 		<?php endif;?>
 	</li>
@@ -37,12 +37,12 @@ if ($show)
 
 	<?php if ($user->exists()) : ?>
 	<li>
-		<p></p>
 		<span class="label label-<?php echo $user->isOnline('success', 'important') ?>">
 			<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
 		</span>
 
 	</li>
+	<?php endif; ?>
 
 	<?php if (!empty($rankTitle)) : ?>
 	<li>
@@ -63,8 +63,8 @@ if ($show)
 	<?php endif; ?>
 </ul>
 <div class="profile-expand center">
-	<span class="heading btn btn-small heading-less" style="width:50px;display:none;"><i class="icon-arrow-up-4"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-	<span class="heading btn btn-small" style="width:50px;"><i class="icon-arrow-down-4"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+	<span class="heading btn btn-small heading-less" style="width:50px;display:none;"><i class="icon-arrow-up"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+	<span class="heading btn btn-small" style="width:50px;"><i class="icon-arrow-down"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 	<div class="content" style="display:none;">
 		<ul>
 			<li>
@@ -91,13 +91,12 @@ if ($show)
 
 			<li>
 				<?php echo $user->profileIcon('gender'); ?>
-				<?php  echo $user->profileIcon('birthdate'); ?>
-				<?php  echo $user->profileIcon('location'); ?>
+				<?php echo $user->profileIcon('birthdate'); ?>
+				<?php echo $user->profileIcon('location'); ?>
 				<?php echo $user->profileIcon('website'); ?>
-				<?php  echo $user->profileIcon('private'); ?>
-				<?php  echo $user->profileIcon('email'); ?>
+				<?php echo $user->profileIcon('private'); ?>
+				<?php echo $user->profileIcon('email'); ?>
 			</li>
 		</ul>
 	</div>
 </div>
-<?php endif; ?>

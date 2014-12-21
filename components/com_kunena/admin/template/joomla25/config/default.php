@@ -937,6 +937,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><input type="text" name="cfg_ebay_affiliate_id" value="<?php echo $this->escape($this->config->ebay_affiliate_id) ?>" /></td>
 														<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_CLOAKEMAIL_LABEL') ?></td>
+														<td><?php echo $this->lists ['cloakemail'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_CLOAKEMAIL_DESC') ?></td>
+													</tr>
 													<?php /*
 													// TODO: If you uncomment this feature, please remove forced disable from the KunenaConfig class.
 													<tr>

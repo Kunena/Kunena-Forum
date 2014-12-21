@@ -87,7 +87,15 @@ class KunenaBbcode extends NBBC_BBCode {
 			if (preg_match('#^mailto:#ui', $url)) {
 				// Cloak email addresses
 				$email = substr($text, 7);
-				return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+
+				if ( $this->canCloakEmail() )
+				{
+					return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+				}
+				else
+				{
+					return '<a href="mailto:' . $email . '">' . $email . '</a>';
+				}
 			}
 
 			// Remove http(s):// from the text
@@ -222,8 +230,15 @@ class KunenaBbcode extends NBBC_BBCode {
 				$params = JString::parse_url($url);
 				if (!$invalid && substr($url, 0, 7) == 'mailto:') {
 					$email = JString::substr($url, 7);
-					$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
 
+					if ( $this->canCloakEmail() )
+					{
+						$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+					}
+					else
+					{
+						$output[$index] = $email;
+					}
 				} elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
 					$output[$index-1] .= $token;
 					$output[$index] = '';
@@ -252,6 +267,28 @@ class KunenaBbcode extends NBBC_BBCode {
 		if ($local_too && $string[0] == '/') $string = 'http://www.domain.com' . $string;
 		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
 		if (preg_match($re, $string)) return true;
+		return false;
+	}
+
+	/**
+	 *
+	 * @param unknown $email
+	 * @return boolean
+	 */
+	public function canCloakEmail()
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (JPluginHelper::isEnabled('content', 'emailcloak'))
+		{
+			return true;
+		}
+
+		if ( $config->cloakemail )
+		{
+			return true;
+		}
+
 		return false;
 	}
 }
@@ -850,7 +887,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		$email = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode($content);
 		$text = is_string ( $default ) ? $bbcode->UnHTMLEncode($content) : $default;
-		return JHtml::_('email.cloak', htmlspecialchars ( $email ), $bbcode->IsValidEmail ( $email ), htmlspecialchars ( $text ), $bbcode->IsValidEmail ( $text ));
+
+		if ( $bbcode->canCloakEmail() )
+		{
+			return JHtml::_('email.cloak', htmlspecialchars( $email ), $bbcode->IsValidEmail( $email ), htmlspecialchars( $text ), $bbcode->IsValidEmail( $text ));
+		}
+		else
+		{
+			return '<a href="mailto:' . htmlspecialchars($email) . '">' . htmlspecialchars($text) . '</a>';
+		}
 	}
 
 	/**
@@ -1330,7 +1375,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$bbcode->autolink_disable++;
 			return true;
 		}
-		
+
 		if (!$content) {
 			return '';
 		}

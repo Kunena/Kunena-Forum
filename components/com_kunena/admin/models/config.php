@@ -389,6 +389,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['statslink_allowed'] = JHtml::_('select.genericlist', $yesno, 'cfg_statslink_allowed', 'class="inputbox" size="1"', 'value', 'text', $this->config->statslink_allowed);
 		$lists ['superadmin_userlist'] = JHtml::_('select.genericlist', $yesno, 'cfg_superadmin_userlist', 'class="inputbox" size="1"', 'value', 'text', $this->config->superadmin_userlist);
 
+		$lists ['cloakemail'] = JHtml::_('select.genericlist', $yesno, 'cfg_cloakemail', 'class="inputbox" size="1"', 'value', 'text', $this->config->cloakemail);
+
 		return $lists;
 	}
 }

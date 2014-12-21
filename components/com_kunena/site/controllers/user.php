@@ -471,26 +471,51 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->signature = JRequest::getVar('signature', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
 	}
 
-	protected function saveAvatar() {
+	/**
+	 * Delete previoulsy uplaoded avatars from filesystem
+	 *
+	 * @return void
+	 */
+	protected function deleteOldAvatars()
+	{
+		if (preg_match('|^users/|', $this->me->avatar))
+		{
+			// Delete old uploaded avatars:
+			if (is_dir(KPATH_MEDIA . '/avatars/resized'))
+			{
+				$deletelist = KunenaFolder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
+
+				foreach ($deletelist as $delete)
+				{
+					if (is_file($delete . '/' . $this->me->avatar))
+					{
+						KunenaFile::delete($delete . '/' . $this->me->avatar);
+					}
+				}
+			}
+
+			if (is_file(KPATH_MEDIA . '/avatars/' . $this->me->avatar))
+			{
+				KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $this->me->avatar);
+			}
+		}
+	}
+
+	/**
+	 * Upload and resize if needed the new avatar for user, or set one from the gallery or the default one
+	 *
+	 * @return boolean
+	 */
+	protected function saveAvatar()
+	{
 		$action = JRequest::getString('avatar', 'keep');
 		$current_avatar = $this->me->avatar;
 
 		$avatarFile = $this->app->input->files->get('avatarfile');
 
-		if ( !empty($avatarFile['tmp_name']) ) {
-			if (preg_match('|^users/|' , $this->me->avatar)) {
-				// Delete old uploaded avatars:
-				if (is_dir( KPATH_MEDIA . '/avatars/resized')) {
-					$deletelist = KunenaFolder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
-					foreach ($deletelist as $delete) {
-						if (is_file($delete . '/' . $this->me->avatar))
-							KunenaFile::delete($delete . '/' . $this->me->avatar);
-					}
-				}
-				if (is_file(KPATH_MEDIA . '/avatars/' . $this->me->avatar)) {
-					KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $this->me->avatar);
-				}
-			}
+		if ( !empty($avatarFile['tmp_name']) )
+		{
+			$this->deleteOldAvatars();
 
 			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
 
@@ -524,12 +549,19 @@ class KunenaControllerUser extends KunenaController {
 
 				return false;
 			}
-		} else if ( $action == 'delete' ) {
-			//set default avatar
+		}
+		elseif ( $action == 'delete' )
+		{
+			$this->deleteOldAvatars();
+
+			// Set default avatar
 			$this->me->avatar = '';
-		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false) {
+		}
+		elseif ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false)
+		{
 			$this->me->avatar = $action;
 		}
+
 		return true;
 	}
 

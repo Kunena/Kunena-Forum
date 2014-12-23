@@ -95,7 +95,7 @@ foreach ($this->sections as $section) :
 				<?php
 				foreach ($this->categories[$section->id] as $category) : ?>
 					<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
-						<td class="span1 center">
+						<td class="span1 center hidden-phone">
 							<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
 						</td>
 						<td class="span8">

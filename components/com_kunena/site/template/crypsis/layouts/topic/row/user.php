@@ -99,7 +99,7 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="span2" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="span1">
+			<div class="span1 hidden-phone">
 				<?php echo $avatar; ?>
 			</div>
 			<div class="span11">

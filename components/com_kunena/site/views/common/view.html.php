@@ -136,6 +136,10 @@ class KunenaViewCommon extends KunenaView {
 						break;
 				}
 			}
+			// Remove double index link
+			if ($view == 'category' && $layout == 'list' ) {
+				$pathway->setItemName(1, '' );
+			}
 		}
 		$this->pathway = array();
 		foreach ($pathway->getPathway() as $pitem) {

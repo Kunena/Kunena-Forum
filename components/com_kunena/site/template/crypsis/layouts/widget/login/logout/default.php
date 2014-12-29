@@ -14,7 +14,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 // FIXME: move announcements logic and pm logic into the template file...
 ?>
 <ul class="nav pull-right">
-	<li class="dropdown">
+	<li class="dropdown" style="float: right">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>

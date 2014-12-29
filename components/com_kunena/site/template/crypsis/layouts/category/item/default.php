@@ -110,7 +110,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 			<td colspan="6" class="hidden-phone">
-				<div class="form-horizontal">
+				<div class="input-append">
 
 					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
 						JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>

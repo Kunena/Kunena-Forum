@@ -63,8 +63,8 @@ input[type='checkbox']:focus {
 	padding-left: 3px;
 }
 
-.kfrontend {
-	margin-top: 20px;
+.kfrontend .section {
+	margin-bottom: 20px;
 }
 
 .kfrontend:hover .btn,
@@ -119,10 +119,6 @@ input[type='checkbox']:focus {
 
 .pagination {
 	margin: 3px 0;
-}
-
-.kavatar {
-	vertical-align: middle;
 }
 
 .dropdown-menu li > a:hover,
@@ -260,14 +256,23 @@ form > table > thead > tr > td > ul {
 	border-top: 0px;
 }
 
+.table thead tr td,
+.table tfoot tr td {
+	vertical-align: middle;
+}
 
-.kfrontend h1,
-.kfrontend h2,
-.kfrontend h3,
-.kfrontend h4,
-.kfrontend h5,
-.kfrontend h6 {
-	margin: 5px !important;
+.kfrontend .table td {
+	padding: 10px;
+}
+
+.kfrontend .table td h1,
+.kfrontend .table td  h2,
+.kfrontend .table td h3,
+.kfrontend .table td h4,
+.kfrontend .table td h5,
+.kfrontend .table td h6 {
+	margin: 0px !important;
+	line-height: 20px;
 }
 
 ul li {
@@ -276,6 +281,7 @@ ul li {
 
 .kbuttons .inline {
 	padding: 5px 0;
+	margin-left: 0;
 	clear: both;
 	li {
 		padding: 0;
@@ -293,7 +299,7 @@ ul li {
 }
 
 .topictitle {
-	font-size: 120%;
+	font-size: 110%;
 }
 
 .replies, .repliesnum {
@@ -301,7 +307,9 @@ ul li {
 }
 
 .breadcrumb {
-	padding: 8px 15px;
+	padding: 0;
+	margin-bottom: 20px;
+	background-color: transparent;
 }
 
 input[type='checkbox'] {
@@ -318,12 +326,6 @@ a:focus,
 .qreply {
 	min-height: 150px !important;
 	width: 98%;
-}
-
-.padding-table,
-.last-post,
-.header-desc {
-	padding: 4px 8px;
 }
 
 .desc {
@@ -556,35 +558,14 @@ div.navbar > div > div.visible-phone.hidden-tablet > ul {
 }
 
 select#mode {
-	margin-left: 65px;
+	margin-left: 69px;
 }
-
 
 .img-thumbnail {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	border:1px solid #ddd;
-}
-
-#recent-topics  {
-	.last-posts {
-		vertical-align:middle;
-		left:25px;
-		position: relative;
-	}
-	.span2 	.img-thumbnail {
-		position: absolute;
-		margin-top: -5px;
-	}
-}
-
-#category-index .row-fluid {
-	.img-thumbnail {
-		margin-right: 10px;
-		vertical-align:text-top;
-	}
-	min-width: 260px;
 }
 
 .row-fluid {
@@ -659,12 +640,10 @@ table .well {
 	}
 }
 
-.table td {
-	vertical-align: middle;
-}
 .profilebox {
 	margin-top: -5px;
 }
+
 .profile-horizontal-top {
 	padding: 10px 5px 5px 5px;
 	border-bottom: 1px  solid #ddd;
@@ -673,6 +652,7 @@ table .well {
 	margin-bottom: 10px;
 	min-height: 110px;
 }
+
 .profile-horizontal-bottom {
 	padding: 10px 5px 5px 5px;
 	border-top: 1px  solid #ddd;
@@ -682,8 +662,74 @@ table .well {
 }
 
 .table .pagination  {
-	max-height: 15px;
+	max-height: 25px;
 }
+
 .dropdown-menu .form-inline {
 	margin: 15px 0;
+}
+
+.profile-expand .content ul {
+	margin:0;
+}
+
+.kfrontend .inline > li {
+	float:left;
+	padding-right: 20px;
+	list-style: disc;
+}
+
+#kbbcode-poll-options {
+	margin: 20px 0;
+}
+
+.collapse .table {
+	margin-bottom:0px;
+}
+
+h2 .pull-right select {
+	line-height: 40px;
+	margin: 0;
+}
+
+.pagination {
+	padding: 0;
+}
+
+.pagination ul > li {
+	display: inline;
+}
+
+.pagination-small ul > li > a,
+.pagination-small ul > li > span {
+	padding: 4px 6px !important;
+	line-height: 15px !important;
+}
+
+.pagination ul > li > a,
+.pagination ul > li > span {
+	float: left;
+	padding: 4px 12px;
+	line-height: 20px;
+	background-color: transparent;
+	border: 1px solid #dddddd;
+	margin: 0;
+}
+
+#recent-topics img.img-thumbnail {
+	vertical-align: text-top;
+	margin-right: 10px;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+div.btn-toolbar .font-size-is-default {
+	font-size: 16px;
+	line-height: 1.7em;
+}
+
+.btn [class^='icon-'].icon-large, .btn [class*=' icon-'].icon-large, .nav [class^='icon-'].icon-large, .nav [class*=' icon-'].icon-large {
+	line-height: 1.5em;
 }

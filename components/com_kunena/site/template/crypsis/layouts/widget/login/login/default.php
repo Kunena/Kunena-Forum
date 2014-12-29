@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 <ul class="nav pull-right">
-	<li class="dropdown">
+	<li class="dropdown" style="float: right">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
@@ -55,7 +55,7 @@ defined('_JEXEC') or die;
 				<div id="form-login-remember" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">
-							<div class="add-on">						
+							<div class="add-on">
 								<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
 								<label for="login-remember" class="control-label">
 									<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>

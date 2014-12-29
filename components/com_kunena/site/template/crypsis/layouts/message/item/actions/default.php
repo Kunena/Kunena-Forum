@@ -38,7 +38,7 @@ $config = KunenaConfig::getInstance();
 	<?php if ($this->messageButtons->get('moderate')) : ?>
 	<div class="btn-group">
 		<button class="btn" data-toggle="dropdown">
-			<i class=" icon-shuffle"></i>	<?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
+			<i class="icon-shuffle"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
 		</button>
 		<button class="btn dropdown-toggle" data-toggle="dropdown">
 			<span class="caret"></span>

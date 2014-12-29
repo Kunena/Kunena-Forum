@@ -81,7 +81,6 @@
 	li.dropdown {
 		float: right;
 		padding: 5px;
-		margin-top: 5px;
 	}
 	a.dropdown-toggle,
 	i.icon-large {
@@ -93,6 +92,87 @@
 	.controls {
 		margin-left: 0 !important;
 	}
+	// COLLAPSIBLE NAVBAR
+	// ------------------
+	// Nav collapse clears brand
+	.nav-collapse {
+		clear: both;
+	}
+	// Block-level the nav
+	.nav-collapse .nav {
+		float: none;
+	}
+	.nav-collapse .nav > li {
+		float: none;
+	}
+	.nav-collapse .nav > li > a {
+		margin-bottom: 2px;
+	}
+	.nav-collapse .nav > .divider-vertical {
+		display: none;
+	}
+	.nav-collapse .nav .nav-header {
+		text-shadow: none;
+	}
+	// Nav and dropdown links in navbar
+	.nav-collapse .nav > li > a,
+	.nav-collapse .dropdown-menu a {
+		padding: 9px 15px;
+		font-weight: bold;
+		.border-radius(3px);
+	}
+	// Buttons
+	.nav-collapse .btn {
+		padding: 4px 10px 4px;
+		font-weight: normal;
+	}
+	.nav-collapse .dropdown-menu li + li a {
+		margin-bottom: 2px;
+	}
+
+	// Buttons in the navbar
+	.nav-collapse.in .btn-group {
+		margin-top: 5px;
+		padding: 0;
+	}
+	// Dropdowns in the navbar
+	.nav-collapse .dropdown-menu {
+		position: static;
+		top: auto;
+		left: auto;
+		float: none;
+		display: none;
+		max-width: none;
+		margin: 0 15px;
+		padding: 0;
+		background-color: transparent;
+		border: none;
+		.border-radius(0);
+		.box-shadow(none);
+	}
+	.nav-collapse .open > .dropdown-menu {
+		display: block;
+	}
+
+	.nav-collapse .dropdown-menu:before,
+	.nav-collapse .dropdown-menu:after {
+		display: none;
+	}
+	.nav-collapse .dropdown-menu .divider {
+		display: none;
+	}
+	.nav-collapse .nav > li > .dropdown-menu {
+		&:before,
+		&:after {
+			display: none;
+		}
+	}
+	// Navbar button
+	.navbar .btn-navbar {
+		display: block;
+	}
+
+
 }
 
 

@@ -18,7 +18,7 @@ $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
 ?>
 
-<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
+<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->escape($message->id); ?>">#<?php echo $this->location; ?></a>

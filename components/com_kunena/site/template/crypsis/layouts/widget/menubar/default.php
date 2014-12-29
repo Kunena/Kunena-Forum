@@ -18,8 +18,8 @@ defined('_JEXEC') or die;
 		</div>
 		<div class="visible-phone visible-tablet">
 			<div class="nav navbar-nav">
-				<div style="float: left"><a class="btn btn-link" style="color: inherit"  data-toggle="collapse" data-target="#nav-menu"> <i class="icon-large icon-list"></i> <b class="caret" style="color: inherit"></b> </a></div>
-				<div class="collapse-navbar collapse" id="nav-menu"><?php echo $this->subRequest('Widget/Menu'); ?></div>
+				<div class="nav-collapse collapse" id="nav-menu"><?php echo $this->subRequest('Widget/Menu'); ?></div>
+				<div style="float: left;padding-top: 10px"><a class="btn btn-link" style="color: inherit"  data-toggle="collapse" data-target="#nav-menu"> <i class="icon-large icon-list"></i> <b class="caret" style="color: inherit"></b> </a></div>
 				<?php echo $this->subRequest('Widget/Login')->setLayout('Logout/mobile'); ?>
 			</div>
 		</div>

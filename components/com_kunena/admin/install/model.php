@@ -56,7 +56,7 @@ class KunenaModelInstall extends JModelLegacy {
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
 
-		if (ini_get('ignore_user_abort'))
+		if (function_exists('ignore_user_abort'))
 		{
 			ignore_user_abort(true);
 		}

@@ -23,7 +23,7 @@ class Com_KunenaInstallerScript {
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.4' => '3.4.0',
+			'3.4' => '3.4.0-dev',
 			'3.3' => '3.3.6',
 			'3.2' => '3.2.7',
 			'3.1' => '3.1.5',

@@ -47,7 +47,10 @@ input[type='radio']:focus,
 input[type='checkbox']:focus {
 	outline: 0 !important;
 }
-
+h2 {
+	padding-bottom: 2%;
+	margin-bottom: 10px;
+}
 .kgooglemap {
 	width: 100%;
 	display: block;
@@ -80,7 +83,7 @@ input[type='checkbox']:focus {
 }
 
 .navbar-inner {
-	padding-left: 0px;
+	padding: 0;
 }
 
 .navbar .nav > li > a {
@@ -415,7 +418,6 @@ div.kmsgtext-article,
 div.kmsgtext-quote,
 div.kmsgtext-hide,
 div.kmsgtext-code,
-.highlight,
 div.kmsgtext-confidential {
 	font-size: 12px;
 	line-height: 18px;
@@ -666,7 +668,7 @@ table .well {
 }
 
 .dropdown-menu .form-inline {
-	margin: 15px 0;
+	margin: 0;
 }
 
 .profile-expand .content ul {
@@ -732,4 +734,35 @@ div.btn-toolbar .font-size-is-default {
 
 .btn [class^='icon-'].icon-large, .btn [class*=' icon-'].icon-large, .nav [class^='icon-'].icon-large, .nav [class*=' icon-'].icon-large {
 	line-height: 1.5em;
+}
+
+select#categorylist {
+	width: auto;
+}
+
+div#editprofile input,
+div#editprofile select,
+div#home input,
+div#home select,
+div#editsettings select {
+	float: left;
+	margin: 0 5px 0 0;
+}
+
+.collapse {
+	transition: height 0.01s;
+}
+div.kmsg > li {
+	margin-left: 20px;
+}
+.kcontenttablespacer {
+	border-bottom-color: #BFC3C6;
+}
+
+.krow1-stickymsg {
+	background-color: #FFFFCC;
+}
+
+.krow2-stickymsg {
+	background-color: #FFFFCC;
 }

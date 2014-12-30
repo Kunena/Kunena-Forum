@@ -16,18 +16,23 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
+if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
+	$this->numLink = $this->location ;
+} else {
+	$this->numLink = $message->replynum;
+}
 ?>
 
-<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
+<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-	<a href="#<?php echo $this->escape($message->id); ?>">#<?php echo $this->location; ?></a>
+	<a href="#<?php echo $this->escape($this->numLink); ?>"  id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
 </small>
 
 <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
 	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
 	<div class="kmessage">
-		<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
+		<div class="kmsg"> <?php echo $message->displayField('message'); ?> </div>
 	</div>
 	<?php if (!empty($attachments)) : ?>
 		<div class="kattach">

@@ -160,8 +160,12 @@ if ($this->config->showuserstats)
 				<?php if ($profile->email) : ?>
 					<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="icon-mail"></i></a>
 				<?php endif; ?>
-				<?php if ($websiteName) : ?>
+				<?php if (!empty($websiteName) && $websiteURL!='http://') : ?>
 					<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i> <?php echo $websiteName ?></a>
+				<?php elseif(empty($websiteName) && $websiteURL!='http://'): ?>
+					<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i> <?php echo $websiteURL ?></a>
+				<?php elseif(!empty($websiteName) && $websiteURL=='http://'): ?>
+					<button class="btn btn-small"><i class="icon-bookmark"></i> <?php echo $websiteName ?></button>
 				<?php endif; ?>
 			</div>
 		</div>

@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 <ul class="nav pull-right">
-	<li class="dropdown" style="float: right">
+	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>

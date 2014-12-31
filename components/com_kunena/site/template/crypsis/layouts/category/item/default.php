@@ -65,7 +65,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			<td class="span2 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
-			<td class="span3">
+			<td class="span3 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->topicActions)) : ?>
@@ -109,7 +109,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 				</a>
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
-			<td colspan="6" class="hidden-phone">
+			<td colspan="6">
 				<div class="input-append">
 
 					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,

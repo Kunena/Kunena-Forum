@@ -23,7 +23,7 @@ if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
 }
 ?>
 
-<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
+<small class="text-muted pull-right hidden-phone">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->escape($this->numLink); ?>"  id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>

@@ -18,7 +18,7 @@ $userConfig = JComponentHelper::getParams('com_users');
 		<a href="#" class="mobile" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
-		<div class="dropdown-menu well well-small">
+		<div class="dropdown-menu" id="userdropdown">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="login" />

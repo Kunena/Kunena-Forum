@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="mobile">
 <ul class="nav pull-left">
 		<li class="dropdown"> <a href="#" class="btn btn-navbar" data-toggle="dropdown"> <i class="icon-large icon-user"></i> <b class="caret"></b> </a>
-				<div class="dropdown-menu well well-small">
+				<div class="dropdown-menu" id="userdropdown">
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 								<div class="center"> <a href="<?php  echo $this->me->getURL(); ?>"> <?php echo $this->me->getAvatarImage('img-polaroid'); ?> </a>
 										<p> <strong><?php echo $this->escape($this->me->get('name')); ?></strong> </p>

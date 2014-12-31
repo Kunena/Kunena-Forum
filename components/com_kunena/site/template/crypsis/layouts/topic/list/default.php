@@ -80,8 +80,8 @@ $colspan = !empty($this->actions) ? 5 : 4;
 				</a>
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
-			<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 			<td colspan="<?php echo $colspan; ?>">
+				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 				<div class="input-append">
 					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 					<?php if (!empty($this->actions)) : ?>
@@ -93,8 +93,8 @@ $colspan = !empty($this->actions) ? 5 : 4;
 						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
 				</div>
+				<?php endif; ?>
 			</td>
-			<?php endif; ?>
 		</tr>
 		</tfoot>
 		<tbody>

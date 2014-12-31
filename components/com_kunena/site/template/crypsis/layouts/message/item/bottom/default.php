@@ -17,16 +17,22 @@ $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
+if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
+	$this->numLink = $this->location ;
+} else {
+	$this->numLink = $message->replynum;
+}
+$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 ?>
 
 <small class="text-muted pull-right hidden-phone">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-	<a href="#<?php echo $this->escape($message->id); ?>">#<?php echo $this->location; ?></a>
+	<a href="#<?php echo $this->escape($this->numLink); ?>" id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
 </small>
 <div class="clear-fix"></div>
 <div class="horizontal-message">
-	<div class="horizontal-message-bottom" data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
+	<div class="horizontal-message-bottom" data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
 		<div class="kmessage">
 			<div class="horizontal-message-text">
 				<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>

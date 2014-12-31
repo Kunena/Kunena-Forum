@@ -21,16 +21,17 @@ if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
 } else {
 	$this->numLink = $message->replynum;
 }
+$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 ?>
 
 <small class="text-muted pull-right hidden-phone">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-	<a href="#<?php echo $this->escape($this->numLink); ?>"  id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
+	<a href="#<?php echo $this->escape($this->numLink); ?>" id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
 </small>
 
 <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
+	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<div class="kmsg"> <?php echo $message->displayField('message'); ?> </div>
 	</div>

@@ -20,7 +20,7 @@ defined('_JEXEC') or die;
 			<div class="nav navbar-nav">
 				<div><a class="btn btn-link"  data-toggle="collapse" data-target="#nav-menu"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a></div>
 				<div class="nav-collapse collapse in" id="nav-menu"><?php echo $this->subRequest('Widget/Menu'); ?></div>
-				<?php echo $this->subRequest('Widget/Login')->setLayout('Logout/mobile'); ?>
+				<?php echo $this->subRequest('Widget/Login'); ?>
 			</div>
 		</div>
 	</div>

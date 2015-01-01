@@ -1168,6 +1168,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			KunenaForumTopicUserHelper::recount($this->id);
 			// FIXME: optimize
 			KunenaUserHelper::recount();
+			KunenaForumCategoryHelper::recount();
 		}
 
 		return true;

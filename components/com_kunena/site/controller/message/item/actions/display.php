@@ -90,7 +90,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			else {
 				$register = '';
 			}
-			echo '<p>'. JText::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register);
+			echo '<p>'. JText::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register).'</p>';
 		}
 
 		// Thank you.

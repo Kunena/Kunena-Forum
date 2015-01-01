@@ -21,7 +21,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 	</div>
 <?php endif; ?>
 
-<?php if (!$this->category->isSection() && !empty($this->topics)) : ?>
+<?php if (!$this->category->isSection()) : ?>
 	<h2>
 		<?php echo $this->escape($this->headerText); ?>
 	</h2>

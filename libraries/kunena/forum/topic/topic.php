@@ -1186,8 +1186,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 					GROUP BY m.thread";
 			$this->_db->setQuery($query);
 			$result = $this->_db->loadAssoc ();
-			if (KunenaError::checkDatabaseError ())
+			if (KunenaError::checkDatabaseError ()) {
 				return false;
+			}
 			if (!$result) {
 				$this->posts = 0;
 				// Double check if all posts have been removed from the database
@@ -1197,14 +1198,15 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 						GROUP BY m.thread";
 				$this->_db->setQuery($query);
 				$result = $this->_db->loadAssoc ();
-				if (KunenaError::checkDatabaseError ())
+				if (KunenaError::checkDatabaseError ()) {
 					return false;
-				if ($result) {
-					// Information in the database was wrong, recount topic
-					$this->hold = $result['hold'];
-					$this->recount();
 				}
 				return true;
+			}
+			if ($result) {
+				// Information in the database was wrong, recount topic
+				$this->hold = $result['hold'];
+				$this->recount();
 			}
 			$this->bind($result);
 		}

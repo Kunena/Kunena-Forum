@@ -441,7 +441,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		$this->setError(
-			JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
+			JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['real'], ENT_COMPAT, 'UTF-8'))
 			. ': ' . htmlspecialchars($fileinfo['error'], ENT_COMPAT, 'UTF-8'));
 
 		return false;

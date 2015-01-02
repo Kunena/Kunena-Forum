@@ -1168,7 +1168,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			KunenaForumTopicUserHelper::recount($this->id);
 			// FIXME: optimize
 			KunenaUserHelper::recount();
-			KunenaForumCategoryHelper::recount();
 		}
 
 		return true;
@@ -1198,14 +1197,16 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 						GROUP BY m.thread";
 				$this->_db->setQuery($query);
 				$result = $this->_db->loadAssoc ();
-				if (KunenaError::checkDatabaseError ())
+				if (KunenaError::checkDatabaseError ()) {
 					return false;
-				if ($result) {
-					// Information in the database was wrong, recount topic
-					$this->hold = $result['hold'];
-					$this->recount();
 				}
+
 				return true;
+			}
+			if ($result) {
+				// Information in the database was wrong, recount topic
+				$this->hold = $result['hold'];
+				$this->recount();
 			}
 			$this->bind($result);
 		}

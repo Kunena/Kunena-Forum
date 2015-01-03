@@ -114,14 +114,14 @@ class KunenaBbcode extends NBBC_BBCode {
 			}
 			if (isset($video)) {
 				$uri = JURI::getInstance();
-				if ( $uri->isSSL() ) {
-					return '<object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/'
-							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/'
-									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
-				} else {
-					return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
-							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
-									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+
+				if ( $uri->isSSL() )
+				{
+					return '<iframe width="425" height="344" src="https://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
+				}
+				else
+				{
+					return '<iframe width="425" height="344" src="http://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
 				}
 			}
 		}
@@ -1325,7 +1325,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$bbcode->autolink_disable++;
 			return true;
 		}
-		
+
 		if (!$content) {
 			return '';
 		}
@@ -1394,7 +1394,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1&cc_load_policy=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+		'youtube' => array ('iframe', 425, 355, 0, 0, 'http://www.youtube.com/embed/%vcode%', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 		'youku' => array ('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
@@ -1464,6 +1464,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			case 'flash' :
 				$vid_par1 = array (array (1, 'classid', 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' ), array (1, 'codebase', 'http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab' ), array (2, 'movie', $vid_source ), array (4, 'src', $vid_source ), array (4, 'type', 'application/x-shockwave-flash' ), array (4, 'pluginspage', 'http://www.macromedia.com/go/getflashplayer' ), array (6, 'quality', 'high' ), array (6, 'allowFullScreen', 'true' ), array (6, 'allowScriptAccess', 'never' ), array (5, 'width', $vid_width ), array (5, 'height', $vid_height ) );
 				$vid_allowpar = array ('flashvars', 'wmode', 'bgcolor', 'quality' );
+				break;
+			case 'iframe' :
+				return '<iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe>';
 				break;
 			case 'mediaplayer' :
 				$vid_par1 = array (array (1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95' ), array (1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab' ), array (4, 'type', 'application/x-mplayer2' ), array (4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/' ), array (6, 'src', $vid_source ), array (6, 'autostart', 'false' ), array (6, 'autosize', 'true' ), array (5, 'width', $vid_width ), array (5, 'height', $vid_height ) );

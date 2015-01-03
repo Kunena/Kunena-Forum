@@ -4,14 +4,14 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
 <ul class="nav pull-right">
-	<li class="dropdown">
+	<li class="dropdown" style="float: right">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
@@ -55,7 +55,7 @@ defined('_JEXEC') or die;
 				<div id="form-login-remember" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">
-							<div class="add-on">						
+							<div class="add-on">
 								<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
 								<label for="login-remember" class="control-label">
 									<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>

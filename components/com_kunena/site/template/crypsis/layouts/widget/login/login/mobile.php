@@ -4,7 +4,7 @@
  * @package Kunena.Template.Crypsis
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
@@ -13,9 +13,9 @@ defined ( '_JEXEC' ) or die ();
 
 $userConfig = JComponentHelper::getParams('com_users');
 ?>
-<ul>
+<ul class="pull-right">
 	<li class="dropdown">
-		<a href="#" class="mobile" data-toggle="dropdown" style="padding-top: 3px;float:right">
+		<a href="#" class="mobile" data-toggle="dropdown" style="padding-top: 3px;">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
 		<div class="dropdown-menu well well-small">

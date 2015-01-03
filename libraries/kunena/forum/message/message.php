@@ -640,8 +640,17 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$attachment = new KunenaAttachment;
 		$attachment->userid = $this->userid;
 		$success = $attachment->upload($postvar, $catid);
+
+		if (!$success)
+		{
+			$this->setError($attachment->getError());
+
+			return false;
+		}
+
 		$this->_attachments_add[$tmpid] = $attachment;
-		return $success;
+
+		return true;
 	}
 
 	/**

@@ -728,7 +728,6 @@ class KunenaControllerTopic extends KunenaController {
 			$subject = JRequest::getString ( 'subject', '' );
 			$shadow = JRequest::getBool ( 'shadow', false );
 			$topic_emoticon = JRequest::getInt ( 'topic_emoticon', null );
-			if (!is_null($topic_emoticon)) $topic->icon_id = $topic_emoticon;
 
 			if ($object instanceof KunenaForumMessage) {
 				$mode = JRequest::getWord ( 'mode', 'selected' );
@@ -744,7 +743,7 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$ids = false;
 			}
-			$targetobject = $topic->move ( $target, $ids, $shadow, $subject, $changesubject );
+			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon);
 			if (!$targetobject) {
 				$error = $topic->getError();
 			}

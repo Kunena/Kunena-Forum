@@ -195,6 +195,7 @@ class KunenaControllerUser extends KunenaController {
 
 		if ($block) {
 			if ($ban->isEnabled ()) {
+				$this->app->logout($user->userid);
 				$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
 			} else {
 				$message = JText::_ ( 'COM_KUNENA_USER_UNBLOCKED_DONE' );

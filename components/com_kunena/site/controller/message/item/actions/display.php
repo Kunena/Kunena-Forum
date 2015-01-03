@@ -77,7 +77,20 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			// User is not allowed to write a post.
 			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') :
-				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : JText::_('COM_KUNENA_VIEW_DISABLED'));
+				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED'): '');
+		}
+
+		if (!$me->exists() && !$this->message_closed || !$me->exists() && !$this->topic->locked) {
+			JHtml::_('behavior.modal');
+			$login = KunenaLogin::getInstance();
+			$logintext =  '<a class="modal" href="' . $login->getLoginURL() . '&tmpl=component"> ' . JText::_('JLOGIN'). '</a>';
+			if ($login->getRegistrationUrl()) {
+				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="modal" href="' . $login->getRegistrationURL() . '&tmpl=component">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
+			}
+			else {
+				$register = '';
+			}
+			echo '<p>'. JText::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register).'</p>';
 		}
 
 		// Thank you.
@@ -94,7 +107,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('unthankyou',
-					$this->getButton(sprintf($task, 'unthankyou&userid='.$me->userid), 'unthankyou', 'message', 'user', null, false)
+				$this->getButton(sprintf($task, 'unthankyou&userid='.$me->userid), 'unthankyou', 'message', 'user', null, false)
 			);
 		}
 

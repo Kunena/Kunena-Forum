@@ -32,7 +32,13 @@ if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
 <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
 	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
 	<div class="kmessage">
-		<div class="kmsg"> <?php echo $message->displayField('message'); ?> </div>
+		<p class="kmsg">
+			<?php  if (!$this->me->userid && !$isReply) :
+				echo $message->displayField('message');
+			else:
+				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+			endif;?>
+		</p>
 	</div>
 	<?php if (!empty($attachments)) : ?>
 		<div class="kattach">
@@ -55,7 +61,6 @@ if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
 	<?php if (!empty($this->reportMessageLink)) : ?>
 		<div class="msgfooter">
 			<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-
 			<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

@@ -1104,6 +1104,12 @@ class KunenaConfig extends JObject {
 	 */
 	public $avatarcrop = 0;
 
+	/**
+	 * @var    integer  Teaser; select, boolean
+	 * @since  3.1.0
+	 */
+	public $teaser = 0;
+
 	public function __construct() {
 		parent::__construct ();
 	}

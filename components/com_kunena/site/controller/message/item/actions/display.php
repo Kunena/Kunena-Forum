@@ -77,7 +77,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			// User is not allowed to write a post.
 			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') :
-				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED'): '');
+				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED'): ' ');
 		}
 
 		if (!$me->exists() && !$this->message_closed || !$me->exists() && !$this->topic->locked) {

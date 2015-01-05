@@ -16,7 +16,8 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
-if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
+$config = KunenaConfig::getInstance();
+if ($config->ordering_system == 'mesid') {
 	$this->numLink = $this->location ;
 } else {
 	$this->numLink = $message->replynum;

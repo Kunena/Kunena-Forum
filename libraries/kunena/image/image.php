@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Image
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -44,7 +44,7 @@ class KunenaImage extends KunenaCompatImage
 				$resizemethod = 'imagecopyresampled';
 				break;
 			default:
-				$resizemethod = array('KunenaImage','imageCopyResampledBicubic');
+				$resizemethod = 'self::imageCopyResampledBicubic';
 				break;
 		}
 
@@ -106,7 +106,33 @@ class KunenaImage extends KunenaCompatImage
 			}
 		}
 
-		$resizemethod($handle, $this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight());
+		if ($this->isTransparent())
+		{
+			// Get the transparent color values for the current image.
+			$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
+			$color = imageColorAllocateAlpha($handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
+
+			// Set the transparent color values for the new image.
+			imagecolortransparent($handle, $color);
+			imagefill($handle, 0, 0, $color);
+
+			imagecopyresized(
+				$handle,
+				$this->handle,
+				$offset->x,
+				$offset->y,
+				0,
+				0,
+				$dimensions->width,
+				$dimensions->height,
+				$this->getWidth(),
+				$this->getHeight()
+			);
+		}
+		else
+		{
+			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
+		}
 
 		// If we are resizing to a new image, create a new KunenaImage object.
 		if ($createNew)

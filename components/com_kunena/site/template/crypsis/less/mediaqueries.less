@@ -2,7 +2,7 @@
 * Kunena Component
 * @package Kunena.Template.Crypsis
 *
-* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -13,7 +13,7 @@
 		width: 60%;
 		margin-bottom: 10px;
 	}
-
+}
 /* Smartphones */
 @media (max-width: 480px) {
 	.pagination .test ul > li > a, .pagination ul > li > span {
@@ -74,9 +74,110 @@
 }
 
 /* Smartphones to Tablets */
-@media (min-width: 481px) and (max-width: 767px) {
+@media (max-width: 959px) {
+	select{
+		width: 80%;
+	}
+	li.dropdown {
+		float: right;
+		padding: 5px;
+	}
+	a.dropdown-toggle,
+	i.icon-large {
+		color: inherit;
+	}
+	.navbar .nav {
+		width: 100%;
+	}
+	.controls {
+		margin-left: 0 !important;
+	}
+	.mobile-user {
+		margin-top: -40px !important;
+	}
+	// COLLAPSIBLE NAVBAR
+	// ------------------
+	// Nav collapse clears brand
+	.nav-collapse {
+		clear: both;
+	}
+	// Block-level the nav
+	.nav-collapse .nav {
+		float: none;
+	}
+	.nav-collapse .nav > li {
+		float: none;
+	}
+	.nav-collapse .nav > li > a {
+		margin-bottom: 2px;
+	}
+	.nav-collapse .nav > .divider-vertical {
+		display: none;
+	}
+	.nav-collapse .nav .nav-header {
+		text-shadow: none;
+	}
+	// Nav and dropdown links in navbar
+	.nav-collapse .nav > li > a,
+	.nav-collapse .dropdown-menu a {
+		padding: 9px 15px;
+		font-weight: bold;
+		.border-radius(3px);
+	}
+	// Buttons
+	.nav-collapse .btn {
+		padding: 4px 10px 4px;
+		font-weight: normal;
+	}
+	.nav-collapse .dropdown-menu li + li a {
+		margin-bottom: 2px;
+	}
+
+	// Buttons in the navbar
+	.nav-collapse.in .btn-group {
+		margin-top: 5px;
+		padding: 0;
+	}
+	// Dropdowns in the navbar
+	.nav-collapse .dropdown-menu {
+		position: static;
+		top: auto;
+		left: auto;
+		float: none;
+		display: none;
+		max-width: none;
+		margin: 0 15px;
+		padding: 0;
+		background-color: transparent;
+		border: none;
+		.border-radius(0);
+		.box-shadow(none);
+	}
+	.nav-collapse .open > .dropdown-menu {
+		display: block;
+	}
+
+	.nav-collapse .dropdown-menu:before,
+	.nav-collapse .dropdown-menu:after {
+		display: none;
+	}
+	.nav-collapse .dropdown-menu .divider {
+		display: none;
+	}
+	.nav-collapse .nav > li > .dropdown-menu {
+		&:before,
+		&:after {
+			display: none;
+		}
+	}
+	// Navbar button
+	.navbar .btn-navbar {
+		display: block;
+	}
+
 
 }
+
 
 /* Tablets */
 @media (min-width: 768px) and (max-width: 959px) {
@@ -84,8 +185,17 @@
 }
 
 /* Desktop */
-@media (min-width: 960px) and (max-width: 1199px) {
-
+@media (min-width: 960px)  {
+	.navbar .nav {
+		margin-bottom: -1px;
+	}
+	a.dropdown-toggle,
+	i.icon-large {
+		color: inherit;
+	}
+	ul.pull-right {
+		margin: 0;
+	}
 }
 
 /* Large Display */
@@ -93,5 +203,3 @@
 
 }
 
-
-}

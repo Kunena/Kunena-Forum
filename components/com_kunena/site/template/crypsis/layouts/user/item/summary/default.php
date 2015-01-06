@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -160,8 +160,12 @@ if ($this->config->showuserstats)
 				<?php if ($profile->email) : ?>
 					<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="icon-mail"></i></a>
 				<?php endif; ?>
-				<?php if ($websiteName) : ?>
+				<?php if (!empty($websiteName) && $websiteURL!='http://') : ?>
 					<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i> <?php echo $websiteName ?></a>
+				<?php elseif(empty($websiteName) && $websiteURL!='http://'): ?>
+					<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i> <?php echo $websiteURL ?></a>
+				<?php elseif(!empty($websiteName) && $websiteURL=='http://'): ?>
+					<button class="btn btn-small"><i class="icon-bookmark"></i> <?php echo $websiteName ?></button>
 				<?php endif; ?>
 			</div>
 		</div>

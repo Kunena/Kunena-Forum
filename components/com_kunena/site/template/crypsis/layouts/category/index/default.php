@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -58,7 +58,7 @@ foreach ($this->sections as $section) :
 			echo $this->escape($section->name);
 		}
 		?>
-		<small class="hidden-phone">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
+		<small class="hidden-phone nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 				$this->formatLargeNumber($section->getTopics())); ?>)
 		</small>
 	</h2>
@@ -95,14 +95,14 @@ foreach ($this->sections as $section) :
 				<?php
 				foreach ($this->categories[$section->id] as $category) : ?>
 					<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
-						<td class="span1 center">
+						<td class="span1 center hidden-phone">
 							<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
 						</td>
 						<td class="span8">
 							<div>
 								<h3>
 									<?php echo $this->getCategoryLink($category); ?>
-									<small class="hidden-phone">
+									<small class="hidden-phone nowrap">
 										(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
 							<span>
 								<?php if (($new = $category->getNewCount()) > 0) : ?>
@@ -189,21 +189,23 @@ foreach ($this->sections as $section) :
 							$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-thumbnail', 48) : null;
 							?>
 
-							<td class="span3 hidden-phone" id="category-index">
+							<td class="span3 hidden-phone" id="recent-topics">
 								<div class="row-fluid">
 									<?php if ($avatar) : ?>
-										<div class="span3">
-											<?php echo $author->getLink($avatar); ?>
-										</div>
-									<?php endif; ?>
-									<div class="span9">
-										<?php echo $this->getLastPostLink($category) ?>
-										<br>
-										<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
-										<br>
-										<?php echo $time->toKunena('config_post_dateformat'); ?>
+									<div class="span2">
+										<?php echo $author->getLink($avatar); ?>
 									</div>
-								</div>
+									<div class="span6">
+										<?php else : ?>
+										<div class="span12 last-posts">
+											<?php endif; ?>
+											<?php echo $this->getLastPostLink($category) ?>
+											<br>
+											<?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?>
+											<br>
+											<?php echo $time->toKunena('config_post_dateformat'); ?>
+										</div>
+									</div>
 							</td>
 						<?php else : ?>
 							<td class="span3 center hidden-phone">

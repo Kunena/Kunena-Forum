@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -405,6 +405,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['avatarresizemethod'] = JHtml::_('select.genericlist', $resizeoptions, 'cfg_avatarresizemethod', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarresizemethod);
 		$lists ['avatarcrop'] = JHtml::_('select.genericlist', $yesno, 'cfg_avatarcrop', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarcrop);
 		$lists ['user_report'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_user_report', 'class="inputbox" size="1"', 'value', 'text', $this->config->user_report );
+
+		$lists ['teaser'] = JHtml::_('select.genericlist', $yesno, 'cfg_teaser', 'class="inputbox" size="1"', 'value', 'text', $this->config->teaser);
 
 		return $lists;
 	}

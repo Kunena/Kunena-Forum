@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Upload
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -477,6 +477,103 @@ class KunenaUpload
 		}
 
 		return json_encode($response);
+	}
+
+	/**
+	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
+	 *
+	 * @param   int      $filesize  The size of file in bytes
+	 * @param   boolean  $avatar    If the file is an avatar
+	 *
+	 * @return boolean
+	 */
+	protected function checkFileSize($filesize, $avatar)
+	{
+		if ( !$avatar )
+		{
+			if ( $filesize > $this->getMaxSize() )
+			{
+				return false;
+			}
+		}
+		else if ( $avatar && $filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024 )
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Upload file by passing it by HTML input
+	 *
+	 * @param   array   $fileInput    The file object returned by JInput
+	 * @param   string  $destination  The path of destination of file uploaded
+	 *
+	 * @return object
+	 */
+	public function upload($fileInput, $destination)
+	{
+		$file = new stdClass;
+		$file->ext = JFile::getExt($fileInput['name']);
+		$file->size = $fileInput['size'];
+		$file->tmp_name = $fileInput['tmp_name'];
+		$file->error = $fileInput['error'];
+		$file->destination = $destination . '.' . $file->ext;
+		$file->success = false;
+
+		if ( !is_uploaded_file($file->tmp_name) )
+		{
+			$exception = $this->checkUpload($fileInput);
+
+			if ($exception)
+			{
+				throw $exception;
+			}
+		}
+		elseif ( $file->error != 0 )
+		{
+			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 500);
+		}
+
+		// Check if file extension matches any allowed extensions (case insensitive)
+		foreach ($this->validExtensions as $ext)
+		{
+			$extension = JString::substr($file->tmp_name, -JString::strlen($ext));
+
+			if (JString::strtolower($extension) == JString::strtolower($ext))
+			{
+				// File must contain one letter before extension
+				$name = JString::substr($file->tmp_name, 0, -JString::strlen($ext));
+				$extension = JString::substr($extension, 1);
+
+				if (!$name)
+				{
+					throw new RuntimeException(
+						JText::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+						400
+					);
+				}
+			}
+		}
+
+		if ( !$this->checkFileSize($file->size, true) )
+		{
+			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+		}
+
+		if (! KunenaFile::copy($file->tmp_name, $file->destination))
+		{
+			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_RIGHT_MEDIA_DIR'), 500);
+		}
+
+		unlink($file->tmp_name);
+
+		KunenaPath::setPermissions($file->destination);
+
+		$file->success = true;
+
+		return $file;
 	}
 
 	/**

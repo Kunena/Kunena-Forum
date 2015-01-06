@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage BBCode
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -2012,13 +2012,19 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @param $content
 	 * @return bool|string
 	 */
-	function DoTweet($bbcode, $action, $name, $default, $params, $content) {
+	public function DoTweet($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK)
 			return true;
 
 		$tweetid = trim($content);
 
 		if ( !is_numeric($tweetid) ) return false;
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal))
+		{
+			return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . JText::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
+		}
 
 		$cache = JFactory::getCache('Kunena_tweet_quote');
 		$cache->setCaching(true);
@@ -2028,7 +2034,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return '<div>'.$tweet_quote.'</div>';
 	}
 
-	function getTweet($tweetid ) {
+	protected function getTweet($tweetid ) {
 		// FIXME: use AJAX instead...
 		if ( !function_exists('curl_init') ) return false;
 

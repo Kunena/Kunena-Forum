@@ -58,7 +58,6 @@ if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
 			<span class="ksignature"><?php echo $signature; ?></span>
 		</div>
 	<?php endif ?>
-<<<<<<< HEAD
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
 			<div class="msgfooter">
@@ -72,18 +71,6 @@ if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
 				<div class="pull-right">
 					<p> <?php echo $this->ipLink; ?> </p>
 				</div>
-=======
-	<?php if (!empty($this->reportMessageLink)) : ?>
-		<div class="msgfooter">
-			<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-			<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?> </div>
-			</div>
-			<div class="pull-right">
-				<p> <?php echo $this->ipLink; ?> </p>
->>>>>>> upstream/develop
 			</div>
 		<?php endif; ?>
 	<?php endif; ?>

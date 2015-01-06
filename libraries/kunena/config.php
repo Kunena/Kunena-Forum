@@ -1104,20 +1104,18 @@ class KunenaConfig extends JObject {
 	 */
 	public $avatarcrop = 0;
 
-<<<<<<< HEAD
-
 	/**
 	 * @var    integer  Max Links limit; input, number
 	 * @since  3.1.0
 	 */
 	public $max_links = 6;
-=======
+
 	/**
 	 * @var    integer  Teaser; select, boolean
 	 * @since  3.1.0
 	 */
 	public $teaser = 0;
->>>>>>> upstream/develop
+
 
 	public function __construct() {
 		parent::__construct ();

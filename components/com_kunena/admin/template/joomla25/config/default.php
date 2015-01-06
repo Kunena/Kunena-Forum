@@ -606,15 +606,14 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
 													</tr>
 													<tr>
-<<<<<<< HEAD
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS') ?></td>
 														<td><input type="text" name="cfg_max_links" value="<?php echo $this->escape ( $this->config->max_links ) ?>" /></td>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC') ?></td>
-=======
+													</tr>
+													<tr>
 														<td><?php echo JText::_('COM_KUNENA_TEASER') ?></td>
 														<td><?php echo $this->lists ['teaser'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_TEASER_DESC') ?></td>
->>>>>>> upstream/develop
 													</tr>
 												</tbody>
 											</table>

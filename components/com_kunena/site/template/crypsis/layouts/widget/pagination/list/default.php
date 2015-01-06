@@ -4,14 +4,20 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Pagination
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
+$display = isset($this->display);
+
 $data = $this->pagination->getData();
-if (count($data->pages) <= 1) return;
+
+$count = count($data->pages);
+
+if ($count == 0) return;
+elseif ($count == 1 && empty($display)) return;
 $last = 0;
 ?>
 

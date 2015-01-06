@@ -4,11 +4,17 @@
 	<fieldset name="advanced">
 		<field name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
 			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
+			<option value="right">COM_KUNENA_TEMPLATE_RIGHT</option>
+			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
+			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
+		</field>
+		<field name="lightboxColor" type="list" default="white" label="COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_POSITION" description="COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_DESC">
+			<option value="white">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_WHITE</option>
+			<option value="black">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_BLACK</option>
 		</field>
 		<field name="templatebyText" type="hidden" default="" />
 		<field name="templatebyName" type="hidden" default="" />
 		<field name="templatebyLink" type="hidden" default="" />
-		
 		<!-- Required avatar sizes -->
 		<field name="avatarSizeXThumb" type="hidden" default="36" />
 		<field name="avatarSizeYThumb" type="hidden" default="36" />

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Upload
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -19,6 +19,7 @@ class KunenaUploadHelper {
 	private function __construct() {}
 
 	public static function upload($file, $uploadfolder, $format) {
+		// TODO: remove when dropping Joomla! 2.5 support, replace with JHelperMedia
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
 
 		$err			= null;

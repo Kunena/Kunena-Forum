@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -1104,12 +1104,20 @@ class KunenaConfig extends JObject {
 	 */
 	public $avatarcrop = 0;
 
+<<<<<<< HEAD
 
 	/**
 	 * @var    integer  Max Links limit; input, number
 	 * @since  3.1.0
 	 */
 	public $max_links = 6;
+=======
+	/**
+	 * @var    integer  Teaser; select, boolean
+	 * @since  3.1.0
+	 */
+	public $teaser = 0;
+>>>>>>> upstream/develop
 
 	public function __construct() {
 		parent::__construct ();

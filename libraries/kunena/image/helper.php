@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Image
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -25,6 +25,7 @@ class KunenaImageHelper
 	 * @param  int     $maxHeight   Maximum height for the image.
 	 * @param  int     $quality     Quality for the file (1-100).
 	 * @param  int     $scale       See available KunenaImage constants.
+	 * @param  int     $crop        Define if you want crop the image.
 	 *
 	 * @return bool    True on success.
 	 */

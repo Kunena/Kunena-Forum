@@ -4,7 +4,7 @@
 * @package Kunena.Template.Crypsis
 * @subpackage BBCode
 *
-* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -15,9 +15,10 @@ $attachment = $this->attachment;
 
 $config = KunenaConfig::getInstance();
 
-$attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button""' : '';
+$attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';
 ?>
-<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0,7); ?>">
-	<?php echo $attachment->getShortName(); ?>
+
+<a class="btn btn-small" rel="popover" data-placement="bottom" data-trigger="hover" data-content="Filesize: <?php echo number_format($attachment->size / 1024, 0, '', ',') . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
+" data-original-title="<?php echo $attachment->getShortName(); ?>" href="<?php echo $attachment->getUrl(); ?>" title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0,26); ?>">
+	<i class="icon icon-info"></i>
 </a>
-(<?php echo number_format($attachment->size / 1024, 0, '', ',') . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>)

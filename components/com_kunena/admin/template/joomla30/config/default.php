@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Config
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -615,9 +615,15 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
 											</tr>
 											<tr>
+<<<<<<< HEAD
 												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS') ?></td>
 												<td><input type="text" name="cfg_max_links" value="<?php echo $this->escape ( $this->config->max_links ) ?>" /></td>
 												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC') ?></td>
+=======
+												<td><?php echo JText::_('COM_KUNENA_TEASER') ?></td>
+												<td><?php echo $this->lists ['teaser'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_TEASER_DESC') ?></td>
+>>>>>>> upstream/develop
 											</tr>
 										</tbody>
 									</table>

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -57,11 +57,5 @@ defined('_JEXEC') or die;
 			</ul>
 		</div>
 		<?php endif ?>
-
-		<div class="btn-group pull-right">
-			<?php echo $this->subLayout('Widget/Search')
-				->set('id', $this->topic->id)
-				->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC')); ?>
-		</div>
 	</div>
 </div>

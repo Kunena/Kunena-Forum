@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -260,7 +260,6 @@ var kbbcode = new Class({
 		if(this.options.interceptTabs) {
 
 			this.el.addEvent('keypress', function(event){
-				event = new Event(event);
 				if(event.key == "tab") {
 					event.preventDefault();
 					this.replaceSelection("\t");

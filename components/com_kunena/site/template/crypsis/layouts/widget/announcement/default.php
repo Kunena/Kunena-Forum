@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 <div class=" collapse in" id="announcement<?php echo $this->announcement->id; ?>">
 	<div class="alert alert-info">
 	<div class="close" data-toggle="collapse" data-target="#announcement<?php echo $this->announcement->id; ?>">&times;</div>
-	<h4>
+	<h5>
 		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(),
 			$this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'),
 			null, 'follow'); ?>
@@ -23,8 +23,8 @@ defined('_JEXEC') or die;
 		<small>(<?php echo $this->announcement->displayField('created', 'date_today'); ?>)</small>
 		<?php endif; ?>
 
-	</h4>
-	<h5>
+	</h5>
+	<div>
 		<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
 
 		<?php if (!empty($this->announcement->description)) : ?>
@@ -33,6 +33,6 @@ defined('_JEXEC') or die;
 				null, 'follow'); ?></p>
 		<?php endif; ?>
 
-	</h5>
+	</div>
 	</div>
 </div>

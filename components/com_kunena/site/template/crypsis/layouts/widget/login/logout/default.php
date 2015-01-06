@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -14,12 +14,12 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 // FIXME: move announcements logic and pm logic into the template file...
 ?>
 <ul class="nav pull-right">
-	<li class="dropdown">
+	<li class="dropdown mobile-user" style="float: right">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu well well-small">
+		<div class="dropdown-menu">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div class="center">
 					<a href="<?php  echo $this->me->getURL(); ?>">
@@ -67,10 +67,11 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>
 				</a>
 				<?php endif ?>
+				<div class="divider"></div>
 
-				<button class="btn btn-small btn-link" name="submit" type="submit">
-					<i class="icon-out"></i>
-					<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
+				<button class="btn-link" name="submit" type="submit">
+					<a><i class="icon-out"></i>
+						<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?></a>
 				</button>
 
 				<input type="hidden" name="view" value="user" />

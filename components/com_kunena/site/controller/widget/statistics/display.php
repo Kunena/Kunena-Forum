@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Widget
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -24,8 +24,6 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 	public $latestMemberLink;
 
 	public $statisticsUrl;
-
-	public $userlistUrl;
 
 	/**
 	 * Prepare statistics box display.
@@ -49,8 +47,6 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsUrl = KunenaFactory::getProfile()->getStatisticsURL();
-		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
-
 		return true;
 	}
 }

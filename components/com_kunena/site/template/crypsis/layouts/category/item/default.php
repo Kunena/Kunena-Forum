@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -110,7 +110,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 			<td colspan="6" class="hidden-phone">
-				<div class="form-horizontal">
+				<div class="input-append">
 
 					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
 						JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>

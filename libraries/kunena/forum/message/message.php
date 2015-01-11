@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -729,12 +729,9 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 				$this->setError($exception->getMessage());
 				continue;
 			}
-			if ($attachment->exists())
-			{
-				if (!$attachment->save()) {
-					$this->setError($attachment->getError());
-					continue;
-				}
+			if (!$attachment->save()) {
+				$this->setError($attachment->getError());
+				continue;
 			}
 			// Update attachments count and fix attachment name inside message
 			$this->getTopic()->attachments++;

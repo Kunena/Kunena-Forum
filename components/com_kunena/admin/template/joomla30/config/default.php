@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Config
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -613,6 +613,11 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED') ?></td>
 												<td><?php echo $this->lists ['statslink_allowed'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_TEASER') ?></td>
+												<td><?php echo $this->lists ['teaser'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_TEASER_DESC') ?></td>
 											</tr>
 										</tbody>
 									</table>

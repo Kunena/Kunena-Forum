@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -352,14 +352,14 @@ class KunenaControllerTopic extends KunenaController {
 		$message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
 		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
-		// Upload new attachments
+		// Legacy way to upload new attachments
 		foreach ($_FILES as $key => $file)
 		{
 			$intkey = 0;
 			if (preg_match('/\D*(\d+)/', $key, $matches))
 				$intkey = (int)$matches[1];
 
-			if ($file['error'] == 0 && $intkey != 0)
+			if ($file['error'] != UPLOAD_ERR_NO_FILE)
 			{
 				$message->uploadAttachment($intkey, $key, $this->catid);
 			}

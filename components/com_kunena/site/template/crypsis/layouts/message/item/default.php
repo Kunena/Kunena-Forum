@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Message
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -16,18 +16,29 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
+if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
+	$this->numLink = $this->location ;
+} else {
+	$this->numLink = $message->replynum;
+}
 ?>
 
-<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
+<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-	<a href="#<?php echo $this->escape($message->id); ?>">#<?php echo $this->location; ?></a>
+	<a href="#<?php echo $this->escape($this->numLink); ?>"  id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
 </small>
 
 <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
 	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
 	<div class="kmessage">
-		<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
+		<p class="kmsg">
+			<?php  if (!$this->me->userid && !$isReply) :
+				echo $message->displayField('message');
+			else:
+				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+			endif;?>
+		</p>
 	</div>
 	<?php if (!empty($attachments)) : ?>
 		<div class="kattach">
@@ -50,7 +61,6 @@ $avatarname = $this->profile->getname();
 	<?php if (!empty($this->reportMessageLink)) : ?>
 		<div class="msgfooter">
 			<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-
 			<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

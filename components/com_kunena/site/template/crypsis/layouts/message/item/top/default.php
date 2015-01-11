@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Message
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -21,7 +21,7 @@ $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 
 
 
-<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
+<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->escape($message->id); ?>">#<?php echo $this->location; ?></a>

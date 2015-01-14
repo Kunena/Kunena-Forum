@@ -13,6 +13,26 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.keepalive');
 
+// Load scripts to handle fileupload process
+JText::script('COM_KUNENA_EDITOR_INSERT');
+JText::script('COM_KUNENA_GEN_REMOVE_FILE');
+JText::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES');
+JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
+JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
+JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
+JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
+
+$this->addScript('js/jquery.ui.widget.js');
+$this->addScript('js/load-image.min.js');
+$this->addScript('js/canvas-to-blob.min.js');
+$this->addScript('js/jquery.iframe-transport.js');
+$this->addScript('js/jquery.fileupload.js');
+$this->addScript('js/jquery.fileupload-process.js');
+$this->addScript('js/jquery.fileupload-image.js');
+$this->addScript('js/upload.main.js');
+$this->addStyleSheet('css/fileupload.css');
+$this->addStyleSheet('css/fileupload-ui.css');
+
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
@@ -148,10 +168,6 @@ $this->addScriptDeclaration("kunena_upload_files_maxfiles = '" .$this->config->a
 							</span>
 							<br>
 							<br>
-							<!-- The global progress bar -->
-							<div id="progress" class="progress progress-striped">
-								<div class="bar"></div>
-							</div>
 							<!-- The container for the uploaded files -->
 							<div id="files" class="files"></div>
 							<span id="klabel_info_drop_browse" class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>

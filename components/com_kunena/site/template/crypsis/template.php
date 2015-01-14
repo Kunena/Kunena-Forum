@@ -96,25 +96,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$this->addScript('js/atwho.js');
 		$this->addStyleSheet('css/atwho.css');
 
-		// Load scripts to handle fileupload process
-		JText::script('COM_KUNENA_EDITOR_INSERT');
-		JText::script('COM_KUNENA_GEN_REMOVE_FILE');
-		JText::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES');
-		JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
-		JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
-		JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
-		JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
-
-		$this->addScript('js/jquery.ui.widget.js');
-		$this->addScript('js/load-image.min.js');
-		$this->addScript('js/canvas-to-blob.min.js');
-		$this->addScript('js/jquery.fileupload.js');
-		$this->addScript('js/jquery.fileupload-process.js');
-		$this->addScript('js/jquery.fileupload-image.js');
-		$this->addScript('js/upload.main.js');
-		$this->addStyleSheet('css/fileupload.css');
-		$this->addStyleSheet('css/fileupload-ui.css');
-
 		// Load JavaScript.
 		$this->addScript('plugins.js');
 

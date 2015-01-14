@@ -7,78 +7,75 @@ jQuery(function($) {
 
 		jQuery('#kbbcode-message').val(value+' [attachment='+attachid+']'+filename+'[/attachment]');
 	}
+	
+	var fileCount = null;
+	
+	var insertButton = $('<button>')
+		.addClass("btn btn-primary")
+		.html('<i class="icon-upload"></i> '+Joomla.JText._('COM_KUNENA_EDITOR_INSERT'))
+		.on('click', function (e) {
+			// Make sure the button click doesn't submit the form:
+			e.preventDefault();
+			e.stopPropagation();
 
-	var uploadButton = $('<button/>')
-		.addClass('btn btn-primary')
-		.attr('type', 'button')
-		.prop('disabled', true)
-		.text(Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON'))
-		.on('click', function () {
 			var $this = $(this),
 				data = $this.data();
-			$this
-				.off('click')
-				.text(Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON'))
-				.on('click', function () {
-					$this.remove();
-					data.abort();
-				});
 
-				data.submit().always(function () {
-					$this.remove();
-				});
+			var file_id = 0;
+			var filename = null;
+			if (data.result!=undefined){
+				file_id = data.result.data.id;
+				filename = data.result.data.filename;
+			}else{
+				file_id = data.id; 
+				filename = data.name;
+			}
+
+			insertInMessage(file_id,filename);
 		});
-
+	
 	var removeButton = $('<button/>')
 		.addClass('btn btn-danger')
 		.attr('type', 'button')
-		.text(Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
+		.html('<i class="icon-trash"></i> '+Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
 		.on('click', function () {
 			var $this = $(this),
 				data = $this.data(); 
 			
 			$('#klabel_info_drop_browse').show();
 
-			// Check if file exist on server
-			if(data.onserver!==false)
+			var file_id = 0;
+			if (data.onserver==true)
 			{
-				var file_id = 0;
 				if (data.result!=false){
 					file_id = data.result.data.id;
 				} else {
 					file_id = data.file_id;
 				}
-
-				jQuery('#kattach-list').append('<input id="kattachs-'+file_id+'" type="hidden" name="attachments['+file_id+']" value="1" />');
-
-				if ( jQuery('#kattach-'+file_id).length > 0 ) {
-					jQuery('#kattach-'+file_id).remove();
-				}
-
-				// Ajax Request to delete the file from filesystem
-				jQuery.ajax({
-					url: kunena_upload_files_rem+'&fil_id='+file_id,
-					type: 'DELETE',
-					success: function(result) {
-						$this.parent().remove();
-					}
-				});
 			}
-			else
-			{
-				$this.parent().parent().remove();
-			} 
-	});
+			
+			jQuery('#kattach-list').append('<input id="kattachs-'+file_id+'" type="hidden" name="attachments['+file_id+']" value="1" />');
 
-	function getNumberOfFiles()
-	{
-		return $('#files').children().not('.processing').length;
-	}
+			if ( jQuery('#kattach-'+file_id).length > 0 ) {
+				jQuery('#kattach-'+file_id).remove();
+			}
+			
+			fileCount =  fileCount-1;
+			
+			// Ajax Request to delete the file from filesystem
+			jQuery.ajax({
+				url: kunena_upload_files_rem+'&fil_id='+file_id,
+				type: 'DELETE',
+				success: function(result) {
+					$this.parent().remove();
+				}
+			});	
+	});
 
 	$('#fileupload').fileupload({
 		url: jQuery('#kunena_upload_files_url').val(),
 		dataType: 'json',
-		autoUpload: false,
+		autoUpload: true,
 		// Enable image resizing, except for Android and Opera,
 		// which actually support image resizing, but fail to
 		// send Blob objects via XHR requests:
@@ -96,23 +93,31 @@ jQuery(function($) {
 		data.formData = params;
 	})
 	.bind('fileuploaddrop', function (e, data) {
-		var fileCount = getNumberOfFiles()+1; 
+		var filecoutntmp = Object.keys(data['files']).length+fileCount; 
 
-		if (fileCount > kunena_upload_files_maxfiles) {
-			$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES')+'</div>').insertBefore( $('#progress') );
+		if (filecoutntmp > kunena_upload_files_maxfiles) {
+			$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES')+'</div>').insertBefore( $('#files') );
 
 			return false; 
+		}
+		else
+		{
+			fileCount = Object.keys(data['files']).length+fileCount; 
 		}
 	})
 	.bind('fileuploadchange', function (e, data) {
-		var fileCount = getNumberOfFiles()+1; 
+		var filecoutntmp = Object.keys(data['files']).length+fileCount; 
 
-		if (fileCount > kunena_upload_files_maxfiles) {
-			$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES')+'</div>').insertBefore( $('#progress') );
+		if (filecoutntmp > kunena_upload_files_maxfiles) {
+			$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES')+'</div>').insertBefore( $('#files') );
 
 			return false; 
 		}
-	})  
+		else
+		{
+			fileCount = Object.keys(data['files']).length+fileCount; 
+		}
+	})
 	.on('fileuploadadd', function (e, data) {
 		$('#klabel_info_drop_browse').hide();
 		
@@ -128,8 +133,7 @@ jQuery(function($) {
 				.append($('<span/>').text(file.name));
 			if (!index) {
 				node
-					.append('<br>')
-					.append(uploadButton.clone(true).data(data));
+					.append('<br>');
 				data.onserver = false;    
 				node.append(removeButton.clone(true).data(data));
 			}
@@ -162,7 +166,7 @@ jQuery(function($) {
 		);
 	}).on('fileuploaddone', function (e, data) {
 		// $.each(data.result.data, function (index, file) 
-		//console.log(data.result.data);
+		
 		if (data.result.success==true) {
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
 			jQuery('#kattach-list').append('<input id="kattachs-'+data.result.data.id+'" type="hidden" name="attachments['+data.result.data.id+']" value="1" />');
@@ -171,20 +175,10 @@ jQuery(function($) {
 			var link = $('<a>')
 				.attr('target', '_blank')
 				.prop('href', data.result.location);
-
-			var insertButton = $('<button>').addClass("btn btn-primary").text(Joomla.JText._('COM_KUNENA_EDITOR_INSERT'));
-
-			insertButton.click(function(e) {
-				// Make sure the button click doesn't submit the form:
-				e.preventDefault();
-				e.stopPropagation();
-
-				insertInMessage(data.result.data.id,data.result.data.filename);
-			});
-
+			
 			data.context.find('span')
 				.wrap(link);
-			data.context.append(insertButton); 
+			data.context.append(insertButton.clone(true).data(data)); 
 			if (data.context.find('button').hasClass('btn-danger'))
 			{
 				data.context.find('button.btn-danger').remove();
@@ -221,16 +215,10 @@ jQuery(function($) {
 					data.onserver = true;
 					data.result= false;
 					data.file_id = file.id;
-					object.append(removeButton.clone(true).data(data));var insertButton = $('<button>').addClass("btn btn-primary").text(Joomla.JText._('COM_KUNENA_EDITOR_INSERT'));
-
-					insertButton.click(function(e) {
-						// Make sure the button click doesn't submit the form:
-						e.preventDefault();
-						e.stopPropagation();
-
-						insertInMessage(file.id,file.name);
-					});  
-					object.append(insertButton);
+					
+					object.append(insertButton.clone(true).data(file));
+					object.append(removeButton.clone(true).data(data));
+					
 					object.appendTo( "#files" );
 				});
 			}

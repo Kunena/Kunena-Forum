@@ -53,6 +53,10 @@ if ($config->lightbox == 1)
 				});
 			');
 }
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addScript('js/caret.js');
+$this->addScript('js/atwho.js');
+$this->addStyleSheet('css/atwho.css');
 ?>
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">

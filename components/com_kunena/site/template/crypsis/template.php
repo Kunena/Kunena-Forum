@@ -91,11 +91,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('jquery.framework');
 		//JHtml::_('formbehavior.chosen', 'select');
 
-		// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-		$this->addScript('js/caret.js');
-		$this->addScript('js/atwho.js');
-		$this->addStyleSheet('css/atwho.css');
-
 		// Load JavaScript.
 		$this->addScript('plugins.js');
 

@@ -17,6 +17,42 @@ $me = KunenaUserHelper::getMyself();
 $this->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
+
+$config = KunenaFactory::getConfig();
+
+// If polls are enabled, load also poll JavaScript.
+if ($config->pollenabled == 1)
+{
+	JText::script('COM_KUNENA_POLL_OPTION_NAME');
+	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
+	$this->addScript('poll.js');
+}
+
+// Load FancyBox library if enabled in configuration
+if ($config->lightbox == 1)
+{
+	$template = KunenaTemplate::getInstance();
+	if ( $template->params->get('lightboxColor') == 'white') {
+		$this->addStyleSheet('css/fancybox-white.css');
+	}
+	else  {
+		$this->addStyleSheet('css/fancybox-black.css');
+	}
+	$this->addScript('js/fancybox.js');
+	JFactory::getDocument()->addScriptDeclaration('
+				jQuery(document).ready(function() {
+					jQuery(".fancybox-button").fancybox({
+						prevEffect		: \'none\',
+						nextEffect		: \'none\',
+						closeBtn		:  true,
+						helpers		: {
+							title	: { type : \'inside\' },
+							buttons	: {}
+						}
+					});
+				});
+			');
+}
 ?>
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">

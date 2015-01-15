@@ -57,6 +57,8 @@ if ($config->lightbox == 1)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
+
+$this->addScript('js/topic.js');
 ?>
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">

@@ -26,6 +26,12 @@ $category = isset($this->category) ? $this->category : $message->getCategory();
 $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 /** @var KunenaUser  $me  Current user. */
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addScript('js/caret.js');
+$this->addScript('js/atwho.js');
+$this->addStyleSheet('css/atwho.css');
+
+$this->addScript('js/edit.js');
 ?>
 
 <div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">

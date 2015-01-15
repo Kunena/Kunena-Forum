@@ -92,7 +92,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		//JHtml::_('formbehavior.chosen', 'select');
 
 		// Load JavaScript.
-		$this->addScript('plugins.js');
+		$this->addScript('main.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');

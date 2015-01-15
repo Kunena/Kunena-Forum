@@ -57,6 +57,8 @@ if ($config->pollenabled == 1)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
+
+$this->addScript('js/edit.js');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal"

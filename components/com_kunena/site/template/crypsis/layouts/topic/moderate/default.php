@@ -18,6 +18,8 @@ if (version_compare(JVERSION, '3.2', '>'))
 $this->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")."';
 // ]]>");
+
+$this->addScript('js/topic.js');
 ?>
 <h2> <?php echo !isset($this->message)
 		? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC')

@@ -10,7 +10,35 @@
  **/
 defined('_JEXEC') or die;
 
-if (empty($this->results)) return;
+if (empty($this->results)) {
+	return;
+}
+$config = KunenaFactory::getConfig();
+// Load FancyBox library if enabled in configuration
+if ($config->lightbox == 1)
+{
+	$template = KunenaTemplate::getInstance();
+	if ( $template->params->get('lightboxColor') == 'white') {
+		$this->addStyleSheet('css/fancybox-white.css');
+	}
+	else  {
+		$this->addStyleSheet('css/fancybox-black.css');
+	}
+	$this->addScript('js/fancybox.js');
+	JFactory::getDocument()->addScriptDeclaration('
+				jQuery(document).ready(function() {
+					jQuery(".fancybox-button").fancybox({
+						prevEffect		: \'none\',
+						nextEffect		: \'none\',
+						closeBtn		:  true,
+						helpers		: {
+							title	: { type : \'inside\' },
+							buttons	: {}
+						}
+					});
+				});
+			');
+}
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?>

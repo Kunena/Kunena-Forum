@@ -20,14 +20,6 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 
 $config = KunenaFactory::getConfig();
 
-// If polls are enabled, load also poll JavaScript.
-if ($config->pollenabled == 1)
-{
-	JText::script('COM_KUNENA_POLL_OPTION_NAME');
-	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-	$this->addScript('poll.js');
-}
-
 // Load FancyBox library if enabled in configuration
 if ($config->lightbox == 1)
 {

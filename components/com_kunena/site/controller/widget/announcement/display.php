@@ -48,7 +48,7 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 		$view = JRequest::getWord ( 'view', 'default' );
 		$layout = JRequest::getWord ( 'layout', 'default' );
 
-		if ($view == 'topic' && $layout != 'edit' || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
+		if ($view == 'topic' && $layout != 'default'  || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
 			return false;
 		}
 

@@ -9,6 +9,10 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+$this->addBreadcrumb(
+	JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
+	KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=list")
+);
 
 echo $this->subRequest('Announcement/List');
 ?>

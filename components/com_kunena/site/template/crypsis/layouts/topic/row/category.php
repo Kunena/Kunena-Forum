@@ -21,7 +21,7 @@ $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 5 : 6;
 
 if (!empty($this->spacing)) : ?>
-	<tr>
+	<tr class="kcontenttablespacer">
 		<td colspan="<?php echo $cols; ?>">&nbsp;</td>
 	</tr>
 <?php endif; ?>

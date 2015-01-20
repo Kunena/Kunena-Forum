@@ -23,6 +23,7 @@ $websiteURL = $profile->getWebsiteURL();
 $websiteName = $profile->getWebsiteName();
 $personalText = $profile->getPersonalText();
 $signature = $profile->getSignature();
+$email = $profile->email && !$profile->hideEmail || $me->isModerator() || $profile->userid == $me->userid;
 
 if ($this->config->showuserstats)
 {
@@ -157,7 +158,7 @@ if ($this->config->showuserstats)
 						<?php echo $privateLabel ?>
 					</a>
 				<?php endif; ?>
-				<?php if ($profile->email) : ?>
+				<?php if ($email) : ?>
 					<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="icon-mail"></i></a>
 				<?php endif; ?>
 				<?php if (!empty($websiteName) && $websiteURL!='http://') : ?>

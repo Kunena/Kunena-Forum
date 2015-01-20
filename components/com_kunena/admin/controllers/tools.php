@@ -114,6 +114,7 @@ class KunenaAdminControllerTools extends KunenaController {
 		$useradd = JRequest::getBool ( 'useradd', 0 );
 		$userdel = JRequest::getBool ( 'userdel', 0 );
 		$userrename = JRequest::getBool ( 'userrename', 0 );
+		$userdellife = JRequest::getBool ( 'userdellife', 0 );
 
 		$db = JFactory::getDBO ();
 		if (!JSession::checkToken('post')) {
@@ -137,6 +138,19 @@ class KunenaAdminControllerTools extends KunenaController {
 					FROM #__kunena_users AS a
 					LEFT JOIN #__users AS b ON a.userid=b.id
 					WHERE b.username IS NULL" );
+			$db->query ();
+			if (KunenaError::checkDatabaseError()) return;
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE',$db->getAffectedRows ()) );
+		}
+		if ($userdellife) {
+			$db->setQuery ( "DELETE a
+					FROM #__kunena_users AS a
+					LEFT JOIN #__users AS b ON a.userid=b.id
+					WHERE banned='0000-00-00 00:00:00'" );
+			$db->query ();
+			$db->setQuery ( "DELETE a
+					FROM #__users AS a
+					WHERE block='1'" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE',$db->getAffectedRows ()) );

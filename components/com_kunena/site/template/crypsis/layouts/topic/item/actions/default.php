@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 ?>
 
 <div class="clearfix"></div>
-<div class="btn-toolbar" style="min-height:25px">
+<div class="btn-toolbar" id="topic-actions">
 	<div>
 		<?php if ($this->topicButtons->get('reply')
 			|| $this->topicButtons->get('subscribe')

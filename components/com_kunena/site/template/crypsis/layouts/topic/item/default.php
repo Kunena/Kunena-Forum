@@ -30,6 +30,8 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	<?php echo $topic->displayField('subject'); ?>
 </h3>
 
+<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
+
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination)
@@ -48,7 +50,6 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
 echo $this->subRequest('Topic/Poll')->set('id', $topic->id);
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
-if($me->exists()) echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id);
 
 foreach ($this->messages as $id => $message)
 {
@@ -70,7 +71,6 @@ foreach ($this->messages as $id => $message)
 		->setLayout('topic'); ?>
 </div>
 
-<?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?>
-<div class="clearfix"></div>
+<div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
-<?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?>
+<div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>

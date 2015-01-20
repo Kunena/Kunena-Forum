@@ -106,7 +106,33 @@ class KunenaImage extends KunenaCompatImage
 			}
 		}
 
-		call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
+		if ($this->isTransparent())
+		{
+			// Get the transparent color values for the current image.
+			$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
+			$color = imageColorAllocateAlpha($handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
+
+			// Set the transparent color values for the new image.
+			imagecolortransparent($handle, $color);
+			imagefill($handle, 0, 0, $color);
+
+			imagecopyresized(
+				$handle,
+				$this->handle,
+				$offset->x,
+				$offset->y,
+				0,
+				0,
+				$dimensions->width,
+				$dimensions->height,
+				$this->getWidth(),
+				$this->getHeight()
+			);
+		}
+		else
+		{
+			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
+		}
 
 		// If we are resizing to a new image, create a new KunenaImage object.
 		if ($createNew)

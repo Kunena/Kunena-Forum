@@ -45,6 +45,14 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 			return false;
 		}
 
+		$jinput = JFactory::getApplication()->input;
+		$view = $jinput->getWord('view', 'default');
+		$layout = $jinput->getWord('layout', 'default');
+
+		if ($view == 'topic' && $layout != 'default'  || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
+			return false;
+		}
+
 		return true;
 	}
 }

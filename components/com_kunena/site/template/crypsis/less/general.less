@@ -8,7 +8,7 @@
 **/
 
 .red {
-	color : rgba(232, 15, 34, 1);
+	color: rgba(232, 15, 34, 1);
 }
 
 .orange {
@@ -28,7 +28,7 @@
 }
 
 .blue {
-	color :rgba(0, 114, 198, 1);
+	color: rgba(0, 114, 198, 1);
 }
 
 .purple {
@@ -47,10 +47,12 @@ input[type='radio']:focus,
 input[type='checkbox']:focus {
 	outline: 0 !important;
 }
+
 h2 {
 	padding-bottom: 2%;
 	margin-bottom: 10px;
 }
+
 .kgooglemap {
 	width: 100%;
 	display: block;
@@ -269,7 +271,7 @@ form > table > thead > tr > td > ul {
 }
 
 .kfrontend .table td h1,
-.kfrontend .table td  h2,
+.kfrontend .table td h2,
 .kfrontend .table td h3,
 .kfrontend .table td h4,
 .kfrontend .table td h5,
@@ -334,6 +336,7 @@ a:focus,
 .desc {
 	display: block;
 }
+
 .horizontal-message {
 	border: 1px solid #ddd;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -342,22 +345,27 @@ a:focus,
 	margin-bottom: 20px;
 	border-radius: 4px;
 }
+
 .horizontal-message-top .kmsg {
 	padding-top: 40px;
 	min-height: 140px;
 	padding-left: 10px;
 }
+
 .horizontal-message-bottom .kmsg {
 	margin-top: 50px;
 	min-height: 140px;
 	padding-left: 10px;
 }
+
 .horizontal-message .kmessage {
 	padding: 10px;
 }
+
 [class*="horizontal-message-top"] {
 	position: relative;
 }
+
 .horizontal-message-top:after {
 	content: attr(data-badger);
 	position: absolute;
@@ -368,9 +376,11 @@ a:focus,
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 }
+
 [class*="horizontal-message-bottom"] {
 	position: relative;
 }
+
 .horizontal-message-bottom:after {
 	content: attr(data-badger);
 	position: absolute;
@@ -469,6 +479,7 @@ form {
 .kmsg {
 	height: 100%;
 	margin: 20px 0px;
+	word-wrap: break-word;
 }
 
 .input-xxlarge {
@@ -567,7 +578,7 @@ select#mode {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
-	border:1px solid #ddd;
+	border: 1px solid #ddd;
 }
 
 .row-fluid {
@@ -593,6 +604,7 @@ select#mode {
 		}
 	}
 }
+
 .table th, .table td {
 	line-height: 20px;
 }
@@ -638,7 +650,7 @@ table .well {
 .nav .dropdown-menu a {
 	display: inline-block;
 	.btn-link {
-		margin-left:-120px;
+		margin-left: -120px;
 	}
 }
 
@@ -648,7 +660,7 @@ table .well {
 
 .profile-horizontal-top {
 	padding: 10px 5px 5px 5px;
-	border-bottom: 1px  solid #ddd;
+	border-bottom: 1px solid #ddd;
 	background-color: rgba(229, 229, 229, 0.4);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	margin-bottom: 10px;
@@ -657,13 +669,13 @@ table .well {
 
 .profile-horizontal-bottom {
 	padding: 10px 5px 5px 5px;
-	border-top: 1px  solid #ddd;
+	border-top: 1px solid #ddd;
 	background-color: rgba(229, 229, 229, 0.4);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	min-height: 110px;
 }
 
-.table .pagination  {
+.table .pagination {
 	max-height: 25px;
 }
 
@@ -672,11 +684,11 @@ table .well {
 }
 
 .profile-expand .content ul {
-	margin:0;
+	margin: 0;
 }
 
 .kfrontend .inline > li {
-	float:left;
+	float: left;
 	padding-right: 20px;
 	list-style: disc;
 }
@@ -686,7 +698,7 @@ table .well {
 }
 
 .collapse .table {
-	margin-bottom:0px;
+	margin-bottom: 0px;
 }
 
 h2 .pull-right select {
@@ -752,9 +764,11 @@ div#editsettings select {
 .collapse {
 	transition: height 0.01s;
 }
+
 div.kmsg > li {
 	margin-left: 20px;
 }
+
 .kcontenttablespacer {
 	border-bottom-color: #BFC3C6;
 }
@@ -765,4 +779,58 @@ div.kmsg > li {
 
 .krow2-stickymsg {
 	background-color: #FFFFCC;
+}
+
+.navbar-nav {
+	float: left;
+	padding-top: 10px;
+	.btn-link {
+		color: inherit;
+	}
+}
+
+small.text-muted {
+	margin-top: -10px;
+}
+
+#credits .dl-horizontal dt {
+	text-align: left !important;
+	margin-left: 10px;
+}
+
+#credits .dl-horizontal dd {
+	margin-left: 160px !important;
+}
+
+#credits dd,
+#credits dt {
+	padding: 5px 0;
+}
+
+#credits dt {
+	font-weight: normal !important;
+}
+
+#credits .dl-horizontal dt:nth-child(odd),
+#credits .dl-horizontal dd:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+.credits {
+	border: 1px solid #e5e5e5;
+	border-radius: 10px;
+	padding: 0 20px;
+}
+
+.icon-chevron-right {
+	font-size: 80%;
+	padding-bottom: 3px;
+}
+
+#topic-actions {
+	padding-bottom: 10px;
+}
+
+#userdropdown {
+	padding-top: 20px;
 }

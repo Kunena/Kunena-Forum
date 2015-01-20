@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 ?>
 <ul class="nav pull-right">
-	<li class="dropdown" style="float: right">
+	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu">
+		<div class="dropdown-menu" id="userdropdown">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="login" />
@@ -36,6 +36,7 @@ defined('_JEXEC') or die;
 						</div>
 					</div>
 				</div>
+				
 				<div id="form-login-password" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">
@@ -50,6 +51,24 @@ defined('_JEXEC') or die;
 						</div>
 					</div>
 				</div>
+				
+				<?php $login = KunenaLogin::getInstance(); ?>
+				<?php if ($login->getTwoFactorMethods() > 1) : ?>
+				<div id="form-login-tfa" class="control-group center">
+					<div class="controls">
+						<div class="input-prepend input-append">
+							<span class="add-on"> 
+								<i class="icon-star tip" title="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"></i>
+								<label for="k-lgn-secretkey" class="element-invisible">
+									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
+								</label>
+						  </span>
+							<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" tabindex="3" 
+										size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
+						</div>
+					</div>
+				</div>
+				<?php endif; ?>
 
 				<?php if ($this->rememberMe) : ?>
 				<div id="form-login-remember" class="control-group center">

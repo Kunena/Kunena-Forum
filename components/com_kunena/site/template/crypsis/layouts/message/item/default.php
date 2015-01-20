@@ -16,23 +16,31 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
-if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
+$config = KunenaConfig::getInstance();
+if ($config->ordering_system == 'mesid') {
 	$this->numLink = $this->location ;
 } else {
 	$this->numLink = $message->replynum;
 }
+$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 ?>
 
-<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
+<small class="text-muted pull-right hidden-phone">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-	<a href="#<?php echo $this->escape($this->numLink); ?>"  id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
+	<a href="#<?php echo $this->escape($this->numLink); ?>" id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
 </small>
 
 <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
+	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
 	<div class="kmessage">
-		<div class="kmsg"> <?php echo $message->displayField('message'); ?> </div>
+		<p class="kmsg">
+			<?php  if (!$this->me->userid && !$isReply) :
+				echo $message->displayField('message');
+			else:
+				echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+			endif;?>
+		</p>
 	</div>
 	<?php if (!empty($attachments)) : ?>
 		<div class="kattach">
@@ -55,7 +63,6 @@ if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
 	<?php if (!empty($this->reportMessageLink)) : ?>
 		<div class="msgfooter">
 			<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-
 			<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

@@ -405,6 +405,7 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['avatarresizemethod'] = JHtml::_('select.genericlist', $resizeoptions, 'cfg_avatarresizemethod', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarresizemethod);
 		$lists ['avatarcrop'] = JHtml::_('select.genericlist', $yesno, 'cfg_avatarcrop', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarcrop);
 
+<<<<<<< HEAD
 		$searchtime = array();
 		$searchtime[]	= JHtml::_('select.option',  1, JText::_('COM_KUNENA_CFG_SEARCH_DATE_YESTERDAY') );
 		$searchtime[]	= JHtml::_('select.option',  7, JText::_('COM_KUNENA_CFG_SEARCH_DATE_WEEK') );
@@ -416,6 +417,9 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$searchtime[]	= JHtml::_('select.option',  'all', JText::_('COM_KUNENA_CFG_SEARCH_DATE_ANY') );
 		$lists ['searchtime'] = JHtml::_('select.genericlist', $searchtime, 'cfg_searchtime', 'class="inputbox" size="1"', 'value', 'text', $this->config->searchtime);
 
+=======
+		$lists ['teaser'] = JHtml::_('select.genericlist', $yesno, 'cfg_teaser', 'class="inputbox" size="1"', 'value', 'text', $this->config->teaser);
+>>>>>>> upstream/develop
 
 		return $lists;
 	}

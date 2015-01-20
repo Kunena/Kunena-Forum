@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 $content = $this->execute('User/Edit');
 
 $this->addBreadcrumb(
-	$content->headerText,
+	JText::_('COM_KUNENA_EDIT'),
 	'index.php?option=com_kunena&view=user&layout=edit'
 );
 

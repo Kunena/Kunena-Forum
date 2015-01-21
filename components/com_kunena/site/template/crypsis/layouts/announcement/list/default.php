@@ -40,7 +40,7 @@ $options = $this->getOptions();
 				<th class="span1">
 					<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
 				</th>
-				<th class="span4">
+				<th class="span5">
 					<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
 				</th>
 
@@ -54,7 +54,7 @@ $options = $this->getOptions();
 					<th class="span1 center">
 						<?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?>
 					</th>
-					<th class="span3">
+					<th class="span1">
 						<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_AUTHOR'); ?>
 					</th>
 				<?php endif; ?>

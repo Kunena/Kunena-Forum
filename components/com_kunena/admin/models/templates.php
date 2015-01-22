@@ -111,8 +111,11 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	function getTemplatedetails() {
 		$template = $this->app->getUserState ( 'kunena.edit.template');
-		$details	= KunenaTemplateHelper::parseXmlFile($template);
-
+		$details = KunenaTemplateHelper::parseXmlFile($template);
+		if (empty($template)) {
+			$template = $this->getState('template');
+			$details = KunenaTemplateHelper::parseXmlFile($template);
+		}
 		return $details;
 	}
 

@@ -1441,6 +1441,7 @@ PX		EM			PCT			PT
 	padding-left: 25px;
 	line-height: 22px;
 	font-size: 1.333em;
+	float: left;
 }
 
 #Kunena span.kmsgtitle-new {

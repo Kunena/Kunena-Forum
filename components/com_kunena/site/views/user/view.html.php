@@ -89,8 +89,8 @@ class KunenaViewUser extends KunenaView {
 			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->me->userid) {
-			if ($this->do != 'edit') $this->editlink = '<a href="index.php?option=com_kunena&view=user&layout=edit" rel="nofollow">' . JText::_('COM_KUNENA_EDIT') . '</a>';
-			else $this->editlink = '<a href="index.php?option=com_kunena&view=user&userid=' . $this->me->userid . '" rel="nofollow">' . JText::_('COM_KUNENA_BACK') . '</a>';
+			if ($this->do != 'edit') $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_EDIT').' &raquo;', JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit' );
+			else $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_BACK').' &raquo;', JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow' );
 		}
 		$this->name = $this->user->username;
 

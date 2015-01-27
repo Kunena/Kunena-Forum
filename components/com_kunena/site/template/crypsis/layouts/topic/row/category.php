@@ -120,10 +120,10 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="span2 hidden-phone" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="span1 hidden-phone">
+			<div class="span2 hidden-phone">
 				<?php echo $avatar; ?>
 			</div>
-			<div class="span11">
+			<div class="span10">
 		<?php endif; ?>
 		<?php if (!$config->avataroncat) : ?>
 			<div class="span12">

@@ -128,7 +128,7 @@ if (!empty($this->spacing)) : ?>
 			<div class="span2 hidden-phone">
 				<?php echo $avatar; ?>
 			</div>
-			<div class="span10">
+			<div class="span10 last-avatar">
 		<?php endif; ?>
 		<?php if (!$config->avataroncat) : ?>
 			<div class="span12">

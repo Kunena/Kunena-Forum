@@ -280,7 +280,7 @@ class KunenaUpload
 			}
 			if ($options['size'] > max($config->filesize, $config->imagesize) * 1024)
 			{
-				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $options['size']), 400);
+				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($options['size'], JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'))), 400);
 			}
 
 			if (strpos($contentType, 'multipart') !== false)
@@ -353,7 +353,7 @@ class KunenaUpload
 
 				if ($size > max($config->filesize, $config->imagesize) * 1024)
 				{
-					throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $size), 400);
+					throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($size, JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'))), 400);
 				}
 			}
 		}
@@ -627,5 +627,24 @@ class KunenaUpload
 		}
 
 		return $exception;
+	}
+
+	/**
+	 * Convert into human readable format bytes to kB, MB, GB
+	 *
+	 * @param unknown $bytes
+	 * @param string $force_unit
+	 * @param string $format
+	 * @param string $si
+	 * @return string
+	 */
+	public function bytes($bytes, $unit = NULL)
+	{
+		// Format string
+		$format = '%01.2f %s';
+
+		$power = ($bytes > 0) ? floor(log($bytes, '1024')) : 0;
+
+		return sprintf($format, $bytes / pow('1024', $power), $unit);
 	}
 }

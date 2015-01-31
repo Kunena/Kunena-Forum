@@ -184,10 +184,14 @@ jQuery(function($) {
 		} else if (data.result.message) {
 			data.uploaded=false;
 			data.context.append(removeButton.clone(true).data(data));
-			var error = $('<div class="alert alert-error"/>').text(data.result.message);
-			data.context.find('span')
-				.append('<br>')
-				.append(error);
+		
+			var error = null;
+			$.each(data.result.data.exceptions, function (index, error) {
+				error = $('<div class="alert alert-error"/>').text(error.message);
+				data.context.find('span')
+					.append('<br>')
+					.append(error);
+			});
 		} 
 	}).on('fileuploadfail', function (e, data) {
 		$.each(data.files, function (index, file) {

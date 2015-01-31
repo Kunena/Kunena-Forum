@@ -158,7 +158,7 @@ $this->addScriptDeclaration("kunena_upload_files_maxfiles = '" .$this->config->a
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
 							<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
-							<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT')?>: <?php echo $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT')?>: <?php echo $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT') ?></span><br /><br />
+							<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT')?>: <?php echo $this->config->filesize!=0 ? round($this->config->filesize/1024, 3): $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT')?>: <?php echo $this->config->imagesize!=0 ? round($this->config->imagesize/1024, 3): $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
 							<!-- The fileinput-button span is used to style the file input field as button -->
 							<span class="btn btn-primary fileinput-button">
 								<i class="icon-plus"></i>

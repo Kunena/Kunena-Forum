@@ -16,7 +16,7 @@ JHtml::_('behavior.keepalive');
 // Load scripts to handle fileupload process
 JText::script('COM_KUNENA_EDITOR_INSERT');
 JText::script('COM_KUNENA_GEN_REMOVE_FILE');
-JText::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES');
+JText::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES',$this->config->attachment_limit, array('script' => true));
 JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');

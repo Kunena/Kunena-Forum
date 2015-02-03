@@ -257,7 +257,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			$message = KunenaHtmlParser::stripBBCode ( $this->message, 0, false );
 
 			$mailsender = JMailHelper::cleanAddress ( $config->board_title );
-			$mailsubject = JMailHelper::cleanSubject ( "[" . $config->board_title . "] " . $topic->subject . " (" . $this->getCategory()->name . ")" );
+			$mailsubject = JMailHelper::cleanSubject ( $config->board_title . $topic->subject . " (" . $this->getCategory()->name . ")" );
 			$subject = $this->subject ? $this->subject : $topic->subject;
 
 			// Make a list from all receivers

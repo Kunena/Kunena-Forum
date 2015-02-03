@@ -960,7 +960,7 @@ class KunenaViewTopic extends KunenaView {
 			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
 			$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
-			$title = JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject) . " ({$page}/{$pages})";
+			$title = JText::sprintf($this->topic->subject) . " ({$page}/{$pages})";
 			$this->setTitle($title);
 
 			// TODO: use real keywords, too

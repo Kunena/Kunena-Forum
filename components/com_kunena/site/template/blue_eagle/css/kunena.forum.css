@@ -75,8 +75,8 @@ PX		EM			PCT			PT
 	padding: 0;
 }
 
-/* Fix .visible-desktop in Bootstrap based templates */
-#Kunena td.visible-desktop {
+/* Fix .hidden-phone in Bootstrap based templates */
+#Kunena td.hidden-phone {
 	display: table-cell !important;
 }
 /* Fix form layout issues in Bootstrap based templates */

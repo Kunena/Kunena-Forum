@@ -85,7 +85,7 @@ $this->cache = false;
 	  </div>
 	</td>
 
-	<td class="kcol-mid kcol-ktopicviews visible-desktop">
+	<td class="kcol-mid kcol-ktopicviews hidden-phone">
 		<span class="ktopic-views-number"><?php echo $this->formatLargeNumber ( $this->topic->hits );?></span>
 		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_GEN_HITS');?> </span>
 	</td>

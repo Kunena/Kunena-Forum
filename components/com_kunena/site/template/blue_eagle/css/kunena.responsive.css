@@ -141,7 +141,7 @@
     }
 
 
-    #Kunena  td.visible-desktop {
+    #Kunena  td.hidden-phone {
         display: none !important;
     }
 

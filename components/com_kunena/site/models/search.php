@@ -54,7 +54,7 @@ class KunenaModelSearch extends KunenaModel {
 		$value = JRequest::getInt ( 'replylimit', 0 );
 		$this->setState ( 'query.replylimit', $value );
 
-		$value = JRequest::getString ( 'searchdate', 365 );
+		$value = JRequest::getString ( 'searchdate', $this->config->searchtime );
 		$this->setState ( 'query.searchdate', $value );
 
 		$value = JRequest::getWord ( 'beforeafter', 'after' );

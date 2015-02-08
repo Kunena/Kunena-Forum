@@ -343,6 +343,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['default_sort'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME') ?></td>
+														<td><?php echo $this->lists ['searchtime'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>

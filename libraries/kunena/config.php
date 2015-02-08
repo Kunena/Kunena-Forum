@@ -1105,6 +1105,12 @@ class KunenaConfig extends JObject {
 	public $avatarcrop = 0;
 
 	/**
+	 * @var    integer  Search time; select, boolean
+	 * @since  3.1.0
+	 */
+	public $searchtime = 365;
+
+	/**
 	 * @var    integer  Teaser; select, boolean
 	 * @since  3.1.0
 	 */

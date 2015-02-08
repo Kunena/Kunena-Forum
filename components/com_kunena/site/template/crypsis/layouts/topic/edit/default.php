@@ -43,6 +43,22 @@ $this->addScriptDeclaration("window.addEvent('domready', function() {
 });");
 
 $this->k=0;
+
+$config = KunenaFactory::getConfig();
+
+// If polls are enabled, load also poll JavaScript.
+if ($config->pollenabled == 1)
+{
+	JText::script('COM_KUNENA_POLL_OPTION_NAME');
+	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
+	$this->addScript('poll.js');
+}
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addScript('js/caret.js');
+$this->addScript('js/atwho.js');
+$this->addStyleSheet('css/atwho.css');
+
+$this->addScript('js/edit.js');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal"

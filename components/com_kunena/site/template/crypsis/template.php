@@ -82,62 +82,19 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	public function initialize()
 	{
-		// Template requires Mootools 1.4+ framework.
-		$this->loadMootools();
 		JHtml::_('behavior.tooltip');
-		JHtml::_('bootstrap.modal');
 
 		// Template also requires jQuery framework.
 		JHtml::_('jquery.framework');
+		JHtml::_('bootstrap.modal');
 		//JHtml::_('formbehavior.chosen', 'select');
 
-		// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-		$this->addScript('js/caret.js');
-		$this->addScript('js/atwho.js');
-		$this->addStyleSheet('css/atwho.css');
-
 		// Load JavaScript.
-		$this->addScript('plugins.js');
+		$this->addScript('main.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
-
-		$config = KunenaFactory::getConfig();
-
-		// If polls are enabled, load also poll JavaScript.
-		if ($config->pollenabled == 1)
-		{
-			JText::script('COM_KUNENA_POLL_OPTION_NAME');
-			JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-			$this->addScript('poll.js');
-		}
-
-		// Load FancyBox library if enabled in configuration
-		if ($config->lightbox == 1)
-		{
-			$template = KunenaTemplate::getInstance();
-			if ( $template->params->get('lightboxColor') == 'white') {
-				$this->addStyleSheet('css/fancybox-white.css');
-			}
-			else  {
-				$this->addStyleSheet('css/fancybox-black.css');
-			}
-			$this->addScript('js/fancybox.js');
-			JFactory::getDocument()->addScriptDeclaration('
-				jQuery(document).ready(function() {
-					jQuery(".fancybox-button").fancybox({
-						prevEffect		: \'none\',
-						nextEffect		: \'none\',
-						closeBtn		:  true,
-						helpers		: {
-							title	: { type : \'inside\' },
-							buttons	: {}
-						}
-					});
-				});
-			');
-		}
 
 		parent::initialize();
 	}

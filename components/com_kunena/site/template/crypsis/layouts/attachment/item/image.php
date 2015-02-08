@@ -13,7 +13,11 @@ defined ( '_JEXEC' ) or die ();
 /** @var KunenaAttachment $attachment */
 $attachment = $this->attachment;
 
-if (!$attachment->isImage()) return;
+if (!$attachment->isImage()) {
+	return;
+}
+
+echo $this->subLayout('Widget/Lightbox');
 
 $config = KunenaConfig::getInstance();
 

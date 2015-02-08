@@ -373,17 +373,23 @@ class KunenaUser extends JObject {
 	}
 
 	/**
+	 * Check if an user is banned ot not
+	 *
 	 * @return bool
 	 */
-	public function isBanned() {
-		if (! $this->banned)
-			return false;
-		if ($this->blocked || $this->banned == $this->_db->getNullDate ())
-			return true;
-
-		$ban = new JDate ( $this->banned );
+	public function isBanned()
+	{
 		$now = new JDate ();
-		return ($ban->toUnix () > $now->toUnix ());
+
+		if (!$this->banned!=$this->_db->getNullDate () && $this->ban_expiration <= $now->toSql())
+		{
+			return false;
+		}
+
+		if ($this->blocked || $this->ban_expiration >= $now->toSql())
+		{
+			return true;
+		}
 	}
 
 	/**

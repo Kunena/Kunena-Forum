@@ -294,8 +294,8 @@
 			default="0" />
 		<field name="view" type="varchar(8)" null="0" default="" />
 		<field name="signature" type="text" null="1" />
-		<field name="moderator" type="int(11)" null="1" default="0" />
-		<field name="banned" type="datetime" null="1" />
+		<field name="moderator" type="int(11)" null="1" default="0" />		
+		<field name="ban_expiration" type="datetime" null="0" default="0000-00-00" />
 		<field name="ordering" type="int(11)" null="1" default="0" />
 		<field name="posts" type="int(11)" null="1" default="0" />
 		<field name="avatar" type="varchar(255)" null="1" />
@@ -342,7 +342,7 @@
 		<field name="userid" type="int(11)" null="1" />
 		<field name="ip" type="varchar(128)" null="1" />
 		<field name="blocked" type="tinyint(4)" null="0" default="0" />
-		<field name="expiration" type="datetime" null="1" />
+		<field name="expiration" type="datetime" null="0" default="0000-00-00" />
 		<field name="created_by" type="int(11)" null="0" />
 		<field name="created_time" type="datetime" null="0" />
 		<field name="reason_private" type="text" null="1" />

@@ -27,5 +27,19 @@ jQuery(document).ready(function() {
 		var boxToOpen = jQuery(this).attr('href');
 		jQuery(boxToOpen ).css('visibility', 'visible');
 	});
+
+	/* Button to show more info on profilebox */
+	jQuery(".heading").click(function() {
+		if ( !jQuery(this).hasClass('heading-less') ) {
+			jQuery(this).prev(".heading").show();
+			jQuery(this).hide();
+			jQuery(this).next(".content").slideToggle(500);
+		} else {
+			var content = jQuery(this).next(".heading").show();
+			jQuery(this).hide();
+			content.next(".content").slideToggle(500);
+		}
+	});
+
 });
 

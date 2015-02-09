@@ -16,7 +16,7 @@ JHtml::_('behavior.keepalive');
 // Load scripts to handle fileupload process
 JText::script('COM_KUNENA_EDITOR_INSERT');
 JText::script('COM_KUNENA_GEN_REMOVE_FILE');
-JText::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES',$this->config->attachment_limit, array('script' => true));
+JText::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES', $this->config->attachment_limit, array('script' => true));
 JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
@@ -62,14 +62,12 @@ $this->addScriptDeclaration("window.addEvent('domready', function() {
 
 $this->k=0;
 
-$this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&'. JSession::getFormToken() .'=1', false). "'" );
-$this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&'. JSession::getFormToken() .'=1', false). "'" );
-$this->addScriptDeclaration("kunena_upload_files_maxfiles = '" .$this->config->attachment_limit. "' ");
-
-$config = KunenaFactory::getConfig();
+$this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false) . "'");
+$this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . JSession::getFormToken() . '=1', false) . "'");
+$this->addScriptDeclaration("kunena_upload_files_maxfiles = '" . $this->config->attachment_limit . "' ");
 
 // If polls are enabled, load also poll JavaScript.
-if ($config->pollenabled == 1)
+if ($this->config->pollenabled)
 {
 	JText::script('COM_KUNENA_POLL_OPTION_NAME');
 	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
@@ -102,7 +100,7 @@ $this->addScript('js/edit.js');
 		<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 	<?php endif; ?>
 	<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
-	<input type="hidden" id="kunena_upload_files_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&'. JSession::getFormToken() .'=1', false) ?>" />
+	<input type="hidden" id="kunena_upload_files_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . JSession::getFormToken() . '=1', false) ?>" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<h2>
@@ -174,7 +172,7 @@ $this->addScript('js/edit.js');
 						<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
 						<div class="controls">
 							<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
-							<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT')?>: <?php echo $this->config->filesize!=0 ? round($this->config->filesize/1024, 1): $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT')?>: <?php echo $this->config->imagesize!=0 ? round($this->config->imagesize/1024, 1): $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
+							<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT')?>: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1): $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT')?>: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1): $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
 							<!-- The fileinput-button span is used to style the file input field as button -->
 							<span class="btn btn-primary fileinput-button">
 								<i class="icon-plus"></i>

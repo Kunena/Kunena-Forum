@@ -13,6 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /** @var KunenaAttachment $attachment */
 $attachment = $this->attachment;
 
+echo $this->subLayout('Widget/Lightbox');
+
 $config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybox-button" rel="fancybox-button"' : '';

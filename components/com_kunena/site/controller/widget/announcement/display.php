@@ -45,6 +45,13 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 			return false;
 		}
 
+		$view = $this->input->getWord('view', 'default');
+		$layout = $this->input->getWord('layout', 'default');
+
+		if ($view == 'topic' && $layout != 'default'  || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
+			return false;
+		}
+
 		return true;
 	}
 }

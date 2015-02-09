@@ -1105,17 +1105,16 @@ class KunenaConfig extends JObject {
 	public $avatarcrop = 0;
 
 	/**
-<<<<<<< HEAD
 	 * @var    integer  User can report himself; select, boolean
 	 * @since  3.1.0
 	 */
 	public $user_report = 1;
-=======
+
+	/**
 	 * @var    integer  Search time; select, boolean
 	 * @since  3.1.0
 	 */
 	public $searchtime = 365;
->>>>>>> upstream/develop
 
 	/**
 	 * @var    integer  Teaser; select, boolean

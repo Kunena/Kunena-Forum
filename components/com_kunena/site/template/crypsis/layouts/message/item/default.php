@@ -16,21 +16,23 @@ $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
-if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
+$config = KunenaConfig::getInstance();
+if ($config->ordering_system == 'mesid') {
 	$this->numLink = $this->location ;
 } else {
 	$this->numLink = $message->replynum;
 }
+$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 ?>
 
-<small class="text-muted pull-right hidden-phone" style="margin-top:-10px;">
+<small class="text-muted pull-right hidden-phone">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-	<a href="#<?php echo $this->escape($this->numLink); ?>"  id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
+	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
 </small>
 
 <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
+	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' created the topic: ' : $this->escape($avatarname) . ' replied the topic: '; ?><?php echo KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
 			<?php  if (!$this->me->userid && !$isReply) :
@@ -58,18 +60,21 @@ if (KunenaConfig::getInstance()->ordering_system == 'mesid') {
 			<span class="ksignature"><?php echo $signature; ?></span>
 		</div>
 	<?php endif ?>
-	<?php if (!empty($this->reportMessageLink)) : ?>
-		<div class="msgfooter">
-			<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-			<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?> </div>
+	<?php if ($this->config->reportmsg && $this->me->exists()) :
+		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
+			<div class="msgfooter">
+				<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
+				<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+					</div>
+				</div>
+				<div class="pull-right">
+					<p> <?php echo $this->ipLink; ?> </p>
+				</div>
 			</div>
-			<div class="pull-right">
-				<p> <?php echo $this->ipLink; ?> </p>
-			</div>
-		</div>
+		<?php endif; ?>
 	<?php endif; ?>
 </div>
 

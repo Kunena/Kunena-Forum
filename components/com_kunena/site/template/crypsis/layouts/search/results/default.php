@@ -10,7 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
-if (empty($this->results)) return;
+if (empty($this->results)) {
+	return;
+}
+
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?>

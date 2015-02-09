@@ -18,6 +18,12 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addScript('js/caret.js');
+$this->addScript('js/atwho.js');
+$this->addStyleSheet('css/atwho.css');
+$this->addScript('js/search.js');
+
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">

@@ -26,5 +26,6 @@
 		<field name="avatarSizeYPost" type="hidden" default="144" />
 		<field name="avatarSizeXProfile" type="hidden" default="200" />
 		<field name="avatarSizeYProfile" type="hidden" default="200" />
+		<field name="SubjectLengthMessage" type="text" default="80" label="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH" description="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH_DESC" />
 	</fieldset>
 </config>

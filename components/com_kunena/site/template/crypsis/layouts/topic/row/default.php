@@ -63,11 +63,28 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 		</div>
 
-		<div>
+		<div class="hidden-phone">
 			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
 			<?php echo JText::_('COM_KUNENA_BY') ?>
 			<?php echo $topic->getAuthor()->getLink(); ?>
+			<div class="pull-right">
+				<?php /** TODO: New Feature - LABELS
+				<span class="label label-info">
+				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
+				</span>	*/ ?>
+				<?php if ($topic->locked != 0) : ?>
+					<span class="label label-important">
+						<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+					</span>
+				<?php endif; ?>
+			</div>
+		</div>
+
+		<div class="visible-phone">
+			<?php echo JText::_('COM_KUNENA_GEN_LAST_POST')?>
+			<?php echo  $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
+			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -106,12 +123,12 @@ if (!empty($this->spacing)) : ?>
 		</table>
 	</td>
 
-	<td class="span2" id="recent-topics">
+	<td class="span2 hidden-phone" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="span1 hidden-phone">
+			<div class="span2 hidden-phone">
 				<?php echo $avatar; ?>
 			</div>
-			<div class="span11">
+			<div class="span10 last-avatar">
 		<?php endif; ?>
 		<?php if (!$config->avataroncat) : ?>
 			<div class="span12">

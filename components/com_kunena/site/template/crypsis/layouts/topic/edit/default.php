@@ -65,6 +65,22 @@ $this->k=0;
 $this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&'. JSession::getFormToken() .'=1', false). "'" );
 $this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&'. JSession::getFormToken() .'=1', false). "'" );
 $this->addScriptDeclaration("kunena_upload_files_maxfiles = '" .$this->config->attachment_limit. "' ");
+
+$config = KunenaFactory::getConfig();
+
+// If polls are enabled, load also poll JavaScript.
+if ($config->pollenabled == 1)
+{
+	JText::script('COM_KUNENA_POLL_OPTION_NAME');
+	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
+	$this->addScript('poll.js');
+}
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addScript('js/caret.js');
+$this->addScript('js/atwho.js');
+$this->addStyleSheet('css/atwho.css');
+
+$this->addScript('js/edit.js');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal"

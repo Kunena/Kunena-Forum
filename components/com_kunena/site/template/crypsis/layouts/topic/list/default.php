@@ -59,7 +59,7 @@ $colspan = !empty($this->actions) ? 5 : 4;
 			<td class="span2 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 			</td>
-			<td class="span3">
+			<td class="span3 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->actions)) : ?>
@@ -81,6 +81,7 @@ $colspan = !empty($this->actions) ? 5 : 4;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 			<td colspan="<?php echo $colspan; ?>">
+				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 				<div class="input-append">
 					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 					<?php if (!empty($this->actions)) : ?>
@@ -92,6 +93,7 @@ $colspan = !empty($this->actions) ? 5 : 4;
 						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
 				</div>
+				<?php endif; ?>
 			</td>
 		</tr>
 		</tfoot>

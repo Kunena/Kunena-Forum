@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 	<?php
 	echo $this->subLayout('Widget/MenuBar');
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
+	echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
 	echo $this->subRequest('Widget/Announcement');
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
 

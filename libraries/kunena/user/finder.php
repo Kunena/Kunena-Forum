@@ -76,8 +76,12 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		} elseif ($this->config->userlist_count_users == '3' ) {
 			$this->query->where('a.block=0');
 		}
+
 		// Hide super admins from the list
-		if ($ignore) $this->query->where('a.id NOT IN ('.implode(',', $ignore).')');
+		if ( !$this->config->superadmin_userlist && $ignore)
+		{
+			$this->query->where('a.id NOT IN (' . implode(',', $ignore) . ')');
+		}
 
 		return $this;
 	}

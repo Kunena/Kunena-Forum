@@ -22,7 +22,7 @@ if ($item) : ?>
 	</li>
 
 	<?php foreach($pathway as $item) : ?>
-	<li class="divider">/</li>
+	<li class="divider"><i class="icon-chevron-right"></i></li>
 	<li>
 		<a href="<?php echo $item->link; ?>"><?php echo $item->name; ?></a>
 	</li>

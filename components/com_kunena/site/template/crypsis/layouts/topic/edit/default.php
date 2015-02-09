@@ -44,10 +44,8 @@ $this->addScriptDeclaration("window.addEvent('domready', function() {
 
 $this->k=0;
 
-$config = KunenaFactory::getConfig();
-
 // If polls are enabled, load also poll JavaScript.
-if ($config->pollenabled == 1)
+if ($this->config->pollenabled)
 {
 	JText::script('COM_KUNENA_POLL_OPTION_NAME');
 	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');

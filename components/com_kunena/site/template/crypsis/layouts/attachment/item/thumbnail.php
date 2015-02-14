@@ -21,5 +21,5 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybo
 $attributesImg = ' style="max-height: '. (int) $config->thumbheight . 'px;"';
 ?>
 <a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0,7); ?>"<?php echo $attributesLink; ?>>
-	<img src="<?php echo $attachment->getUrl(true); ?>"<?php echo $attributesImg; ?> alt="" />
+	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
 </a>

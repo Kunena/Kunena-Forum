@@ -572,6 +572,7 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->ordering = JRequest::getInt('messageordering', '');
 		$this->me->hideEmail = JRequest::getInt('hidemail', '');
 		$this->me->showOnline = JRequest::getInt('showonline', '');
+		$this->me->canSubscribe = JRequest::getInt('cansubscribe', '');
 	}
 
 	// Reports a user to stopforumspam.com

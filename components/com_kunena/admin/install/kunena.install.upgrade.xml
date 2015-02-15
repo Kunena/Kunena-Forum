@@ -420,6 +420,9 @@
 		<version version="3.0.97" versiondate="2015-02-15" versionname="Internal">
 			<query>ALTER TABLE `#__kunena_users` ADD `canSubscribe` tinyint(1) NOT NULL DEFAULT '1' AFTER `showOnline`;</query>
 		</version>
+		<version version="3.0.98" versiondate="2015-02-15" versionname="Internal">
+			<query>ALTER TABLE `#__kunena_users` ADD `userListtime` int(11) NOT NULL DEFAULT '-2' AFTER `canSubscribe`;</query>
+		</version>
         <version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>

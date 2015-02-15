@@ -92,10 +92,17 @@ class KunenaModelTopics extends KunenaModel {
 
 		// Selection time.
 		if (JFactory::getDocument()->getType() != 'feed') {
-			// Selection time from user state / menu item / url parameter / configuration.
-			$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
-			$this->setState ( 'list.time', (int) $value );
-
+			// Selection time from user state / menu item / url parameter / configuration.s
+			if (!$this->me->exists()) {
+				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
+				$this->setState ( 'list.time', (int) $value );
+			}
+			if ($this->me->exists() && $this->me->userListtime == -2) {
+				$this->setState ( 'list.time', $this->config->show_list_time );
+			}
+			if ($this->me->exists() && $this->me->userListtime != -2) {
+				$this->setState ( 'list.time', $this->me->userListtime );
+			}
 		} else {
 			// Selection time.
 			$value = $this->getInt ('sel', $this->config->rss_timelimit);

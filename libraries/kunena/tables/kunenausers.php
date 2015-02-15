@@ -252,6 +252,12 @@ class TableKunenaUsers extends KunenaTable
 	 **/
 	public $canSubscribe = null;
 
+	/**
+	 * userListtime
+	 * @var int
+	 **/
+	public $userListtime = null;
+
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_users', 'userid', $db);

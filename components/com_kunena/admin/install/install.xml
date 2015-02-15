@@ -329,6 +329,7 @@
 		<field name="hideEmail" type="tinyint(1)" null="0" default="1" />
 		<field name="showOnline" type="tinyint(1)" null="0" default="1" />
 		<field name="canSubscribe" type="tinyint(1)" null="0" default="1" />
+		<field name="userListtime" type="int(11)" null="1" default="-2" />
 		<field name="thankyou" type="int(11)" null="1" default="0" />
 		<key name="PRIMARY" unique="1" columns="userid" />
 		<key name="group_id" columns="group_id" />

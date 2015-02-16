@@ -2,14 +2,14 @@ jQuery(function($) {
 	'use strict';
 
 	// Insert bbcode in message
-	function insertInMessage(attachid,filename) {	
+	function insertInMessage(attachid,filename) {
 		var value = jQuery('#kbbcode-message').val();
 
 		jQuery('#kbbcode-message').val(value+' [attachment='+attachid+']'+filename+'[/attachment]');
 	}
-	
+
 	var fileCount = null;
-	
+
 	var insertButton = $('<button>')
 		.addClass("btn btn-primary")
 		.html('<i class="icon-upload"></i> '+Joomla.JText._('COM_KUNENA_EDITOR_INSERT'))
@@ -27,21 +27,21 @@ jQuery(function($) {
 				file_id = data.result.data.id;
 				filename = data.result.data.filename;
 			}else{
-				file_id = data.id; 
+				file_id = data.id;
 				filename = data.name;
 			}
 
 			insertInMessage(file_id,filename);
 		});
-	
+
 	var removeButton = $('<button/>')
 		.addClass('btn btn-danger')
 		.attr('type', 'button')
 		.html('<i class="icon-trash"></i> '+Joomla.JText._('COM_KUNENA_GEN_REMOVE_FILE'))
 		.on('click', function () {
 			var $this = $(this),
-				data = $this.data(); 
-			
+				data = $this.data();
+
 			$('#klabel_info_drop_browse').show();
 
 			var file_id = 0;
@@ -53,7 +53,7 @@ jQuery(function($) {
 					file_id = data.file_id;
 				}
 			}
-			
+
 			if ( jQuery('#kattachs-'+file_id).length == 0 ) {
 				jQuery('#kattach-list').append('<input id="kattachs-'+file_id+'" type="hidden" name="attachments['+file_id+']" value="1" />');
 			}
@@ -61,9 +61,9 @@ jQuery(function($) {
 			if ( jQuery('#kattach-'+file_id).length > 0 ) {
 				jQuery('#kattach-'+file_id).remove();
 			}
-			
+
 			fileCount =  fileCount-1;
-			
+
 			// Ajax Request to delete the file from filesystem
 			jQuery.ajax({
 				url: kunena_upload_files_rem+'&fil_id='+file_id,
@@ -71,7 +71,7 @@ jQuery(function($) {
 				success: function(result) {
 					$this.parent().remove();
 				}
-			});	
+			});
 	});
 
 	$('#fileupload').fileupload({
@@ -89,47 +89,45 @@ jQuery(function($) {
 	}).bind('fileuploadsubmit', function (e, data) {
 		var params = {};
 		$.each(data.files, function (index, file) {
-			params = { 'catid': jQuery('#kunena_upload').val(), 'filename': file.name, 'size': file.size, 'mime': file.type }; 
+			params = { 'catid': jQuery('#kunena_upload').val(), 'filename': file.name, 'size': file.size, 'mime': file.type };
 		});
 
 		data.formData = params;
 	})
 	.bind('fileuploaddrop', function (e, data) {
-		var filecoutntmp = Object.keys(data['files']).length+fileCount; 
+		var filecoutntmp = Object.keys(data['files']).length+fileCount;
 
 		if (filecoutntmp > kunena_upload_files_maxfiles) {
 			$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES')+'</div>').insertBefore( $('#files') );
 
-			return false; 
+			return false;
 		}
 		else
 		{
-			fileCount = Object.keys(data['files']).length+fileCount; 
+			fileCount = Object.keys(data['files']).length+fileCount;
 		}
 	})
 	.bind('fileuploadchange', function (e, data) {
-		var filecoutntmp = Object.keys(data['files']).length+fileCount; 
+		var filecoutntmp = Object.keys(data['files']).length+fileCount;
 
 		if (filecoutntmp > kunena_upload_files_maxfiles) {
 			$('<div class="alert alert-danger"><button class="close" type="button" data-dismiss="alert">×</button>'+Joomla.JText._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES')+'</div>').insertBefore( $('#files') );
 
-			return false; 
+			return false;
 		}
 		else
 		{
-			fileCount = Object.keys(data['files']).length+fileCount; 
+			fileCount = Object.keys(data['files']).length+fileCount;
 		}
 	})
 	.on('fileuploadadd', function (e, data) {
-		$('#klabel_info_drop_browse').hide();
-		
 		$('#progress .bar').css(
 			'width',
 			'0%'
 		);
 
 		data.context = $('<div/>').appendTo('#files');
-		
+
 		$.each(data.files, function (index, file) {
 			var node = $('<p/>')
 				.append($('<span/>').text(file.name));
@@ -159,23 +157,23 @@ jQuery(function($) {
 				.prop('disabled', !!data.files.error);
 		}
 	}).on('fileuploaddone', function (e, data) {
-		// $.each(data.result.data, function (index, file) 
-		
+		// $.each(data.result.data, function (index, file)
+
 		var link = $('<a>')
 			.attr('target', '_blank')
 			.prop('href', data.result.location);
-	
+
 		data.context.find('span')
 			.wrap(link);
-		
+
 		if (data.result.success==true) {
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
 			jQuery('#kattach-list').append('<input id="kattachs-'+data.result.data.id+'" type="hidden" name="attachments['+data.result.data.id+']" value="1" />');
 			jQuery('#kattach-list').append('<input id="kattach-'+data.result.data.id+'" type="hidden" name="attachment['+data.result.data.id+']" value="1" />');
-			
+
 			data.uploaded=true;
-			
-			data.context.append(insertButton.clone(true).data(data)); 
+
+			data.context.append(insertButton.clone(true).data(data));
 			if (data.context.find('button').hasClass('btn-danger'))
 			{
 				data.context.find('button.btn-danger').remove();
@@ -184,7 +182,7 @@ jQuery(function($) {
 		} else if (data.result.message) {
 			data.uploaded=false;
 			data.context.append(removeButton.clone(true).data(data));
-		
+
 			var error = null;
 			$.each(data.result.data.exceptions, function (index, error) {
 				error = $('<div class="alert alert-error"/>').text(error.message);
@@ -192,7 +190,7 @@ jQuery(function($) {
 					.append('<br>')
 					.append(error);
 			});
-		} 
+		}
 	}).on('fileuploadfail', function (e, data) {
 		$.each(data.files, function (index, file) {
 			// TODO: replace text with error message from server if possible
@@ -219,10 +217,10 @@ jQuery(function($) {
 					data.uploaded = true;
 					data.result= false;
 					data.file_id = file.id;
-					
+
 					object.append(insertButton.clone(true).data(file));
 					object.append(removeButton.clone(true).data(data));
-					
+
 					object.appendTo( "#files" );
 				});
 			}

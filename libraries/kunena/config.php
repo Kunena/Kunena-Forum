@@ -179,8 +179,8 @@ class KunenaConfig extends JObject {
 	//New for 1.6.2: choose the time since which to show the topics
 	public $show_list_time = 720;
 	//New for 1.6.2: configuration option to show online users by minutes or session time
-	public $show_session_type = 0;
-	public $show_session_starttime = 0;
+	public $show_session_type = 2;
+	public $show_session_starttime = 1800;
 	// New for 1.6.2: configuration option to set all users or only registred users to see userlist
 	public $userlist_allowed = 0;
 	// New for 1.6.4

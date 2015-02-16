@@ -184,7 +184,14 @@ $this->addScript('js/edit.js');
 							<br>
 							<!-- The container for the uploaded files -->
 							<div id="files" class="files"></div>
-							<span id="klabel_info_drop_browse" class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
+							<div id="dropzone">
+								<div class="dropzone">
+									<div class="default message">
+										<span id="klabel_info_drop_browse"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
+									</div>
+								</div>
+							</div>
+
 							<br>
 						</div>
 					</div>

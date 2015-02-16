@@ -241,9 +241,14 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <div class="control-group">
 	<label class="control-label"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
-	<div class="center"> <span class="center" onclick="kGrowShrinkMessage(100);"
-							   style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span class="center" onclick="kGrowShrinkMessage(-100);"
-																																	  style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></div>
+	<div class="center">
+		<span class="center" onclick="kGrowShrinkMessage(100);" style="cursor: pointer">
+			<?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?>
+		</span>&nbsp;/&nbsp;
+		<span class="center" onclick="kGrowShrinkMessage(-100);"  style="cursor: pointer">
+			<?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?>
+		</span>
+	</div>
 	<div class="controls">
 		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>

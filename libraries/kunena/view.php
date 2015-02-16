@@ -468,7 +468,7 @@ class KunenaView extends JViewLegacy {
 				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
 			} else {
 				// TODO: allow translations/overrides (also above)
-				$title = KunenaFactory::getConfig()->board_title .' :: '. $title;
+				$title = KunenaFactory::getConfig()->board_title .': '. $title;
 			}
 			$this->document->setTitle($title);
 		}
@@ -493,7 +493,7 @@ class KunenaView extends JViewLegacy {
 				$description = JString::substr($description, 0, $length) . '...';
 			}
 
-			$this->document->setMetadata('description', $description . ' - ' . $lang->getName());
+			$this->document->setMetadata('description', $description);
 		}
 	}
 }

@@ -3,7 +3,7 @@
 <extension type="package" version="2.5" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>3.0.96-DEV</version>
+	<version>3.0.97-DEV</version>
 	<versionname>Internal</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>

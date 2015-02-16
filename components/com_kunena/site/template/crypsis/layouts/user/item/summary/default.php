@@ -23,7 +23,7 @@ $websiteURL = $profile->getWebsiteURL();
 $websiteName = $profile->getWebsiteName();
 $personalText = $profile->getPersonalText();
 $signature = $profile->getSignature();
-$email = $profile->email && !$profile->hideEmail || $me->isModerator() || $profile->userid == $me->userid;
+$email = $profile->email && !$profile->hideEmail && $this->config->showemail || $me->isModerator() || $profile->userid == $me->userid;
 
 if ($this->config->showuserstats)
 {

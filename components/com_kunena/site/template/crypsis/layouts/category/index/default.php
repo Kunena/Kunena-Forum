@@ -23,22 +23,22 @@ foreach ($this->sections as $section) :
 	<div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 
-		<?php if ($this->me->exists()) : ?>
+		<?php // FIXME: Fix issues. ?>
+		<?php /*if ($this->me->exists()) : */?><!--
 			<div class="btn-group">
 
-				<?php if ($markReadUrl) : ?>
-					<a class="btn btn-small" href="<?php echo $markReadUrl; ?>">
-						<?php echo JText::_('COM_KUNENA_MARK_CATEGORIES_READ') ?>
+				<?php /*if ($markReadUrl) : */?>
+					<a class="btn btn-small" href="<?php /*echo $markReadUrl; */?>">
+						<?php /*echo JText::_('COM_KUNENA_MARK_CATEGORIES_READ') */?>
 					</a>
-				<?php endif; ?>
+				<?php /*endif; */?>
 
-				<?php if ($this->me->isAdmin($section)) : ?>
-					<?php // FIXME: translate and implement. ?>
+				<?php /*if ($this->me->isAdmin($section)) : */?>
 					<button class="btn btn-small">Approve Posts</button>
-				<?php endif; ?>
+				<?php /*endif; */?>
 
 			</div>
-		<?php endif; ?>
+		--><?php /*endif; */?>
 
 		<?php if (count($this->sections) > 0) : ?>
 			<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>">&times;</div>
@@ -172,7 +172,7 @@ foreach ($this->sections as $section) :
 								</div>
 							<?php endif; ?>
 							<?php if (!empty($this->pending[$category->id])) : ?>
-								<div class="alert" style="max-width:150px;">
+								<div class="alert" style="max-width:150px;margin-top:20px;">
 									<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id),
 										intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'),
 										'', '', 'nofollow'); ?>

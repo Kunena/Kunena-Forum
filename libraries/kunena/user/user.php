@@ -16,6 +16,8 @@ jimport ( 'joomla.utilities.date' );
  * Class KunenaUser
  *
  * @property	int		$userid
+ * @property	int		$status
+ * @property	string	$status_text
  * @property	string	$name
  * @property	string	$username
  * @property	string	$email
@@ -322,6 +324,20 @@ class KunenaUser extends JObject {
 	public function isOnline($yes = false, $no = 'offline') {
 		return KunenaUserHelper::isOnline($this->userid, $yes, $no);
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getStatus() {
+		return KunenaUserHelper::getStatus($this->userid);
+ 	}
+
+	/**
+	 * @return string
+	 */
+	public function getStatusText() {
+		return KunenaHtmlParser::parseText($this->status_text);
+ 	}
 
 	/**
 	 * @return array

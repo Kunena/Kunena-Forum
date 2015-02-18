@@ -252,6 +252,24 @@ class TableKunenaUsers extends KunenaTable
 	 **/
 	public $canSubscribe = null;
 
+	/**
+	* userListtime
+	* @var int
+	**/
+	public $userListtime = null;
+
+	/**
+	 * Status
+	 * @var int
+	 **/
+	public $status = null;
+
+	/**
+	 * Status Text
+	 * @var string
+	 **/
+	public $status_text = null;
+
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_users', 'userid', $db);
@@ -327,6 +345,14 @@ class TableKunenaUsers extends KunenaTable
 		if (!$this->userid || !JFactory::getUser($this->userid)) {
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int)$this->userid));
 		}
+
+		if ($this->status < 0 || $this->status > 3) {
+			$this->setError ( JText::_('COM_KUNENA_UNKNOWN_STATUS'));
+		}
+
+		if (strlen($this->status) < 0 || strlen($this->status) > 255) {
+			$this->setError ( JText::_('COM_KUNENA_STATUS_TOOLONG'));
+ 		}
 
 		return ($this->getError() == '');
 	}

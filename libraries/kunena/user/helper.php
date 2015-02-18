@@ -25,6 +25,7 @@ abstract class KunenaUserHelper {
 	 */
 	protected static $_instances_name = array ();
 	protected static $_online = null;
+	protected static $_online_status = null;
 	protected static $_lastid = null;
 	protected static $_total = null;
 	protected static $_topposters = null;
@@ -305,6 +306,8 @@ abstract class KunenaUserHelper {
 	 * @param bool|string   $yes
 	 * @param string $no
 	 *
+	 * @deprecated 3.1.0  Please use getsStatus instead.
+	 *
 	 * @return bool|string
 	 */
 	public static function isOnline($user, $yes = false, $no = 'offline') {
@@ -319,6 +322,31 @@ abstract class KunenaUserHelper {
 		}
 		if ($yes) return $online ? $yes : $no;
 		return $online;
+	}
+
+	/**
+	 * Returns the status of a user. If as session exists, we can return the type of status the user set.
+	 *
+	 * @param mixed  $user
+	 *
+	 * @return int
+	 */
+	public static function getStatus($user) {
+		$user = self::get($user);
+		$online = false;
+		if (intval($user->userid) > 0) {
+			// First check if the user is actually has an active session regardless of the status the user set
+			if (self::$_online === null) {
+				self::getOnlineUsers();
+			}
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time  > time() - JFactory::getApplication()->getCfg ( 'lifetime', 15 ) * 60) : false;
+		}
+		if (!$online || ($user->status == 3 && !$user->isMyself() && !self::getMyself()->isModerator())) {
+			return -1;
+		} elseif ($online && self::$_online [$user->userid]->time <  time() - 30) {
+			return 1;
+		}
+		return $user->status;
 	}
 
 	public static function recount() {

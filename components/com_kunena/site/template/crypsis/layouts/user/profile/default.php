@@ -37,10 +37,7 @@ if ($show)
 
 	<?php if ($user->exists()) : ?>
 	<li>
-		<span class="label label-<?php echo $user->isOnline('success', 'important') ?>">
-			<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-		</span>
-
+		<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 	</li>
 	<?php endif; ?>
 

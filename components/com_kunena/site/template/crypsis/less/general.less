@@ -8,31 +8,31 @@
 **/
 
 .red {
-	color: rgba(232, 15, 34, 1);
+	color: rgba(232, 15, 34, 1) !important;
 }
 
 .orange {
-	color: rgba(235, 99, 1, 1);
+	color: rgba(235, 99, 1, 1) !important;
 }
 
 .yellow {
-	color: rgba(252, 209, 21, 1);
+	color: rgba(252, 209, 21, 1) !important;
 }
 
 .green {
-	color: rgba(128, 186, 1, 1);
+	color: rgba(128, 186, 1, 1) !important;
 }
 
 .lightblue {
-	color: rgba(185, 232, 250, 1);
+	color: rgba(185, 232, 250, 1) !important;
 }
 
 .blue {
-	color: rgba(0, 114, 198, 1);
+	color: rgba(0, 114, 198, 1) !important;
 }
 
 .purple {
-	color: rgba(163, 40, 125, 1);
+	color: rgba(163, 40, 125, 1) !important;
 }
 
 .filter {
@@ -649,6 +649,7 @@ table .well {
 
 .nav .dropdown-menu a {
 	display: inline-block;
+	text-decoration:none;
 	.btn-link {
 		margin-left: -120px;
 	}
@@ -781,11 +782,11 @@ div.kmsg > li {
 	background-color: #FFFFCC;
 }
 
-.navbar-nav {
+#logout-form {
 	float: left;
-	padding-top: 10px;
 	.btn-link {
 		color: inherit;
+		text-decoration:none;
 	}
 }
 
@@ -836,4 +837,21 @@ small.text-muted {
 }
 .last-avatar {
 	padding-left: 10px;
+}
+
+#status-form label.btn a.btn {
+	padding: 0;
+	padding-left: 5px;
+}
+.navbar .btn, .navbar .btn-group {
+	margin-top:0;
+}
+#nav-menu {
+	width: 190px;
+}
+#nav-menu a {
+	padding: 5px 10px 5px 15px;
+}
+#nav-menu img {
+	margin-left: -5px;
 }

@@ -14,7 +14,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 // FIXME: move announcements logic and pm logic into the template file...
 ?>
 <ul class="nav pull-right">
-	<li class="dropdown">
+	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<?php if ($this->me->status == 0) : ?>
 				<i class="icon-large icon-user green"></i>
@@ -28,7 +28,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu">
+		<div class="dropdown-menu" id="nav-menu">
 
 			<div class="center">
 				<a href="<?php  echo $this->me->getURL(); ?>">
@@ -129,7 +129,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					</a>
 				</div>
 			<?php endif ?>
-
+			<div class="divider"></div>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div>
 					<button class="btn btn-link" name="submit" type="submit">

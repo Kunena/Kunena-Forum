@@ -20,11 +20,11 @@ class KunenaViewCredits extends KunenaView {
 
 		$this->memberList = array(
 				array('name'=>'Matias Griese', 'url'=>'http://www.kunena.org/forum/user/63-matias',
-					'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPEMENT')),
+					'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPMENT')),
 				array('name'=>'Florian Dal Fitto', 'url'=>'http://www.kunena.org/forum/user/1288-xillibit',
-					'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPEMENT')),
+					'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPMENT')),
 				array('name'=>'Joshua Weiss', 'url'=>'http://www.kunena.org/forum/user/10809-coder4life',
-					'title'=>JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_DESIGN'), JText::_('COM_KUNENA_CREDITS_DEVELOPEMENT'))),
+					'title'=>JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_DESIGN'), JText::_('COM_KUNENA_CREDITS_DEVELOPMENT'))),
 				array('name'=>'Jelle Kok', 'url'=>'http://www.kunena.org/forum/user/634-810',
 					'title'=>JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_DESIGN'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
 				array('name'=>'Ron Severdia', 'url'=>'http://www.kunena.org/forum/user/114-severdia',

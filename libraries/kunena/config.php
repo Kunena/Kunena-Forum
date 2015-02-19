@@ -832,7 +832,6 @@ class KunenaConfig extends JObject {
 	 * @since  1.6.1
 	 */
 	public $show_list_time = 720;
-<<<<<<< HEAD
 
 	/**
 	 * @var    integer  Show session type; select, selection
@@ -850,12 +849,6 @@ class KunenaConfig extends JObject {
 	 * @var    integer  User list allowed; select, boolean
 	 * @since  1.6.2
 	 */
-=======
-	//New for 1.6.2: configuration option to show online users by minutes or session time
-	public $show_session_type = 2;
-	public $show_session_starttime = 1800;
-	// New for 1.6.2: configuration option to set all users or only registred users to see userlist
->>>>>>> upstream/master
 	public $userlist_allowed = 0;
 
 	/**
@@ -1074,7 +1067,6 @@ class KunenaConfig extends JObject {
 	 * @since  3.0.4
 	 */
 	public $statslink_allowed = 1;
-<<<<<<< HEAD
 
     /**
      * @var    integer  Super admin user list; select, boolean
@@ -1130,13 +1122,17 @@ class KunenaConfig extends JObject {
 	 */
 	public $teaser = 0;
 
-=======
-	// New for 3.0.6
-	public $superadmin_userlist = 0;
-	// New for 3.0.7
+	/**
+	 * @var    integer  Define ebay widget language; select, boolean
+	 * @since  3.0.7
+	 */
 	public $ebay_language = 0;
+
+	/**
+	 * @var    integer  Define ebay Api key to be allowed to display ebay widget; select, boolean
+	 * @since  3.0.7
+	 */
 	public $ebay_api_key = '';
->>>>>>> upstream/master
 
 	public function __construct() {
 		parent::__construct ();

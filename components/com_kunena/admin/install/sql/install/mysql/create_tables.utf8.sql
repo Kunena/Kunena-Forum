@@ -306,6 +306,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users` (
 	`hideEmail` tinyint(1) NOT NULL default '1',
 	`showOnline` tinyint(1) NOT NULL default '1',
 	`canSubscribe` tinyint(1) NOT NULL default '1',
+	`userListtime` int(11) NULL default '-2',
 	`thankyou` int(11) NULL default '0',
 	PRIMARY KEY (userid),
 	KEY `group_id` (group_id),

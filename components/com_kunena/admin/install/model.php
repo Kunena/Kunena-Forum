@@ -56,7 +56,11 @@ class KunenaModelInstall extends JModelLegacy {
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
 
-		ignore_user_abort ( true );
+		if (function_exists('ignore_user_abort'))
+		{
+			ignore_user_abort(true);
+		}
+
 		$this->setState ( 'default_max_time', @ini_get ( 'max_execution_time' ) );
 		@set_time_limit ( 300 );
 		$this->setState ( 'max_time', @ini_get ( 'max_execution_time' ) );

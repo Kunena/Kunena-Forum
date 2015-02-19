@@ -122,14 +122,14 @@ class KunenaBbcode extends NBBC_BBCode {
 			}
 			if (isset($video)) {
 				$uri = JURI::getInstance();
-				if ( $uri->isSSL() ) {
-					return '<div class="vid"><object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/'
-							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/'
-									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object></div>';
-				} else {
-					return '<div class="vid"><object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
-							.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
-									.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object></div>';
+
+				if ( $uri->isSSL() )
+				{
+					return '<iframe width="425" height="344" src="https://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
+				}
+				else
+				{
+					return '<iframe width="425" height="344" src="http://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
 				}
 			}
 		}
@@ -160,10 +160,13 @@ class KunenaBbcode extends NBBC_BBCode {
 						. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
 						. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid='.$config->ebay_affiliate_id.'"></embed></object>';
 				}
+
+				return $this->getEbayItemFromCache($itemid);
 			}
 
 			parse_str($params['query'], $query);
 
+			// FIXME: ebay search and seller listings are not supported.
 			if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
 				// convert ebay search to embedded widget
 				$layout = KunenaLayout::factory('BBCode/eBay');
@@ -180,9 +183,10 @@ class KunenaBbcode extends NBBC_BBCode {
 				}
 
 				// TODO: Remove in Kunena 4.0
-				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query='
-					. urlencode($query['_nkw']) .'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebaylanguagecode . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
+				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebay_language . '&mode=search&query='
+					. urlencode($query['_nkw']) .'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebay_language . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid=5336042350"></embed></object>';
+
 			}
 			if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
 				// convert seller listing to embedded widget
@@ -201,8 +205,8 @@ class KunenaBbcode extends NBBC_BBCode {
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="355"><param name="movie" value="http://togo.ebay.com/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebaylanguagecode . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebaylanguagecode . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
+					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid=5336042350"></embed></object>';
 			}
 		}
 
@@ -301,6 +305,23 @@ class KunenaBbcode extends NBBC_BBCode {
 		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
 		if (preg_match($re, $string)) return true;
 		return false;
+	}
+
+	/**
+	 * Load eBay objet item from cache
+	 *
+	 * @param   int  $ItemID  The eBay ID of object to query
+	 *
+	 * @return string
+	 */
+	public function getEbayItemFromCache($ItemID)
+	{
+		$cache = JFactory::getCache('Kunena_ebay_request');
+		$cache->setCaching(true);
+		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
+		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
+
+		return $ebay_item;
 	}
 }
 
@@ -1348,13 +1369,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// TODO: Remove in Kunena 4.0
-		if (is_numeric ( $content )) {
-			// Numeric: we have to assume this is an item id
-			return '<object width="'.$width.'" height="'.$height.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=' . $content . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=' . $content . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
-		} else {
-			// Non numeric: we have to assume this is a search
-			return '<object width="'.$width.'" height="'.$height.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=' . $content . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=' . $content . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
-		}
+		return $bbcode->getEbayItemFromCache($content);
 	}
 
 	function DoArticle($bbcode, $action, $name, $default, $params, $content) {
@@ -1575,9 +1590,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$bbcode->autolink_disable--;
-		if (! $content)
-			return;
+		if (!$content) {
+			return '';
+		}
 
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal)) {
@@ -1604,7 +1619,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			unset ( $vid_players );
 		}
 		if (! $vid ["type"]) {
-			$vid_auto = preg_match ( '#^http://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
+			$vid_auto = preg_match ( '#^https?://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
 			if ($vid_auto) {
 				$vid ["type"] = JString::strtolower ( $vid_regs [1] );
 				switch ($vid ["type"]) {
@@ -1643,7 +1658,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1&cc_load_policy=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+		'youtube' => array ('iframe', 425, 355, 0, 0, 'http://www.youtube.com/embed/%vcode%', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 		'youku' => array ('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
@@ -1713,6 +1728,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			case 'flash' :
 				$vid_par1 = array (array (1, 'classid', 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' ), array (1, 'codebase', 'http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab' ), array (2, 'movie', $vid_source ), array (4, 'src', $vid_source ), array (4, 'type', 'application/x-shockwave-flash' ), array (4, 'pluginspage', 'http://www.macromedia.com/go/getflashplayer' ), array (6, 'quality', 'high' ), array (6, 'allowFullScreen', 'true' ), array (6, 'allowScriptAccess', 'never' ), array (5, 'width', $vid_width ), array (5, 'height', $vid_height ) );
 				$vid_allowpar = array ('flashvars', 'wmode', 'bgcolor', 'quality' );
+				break;
+			case 'iframe' :
+				return '<iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe>';
 				break;
 			case 'mediaplayer' :
 				$vid_par1 = array (array (1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95' ), array (1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab' ), array (4, 'type', 'application/x-mplayer2' ), array (4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/' ), array (6, 'src', $vid_source ), array (6, 'autostart', 'false' ), array (6, 'autosize', 'true' ), array (5, 'width', $vid_width ), array (5, 'height', $vid_height ) );
@@ -1795,6 +1813,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				}
 			}
 		}
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments )) {
+			$filename = basename(trim(strip_tags($content)));
+			return $attachment->getThumbnailLink();
+		}
+
 		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments )) {
 			foreach ( $bbcode->parent->inline_attachments as $att ) {
 				if ($att->getFilename() == trim(strip_tags($content))) {
@@ -2070,4 +2095,73 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		return false;
 	}
+
+	/**
+	 * Query from eBay API the JSON stream of item id given to render
+	 *
+	 * @param   int  $ItemID  The eBay ID of object to query
+	 *
+	 * @return string
+	 */
+	public static function getEbayItem($ItemID)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (is_numeric($ItemID)  && $config->ebay_api_key)
+		{
+			$options = new JRegistry;
+
+			$transport = new JHttpTransportStream($options);
+
+			// Create a 'stream' transport.
+			$http = new JHttp($options, $transport);
+
+			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebay_language . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9');
+
+			if ($response->code == '200')
+			{
+				$resp = json_decode($response->body);
+
+				if ($resp->Ack == 'Success')
+				{
+					$ebay_object = '<div style="border: 1px solid #e5e5e5;margin:10px;padding:10px;border-radius:5px">';
+					$ebay_object .= '<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif" />';
+					$ebay_object .= '<div style="margin:10px 0" /></div>';
+					$ebay_object .= '<div style="text-align: center;"><a href="' . $resp->Item->ViewItemURLForNaturalSearch . '"> <img  src="' . $resp->Item->PictureURL[0] . '" /></a></div>';
+					$ebay_object .= '<div style="margin:10px 0" /></div>';
+					$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . $resp->Item->Title . '</a>';
+					$ebay_object .= '<div style="margin:10px 0" /></div>';
+					$ebay_object .= $resp->Item->ConvertedCurrentPrice->CurrencyID . '  ' . $resp->Item->ConvertedCurrentPrice->Value;
+					$ebay_object .= '<div style="margin:10px 0" /></div>';
+
+					if ($resp->Item->ListingStatus == "Active")
+					{
+						$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') . '</a>';
+					}
+					else
+					{
+						$ebay_object .= JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED');
+					}
+
+					$ebay_object .= '</div>';
+
+					return $ebay_object;
+				}
+				else
+				{
+					return '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+				}
+			}
+		}
+		else
+		{
+			if (KunenaFactory::getUser()->isAdmin())
+			{
+				return '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_INVALID_APPID_KEY') . '</<b>';
+			}
+		}
+
+		return '';
+	}
+
 }

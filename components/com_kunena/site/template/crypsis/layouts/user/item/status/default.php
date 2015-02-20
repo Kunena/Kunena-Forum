@@ -15,14 +15,15 @@ $status = $user->getStatus();
 $status_text = $user->getStatusText();
 $link = $user->getURL();
 
-switch ($status) {
+switch ($status)
+{
 	case 0:
 		$label = JText::_("COM_KUNENA_ONLINE");
 		$state = "success";
 		break;
 	case 1:
 		$label = JText::_("COM_KUNENA_AWAY");
-		$state =  "warning";
+		$state = "warning";
 		break;
 	case 2:
 		$label = JText::_("COM_KUNENA_BUSY");
@@ -39,8 +40,8 @@ switch ($status) {
 }
 
 echo $this->subLayout('Widget/Label')
-	->set('label',$label)
-	->set('description',$status_text)
+	->set('label', $label)
+	->set('description', $status_text)
 	->set('state', $state)
 	->set('link', $link)
 	->setLayout('link');

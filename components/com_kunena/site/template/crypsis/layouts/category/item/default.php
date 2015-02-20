@@ -21,7 +21,8 @@ $cols = empty($this->checkbox) ? 4 : 5;
 	</div>
 <?php endif; ?>
 
-<?php if (!$this->category->isSection() && !empty($this->topics)) : ?>
+<?php if (!$this->category->isSection()) : ?>
+	<?php if (!empty($this->topics)) : ?>
 	<h2>
 		<?php echo $this->escape($this->headerText); ?>
 	</h2>
@@ -37,6 +38,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			->set('pagination', $this->pagination)
 			->set('display', true); ?>
 	</div>
+	<?php endif; ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
 	<input type="hidden" name="view" value="topics"/>

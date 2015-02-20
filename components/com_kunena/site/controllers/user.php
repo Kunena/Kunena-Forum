@@ -331,37 +331,65 @@ class KunenaControllerUser extends KunenaController {
 		$this->setRedirectBack();
 	}
 
-	public function status() {
-		if(!JSession::checkToken('request')) {
+	/**
+	 * Save online status for user
+	 *
+	 * @return void
+	 */
+	public function status()
+	{
+		if (!JSession::checkToken('request'))
+		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
+
 			return;
 		}
-		$status = JRequest::getInt ( 'status', 0 );
+
+		$status = JRequest::getInt('status', 0);
 		$me = KunenaUserHelper::getMyself();
 		$me->status = $status;
-		if (!$me->save()) {
-			$this->app->enqueueMessage ( $me->getError(), 'error' );
-		} else {
-			$this->app->enqueueMessage ( JText::_( 'Successfully Saved Status') );
+
+		if (!$me->save())
+		{
+			$this->app->enqueueMessage($me->getError(), 'error');
 		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('Successfully Saved Status'));
+		}
+
 		$this->setRedirectBack();
 	}
 
-	public function statusText() {
-		if(!JSession::checkToken('request')) {
+	/**
+	 * Set online status text for user
+	 *
+	 * @return void
+	 */
+	public function statusText()
+	{
+		if (!JSession::checkToken('request'))
+		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
+
 			return;
 		}
-		$status_text = JRequest::getString ( 'status_text', null, 'POST');
+
+		$status_text = JRequest::getString('status_text', null, 'POST');
 		$me = KunenaUserHelper::getMyself();
 		$me->status_text = $status_text;
-		if (!$me->save()) {
-			$this->app->enqueueMessage ( $me->getError(), 'error' );
-		} else {
-			$this->app->enqueueMessage ( JText::_( 'Successfully Saved Status Text') );
+
+		if (!$me->save())
+		{
+			$this->app->enqueueMessage($me->getError(), 'error');
 		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('Successfully Saved Status Text'));
+		}
+
 		$this->setRedirectBack();
 	}
 

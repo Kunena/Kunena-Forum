@@ -837,13 +837,13 @@ class KunenaConfig extends JObject {
 	 * @var    integer  Show session type; select, selection
 	 * @since  1.6.1
 	 */
-	public $show_session_type = 0;
+	public $show_session_type = 2;
 
 	/**
 	 * @var    integer  Show session start time; select, selection
 	 * @since  1.6.1
 	 */
-	public $show_session_starttime = 0;
+	public $show_session_starttime = 1800;
 
 	/**
 	 * @var    integer  User list allowed; select, boolean

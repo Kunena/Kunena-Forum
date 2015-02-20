@@ -57,7 +57,7 @@ class KunenaControllerTopic extends KunenaController {
 			$object->folder = $attach->folder;
 			$object->caption = $attach->caption;
 			$object->type = $attach->filetype;
-			$object->path = $attach->getUrl(true);
+			$object->path = $attach->getUrl();
 			$list['files'][] = $object;
 		}
 

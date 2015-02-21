@@ -221,6 +221,8 @@ abstract class KunenaUserHelper {
 	}
 
 	/**
+	 * Get the list of users online by giving list of userid
+	 *
 	 * @return array
 	 */
 	public static function getOnlineUsers()
@@ -260,6 +262,8 @@ abstract class KunenaUserHelper {
 	}
 
 	/**
+	 * Get the number of users online
+	 *
 	 * @return array
 	 */
 	public static function getOnlineCount()
@@ -298,6 +302,7 @@ abstract class KunenaUserHelper {
 			$counts['user'] = count(self::getOnlineUsers());
 			$counts['guest'] = $count;
 		}
+
 		return $counts;
 	}
 
@@ -327,25 +332,35 @@ abstract class KunenaUserHelper {
 	/**
 	 * Returns the status of a user. If as session exists, we can return the type of status the user set.
 	 *
-	 * @param mixed  $user
+	 * @param   mixed  $user  The user object to get the status
 	 *
 	 * @return int
 	 */
-	public static function getStatus($user) {
+	public static function getStatus($user)
+	{
 		$user = self::get($user);
 		$online = false;
-		if (intval($user->userid) > 0) {
+
+		if (intval($user->userid) > 0)
+		{
 			// First check if the user is actually has an active session regardless of the status the user set
-			if (self::$_online === null) {
+			if (self::$_online === null)
+			{
 				self::getOnlineUsers();
 			}
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time  > time() - JFactory::getApplication()->getCfg ( 'lifetime', 15 ) * 60) : false;
+
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - JFactory::getApplication()->getCfg('lifetime', 15) * 60) : false;
 		}
-		if (!$online || ($user->status == 3 && !$user->isMyself() && !self::getMyself()->isModerator())) {
+
+		if (!$online || ($user->status == 3 && !$user->isMyself() && !self::getMyself()->isModerator()))
+		{
 			return -1;
-		} elseif ($online && self::$_online [$user->userid]->time <  time() - 30) {
+		}
+		elseif ($online && self::$_online [$user->userid]->time < time() - 30)
+		{
 			return 1;
 		}
+
 		return $user->status;
 	}
 

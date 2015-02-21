@@ -387,7 +387,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('Successfully Saved Status Text'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STATUS_SAVED'));
 		}
 
 		$this->setRedirectBack();

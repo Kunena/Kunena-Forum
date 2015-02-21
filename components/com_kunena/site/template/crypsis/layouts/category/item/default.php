@@ -90,7 +90,8 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		/** @var KunenaForumTopic $previous */
 		$previous = null;
 
-		foreach ($this->topics as $position => $topic) {
+		foreach ($this->topics as $position => $topic)
+		{
 			echo $this->subLayout('Topic/Row')
 				->set('topic', $topic)
 				->set('spacing', $previous && $previous->ordering != $topic->ordering)
@@ -147,10 +148,11 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			->set('display', true); ?>
 	</div>
 
-<?php
-if (!empty($this->moderators))
+<?php if (!empty($this->moderators))
+{
 	echo $this->subLayout('Category/Moderators')
 		->set('moderators', $this->moderators);
+}
 ?>
 
 <?php endif; ?>

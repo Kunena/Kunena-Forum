@@ -14,7 +14,10 @@ defined('_JEXEC') or die;
 
 /** @var KunenaForumMessage  $message  Message to reply to. */
 $message = $this->message;
-if (!$message->isAuthorised('reply')) return;
+if (!$message->isAuthorised('reply'))
+{
+	return;
+}
 
 /** @var KunenaUser  $author  Author of the message. */
 $author = isset($this->author) ? $this->author : $message->getAuthor();
@@ -26,7 +29,9 @@ $category = isset($this->category) ? $this->category : $message->getCategory();
 $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 /** @var KunenaUser  $me  Current user. */
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');

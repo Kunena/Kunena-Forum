@@ -111,7 +111,7 @@ if ($this->config->showuserstats)
 					<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
 				<span>
 					<?php if ($profile->location) : ?>
-						<a href="http://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
+						<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
 						   target="_blank"><?php echo $this->escape($profile->location); ?></a>
 					<?php else : ?>
 						<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>

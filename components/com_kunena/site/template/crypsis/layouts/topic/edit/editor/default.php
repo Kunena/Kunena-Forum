@@ -110,7 +110,8 @@ defined ( '_JEXEC' ) or die ();
 					<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
 				</div>
 				<?php
-				if($this->poll->exists()) {
+				if ($this->poll->exists())
+				{
 					$x = 1;
 					foreach ($this->poll->getOptions() as $poll_option) {
 						echo '<div class="polloption">Option '.$x.' <input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" onmouseover="document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION', true).'\')" /></div>';
@@ -130,12 +131,13 @@ defined ( '_JEXEC' ) or die ();
 				<div class="controls">
 					<?php
 					$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
-					foreach ( $emoticons as $emo_code=>$emo_url ) {
+
+					foreach ( $emoticons as $emo_code => $emo_url )
+					{
 						echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
 					}
 					?>
 				</div>
-			</div>
 			</div>
 		<?php endif;
 
@@ -255,12 +257,13 @@ defined ( '_JEXEC' ) or die ();
 	<!-- Hidden preview placeholder -->
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
+
 <?php if ($this->message->exists()) : ?>
 
-	<div class="control-group">
-		<label class="control-label"><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
-		<div class="controls">
-			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
-		</div>
+<div class="control-group">
+	<label class="control-label"><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+	<div class="controls">
+		<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
 	</div>
+</div>
 <?php endif; ?>

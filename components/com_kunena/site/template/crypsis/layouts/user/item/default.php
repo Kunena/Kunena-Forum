@@ -33,7 +33,7 @@ echo $this->subLayout('User/Item/Summary')
 ?>
 
 <div class="tabs hidden-phone">
- <br />
+<br />
 <br />
 
 	<ul class="nav nav-tabs">

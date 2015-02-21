@@ -24,7 +24,7 @@ if (!isset($id))
 	$id = 0;
 }
 
-$mapid = 'kgooglemap'.++$id;
+$mapid = 'kgooglemap' . ++ $id;
 $map_type = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 $map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
 if (!in_array($map_type, $map_typeId)) $map_type = 'ROADMAP';

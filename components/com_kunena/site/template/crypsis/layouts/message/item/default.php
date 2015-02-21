@@ -17,12 +17,15 @@ $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
 $config = KunenaConfig::getInstance();
-if ($config->ordering_system == 'mesid') {
+$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+
+if ($config->ordering_system == 'mesid')
+{
 	$this->numLink = $this->location ;
 } else {
 	$this->numLink = $message->replynum;
 }
-$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+
 ?>
 
 <small class="text-muted pull-right hidden-phone">
@@ -79,22 +82,22 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 </div>
 
 <?php if ($message->modified_by && $this->config->editmarkup) :
-	$dateshown = $datehover = '';
-	if ($message->modified_time) {
-		$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
-		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
-	} ?>
-	<div class="alert alert-info hidden-phone" <?php echo $datehover ?>>
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
-		<?php if ($message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); ?>
-	</div>
+$dateshown = $datehover = '';
+if ($message->modified_time) {
+	$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
+	$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
+} ?>
+<div class="alert alert-info hidden-phone" <?php echo $datehover ?>>
+	<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
+	<?php if ($message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); ?>
+</div>
 <?php endif; ?>
 
 <?php if (!empty($this->thankyou)): ?>
-	<div class="kmessage-thankyou">
-		<?php
-		echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
-		if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
-		?>
-	</div>
+<div class="kmessage-thankyou">
+	<?php
+	echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
+	if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+	?>
+</div>
 <?php endif; ?>

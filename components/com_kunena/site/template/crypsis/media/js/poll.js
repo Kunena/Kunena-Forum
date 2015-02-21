@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
 	/**
 	 * This function will insert directly in DOM the new field for poll with attibutes
 	 */
-	function create_new_field_now(optionid, options) {
+	function create_new_field_now(optionid) {
 		var polldiv = jQuery('<div></div>').attr('class','polloption').appendTo('#kbbcode-poll-options');
 
 		var label = jQuery('<label>').text(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+' '+optionid+' ');
@@ -23,7 +23,6 @@ jQuery(document).ready(function() {
 		newInput.setAttribute('class', 'inputbox');
 		newInput.setAttribute('maxlength', '25');
 		newInput.setAttribute('type', 'text');
-		newInput.setAttribute('onmouseover', 'document.id("helpbox").set("value", "'+Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_OPTION')+'")');
 		polldiv.append(newInput);
 	}
 
@@ -33,10 +32,10 @@ jQuery(document).ready(function() {
 			var koptions = jQuery('#kbbcode-poll-options').children('div.polloption');
 
 			if(!nboptionsmax || (koptions.length < nboptionsmax && koptions.length > 1 ) ){
-				create_new_field_now(koptions.length+1,nboptionsmax);
+				create_new_field_now(koptions.length+1);
 			} else if ( !nboptionsmax || koptions.length < 1 ) {
-				create_new_field_now(koptions.length+1,nboptionsmax);
-				create_new_field_now(koptions.length+2,nboptionsmax);
+				create_new_field_now(koptions.length+1);
+				create_new_field_now(koptions.length+2);
 			} else {
 				// Set error message with alert bootstrap way
 				jQuery('#kpoll-alert-error').removeAttr('style');

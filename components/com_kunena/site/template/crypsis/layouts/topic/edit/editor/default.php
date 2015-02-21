@@ -34,7 +34,6 @@ defined ( '_JEXEC' ) or die ();
 	<div class="modal-body">
 		<p><?php $codeTypes = $this->getCodeTypes(); if (!empty($codeTypes)) :	?>
 			<?php echo $codeTypes; ?>
-				<input id="kbutton-modal-addcode" type="button" name="Code" value="<?php echo JText::_('COM_KUNENA_EDITOR_CODE_INSERT'); ?>" />
 		<?php endif; ?></p>
 	</div>
 	<div class="modal-footer">
@@ -49,6 +48,19 @@ defined ( '_JEXEC' ) or die ();
 	<div class="modal-body">
 		<p>Size: <input name="modal-picture-size" id="modal-picture-size" type="text" value="" />
 		Url : <input name="modal-picture-url" id="modal-picture-url" type="text" value="" /></p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+	</div>
+</div>
+<div id="modal-link" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Link settings</h3>
+	</div>
+	<div class="modal-body">
+		<p>Url: <input name="modal-picture-size" id="modal-picture-url" type="text" value="" />
+		Text : <input name="modal-picture-url" id="modal-picture-text" type="text" value="" /></p>
 	</div>
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
@@ -120,7 +132,7 @@ defined ( '_JEXEC' ) or die ();
 					if($this->poll->exists()) {
 						$x = 1;
 						foreach ($this->poll->getOptions() as $poll_option) {
-							echo '<div class="polloption">Option '.$x.' <input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" onmouseover="document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION', true).'\')" /></div>';
+							echo '<div class="polloption">Option '.$x.' <input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'")" /></div>';
 							$x++;
 						}
 					}

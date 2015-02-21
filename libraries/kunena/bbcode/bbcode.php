@@ -145,20 +145,18 @@ class KunenaBbcode extends NBBC_BBCode {
 					$layout = KunenaLayout::factory('BBCode/eBay');
 					if ($layout->getPath())
 					{
-						return (string) $layout
-							->set('content', $itemid)
-							->set('params', null)
-							->set('width', 355)
-							->set('height', 300)
-							->set('language', $config->ebaylanguagecode)
-							->set('affiliate', $config->ebay_affiliate_id)
-							->setLayout('default');
-					}
+						$ebay = $bbcode->getEbayItemFromCache($content);
 
-					// TODO: Remove in Kunena 4.0
-					return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
-						. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
-						. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid='.$config->ebay_affiliate_id.'"></embed></object>';
+						return (string) $layout
+							->set('content', $content)
+							->set('params', $params)
+							->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
+							->set('pictureurl', $ebay->Item->PictureURL[0])
+							->set('status', $ebay->Item->ListingStatus)
+							->set('ack', $ebay->Ack)
+							->set('title', $ebay->Item->Title)
+							->setLayout(is_numeric($content) ? 'default' : 'search');
+					}
 				}
 
 				return $this->getEbayItemFromCache($itemid);
@@ -1358,18 +1356,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$layout = KunenaLayout::factory('BBCode/eBay');
 		if ($layout->getPath())
 		{
+			$ebay = $bbcode->getEbayItemFromCache($content);
+
 			return (string) $layout
 				->set('content', $content)
 				->set('params', $params)
-				->set('width', $width)
-				->set('height', $height)
-				->set('language', $config->ebaylanguagecode)
-				->set('affiliate', $config->ebay_affiliate_id)
+				->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
+				->set('pictureurl', $ebay->Item->PictureURL[0])
+				->set('status', $ebay->Item->ListingStatus)
+				->set('ack', $ebay->Ack)
+				->set('title', $ebay->Item->Title)
 				->setLayout(is_numeric($content) ? 'default' : 'search');
 		}
-
-		// TODO: Remove in Kunena 4.0
-		return $bbcode->getEbayItemFromCache($content);
 	}
 
 	function DoArticle($bbcode, $action, $name, $default, $params, $content) {
@@ -2122,42 +2120,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			{
 				$resp = json_decode($response->body);
 
-				if ($resp->Ack == 'Success')
-				{
-					$ebay_object = '<div style="border: 1px solid #e5e5e5;margin:10px;padding:10px;border-radius:5px">';
-					$ebay_object .= '<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif" />';
-					$ebay_object .= '<div style="margin:10px 0" /></div>';
-					$ebay_object .= '<div style="text-align: center;"><a href="' . $resp->Item->ViewItemURLForNaturalSearch . '"> <img  src="' . $resp->Item->PictureURL[0] . '" /></a></div>';
-					$ebay_object .= '<div style="margin:10px 0" /></div>';
-					$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . $resp->Item->Title . '</a>';
-					$ebay_object .= '<div style="margin:10px 0" /></div>';
-					$ebay_object .= $resp->Item->ConvertedCurrentPrice->CurrencyID . '  ' . $resp->Item->ConvertedCurrentPrice->Value;
-					$ebay_object .= '<div style="margin:10px 0" /></div>';
-
-					if ($resp->Item->ListingStatus == "Active")
-					{
-						$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') . '</a>';
-					}
-					else
-					{
-						$ebay_object .= JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED');
-					}
-
-					$ebay_object .= '</div>';
-
-					return $ebay_object;
-				}
-				else
-				{
-					return '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
-				}
-			}
-		}
-		else
-		{
-			if (KunenaFactory::getUser()->isAdmin())
-			{
-				return '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_INVALID_APPID_KEY') . '</<b>';
+				return $resp;
 			}
 		}
 

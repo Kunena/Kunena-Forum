@@ -25,7 +25,7 @@ defined('_JEXEC') or die;
 		<div style="margin:10px 0" /></div>
 		<div style="margin:10px 0" /></div>
 		<?php if ($this->status == "Active"): ?>
-			<a class="btn" href="<?php echo $this->naturalurl; ?>"><?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') ?></a>
+			<a href="<?php echo $this->naturalurl; ?>"><?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') ?></a>
 		<?php else: ?>
 			<?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED'); ?>
 		<?php endif; ?>

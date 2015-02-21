@@ -16,7 +16,7 @@ $topic = $message->getTopic();
 $category = $topic->getCategory();
 $author = $message->getAuthor();
 $isReply = $message->id != $topic->first_post_id;
-$config = KunenaFactory::getConfig ();
+$config = KunenaFactory::getConfig();
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 ?>
 <div id="kunena_search_results" class="row-fluid">
@@ -42,7 +42,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			<div class="kmessage">
 				<?php  if (!$isReply) :
 					echo $message->displayField('message');
- 				else:
+ 				else :
 					echo (!$me->userid && $config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
  			endif;?>
 			</div>

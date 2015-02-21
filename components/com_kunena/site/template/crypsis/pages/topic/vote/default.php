@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 $content = $this->request('Topic/Poll')
-	->setProperties(array('alwaysVote'=>true))
+	->setProperties(array('alwaysVote' => true))
 	->execute();
 
 // Display breadcrumb path to the current category / topic / message / report.

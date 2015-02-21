@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
+
 // FIXME: move announcements logic and pm logic into the template file...
 ?>
 <ul class="nav pull-right">

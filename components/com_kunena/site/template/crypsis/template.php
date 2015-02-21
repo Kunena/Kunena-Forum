@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Template.Crypsis
  * @subpackage  Template
  *
@@ -12,6 +13,8 @@ defined('_JEXEC') or die;
 
 /**
  * Crypsis template.
+ *
+ * @since  K3.1
  */
 class KunenaTemplateCrypsis extends KunenaTemplate
 {
@@ -43,6 +46,11 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		'css' => 'media/css'
 	);
 
+	/**
+	 * User group initialization.
+	 *
+	 * @return void
+	 */
 	protected $userClasses = array(
 		'kwho-',
 		'admin'=>'kwho-admin',
@@ -69,9 +77,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		foreach (array_reverse($this->default) as $template)
 		{
 			$file = "kunena_tmpl_{$template}";
-			$lang->load($file, JPATH_SITE)
-				|| $lang->load($file, KPATH_SITE)
-				|| $lang->load($file, KPATH_SITE . "/template/{$template}");
+			$lang->load($file, JPATH_SITE) || $lang->load($file, KPATH_SITE) || $lang->load($file, KPATH_SITE . "/template/{$template}");
 		}
 	}
 
@@ -87,7 +93,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Template also requires jQuery framework.
 		JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.modal');
-		//JHtml::_('formbehavior.chosen', 'select');
+
+		// JHtml::_('formbehavior.chosen', 'select');
 
 		// Load JavaScript.
 		$this->addScript('main.js');
@@ -99,31 +106,50 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		parent::initialize();
 	}
 
-	public function addStyleSheet($filename, $group='forum')
+	/**
+	 * @param        $filename
+	 * @param string $group
+	 *
+	 * @return JDocument
+	 */
+	public function addStyleSheet($filename, $group = 'forum')
 	{
 		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
-		return JFactory::getDocument()->addStyleSheet(JUri::root(true)."/{$filename}");
+
+		return JFactory::getDocument()->addStyleSheet(JUri::root(true) . "/{$filename}");
 	}
 
+	/**
+	 * @param      $link
+	 * @param      $name
+	 * @param      $scope
+	 * @param      $type
+	 * @param null $id
+	 *
+	 * @return string
+	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
-		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod', 'permanent'=>'mod');
-		$names = array('unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
-				'quickreply'=>'reply', 'quote'=>'quote', 'edit'=>'edit', 'permdelete'=>'delete',
-				'flat'=>'layout-flat', 'threaded'=>'layout-threaded', 'indented'=>'layout-indented',
-				'list'=>'reply');
+		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod');
+		$names = array('unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic', 'quickreply' => 'reply', 'quote' => 'quote', 'edit' => 'edit', 'permdelete' => 'delete', 'flat' => 'layout-flat', 'threaded' => 'layout-threaded', 'indented' => 'layout-indented', 'list' => 'reply');
 
 		// Need special style for buttons in drop-down list
 		$buttonsDropdown = array('reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented');
 
-		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$text  = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
 
-		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") $title = '';
+		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG")
+		{
+			$title = '';
+		}
 
-		if ($id) $id = 'id="'.$id.'"';
+		if ($id)
+		{
+			$id = 'id="' . $id . '"';
+		}
 
-		if ( in_array($name,$buttonsDropdown) )
+		if (in_array($name, $buttonsDropdown))
 		{
 			return <<<HTML
 				<a $id style="" href="{$link}" rel="nofollow" title="{$title}">
@@ -142,14 +168,25 @@ HTML;
 		}
 	}
 
-	public function getIcon($name, $title='')
+	/**
+	 * @param        $name
+	 * @param string $title
+	 *
+	 * @return string
+	 */
+	public function getIcon($name, $title = '')
 	{
-		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
+		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
 	}
 
-	public function getImage($image, $alt='')
+	/**
+	 * @param        $image
+	 * @param string $alt
+	 *
+	 * @return string
+	 */
+	public function getImage($image, $alt = '')
 	{
-		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
+		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
 	}
-
 }

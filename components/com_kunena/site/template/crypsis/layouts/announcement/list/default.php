@@ -16,7 +16,7 @@ $options = $this->getOptions();
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
 	  id="adminForm" name="adminForm">
 	<input type="hidden" name="boxchecked" value="0" />
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo JHtml::_('form.token'); ?>
 
 	<h2>
 		<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
@@ -44,7 +44,7 @@ $options = $this->getOptions();
 					<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
 				</th>
 
-				<?php if ($options): ?>
+				<?php if ($options) : ?>
 					<th class="span1 center">
 						<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
 					</th>
@@ -63,7 +63,7 @@ $options = $this->getOptions();
 					<?php echo JText::_('COM_KUNENA_ANN_ID'); ?>
 				</th>
 
-				<?php if ($options): ?>
+				<?php if ($options) : ?>
 					<th class="span1 center">
 						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
 					</th>
@@ -72,7 +72,7 @@ $options = $this->getOptions();
 			</tr>
 		</thead>
 
-		<?php if ( $this->pagination->pagesTotal > 1 ): ?>
+		<?php if ( $this->pagination->pagesTotal > 1 ) : ?>
 			<tfoot>
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">

@@ -37,7 +37,8 @@ $this->addScript('poll.js');
 		</td>
 		<td>
 			<?php
-			if(isset($option->votes) && $option->votes > 0) {
+			if (isset($option->votes) && $option->votes > 0)
+			{
 				echo $option->votes;
 			} else {
 				echo JText::_('COM_KUNENA_POLL_NO_VOTE');

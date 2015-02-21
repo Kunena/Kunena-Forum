@@ -79,7 +79,7 @@ foreach ($this->list as $i => $item)
 			$extra = ' target="_blank"';
 			break;
 		case 2:
-			// window.open
+			// Window.open
 			$extra = ' onclick="window.open(this.href,\'targetWindow\',\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes\');return false;"';
 			break;
 	}

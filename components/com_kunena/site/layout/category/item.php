@@ -65,31 +65,34 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 				->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'primary' => true));
 		}
 
-		// Is user allowed to mark forums as read?
-		$url = $category->getMarkReadUrl();
-
-		if ($url)
+		if ( $category->getTopics() > 0 )
 		{
-			$actions['markread'] = $this->subLayout('Widget/Button')
-				->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user'));
-		}
+			// Is user allowed to mark forums as read?
+			$url = $category->getMarkReadUrl();
 
-		// Is user allowed to subscribe category?
-		if ($category->isAuthorised('subscribe'))
-		{
-			$subscribed = $category->getSubscribed($this->me->userid);
-
-			if (!$subscribed)
+			if ($url)
 			{
-				$url = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-				$actions['subscribe'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user'));
+				$actions['markread'] = $this->subLayout('Widget/Button')
+					->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user'));
 			}
-			else
+
+			// Is user allowed to subscribe category?
+			if ($category->isAuthorised('subscribe'))
 			{
-				$url = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-				$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user'));
+				$subscribed = $category->getSubscribed($this->me->userid);
+
+				if (!$subscribed)
+				{
+					$url = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+					$actions['subscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user'));
+				}
+				else
+				{
+					$url = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user'));
+				}
 			}
 		}
 

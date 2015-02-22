@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -781,9 +781,12 @@ class KunenaViewTopic extends KunenaView {
 		$cachegroup = 'com_kunena.messages';
 
 		if ($this->config->reportmsg && $this->me->exists()) {
-			$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid='.intval($this->category->id).'&id='.intval($this->message->thread).'&mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
-		} else {
-			$this->reportMessageLink = null;
+			if (!$this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator()) {
+				$this->reportMessageLink = null;
+			}
+			else {
+				$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid='.intval($this->category->id).'&id='.intval($this->message->thread).'&mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
+			}
 		}
 
 		$contents = false; //$cache->get($cachekey, $cachegroup);
@@ -993,7 +996,7 @@ class KunenaViewTopic extends KunenaView {
 			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
 			$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
-			$title = JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject) . " ({$page}/{$pages})";
+			$title = JText::sprintf($this->topic->subject) . " ({$page}/{$pages})";
 			$this->setTitle($title);
 
 			// TODO: use real keywords, too

@@ -5,7 +5,7 @@
 
   @package		Kunena
   @subpackage	com_kunena
-  @copyright	Copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+  @copyright	Copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
   				portions (C) 2007 MjazTools. All rights reserved.
   @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
   @link			http://www.kunena.org
@@ -116,7 +116,9 @@
 			<fileset dir="${project_dir}/plugins/plg_quickicon_kunena"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
-			<fileset dir="${project_dir}/media/kunena"/>
+			<fileset dir="${project_dir}/media/kunena">
+				<exclude name="${project_dir}/media/kunena/external/**"/>
+			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena">
 			<fileset dir="${project_dir}/${kunena.admin}">

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -492,6 +492,15 @@ class KunenaViewUser extends KunenaView {
 		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field = JHtml::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline), 'kshowonline');
+		$this->settings[] = $item;
+
+		$item = new StdClass();
+		$item->name = 'cansubscribe';
+		$item->label = JText::_('COM_KUNENA_USER_CANSUBSCRIBE');
+		$options = array();
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$item->field = JHtml::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->canSubscribe), 'kcansubscribe');
 		$this->settings[] = $item;
 
 		$this->row(true);

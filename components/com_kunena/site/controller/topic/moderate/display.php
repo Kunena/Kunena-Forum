@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -97,6 +97,10 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 		if ($this->message)
 		{
+			$this->banHistory = KunenaUserBan::getUserHistory($this->message->userid);
+
+			$this->me = KunenaFactory::getUser();
+
 			// Get thread and reply count from current message:
 			$db = JFactory::getDbo();
 			$query = "SELECT COUNT(mm.id) AS replies FROM #__kunena_messages AS m
@@ -111,6 +115,8 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 				return;
 			}
 		}
+
+		$this->banInfo = KunenaUserBan::getInstanceByUserid(JFactory::getUser()->id, true);
 	}
 
 	/**

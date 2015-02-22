@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -144,7 +144,10 @@ class KunenaViewCategory extends KunenaView {
 		if (!isset($channels[$lastTopic->category_id])) $category = $lastTopic->getCategory();
 		$uri = $lastTopic->getUri($category, 'last');
 
-		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $length);
+		$lastpostsubjectlength = $this->ktemplate->params->get('lastPostSubjectLength', 20);
+
+		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, $lastpostsubjectlength);
+
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}

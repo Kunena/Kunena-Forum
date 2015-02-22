@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Widget
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -42,6 +42,13 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 
 		if (!$this->announcement || !$this->announcement->authorise('read'))
 		{
+			return false;
+		}
+
+		$view = $this->input->getWord('view', 'default');
+		$layout = $this->input->getWord('layout', 'default');
+
+		if ($view == 'topic' && $layout != 'default'  || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
 			return false;
 		}
 

@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @Copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+* @Copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -144,6 +144,8 @@
 }
 #Kunena .klist-moderators {
 	clear: right;
+	float: left;
+	padding-top: 10px;
 }
 #Kunena .klist-categories {
 	/* TODO: override left rule(?) */
@@ -637,11 +639,10 @@ label.kpoll-term-lbl {
 }
 
 /* PATHWAY */
-
 #Kunena .path-element-first {
 	/* TODO: create new rtl image and use it */
 	background: url("../images/pathway_start.gif") no-repeat right center;
-	padding: 1px 22px 1px 3px;
+	padding: 1px 34px 1px 3px;
 }
 #Kunena .kforum-pathway .path-element,
 #Kunena .kforum-pathway-bottom .path-element	{
@@ -649,6 +650,7 @@ label.kpoll-term-lbl {
 	background: url("../images/icons/arrow.png") no-repeat right center;
 	padding-left: 3px;
 	padding-right: 12px;
+	float: right;
 }
 #Kunena .kforum-pathway .path-element-last,
 #Kunena .kforum-pathway-bottom .path-element-last {
@@ -896,4 +898,8 @@ ul.autocompleter-choices {
 #Kunena .ktree {
 	/* TODO: create new rtl image and use it */
 	background: url("../images/treenodes-rtl.png") no-repeat right center;
+}
+
+#Kunena .kbuttonuser span.thankyou {
+	padding-right: 3px;
 }

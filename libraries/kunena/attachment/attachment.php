@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -214,7 +214,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{
 		// Generic thumbnails are special case.
-		if ($thumb && !$this->isImage())
+		if (!$this->isImage())
 		{
 			return JUri::root(true) .'/media/kunena/images/attach_generic.png';
 		}

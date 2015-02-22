@@ -14,6 +14,8 @@
 		<filename>config.xml</filename>
 		<filename>README.md</filename>
 		<filename>template.php</filename>
+		<folder>css</folder>
+		<folder>images</folder>
 		<folder>language</folder>
 		<folder>layouts</folder>
 		<folder>less</folder>

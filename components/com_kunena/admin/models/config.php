@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -404,6 +404,47 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$resizeoptions[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_RESIZE_BICUBIC'));
 		$lists ['avatarresizemethod'] = JHtml::_('select.genericlist', $resizeoptions, 'cfg_avatarresizemethod', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarresizemethod);
 		$lists ['avatarcrop'] = JHtml::_('select.genericlist', $yesno, 'cfg_avatarcrop', 'class="inputbox" size="1"', 'value', 'text', $this->config->avatarcrop);
+		$lists ['user_report'] = JHtml::_ ( 'select.genericlist', $yesno, 'cfg_user_report', 'class="inputbox" size="1"', 'value', 'text', $this->config->user_report );
+
+
+		$searchtime = array();
+		$searchtime[]	= JHtml::_('select.option',  1, JText::_('COM_KUNENA_CFG_SEARCH_DATE_YESTERDAY') );
+		$searchtime[]	= JHtml::_('select.option',  7, JText::_('COM_KUNENA_CFG_SEARCH_DATE_WEEK') );
+		$searchtime[]	= JHtml::_('select.option',  14,  JText::_('COM_KUNENA_CFG_SEARCH_DATE_2WEEKS') );
+		$searchtime[]	= JHtml::_('select.option',  30, JText::_('COM_KUNENA_CFG_SEARCH_DATE_MONTH') );
+		$searchtime[]	= JHtml::_('select.option',  90, JText::_('COM_KUNENA_CFG_SEARCH_DATE_3MONTHS') );
+		$searchtime[]	= JHtml::_('select.option',  180, JText::_('COM_KUNENA_CFG_SEARCH_DATE_6MONTHS') );
+		$searchtime[]	= JHtml::_('select.option',  365, JText::_('COM_KUNENA_CFG_SEARCH_DATE_YEAR') );
+		$searchtime[]	= JHtml::_('select.option',  'all', JText::_('COM_KUNENA_CFG_SEARCH_DATE_ANY') );
+		$lists ['searchtime'] = JHtml::_('select.genericlist', $searchtime, 'cfg_searchtime', 'class="inputbox" size="1"', 'value', 'text', $this->config->searchtime);
+
+		$lists ['teaser'] = JHtml::_('select.genericlist', $yesno, 'cfg_teaser', 'class="inputbox" size="1"', 'value', 'text', $this->config->teaser);
+
+		// List of eBay language code
+		$ebay_language = array();
+		$ebay_language[] = JHtml::_('select.option', '0', 'en-US');
+		$ebay_language[] = JHtml::_('select.option', '2', 'en-CA');
+		$ebay_language[] = JHtml::_('select.option', '3', 'en-GB');
+		$ebay_language[] = JHtml::_('select.option', '15', 'en-AU');
+		$ebay_language[] = JHtml::_('select.option', '16', 'de-AT');
+		$ebay_language[] = JHtml::_('select.option', '23', 'fr-BE');
+		$ebay_language[] = JHtml::_('select.option', '71', 'fr-FR');
+		$ebay_language[] = JHtml::_('select.option', '77', 'de-DE');
+		$ebay_language[] = JHtml::_('select.option', '101', 'it-IT');
+		$ebay_language[] = JHtml::_('select.option', '123', 'nl-BE');
+		$ebay_language[] = JHtml::_('select.option', '146', 'nl-NL');
+		$ebay_language[] = JHtml::_('select.option', '186', 'es-ES');
+		$ebay_language[] = JHtml::_('select.option', '193', 'ch-CH');
+		$ebay_language[] = JHtml::_('select.option', '201', 'hk-HK');
+		$ebay_language[] = JHtml::_('select.option', '203', 'in-IN');
+		$ebay_language[] = JHtml::_('select.option', '205', 'ie-IE');
+		$ebay_language[] = JHtml::_('select.option', '207', 'my-MY');
+		$ebay_language[] = JHtml::_('select.option', '210', 'fr-CA');
+		$ebay_language[] = JHtml::_('select.option', '211', 'ph-PH');
+		$ebay_language[] = JHtml::_('select.option', '212', 'pl-PL');
+		$ebay_language[] = JHtml::_('select.option', '216', 'sg-SG');
+
+		$lists['ebay_language'] = JHtml::_('select.genericlist', $ebay_language, 'cfg_ebay_language', 'class="inputbox" size="1"', 'value', 'text', $this->config->ebay_language);
 
 		return $lists;
 	}

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -76,8 +76,12 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		} elseif ($this->config->userlist_count_users == '3' ) {
 			$this->query->where('a.block=0');
 		}
+
 		// Hide super admins from the list
-		if ($ignore) $this->query->where('a.id NOT IN ('.implode(',', $ignore).')');
+		if ($this->config->superadmin_userlist && $ignore)
+		{
+			$this->query->where('a.id NOT IN (' . implode(',', $ignore) . ')');
+		}
 
 		return $this;
 	}

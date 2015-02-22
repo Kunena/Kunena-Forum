@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -167,7 +167,12 @@ class KunenaViewTopics extends KunenaView {
 			} else {
 				$id = $topic->last_post_id;
 				$page = 'last';
-				$description = $topic->last_post_message;
+				if (!$this->me->userid && $this->config->teaser && $id != $topic->first_post_id) {
+					$description = JText::_('COM_KUNENA_TEASER_TEXT');
+				}
+				else {
+					$description = $topic->last_post_message;
+				}
 				$date = new JDate($topic->last_post_time);
 				$userid = $topic->last_post_userid;
 				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
@@ -190,7 +195,12 @@ class KunenaViewTopics extends KunenaView {
 			$title = $message->subject;
 			$category = $topic->getCategory();
 			$url = $message->getUrl($category);
-			$description = $message->message;
+			if (!$this->me->userid && $this->config->teaser && $message->id != $topic->first_post_id) {
+				$description = JText::_('COM_KUNENA_TEASER_TEXT');
+			}
+			else {
+				$description = $message->message;
+			}
 			$date = new JDate($message->time);
 			$userid = $message->userid;
 			$username = KunenaFactory::getUser($userid)->getName($message->name);

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -111,8 +111,11 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	function getTemplatedetails() {
 		$template = $this->app->getUserState ( 'kunena.edit.template');
-		$details	= KunenaTemplateHelper::parseXmlFile($template);
-
+		$details = KunenaTemplateHelper::parseXmlFile($template);
+		if (empty($template)) {
+			$template = $this->getState('template');
+			$details = KunenaTemplateHelper::parseXmlFile($template);
+		}
 		return $details;
 	}
 

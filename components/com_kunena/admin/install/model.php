@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -56,7 +56,11 @@ class KunenaModelInstall extends JModelLegacy {
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
 
-		ignore_user_abort ( true );
+		if (function_exists('ignore_user_abort'))
+		{
+			ignore_user_abort(true);
+		}
+
 		$this->setState ( 'default_max_time', @ini_get ( 'max_execution_time' ) );
 		@set_time_limit ( 300 );
 		$this->setState ( 'max_time', @ini_get ( 'max_execution_time' ) );

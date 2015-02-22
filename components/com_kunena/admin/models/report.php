@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -193,7 +193,7 @@ class KunenaAdminModelReport extends KunenaModel {
 
 				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
 					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_address'
-					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id') {
+					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id'&& $key != 'ebay_api_key') {
 					$kconfigsettings .= '[tr][td]'.$key.'[/td][td]'.$value.'[/td][/tr]';
 				}
 		}
@@ -253,12 +253,22 @@ class KunenaAdminModelReport extends KunenaModel {
 	protected function _getJoomlaMenuDetails() {
 		$items = KunenaMenuFix::getAll();
 
-		$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
-		foreach($items as $item) {
-			$link = preg_replace('/^.*\?(option=com_kunena&)?/', '', $item->link);
-			$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->menutype.' [/td][td] '.$link.' [/td][td] '.$item->route.'[/td][/tr] ';
+		if ( !empty($items) )
+		{
+			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][td][u] In trash [/u][/td][/tr] ';
+			foreach($items as $item) {
+				$trashed = 'No';
+				if ( $item->published == '-2' ) $trashed = 'Yes';
+
+				$link = preg_replace('/^.*\?(option=com_kunena&)?/', '', $item->link);
+				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->menutype.' [/td][td] '.$link.' [/td][td] '.$item->route.'[/td][td] '.$trashed.'[/td][/tr] ';
+			}
+			$joomlamenudetails .='[/table]';
 		}
-		$joomlamenudetails .='[/table]';
+		else
+		{
+			$joomlamenudetails = "Menu items doesn't exists";
+		}
 
 		return $joomlamenudetails;
 

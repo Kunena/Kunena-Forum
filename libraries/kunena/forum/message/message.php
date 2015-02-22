@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -490,7 +490,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
 				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
-					($this->message, $this, $html);
+					($this->message, $this->parent, $html);
 		}
 		return '';
 	}

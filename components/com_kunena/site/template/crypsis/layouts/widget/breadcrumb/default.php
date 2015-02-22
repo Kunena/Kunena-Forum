@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -22,7 +22,7 @@ if ($item) : ?>
 	</li>
 
 	<?php foreach($pathway as $item) : ?>
-	<li class="divider">/</li>
+	<li class="divider"><i class="icon-chevron-right"></i></li>
 	<li>
 		<a href="<?php echo $item->link; ?>"><?php echo $item->name; ?></a>
 	</li>

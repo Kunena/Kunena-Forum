@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -34,7 +34,15 @@ defined ( '_JEXEC' ) or die ();
 						</span>
 						<span>
 							<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD'); ?>
-							<input type="password" name="password" class="inputbox ks" size="18" alt="password" /></span>
+							<input type="password" name="password" class="inputbox ks" size="18" alt="password" />
+						</span>						
+						<?php $login = KunenaLogin::getInstance(); ?>
+						<?php if ($login->getTwoFactorMethods() > 1) : ?>
+						<span>
+							<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
+							<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" size="18" />
+						</span>
+						<?php endif; ?>
 						<span>
 							<?php if($this->remember) : ?>
 							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME'); ?>

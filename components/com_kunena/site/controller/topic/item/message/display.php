@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -102,15 +102,16 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 			}
 		}
 
-		if ($this->config->reportmsg && $this->me->exists())
-		{
-			$this->reportMessageLink = JHTML::_('kunenaforum.link',
-				'index.php?option=com_kunena&view=topic&layout=report&catid='
-				. intval($this->category->id) . '&id=' . intval($this->message->thread)
-				. '&mesid=' . intval($this->message->id),
-				JText::_('COM_KUNENA_REPORT'),
-				JText::_('COM_KUNENA_REPORT')
-			);
+		if ($this->config->reportmsg && $this->me->exists()) {
+			if ($this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator()) {
+				$this->reportMessageLink = JHTML::_('kunenaforum.link',
+					'index.php?option=com_kunena&view=topic&layout=report&catid='
+					. intval($this->category->id) . '&id=' . intval($this->message->thread)
+					. '&mesid=' . intval($this->message->id),
+					JText::_('COM_KUNENA_REPORT'),
+					JText::_('COM_KUNENA_REPORT')
+				);
+			}
 		}
 
 		// Show admins the IP address of the user.

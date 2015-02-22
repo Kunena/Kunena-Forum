@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Pages.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -37,6 +37,7 @@ if ($content->message)
 		$content->message->getUri()
 	);
 }
+
 $this->addBreadcrumb(
 	JText::_('COM_KUNENA_NEW'),
 	null

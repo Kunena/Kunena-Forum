@@ -34,7 +34,8 @@ if (!empty($this->spacing)) : ?>
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
-			if ($topic->unread) {
+			if ($topic->unread)
+			{
 				echo $this->getTopicLink($topic, 'unread',
 					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}

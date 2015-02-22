@@ -26,7 +26,7 @@ $announcement = $this->announcement;
 		</div>
 	</td>
 
-	<?php if ($this->checkbox): ?>
+	<?php if ($this->checkbox) : ?>
 	<td class="center">
 		<?php if ($this->canPublish()) echo JHtml::_('kunenagrid.published', $row, $announcement->published, '', true); ?>
 	</td>

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package     Kunena.Framework
+ * @subpackage  Tables
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -15,6 +15,8 @@ require_once(__DIR__ . '/kunena.php');
 /**
  * Kunena Users Table
  * Provides access to the #__kunena_users table
+ *
+ * @since  K3.1
  */
 class TableKunenaUsers extends KunenaTable
 {
@@ -144,6 +146,7 @@ class TableKunenaUsers extends KunenaTable
 	 * @var int
 	 **/
 	public $showOnline = null;
+
 	/**
 	 * ICQ ID
 	 * @var string
@@ -253,9 +256,9 @@ class TableKunenaUsers extends KunenaTable
 	public $canSubscribe = null;
 
 	/**
-	* userListtime
-	* @var int
-	**/
+	 * userListtime
+	 * @var int
+	 **/
 	public $userListtime = null;
 
 	/**
@@ -279,6 +282,7 @@ class TableKunenaUsers extends KunenaTable
 	{
 		$this->_exists = false;
 		$k = $this->_tbl_key;
+
 		// Get the id to load.
 		if ($userid !== null) {
 			$this->$k = $userid;
@@ -288,7 +292,8 @@ class TableKunenaUsers extends KunenaTable
 		if ($reset) $this->reset();
 
 		// Check for a valid id to load.
-		if ($this->$k === null || intval($this->$k) < 1) {
+		if ($this->$k === null || intval($this->$k) < 1)
+		{
 			$this->$k = 0;
 
 			return false;
@@ -303,17 +308,22 @@ class TableKunenaUsers extends KunenaTable
 		$data = $this->_db->loadAssoc();
 
 		// Check for an error message.
-		if ($this->_db->getErrorNum()) {
+
+		if ($this->_db->getErrorNum())
+		{
 			$this->setError($this->_db->getErrorMsg());
 
 			return false;
 		}
+
 		// User does not exist (may exist in #__kunena_users, though)
-		if (!$data) {
+		if (!$data)
+		{
 			$this->$k = 0;
 
 			return false;
 		}
+
 		if ($data['posts'] !== null) $this->_exists = true;
 
 		// Bind the data to the table.
@@ -326,7 +336,9 @@ class TableKunenaUsers extends KunenaTable
 	{
 		parent::reset();
 		$fields = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
-		foreach ($fields as $field) {
+
+		foreach ($fields as $field)
+		{
 			$this->$field = null;
 		}
 	}
@@ -335,24 +347,29 @@ class TableKunenaUsers extends KunenaTable
 	{
 		parent::bind($data, $ignore);
 		$fields = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
-		foreach ($fields as $field) {
+
+		foreach ($fields as $field)
+		{
 			if (isset($data[$field]) && !in_array($field, $ignore)) $this->$field = $data[$field];
 		}
 	}
 
 	public function check()
 	{
-		if (!$this->userid || !JFactory::getUser($this->userid)) {
+		if (!$this->userid || !JFactory::getUser($this->userid))
+		{
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int)$this->userid));
 		}
 
-		if ($this->status < 0 || $this->status > 3) {
+		if ($this->status < 0 || $this->status > 3)
+		{
 			$this->setError ( JText::_('COM_KUNENA_UNKNOWN_STATUS'));
 		}
 
-		if (strlen($this->status) < 0 || strlen($this->status) > 255) {
+		if (strlen($this->status) < 0 || strlen($this->status) > 255)
+		{
 			$this->setError ( JText::_('COM_KUNENA_STATUS_TOOLONG'));
- 		}
+		}
 
 		return ($this->getError() == '');
 	}

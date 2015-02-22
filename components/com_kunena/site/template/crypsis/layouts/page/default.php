@@ -9,10 +9,15 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+$config = KunenaFactory::getTemplate()->params->get('displayMenu');
 ?>
 <div id="kunena" class="layout">
 	<?php
-	echo $this->subLayout('Widget/MenuBar');
+	if ($config)
+	{
+		echo $this->subLayout('Widget/MenuBar');
+	}
+
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
 	echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
 	echo $this->subRequest('Widget/Announcement');

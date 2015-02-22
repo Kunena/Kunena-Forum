@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 $user = $this->user;
 $avatar = $user->getAvatarImage('img-polaroid', 120, 120);
 $show = KunenaConfig::getInstance()->showuserstats;
+
 if ($show)
 {
 	$rankImage = $user->getRank(0, 'image');

@@ -16,6 +16,7 @@ $colspan = !empty($this->actions) ? 6 : 5;
 <h3>
 	<?php echo $this->escape($this->headerText); ?>
 	<span class="badge badge-info"><?php echo $this->pagination->total; ?></span>
+
 	<?php // To Do:: echo $this->topics->count->unread;<span class="badge badge-success"> </span>?>
 </h3>
 

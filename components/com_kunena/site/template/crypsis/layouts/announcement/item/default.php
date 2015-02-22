@@ -21,14 +21,15 @@ $actions = $this->getActions();
 			<?php echo $announcement->displayField('created', 'date_today'); ?>
 		</small>
 	<?php endif; ?>
-
 </h2>
+
 <?php if (!empty($actions)) : ?>
 	<div>
 		<?php echo implode(' ', $actions); ?>
 	</div>
 	</br>
 <?php endif; ?>
+
 <div class="well well-small">
 	<div><?php echo $announcement->displayField('sdescription'); ?></div>
 	<div><?php echo $announcement->displayField('description'); ?></div>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
@@ -23,7 +24,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<?php elseif ($this->me->status == 2) : ?>
 				<i class="icon-large icon-user red "></i>
 			<?php elseif ($this->me->status == 3) : ?>
-				<i class="icon-large icon-user purple"></i>
+				<i class="icon-large icon-user grey"></i>
 			<?php endif; ?>
 			<b class="caret"></b>
 		</a>
@@ -31,7 +32,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 		<div class="dropdown-menu" id="nav-menu">
 
 			<div class="center">
-				<a href="<?php  echo $this->me->getURL(); ?>">
+				<a href="<?php echo $this->me->getURL(); ?>">
 					<?php echo $this->me->getAvatarImage('img-polaroid', 128, 128); ?>
 				</a>
 				<p>
@@ -48,8 +49,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					<input id="status-online" class="hide" type="radio" value="0" name="status" />
 					<label for="status-online" class="btn btn-link">
 						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . JSession::getFormToken() . '=1'); ?>" class="btn btn-link">
-						<i class="icon-plus green"></i>
-						<?php echo JText::_('COM_KUNENA_ONLINE') ?>
+							<i class="icon-plus green"></i>
+							<?php echo JText::_('COM_KUNENA_ONLINE') ?>
 						</a>
 					</label>
 				</div>
@@ -58,8 +59,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					<input id="status-away" class="hide" type="radio" value="1" name="status" />
 					<label for="status-away" class="btn btn-link">
 						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . JSession::getFormToken() . '=1'); ?>" class="btn btn-link">
-						<i class="icon-plus yellow"></i>
-						<?php echo JText::_('COM_KUNENA_AWAY') ?>
+							<i class="icon-plus yellow"></i>
+							<?php echo JText::_('COM_KUNENA_AWAY') ?>
 						</a>
 					</label>
 				</div>
@@ -67,8 +68,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					<input id="status-busy" class="hide" type="radio" value="2" name="status" />
 					<label for="status-busy" class="btn btn-link">
 						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . JSession::getFormToken() . '=1');; ?>" class="btn btn-link">
-						<i class="icon-minus red"></i>
-						<?php echo JText::_('COM_KUNENA_BUSY') ?>
+							<i class="icon-minus red"></i>
+							<?php echo JText::_('COM_KUNENA_BUSY') ?>
 						</a>
 					</label>
 				</div>
@@ -76,8 +77,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 					<input id="status-invisible" class="hide" type="radio" value="3" name="status" />
 					<label for="status-invisible" class="btn btn-link">
 						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . JSession::getFormToken() . '=1'); ?>" class="btn btn-link">
-						<i class="icon-minus purple"></i>
-						<?php echo JText::_('COM_KUNENA_INVISIBLE') ?>
+							<i class="icon-minus grey"></i>
+							<?php echo JText::_('COM_KUNENA_INVISIBLE') ?>
 						</a>
 					</label>
 				</div>
@@ -160,8 +161,8 @@ from the parent forcing the dropsown to take over z-index calculation */
 	<?php echo JHtml::_('form.token'); ?>
 </form>
 <script type='text/javascript'>
-	jQuery(document).ready(function( $ ) {
-		$("input[name=status]").change(function(){
+	jQuery(document).ready(function ($) {
+		$("input[name=status]").change(function () {
 			$("#status-form").submit();
 		});
 	});

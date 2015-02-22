@@ -10,9 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-if (version_compare(JVERSION, '3.2', '>')) {
-	JHtml::_('behavior.tabstate');
-}
+JHtml::_('behavior.tabstate');
 
 $this->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '" . KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw") . "';
@@ -39,7 +37,7 @@ $this->addScript('js/topic.js');
 			<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a></li>
 			<?php if (isset($this->message)) : ?>
 				<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a></li>
-				<!--  <li><a href="#tab4" data-toggle="tab"><?php //echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li>-->
+				<!--  <li><a href="#tab4" data-toggle="tab"><?php // echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
 			<?php endif; ?>
 		</ul>
 

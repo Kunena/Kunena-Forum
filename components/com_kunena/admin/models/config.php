@@ -420,6 +420,32 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists ['teaser'] = JHtml::_('select.genericlist', $yesno, 'cfg_teaser', 'class="inputbox" size="1"', 'value', 'text', $this->config->teaser);
 
+		// List of eBay language code
+		$ebay_language = array();
+		$ebay_language[] = JHtml::_('select.option', '0', 'en-US');
+		$ebay_language[] = JHtml::_('select.option', '2', 'en-CA');
+		$ebay_language[] = JHtml::_('select.option', '3', 'en-GB');
+		$ebay_language[] = JHtml::_('select.option', '15', 'en-AU');
+		$ebay_language[] = JHtml::_('select.option', '16', 'de-AT');
+		$ebay_language[] = JHtml::_('select.option', '23', 'fr-BE');
+		$ebay_language[] = JHtml::_('select.option', '71', 'fr-FR');
+		$ebay_language[] = JHtml::_('select.option', '77', 'de-DE');
+		$ebay_language[] = JHtml::_('select.option', '101', 'it-IT');
+		$ebay_language[] = JHtml::_('select.option', '123', 'nl-BE');
+		$ebay_language[] = JHtml::_('select.option', '146', 'nl-NL');
+		$ebay_language[] = JHtml::_('select.option', '186', 'es-ES');
+		$ebay_language[] = JHtml::_('select.option', '193', 'ch-CH');
+		$ebay_language[] = JHtml::_('select.option', '201', 'hk-HK');
+		$ebay_language[] = JHtml::_('select.option', '203', 'in-IN');
+		$ebay_language[] = JHtml::_('select.option', '205', 'ie-IE');
+		$ebay_language[] = JHtml::_('select.option', '207', 'my-MY');
+		$ebay_language[] = JHtml::_('select.option', '210', 'fr-CA');
+		$ebay_language[] = JHtml::_('select.option', '211', 'ph-PH');
+		$ebay_language[] = JHtml::_('select.option', '212', 'pl-PL');
+		$ebay_language[] = JHtml::_('select.option', '216', 'sg-SG');
+
+		$lists['ebay_language'] = JHtml::_('select.genericlist', $ebay_language, 'cfg_ebay_language', 'class="inputbox" size="1"', 'value', 'text', $this->config->ebay_language);
+
 		return $lists;
 	}
 }

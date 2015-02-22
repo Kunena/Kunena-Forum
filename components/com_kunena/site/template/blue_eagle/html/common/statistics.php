@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="kblock kfrontstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kfrontstats-tbody"></a></span>
-		<h2><span><?php echo $this->getStatsLink($this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), ''); ?></span></h2>
+		<h2><span><?php echo $this->config->statslink_allowed ? $this->getStatsLink($this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), '') : $this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kfrontstats-tbody">
 		<div class="kbody">

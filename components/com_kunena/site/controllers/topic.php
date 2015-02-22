@@ -57,7 +57,7 @@ class KunenaControllerTopic extends KunenaController {
 			$object->folder = $attach->folder;
 			$object->caption = $attach->caption;
 			$object->type = $attach->filetype;
-			$object->path = $attach->getUrl(true);
+			$object->path = $attach->getUrl();
 			$list['files'][] = $object;
 		}
 
@@ -570,7 +570,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$poll_title = $fields['poll_title'];
-		if ($poll_title !== null) {
+		if ($poll_title !== null && $message->id == $topic->first_post_id) {
 			// Save changes into poll
 			$poll_options = $fields['poll_options'];
 			$poll = $topic->getPoll();
@@ -1001,7 +1001,6 @@ class KunenaControllerTopic extends KunenaController {
 			$subject = JRequest::getString ( 'subject', '' );
 			$shadow = JRequest::getBool ( 'shadow', false );
 			$topic_emoticon = JRequest::getInt ( 'topic_emoticon', null );
-			if (!is_null($topic_emoticon)) $topic->icon_id = $topic_emoticon;
 
 			if ($object instanceof KunenaForumMessage) {
 				$mode = JRequest::getWord ( 'mode', 'selected' );
@@ -1017,7 +1016,7 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$ids = false;
 			}
-			$targetobject = $topic->move ( $target, $ids, $shadow, $subject, $changesubject );
+			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon);
 			if (!$targetobject) {
 				$error = $topic->getError();
 			}

@@ -138,11 +138,12 @@ foreach ($this->sections as $section) :
 										<li>
 											<?php
 											// FIXME: Implement small category icons.
-											//echo $this->getCategoryIcon($subcategory, true);
+											// FIXME: echo $this->getCategoryIcon($subcategory, true);
 											echo $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
 												. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 												. ')</small>';
-											if (($new = $subcategory->getNewCount()) > 0) {
+											if (($new = $subcategory->getNewCount()) > 0)
+											{
 												echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
 											}
 											?>
@@ -164,7 +165,8 @@ foreach ($this->sections as $section) :
 									<?php
 									// get the Moderator list for display
 									$modslist = array();
-									foreach ($category->moderators as $moderator) {
+									foreach ($category->moderators as $moderator)
+									{
 										$modslist[] = KunenaFactory::getUser($moderator)->getLink();
 									}
 									echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);

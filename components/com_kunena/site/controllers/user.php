@@ -393,7 +393,6 @@ class KunenaControllerUser extends KunenaController {
 		$this->setRedirectBack();
 	}
 
-
 	// Internal functions:
 
 	protected function karma($karmaDelta) {

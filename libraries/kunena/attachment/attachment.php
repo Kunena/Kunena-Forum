@@ -214,7 +214,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{
 		// Generic thumbnails are special case.
-		if ($thumb && !$this->isImage())
+		if (!$this->isImage())
 		{
 			return JUri::root(true) .'/media/kunena/images/attach_generic.png';
 		}

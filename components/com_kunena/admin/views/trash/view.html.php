@@ -66,6 +66,8 @@ class KunenaAdminViewTrash extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('purge','delete.png','delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
 		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
 	}
 
 	protected function getSortFields() {

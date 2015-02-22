@@ -69,7 +69,7 @@ foreach ($this->messages as $id => $message)
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination)
-		->set('display', true);; ?>
+		->set('display', true); ?>
 </div>
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')

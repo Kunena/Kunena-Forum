@@ -346,7 +346,7 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		$status = JRequest::getInt('status', 0);
+		$status = $this->app->input->getInt('status', 0);
 		$me = KunenaUserHelper::getMyself();
 		$me->status = $status;
 
@@ -377,7 +377,7 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		$status_text = JRequest::getString('status_text', null, 'POST');
+		$status_text =  $this->app->input->getString('status_text', null, 'POST');
 		$me = KunenaUserHelper::getMyself();
 		$me->status_text = $status_text;
 

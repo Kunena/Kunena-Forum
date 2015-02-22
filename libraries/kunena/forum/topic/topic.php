@@ -251,15 +251,25 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	 * @return bool
 	 */
 	public function publish($value=KunenaForum::PUBLISHED) {
-		if ($value<0 || $value>3) $value = 0;
-		elseif ($value>3) $value = 3;
-		$this->hold = (int)$value;
+		if ($value < 0 || $value > 3)
+		{
+			$value = 0;
+		}
+
+		$this->hold = (int) $value;
 		$query = new KunenaDatabaseQuery();
-		$query->update('#__kunena_messages')->set("hold={$this->hold}")->where("thread={$this->id}")->where("hold={$this->_hold}");
-		$this->_db->setQuery ( $query );
-		$this->_db->query ();
-		if (KunenaError::checkDatabaseError()) return false;
-		return $this->recount();
+		$query->update('#__kunena_messages')->set("hold={$this->hold}")
+			->where("thread={$this->id}")->where("hold={$this->_hold}");
+
+		$this->_db->setQuery($query);
+		$this->_db->execute();
+
+		if (KunenaError::checkDatabaseError())
+		{
+			return false;
+		}
+
+		return $this->_db->getAffectedRows() ? $this->recount() : $this->save();
 	}
 
 	/**

@@ -1134,6 +1134,18 @@ class KunenaConfig extends JObject {
 	 */
 	public $ebay_api_key = '';
 
+	/**
+	 * @var    string  Define twitter API consumer key; select, boolean
+	 * @since  3.1.0
+	 */
+	public $twitter_consumer_key = '';
+
+	/**
+	 * @var    string  Define twitter API consumer secret; select, boolean
+	 * @since  3.1.0
+	 */
+	public $twitter_consumer_secret = '';
+
 	public function __construct() {
 		parent::__construct ();
 	}

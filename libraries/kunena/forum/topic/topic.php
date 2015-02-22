@@ -1194,8 +1194,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 					GROUP BY m.thread";
 			$this->_db->setQuery($query);
 			$result = $this->_db->loadAssoc ();
-			if (KunenaError::checkDatabaseError ())
+			if (KunenaError::checkDatabaseError ()) {
 				return false;
+			}
 			if (!$result) {
 				$this->posts = 0;
 				// Double check if all posts have been removed from the database
@@ -1205,14 +1206,15 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 						GROUP BY m.thread";
 				$this->_db->setQuery($query);
 				$result = $this->_db->loadAssoc ();
-				if (KunenaError::checkDatabaseError ())
+				if (KunenaError::checkDatabaseError ()) {
 					return false;
-				if ($result) {
-					// Information in the database was wrong, recount topic
-					$this->hold = $result['hold'];
-					$this->recount();
 				}
 				return true;
+			}
+			if ($result) {
+				// Information in the database was wrong, recount topic
+				$this->hold = $result['hold'];
+				$this->recount();
 			}
 			$this->bind($result);
 		}
@@ -1225,19 +1227,24 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	 * @return bool
 	 */
 	public function resetvotes($mesid) {
-		if( !isset($mesid) ) return false;
+		if(!isset($mesid)) {
+			return false;
+		}
 
 		$query ="UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($mesid)}";
 			$this->_db->setQuery($query);
 			$this->_db->Query();
-		if (KunenaError::checkDatabaseError ())
-		return false;
+
+		if (KunenaError::checkDatabaseError ()) {
+			return false;
+		}
 
 		$query ="DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($mesid)}";
 			$this->_db->setQuery($query);
 			$this->_db->Query();
-		if (KunenaError::checkDatabaseError ())
-		return false;
+		if (KunenaError::checkDatabaseError ()) {
+			return false;
+		}
 
 		return true;
 	}

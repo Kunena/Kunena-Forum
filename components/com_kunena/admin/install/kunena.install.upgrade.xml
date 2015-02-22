@@ -408,7 +408,6 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `caption` VARCHAR( 255 ) NOT NULL DEFAULT '';</query>
 			<query mode="silenterror">UPDATE `#__kunena_attachments` SET `filename_real`=`filename` WHERE `filename_real`='';</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD INDEX `filename_real` (`filename_real`);</query>
-
 		</version>
         <version version="3.0.94" versiondate="2013-11-20" versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_user_categories` ADD `allreadtime_new` INT NOT NULL DEFAULT '0' AFTER `allreadtime`;</query>
@@ -420,7 +419,10 @@
 		<version version="3.0.96" versiondate="2015-02-15" versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `canSubscribe` tinyint(1) NOT NULL DEFAULT '1' AFTER `showOnline`;</query>
 		</version>
-        <version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+		<version version="3.0.97" versiondate="2015-02-15" versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `userListtime` int(11) NOT NULL DEFAULT '-2' AFTER `canSubscribe`;</query>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

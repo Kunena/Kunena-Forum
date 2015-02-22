@@ -98,10 +98,12 @@ class KunenaModelTopics extends KunenaModel {
 				$this->setState ( 'list.time', (int) $value );
 			}
 			if ($this->me->exists() && $this->me->userListtime == -2) {
-				$this->setState ( 'list.time', $this->config->show_list_time );
+				$value = $this->getInt ('sel', $this->config->show_list_time);
+				$this->setState ('list.time', $value);
 			}
 			if ($this->me->exists() && $this->me->userListtime != -2) {
-				$this->setState ( 'list.time', $this->me->userListtime );
+				$value = $this->getInt ('sel', $this->me->userListtime);
+				$this->setState ('list.time', $value);
 			}
 		} else {
 			// Selection time.

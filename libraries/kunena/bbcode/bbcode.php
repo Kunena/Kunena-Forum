@@ -2059,12 +2059,24 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . JText::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
 		}
 
-		$cache = JFactory::getCache('Kunena_tweet_quote');
-		$cache->setCaching(true);
-		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
-		$tweet_quote = $cache->get( array( $this, 'getTweet' ), array( $tweetid ) );
+		$tweet = $this->getTweet($tweetid);
 
-		return '<div>'.$tweet_quote.'</div>';
+		$layout = KunenaLayout::factory('BBCode/twitter');
+
+		if ($layout->getPath())
+		{
+			return (string) $layout
+				->set('tweetid', $tweet->id_str)
+				->set('user_profile_url_normal', $tweet->user->profile_image_url)
+				->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+				->set('user_name', $tweet->user->name)
+				->set('user_screen_name', $tweet->user->screen_name)
+				->set('tweet_created_at', $tweet->created_at)
+				->set('tweet_text', $tweet->text)
+				->set('retweet_count', $tweet->retweet_count)
+				->set('favorite_count', $tweet->favorite_count)
+				->setLayout('default');
+		}
 	}
 
 	/**
@@ -2077,9 +2089,17 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	protected function getTweet($tweetid)
 	{
 		// FIXME: use AJAX instead...
-		$config = KunenaFactory::getConfig ();
-		$consumer_key = $config->twitter_consumer_key;
-		$consumer_secret = $config->twitter_consumer_secret;
+		$config = KunenaFactory::getConfig();
+		$uri = JURI::getInstance();
+		$consumer_key = trim($config->twitter_consumer_key);
+		$consumer_secret = trim($config->twitter_consumer_secret);
+
+		$tweet_data = file_get_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json');
+
+		if ($tweet_data !== false)
+		{
+			return json_decode($tweet_data);
+		}
 
 		if (!empty($consumer_key) && !empty($consumer_secret) && empty($this->token))
 		{
@@ -2108,7 +2128,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 			else
 			{
-				echo 'Could not retrieve bearer token (consumer)';
+				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
 			}
 		}
 		else
@@ -2137,12 +2157,48 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			if ($response->code == 200)
 			{
 				$tweet_data = json_decode($response->body);
+
+				if ($uri->isSSL())
+				{
+					$tweet_data->user->user->profile_image_url = $tweet_data->user->profile_image_url_https;
+				}
+
+				$tweet_data->user->profile_image_url_big = str_replace('normal', 'bigger', $tweet_data->user->profile_image_url);
+
+				foreach ($tweet_data->entities->urls as $url)
+				{
+					if (isset($url->display_url))
+					{
+						$d_url = $url->display_url;
+					}
+					else
+					{
+						$d_url = $url->url;
+					}
+
+					// We need to check to verify that the URL has the protocol, just in case
+					if (strpos($url->url, 'http') !== 0)
+					{
+						// Prepend http since there's no protocol
+						$link = 'http://' . $url->url;
+					}
+					else
+					{
+						$link = $url->url;
+					}
+
+					$tweet_data->text = str_replace($url->url, '<a href="' . $link . '" target="_blank" rel="nofollow">' . $d_url . '</a>', $tweet_data->text);
+				}
+
+				file_put_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
 			}
 			else
 			{
-				echo 'The tweet ID given is invalid';
+				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
 			}
 		}
+
+		return $tweet_data;
 	}
 
 	/**

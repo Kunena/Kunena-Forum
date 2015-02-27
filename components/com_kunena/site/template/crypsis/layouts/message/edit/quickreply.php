@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 
 /** @var KunenaForumMessage  $message  Message to reply to. */
 $message = $this->message;
+
 if (!$message->isAuthorised('reply'))
 {
 	return;
@@ -75,7 +76,7 @@ $this->addScript('js/edit.js');
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<input type="checkbox" name="subscribeMe" value="1"
-				<?php echo ($config->subscriptionschecked == 1) ? 'checked="checked"' : ''; ?> />
+				<?php echo ($config->subscriptionschecked == 1 && $me->canSubscribe || $config->subscriptionschecked == 0 && $me->canSubscribe) ? 'checked="checked"' : ''; ?> />
 			<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 			<br />
 			<?php endif; ?>

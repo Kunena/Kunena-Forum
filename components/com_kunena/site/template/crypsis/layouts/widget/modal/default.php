@@ -10,12 +10,12 @@
  **/
 defined('_JEXEC') or die;
 
-$state = isset($this->state) ? ' '.$this->state : ' hide';
-$transition = isset($this->transition) ? ' '.$this->transition : ' fade';
+$state = isset($this->state) ? ' ' . $this->state : ' hide';
+$transition = isset($this->transition) ? ' ' . $this->transition : ' fade';
 
-$id = ' id="'.$this->id.'"';
-$class = ' class="modal' .$state . $transition . $this->class.'"';
-$name = ' name="'.$this->name.'"';
+$id = ' id="' . $this->id . '"';
+$class = 'class="modal' . $state . $transition . '"';
+$name = ' name="' . $this->name . '"';
 $label  = $this->label;
 $description  = $this->description;
 $data = $this->data;

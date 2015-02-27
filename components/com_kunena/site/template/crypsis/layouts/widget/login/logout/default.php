@@ -153,9 +153,10 @@ from the parent forcing the dropsown to take over z-index calculation */
 	<?php echo $this->subLayout('Widget/Modal')
 		->set('id', 'statusTextModal')
 		->set('name', 'status_text')
-		->set('label', JText::_('Set Status Message'))
-		->set('description', JText::_('Type your message below'))
-		->set('data', $this->me->status_text); ?>
+		->set('label', JText::_('COM_KUNENA_STATUS_MESSAGE'))
+		->set('description', JText::_('COM_KUNENA_STATUS_TYP'))
+		->set('data', $this->me->status_text)
+		->set('form', 'statusText-form'); ?>
 	<input type="hidden" name="view" value="user" />
 	<input type="hidden" name="task" value="statustext" />
 	<?php echo JHtml::_('form.token'); ?>

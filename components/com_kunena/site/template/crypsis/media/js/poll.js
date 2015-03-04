@@ -9,17 +9,30 @@
 
 jQuery(document).ready(function() {
 	/**
+	 * Get the number of field options inserted in form
+	 */	
+	function getOptionsNumber()
+	{
+		var myoptions = jQuery('#kbbcode-poll-options').children('div.polloption');
+		
+		return myoptions.length;
+	}
+
+	/**
 	 * This function will insert directly in DOM the new field for poll with attibutes
 	 */
-	function create_new_field_now(optionid, options) {
+	function createNewOptionField() {
+		var	options = getOptionsNumber();
+		options++;
+
 		var polldiv = jQuery('<div></div>').attr('class','polloption').appendTo('#kbbcode-poll-options');
 
-		var label = jQuery('<label>').text(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+' '+optionid+' ');
+		var label = jQuery('<label>').text(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+' '+options+' ');
 		polldiv.append(label);
 
 		newInput = document.createElement('input');
-		newInput.setAttribute('name', 'polloptionsID[new'+optionid+']');
-		newInput.setAttribute('id', 'field_option'+optionid);
+		newInput.setAttribute('name', 'polloptionsID[new'+options+']');
+		newInput.setAttribute('id', 'field_option'+options);
 		newInput.setAttribute('class', 'inputbox');
 		newInput.setAttribute('maxlength', '25');
 		newInput.setAttribute('type', 'text');
@@ -30,16 +43,16 @@ jQuery(document).ready(function() {
 	if( jQuery('#kbutton-poll-add') != undefined ) {
 		jQuery('#kbutton-poll-add').click(function() {
 			var nboptionsmax = jQuery('#nb_options_allowed').val();
-			var koptions = jQuery('#kbbcode-poll-options').children('div.polloption');
+			var koptions = getOptionsNumber();
 
-			if(!nboptionsmax || (koptions.length < nboptionsmax && koptions.length > 1 ) ){
-				create_new_field_now(koptions.length+1,nboptionsmax);
-			} else if ( !nboptionsmax || koptions.length < 1 ) {
-				create_new_field_now(koptions.length+1,nboptionsmax);
-				create_new_field_now(koptions.length+2,nboptionsmax);
+			if(!nboptionsmax || (koptions < nboptionsmax && koptions >= 2) ){
+				createNewOptionField();
+			} else if (!nboptionsmax || koptions < 2) {
+				createNewOptionField();
+				createNewOptionField();
 			} else {
 				// Set error message with alert bootstrap way
-				jQuery('#kpoll-alert-error').removeAttr('style');
+				jQuery('#kpoll-alert-error').show();
 			}
 		});
 	}
@@ -47,9 +60,10 @@ jQuery(document).ready(function() {
 		jQuery('#kbutton-poll-rem').click(function() {
 			var koption = jQuery ('div.polloption:last');
 			if(koption) {
-				var isvisible = jQuery('#kpoll-alert-error').attr('style');
-				if( isvisible == undefined ){
-					jQuery('#kpoll-alert-error').attr('style','display:none;');
+				var isvisible = jQuery('#kpoll-alert-error').is(":visible");
+
+				if (isvisible){
+					jQuery('#kpoll-alert-error').hide();
 				}
 				koption.remove();
 			}
@@ -60,9 +74,9 @@ jQuery(document).ready(function() {
 		jQuery('#postcatid').change(function() {
 			var catid = jQuery('select#postcatid option').filter(':selected').val();
 			if ( pollcategoriesid[catid] !== undefined ) {
-				jQuery('#kbbcode-poll-button').removeAttr('style');
+				jQuery('#kbbcode-poll-button').show();
 			} else {
-				jQuery('#kbbcode-poll-button').attr('style','display:none;');
+				jQuery('#kbbcode-poll-button').hide();
 			}
 		});
 	}

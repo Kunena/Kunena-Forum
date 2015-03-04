@@ -465,4 +465,3 @@ CREATE TABLE IF NOT EXISTS `#__kunena_version` (
 	`versionname` varchar(40) NULL,
 	`state` text NOT NULL,
 	PRIMARY KEY (id) ) DEFAULT CHARACTER SET utf8;
->>>>>>> upstream/develop

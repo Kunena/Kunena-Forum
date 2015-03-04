@@ -151,7 +151,7 @@ class KunenaControllerUser extends KunenaController {
 		if ($return) return $return;
 	}
 
-	function ban() {
+	public function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JSession::checkToken('post')) {
 			$this->setRedirect($user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -277,12 +277,12 @@ class KunenaControllerUser extends KunenaController {
 		$this->setRedirect($user->getUrl(false));
 	}
 
-	function cancel() {
+	public function cancel() {
 		$user = KunenaFactory::getUser();
 		$this->setRedirect($user->getUrl(false));
 	}
 
-	function login() {
+	public function login() {
 		if(!JFactory::getUser()->guest || !JSession::checkToken('post')) {
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -309,7 +309,7 @@ class KunenaControllerUser extends KunenaController {
 		$this->setRedirectBack();
 	}
 
-	function logout() {
+	public function logout() {
 		if(!JSession::checkToken('request')) {
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -326,6 +326,68 @@ class KunenaControllerUser extends KunenaController {
 			// Redirect the user.
 			$this->setRedirect(JRoute::_($return, false));
 			return;
+		}
+
+		$this->setRedirectBack();
+	}
+
+	/**
+	 * Save online status for user
+	 *
+	 * @return void
+	 */
+	public function status()
+	{
+		if (!JSession::checkToken('request'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$status = $this->app->input->getInt('status', 0);
+		$me = KunenaUserHelper::getMyself();
+		$me->status = $status;
+
+		if (!$me->save())
+		{
+			$this->app->enqueueMessage($me->getError(), 'error');
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('Successfully Saved Status'));
+		}
+
+		$this->setRedirectBack();
+	}
+
+	/**
+	 * Set online status text for user
+	 *
+	 * @return void
+	 */
+	public function statusText()
+	{
+		if (!JSession::checkToken('request'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$status_text =  $this->app->input->getString('status_text', null, 'POST');
+		$me = KunenaUserHelper::getMyself();
+		$me->status_text = $status_text;
+
+		if (!$me->save())
+		{
+			$this->app->enqueueMessage($me->getError(), 'error');
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STATUS_SAVED'));
 		}
 
 		$this->setRedirectBack();
@@ -569,11 +631,10 @@ class KunenaControllerUser extends KunenaController {
 	protected function saveSettings() {
 		if (JRequest::getVar('hidemail', null) === null) return;
 
-		$this->me->ordering = $this->app->input->getInt('messageordering', '');
-		$this->me->hideEmail = $this->app->input->getInt('hidemail', '');
-		$this->me->showOnline = $this->app->input->getInt('showonline', '');
-		$this->me->canSubscribe = $this->app->input->getInt('cansubscribe', '');
-		$this->me->userListtime = $this->app->input->getInt('userlisttime', '');
+		$this->me->ordering = JRequest::getInt('messageordering', '');
+		$this->me->hideEmail = JRequest::getInt('hidemail', '');
+		$this->me->showOnline = JRequest::getInt('showonline', '');
+		$this->me->canSubscribe = JRequest::getInt('cansubscribe', '');
 	}
 
 	// Reports a user to stopforumspam.com

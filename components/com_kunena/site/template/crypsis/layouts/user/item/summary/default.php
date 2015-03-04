@@ -38,8 +38,9 @@ if ($this->config->showuserstats)
 			<?php if ($avatar) : ?>
 				<div class="span2">
 					<div class="center"> <?php echo $avatar; ?> </div>
-					<div class="center"> </br>
-						<sup class="label label-<?php echo $this->profile->isOnline('success', 'important') ?>"> <?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?> </sup></div>
+					<div class="center">
+						<strong><?php echo $this->subLayout('User/Item/Status')->set('user', $profile); ?></strong>
+					</div>
 				</div>
 			<?php endif; ?>
 			<br />

@@ -8,31 +8,31 @@
 **/
 
 .red {
-	color: rgba(232, 15, 34, 1);
+	color: rgba(232, 15, 34, 1) !important;
 }
 
 .orange {
-	color: rgba(235, 99, 1, 1);
+	color: rgba(235, 99, 1, 1) !important;
 }
 
 .yellow {
-	color: rgba(252, 209, 21, 1);
+	color: rgba(252, 209, 21, 1) !important;
 }
 
 .green {
-	color: rgba(128, 186, 1, 1);
+	color: rgba(128, 186, 1, 1) !important;
 }
 
 .lightblue {
-	color: rgba(185, 232, 250, 1);
+	color: rgba(185, 232, 250, 1) !important;
 }
 
 .blue {
-	color: rgba(0, 114, 198, 1);
+	color: rgba(0, 114, 198, 1) !important;
 }
 
-.purple {
-	color: rgba(163, 40, 125, 1);
+.grey {
+	color: rgba(204, 204, 204, 1) !important;
 }
 
 .filter {
@@ -154,7 +154,7 @@ h2 {
 .kfile-input {
 	font-size: 23px;
 	position: absolute;
-	right: 0px;
+	right: 0;
 	top: -10px;
 	opacity: 0;
 	filter: alpha(opacity=0);
@@ -204,11 +204,11 @@ img {
 }
 
 .form-search {
-	margin: 0px;
+	margin: 0;
 }
 
 .progress {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .kpoll {
@@ -244,12 +244,11 @@ img {
 }
 
 hr {
-	margin: 0px;
+	margin: 0;
 }
 
 .active.btn-success {
-	background-color: transparent;
-	background-image: none;
+  background : transparent none;
 }
 
 form > table > thead > tr > td > ul {
@@ -258,7 +257,7 @@ form > table > thead > tr > td > ul {
 
 .table th {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-	border-top: 0px;
+	border-top: 0;
 }
 
 .table thead tr td,
@@ -276,7 +275,7 @@ form > table > thead > tr > td > ul {
 .kfrontend .table td h4,
 .kfrontend .table td h5,
 .kfrontend .table td h6 {
-	margin: 0px !important;
+	margin: 0 !important;
 	line-height: 20px;
 }
 
@@ -369,7 +368,7 @@ a:focus,
 .horizontal-message-top:after {
 	content: attr(data-badger);
 	position: absolute;
-	top: 0px;
+	top: 0;
 	font-weight: bold;
 	padding: 8px 12px;
 	margin-top: -10px;
@@ -443,7 +442,7 @@ div.kmsgtext-confidential {
 
 #kwho > div > p,
 #kstats > div > p {
-	margin: 0px;
+	margin: 0;
 }
 
 .msgfooter {
@@ -478,7 +477,7 @@ form {
 
 .kmsg {
 	height: 100%;
-	margin: 20px 0px;
+	margin: 20px 0;
 	word-wrap: break-word;
 }
 
@@ -585,22 +584,22 @@ select#mode {
 	ul.thumbnails {
 		word-break: break-all;
 		li.span12 + li {
-			margin-left: 0px;
+			margin-left: 0;
 		}
 		li.span6:nth-child(2n + 3) {
-			margin-left: 0px;
+			margin-left: 0;
 		}
 		li.span4:nth-child(3n + 4) {
-			margin-left: 0px;
+			margin-left: 0;
 		}
 		li.span3:nth-child(4n + 5) {
-			margin-left: 0px;
+			margin-left: 0;
 		}
 		li.span2:nth-child(6n + 7) {
-			margin-left: 0px;
+			margin-left: 0;
 		}
 		li.span1:nth-child(12n + 13) {
-			margin-left: 0px;
+			margin-left: 0;
 		}
 	}
 }
@@ -649,6 +648,7 @@ table .well {
 
 .nav .dropdown-menu a {
 	display: inline-block;
+	text-decoration:none;
 	.btn-link {
 		margin-left: -120px;
 	}
@@ -698,7 +698,7 @@ table .well {
 }
 
 .collapse .table {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 h2 .pull-right select {
@@ -781,11 +781,11 @@ div.kmsg > li {
 	background-color: #FFFFCC;
 }
 
-.navbar-nav {
+#logout-form {
 	float: left;
-	padding-top: 10px;
 	.btn-link {
 		color: inherit;
+		text-decoration:none;
 	}
 }
 
@@ -834,6 +834,27 @@ small.text-muted {
 #userdropdown {
 	padding-top: 20px;
 }
+
 .last-avatar {
 	padding-left: 10px;
+}
+
+#status-form label.btn a.btn {
+  padding : 0 0 0 5px;
+}
+
+.navbar .btn, .navbar .btn-group {
+	margin-top:0;
+}
+
+#nav-menu {
+	width: 190px;
+}
+
+#nav-menu a {
+	padding: 5px 10px 5px 15px;
+}
+
+#nav-menu img {
+	margin-left: -5px;
 }

@@ -629,12 +629,13 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	protected function saveSettings() {
-		if (JRequest::getVar('hidemail', null) === null) return;
+		if ($this->app->input->get('hidemail', null) === null) return;
 
-		$this->me->ordering = JRequest::getInt('messageordering', '');
-		$this->me->hideEmail = JRequest::getInt('hidemail', '');
-		$this->me->showOnline = JRequest::getInt('showonline', '');
-		$this->me->canSubscribe = JRequest::getInt('cansubscribe', '');
+		$this->me->ordering = $this->app->input->getInt('messageordering', '');
+		$this->me->hideEmail = $this->app->input->getInt('hidemail', '');
+		$this->me->showOnline = $this->app->input->getInt('showonline', '');
+		$this->me->canSubscribe = $this->app->input->getInt('cansubscribe', '');
+		$this->me->userListtime = $this->app->input->getInt('userlisttime', '');
 	}
 
 	// Reports a user to stopforumspam.com

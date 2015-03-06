@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -80,7 +80,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	function install() {
 		$tmp = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
-		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
+		$file = JRequest::getVar('install_package', null, 'files', 'array'); // File upload
 
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -88,14 +88,20 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			return;
 		}
 
-		if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
-			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
+		if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) {
+			$this->app->enqueueMessage(
+				JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $this->escape($file['name'])),
+				'notice'
+			);
 		}
 		else {
 			$success = KunenaFile::upload($file ['tmp_name'], $tmp . $file ['name']);
 			if ($success) $success = JArchive::extract ( $tmp . $file ['name'], $tmp );
 			if (! $success) {
-				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
+				$this->app->enqueueMessage(
+					JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
+					'notice'
+				);
 			}
 			// Delete the tmp install directory
 			if (is_dir($tmp)) {

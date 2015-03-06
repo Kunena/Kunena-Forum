@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Announcement
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -37,7 +37,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-short">
-				<?php echo $this->displayInput('sdescription', 'class="input-xxlarge" required placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
+				<?php echo $this->displayInput('sdescription', 'rows="9" class="input-xxlarge" required placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
 			</div>
 		</div>
 
@@ -46,7 +46,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-long">
-				<?php echo $this->displayInput('description', 'rows="9" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
+				<?php echo $this->displayInput('description', 'rows="12" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
 			</div>
 		</div>
 
@@ -78,7 +78,7 @@ defined('_JEXEC') or die;
 		</div>
 
 		<div class="control-group">
-			<div class="controls" id="ann-publish">
+			<div class="controls center" id="ann-publish">
 				<input name="submit" class="btn btn-primary" type="submit"
 				       value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
 				<input onclick="window.history.back();" name="cancel" class="btn" type="button"

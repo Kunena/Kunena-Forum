@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Announcement
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -17,19 +17,20 @@ $actions = $this->getActions();
 	<?php echo $announcement->displayField('title'); ?>
 
 	<?php if ($this->announcement->showdate) : ?>
-	<small title="<?php echo $announcement->displayField('created', 'ago'); ?>">
-		<?php echo $announcement->displayField('created', 'date_today'); ?>
-	</small>
+		<small title="<?php echo $announcement->displayField('created', 'ago'); ?>">
+			<?php echo $announcement->displayField('created', 'date_today'); ?>
+		</small>
 	<?php endif; ?>
-
 </h2>
-<div class="well well-small">
 
-	<?php if (!empty($actions)) : ?>
+<?php if (!empty($actions)) : ?>
 	<div>
 		<?php echo implode(' ', $actions); ?>
 	</div>
-	<?php endif; ?>
+	</br>
+<?php endif; ?>
 
+<div class="well well-small">
+	<div><?php echo $announcement->displayField('sdescription'); ?></div>
 	<div><?php echo $announcement->displayField('description'); ?></div>
 </div>

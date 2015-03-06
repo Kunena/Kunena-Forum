@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -49,7 +49,11 @@ class KunenaAdminControllerTools extends KunenaController {
 			return;
 		}
 
-		$categories = KunenaForumCategoryHelper::getCategories(JRequest::getVar ( 'prune_forum', array(0) ), false, 'admin');
+		$ids = JRequest::getVar('prune_forum', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($ids);
+
+		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
+
 		if (!$categories) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CHOOSEFORUMTOPRUNE' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

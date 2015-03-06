@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -56,7 +56,11 @@ class KunenaModelInstall extends JModelLegacy {
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
 
-		ignore_user_abort ( true );
+		if (function_exists('ignore_user_abort'))
+		{
+			ignore_user_abort(true);
+		}
+
 		$this->setState ( 'default_max_time', @ini_get ( 'max_execution_time' ) );
 		@set_time_limit ( 300 );
 		$this->setState ( 'max_time', @ini_get ( 'max_execution_time' ) );
@@ -1422,8 +1426,11 @@ class KunenaModelInstall extends JModelLegacy {
 			return null; // Nothing to migrate
 
 		// Make identical copy from the table with new name
-		$create = array_pop($this->db->getTableCreate($this->db->getPrefix () . $oldtable));
+		$create = $this->db->getTableCreate($this->db->getPrefix () . $oldtable);
+		$create = implode(' ', $create);
+
 		$collation = $this->db->getCollation ();
+
 		if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
 		if (!$create) return null;
 		$create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);
@@ -1450,13 +1457,14 @@ class KunenaModelInstall extends JModelLegacy {
 
 	// TODO: move to migration
 	function selectWithStripslashes($table) {
-		$fields = array_pop($this->db->getTableColumns($table));
+		$fields = $this->db->getTableColumns($table);
 		$select = array();
 		foreach ($fields as $field=>$type) {
 			$isString = preg_match('/text|char/', $type);
 			$select[] = ($isString ? "REPLACE(REPLACE(REPLACE({$this->db->quoteName($field)}, {$this->db->Quote('\\\\')}, {$this->db->Quote('\\')}),{$this->db->Quote('\\\'')} ,{$this->db->Quote('\'')}),{$this->db->Quote('\"')} ,{$this->db->Quote('"')}) AS " : '') . $this->db->quoteName($field);
 		}
 		$select = implode(', ', $select);
+
 		return "SELECT {$select} FROM {$table}";
 	}
 

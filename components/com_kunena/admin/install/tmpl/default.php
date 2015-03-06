@@ -4,12 +4,11 @@
  * @package Kunena.Installer
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-JHtml::_('behavior.framework', true);
 ?>
 <div id="kunena" style="max-width:530px">
 	<div id="kunena-install">
@@ -35,72 +34,73 @@ JHtml::_('behavior.framework', true);
 </div>
 <script>
 window.kunenaAddItems = function(log) {
-	document.id('kunena-details').set('html', log);
+	jQuery('#kunena-details').html(log);
 };
 window.kunenainstall = function() {
-	var kunenaInstall = document.id('kunena-install');
-	var kunenaProgress = document.id('kunena-progress');
-	var kunenaDescription = document.id('kunena-description');
-	var kunenaRequest = new Request.JSON({
-		url: '<?php echo JRoute::_('index.php?option=com_kunena&view=install&task=run', false)?>',
-		format: 'json',
+	var kunenaInstall = jQuery('#kunena-install');
+	var kunenaProgress = jQuery('#kunena-progress');
+	var kunenaDescription = jQuery('#kunena-description');
+
+	jQuery.ajax({
+		type: 'POST',
+		dataType: 'json',
 		timeout: '180000', // 3 minutes
-		noCache: true,
-		secure: false,
-		onRequest: function() {
-			kunenaProgress.setStyle('width', '1%');
+		url: '<?php echo JRoute::_('index.php?option=com_kunena&view=install&task=run', false)?>',
+		data: '<?php echo JSession::getFormToken(); ?>=1',
+		cache: false,
+		error: function (xhr, ajaxOptions, thrownError) {
+			kunenaInstall.html('<h2><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + xhr.responseText + '</div>');
+			kunenaProgress.addClass('bar-danger');
+			jQuery('#kunena-installer').show();
 		},
-		onSuccess: function(responseJSON, responseText) {
-			if (responseJSON.status) {
-				kunenaProgress.setStyle('width', responseJSON.status);
+		beforeSend: function () {
+			kunenaProgress.css('width', '1%');
+		},
+		complete: function () {
+
+		},
+		success: function (json) {
+			if (json.status) {
+				kunenaProgress.css('width', json.status);
 			}
-			if (responseJSON.log) {
-				window.kunenaAddItems(responseJSON.log);
+			if (json.log) {
+				window.kunenaAddItems(json.log);
 			}
-			if (responseJSON.success) {
-				kunenaDescription.set('html', responseJSON.current);
-				if (responseJSON.status != '100%') {
+			if (json.success) {
+				kunenaDescription.html(json.current);
+				if (json.status != '100%') {
 					window.kunenainstall();
 					return;
 				} else {
-					kunenaInstall.getElement('h2').set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
-					kunenaProgress.getParent().removeClass('active');
+					kunenaInstall.find('h2').text('<?php echo JText::_('COM_KUNENA_INSTALL_SUCCESS_MESSAGE', true); ?>');
+					kunenaProgress.parent().removeClass('active');
 					kunenaProgress.addClass('bar-success');
 				}
-				$$('.kunena-close').removeProperty('disabled');
+				jQuery('.kunena-close').removeAttr('disabled');
 			} else {
-				kunenaProgress.getParent().removeClass('active');
-				kunenaInstall.getElement('h2').set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
-				kunenaDescription.set('html', responseJSON.error);
+				kunenaProgress.parent().removeClass('active');
+				kunenaInstall.find('h2').text('<?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?>');
+				kunenaDescription.html(json.error);
 				kunenaProgress.addClass('bar-danger');
-				document.id('kunena-installer').removeProperty('disabled');
-				document.id('kunena-container').removeClass('hidden');
+				jQuery('#kunena-installer').removeAttr('disabled');
+				jQuery('#kunena-container').removeClass('hidden');
 			}
-		},
-		onError: function(responseText) {
-			kunenaInstall.set('html', '<h2><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + responseText + '</div>');
-			kunenaProgress.addClass('bar-danger');
-			document.id('kunena-installer').removeProperty('disabled');
-		},
-		onFailure: function() {
-			kunenaDescription.set('text', '<?php echo JText::_('COM_KUNENA_INSTALL_ERROR_FATAL', true); ?>');
-			kunenaProgress.addClass('bar-danger');
-			document.id('kunena-installer').removeProperty('disabled');
 		}
 	});
-	kunenaRequest.post('<?php echo JSession::getFormToken(); ?>=1');
+
+
 }
-window.addEvent('domready', function() {
-	document.id('kunena-toggle').addEvent('click', function(e) {
-		document.id('kunena-container').toggleClass('hidden');
+jQuery( document ).ready(function() {
+	jQuery('#kunena-toggle').click(function(e) {
+		jQuery('#kunena-container').toggleClass('hidden');
 		e.preventDefault();
 	});
-	$$('.kunena-close').addEvent('click', function(e) {
-		if (this.get('id') == 'kunena-component') window.location.href='<?php echo JRoute::_('index.php?option=com_kunena', false)?>';
-		if (document.id('kunena-modal')) {
-		} else if (this.get('id') == 'kunena-installer') {
-			window.location.href='<?php echo JRoute::_('index.php?option=com_installer&view=install', false)?>';
-		}
+	jQuery('#kunena-component').click(function(e) {
+		window.location.href='<?php echo JRoute::_('index.php?option=com_kunena', false)?>';
+		e.preventDefault();
+	});
+	jQuery('#kunena-installer').click(function(e) {
+		window.location.href='#Close';
 		e.preventDefault();
 	});
 	window.kunenainstall();

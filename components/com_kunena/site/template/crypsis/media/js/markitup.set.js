@@ -146,6 +146,8 @@ bbcodeSettings = {
 }
 
 jQuery(document).ready(function (){
+	jQuery('#kbbcode-message').markItUp(bbcodeSettings);
+
 	// For code
 	jQuery('#modal-code').change(function() {
 		var codetype = jQuery("#kcodetype option:selected").val();

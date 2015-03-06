@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -30,12 +30,14 @@ class KunenaAdminControllerTrash extends KunenaController {
 			return;
 		}
 
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$type = JRequest::getCmd ( 'type', 'topics', 'post' );
 		$md5 = JRequest::getString ( 'md5', null );
 
-		if ( !empty($cids) ) {
-			$this->app->setUserState('com_kunena.purge', $cids);
+		if ( !empty($cid) ) {
+			$this->app->setUserState('com_kunena.purge', $cid);
 			$this->app->setUserState('com_kunena.type', $type);
 
 		} elseif ( $md5 ) {
@@ -81,7 +83,9 @@ class KunenaAdminControllerTrash extends KunenaController {
 			return;
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
+
 		$type = JRequest::getCmd ( 'type', 'topics', 'post' );
 
 		if (empty ( $cid )) {
@@ -94,7 +98,7 @@ class KunenaAdminControllerTrash extends KunenaController {
 		if ( $type=='messages' ) {
 			$messages = KunenaForumMessageHelper::getMessages($cid, 'none');
 			foreach ( $messages as $target ) {
-				if ( $target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED) ) {
+				if ( $target->publish(KunenaForum::PUBLISHED) ) {
 					$nb_items++;
 				} else {
 					$this->app->enqueueMessage ( $target->getError(), 'notice' );
@@ -103,7 +107,7 @@ class KunenaAdminControllerTrash extends KunenaController {
 		} elseif ( $type=='topics' ) {
 			$topics = KunenaForumTopicHelper::getTopics($cid, 'none');
 			foreach ( $topics as $target ) {
-				if ( $target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED) ) {
+				if ( $target->publish(KunenaForum::PUBLISHED) ) {
 					$nb_items++;
 				} else {
 					$this->app->enqueueMessage ( $target->getError(), 'notice' );
@@ -120,5 +124,24 @@ class KunenaAdminControllerTrash extends KunenaController {
 		KunenaForumCategoryHelper::recount ();
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Method to redirect user on cancel on purge page
+	 *
+	 * @return void
+	 */
+	public function cancel()
+	{
+		$type = $this->app->getUserState('com_kunena.type');
+
+		if ($type == 'messages')
+		{
+			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
+		}
+		else
+		{
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
 	}
 }

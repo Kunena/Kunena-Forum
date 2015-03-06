@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -159,11 +159,24 @@ class KunenaTemplate extends JObject
 		// Loading language strings for the template
 		$lang = JFactory::getLanguage();
 		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
-		foreach (array_reverse($this->default) as $template) {
-			$file = 'com_kunena.tpl_'.$template;
-			$lang->load($file, JPATH_SITE)
-				|| $lang->load($file, KPATH_SITE)
-				|| $lang->load($file, KPATH_SITE.'/template/'.$template);
+
+		foreach (array_reverse($this->default) as $template)
+		{
+			// Try to load language file for legacy templates
+			if ($lang->load('com_kunena.tpl_' . $template, JPATH_SITE)
+				|| $lang->load('com_kunena.tpl_' . $template, KPATH_SITE)
+				|| $lang->load('com_kunena.tpl_' . $template, KPATH_SITE . '/template/' . $template))
+			{
+				$lang->load('com_kunena.tpl_' . $template, JPATH_SITE)
+					|| $lang->load('com_kunena.tpl_' . $template, KPATH_SITE)
+					|| $lang->load('com_kunena.tpl_' . $template, KPATH_SITE . '/template/' . $template);
+			}
+			else
+			{
+				$lang->load('kunena_tmpl_' . $template, JPATH_SITE)
+				|| $lang->load('kunena_tmpl_' . $template, KPATH_SITE)
+				|| $lang->load('kunena_tmpl_' . $template, KPATH_SITE . '/template/' . $template);
+			}
 		}
 	}
 

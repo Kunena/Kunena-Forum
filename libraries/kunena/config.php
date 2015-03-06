@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -27,7 +27,7 @@ class KunenaConfig extends JObject {
 	 * @since  1.5.2
 	 */
 	public $id = 0;
-	
+
 	/**
 	 * @var    string  Board Title; input, text
 	 * @since  1.0.0
@@ -817,6 +817,7 @@ class KunenaConfig extends JObject {
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
+     * @deprecated 3.1 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 
@@ -836,13 +837,13 @@ class KunenaConfig extends JObject {
 	 * @var    integer  Show session type; select, selection
 	 * @since  1.6.1
 	 */
-	public $show_session_type = 0;
+	public $show_session_type = 2;
 
 	/**
 	 * @var    integer  Show session start time; select, selection
 	 * @since  1.6.1
 	 */
-	public $show_session_starttime = 0;
+	public $show_session_starttime = 1800;
 
 	/**
 	 * @var    integer  User list allowed; select, boolean
@@ -1067,6 +1068,12 @@ class KunenaConfig extends JObject {
 	 */
 	public $statslink_allowed = 1;
 
+    /**
+     * @var    integer  Super admin user list; select, boolean
+     * @since  3.0.6
+     */
+    public $superadmin_userlist = 0;
+
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
 	 * @since  3.1.0
@@ -1098,10 +1105,34 @@ class KunenaConfig extends JObject {
 	public $avatarcrop = 0;
 
 	/**
-	 * @var    integer  Super admin user list; select, boolean
+	 * @var    integer  User can report himself; select, boolean
 	 * @since  3.1.0
 	 */
-	public $superadmin_userlist = 0;
+	public $user_report = 1;
+
+	/**
+	 * @var    integer  Search time; select, boolean
+	 * @since  3.1.0
+	 */
+	public $searchtime = 365;
+
+	/**
+	 * @var    integer  Teaser; select, boolean
+	 * @since  3.1.0
+	 */
+	public $teaser = 0;
+
+	/**
+	 * @var    integer  Define ebay widget language; select, boolean
+	 * @since  3.0.7
+	 */
+	public $ebay_language = 0;
+
+	/**
+	 * @var    integer  Define ebay Api key to be allowed to display ebay widget; select, boolean
+	 * @since  3.0.7
+	 */
+	public $ebay_api_key = '';
 
 	public function __construct() {
 		parent::__construct ();

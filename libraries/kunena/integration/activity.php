@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -38,11 +38,23 @@ class KunenaIntegrationActivity
 		return self::$instance;
 	}
 
+	/**
+	 * Method magical to call the right method in plugin integration
+	 *
+	 * @param   string  $method     Name of method to call
+	 * @param   string  $arguments  Arguments need to be passed to the method
+	 *
+	 * @return mixed
+	 */
 	public function __call($method, $arguments) {
+		$ret = null;
 		foreach ($this->instances as $instance) {
 			if (method_exists($instance, $method)) {
-				call_user_func_array(array($instance, $method), $arguments);
+				$r = call_user_func_array(array($instance, $method), $arguments);
+				if($r !== null & $ret === null)
+					$ret = $r;
 			}
 		}
+		return $ret;
 	}
 }

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.BBCode
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -24,7 +24,7 @@ if (!isset($id))
 	$id = 0;
 }
 
-$mapid = 'kgooglemap'.++$id;
+$mapid = 'kgooglemap' . ++ $id;
 $map_type = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 $map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
 if (!in_array($map_type, $map_typeId)) $map_type = 'ROADMAP';

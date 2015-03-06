@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -151,7 +151,7 @@ class KunenaControllerUser extends KunenaController {
 		if ($return) return $return;
 	}
 
-	function ban() {
+	public function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JSession::checkToken('post')) {
 			$this->setRedirect($user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -170,10 +170,10 @@ class KunenaControllerUser extends KunenaController {
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
-		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
-		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
-		$DelSignature = JRequest::getVar ( 'delsignature', '' );
-		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
+		$banDelPosts = JRequest::getString ( 'bandelposts', '' );
+		$DelAvatar = JRequest::getString ( 'delavatar', '' );
+		$DelSignature = JRequest::getString ( 'delsignature', '' );
+		$DelProfileInfo = JRequest::getString ( 'delprofileinfo', '' );
 
 		$delban = JRequest::getString ( 'delban', '' );
 
@@ -195,6 +195,7 @@ class KunenaControllerUser extends KunenaController {
 
 		if ($block) {
 			if ($ban->isEnabled ()) {
+				$this->app->logout($user->userid);
 				$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
 			} else {
 				$message = JText::_ ( 'COM_KUNENA_USER_UNBLOCKED_DONE' );
@@ -257,7 +258,16 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		if (! empty ( $banDelPosts )) {
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $user->userid));
+			$params = array('starttime' => '-1','user' => $user->userid,'mode' => 'unapproved');
+
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
+
+			$parmas_recent = array('starttime' => '-1','user' => $user->userid);
+
+			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
+
+			$messages = array_merge($messages_recent, $messages);
+
 			foreach($messages as $mes) {
 				$mes->publish(KunenaForum::DELETED);
 			}
@@ -267,12 +277,12 @@ class KunenaControllerUser extends KunenaController {
 		$this->setRedirect($user->getUrl(false));
 	}
 
-	function cancel() {
+	public function cancel() {
 		$user = KunenaFactory::getUser();
 		$this->setRedirect($user->getUrl(false));
 	}
 
-	function login() {
+	public function login() {
 		if(!JFactory::getUser()->guest || !JSession::checkToken('post')) {
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -288,7 +298,7 @@ class KunenaControllerUser extends KunenaController {
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64')); // Internal URI
 		if (!$error && $return && JURI::isInternal($return))
 		{
 			// Redirect the user.
@@ -299,7 +309,7 @@ class KunenaControllerUser extends KunenaController {
 		$this->setRedirectBack();
 	}
 
-	function logout() {
+	public function logout() {
 		if(!JSession::checkToken('request')) {
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
@@ -310,12 +320,74 @@ class KunenaControllerUser extends KunenaController {
 		if (!JFactory::getUser()->guest) $login->logoutUser();
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64'));
+		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64')); // Internal URI
 		if ($return && JURI::isInternal($return))
 		{
 			// Redirect the user.
 			$this->setRedirect(JRoute::_($return, false));
 			return;
+		}
+
+		$this->setRedirectBack();
+	}
+
+	/**
+	 * Save online status for user
+	 *
+	 * @return void
+	 */
+	public function status()
+	{
+		if (!JSession::checkToken('request'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$status = $this->app->input->getInt('status', 0);
+		$me = KunenaUserHelper::getMyself();
+		$me->status = $status;
+
+		if (!$me->save())
+		{
+			$this->app->enqueueMessage($me->getError(), 'error');
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('Successfully Saved Status'));
+		}
+
+		$this->setRedirectBack();
+	}
+
+	/**
+	 * Set online status text for user
+	 *
+	 * @return void
+	 */
+	public function statusText()
+	{
+		if (!JSession::checkToken('request'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
+		$status_text =  $this->app->input->getString('status_text', null, 'POST');
+		$me = KunenaUserHelper::getMyself();
+		$me->status_text = $status_text;
+
+		if (!$me->save())
+		{
+			$this->app->enqueueMessage($me->getError(), 'error');
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_STATUS_SAVED'));
 		}
 
 		$this->setRedirectBack();
@@ -387,9 +459,9 @@ class KunenaControllerUser extends KunenaController {
 		if (JComponentHelper::getParams('com_users')->get('change_login_name', 1)) $allow[] = 'username';
 
 		//clean request
-		$post = JRequest::get('post');
-		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
-		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$post = JRequest::get( 'post' );
+		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
+		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
 		if (empty($post['password']) || empty($post['password2'])) {
 			unset($post['password'], $post['password2']);
 		} else {
@@ -459,64 +531,111 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->bebo = trim(JRequest::getString ( 'bebo', '' ));
 		$this->me->websitename = JRequest::getString ( 'websitename', '' );
 		$this->me->websiteurl = JRequest::getString ( 'websiteurl', '' );
-		$this->me->signature = JRequest::getVar ( 'signature', '', 'post', 'string', JREQUEST_ALLOWRAW );
+		$this->me->signature = JRequest::getVar('signature', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
 	}
 
-	protected function saveAvatar() {
+	/**
+	 * Delete previoulsy uplaoded avatars from filesystem
+	 *
+	 * @return void
+	 */
+	protected function deleteOldAvatars()
+	{
+		if (preg_match('|^users/|', $this->me->avatar))
+		{
+			// Delete old uploaded avatars:
+			if (is_dir(KPATH_MEDIA . '/avatars/resized'))
+			{
+				$deletelist = KunenaFolder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
+
+				foreach ($deletelist as $delete)
+				{
+					if (is_file($delete . '/' . $this->me->avatar))
+					{
+						KunenaFile::delete($delete . '/' . $this->me->avatar);
+					}
+				}
+			}
+
+			if (is_file(KPATH_MEDIA . '/avatars/' . $this->me->avatar))
+			{
+				KunenaFile::delete(KPATH_MEDIA . '/avatars/' . $this->me->avatar);
+			}
+		}
+	}
+
+	/**
+	 * Upload and resize if needed the new avatar for user, or set one from the gallery or the default one
+	 *
+	 * @return boolean
+	 */
+	protected function saveAvatar()
+	{
 		$action = JRequest::getString('avatar', 'keep');
 		$current_avatar = $this->me->avatar;
 
-		require_once (KPATH_SITE.'/lib/kunena.upload.class.php');
-		$upload = new CKunenaUpload();
-		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
+		$avatarFile = $this->app->input->files->get('avatarfile');
 
-		if ( $upload->uploaded('avatarfile') ) {
-			$filename = 'avatar'.$this->me->userid;
+		if ( !empty($avatarFile['tmp_name']) )
+		{
+			$this->deleteOldAvatars();
 
-			if (preg_match('|^users/|' , $this->me->avatar)) {
-				// Delete old uploaded avatars:
-				if (is_dir( KPATH_MEDIA.'/avatars/resized')) {
-					$deletelist = KunenaFolder::folders(KPATH_MEDIA.'/avatars/resized', '.', false, true);
-					foreach ($deletelist as $delete) {
-						if (is_file($delete.'/'.$this->me->avatar))
-							KunenaFile::delete($delete.'/'.$this->me->avatar);
+			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
+
+			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid);
+
+			if ( !empty($uploaded) )
+			{
+				$imageInfo = KunenaImage::getImageFileProperties($uploaded->destination);
+
+				// If image is not inside allowed size limits, resize it
+				if ($uploaded->size > intval($this->config->avatarsize) * 1024 || $imageInfo->width > '200' || $imageInfo->height > '200')
+				{
+					if ($this->config->avatarquality < 1 || $this->config->avatarquality > 100)
+					{
+						$quality = 70;
 					}
-				}
-				if (is_file(KPATH_MEDIA.'/avatars/'.$this->me->avatar)) {
-					KunenaFile::delete(KPATH_MEDIA.'/avatars/'.$this->me->avatar);
-				}
-			}
+					else
+					{
+						$quality = $this->config->avatarquality;
+					}
 
-			$upload->setImageResize(intval($this->config->avatarsize)*1024, 200, 200, $this->config->avatarquality);
-			$upload->uploadFile(KPATH_MEDIA . '/avatars/users' , 'avatarfile', $filename, false);
-			$fileinfo = $upload->getFileInfo();
+					$resized = KunenaImageHelper::version($uploaded->destination, KPATH_MEDIA . '/avatars/users', 'avatar' . $this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop);
+				}
 
-			if ($fileinfo['ready'] === true) {
-				$this->me->avatar = 'users/'.$fileinfo['name'];
+				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_PROFILE_AVATAR_UPLOADED'));
+				$this->me->avatar = 'users/avatar' . $this->me->userid . '.' . $uploaded->ext;
 			}
-			if (!$fileinfo['status']) {
+			else
+			{
 				$this->me->avatar = $current_avatar;
-				if (!$fileinfo['not_valid_img_ext']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'), 'error' );
-				else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
+
 				return false;
-			} else {
-				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
 			}
-		} else if ( $action == 'delete' ) {
-			//set default avatar
+		}
+		elseif ( $action == 'delete' )
+		{
+			$this->deleteOldAvatars();
+
+			// Set default avatar
 			$this->me->avatar = '';
-		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false) {
+		}
+		elseif ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false)
+		{
 			$this->me->avatar = $action;
 		}
+
 		return true;
 	}
 
 	protected function saveSettings() {
-		if (JRequest::getVar('hidemail', null) === null) return;
+		if ($this->app->input->get('hidemail', null) === null) return;
 
-		$this->me->ordering = JRequest::getInt('messageordering', '');
-		$this->me->hideEmail = JRequest::getInt('hidemail', '');
-		$this->me->showOnline = JRequest::getInt('showonline', '');
+		$this->me->ordering = $this->app->input->getInt('messageordering', '');
+		$this->me->hideEmail = $this->app->input->getInt('hidemail', '');
+		$this->me->showOnline = $this->app->input->getInt('showonline', '');
+		$this->me->canSubscribe = $this->app->input->getInt('cansubscribe', '');
+		$this->me->userListtime = $this->app->input->getInt('userlisttime', '');
 	}
 
 	// Reports a user to stopforumspam.com
@@ -573,12 +692,13 @@ class KunenaControllerUser extends KunenaController {
 			$this->setRedirectBack();
 			return;
 		}
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		JArrayHelper::toInteger($cid);
 
-		if ( !empty($cids) ) {
+		if (!empty($cid)) {
 			$number = 0;
 
-			foreach( $cids as $id ) {
+			foreach( $cid as $id ) {
 				$attachment = KunenaAttachmentHelper::get($id);
 				if ($attachment->isAuthorised('delete') && $attachment->delete()) $number++;
 			}

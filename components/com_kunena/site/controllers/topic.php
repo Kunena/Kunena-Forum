@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -22,6 +22,90 @@ class KunenaControllerTopic extends KunenaController {
 		$this->return = JRequest::getInt('return', $this->catid);
 		$this->id = JRequest::getInt('id', 0);
 		$this->mesid = JRequest::getInt('mesid', 0);
+	}
+
+	/**
+	 * Get attachments attached to a message with AJAX.
+	 *
+	 * @throws RuntimeException
+	 *
+	 * @return string
+	 */
+	public function loadattachments()
+	{
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
+		if (!JSession::checkToken('request'))
+		{
+			throw new RuntimeException(JText::_('Forbidden'), 403);
+		}
+
+		$mes_id = $this->input->getInt('mes_id', 0);
+		$attachments = KunenaAttachmentHelper::getByMessage($mes_id);
+		$list = array();
+
+		foreach ($attachments as $attach)
+		{
+			$object = new stdClass;
+			$object->id = $attach->id;
+			$object->size = round($attach->size / '1024', 0);
+			$object->name = $attach->filename;
+			$object->folder = $attach->folder;
+			$object->caption = $attach->caption;
+			$object->type = $attach->filetype;
+			$object->path = $attach->getUrl();
+			$list['files'][] = $object;
+		}
+
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+		while(@ob_end_clean());
+		echo json_encode($list);
+		jexit();
+	}
+
+	/**
+	 * Remove files with AJAX.
+	 *
+	 * @throws RuntimeException
+	 *
+	 * @return string
+	 */
+	public function removeattachments()
+	{
+		// Only support JSON requests.
+		if ($this->input->getWord('format', 'html') != 'json')
+		{
+			throw new RuntimeException(JText::_('Bad Request'), 400);
+		}
+
+		if (!JSession::checkToken('request'))
+		{
+			throw new RuntimeException(JText::_('Forbidden'), 403);
+		}
+
+		$attach_id = $this->input->getInt('file_id', 0);
+		$success = array();
+		$instance = KunenaAttachmentHelper::get($attach_id);
+		$success['result'] = $instance->delete();
+		unset($instance);
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+		while(@ob_end_clean());
+		echo json_encode($success);
+		jexit();
 	}
 
 	/**
@@ -160,17 +244,18 @@ class KunenaControllerTopic extends KunenaController {
 			'catid' => $this->catid,
 			'name' => JRequest::getString ( 'authorname', $this->me->getName () ),
 			'email' => JRequest::getString ( 'email', null ),
-			'subject' => JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
-			'message' => JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
+			'subject' => JRequest::getVar('subject', null, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
+			'message' => JRequest::getVar('message', null, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
 			'icon_id' => JRequest::getInt ( 'topic_emoticon', null ),
 			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
 			'poll_title' => JRequest::getString ( 'poll_title', '' ),
-			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
+			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'), // Array of key => string
 			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
 			'tags' => JRequest::getString ( 'tags', null ),
 			'mytags' => JRequest::getString ( 'mytags', null ),
 			'subscribe' => JRequest::getInt ( 'subscribeMe', 0 )
 		);
+
 		$this->app->setUserState('com_kunena.postfields', $fields);
 
 		if (! JSession::checkToken('post')) {
@@ -267,12 +352,17 @@ class KunenaControllerTopic extends KunenaController {
 		$message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
 		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
-		// Upload new attachments
-		foreach ($_FILES as $key=>$file) {
+		// Legacy way to upload new attachments
+		foreach ($_FILES as $key => $file)
+		{
 			$intkey = 0;
 			if (preg_match('/\D*(\d+)/', $key, $matches))
 				$intkey = (int)$matches[1];
-			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key, $this->catid);
+
+			if ($file['error'] != UPLOAD_ERR_NO_FILE)
+			{
+				$message->uploadAttachment($intkey, $key, $this->catid);
+			}
 		}
 
 		// Make sure that message has visible content (text, images or objects) to be shown.
@@ -376,13 +466,13 @@ class KunenaControllerTopic extends KunenaController {
 		$fields = array (
 			'name' => JRequest::getString ( 'authorname', $message->name ),
 			'email' => JRequest::getString ( 'email', $message->email ),
-			'subject' => JRequest::getVar ( 'subject', $message->subject, 'POST', 'string', JREQUEST_ALLOWRAW ),
-			'message' => JRequest::getVar ( 'message', $message->message, 'POST', 'string', JREQUEST_ALLOWRAW ),
+			'subject' => JRequest::getVar('subject', $message->subject, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
+			'message' => JRequest::getVar('message', $message->message, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
 			'modified_reason' => JRequest::getString ( 'modified_reason', $message->modified_reason ),
 			'icon_id' => JRequest::getInt ( 'topic_emoticon', $topic->icon_id ),
 			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
 			'poll_title' => JRequest::getString ( 'poll_title', null ),
-			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
+			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'), // Array of key => string
 			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
 			'tags' => JRequest::getString ( 'tags', null ),
 			'mytags' => JRequest::getString ( 'mytags', null )
@@ -418,8 +508,14 @@ class KunenaControllerTopic extends KunenaController {
 		// Mark attachments to be added or deleted.
 		$attachments = JRequest::getVar ( 'attachments', array(), 'post', 'array' );
 		$attachment = JRequest::getVar ( 'attachment', array(), 'post', 'array' );
-		$message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
-		$message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
+
+        $addList = array_keys(array_intersect_key($attachments, $attachment));
+        JArrayHelper::toInteger($addList);
+        $removeList = array_keys(array_diff_key($attachments, $attachment));
+        JArrayHelper::toInteger($removeList);
+
+		$message->addAttachments($addList);
+		$message->removeAttachments($removeList);
 
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {
@@ -474,7 +570,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$poll_title = $fields['poll_title'];
-		if ($poll_title !== null) {
+		if ($poll_title !== null && $message->id == $topic->first_post_id) {
 			// Save changes into poll
 			$poll_options = $fields['poll_options'];
 			$poll = $topic->getPoll();
@@ -905,7 +1001,6 @@ class KunenaControllerTopic extends KunenaController {
 			$subject = JRequest::getString ( 'subject', '' );
 			$shadow = JRequest::getBool ( 'shadow', false );
 			$topic_emoticon = JRequest::getInt ( 'topic_emoticon', null );
-			if (!is_null($topic_emoticon)) $topic->icon_id = $topic_emoticon;
 
 			if ($object instanceof KunenaForumMessage) {
 				$mode = JRequest::getWord ( 'mode', 'selected' );
@@ -921,7 +1016,7 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$ids = false;
 			}
-			$targetobject = $topic->move ( $target, $ids, $shadow, $subject, $changesubject );
+			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon);
 			if (!$targetobject) {
 				$error = $topic->getError();
 			}

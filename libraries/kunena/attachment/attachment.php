@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -214,7 +214,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{
 		// Generic thumbnails are special case.
-		if ($thumb && !$this->isImage())
+		if (!$this->isImage())
 		{
 			return JUri::root(true) .'/media/kunena/images/attach_generic.png';
 		}
@@ -440,7 +440,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return true;
 		}
 
-		$this->setError(JText::sprintf('COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']) . ': ' . $fileinfo['error']);
+		$this->setError(
+			JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
+			. ': ' . htmlspecialchars($fileinfo['error'], ENT_COMPAT, 'UTF-8'));
 
 		return false;
 	}

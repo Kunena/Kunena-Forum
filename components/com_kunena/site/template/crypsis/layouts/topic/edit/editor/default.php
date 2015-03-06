@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
- * @subpackage Topic
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Topic
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 // Kunena bbcode editor
 ?>
@@ -136,10 +137,10 @@ defined ( '_JEXEC' ) or die ();
 							$x++;
 						}
 					}
-					?>
+				?>
 				<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $this->config->pollnboptions; ?>" />
 				<input type="hidden" name="number_total_options" id="numbertotal"
-						value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
+					value="<?php echo !empty ($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			</div>
 		<?php endif; ?>
 	</div>
@@ -158,17 +159,19 @@ defined ( '_JEXEC' ) or die ();
 <div class="control-group">
 	<label class="control-label"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
 	<div class="controls">
-		<textarea class="span12 qreply" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 	<!-- Hidden preview placeholder -->
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
+
 <?php if ($this->message->exists()) : ?>
 
-<div class="control-group">
-	<label class="control-label"><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
-	<div class="controls">
-		<textarea class="input-xlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+	<div class="control-group">
+		<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+
+		<div class="controls">
+			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+		</div>
 	</div>
-</div>
 <?php endif; ?>

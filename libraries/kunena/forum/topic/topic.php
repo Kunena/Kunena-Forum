@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -96,6 +96,8 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	public function __construct($properties = null) {
 		if (!empty($this->id)) {
 			$this->_exists = true;
+			$this->_hold = $this->hold;
+			$this->_posts = $this->posts;
 		} else {
 			parent::__construct($properties);
 		}
@@ -249,15 +251,25 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	 * @return bool
 	 */
 	public function publish($value=KunenaForum::PUBLISHED) {
-		if ($value<0 || $value>3) $value = 0;
-		elseif ($value>3) $value = 3;
-		$this->hold = (int)$value;
+		if ($value < 0 || $value > 3)
+		{
+			$value = 0;
+		}
+
+		$this->hold = (int) $value;
 		$query = new KunenaDatabaseQuery();
-		$query->update('#__kunena_messages')->set("hold={$this->hold}")->where("thread={$this->id}")->where("hold={$this->_hold}");
-		$this->_db->setQuery ( $query );
-		$this->_db->query ();
-		if (KunenaError::checkDatabaseError()) return false;
-		return $this->recount();
+		$query->update('#__kunena_messages')->set("hold={$this->hold}")
+			->where("thread={$this->id}")->where("hold={$this->_hold}");
+
+		$this->_db->setQuery($query);
+		$this->_db->execute();
+
+		if (KunenaError::checkDatabaseError())
+		{
+			return false;
+		}
+
+		return $this->_db->getAffectedRows() ? $this->recount() : $this->save();
 	}
 
 	/**
@@ -777,15 +789,16 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	/**
 	 * Move topic or parts of it into another category or topic.
 	 *
-	 * @param object $target	Target KunenaForumCategory or KunenaForumTopic
-	 * @param mixed $ids		false, array of message Ids or JDate
-	 * @param bool $shadow		Leave visible shadow topic.
-	 * @param string $subject	New subject
-	 * @param bool $subjectall	Change subject from every message
+	 * @param   object  $target        Target KunenaForumCategory or KunenaForumTopic
+	 * @param   mixed   $ids           false, array of message Ids or JDate
+	 * @param   bool    $shadow        Leave visible shadow topic.
+	 * @param   string  $subject       New subject
+	 * @param   bool    $subjectall    Change subject from every message
+	 * @param   int     $topic_iconid  Define a new topic icon
 	 *
 	 * @return 	bool|KunenaForumCategory|KunenaForumTopic	Target KunenaForumCategory or KunenaForumTopic or false on failure
 	 */
-	public function move($target, $ids=false, $shadow=false, $subject='', $subjectall=false) {
+	public function move($target, $ids=false, $shadow=false, $subject='', $subjectall=false, $topic_iconid=null) {
 		// Warning: logic in this function is very complicated and even with full understanding its easy to miss some details!
 
 		// Clear authentication cache
@@ -892,6 +905,13 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			if ($subject) {
 				$target->subject = $subject;
 			}
+
+			// Did user want to change the topic icon?
+			if (!is_null($topic_iconid))
+			{
+				$target->icon_id = $topic_iconid;
+			}
+
 			// Did user want to change category?
 			$target->category_id = $categoryTarget->id;
 
@@ -1293,7 +1313,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 					return false;
 				if ($result) {
 					// Information in the database was wrong, recount topic
-					$this->hold = $result->hold;
+					$this->hold = $result['hold'];
 					$this->recount();
 				}
 				return true;

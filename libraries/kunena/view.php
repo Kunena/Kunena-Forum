@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -537,7 +537,7 @@ class KunenaView extends JViewLegacy {
 				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
 			} else {
 				// TODO: allow translations/overrides (also above)
-				$title = KunenaFactory::getConfig()->board_title .' :: '. $title;
+				$title = KunenaFactory::getConfig()->board_title .': '. $title;
 			}
 			$this->document->setTitle($title);
 		}
@@ -566,7 +566,7 @@ class KunenaView extends JViewLegacy {
 				$description = JString::substr($description, 0, $length) . '...';
 			}
 
-			$this->document->setMetadata('description', $description . ' - ' . $lang->getName());
+			$this->document->setMetadata('description', $description);
 		}
 	}
 }

@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="kblock kfrontstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kfrontstats-tbody"></a></span>
-		<h2><span><?php echo $this->getStatsLink($this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), ''); ?></span></h2>
+		<h2><span><?php echo $this->config->statslink_allowed ? $this->getStatsLink($this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), '') : $this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kfrontstats-tbody">
 		<div class="kbody">

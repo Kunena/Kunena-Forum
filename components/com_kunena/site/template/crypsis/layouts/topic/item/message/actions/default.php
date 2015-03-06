@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -17,8 +17,8 @@ $dateText = $dateHover = '';
 
 if ($this->config->editmarkup && $this->message->modified_time)
 {
-	$dateText = $message->getModifiedTime()->toKunena('config_post_dateformat').' ';
-	$dateTitle = 'title="' . $message->getModifiedTime()->toKunena('config_post_dateformat_hover').'"';
+	$dateText = $message->getModifiedTime()->toKunena('config_post_dateformat') . ' ';
+	$dateTitle = 'title="' . $message->getModifiedTime()->toKunena('config_post_dateformat_hover') . '"';
 }
 ?>
 <div>

@@ -4,13 +4,17 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Search
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
-if (empty($this->results)) return;
+if (empty($this->results))
+{
+	return;
+}
+
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?>
@@ -26,7 +30,8 @@ if (empty($this->results)) return;
 <?php endif; ?>
 
 <?php
-foreach ($this->results as $message) {
+foreach ($this->results as $message)
+{
 	// TODO: use the default message layout...
 	echo $this->subLayout('Search/Results/Row')->set('message', $message);
 }

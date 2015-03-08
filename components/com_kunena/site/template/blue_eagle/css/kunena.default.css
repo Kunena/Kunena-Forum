@@ -200,14 +200,11 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	color: #666666 !important;
 }
 
-#Kunena .kwho-banned ,
+#Kunena .kwho-blocked,
+#Kunena a.kwho-blocked,
+#Kunena .kwho-banned,
 #Kunena a.kwho-banned {
 	color: #A39D49 !important;
-}
-
-#Kunena .kwho-blocked,
-#Kunena a.kwho-blocked {
-	color: #ff0000 !important;
 }
 
 /* MENU
@@ -444,7 +441,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena h1 a:link,
 #Kunena h1 a:active,
 #Kunena h1 a:visited {
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 }
 #Kunena h2 span.kheadbtn a {
 	border-color: #FFF;

@@ -23,7 +23,7 @@ document.addEvent('domready', function() {
 <div class="kblock">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="searchuser_tbody"></a></span>
-		<h2><span><?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), intval($this->total));?></span></h2>
+		<h1><span><?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), intval($this->total));?></span></h1>
 	</div>
 	<div class="kcontainer" id="searchuser_tbody">
 		<div class="kbody">

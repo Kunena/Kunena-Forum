@@ -52,6 +52,8 @@ jQuery(document).ready(function() {
 			} else {
 				// Set error message with alert bootstrap way
 				jQuery('#kpoll-alert-error').show();
+				
+				jQuery('#kbutton-poll-add').hide();
 			}
 		});
 	}
@@ -63,6 +65,8 @@ jQuery(document).ready(function() {
 
 				if (isvisible){
 					jQuery('#kpoll-alert-error').hide();
+					
+					jQuery('#kbutton-poll-add').show();
 				}
 				koption.remove();
 			}
@@ -73,9 +77,9 @@ jQuery(document).ready(function() {
 		jQuery('#postcatid').change(function() {
 			var catid = jQuery('select#postcatid option').filter(':selected').val();
 			if ( pollcategoriesid[catid] !== undefined ) {
-				jQuery('#kbbcode-poll-button').show();
+				jQuery('.pollbutton').show();
 			} else {
-				jQuery('#kbbcode-poll-button').hide();
+				jQuery('.pollbutton').hide();
 			}
 		});
 	}
@@ -84,9 +88,11 @@ jQuery(document).ready(function() {
 		var catid = jQuery('kcategory_poll').val();
 		
 		if ( pollcategoriesid[catid] !== undefined ) {
-			jQuery('.markItUpButton25').show();
+			jQuery('.pollbutton').show();
 		} else {
-			jQuery('.markItUpButton25').hide();
+			jQuery('.pollbutton').hide();
 		}
+	} else {
+		jQuery('.pollbutton').hide();
 	}
 });

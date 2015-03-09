@@ -102,8 +102,8 @@ class KunenaModelTopics extends KunenaModel {
 				$this->setState ('list.time', $value);
 			}
 			if ($this->me->exists() && $this->me->userListtime != -2) {
-				$value = $this->getInt ('sel', $this->me->userListtime);
-				$this->setState ('list.time', $value);
+				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $this->me->userListtime, 'int' );
+				$this->setState ('list.time', (int) $value);
 			}
 		}
 		else {

@@ -328,6 +328,9 @@ class KunenaBbcode extends NBBC_BBCode {
  */
 class KunenaBbcodeLibrary extends BBCodeLibrary {
 	var $default_smileys = array();
+
+	public $mapid = 0;
+
 	var $default_tag_rules = array(
 			'b' => array(
 				'simple_start' => "<b>",
@@ -1263,16 +1266,19 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// Display only link in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof JDocumentHTML))
 		{
-			$url = 'https://maps.google.com/?q='.urlencode($bbcode->UnHTMLEncode($content));
+			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 
-			return '<a href="'.$url.'" rel="nofollow" target="_blank">'.$content.'</a>';
+			return '<a href="' . $url . '" rel="nofollow" target="_blank">' . $content . '</a>';
 		}
+
+		$this->mapid++;
 
 		$layout = KunenaLayout::factory('BBCode/Map');
 		if ($layout->getPath())
 		{
 			return (string) $layout
 				->set('content', $content)
+				->set('mapid', $this->mapid)
 				->set('params', $params);
 		}
 

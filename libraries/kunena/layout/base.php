@@ -85,9 +85,12 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function __toString()
 	{
-		try {
+		try
+		{
 			return (string) $this->render();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			return $this->renderError($e);
 		}
 	}
@@ -97,7 +100,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @return  string
 	 */
-	public function debugInfo() {
+	public function debugInfo()
+	{
 		$rawPath  = strtolower(str_replace('.', '/', $this->_name)) .'/'. $this->layout . '.php';
 
 		$html = "<pre>";
@@ -108,20 +112,27 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		$html .= print_r($this->includePaths, true);
 		$html .= '<strong>Checking paths:</strong> <br />';
 
-		foreach ($this->includePaths as $path) {
+		foreach ($this->includePaths as $path)
+		{
 			$file = $path .'/'. $this->layout . '.php';;
 
-			if (!is_file($file)) {
+			if (!is_file($file))
+			{
 				$html .= 'NOT exists: ' . $file . '<br />';
-
 				$file = $path . '/default.php';
-				if (!is_file($file)) {
+
+				if (!is_file($file))
+				{
 					$html .= 'NOT exists: ' . $file . '<br />';
-				} else {
+				}
+				else
+				{
 					$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
 					break;
 				}
-			} else {
+			}
+			else
+			{
 				$html .= '<strong>EXISTS: ' . $file . '</strong><br />';
 				break;
 			}
@@ -149,15 +160,21 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 
 		// Get the layout path.
-		if (!$layout) $layout = $this->getLayout();
+		if (!$layout)
+		{
+			$layout = $this->getLayout();
+		}
+
 		$path = $this->getPath($layout);
 
 		// Check if the layout path was found.
-		if (!$path) {
+		if (!$path)
+		{
 			throw new RuntimeException("Layout '{$this->_name}:{$layout}' Not Found");
 		}
 
-		try {
+		try
+		{
 			// Start an output buffer.
 			ob_start();
 
@@ -167,13 +184,16 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			// And get the contents.
 			$output = ob_get_clean();
 
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			// Flush the contents and re-throw the exception.
 			ob_end_clean();
 			throw $e;
 		}
 
-		if ($this->debug) {
+		if ($this->debug)
+		{
 			$output = trim($output);
 			$output = "\n<!-- START {$path} -->\n{$output}\n<!-- END {$path} -->\n";
 		}
@@ -188,38 +208,69 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 *
 	 * @return  KunenaLayoutBase  Instance of $this to allow chaining.
 	 */
-	public function debug($value) {
+	public function debug($value)
+	{
 		$this->debug = (bool) $value;
 
 		return $this;
 	}
 
-	public function renderError(Exception $e) {
+	public function renderError(Exception $e)
+	{
 		// Exceptions aren't allowed in string conversion, log the error and output it as a string.
 		$trace = $e->getTrace();
 		$location = null;
-		foreach ($trace as $caller) {
-			if (!$location && isset($caller['file']) && !strstr($caller['file'], '/libraries/')) $location = $caller;
+
+		foreach ($trace as $caller)
+		{
+			if (!$location && isset($caller['file']) && !strstr($caller['file'], '/libraries/'))
+			{
+				$location = $caller;
+			}
+
 			if (isset($caller['class']) && isset($caller['function'])
-				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__) {
+				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__)
+			{
 				break;
 			}
 		}
-		if (!$location) $location = reset($trace);
-		if (isset($caller['file']) && strstr($caller['file'], '/libraries/')) $caller = next($trace);
+
+		if (!$location)
+		{
+			$location = reset($trace);
+		}
+
+		if (isset($caller['file']) && strstr($caller['file'], '/libraries/'))
+		{
+			$caller = next($trace);
+		}
 
 		$error  = "Rendering Error in layout {$this->_name}: {$e->getMessage()}";
 		$error .= " in {$location['file']} on line {$location['line']}";
-		if (isset($caller['file'])) $error .= " called from {$caller['file']} on line {$caller['line']}";
+
+		if (isset($caller['file']))
+		{
+			$error .= " called from {$caller['file']} on line {$caller['line']}";
+		}
+
 		JLog::add($error, JLog::CRITICAL, 'kunena');
 
 		$error = "<b>Rendering Error</b> in layout <b>{$this->_name}</b>: {$e->getMessage()}";
-		if ($this->debug) {
+
+		if ($this->debug)
+		{
 			$error .= " in <b>{$location['file']}</b> on line {$location['line']}<br />";
-			if (isset($caller['file'])) $error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
-		} else {
+
+			if (isset($caller['file']))
+			{
+				$error .= "Layout was rendered in <b>{$caller['file']}</b> on line {$caller['line']}";
+			}
+		}
+		else
+		{
 			$error .= '. Please enable debug mode for more information.';
 		}
+
 		return '<br />'.$error.'<br />';
 	}
 
@@ -244,7 +295,8 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $filename
 	 * @return mixed
 	 */
-	public function addStyleSheet($filename) {
+	public function addStyleSheet($filename)
+	{
 		return KunenaFactory::getTemplate()->addStyleSheet($filename);
 	}
 
@@ -254,17 +306,22 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param $filename
 	 * @return mixed
 	 */
-	public function addScript($filename) {
+	public function addScript($filename)
+	{
 		return KunenaFactory::getTemplate()->addScript($filename);
 	}
 
 	/**
 	 * Add script declaration to the document.
 	 *
-	 * @param $filename
+	 * @param        $content
+	 * @param string $type
+	 *
 	 * @return mixed
+	 * @internal param $filename
 	 */
-	public function addScriptDeclaration($content, $type = 'text/javascript') {
+	public function addScriptDeclaration($content, $type = 'text/javascript')
+	{
 		return KunenaFactory::getTemplate()->addScriptDeclaration($content, $type);
 	}
 
@@ -276,6 +333,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	public function getLayout()
 	{
 		$layout = preg_replace('/[^a-z0-9_]/', '', strtolower($this->layout));
+
 		return $layout ? $layout : 'default';
 	}
 
@@ -288,17 +346,24 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function getPath($layout = null)
 	{
-		if (!$layout) {
+		if (!$layout)
+		{
 			$layout = $this->getLayout();
 		}
 
 		$paths = array();
-		foreach ($this->includePaths as $path) {
+		foreach ($this->includePaths as $path)
+		{
 			$paths[] = $path;
 		}
+
 		// Find the layout file path.
 		$path = KunenaPath::find($paths, "{$layout}.php");
-		if (!$path) $path = KunenaPath::find($paths, 'default.php');
+
+		if (!$path)
+		{
+			$path = KunenaPath::find($paths, 'default.php');
+		}
 
 		return $path;
 	}
@@ -341,6 +406,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 
 		return $this;
 	}
+
 	/**
 	 * Method to set the view paths.
 	 *
@@ -366,9 +432,13 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	public function set($property, $value = null)
 	{
 		$isFactory = is_object($value) && method_exists($value, '__invoke');
-		if ($isFactory) {
+
+		if ($isFactory)
+		{
 			$this->closures[$property] = $value;
-		} else {
+		}
+		else
+		{
 			$this->{$property} = $value;
 		}
 
@@ -395,10 +465,14 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function __get($property)
 	{
-		if (!array_key_exists($property, $this->closures)) {
-			if ($this->debug) {
+		if (!array_key_exists($property, $this->closures))
+		{
+			if ($this->debug)
+			{
 				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
-			} else {
+			}
+			else
+			{
 				 return null;
 			}
 		}
@@ -440,13 +514,18 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function setProperties($properties)
 	{
-		if (!is_array($properties) && !is_object($properties)) {
+		if (!is_array($properties) && !is_object($properties))
+		{
 			throw new \InvalidArgumentException('Parameter should be either array or an object.');
 		}
 
-		foreach ((array) $properties as $k => $v) {
+		foreach ((array) $properties as $k => $v)
+		{
 			// Use the set function which might be overridden.
-			if ($k[0] != "\0") $this->set($k, $v);
+			if ($k[0] != "\0")
+			{
+				$this->set($k, $v);
+			}
 		}
 
 		return $this;
@@ -461,9 +540,15 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	{
 		$properties = (array) $this;
 		$list = array();
-		foreach ($properties as $property=>$value) {
-			if ($property[0] != "\0") $list[$property] = $value;
+
+		foreach ($properties as $property=>$value)
+		{
+			if ($property[0] != "\0")
+			{
+				$list[$property] = $value;
+			}
 		}
+
 		return $list;
 	}
 
@@ -523,41 +608,61 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $base Base path.
 	 * @return  KunenaLayout
 	 */
-	public static function factory($paths, $base = 'layouts') {
+	public static function factory($paths, $base = 'layouts')
+	{
 		$paths = (array) $paths;
 
 		$app = JFactory::getApplication();
+
 		// Add all paths for the template overrides.
-		if ($app->isAdmin()) {
+		if ($app->isAdmin())
+		{
 			$template = KunenaFactory::getAdminTemplate();
-		} else {
+		}
+		else
+		{
 			$template = KunenaFactory::getTemplate();
 		}
 
 		$templatePaths = array();
-		foreach ($paths as $path) {
-			if (!$path) continue;
+		foreach ($paths as $path)
+		{
+			if (!$path)
+			{
+				continue;
+			}
 
 			$path = (string) preg_replace('|\\\|', '/', strtolower($path));
 			$lookup = $template->getTemplatePaths("{$base}/{$path}", true);
-			foreach ($lookup as $loc) {
+
+			foreach ($lookup as $loc)
+			{
 				array_unshift($templatePaths, $loc);
 			}
 		}
 
 		// Go through all the matching layouts.
 		$path = 'Undefined';
-		foreach ($paths as $path) {
-			if (!$path) continue;
+		foreach ($paths as $path)
+		{
+			if (!$path)
+			{
+				continue;
+			}
 
 			// Attempt to load layout class if it doesn't exist.
 			$class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
-			if (!class_exists($class)) {
+
+			if (!class_exists($class))
+			{
 				$fpath = (string) preg_replace('|\\\|', '/', strtolower($path));
 				$filename = JPATH_BASE . "/components/com_kunena/layout/{$fpath}.php";
-				if (!is_file($filename)) {
+
+				if (!is_file($filename))
+				{
 					continue;
 				}
+
 				require_once $filename;
 			}
 

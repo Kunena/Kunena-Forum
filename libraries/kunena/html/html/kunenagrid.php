@@ -22,22 +22,25 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * Returns an action on a grid
 	 *
-	 * @param integer $i The row index
-	 * @param string $task The task to fire
-	 * @param string|array $prefix An optional task prefix or an array of options
-	 * @param string $text An optional text to display
-	 * @param string $title An optional title
-	 * @param string $class An optional active HTML class
-	 * @param boolean $bootstrap An optional setting for to know if it the link will be used in bootstrap.
-	 * @param string $img An optinal img HTML tag
-	 * @param string $checkbox An optional prefix for checkboxes.
+	 * @param integer      $i         The row index
+	 * @param string       $task      The task to fire
+	 * @param string|array $prefix    An optional task prefix or an array of options
+	 * @param string       $alt
+	 * @param string       $title     An optional title
+	 * @param string       $class     An optional active HTML class
+	 * @param boolean      $bootstrap An optional setting for to know if it the link will be used in bootstrap.
+	 * @param string       $img       An optinal img HTML tag
+	 * @param string       $checkbox  An optional prefix for checkboxes.
 	 *
 	 * @return string The Html code
 	 *
-	 * @since 3.0
+	 * @internal param string $text An optional text to display
+	 * @since    3.0
 	 */
-	public static function action($i, $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img='', $checkbox = 'cb') {
-		if (is_array($prefix)) {
+	public static function action($i, $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img='', $checkbox = 'cb')
+	{
+		if (is_array($prefix))
+		{
 			$options = $prefix;
 			$text = array_key_exists('text', $options) ? $options['text'] : $text;
 			$active_title = array_key_exists('active_title', $options) ? $options['active_title'] : $active_title;
@@ -52,20 +55,24 @@ abstract class JHtmlKunenaGrid
 
 		$active = $task== 'publish' ? 'active' : '';
 
-		if ($bootstrap) {
+		if ($bootstrap)
+		{
 			$html[] = '<a class="btn btn-micro ' . $active . '" ';
 			$html[] = ' href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
 			$html[] = ' title="'. $title .'">';
 			$html[] = '<i class="icon-' . $class . '">';
 			$html[] = '</i>';
 			$html[] = '</a>';
-		} else {
+		}
+		else
+		{
 			$html[] = '<a class="grid_'.$task.' hasTip" alt="'.$alt.'"';
 			$html[] = ' href="#" onclick="return listItemTask(\''. $checkbox . $i .'\',\''. $prefix . $task .'\')"';
 			$html[] = 'title="'. $title .'">';
 			$html[] = $img;
 			$html[] = '</a>';
 		}
+
 		return implode($html);
 	}
 
@@ -79,7 +86,8 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return  string   The boolean setting widget.
 	 */
-	static function boolean($i, $value, $taskOn = null, $taskOff = null) {
+	static function boolean($i, $value, $taskOn = null, $taskOff = null)
+	{
 		// Load the behavior.
 		self::behavior();
 
@@ -92,10 +100,12 @@ abstract class JHtmlKunenaGrid
 		$task	= ($value) ? $taskOff : $taskOn;
 		$toggle	= (!$task) ? false : true;
 
-		if ($toggle) {
+		if ($toggle)
+		{
 			$html = '<a class="grid_'.$bool.' hasTip" title="'.$title.'" rel="{id:\'cb'.$i.'\', task:\''.$task.'\'}" href="#toggle"></a>';
 		}
-		else {
+		else
+		{
 			$html = '<a class="grid_'.$bool.'" rel="{id:\'cb'.$i.'\', task:\''.$task.'\'}"></a>';
 		}
 
@@ -113,18 +123,24 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return  string
 	 */
-	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task=NULL, $new_direction='asc', $form=null) {
+	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task = NULL, $new_direction = 'asc', $form = null)
+	{
 		$direction	= strtolower($direction);
-		if ($order != $selected) {
+
+		if ($order != $selected)
+		{
 			$direction = $new_direction;
-		} else {
+		}
+		else
+		{
 			$direction	= ($direction == 'desc') ? 'asc' : 'desc';
 		}
 
 		$html = '<a href="javascript:kunenatableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\',\''.$form.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
 		$html .= JText::_($title);
 
-		if ($order == $selected) {
+		if ($order == $selected)
+		{
 			$html .= '<span class="grid_'.$direction.'"></span>';
 		}
 
@@ -141,35 +157,46 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return  string
 	 */
-	public static function id($rowNum, $recId, $checkedOut=false, $name='cid') {
-		if ($checkedOut) {
+	public static function id($rowNum, $recId, $checkedOut = false, $name = 'cid')
+	{
+		if ($checkedOut)
+		{
 			return '';
 		}
-		else {
+		else
+		{
 			return '<input type="checkbox" id="cb'.$rowNum.'" name="'.$name.'[]" value="'.$recId.'" onclick="Joomla.isChecked(this.checked);" title="'.JText::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)).'" />';
 		}
 	}
 
-	public static function checkedOut($row, $i, $identifier = 'id') {
+	public static function checkedOut($row, $i, $identifier = 'id')
+	{
 		$userid = JFactory::getUser()->get('id');
 
 		$result = false;
-		if ($row instanceof JTable) {
+
+		if ($row instanceof JTable)
+		{
 			$result = $row->isCheckedOut($userid);
 		}
-		else {
+		else
+		{
 			$result = JTable::isCheckedOut($userid, $row->checked_out);
 		}
 
 		$checked = '';
-		if ($result) {
+		if ($result)
+		{
 			$checked = self::_checkedOut($row);
 		}
-		else {
-			if ($identifier == 'id') {
+		else
+		{
+			if ($identifier == 'id')
+			{
 				$checked = self::id($i, $row->$identifier);
 			}
-			else {
+			else
+			{
 				$checked = self::id($i, $row->$identifier, $result, $identifier);
 			}
 		}
@@ -178,14 +205,18 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param   integer  $i
-	 * @param   mixed    $value	Either the scalar value, or an object (for backward compatibility, deprecated)
-	 * @param   string   $prefix	An optional prefix for the task
+	 * @param   integer $i
+	 * @param   mixed   $value  Either the scalar value, or an object (for backward compatibility, deprecated)
+	 * @param   string  $prefix An optional prefix for the task
 	 *
-	 * @return  string
+	 * @param bool      $bootstrap
+	 *
+	 * @return string
 	 */
-	public static function published($i, $value, $prefix='', $bootstrap=false) {
-		if (is_object($value)) {
+	public static function published($i, $value, $prefix = '', $bootstrap = false)
+	{
+		if (is_object($value))
+		{
 			$value = $value->published;
 		}
 
@@ -200,15 +231,18 @@ abstract class JHtmlKunenaGrid
 	}
 
 	/**
-	 * @param   integer  $i
-	 * @param   string   $img	Image for a positive or on value
-	 * @param   string   $alt
-	 * @param   string   $task
-	 * @param   string   $prefix	An optional prefix for the task
+	 * @param   integer $i
+	 * @param   string  $img    Image for a positive or on value
+	 * @param   string  $alt
+	 * @param   string  $task
+	 * @param   string  $prefix An optional prefix for the task
 	 *
-	 * @return  string
+	 * @param bool      $bootstrap
+	 *
+	 * @return string
 	 */
-	public static function task($i, $img, $alt, $task, $prefix='', $bootstrap=false) {
+	public static function task($i, $img, $alt, $task, $prefix='', $bootstrap = false)
+	{
 		return self::action($i, $task, $prefix, $alt, '', $task , $bootstrap, '<img src="'. KunenaFactory::getTemplate()->getImagePath($img) .'" alt="'. $alt .'" title="'. $alt .'" />');
 	}
 	/*
@@ -246,38 +280,51 @@ abstract class JHtmlKunenaGrid
 	}
 	*/
 
-	public static function order($rows, $image = 'filesave.png', $task = 'saveorder') {
+	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
+	{
 		$href = '<a href="javascript:saveorder('.(count($rows)-1).', \''.$task.'\')" class="saveorder" title="'.JText::_('COM_KUNENA_LIB_SAVE_ORDER').'"></a>';
 
 		return $href;
 	}
 
-	public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP') {
+	public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP')
+	{
 		$alt = JText::_($alt);
 
-		if ($enabled) {
+		if ($enabled)
+		{
 			$html = '<a class="move_up" href="#order" rel="{id:\'cb'.$i.'\', task:\''.$task.'\'}" title="'.$alt.'"></a>';
-		} else {
+		}
+		else
+		{
 			$html = '<span class="move_up"></span>';
 		}
+
 		return $html;
 	}
 
-	public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN') {
+	public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN')
+	{
 		$alt = JText::_($alt);
 
-		if ($enabled) {
+		if ($enabled)
+		{
 			$html = '<a class="move_down" href="#order" rel="{id:\'cb'.$i.'\', task:\''.$task.'\'}" title="'.$alt.'"></a>';
-		} else {
+		}
+		else
+		{
 			$html = '<span class="move_down"></span>';
 		}
+
 		return $html;
 	}
 
-	protected static function _checkedOut(&$row, $overlib = 1) {
+	protected static function _checkedOut(&$row, $overlib = 1)
+	{
 		$hover = '';
 
-		if ($overlib) {
+		if ($overlib)
+		{
 			$text = addslashes(htmlspecialchars($row->editor, ENT_COMPAT, 'UTF-8'));
 
 			$date	= JHtml::_('date',$row->checked_out_time, JText::_('DATE_FORMAT_LC1'));
@@ -291,7 +338,8 @@ abstract class JHtmlKunenaGrid
 		return $checked;
 	}
 
-	static function behavior() {
+	static function behavior()
+	{
 		static $loaded = false;
 
 		if (!$loaded)

@@ -36,7 +36,8 @@ class KunenaImage extends KunenaCompatImage
 	{
 		$config = KunenaFactory::getConfig();
 
-		switch ($config->avatarresizemethod) {
+		switch ($config->avatarresizemethod)
+		{
 			case '0':
 				$resizemethod = 'imagecopyresized';
 				break;
@@ -87,18 +88,23 @@ class KunenaImage extends KunenaCompatImage
 
 		$imgProperties = self::getImageFileProperties($this->getPath());
 
-		if ($imgProperties->mime == MIME_GIF) {
+		if ($imgProperties->mime == MIME_GIF)
+		{
 			$trnprt_indx = imagecolortransparent($this->handle);
 
-			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle)) {
+			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))
+			{
 				$trnprt_color   = imagecolorsforindex($this->handle, $trnprt_indx);
 				$trnprt_indx    = imagecolorallocate($handle, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
 				imagefill($handle, 0, 0, $trnprt_indx);
 				imagecolortransparent($handle, $trnprt_indx);
 			}
-		} elseif ($imgProperties->mime == MIME_PNG) {
+		}
+		elseif ($imgProperties->mime == MIME_PNG)
+		{
 			imagealphablending($handle, false);
 			imagesavealpha($handle, true);
+
 			if ($this->isTransparent())
 			{
 				$transparent = imagecolorallocatealpha($this->handle, 255, 255, 255, 127);
@@ -168,10 +174,12 @@ class KunenaImage extends KunenaCompatImage
 		$rX = $src_w / $dst_w;
 		$rY = $src_h / $dst_h;
 		$w = 0;
-		for ($y = 0; $y < $dst_h; $y++)  {
+		for ($y = 0; $y < $dst_h; $y++)
+		{
 			$ow = $w; $w = round(($y + 1) * $rY);
 			$t = 0;
-			for ($x = 0; $x < $dst_w; $x++)  {
+			for ($x = 0; $x < $dst_w; $x++)
+			{
 				$r = $g = $b = 0; $a = 0;
 				$ot = $t; $t = round(($x + 1) * $rX);
 				for ($u = 0; $u < ($w - $ow); $u++)  {

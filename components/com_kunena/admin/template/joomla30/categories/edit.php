@@ -173,7 +173,6 @@ if (version_compare(JVERSION, '3.2', '>'))
 										<td><?php echo $this->options ['allow_polls']; ?></td>
 										<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 									</tr>
-									<?php /*
 									<tr>
 										<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
 										<td><?php echo $this->options ['channels']; ?></td>
@@ -184,6 +183,7 @@ if (version_compare(JVERSION, '3.2', '>'))
 										<td><?php echo $this->options ['topic_ordering']; ?></td>
 										<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 									</tr>
+									<?php /*
 									<tr>
 										<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
 										<td><?php echo $this->options ['category_iconset']; ?></td>

@@ -17,7 +17,8 @@ KunenaUserHelper::initialize();
  *
  * @since  K3.1
  */
-abstract class KunenaUserHelper {
+abstract class KunenaUserHelper
+{
 	/**
 	 * @var array|KunenaUser[]
 	 */
@@ -60,25 +61,30 @@ abstract class KunenaUserHelper {
 	public static function get($identifier = null, $reload = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		if ($identifier === null || $identifier === false)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return self::$_me;
 		}
+
 		if ($identifier instanceof KunenaUser)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return $identifier;
 		}
+
 		// Find the user id
 		if ($identifier instanceof JUser)
 		{
 			$id = (int) $identifier->id;
-		} elseif (((string)(int) $identifier) === ((string) $identifier))
+		}
+		elseif (((string)(int) $identifier) === ((string) $identifier))
 		{
 			// Ignore imported users, which haven't been mapped to Joomla (id<0).
 			$id = (int) max($identifier, 0);
-		} else
+		}
+		else
 		{
 			// Slow, don't use usernames!
 			$id = (int) JUserHelper::getUserId((string) $identifier);
@@ -112,19 +118,24 @@ abstract class KunenaUserHelper {
 	public static function getAuthor($id, $name)
 	{
 		$id = (int) $id;
+
 		if ($id && !empty ( self::$_instances [$id] ))
 		{
 			return self::$_instances [$id];
 		}
+
 		if (!empty ( self::$_instances_name [$name] ))
 		{
 			return self::$_instances_name [$name];
 		}
+
 		$user = self::get($id);
+
 		if (!$user->exists())
 		{
 			$user->username = $user->name = $name;
 		}
+
 		self::$_instances_name [$name] = $user;
 
 		return $user;
@@ -185,6 +196,7 @@ abstract class KunenaUserHelper {
 		}
 
 		$list = array ();
+
 		foreach ($userids as $userid)
 		{
 			if (isset(self::$_instances [$userid])) $list [$userid] = self::$_instances [$userid];
@@ -237,6 +249,7 @@ abstract class KunenaUserHelper {
 	public static function getTopPosters($limit=0)
 	{
 		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
+
 		if (count(self::$_topposters) < $limit)
 		{
 			$db = JFactory::getDBO ();
@@ -351,8 +364,14 @@ abstract class KunenaUserHelper {
 	public static function isOnline($user, $yes = false, $no = 'offline')
 	{
 		$user = self::get($user);
-		if (!$user->showOnline && !self::getMyself()->isModerator()) return $yes ? $no : false;
+
+		if (!$user->showOnline && !self::getMyself()->isModerator())
+		{
+			return $yes ? $no : false;
+		}
+
 		$online = false;
+
 		if (intval($user->userid) > 0)
 		{
 			if (self::$_online === null)
@@ -361,7 +380,11 @@ abstract class KunenaUserHelper {
 			}
 			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time >  time() - JFactory::getApplication()->getCfg ( 'lifetime', 15 ) * 60) : false;
 		}
-		if ($yes) return $online ? $yes : $no;
+
+		if ($yes)
+		{
+			return $online ? $yes : $no;
+		}
 
 		return $online;
 	}
@@ -412,6 +435,7 @@ abstract class KunenaUserHelper {
 			WHERE ut.user_id IS NULL";
 		$db->setQuery($query);
 		$db->query ();
+
 		if (KunenaError::checkDatabaseError ())
 		{
 			return false;
@@ -427,6 +451,7 @@ abstract class KunenaUserHelper {
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
 		$db->setQuery ($query);
 		$db->query ();
+
 		if (KunenaError::checkDatabaseError ())
 		{
 			return false;
@@ -443,6 +468,7 @@ abstract class KunenaUserHelper {
 			SET u.banned=b.banned";
 		$db->setQuery ($query);
 		$db->query ();
+
 		if (KunenaError::checkDatabaseError ())
 		{
 			return false;

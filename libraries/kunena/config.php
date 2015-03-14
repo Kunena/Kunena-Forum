@@ -817,7 +817,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
-     * @deprecated 3.1 (not used in HMVC)
+	 * @deprecated 3.1 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 
@@ -1068,11 +1068,11 @@ class KunenaConfig extends JObject
 	 */
 	public $statslink_allowed = 1;
 
-    /**
-     * @var    integer  Super admin user list; select, boolean
-     * @since  3.0.6
-     */
-    public $superadmin_userlist = 0;
+	/**
+	 * @var    integer  Super admin user list; select, boolean
+	 * @since  3.0.6
+	 */
+	public $superadmin_userlist = 0;
 
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
@@ -1105,12 +1105,6 @@ class KunenaConfig extends JObject
 	public $avatarcrop = 0;
 
 	/**
-<<<<<<< HEAD
-	 * @var    integer  Max Links limit; input, number
-	 * @since  3.1.0
-	 */
-	public $max_links = 6;
-=======
 	 * @var    integer  User can report himself; select, boolean
 	 * @since  3.1.0
 	 */
@@ -1121,7 +1115,6 @@ class KunenaConfig extends JObject
 	 * @since  3.1.0
 	 */
 	public $searchtime = 365;
->>>>>>> upstream/develop
 
 	/**
 	 * @var    integer  Teaser; select, boolean
@@ -1129,10 +1122,6 @@ class KunenaConfig extends JObject
 	 */
 	public $teaser = 0;
 
-<<<<<<< HEAD
-
-	public function __construct() {
-=======
 	/**
 	 * @var    integer  Define ebay widget language; select, boolean
 	 * @since  3.0.7
@@ -1145,9 +1134,14 @@ class KunenaConfig extends JObject
 	 */
 	public $ebay_api_key = '';
 
+	/**
+	 * @var    integer  Max Links limit; input, number
+	 * @since  3.1.0
+	 */
+	public $max_links = 6;
+
 	public function __construct()
 	{
->>>>>>> upstream/develop
 		parent::__construct ();
 	}
 

@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -26,6 +26,7 @@ class KunenaModelAnnouncement extends KunenaModel
 		$this->setState('item.id', $id);
 
 		$value = $this->getInt('limit', 0);
+
 		if ($value < 1 || $value > 100)
 		{
 			$value = 20;
@@ -33,10 +34,12 @@ class KunenaModelAnnouncement extends KunenaModel
 		$this->setState('list.limit', $value);
 
 		$value = $this->getInt('limitstart', 0);
+
 		if ($value < 0)
 		{
 			$value = 0;
 		}
+
 		$this->setState('list.start', $value);
 	}
 

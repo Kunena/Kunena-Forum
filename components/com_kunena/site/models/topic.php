@@ -51,23 +51,28 @@ class KunenaModelTopic extends KunenaModel
 		$this->setState('hold', $value);
 
 		$value = $this->getInt('limit', 0);
+
 		if ($value < 1 || $value > 100)
 		{
 			$value = $this->config->messages_per_page;
 		}
+
 		$this->setState('list.limit', $value);
 
 		//$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
 		$value = $this->getInt('limitstart', 0);
+
 		if ($value < 0)
 		{
 			$value = 0;
 		}
+
 		$this->setState('list.start', $value);
 
 		$value = $this->getUserStateFromRequest("com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', '', 'word');
+
 		if (!$value)
 		{
 			if ($this->me->ordering != '0')
@@ -79,10 +84,12 @@ class KunenaModelTopic extends KunenaModel
 				$value = $this->config->default_sort == 'asc' ? 'asc' : 'desc';
 			}
 		}
+
 		if ($value != 'asc')
 		{
 			$value = 'desc';
 		}
+
 		$this->setState('list.direction', $value);
 	}
 
@@ -96,6 +103,7 @@ class KunenaModelTopic extends KunenaModel
 		if ($this->topic === false)
 		{
 			$mesid = $this->getState('item.mesid');
+
 			if ($mesid)
 			{
 				// Find actual topic by fetching current message
@@ -107,6 +115,7 @@ class KunenaModelTopic extends KunenaModel
 			{
 				$topic = KunenaForumTopicHelper::get($this->getState('item.id'));
 				$ids   = array();
+
 				// If topic has been moved, find the new topic
 				while ($topic->moved_id)
 				{
@@ -126,6 +135,7 @@ class KunenaModelTopic extends KunenaModel
 					}
 				}*/
 			}
+
 			$this->topic = $topic;
 		}
 
@@ -148,9 +158,11 @@ class KunenaModelTopic extends KunenaModel
 			$userlist       = array();
 			$this->threaded = array();
 			$location       = $this->getState('list.start');
+
 			foreach ($this->messages AS $message)
 			{
 				$message->replynum = ++$location;
+
 				if ($threaded)
 				{
 					// Threaded ordering
@@ -163,20 +175,24 @@ class KunenaModelTopic extends KunenaModel
 						$this->threaded[0][] = $message->id;
 					}
 				}
+
 				$userlist[intval($message->userid)]      = intval($message->userid);
 				$userlist[intval($message->modified_by)] = intval($message->modified_by);
 
 				$thankyou_list     = $thankyous[$message->id]->getList();
 				$message->thankyou = array();
+
 				if (!empty($thankyou_list))
 				{
 					$message->thankyou = $thankyou_list;
 				}
 			}
+
 			if (!isset($this->messages[$this->getState('item.mesid')]) && !empty($this->messages))
 			{
 				$this->setState('item.mesid', reset($this->messages)->id);
 			}
+
 			if ($threaded)
 			{
 				if (!isset($this->messages[$this->topic->first_post_id]))
@@ -193,7 +209,7 @@ class KunenaModelTopic extends KunenaModel
 			KunenaUserHelper::loadUsers($userlist);
 
 			// Get attachments
-			KunenaForumMessageAttachmentHelper::getByMessage($this->messages);
+			KunenaAttachmentHelper::getByMessage($this->messages);
 		}
 
 		return $this->messages;
@@ -202,6 +218,7 @@ class KunenaModelTopic extends KunenaModel
 	protected function getThreadedOrdering($parent = 0, $indent = array())
 	{
 		$list = array();
+
 		if (count($indent) == 1 && $this->getTopic()->getTotal() > $this->getState('list.start') + $this->getState('list.limit'))
 		{
 			$last = -1;
@@ -210,10 +227,12 @@ class KunenaModelTopic extends KunenaModel
 		{
 			$last = end($this->threaded[$parent]);
 		}
+
 		foreach ($this->threaded[$parent] as $mesid)
 		{
 			$message = $this->messages[$mesid];
 			$skip    = $message->id != $this->topic->first_post_id && $message->parent != $this->topic->first_post_id && !isset($this->messages[$message->parent]);
+
 			if ($mesid != $last)
 			{
 				// Default sibling edge
@@ -224,14 +243,18 @@ class KunenaModelTopic extends KunenaModel
 				// Last sibling edge
 				$indent[] = 'lastedge';
 			}
+
 			end($indent);
 			$key = key($indent);
+
 			if ($skip)
 			{
 				$indent[] = 'gap';
 			}
+
 			$list[$mesid]         = $this->messages[$mesid];
 			$list[$mesid]->indent = $indent;
+
 			if (empty($this->threaded[$mesid]))
 			{
 				// No children node
@@ -258,12 +281,15 @@ class KunenaModelTopic extends KunenaModel
 				{
 					$indent[$key + 1] = 'empty';
 				}
+
 				$list += $this->getThreadedOrdering($mesid, $indent);
 			}
+
 			if ($skip)
 			{
 				array_pop($indent);
 			}
+
 			array_pop($indent);
 		}
 

@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -26,24 +26,24 @@ class KunenaModelUser extends KunenaModel
 		$layout = $this->getCmd('layout', 'default');
 		$this->setState('layout', $layout);
 
-		$config = KunenaFactory::getConfig();
+		$display = $this->getUserStateFromRequest('com_kunena.users_display', 'display', 'topics');
+		$this->setState('display', $display);
 
-		// TODO: create state for item
-		if ($layout != 'list')
-		{
-			return;
-		}
+		$config = KunenaFactory::getConfig();
 
 		// List state information
 		$limit = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlist_rows'), 'int');
+
 		if ($limit < 1 || $limit > 100)
 		{
 			$limit = $config->get('userlist_rows');
 		}
+
 		if ($limit < 1)
 		{
 			$limit = 30;
 		}
+
 		$this->setState('list.limit', $limit);
 
 		$value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int');
@@ -54,27 +54,20 @@ class KunenaModelUser extends KunenaModel
 		$this->setState('list.ordering', $value);
 
 		$value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_direction", 'filter_order_Dir', 'asc', 'word');
+
 		if ($value != 'asc')
 		{
 			$value = 'desc';
 		}
+
 		$this->setState('list.direction', $value);
 
 		$value = $this->app->input->get('search', null, 'string');
+
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH'))
 		{
 			$this->setState('list.search', $value);
 		}
-
-		$db    = JFactory::getDBO();
-		$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
-		$db->setQuery($query);
-		$superadmins = (array) $db->loadColumn();
-		if (!$superadmins)
-		{
-			$superadmins = array(0);
-		}
-		$this->setState('list.exclude', implode(',', $superadmins));
 	}
 
 	public function getQueryWhere()
@@ -82,16 +75,18 @@ class KunenaModelUser extends KunenaModel
 		$where = '';
 
 		// Hide super admins from the list
-		if (!KunenaFactory::getConfig()->superadmin_userlist)
+		if (KunenaFactory::getConfig()->superadmin_userlist)
 		{
 			$db    = JFactory::getDBO();
 			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
 			$db->setQuery($query);
 			$superadmins = (array) $db->loadColumn();
+
 			if (!$superadmins)
 			{
 				$superadmins = array(0);
 			}
+
 			$this->setState('list.exclude', implode(',', $superadmins));
 
 			$where = ' u.id NOT IN (' . $this->getState('list.exclude') . ') AND ';
@@ -122,9 +117,11 @@ class KunenaModelUser extends KunenaModel
 		// TODO: add strict search from the beginning of the name
 		$search = $this->getState('list.search');
 		$where  = array();
+
 		if ($search)
 		{
 			$db = JFactory::getDBO();
+
 			if ($this->config->username)
 			{
 				$where[] = "u.username LIKE '%{$db->escape($search)}%'";
@@ -133,6 +130,7 @@ class KunenaModelUser extends KunenaModel
 			{
 				$where[] = "u.name LIKE '%{$db->escape($search)}%'";
 			}
+
 			$where = 'AND (' . implode(' OR ', $where) . ')';
 		}
 		else
@@ -146,6 +144,7 @@ class KunenaModelUser extends KunenaModel
 	public function getTotal()
 	{
 		static $total = false;
+
 		if ($total === false)
 		{
 			$db    = JFactory::getDBO();
@@ -161,6 +160,7 @@ class KunenaModelUser extends KunenaModel
 	public function getCount()
 	{
 		static $total = false;
+
 		if ($total === false)
 		{
 			$db     = JFactory::getDBO();
@@ -183,11 +183,13 @@ class KunenaModelUser extends KunenaModel
 		// FIXME: use pagination object and redirect on illegal page (maybe in the view)
 		// TODO: should we reset to page 1 when user makes a new search?
 		static $items = false;
+
 		if ($items === false)
 		{
 			$limitstart = $this->getState('list.start');
 			$limit      = $this->getState('list.limit');
 			$count      = $this->getCount();
+
 			if ($count < $limitstart)
 			{
 				$limitstart = $count - ($count % $limit);

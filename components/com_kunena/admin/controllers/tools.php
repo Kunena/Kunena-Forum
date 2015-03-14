@@ -144,6 +144,7 @@ class KunenaAdminControllerTools extends KunenaController
 		);
 
 		$count = 0;
+
 		foreach ($categories as $category)
 		{
 			if ($trashdelete)
@@ -257,6 +258,23 @@ class KunenaAdminControllerTools extends KunenaController
 
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()));
 		}
+
+		if ($userdellife)
+		{
+			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='0000-00-00 00:00:00'");
+			$db->query();
+
+			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
+			$db->query();
+
+			if (KunenaError::checkDatabaseError())
+			{
+				return;
+			}
+
+			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
+		}
+
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}

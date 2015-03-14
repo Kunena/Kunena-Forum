@@ -23,6 +23,7 @@ $websiteURL = $profile->getWebsiteURL();
 $websiteName = $profile->getWebsiteName();
 $personalText = $profile->getPersonalText();
 $signature = $profile->getSignature();
+$email = $profile->email && !$profile->hideEmail && $this->config->showemail || $me->isModerator() || $profile->userid == $me->userid;
 
 if ($this->config->showuserstats)
 {
@@ -37,8 +38,9 @@ if ($this->config->showuserstats)
 			<?php if ($avatar) : ?>
 				<div class="span2">
 					<div class="center"> <?php echo $avatar; ?> </div>
-					<div class="center"> </br>
-						<sup class="label label-<?php echo $this->profile->isOnline('success', 'important') ?>"> <?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?> </sup></div>
+					<div class="center">
+						<strong><?php echo $this->subLayout('User/Item/Status')->set('user', $profile); ?></strong>
+					</div>
 				</div>
 			<?php endif; ?>
 			<br />
@@ -110,7 +112,7 @@ if ($this->config->showuserstats)
 					<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
 				<span>
 					<?php if ($profile->location) : ?>
-						<a href="http://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
+						<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
 						   target="_blank"><?php echo $this->escape($profile->location); ?></a>
 					<?php else : ?>
 						<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
@@ -157,7 +159,7 @@ if ($this->config->showuserstats)
 						<?php echo $privateLabel ?>
 					</a>
 				<?php endif; ?>
-				<?php if ($profile->email) : ?>
+				<?php if ($email) : ?>
 					<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="icon-mail"></i></a>
 				<?php endif; ?>
 				<?php if (!empty($websiteName) && $websiteURL!='http://') : ?>

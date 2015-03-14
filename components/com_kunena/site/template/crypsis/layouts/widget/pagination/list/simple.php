@@ -11,16 +11,21 @@
 defined('_JEXEC') or die;
 
 $data = $this->pagination->getData();
-if (count($data->pages) <= 1) return;
+
+if (count($data->pages) <= 1)
+{
+	return;
+}
+
 $last = 0;
 ?>
 
 <div class="pagination pagination-small">
 	<ul>
 		<?php
-		foreach($data->pages as $k=>$item)
+		foreach ($data->pages as $k => $item)
 		{
-			if ($last+1 != $k)
+			if ($last + 1 != $k)
 			{
 				echo '<li><a class="disabled">...</a></li>';
 			}

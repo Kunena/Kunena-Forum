@@ -19,7 +19,8 @@ $colspan = !empty($this->actions) ? 5 : 4;
 	<small class="hidden-phone">
 		(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
 	</small>
-	<?php //To Do:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+
+	<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
 	<div class="pull-right">
 		<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 			  method="post" target="_self" class="form-inline hidden-phone">
@@ -115,13 +116,13 @@ $colspan = !empty($this->actions) ? 5 : 4;
 				</td>
 			</tr>
 		<?php else : ?>
-			<?php foreach ($this->topics as $i => $topic) { ?>
-				<?php echo $this->subLayout('Topic/Row')
+			<?php foreach ($this->topics as $i => $topic)
+			{
+				echo $this->subLayout('Topic/Row')
 					->set('topic', $topic)
 					->set('position', 'kunena_topic_' . $i)
 					->set('checkbox', !empty($this->actions));
-				?>
-			<?php } ?>
+			} ?>
 		<?php endif; ?>
 		</tbody>
 	</table>

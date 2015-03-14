@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Keyword Class
  */
-class KunenaKeyword extends JObject {
+class KunenaKeyword extends JObject
+{
 	protected $_exists = false;
 	protected $_db = null;
 
@@ -24,7 +25,8 @@ class KunenaKeyword extends JObject {
 	 *
 	 * @access	protected
 	 */
-	public function __construct($identifier) {
+	public function __construct($identifier)
+	{
 		$this->_db = JFactory::getDBO ();
 		$this->id = 0;
 		$this->name = $identifier;
@@ -40,39 +42,64 @@ class KunenaKeyword extends JObject {
 	 * @return	KunenaKeyword		The topic object.
 	 * @since	1.7
 	 */
-	static public function getInstance($identifier, $reset = false) {
+	static public function getInstance($identifier, $reset = false)
+	{
 		return KunenaKeywordHelper::get($identifier, $reset);
 	}
 
-	public function addTopic($topic_id, $user_id) {
-		if (!$user_id) $this->public_count++;
+	public function addTopic($topic_id, $user_id)
+	{
+		if (!$user_id)
+		{
+			$this->public_count++;
+		}
+
 		$this->total_count++;
-		if (!$this->save()) {
+
+		if (!$this->save())
+		{
 			return false;
 		}
+
 		$query = "INSERT INTO #__kunena_keywords_map (keyword_id, user_id, topic_id) VALUES ({$this->id}, {$user_id}, {$topic_id})";
 		$this->_db->setQuery($query);
 		$this->_db->query();
 		KunenaError::checkDatabaseError ();
+
 		return true;
 	}
 
-	public function delTopic($topic_id, $user_id) {
-		if (!$user_id) $this->public_count--;
+	public function delTopic($topic_id, $user_id)
+	{
+		if (!$user_id)
+		{
+			$this->public_count--;
+		}
+
 		$this->total_count--;
-		if (!$this->save()) {
+
+		if (!$this->save())
+		{
 			return false;
 		}
+
 		$query = "DELETE FROM #__kunena_keywords_map WHERE keyword_id={$this->id} AND topic_id={$topic_id} AND user_id={$user_id}";
 		$this->_db->setQuery($query);
 		$this->_db->query();
 		KunenaError::checkDatabaseError ();
+
 		return true;
 	}
 
-	public function exists($exists = null) {
+	public function exists($exists = null)
+	{
 		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = $exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
+
 		return $return;
 	}
 
@@ -89,11 +116,13 @@ class KunenaKeyword extends JObject {
 	 * @return	object	The keywords table object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'KunenaKeywords', $prefix = 'Table') {
+	public function getTable($type = 'KunenaKeywords', $prefix = 'Table')
+	{
 		static $tabletype = null;
 
 		//Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix']) {
+		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
+		{
 			$tabletype ['name'] = $type;
 			$tabletype ['prefix'] = $prefix;
 		}
@@ -110,7 +139,8 @@ class KunenaKeyword extends JObject {
 	 * @return	boolean			True on success
 	 * @since 1.6
 	 */
-	public function load($id) {
+	public function load($id)
+	{
 		// Create the table object
 		$table = $this->getTable ();
 
@@ -119,11 +149,17 @@ class KunenaKeyword extends JObject {
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
+
 		return $this->_exists;
 	}
 
-	public function bind($data, $allow = array()) {
-		if (!empty($allow)) $data = array_intersect_key($data, array_flip($allow));
+	public function bind($data, $allow = array())
+	{
+		if (!empty($allow))
+		{
+			$data = array_intersect_key($data, array_flip($allow));
+		}
+
 		$this->setProperties ( $data );
 	}
 
@@ -134,7 +170,8 @@ class KunenaKeyword extends JObject {
 	 * @return	boolean True on success
 	 * @since 1.6
 	 */
-	public function save() {
+	public function save()
+	{
 		//are we creating a new topic
 		$isnew = ! $this->_exists;
 
@@ -144,18 +181,21 @@ class KunenaKeyword extends JObject {
 		$table->exists ( $this->_exists );
 
 		// Check and store the object.
-		if (! $table->check ()) {
+		if (! $table->check ())
+		{
 			$this->setError ( $table->getError () );
 			return false;
 		}
 
 		//Store the topic data in the database
-		if (! $result = $table->store ()) {
+		if (! $result = $table->store ())
+		{
 			$this->setError ( $table->getError () );
 		}
 
 		// Set the id for the KunenaKeyword object in case we created a new topic.
-		if ($result && $isnew) {
+		if ($result && $isnew)
+		{
 			$this->load ( $table->id );
 		}
 
@@ -169,8 +209,10 @@ class KunenaKeyword extends JObject {
 	 * @return	boolean	True on success
 	 * @since 1.6
 	 */
-	public function delete() {
-		if (!$this->exists()) {
+	public function delete()
+	{
+		if (!$this->exists())
+		{
 			return true;
 		}
 
@@ -178,9 +220,12 @@ class KunenaKeyword extends JObject {
 		$table = $this->getTable ();
 
 		$result = $table->delete ( $this->id );
-		if (! $result) {
+
+		if (!$result)
+		{
 			$this->setError ( $table->getError () );
 		}
+
 		$this->_exists = false;
 
 		$db = JFactory::getDBO ();
@@ -188,7 +233,8 @@ class KunenaKeyword extends JObject {
 		$queries[] = "DELETE FROM #__kunena_keywords_map WHERE keyword_id={$db->quote($this->id)}";
 
 		$result = true;
-		foreach ($queries as $query) {
+		foreach ($queries as $query)
+		{
 			$db->setQuery($query);
 			$db->query();
 			$result = $result && KunenaError::checkDatabaseError ();
@@ -197,6 +243,8 @@ class KunenaKeyword extends JObject {
 		return $result;
 	}
 
-	public function recount() {
+	public function recount()
+	{
+
 	}
 }

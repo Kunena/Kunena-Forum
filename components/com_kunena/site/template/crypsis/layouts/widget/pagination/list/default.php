@@ -16,7 +16,10 @@ $data = $this->pagination->getData();
 
 $count = count($data->pages);
 
-if ($count == 0) return;
+if ($count == 0)
+{
+	return;
+}
 elseif ($count == 1 && empty($display)) return;
 $last = 0;
 ?>
@@ -26,9 +29,10 @@ $last = 0;
 		<?php
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous);
-		foreach($data->pages as $k=>$item)
+
+		foreach ($data->pages as $k => $item)
 		{
-			if ($last+1 != $k)
+			if ($last + 1 != $k)
 			{
 				echo '<li><a class="disabled">...</a></li>';
 			}
@@ -37,6 +41,7 @@ $last = 0;
 
 			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}
+
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->next);
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end);
 		?>
@@ -46,7 +51,7 @@ $last = 0;
 <div class="pagination test visible-phone">
 	<ul>
 		<?php
-	foreach($data->pages as $k=>$item)
+		foreach ($data->pages as $k => $item)
 		{
 			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}

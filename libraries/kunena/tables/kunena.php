@@ -10,52 +10,74 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-abstract class KunenaTable extends JTable {
+abstract class KunenaTable extends JTable
+{
 	protected $_exists = false;
 
-	public function exists($exists = null) {
+	public function exists($exists = null)
+	{
 		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = $exists;
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
+
 		return $return;
 	}
 
-	public function load($keys = null, $reset = true) {
+	public function load($keys = null, $reset = true)
+	{
 		// Implement JObservableInterface: Pre-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.
-		if (isset($this->_observers)) $this->_observers->update('onBeforeLoad', array($keys, $reset));
+		if (isset($this->_observers))
+		{
+			$this->_observers->update('onBeforeLoad', array($keys, $reset));
+		}
 
 		// Workaround Joomla 3.2 change.
 		// TODO: remove check when we're only supporting J!3.5+.
 		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
 
-		if (empty($keys)) {
+		if (empty($keys))
+		{
 			$empty = true;
 			$keys  = array();
 
 			// If empty, use the value of the current key
-			foreach ($tbl_keys as $key) {
+			foreach ($tbl_keys as $key)
+			{
 				$empty      = $empty && empty($this->$key);
 				$keys[$key] = $this->$key;
 			}
 
 			// If empty primary key there's is no need to load anything
-			if ($empty) {
+			if ($empty)
+			{
 				return false;
 			}
 
-		} elseif (!is_array($keys)) {
+		}
+		elseif (!is_array($keys))
+		{
 			// Load by primary key.
 			$keyCount = count($tbl_keys);
 
-			if (!$keyCount) {
+			if (!$keyCount)
+			{
 				throw new RuntimeException('No table keys defined.');
-			} elseif ($keyCount > 1) {
+			}
+			elseif ($keyCount > 1)
+			{
 				throw new InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
 			}
+
 			$keys = array($this->getKeyName() => $keys);
 		}
 
-		if ($reset) $this->reset();
+		if ($reset)
+		{
+			$this->reset();
+		}
 
 		// Initialise the query.
 		$query = $this->_db->getQuery(true)
@@ -78,50 +100,69 @@ abstract class KunenaTable extends JTable {
 
 		$row = $this->_db->loadAssoc();
 
-		if ($this->_db->getErrorNum()) {
+		if ($this->_db->getErrorNum())
+		{
 			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 		}
 
-		if (empty($row)) {
+		if (empty($row))
+		{
 			// Check that we have a result.
 			$result = false;
-		} else {
+		}
+		else
+		{
 			// Bind the object with the row and return.
 			$result = $this->_exists = $this->bind($row);
 		}
 
 		// Implement JObservableInterface: Post-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.
-		if (isset($this->_observers)) $this->_observers->update('onAfterLoad', array(&$result, $row));
+		if (isset($this->_observers))
+		{
+			$this->_observers->update('onAfterLoad', array(&$result, $row));
+		}
 
 		// Bind the object with the row and return.
 		return $result;
 	}
 
-	public function store($updateNulls = false) {
+	public function store($updateNulls = false)
+	{
 		// Workaround Joomla 3.2 change.
 		// TODO: remove check when we're only supporting J!3.5+.
 		$k = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
 
 		// Implement JObservableInterface: Pre-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.
-		if (isset($this->_observers)) $this->_observers->update('onBeforeStore', array($updateNulls, $k));
+		if (isset($this->_observers))
+		{
+			$this->_observers->update('onBeforeStore', array($updateNulls, $k));
+		}
 
-		if ($this->exists()) {
+		if ($this->exists())
+		{
 			$result = $this->updateObject($updateNulls);
-		} else {
+		}
+		else
+		{
 			$result = $this->insertObject();
 		}
 
-		if (!$result) {
+		if (!$result)
+		{
 			$this->setError(get_class($this) . '::store() failed - ' . $this->_db->getErrorMsg());
+
 			return false;
 		}
 		$this->_exists = true;
 
 		// Implement JObservableInterface: Post-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.
-		if (isset($this->_observers)) $this->_observers->update('onAfterStore', array(&$result));
+		if (isset($this->_observers))
+		{
+			$this->_observers->update('onAfterStore', array(&$result));
+		}
 
 		return true;
 	}
@@ -267,34 +308,45 @@ abstract class KunenaTable extends JTable {
 		// TODO: remove check when we're only supporting J!3.5+.
 		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
 
-		if (is_null($pk)) {
+		if (is_null($pk))
+		{
 			$pk = array();
 
 			foreach ($tbl_keys AS $key) {
 				$pk[$key] = $this->$key;
 			}
-		} elseif (!is_array($pk)) {
+		}
+		elseif (!is_array($pk))
+		{
 			$key = reset($tbl_keys);
 			$pk = array($key => $pk);
 		}
 
-		foreach ($tbl_keys AS $key) {
+		foreach ($tbl_keys AS $key)
+		{
 			$pk[$key] = is_null($pk[$key]) ? $this->$key : $pk[$key];
 
-			if ($pk[$key] === null) {
+			if ($pk[$key] === null)
+			{
 				throw new UnexpectedValueException('Null primary key not allowed.');
 			}
+
 			$this->$key = $pk[$key];
 		}
 
 		// Implement JObservableInterface: Pre-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.
-		if (isset($this->_observers)) $this->_observers->update('onBeforeDelete', array($pk));
+		if (isset($this->_observers))
+		{
+			$this->_observers->update('onBeforeDelete', array($pk));
+		}
 
 		// Delete the row by primary key.
 		$query = $this->_db->getQuery(true)
 			->delete($this->_tbl);
-		foreach ($pk as $key=>$value) {
+
+		foreach ($pk as $key=>$value)
+		{
 			$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 		}
 
@@ -304,13 +356,17 @@ abstract class KunenaTable extends JTable {
 		$this->_db->execute();
 
 		// Check for a database error.
-		if ($this->_db->getErrorNum()) {
+		if ($this->_db->getErrorNum())
+		{
 			throw new RuntimeException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 		}
 
 		// Implement JObservableInterface: Post-processing by observers
 		// TODO: remove if when we're only supporting J!3.5+.
-		if (isset($this->_observers)) $this->_observers->update('onAfterDelete', array($pk));
+		if (isset($this->_observers))
+		{
+			$this->_observers->update('onAfterDelete', array($pk));
+		}
 
 		return true;
 	}

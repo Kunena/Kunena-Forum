@@ -23,7 +23,8 @@ defined ( '_JEXEC' ) or die ();
  * @property int $subscribed
  * @property string $params
  */
-class KunenaForumTopicUser extends JObject {
+class KunenaForumTopicUser extends JObject
+{
 	protected $_exists = false;
 	protected $_db = null;
 
@@ -33,7 +34,8 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @internal
 	 */
-	public function __construct($topic = null, $user = null) {
+	public function __construct($topic = null, $user = null)
+	{
 		$topic = KunenaForumTopicHelper::get($topic);
 
 		// Always fill empty data
@@ -57,14 +59,16 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @return KunenaForumTopicUser
 	 */
-	static public function getInstance($id = null, $user = null, $reload = false) {
+	static public function getInstance($id = null, $user = null, $reload = false)
+	{
 		return KunenaForumTopicUserHelper::get($id, $user, $reload);
 	}
 
 	/**
 	 * @return KunenaForumTopic
 	 */
-	public function getTopic() {
+	public function getTopic()
+	{
 		return KunenaForumTopicHelper::get($this->topic_id);
 	}
 
@@ -73,9 +77,15 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @return bool
 	 */
-	function exists($exists = null) {
+	function exists($exists = null)
+	{
 		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = $exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
+
 		return $return;
 	}
 
@@ -87,11 +97,13 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @return KunenaTable|TableKunenaUserTopics
 	 */
-	public function getTable($type = 'KunenaUserTopics', $prefix = 'Table') {
+	public function getTable($type = 'KunenaUserTopics', $prefix = 'Table')
+	{
 		static $tabletype = null;
 
 		//Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix']) {
+		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
+		{
 			$tabletype ['name'] = $type;
 			$tabletype ['prefix'] = $prefix;
 		}
@@ -104,12 +116,14 @@ class KunenaForumTopicUser extends JObject {
 	 * @param array $data
 	 * @param array $ignore
 	 */
-	public function bind(array $data, array $ignore = array()) {
+	public function bind(array $data, array $ignore = array())
+	{
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
 	}
 
-	public function reset() {
+	public function reset()
+	{
 		$this->topic_id = 0;
 		$this->load();
 	}
@@ -122,24 +136,36 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @return bool	True on success
 	 */
-	public function load($topic_id = null, $user = null) {
-		if ($topic_id === null) {
+	public function load($topic_id = null, $user = null)
+	{
+		if ($topic_id === null)
+		{
 			$topic_id = $this->topic_id;
 		}
-		if ($user === null && $this->user_id !== null) {
+
+		if ($user === null && $this->user_id !== null)
+		{
 			$user = $this->user_id;
 		}
+
 		$user = KunenaUserHelper::get($user);
 
 		// Create the table object
 		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
-		if ($topic_id) $this->_exists = $table->load ( array('user_id'=>$user->userid, 'topic_id'=>$topic_id) );
-		else $this->_exists = false;
+		if ($topic_id)
+		{
+			$this->_exists = $table->load ( array('user_id'=>$user->userid, 'topic_id'=>$topic_id) );
+		}
+		else
+		{
+			$this->_exists = false;
+		}
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
+
 		return $this->_exists;
 	}
 
@@ -150,14 +176,16 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @return bool	True on success.
 	 */
-	public function save($updateOnly = false) {
+	public function save($updateOnly = false)
+	{
 		// Create the topics table object
 		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 
 		// Check and store the object.
-		if (! $table->check ()) {
+		if (! $table->check ())
+		{
 			$this->setError ( $table->getError () );
 			return false;
 		}
@@ -166,12 +194,14 @@ class KunenaForumTopicUser extends JObject {
 		$isnew = ! $this->_exists;
 
 		// If we aren't allowed to create new topic return
-		if ($isnew && $updateOnly) {
+		if ($isnew && $updateOnly)
+		{
 			return true;
 		}
 
 		//Store the topic data in the database
-		if (! $result = $table->store ()) {
+		if (! $result = $table->store ())
+		{
 			$this->setError ( $table->getError () );
 		}
 
@@ -188,8 +218,10 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @return bool	True on success.
 	 */
-	public function delete() {
-		if (!$this->exists()) {
+	public function delete()
+	{
+		if (!$this->exists())
+		{
 			return true;
 		}
 
@@ -197,9 +229,12 @@ class KunenaForumTopicUser extends JObject {
 		$table = $this->getTable ();
 
 		$result = $table->delete ( array('topic_id'=>$this->topic_id, 'user_id'=>$this->user_id) );
-		if (! $result) {
+
+		if (! $result)
+		{
 			$this->setError ( $table->getError () );
 		}
+
 		$this->_exists = false;
 
 		return $result;
@@ -211,26 +246,42 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @return bool|null
 	 */
-	function update(KunenaForumMessage $message=null, $postDelta=0) {
+	function update(KunenaForumMessage $message = null, $postDelta = 0)
+	{
 		$this->posts += $postDelta;
 		$this->category_id = $this->getTopic()->category_id;
-		if ($message && !$message->hold && $message->thread == $this->topic_id) {
-			if ($message->parent == 0) {
+
+		if ($message && !$message->hold && $message->thread == $this->topic_id)
+		{
+			if ($message->parent == 0)
+			{
 				$this->owner = 1;
 			}
-			if ($this->last_post_id < $message->id) {
+
+			if ($this->last_post_id < $message->id)
+			{
 				$this->last_post_id = $message->id;
 			}
-		} elseif (!$message || (($message->hold || $message->thread != $this->topic_id ) && $this->last_post_id == $message->id)) {
+		}
+		elseif (!$message || (($message->hold || $message->thread != $this->topic_id ) && $this->last_post_id == $message->id))
+		{
 			$query ="SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
 					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
 					GROUP BY userid, thread";
 			$this->_db->setQuery($query, 0, 1);
 			$info = $this->_db->loadAssocList();
+
 			if (KunenaError::checkDatabaseError ())
+			{
 				return null;
-			if ($info) $this->bind($info);
+			}
+
+			if ($info)
+			{
+				$this->bind($info);
+			}
 		}
+
 		return $this->save();
 	}
 }

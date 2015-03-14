@@ -14,7 +14,7 @@ BBCODE BUTTONS
 table.kpostbuttonset {
 	tr {
 		td.kpostbuttons {
-			select.kslcbox {
+			select.selectbox {
 				position: relative;
 				bottom: 5px;
 			}
@@ -32,7 +32,7 @@ img.kbbcode {
 	cursor: pointer;
 	margin-top: 4px;
 	margin-right: 1px;
-	padding: 0px;
+	padding: 0;
 }
 
 .kspoiler {
@@ -40,28 +40,25 @@ img.kbbcode {
 }
 
 #kbbcode-toolbar {
-	list-style-position: inside;
-	list-style-type: none;
+	list-style : none inside;
 	height: 18px;
 	margin: 2px 0 2px;
 	padding: 0;
 	position: relative;
 	li {
 		float: left;
-		list-style-image: none !important;
-		list-style-type: none !important;
+		list-style : none none !important;
 		margin: 0;
 		padding: 0;
 		a {
-			background-image: url("iconsets/editor/default/default.png");
-			background-repeat: no-repeat;
+			background : url("../media/iconsets/editor/default/default.png") no-repeat;
 			display: block;
 			height: 18px;
 			width: 18px;
 		}
 		a:hover {
 			cursor: pointer;
-			padding: 0px;
+			padding: 0;
 		}
 		a.kbbcode-separator {
 			background-position: -400px 0;
@@ -227,7 +224,7 @@ img.kbbcode {
 	margin: 2px 0 0;
 	span:hover {
 		cursor: pointer;
-		padding: 0px;
+		padding: 0;
 	}
 	span {
 		vertical-align: middle;
@@ -247,7 +244,7 @@ img.kbbcode:hover {
 	cursor: pointer;
 	margin-top: 4px;
 	margin-right: 1px;
-	padding: 0px;
+	padding: 0;
 }
 
 .kfile-input {
@@ -259,13 +256,11 @@ img.kbbcode:hover {
 #kattachments {
 	line-height: 18px;
 	a {
-		background-image: url("iconsets/editor/default/default.png");
-		background-repeat: no-repeat;
 		display: inline-block;
 		height: 18px;
 		width: 18px;
 		margin-right: 2px;
-		background-position: -216px -18px;
+		background : url("../media/iconsets/editor/default/default.png") no-repeat -216px -18px;
 	}
 }
 
@@ -295,8 +290,7 @@ img.kbbcode:hover {
 }
 
 .controls-select input[type=radio]:checked + label {
-	background-image: none;
-	background-color: rgba(0, 0, 0, 0.07);
+	background : rgba(0, 0, 0, 0.07) none;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 4px;
 }
@@ -320,4 +314,55 @@ img.kbbcode:hover {
 // FIXME: remove this after microsoft have fixed the bug
 label img{
 	pointer-events: none;
+}
+
+.dropzone .message {
+	opacity: 1;
+	-ms-filter: none;
+	filter: none;
+}
+
+.dropzone {
+	border: 1px solid rgba(0,0,0,0.03);
+	min-height: 120px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background: rgba(0,0,0,0.03);
+	padding: 23px;
+}
+
+.dropzone .default.message {
+	opacity: 1;
+	-ms-filter: none;
+	filter: none;
+	-webkit-transition: opacity 0.3s ease-in-out;
+	-moz-transition: opacity 0.3s ease-in-out;
+	-o-transition: opacity 0.3s ease-in-out;
+	-ms-transition: opacity 0.3s ease-in-out;
+	transition: opacity 0.3s ease-in-out;
+	background : no-repeat 0 0;
+}
+
+#klabel_info_drop_browse {
+	position: absolute;
+	width: 90%;
+	top: 50%;
+	left: 33%;
+	right: 50%
+}
+
+#files {
+	padding-bottom: 10px;
+}
+
+#files button.btn {
+	margin-right: 5px;
+}
+
+#files p {
+	margin: 15px 0 0 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-smilies-button {
+	display: none;
 }

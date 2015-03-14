@@ -36,7 +36,8 @@ defined('_JEXEC') or die;
 			<p>
 
 			<?php
-			foreach ($this->onlineList as $user) {
+			foreach ($this->onlineList as $user)
+			{
 				$onlinelist[] = $user->getLink();
 			}
 			?>
@@ -49,7 +50,8 @@ defined('_JEXEC') or die;
 				<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
 
 			<?php
-			foreach ($this->hiddenList as $user) {
+			foreach ($this->hiddenList as $user)
+			{
 				$hiddenlist[] = $user->getLink();
 			}
 			?>

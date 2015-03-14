@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post" name="kcategoryform" id="kcategoryform">
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo JHtml::_('form.token'); ?>
 
 	<h3>
 		<?php echo $this->escape($this->headerText); ?>
@@ -68,7 +68,8 @@ defined('_JEXEC') or die;
 		<?php else : ?>
 			<tbody>
 				<?php
-				foreach ($this->categories as $this->category) {
+				foreach ($this->categories as $this->category)
+				{
 					echo $this->subLayout('Category/List/Row')
 						->set('category', $this->category)
 						->set('config', $this->config)

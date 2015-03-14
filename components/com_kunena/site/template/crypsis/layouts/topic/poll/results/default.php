@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 // TODO: Hide KunenaHtmlParser::parseText()
+$this->addScript('poll.js');
 ?>
 
 <div class="pull-right btn btn-small" data-toggle="collapse" data-target="#poll-results">&times;</div>
@@ -36,7 +37,8 @@ defined('_JEXEC') or die;
 		</td>
 		<td>
 			<?php
-			if(isset($option->votes) && $option->votes > 0) {
+			if (isset($option->votes) && $option->votes > 0)
+			{
 				echo $option->votes;
 			} else {
 				echo JText::_('COM_KUNENA_POLL_NO_VOTE');

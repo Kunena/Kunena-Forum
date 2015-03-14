@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 $user = $this->user;
 $avatar = $user->getAvatarImage('img-polaroid', 120, 120);
 $show = KunenaConfig::getInstance()->showuserstats;
+
 if ($show)
 {
 	$rankImage = $user->getRank(0, 'image');
@@ -37,10 +38,7 @@ if ($show)
 
 	<?php if ($user->exists()) : ?>
 	<li>
-		<span class="label label-<?php echo $user->isOnline('success', 'important') ?>">
-			<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-		</span>
-
+		<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 	</li>
 	<?php endif; ?>
 

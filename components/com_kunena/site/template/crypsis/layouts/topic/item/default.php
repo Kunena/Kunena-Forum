@@ -17,6 +17,13 @@ $me = KunenaUserHelper::getMyself();
 $this->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
+
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addScript('js/caret.js');
+$this->addScript('js/atwho.js');
+$this->addStyleSheet('css/atwho.css');
+
+$this->addScript('js/topic.js');
 ?>
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">
@@ -62,7 +69,7 @@ foreach ($this->messages as $id => $message)
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination)
-		->set('display', true);; ?>
+		->set('display', true); ?>
 </div>
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')

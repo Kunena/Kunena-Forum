@@ -17,18 +17,21 @@ $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
 $config = KunenaConfig::getInstance();
-if ($config->ordering_system == 'mesid') {
+$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+
+if ($config->ordering_system == 'mesid')
+{
 	$this->numLink = $this->location ;
 } else {
 	$this->numLink = $message->replynum;
 }
-$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+
 ?>
 
 <small class="text-muted pull-right hidden-phone">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-	<a href="#<?php echo $this->escape($this->numLink); ?>" id="<?php echo $this->escape($message->replynum) ?>">#<?php echo $this->numLink; ?></a>
+	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
 </small>
 
 <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
@@ -60,38 +63,41 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 			<span class="ksignature"><?php echo $signature; ?></span>
 		</div>
 	<?php endif ?>
-	<?php if (!empty($this->reportMessageLink)) : ?>
-		<div class="msgfooter">
-			<a href="#report" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-			<div id="report" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?> </div>
+	<?php if ($this->config->reportmsg && $this->me->exists()) :
+		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
+			<div class="msgfooter">
+				<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
+				<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+					</div>
+				</div>
+				<div class="pull-right">
+					<p> <?php echo $this->ipLink; ?> </p>
+				</div>
 			</div>
-			<div class="pull-right">
-				<p> <?php echo $this->ipLink; ?> </p>
-			</div>
-		</div>
+		<?php endif; ?>
 	<?php endif; ?>
 </div>
 
 <?php if ($message->modified_by && $this->config->editmarkup) :
-	$dateshown = $datehover = '';
-	if ($message->modified_time) {
-		$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
-		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
-	} ?>
-	<div class="alert alert-info hidden-phone" <?php echo $datehover ?>>
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
-		<?php if ($message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); ?>
-	</div>
+$dateshown = $datehover = '';
+if ($message->modified_time) {
+	$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
+	$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
+} ?>
+<div class="alert alert-info hidden-phone" <?php echo $datehover ?>>
+	<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
+	<?php if ($message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); ?>
+</div>
 <?php endif; ?>
 
 <?php if (!empty($this->thankyou)): ?>
-	<div class="kmessage-thankyou">
-		<?php
-		echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
-		if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
-		?>
-	</div>
+<div class="kmessage-thankyou">
+	<?php
+	echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
+	if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+	?>
+</div>
 <?php endif; ?>

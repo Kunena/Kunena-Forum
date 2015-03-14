@@ -34,7 +34,8 @@ if (!empty($this->spacing)) : ?>
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
-			if ($topic->unread) {
+			if ($topic->unread)
+			{
 				echo $this->getTopicLink($topic, 'unread',
 					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
@@ -120,10 +121,10 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="span2 hidden-phone" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="span1 hidden-phone">
+			<div class="span2 hidden-phone">
 				<?php echo $avatar; ?>
 			</div>
-			<div class="span11">
+			<div class="span10 last-avatar">
 		<?php endif; ?>
 		<?php if (!$config->avataroncat) : ?>
 			<div class="span12">

@@ -211,18 +211,20 @@ jQuery(function($) {
 			dataType: 'json',
 			data: {mes_id : $('#kmessageid').val() },
 			success: function(data){
-				fileCount = Object.keys(data.files).length;
-				$( data.files ).each(function( index, file ) {
-					var object = $( '<div><p><img src="'+file.path+'" width="100" height="100" /><br /><span>'+file.name+'</span><br /></p></div>' );
-					data.uploaded = true;
-					data.result= false;
-					data.file_id = file.id;
-
-					object.append(insertButton.clone(true).data(file));
-					object.append(removeButton.clone(true).data(data));
-
-					object.appendTo( "#files" );
-				});
+				if($.isEmptyObject(data.files)==false) {
+					fileCount = Object.keys(data.files).length;
+					$( data.files ).each(function( index, file ) {
+						var object = $( '<div><p><img src="'+file.path+'" width="100" height="100" /><br /><span>'+file.name+'</span><br /></p></div>' );
+						data.uploaded = true;
+						data.result= false;
+						data.file_id = file.id;
+	
+						object.append(insertButton.clone(true).data(file));
+						object.append(removeButton.clone(true).data(data));
+	
+						object.appendTo( "#files" );
+					});
+				}
 			}
 		});
 	}

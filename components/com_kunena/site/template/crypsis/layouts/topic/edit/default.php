@@ -63,9 +63,9 @@ $this->addScriptDeclaration("window.addEvent('domready', function() {
 
 $this->k = 0;
 
-$this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false) . "'");
-$this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . JSession::getFormToken() . '=1', false) . "'");
-$this->addScriptDeclaration("kunena_upload_files_maxfiles = '" . $this->config->attachment_limit . "' ");
+$this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false) . "';");
+$this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . JSession::getFormToken() . '=1', false) . "';");
+$this->addScriptDeclaration("kunena_upload_files_maxfiles = '" . $this->config->attachment_limit . "';");
 
 // If polls are enabled, load also poll JavaScript.
 

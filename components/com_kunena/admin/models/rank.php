@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -72,7 +72,7 @@ class KunenaAdminModelRank extends KunenaModel
 		$selected = $this->getRank();
 
 		$rankpath = $template->getRankPath();
-		$files1   = (array) JFolder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
+		$files1   = (array) KunenaFolder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
 		$files1   = (array) array_flip($files1);
 
 		foreach ($files1 as $key => &$path)
@@ -81,7 +81,7 @@ class KunenaAdminModelRank extends KunenaModel
 		}
 
 		$rankpath = 'media/kunena/ranks/';
-		$files2   = (array) JFolder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
+		$files2   = (array) KunenaFolder::Files(JPATH_SITE . '/' . $rankpath, false, false, false, array('index.php', 'index.html'));
 		$files2   = (array) array_flip($files2);
 
 		foreach ($files2 as $key => &$path)

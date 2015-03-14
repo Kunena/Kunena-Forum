@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -59,7 +59,8 @@ class KunenaAdminModelUsers extends JModelList
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
+		$layout        = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.users';
 
 		if ($layout)
 		{
@@ -206,6 +207,7 @@ class KunenaAdminModelUsers extends JModelList
 		if ($filter !== '')
 		{
 			$now = new JDate ();
+
 			if ($filter)
 			{
 				$query->where("ku.banned={$db->quote($db->getNullDate())} OR ku.banned>{$db->quote($now->toSql())}");

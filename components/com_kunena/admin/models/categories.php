@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -104,7 +104,7 @@ class KunenaAdminModelCategories extends KunenaModel
 		$value = $this->getUserStateFromRequest($this->context . ".filter.levels", 'levellimit', 10, 'int');
 		$this->setState('filter.levels', $value);
 
-		$catid     = $this->getInt('catid', 0);
+		$catid     = $this->getUserStateFromRequest($this->context . '.filter.catid', 'catid', 0, 'int');
 		$layout    = $this->getWord('layout', 'edit');
 		$parent_id = 0;
 
@@ -143,15 +143,15 @@ class KunenaAdminModelCategories extends KunenaModel
 
 			if ($catid)
 			{
-				$categories   = KunenaForumCategoryHelper::getParents($catid, $this->getState('filter.levels'), array('unpublished' => 1, 'action' => 'none'));
+				$categories   = KunenaForumCategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, array('unpublished' => 1, 'action' => 'none'));
 				$categories[] = KunenaForumCategoryHelper::get($catid);
 			}
 			else
 			{
-				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState('filter.levels'), $params);
+				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState('filter.levels') - 1, $params);
 			}
 
-			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState('filter.levels'), $params));
+			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState('filter.levels') - 1, $params));
 			$categories = array_merge($orphans, $categories);
 
 			$categories = KunenaForumCategoryHelper::getIndentation($categories);
@@ -168,8 +168,8 @@ class KunenaAdminModelCategories extends KunenaModel
 
 			$admin = 0;
 			$acl   = KunenaAccess::getInstance();
-			/** @var KunenaForumCategory $category */
 
+			/** @var KunenaForumCategory $category */
 			foreach ($this->_admincategories as $category)
 			{
 				// TODO: Following is needed for J!2.5 only:
@@ -185,7 +185,14 @@ class KunenaAdminModelCategories extends KunenaModel
 
 				foreach ($access as $item)
 				{
-					$category->accessname[] = $item['title'];
+					if (!empty($item['admin.link']))
+					{
+						$category->accessname[] = '<a href="' . htmlentities($item['admin.link'], ENT_COMPAT, 'utf-8') . '">' . htmlentities($item['title'], ENT_COMPAT, 'utf-8') . '</a>';
+					}
+					else
+					{
+						$category->accessname[] = htmlentities($item['title'], ENT_COMPAT, 'utf-8');
+					}
 				}
 
 				$category->accessname = implode(' / ', $category->accessname);
@@ -332,11 +339,21 @@ class KunenaAdminModelCategories extends KunenaModel
 		$lists ['post_anonymous']  = JHtml::_('select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous);
 		$lists ['topic_ordering']  = JHtml::_('select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox" size="1"', 'value', 'text', $category->topic_ordering);
 
+		$options                 = array();
+		$options[0]              = JHtml::_('select.option', '0', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_NEVER'));
+		$options[1]              = JHtml::_('select.option', '1', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SECTION'));
+		$options[2]              = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_CATEGORY'));
+		$options[3]              = JHtml::_('select.option', '3', JText::_('COM_KUNENA_A_CATEGORY_CFG_OPTION_SUBCATEGORY'));
+		$lists['display_parent'] = JHtml::_('select.genericlist', $options, 'params[display][index][parent]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.parent', '3'));
+
+		unset($options[1]);
+
+		$lists['display_children'] = JHtml::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
+
 		// TODO:
 		/*
 		$topicicons = array ();
-		jimport( 'joomla.filesystem.folder' );
-		$topiciconslist = JFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
+		$topiciconslist = KunenaFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
 		foreach( $topiciconslist as $icon ) {
 			$topicicons[] = JHtml::_ ( 'select.option', $icon, $icon );
 		}

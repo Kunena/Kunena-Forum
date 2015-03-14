@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -52,7 +52,8 @@ class KunenaAdminModelSmilies extends JModelList
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
+		$layout        = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.smilies';
 
 		if ($layout)
 		{
@@ -136,7 +137,7 @@ class KunenaAdminModelSmilies extends JModelList
 				$query->order('a.id ' . $direction);
 		}
 
-		// echo nl2br(str_replace('#__','jos_',$query));
+		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
 }

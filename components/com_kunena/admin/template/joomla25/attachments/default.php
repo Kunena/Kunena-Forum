@@ -133,8 +133,10 @@ defined ( '_JEXEC' ) or die ();
 							$i = 0;
 							$n = count($this->items);
 							if($this->pagination->total > 0) :
-							foreach($this->items as $id=>$attachment) {
-							$message = $attachment->getMessage();
+
+							foreach($this->items as $id=>$attachment)
+							{
+								$message = $attachment->getMessage();
 							?>
 								<tr <?php echo 'class = "row' . $k . '"';?>>
 									<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>

@@ -41,14 +41,20 @@ class KunenaRequest
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
 	 * @throws	InvalidArgumentException
 	 */
-	public static function factory($path, JInput $input = null, $options = null) {
+	public static function factory($path, JInput $input = null, $options = null)
+	{
 		// Normalize input.
 		$words = ucwords(strtolower(trim(preg_replace('/[^a-z0-9_]+/i', ' ', (string) $path))));
-		if (!$words) throw new InvalidArgumentException('No controller given.', 404);
+
+		if (!$words)
+		{
+			throw new InvalidArgumentException('No controller given.', 404);
+		}
 
 		// Attempt to load controller.
 		$class = 'ComponentKunenaController' . str_replace(' ', '', $words);
-		if (!class_exists($class)) {
+		if (!class_exists($class))
+		{
 			throw new InvalidArgumentException(sprintf('Controller %s doesn\'t exist.', $class), 404);
 		}
 

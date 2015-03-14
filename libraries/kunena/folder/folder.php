@@ -24,9 +24,11 @@ class KunenaFolder extends JFolder
 	 *
 	 * @param $folder
 	 */
-	static function createIndex($folder) {
+	static function createIndex($folder)
+	{
 		// Make sure we have an index.html file in the current folder
-		if (!KunenaFile::exists($folder.'/index.html')) {
+		if (!KunenaFile::exists($folder.'/index.html'))
+		{
 			$contents = '<html><body></body></html>';
 			KunenaFile::write($folder.'/index.html', $contents);
 		}

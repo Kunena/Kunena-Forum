@@ -259,7 +259,8 @@ class KunenaUpload
 			$contentType = '';
 		}
 
-		try {
+		try
+		{
 			// Set filename for future queries.
 			$this->filename = $options['filename'];
 
@@ -400,9 +401,13 @@ class KunenaUpload
 			$options['mime'] = KunenaFile::getMime($outFile);
 			$options['hash'] = md5_file($outFile);
 
-		} else
+		}
+		else
 		{
-			if ($size) $options['mime'] = KunenaFile::getMime($outFile);
+			if ($size)
+			{
+				$options['mime'] = KunenaFile::getMime($outFile);
+			}
 		}
 
 		return $options;
@@ -489,14 +494,14 @@ class KunenaUpload
 	 */
 	protected function checkFileSize($filesize, $avatar)
 	{
-		if ( !$avatar )
+		if (!$avatar)
 		{
-			if ( $filesize > $this->getMaxSize() )
+			if ($filesize > $this->getMaxSize())
 			{
 				return false;
 			}
 		}
-		else if ( $avatar && $filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024 )
+		else if ($avatar && $filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024)
 		{
 			return false;
 		}
@@ -522,7 +527,7 @@ class KunenaUpload
 		$file->destination = $destination . '.' . $file->ext;
 		$file->success = false;
 
-		if ( !is_uploaded_file($file->tmp_name) )
+		if (!is_uploaded_file($file->tmp_name))
 		{
 			$exception = $this->checkUpload($fileInput);
 
@@ -531,7 +536,7 @@ class KunenaUpload
 				throw $exception;
 			}
 		}
-		elseif ( $file->error != 0 )
+		elseif ($file->error != 0)
 		{
 			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED'), 500);
 		}
@@ -557,12 +562,12 @@ class KunenaUpload
 			}
 		}
 
-		if ( !$this->checkFileSize($file->size, true) )
+		if (!$this->checkFileSize($file->size, true))
 		{
 			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 		}
 
-		if (! KunenaFile::copy($file->tmp_name, $file->destination))
+		if (!KunenaFile::copy($file->tmp_name, $file->destination))
 		{
 			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_RIGHT_MEDIA_DIR'), 500);
 		}
@@ -633,10 +638,12 @@ class KunenaUpload
 	 * Convert into human readable format bytes to kB, MB, GB
 	 *
 	 * @param unknown $bytes
-	 * @param string $force_unit
-	 * @param string $format
-	 * @param string $si
+	 * @param null    $unit
+	 *
 	 * @return string
+	 * @internal param string $force_unit
+	 * @internal param string $format
+	 * @internal param string $si
 	 */
 	public function bytes($bytes, $unit = NULL)
 	{

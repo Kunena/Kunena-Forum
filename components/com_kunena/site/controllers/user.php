@@ -181,6 +181,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
+
 		if ($return)
 		{
 			return $return;
@@ -279,14 +280,12 @@ class KunenaControllerUser extends KunenaController
 		if (!empty ($DelAvatar) || !empty ($DelProfileInfo))
 		{
 			$avatar_deleted = '';
-
 			// Delete avatar from file system
 			if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar) && !stristr($user->avatar, 'gallery/'))
 			{
 				KunenaFile::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
 				$avatar_deleted = JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
 			}
-
 			$user->avatar = '';
 			$user->save();
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
@@ -491,7 +490,6 @@ class KunenaControllerUser extends KunenaController
 
 			return;
 		}
-
 		$karma_delay = '14400'; // 14400 seconds = 6 hours
 		$userid      = JRequest::getInt('userid', 0);
 
@@ -558,7 +556,6 @@ class KunenaControllerUser extends KunenaController
 
 			return;
 		}
-
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterKarma($target->userid, $this->me->userid, $karmaDelta);
@@ -611,7 +608,6 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$username = $this->user->get('username');
-
 		$user = new JUser($this->user->id);
 
 		// Bind the form fields to the user table and save.
@@ -811,6 +807,7 @@ class KunenaControllerUser extends KunenaController
 		fputs($fp, $data);
 		// Create a buffer which holds the response
 		$response = '';
+
 		// Read the response
 		while (!feof($fp))
 		{
@@ -858,6 +855,7 @@ class KunenaControllerUser extends KunenaController
 			foreach ($cid as $id)
 			{
 				$attachment = KunenaAttachmentHelper::get($id);
+
 				if ($attachment->isAuthorised('delete') && $attachment->delete())
 				{
 					$number++;

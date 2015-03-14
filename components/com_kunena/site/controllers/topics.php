@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -22,7 +22,7 @@ class KunenaControllerTopics extends KunenaController
 	function none()
 	{
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_CONTROLLER_NO_TASK'));
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function permdel()
@@ -30,7 +30,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$message = '';
@@ -66,7 +68,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage($message);
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function delete()
@@ -74,7 +76,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
@@ -107,7 +111,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage($message);
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function restore()
@@ -115,7 +119,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
@@ -148,7 +154,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage($message);
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	public function approve()
@@ -156,7 +162,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
@@ -190,7 +198,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage($message);
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function move()
@@ -198,7 +206,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
@@ -239,7 +249,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage($message);
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function unfavorite()
@@ -247,7 +257,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
@@ -264,7 +276,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC'));
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function unsubscribe()
@@ -272,7 +284,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
@@ -289,7 +303,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC'));
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	public function approve_posts()
@@ -297,7 +311,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
@@ -331,7 +347,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'));
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	public function delete_posts()
@@ -339,7 +355,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
@@ -372,7 +390,7 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_DELETE'));
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function restore_posts()
@@ -380,7 +398,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
@@ -412,8 +432,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_UNDELETE'));
 		}
-
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function permdel_posts()
@@ -421,7 +440,9 @@ class KunenaControllerTopics extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
@@ -454,6 +475,6 @@ class KunenaControllerTopics extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_BULKMSG_DELETED'));
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 }

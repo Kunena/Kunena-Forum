@@ -11,7 +11,12 @@
 defined('_JEXEC') or die;
 
 $modules = $this->renderPosition();
-if (!$modules) return;
+
+if (!$modules)
+{
+	return;
+}
+
 ?>
 <!-- Module position: <?php echo $this->position; ?> -->
 <div class="well well-small">

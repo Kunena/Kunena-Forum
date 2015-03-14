@@ -17,8 +17,8 @@ $dateText = $dateHover = '';
 
 if ($this->config->editmarkup && $this->message->modified_time)
 {
-	$dateText = $message->getModifiedTime()->toKunena('config_post_dateformat').' ';
-	$dateTitle = 'title="' . $message->getModifiedTime()->toKunena('config_post_dateformat_hover').'"';
+	$dateText = $message->getModifiedTime()->toKunena('config_post_dateformat') . ' ';
+	$dateTitle = 'title="' . $message->getModifiedTime()->toKunena('config_post_dateformat_hover') . '"';
 }
 ?>
 <div>

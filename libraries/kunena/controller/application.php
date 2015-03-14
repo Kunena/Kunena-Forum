@@ -34,7 +34,8 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 				: null);
 
 		// Execute HMVC if the controller is present.
-		if ($controller && $controller->exists()) {
+		if ($controller && $controller->exists())
+		{
 			return $controller;
 		}
 

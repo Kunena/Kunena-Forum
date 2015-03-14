@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Topic
+ *
+ * @package         Kunena.Site
+ * @subpackage      Layout.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -21,8 +22,8 @@ class KunenaLayoutMessageList extends KunenaLayout
 	/**
 	 * Method to display the time filter
 	 *
-	 * @param   int     $id      The HTML id for the select list
-	 * @param   string  $attrib  The extras attributes for the select list
+	 * @param   int    $id     The HTML id for the select list
+	 * @param   string $attrib The extras attributes for the select list
 	 *
 	 * @return void
 	 */

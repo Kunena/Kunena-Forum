@@ -1,31 +1,34 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator
- * @subpackage Controllers
+ *
+ * @package       Kunena.Administrator
+ * @subpackage    Controllers
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Kunena Plugins Controller
  *
  * @since 2.0
  */
-class KunenaAdminControllerPlugins extends KunenaController {
+class KunenaAdminControllerPlugins extends KunenaController
+{
 	protected $baseurl = null;
 
-	public function __construct($config = array()) {
+	public function __construct($config = array())
+	{
 		$this->option = 'com_kunena';
-		$this->input = JFactory::getApplication()->input;
+		$this->input  = JFactory::getApplication()->input;
 
 		parent::__construct($config);
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=plugins';
-		$this->baseurl2 = 'administrator/index.php?option=com_kunena&view=plugins';
-		$this->view_list = 'plugins';
+		$this->baseurl     = 'administrator/index.php?option=com_kunena&view=plugins';
+		$this->baseurl2    = 'administrator/index.php?option=com_kunena&view=plugins';
+		$this->view_list   = 'plugins';
 		$this->text_prefix = 'COM_PLUGINS';
 
 		// Value = 0
@@ -51,6 +54,7 @@ class KunenaAdminControllerPlugins extends KunenaController {
 		{
 			$name = 'plugin';
 		}
+
 		return parent::getModel($name, $prefix, $config);
 	}
 
@@ -67,9 +71,9 @@ class KunenaAdminControllerPlugins extends KunenaController {
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
 		// Get items to publish from the request.
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'array');
-		$data = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
-		$task = $this->getTask();
+		$cid   = JFactory::getApplication()->input->get('cid', array(), 'array');
+		$data  = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
+		$task  = $this->getTask();
 		$value = JArrayHelper::getValue($data, $task, 0, 'int');
 
 		if (empty($cid))
@@ -107,10 +111,11 @@ class KunenaAdminControllerPlugins extends KunenaController {
 				{
 					$ntext = $this->text_prefix . '_N_ITEMS_TRASHED';
 				}
+
 				$this->setMessage(JText::plural($ntext, count($cid)));
 			}
 		}
-		$extension = $this->input->get('extension');
+		$extension    = $this->input->get('extension');
 		$extensionURL = ($extension) ? '&extension=' . $extension : '';
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
 	}
@@ -130,13 +135,15 @@ class KunenaAdminControllerPlugins extends KunenaController {
 		$ids = JFactory::getApplication()->input->post->get('cid', array(), 'array');
 		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
 
-		$model = $this->getModel();
+		$model  = $this->getModel();
 		$return = $model->reorder($ids, $inc);
+
 		if ($return === false)
 		{
 			// Reorder failed.
 			$message = JText::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
+
 			return false;
 		}
 		else
@@ -144,6 +151,7 @@ class KunenaAdminControllerPlugins extends KunenaController {
 			// Reorder succeeded.
 			$message = JText::_('JLIB_APPLICATION_SUCCESS_ITEM_REORDERED');
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
+
 			return true;
 		}
 	}
@@ -161,7 +169,7 @@ class KunenaAdminControllerPlugins extends KunenaController {
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Get the input
-		$pks = $this->input->post->get('cid', array(), 'array');
+		$pks   = $this->input->post->get('cid', array(), 'array');
 		$order = $this->input->post->get('order', array(), 'array');
 
 		// Sanitize the input
@@ -179,6 +187,7 @@ class KunenaAdminControllerPlugins extends KunenaController {
 			// Reorder failed
 			$message = JText::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
+
 			return false;
 		}
 		else
@@ -186,6 +195,7 @@ class KunenaAdminControllerPlugins extends KunenaController {
 			// Reorder succeeded.
 			$this->setMessage(JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+
 			return true;
 		}
 	}
@@ -204,13 +214,15 @@ class KunenaAdminControllerPlugins extends KunenaController {
 
 		$ids = JFactory::getApplication()->input->post->get('cid', array(), 'array');
 
-		$model = $this->getModel();
+		$model  = $this->getModel();
 		$return = $model->checkin($ids);
+
 		if ($return === false)
 		{
 			// Checkin failed.
 			$message = JText::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message, 'error');
+
 			return false;
 		}
 		else
@@ -218,6 +230,7 @@ class KunenaAdminControllerPlugins extends KunenaController {
 			// Checkin succeeded.
 			$message = JText::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids));
 			$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false), $message);
+
 			return true;
 		}
 	}

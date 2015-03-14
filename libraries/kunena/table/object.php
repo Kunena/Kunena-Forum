@@ -19,7 +19,8 @@ defined ( '_JEXEC' ) or die ();
  *
  * @since       3.1
  */
-abstract class KunenaTableObject {
+abstract class KunenaTableObject
+{
 	/**
 	 * Store all instances of this type by Id.
 	 * Always override this variable in your own class!
@@ -228,7 +229,10 @@ abstract class KunenaTableObject {
 	 * @param  bool  $sqlFetch  True only if properties were assigned before constructor was called.
 	 * @since  3.1
 	 */
-	protected function initialise($sqlFetch = false) {}
+	protected function initialise($sqlFetch = false)
+	{
+
+	}
 
 	/**
 	 * Create almost identical copy of the object, but clean up the key fields.
@@ -262,13 +266,18 @@ abstract class KunenaTableObject {
 		$k = json_encode(self::resolveKeys($keys));
 		// FIXME:
 		$k = (int) $keys;
+
 		// If we are creating or loading a new item or we load instance by alternative keys,
 		// we need to create a new object.
 		if (!isset(static::$instances[$k])) {
 			$c = get_called_class();
 			$instance = new $c($keys);
 			/** @var KunenaTableObject $instance */
-			if (!$instance->exists()) return $instance;
+
+			if (!$instance->exists())
+			{
+				return $instance;
+			}
 
 			// Instance exists: make sure that we return the global instance.
 			$k = $instance->_key;
@@ -276,8 +285,10 @@ abstract class KunenaTableObject {
 
 		// Return global instance from the identifier.
 		$instance = static::$instances[$k];
+
 		// But before that, check that we have valid item.
-		if ($k != $instance->_key) {
+		if ($k != $instance->_key)
+		{
 			throw new RuntimeException(get_called_class() . ": Identifier doesn't match ({$k} != {$instance->_key})");
 		}
 
@@ -329,10 +340,12 @@ abstract class KunenaTableObject {
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
+
 		if ($exists !== null)
 		{
 			$this->_exists = $exists;
 		}
+
 		return $return;
 	}
 
@@ -372,7 +385,8 @@ abstract class KunenaTableObject {
 	{
 		// Use closure to return public variables only.
 		$self = $this;
-		return function() use ($self) {
+		return function() use ($self)
+		{
 			return get_object_vars($self);
 		};
 	}
@@ -428,15 +442,21 @@ abstract class KunenaTableObject {
 
 	protected function load($keys = null, $reset = true)
 	{
-		try {
+		try
+		{
 			$keys = $this->getKeyValues($keys);
-		} catch (UnexpectedValueException $e) {
-			if ($e->getCode() == 0) {
+		}
+		catch (UnexpectedValueException $e)
+		{
+			if ($e->getCode() == 0)
+			{
 				// Key not fully given, no need to load the item.
-				foreach ($keys as $field => $value) {
+				foreach ($keys as $field => $value)
+				{
 					// Make sure the object contains the search fields.
 					$this->$field = $value;
 				}
+
 				return false;
 			}
 			// Error, throw it forward.
@@ -450,7 +470,8 @@ abstract class KunenaTableObject {
 		// Initialise the query.
 		$query = static::$db->getQuery(true)->select('*')->from(static::$tbl);
 
-		foreach ($keys as $field => $value) {
+		foreach ($keys as $field => $value)
+		{
 			// Make sure the object contains the search fields.
 			// This is incompatible to JTable, but needed by this class.
 			$this->$field = $value;
@@ -464,7 +485,8 @@ abstract class KunenaTableObject {
 		$row = static::$db->loadAssoc();
 
 		// Check that we have a result.
-		if (empty($row)) {
+		if (empty($row))
+		{
 			return false;
 		}
 
@@ -488,22 +510,31 @@ abstract class KunenaTableObject {
 		return true;
 	}
 
-	public function store($updateNulls = false) {
-		if ($this->exists()) {
+	public function store($updateNulls = false)
+	{
+		if ($this->exists())
+		{
 			$ret = static::$db->updateObject(static::$tbl, $this, static::$tbl_keys, $updateNulls);
-		} else {
+		}
+		else
+		{
 			$ret = static::$db->insertObject(static::$tbl, $this, static::$tbl_keys);
 		}
 
-		if (static::$locked) {
+		if (static::$locked)
+		{
 			$this->unlock();
 		}
 
-		if (!$ret) {
+		if (!$ret)
+		{
 			$this->setError(get_class($this) . '::store failed - ' . static::$db->getErrorMsg());
+
 			return false;
 		}
+
 		$this->_exists = true;
+
 		return true;
 	}
 
@@ -579,9 +610,12 @@ abstract class KunenaTableObject {
 	 */
 	public function delete($keys = null)
 	{
-		try {
+		try
+		{
 			$keys = $this->getKeyValues($keys);
-		} catch (UnexpectedValueException $e) {
+		}
+		catch (UnexpectedValueException $e)
+		{
 			throw $e;
 		}
 
@@ -696,15 +730,16 @@ abstract class KunenaTableObject {
 	/**
 	 * Method to increment the hits for a row if the necessary property/field exists.
 	 *
-	 * @param   mixed  $pk  An optional primary key value to increment. If not set the instance property value is used.
+	 * @return bool True on success.
 	 *
-	 * @return  boolean  True on success.
+	 * @internal param mixed $pk An optional primary key value to increment. If not set the instance property value is used.
 	 *
-	 * @since  3.1
+	 * @since    3.1
 	 */
 	public function hit()
 	{
 		$pk = null;
+
 		// If there is no hits field, just return true.
 		if (!property_exists($this, 'hits'))
 		{
@@ -820,7 +855,11 @@ abstract class KunenaTableObject {
 		$db = JFactory::getDbo();
 		$db->setQuery($query);
 		$items = (array) $db->loadObjectList('id', get_called_class());
-		if (is_array(static::$instances)) static::$instances += $items;
+
+		if (is_array(static::$instances))
+		{
+			static::$instances += $items;
+		}
 
 		return $items;
 	}
@@ -833,54 +872,68 @@ abstract class KunenaTableObject {
 	 * @since  3.1
 	 * @throws UnexpectedValueException
 	 */
-	protected function getKeyValues($fields = null, $throw = true) {
+	protected function getKeyValues($fields = null, $throw = true)
+	{
 		// FIXME: bug...
 		static $fieldNames = null;
 
 		$tableKeys = static::$tbl_keys;
 
 		$keys = array();
-		if (is_null($fields)) {
+		if (is_null($fields))
+		{
 			// No fields were given as parameter: use table instance.
-			foreach ($tableKeys as $i => $keyName) {
+			foreach ($tableKeys as $i => $keyName)
+			{
 				$keyValue = isset($this->$keyName) ? $this->$keyName : null;
 				$keys[$keyName] = $keyValue;
 
 				// If null primary keys aren't allowed
-				if($throw && is_null($keyValue)) {
+				if($throw && is_null($keyValue))
+				{
 					throw new UnexpectedValueException(sprintf('%s: Null primary key not allowed &#160; %s..', get_class($this), $keyName), 0);
 				}
 			}
-		} else {
-			if (is_null($fieldNames)) {
+		}
+		else
+		{
+			if (is_null($fieldNames))
+			{
 				// Lazy initialize fields list.
 				$fieldNames = static::getFields();
 			}
 
-			if (!is_array($fields)) {
+			if (!is_array($fields))
+			{
 				$fields = (array) $fields;
 			}
 
-			foreach ($fields as $keyName => $keyValue) {
+			foreach ($fields as $keyName => $keyValue)
+			{
 				// Check if key in given numeric location exists.
-				if (is_numeric($keyName)) {
-					if (!isset($tableKeys[$keyName])) {
+				if (is_numeric($keyName))
+				{
+					if (!isset($tableKeys[$keyName]))
+					{
 						throw new UnexpectedValueException(sprintf('%s: Missing key in index %s.', get_class($this), $keyName), 1);
 					}
+
 					// Find out key name in given numeric location and use it.
 					$keyName = $tableKeys[$keyName];
 				}
 				$keys[$keyName] = $keyValue;
 
 				// Verify that the used key exists in the table.
-				if (!in_array($keyName, $fieldNames)) {
+				if (!in_array($keyName, $fieldNames))
+				{
 					throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', get_class($this), $keyName), 2);
 				}
 			}
 		}
 
 		// Make sure user didn't pass empty array.
-		if (empty($keys)) {
+		if (empty($keys))
+		{
 			throw new UnexpectedValueException(sprintf('%s: No fields given.', get_class($this)), 3);
 		}
 
@@ -895,7 +948,8 @@ abstract class KunenaTableObject {
 	 * @since  3.1
 	 * @throws UnexpectedValueException
 	 */
-	static protected function resolveKeys($fields) {
+	static protected function resolveKeys($fields)
+	{
 		// First run: Initialise the table properties.
 		if (is_null(static::$tbl_fields))
 		{
@@ -904,29 +958,36 @@ abstract class KunenaTableObject {
 
 		$keys = array();
 
-		if (!is_array($fields)) {
+		if (!is_array($fields))
+		{
 			$fields = (array) $fields;
 		}
 
-		foreach ($fields as $keyName => $keyValue) {
+		foreach ($fields as $keyName => $keyValue)
+		{
 			// Check if key in given numeric location exists.
-			if (is_numeric($keyName)) {
-				if (!isset(static::$tbl_keys[$keyName])) {
+			if (is_numeric($keyName))
+			{
+				if (!isset(static::$tbl_keys[$keyName]))
+				{
 					throw new UnexpectedValueException(sprintf('%s: Missing key in index: %s.', get_called_class(), $keyName), 1);
 				}
+
 				// Find out key name in given numeric location and use it.
 				$keyName = static::$tbl_keys[$keyName];
 			}
 			$keys[$keyName] = $keyValue;
 
 			// Verify that the used key exists in the table.
-			if (!isset(static::$tbl_fields[$keyName])) {
+			if (!isset(static::$tbl_fields[$keyName]))
+			{
 				throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', get_called_class(), $keyName), 2);
 			}
 		}
 
 		// Make sure user didn't pass empty array.
-		if (empty($keys)) {
+		if (empty($keys))
+		{
 			throw new UnexpectedValueException(sprintf('%s: No fields given.', get_called_class()), 3);
 		}
 

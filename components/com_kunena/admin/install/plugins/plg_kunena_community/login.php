@@ -1,34 +1,43 @@
 <?php
 /**
  * Kunena Plugin
- * @package Kunena.Plugins
- * @subpackage Community
+ *
+ * @package       Kunena.Plugins
+ * @subpackage    Community
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
-class KunenaLoginCommunity {
+class KunenaLoginCommunity
+{
 	protected $params = null;
 
-	public function __construct($params) {
+	public function __construct($params)
+	{
 		$this->params = $params;
 	}
 
-	public function getLoginURL() {
+	public function getLoginURL()
+	{
 		return CRoute::_('index.php?option=com_community&view=frontpage');
 	}
 
-	public function getLogoutURL() {
+	public function getLogoutURL()
+	{
 		return CRoute::_('index.php?option=com_community&view=frontpage');
 	}
 
-	public function getRegistrationURL() {
-		$usersConfig = JComponentHelper::getParams ( 'com_users' );
-		if ($usersConfig->get ( 'allowUserRegistration' ))
+	public function getRegistrationURL()
+	{
+		$usersConfig = JComponentHelper::getParams('com_users');
+		if ($usersConfig->get('allowUserRegistration'))
+		{
 			return CRoute::_('index.php?option=com_community&view=register');
+		}
+
 		return null;
 	}
 }

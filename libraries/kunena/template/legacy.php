@@ -13,13 +13,17 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaTemplateLegacy is needed to load support for legacy templates
  */
-class KunenaTemplateLegacy {
-	public static function load() {}
+class KunenaTemplateLegacy
+{
+	public static function load(){}
 }
 
 $app = JFactory::getApplication('Site');
 
-if (!defined('DS')) define('DS', '/');
+if (!defined('DS'))
+{
+	define('DS', '/');
+}
 
 // Default values
 define('KUNENA_TEMPLATE_DEFAULT', 'blue_eagle');
@@ -80,15 +84,23 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
 /**
  * Class CKunenaTools is legacy class from Kunena 1.6/1.7
  */
-class CKunenaTools {
-	public static function addStyleSheet($filename) {
+class CKunenaTools
+{
+	public static function addStyleSheet($filename)
+	{
 		$document = JFactory::getDocument ();
 		$config = KunenaFactory::getConfig ();
 		$template = KunenaFactory::getTemplate();
 
-		if ($template->name != 'default') $filename = preg_replace('#/com_kunena/template/default#', '/com_kunena/template/blue_eagle', $filename);
+		if ($template->name != 'default')
+		{
+			$filename = preg_replace('#/com_kunena/template/default#', '/com_kunena/template/blue_eagle', $filename);
+		}
+
 		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.css)$#', KUNENA_DIRECTURL.'template/blue_eagle/css/\1', $filename);
-		if (JDEBUG || $config->debug || KunenaForum::isDev()) {
+
+		if (JDEBUG || $config->debug || KunenaForum::isDev())
+		{
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\-min\./u', '.', $filename );
 		}
@@ -96,7 +108,8 @@ class CKunenaTools {
 		return $document->addStyleSheet ( $filename );
 	}
 
-	public static function addScript($filename) {
+	public static function addScript($filename)
+	{
 		$document = JFactory::getDocument ();
 		$config = KunenaFactory::getConfig ();
 
@@ -105,7 +118,9 @@ class CKunenaTools {
 		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.js)$#', JUri::root(true).'/media/kunena/js/\1', $filename);
 		// Replace everything else that points to default template with media
 		$filename = preg_replace('#/components/com_kunena/template/default/js/#', '/media/kunena/js/', $filename);
-		if (JDEBUG || $config->debug || KunenaForum::isDev()) {
+
+		if (JDEBUG || $config->debug || KunenaForum::isDev())
+		{
 			// If we are in debug more, make sure we load the unpacked javascript
 			$filename = preg_replace ( '/\-min\./u', '.', $filename );
 		}

@@ -22,12 +22,12 @@ class KunenaAdminControllerPlugin extends KunenaController
 {
 	public function __construct($config = array())
 	{
-		$this->option = 'com_kunena';
-		$this->view_list = 'plugins';
-		$this->view_item = 'plugin';
-		$this->context = 'plugin';
+		$this->option      = 'com_kunena';
+		$this->view_list   = 'plugins';
+		$this->view_item   = 'plugin';
+		$this->context     = 'plugin';
 		$this->text_prefix = 'COM_PLUGINS';
-		$this->input = JFactory::getApplication()->input;
+		$this->input       = JFactory::getApplication()->input;
 
 		parent::__construct($config);
 
@@ -37,13 +37,12 @@ class KunenaAdminControllerPlugin extends KunenaController
 		$this->registerTask('apply', 'save');
 	}
 
-
 	/**
 	 * Method to get a model object, loading it if required.
 	 *
-	 * @param   string  $name    The model name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
+	 * @param   string $name   The model name. Optional.
+	 * @param   string $prefix The class prefix. Optional.
+	 * @param   array  $config Configuration array for model. Optional.
 	 *
 	 * @return  object  The model.
 	 *
@@ -55,16 +54,16 @@ class KunenaAdminControllerPlugin extends KunenaController
 		{
 			$name = 'plugin';
 		}
+
 		return parent::getModel($name, $prefix, $config);
 	}
-
 
 	/**
 	 * Method to check if you can add a new record.
 	 *
 	 * Extended classes can override this if necessary.
 	 *
-	 * @param   array  $data  An array of input data.
+	 * @param   array $data An array of input data.
 	 *
 	 * @return  boolean
 	 *
@@ -73,6 +72,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	protected function allowAdd($data = array())
 	{
 		$user = JFactory::getUser();
+
 		return ($user->authorise('core.create', $this->option) || count($user->getAuthorisedCategories($this->option, 'core.create')));
 	}
 
@@ -81,8 +81,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * Extended classes can override this if necessary.
 	 *
-	 * @param   array   $data  An array of input data.
-	 * @param   string  $key   The name of the key for the primary key; default is id.
+	 * @param   array  $data An array of input data.
+	 * @param   string $key  The name of the key for the primary key; default is id.
 	 *
 	 * @return  boolean
 	 *
@@ -98,8 +98,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * Extended classes can override this if necessary.
 	 *
-	 * @param   array   $data  An array of input data.
-	 * @param   string  $key   The name of the key for the primary key.
+	 * @param   array  $data An array of input data.
+	 * @param   string $key  The name of the key for the primary key.
 	 *
 	 * @return  boolean
 	 *
@@ -122,9 +122,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Method to edit an existing record.
 	 *
-	 * @param   string  $key     The name of the primary key of the URL variable.
-	 * @param   string  $urlVar  The name of the URL variable if different from the primary key
-	 * (sometimes required to avoid router collisions).
+	 * @param   string $key    The name of the primary key of the URL variable.
+	 * @param   string $urlVar The name of the URL variable if different from the primary key
+	 *                         (sometimes required to avoid router collisions).
 	 *
 	 * @return  boolean  True if access level check and checkout passes, false otherwise.
 	 *
@@ -132,10 +132,10 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
-		$app   = JFactory::getApplication();
-		$model = $this->getModel();
-		$table = $model->getTable();
-		$cid   = $this->input->post->get('cid', array(), 'array');
+		$app     = JFactory::getApplication();
+		$model   = $this->getModel();
+		$table   = $model->getTable();
+		$cid     = $this->input->post->get('cid', array(), 'array');
 		$context = "$this->option.edit.$this->context";
 
 		// Determine the name of the primary key for the data.
@@ -152,7 +152,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 
 		// Get the previous record id (if any) and the current record id.
 		$recordId = (int) (count($cid) ? $cid[0] : $this->input->getInt($urlVar));
-		$checkin = property_exists($table, 'checked_out');
+		$checkin  = property_exists($table, 'checked_out');
 
 		// Access check.
 		if (!$this->allowEdit(array($key => $recordId), $key))
@@ -163,7 +163,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 			$this->setRedirect(
 				JRoute::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_list
-						. $this->getRedirectToListAppend(), false
+					. $this->getRedirectToListAppend(), false
 				)
 			);
 
@@ -180,7 +180,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 			$this->setRedirect(
 				JRoute::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
-						. $this->getRedirectToItemAppend($recordId, $urlVar), false
+					. $this->getRedirectToItemAppend($recordId, $urlVar), false
 				)
 			);
 
@@ -195,7 +195,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 			$this->setRedirect(
 				JRoute::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
-						. $this->getRedirectToItemAppend($recordId, $urlVar), false
+					. $this->getRedirectToItemAppend($recordId, $urlVar), false
 				)
 			);
 
@@ -206,7 +206,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Method to cancel an edit.
 	 *
-	 * @param   string  $key  The name of the primary key of the URL variable.
+	 * @param   string $key The name of the primary key of the URL variable.
 	 *
 	 * @return  boolean  True if access level checks pass, false otherwise.
 	 *
@@ -216,9 +216,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 	{
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app = JFactory::getApplication();
-		$model = $this->getModel();
-		$table = $model->getTable();
+		$app     = JFactory::getApplication();
+		$model   = $this->getModel();
+		$table   = $model->getTable();
 		$checkin = property_exists($table, 'checked_out');
 		$context = "$this->option.edit.$this->context";
 
@@ -242,7 +242,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 				$this->setRedirect(
 					JRoute::_(
 						'index.php?option=' . $this->option . '&view=' . $this->view_list
-							. $this->getRedirectToListAppend(), false
+						. $this->getRedirectToListAppend(), false
 					)
 				);
 
@@ -260,7 +260,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 					$this->setRedirect(
 						JRoute::_(
 							'index.php?option=' . $this->option . '&view=' . $this->view_item
-								. $this->getRedirectToItemAppend($recordId, $key), false
+							. $this->getRedirectToItemAppend($recordId, $key), false
 						)
 					);
 
@@ -276,7 +276,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 		$this->setRedirect(
 			JRoute::_(
 				'index.php?option=' . $this->option . '&view=' . $this->view_list
-					. $this->getRedirectToListAppend(), false
+				. $this->getRedirectToListAppend(), false
 			)
 		);
 
@@ -286,8 +286,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Gets the URL arguments to append to an item redirect.
 	 *
-	 * @param   integer  $recordId  The primary key id for the item.
-	 * @param   string   $urlVar    The name of the URL variable for the id.
+	 * @param   integer $recordId The primary key id for the item.
+	 * @param   string  $urlVar   The name of the URL variable for the id.
 	 *
 	 * @return  string  The arguments to append to the redirect URL.
 	 *
@@ -327,7 +327,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 */
 	protected function getRedirectToListAppend()
 	{
-		$tmpl = JFactory::getApplication()->input->get('tmpl');
+		$tmpl   = JFactory::getApplication()->input->get('tmpl');
 		$append = '';
 
 		// Setup redirect info.
@@ -343,8 +343,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 * Function that allows child controller access to model data
 	 * after the data has been saved.
 	 *
-	 * @param   JModelLegacy  $model      The data model object.
-	 * @param   array         $validData  The validated data.
+	 * @param   JModelLegacy $model     The data model object.
+	 * @param   array        $validData The validated data.
 	 *
 	 * @return  void
 	 *
@@ -357,8 +357,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Method to save a record.
 	 *
-	 * @param   string  $key     The name of the primary key of the URL variable.
-	 * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+	 * @param   string $key    The name of the primary key of the URL variable.
+	 * @param   string $urlVar The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
 	 *
 	 * @return  boolean  True if successful, false otherwise.
 	 *
@@ -369,14 +369,14 @@ class KunenaAdminControllerPlugin extends KunenaController
 		// Check for request forgeries.
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app   = JFactory::getApplication();
-		$lang  = JFactory::getLanguage();
-		$model = $this->getModel();
-		$table = $model->getTable();
-		$data  = $this->input->post->get('jform', array(), 'array');
+		$app     = JFactory::getApplication();
+		$lang    = JFactory::getLanguage();
+		$model   = $this->getModel();
+		$table   = $model->getTable();
+		$data    = $this->input->post->get('jform', array(), 'array');
 		$checkin = property_exists($table, 'checked_out');
 		$context = "$this->option.edit.$this->context";
-		$task = $this->getTask();
+		$task    = $this->getTask();
 
 		// Determine the name of the primary key for the data.
 		if (empty($key))
@@ -401,7 +401,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 			$this->setRedirect(
 				JRoute::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_list
-						. $this->getRedirectToListAppend(), false
+					. $this->getRedirectToListAppend(), false
 				)
 			);
 
@@ -424,7 +424,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 				$this->setRedirect(
 					JRoute::_(
 						'index.php?option=' . $this->option . '&view=' . $this->view_item
-							. $this->getRedirectToItemAppend($recordId, $urlVar), false
+						. $this->getRedirectToItemAppend($recordId, $urlVar), false
 					)
 				);
 
@@ -433,7 +433,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 
 			// Reset the ID and then treat the request as for Apply.
 			$data[$key] = 0;
-			$task = 'apply';
+			$task       = 'apply';
 		}
 
 		// Access check.
@@ -445,7 +445,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 			$this->setRedirect(
 				JRoute::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_list
-						. $this->getRedirectToListAppend(), false
+					. $this->getRedirectToListAppend(), false
 				)
 			);
 
@@ -492,7 +492,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 			$this->setRedirect(
 				JRoute::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
-						. $this->getRedirectToItemAppend($recordId, $urlVar), false
+					. $this->getRedirectToItemAppend($recordId, $urlVar), false
 				)
 			);
 
@@ -512,7 +512,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 			$this->setRedirect(
 				JRoute::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
-						. $this->getRedirectToItemAppend($recordId, $urlVar), false
+					. $this->getRedirectToItemAppend($recordId, $urlVar), false
 				)
 			);
 
@@ -532,7 +532,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 			$this->setRedirect(
 				JRoute::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
-						. $this->getRedirectToItemAppend($recordId, $urlVar), false
+					. $this->getRedirectToItemAppend($recordId, $urlVar), false
 				)
 			);
 
@@ -561,7 +561,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 				$this->setRedirect(
 					JRoute::_(
 						'index.php?option=' . $this->option . '&view=' . $this->view_item
-							. $this->getRedirectToItemAppend($recordId, $urlVar), false
+						. $this->getRedirectToItemAppend($recordId, $urlVar), false
 					)
 				);
 				break;
@@ -575,7 +575,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 				$this->setRedirect(
 					JRoute::_(
 						'index.php?option=' . $this->option . '&view=' . $this->view_list
-							. $this->getRedirectToListAppend(), false
+						. $this->getRedirectToListAppend(), false
 					)
 				);
 				break;

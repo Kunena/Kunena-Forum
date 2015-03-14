@@ -14,6 +14,7 @@
 		margin-bottom: 10px;
 	}
 }
+
 /* Smartphones */
 @media (max-width: 480px) {
 	.pagination .test ul > li > a, .pagination ul > li > span {
@@ -21,7 +22,7 @@
 	}
 
 	[class*="badger"] {
-		padding: 25% 19px 14px;
+		padding: 30% 19px 14px;
 	}
 
 	.form-search {
@@ -71,52 +72,77 @@
 		margin-left: 15px;
 		margin-top: 10px;
 	}
+
+	.input-append input {
+		width: 60%;
+	}
+
+	form#ktopicsform input,
+	#login-remember {
+		width: auto;
+	}
+
+	.modal {
+		position: static;
+	}
 }
 
 /* Smartphones to Tablets */
 @media (max-width: 959px) {
-	select{
+	select {
 		width: 80%;
 	}
+
 	li.dropdown {
 		float: right;
 		padding: 5px;
 	}
+
 	a.dropdown-toggle,
 	i.icon-large {
 		color: inherit;
 	}
+
 	.navbar .nav {
 		width: 100%;
 	}
+
 	.controls {
 		margin-left: 0 !important;
 	}
+
 	.mobile-user {
 		margin-top: -40px !important;
 	}
+
 	// COLLAPSIBLE NAVBAR
 	// ------------------
 	// Nav collapse clears brand
 	.nav-collapse {
 		clear: both;
 	}
+
 	// Block-level the nav
 	.nav-collapse .nav {
 		float: none;
 	}
+
 	.nav-collapse .nav > li {
 		float: none;
 	}
+
 	.nav-collapse .nav > li > a {
 		margin-bottom: 2px;
 	}
+
 	.nav-collapse .nav > .divider-vertical {
 		display: none;
 	}
+
 	.nav-collapse .nav .nav-header {
 		text-shadow: none;
 	}
+
 	// Nav and dropdown links in navbar
 	.nav-collapse .nav > li > a,
 	.nav-collapse .dropdown-menu a {
@@ -124,11 +150,13 @@
 		font-weight: bold;
 		.border-radius(3px);
 	}
+
 	// Buttons
 	.nav-collapse .btn {
 		padding: 4px 10px 4px;
 		font-weight: normal;
 	}
+
 	.nav-collapse .dropdown-menu li + li a {
 		margin-bottom: 2px;
 	}
@@ -138,6 +166,7 @@
 		margin-top: 5px;
 		padding: 0;
 	}
+
 	// Dropdowns in the navbar
 	.nav-collapse .dropdown-menu {
 		position: static;
@@ -153,6 +182,7 @@
 		.border-radius(0);
 		.box-shadow(none);
 	}
+
 	.nav-collapse .open > .dropdown-menu {
 		display: block;
 	}
@@ -161,21 +191,26 @@
 	.nav-collapse .dropdown-menu:after {
 		display: none;
 	}
+
 	.nav-collapse .dropdown-menu .divider {
 		display: none;
 	}
+
 	.nav-collapse .nav > li > .dropdown-menu {
 		&:before,
 		&:after {
 			display: none;
 		}
 	}
+
 	// Navbar button
 	.navbar .btn-navbar {
 		display: block;
 	}
 
-
+	a.modal {
+		position: static;
+	}
 }
 
 
@@ -189,10 +224,12 @@
 	.navbar .nav {
 		margin-bottom: -1px;
 	}
+
 	a.dropdown-toggle,
 	i.icon-large {
 		color: inherit;
 	}
+
 	ul.pull-right {
 		margin: 0;
 	}
@@ -202,4 +239,3 @@
 @media (min-width: 1200px) {
 
 }
-

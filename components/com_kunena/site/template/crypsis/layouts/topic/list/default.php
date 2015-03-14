@@ -19,7 +19,8 @@ $colspan = !empty($this->actions) ? 5 : 4;
 	<small class="hidden-phone">
 		(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
 	</small>
-	<?php //To Do:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+
+	<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
 	<div class="pull-right">
 		<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 			  method="post" target="_self" class="form-inline hidden-phone">
@@ -59,7 +60,7 @@ $colspan = !empty($this->actions) ? 5 : 4;
 			<td class="span2 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 			</td>
-			<td class="span3">
+			<td class="span3 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->actions)) : ?>
@@ -81,6 +82,7 @@ $colspan = !empty($this->actions) ? 5 : 4;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 			<td colspan="<?php echo $colspan; ?>">
+				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 				<div class="input-append">
 					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 					<?php if (!empty($this->actions)) : ?>
@@ -92,6 +94,7 @@ $colspan = !empty($this->actions) ? 5 : 4;
 						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
 				</div>
+				<?php endif; ?>
 			</td>
 		</tr>
 		</tfoot>
@@ -113,13 +116,13 @@ $colspan = !empty($this->actions) ? 5 : 4;
 				</td>
 			</tr>
 		<?php else : ?>
-			<?php foreach ($this->topics as $i => $topic) { ?>
-				<?php echo $this->subLayout('Topic/Row')
+			<?php foreach ($this->topics as $i => $topic)
+			{
+				echo $this->subLayout('Topic/Row')
 					->set('topic', $topic)
 					->set('position', 'kunena_topic_' . $i)
 					->set('checkbox', !empty($this->actions));
-				?>
-			<?php } ?>
+			} ?>
 		<?php endif; ?>
 		</tbody>
 	</table>

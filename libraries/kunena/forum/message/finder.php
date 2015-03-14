@@ -78,9 +78,16 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		$list = array();
 		foreach ($categories as $category)
 		{
-			if ($category instanceof KunenaForumCategory) $list[] = (int) $category->id;
-			else $list[] = (int) $category;
+			if ($category instanceof KunenaForumCategory)
+			{
+				$list[] = (int) $category->id;
+			}
+			else
+			{
+				$list[] = (int) $category;
+			}
 		}
+
 		$list = implode(',', $list);
 		$this->query->where("a.catid IN ({$list})");
 
@@ -97,11 +104,16 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 */
 	public function filterByTime(JDate $starting = null, JDate $ending = null)
 	{
-		if ($starting && $ending) {
+		if ($starting && $ending)
+		{
 			$this->query->where("a.time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
-		} elseif ($starting) {
+		}
+		elseif ($starting)
+		{
 			$this->query->where("a.time > {$this->db->quote($starting->toUnix())}");
-		} elseif ($ending) {
+		}
+		elseif ($ending)
+		{
 			$this->query->where("a.time <= {$this->db->quote($ending->toUnix())}");
 		}
 
@@ -187,7 +199,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	{
 		// TODO: remove the field..
 		$query->where("a.moved=0");
-		if (!empty($this->hold)) {
+		if (!empty($this->hold))
+		{
 			JArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
 			$query->where("a.hold IN ({$hold})");

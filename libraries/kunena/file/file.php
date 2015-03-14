@@ -23,6 +23,7 @@ class KunenaFile extends JFile
 	{
 		// Check if file is an image.
 		$info = @getimagesize($file);
+
 		if ($info)
 		{
 			$type = $info['mime'];

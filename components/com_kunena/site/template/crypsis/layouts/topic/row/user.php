@@ -21,9 +21,9 @@ $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
 
 if (!empty($this->spacing)) : ?>
-	<tr>
-		<td colspan="<?php echo $cols; ?>">&nbsp;</td>
-	</tr>
+<tr>
+	<td colspan="<?php echo $cols; ?>">&nbsp;</td>
+</tr>
 <?php endif; ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx); ?>">
@@ -34,7 +34,8 @@ if (!empty($this->spacing)) : ?>
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
-			if ($topic->unread) {
+			if ($topic->unread)
+			{
 				echo $this->getTopicLink($topic, 'unread',
 					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
@@ -58,9 +59,26 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 		</div>
 
-		<div>
+		<div class="hidden-phone">
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
+			<div class="pull-right">
+				<?php /** TODO: New Feature - LABELS
+				<span class="label label-info">
+				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
+				</span>	*/ ?>
+				<?php if ($topic->locked != 0) : ?>
+					<span class="label label-important">
+						<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+					</span>
+				<?php endif; ?>
+			</div>
+		</div>
+
+		<div class="visible-phone">
+			<?php echo JText::_('COM_KUNENA_GEN_LAST_POST')?>
+			<?php echo  $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?> <br>
+			<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -99,10 +117,10 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="span2" id="recent-topics">
 		<?php if ($config->avataroncat) : ?>
-			<div class="span1 hidden-phone">
+			<div class="span2 hidden-phone">
 				<?php echo $avatar; ?>
 			</div>
-			<div class="span11">
+			<div class="span10 last-avatar">
 		<?php endif; ?>
 		<?php if (!$config->avataroncat) : ?>
 			<div class="span12">

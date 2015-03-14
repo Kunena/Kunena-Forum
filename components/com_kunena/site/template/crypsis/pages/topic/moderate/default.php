@@ -30,7 +30,8 @@ $this->addBreadcrumb(
 	$content->topic->getUri()
 );
 
-if ($content->message) {
+if ($content->message)
+{
 	$this->addBreadcrumb(
 		JText::_('COM_KUNENA_MESSAGE'),
 		$content->message->getUri()

@@ -23,22 +23,22 @@ foreach ($this->sections as $section) :
 	<div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 
-		<?php if ($this->me->exists()) : ?>
+		<?php // FIXME: Fix issues. ?>
+		<?php /*if ($this->me->exists()) : */?><!--
 			<div class="btn-group">
 
-				<?php if ($markReadUrl) : ?>
-					<a class="btn btn-small" href="<?php echo $markReadUrl; ?>">
-						<?php echo JText::_('COM_KUNENA_MARK_CATEGORIES_READ') ?>
+				<?php /*if ($markReadUrl) : */?>
+					<a class="btn btn-small" href="<?php /*echo $markReadUrl; */?>">
+						<?php /*echo JText::_('COM_KUNENA_MARK_CATEGORIES_READ') */?>
 					</a>
-				<?php endif; ?>
+				<?php /*endif; */?>
 
-				<?php if ($this->me->isAdmin($section)) : ?>
-					<?php // FIXME: translate and implement. ?>
+				<?php /*if ($this->me->isAdmin($section)) : */?>
 					<button class="btn btn-small">Approve Posts</button>
-				<?php endif; ?>
+				<?php /*endif; */?>
 
 			</div>
-		<?php endif; ?>
+		--><?php /*endif; */?>
 
 		<?php if (count($this->sections) > 0) : ?>
 			<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>">&times;</div>
@@ -63,7 +63,7 @@ foreach ($this->sections as $section) :
 		</small>
 	</h2>
 
-	<div class="row-fluid collapse in section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
+	<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 		<table class="table table-bordered">
 			<?php if (!empty($section->description)) : ?>
 				<thead class="hidden-phone">
@@ -138,11 +138,12 @@ foreach ($this->sections as $section) :
 										<li>
 											<?php
 											// FIXME: Implement small category icons.
-											//echo $this->getCategoryIcon($subcategory, true);
+											// FIXME: echo $this->getCategoryIcon($subcategory, true);
 											echo $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
 												. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 												. ')</small>';
-											if (($new = $subcategory->getNewCount()) > 0) {
+											if (($new = $subcategory->getNewCount()) > 0)
+											{
 												echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
 											}
 											?>
@@ -164,7 +165,8 @@ foreach ($this->sections as $section) :
 									<?php
 									// get the Moderator list for display
 									$modslist = array();
-									foreach ($category->moderators as $moderator) {
+									foreach ($category->moderators as $moderator)
+									{
 										$modslist[] = KunenaFactory::getUser($moderator)->getLink();
 									}
 									echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
@@ -172,7 +174,7 @@ foreach ($this->sections as $section) :
 								</div>
 							<?php endif; ?>
 							<?php if (!empty($this->pending[$category->id])) : ?>
-								<div class="alert" style="max-width:150px;">
+								<div class="alert" style="max-width:150px;margin-top:20px;">
 									<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id),
 										intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'),
 										'', '', 'nofollow'); ?>

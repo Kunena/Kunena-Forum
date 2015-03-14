@@ -61,6 +61,35 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 			'text', $this->escape($this->profile->showOnline), 'kshowonline');
 		$this->settings[] = $item;
 
+		$item = new StdClass();
+		$item->name = 'cansubscribe';
+		$item->label = JText::_('COM_KUNENA_USER_CANSUBSCRIBE');
+		$options = array();
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$item->field = JHtml::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox" size="1"', 'value',
+			'text', $this->escape($this->profile->canSubscribe), 'kcansubscribe');
+		$this->settings[] = $item;
+
+		$item = new StdClass();
+		$item->name = 'userlisttime';
+		$item->label = JText::_('COM_KUNENA_USER_USERLISTTIME');
+		$options = array();
+		$options[] = JHtml::_('select.option', -2, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[] = JHtml::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
+		$options[] = JHtml::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
+		$options[] = JHtml::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));
+		$options[] = JHtml::_('select.option', 12, JText::_('COM_KUNENA_SHOW_12_HOURS'));
+		$options[] = JHtml::_('select.option', 24, JText::_('COM_KUNENA_SHOW_24_HOURS'));
+		$options[] = JHtml::_('select.option', 48, JText::_('COM_KUNENA_SHOW_48_HOURS'));
+		$options[] = JHtml::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
+		$options[] = JHtml::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
+		$options[] = JHtml::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
+		$item->field = JHtml::_('select.genericlist', $options, 'userlisttime', 'class="kinputbox" size="1"', 'value',
+			'text', $this->escape($this->profile->userListtime), 'kuserlisttime');
+		$this->settings[] = $item;
+
 		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE');
 	}
 

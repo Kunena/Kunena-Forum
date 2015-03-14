@@ -37,6 +37,7 @@ if ($content->message)
 		$content->message->getUri()
 	);
 }
+
 $this->addBreadcrumb(
 	JText::_('COM_KUNENA_NEW'),
 	null

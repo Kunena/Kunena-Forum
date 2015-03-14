@@ -14,7 +14,11 @@ defined('_JEXEC') or die;
 <div>
 	<?php
 	echo JText::_('COM_KUNENA_MODERATORS') . ": ";
-	foreach ($this->moderators as $moderator) echo "{$moderator->getLink()} &nbsp;";
+
+	foreach ($this->moderators as $moderator)
+	{
+		echo "{$moderator->getLink()} &nbsp;";
+	}
 	?>
 </div>
 <?php endif; ?>

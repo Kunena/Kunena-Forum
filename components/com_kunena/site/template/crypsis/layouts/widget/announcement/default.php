@@ -9,6 +9,7 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
 // TODO: Move from widget to announcement
 ?>
 <div class=" collapse in" id="announcement<?php echo $this->announcement->id; ?>">

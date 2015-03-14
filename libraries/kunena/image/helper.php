@@ -29,7 +29,7 @@ class KunenaImageHelper
 	 *
 	 * @return bool    True on success.
 	 */
-	public static function version($file, $folder, $filename, $maxWidth=800, $maxHeight=800, $quality=70, $scale=KunenaImage::SCALE_INSIDE, $crop=0)
+	public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0)
 	{
 		try
 		{
@@ -64,13 +64,18 @@ class KunenaImageHelper
 				// Resize image and copy it to temporary file.
 				$image = new KunenaImage($file);
 
-				if ($crop && $info->width > $info->height) {
+				if ($crop && $info->width > $info->height)
+				{
 					$image = $image->resize($info->width * $maxHeight / $info->height, $maxHeight , false, $scale);
 					$image = $image->crop($maxWidth, $maxHeight);
-				} elseif ($crop && $info->width < $info->height) {
+				}
+				elseif ($crop && $info->width < $info->height)
+				{
 					$image = $image->resize($maxWidth, $info->height * $maxWidth / $info->width, false, $scale);
 					$image = $image->crop($maxWidth, $maxHeight);
-				} else {
+				}
+				else
+				{
 					$image = $image->resize($maxWidth, $maxHeight, false, $scale);
 				}
 
@@ -82,6 +87,7 @@ class KunenaImageHelper
 				if (!KunenaFile::move($temp, "{$folder}/{$filename}"))
 				{
 					unlink($temp);
+
 					return false;
 				}
 			}
@@ -98,6 +104,7 @@ class KunenaImageHelper
 		{
 			return false;
 		}
+
 		return true;
 	}
 }

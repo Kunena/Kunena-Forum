@@ -12,4 +12,7 @@ defined('JPATH_PLATFORM') or die;
 /**
  * Compatibility layer for JImage
  */
-class KunenaCompatImage extends JImage {}
+class KunenaCompatImage extends JImage
+{
+
+}

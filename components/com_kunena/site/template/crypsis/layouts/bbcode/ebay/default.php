@@ -14,9 +14,22 @@ defined('_JEXEC') or die;
 
 // Display ebay item.
 ?>
-<object width="<?php echo $this->width; ?>" height="<?php echo $this->height; ?>">
-	<param name="movie" value="http://togo.ebay.com/togo/togo.swf" />
-	<param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=<?php echo $this->language; ?>&mode=normal&itemid=<?php echo $this->content; ?>&campid=<?php echo $this->affiliate; ?>" />
-	<embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=<?php echo $this->language; ?>&mode=normal&itemid=<?php echo $this->content; ?>&campid=<?php echo $this->affiliate; ?>">
-	</embed>
-</object>
+
+<?php if($this->ack == 'Success'): ?>
+	<div style="border: 1px solid #e5e5e5;margin:10px;padding:10px;border-radius:5px">
+		<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif" />
+		<div style="margin:10px 0" /></div>
+		<div style="text-align: center;"><a href="<?php echo $this->naturalurl; ?>"> <img  src="<?php echo $this->pictureurl; ?>" /></a></div>
+		<div style="margin:10px 0" /></div>
+		<a href="<?php echo $this->naturalurl; ?>"><?php echo $this->title; ?></a>
+		<div style="margin:10px 0" /></div>
+		<div style="margin:10px 0" /></div>
+		<?php if ($this->status == "Active"): ?>
+			<a class="btn" href="<?php echo $this->naturalurl; ?>"><?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') ?></a>
+		<?php else: ?>
+			<?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED'); ?>
+		<?php endif; ?>
+	</div>
+<?php else: ?>
+	<b><?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID'); ?></b>
+<?php endif; ?>

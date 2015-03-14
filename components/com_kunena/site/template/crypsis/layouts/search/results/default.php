@@ -10,7 +10,11 @@
  **/
 defined('_JEXEC') or die;
 
-if (empty($this->results)) return;
+if (empty($this->results))
+{
+	return;
+}
+
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?>
@@ -26,7 +30,8 @@ if (empty($this->results)) return;
 <?php endif; ?>
 
 <?php
-foreach ($this->results as $message) {
+foreach ($this->results as $message)
+{
 	// TODO: use the default message layout...
 	echo $this->subLayout('Search/Results/Row')->set('message', $message);
 }

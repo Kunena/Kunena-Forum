@@ -13,6 +13,11 @@ defined('_JEXEC') or die;
 $config = $this->config;
 
 $cols = 1;
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+$this->addScript('js/caret.js');
+$this->addScript('js/atwho.js');
+$this->addStyleSheet('css/atwho.css');
+$this->addScript('js/search.js');
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_MEMBERS'); ?>
@@ -34,7 +39,7 @@ $cols = 1;
       method="post" id="kuserlist-form" name="kuserlist-form">
 	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>" />
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-striped">
 		<thead>
@@ -128,9 +133,7 @@ $cols = 1;
 
 				<?php if ($config->userlist_online) : ?>
 				<td class="center">
-					<span class="label label-<?php echo $user->isOnline('success', 'important'); ?>">
-						<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-					</span>
+					<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 				</td>
 				<?php endif; ?>
 

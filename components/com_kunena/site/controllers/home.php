@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -40,7 +40,6 @@ class KunenaControllerHome extends KunenaController
 			if (!$default || $default->id == $home->id)
 			{
 				// There is no default menu item, use category view instead
-
 				$default = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
 
 				if ($default)

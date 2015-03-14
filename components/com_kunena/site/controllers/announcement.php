@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -30,7 +30,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
@@ -43,9 +45,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				continue;
 			}
-
 			$announcement->published = 1;
-
 			if (!$announcement->authorise('edit') || !$announcement->save())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
@@ -56,7 +56,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			}
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	public function unpublish()
@@ -64,7 +64,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
@@ -73,6 +75,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
+
 			if ($announcement->published == 0)
 			{
 				continue;
@@ -90,7 +93,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			}
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	public function edit()
@@ -108,7 +111,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		if (!JSession::checkToken('request'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$cid = JRequest::getVar('cid', (array) JRequest::getInt('id'), 'post', 'array'); // Array of integers
@@ -136,7 +141,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$now                    = new JDate();
@@ -155,7 +162,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		if (!$announcement->authorise($id ? 'edit' : 'create') || !$announcement->save())
 		{
 			$this->app->enqueueMessage($announcement->getError(), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$this->app->enqueueMessage(JText::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));

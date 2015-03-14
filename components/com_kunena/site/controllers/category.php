@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -46,10 +46,13 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		if (!JSession::checkToken('request'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
-		$catid = JRequest::getInt('catid', 0);
+		$catid    = JRequest::getInt('catid', 0);
+		$children = JRequest::getBool('children', 0);
 
 		if (!$catid)
 		{
@@ -74,22 +77,29 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			if (!$category->authorise('read'))
 			{
 				$this->app->enqueueMessage($category->getError(), 'error');
-				$this->redirectBack();
+				$this->setRedirectBack();
+
+				return;
 			}
 
 			$session = KunenaFactory::getSession();
 
 			if ($session->userid)
 			{
-				// Mark all unread topics in the category to read
-				$userinfo = $category->getUserInfo();
+				$categories = array($category->id => $category);
 
-				// FIXME: Joomla 2.5 ->toSql()
-				$userinfo->allreadtime = JFactory::getDate()->toSql();
-
-				if (!$userinfo->save())
+				if ($children)
 				{
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
+					// Include all levels of child categories.
+					$categories += $category->getChildren(-1);
+				}
+
+				// Mark all unread topics in selected categories as read.
+				KunenaForumCategoryUserHelper::markRead(array_keys($categories));
+
+				if (count($categories) > 1)
+				{
+					$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_ALL_MARKED'));
 				}
 				else
 				{
@@ -98,7 +108,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			}
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function subscribe()
@@ -106,7 +116,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		if (!JSession::checkToken('get'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$category = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
@@ -114,7 +126,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		if (!$category->authorise('read'))
 		{
 			$this->app->enqueueMessage($category->getError(), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		if ($this->me->exists())
@@ -127,7 +141,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			}
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 
 	function unsubscribe()
@@ -135,7 +149,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		if (!JSession::checkToken('request'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->redirectBack();
+			$this->setRedirectBack();
+
+			return;
 		}
 
 		$catid  = JRequest::getInt('catid', 0);
@@ -145,7 +161,6 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		JArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
-
 		foreach ($categories as $category)
 		{
 			if (!$category->authorise('read'))
@@ -165,6 +180,6 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 			}
 		}
 
-		$this->redirectBack();
+		$this->setRedirectBack();
 	}
 }

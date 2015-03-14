@@ -32,6 +32,10 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 */
 	protected $helpURL;
 
+	/**
+	 *
+	 * @since   1.6
+	 */
 	protected $_cache;
 
 	/**
@@ -110,7 +114,6 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return  mixed  The data for the form.
-	 *
 	 * @since   1.6
 	 */
 	protected function loadFormData()
@@ -194,9 +197,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			$this->_cache[$pk]->params = $registry->toArray();
 
 			// Get the plugin XML.
-			$path = JPath::clean(JPATH_PLUGINS . '/' . $table->folder . '/' . $table->element . '/' . $table->element . '.xml');
+			$path = KunenaPath::clean(JPATH_PLUGINS . '/' . $table->folder . '/' . $table->element . '/' . $table->element . '.xml');
 
-			if (file_exists($path))
+			if (is_file($path))
 			{
 				$this->_cache[$pk]->xml = simplexml_load_file($path);
 			}
@@ -229,7 +232,6 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return  void
-	 *
 	 * @since   1.6
 	 */
 	protected function populateState()
@@ -252,14 +254,11 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   string $group Form group.
 	 *
 	 * @return  mixed  True if successful.
-	 *
 	 * @throws    Exception if there is an error in the form event.
 	 * @since   1.6
 	 */
 	protected function preprocessForm(JForm $form, $data, $group = 'content')
 	{
-		jimport('joomla.filesystem.path');
-
 		$folder  = $this->getState('item.folder');
 		$element = $this->getState('item.element');
 		$lang    = JFactory::getLanguage();
@@ -286,9 +285,8 @@ class KunenaAdminModelPlugin extends JModelAdmin
 			$app->redirect(JRoute::_('index.php?option=com_kunena&view=plugins', false));
 		}
 
-		$formFile = JPath::clean(JPATH_PLUGINS . '/' . $folder . '/' . $element . '/' . $element . '.xml');
-
-		if (!file_exists($formFile))
+		$formFile = KunenaPath::clean(JPATH_PLUGINS . '/' . $folder . '/' . $element . '/' . $element . '.xml');
+		if (!is_file($formFile))
 		{
 			throw new Exception(JText::sprintf('COM_PLUGINS_ERROR_FILE_NOT_FOUND', $element . '.xml'));
 		}
@@ -299,7 +297,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		|| $lang->load('plg_' . $folder . '_' . $element, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 		|| $lang->load('plg_' . $folder . '_' . $element, JPATH_PLUGINS . '/' . $folder . '/' . $element, $lang->getDefault(), false, false);
 
-		if (file_exists($formFile))
+		if (is_file($formFile))
 		{
 			// Get the plugin form.
 			if (!$form->loadFile($formFile, false, '//config'))
@@ -336,7 +334,6 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   object $table A record object.
 	 *
 	 * @return  array  An array of conditions to add to add to ordering queries.
-	 *
 	 * @since   1.6
 	 */
 	protected function getReorderConditions($table)
@@ -354,7 +351,6 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   array $data The form data.
 	 *
 	 * @return  boolean  True on success.
-	 *
 	 * @since   1.6
 	 */
 	public function save($data)
@@ -372,7 +368,6 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Get the necessary data to load an item help screen.
 	 *
 	 * @return  object  An object with key, url, and local properties for loading the item help screen.
-	 *
 	 * @since   1.6
 	 */
 	public function getHelp()
@@ -384,10 +379,6 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Custom clean cache method, plugins are cached in 2 places for different clients
 	 *
 	 * @since   1.6
-	 *
-	 * @param null $group
-	 *
-	 * @param int  $client_id
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{

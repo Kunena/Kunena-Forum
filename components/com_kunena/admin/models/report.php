@@ -5,15 +5,13 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 jimport('joomla.application.component.model');
-jimport('joomla.filesystem.folder');
-jimport('joomla.filesystem.file');
 
 /**
  * Reportconfiguration Model for Kunena
@@ -69,7 +67,7 @@ class KunenaAdminModelReport extends KunenaModel
 			$jconfig_sef_rewrite = 'Disabled';
 		}
 
-		if (file_exists(JPATH_ROOT . '/.htaccess'))
+		if (is_file(JPATH_ROOT . '/.htaccess'))
 		{
 			$htaccess = 'Exists';
 		}
@@ -288,7 +286,8 @@ class KunenaAdminModelReport extends KunenaModel
 
 				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
 					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_address'
-					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' && $key != 'ebay_api_key')
+					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' && $key != 'ebay_api_key'
+				)
 				{
 					$kconfigsettings .= '[tr][td]' . $key . '[/td][td]' . $value . '[/td][/tr]';
 				}
@@ -326,6 +325,7 @@ class KunenaAdminModelReport extends KunenaModel
 		}
 
 		$xml = simplexml_load_file(JPATH_SITE . '/templates/' . $template . '/templateDetails.xml');
+
 		if (!$xml || $xml->getName() != 'extension')
 		{
 			return false;
@@ -382,6 +382,7 @@ class KunenaAdminModelReport extends KunenaModel
 				$link = preg_replace('/^.*\?(option=com_kunena&)?/', '', $item->link);
 				$joomlamenudetails .= '[tr][td]' . $item->id . ' [/td][td] ' . $item->title . ' [/td][td] ' . $item->menutype . ' [/td][td] ' . $link . ' [/td][td] ' . $item->route . '[/td][td] ' . $trashed . '[/td][/tr] ';
 			}
+
 			$joomlamenudetails .= '[/table]';
 		}
 		else
@@ -481,6 +482,7 @@ class KunenaAdminModelReport extends KunenaModel
 			list($folder, $element) = explode('/', $extension, 2);
 			$path = JPATH_PLUGINS . "/{$folder}/{$element}";
 		}
+
 		$version = $this->findExtensionVersion($path);
 
 		return $version ? '[u]' . $name . '[/u] ' . $version : '';
@@ -503,7 +505,7 @@ class KunenaAdminModelReport extends KunenaModel
 		elseif (is_dir($path))
 		{
 			// Get an array of all the XML files from the directory
-			$xmlfiles = JFolder::files($path, '\.xml$', 1, true);
+			$xmlfiles = KunenaFolder::files($path, '\.xml$', 1, true);
 		}
 
 		$version = null;

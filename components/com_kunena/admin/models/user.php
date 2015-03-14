@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -31,7 +31,8 @@ class KunenaAdminModelUser extends KunenaModel
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
+		$layout        = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.user';
 
 		if ($layout)
 		{
@@ -143,7 +144,6 @@ class KunenaAdminModelUser extends KunenaModel
 		{
 			$categoryList[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
-
 		$params  = array(
 			'sections' => false,
 			'action'   => 'read');
@@ -156,7 +156,6 @@ class KunenaAdminModelUser extends KunenaModel
 	{
 		$db   = JFactory::getDBO();
 		$user = $this->getUser();
-
 		//grab all special ranks
 		$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_special = '1'");
 		$specialRanks = (array) $db->loadObjectList();

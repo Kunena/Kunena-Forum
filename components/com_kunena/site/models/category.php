@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -50,10 +50,12 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		// List state information
 		$value        = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_list_limit", 'limit', 0, 'int');
 		$defaultlimit = $format != 'feed' ? $this->config->threads_per_page : $this->config->rss_limit;
+
 		if ($value < 1 || $value > 100)
 		{
 			$value = $defaultlimit;
 		}
+
 		$this->setState('list.limit', $value);
 
 		//$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
@@ -63,10 +65,12 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		$this->setState('list.start', $value);
 
 		$value = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_{$active}_list_direction", 'filter_order_Dir', 'desc', 'word');
+
 		if ($value != 'asc')
 		{
 			$value = 'desc';
 		}
+
 		$this->setState('list.direction', $value);
 	}
 
@@ -100,6 +104,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			elseif ($catid)
 			{
 				$categories[0] = KunenaForumCategoryHelper::getCategories($catid);
+
 				if (empty($categories[0]))
 				{
 					return array();
@@ -118,6 +123,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			{
 				$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($categories [0]), 1);
 			}
+
 			if (empty ($allsubcats))
 			{
 				return array();
@@ -136,6 +142,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				{
 
 					$last = $subcat->getLastCategory();
+
 					if ($last->last_topic_id)
 					{
 						// Get list of topics
@@ -158,6 +165,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			}
 			// Prefetch topics
 			$topics = KunenaForumTopicHelper::getTopics($topiclist);
+
 			foreach ($topics as $topic)
 			{
 				// Prefetch users
@@ -175,6 +183,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			}
 
 			$this->pending = array();
+
 			if ($this->me->userid && count($modcats))
 			{
 				$catlist = implode(',', $modcats);
@@ -193,6 +202,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 					}
 				}
 			}
+
 			// Fix last post position when user can see unapproved or deleted posts
 			if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))
 			{
@@ -243,6 +253,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			$params = array(
 				'hold'  => $hold,
 				'moved' => $moved);
+
 			switch ($topic_ordering)
 			{
 				case 'alpha':
@@ -260,12 +271,15 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			{
 				$catid = array_keys(KunenaForumCategoryHelper::getChildren($catid, 100) + array($catid => 1));
 			}
+
 			list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
+
 			if ($this->total > 0)
 			{
 				// collect user ids for avatar prefetch when integrated
 				$userlist     = array();
 				$lastpostlist = array();
+
 				foreach ($this->topics as $topic)
 				{
 					$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
@@ -284,7 +298,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts
-				if (($lastpostlist || $lastreadlist) && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))
+				if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())
 				{
 					KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
@@ -311,47 +325,59 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		{
 			$this->getTopics();
 		}
+
 		$delete = $approve = $undelete = $move = $permdelete = false;
+
 		foreach ($this->topics as $topic)
 		{
 			if (!$delete && $topic->authorise('delete'))
 			{
 				$delete = true;
 			}
+
 			if (!$approve && $topic->authorise('approve'))
 			{
 				$approve = true;
 			}
+
 			if (!$undelete && $topic->authorise('undelete'))
 			{
 				$undelete = true;
 			}
+
 			if (!$move && $topic->authorise('move'))
 			{
 				$move = $this->actionMove = true;
 			}
+
 			if (!$permdelete && $topic->authorise('permdelete'))
 			{
 				$permdelete = true;
 			}
 		}
+
 		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+
 		if ($move)
 		{
 			$actionDropdown[] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 		}
+
 		if ($approve)
 		{
 			$actionDropdown[] = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
 		}
+
 		if ($delete)
 		{
 			$actionDropdown[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
 		}
+
 		if ($permdelete)
 		{
 			$actionDropdown[] = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 		}
+
 		if ($undelete)
 		{
 			$actionDropdown[] = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));

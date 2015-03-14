@@ -86,6 +86,7 @@ class KunenaModelSearch extends KunenaModel
 			$value = explode(' ', $value);
 			JArrayHelper::toInteger($value);
 		}
+
 		$this->setState('query.catids', $value);
 
 		// FIXME: support search topic
@@ -100,23 +101,28 @@ class KunenaModelSearch extends KunenaModel
 			$value = explode(' ', $value);
 			JArrayHelper::toInteger($value);
 		}
+
 		$this->setState('query.ids', $value);
 
 		$value = JRequest::getInt('show', 0);
 		$this->setState('query.show', $value);
 
 		$value = $this->getInt('limitstart', 0);
+
 		if ($value < 0)
 		{
 			$value = 0;
 		}
+
 		$this->setState('list.start', $value);
 
 		$value = $this->getInt('limit', 0);
+
 		if ($value < 1 || $value > 100)
 		{
 			$value = $this->config->messages_per_page_search;
 		}
+
 		$this->setState('list.limit', $value);
 	}
 
@@ -128,10 +134,12 @@ class KunenaModelSearch extends KunenaModel
 		foreach ($this->getSearchWords() as $searchword)
 		{
 			$searchword = $db->escape(JString::trim($searchword));
+
 			if (empty ($searchword))
 			{
 				continue;
 			}
+
 			$not      = '';
 			$operator = ' OR ';
 
@@ -167,6 +175,7 @@ class KunenaModelSearch extends KunenaModel
 		}
 
 		$time = 0;
+
 		switch ($this->getState('query.searchdate'))
 		{
 			case 'lastvisit' :
@@ -200,6 +209,7 @@ class KunenaModelSearch extends KunenaModel
 		}
 
 		$topic_id = $this->getState('query.topic_id');
+
 		if ($topic_id)
 		{
 			$querystrings [] = "m.id = '{$topic_id}'";
@@ -240,6 +250,7 @@ class KunenaModelSearch extends KunenaModel
 	public function getTotal()
 	{
 		$q = $this->getState('searchwords');
+
 		if (!$q && !$this->getState('query.searchuser'))
 		{
 			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
@@ -290,6 +301,7 @@ class KunenaModelSearch extends KunenaModel
 		}
 
 		$q = $this->getState('searchwords');
+
 		if (!$q && !$this->getState('query.searchuser'))
 		{
 			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
@@ -299,6 +311,7 @@ class KunenaModelSearch extends KunenaModel
 
 		/* get results */
 		$hold = $this->getState('query.show');
+
 		if ($hold == 1)
 		{
 			$mode = 'unapproved';
@@ -311,6 +324,7 @@ class KunenaModelSearch extends KunenaModel
 		{
 			$mode = 'recent';
 		}
+
 		$params     = array(
 			'mode'        => $mode,
 			'childforums' => $this->getState('query.childforums'),
@@ -329,11 +343,13 @@ class KunenaModelSearch extends KunenaModel
 
 		$topicids = array();
 		$userids  = array();
+
 		foreach ($this->messages as $message)
 		{
 			$topicids[$message->thread] = $message->thread;
 			$userids[$message->userid]  = $message->userid;
 		}
+
 		if ($topicids)
 		{
 			$topics = KunenaForumTopicHelper::getTopics($topicids);
@@ -342,6 +358,7 @@ class KunenaModelSearch extends KunenaModel
 				$userids[$topic->first_post_userid] = $topic->first_post_userid;
 			}
 		}
+
 		KunenaUserHelper::loadUsers($userids);
 		KunenaForumMessageHelper::loadLocation($this->messages);
 
@@ -362,19 +379,23 @@ class KunenaModelSearch extends KunenaModel
 
 		$url_params = '';
 		$state      = $this->getState();
+
 		foreach ($state as $param => $value)
 		{
 			$paramparts = explode('.', $param);
+
 			if ($paramparts[0] != 'query')
 			{
 				continue;
 			}
+
 			$param = $paramparts[1];
 
 			if ($param == 'catids')
 			{
 				$value = implode(' ', $value);
 			}
+
 			if ($value != $defaults [$param])
 			{
 				$url_params .= "&$param=" . urlencode($value);
@@ -388,10 +409,12 @@ class KunenaModelSearch extends KunenaModel
 	{
 		$config   = KunenaFactory::getConfig();
 		$limitstr = "";
+
 		if ($limitstart > 0)
 		{
 			$limitstr .= "&limitstart=$limitstart";
 		}
+
 		if ($limit > 0 && $limit != $config->messages_per_page_search)
 		{
 			$limitstr .= "&limit=$limit";

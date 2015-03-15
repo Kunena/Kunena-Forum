@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -54,7 +54,7 @@ class KunenaViewCredits extends KunenaView
 
 		$this->_prepareDocument();
 
-		parent::display();
+		$this->render('Credits', $tpl);
 	}
 
 	protected function _prepareDocument()

@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -28,20 +28,23 @@ class KunenaViewTopics extends KunenaView
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
+
 		if ($this->embedded)
 		{
 			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode=' . $this->state->get('list.mode');
 			$userid        = $this->state->get('user');
+
 			if ($userid)
 			{
 				$this->moreUri .= "&userid={$userid}";
 			}
 		}
+
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
 
 		$this->_prepareDocument('default');
 
-		$this->display($tpl);
+		$this->render('Topic/List', $tpl);
 	}
 
 	function displayUser($tpl = null)
@@ -60,6 +63,7 @@ class KunenaViewTopics extends KunenaView
 		{
 			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=user&mode=' . $this->state->get('list.mode');
 			$userid        = $this->state->get('user');
+
 			if ($userid)
 			{
 				$this->moreUri .= "&userid={$userid}";
@@ -68,7 +72,7 @@ class KunenaViewTopics extends KunenaView
 
 		$this->_prepareDocument('user');
 
-		$this->display($tpl);
+		$this->render('Topic/List', $tpl);
 	}
 
 	function displayPosts($tpl = null)
@@ -88,6 +92,7 @@ class KunenaViewTopics extends KunenaView
 		{
 			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode');
 			$userid        = $this->state->get('user');
+
 			if ($userid)
 			{
 				$this->moreUri .= "&userid={$userid}";
@@ -96,7 +101,7 @@ class KunenaViewTopics extends KunenaView
 
 		$this->_prepareDocument('posts');
 
-		$this->display($tpl);
+		$this->render('Message/List', $tpl);
 	}
 
 	function displayRows()
@@ -141,6 +146,7 @@ class KunenaViewTopics extends KunenaView
 
 			// FIXME: enable caching after fixing the issues
 			$contents = false; //$cache->get($cachekey, $cachegroup);
+
 			if (!$contents)
 			{
 				$this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
@@ -154,6 +160,7 @@ class KunenaViewTopics extends KunenaView
 				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
 				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 				$this->pages            = ceil($this->topic->getTotal() / $this->config->messages_per_page);
+
 				if ($this->config->avataroncat)
 				{
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
@@ -167,7 +174,9 @@ class KunenaViewTopics extends KunenaView
 				{
 					$this->spacing = 0;
 				}
+
 				$contents = $this->loadTemplateFile('row');
+
 				if ($usertype == 'guest')
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
@@ -175,10 +184,12 @@ class KunenaViewTopics extends KunenaView
 				// FIXME: enable caching after fixing the issues
 				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
+
 			if ($usertype != 'guest')
 			{
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 			}
+
 			echo $contents;
 			$lasttopic = $this->topic;
 		}
@@ -232,6 +243,7 @@ class KunenaViewTopics extends KunenaView
 
 			// FIXME: enable caching after fixing the issues
 			$contents = false; //$cache->get($cachekey, $cachegroup);
+
 			if (!$contents)
 			{
 				$this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
@@ -243,11 +255,14 @@ class KunenaViewTopics extends KunenaView
 				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
 				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 				$this->pages            = ceil($this->topic->getTotal() / $this->config->messages_per_page);
+
 				if ($this->config->avataroncat)
 				{
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
+
 				$contents = $this->loadTemplateFile('row');
+
 				if ($usertype == 'guest')
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
@@ -255,10 +270,12 @@ class KunenaViewTopics extends KunenaView
 				// FIXME: enable caching after fixing the issues
 				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
+
 			if ($usertype != 'guest')
 			{
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 			}
+
 			echo $contents;
 			$lasttopic = $this->topic;
 		}
@@ -268,19 +285,24 @@ class KunenaViewTopics extends KunenaView
 	{
 		$class = $prefix . $class;
 		$txt   = $class . (($this->position & 1) + 1);
+
 		if ($this->topic->ordering)
 		{
 			$txt .= '-stickymsg';
 		}
+
 		if ($this->topic->getCategory()->class_sfx)
 		{
 			$txt .= ' ' . $class . (($this->position & 1) + 1);
+
 			if ($this->topic->ordering)
 			{
 				$txt .= '-stickymsg';
 			}
+
 			$txt .= $this->escape($this->topic->getCategory()->class_sfx);
 		}
+
 		if ($this->topic->hold == 1)
 		{
 			$txt .= ' ' . $prefix . 'unapproved';
@@ -354,6 +376,7 @@ class KunenaViewTopics extends KunenaView
 				default :
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
 			}
+
 			$this->title = $this->headerText;
 
 			$title = "{$this->title} ({$pagesTxt})";
@@ -388,6 +411,7 @@ class KunenaViewTopics extends KunenaView
 				default :
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 			}
+
 			$this->title = $this->headerText;
 
 			$title = "{$this->title} ({$pagesTxt})";
@@ -420,6 +444,7 @@ class KunenaViewTopics extends KunenaView
 				default:
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 			}
+
 			$this->title = $this->headerText;
 
 			$title = "{$this->title} ({$pagesTxt})";

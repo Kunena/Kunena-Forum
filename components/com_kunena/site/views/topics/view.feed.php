@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -65,6 +65,7 @@ class KunenaViewTopics extends KunenaView
 			default :
 				$title = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
 		}
+
 		$this->setTitle($title);
 
 		// Create image for feed
@@ -83,6 +84,7 @@ class KunenaViewTopics extends KunenaView
 		{
 			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
 		}
+
 		$this->layout = 'user';
 		$this->topics = $this->get('Topics');
 		$this->total  = $this->get('Total');
@@ -108,6 +110,7 @@ class KunenaViewTopics extends KunenaView
 			default :
 				$title = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 		}
+
 		$this->setTitle($title);
 
 		// Create image for feed
@@ -126,6 +129,7 @@ class KunenaViewTopics extends KunenaView
 		{
 			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
 		}
+
 		$this->layout   = 'posts';
 		$this->messages = $this->get('Messages');
 		$this->topics   = $this->get('Topics');
@@ -153,6 +157,7 @@ class KunenaViewTopics extends KunenaView
 			default:
 				$title = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 		}
+
 		$this->setTitle($title);
 
 		// Create image for feed
@@ -168,6 +173,7 @@ class KunenaViewTopics extends KunenaView
 	function displayTopicRows()
 	{
 		$firstpost = $this->state->get('list.mode') == 'topics';
+
 		foreach ($this->topics as $topic)
 		{
 			if ($firstpost)
@@ -181,13 +187,23 @@ class KunenaViewTopics extends KunenaView
 			}
 			else
 			{
-				$id          = $topic->last_post_id;
-				$page        = 'last';
-				$description = $topic->last_post_message;
-				$date        = new JDate($topic->last_post_time);
-				$userid      = $topic->last_post_userid;
-				$username    = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
+				$id   = $topic->last_post_id;
+				$page = 'last';
+
+				if (!$this->me->userid && $this->config->teaser && $id != $topic->first_post_id)
+				{
+					$description = JText::_('COM_KUNENA_TEASER_TEXT');
+				}
+				else
+				{
+					$description = $topic->last_post_message;
+				}
+
+				$date     = new JDate($topic->last_post_time);
+				$userid   = $topic->last_post_userid;
+				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
 			}
+
 			$title    = $topic->subject;
 			$category = $topic->getCategory();
 			$url      = $topic->getUrl($category, true, $page);
@@ -205,14 +221,24 @@ class KunenaViewTopics extends KunenaView
 				// TODO: INTERNAL ERROR
 				return;
 			}
-			$topic       = $this->topics[$message->thread];
-			$title       = $message->subject;
-			$category    = $topic->getCategory();
-			$url         = $message->getUrl($category);
-			$description = $message->message;
-			$date        = new JDate($message->time);
-			$userid      = $message->userid;
-			$username    = KunenaFactory::getUser($userid)->getName($message->name);
+
+			$topic    = $this->topics[$message->thread];
+			$title    = $message->subject;
+			$category = $topic->getCategory();
+			$url      = $message->getUrl($category);
+
+			if (!$this->me->userid && $this->config->teaser && $message->id != $topic->first_post_id)
+			{
+				$description = JText::_('COM_KUNENA_TEASER_TEXT');
+			}
+			else
+			{
+				$description = $message->message;
+			}
+
+			$date     = new JDate($message->time);
+			$userid   = $message->userid;
+			$username = KunenaFactory::getUser($userid)->getName($message->name);
 
 			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
 		}
@@ -225,10 +251,12 @@ class KunenaViewTopics extends KunenaView
 			// We want author in item titles
 			$title .= ' - ' . JText::_('COM_KUNENA_BY') . ': ' . $username;
 		}
+
 		$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);
 		$description = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $description);
 		$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
 		$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
+
 		if ((bool) $this->config->rss_allow_html)
 		{
 			$description = KunenaHtmlParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
@@ -245,11 +273,13 @@ class KunenaViewTopics extends KunenaView
 		$item->description = $description;
 		$item->date        = $date->toSql();
 		$item->author      = $username;
+
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name')
 		{
 			$item->authorEmail = JFactory::getUser($userid)->email;
 		}
+
 		$item->category = $category;
 
 		// Finally add item to feed

@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -32,6 +32,7 @@ class KunenaViewAnnouncement extends KunenaView
 		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
+
 		if ($errors)
 		{
 			$this->displayNoAccess($errors);
@@ -39,7 +40,7 @@ class KunenaViewAnnouncement extends KunenaView
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Item', $tpl);
 	}
 
 	function displayCreate($tpl = null)
@@ -56,6 +57,7 @@ class KunenaViewAnnouncement extends KunenaView
 		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
+
 		if ($errors)
 		{
 			$this->displayNoAccess($errors);
@@ -63,7 +65,7 @@ class KunenaViewAnnouncement extends KunenaView
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Edit', $tpl);
 	}
 
 	function displayEdit($tpl = null)
@@ -80,6 +82,7 @@ class KunenaViewAnnouncement extends KunenaView
 		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
+
 		if ($errors)
 		{
 			$this->displayNoAccess($errors);
@@ -87,7 +90,7 @@ class KunenaViewAnnouncement extends KunenaView
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Edit', $tpl);
 	}
 
 	function displayList($tpl = null)
@@ -96,10 +99,12 @@ class KunenaViewAnnouncement extends KunenaView
 		$new                 = new KunenaForumAnnouncement;
 
 		$this->actions = array();
+
 		if ($new->authorise('create'))
 		{
 			$this->actions['add'] = $new->getUri('create');
 		}
+
 		if ($this->actions)
 		{
 			$this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUri('list');
@@ -112,6 +117,7 @@ class KunenaViewAnnouncement extends KunenaView
 		$this->total = $this->get('Total');
 
 		$errors = $this->getErrors();
+
 		if ($errors)
 		{
 			$this->displayNoAccess($errors);
@@ -119,13 +125,14 @@ class KunenaViewAnnouncement extends KunenaView
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/List', $tpl);
 	}
 
 	function displayItems()
 	{
 		$this->row = 0;
 		$this->k   = 0;
+
 		foreach ($this->announcements as $this->announcement)
 		{
 			$this->displayItem();
@@ -142,14 +149,17 @@ class KunenaViewAnnouncement extends KunenaView
 	function displayActions()
 	{
 		$this->buttons = array();
+
 		if ($this->announcement->authorise('edit'))
 		{
 			$this->buttons['edit'] = $this->getButton($this->announcement->getUri('edit'), 'edit', 'announcement', 'moderation');
 		}
+
 		if ($this->announcement->authorise('delete'))
 		{
 			$this->buttons['delete'] = $this->getButton($this->announcement->getTaskUri('delete'), 'delete', 'announcement', 'permanent');
 		}
+
 		if ($this->buttons)
 		{
 			$this->buttons['cpanel'] = $this->getButton(KunenaForumAnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
@@ -209,12 +219,17 @@ class KunenaViewAnnouncement extends KunenaView
 		return $this->announcement->authorise('delete');
 	}
 
-	function getPagination($maxpages)
+	function getPaginationObject($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
-		return $pagination->getPagesLinks();
+		return $pagination;
+	}
+
+	function getPagination($maxpages)
+	{
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	protected function _prepareDocument()

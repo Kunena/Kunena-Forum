@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -19,13 +19,14 @@ class KunenaViewSearch extends KunenaView
 	function displayDefault($tpl = null)
 	{
 		$this->message_ordering = $this->me->getMessageOrdering();
-//TODO: Need to move the select markup outside of view.  Otherwise difficult to stylize
+		//TODO: Need to move the select markup outside of view.  Otherwise difficult to stylize
 
 		$this->searchwords = $this->get('SearchWords');
-		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus($this->me));
 
 		$this->results = array();
 		$this->total   = $this->get('Total');
+
 		if ($this->total)
 		{
 			$this->results      = $this->get('Results');
@@ -46,7 +47,7 @@ class KunenaViewSearch extends KunenaView
 
 		$this->_prepareDocument();
 
-		$this->display();
+		$this->render('Search', $tpl);
 	}
 
 	function displaySearchResults()
@@ -162,10 +163,12 @@ class KunenaViewSearch extends KunenaView
 				{
 					continue;
 				}
+
 				$ressubject = preg_replace("/" . preg_quote($searchword, '/') . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
 				// FIXME: enable highlighting, but only after we can be sure that we do not break html
 				//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
+
 			$this->author      = $this->message->getAuthor();
 			$this->topicAuthor = $this->topic->getAuthor();
 			$this->topicTime   = $this->topic->first_post_time;
@@ -193,12 +196,17 @@ class KunenaViewSearch extends KunenaView
 		}
 	}
 
-	function getPagination($maxpages)
+	function getPaginationObject($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
-		return $pagination->getPagesLinks();
+		return $pagination;
+	}
+
+	function getPagination($maxpages)
+	{
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
 	protected function _prepareDocument()

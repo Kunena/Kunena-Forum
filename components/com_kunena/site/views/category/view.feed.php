@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -26,6 +26,7 @@ class KunenaViewCategory extends KunenaView
 		KunenaHtmlParser::$relative = false;
 
 		$this->category = $this->get('Category');
+
 		if (!$this->category->authorise('read'))
 		{
 			JError::raiseError(404, $this->category->getError());
@@ -68,10 +69,12 @@ class KunenaViewCategory extends KunenaView
 			// We want author in item titles
 			$title .= ' - ' . JText::_('COM_KUNENA_BY') . ': ' . $username;
 		}
+
 		$description = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $description);
 		$description = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $description);
 		$description = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $description);
 		$description = preg_replace('/\[code\](.*?)\[\/code]/s', '', $description);
+
 		if ((bool) $this->config->rss_allow_html)
 		{
 			$description = KunenaHtmlParser::parseBBCode($description, null, (int) $this->config->rss_word_count);
@@ -88,11 +91,13 @@ class KunenaViewCategory extends KunenaView
 		$item->description = $description;
 		$item->date        = $date->toSql();
 		$item->author      = $username;
+
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name')
 		{
 			$item->authorEmail = JFactory::getUser($userid)->email;
 		}
+
 		$item->category = $category;
 
 		// Finally add item to feed

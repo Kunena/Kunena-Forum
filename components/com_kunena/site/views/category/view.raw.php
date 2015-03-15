@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -20,9 +20,11 @@ class KunenaViewCategory extends KunenaView
 	{
 		$response              = array();
 		$response['topiclist'] = array();
+
 		if ($this->me->exists())
 		{
 			$this->category = $this->get('Category');
+
 			if (!$this->category->authorise('read'))
 			{
 				$response['error'] = $this->category->getError();
@@ -30,6 +32,7 @@ class KunenaViewCategory extends KunenaView
 			else
 			{
 				$topics = $this->get('Topics');
+
 				foreach ($topics as $topic)
 				{
 					$item                    = new StdClass();

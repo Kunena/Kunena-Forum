@@ -19,9 +19,11 @@ class KunenaViewUser extends KunenaView
 	function displayList($tpl = null)
 	{
 		$response = array();
+
 		if ($this->me->exists())
 		{
 			$users = $this->get('Items');
+
 			foreach ($users as $user)
 			{
 				if ($this->config->username)
@@ -34,6 +36,7 @@ class KunenaViewUser extends KunenaView
 				}
 			}
 		}
+
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');

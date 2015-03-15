@@ -42,6 +42,7 @@ class KunenaViewUser extends KunenaView
 
 			return;
 		}
+
 		$this->displayCommon($tpl);
 	}
 
@@ -86,6 +87,7 @@ class KunenaViewUser extends KunenaView
 		{
 			$this->user = JFactory::getUser($userid);
 		}
+
 		if ($this->user->id == 0 || ($this->me->userid == 0 && !$this->config->pubprofile))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice');
@@ -108,10 +110,12 @@ class KunenaViewUser extends KunenaView
 		$this->allow = true;
 
 		$this->profile = KunenaFactory::getUser($this->user->id);
+
 		if (!$this->profile->exists())
 		{
 			$this->profile->save();
 		}
+
 		if ($this->profile->userid == $this->me->userid)
 		{
 			if ($this->do != 'edit')
@@ -123,6 +127,7 @@ class KunenaViewUser extends KunenaView
 				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow');
 			}
 		}
+
 		$this->name = $this->user->username;
 
 		if ($this->config->userlist_name)
@@ -139,33 +144,41 @@ class KunenaViewUser extends KunenaView
 			$this->userpoints = $activityIntegration->getUserPoints($this->profile->userid);
 			$this->usermedals = $activityIntegration->getUserMedals($this->profile->userid);
 		}
+
 		if ($this->config->userlist_joindate || $this->me->isModerator())
 		{
 			$this->registerdate = $this->user->registerDate;
 		}
+
 		if ($this->config->userlist_lastvisitdate || $this->me->isModerator())
 		{
 			$this->lastvisitdate = $this->user->lastvisitDate;
 		}
+
 		if (!isset($this->lastvisitdate) || $this->lastvisitdate == "0000-00-00 00:00:00")
 		{
 			$this->lastvisitdate = null;
 		}
+
 		$this->avatarlink    = $this->profile->getAvatarImage('kavatar', 'profile');
 		$this->personalText  = $this->profile->personalText;
 		$this->signature     = $this->profile->signature;
 		$this->signatureHtml = KunenaHtmlParser::parseBBCode($this->signature, null, $this->config->maxsig);
 		$this->localtime     = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg('offset', null)));
+
 		try
 		{
 			$offset = new DateTimeZone($this->user->getParam('timezone', $this->app->getCfg('offset', null)));
-		} catch (Exception $e)
+		}
+		catch (Exception $e)
 		{
 			$offset = null;
 		}
+
 		$this->localtime->setTimezone($offset);
 		$this->moderator = KunenaAccess::getInstance()->getModeratorStatus($this->profile);
 		$this->admin     = $this->profile->isAdmin();
+
 		switch ($this->profile->gender)
 		{
 			case 1:
@@ -180,6 +193,7 @@ class KunenaViewUser extends KunenaView
 				$this->genderclass = 'unknown';
 				$this->gender      = JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN');
 		}
+
 		if ($this->profile->location)
 		{
 			$this->locationlink = '<a href="http://maps.google.com?q=' . $this->escape($this->profile->location) . '" target="_blank">' . $this->escape($this->profile->location) . '</a>';
@@ -206,6 +220,7 @@ class KunenaViewUser extends KunenaView
 
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan  = $this->banInfo->canBan();
+
 		if ($this->config->showbannedreason)
 		{
 			$this->banReason = $this->banInfo->reason_public;
@@ -229,6 +244,7 @@ class KunenaViewUser extends KunenaView
 		}
 
 		$private = KunenaFactory::getPrivateMessaging();
+
 		if ($this->me->userid == $this->user->id)
 		{
 			$this->pmCount = $private->getUnreadCount($this->me->userid);
@@ -330,6 +346,7 @@ class KunenaViewUser extends KunenaView
 		{
 			return;
 		}
+
 		$params = array(
 			'topics_categories'   => 0,
 			'topics_catselection' => 1,
@@ -341,6 +358,7 @@ class KunenaViewUser extends KunenaView
 			'limitstart'          => 0,
 			'filter_order_Dir'    => 'desc',
 		);
+
 		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
@@ -357,6 +375,7 @@ class KunenaViewUser extends KunenaView
 			'limitstart'       => 0,
 			'filter_order_Dir' => 'desc',
 		);
+
 		KunenaForum::display('category', 'user', 'embed', $params);
 	}
 
@@ -376,16 +395,19 @@ class KunenaViewUser extends KunenaView
 	{
 		// TODO: move ban manager somewhere else and add pagination
 		$this->bannedusers = KunenaUserBan::getBannedUsers(0, 50);
+
 		if (!empty($this->bannedusers))
 		{
 			KunenaUserHelper::loadUsers(array_keys($this->bannedusers));
 		}
+
 		echo $this->loadTemplateFile('banmanager');
 	}
 
 	function displaySummary()
 	{
 		$private = KunenaFactory::getPrivateMessaging();
+
 		if ($this->me->userid == $this->user->id)
 		{
 			$PMCount      = $private->getUnreadCount($this->me->userid);
@@ -402,6 +424,7 @@ class KunenaViewUser extends KunenaView
 	function displayTab()
 	{
 		$this->email = null;
+
 		if ($this->user->email)
 		{
 			if ($this->config->showemail && (!$this->profile->hideEmail || $this->me->isModerator()))
@@ -422,10 +445,12 @@ class KunenaViewUser extends KunenaView
 		{
 			case 'edit':
 				$user = JFactory::getUser();
+
 				if ($user->id == $this->user->id)
 				{
 					echo $this->loadTemplateFile('tab');
 				}
+
 				break;
 			default:
 				echo $this->loadTemplateFile('tab');
@@ -435,6 +460,7 @@ class KunenaViewUser extends KunenaView
 	function displayKarma()
 	{
 		$userkarma = '';
+
 		if ($this->config->showkarma && $this->profile->userid)
 		{
 			$userkarma = '<strong>' . JText::_('COM_KUNENA_KARMA') . "</strong>: " . $this->profile->karma;
@@ -463,17 +489,21 @@ class KunenaViewUser extends KunenaView
 		jimport('joomla.utilities.string');
 		$folders   = KunenaFolder::folders($path, '.', true, true);
 		$galleries = array();
+
 		if ($this->getAvatarGallery($path))
 		{
 			$galleries[] = JHtml::_('select.option', 'default', JText::_('COM_KUNENA_DEFAULT_GALLERY'));
 		}
+
 		foreach ($folders as $folder)
 		{
 			$folder = substr($folder, strlen($path) + 1);
+
 			if (!$this->getAvatarGallery($path . '/' . $folder))
 			{
 				continue;
 			}
+
 			$galleries[] = JHtml::_('select.option', $folder, JString::ucwords(str_replace('/', ' / ', $folder)));
 		}
 
@@ -491,6 +521,7 @@ class KunenaViewUser extends KunenaView
 		if (JComponentHelper::getParams('com_users')->get('frontend_userparams'))
 		{
 			$usersConfig = JComponentHelper::getParams('com_users');
+
 			if ($usersConfig->get('frontend_userparams', 0))
 			{
 				$lang = JFactory::getLanguage();
@@ -510,6 +541,7 @@ class KunenaViewUser extends KunenaView
 				$this->userparameters = $form->getFieldset('params');
 			}
 		}
+
 		echo $this->loadTemplateFile('user');
 	}
 
@@ -537,11 +569,14 @@ class KunenaViewUser extends KunenaView
 		{
 			return;
 		}
+
 		$this->gallery = JRequest::getString('gallery', 'default');
+
 		if ($this->gallery == 'default')
 		{
 			$this->gallery = '';
 		}
+
 		$path             = JPATH_ROOT . '/media/kunena/avatars/gallery';
 		$this->galleryurl = JUri::root(true) . '/media/kunena/avatars/gallery';
 		$this->galleries  = $this->getAvatarGalleries($path, 'gallery');
@@ -568,12 +603,14 @@ class KunenaViewUser extends KunenaView
 				$newdefaultGallery[] = $image;
 			}
 		}
+
 		$files_list['default'] = json_encode($newdefaultGallery);
 
 		foreach ($galleryFolders as $folder)
 		{
 			$tmp               = KunenaFolder::files($path . '/' . $folder);
 			$newgalleryFolders = array();
+
 			foreach ($tmp as $img)
 			{
 				if ($img != 'index.html')
@@ -658,10 +695,12 @@ class KunenaViewUser extends KunenaView
 	{
 		$this->user  = KunenaFactory::getUser($user->id);
 		$this->email = '';
+
 		if ($this->user->email && $this->config->userlist_email && (!$this->user->hideEmail || $this->me->isModerator()))
 		{
 			$this->email = JHtml::_('email.cloak', $this->user->email);
 		}
+
 		$this->rank_image = $this->user->getRank(0, 'image');
 		$this->rank_title = $this->user->getRank(0, 'title');
 		echo $this->loadTemplateFile('row');
@@ -710,17 +749,22 @@ class KunenaViewUser extends KunenaView
 		{
 			// Preload messages
 			$attach_mesids = array();
+
 			foreach ($this->userattachs as $attach)
 			{
 				$attach_mesids[] = (int) $attach->mesid;
 			}
+
 			$messages = KunenaForumMessageHelper::getMessages($attach_mesids, 'none');
+
 			// Preload topics
 			$topic_ids = array();
+
 			foreach ($messages as $message)
 			{
 				$topic_ids[] = $message->thread;
 			}
+
 			KunenaForumTopicHelper::getTopics($topic_ids, 'none');
 		}
 

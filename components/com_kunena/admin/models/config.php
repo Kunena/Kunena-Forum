@@ -448,8 +448,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists['ebay_language'] = JHtml::_('select.genericlist', $ebay_language, 'cfg_ebay_language', 'class="inputbox" size="1"', 'value', 'text', $this->config->ebay_language);
 
 		$useredit = array();
-		$useredit[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_YES'));
-		$useredit[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_NO'));
+		$useredit[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+		$useredit[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
 		$useredit[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
 		$lists['useredit'] = JHtml::_('select.genericlist', $useredit, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->useredit);
 

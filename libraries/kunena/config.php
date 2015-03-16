@@ -817,7 +817,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
-     * @deprecated 3.1 (not used in HMVC)
+	 * @deprecated 3.1 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 
@@ -1068,11 +1068,11 @@ class KunenaConfig extends JObject
 	 */
 	public $statslink_allowed = 1;
 
-    /**
-     * @var    integer  Super admin user list; select, boolean
-     * @since  3.0.6
-     */
-    public $superadmin_userlist = 0;
+	/**
+	 * @var    integer  Super admin user list; select, boolean
+	 * @since  3.0.6
+	 */
+	public $superadmin_userlist = 0;
 
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
@@ -1133,6 +1133,12 @@ class KunenaConfig extends JObject
 	 * @since  3.0.7
 	 */
 	public $ebay_api_key = '';
+
+	/**
+	 * @var    integer  Max Links limit; input, number
+	 * @since  3.1.0
+	 */
+	public $max_links = 6;
 
 	public function __construct()
 	{

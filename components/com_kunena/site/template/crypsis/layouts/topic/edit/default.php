@@ -23,6 +23,8 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 
+$this->addStyleSheet('css/fileupload.css');
+$this->addStyleSheet('css/fileupload-ui.css');
 $this->addScript('js/jquery.ui.widget.js');
 $this->addScript('js/load-image.min.js');
 $this->addScript('js/canvas-to-blob.min.js');
@@ -31,8 +33,7 @@ $this->addScript('js/jquery.fileupload.js');
 $this->addScript('js/jquery.fileupload-process.js');
 $this->addScript('js/jquery.fileupload-image.js');
 $this->addScript('js/upload.main.js');
-$this->addStyleSheet('css/fileupload.css');
-$this->addStyleSheet('css/fileupload-ui.css');
+$this->addScript('js/formyeah.js');
 
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
@@ -84,8 +85,8 @@ $this->addStyleSheet('css/atwho.css');
 $this->addScript('js/edit.js');
 ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal"
-		id="postform" name="postform" enctype="multipart/form-data">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="formyeah form-horizontal"
+		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
 		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
@@ -260,7 +261,7 @@ $this->addScript('js/edit.js');
 			<input id="kbutton-preview" type="button" name="preview" class="btn"
 				value="<?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>"
 				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW')); ?>:: " tabindex="3" />
-			<input type="button" name="cancel" class="btn"
+			<input type="reset" name="cancel" class="btn"
 				value="<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
 				onclick="javascript:window.history.back();"
 				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" tabindex="5" />

@@ -404,6 +404,10 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '') {
+		if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest) {
+			return false;
+		}
+
 		$link = KunenaFactory::getProfile ()->getUserListURL ( $action );
 		if ($link) {
 			return '<a href="'. $link .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';

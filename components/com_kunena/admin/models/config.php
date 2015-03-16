@@ -131,7 +131,6 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['regonly']                = JHtml::_('select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $this->config->regonly);
 		$lists ['board_offline']          = JHtml::_('select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $this->config->board_offline);
 		$lists ['pubwrite']               = JHtml::_('select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $this->config->pubwrite);
-		$lists ['useredit']               = JHtml::_('select.genericlist', $yesno, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->useredit);
 		$lists ['showhistory']            = JHtml::_('select.genericlist', $yesno, 'cfg_showhistory', 'class="inputbox" size="1"', 'value', 'text', $this->config->showhistory);
 		$lists ['showannouncement']       = JHtml::_('select.genericlist', $yesno, 'cfg_showannouncement', 'class="inputbox" size="1"', 'value', 'text', $this->config->showannouncement);
 		$lists ['avataroncat']            = JHtml::_('select.genericlist', $yesno, 'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $this->config->avataroncat);
@@ -447,6 +446,12 @@ class KunenaAdminModelConfig extends KunenaModel
 		$ebay_language[] = JHtml::_('select.option', '216', 'sg-SG');
 
 		$lists['ebay_language'] = JHtml::_('select.genericlist', $ebay_language, 'cfg_ebay_language', 'class="inputbox" size="1"', 'value', 'text', $this->config->ebay_language);
+
+		$useredit = array();
+		$useredit[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_YES'));
+		$useredit[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_NO'));
+		$useredit[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
+		$lists['useredit'] = JHtml::_('select.genericlist', $useredit, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->useredit);
 
 		return $lists;
 	}

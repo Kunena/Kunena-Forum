@@ -68,13 +68,6 @@ class KunenaViewTopics extends KunenaView
 
 		$this->setTitle($title);
 
-		// Create image for feed
-		$image                 = new JFeedImage();
-		$image->title          = $this->document->getTitle();
-		$image->url            = $this->ktemplate->getImagePath('icons/rss.png');
-		$image->description    = $this->document->getDescription();
-		$this->document->image = $image;
-
 		$this->displayTopicRows();
 	}
 
@@ -112,13 +105,6 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		$this->setTitle($title);
-
-		// Create image for feed
-		$image                 = new JFeedImage();
-		$image->title          = $this->document->getTitle();
-		$image->url            = $this->ktemplate->getImagePath('icons/rss.png');
-		$image->description    = $this->document->getDescription();
-		$this->document->image = $image;
 
 		$this->displayTopicRows();
 	}
@@ -159,13 +145,6 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		$this->setTitle($title);
-
-		// Create image for feed
-		$image                 = new JFeedImage();
-		$image->title          = $this->document->getTitle();
-		$image->url            = $this->ktemplate->getImagePath('icons/rss.png');
-		$image->description    = $this->document->getDescription();
-		$this->document->image = $image;
 
 		$this->displayPostRows();
 	}

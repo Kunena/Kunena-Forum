@@ -12,4 +12,7 @@ defined('JPATH_PLATFORM') or die;
 /**
  * Compatibility layer for JResponseJson
  */
-class KunenaCompatResponseJson extends JResponseJson {}
+class KunenaCompatResponseJson extends JResponseJson
+{
+
+}

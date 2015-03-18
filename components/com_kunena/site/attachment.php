@@ -1,11 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
+ *
+ * @package       Kunena.Site
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
 
 /*
@@ -33,7 +34,8 @@ require_once JPATH_BASE . '/includes/defines.php';
 
 // Installation check, and check on removal of the install directory.
 if (!file_exists(JPATH_CONFIGURATION . '/configuration.php')
-	|| (filesize(JPATH_CONFIGURATION . '/configuration.php') < 10))
+	|| (filesize(JPATH_CONFIGURATION . '/configuration.php') < 10)
+)
 {
 	echo 'No configuration file found and no installation code available. Exiting...';
 
@@ -41,7 +43,7 @@ if (!file_exists(JPATH_CONFIGURATION . '/configuration.php')
 }
 
 // Kunena check.
-if (!file_exists( JPATH_ADMINISTRATOR . '/components/com_kunena/api.php'))
+if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_kunena/api.php'))
 {
 	echo 'Kunena Forum not installed. Exiting...';
 
@@ -56,7 +58,8 @@ require_once JPATH_LIBRARIES . '/cms.php';
 
 require_once JPATH_BASE . '/includes/framework.php';
 
-class KunenaApplication extends JApplicationWeb {
+class KunenaApplication extends JApplicationWeb
+{
 	protected $_name = 'site';
 	protected $_clientId = 0;
 	protected $userstate = array();
@@ -113,7 +116,7 @@ class KunenaApplication extends JApplicationWeb {
 
 		// Initialize the options for JSession.
 		$options = array(
-			'name' => $name,
+			'name'   => $name,
 			'expire' => $lifetime
 		);
 
@@ -138,13 +141,14 @@ class KunenaApplication extends JApplicationWeb {
 	protected function doExecute()
 	{
 		// Handle SEF.
-		$query = $this->input->getString('query', 'foo');
+		$query    = $this->input->getString('query', 'foo');
 		$segments = explode('/', $query);
 
 		$segment = array_shift($segments);
 		$this->input->set('id', (int) $segment);
 		$segment = array_shift($segments);
-		if ($segment == 'thumb') {
+		if ($segment == 'thumb')
+		{
 			$this->input->set('thumb', 1);
 		}
 		$this->input->set('format', 'raw');
@@ -153,11 +157,13 @@ class KunenaApplication extends JApplicationWeb {
 		echo $controller->execute();
 	}
 
-	public function isSite() {
+	public function isSite()
+	{
 		return true;
 	}
 
-	public function isAdmin() {
+	public function isAdmin()
+	{
 		return false;
 	}
 
@@ -181,9 +187,11 @@ $app = new KunenaApplication();
 
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
-try {
+try
+{
 	$app->execute();
-} catch (Exception $e) {
+} catch (Exception $e)
+{
 	echo $e->getMessage();
 }
 

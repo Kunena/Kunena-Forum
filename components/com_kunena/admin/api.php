@@ -7,10 +7,12 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined ('_JEXEC') or die ();
 
-if (defined ( 'KUNENA_LOADED' ))
+if (defined('KUNENA_LOADED' ))
+{
 	return;
+}
 
 // Manually enable code profiling by setting value to 1
 define ( 'KUNENA_PROFILER', 0 );
@@ -32,12 +34,15 @@ define ( 'KURL_SITE', JUri::Root () . KPATH_COMPONENT_RELATIVE . '/' );
 define ( 'KURL_MEDIA', JUri::Root () . 'media/' . KUNENA_NAME . '/' );
 
 $libraryFile = JPATH_PLATFORM . '/kunena/bootstrap.php';
-if (is_file($libraryFile)) {
+
+if (is_file($libraryFile))
+{
 	require_once $libraryFile;
 }
 
-if (JFactory::getApplication()->isSite()) {
-	JLoader::registerPrefix('ComponentKunenaController', KPATH_SITE.'/controller');
+if (JFactory::getApplication()->isSite())
+{
+	JLoader::registerPrefix('ComponentKunenaController', KPATH_SITE . '/controller');
 }
 
 // Kunena has been initialized

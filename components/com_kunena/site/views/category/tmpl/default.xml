@@ -8,7 +8,10 @@
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
 		<fieldset name="request">
-			<field name="catid" type="kunenacategorylist" sections="1" label="COM_KUNENA_MENU_CATID" />
+			<field name="catid"
+			       type="kunenacategorylist"
+			       sections="1"
+			       label="COM_KUNENA_MENU_CATID"/>
 		</fieldset>
 	</fields>
 </metadata>

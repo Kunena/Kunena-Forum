@@ -61,7 +61,8 @@ jimport ( 'joomla.utilities.date' );
  * @property	string	$bebo
  * @property	int		$thankyou
 */
-class KunenaUser extends JObject {
+class KunenaUser extends JObject
+{
 	// Global for every instance
 	protected static $_ranks = null;
 
@@ -86,8 +87,15 @@ class KunenaUser extends JObject {
 	public function __construct($identifier = 0)
 	{
 		// Always load the user -- if user does not exist: fill empty data
-		if ($identifier !== false) $this->load ( $identifier );
-		if (!isset($this->userid)) $this->userid = 0;
+		if ($identifier !== false)
+		{
+			$this->load ( $identifier );
+		}
+
+		if (!isset($this->userid))
+		{
+			$this->userid = 0;
+		}
 
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
@@ -115,7 +123,11 @@ class KunenaUser extends JObject {
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = $exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = $exists;
+		}
 
 		return $return;
 	}
@@ -193,7 +205,8 @@ class KunenaUser extends JObject {
 				break;
 			case 'ban' :
 				$banInfo = KunenaUserBan::getInstanceByUserid($this->userid, true);
-				if (!$banInfo->canBan()) {
+				if (!$banInfo->canBan())
+				{
 					$exception =  new KunenaExceptionAuthorise($banInfo->getError(), $user->exists() ? 403 : 401);
 				}
 				break;
@@ -202,7 +215,11 @@ class KunenaUser extends JObject {
 		}
 
 		// Throw or return the exception.
-		if ($throw && $exception) throw $exception;
+		if ($throw && $exception)
+		{
+			throw $exception;
+		}
+
 		return $exception;
 	}
 
@@ -252,13 +269,19 @@ class KunenaUser extends JObject {
 		$table = $this->getTable ();
 
 		// Load the KunenaTableUser object based on the user id
-		if ($id > 0) $this->_exists = $table->load($id);
+		if ($id > 0)
+		{
+			$this->_exists = $table->load($id);
+		}
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
 
 		// Set showOnline if user doesn't exists (if we will save the user)
-		if (!$this->_exists) $this->showOnline = 1;
+		if (!$this->_exists)
+		{
+			$this->showOnline = 1;
+		}
 
 		return $this->_exists;
 	}
@@ -279,23 +302,23 @@ class KunenaUser extends JObject {
 		$table->exists ( $this->_exists );
 
 		// Check and store the object.
-		if (! $table->check ())
+		if (!$table->check ())
 		{
 			$this->setError ( $table->getError () );
 			return false;
 		}
 
 		//are we creating a new user
-		$isnew = ! $this->_exists;
+		$isnew = !$this->_exists;
 
 		// If we aren't allowed to create new users return
-		if (! $this->userid || ($isnew && $updateOnly))
+		if (!$this->userid || ($isnew && $updateOnly))
 		{
 			return true;
 		}
 
 		//Store the user data in the database
-		if (! $result = $table->store ())
+		if (!$result = $table->store ())
 		{
 			$this->setError ( $table->getError () );
 		}
@@ -372,6 +395,7 @@ class KunenaUser extends JObject {
 		{
 			$this->_allowed = KunenaAccess::getInstance()->getAllowedCategories($this->userid);
 		}
+
 		return $this->_allowed;
 	}
 
@@ -435,6 +459,7 @@ class KunenaUser extends JObject {
 
 		$ban = new JDate ($this->banned);
 		$now = new JDate ();
+
 		return ($ban->toUnix () > $now->toUnix ());
 	}
 
@@ -467,7 +492,12 @@ class KunenaUser extends JObject {
 		{
 			$name = $this->_config->username ? $this->username : $this->name;
 		}
-		if ($escape) $name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
+
+		if ($escape)
+		{
+			$name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
+		}
+
 		return $name;
 	}
 
@@ -513,6 +543,7 @@ class KunenaUser extends JObject {
 		{
 			$name = $this->getName();
 		}
+
 		$key = "{$name}.{$title}.{$rel}";
 		if (empty($this->_link[$key]))
 		{
@@ -520,8 +551,10 @@ class KunenaUser extends JObject {
 			{
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}
+
 			$class = !is_null($class) ? $class : $this->getType(0, 'class');
 			$link = $this->getURL (true, $task);
+
 			if (! empty ( $link ))
 			{
 				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
@@ -579,28 +612,36 @@ class KunenaUser extends JObject {
 		if ($this->userid == 0)
 		{
 			$type = 'guest';
-		} elseif ($this->isBlocked())
+		}
+		elseif ($this->isBlocked())
 		{
 			$type = 'blocked';
-		} elseif ($this->isBanned())
+		}
+		elseif ($this->isBanned())
 		{
 			$type = 'banned';
-		} elseif (!empty($adminCategories[0]))
+		}
+		elseif (!empty($adminCategories[0]))
 		{
 			$type = 'admin';
-		} elseif (!empty($adminCategories[$catid]))
+		}
+		elseif (!empty($adminCategories[$catid]))
 		{
 			$type = 'localadmin';
-		} elseif (!empty($moderatedCategories[0]))
+		}
+		elseif (!empty($moderatedCategories[0]))
 		{
 			$type = 'globalmod';
-		} elseif (!empty($moderatedCategories[$catid]))
+		}
+		elseif (!empty($moderatedCategories[$catid]))
 		{
 			$type = 'moderator';
-		} elseif (!$catid && !empty($moderatedCategories))
+		}
+		elseif (!$catid && !empty($moderatedCategories))
 		{
 			$type = 'moderator';
-		} else
+		}
+		else
 		{
 			$type = 'user';
 		}
@@ -652,7 +693,8 @@ class KunenaUser extends JObject {
 		{
 			// Use rank specified to the user.
 			$rank = self::$_ranks[$this->rank];
-		} else
+		}
+		else
 		{
 			// Generate user rank.
 			$rank = new stdClass();
@@ -861,7 +903,8 @@ class KunenaUser extends JObject {
 			$layout = $this->view;
 		}
 
-		switch ( $layout ) {
+		switch ($layout)
+		{
 			case 'flat':
 			case 'threaded':
 			case 'indented':
@@ -876,12 +919,17 @@ class KunenaUser extends JObject {
 	/**
 	 * @param string $layout
 	 */
-	public function setTopicLayout( $layout = 'default' ) {
-		if ($layout != 'default') $layout = $this->getTopicLayout($layout);
+	public function setTopicLayout($layout = 'default')
+	{
+		if ($layout != 'default')
+		{
+			$layout = $this->getTopicLayout($layout);
+		}
 
 		$this->_app->setUserState ('com_kunena.topic_layout', $layout);
 
-		if ($this->userid && $this->view != $layout) {
+		if ($this->userid && $this->view != $layout)
+		{
 			$this->view = $layout;
 			$this->save(true);
 		}
@@ -975,6 +1023,7 @@ class KunenaUser extends JObject {
 			$me = KunenaUserHelper::getMyself();
 
 			$this->_email = '';
+
 			if ($this->email && (($config->showemail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
 			{
 				$this->_email = JHtml::_('email.cloak', $this->email);
@@ -1073,7 +1122,8 @@ class KunenaUser extends JObject {
 	 *
 	 * @since 3.1
 	 */
-	public function getPersonalText() {
+	public function getPersonalText()
+	{
 		if (!isset($this->_personalText))
 		{
 			$this->_personalText = KunenaHtmlParser::parseText($this->personalText);
@@ -1089,8 +1139,10 @@ class KunenaUser extends JObject {
 	 *
 	 * @since 3.1
 	 */
-	public function getSignature() {
-		if (!isset($this->_signature)) {
+	public function getSignature()
+	{
+		if (!isset($this->_signature))
+		{
 			$this->_signature = KunenaHtmlParser::parseBBCode($this->signature, $this, KunenaConfig::getInstance()->maxsig);
 		}
 
@@ -1125,7 +1177,7 @@ class KunenaUser extends JObject {
 				if ($this->birthdate)
 				{
 					$date = new KunenaDate($this->birthdate);
-					if ($date->format('%Y')<1902)
+					if ($date->format('%Y') < 1902)
 					{
 						break;
 					}
@@ -1148,7 +1200,8 @@ class KunenaUser extends JObject {
 				{
 					$websitename = $this->websiteurl;
 				}
-				else {
+				else
+				{
 					$websitename = $this->websitename;
 				}
 				if ($this->websiteurl)
@@ -1199,20 +1252,25 @@ class KunenaUser extends JObject {
 			'flickr' => array ('url' => 'http://www.flickr.com/photos/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FLICKR' ), 'nourl' => '0' ),
 			'bebo' => array ('url' => 'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BEBO' ), 'nourl' => '0' )
 		);
+
 		if (!isset($social [$name]))
 		{
 			return;
 		}
+
 		$title = $social [$name] ['title'];
 		$value = $this->escape ( $this->$name );
 		$url = strtr ( $social [$name] ['url'], array ('##VALUE##' => $value ) );
+
 		if ($social [$name] ['nourl'] == '0')
 		{
 			if (!empty($this->$name))
 			{
 				return '<a href="' . $this->escape ( $url ) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
 			}
-		} else {
+		}
+		else
+		{
 			if (!empty($this->$name))
 			{
 				return '<span class="kicon-profile kicon-profile-' . $name . ' kTip" title="' . $title . ': ' . $value . '"></span>';
@@ -1248,7 +1306,8 @@ class KunenaUser extends JObject {
 		switch ($name)
 		{
 			case 'id':
-				return $this->userid;
+
+			return $this->userid;
 		}
 
 		$trace = debug_backtrace();
@@ -1257,6 +1316,7 @@ class KunenaUser extends JObject {
 			' in ' . $trace[0]['file'] .
 			' on line ' . $trace[0]['line'],
 			E_USER_NOTICE);
+
 		return null;
 	}
 }

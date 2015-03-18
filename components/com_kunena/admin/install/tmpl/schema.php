@@ -1,18 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Installer
- * @subpackage Template
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package       Kunena.Installer
+ * @subpackage    Template
+ *
+ * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /** @var KunenaViewInstall $this */
 
-$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/install/media/install.css' );
+$this->document->addStyleSheet(JUri::base(true) . '/components/com_kunena/install/media/install.css');
 ?>
 <div id="right">
 	<div id="rightpad">
@@ -39,10 +40,10 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/instal
 				</div>
 			</div>
 			<div class="n">
-			<h2>Schema Difference</h2>
-			<p><?php $this->displaySchemaDiff();?></p>
-			<h2>Database Schema</h2>
-			<p><?php $this->displaySchema();?></p>
+				<h2>Schema Difference</h2>
+				<p><?php $this->displaySchemaDiff(); ?></p>
+				<h2>Database Schema</h2>
+				<p><?php $this->displaySchema(); ?></p>
 			</div>
 			<div class="c">
 				<div class="c">

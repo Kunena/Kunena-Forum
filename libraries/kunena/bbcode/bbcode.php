@@ -21,26 +21,34 @@ jimport('joomla.utilities.string');
  *
  * @since   2.0
  */
-class KunenaBbcode extends NBBC_BBCode {
+class KunenaBbcode extends NBBC_BBCode
+{
 	public $autolink_disable = 0;
+
 	/**
 	 * @var object
 	 */
 	public $parent = null;
 
-    /**
-     * Use KunenaBbcode::getInstance() instead.
-     *
-     * @param bool $relative
-     * @internal
-     */
-    public function __construct($relative = true) {
+	 /**
+	 * Use KunenaBbcode::getInstance() instead.
+	 *
+	 * @param bool $relative
+	 * @internal
+	 */
+	public function __construct($relative = true)
+	{
 		parent::__construct();
 		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 
 		$this->smileys = $this->defaults->default_smileys;
-		if (empty($this->smileys)) $this->SetEnableSmileys(false);
+
+		if (empty($this->smileys))
+		{
+			$this->SetEnableSmileys(false);
+		}
+
 		$this->SetSmileyDir ( JPATH_ROOT );
 		$this->SetSmileyURL ( $relative ? JUri::root(true) : rtrim(JUri::root(), '/') );
 		$this->SetDetectURLs ( true );
@@ -53,43 +61,46 @@ class KunenaBbcode extends NBBC_BBCode {
 	}
 
 	/**
-	 * Get Singleton Instance
+	 * Get global instance from BBCode parser.
 	 *
-	 * @param
-	 * @return	KunenaBbcode
-	 * @since	1.7
+	 * @param bool $relative
+	 * @return mixed
 	 */
-    /**
-     * Get global instance from BBCode parser.
-     *
-     * @param bool $relative
-     * @return mixed
-     */
-    public static function getInstance($relative = true) {
+	public static function getInstance($relative = true)
+	{
 		static $instance = false;
-		if (!isset($instance[intval($relative)])) {
+
+		if (!isset($instance[intval($relative)]))
+		{
 			$instance[intval($relative)] = new KunenaBbcode ($relative);
 		}
+
 		$instance[intval($relative)]->autolink_disable = 0;
+
 		return $instance[intval($relative)];
 	}
 
-    /**
-     * @param $params
-     * @return string
-     */
-    public function parseUrl($params) {
+	 /**
+	 * @param $params
+	 * @return string
+	 */
+	public function parseUrl($params)
+	{
 		$url = $params['url'];
 		$text = $params['text'];
 
 		$config = KunenaFactory::getConfig ();
-		if ($config->autolink) {
-			if (preg_match('#^mailto:#ui', $url)) {
+		if ($config->autolink)
+		{
+			if (preg_match('#^mailto:#ui', $url))
+			{
 				// Cloak email addresses
 				$email = substr($text, 7);
 
 				$layout = KunenaLayout::factory('BBCode/Email');
-				if ($layout->getPath()) {
+
+				if ($layout->getPath())
+				{
 					return (string) $layout
 						->set('email', $email)
 						->set('mailto', $this->IsValidEmail($email));
@@ -101,29 +112,43 @@ class KunenaBbcode extends NBBC_BBCode {
 			// Remove http(s):// from the text
 			$text = preg_replace ( '#^http(s?)://#ui', '', $text );
 
-			if ($config->trimlongurls) {
+			if ($config->trimlongurls)
+			{
 				// shorten URL text if they are too long
 				$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
 			}
 		}
 
-		if (!isset($params['query'])) $params['query'] = '';
-		if (!isset($params['path'])) $params['path'] = '';
+		if (!isset($params['query']))
+		{
+			$params['query'] = '';
+		}
 
-		if ($config->autoembedyoutube && empty($this->parent->forceMinimal) && isset($params['host'])) {
+		if (!isset($params['path']))
+		{
+			$params['path'] = '';
+		}
+
+		if ($config->autoembedyoutube && empty($this->parent->forceMinimal) && isset($params['host']))
+		{
 			// convert youtube links to embedded player
 			parse_str($params['query'], $query);
 			$path = explode('/', $params['path']);
 
-			if (strstr($params['host'], '.youtube.') && !empty($path[1]) && $path[1]=='watch' && !empty($query['v'])) {
+			if (strstr($params['host'], '.youtube.') && !empty($path[1]) && $path[1]=='watch' && !empty($query['v']))
+			{
 				$video = $query['v'];
-			} elseif ($params['host'] == 'youtu.be' && !empty($path[1])) {
+			}
+			elseif ($params['host'] == 'youtu.be' && !empty($path[1]))
+			{
 				$video = $path[1];
 			}
-			if (isset($video)) {
+
+			if (isset($video))
+			{
 				$uri = JURI::getInstance();
 
-				if ( $uri->isSSL() )
+				if ($uri->isSSL())
 				{
 					return '<iframe width="425" height="344" src="https://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
 				}
@@ -133,16 +158,28 @@ class KunenaBbcode extends NBBC_BBCode {
 				}
 			}
 		}
-		if ($config->autoembedebay && empty($this->parent->forceMinimal) && isset($params['host']) && strstr($params['host'], '.ebay.')) {
+
+		if ($config->autoembedebay && empty($this->parent->forceMinimal) && isset($params['host']) && strstr($params['host'], '.ebay.'))
+		{
 			parse_str($params['query'], $query);
 			$path = explode('/', $params['path']);
 
-			if ($path[1] == 'itm') {
-				if (isset($path[3]) && is_numeric($path[3])) $itemid = intval($path[3]);
-				elseif (isset($path[2]) && is_numeric($path[2])) $itemid = intval($path[2]);
-				if (isset($itemid)) {
+			if ($path[1] == 'itm')
+			{
+				if (isset($path[3]) && is_numeric($path[3]))
+				{
+					$itemid = intval($path[3]);
+				}
+				elseif (isset($path[2]) && is_numeric($path[2]))
+				{
+					$itemid = intval($path[2]);
+				}
+
+				if (isset($itemid))
+				{
 					// convert ebay item to embedded widget
 					$layout = KunenaLayout::factory('BBCode/eBay');
+
 					if ($layout->getPath())
 					{
 						$ebay = $bbcode->getEbayItemFromCache($content);
@@ -165,9 +202,11 @@ class KunenaBbcode extends NBBC_BBCode {
 			parse_str($params['query'], $query);
 
 			// FIXME: ebay search and seller listings are not supported.
-			if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
+			if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw']))
+			{
 				// convert ebay search to embedded widget
 				$layout = KunenaLayout::factory('BBCode/eBay');
+
 				if ($layout->getPath())
 				{
 					return (string) $layout
@@ -186,9 +225,12 @@ class KunenaBbcode extends NBBC_BBCode {
 					. $config->ebay_language . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid=5336042350"></embed></object>';
 
 			}
-			if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
+
+			if (strstr($params['host'], 'myworld.') && !empty($path[1]))
+			{
 				// convert seller listing to embedded widget
 				$layout = KunenaLayout::factory('BBCode/eBay');
+
 				if ($layout->getPath())
 				{
 					return (string) $layout
@@ -208,9 +250,12 @@ class KunenaBbcode extends NBBC_BBCode {
 			}
 		}
 
-		if ($config->autolink) {
+		if ($config->autolink)
+		{
 			$layout = KunenaLayout::factory('BBCode/URL');
-			if ($layout->getPath()) {
+
+			if ($layout->getPath())
+			{
 				return (string) $layout
 					->set('content', $text)
 					->set('url', $url)
@@ -228,7 +273,8 @@ class KunenaBbcode extends NBBC_BBCode {
      * @param $string
      * @return array
      */
-    function Internal_AutoDetectURLs($string) {
+    function Internal_AutoDetectURLs($string)
+    {
 		$search = preg_split('/(?xi)
 		\b
 		(
@@ -254,15 +300,22 @@ class KunenaBbcode extends NBBC_BBCode {
 		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE );
 
 		$output = array();
-		foreach ($search as $index => $token) {
-			if ($index & 1) {
-				if (preg_match("/^(https?|ftp|mailto):/ui", $token)) {
+
+		foreach ($search as $index => $token)
+		{
+			if ($index & 1)
+			{
+				if (preg_match("/^(https?|ftp|mailto):/ui", $token))
+				{
 					// Protocol has been provided, so just use it as-is.
 					$url = $token;
-				} else {
+				}
+				else
+				{
 					// Add scheme to emails and raw domain URLs.
 					$url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
 				}
+
 				// Never start URL from the middle of text (except for punctuation).
 				$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index-1]);
 				$invalid |= !$this->IsValidURL($url, true);
@@ -270,43 +323,59 @@ class KunenaBbcode extends NBBC_BBCode {
 				// We have a full, complete, and properly-formatted URL, with protocol.
 				// Now we need to apply the $this->url_pattern template to turn it into HTML.
 				$params = JString::parse_url($url);
-				if (!$invalid && substr($url, 0, 7) == 'mailto:') {
+
+				if (!$invalid && substr($url, 0, 7) == 'mailto:')
+				{
 					$email = JString::substr($url, 7);
 					$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
 
-				} elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
+				}
+				elseif ($invalid || empty($params['host']) || !empty($params['pass']))
+				{
 					$output[$index-1] .= $token;
 					$output[$index] = '';
-
-				} else {
+				}
+				else
+				{
 					$params['url'] = $url;
 					$params['link'] = $url;
 					$params['text'] = $token;
 					$output[$index] = $this->FillTemplate($this->url_pattern, $params);
 				}
-			} else {
+			}
+			else
+			{
 				$output[$index] = $token;
 			}
 		}
+
 		return $output;
 	}
 
 	/**
 	 * @see BBCode::IsValidURL()
 	 * Regular expression taken from https://gist.github.com/729294
+	 *
+	 * @param      $string
+	 * @param bool $email_too
+	 * @param bool $local_too
+	 *
+	 * @return bool
 	 */
-	public function IsValidURL($string, $email_too = true, $local_too = false) {
+	public function IsValidURL($string, $email_too = true, $local_too = false)
+	{
 		static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
 
 		if (empty($string)) return false;
 		if ($local_too && $string[0] == '/') $string = 'http://www.domain.com' . $string;
 		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
 		if (preg_match($re, $string)) return true;
+
 		return false;
 	}
 
 	/**
-	 * Load eBay objet item from cache
+	 * Load eBay object item from cache
 	 *
 	 * @param   int  $ItemID  The eBay ID of object to query
 	 *
@@ -326,8 +395,12 @@ class KunenaBbcode extends NBBC_BBCode {
 /**
  * Class KunenaBbcodeLibrary
  */
-class KunenaBbcodeLibrary extends BBCodeLibrary {
+class KunenaBbcodeLibrary extends BBCodeLibrary
+{
 	var $default_smileys = array();
+
+	public $mapid = 0;
+
 	var $default_tag_rules = array(
 			'b' => array(
 				'simple_start' => "<b>",
@@ -899,30 +972,42 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			),
 	);
 
-	function __construct() {
-		if (!KunenaFactory::getConfig()->disemoticons) {
+	function __construct()
+	{
+		if (!KunenaFactory::getConfig()->disemoticons)
+		{
 			$db = JFactory::getDBO ();
 			$query = "SELECT code, location FROM #__kunena_smileys";
 			$db->setQuery ( $query );
 			$smileys = $db->loadObjectList ();
 
 			$template = KunenaFactory::getTemplate();
-			foreach ( $smileys as $smiley ) {
+
+			foreach ($smileys as $smiley)
+			{
 				$this->default_smileys [$smiley->code] = $template->getSmileyPath($smiley->location);
 			}
 		}
+
 		// Translate plain text "Quote:"
 		$this->default_tag_rules['quote']['plain_start'] = "\n".JText::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE')."\n";
 	}
 
-	protected function getMessage() {
-		if (empty($this->parent)) {
+	protected function getMessage()
+	{
+		if (empty($this->parent))
+		{
 			return null;
-		} elseif ($this->parent instanceof KunenaForumMessage) {
+		}
+		elseif ($this->parent instanceof KunenaForumMessage)
+		{
 			return $this->parent;
-		} elseif (isset($this->parent->message)) {
+		}
+		elseif (isset($this->parent->message)
+		) {
 			return $this->parent->message;
 		}
+
 		return null;
 	}
 
@@ -949,7 +1034,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$textCloak = $bbcode->IsValidEmail($text);
 
 		$layout = KunenaLayout::factory('BBCode/Email');
-		if ($layout->getPath()) {
+
+		if ($layout->getPath())
+		{
 			return (string) $layout
 				->set('email', $email)
 				->set('mailto', $mailto)
@@ -1012,7 +1099,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$layout = KunenaLayout::factory('BBCode/URL');
-		if ($layout->getPath()) {
+
+		if ($layout->getPath())
+		{
 			return (string) $layout
 				->set('content', $content)
 				->set('url', $url)
@@ -1021,6 +1110,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		// TODO: Remove in Kunena 4.0
 		$target = ' target="' . htmlspecialchars($target, ENT_COMPAT, 'UTF-8') . '"';
+
 		return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
 	}
 
@@ -1033,7 +1123,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$layout = KunenaLayout::factory('BBCode/Size');
-		if ($layout->getPath()) {
+
+		if ($layout->getPath())
+		{
 			return (string) $layout
 				->set('content', $content)
 				->set('size', $default);
@@ -1041,13 +1133,19 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		// TODO: Remove in Kunena 4.0
 		$size_css = array(1 => 'kmsgtext-xs', 'kmsgtext-s', 'kmsgtext-m', 'kmsgtext-l', 'kmsgtext-xl', 'kmsgtext-xxl');
-		if (isset($size_css[$default])) {
+
+		if (isset($size_css[$default]))
+		{
 			$size = "class=\"{$size_css[$default]}\"";
-		} elseif ($default) {
+		}
+		elseif ($default)
+		{
 			$size = "style=\"font-size:{$default}\"";
-		} else {
+		}
+		else {
 			$size = "class=\"{$size_css[3]}\"";
 		}
+
 		return "<span {$size}>{$content}</span>";
 	}
 
@@ -1066,43 +1164,68 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	//   [list=i]         Ordered list, lowercase Roman numerals, starting at i
 	//   [list=greek]     Ordered list, lowercase Greek letters, starting at alpha
 	//   [list=01]        Ordered list, two-digit numeric with 0-padding, starting at 01
-	function DoList($bbcode, $action, $name, $default, $params, $content) {
+	function DoList($bbcode, $action, $name, $default, $params, $content)
+	{
 		// Allowed list styles, striaght from the CSS 2.1 spec.  The only prohibited
 		// list style is that with image-based markers, which often slows down web sites.
 		$list_styles = Array ('1' => 'decimal', '01' => 'decimal-leading-zero', 'i' => 'lower-roman', 'I' => 'upper-roman', 'a' => 'lower-alpha', 'A' => 'upper-alpha' );
 		$ci_list_styles = Array ('circle' => 'circle', 'disc' => 'disc', 'square' => 'square', 'greek' => 'lower-greek', 'armenian' => 'armenian', 'georgian' => 'georgian' );
 		$ul_types = Array ('circle' => 'circle', 'disc' => 'disc', 'square' => 'square' );
 		$default = trim ( $default );
-		if (! $default)
-			$default = $bbcode->tag_rules [$name] ['default'] ['_default'];
 
-		if ($action == BBCODE_CHECK) {
+		if (!$default)
+		{
+			$default = $bbcode->tag_rules [$name] ['default'] ['_default'];
+		}
+
+		if ($action == BBCODE_CHECK)
+		{
 			if (! is_string ( $default ) || strlen ( $default ) == "")
+			{
 				return true;
+			}
 			else if (isset ( $list_styles [$default] ))
+			{
 				return true;
+			}
 			else if (isset ( $ci_list_styles [strtolower ( $default )] ))
+			{
 				return true;
+			}
 			else
+			{
 				return false;
+			}
 		}
 
 		// Choose a list element (<ul> or <ol>) and a style.
 		$type = '';
 		$elem = 'ul';
-		if (! is_string ( $default ) || strlen ( $default ) == "") {
+
+		if (! is_string ( $default ) || strlen ( $default ) == "")
+		{
 			$elem = 'ul';
-		} else if ($default == '1') {
+		}
+		else if ($default == '1')
+		{
 			$elem = 'ol';
-		} else if (isset ( $list_styles [$default] )) {
+		}
+		else if (isset ( $list_styles [$default] ))
+		{
 			$elem = 'ol';
 			$type = $list_styles [$default];
-		} else {
+		}
+		else
+		{
 			$default = strtolower ( $default );
-			if (isset ( $ul_types [$default] )) {
+
+			if (isset ( $ul_types [$default] ))
+			{
 				$elem = 'ul';
 				$type = $ul_types [$default];
-			} else if (isset ( $ci_list_styles [$default] )) {
+			}
+			else if (isset ( $ci_list_styles [$default] ))
+			{
 				$elem = 'ol';
 				$type = $ci_list_styles [$default];
 			}
@@ -1110,9 +1233,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		// Generate the HTML for it.
 		if (strlen ( $type ))
+		{
 			return "\n<$elem class=\"bbcode_list\" style=\"list-style-type:$type\">\n$content</$elem>\n";
+		}
 		else
+		{
 			return "\n<$elem class=\"bbcode_list\">\n$content</$elem>\n";
+		}
 	}
 
 	public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
@@ -1138,7 +1265,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$hidden = ($document instanceof JDocumentHTML);
 
 		$layout = KunenaLayout::factory('BBCode/Spoiler');
-		if ($layout->getPath()) {
+
+		if ($layout->getPath())
+		{
 			return (string) $layout
 				->set('title', $title)
 				->set('hidden', $hidden)
@@ -1181,6 +1310,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$me = KunenaUserHelper::getMyself();
 
 		$layout = KunenaLayout::factory('BBCode/Hidden');
+
 		if ($layout->getPath())
 		{
 			return (string) $layout
@@ -1263,16 +1393,20 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// Display only link in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof JDocumentHTML))
 		{
-			$url = 'https://maps.google.com/?q='.urlencode($bbcode->UnHTMLEncode($content));
+			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 
-			return '<a href="'.$url.'" rel="nofollow" target="_blank">'.$content.'</a>';
+			return '<a href="' . $url . '" rel="nofollow" target="_blank">' . $content . '</a>';
 		}
 
+		$this->mapid++;
+
 		$layout = KunenaLayout::factory('BBCode/Map');
+
 		if ($layout->getPath())
 		{
 			return (string) $layout
 				->set('content', $content)
+				->set('mapid', $this->mapid)
 				->set('params', $params);
 		}
 
@@ -1286,11 +1420,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$id ++;
-		$mapid = 'kgooglemap'.$id;
+		$mapid = 'kgooglemap' . $id;
 
 		$map_type = isset($params ['type']) ? strtoupper($params ["type"]): 'ROADMAP';
 		$map_typeId = array('HYBRID','ROADMAP','SATELLITE','TERRAIN');
-		if ( !in_array($map_type, $map_typeId) ) $map_type = 'ROADMAP';
+
+		if (!in_array($map_type, $map_typeId))
+		{
+			$map_type = 'ROADMAP';
+		}
+
 		$map_zoom = isset($params ['zoom']) ? (int) $params ['zoom']: 10;
 		$map_control = isset($params ['control']) ? (int) $params ['control'] : 0;
 
@@ -1354,6 +1493,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$height = (int) $config->rteheight;
 
 		$layout = KunenaLayout::factory('BBCode/eBay');
+
 		if ($layout->getPath())
 		{
 			$ebay = $bbcode->getEbayItemFromCache($content);
@@ -1370,9 +1510,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 
-	function DoArticle($bbcode, $action, $name, $default, $params, $content) {
+	function DoArticle($bbcode, $action, $name, $default, $params, $content)
+	{
 		if ($action == BBCODE_CHECK)
+		{
 			return true;
+		}
 
 		$lang = JFactory::getLanguage();
 		$lang->load('com_content');
@@ -1393,7 +1536,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			WHERE a.id='.$db->quote($articleid);
 		$db->setQuery($query);
 		$article = $db->loadObject();
-		if ($article) {
+
+		if ($article)
+		{
 			// Get credentials to check if the user has right to see the article
 			$params = $site->getParams('com_content');
 			$registry = new JRegistry();
@@ -1403,35 +1548,54 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$params = $article->params;
 
 			$viewlevels = $user->getAuthorisedViewLevels();
-			if ( !in_array($article->access, $viewlevels) ) {
+
+			if (!in_array($article->access, $viewlevels))
+			{
 				$denied = true;
 			}
 		}
 
 		$html = $link = '';
-		if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
+
+		if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid))
+		{
 			$html = JText::_ ( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED' );
-		} elseif (!empty($denied) && !$params->get('show_noauth')) {
+		}
+		elseif (!empty($denied) && !$params->get('show_noauth'))
+		{
 			$html = JText::_( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS' );
-		} else {
+		}
+		else
+		{
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 			$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
 			$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
 			$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 
-			if (!$default) $default = $config->article_display;
-			// Do not display full text if there's no permissions to display the full article.
-			if (!empty($denied) && $default == 'full') $default = 'intro';
-			switch ($default) {
+			if (!$default)
+			{
+				$default = $config->article_display;
+			}
+
+				// Do not display full text if there's no permissions to display the full article.
+			if (!empty($denied) && $default == 'full')
+			{
+				$default = 'intro';
+			}
+
+			switch ($default)
+			{
 				case 'full':
-					if ( !empty($article->fulltext) ) {
+					if (!empty($article->fulltext))
+					{
 						$article->text = $article->introtext. ' '. $article->fulltext;
 						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
 						break;
 					}
 					// continue to intro if fulltext is empty
 				case 'intro':
-					if ( !empty($article->introtext) ) {
+					if (!empty($article->introtext))
+					{
 						$article->text = $article->introtext;
 						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE').'</a>';
 						break;
@@ -1442,7 +1606,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					$link = '<a href="'.$url.'" class="readon">'.$article->title.'</a>';
 					break;
 			}
-			if (!empty($article->text)) {
+
+			if (!empty($article->text))
+			{
 				// Identify the source of the event to be Kunena itself
 				// this is important to avoid recursive event behaviour with our own plugins
 				$params->set('ksource', 'kunena');
@@ -1453,22 +1619,33 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$bbcode->text_length += strlen($article->text);
 				$html = $article->text;
 			}
-			if (!empty($denied)) {
+
+			if (!empty($denied))
+			{
 				$link = '<span class="readon">'. JText::_('COM_CONTENT_REGISTER_TO_READ_MORE') .'</span>';
 			}
 		}
 		return ($html ? '<div class="kmsgtext-article">' . $html . '</div>' : '') . $link;
 	}
 
-	function DoQuote($bbcode, $action, $name, $default, $params, $content) {
+	function DoQuote($bbcode, $action, $name, $default, $params, $content)
+	{
 		if ($action == BBCODE_CHECK)
+		{
 			return true;
+		}
 
 		$post = isset($params["post"]) ? $params["post"] : false;
 		$user = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 		$html = '';
-		if ($user) $html .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
+
+		if ($user)
+		{
+			$html .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
+		}
+
 		$html .= '<div class="kmsgtext-quote">' . $content . '</div>';
+
 		return $html;
 	}
 
@@ -1481,41 +1658,60 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @param $content
 	 * @return bool|string
 	 */
-	function DoCode($bbcode, $action, $name, $default, $params, $content) {
-		if ($action == BBCODE_CHECK) {
+	function DoCode($bbcode, $action, $name, $default, $params, $content)
+	{
+		if ($action == BBCODE_CHECK)
+		{
 			return true;
 		}
 
 		$type = isset($params["type"]) ? $params["type"] : (isset($default) ? $default : "php");
-		if ($type == 'js') {
+
+		if ($type == 'js')
+		{
 			$type = 'javascript';
-		} elseif ($type == 'html') {
+		}
+		elseif ($type == 'html')
+		{
 			$type = 'html4strict';
 		}
 
-		if ($type == 'less' || $type == 'scss' || $type == 'sass') $type = 'css';
+		if ($type == 'less' || $type == 'scss' || $type == 'sass')
+		{
+			$type = 'css';
+		}
 
 		$highlight = KunenaFactory::getConfig()->highlightcode && empty($bbcode->parent->forceMinimal);
-		if ($highlight && !class_exists('GeSHi')) {
+
+		if ($highlight && !class_exists('GeSHi'))
+		{
 			$paths = array(
 				JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi.php',
 				JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php'
 			);
-			foreach ($paths as $path) {
-				if (!class_exists('GeSHi') && is_file($path)) {
+
+			foreach ($paths as $path)
+			{
+				if (!class_exists('GeSHi') && is_file($path))
+				{
 					require_once $path;
 				}
 			}
 
 		}
-		if ($highlight && class_exists('GeSHi')) {
+
+		if ($highlight && class_exists('GeSHi'))
+		{
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();
-		} else {
+		}
+		else
+		{
 			$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
 			$code = '<pre xml:'.$type.'>'.$content.'</pre>';
 		}
+
 		return '<div class="highlight">'.$code.'</div>';
 	}
 
@@ -1552,6 +1748,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$toolbar = $matches[3];
 
 			$layout = KunenaLayout::factory('BBCode/Tableau');
+
 			if ($layout->getPath())
 			{
 				return (string) $layout
@@ -1582,18 +1779,22 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @param $content
 	 * @return bool|string
 	 */
-	function DoVideo($bbcode, $action, $name, $default, $params, $content) {
-		if ($action == BBCODE_CHECK) {
+	function DoVideo($bbcode, $action, $name, $default, $params, $content)
+	{
+		if ($action == BBCODE_CHECK)
+		{
 			$bbcode->autolink_disable++;
 			return true;
 		}
 
-		if (!$content) {
+		if (!$content)
+		{
 			return '';
 		}
 
 		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal)) {
+		if (!empty($bbcode->parent->forceMinimal))
+		{
 			return '[video]';
 		}
 
@@ -1606,21 +1807,34 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$vid ["type"] = (isset ( $params ["type"] )) ? JString::strtolower ( $params ["type"] ) : '';
 		$vid ["param"] = (isset ( $params ["param"] )) ? $params ["param"] : '';
 
-		if (! $vid ["type"]) {
+		if (! $vid ["type"])
+		{
 			$vid_players = array ('divx' => 'divx', 'flash' => 'swf', 'mediaplayer' => 'avi,mp3,wma,wmv', 'quicktime' => 'mov,qt,qti,qtif,qtvr', 'realplayer', 'rm' );
-			foreach ( $vid_players as $vid_player => $vid_exts )
-				foreach ( explode ( ',', $vid_exts ) as $vid_ext )
-					if (preg_match ( '/^(.*\.' . $vid_ext . ')$/i', $content ) > 0) {
+
+			foreach ($vid_players as $vid_player => $vid_exts)
+			{
+				foreach (explode ( ',', $vid_exts ) as $vid_ext)
+				{
+					if (preg_match ( '/^(.*\.' . $vid_ext . ')$/i', $content ) > 0)
+					{
 						$vid ["type"] = $vid_player;
 						break 2;
 					}
-			unset ( $vid_players );
+				}
+			}
+
+			unset ($vid_players);
 		}
-		if (! $vid ["type"]) {
+		if (!$vid ["type"])
+		{
 			$vid_auto = preg_match ( '#^https?://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
-			if ($vid_auto) {
+
+			if ($vid_auto)
+			{
 				$vid ["type"] = JString::strtolower ( $vid_regs [1] );
-				switch ($vid ["type"]) {
+
+				switch ($vid ["type"])
+				{
 					case 'wideo' :
 						$vid ["type"] = 'wideo.fr';
 						break;
@@ -1665,60 +1879,105 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		//
 		);
 
-		if (isset ( $vid_providers [$vid ["type"]] )) {
+		if (isset ( $vid_providers [$vid ["type"]] ))
+		{
 			list ( $vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2 ) = (isset ( $vid_providers [$vid ["type"]] )) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
-		} else {
+		}
+		else
+		{
 			return;
 		}
 
 		unset ( $vid_providers );
-		if (! empty ( $vid_auto )) {
+
+		if (! empty ( $vid_auto ))
+		{
 			if ($vid_match and (preg_match ( "/$vid_match/i", $content, $vid_regs ) > 0))
+			{
 				$content = $vid_regs [1];
+			}
 			else
+			{
 				return;
+			}
 		}
 
 		$uri = JURI::getInstance();
-		if ( $uri->isSSL() && $vid ["type"] == 'youtube' ) $vid_source = preg_replace("/^http:/", "https:", $vid_source);
+
+		if ( $uri->isSSL() && $vid ["type"] == 'youtube' )
+		{
+			$vid_source = preg_replace("/^http:/", "https:", $vid_source);
+		}
+
 		$vid_source = preg_replace ( '/%vcode%/', $content, $vid_source );
+
 		if (! is_array ( $vid_par2 ))
+		{
 			$vid_par2 = array ();
+		}
 
 		$vid_size = isset ( $params ["size"] ) ? intval ( $params ["size"] ) : 0;
-		if (($vid_size > 0) and ($vid_size < $vid_sizemax)) {
+
+		if (($vid_size > 0) and ($vid_size < $vid_sizemax))
+		{
 			$vid_width = ( int ) ($vid_width * $vid_size / 100);
 			$vid_height = ( int ) ($vid_height * $vid_size / 100);
 		}
+
 		$vid_width += $vid_addx;
 		$vid_height += $vid_addy;
-		if (! isset ( $params ["size"] )) {
+
+		if (! isset ( $params ["size"] ))
+		{
 			if (isset ( $params ["width"] ))
-				if ($params ['width'] == '1') {
+			{
+				if ($params ['width'] == '1')
+				{
 					$params ['width'] = $vid_minwidth;
 				}
-			if (isset ( $params ["width"] )) {
+			}
+
+			if (isset ( $params ["width"] ))
+			{
 				$vid_width = intval ( $params ["width"] );
 			}
+
 			if (isset ( $params ["height"] ))
-				if ($params ['height'] == '1') {
+			{
+				if ($params ['height'] == '1')
+				{
 					$params ['height'] = $vid_minheight;
 				}
-			if (isset ( $params ["height"] )) {
+			}
+
+			if (isset ( $params ["height"] ))
+			{
 				$vid_height = intval ( $params ["height"] );
 			}
 		}
 
 		if ($vid_width < $vid_minwidth)
+		{
 			$vid_width = $vid_minwidth;
-		if ($vid_width > $vid_maxwidth)
-			$vid_width = $vid_maxwidth;
-		if ($vid_height < $vid_minheight)
-			$vid_height = $vid_minheight;
-		if ($vid_height > $vid_maxheight)
-			$vid_height = $vid_maxheight;
+		}
 
-		switch ($vid_type) {
+		if ($vid_width > $vid_maxwidth)
+		{
+			$vid_width = $vid_maxwidth;
+		}
+
+		if ($vid_height < $vid_minheight)
+		{
+			$vid_height = $vid_minheight;
+		}
+
+		if ($vid_height > $vid_maxheight)
+		{
+			$vid_height = $vid_maxheight;
+		}
+
+		switch ($vid_type)
+		{
 			case 'divx' :
 				$vid_par1 = array (array (1, 'classid', 'clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616' ), array (1, 'codebase', 'http://go.divx.com/plugin/DivXBrowserPlugin.cab' ), array (4, 'type', 'video/divx' ), array (4, 'pluginspage', 'http://go.divx.com/plugin/download/' ), array (6, 'src', $vid_source ), array (6, 'autoplay', 'false' ), array (5, 'width', $vid_width ), array (5, 'height', $vid_height ) );
 				$vid_allowpar = array ('previewimage' );
@@ -1747,49 +2006,85 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$vid_par3 = array ();
-		foreach ( $params as $vid_key => $vid_value ) {
+		foreach ( $params as $vid_key => $vid_value )
+		{
 			if (in_array ( JString::strtolower ( $vid_key ), $vid_allowpar ))
+			{
 				array_push ( $vid_par3, array (6, $vid_key, $bbcode->HTMLEncode ( $vid_value ) ) );
+			}
 		}
 
 		$vid_object = $vid_param = $vid_embed = array ();
-		foreach ( array_merge ( $vid_par1, $vid_par2, $vid_par3 ) as $vid_data ) {
-			list ( $vid_key, $vid_name, $vid_value ) = $vid_data;
+
+		foreach ( array_merge ( $vid_par1, $vid_par2, $vid_par3 ) as $vid_data )
+		{
+			list ($vid_key, $vid_name, $vid_value) = $vid_data;
+
 			if ($vid_key & 1)
-				$vid_object [$vid_name] = ' ' . $vid_name . '="' . preg_replace ( '/%vcode%/', $content, $vid_value ) . '"';
+			{
+				$vid_object [$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
+			}
+
 			if ($vid_key & 2)
+			{
 				$vid_param [$vid_name] = '<param name="' . $vid_name . '" value="' . preg_replace ( '/%vcode%/', $content, $vid_value ) . '" />';
+			}
+
 			if ($vid_key & 4)
+			{
 				$vid_embed [$vid_name] = ' ' . $vid_name . '="' . preg_replace ( '/%vcode%/', $content, $vid_value ) . '"';
+			}
 		}
 
 		$tag_new = '<object';
+
 		foreach ( $vid_object as $vid_data )
+		{
 			$tag_new .= $vid_data;
+		}
+
 		$tag_new .= '>';
+
 		foreach ( $vid_param as $vid_data )
+		{
 			$tag_new .= $vid_data;
+		}
+
 		$tag_new .= '<embed';
+
 		foreach ( $vid_embed as $vid_data )
+		{
 			$tag_new .= $vid_data;
+		}
+
 		$tag_new .= ' /></object>';
 
 		return $tag_new;
 	}
 
-	function DoAttachment($bbcode, $action, $name, $default, $params, $content) {
+	function DoAttachment($bbcode, $action, $name, $default, $params, $content)
+	{
 		if ($action == BBCODE_CHECK)
+		{
 			return true;
+		}
 
 		$attachments = null;
-		if ($bbcode->parent instanceof KunenaForumMessage) {
+
+		if ($bbcode->parent instanceof KunenaForumMessage)
+		{
 			$attachments = $bbcode->parent->getAttachments();
-		} elseif (is_object($bbcode->parent) && isset($bbcode->parent->attachments)) {
+		}
+		elseif (is_object($bbcode->parent) && isset($bbcode->parent->attachments))
+		{
 			$attachments = &$bbcode->parent->attachments;
 		}
+
 		// Display tag in activity streams etc..
-		if (!isset($attachments) || !empty($bbcode->parent->forceMinimal)) {
+		if (!isset($attachments) || !empty($bbcode->parent->forceMinimal))
+		{
 			$filename = basename(trim(strip_tags($content)));
+
 			return '[' . JText::_('COM_KUNENA_FILEATTACH') . ' ' . basename(!empty($params["name"]) ? $params["name"] : $filename) . ']';
 		}
 
@@ -1797,14 +2092,21 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		/** @var KunenaAttachment $attachment */
 
 		$attachment = null;
-		if (! empty ( $default )) {
+		if (! empty ( $default ))
+		{
 			$attachment = KunenaAttachmentHelper::get($default);
 			unset ( $attachments [$attachment->id] );
-		} elseif (empty ( $content )) {
+		}
+		elseif (empty ( $content ))
+		{
 			$attachment = array_shift ( $attachments );
-		} elseif (!empty ( $attachments )) {
-			foreach ( $attachments as $att ) {
-				if ($att->getFilename() == $content) {
+		}
+		elseif (!empty ( $attachments ))
+		{
+			foreach ( $attachments as $att )
+			{
+				if ($att->getFilename() == $content)
+				{
 					$attachment = $att;
 					unset ( $attachments [$att->id] );
 					break;
@@ -1813,14 +2115,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments )) {
+		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments ))
+		{
 			$filename = basename(trim(strip_tags($content)));
 			return $attachment->getThumbnailLink();
 		}
 
-		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments )) {
-			foreach ( $bbcode->parent->inline_attachments as $att ) {
-				if ($att->getFilename() == trim(strip_tags($content))) {
+		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments ))
+		{
+			foreach ( $bbcode->parent->inline_attachments as $att )
+			{
+				if ($att->getFilename() == trim(strip_tags($content)))
+				{
 					$attachment = $att;
 					break;
 				}
@@ -1869,13 +2175,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @param $content
 	 * @return bool|string
 	 */
-	function DoFile($bbcode, $action, $name, $default, $params, $content) {
+	function DoFile($bbcode, $action, $name, $default, $params, $content)
+	{
 		if ($action == BBCODE_CHECK)
+		{
 			return true;
+		}
 
 		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal)) {
+		if (!empty($bbcode->parent->forceMinimal))
+		{
 			$filename = basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content)));
+
 			return '[ '.basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content))).' ]';
 		}
 
@@ -1886,11 +2197,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$fileurl = KURL_MEDIA . '/' . $path;
 
 		// Legacy attachments support.
-		if (isset($bbcode->parent->attachments)) {
+		if (isset($bbcode->parent->attachments))
+		{
 			/** @var array|KunenaAttachment[] $attachments */
 			$attachments = &$bbcode->parent->attachments;
-			foreach ($attachments as $id => $attachment) {
-				if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/files') {
+
+			foreach ($attachments as $id => $attachment)
+			{
+				if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/files')
+				{
 					unset($attachments[$id]);
 
 					return $this->renderAttachment($attachment, $bbcode, false);
@@ -1942,8 +2257,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @param $content
 	 * @return bool|string
 	 */
-	function DoImage($bbcode, $action, $name, $default, $params, $content) {
-		if ($action == BBCODE_CHECK) {
+	function DoImage($bbcode, $action, $name, $default, $params, $content)
+	{
+		if ($action == BBCODE_CHECK)
+		{
 			return true;
 		}
 
@@ -1951,16 +2268,19 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$filename = basename($fileurl);
 
 		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal)) {
+		if (!empty($bbcode->parent->forceMinimal))
+		{
 			return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow\" target=\"_blank\">" . $bbcode->HTMLEncode($filename) . '</a>';
 		}
 
 		// Legacy attachments support.
-		if (isset($bbcode->parent->attachments) && strpos($fileurl, '/media/kunena/attachments/legacy/images/')) {
+		if (isset($bbcode->parent->attachments) && strpos($fileurl, '/media/kunena/attachments/legacy/images/'))
+		{
 
 			// Remove attachment from the attachments list and show it if it exists.
 			/** @var array|KunenaAttachment[] $attachments */
 			$attachments = &$bbcode->parent->attachments;
+
 			foreach ($attachments as $id => $attachment)
 			{
 				if ($attachment->getFilename() == $filename && $attachment->folder == 'media/kunena/attachments/legacy/images')
@@ -1981,22 +2301,30 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			->set('canLink', $bbcode->autolink_disable == 0);
 
 
-		if (JFactory::getUser()->id == 0 && $config->showimgforguest == 0) {
+		if (JFactory::getUser()->id == 0 && $config->showimgforguest == 0)
+		{
 			// Hide between content from non registered users.
 			return (string) $layout->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
 		}
 
 		// Obey image security settings.
-		if ($config->bbcode_img_secure != 'image') {
-			if ($bbcode->autolink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
+		if ($config->bbcode_img_secure != 'image')
+		{
+			if ($bbcode->autolink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl))
+			{
 				// If the image has not legal extension, return it as link or text.
-				if ($config->bbcode_img_secure == 'link') {
-					if (! preg_match ( '`^(/|https?://)`', $fileurl )) {
+				if ($config->bbcode_img_secure == 'link')
+				{
+					if (! preg_match ( '`^(/|https?://)`', $fileurl ))
+					{
 						$fileurl = 'http://' . $fileurl;
 					}
+
 					// TODO: call URL layout instead..
 					return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow\" target=\"_blank\">" . $bbcode->HTMLEncode($fileurl) . '</a>';
-				} else {
+				}
+				else
+				{
 					return $bbcode->HTMLEncode($fileurl);
 				}
 			}
@@ -2013,6 +2341,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$layout = KunenaLayout::factory('BBCode/Terminal');
+
 		if ($layout->getPath())
 		{
 			return (string) $layout
@@ -2035,13 +2364,19 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * @param $content
 	 * @return bool|string
 	 */
-	public function DoTweet($bbcode, $action, $name, $default, $params, $content) {
+	public function DoTweet($bbcode, $action, $name, $default, $params, $content)
+	{
 		if ($action == BBCODE_CHECK)
+		{
 			return true;
+		}
 
 		$tweetid = trim($content);
 
-		if ( !is_numeric($tweetid) ) return false;
+		if (!is_numeric($tweetid))
+		{
+			return false;
+		}
 
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
@@ -2057,9 +2392,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return '<div>'.$tweet_quote.'</div>';
 	}
 
-	protected function getTweet($tweetid ) {
+	protected function getTweet($tweetid)
+	{
 		// FIXME: use AJAX instead...
-		if ( !function_exists('curl_init') ) return false;
+		if (!function_exists('curl_init'))
+		{
+			return false;
+		}
 
 		$url = 'https://api.twitter.com/1/statuses/oembed.json?id='.$tweetid .'&align=center';
 
@@ -2085,7 +2424,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$result = curl_exec($curl);
 		curl_close($curl);
 
-		if ( !empty($result) ) {
+		if (!empty($result))
+		{
 			$tweet_object = json_decode($result);
 
 			return $tweet_object->html;

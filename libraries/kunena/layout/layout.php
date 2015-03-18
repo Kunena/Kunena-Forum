@@ -31,7 +31,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @param  string  $content
 	 */
-	public function appendAfter($content) {
+	public function appendAfter($content)
+	{
 		$this->after[] = $content;
 	}
 
@@ -39,7 +40,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param $key
 	 * @return string
 	 */
-	public function text($key) {
+	public function text($key)
+	{
 		return JText::_($key);
 	}
 
@@ -56,17 +58,23 @@ class KunenaLayout extends KunenaLayoutBase
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->_name}'") : null;
 
-		try {
+		try
+		{
 			$output = parent::render($layout);
-			foreach ($this->after as $content) {
+
+			foreach ($this->after as $content)
+			{
 				$output .= (string) $content;
 			}
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 			throw $e;
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
+
 		return $output;
 	}
 
@@ -84,7 +92,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param null $template
 	 * @deprecated 3.1
 	 */
-	public function displayTemplateFile($view, $layout, $template = null) {
+	public function displayTemplateFile($view, $layout, $template = null)
+	{
 		list($layout, $template) = KunenaFactory::getTemplate()->mapLegacyView("{$view}/{$layout}_{$template}");
 		echo $this->subLayout($layout)->setLayout($template)->setLegacy($this->legacy);
 	}
@@ -99,19 +108,28 @@ class KunenaLayout extends KunenaLayoutBase
 	 */
 	public function __get($property)
 	{
-		if (!array_key_exists($property, $this->closures)) {
-			if ($this->legacy) {
-				if (isset($this->legacy->{$property})) {
+		if (!array_key_exists($property, $this->closures))
+		{
+			if ($this->legacy)
+			{
+				if (isset($this->legacy->{$property}))
+				{
 					return $this->legacy->{$property};
 				}
+
 				$properties = $this->legacy->getProperties();
-				if (array_key_exists($property, $properties)) {
+
+				if (array_key_exists($property, $properties))
+				{
 					return $this->legacy->{$property};
 				}
 			}
-			if (JDEBUG) {
+			if (JDEBUG)
+			{
 				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
-			} else {
+			}
+			else
+			{
 				return null;
 			}
 		}
@@ -130,14 +148,19 @@ class KunenaLayout extends KunenaLayoutBase
 	 */
 	public function __call($name, $arguments)
 	{
-		try {
+		try
+		{
 			return parent::__call($name, $arguments);
-
-		} catch (InvalidArgumentException $e) {
+		}
+		catch (InvalidArgumentException $e)
+		{
 			$callable = array($this->legacy, $name);
-			if ($this->legacy && is_callable($callable)) {
+
+			if ($this->legacy && is_callable($callable))
+			{
 				return call_user_func_array($callable, $arguments);
 			}
+
 			throw $e;
 		}
 	}
@@ -165,11 +188,17 @@ class KunenaLayout extends KunenaLayoutBase
 	public function set($property, $value = null)
 	{
 		$isFactory = is_object($value) && method_exists($value, '__invoke');
-		if ($isFactory) {
+
+		if ($isFactory)
+		{
 			$this->closures[$property] = $value;
-		} elseif ($this->legacy) {
+		}
+		elseif ($this->legacy)
+		{
 			$this->legacy->{$property} = $value;
-		} else {
+		}
+		else
+		{
 			$this->{$property} = $value;
 		}
 
@@ -187,11 +216,13 @@ class KunenaLayout extends KunenaLayoutBase
 		return parent::subLayout($path)->setLegacy($this->legacy)->setLayout($this->layout);
 	}
 
-	public function getButton($link, $name, $scope, $type, $id = null) {
+	public function getButton($link, $name, $scope, $type, $id = null)
+	{
 		return KunenaFactory::getTemplate()->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
 	}
 
-	public function getIcon($name, $title='') {
+	public function getIcon($name, $title='')
+	{
 		return KunenaFactory::getTemplate()->getIcon($name, $title);
 	}
 
@@ -206,44 +237,71 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param int $precision	Significant digits for output
 	 * @return string
 	 */
-	public function formatLargeNumber($number, $precision = 3) {
+	public function formatLargeNumber($number, $precision = 3)
+	{
 		// Do we need to reduce the number of significant digits?
-		if ($number >= 10000){
+		if ($number >= 10000)
+		{
 			// Round the number to n significant digits
 			$number = round ($number, -1*(log10($number)+1) + $precision);
 		}
 
-		if ($number < 10000) {
+		if ($number < 10000)
+		{
 			$output = $number;
-		} elseif ($number >= 1000000) {
+		}
+		elseif ($number >= 1000000)
+		{
 			$output = $number / 1000000 . JText::_('COM_KUNENA_MILLION');
-		} else {
+		}
+		else
+		{
 			$output = $number / 1000 . JText::_('COM_KUNENA_THOUSAND');
 		}
 
 		return $output;
 	}
 
-	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null) {
+	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
+	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		if (!$content) $content = $this->escape($category->name);
-		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+		if (!$content)
+		{
+			$content = $this->escape($category->name);
+		}
+
+		if ($title === null)
+		{
+			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+		}
+
 		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		return $link;
 	}
 
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL) {
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
+	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
 		$url = $topic->getUrl($category ? $category : (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
-		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
-		if ($title === null) {
-			if ($action instanceof KunenaForumMessage) {
+
+		if (!$content)
+		{
+			$content = KunenaHtmlParser::parseText($topic->subject);
+		}
+
+		if ($title === null)
+		{
+			if ($action instanceof KunenaForumMessage)
+			{
 				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
-			} else {
+			}
+			else
+			{
 				switch ($action) {
 					case 'first':
 						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
@@ -262,20 +320,33 @@ class KunenaLayout extends KunenaLayoutBase
 		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		return $link;
 	}
 
-	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30) {
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30)
+	{
 		$lastTopic = $category->getLastTopic();
 		$channels = $category->getChannels();
-		if (!isset($channels[$lastTopic->category_id])) $category = $lastTopic->getCategory();
+
+		if (!isset($channels[$lastTopic->category_id]))
+		{
+			$category = $lastTopic->getCategory();
+		}
+
 		$uri = $lastTopic->getUrl($category, true, 'last');
 
-		if (!$content) {
+		if (!$content)
+		{
 			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE').' ' : '';
 			$content .= KunenaHtmlParser::parseText($lastTopic->subject, $length);
 		}
-		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
+
+		if ($title === null)
+		{
+			$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
+		}
+
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 }

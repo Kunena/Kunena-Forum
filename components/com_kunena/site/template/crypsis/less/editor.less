@@ -16,14 +16,14 @@ BBCODE BUTTONS
 -------------------------------------------------------------------- */
 
 table.kpostbuttonset {
- tr {
- td.kpostbuttons {
- select.kslcbox {
- position: relative;
- bottom: 5px;
-}
-}
-}
+  tr {
+	td.kpostbuttons {
+	  select.selectbox {
+		position: relative;
+		bottom: 5px;
+	  }
+	}
+  }
 }
 .kattachment {
  .hasTip {
@@ -355,4 +355,50 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled = false);
 	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
 	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
 	box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+}
+
+.dropzone .message {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+
+.dropzone {
+  border: 1px solid rgba(0,0,0,0.03);
+  min-height: 120px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.03);
+  padding: 23px;
+}
+
+.dropzone .default.message {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  background : no-repeat 0 0;
+}
+
+#klabel_info_drop_browse {
+  display: block;
+  padding: 5px 10px;
+  width: 350px;
+  margin: 50px auto 0 auto;
+}
+
+#files {
+  padding-bottom: 10px;
+}
+
+#files button.btn {
+  margin-right: 5px;
+}
+
+#files p {
+  margin: 15px 0 0 0;
 }

@@ -20,11 +20,11 @@ $params = $this->params;
 // Load JavaScript API.
 if (!isset($id))
 {
-	$this->addScript('http://maps.google.com/maps/api/js?sensor=true');
+	$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true');
 	$id = 0;
 }
 
-$mapid = 'kgooglemap' . ++ $id;
+$mapid = 'kgooglemap' . $this->mapid;
 $map_type = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 $map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
 if (!in_array($map_type, $map_typeId)) $map_type = 'ROADMAP';

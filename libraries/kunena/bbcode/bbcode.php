@@ -372,12 +372,16 @@ class KunenaBbcode extends NBBC_BBCode
 	 */
 	public function canCloakEmail(&$params)
 	{
-		$plugin = JPluginHelper::getPlugin('content', 'emailcloak');
-		$params = new JRegistry($plugin->params);
 
-		if (JPluginHelper::isEnabled('content', 'emailcloak') && $params->get('mode', 1))
+		if (JPluginHelper::isEnabled('content', 'emailcloak'))
 		{
-			return true;
+			$plugin = JPluginHelper::getPlugin('content', 'emailcloak');
+			$params = new JRegistry($plugin->params);
+
+			if ($params->get('mode', 1))
+			{
+				return true;
+			}
 		}
 
 		return false;

@@ -395,8 +395,15 @@ class KunenaBbcode extends NBBC_BBCode
 /**
  * Class KunenaBbcodeLibrary
  */
-class KunenaBbcodeLibrary extends BBCodeLibrary
-{
+class KunenaBbcodeLibrary extends BBCodeLibrary {
+	/**
+	 * The bearer token to get tweet data
+	 *
+	 * @var string
+	 * @since 3.1
+	 */
+	public $token = null;
+
 	var $default_smileys = array();
 
 	public $mapid = 0;
@@ -2384,54 +2391,146 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . JText::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
 		}
 
-		$cache = JFactory::getCache('Kunena_tweet_quote');
-		$cache->setCaching(true);
-		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
-		$tweet_quote = $cache->get( array( $this, 'getTweet' ), array( $tweetid ) );
+		$tweet = $this->getTweet($tweetid);
 
-		return '<div>'.$tweet_quote.'</div>';
+		$layout = KunenaLayout::factory('BBCode/twitter');
+
+		if ($layout->getPath())
+		{
+			return (string) $layout
+				->set('tweetid', $tweet->id_str)
+				->set('user_profile_url_normal', $tweet->user->profile_image_url)
+				->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+				->set('user_name', $tweet->user->name)
+				->set('user_screen_name', $tweet->user->screen_name)
+				->set('tweet_created_at', $tweet->created_at)
+				->set('tweet_text', $tweet->text)
+				->set('retweet_count', $tweet->retweet_count)
+				->set('favorite_count', $tweet->favorite_count)
+				->setLayout('default');
+		}
 	}
 
+	/**
+	 * Get JSON tweet data by using OAuth 2.0 authentification
+	 *
+	 * @param   int  $tweetid  The tweet ID to query against twitter API
+	 *
+	 * @return string
+	 */
 	protected function getTweet($tweetid)
 	{
 		// FIXME: use AJAX instead...
-		if (!function_exists('curl_init'))
+		$config = KunenaFactory::getConfig();
+		$uri = JURI::getInstance();
+		$consumer_key = trim($config->twitter_consumer_key);
+		$consumer_secret = trim($config->twitter_consumer_secret);
+
+		$tweet_data = file_get_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json');
+
+		if ($tweet_data !== false)
 		{
-			return false;
+			return json_decode($tweet_data);
 		}
 
-		$url = 'https://api.twitter.com/1/statuses/oembed.json?id='.$tweetid .'&align=center';
-
-		$curl = curl_init();
-		$header[0] = "Accept: text/xml,application/xml,application/json,application/xhtml+xml,";
-		$header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
-		$header[] = "Cache-Control: max-age=0";
-		$header[] = "Connection: keep-alive";
-		$header[] = "Keep-Alive: 300";
-		$header[] = "Accept-Charset: utf-8;q=0.7,*;q=0.7";
-		$header[] = "Accept-Language: en-us,en;q=0.5";
-
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_USERAGENT, 'Kunena)');
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_HTTPPROXYTUNNEL, true);
-
-		$result = curl_exec($curl);
-		curl_close($curl);
-
-		if (!empty($result))
+		if (!empty($consumer_key) && !empty($consumer_secret) && empty($this->token))
 		{
-			$tweet_object = json_decode($result);
+			$bearer_token_credentials = $consumer_key . ":" . $consumer_secret;
+			$b64_bearer_token_credentials = base64_encode($bearer_token_credentials);
 
-			return $tweet_object->html;
+			$url = 'https://api.twitter.com/oauth2/token';
+
+			$options = new JRegistry;
+
+			$transport = new JHttpTransportStream($options);
+
+			// Create a 'stream' transport.
+			$http = new JHttp($options, $transport);
+
+			$headers = array(
+				'Authorization' => "Basic " . $b64_bearer_token_credentials,
+			);
+
+			$data = "grant_type=client_credentials";
+			$response = $http->post($url, $data, $headers);
+
+			if ($response->code == 200)
+			{
+				$this->token = json_decode($response->body)->access_token;
+			}
+			else
+			{
+				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
+			}
+		}
+		else
+		{
+			echo 'Invalid consumer key/secret in configuration';
 		}
 
-		return false;
+		if ( !empty($this->token) )
+		{
+			$url = 'https://api.twitter.com/1.1/statuses/show.json?id=' . $tweetid;
+
+			$options = new JRegistry;
+
+			$transport = new JHttpTransportStream($options);
+
+			// Create a 'stream' transport.
+			$http = new JHttp($options, $transport);
+
+			$headers = array(
+				'Authorization' => "Bearer " . $this->token,
+			);
+
+			$data = array();
+			$response = $http->get($url, $headers);
+
+			if ($response->code == 200)
+			{
+				$tweet_data = json_decode($response->body);
+
+				if ($uri->isSSL())
+				{
+					$tweet_data->user->user->profile_image_url = $tweet_data->user->profile_image_url_https;
+				}
+
+				$tweet_data->user->profile_image_url_big = str_replace('normal', 'bigger', $tweet_data->user->profile_image_url);
+
+				foreach ($tweet_data->entities->urls as $url)
+				{
+					if (isset($url->display_url))
+					{
+						$d_url = $url->display_url;
+					}
+					else
+					{
+						$d_url = $url->url;
+					}
+
+					// We need to check to verify that the URL has the protocol, just in case
+					if (strpos($url->url, 'http') !== 0)
+					{
+						// Prepend http since there's no protocol
+						$link = 'http://' . $url->url;
+					}
+					else
+					{
+						$link = $url->url;
+					}
+
+					$tweet_data->text = str_replace($url->url, '<a href="' . $link . '" target="_blank" rel="nofollow">' . $d_url . '</a>', $tweet_data->text);
+				}
+
+				file_put_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
+			}
+			else
+			{
+				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
+			}
+		}
+
+		return $tweet_data;
 	}
 
 	/**

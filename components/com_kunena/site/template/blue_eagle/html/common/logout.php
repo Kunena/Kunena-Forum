@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 				</ul>
 				<ul class="kprofilebox-welcome">
 					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo $this->me->getLink() ?></strong></li>
-					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('ago'); ?>"><?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('date_today'); ?></span></li>
+					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTLOGIN'); ?>:</strong> <span title="<?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('ago'); ?>"><?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('config_post_dateformat', 'ago'); ?></span></li>
 					<?php if ($this->logout->enabled()) : ?>
 					<li>
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">

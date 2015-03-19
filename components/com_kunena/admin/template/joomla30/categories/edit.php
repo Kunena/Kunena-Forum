@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -173,7 +173,6 @@ if (version_compare(JVERSION, '3.2', '>'))
 										<td><?php echo $this->options ['allow_polls']; ?></td>
 										<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 									</tr>
-									<?php /*
 									<tr>
 										<td><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
 										<td><?php echo $this->options ['channels']; ?></td>
@@ -184,6 +183,7 @@ if (version_compare(JVERSION, '3.2', '>'))
 										<td><?php echo $this->options ['topic_ordering']; ?></td>
 										<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 									</tr>
+									<?php /*
 									<tr>
 										<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
 										<td><?php echo $this->options ['category_iconset']; ?></td>

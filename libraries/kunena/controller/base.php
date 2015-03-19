@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -130,7 +130,8 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  JApplicationBase  The application object.
 	 */
-	public function getApplication() {
+	public function getApplication()
+	{
 		return $this->app;
 	}
 
@@ -139,7 +140,8 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  JInput  The input object.
 	 */
-	public function getInput() {
+	public function getInput()
+	{
 		return $this->input;
 	}
 
@@ -148,7 +150,8 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  string  The serialized controller.
 	 */
-	public function serialize() {
+	public function serialize()
+	{
 		return serialize(array($this->input, $this->options));
 	}
 
@@ -161,7 +164,8 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @throws  UnexpectedValueException if input is not the right class.
 	 */
-	public function unserialize($input) {
+	public function unserialize($input)
+	{
 		// Setup dependencies.
 		$this->app = $this->loadApplication();
 
@@ -181,7 +185,8 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  JApplicationBase  The application object.
 	 */
-	protected function loadApplication() {
+	protected function loadApplication()
+	{
 		return JFactory::getApplication();
 	}
 
@@ -190,7 +195,8 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  JInput  The input object.
 	 */
-	protected function loadInput() {
+	protected function loadInput()
+	{
 		return $this->app->input;
 	}
 }

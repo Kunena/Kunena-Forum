@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Content
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class plgContentKunena
  */
-class plgContentKunena extends JPlugin {
+class plgContentKunena extends JPlugin
+{
 
 	/**
 	 * Construct plugin.
@@ -21,20 +22,23 @@ class plgContentKunena extends JPlugin {
 	 * @param object $subject
 	 * @param array $config
 	 */
-	public function __construct(&$subject, $config) {
+	public function __construct(&$subject, $config)
+	{
 		// Do not enable plugin in administration.
-		if (JFactory::getApplication()->isAdmin()) {
+		if (JFactory::getApplication()->isAdmin())
+		{
 			return;
 		}
 
 		// Do not load if Kunena version is not supported or Kunena is not installed
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.1') && KunenaForum::installed())) {
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.1') && KunenaForum::installed()))
+		{
 			return;
 		}
 
-		$this->loadLanguage('plg_content_kunena.sys');
-
 		parent::__construct ($subject, $config);
+
+		$this->loadLanguage('plg_content_kunena.sys');
 	}
 
 	/**
@@ -45,9 +49,11 @@ class plgContentKunena extends JPlugin {
 	 * @param $params
 	 * @param int $page
 	 */
-	public function onContentPrepare($context, &$article, &$params, $page = 0) {
+	public function onContentPrepare($context, &$article, &$params, $page = 0)
+	{
 		// Don't display in Kunena.
-		if (strpos($context, 'kunena') !== false) {
+		if (strpos($context, 'kunena') !== false)
+		{
 			return;
 		}
 
@@ -60,31 +66,41 @@ class plgContentKunena extends JPlugin {
 	 * @param string $content
 	 * @return bool
 	 */
-	protected function process(&$content) {
+	protected function process(&$content)
+	{
 		// Quick search to optimize pages which do not contain the tag.
-		if (stripos($content, 'Kunena.Display') === false) {
+		if (stripos($content, 'Kunena.Display') === false)
+		{
 			return false;
 		}
 
 		$regex = '/{{\s*Kunena.Display\(([^\)]+)\)\s*}}/i';
 		preg_match_all($regex, $content, $matches, PREG_SET_ORDER);
 
-		if (!$matches) return false;
+		if (!$matches)
+		{
+			return false;
+		}
 
-		foreach ($matches as $match) {
+		foreach ($matches as $match)
+		{
 			$paramslist = (array) explode(',', $match[1]);
 			$layout = trim(trim(array_shift($paramslist)), '\'"').'/Display';
 
-			try {
+			try
+			{
 				// TODO: de we need to load the language files?
 				$input = new JInput($this->getParams($paramslist));
 				$output = KunenaRequest::factory($layout, $input);
-			} catch (Exception $e) {
+			}
+			catch (Exception $e)
+			{
 				$output = '<div class="alert">' . $e->getMessage() . '</div>';
 			}
 
 			$pos = strpos($content, $match[0]);
-			if ($pos !== false) {
+			if ($pos !== false)
+			{
 				$content = substr_replace($content, (string) $output, $pos, strlen($match[0]));
 			}
 		}
@@ -92,15 +108,24 @@ class plgContentKunena extends JPlugin {
 		return true;
 	}
 
-	protected function getParams(array $params) {
+	protected function getParams(array $params)
+	{
 		$list = array();
-		foreach ($params as $param) {
+
+		foreach ($params as $param)
+		{
 			list($key, $value) = explode('=', $param);
 			$key = trim($key);
-			if (!$key) continue;
+
+			if (!$key)
+			{
+				continue;
+			}
+
 			$value = trim(trim($value), '\'"');
 			$list[$key] = $value;
 		}
+
 		return $list;
 	}
 }

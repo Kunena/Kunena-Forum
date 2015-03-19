@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.BBCode
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -20,11 +20,11 @@ $params = $this->params;
 // Load JavaScript API.
 if (!isset($id))
 {
-	$this->addScript('http://maps.google.com/maps/api/js?sensor=true');
+	$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true');
 	$id = 0;
 }
 
-$mapid = 'kgooglemap'.++$id;
+$mapid = 'kgooglemap' . $this->mapid;
 $map_type = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 $map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
 if (!in_array($map_type, $map_typeId)) $map_type = 'ROADMAP';

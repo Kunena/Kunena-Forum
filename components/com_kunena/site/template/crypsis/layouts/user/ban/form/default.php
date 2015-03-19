@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.User
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -44,10 +44,10 @@ defined('_JEXEC') or die;
 				</td>
 				<td>
 					<?php
-					// make the select list for the view type
+					// Make the select list for the view type
 					$block[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
 					$block[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
-					// build the html select list
+					// Build the html select list
 					echo JHtml::_('select.genericlist', $block, 'block', '', 'value', 'text',
 						$this->escape($this->banInfo->blocked), 'ban-level');
 					?>
@@ -94,7 +94,7 @@ defined('_JEXEC') or die;
 				</td>
 			</tr>
 
-			<?php if($this->banInfo->exists()): ?>
+			<?php if ($this->banInfo->exists()) : ?>
 				<tr>
 					<td>
 						<label for="ban-remove"><?php echo JText::_('COM_KUNENA_MODERATE_REMOVE_BAN'); ?></label>

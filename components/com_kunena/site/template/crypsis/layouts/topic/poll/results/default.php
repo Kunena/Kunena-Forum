@@ -4,13 +4,14 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 // TODO: Hide KunenaHtmlParser::parseText()
+$this->addScript('poll.js');
 ?>
 
 <div class="pull-right btn btn-small" data-toggle="collapse" data-target="#poll-results">&times;</div>
@@ -36,7 +37,8 @@ defined('_JEXEC') or die;
 		</td>
 		<td>
 			<?php
-			if(isset($option->votes) && $option->votes > 0) {
+			if (isset($option->votes) && $option->votes > 0)
+			{
 				echo $option->votes;
 			} else {
 				echo JText::_('COM_KUNENA_POLL_NO_VOTE');

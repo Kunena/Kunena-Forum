@@ -1,22 +1,26 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator
- * @subpackage Views
+ *
+ * @package       Kunena.Administrator
+ * @subpackage    Views
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Kunena report view for Kunena backend
  */
-class KunenaAdminViewReport extends KunenaView {
-	function displayDefault() {
+class KunenaAdminViewReport extends KunenaView
+{
+	function displayDefault()
+	{
 		$this->systemreport = $this->get('SystemReport');
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
-		$this->display ();
+		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
+
+		$this->display();
 	}
 }

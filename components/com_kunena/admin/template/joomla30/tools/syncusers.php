@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage SyncUsers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -41,6 +41,11 @@ defined ( '_JEXEC' ) or die ();
 						<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME'); ?></td>
 						<td><input type="checkbox" name="userrename" value="1" /></td>
 						<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME_DESC'); ?></td>
+					</tr>
+					<tr>
+						<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DELLIFE'); ?></td>
+						<td><input type="checkbox" name="userdellife" value="1" /></td>
+						<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DELLIFE_DESC'); ?></td>
 					</tr>
 				</table>
 			</fieldset>

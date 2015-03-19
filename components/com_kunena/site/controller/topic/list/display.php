@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -98,6 +98,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$this->setTitle($headerText);
 	}
 
+	/**
+	 * Get Topic Actions.
+	 *
+	 * @return array
+	 */
 	protected function getTopicActions(
 		array $topics,
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete')
@@ -146,6 +151,11 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		return $actions;
 	}
 
+	/**
+	 * Get Message Actions.
+	 *
+	 * @return array
+	 */
 	protected function getMessageActions(
 		array $messages,
 		$actions = array('approve', 'undelete', 'delete', 'permdelete')

@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Category.Index
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @package         Kunena.Site
+ * @subpackage      Layout.Category.Index
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -21,7 +22,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to return a KunenaPagination object
 	 *
-	 * @param   int  $maxpages  Maximum that are allowed for pagination
+	 * @param   int $maxpages Maximum that are allowed for pagination
 	 *
 	 * @return KunenaPagination
 	 */
@@ -36,15 +37,15 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve category icon
 	 *
-	 * @param   KunenaCategory  $category  The KunenaCategory object
-	 * @param   boolean         $thumb     Define if it's the thumb which will be loaded
+	 * @param   KunenaCategory $category The KunenaCategory object
+	 * @param   boolean        $thumb    Define if it's the thumb which will be loaded
 	 *
 	 * @return string
 	 */
 	public function getCategoryIcon($category, $thumb = false)
 	{
-		$path	= JPATH_ROOT . '/media/kunena/' . $this->config->catimagepath . '/';
-		$uri	= JUri::root(true) . '/media/kunena/' . $this->config->catimagepath . '/';
+		$path = JPATH_ROOT . '/media/kunena/' . $this->config->catimagepath . '/';
+		$uri  = JUri::root(true) . '/media/kunena/' . $this->config->catimagepath . '/';
 
 		if (!$thumb)
 		{
@@ -107,14 +108,14 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the category icon file
 	 *
-	 * @param   string  $filename  The filename for the category icon
-	 * @param   string  $path      The path for the category icon
+	 * @param   string $filename The filename for the category icon
+	 * @param   string $path     The path for the category icon
 	 *
 	 * @return string|boolean
 	 */
 	private function getCategoryIconFile($filename, $path = '')
 	{
-		$types	= array('.gif', '.png', '.jpg');
+		$types = array('.gif', '.png', '.jpg');
 
 		foreach ($types as $ext)
 		{
@@ -130,8 +131,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of mark read button
 	 *
-	 * @param   int  $category_id  The category Id
-	 * @param   int  $numTopics    The number of topics
+	 * @param   int $category_id The category Id
+	 * @param   int $numTopics   The number of topics
 	 *
 	 * @return string|null
 	 */
@@ -153,8 +154,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of category RSS feed
 	 *
-	 * @param   int     $catid  The Id of category
-	 * @param   string  $xhtml  Replace & by & for XML compliance.
+	 * @param   int    $catid The Id of category
+	 * @param   string $xhtml Replace & by & for XML compliance.
 	 *
 	 * @return string|null
 	 */

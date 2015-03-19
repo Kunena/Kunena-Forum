@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -51,8 +51,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
 			}
 
-			$javascript = "document.id('helpbox').set('value', '".JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true)."')";
-			$list = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" onmouseover="'.$javascript.'"' , 'value', 'text', '-1' );
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" ' , 'value', 'text', '-1' );
 
 			return $list;
 		}

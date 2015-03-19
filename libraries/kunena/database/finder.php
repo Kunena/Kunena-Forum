@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Database
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -48,7 +48,8 @@ abstract class KunenaDatabaseFinder
 	 */
 	public function __construct()
 	{
-		if (!$this->table) {
+		if (!$this->table)
+		{
 			throw new DomainException('Table name missing from ' . get_class($this));
 		}
 
@@ -138,10 +139,13 @@ abstract class KunenaDatabaseFinder
 			case 'IN':
 			case 'NOT IN':
 				$value = (array) $value;
-				if (empty($value)) {
+				if (empty($value))
+				{
 					// WHERE field IN (nothing).
 					$this->query->where('0');
-				} else {
+				}
+				else
+				{
 					$list = implode(',', $value);
 					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}

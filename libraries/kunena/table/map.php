@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Table
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -71,9 +71,11 @@ class KunenaTableMap
 
 		// Initialise the table properties.
 		$fields = $this->getFields();
-		foreach ($fields as $name => $v) {
+		foreach ($fields as $name => $v)
+		{
 			// Add the field if it is not already present.
-			if (!property_exists($this, $name)) {
+			if (!property_exists($this, $name))
+			{
 				$this->{$name} = null;
 			}
 		}
@@ -91,13 +93,16 @@ class KunenaTableMap
 		static $cache = array();
 
 		$name = $this->_tbl;
-		if (!isset($cache[$name])) {
+		if (!isset($cache[$name]))
+		{
 			// Lookup the fields for this table only once.
 			$fields = $this->_db->getTableColumns($name, false);
 
-			if (empty($fields)) {
+			if (empty($fields))
+			{
 				throw new UnexpectedValueException(sprintf('No columns found for %s table', $name));
 			}
+
 			$cache[$name] = $fields;
 		}
 
@@ -113,9 +118,11 @@ class KunenaTableMap
 	{
 		$properties = (array) $this;
 		$list = array();
-		foreach ($properties as $property=>$value) {
+		foreach ($properties as $property=>$value)
+		{
 			if ($property[0] != "\0") $list[$property] = $value;
 		}
+
 		return $list;
 	}
 
@@ -124,10 +131,12 @@ class KunenaTableMap
 		static $instance = array();
 
 		$key = md5(serialize(array($this->_tbl, $this->_tbl_mapped, $this->_tbl_key)));
-		if (!isset($instance[$key])) {
+		if (!isset($instance[$key]))
+		{
 			$c = get_called_class();
 			$instance[$key] = new $c($this->_tbl, $this->_tbl_mapped, $this->_tbl_key);
 		}
+
 		return $instance[$key];
 	}
 
@@ -286,9 +295,11 @@ class KunenaTableMap
 	public function reset()
 	{
 		// Get the default values for the class from the table.
-		foreach ($this->getFields() as $k => $v) {
+		foreach ($this->getFields() as $k => $v)
+		{
 			// If the property is not the primary key or private, reset it.
-			if ($k != $this->_tbl_key && (strpos($k, '_') !== 0)) {
+			if ($k != $this->_tbl_key && (strpos($k, '_') !== 0))
+			{
 				$this->{$k} = $v->Default;
 			}
 		}
@@ -310,25 +321,31 @@ class KunenaTableMap
 	public function bind($src, $ignore = array())
 	{
 		// If the source value is not an array or object return false.
-		if (!is_object($src) && !is_array($src)) {
+		if (!is_object($src) && !is_array($src))
+		{
 			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', get_class($this), gettype($src)));
 		}
 
 		// If the source value is an object, get its accessible properties.
-		if (is_object($src)) {
+		if (is_object($src))
+		{
 			$src = get_object_vars($src);
 		}
 
 		// If the ignore value is a string, explode it over spaces.
-		if (!is_array($ignore)) {
+		if (!is_array($ignore))
+		{
 			$ignore = explode(' ', $ignore);
 		}
 
 		// Bind the source value, excluding the ignored fields.
-		foreach ($this->getProperties() as $k => $v) {
+		foreach ($this->getProperties() as $k => $v)
+		{
 			// Only process fields not in the ignore array.
-			if (!in_array($k, $ignore)) {
-				if (isset($src[$k])) {
+			if (!in_array($k, $ignore))
+			{
+				if (isset($src[$k]))
+				{
 					$this->{$k} = $src[$k];
 				}
 			}
@@ -353,18 +370,22 @@ class KunenaTableMap
 	 */
 	public function load($keys = null, $reset = true)
 	{
-		if (empty($keys)) {
+		if (empty($keys))
+		{
 			// If empty, use the value of the current key
 			$keyName = $this->_tbl_key;
 			$keyValue = $this->{$keyName};
 
 			// If empty primary key there's is no need to load anything
-			if (empty($keyValue)) {
+			if (empty($keyValue))
+			{
 				return true;
 			}
 
 			$keys = array($keyName => $keyValue);
-		} elseif (!is_array($keys)) {
+		}
+		elseif (!is_array($keys))
+		{
 			// Load by primary key.
 			$keys = array($this->_tbl_key => $keys);
 		}
@@ -382,9 +403,11 @@ class KunenaTableMap
 		foreach ($keys as $field => $value)
 		{
 			// Check that $field is in the table.
-			if (!in_array($field, $fields)) {
+			if (!in_array($field, $fields))
+			{
 				throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', get_class($this), $field));
 			}
+
 			// Add the search tuple to the query.
 			$this->{$field} = $value;
 			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
@@ -428,13 +451,15 @@ class KunenaTableMap
 		$k = $this->_tbl_key;
 		$m = $this->_tbl_mapped;
 
-		if (0 == $this->{$k}) {
+		if (0 == $this->{$k})
+		{
 			throw new UnexpectedValueException(sprintf('No key specified: %s.', get_class($this)));
 		}
 
 		$id = $this->{$k};
 		$items = $this->{$m};
-		if (!empty($items)) {
+		if (!empty($items))
+		{
 			// Load currently mapped variables from database.
 			$this->load();
 			$filtered = !is_null($filter) ? array_intersect($this->{$m}, $filter) : $this->{$m};
@@ -444,11 +469,14 @@ class KunenaTableMap
 			$deleted = array_diff($filtered, $items);
 
 			// Create all added items.
-			if ($added) {
+			if ($added)
+			{
 				$values = array();
-				foreach ($added as $var) {
+				foreach ($added as $var)
+				{
 					$values[] = (int) $id .','. (int) $var;
 				}
+
 				$query = $this->_db->getQuery(true);
 				$query->insert($this->_db->qn($this->_tbl));
 				$query->columns(array($this->_db->qn($this->_tbl_key), $this->_db->qn($this->_tbl_mapped)));
@@ -467,9 +495,12 @@ class KunenaTableMap
 				$this->_db->execute();
 			}
 
-		} else {
+		}
+		else
+		{
 			$this->delete();
 		}
+
 		$this->{$m} = $items;
 
 		if ($this->_locked)
@@ -493,17 +524,20 @@ class KunenaTableMap
 	 */
 	public function save(array $map = null, array $filter = null)
 	{
-		if (!is_null($map)) {
+		if (!is_null($map))
+		{
 			$this->setMapped($map);
 		}
 
 		// Run any sanity checks on the instance and verify that it is ready for storage.
-		if (!$this->check()) {
+		if (!$this->check())
+		{
 			return false;
 		}
 
 		// Attempt to store the properties to the database table.
-		if (!$this->store($filter)) {
+		if (!$this->store($filter))
+		{
 			return false;
 		}
 
@@ -530,6 +564,7 @@ class KunenaTableMap
 		{
 			throw new UnexpectedValueException('Null primary key not allowed.');
 		}
+
 		// Turn pk into array.
 		if (!is_array($pk))
 		{
@@ -540,10 +575,12 @@ class KunenaTableMap
 		$query = $this->_db->getQuery(true);
 		$query->delete();
 		$query->from($this->_tbl);
+
 		foreach ($pk as $key=>$value)
 		{
 			$query->where($key . ' = ' . $this->_db->quote($value));
 		}
+
 		$this->_db->setQuery($query);
 
 		// Delete items.

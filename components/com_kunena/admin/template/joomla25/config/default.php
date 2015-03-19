@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Config
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -105,11 +105,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH') ?></td>
 														<td><?php echo $this->lists ['fallback_english'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK') ?></td>
-														<td><?php echo $this->lists ['version_check'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?></td>
@@ -348,6 +343,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['default_sort'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME') ?></td>
+														<td><?php echo $this->lists ['searchtime'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -473,6 +473,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
 														<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT') ?></td>
+														<td><?php echo $this->lists ['user_report'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT_DESC') ?></td>
 													</tr>
 												</tbody>
 											</table>
@@ -610,6 +615,16 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['statslink_allowed'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS') ?></td>
+														<td><input type="text" name="cfg_max_links" value="<?php echo $this->escape ( $this->config->max_links ) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_TEASER') ?></td>
+														<td><?php echo $this->lists ['teaser'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_TEASER_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -707,7 +722,7 @@ defined ( '_JEXEC' ) or die ();
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_AVATAR_RESIZE_METHOD') ?></td>
-														<td class="nowrap"><input type="text" name="cfg_avatarresizemethod" class="ksm-field" value="<?php echo $this->escape($this->config->avatarresizemethod) ?>" /> %</td>
+														<td><?php echo $this->lists ['avatarresizemethod'] ?></td>
 														<td></td>
 													</tr>
 													<tr>
@@ -922,11 +937,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_A_SHOWEBAYTAG_DESC') ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE') ?></td>
-														<td><input type="text" name="cfg_ebaylanguagecode" value="<?php echo $this->escape($this->config->ebaylanguagecode) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE_DESC') ?></td>
-													</tr>
-													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLS') ?></td>
 														<td><?php echo $this->lists ['trimlongurls'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLS_DESC') ?></td>
@@ -967,9 +977,19 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_DESC') ?></td>
 													</tr>
 													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE') ?></td>
+														<td><?php echo $this->lists ['ebay_language'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE_DESC') ?></td>
+													</tr>
+													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID') ?></td>
 														<td><input type="text" name="cfg_ebay_affiliate_id" value="<?php echo $this->escape($this->config->ebay_affiliate_id) ?>" /></td>
 														<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_LABEL') ?></td>
+														<td><input type="text" name="cfg_ebay_api_key" value="<?php echo $this->escape($this->config->ebay_api_key) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
 													</tr>
 													<?php /*
 													// TODO: If you uncomment this feature, please remove forced disable from the KunenaConfig class.
@@ -1073,7 +1093,7 @@ defined ( '_JEXEC' ) or die ();
 
 									<div class="tab-pane" id="tab_extra">
 										<fieldset>
-											<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
+											<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_SETTINGS') ?></legend>
 											<table class="table table-striped">
 												<thead>
 													<tr>
@@ -1132,6 +1152,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS') ?></td>
 														<td><?php echo $this->lists ['userlist_userhits'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
+														<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
 													</tr>
 												</tbody>
 											</table>

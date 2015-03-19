@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -56,14 +56,18 @@ class KunenaLayoutPage extends KunenaLayout
 	 */
 	public function addBreadcrumb($text, $uri, $ignore = true)
 	{
-		if ($ignore) {
+		if ($ignore)
+		{
 			$active = KunenaRoute::$active;
 			$view = isset($active->query['view']) ? $active->query['view'] : '';
 			$layout = isset($active->query['layout']) ? $active->query['layout'] : 'default';
 
-			if ($active && $active->component == 'com_kunena'
-				&& strtolower("{$view}/{$layout}") == strtolower($this->_name)) return $this;
+			if ($active && $active->component == 'com_kunena' && strtolower("{$view}/{$layout}") == strtolower($this->_name))
+			{
+				return $this;
+			}
 		}
+
 		$this->breadcrumb->addItem($text, KunenaRoute::normalize($uri));
 
 		return $this;
@@ -81,41 +85,61 @@ class KunenaLayoutPage extends KunenaLayout
 	 * @param   string $base Base path.
 	 * @return  KunenaLayout
 	 */
-	public static function factory($paths, $base = 'pages') {
+	public static function factory($paths, $base = 'pages')
+	{
 		$paths = (array) $paths;
 
 		$app = JFactory::getApplication();
+
 		// Add all paths for the template overrides.
-		if ($app->isAdmin()) {
+		if ($app->isAdmin())
+		{
 			$template = KunenaFactory::getAdminTemplate();
-		} else {
+		}
+		else
+		{
 			$template = KunenaFactory::getTemplate();
 		}
 
 		$templatePaths = array();
-		foreach ($paths as $path) {
-			if (!$path) continue;
+		foreach ($paths as $path)
+		{
+			if (!$path)
+			{
+				continue;
+			}
 
 			$path = (string) preg_replace('|\\\|', '/', strtolower($path));
 			$lookup = $template->getTemplatePaths("{$base}/{$path}", true);
-			foreach ($lookup as $loc) {
+
+			foreach ($lookup as $loc)
+			{
 				array_unshift($templatePaths, $loc);
 			}
 		}
 
 		// Go through all the matching layouts.
 		$path = 'Undefined';
-		foreach ($paths as $path) {
-			if (!$path) continue;
+		foreach ($paths as $path)
+		{
+			if (!$path)
+			{
+				continue;
+			}
 
 			// Attempt to load layout class if it doesn't exist.
 			$class = 'KunenaPage' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
 			$fpath = (string) preg_replace('|\\\|', '/', strtolower($path));
-			if (!class_exists($class)) {
+
+			if (!class_exists($class))
+			{
 				$filename = JPATH_BASE . "/components/com_kunena/page/{$fpath}.php";
-				if (!is_file($filename)) {
+
+				if (!is_file($filename))
+				{
 					continue;
 				}
+
 				require_once $filename;
 			}
 

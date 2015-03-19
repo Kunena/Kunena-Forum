@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Site
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -20,7 +20,7 @@ licenses, including works distributed under the following copyright notices:
 
 Joomla
 ------
-Copyright:	2005 - 2013 Open Source Matters, Inc. All rights reserved.
+Copyright:	2005 - 2014 Open Source Matters, Inc. All rights reserved.
 License:	GPLv2 or later; http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 Bootstrap

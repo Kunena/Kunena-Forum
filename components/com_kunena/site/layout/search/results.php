@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Search
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @package         Kunena.Site
+ * @subpackage      Layout.Search
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -34,22 +35,22 @@ class KunenaLayoutSearchResults extends KunenaLayout
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->results, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->results, &$params, 0));
 
 		foreach ($this->results as $this->message)
 		{
-			$this->topic = $this->message->getTopic();
-			$this->category = $this->message->getCategory();
+			$this->topic        = $this->message->getTopic();
+			$this->category     = $this->message->getCategory();
 			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
-			$ressubject = KunenaHtmlParser::parseText($this->message->subject);
-			$resmessage = KunenaHtmlParser::parseBBCode($this->message->message, 500);
+			$ressubject         = KunenaHtmlParser::parseText($this->message->subject);
+			$resmessage         = KunenaHtmlParser::parseBBCode($this->message->message, 500);
 
-			$profile = KunenaFactory::getUser((int) $this->message->userid);
+			$profile          = KunenaFactory::getUser((int) $this->message->userid);
 			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');
 
-			foreach ( $this->searchwords as $searchword )
+			foreach ($this->searchwords as $searchword)
 			{
-				if (empty ( $searchword ))
+				if (empty ($searchword))
 				{
 					continue;
 				}
@@ -60,9 +61,9 @@ class KunenaLayoutSearchResults extends KunenaLayout
 				// $resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
 
-			$this->author = $this->message->getAuthor();
+			$this->author      = $this->message->getAuthor();
 			$this->topicAuthor = $this->topic->getAuthor();
-			$this->topicTime = $this->topic->first_post_time;
+			$this->topicTime   = $this->topic->first_post_time;
 			$this->subjectHtml = $ressubject;
 			$this->messageHtml = $resmessage;
 

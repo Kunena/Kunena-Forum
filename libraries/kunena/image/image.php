@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Image
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -16,44 +16,8 @@ define('MIME_PNG','image/png');
 /**
  * Helper class for image manipulation.
  */
-class KunenaImage extends JImage
+class KunenaImage extends KunenaCompatImage
 {
-	/**
-	 * @const  integer
-	 * @since  11.3
-	 */
-	const SCALE_FILL = 1;
-	
-	/**
-	 * @const  integer
-	 * @since  11.3
-	*/
-	const SCALE_INSIDE = 2;
-	
-	/**
-	 * @const  integer
-	 * @since  11.3
-	 */
-	const SCALE_OUTSIDE = 3;
-		
-	/**
-	 * @const  integer
-	 * @since  12.2
-	 */
-	const CROP = 4;
-
-	/**
-	 * @const  integer
-	 * @since  12.3
-	 */
-	const CROP_RESIZE = 5;
-
-	/**
-	 * @const  integer
-	 * @since  3.2
-	 */
-	const SCALE_FIT = 6;
-
 	/**
 	 * Method to resize the current image.
 	 *
@@ -72,13 +36,8 @@ class KunenaImage extends JImage
 	{
 		$config = KunenaFactory::getConfig();
 
-		// Make sure the resource handle is valid.
-		if (!$this->isLoaded())
+		switch ($config->avatarresizemethod)
 		{
-			throw new LogicException('No valid image was loaded.');
-		}
-
-		switch ($config->avatarresizemethod) {
 			case '0':
 				$resizemethod = 'imagecopyresized';
 				break;
@@ -86,9 +45,14 @@ class KunenaImage extends JImage
 				$resizemethod = 'imagecopyresampled';
 				break;
 			default:
-				// $resizemethod = 'KunenaImage::imageCopyResampledBicubic';
-				$resizemethod = array('KunenaImage','imageCopyResampledBicubic');
+				$resizemethod = 'self::imageCopyResampledBicubic';
 				break;
+		}
+
+		// Make sure the resource handle is valid.
+		if (!$this->isLoaded())
+		{
+			throw new LogicException('No valid image was loaded.');
 		}
 
 		// Sanitize width.
@@ -124,26 +88,57 @@ class KunenaImage extends JImage
 
 		$imgProperties = self::getImageFileProperties($this->getPath());
 
-		if ($imgProperties->mime == MIME_GIF) {
+		if ($imgProperties->mime == MIME_GIF)
+		{
 			$trnprt_indx = imagecolortransparent($this->handle);
 
-			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle)) {
+			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))
+			{
 				$trnprt_color   = imagecolorsforindex($this->handle, $trnprt_indx);
 				$trnprt_indx    = imagecolorallocate($handle, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
 				imagefill($handle, 0, 0, $trnprt_indx);
 				imagecolortransparent($handle, $trnprt_indx);
 			}
-		} elseif ($imgProperties->mime == MIME_PNG) {
+		}
+		elseif ($imgProperties->mime == MIME_PNG)
+		{
 			imagealphablending($handle, false);
 			imagesavealpha($handle, true);
+
 			if ($this->isTransparent())
 			{
-	            $transparent = imagecolorallocatealpha($this->handle, 255, 255, 255, 127);
-	            imagefilledrectangle($this->handle, 0, 0, $width, $height, $transparent);
+				$transparent = imagecolorallocatealpha($this->handle, 255, 255, 255, 127);
+				imagefilledrectangle($this->handle, 0, 0, $width, $height, $transparent);
 			}
 		}
 
-		$resizemethod($handle, $this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight());
+		if ($this->isTransparent())
+		{
+			// Get the transparent color values for the current image.
+			$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
+			$color = imageColorAllocateAlpha($handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
+
+			// Set the transparent color values for the new image.
+			imagecolortransparent($handle, $color);
+			imagefill($handle, 0, 0, $color);
+
+			imagecopyresized(
+				$handle,
+				$this->handle,
+				$offset->x,
+				$offset->y,
+				0,
+				0,
+				$dimensions->width,
+				$dimensions->height,
+				$this->getWidth(),
+				$this->getHeight()
+			);
+		}
+		else
+		{
+			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0, $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight()));
+		}
 
 		// If we are resizing to a new image, create a new KunenaImage object.
 		if ($createNew)
@@ -168,58 +163,42 @@ class KunenaImage extends JImage
 	}
 
 	public static function imageCopyResampledBicubic(&$dst_image, &$src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)  {
-        // we should first cut the piece we are interested in from the source
-        $src_img = ImageCreateTrueColor($src_w, $src_h);
-        imagecopy($src_img, $src_image, 0, 0, $src_x, $src_y, $src_w, $src_h);
+		// We should first cut the piece we are interested in from the source
+		$src_img = ImageCreateTrueColor($src_w, $src_h);
+		imagecopy($src_img, $src_image, 0, 0, $src_x, $src_y, $src_w, $src_h);
 
-        // this one is used as temporary image
-        $dst_img = ImageCreateTrueColor($dst_w, $dst_h);
+		// This one is used as temporary image
+		$dst_img = ImageCreateTrueColor($dst_w, $dst_h);
 
-        ImagePaletteCopy($dst_img, $src_img);
-        $rX = $src_w / $dst_w;
-        $rY = $src_h / $dst_h;
-        $w = 0;
-        for ($y = 0; $y < $dst_h; $y++)  {
-            $ow = $w; $w = round(($y + 1) * $rY);
-            $t = 0;
-            for ($x = 0; $x < $dst_w; $x++)  {
-                $r = $g = $b = 0; $a = 0;
-                $ot = $t; $t = round(($x + 1) * $rX);
-                for ($u = 0; $u < ($w - $ow); $u++)  {
-                    for ($p = 0; $p < ($t - $ot); $p++)  {
-                        $c = ImageColorsForIndex($src_img, ImageColorAt($src_img, $ot + $p, $ow + $u));
-                        $r += $c['red'];
-                        $g += $c['green'];
-                        $b += $c['blue'];
-                        $a++;
-                    }
-                }
-                ImageSetPixel($dst_img, $x, $y, ImageColorClosest($dst_img, $r / $a, $g / $a, $b / $a));
-            }
-        }
-
-        // apply the temp image over the returned image and use the destination x,y coordinates
-        imagecopy($dst_image, $dst_img, $dst_x, $dst_y, 0, 0, $dst_w, $dst_h);
-
-        // we should return true since ImageCopyResampled/ImageCopyResized do it
-        return true;
-    }
-
-    /**
-     * Method to destroy an image handle and
-     * free the memory associated with the handle
-     *
-     * @return  boolean  True on success, false on failure or if no image is loaded
-     *
-     * @since 3.1
-     */
-	public function destroy()
-	{
-		if ($this->isLoaded())
+		ImagePaletteCopy($dst_img, $src_img);
+		$rX = $src_w / $dst_w;
+		$rY = $src_h / $dst_h;
+		$w = 0;
+		for ($y = 0; $y < $dst_h; $y++)
 		{
-			return imagedestroy($this->handle);
+			$ow = $w; $w = round(($y + 1) * $rY);
+			$t = 0;
+			for ($x = 0; $x < $dst_w; $x++)
+			{
+				$r = $g = $b = 0; $a = 0;
+				$ot = $t; $t = round(($x + 1) * $rX);
+				for ($u = 0; $u < ($w - $ow); $u++)  {
+					for ($p = 0; $p < ($t - $ot); $p++)  {
+						$c = ImageColorsForIndex($src_img, ImageColorAt($src_img, $ot + $p, $ow + $u));
+						$r += $c['red'];
+						$g += $c['green'];
+						$b += $c['blue'];
+						$a++;
+					}
+				}
+				ImageSetPixel($dst_img, $x, $y, ImageColorClosest($dst_img, $r / $a, $g / $a, $b / $a));
+			}
 		}
 
-		return false;
+		// Apply the temp image over the returned image and use the destination x,y coordinates
+		imagecopy($dst_image, $dst_img, $dst_x, $dst_y, 0, 0, $dst_w, $dst_h);
+
+		// We should return true since ImageCopyResampled/ImageCopyResized do it
+		return true;
 	}
 }

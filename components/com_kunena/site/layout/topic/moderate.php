@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @package         Kunena.Site
+ * @subpackage      Layout.Topic
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -25,7 +26,7 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 */
 	public function getTopicOptions()
 	{
-		$options = array ();
+		$options = array();
 
 		// Start with default options.
 		if (!$this->message)
@@ -40,10 +41,10 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$options[] = JHtml::_('select.option', -1, JText::_('COM_KUNENA_MODERATION_ENTER_TOPIC'));
 
 		// Then list a few topics.
-		$db = JFactory::getDbo();
+		$db     = JFactory::getDbo();
 		$params = array(
 			'orderby' => 'tt.last_post_time DESC',
-			'where' => " AND tt.id != {$db->Quote($this->topic->id)} ");
+			'where'   => " AND tt.id != {$db->Quote($this->topic->id)} ");
 		list ($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)
@@ -61,8 +62,8 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 	 */
 	public function getCategoryList()
 	{
-		$options = array ();
-		$params = array ('sections' => 0, 'catid' => 0);
+		$options = array();
+		$params  = array('sections' => 0, 'catid' => 0);
 
 		return JHtml::_(
 			'kunenaforum.categorylist', 'targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->category->id, 'kmod_categories'

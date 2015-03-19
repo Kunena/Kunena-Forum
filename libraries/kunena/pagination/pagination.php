@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Pagination
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -192,13 +192,16 @@ class KunenaPagination
 
 		// Set the pagination iteration loop values.
 		$this->pagesStart = $this->pagesCurrent - (int) ($displayed / 2);
+
 		if ($this->pagesStart < 1 + $start)
 		{
 			$this->pagesStart = 1 + $start;
 		}
+
 		if ($this->pagesStart + $displayed - $start > $this->pagesTotal)
 		{
 			$this->pagesStop = $this->pagesTotal;
+
 			if ($this->pagesTotal < $displayed)
 			{
 				$this->pagesStart = 1 + $start;
@@ -500,7 +503,11 @@ class KunenaPagination
 
 		$limits[] = JHtml::_('select.option', '50', JText::_('J50'));
 		$limits[] = JHtml::_('select.option', '100', JText::_('J100'));
-		if ($all) $limits[] = JHtml::_('select.option', '0', JText::_('JALL'));
+
+		if ($all)
+		{
+			$limits[] = JHtml::_('select.option', '0', JText::_('JALL'));
+		}
 
 		$selected = $this->viewall ? 0 : $this->limit;
 
@@ -763,7 +770,9 @@ class KunenaPagination
 		$range[] = 1;
 		$range[] = $this->pagesTotal;
 		sort($range);
-		foreach ($range as $i) {
+
+		foreach ($range as $i)
+		{
 			$offset = ($i - 1) * $this->limit;
 
 			$data->pages[$i] = new JPaginationObject($i, $this->prefix);

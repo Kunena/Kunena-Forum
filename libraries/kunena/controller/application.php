@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -34,7 +34,8 @@ abstract class KunenaControllerApplication extends KunenaControllerDisplay
 				: null);
 
 		// Execute HMVC if the controller is present.
-		if ($controller && $controller->exists()) {
+		if ($controller && $controller->exists())
+		{
 			return $controller;
 		}
 

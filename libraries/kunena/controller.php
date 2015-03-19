@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,12 +14,14 @@ jimport ( 'joomla.application.component.helper' );
 /**
  * Class KunenaController
  */
-class KunenaController extends JControllerLegacy {
+class KunenaController extends JControllerLegacy
+{
 	public $app = null;
 	public $me = null;
 	public $config = null;
 
-	public function __construct($config = array()) {
+	public function __construct($config = array())
+	{
 		parent::__construct ($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication();
@@ -27,11 +29,15 @@ class KunenaController extends JControllerLegacy {
 		$this->me = KunenaUserHelper::getMyself();
 
 		// Save user profile if it didn't exist.
-		if ($this->me->userid && !$this->me->exists()) {
+		if ($this->me->userid && !$this->me->exists())
+		{
 			$this->me->save();
 		}
 
-		if (empty($this->input)) $this->input = $this->app->input;
+		if (empty($this->input))
+		{
+			$this->input = $this->app->input;
+		}
 	}
 
 	/**
@@ -41,11 +47,17 @@ class KunenaController extends JControllerLegacy {
 	 * @param	mixed	$config
 	 * @return	KunenaController
 	 */
-	public static function getInstance($prefix = 'Kunena', $config = array()) {
+	public static function getInstance($prefix = 'Kunena', $config = array())
+	{
 		static $instance = null;
 
-		if (!$prefix) $prefix = 'Kunena';
-		if (! empty ( $instance ) && !isset($instance->home)) {
+		if (!$prefix)
+		{
+			$prefix = 'Kunena';
+		}
+
+		if (!empty($instance) && !isset($instance->home))
+		{
 			return $instance;
 		}
 
@@ -55,13 +67,16 @@ class KunenaController extends JControllerLegacy {
 		$command  = $input->get('task', 'display');
 
 		// Check for a controller.task command.
-		if (strpos($command, '.') !== false) {
+		if (strpos($command, '.') !== false)
+		{
 			// Explode the controller.task command.
 			list ($view, $task) = explode('.', $command);
 
 			// Reset the task without the controller context.
 			$input->set('task', $task);
-		} else {
+		}
+		else
+		{
 			// Base controller.
 			$view = strtolower ( JRequest::getWord ( 'view', $app->isAdmin() ? 'cpanel' : 'home' ) );
 		}
@@ -69,30 +84,39 @@ class KunenaController extends JControllerLegacy {
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
-		if (is_file($path)) {
+		if (is_file($path))
+		{
 			require_once $path;
-		} else {
+		}
+		else
+		{
 			JError::raiseError ( 404, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER', ucfirst ( $view ) ) );
 		}
 
 		// Set the name for the controller and instantiate it.
-		if ($app->isAdmin()) {
+		if ($app->isAdmin())
+		{
 			$class = $prefix . 'AdminController' . ucfirst ( $view );
 			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 			KunenaFactory::loadLanguage('com_kunena', 'site');
 
-		} else {
+		}
+		else
+		{
 			$class = $prefix . 'Controller' . ucfirst ( $view );
 			KunenaFactory::loadLanguage('com_kunena.controllers');
 			KunenaFactory::loadLanguage('com_kunena.models');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
-
 		}
-		if (class_exists ( $class )) {
-			$instance = new $class ();
-		} else {
+
+		if (class_exists($class))
+		{
+			$instance = new $class();
+		}
+		else
+		{
 			JError::raiseError ( 404, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER_CLASS', $class ) );
 		}
 
@@ -272,7 +296,8 @@ class KunenaController extends JControllerLegacy {
 	 *
 	 * @return  JControllerLegacy  A JControllerLegacy object to support chaining.
 	 */
-	public function display($cachable = false, $urlparams = false) {
+	public function display($cachable = false, $urlparams = false)
+	{
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
@@ -284,7 +309,8 @@ class KunenaController extends JControllerLegacy {
 		$lName = JRequest::getWord ( 'layout', 'default' );
 		$vFormat = $document->getType ();
 
-		if ($this->app->isAdmin()) {
+		if ($this->app->isAdmin())
+		{
 			// Load admin language files
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
@@ -295,10 +321,14 @@ class KunenaController extends JControllerLegacy {
 			require_once KPATH_ADMIN . '/install/version.php';
 			$version = new KunenaVersion();
 			$version_warning = $version->getVersionWarning();
-			if (! empty ( $version_warning )) {
-				$this->app->enqueueMessage ( $version_warning, 'notice' );
+
+			if (!empty($version_warning))
+			{
+				$this->app->enqueueMessage($version_warning, 'notice');
 			}
-		} else {
+		}
+		else
+		{
 			// Load site language files
 			KunenaFactory::loadLanguage('com_kunena.views');
 			KunenaFactory::loadLanguage('com_kunena.templates');
@@ -311,7 +341,8 @@ class KunenaController extends JControllerLegacy {
 			// Check if menu item was correctly routed
 			$routed = $menu->getItem ( KunenaRoute::getItemID() );
 
-			if ($vFormat=='html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
+			if ($vFormat=='html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id))
+			{
 				// Routing has been changed, redirect
 				// FIXME: check possible redirect loops!
 				$route = KunenaRoute::_(null, false);
@@ -334,8 +365,11 @@ class KunenaController extends JControllerLegacy {
 		}
 
 		$view = $this->getView ( $vName, $vFormat );
-		if ($view) {
-			if ($this->app->isSite() && $vFormat=='html') {
+
+		if ($view)
+		{
+			if ($this->app->isSite() && $vFormat=='html')
+			{
 				$common = $this->getView ( 'common', $vFormat );
 				$model = $this->getModel ( 'common' );
 				$common->setModel ( $model, true );
@@ -344,30 +378,34 @@ class KunenaController extends JControllerLegacy {
 			}
 
 			// Set the view layout.
-			$view->setLayout ( $lName );
+			$view->setLayout($lName);
 
 			// Get the appropriate model for the view.
-			$model = $this->getModel ( $vName );
+			$model = $this->getModel($vName);
 
 			// Push the model into the view (as default).
-			$view->setModel ( $model, true );
+			$view->setModel($model, true);
 
 			// Push document object into the view.
 			$view->document = $document;
 
 			// Render the view.
-			if ($vFormat=='html') {
+			if ($vFormat=='html')
+			{
 				JPluginHelper::importPlugin('kunena');
 				$dispatcher = JDispatcher::getInstance();
 				$dispatcher->trigger('onKunenaDisplay', array('start', $view));
 				$view->displayAll ();
 				$dispatcher->trigger('onKunenaDisplay', array('end', $view));
-			} else {
+			}
+			else
+			{
 				$view->displayLayout ();
 			}
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		return $this;
 	}
 
@@ -378,28 +416,32 @@ class KunenaController extends JControllerLegacy {
 	 *
 	 * @return string The escaped value.
 	 */
-	public function escape($var) {
+	public function escape($var)
+	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getRedirect() {
+	public function getRedirect()
+	{
 		return $this->redirect;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getMessage() {
+	public function getMessage()
+	{
 		return $this->message;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getMessageType() {
+	public function getMessageType()
+	{
 		return $this->messageType;
 	}
 
@@ -412,7 +454,8 @@ class KunenaController extends JControllerLegacy {
 	 * @param string $default
 	 * @param string $anchor
 	 */
-	protected function setRedirectBack($default = null, $anchor = null) {
+	protected function setRedirectBack($default = null, $anchor = null)
+	{
 		$this->setRedirect(KunenaRoute::getReferrer($default, $anchor));
 	}
 }

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,32 +13,44 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaLogin
  */
-class KunenaLogin {
+class KunenaLogin
+{
 	protected static $instance = false;
 	/**
 	 * @var array|KunenaLogin[]
 	 */
 	protected $instances = array();
 
-	public function __construct() {
+	public function __construct()
+	{
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher = JDispatcher::getInstance();
 		$classes = $dispatcher->trigger('onKunenaGetLogin');
-		foreach ($classes as $class) {
-			if (!is_object($class)) continue;
+
+		foreach ($classes as $class)
+		{
+			if (!is_object($class))
+			{
+				continue;
+			}
+
 			$this->instances[] = $class;
 		}
 	}
 
-	public function enabled() {
+	public function enabled()
+	{
 		// TODO: do better
 		return !empty($this->instances);
 	}
 
-	public static function getInstance($integration = null) {
-		if (self::$instance === false) {
+	public static function getInstance($integration = null)
+	{
+		if (self::$instance === false)
+		{
 			self::$instance = new KunenaLogin();
 		}
+
 		return self::$instance;
 	}
 
@@ -48,94 +60,111 @@ class KunenaLogin {
 	 * @param   string  $username    The username of user which need to be logged
 	 * @param   string  $password    The password of user which need to be logged
 	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
-	 * @param   string  $return      The URL where the user will be redirected
-	 * @param   int     $secretkey   The secretkey given ot use TFA feature
+	 * @param   string  $secretkey   The secret key for the TFA feature
 	 *
 	 * @return boolean
 	 */
-	public function loginUser($username, $password, $rememberme = 0, $return = null, $secretkey = null)
+	public function loginUser($username, $password, $rememberme = 0, $secretkey = null)
 	{
 		foreach ($this->instances as $login)
 		{
 			if (method_exists($login, 'loginUser'))
 			{
-				if ( $this->isTFAEnabled() )
-				{
-					if ( $this->isValidTFA($secretkey) )
-					{
-						return $login->loginUser($username, $password, $rememberme, $return);
-					}
-				}
-				else
-				{
-					return $login->loginUser($username, $password, $rememberme, $return);
-				}
+				return $login->loginUser($username, $password, $rememberme, $secretkey);
 			}
 		}
 
 		return false;
 	}
 
-	public function logoutUser($return=null) {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'logoutUser')) {
+	public function logoutUser($return=null)
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'logoutUser'))
+			{
 				return $login->logoutUser($return);
 			}
 		}
+
 		return false;
 	}
 
-	public function getRememberMe() {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'getRememberMe')) {
+	public function getRememberMe()
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'getRememberMe'))
+			{
 				return $login->getRememberMe();
 			}
 		}
+
 		return false;
 	}
 
-	public function getLoginURL() {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'getLoginURL')) {
+	public function getLoginURL()
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'getLoginURL'))
+			{
 				return $login->getLoginURL();
 			}
 		}
+
 		return null;
 	}
 
-	public function getLogoutURL() {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'getLogoutURL')) {
+	public function getLogoutURL()
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'getLogoutURL'))
+			{
 				return $login->getLogoutURL();
 			}
 		}
+
 		return null;
 	}
 
-	public function getRegistrationURL() {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'getRegistrationURL')) {
+	public function getRegistrationURL()
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'getRegistrationURL'))
+			{
 				return $login->getRegistrationURL();
 			}
 		}
+
 		return null;
 	}
 
-	public function getResetURL() {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'getResetURL')) {
+	public function getResetURL()
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'getResetURL'))
+			{
 				return $login->getResetURL();
 			}
 		}
+
 		return null;
 	}
 
-	public function getRemindURL() {
-		foreach ($this->instances as $login) {
-			if (method_exists($login, 'getRemindURL')) {
+	public function getRemindURL()
+	{
+		foreach ($this->instances as $login)
+		{
+			if (method_exists($login, 'getRemindURL'))
+			{
 				return $login->getRemindURL();
 			}
 		}
+
 		return null;
 	}
 
@@ -150,7 +179,7 @@ class KunenaLogin {
 	 */
 	public function isTFAEnabled($userId = null)
 	{
-		if ( !version_compare(JVERSION, '3.2', '>=') )
+		if (!version_compare(JVERSION, '3.2', '>='))
 		{
 			return false;
 		}
@@ -181,32 +210,19 @@ class KunenaLogin {
 	}
 
 	/**
-	 * Checks if the provided secret code is a valid two factor authentication
-	 * code for the user whose $userId is provided. If TFA is disabled globally
-	 * or for the specific user you will receive true.
+	 * Method to check if TFA is enabled when user ins't logged
 	 *
-	 * @param   string   $code    The secret code to check
-	 * @param   integer  $userId  The user ID to check. Skip to use the current user.
-	 *
-	 * @return boolean True if you should accept the code
+	 * @return int
 	 */
-	public function isValidTFA($code, $userId = null)
+	public static function getTwoFactorMethods()
 	{
-		// Include the necessary user model
-		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
-
-		// Do we need to get the User ID?
-		if (empty($userId))
+		if (!version_compare(JVERSION, '3.2', '>='))
 		{
-			$userId = JFactory::getUser()->id;
+			return null;
 		}
 
-		// Check the secret code
-		$model = new UsersModelUser;
-		$options = array(
-				'warn_if_not_req'	=> false,
-		);
+		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
 
-		return $model->isValidSecretKey($userId, $code, $options);
+		return count(UsersHelper::getTwoFactorMethods());
 	}
 }

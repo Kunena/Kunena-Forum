@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaForumTopicHelper
  */
-abstract class KunenaForumTopicHelper {
+abstract class KunenaForumTopicHelper
+{
 	/**
 	 * @var KunenaForumTopic[]
 	 */
@@ -27,21 +28,30 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return KunenaForumTopic
 	 */
-	static public function get($identifier = null, $reload = false) {
-		if ($identifier instanceof KunenaForumTopic) {
+	static public function get($identifier = null, $reload = false)
+	{
+		if ($identifier instanceof KunenaForumTopic)
+		{
 			return $identifier;
 		}
-		$id = (int) $identifier;
-		if ($id < 1)
-			return new KunenaForumTopic;
 
-		if (empty(self::$_instances[$id])) {
+		$id = (int) $identifier;
+
+		if ($id < 1)
+		{
+			return new KunenaForumTopic;
+		}
+
+		if (empty(self::$_instances[$id]))
+		{
 			$instance = new KunenaForumTopic;
 			// Only load topics which haven't been preloaded before (including missing ones).
 			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
 			$instance->id = $id;
 			self::$_instances[$id] = $instance;
-		} elseif ($reload) {
+		}
+		elseif ($reload)
+		{
 			self::$_instances[$id]->load();
 		}
 
@@ -55,16 +65,24 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return int
 	 */
-	public static function subscribe($ids, $value=true, $user=null) {
+	public static function subscribe($ids, $value = true, $user = null)
+	{
 		// Pre-load all items
 		KunenaForumTopicUserHelper::getTopics($ids, $user);
 		$count = 0;
-		foreach ($ids as $id) {
+		foreach ($ids as $id)
+		{
 			$usertopic = KunenaForumTopicUserHelper::get($id, $user);
-			if ($usertopic->subscribed != (int)$value) $count++;
+
+			if ($usertopic->subscribed != (int)$value)
+			{
+				$count++;
+			}
+
 			$usertopic->subscribed = (int)$value;
 			$usertopic->save();
 		}
+
 		return $count;
 	}
 
@@ -75,16 +93,25 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return int
 	 */
-	public static function favorite($ids, $value=true, $user=null) {
+	public static function favorite($ids, $value = true, $user = null)
+	{
 		// Pre-load all items
 		KunenaForumTopicUserHelper::getTopics($ids, $user);
 		$count = 0;
-		foreach ($ids as $id) {
+
+		foreach ($ids as $id)
+		{
 			$usertopic = KunenaForumTopicUserHelper::get($id, $user);
-			if ($usertopic->favorite != (int)$value) $count++;
+
+			if ($usertopic->favorite != (int)$value)
+			{
+				$count++;
+			}
+
 			$usertopic->favorite = (int)$value;
 			$usertopic->save();
 		}
+
 		return $count;
 	}
 
@@ -94,15 +121,23 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return KunenaForumTopic[]
 	 */
-	static public function getTopics($ids = false, $authorise='read') {
+	static public function getTopics($ids = false, $authorise='read')
+	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		if ($ids === false) {
+
+		if ($ids === false)
+		{
 			return self::$_instances;
-		} elseif (is_array ($ids) ) {
+		}
+		elseif (is_array ($ids) )
+		{
 			$ids = array_unique($ids);
-		} else {
+		}
+		else
+		{
 			$ids = array($ids);
 		}
+
 		self::loadTopics($ids);
 
 		$list = array ();
@@ -113,6 +148,7 @@ abstract class KunenaForumTopicHelper {
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		return $list;
 	}
 
@@ -122,10 +158,13 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return KunenaForumTopicUser[]
 	 */
-	static public function getUserTopics($ids = false, $user=null) {
-		if ($ids === false) {
+	static public function getUserTopics($ids = false, $user = null)
+	{
+		if ($ids === false)
+		{
 			$ids = array_keys(self::$_instances);
 		}
+
 		return KunenaForumTopicUserHelper::getTopics($ids, $user);
 	}
 
@@ -135,10 +174,13 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return array
 	 */
-	static public function getKeywords($ids=false, $user=false) {
-		if ($ids === false) {
+	static public function getKeywords($ids = false, $user = false)
+	{
+		if ($ids === false)
+		{
 			$ids = array_keys(self::$_instances);
 		}
+
 		return KunenaKeywordHelper::getByTopics($ids, $user);
 	}
 
@@ -150,11 +192,16 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return array|KunenaForumTopic[]
 	 */
-	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array()) {
+	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array())
+	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$db = JFactory::getDBO ();
 		$config = KunenaFactory::getConfig ();
-		if ($limit < 1 && empty($params['nolimit'])) $limit = $config->threads_per_page;
+
+		if ($limit < 1 && empty($params['nolimit']))
+		{
+			$limit = $config->threads_per_page;
+		}
 
 		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'tt.last_post_time DESC';
@@ -164,23 +211,33 @@ abstract class KunenaForumTopicHelper {
 		$moved = isset($params['moved']) ? (string) $params['moved'] : 0;
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
-		if (strstr('ut.last_', $orderby)) {
+		if (strstr('ut.last_', $orderby))
+		{
 			$post_time_field = 'ut.last_post_time';
-		} elseif (strstr('tt.first_', $orderby)) {
+		}
+		elseif (strstr('tt.first_', $orderby))
+		{
 			$post_time_field = 'tt.first_post_time';
-		} else {
+		}
+		else
+		{
 			$post_time_field = 'tt.last_post_time';
 		}
 
 		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse);
 		$catlist = array();
-		foreach ($categories as $category) {
+
+		foreach ($categories as $category)
+		{
 			$catlist += $category->getChannels();
 		}
-		if (empty($catlist)) {
+
+		if (empty($catlist))
+		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return array(0, array());
 		}
+
 		$catlist = implode(',', array_keys($catlist));
 
 		$whereuser = array();
@@ -190,15 +247,19 @@ abstract class KunenaForumTopicHelper {
 		if (!empty($params['favorited'])) $whereuser[] = 'ut.favorite=1';
 		if (!empty($params['subscribed'])) $whereuser[] = 'ut.subscribed=1';
 
-		if ($config->keywords || $config->userkeywords) {
+		if ($config->keywords || $config->userkeywords)
+		{
 			$kwids = array();
-			if (!empty($params['keywords'])) {
+
+			if (!empty($params['keywords']))
+			{
 				$keywords = KunenaKeywordHelper::getByKeywords($params['keywords']);
 				foreach ($keywords as $keyword) {
 					$kwids[] = $keyword->id;
 				}
 				$kwids = implode(',', $kwids);
 			}
+
 			//TODO: add support for keywords (example:)
 			/* SELECT tt.*, COUNT(*) AS score FROM #__kunena_keywords_map AS km
 			INNER JOIN #__kunena_topics` AS tt ON km.topic_id=tt.id
@@ -210,51 +271,76 @@ abstract class KunenaForumTopicHelper {
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (".implode(' OR ',$whereuser).')' : '');
 		$where = "tt.hold IN ({$hold}) AND tt.category_id IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
-		if (!$moved) $where .= " AND tt.moved_id='0'";
+
+		if (!$moved)
+		{
+			$where .= " AND tt.moved_id='0'";
+		}
 
 		// Get total count
 		if ($whereuser)
+		{
 			$query = "SELECT COUNT(*) FROM #__kunena_user_topics AS ut INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id WHERE {$where}";
+		}
 		else
+		{
 			$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt WHERE {$where}";
+		}
+
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
-		if (KunenaError::checkDatabaseError() || !$total) {
+
+		if (KunenaError::checkDatabaseError() || !$total)
+		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return array(0, array());
 		}
 
 		// If out of range, use last page
 		if ($limit && $total < $limitstart)
+		{
 			$limitstart = intval($total / $limit) * $limit;
+		}
 
 		// Get items
 		if ($whereuser)
+		{
 			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
 				FROM #__kunena_user_topics AS ut
 				INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id
 				WHERE {$where} ORDER BY {$orderby}";
+		}
 		else
+		{
 			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
 				FROM #__kunena_topics AS tt
 				LEFT JOIN #__kunena_user_topics AS ut ON tt.id=ut.topic_id AND ut.user_id={$db->Quote($user->userid)}
 				WHERE {$where} ORDER BY {$orderby}";
+		}
+
 		$db->setQuery ( $query, $limitstart, $limit );
 		$results = (array) $db->loadAssocList ('id');
-		if (KunenaError::checkDatabaseError()) {
+
+		if (KunenaError::checkDatabaseError())
+		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 			return array(0, array());
 		}
 
 		$topics = array();
-		foreach ( $results as $id=>$result ) {
+
+		foreach ( $results as $id=>$result )
+		{
 			$instance = new KunenaForumTopic ($result);
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
 			$topics[$id] = $instance;
 		}
+
 		unset ($results);
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		return array($total, $topics);
 	}
 
@@ -265,11 +351,19 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return int	Count of deleted topics.
 	 */
-	public static function delete($ids) {
-		if (empty($ids)) return 0;
-		if (is_array($ids)) {
+	public static function delete($ids)
+	{
+		if (empty($ids))
+		{
+			return 0;
+		}
+
+		if (is_array($ids))
+		{
 			$idlist = implode(',', $ids);
-		} else {
+		}
+		else
+		{
 			$idlist = (int) $ids;
 		}
 
@@ -293,7 +387,8 @@ abstract class KunenaForumTopicHelper {
 		$queries[] = "DELETE FROM #__kunena_topics WHERE id IN ({$idlist})";
 
 		$db = JFactory::getDBO ();
-		foreach ($queries as $query) {
+		foreach ($queries as $query)
+		{
 			$db->setQuery($query);
 			$db->query();
 			KunenaError::checkDatabaseError ();
@@ -309,11 +404,19 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return int	Count of trashed topics.
 	 */
-	public static function trash($ids) {
-		if (empty($ids)) return 0;
-		if (is_array($ids)) {
+	public static function trash($ids)
+	{
+		if (empty($ids))
+		{
+			return 0;
+		}
+
+		if (is_array($ids))
+		{
 			$idlist = implode(',', $ids);
-		} else {
+		}
+		else
+		{
 			$idlist = (int) $ids;
 		}
 
@@ -321,7 +424,8 @@ abstract class KunenaForumTopicHelper {
 		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread IN ({$idlist})";
 		$queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id IN ({$idlist})";
 
-		foreach ($queries as $query) {
+		foreach ($queries as $query)
+		{
 			$db->setQuery($query);
 			$db->query();
 			KunenaError::checkDatabaseError ();
@@ -333,7 +437,8 @@ abstract class KunenaForumTopicHelper {
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 */
-	public static function cleanup() {
+	public static function cleanup()
+	{
 		self::$_instances = array();
 	}
 
@@ -344,14 +449,20 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return bool|int
 	 */
-	public static function recount($ids=false, $start=0, $end=0) {
+	public static function recount($ids = false, $start = 0, $end = 0)
+	{
 		$db = JFactory::getDBO ();
 
-		if (is_array($ids)) {
+		if (is_array($ids))
+		{
 			$threads = 'AND m.thread IN ('.implode(',', $ids).')';
-		} elseif ((int)$ids) {
+		}
+		elseif ((int)$ids)
+		{
 			$threads = 'AND m.thread='.(int)$ids;
-		} else {
+		}
+		else
+		{
 			$threads = '';
 		}
 
@@ -381,8 +492,12 @@ abstract class KunenaForumTopicHelper {
 			WHERE tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL {$topics} {$threads}";
 		$db->setQuery($query);
 		$db->query ();
+
 		if (KunenaError::checkDatabaseError ())
+		{
 			return false;
+		}
+
 		$rows = $db->getAffectedRows ();
 
 		// Find out if there are deleted topics with visible replies.
@@ -394,8 +509,12 @@ abstract class KunenaForumTopicHelper {
 			WHERE tt.moved_id=0 {$topics}";
 		$db->setQuery($query);
 		$db->query ();
+
 		if (KunenaError::checkDatabaseError ())
+		{
 			return false;
+		}
+
 		$rows += $db->getAffectedRows ();
 
 		// Recount total posts, total attachments and update first & last post information (by time)
@@ -426,9 +545,14 @@ abstract class KunenaForumTopicHelper {
 			WHERE moved_id=0 {$topics}";
 		$db->setQuery($query);
 		$db->query ();
+
 		if (KunenaError::checkDatabaseError ())
+		{
 			return false;
+		}
+
 		$rows += $db->getAffectedRows ();
+
 		return $rows;
 	}
 
@@ -438,22 +562,38 @@ abstract class KunenaForumTopicHelper {
 	 *
 	 * @return array
 	 */
-	static public function fetchNewStatus(array $topics, $user = null) {
+	static public function fetchNewStatus(array $topics, $user = null)
+	{
 		$user = KunenaUserHelper::get($user);
-		if (!KunenaFactory::getConfig()->shownew || empty($topics) || !$user->exists()) {
+
+		if (!KunenaFactory::getConfig()->shownew || empty($topics) || !$user->exists())
+		{
 			return array();
 		}
+
 		$session = KunenaFactory::getSession ();
 
 		$ids = array();
-		foreach ($topics as $topic) {
-			if ($topic->last_post_time < $session->getAllReadTime()) continue;
+
+		foreach ($topics as $topic)
+		{
+			if ($topic->last_post_time < $session->getAllReadTime())
+			{
+				continue;
+			}
+
 			$allreadtime = $topic->getCategory()->getUserInfo()->allreadtime;
-			if ($allreadtime && $topic->last_post_time < $allreadtime) continue;
+
+			if ($allreadtime && $topic->last_post_time < $allreadtime)
+			{
+				continue;
+			}
+
 			$ids[] = $topic->id;
 		}
 
-		if ($ids) {
+		if ($ids)
+		{
 			$idstr = implode ( ",", $ids );
 
 			$db = JFactory::getDBO ();
@@ -467,16 +607,22 @@ abstract class KunenaForumTopicHelper {
 		}
 
 		$list = array();
-		foreach ( $topics as $topic ) {
-			if (isset($topiclist[$topic->id])) {
+		foreach ( $topics as $topic )
+		{
+			if (isset($topiclist[$topic->id]))
+			{
 				$topic->lastread = $topiclist[$topic->id]->lastread;
 				$topic->unread = $topiclist[$topic->id]->unread;
-			} else {
+			}
+			else
+			{
 				$topic->lastread = $topic->last_post_id;
 				$topic->unread = 0;
 			}
+
 			$list[$topic->id] = $topic->lastread;
 		}
+
 		return $list;
 	}
 
@@ -485,29 +631,44 @@ abstract class KunenaForumTopicHelper {
 	/**
 	 * @param array $ids
 	 */
-	static protected function loadTopics(array $ids) {
-		foreach ($ids as $i=>$id) {
+	static protected function loadTopics(array $ids)
+	{
+		foreach ($ids as $i => $id)
+		{
 			$id = intval($id);
+
 			if (!$id || isset(self::$_instances [$id]))
+			{
 				unset($ids[$i]);
+			}
 		}
+
 		if (empty($ids))
+		{
 			return;
+		}
 
 		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
 		$db->setQuery ( $query );
-		$results = (array) $db->loadObjectList('id', 'KunenaForumTopic');
+		$results = (array) $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();
 
-		foreach ( $ids as $id ) {
-			if (isset($results[$id])) {
-				self::$_instances [$id] = $results[$id];
-			} else {
+		foreach ( $ids as $id )
+		{
+			if (isset($results[$id]))
+			{
+				$instance = new KunenaForumTopic ($results[$id]);
+ 				$instance->exists(true);
+ 				self::$_instances [$id] = $instance;
+			}
+			else
+			{
 				self::$_instances [$id] = null;
 			}
 		}
+
 		unset ($results);
 	}
 }

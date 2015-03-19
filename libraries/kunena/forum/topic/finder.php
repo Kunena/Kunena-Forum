@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -78,13 +78,23 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		$list = array();
 		foreach ($categories as $category)
 		{
-			if ($category instanceof KunenaForumCategory) $list[] = (int) $category->id;
-			else $list[] = (int) $category;
+			if ($category instanceof KunenaForumCategory)
+			{
+				$list[] = (int) $category->id;
+			}
+			else
+			{
+				$list[] = (int) $category;
+			}
 		}
+
 		$list = implode(',', $list);
 
 		// Handle empty list as impossible filter value.
-		if (!$list) $list = -1;
+		if (!$list)
+		{
+			$list = -1;
+		}
 
 		$this->query->where("a.category_id IN ({$list})");
 
@@ -104,11 +114,16 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	{
 		$name = $lastPost ? 'last' : 'first';
 
-		if ($starting && $ending) {
+		if ($starting && $ending)
+		{
 			$this->query->where("a.{$name}_post_time BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
-		} elseif ($starting) {
+		}
+		elseif ($starting)
+		{
 			$this->query->where("a.{$name}_post_time > {$this->db->quote($starting->toUnix())}");
-		} elseif ($ending) {
+		}
+		elseif ($ending)
+		{
 			$this->query->where("a.{$name}_post_time <= {$this->db->quote($ending->toUnix())}");
 		}
 
@@ -204,14 +219,26 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		$list = array();
 		foreach ($users as $user)
 		{
-			if ($user instanceof KunenaUser) $list[] = (int) $user->userid;
-			elseif ($user instanceof JUser) $list[] = (int) $user->id;
-			else $list[] = (int) $user;
+			if ($user instanceof KunenaUser)
+			{
+				$list[] = (int) $user->userid;
+			}
+			elseif ($user instanceof JUser)
+			{
+				$list[] = (int) $user->id;
+			}
+			else
+			{
+				$list[] = (int) $user;
+			}
 		}
-		if (empty($list)) {
+
+		if (empty($list))
+		{
 			$this->query->where('0');
 			return $this;
 		}
+
 		$userlist = implode(',', $list);
 
 		$subQuery = $this->db->getQuery(true);
@@ -226,10 +253,13 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		$this->query->innerJoin("({$subQuery} LIMIT 1000) AS uu ON uu.id=a.id");
 		$this->query->innerJoin("#__kunena_user_topics AS ut ON ut.topic_id=a.id AND ut.owner=1");
 
-		if ($negate) {
+		if ($negate)
+		{
 			// Topic owner has posted after $users (or $users haven't replied at all).
 			$this->query->where("ut.last_post_id > uu.max_post_id");
-		} else {
+		}
+		else
+		{
 			// One of the $users has posted after topic owner.
 			$this->query->where("ut.last_post_id < uu.max_post_id");
 		}
@@ -280,13 +310,15 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 
 	protected function build(JDatabaseQuery $query)
 	{
-		if (!empty($this->hold)) {
+		if (!empty($this->hold))
+		{
 			JArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
 			$query->where("a.hold IN ({$hold})");
 		}
 
-		if (isset($this->moved)) {
+		if (isset($this->moved))
+		{
 			$query->where('a.moved_id' . ($this->moved ? '>0' : '=0'));
 		}
 	}

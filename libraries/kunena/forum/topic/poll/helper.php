@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.Poll
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaForumTopicPollHelper
  */
-abstract class KunenaForumTopicPollHelper {
+abstract class KunenaForumTopicPollHelper
+{
 	protected static $_instances = array();
 
 	/**
@@ -24,22 +25,30 @@ abstract class KunenaForumTopicPollHelper {
 	 *
 	 * @return KunenaForumTopicPoll
 	 */
-	static public function get($identifier = null, $reload = false) {
-		if ($identifier instanceof KunenaForumTopicPoll) {
+	static public function get($identifier = null, $reload = false)
+	{
+		if ($identifier instanceof KunenaForumTopicPoll)
+		{
 			return $identifier;
 		}
-		$id = intval ( $identifier );
-		if ($id < 1)
-			return new KunenaForumTopicPoll ();
 
-		if ($reload || empty ( self::$_instances [$id] )) {
+		$id = intval ( $identifier );
+
+		if ($id < 1)
+		{
+			return new KunenaForumTopicPoll ();
+		}
+
+		if ($reload || empty ( self::$_instances [$id] ))
+		{
 			self::$_instances [$id] = new KunenaForumTopicPoll ( $id );
 		}
 
 		return self::$_instances [$id];
 	}
 
-	static public function recount() {
+	static public function recount()
+	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query

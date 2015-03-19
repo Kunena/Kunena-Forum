@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -76,10 +76,12 @@ class KunenaDatabaseQueryElement
 	 */
 	public function append($elements)
 	{
-		if (is_array($elements)) {
+		if (is_array($elements))
+		{
 			$this->_elements = array_unique(array_merge($this->_elements, $elements));
 		}
-		else {
+		else
+		{
 			$this->_elements = array_unique(array_merge($this->_elements, array($elements)));
 		}
 	}
@@ -252,10 +254,12 @@ class KunenaDatabaseQuery
 	{
 		$this->_type = 'select';
 
-		if (is_null($this->_select)) {
+		if (is_null($this->_select))
+		{
 			$this->_select = new KunenaDatabaseQueryElement('SELECT', $columns);
 		}
-		else {
+		else
+		{
 			$this->_select->append($columns);
 		}
 
@@ -312,10 +316,12 @@ class KunenaDatabaseQuery
 	 */
 	public function from($tables)
 	{
-		if (is_null($this->_from)) {
+		if (is_null($this->_from))
+		{
 			$this->_from = new KunenaDatabaseQueryElement('FROM', $tables);
 		}
-		else {
+		else
+		{
 			$this->_from->append($tables);
 		}
 
@@ -331,9 +337,11 @@ class KunenaDatabaseQuery
 	 */
 	public function join($type, $conditions)
 	{
-		if (is_null($this->_join)) {
+		if (is_null($this->_join))
+		{
 			$this->_join = array();
 		}
+
 		$this->_join[] = new KunenaDatabaseQueryElement(strtoupper($type) . ' JOIN', $conditions);
 
 		return $this;
@@ -400,11 +408,13 @@ class KunenaDatabaseQuery
 	 */
 	public function set($conditions, $glue=',')
 	{
-		if (is_null($this->_set)) {
+		if (is_null($this->_set))
+		{
 			$glue = strtoupper($glue);
 			$this->_set = new KunenaDatabaseQueryElement('SET', $conditions, "\n\t$glue ");
 		}
-		else {
+		else
+		{
 			$this->_set->append($conditions);
 		}
 
@@ -420,11 +430,13 @@ class KunenaDatabaseQuery
 	 */
 	public function where($conditions, $glue='AND')
 	{
-		if (is_null($this->_where)) {
+		if (is_null($this->_where))
+		{
 			$glue = strtoupper($glue);
 			$this->_where = new KunenaDatabaseQueryElement('WHERE', $conditions, " $glue ");
 		}
-		else {
+		else
+		{
 			$this->_where->append($conditions);
 		}
 
@@ -439,10 +451,12 @@ class KunenaDatabaseQuery
 	 */
 	public function group($columns)
 	{
-		if (is_null($this->_group)) {
+		if (is_null($this->_group))
+		{
 			$this->_group = new KunenaDatabaseQueryElement('GROUP BY', $columns);
 		}
-		else {
+		else
+		{
 			$this->_group->append($columns);
 		}
 
@@ -458,11 +472,14 @@ class KunenaDatabaseQuery
 	 */
 	public function having($conditions, $glue='AND')
 	{
-		if (is_null($this->_having)) {
+		if (is_null($this->_having))
+		{
 			$glue = strtoupper($glue);
 			$this->_having = new KunenaDatabaseQueryElement('HAVING', $conditions, " $glue ");
 		}
-		else {
+
+		else
+		{
 			$this->_having->append($conditions);
 		}
 
@@ -477,10 +494,12 @@ class KunenaDatabaseQuery
 	 */
 	public function order($columns)
 	{
-		if (is_null($this->_order)) {
+		if (is_null($this->_order))
+		{
 			$this->_order = new KunenaDatabaseQueryElement('ORDER BY', $columns);
 		}
-		else {
+		else
+		{
 			$this->_order->append($columns);
 		}
 
@@ -513,26 +532,32 @@ class KunenaDatabaseQuery
 			case 'select':
 				$query .= (string) $this->_select;
 				$query .= (string) $this->_from;
-				if ($this->_join) {
+				if ($this->_join)
+				{
 					// special case for joins
-					foreach ($this->_join as $join) {
+					foreach ($this->_join as $join)
+					{
 						$query .= (string) $join;
 					}
 				}
 
-				if ($this->_where) {
+				if ($this->_where)
+				{
 					$query .= (string) $this->_where;
 				}
 
-				if ($this->_group) {
+				if ($this->_group)
+				{
 					$query .= (string) $this->_group;
 				}
 
-				if ($this->_having) {
+				if ($this->_having)
+				{
 					$query .= (string) $this->_having;
 				}
 
-				if ($this->_order) {
+				if ($this->_order)
+				{
 					$query .= (string) $this->_order;
 				}
 
@@ -542,14 +567,17 @@ class KunenaDatabaseQuery
 				$query .= (string) $this->_delete;
 				$query .= (string) $this->_from;
 
-				if ($this->_join) {
+				if ($this->_join)
+				{
 					// special case for joins
-					foreach ($this->_join as $join) {
+					foreach ($this->_join as $join)
+					{
 						$query .= (string) $join;
 					}
 				}
 
-				if ($this->_where) {
+				if ($this->_where)
+				{
 					$query .= (string) $this->_where;
 				}
 
@@ -558,16 +586,19 @@ class KunenaDatabaseQuery
 			case 'update':
 				$query .= (string) $this->_update;
 
-				if ($this->_join) {
+				if ($this->_join)
+				{
 					// special case for joins
-					foreach ($this->_join as $join) {
+					foreach ($this->_join as $join)
+					{
 						$query .= (string) $join;
 					}
 				}
 
 				$query .= (string) $this->_set;
 
-				if ($this->_where) {
+				if ($this->_where)
+				{
 					$query .= (string) $this->_where;
 				}
 
@@ -577,7 +608,8 @@ class KunenaDatabaseQuery
 				$query .= (string) $this->_insert;
 				$query .= (string) $this->_set;
 
-				if ($this->_where) {
+				if ($this->_where)
+				{
 					$query .= (string) $this->_where;
 				}
 

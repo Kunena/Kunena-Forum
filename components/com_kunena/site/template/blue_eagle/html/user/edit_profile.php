@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -88,7 +88,7 @@ JHtml::_('behavior.tooltip');
 			<?php // TODO: Add some bbcode functions ?>
 			<td class="kcol-mid">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>" >
-					<textarea class="ktxtarea required" maxlength="<?php echo intval($this->config->maxsig) ?>" name="signature" id="kbbcode-message" rows="10" cols="30"><?php echo $this->escape($this->profile->signature) ?></textarea>
+					<textarea class="ktxtarea" maxlength="<?php echo intval($this->config->maxsig) ?>" name="signature" id="kbbcode-message" rows="10" cols="30"><?php echo $this->escape($this->profile->signature) ?></textarea>
 				</span>
 			</td>
 		</tr>

@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Joomla25
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,10 +18,27 @@ class KunenaLoginJoomla {
 		require_once JPATH_SITE.'/components/com_users/helpers/route.php';
 	}
 
-	public function loginUser($username, $password, $rememberme) {
+	/**
+	 * Method to login via Joomla! framework
+	 *
+	 * @param   string   $username    Username of user
+	 * @param   string   $password    Password of user
+	 * @param   boolean  $rememberme  Remember the user next time it wants login
+	 * @param   string   $secretkey   The secretkey given by user when TFA is enabled
+	 *
+	 * @return boolean
+	 */
+	public function loginUser($username, $password, $rememberme, $secretkey = null) {
 		$credentials = array('username' => $username, 'password' => $password);
+
+		if ($secretkey)
+		{
+			$credentials['secretkey'] = $secretkey;
+		}
+
 		$options = array('remember' => $rememberme);
-		$error = JFactory::getApplication()->login ( $credentials, $options );
+		$error = JFactory::getApplication()->login($credentials, $options);
+
 		return is_bool($error) ? '' : $error;
 	}
 

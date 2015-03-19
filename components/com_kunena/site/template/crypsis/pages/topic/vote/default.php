@@ -4,14 +4,14 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Pages.Topic
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 $content = $this->request('Topic/Poll')
-	->setProperties(array('alwaysVote'=>true))
+	->setProperties(array('alwaysVote' => true))
 	->execute();
 
 // Display breadcrumb path to the current category / topic / message / report.

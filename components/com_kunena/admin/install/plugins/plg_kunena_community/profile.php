@@ -4,7 +4,8 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2013 - 2014 iJoomla, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,8 +26,11 @@ class KunenaProfileCommunity extends KunenaProfile {
 	}
 
 	public function getProfileURL($userid, $task='', $xhtml = true) {
-		$do = $task ? '&task='.$task : '';
-		return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid.$do, $xhtml);
+		// Make sure that user profile exist.
+		if (!$userid || CFactory::getUser($userid) === null) {
+			return false;
+		}
+		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
 	}
 
 	public function _getTopHits($limit=0) {

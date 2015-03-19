@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Message
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -14,7 +14,11 @@ defined('_JEXEC') or die;
 
 /** @var KunenaForumMessage  $message  Message to reply to. */
 $message = $this->message;
-if (!$message->isAuthorised('reply')) return;
+
+if (!$message->isAuthorised('reply'))
+{
+	return;
+}
 
 /** @var KunenaUser  $author  Author of the message. */
 $author = isset($this->author) ? $this->author : $message->getAuthor();
@@ -26,6 +30,14 @@ $category = isset($this->category) ? $this->category : $message->getCategory();
 $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 /** @var KunenaUser  $me  Current user. */
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+
+// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
+
+$this->addScript('js/caret.js');
+$this->addScript('js/atwho.js');
+$this->addStyleSheet('css/atwho.css');
+
+$this->addScript('js/edit.js');
 ?>
 
 <div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
@@ -64,7 +76,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<input type="checkbox" name="subscribeMe" value="1"
-				<?php echo ($config->subscriptionschecked == 1) ? 'checked="checked"' : ''; ?> />
+				<?php echo ($config->subscriptionschecked == 1 && $me->canSubscribe || $config->subscriptionschecked == 0 && $me->canSubscribe) ? 'checked="checked"' : ''; ?> />
 			<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 			<br />
 			<?php endif; ?>
@@ -80,5 +92,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 				<?php echo JText::_('COM_KUNENA_CANCEL'); ?>
 			</button>
 		</div>
+		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disemoticons ?>" />
 	</form>
 </div>

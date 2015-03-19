@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 *
@@ -200,14 +200,11 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	color: #666666 !important;
 }
 
-#Kunena .kwho-banned ,
+#Kunena .kwho-blocked,
+#Kunena a.kwho-blocked,
+#Kunena .kwho-banned,
 #Kunena a.kwho-banned {
 	color: #A39D49 !important;
-}
-
-#Kunena .kwho-blocked,
-#Kunena a.kwho-blocked {
-	color: #ff0000 !important;
 }
 
 /* MENU

@@ -4,14 +4,23 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Pagination
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
+$display = isset($this->display);
+
 $data = $this->pagination->getData();
-if (count($data->pages) <= 1) return;
+
+$count = count($data->pages);
+
+if ($count == 0)
+{
+	return;
+}
+elseif ($count == 1 && empty($display)) return;
 $last = 0;
 ?>
 
@@ -20,9 +29,10 @@ $last = 0;
 		<?php
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous);
-		foreach($data->pages as $k=>$item)
+
+		foreach ($data->pages as $k => $item)
 		{
-			if ($last+1 != $k)
+			if ($last + 1 != $k)
 			{
 				echo '<li><a class="disabled">...</a></li>';
 			}
@@ -31,6 +41,7 @@ $last = 0;
 
 			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}
+
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->next);
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end);
 		?>
@@ -40,7 +51,7 @@ $last = 0;
 <div class="pagination test visible-phone">
 	<ul>
 		<?php
-	foreach($data->pages as $k=>$item)
+		foreach ($data->pages as $k => $item)
 		{
 			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
 		}

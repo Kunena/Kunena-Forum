@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -94,8 +94,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function __get($property)
 	{
-		if ($this->width == null) $this->initialize();
-		switch ($property) {
+		if ($this->width == null)
+		{
+			$this->initialize();
+		}
+
+		switch ($property)
+		{
 			case 'width':
 				return $this->width;
 			case 'height':
@@ -214,7 +219,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{
 		// Generic thumbnails are special case.
-		if ($thumb && !$this->isImage())
+		if (!$this->isImage())
 		{
 			return JUri::root(true) .'/media/kunena/images/attach_generic.png';
 		}
@@ -233,6 +238,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 
 			$url = JUri::root(true) .'/'. ($thumb ? $fileThumb : $file);
+
 			return $escape ? htmlspecialchars($url, ENT_COMPAT, 'UTF-8') : $url;
 		}
 
@@ -399,9 +405,16 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		$exception = $this->tryAuthorise($action, $user, false);
-		if ($silent === false && $exception) $this->setError($exception->getMessage());
 
-		if ($silent !== null) return !$exception;
+		if ($silent === false && $exception)
+		{
+			$this->setError($exception->getMessage());
+		}
+
+		if ($silent !== null)
+		{
+			return !$exception;
+		}
 
 		return $exception ? $exception->getMessage() : null;
 	}
@@ -440,7 +453,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return true;
 		}
 
-		$this->setError(JText::sprintf('COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']) . ': ' . $fileinfo['error']);
+		$this->setError(
+			JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
+			. ': ' . htmlspecialchars($fileinfo['error'], ENT_COMPAT, 'UTF-8'));
 
 		return false;
 	}

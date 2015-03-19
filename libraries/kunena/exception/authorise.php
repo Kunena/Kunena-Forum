@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Exception
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,11 +25,13 @@ class KunenaExceptionAuthorise extends RuntimeException
 		503 => '503 Service Temporarily Unavailable'
 	);
 
-	public function getResponseCode() {
+	public function getResponseCode()
+	{
 		return isset($this->responseCodes[$this->code]) ? (int) $this->code : 500;
 	}
 
-	public function getResponseStatus() {
+	public function getResponseStatus()
+	{
 		return $this->responseCodes[$this->getResponseCode()];
 	}
 }

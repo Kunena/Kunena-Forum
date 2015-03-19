@@ -8,11 +8,16 @@
 	<!-- Add fields to the parameters object for the layout. -->
 	<fields name="params">
 		<!-- Basic options. -->
-		<fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
-			<field name="integration" type="radio" label="COM_KUNENA_MENU_INTEGRATION" description="COM_KUNENA_MENU_INTEGRATION_DESC" default="1">
+		<fieldset name="basic"
+		          label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
+			<field name="integration"
+			       type="radio"
+			       label="COM_KUNENA_MENU_INTEGRATION"
+			       description="COM_KUNENA_MENU_INTEGRATION_DESC"
+			       default="1">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
-		</field>
+			</field>
 		</fieldset>
 	</fields>
 </metadata>

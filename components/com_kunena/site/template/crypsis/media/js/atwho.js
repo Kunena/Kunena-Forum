@@ -1,4 +1,4 @@
-/*! jquery.atwho - v0.4.11 - 2014-04-27
+/*! jquery.atwho - v0.4.12 - 2014-06-26
 * Copyright (c) 2014 chord.luo <chord.luo@gmail.com>; 
 * homepage: http://ichord.github.com/At.js 
 * Licensed MIT
@@ -46,7 +46,24 @@ App = (function() {
   };
 
   App.prototype.controller = function(at) {
-    return this.controllers[this.alias_maps[at] || at || this.current_flag];
+    var c, current, current_flag, _ref;
+    if (this.alias_maps[at]) {
+      current = this.controllers[this.alias_maps[at]];
+    } else {
+      _ref = this.controllers;
+      for (current_flag in _ref) {
+        c = _ref[current_flag];
+        if (current_flag === at) {
+          current = c;
+          break;
+        }
+      }
+    }
+    if (current) {
+      return current;
+    } else {
+      return this.controllers[this.current_flag];
+    }
   };
 
   App.prototype.set_context_for = function(at) {
@@ -76,13 +93,13 @@ App = (function() {
     })(this)).on('scroll.atwhoInner', (function(_this) {
       return function(e) {
         var _ref;
-        return (_ref = _this.controller()) != null ? _ref.view.hide() : void 0;
+        return (_ref = _this.controller()) != null ? _ref.view.hide(e) : void 0;
       };
     })(this)).on('blur.atwhoInner', (function(_this) {
       return function(e) {
         var c;
         if (c = _this.controller()) {
-          return c.view.hide(c.get_opt("display_timeout"));
+          return c.view.hide(e, c.get_opt("display_timeout"));
         }
       };
     })(this));
@@ -153,7 +170,7 @@ App = (function() {
     switch (e.keyCode) {
       case KEY_CODE.ESC:
         e.preventDefault();
-        view.hide();
+        view.hide(e);
         break;
       case KEY_CODE.UP:
         e.preventDefault();
@@ -183,7 +200,8 @@ App = (function() {
           return;
         }
         e.preventDefault();
-        view.choose();
+        view.choosing = true;
+        view.choose(e);
         break;
       default:
         $.noop();
@@ -356,12 +374,12 @@ Controller = (function() {
       }
     }
     if ($inputor.is('textarea, input')) {
-      content = '' + content;
+      content = this.get_opt('space_after') ? content + ' ' : '' + content;
       source = $inputor.val();
       start_str = source.slice(0, Math.max(this.query.head_pos - this.at.length, 0));
-      text = "" + start_str + content + " " + (source.slice(this.query['end_pos'] || 0));
+      text = "" + start_str + content + (source.slice(this.query['end_pos'] || 0));
       $inputor.val(text);
-      $inputor.caret('pos', start_str.length + content.length + 1);
+      $inputor.caret('pos', start_str.length + content.length);
     } else if (range = this.range) {
       pos = range.startOffset - (this.query.end_pos - this.query.head_pos) - this.at.length;
       range.setStart(range.endContainer, Math.max(pos, 0));
@@ -504,7 +522,7 @@ View = (function() {
       return $(e.currentTarget).addClass('cur');
     }).on('click', (function(_this) {
       return function(e) {
-        _this.choose();
+        _this.choose(e);
         return e.preventDefault();
       };
     })(this));
@@ -514,13 +532,13 @@ View = (function() {
     return this.$el.is(":visible");
   };
 
-  View.prototype.choose = function() {
+  View.prototype.choose = function(e) {
     var $li, content;
     if (($li = this.$el.find(".cur")).length) {
       content = this.context.insert_content_for($li);
       this.context.insert(this.context.callbacks("before_insert").call(this.context, content, $li), $li);
-      this.context.trigger("inserted", [$li]);
-      return this.hide();
+      this.context.trigger("inserted", [$li, e]);
+      return this.hide(e);
     }
   };
 
@@ -562,6 +580,10 @@ View = (function() {
 
   View.prototype.show = function() {
     var rect;
+    if (this.choosing) {
+      this.choosing = false;
+      return;
+    }
     this.context.mark_range();
     if (!this.visible()) {
       this.$el.show();
@@ -572,12 +594,15 @@ View = (function() {
     }
   };
 
-  View.prototype.hide = function(time) {
+  View.prototype.hide = function(e, time) {
     var callback;
-    if (isNaN(time && this.visible())) {
+    if (!this.visible()) {
+      return;
+    }
+    if (isNaN(time)) {
       this.context.reset_rect();
       this.$el.hide();
-      return this.context.trigger('hidden');
+      return this.context.trigger('hidden', [e]);
     } else {
       callback = (function(_this) {
         return function() {
@@ -707,7 +732,7 @@ DEFAULT_CALLBACKS = {
     if (!query) {
       return li;
     }
-    regexp = new RegExp(">\\s*(\\w*)(" + query.replace("+", "\\+") + ")(\\w*)\\s*<", 'ig');
+    regexp = new RegExp(">\\s*(\\w*?)(" + query.replace("+", "\\+") + ")(\\w*)\\s*<", 'ig');
     return li.replace(regexp, function(str, $1, $2, $3) {
       return '> ' + $1 + '<strong>' + $2 + '</strong>' + $3 + ' <';
     });
@@ -801,6 +826,7 @@ $.fn.atwho = function(method) {
 $.fn.atwho["default"] = {
   at: void 0,
   alias: void 0,
+  space_after: true,
   data: null,
   tpl: "<li data-value='${atwho-at}${name}'>${name}</li>",
   insert_tpl: "<span>${atwho-data-value}</span>",

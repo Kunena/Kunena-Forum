@@ -2,45 +2,28 @@
 * Kunena Component
 * @package Kunena.Template.Crypsis
 *
-* @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
 
+.large-kicon {
+	width: 18px;
+	height: 18px;
+	margin-right: 0;
+	line-height: 18px;
+	font-size: 18px;
+}
 
-.ktopicmy {
-	background-image: url("icons/myflag.png");
-	width: 16px;
-	height: 16px;
-	margin-left: 2px;
+.icon-feed::before {
+	color: orange
 }
-.kforummoderated {
-	background: url("icons/tmoder.gif") no-repeat left center;
-	width: 16px;
-	height: 16px;
-}
-.ktopicattach {
-	background: url("icons/attachment.png") no-repeat left center;
-	margin: 2px;
-	width: 32px;
-	height: 32px;
-	float: right;
-}
-.kfavoritestar-grey {
-	background: url("icons/favoritestar-grey.png") no-repeat left center;
-	width: 16px;
-	height: 16px;
-}
-.ktopiclocked,
-.kforumlocked {
-	background: url("icons/lock_sm.png") no-repeat left center;
-	width: 16px;
-	height: 16px;
-}
+
 .kfile-input {
 	display: block;
 	overflow: hidden;
 }
+
 .kspoiler-wrapper {
 	border-bottom: 1px solid black;
 	border-top: 1px solid black;
@@ -48,79 +31,85 @@
 	width: 100%;
 	background-color: #ffc;
 }
-.kunreadforum {
-	background: url("icons/folder.png") no-repeat left center;
-	width: 32px;
-	height: 32px;
-}
-.krss {
-	background: url("icons/rss.png") no-repeat left center;
-	width: 24px;
-	height: 24px;
-}
+
 .kicon {
 	border: 0;
 	margin: 0;
 	padding: 0;
 	display: inline-block;
 }
+
 .kspoiler-header {
 	cursor: pointer;
 }
+
 .kmark-read {
-	background: url("icons/mark-read.png") no-repeat left center;
 	width: 16px;
 	height: 16px;
 }
+
 div.krss-block {
 	float: right;
 }
+
 .kspoiler {
 	cursor: auto;
 }
+
 .kspoiler-expand,
 .kspoiler-hide {
 	color: #888;
 }
+
 .ktopicpoll {
-	background: url("icons/poll.png") no-repeat left center;
 	margin: 2px;
 	width: 32px;
 	height: 32px;
 	float: right;
 }
+
 .kforumbottom {
-	background: url("icons/bottom_arrow.gif") no-repeat left center;
 	width: 18px;
 	height: 15px;
 }
+
 .kspoiler-content {
 	margin: 10px 5px;
 }
+
 .kfavoritestar {
-	background: url("icons/favoritestar.png") no-repeat left center;
 	width: 16px;
 	height: 16px;
 }
+
 .kspoiler-title {
 	font-weight: bold;
 }
+
 .krss-small {
-	background: url("icons/rss-small.png") no-repeat left center;
 	width: 16px;
 	height: 16px;
 }
+
 .kforumtop {
-	background: url("icons/top_arrow.gif") no-repeat left center;
 	width: 18px;
 	height: 15px;
 }
+
 .kreadforum,
 .knotloginforum {
 	background: url("icons/folder_nonew.png") no-repeat left center;
 	width: 32px;
 	height: 32px;
 }
+
+.kunreadforum,
+.knotloginforum {
+	background: url("icons/folder.png") no-repeat left center;
+	width: 32px;
+	height: 32px;
+}
+
 .kunreadforum-sm {
 	background: url("icons/folder_sm.png") no-repeat left center;
 	width: 12px;
@@ -128,6 +117,7 @@ div.krss-block {
 	margin-right: 3px;
 	vertical-align: middle;
 }
+
 .kreadforum-sm,
 .knotloginforum-sm {
 	background: url("icons/folder_nonew_sm.png") no-repeat left center;
@@ -136,6 +126,7 @@ div.krss-block {
 	margin-right: 3px;
 	vertical-align: middle;
 }
+
 .kgooglemap {
 	width: 100%;
 	display: block;

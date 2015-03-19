@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Html
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,8 +21,13 @@ jimport ( 'joomla.html.pagination' );
  */
 class KunenaHtmlPagination extends KunenaPagination
 {
-	public function setDisplay($displayedPages = 7, $uri = null) {
+	public function setDisplay($displayedPages = 7, $uri = null)
+	{
 		$this->setDisplayedPages($displayedPages);
-		if ($uri instanceof JUri) $this->setUri($uri);
+
+		if ($uri instanceof JUri)
+		{
+			$this->setUri($uri);
+		}
 	}
 }

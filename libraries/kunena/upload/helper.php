@@ -13,73 +13,105 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Upload Backend Helper Class
  */
-class KunenaUploadHelper {
+class KunenaUploadHelper
+{
 	protected static $_instances = array ();
 
 	private function __construct() {}
 
-	public static function upload($file, $uploadfolder, $format) {
+	public static function upload($file, $uploadfolder, $format)
+	{
+		jimport( 'joomla.filesystem.folder' );
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
 
-		$err			= null;
+		$err = null;
 
 		// Set FTP credentials, if given
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Make the filename safe
-		$file['name'] = KunenaFile::makeSafe($file['name']);
+		jimport('joomla.filesystem.file');
+		$file['name'] = JFile::makeSafe($file['name']);
 
-		if (!is_dir($uploadfolder)) return false;
+		if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error']))
+		{
+			return false;
+		}
 
-		if (isset($file['name'])) {
-			$filepath = KunenaPath::clean($uploadfolder.'/'.strtolower($file['name']));
+		if (!JFolder::exists($uploadfolder))
+		{
+			return false;
+		}
 
-			if (!MediaHelper::canUpload( $file, $err )) {
-				if ($format == 'json') {
+		if (isset($file['name']))
+		{
+			$filepath = JPath::clean($uploadfolder.'/'.strtolower($file['name']));
+
+			if (!MediaHelper::canUpload( $file, $err ))
+			{
+				if ($format == 'json')
+				{
 					//jimport('joomla.error.log');
 					//$log = JLog::getInstance('upload.error.php');
 					//$log->addEntry(array('comment' => 'Invalid: '.$filepath.': '.$err));
 					header('HTTP/1.0 415 Unsupported Media Type');
 					jexit('Error. Unsupported Media Type!');
-				} else {
+				}
+				else
+				{
 					return false;
 				}
 			}
 
-			if (is_file($filepath)) {
-				if ($format == 'json') {
+			if (JFile::exists($filepath))
+			{
+				if ($format == 'json')
+				{
 					//jimport('joomla.error.log');
 					//$log = JLog::getInstance('upload.error.php');
 					//$log->addEntry(array('comment' => 'File already exists: '.$filepath));
 					header('HTTP/1.0 409 Conflict');
 					jexit('Error. File already exists');
-				} else {
+				}
+				else
+				{
 					return false;
 				}
 			}
 
-			if (!KunenaFile::upload($file['tmp_name'], $filepath)) {
-				if ($format == 'json') {
+			if (!JFile::upload($file['tmp_name'], $filepath))
+			{
+				if ($format == 'json')
+				{
 					//jimport('joomla.error.log');
 					//$log = JLog::getInstance('upload.error.php');
 					//$log->addEntry(array('comment' => 'Cannot upload: '.$filepath));
 					header('HTTP/1.0 400 Bad Request');
 					jexit('Error. Unable to upload file');
-				} else {
+				}
+				else
+				{
 					return false;
 				}
-			} else {
-				if ($format == 'json') {
+			}
+			else
+			{
+				if ($format == 'json')
+				{
 					//jimport('joomla.error.log');
 					//$log = JLog::getInstance();
 					//$log->addEntry(array('comment' => $uploadfolder));
 					jexit('Upload complete');
-				} else {
+				}
+				else
+				{
 					return true;
 				}
 			}
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}

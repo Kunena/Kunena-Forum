@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Message
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -18,7 +18,7 @@ $topic = $message->getTopic();
 $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
-
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 48);
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 4 : 5;
 ?>
@@ -26,7 +26,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span4">
+	<td class="span5">
 		<?php
 		// FIXME:
 		/*if ($message->attachments) {
@@ -37,12 +37,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			<?php echo $this->getTopicLink(
 				$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
 			); ?>
-		</div>
-	</td>
-	<td class="span3">
-		<div>
 			<?php
-			echo $this->getTopicLink($topic);
 
 			if ($topic->getUserTopic()->favorite) {
 				echo $this->getIcon ('kfavoritestar', JText::_('COM_KUNENA_FAVORITE'));
@@ -59,33 +54,48 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			?>
 		</div>
 		<div>
+			<?php echo $topic->getAuthor()->getLink(); ?>,
+			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 		</div>
 	</td>
-	<td class="span1 center">
-		<div>
-			<?php echo $author->getLink(); ?>
-		</div>
+	<td class="span2 hidden-phone">
+		<table cellpadding="0" cellspacing="0">
+			<tbody>
+			<tr>
+				<td style="border: 0 none;" class="labels">
+					<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong></div>
+					<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</div>
+				</td>
+				<td style="width:100%;text-align:right;border: 0 none;" class="numbers">
+					<div class="repliesnum"><strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong></div>
+					<div class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></div>
+
+				</td>
+			</tr>
+			</tbody>
+		</table>
 	</td>
-	<td class="span3">
-		<div>
-			<span title="<?php echo KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat_hover'); ?>">
-				<?php echo JText::_('COM_KUNENA_POSTED_AT')
-					. ' ' . KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat'); ?>
-			</span>
-
+	<td class="span2" id="recent-topics">
+		<?php if ($config->avataroncat) : ?>
+			<div class="span2">
+				<?php echo $avatar; ?>
+			</div>
+		<?php endif; ?>
+		<div class="span9 last-posts">
+			<?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
 			<?php if ($message->userid) : ?>
-			<br />
-			<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+				<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 			<?php endif; ?>
-
+			<br />
+			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
 		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-	<td class="span1 center">
-		<input class ="kcheck" type="checkbox" name="posts[<?php echo $message->id?>]" value="1" />
-	</td>
+		<td class="span1 center">
+			<input class ="kcheck" type="checkbox" name="posts[<?php echo $message->id?>]" value="1" />
+		</td>
 	<?php endif; ?>
 
 	<?php

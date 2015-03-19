@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Announcement.Edit
+ *
+ * @package         Kunena.Site
+ * @subpackage      Layout.Announcement.Edit
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -21,13 +22,13 @@ class KunenaLayoutAnnouncementEdit extends KunenaLayout
 	/**
 	 * Method to create an input in fonction of name given
 	 *
-	 * @param   string  $name        Name of input to create
-	 * @param   string  $attributes  Attibutes to be added to input
-	 * @param   int     $id          Id to be added to the input
+	 * @param   string $name       Name of input to create
+	 * @param   string $attributes Attibutes to be added to input
+	 * @param   int    $id         Id to be added to the input
 	 *
 	 * @return string
 	 */
-	public function displayInput($name, $attributes='', $id=null)
+	public function displayInput($name, $attributes = '', $id = null)
 	{
 		switch ($name)
 		{
@@ -42,17 +43,17 @@ class KunenaLayoutAnnouncementEdit extends KunenaLayout
 			case 'created':
 				return JHtml::_('calendar', $this->escape($this->announcement->created), 'created', $id);
 			case 'showdate':
-				$options	= array();
-				$options[]	= JHtml::_('select.option',  '0', JText::_('COM_KUNENA_NO'));
-				$options[]	= JHtml::_('select.option',  '1', JText::_('COM_KUNENA_YES'));
+				$options   = array();
+				$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+				$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
 
-				return JHtml::_('select.genericlist',  $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id);
+				return JHtml::_('select.genericlist', $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id);
 			case 'published':
-				$options	= array();
-				$options[]	= JHtml::_('select.option',  '0', JText::_('COM_KUNENA_NO'));
-				$options[]	= JHtml::_('select.option',  '1', JText::_('COM_KUNENA_YES'));
+				$options   = array();
+				$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+				$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
 
-				return JHtml::_('select.genericlist',  $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id);
+				return JHtml::_('select.genericlist', $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id);
 		}
 
 		return '';

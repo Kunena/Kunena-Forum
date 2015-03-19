@@ -57,23 +57,34 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	{
 		$name = $register ? 'registerDate' : 'lastvisitDate';
 
-		if ($starting && $ending) {
+		if ($starting && $ending)
+		{
 			$this->query->where("a.{$name} BETWEEN {$this->db->quote($starting->toUnix())} AND {$this->db->quote($ending->toUnix())}");
-		} elseif ($starting) {
+		}
+		elseif ($starting)
+		{
 			$this->query->where("a.{$name} > {$this->db->quote($starting->toUnix())}");
-		} elseif ($ending) {
+		}
+		elseif ($ending)
+		{
 			$this->query->where("a.{$name} <= {$this->db->quote($ending->toUnix())}");
 		}
 
 		return $this;
 	}
 
-	public function filterByConfiguration(array $ignore = array()) {
-		if ($this->config->userlist_count_users == '1' ) {
+	public function filterByConfiguration(array $ignore = array())
+	{
+		if ($this->config->userlist_count_users == '1' )
+		{
 			$this->query->where('(a.block=0 OR a.activation="")');
-		} elseif ($this->config->userlist_count_users == '2' ) {
+		}
+		elseif ($this->config->userlist_count_users == '2' )
+		{
 			$this->query->where('(a.block=0 AND a.activation="")');
-		} elseif ($this->config->userlist_count_users == '3' ) {
+		}
+		elseif ($this->config->userlist_count_users == '3' )
+		{
 			$this->query->where('a.block=0');
 		}
 
@@ -86,11 +97,16 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
-	public function filterByName($search) {
-		if ($search) {
-			if ($this->config->username) {
+	public function filterByName($search)
+	{
+		if ($search)
+		{
+			if ($this->config->username)
+			{
 				$this->query->where("a.username LIKE '%{$this->db->escape($search)}%'");
-			} else {
+			}
+			else
+			{
 				$this->query->where("a.name LIKE '%{$this->db->escape($search)}%'");
 			}
 		}

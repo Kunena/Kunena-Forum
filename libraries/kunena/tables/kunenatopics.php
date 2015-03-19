@@ -16,7 +16,8 @@ require_once(__DIR__ . '/kunena.php');
  * Kunena Topics
  * Provides access to the #__kunena_topics table
  */
-class TableKunenaTopics extends KunenaTable {
+class TableKunenaTopics extends KunenaTable
+{
 	public $id = null;
 	public $category_id = null;
 	public $subject = null;
@@ -41,7 +42,8 @@ class TableKunenaTopics extends KunenaTable {
 	public $last_post_guest_name = null;
 	public $params = null;
 
-	public function __construct($db) {
+	public function __construct($db)
+	{
 		parent::__construct ( '#__kunena_topics', 'id', $db );
 	}
 
@@ -49,6 +51,7 @@ class TableKunenaTopics extends KunenaTable {
 	{
 		$this->_exists = false;
 		$k = $this->_tbl_key;
+
 		// Get the id to load.
 		if ($id !== null) {
 			$this->$k = $id;
@@ -58,8 +61,10 @@ class TableKunenaTopics extends KunenaTable {
 		if ($reset) $this->reset();
 
 		// Check for a valid id to load.
-		if ($this->$k === null || intval($this->$k) < 1) {
+		if ($this->$k === null || intval($this->$k) < 1)
+		{
 			$this->$k = 0;
+
 			return false;
 		}
 
@@ -69,34 +74,46 @@ class TableKunenaTopics extends KunenaTable {
 		$data = $this->_db->loadAssoc();
 
 		// Check for an error message.
-		if ($this->_db->getErrorNum()) {
+		if ($this->_db->getErrorNum())
+		{
 			$this->setError($this->_db->getErrorMsg());
+
 			return false;
 		}
 
 		if(!$data)
 		{
 			$this->$k = 0;
+
 			return false;
 		}
 		$this->_exists = true;
 
 		// Bind the data to the table.
 		$this->bind($data);
+
 		return $this->_exists;
 	}
 
-	public function check() {
+	public function check()
+	{
 		$category = KunenaForumCategoryHelper::get($this->category_id);
-		if (!$category->exists()) {
+
+		if (!$category->exists())
+		{
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id ) );
-		} else {
+		}
+		else
+		{
 			$this->category_id = $category->id;
 		}
+
 		$this->subject = trim($this->subject);
-		if (!$this->subject) {
+		if (!$this->subject)
+		{
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT' ) );
 		}
+
 		return ($this->getError () == '');
 	}
 }

@@ -86,7 +86,7 @@ else
 		rm -rf "$GIT_TARGET/media/kunena"
 	fi
 	mkdir "$GIT_TARGET/administrator/components/com_kunena"
-so our goal is 	cp -r "$GIT_SOURCE/components/com_kunena/admin/kunena.xml" "$GIT_TARGET/administrator/components/com_kunena/kunena.xml"
+	cp -r "$GIT_SOURCE/components/com_kunena/admin/kunena.xml" "$GIT_TARGET/administrator/components/com_kunena/kunena.xml"
 	echo "Removed development tree from your web site."
 	echo "Please install Kunena Package to fix your site!"
 fi

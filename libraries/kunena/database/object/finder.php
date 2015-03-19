@@ -47,7 +47,8 @@ abstract class KunenaDatabaseObjectFinder
 	 */
 	public function __construct()
 	{
-		if (!$this->table) {
+		if (!$this->table)
+		{
 			throw new DomainException('Table name missing from ' . get_class($this));
 		}
 
@@ -137,10 +138,13 @@ abstract class KunenaDatabaseObjectFinder
 			case 'IN':
 			case 'NOT IN':
 				$value = (array) $value;
-				if (empty($value)) {
+				if (empty($value))
+				{
 					// WHERE field IN (nothing).
 					$this->query->where('0');
-				} else {
+				}
+				else
+				{
 					$db = $this->db;
 					array_walk($value, function (&$item) use ($db) { $item = $db->quote($item); });
 					$list = implode(',', $value);

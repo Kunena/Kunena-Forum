@@ -94,8 +94,13 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function __get($property)
 	{
-		if ($this->width == null) $this->initialize();
-		switch ($property) {
+		if ($this->width == null)
+		{
+			$this->initialize();
+		}
+
+		switch ($property)
+		{
 			case 'width':
 				return $this->width;
 			case 'height':
@@ -233,6 +238,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 
 			$url = JUri::root(true) .'/'. ($thumb ? $fileThumb : $file);
+
 			return $escape ? htmlspecialchars($url, ENT_COMPAT, 'UTF-8') : $url;
 		}
 
@@ -399,9 +405,16 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		$exception = $this->tryAuthorise($action, $user, false);
-		if ($silent === false && $exception) $this->setError($exception->getMessage());
 
-		if ($silent !== null) return !$exception;
+		if ($silent === false && $exception)
+		{
+			$this->setError($exception->getMessage());
+		}
+
+		if ($silent !== null)
+		{
+			return !$exception;
+		}
 
 		return $exception ? $exception->getMessage() : null;
 	}

@@ -66,7 +66,8 @@ class KunenaResponseJson extends KunenaCompatResponseJson
 		while (($output = ob_get_clean()) !== false)
 		{
 			// In debug mode send also output buffers (debug dumps, PHP notices and warnings).
-			if ($output && defined(JDEBUG)) {
+			if ($output && defined(JDEBUG))
+			{
 				$response->messages['php'][] = $output;
 			}
 		}

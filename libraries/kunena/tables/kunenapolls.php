@@ -15,13 +15,15 @@ require_once(__DIR__ . '/kunena.php');
  * Kunena Polls
  * Provides access to the #__kunena_polls table
  */
-class TableKunenaPolls extends KunenaTable {
+class TableKunenaPolls extends KunenaTable
+{
 	public $id = null;
 	public $title = null;
 	public $threadid = null;
 	public $polltimetolive = null;
 
-	public function __construct($db) {
+	public function __construct($db)
+	{
 		parent::__construct ( '#__kunena_polls', 'id', $db );
 	}
 }

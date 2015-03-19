@@ -12,20 +12,27 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaError
  */
-abstract class KunenaError {
+abstract class KunenaError
+{
 	static $enabled = 0;
 	static $handler = false;
 	static $debug = false;
 	static $admin = false;
 	static $format;
 
-	public static function initialize() {
-		if (!self::$enabled) {
+	public static function initialize()
+	{
+		if (!self::$enabled)
+		{
 			self::$format = JFactory::getApplication()->input->getWord('format', 'html');
 			self::$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
 			self::$admin = JFactory::getApplication()->isAdmin();
 			register_shutdown_function(array('KunenaError', 'shutdownHandler'), self::$debug || self::$admin || KUNENA_PROFILER);
-			if (!self::$debug) return;
+
+			if (!self::$debug)
+			{
+				return;
+			}
 
 			@ini_set('display_errors', 1);
 			self::$handler = true;
@@ -37,61 +44,88 @@ abstract class KunenaError {
 		}
 	}
 
-	public static function cleanup() {
-		if (self::$enabled && (--self::$enabled) == 0) {
-			if (self::$handler) {
+	public static function cleanup()
+	{
+		if (self::$enabled && (--self::$enabled) == 0)
+		{
+			if (self::$handler)
+			{
 				restore_error_handler ();
 				self::$handler = false;
 			}
 		}
 	}
 
-	public static function error($msg, $where='default') {
-		if (self::$debug) {
+	public static function error($msg, $where='default')
+	{
+		if (self::$debug)
+		{
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_'.strtoupper($where), $msg), 'error');
 		}
 	}
 
-	public static function warning($msg, $where='default') {
-		if (self::$debug) {
+	public static function warning($msg, $where='default')
+	{
+		if (self::$debug)
+		{
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_'.strtoupper($where), $msg), 'notice');
 		}
 	}
 
-	public static function checkDatabaseError() {
+	public static function checkDatabaseError()
+	{
 		$db = JFactory::getDBO();
-		if ($db->getErrorNum ()) {
+		if ($db->getErrorNum())
+		{
 			$app = JFactory::getApplication();
-			if (JFactory::getApplication()->isAdmin()) {
+
+			if (JFactory::getApplication()->isAdmin())
+			{
 				$app->enqueueMessage ($db->getErrorMsg(), 'error' );
-			} elseif (self::$debug || self::$admin) {
+			}
+			elseif (self::$debug || self::$admin)
+			{
 				$app->enqueueMessage ( 'Kunena '.JText::sprintf ( 'COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.org/">www.kunena.org</a>' ), 'error' );
-			} else {
+			}
+			else
+			{
 				$app->enqueueMessage ( 'Kunena '.JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' ), 'error' );
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 
-	public static function getDatabaseError() {
+	public static function getDatabaseError()
+	{
 		$db = JFactory::getDBO();
-		if ($db->getErrorNum ()) {
-			if (self::$debug || self::$admin) {
+
+		if ($db->getErrorNum ())
+		{
+			if (self::$debug || self::$admin)
+			{
 				return $db->getErrorMsg();
-			} else {
+			}
+			else
+			{
 				return 'Kunena '.JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' );
 			}
 		}
 	}
 
-	public static function errorHandler($errno, $errstr, $errfile, $errline) {
-		if (error_reporting () == 0 || !strstr($errfile, 'kunena')) {
+	public static function errorHandler($errno, $errstr, $errfile, $errline)
+	{
+		if (error_reporting () == 0 || !strstr($errfile, 'kunena'))
+		{
 			return false;
 		}
-		switch ($errno) {
+
+		switch ($errno)
+		{
 			case E_NOTICE :
 			case E_USER_NOTICE :
 				$error = "Notice";
@@ -121,12 +155,17 @@ abstract class KunenaError {
 		$errfile_short = strtr($errfile, '\\', '/');
 		$errfile_short = preg_replace('%'.strtr(JPATH_ROOT, '\\', '/').'/%', '\\1', $errfile_short);
 		$errfile_short = preg_replace('%^.*?/((administrator/)?(components|modules|plugins|templates)/)%', '\\1', $errfile_short);
-		if (self::$debug || self::$admin) {
-			printf ( "<br />\n<b>%s</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error, $errstr, $errfile_short, $errline );
+
+		if (self::$debug || self::$admin)
+		{
+			printf( "<br />\n<b>%s</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error, $errstr, $errfile_short, $errline);
 		}
-		if (ini_get ( 'log_errors' )) {
+
+		if (ini_get('log_errors'))
+		{
 			error_log ( sprintf ( "PHP %s:  %s in %s on line %d", $error, $errstr, $errfile, $errline ) );
 		}
+
 		return true;
 	}
 
@@ -151,7 +190,8 @@ abstract class KunenaError {
 				$parts = explode('/', $file);
 				$dir = (string) array_shift($parts);
 
-				if ($dir == 'administrator') {
+				if ($dir == 'administrator')
+				{
 					$dir = (string) array_shift($parts);
 				}
 
@@ -187,7 +227,8 @@ abstract class KunenaError {
 			ob_start();
 			header('HTTP/1.1 500 Internal Server Error');
 
-			if (self::$format == 'json') {
+			if (self::$format == 'json')
+			{
 				header('Content-type: application/json');
 
 				// Emulate JResponseJson.
@@ -243,7 +284,7 @@ abstract class KunenaError {
 			}
 			else
 			{
-					echo '<p>Please contact the site owner.</p>';
+				echo '<p>Please contact the site owner.</p>';
 			}
 			echo '<hr /><p><a href="javascript:window.history.back()">Go back</a></p><br />';
 			echo '</div>';

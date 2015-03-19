@@ -15,7 +15,8 @@ require_once KPATH_SITE . '/router.php';
 /**
  * Class KunenaRouteLegacy
  */
-abstract class KunenaRouteLegacy {
+abstract class KunenaRouteLegacy
+{
 	// List of legacy views from previous releases
 	static $functions = array (
 		'entrypage'=>1,
@@ -64,35 +65,49 @@ abstract class KunenaRouteLegacy {
 		'fb_pdf'=>1,
 	);
 
-	public static function isLegacy($view) {
-		if (!$view || $view=='legacy') return true;
+	public static function isLegacy($view)
+	{
+		if (!$view || $view=='legacy')
+		{
+			return true;
+		}
+
 		return isset(self::$functions[$view]);
 	}
 
-	public static function convert($uri, $showstart = 1) {
+	public static function convert($uri, $showstart = 1)
+	{
 		// Make sure that input is JUri to legacy Kunena func=xxx
-		if (!($uri instanceof JUri)) {
+		if (!($uri instanceof JUri))
+		{
 			return;
 		}
-		if ($uri->getVar('option') != 'com_kunena') {
+
+		if ($uri->getVar('option') != 'com_kunena')
+		{
 			return;
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		if ($uri->getVar('func')) {
+		if ($uri->getVar('func'))
+		{
 			$uri->setVar('view', $uri->getVar('func'));
 			$uri->delVar('func');
 		}
-		if (!isset(self::$functions[$uri->getVar('view')])) {
+
+		if (!isset(self::$functions[$uri->getVar('view')]))
+		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 			return;
 		}
 
 		$legacy = clone $uri;
 
 		// Turn &do=xxx into &layout=xxx
-		if ($uri->getVar('do')) {
+		if ($uri->getVar('do'))
+		{
 			$uri->setVar('layout', $uri->getVar('do'));
 			$uri->delVar('do');
 		}
@@ -100,7 +115,9 @@ abstract class KunenaRouteLegacy {
 		$app = JFactory::getApplication();
 		$config = KunenaFactory::getConfig ();
 		$changed = false;
-		switch ($uri->getVar('view')) {
+
+		switch ($uri->getVar('view'))
+		{
 			case 'entrypage' :
 				$changed = true;
 				$uri->setVar('view', 'home');
@@ -114,10 +131,13 @@ abstract class KunenaRouteLegacy {
 				$changed = true;
 				$uri->setVar('view', 'category');
 				$page = (int) $uri->getVar ( 'page', $showstart );
-				if ($page > 0) {
+
+				if ($page > 0)
+				{
 					$uri->setVar ( 'limitstart', (int) $config->messages_per_page * ($page - 1) );
 					$uri->setVar ( 'limit', (int) $config->messages_per_page );
 				}
+
 				$uri->delVar ( 'page' );
 				break;
 			case 'latest' :
@@ -132,7 +152,9 @@ abstract class KunenaRouteLegacy {
 				$uri->setVar('view', 'topics');
 				// Handle both &func=noreplies and &func=latest&do=noreplies
 				$mode = $uri->getVar('layout') ? $uri->getVar('layout') : $uri->getVar('view');
-				switch ($mode) {
+
+				switch ($mode)
+				{
 					case 'latest' :
 						$uri->setVar('layout', 'default');
 						$uri->setVar('mode', 'replies');
@@ -192,11 +214,15 @@ abstract class KunenaRouteLegacy {
 						$uri->setVar('layout', 'default');
 						$uri->setVar('mode', 'replies');
 				}
+
 				$page = (int) $uri->getVar ( 'page', $showstart );
-				if ($page > 0) {
+
+				if ($page > 0)
+				{
 					$uri->setVar ( 'limitstart', (int) $config->threads_per_page * ($page - 1) );
 					$uri->setVar ( 'limit', (int) $config->threads_per_page );
 				}
+
 				$uri->delVar ( 'page' );
 				break;
 			case 'view' :
@@ -207,13 +233,27 @@ abstract class KunenaRouteLegacy {
 				$id = $uri->getVar ( 'id' );
 				$message = KunenaForumMessageHelper::get ( $id );
 				$mesid = $uri->getVar ( 'mesid' );
-				if ($message->exists ()) {
+
+				if ($message->exists ())
+				{
 					$id = $message->thread;
+
 					if ($id != $message->id)
+					{
 						$mesid = $message->id;
+					}
 				}
-				if ($id) $uri->setVar ( 'id', $id );
-				if ($mesid) $uri->setVar ( 'mesid', $mesid );
+
+				if ($id)
+				{
+					$uri->setVar ( 'id', $id );
+				}
+
+				if ($mesid)
+				{
+					$uri->setVar ( 'mesid', $mesid );
+				}
+
 				break;
 			case 'moderateuser' :
 				if ($uri->getVar('view') == 'moderateuser') $uri->setVar('layout', 'moderate');
@@ -224,12 +264,16 @@ abstract class KunenaRouteLegacy {
 			case 'profile' :
 				$changed = true;
 				$uri->setVar('view', 'user');
-				if ($uri->getVar ( 'task' )) {
+
+				if ($uri->getVar('task'))
+				{
 					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
 					$uri->delVar ( 'task' );
 				}
+
 				// Handle &do=xxx
-				switch ($uri->getVar('layout')) {
+				switch ($uri->getVar('layout'))
+				{
 					case 'edit' :
 						$uri->setVar('layout', 'edit');
 						break;
@@ -240,6 +284,7 @@ abstract class KunenaRouteLegacy {
 						$uri->delVar('layout');
 						break;
 				}
+
 				break;
 			case 'report' :
 				$changed = true;
@@ -247,16 +292,30 @@ abstract class KunenaRouteLegacy {
 				$uri->setVar('layout', 'report');
 
 				// Convert URI to have both id and mesid
-				$id = $uri->getVar ( 'id' );
-				$message = KunenaForumMessageHelper::get ( $id );
+				$id = $uri->getVar('id');
+				$message = KunenaForumMessageHelper::get($id);
 				$mesid = null;
-				if ($message->exists ()) {
+
+				if ($message->exists())
+				{
 					$id = $message->thread;
+
 					if ($id != $message->id)
+					{
 						$mesid = $message->id;
+					}
 				}
-				if ($id) $uri->setVar ( 'id', $id );
-				if ($mesid) $uri->setVar ( 'mesid', $mesid );
+
+				if ($id)
+				{
+					$uri->setVar ( 'id', $id );
+				}
+
+				if ($mesid)
+				{
+					$uri->setVar ( 'mesid', $mesid );
+				}
+
 				break;
 
 			case 'userlist' :
@@ -268,7 +327,9 @@ abstract class KunenaRouteLegacy {
 				$changed = true;
 				$uri->setVar('view', 'topics');
 				$mode = $config->rss_type;
-				switch ($mode) {
+
+				switch ($mode)
+				{
 					case 'topic' :
 						$uri->setVar('layout', 'default');
 						$uri->setVar('mode', 'topics');
@@ -283,7 +344,9 @@ abstract class KunenaRouteLegacy {
 						$uri->setVar('mode', 'latest');
 						break;
 				}
-				switch ($config->rss_timelimit) {
+
+				switch ($config->rss_timelimit)
+				{
 					case 'week' :
 						$uri->setVar ( 'sel', 168);
 						break;
@@ -295,6 +358,7 @@ abstract class KunenaRouteLegacy {
 						$uri->setVar ( 'sel', 720);
 						break;
 				}
+
 				$uri->setVar ( 'type', 'rss' );
 				$uri->setVar ( 'format', 'feed' );
 				break;
@@ -303,35 +367,56 @@ abstract class KunenaRouteLegacy {
 				$uri->setVar('view', 'topic');
 
 				// Support old &parentid=123 and &replyto=123 variables
-				$id = $uri->getVar ( 'id' );
-				if (! $id) {
-					$id = $uri->getVar ( 'parentid' );
-					$uri->delVar ( 'parentid' );
+				$id = $uri->getVar('id');
+
+				if (!$id)
+				{
+					$id = $uri->getVar('parentid');
+					$uri->delVar('parentid');
 				}
-				if (! $id) {
-					$id = $uri->getVar ( 'replyto' );
-					$uri->delVar ( 'replyto' );
+
+				if (!$id)
+				{
+					$id = $uri->getVar('replyto');
+					$uri->delVar('replyto');
 				}
 
 				// Convert URI to have both id and mesid
-				$message = KunenaForumMessageHelper::get ( $id );
+				$message = KunenaForumMessageHelper::get($id);
 				$mesid = null;
-				if ($message->exists ()) {
-					$id = $message->thread;
-					if ($id != $message->id)
-						$mesid = $message->id;
-				}
-				if ($id) $uri->setVar ( 'id', $id );
-				if ($mesid) $uri->setVar ( 'mesid', $mesid );
 
-				if ($uri->getVar ( 'action')) {
+				if ($message->exists ())
+				{
+					$id = $message->thread;
+
+					if ($id != $message->id)
+					{
+						$mesid = $message->id;
+					}
+				}
+
+				if ($id)
+				{
+					$uri->setVar('id', $id);
+				}
+
+				if ($mesid)
+				{
+					$uri->setVar('mesid', $mesid);
+				}
+
+				if ($uri->getVar('action'))
+				{
 					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
-					$uri->delVar ( 'action');
-				} else {
+					$uri->delVar('action');
+				}
+				else
+				{
 					// Handle &do=xxx
 					$layout = $uri->getVar ('layout');
 					$uri->delVar ('layout');
-					switch ($layout) {
+					switch ($layout)
+					{
 
 						// Create, reply, quote and edit:
 						case 'new' :
@@ -349,94 +434,126 @@ abstract class KunenaRouteLegacy {
 						case 'edit' :
 							$uri->setVar('layout', 'edit');
 							// Always add &mesid=x
-							if (! $mesid)
+							if (!$mesid)
+							{
 								$uri->setVar ( 'mesid', $id );
+							}
+
 							break;
 
 						// Topic moderation:
 						case 'moderatethread' :
 							$uri->setVar('layout', 'moderate');
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 						case 'deletethread' :
 							$uri->setVar('task', 'delete');
+
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 						case 'sticky' :
 							$uri->setVar('task', 'sticky');
+
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 						case 'unsticky' :
 							$uri->setVar('task', 'unsticky');
+
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 						case 'lock' :
 							$uri->setVar('task', 'lock');
+
 							// Always remove &mesid=x
 							$uri->delVar ( 'mesid' );
 							break;
 						case 'unlock' :
 							$uri->setVar('task', 'unlock');
+
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 
 						// Message moderator actions:
 						case 'moderate' :
 							$uri->setVar('layout', 'moderate');
+
 							// Always add &mesid=x
-							if (! $mesid)
+							if (!$mesid)
+							{
 								$uri->setVar ( 'mesid', $id );
+							}
+
 							break;
 						case 'approve' :
 							$uri->setVar('task', 'approve');
+
 							// Always add &mesid=x
-							if (! $mesid)
-								$uri->setVar ( 'mesid', $id );
+							if (!$mesid)
+							{
+								$uri->setVar('mesid', $id);
+							}
+
 							break;
 						case 'delete' :
 							$uri->setVar('task', 'delete');
+
 							// Always add &mesid=x
-							if (! $mesid)
-								$uri->setVar ( 'mesid', $id );
+							if (!$mesid)
+							{
+								$uri->setVar('mesid', $id);
+							}
+
 							break;
 						case 'undelete' :
 							$uri->setVar('task', 'undelete');
+
 							// Always add &mesid=x
-							if (! $mesid)
-								$uri->setVar ( 'mesid', $id );
+							if (!$mesid)
+							{
+								$uri->setVar('mesid', $id);
+							}
+
 							break;
 						case 'permdelete' :
 							$uri->setVar('task', 'permdelete');
+
 							// Always add &mesid=x
-							if (! $mesid)
-								$uri->setVar ( 'mesid', $id );
+							if (!$mesid)
+							{
+								$uri->setVar('mesid', $id);
+							}
+
 							break;
 
 						// Topic user actions:
 						case 'subscribe' :
 							$uri->setVar('task', 'subscribe');
+
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 						case 'unsubscribe' :
 							$uri->setVar('task', 'unsubscribe');
+
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 						case 'favorite' :
 							$uri->setVar('task', 'favorite');
+
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 						case 'unfavorite' :
 							$uri->setVar('task', 'unfavorite');
+
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 
 						default :
@@ -456,8 +573,10 @@ abstract class KunenaRouteLegacy {
 			case 'poll':
 				$changed = true;
 				$uri->setVar('view', 'topic');
+
 				// Handle &do=xxx
-				switch ($uri->getVar('layout')) {
+				switch ($uri->getVar('layout'))
+				{
 					case 'changevote' :
 						$uri->setVar('layout', 'vote');
 						break;
@@ -472,7 +591,8 @@ abstract class KunenaRouteLegacy {
 				$uri->delVar('action');
 				break;
 			case 'announcement':
-				switch ($uri->getVar('layout')) {
+				switch ($uri->getVar('layout'))
+				{
 					case 'read':
 						$changed = true;
 						$uri->delVar('layout');
@@ -501,26 +621,33 @@ abstract class KunenaRouteLegacy {
 				}
 				break;
 			case 'thankyou':
+
 				// Convert URI to have both id and mesid
-				$id = $uri->getVar ( 'pid' );
-				if ($id) {
+				$id = $uri->getVar('pid');
+				if ($id)
+				{
 					$changed = true;
 					$uri->setVar('view', 'topic');
 					$uri->setVar('task', 'thankyou');
 					$uri->delVar('pid');
 
-					$message = KunenaForumMessageHelper::get ( $id );
-					if ($message->exists ()) {
+					$message = KunenaForumMessageHelper::get($id);
+
+					if ($message->exists())
+					{
 						$id = $message->thread;
-						$uri->setVar ( 'mesid', $message->id );
+						$uri->setVar('mesid', $message->id);
 					}
+
 					$uri->setVar ( 'id', $id );
 				}
 				break;
 			case 'karma':
 				$changed = true;
 				$uri->setVar('view', 'user');
-				switch ($uri->getVar('layout')) {
+
+				switch ($uri->getVar('layout'))
+				{
 					case 'increase':
 						$uri->setVar('task', 'karmaup');
 						break;
@@ -528,6 +655,7 @@ abstract class KunenaRouteLegacy {
 						$uri->setVar('task', 'karmadown');
 						break;
 				}
+
 				$uri->delVar('layout');
 				$uri->delVar('pid');
 				break;
@@ -542,24 +670,30 @@ abstract class KunenaRouteLegacy {
 				$uri->setVar('view', 'misc');
 				$uri->delVar('layout');
 				break;
-
 		}
-		if ($changed) {
+
+		if ($changed)
+		{
 			JLog::add("Legacy URI {$legacy->toString(array('path', 'query'))} was converted to {$uri->toString(array('path', 'query'))}", JLog::DEBUG, 'kunena');
 		}
+
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		return $changed;
 	}
 
-	public static function convertMenuItem($item) {
+	public static function convertMenuItem($item)
+	{
 		$uri = JUri::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
 
 		$params = new JRegistry($item->params);
 
-		if (self::convert($uri, 0)) {
+		if (self::convert($uri, 0))
+		{
 
-			switch ($view) {
+			switch ($view)
+			{
 				case 'latest' :
 				case 'mylatest' :
 				case 'noreplies' :

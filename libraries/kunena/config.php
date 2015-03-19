@@ -19,9 +19,9 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaConfig
  */
-class KunenaConfig extends JObject {
+class KunenaConfig extends JObject
+{
 
-	// New in Kunena 1.5.2: $id for JoomFish support
 	/**
 	 * @var    integer  ID; input, hidden
 	 * @since  1.5.2
@@ -817,7 +817,7 @@ class KunenaConfig extends JObject {
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
-     * @deprecated 3.1 (not used in HMVC)
+	 * @deprecated 3.1 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 
@@ -1068,11 +1068,11 @@ class KunenaConfig extends JObject {
 	 */
 	public $statslink_allowed = 1;
 
-    /**
-     * @var    integer  Super admin user list; select, boolean
-     * @since  3.0.6
-     */
-    public $superadmin_userlist = 0;
+	/**
+	 * @var    integer  Super admin user list; select, boolean
+	 * @since  3.0.6
+	 */
+	public $superadmin_userlist = 0;
 
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
@@ -1146,21 +1146,33 @@ class KunenaConfig extends JObject {
 	 */
 	public $twitter_consumer_secret = '';
 
-	public function __construct() {
+	/**
+	 * @var    integer  Max Links limit; input, number
+	 * @since  3.1.0
+	 */
+	public $max_links = 6;
+
+	public function __construct()
+	{
 		parent::__construct ();
 	}
 
-	public static function getInstance() {
+	public static function getInstance()
+	{
 		static $instance = null;
 
-		if (! $instance) {
+		if (!$instance)
+		{
 			/** @var JCache|JCacheController $cache */
 			$cache = JFactory::getCache('com_kunena', 'output');
 			$instance = $cache->get('configuration', 'com_kunena');
-			if (!$instance) {
+
+			if (!$instance)
+			{
 				$instance = new KunenaConfig();
 				$instance->load();
 			}
+
 			$cache->store($instance, 'configuration', 'com_kunena');
 		}
 		return $instance;
@@ -1169,7 +1181,8 @@ class KunenaConfig extends JObject {
 	/**
 	 * @param mixed $properties
 	 */
-	public function bind($properties) {
+	public function bind($properties)
+	{
 		$this->setProperties($properties);
 
 		// Disable some experimental features
@@ -1177,7 +1190,8 @@ class KunenaConfig extends JObject {
 		$this->userkeywords = 0;
 	}
 
-	public function save() {
+	public function save()
+	{
 		$db = JFactory::getDBO ();
 
 		// Perform custom validation of config data before we write it.
@@ -1195,7 +1209,8 @@ class KunenaConfig extends JObject {
 		KunenaCacheHelper::clear();
 	}
 
-	public function reset() {
+	public function reset()
+	{
 		$instance = new KunenaConfig ();
 		$this->bind($instance->getProperties());
 	}
@@ -1204,13 +1219,15 @@ class KunenaConfig extends JObject {
 	 * Load config settings from database table.
 	 * @param null $userinfo Not used.
 	 */
-	public function load($userinfo = null) {
+	public function load($userinfo = null)
+	{
 		$db = JFactory::getDBO ();
 		$db->setQuery ( "SELECT * FROM #__kunena_configuration WHERE id=1" );
 		$config = $db->loadAssoc ();
 		KunenaError::checkDatabaseError ();
 
-		if ($config) {
+		if ($config)
+		{
 			$params = json_decode($config['params']);
 			$this->bind ($params);
 		}
@@ -1223,9 +1240,17 @@ class KunenaConfig extends JObject {
 		$plugins = array();
 		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
-		foreach ($plugins as $name => $registry) {
-			if ($name == '38432UR24T5bBO6') $this->bind($registry->toArray());
-			elseif ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
+
+		foreach ($plugins as $name => $registry)
+		{
+			if ($name == '38432UR24T5bBO6')
+			{
+				$this->bind($registry->toArray());
+			}
+			elseif ($name && $registry instanceof JRegistry)
+			{
+				$this->plugins[$name] = $registry;
+			}
 		}
 	}
 
@@ -1236,21 +1261,22 @@ class KunenaConfig extends JObject {
 	 *
 	 * @internal
 	 */
-	public function getPlugin($name) {
+	public function getPlugin($name)
+	{
 		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry();
 	}
 
 	/**
 	 * Messages per page
 	 */
-	public function check() {
+	public function check()
+	{
 		// Add anything that requires validation
 
 		// Need to have at least two per page of these
 		$this->messages_per_page = max ( $this->messages_per_page, 2 );
 		$this->messages_per_page_search = max ( $this->messages_per_page_search, 2 );
 		$this->threads_per_page = max ( $this->threads_per_page, 2 );
-
 	}
 
 	/**
@@ -1258,8 +1284,10 @@ class KunenaConfig extends JObject {
 	 *
 	 * @return string
 	 */
-	public function getEmail() {
+	public function getEmail()
+	{
 		$email = $this->get('email');
+
 		return !empty($email) ? $email : JFactory::getApplication()->getCfg('mailfrom', '');
 	}
 }

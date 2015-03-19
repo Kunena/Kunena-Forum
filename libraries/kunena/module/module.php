@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaModule
  */
-abstract class KunenaModule {
+abstract class KunenaModule
+{
 	/**
 	 * CSS file to be loaded.
 	 * @var string
@@ -33,7 +34,8 @@ abstract class KunenaModule {
 	 * @param stdClass $module
 	 * @param JRegistry $params
 	 */
-	public function __construct($module, $params) {
+	public function __construct($module, $params)
+	{
 		$this->module = $module;
 		$this->params = $params;
 		$this->document = JFactory::getDocument();
@@ -47,22 +49,27 @@ abstract class KunenaModule {
 	/**
 	 * Display module contents.
 	 */
-	final public function display() {
+	final public function display()
+	{
 		// Load CSS only once
-		if (static::$css) {
+		if (static::$css)
+		{
 			$this->document->addStyleSheet(JURI::root(true) . static::$css);
 			static::$css = null;
 		}
 
 		// Use caching also for registered users if enabled.
-		if ($this->params->get('owncache', 0)) {
+		if ($this->params->get('owncache', 0))
+		{
 			/** @var $cache JCacheControllerOutput */
 			$cache = JFactory::getCache('com_kunena', 'output');
 
 			$me = KunenaFactory::getUser();
 			$cache->setLifeTime($this->params->get('cache_time', 180));
 			$hash = md5(serialize($this->params));
-			if ($cache->start("display.{$me->userid}.{$hash}", 'mod_kunenalatest')) {
+
+			if ($cache->start("display.{$me->userid}.{$hash}", 'mod_kunenalatest'))
+			{
 				return;
 			}
 		}
@@ -74,7 +81,8 @@ abstract class KunenaModule {
 		$this->_display();
 
 		// Store cached page.
-		if (isset($cache)) {
+		if (isset($cache))
+		{
 			$cache->end();
 		}
 	}

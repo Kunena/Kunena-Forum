@@ -20,7 +20,17 @@ $params = $this->params;
 // Load JavaScript API.
 if (!isset($id))
 {
-	$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true');
+	$uri = JURI::getInstance();
+
+	if ($uri->isSSL())
+	{
+		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp&signed_in=true');
+	}
+	else
+	{
+		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true');
+	}
+
 	$id = 0;
 }
 

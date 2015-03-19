@@ -218,12 +218,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{
-		// Generic thumbnails are special case.
-		if (!$this->isImage())
-		{
-			return JUri::root(true) .'/media/kunena/images/attach_generic.png';
-		}
-
 		$protect = (bool) KunenaConfig::getInstance()->attachment_protection;
 
 		// Use direct URLs to the attachments if protection is turned off and file wasn't protected.

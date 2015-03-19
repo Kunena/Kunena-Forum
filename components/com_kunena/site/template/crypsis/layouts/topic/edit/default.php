@@ -34,32 +34,8 @@ $this->addScript('js/upload.main.js');
 $this->addStyleSheet('css/fileupload.css');
 $this->addStyleSheet('css/fileupload-ui.css');
 
-$editor = KunenaBbcodeEditor::getInstance();
-$editor->initialize('id');
-
-$this->addScriptDeclaration("window.addEvent('domready', function() {
-	if ( typeof pollcategoriesid != 'undefined' ) {
-		var catid = $('kcategory_poll').get('value');
-		if ( pollcategoriesid[catid] !== undefined ) {
-			kbbcode.addFunction('Poll', function() {
-				kToggleOrSwap('kbbcode-poll-options');
-			}, {'id': 'kbbcode-poll-button',
-				'class': 'kbbcode-poll-button',
-				'title': Joomla.JText._('COM_KUNENA_EDITOR_POLL'),
-				'alt': Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_POLL')});
-
-		} else {
-			kbbcode.addFunction('Poll', function() {
-				kToggleOrSwap('kbbcode-poll-options');
-			}, {'id': 'kbbcode-poll-button',
-				'class': 'kbbcode-poll-button',
-				'style':'display: none;',
-				'title': Joomla.JText._('COM_KUNENA_EDITOR_POLL'),
-				'alt': Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_POLL')});
-		}
-	}
-	kEditorInitialize();
-});");
+$this->addScript('js/markitup.js');
+$this->addScript('js/markitup.set.js');
 
 $this->k = 0;
 

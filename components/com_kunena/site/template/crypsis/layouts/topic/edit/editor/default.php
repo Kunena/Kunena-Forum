@@ -26,8 +26,8 @@ defined('_JEXEC') or die ();
 		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_MAP_SETTINGS_CITY') ?>: <input name="modal-map-city" id="modal-map-city" type="text" value="" /></p>
 	</div>
 	<div class="modal-footer">
-		<button id="map-modal-submit" class="btn btn-primary">Add</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+		<button id="map-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
 <?php $codeTypes = $this->getCodeTypes(); if (!empty($codeTypes)) :	?>
@@ -42,8 +42,8 @@ defined('_JEXEC') or die ();
 		</p>
 	</div>
 	<div class="modal-footer">
-		<button id="code-modal-submit" class="btn btn-primary">Add</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+		<button id="code-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
 <?php endif; ?>
@@ -57,8 +57,8 @@ defined('_JEXEC') or die ();
 		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url" type="text" value="" /></p>
 	</div>
 	<div class="modal-footer">
-		<button id="picture-modal-submit" class="btn btn-primary">Add</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+		<button id="picture-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
 <div id="modal-link" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -71,8 +71,8 @@ defined('_JEXEC') or die ();
 		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_TEXT') ?>: <input name="modal-link-text" id="modal-link-text" type="text" value="" /></p>
 	</div>
 	<div class="modal-footer">
-		<button id="link-modal-submit" class="btn btn-primary">Add</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+		<button id="link-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
 <div id="modal-video-settings" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -100,8 +100,8 @@ defined('_JEXEC') or die ();
 		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS_ID') ?>: <input name="modal-video-id" id="modal-video-id" type="text" maxlength="30" size="11" value="" /></p>
 	</div>
 	<div class="modal-footer">
-		<button id="videosettings-modal-submit" class="btn btn-primary">Add</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+		<button id="videosettings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
 <div id="modal-video-urlprovider" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -113,8 +113,8 @@ defined('_JEXEC') or die ();
 		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER_URL') ?>: <input name="modal-video-urlprovider-input" id="modal-video-urlprovider-input" type="text" value="" /></p>
 	</div>
 	<div class="modal-footer">
-		<button id="videourlprovider-modal-submit" class="btn btn-primary modal-submit">Add</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+		<button id="videourlprovider-modal-submit" class="btn btn-primary modal-submit"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
 <?php if (!$this->message->parent && isset($this->poll)) : ?>
@@ -156,8 +156,8 @@ defined('_JEXEC') or die ();
 			</div>
 	</div>
 	<div class="modal-footer">
-		<button id="poll-modal-submit" class="btn btn-primary">Add</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+		<button id="poll-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
 <?php endif; ?>
@@ -176,7 +176,7 @@ defined('_JEXEC') or die ();
 			</div></p>
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close modal</button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
 <!-- end of Bootstrap modal to be used with bbcode editor -->

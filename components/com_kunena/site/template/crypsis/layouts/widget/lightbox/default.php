@@ -29,6 +29,7 @@ if ($config->lightbox == 1)
 	JFactory::getDocument()->addScriptDeclaration('
 				jQuery(document).ready(function() {
 					jQuery(".fancybox-button").fancybox({
+						type: \'image\',
 						prevEffect		: \'none\',
 						nextEffect		: \'none\',
 						closeBtn		:  true,

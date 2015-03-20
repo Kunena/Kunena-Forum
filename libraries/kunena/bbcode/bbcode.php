@@ -106,7 +106,14 @@ class KunenaBbcode extends NBBC_BBCode
 						->set('mailto', $this->IsValidEmail($email));
 				}
 
-				return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+				if ($this->canCloakEmail($params))
+				{
+					return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+				}
+				else
+				{
+					return '<a href="mailto:' . $email . '">' . $email . '</a>';
+				}
 			}
 
 			// Remove http(s):// from the text
@@ -327,7 +334,15 @@ class KunenaBbcode extends NBBC_BBCode
 				if (!$invalid && substr($url, 0, 7) == 'mailto:')
 				{
 					$email = JString::substr($url, 7);
-					$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+
+					if ( $this->canCloakEmail($params) )
+					{
+						$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
+					}
+					else
+					{
+						$output[$index] = $email;
+					}
 
 				}
 				elseif ($invalid || empty($params['host']) || !empty($params['pass']))
@@ -350,6 +365,30 @@ class KunenaBbcode extends NBBC_BBCode
 		}
 
 		return $output;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function canCloakEmail(&$params)
+	{
+
+		if (JPluginHelper::isEnabled('content', 'emailcloak'))
+		{
+			$plugin = JPluginHelper::getPlugin('content', 'emailcloak');
+			$params = new JRegistry($plugin->params);
+
+			if ($params->get('mode', 1))
+			{
+				return true;
+			}
+		}
+		else
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -1051,8 +1090,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('textCloak', $textCloak);
 		}
 
-		// TODO: Remove in Kunena 4.0
-		return JHtml::_('email.cloak', htmlspecialchars($email, ENT_COMPAT, 'UTF-8'), $mailto, htmlspecialchars($text, ENT_COMPAT, 'UTF-8'), $textCloak);
+		if ($bbcode->canCloakEmail($params))
+		{
+			return JHtml::_('email.cloak', htmlspecialchars($email), $bbcode->IsValidEmail($email), htmlspecialchars($text), $bbcode->IsValidEmail($text));
+		}
+		else
+		{
+			return '<a href="mailto:' . htmlspecialchars($email) . '">' . htmlspecialchars($text) . '</a>';
+		}
 	}
 
 	/**

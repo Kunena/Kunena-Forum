@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 
 // Display individual tweet.
 ?>
+
 <div id="twitter-widget-4" style="background: none repeat scroll 0 0 #fff;    border-radius: 5px;    padding: 8px 8px 0;" class="root ltr twitter-tweet not-touch var-narrow" lang="en" data-scribe="page:tweet" data-iframe-title="Embedded Tweet" data-dt-pm="PM" data-dt-am="AM" data-dt-full="%{hours12}:%{minutes} %{amPm} - %{day} %{month} %{year}" data-dt-months="Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec" dir="ltr" data-twitter-event-id="4">
 	<blockquote class="tweet subject expanded h-entry" data-scribe="section:subject" cite="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>" data-tweet-id="<?php echo $this->tweetid ?>">
 		<div class="header">
@@ -27,8 +28,7 @@ defined('_JEXEC') or die;
 					</span>
 				</span>
 				<span class="p-nickname" data-scribe="element:screen_name" dir="ltr">
-					@
-					<b><?php echo $this->user_screen_name ?></b>
+					@<b><?php echo $this->user_screen_name ?></b>
 				</span>
 			</a>
 		</div>
@@ -62,19 +62,19 @@ defined('_JEXEC') or die;
 			<ul class="tweet-actions" data-scribe="component:actions" aria-label="Tweet actions" role="menu">
 				<li>
 					<a class="reply-action web-intent" data-scribe="element:reply" title="Reply" href="https://twitter.com/intent/tweet?in_reply_to=<?php echo $this->tweetid ?>">
-						<i class="ic-reply ic-mask"></i>
+						<i class="large-kicon icon-undo "></i>
 						<b>Reply</b>
 					</a>
 				</li>
 				<li>
 					<a class="retweet-action web-intent" data-scribe="element:retweet" title="Retweet" href="https://twitter.com/intent/retweet?tweet_id=<?php echo $this->tweetid ?>">
-						<i class="ic-retweet ic-mask"></i>
+						<i class="large-kicon icon-loop"></i>
 						<b>Retweet</b>
 					</a>
 				</li>
 				<li>
 					<a class="favorite-action web-intent" data-scribe="element:favorite" title="Favorite" href="https://twitter.com/intent/favorite?tweet_id=<?php echo $this->tweetid ?>">
-						<i class="ic-fav ic-mask"></i>
+						<i class="large-kicon icon-star"></i>
 						<b>Favorite</b>
 					</a>
 				</li>

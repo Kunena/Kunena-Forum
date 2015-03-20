@@ -2440,19 +2440,22 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$layout = KunenaLayout::factory('BBCode/twitter');
 
-		if ($layout->getPath())
+		if ( $tweet!==false )
 		{
-			return (string) $layout
-				->set('tweetid', $tweet->id_str)
-				->set('user_profile_url_normal', $tweet->user->profile_image_url)
-				->set('user_profile_url_big', $tweet->user->profile_image_url_big)
-				->set('user_name', $tweet->user->name)
-				->set('user_screen_name', $tweet->user->screen_name)
-				->set('tweet_created_at', $tweet->created_at)
-				->set('tweet_text', $tweet->text)
-				->set('retweet_count', $tweet->retweet_count)
-				->set('favorite_count', $tweet->favorite_count)
-				->setLayout('default');
+			if ($layout->getPath())
+			{
+				return (string) $layout
+					->set('tweetid', $tweet->id_str)
+					->set('user_profile_url_normal', $tweet->user->profile_image_url)
+					->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+					->set('user_name', $tweet->user->name)
+					->set('user_screen_name', $tweet->user->screen_name)
+					->set('tweet_created_at', $tweet->created_at)
+					->set('tweet_text', $tweet->text)
+					->set('retweet_count', $tweet->retweet_count)
+					->set('favorite_count', $tweet->favorite_count)
+					->setLayout('default');
+			}
 		}
 	}
 
@@ -2506,11 +2509,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			else
 			{
 				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
+
+				return false;
 			}
 		}
 		else
 		{
-			echo 'Invalid consumer key/secret in configuration';
+			echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_CONSUMMER_KEY_SECRET_INVALID');
+
+			return false;
 		}
 
 		if ( !empty($this->token) )
@@ -2568,14 +2575,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				}
 
 				file_put_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
+
+				return $tweet_data;
 			}
 			else
 			{
 				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
+
+				return false;
 			}
 		}
-
-		return $tweet_data;
 	}
 
 	/**

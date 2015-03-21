@@ -1348,7 +1348,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		// User is only allowed to edit post within time specified in the configuration
 		$config = KunenaFactory::getConfig ();
 
-		if (intval($config->useredit) != 1)
+		if (intval($config->useredit) == 0)
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
+		}
+
+		if (intval($config->useredit) == 2 && $this->getTopic()->first_post_id == $this->id && $this->getTopic()->last_post_id == $this->id)
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 		}

@@ -2452,6 +2452,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				->set('tweet_text', $tweet->text)
 				->set('retweet_count', $tweet->retweet_count)
 				->set('favorite_count', $tweet->favorite_count)
+				->set('verified', $tweet->user->verified)
 				->setLayout('default');
 		}
 	}

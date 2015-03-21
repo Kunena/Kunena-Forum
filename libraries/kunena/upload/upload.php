@@ -281,7 +281,7 @@ class KunenaUpload
 			}
 			if ($options['size'] > max($config->filesize, $config->imagesize) * 1024)
 			{
-				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($options['size'], JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'))), 400);
+				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($options['size'])), 400);
 			}
 
 			if (strpos($contentType, 'multipart') !== false)
@@ -354,7 +354,7 @@ class KunenaUpload
 
 				if ($size > max($config->filesize, $config->imagesize) * 1024)
 				{
-					throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($size, JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'))), 400);
+					throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($size)), 400);
 				}
 			}
 		}
@@ -637,21 +637,27 @@ class KunenaUpload
 	/**
 	 * Convert into human readable format bytes to kB, MB, GB
 	 *
-	 * @param unknown $bytes
-	 * @param null    $unit
+	 * @param   integer  $bytes       size in bytes
+	 * @param   string   $force_unit  a definitive unit
+	 * @param   string   $format      the return string format
+	 * @param   boolean  $si          whether to use SI prefixes or IEC
 	 *
 	 * @return string
-	 * @internal param string $force_unit
-	 * @internal param string $format
-	 * @internal param string $si
 	 */
-	public function bytes($bytes, $unit = NULL)
+	public function bytes($bytes, $force_unit = null, $format = null, $si = true)
 	{
 		// Format string
-		$format = '%01.2f %s';
+		$format = ($format === null) ? '%01.2f %s' : (string) $format;
 
-		$power = ($bytes > 0) ? floor(log($bytes, '1024')) : 0;
+		$units = array(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_BYTES'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_KB'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_MB'), JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_WEIGHT_GB'));
+		$mod   = 1024;
 
-		return sprintf($format, $bytes / pow('1024', $power), $unit);
+		// Determine unit to use
+		if (($power = array_search((string) $force_unit, $units)) === false)
+		{
+			$power = ($bytes > 0) ? floor(log($bytes, $mod)) : 0;
+		}
+
+		return sprintf($format, $bytes / pow($mod, $power), $units[$power]);
 	}
 }

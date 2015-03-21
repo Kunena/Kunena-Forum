@@ -23,9 +23,11 @@ defined('_JEXEC') or die;
 				<img class="u-photo avatar" data-scribe="element:avatar" data-src-2x="<?php echo $this->user_profile_url_big ?>" src="<?php echo $this->user_profile_url_normal ?>" alt="">
 				<span class="full-name">
 					<span class="p-name customisable-highlight" data-scribe="element:name"><?php echo $this->user_name ?></span>
-					<span class="verified" data-scribe="element:verified_badge" aria-label="Verified Account" title="Verified Account">
-						<b>✔</b>
-					</span>
+					<?php if ($this->verified): ?>
+						<span class="verified" data-scribe="element:verified_badge" aria-label="Verified Account" title="Verified Account">
+							<b>✔</b>
+						</span>
+					<?php endif; ?>
 				</span>
 				<span class="p-nickname" data-scribe="element:screen_name" dir="ltr">
 					@<b><?php echo $this->user_screen_name ?></b>

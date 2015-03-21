@@ -2440,7 +2440,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$layout = KunenaLayout::factory('BBCode/twitter');
 
-		if ( $tweet!==false )
+		if ($tweet !== false)
 		{
 			if ($layout->getPath())
 			{
@@ -2454,6 +2454,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					->set('tweet_text', $tweet->text)
 					->set('retweet_count', $tweet->retweet_count)
 					->set('favorite_count', $tweet->favorite_count)
+					->set('verified', $tweet->user->verified)
 					->setLayout('default');
 			}
 		}
@@ -2469,12 +2470,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	protected function getTweet($tweetid)
 	{
 		// FIXME: use AJAX instead...
+		jimport('joomla.filesystem.folder');
 		$config = KunenaFactory::getConfig();
 		$uri = JURI::getInstance();
 		$consumer_key = trim($config->twitter_consumer_key);
 		$consumer_secret = trim($config->twitter_consumer_secret);
 
-		$tweet_data = file_get_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json');
+		$tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
 
 		if ($tweet_data !== false)
 		{
@@ -2513,7 +2515,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				return false;
 			}
 		}
-		else
+		elseif (empty($consumer_key) || empty($consumer_secret) )
 		{
 			echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_CONSUMMER_KEY_SECRET_INVALID');
 
@@ -2549,32 +2551,98 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 				$tweet_data->user->profile_image_url_big = str_replace('normal', 'bigger', $tweet_data->user->profile_image_url);
 
-				foreach ($tweet_data->entities->urls as $url)
+				if ( !empty($tweet_data->entities->urls) )
 				{
-					if (isset($url->display_url))
+					foreach ($tweet_data->entities->urls as $url)
 					{
-						$d_url = $url->display_url;
-					}
-					else
-					{
-						$d_url = $url->url;
-					}
+						if (isset($url->display_url))
+						{
+							$d_url = $url->display_url;
+						}
+						else
+						{
+							$d_url = $url->url;
+						}
 
-					// We need to check to verify that the URL has the protocol, just in case
-					if (strpos($url->url, 'http') !== 0)
-					{
-						// Prepend http since there's no protocol
-						$link = 'http://' . $url->url;
-					}
-					else
-					{
-						$link = $url->url;
-					}
+						// We need to check to verify that the URL has the protocol, just in case
+						if (strpos($url->url, 'http') !== 0)
+						{
+							// Prepend http since there's no protocol
+							$link = 'http://' . $url->url;
+						}
+						else
+						{
+							$link = $url->url;
+						}
 
-					$tweet_data->text = str_replace($url->url, '<a href="' . $link . '" target="_blank" rel="nofollow">' . $d_url . '</a>', $tweet_data->text);
+						$tweet_data->text = str_replace($url->url, '<a href="' . $link . '" target="_blank" rel="nofollow">' . $d_url . '</a>', $tweet_data->text);
+					}
 				}
 
-				file_put_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
+				if ( !empty($tweet_data->entities->user_mentions) )
+				{
+					foreach ($tweet_data->entities->user_mentions as $mention)
+					{
+						$tweet_data->text = str_replace('@' . $mention->screen_name, '<a href="https://twitter.com/' . $mention->screen_name . '" target="_blank" rel="nofollow">@' . $mention->screen_name . '</a>', $tweet_data->text);
+					}
+				}
+
+				if ( !empty($tweet_data->entities->hashtags) )
+				{
+					foreach ($tweet_data->entities->hashtags as $hashtag)
+					{
+						$tweet_data->text = str_replace('#' . $hashtag->text, '<a href="https://twitter.com/hashtag/' . $hashtag->text . '?src=hash" target="_blank" rel="nofollow">#' . $hashtag->text . '</a>', $tweet_data->text);
+					}
+				}
+
+				if ( !empty($tweet_data->extended_entities->media) )
+				{
+					foreach ( $tweet_data->extended_entities->media as $media )
+					{
+						$tweet_data->text = str_replace($tweet_data->extended_entities->media[0]->url, '', $tweet_data->text);
+
+						if ( $media->type == 'photo' )
+						{
+							if ($uri->isSSL())
+							{
+								$tweet_data->text .= '<img src="' . $media->media_url_https . '" alt="" />';
+							}
+							else
+							{
+								$tweet_data->text .= '<img src="' . $media->media_url . '" alt="" />';
+							}
+						}
+						elseif ( $media->type == 'video' )
+						{
+							if ($uri->isSSL())
+							{
+								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url_https . '" alt="" /></a>';
+							}
+							else
+							{
+								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url . '" alt="" /></a>';
+							}
+						}
+						elseif ( $media->type == 'animated_gif' )
+						{
+							if ($uri->isSSL())
+							{
+								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url_https . '" alt="" /></a>';
+							}
+							else
+							{
+								$tweet_data->text .= '<a href="' . $media->url . '"><img src="' . $media->media_url . '" alt="" /></a>';
+							}
+						}
+					}
+				}
+
+				if ( !JFolder::exists(JPATH_CACHE . '/kunena_tweet') )
+				{
+					JFolder::create(JPATH_CACHE . '/kunena_tweet');
+				}
+
+				file_put_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
 
 				return $tweet_data;
 			}

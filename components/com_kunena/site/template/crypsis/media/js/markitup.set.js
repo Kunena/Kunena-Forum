@@ -28,40 +28,40 @@ bbcodeSettings = {
 			{name:'Super Bigger', openWith:'[size=6]', closeWith:'[/size]' }
 			]},
 		{
-		name:'Colors', 
-			className:'colorsbutton', 
-			openWith:'[color=[![Color]!]]', 
-			closeWith:'[/color]', 
+		name:'Colors',
+			className:'colors',
+			openWith:'[color=[![Color]!]]',
+			closeWith:'[/color]',
 				dropMenu: [
 					{name:'Black',	openWith:'[color=#000000]', 	closeWith:'[/color]', className:"col1-1" },
 					{name:'Orange',	openWith:'[color=#000044]', 	closeWith:'[/color]', className:"col1-2" },
 					{name:'Red', 	openWith:'[color=#000088]', 	closeWith:'[/color]', className:"col1-3" },
-					
+
 					{name:'Blue', 	openWith:'[color=blue]', 	closeWith:'[/color]', className:"col2-1" },
 					{name:'Purple', openWith:'[color=purple]', 	closeWith:'[/color]', className:"col2-2" },
 					{name:'Green', 	openWith:'[color=green]', 	closeWith:'[/color]', className:"col2-3" },
-					
+
 					{name:'White', 	openWith:'[color=white]', 	closeWith:'[/color]', className:"col3-1" },
-					{name:'Gray', 	openWith:'[color=gray]', 	closeWith:'[/color]', className:"col3-2" },
-					{name:'Black',	openWith:'[color=black]', 	closeWith:'[/color]', className:"col3-3" }
+					{name:'Gray', 	openWith:'[color=gray]', 	closeWith:'[/color]', className:"col3-2" }
 				]
 		},
 		{separator:'---------------' },
 		{name:'Bulleted list', className: 'bulletedlistbutton', openWith:'[ul]\n[li][/li]\n[li][/li]', closeWith:'\n[/ul]'},
-		{name:'Numeric list', className: 'numericlistbutton', openWith:'[ol=[![Starting number]!]]\n[li][/li]\n[li][/li]', closeWith:'\n[/ol]'}, 
+		{name:'Numeric list', className: 'numericlistbutton', openWith:'[ol=[![Starting number]!]]\n[li][/li]\n[li][/li]', closeWith:'\n[/ol]'},
 		{name:'List item', className: 'listitembutton', openWith:'[li]\n', closeWith:'\n[/li]'},
+		{name:'HR', className: 'hrbutton', openWith:'[hr]'},
 		{name:'Align left', className: 'alignleftbutton', openWith:'[left]\n', closeWith:'\n[/left]'},
 		{name:'Center', className: 'centerbutton', openWith:'[center]\n', closeWith:'\n[/center]'},
 		{name:'Align right', className: 'alignrightbutton', openWith:'[right]\n', closeWith:'\n[/right]'},
 		{separator:'---------------' },
-		{name:'Quote', className: 'quotebutton', openWith:'[quote]', closeWith:'[/quote]'},		
+		{name:'Quote', className: 'quotebutton', openWith:'[quote]', closeWith:'[/quote]'},
 		{name: 'Code', className: 'codemodalboxbutton', beforeInsert:function() {
 			jQuery('#code-modal-submit').click(function(event) {
 				event.preventDefault();
-				
+
 				jQuery('#modal-code').modal('hide');
 			});
-			
+
 			jQuery('#modal-code').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
 					dialog.overlay.fadeIn('slow', function () {
@@ -75,15 +75,15 @@ bbcodeSettings = {
 		{name: 'Code', className: 'codesimplebutton', openWith:'[code]', closeWith:'[/code]' },
 		{name:'Table', className: 'tablebutton', openWith:'[table]\n[tr]\n[td][/td]\n[td][/td]\n[/tr]\n[tr]\n[td][/td]\n[td][/td]\n[/tr]', closeWith:'[/table]'},
 		{name:'Spoiler', className: 'spoilerbutton',  openWith:'[spoiler]', closeWith:'[/spoiler]'},
-		{name:'Hidden text', className: 'hiddentextbutton',  openWith:'[hide]', closeWith:'[/hide]'}, 
-		{separator:'---------------' },    
+		{name:'Hidden text', className: 'hiddentextbutton',  openWith:'[hide]', closeWith:'[/hide]'},
+		{separator:'---------------' },
 		{name: 'Picture', className: 'picturebutton', beforeInsert:function() {
 			jQuery('#picture-modal-submit').click(function(event) {
 				event.preventDefault();
-				
+
 				jQuery('#modal-picture').modal('hide');
 			});
-			
+
 			jQuery('#modal-picture').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
 					dialog.overlay.fadeIn('slow', function () {
@@ -97,10 +97,10 @@ bbcodeSettings = {
 		{name:'Link',  className: 'linkbutton', beforeInsert:function() {
 			jQuery('#link-modal-submit').click(function(event) {
 				event.preventDefault();
-				
+
 				jQuery('#modal-link').modal('hide');
 			});
-			
+
 			jQuery('#modal-link').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
 					dialog.overlay.fadeIn('slow', function () {
@@ -110,17 +110,17 @@ bbcodeSettings = {
 					});
 				}});
 			}
-		}, 
+		},
 		{separator:'---------------' },
 		{name:'Ebay', className:'ebaybutton', key:'E', openWith:'[ebay]', closeWith:'[/ebay]'},
 		{name:'Video', className: 'videodropdownbutton', dropMenu: [
 		{name: 'Video Settings', className: 'videosettingsbutton', beforeInsert:function() {
 			jQuery('#videosettings-modal-submit').click(function(event) {
 				event.preventDefault();
-				
+
 				jQuery('#modal-video-settings').modal('hide');
 			});
-			
+
 			jQuery('#modal-video-settings').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
 					dialog.overlay.fadeIn('slow', function () {
@@ -133,10 +133,10 @@ bbcodeSettings = {
 		{name: 'Video Provider URL', className: 'videoURLbutton', beforeInsert:function() {
 			jQuery('#videourlprovider-modal-submit').click(function(event) {
 				event.preventDefault();
-				
+
 				jQuery('#modal-video-urlprovider').modal('hide');
 			});
-			
+
 			jQuery('#modal-video-urlprovider').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
 					dialog.overlay.fadeIn('slow', function () {
@@ -150,10 +150,10 @@ bbcodeSettings = {
 		{name: 'Map', className: 'mapbutton', beforeInsert:function() {
 			jQuery('#map-modal-submit').click(function(event) {
 				event.preventDefault();
-				
+
 				jQuery('#modal-map').modal('hide');
 			});
-			
+
 			jQuery('#modal-map').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
 					dialog.overlay.fadeIn('slow', function () {
@@ -168,10 +168,10 @@ bbcodeSettings = {
 			if ( jQuery('#modal-poll-settings').length!=0 ) {
 					jQuery('#poll-modal-submit').click(function(event) {
 						event.preventDefault();
-						
+
 						jQuery('#modal-poll-settings').modal('hide');
-					});	
-				
+					});
+
 					jQuery('#modal-poll-settings').modal(
 					{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
 						dialog.overlay.fadeIn('slow', function () {
@@ -184,47 +184,48 @@ bbcodeSettings = {
 			}
 		},
 		{name:'Tweet', className: 'tweetbutton', openWith:'[tweet]', closeWith:'[/tweet]'},
-		{name:'HR', className: 'hrbutton', openWith:'[hr]'},
-		{name: 'Emoticons', className: 'emoticonsbutton', beforeInsert:function() {
-			jQuery('#map-modal-submit').click(function(event) {
-				event.preventDefault();
-				
-				jQuery('#modal-map').modal('hide');
-			});
-			
-			jQuery('#modal-emoticons').modal(
-				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
-							dialog.data.fadeIn('slow');
+		{name:'Emoticons', className: 'emoticonsbutton', dropMenu: [
+			{name: 'Emoticons', className: 'emoticonsbutton', beforeInsert:function() {
+				jQuery('#map-modal-submit').click(function(event) {
+					event.preventDefault();
+
+					jQuery('#modal-map').modal('hide');
+				});
+
+				jQuery('#modal-emoticons').modal(
+					{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+						dialog.overlay.fadeIn('slow', function () {
+							dialog.container.slideDown('slow', function () {
+								dialog.data.fadeIn('slow');
+							});
 						});
-					});
-				}});
+					}});
 			}
-		}
+			}
+		]}
 	]
-}
+};
 
 jQuery(document).ready(function (){
 	jQuery('#kbbcode-message').markItUp(bbcodeSettings);
-	
+
 	if (jQuery('#modal-code').length == 0) {
 		jQuery('.codemodalboxbutton').hide();
 	} else {
 		jQuery('.codesimplebutton').hide();
 	}
-	
+
 	// For code
 	jQuery('#code-modal-submit').click(function() {
 		var codetype = jQuery("#kcodetype option:selected").val();
-	
+
 		jQuery.markItUp(
 			{ openWith:'[code type="'+codetype+'"]',
 			  closeWith:'[/code]' }
 		);
 		return false;
 	});
-	
+
 	// For map
 	jQuery('#map-modal-submit').click(function() {
 		var modalcity = jQuery('#modal-map-city').val();
@@ -232,17 +233,17 @@ jQuery(document).ready(function (){
 		var modalzoom = jQuery('#modal-map-zoomlevel').val();
 		var type = '';
 		var zoom = '';
-		
+
 		if (modaltype!=undefined)
 		{
 			type = 'type='+modaltype;
 		}
-		
+
 		if (modalzoom!=undefined)
 		{
 			zoom = 'zoom='+modalzoom;
 		}
-		
+
 		jQuery.markItUp(
 		{ openWith:'[map '+type+' '+zoom+']'+modalcity,
 		  closeWith:'[/map]' }
@@ -286,8 +287,8 @@ jQuery(document).ready(function (){
 			jQuery.markItUp(
 			{ openWith:'[url='+modallinkurl+']'+text,
 				closeWith:'[/url]' }
-			);  
-		
+			);
+
 		return false;
 		}
 	});
@@ -304,7 +305,7 @@ jQuery(document).ready(function (){
 		var height = '344';
 		if ( videowidth.length > 0 && videoheight.length > 0 ) {
 			width = 'width='+videowidth;
-			height = 'height='+videoheight;  
+			height = 'height='+videoheight;
 		} else {
 			width = 'width='+width;
 			height = 'height='+height;
@@ -334,10 +335,10 @@ jQuery(document).ready(function (){
 		);
 		return false;
 	});
-	
+
 	// For smileys
 	jQuery('.smileyimage').click(function() {
-		var smiley = jQuery(this).attr('alt'); 
+		var smiley = jQuery(this).attr('alt');
 
 		jQuery.markItUp(
 			 { openWith:smiley,

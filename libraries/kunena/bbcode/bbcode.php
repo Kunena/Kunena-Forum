@@ -2440,20 +2440,23 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$layout = KunenaLayout::factory('BBCode/twitter');
 
-		if ($layout->getPath())
+		if ($tweet !== false)
 		{
-			return (string) $layout
-				->set('tweetid', $tweet->id_str)
-				->set('user_profile_url_normal', $tweet->user->profile_image_url)
-				->set('user_profile_url_big', $tweet->user->profile_image_url_big)
-				->set('user_name', $tweet->user->name)
-				->set('user_screen_name', $tweet->user->screen_name)
-				->set('tweet_created_at', $tweet->created_at)
-				->set('tweet_text', $tweet->text)
-				->set('retweet_count', $tweet->retweet_count)
-				->set('favorite_count', $tweet->favorite_count)
-				->set('verified', $tweet->user->verified)
-				->setLayout('default');
+			if ($layout->getPath())
+			{
+				return (string) $layout
+					->set('tweetid', $tweet->id_str)
+					->set('user_profile_url_normal', $tweet->user->profile_image_url)
+					->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+					->set('user_name', $tweet->user->name)
+					->set('user_screen_name', $tweet->user->screen_name)
+					->set('tweet_created_at', $tweet->created_at)
+					->set('tweet_text', $tweet->text)
+					->set('retweet_count', $tweet->retweet_count)
+					->set('favorite_count', $tweet->favorite_count)
+					->set('verified', $tweet->user->verified)
+					->setLayout('default');
+			}
 		}
 	}
 
@@ -2467,12 +2470,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	protected function getTweet($tweetid)
 	{
 		// FIXME: use AJAX instead...
+		jimport('joomla.filesystem.folder');
 		$config = KunenaFactory::getConfig();
 		$uri = JURI::getInstance();
 		$consumer_key = trim($config->twitter_consumer_key);
 		$consumer_secret = trim($config->twitter_consumer_secret);
 
-		$tweet_data = file_get_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json');
+		$tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
 
 		if ($tweet_data !== false)
 		{
@@ -2507,11 +2511,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			else
 			{
 				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
+
+				return false;
 			}
 		}
-		else
+		elseif (empty($consumer_key) || empty($consumer_secret) )
 		{
-			echo 'Invalid consumer key/secret in configuration';
+			echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_CONSUMMER_KEY_SECRET_INVALID');
+
+			return false;
 		}
 
 		if ( !empty($this->token) )
@@ -2591,6 +2599,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				{
 					foreach ( $tweet_data->extended_entities->media as $media )
 					{
+						$tweet_data->text = str_replace($tweet_data->extended_entities->media[0]->url, '', $tweet_data->text);
+
 						if ( $media->type == 'photo' )
 						{
 							if ($uri->isSSL())
@@ -2627,15 +2637,22 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					}
 				}
 
-				file_put_contents(JPATH_CACHE . '/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
+				if ( !JFolder::exists(JPATH_CACHE . '/kunena_tweet') )
+				{
+					JFolder::create(JPATH_CACHE . '/kunena_tweet');
+				}
+
+				file_put_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
+
+				return $tweet_data;
 			}
 			else
 			{
 				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
+
+				return false;
 			}
 		}
-
-		return $tweet_data;
 	}
 
 	/**

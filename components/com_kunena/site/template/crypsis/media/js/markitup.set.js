@@ -45,7 +45,7 @@ bbcodeSettings = {
 					{name:'Gray', 	openWith:'[color=gray]', 	closeWith:'[/color]', className:"col3-2" }
 				]
 		},
-		{separator:'---------------' },
+		{separator:'|' },
 		{name:'Bulleted list', className: 'bulletedlistbutton', openWith:'[ul]\n[li][/li]\n[li][/li]', closeWith:'\n[/ul]'},
 		{name:'Numeric list', className: 'numericlistbutton', openWith:'[ol=[![Starting number]!]]\n[li][/li]\n[li][/li]', closeWith:'\n[/ol]'},
 		{name:'List item', className: 'listitembutton', openWith:'[li]\n', closeWith:'\n[/li]'},
@@ -53,7 +53,7 @@ bbcodeSettings = {
 		{name:'Align left', className: 'alignleftbutton', openWith:'[left]\n', closeWith:'\n[/left]'},
 		{name:'Center', className: 'centerbutton', openWith:'[center]\n', closeWith:'\n[/center]'},
 		{name:'Align right', className: 'alignrightbutton', openWith:'[right]\n', closeWith:'\n[/right]'},
-		{separator:'---------------' },
+		{separator:'|' },
 		{name:'Quote', className: 'quotebutton', openWith:'[quote]', closeWith:'[/quote]'},
 		{name: 'Code', className: 'codemodalboxbutton', beforeInsert:function() {
 			jQuery('#code-modal-submit').click(function(event) {
@@ -76,7 +76,7 @@ bbcodeSettings = {
 		{name:'Table', className: 'tablebutton', openWith:'[table]\n[tr]\n[td][/td]\n[td][/td]\n[/tr]\n[tr]\n[td][/td]\n[td][/td]\n[/tr]', closeWith:'[/table]'},
 		{name:'Spoiler', className: 'spoilerbutton',  openWith:'[spoiler]', closeWith:'[/spoiler]'},
 		{name:'Hidden text', className: 'hiddentextbutton',  openWith:'[hide]', closeWith:'[/hide]'},
-		{separator:'---------------' },
+		{separator:'|' },
 		{name: 'Picture', className: 'picturebutton', beforeInsert:function() {
 			jQuery('#picture-modal-submit').click(function(event) {
 				event.preventDefault();
@@ -111,7 +111,7 @@ bbcodeSettings = {
 				}});
 			}
 		},
-		{separator:'---------------' },
+		{separator:'|' },
 		{name:'Ebay', className:'ebaybutton', key:'E', openWith:'[ebay]', closeWith:'[/ebay]'},
 		{name:'Video', className: 'videodropdownbutton', dropMenu: [
 		{name: 'Video Settings', className: 'videosettingsbutton', beforeInsert:function() {

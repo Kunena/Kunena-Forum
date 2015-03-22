@@ -184,7 +184,7 @@ foreach ($this->sections as $section) :
 										<div class="span2">
 											<?php echo $author->getLink($avatar); ?>
 										</div>
-										<div class="span10">
+										<div class="span10 last-avatar">
 											<?php else : ?>
 											<div class="span12 last-posts">
 												<?php endif; ?>

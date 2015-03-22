@@ -29,7 +29,7 @@ if (is_file(__DIR__ . '/install.php'))
 $app = JFactory::getApplication();
 
 // Safety check to prevent fatal error if 'System - Kunena Forum' plug-in has been disabled.
-if (JRequest::getCmd('view') == 'install' || !class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1'))
+if (JRequest::getCmd('view') == 'install' || !class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0'))
 {
 	// Run installer instead..
 	require_once __DIR__ . '/install/controller.php';

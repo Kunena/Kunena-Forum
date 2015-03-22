@@ -67,10 +67,10 @@ JHtml::_('dropdown.init');
 					</td>
 					<td class="center">
 						<?php if ($row->published == 1) : ?>
-							<img src="<?php echo JUri::base(true); ?>/components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
+							<i class="icon-star" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>"></i>
 						<?php else : ?>
 							<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo urlencode($row->directory);?>','publish')">
-								<img src="<?php echo JUri::base(true); ?>/components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" />
+								<i class="icon-star-empty" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>"></i>
 							</a>
 						<?php endif; ?>
 					</td>

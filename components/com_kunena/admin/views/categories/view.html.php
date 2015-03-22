@@ -83,7 +83,7 @@ class KunenaAdminViewCategories extends KunenaView
 	protected function setToolBarEdit()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA'), 'categories');
+		JToolBarHelper::title(JText::_('COM_KUNENA'), 'list-view');
 		JToolbarHelper::spacer();
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::save('save');
@@ -103,7 +103,7 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('AdminNavigation');
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 
 		//TODO STRING
 		JToolBarHelper::spacer();

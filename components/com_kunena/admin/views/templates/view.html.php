@@ -80,50 +80,31 @@ class KunenaAdminViewTemplates extends KunenaView
 
 	protected function setToolBarDefault()
 	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates');
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
-		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
+		JToolBarHelper::custom('edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
 		JToolBarHelper::divider();
-
-		if (version_compare(JVERSION, '3', '>'))
-		{
-			JToolBarHelper::custom('publish', 'star.png', 'star_f2.png', 'COM_KUNENA_TEMPLATES_FIELD_LABEL_MAKE_DEFAULT');
-		}
-		else
-		{
-			JToolBarHelper::custom('publish', 'default.png', 'default_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
-		}
-
+		JToolBarHelper::custom('publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
 		JToolBarHelper::divider();
-		JToolBarHelper::custom('uninstall', 'delete.png', 'delete_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
+		JToolBarHelper::custom('uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
 		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarAdd()
 	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates');
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarEdit()
 	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates');
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		JToolBarHelper::spacer();
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
-
-		// TODO: figure out how to do css/less editing so that the distribution files don't get overridden
-		/*
-				if (version_compare(JVERSION, '3', '>')) {
-					JToolBarHelper::custom('choosecss', 'edit.png','edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS', false, false );
-				} else {
-					JToolBarHelper::custom('choosecss', 'css.png','css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS', false, false );
-				}
-				JToolBarHelper::spacer();
-		*/
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 	}

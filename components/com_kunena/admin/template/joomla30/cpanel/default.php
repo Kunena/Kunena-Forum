@@ -28,43 +28,43 @@ defined('_JEXEC') or die ();
 						<hr class="hr-condensed">
 						<div id="dashboard-icons" class="btn-group">
 							<a class="btn" href="index.php?option=com_kunena&view=categories">
-								<img src="components/com_kunena/media/icons/large/categories.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>"/><br/>
+								<i class="icon-big icon-list-view" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=users">
-								<img src="components/com_kunena/media/icons/large/users.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>"/><br/>
+								<i class="icon-big icon-users" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=attachments">
-								<img src="components/com_kunena/media/icons/large/files.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>"/><br/>
+								<i class="icon-big icon-flag-2" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=smilies">
-								<img src="components/com_kunena/media/icons/large/smileys.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>"/><br/>
+								<i class="icon-big icon-thumbs-up" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=ranks">
-								<img src="components/com_kunena/media/icons/large/ranks.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>"/><br/>
+								<i class="icon-big icon-star-2" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=templates">
-								<img src="components/com_kunena/media/icons/large/templates.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>"/><br/>
+								<i class="icon-big icon-color-palette" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=config">
-								<img src="components/com_kunena/media/icons/large/prune.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>"/><br/>
+								<i class="icon-big icon-cogs" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=plugins">
-								<img src="components/com_kunena/media/icons/large/pluginsmanager.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>"/><br/>
+								<i class="icon-big icon-puzzle" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=tools">
-								<img src="components/com_kunena/media/icons/large/config.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>"/><br/>
+								<i class="icon-big icon-tools" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=trash">
-								<img src="components/com_kunena/media/icons/large/trash.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>"/><br/>
+								<i class="icon-big icon-trash" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?></span>
 							</a>
 						</div>

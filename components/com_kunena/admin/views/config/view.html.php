@@ -32,7 +32,7 @@ class KunenaAdminViewConfig extends KunenaView
 	protected function setToolBarDefault()
 	{
 		$bar = JToolBar::getInstance('toolbar');
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'config');
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'wrench');
 		JToolbarHelper::spacer();
 		JToolBarHelper::apply();
 		JToolBarHelper::save('save');

@@ -365,12 +365,6 @@ class KunenaConfig extends JObject
 	public $userlist_avatar = 1;
 
 	/**
-	 * @var    integer  User list name; select, boolean
-	 * @since  1.0.0
-	 */
-	public $userlist_name = 1;
-
-	/**
 	 * @var    integer  User list posts; select, boolean
 	 * @since  1.0.0
 	 */

@@ -157,7 +157,6 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['enableforumjump']        = JHtml::_('select.genericlist', $yesno, 'cfg_enableforumjump', 'class="inputbox" size="1"', 'value', 'text', $this->config->enableforumjump);
 		$lists ['userlist_online']        = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_online', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_online);
 		$lists ['userlist_avatar']        = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_avatar', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_avatar);
-		$lists ['userlist_name']          = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_name', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_name);
 		$lists ['userlist_posts']         = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_posts', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_posts);
 		$lists ['userlist_karma']         = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_karma', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_karma);
 		$lists ['userlist_email']         = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_email', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_email);

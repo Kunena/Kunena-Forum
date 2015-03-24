@@ -98,7 +98,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		if ( $upload ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS') );
 		} else {
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE') );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'), 'error');
 		}
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}

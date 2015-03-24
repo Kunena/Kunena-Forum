@@ -58,7 +58,18 @@ class KunenaUploadHelper {
 					header('HTTP/1.0 409 Conflict');
 					jexit('Error. File already exists');
 				} else {
-					return false;
+					$ext = JFile::getExt($file['name']);
+
+					$name = JFile::stripExt($file['name']);
+
+					$newFileName = '';
+
+					for ($i = 2; file_exists("{$uploadfolder}/{$newFileName}"); $i++)
+					{
+						$newFileName = $name . "-$i." . $ext;
+					}
+
+					$filepath = $uploadfolder . '/' . $newFileName;
 				}
 			}
 

@@ -51,8 +51,15 @@ class KunenaAdminViewPlugins extends KunenaView
 	 */
 	protected function setToolbar()
 	{
+		if (version_compare(JVERSION, '3', '>'))
+		{
+			JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
+		}
+		else
+		{
+			JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'pluginsmanager');
+		}
 
-		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
 		JToolbarHelper::spacer();
 		JToolbarHelper::editList('plugin.edit');
 		JToolbarHelper::divider();

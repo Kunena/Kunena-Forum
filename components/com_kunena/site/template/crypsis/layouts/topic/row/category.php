@@ -129,7 +129,7 @@ if (!empty($this->spacing)) : ?>
 		<?php if (!$config->avataroncat) : ?>
 			<div class="span12">
 		<?php endif; ?>
-				<span><?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
+				<span><?php echo $this->getTopicLink ($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
 					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>
 				<br>
 				<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>

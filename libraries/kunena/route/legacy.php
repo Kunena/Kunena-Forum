@@ -672,7 +672,9 @@ abstract class KunenaRouteLegacy
 				break;
 		}
 
-		if ($changed)
+		$path = '/logs';
+
+		if ($changed && is_writable($path))
 		{
 			JLog::add("Legacy URI {$legacy->toString(array('path', 'query'))} was converted to {$uri->toString(array('path', 'query'))}", JLog::DEBUG, 'kunena');
 		}

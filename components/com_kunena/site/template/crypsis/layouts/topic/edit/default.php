@@ -23,7 +23,7 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 
-$this->addScript('js/jquery.ui.widget.js');
+JHtml::_('jquery.ui');
 $this->addScript('js/load-image.min.js');
 $this->addScript('js/canvas-to-blob.min.js');
 $this->addScript('js/jquery.iframe-transport.js');

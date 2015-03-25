@@ -36,6 +36,7 @@ class KunenaAdminModelUsers extends JModelList
 				'id',
 				'username',
 				'name',
+				'rank',
 				'email',
 				'signature',
 				'enabled',
@@ -78,6 +79,9 @@ class KunenaAdminModelUsers extends JModelList
 		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.email', 'filter_email', '', 'string');
 		$this->setState('filter.email', $value);
 
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.rank', 'filter_rank', '', 'string');
+		$this->setState('filter.rank', $value);
+
 		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.signature', 'filter_signature', '', 'string');
 		$this->setState('filter.signature', $value);
 
@@ -113,6 +117,7 @@ class KunenaAdminModelUsers extends JModelList
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.username');
 		$id .= ':' . $this->getState('filter.email');
+		$id .= ':' . $this->getState('filter.rank');
 		$id .= ':' . $this->getState('filter.signature');
 		$id .= ':' . $this->getState('filter.block');
 		$id .= ':' . $this->getState('filter.banned');
@@ -167,6 +172,15 @@ class KunenaAdminModelUsers extends JModelList
 		{
 			$username = $db->Quote('%' . $db->escape($username, true) . '%');
 			$query->where('a.username LIKE ' . $username . ' OR a.name LIKE ' . $username);
+		}
+
+		// Filter by rank.
+		$rank = $this->getState('filter.rank');
+
+		if (!empty($rank))
+		{
+			$rank = $db->Quote('%' . $db->escape($rank, true) . '%');
+			$query->where('ku.rank LIKE ' . $rank);
 		}
 
 		// Filter by email.
@@ -236,6 +250,9 @@ class KunenaAdminModelUsers extends JModelList
 				break;
 			case 'email':
 				$query->order('a.email ' . $direction);
+				break;
+			case 'rank':
+				$query->order('ku.rank ' . $direction);
 				break;
 			case 'signature':
 				$query->order('ku.signature ' . $direction);

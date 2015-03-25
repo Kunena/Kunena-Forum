@@ -32,7 +32,6 @@ $this->addScript('js/jquery.fileupload-process.js');
 $this->addScript('js/jquery.fileupload-image.js');
 $this->addScript('js/upload.main.js');
 $this->addStyleSheet('css/fileupload.css');
-$this->addStyleSheet('css/fileupload-ui.css');
 
 $this->addScript('js/markitup.js');
 $this->addScript('js/markitup.set.js');

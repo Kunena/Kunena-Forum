@@ -29,6 +29,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$this->filterSearch    = $this->escape($this->state->get('filter.search'));
 		$this->filterUsername  = $this->escape($this->state->get('filter.username'));
 		$this->filterEmail     = $this->escape($this->state->get('filter.email'));
+		$this->filterSignature = $this->escape($this->state->get('filter.rank'));
 		$this->filterSignature = $this->escape($this->state->get('filter.signature'));
 		$this->filterBlock     = $this->escape($this->state->get('filter.block'));
 		$this->filterBanned    = $this->escape($this->state->get('filter.banned'));
@@ -76,6 +77,22 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
+	}
+
+	/**
+	 * Returns an array of locked filter options.
+	 *
+	 * @return    string    The HTML code for the select tag
+	 */
+	public function rankOptions()
+	{
+		$options   = array();
+		$options[] = JHtml::_('select.option', 'title', JText::_('JGLOBAL_TITLE'));
+		$options[] = JHtml::_('select.option', 'special', JText::_('COM_KUNENA_RANKS_SPECIAL'));
+		$options[] = JHtml::_('select.option', 'min', JText::_('COM_KUNENA_RANKSMIN'));
+		$options[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
+
+		return $options;
 	}
 
 	/**
@@ -144,6 +161,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
 		//$sortFields[] = JHtml::_('select.option', 'name', JText::_('COM_KUNENA_USRL_REALNAME'));
 		$sortFields[] = JHtml::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = JHtml::_('select.option', 'rank', JText::_('COM_KUNENA_A_RANKS'));
 		$sortFields[] = JHtml::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
 		$sortFields[] = JHtml::_('select.option', 'enabled', JText::_('COM_KUNENA_USRL_ENABLED'));
 		$sortFields[] = JHtml::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));

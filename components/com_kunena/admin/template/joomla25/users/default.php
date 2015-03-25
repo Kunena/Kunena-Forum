@@ -84,6 +84,7 @@ JHtml::_('behavior.tooltip');
 									<th align="center" width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->users ); ?>);" /></th>
 									<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->listDirection, $this->listOrdering ); ?></th>
 									<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->listDirection, $this->listOrdering ); ?></th>
+									<th width="5%" class="nowrap hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_A_RANKS', 'rank', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 									<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->listDirection, $this->listOrdering ); ?></th>
 									<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'enabled', $this->listDirection, $this->listOrdering ); ?></th>
 									<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->listDirection, $this->listOrdering ); ?></th>
@@ -100,6 +101,8 @@ JHtml::_('behavior.tooltip');
 									<td class="nowrap">
 										<label for="filter_email" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
 										<input class="input-block-level input-filter filter" type="text" name="filter_email" id="filter_email" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterEmail; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+									</td>
+									<td class="nowrap center hidden-phone">
 									</td>
 									<td class="nowrap center">
 										<label for="filter_signature" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
@@ -171,6 +174,7 @@ JHtml::_('behavior.tooltip');
 									<td>
 										<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($user->email); ?></a>
 									</td>
+									<td class="hidden-phone hidden-tablet"><?php echo $this->escape($user->getRank(0, 'title')); ?></td>
 									<td class="center">
 										<span class="editlinktip <?php echo ($user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($user->signature); ?> ">
 										<?php if ($user->signature) { ?>

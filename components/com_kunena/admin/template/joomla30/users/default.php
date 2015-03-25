@@ -83,6 +83,7 @@ JHtml::_('dropdown.init');
 						<th width="1%" class="nowrap center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
 						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th class="hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+						<th width="5%" class="nowrap hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_A_RANKS', 'rank', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th width="5%" class="nowrap center hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th width="5%" class="nowrap center hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'enabled', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th width="5%" class="nowrap center hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
@@ -99,6 +100,8 @@ JHtml::_('dropdown.init');
 						<td class="nowrap">
 							<label for="filter_email" class="element-invisible"><?php echo JText::_('COM_KUNENA_USERS_FIELD_INPUT_SEARCHUSERS');?></label>
 							<input class="input-block-level input-filter filter" type="text" name="filter_email" id="filter_email" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterEmail; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+						</td>
+						<td class="nowrap center hidden-phone">
 						</td>
 						<td class="nowrap center hidden-phone">
 							<label for="filter_signature" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
@@ -163,6 +166,7 @@ JHtml::_('dropdown.init');
 							</span>
 						</td>
 						<td class="hidden-phone"><?php echo $this->escape($user->email); ?></td>
+						<td class="hidden-phone hidden-tablet"><?php echo $this->escape($user->getRank(0, 'title')); ?></td>
 						<td class="center hidden-phone hidden-tablet">
 							<span class="editlinktip <?php echo ($user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($user->signature); ?> ">
 								<?php if ($user->signature) { ?>

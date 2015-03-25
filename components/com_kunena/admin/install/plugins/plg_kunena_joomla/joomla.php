@@ -3,7 +3,7 @@
  * Kunena Plugin
  *
  * @package    Kunena.Plugins
- * @subpackage Joomla16
+ * @subpackage Joomla
  *
  * @Copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -13,6 +13,10 @@ defined('_JEXEC') or die ();
 
 class plgKunenaJoomla extends JPlugin
 {
+	/**
+	 * @param object $subject
+	 * @param array  $config
+	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
@@ -26,10 +30,8 @@ class plgKunenaJoomla extends JPlugin
 		$this->loadLanguage('plg_kunena_joomla.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_joomla.sys', KPATH_ADMIN);
 	}
 
-	/*
-	 * Get Kunena access control object.
-	 *
-	 * @return KunenaAccess
+	/**
+	 * @return KunenaAccessJoomla|null
 	 */
 	public function onKunenaGetAccessControl()
 	{
@@ -43,10 +45,8 @@ class plgKunenaJoomla extends JPlugin
 		return new KunenaAccessJoomla($this->params);
 	}
 
-	/*
-	 * Get Kunena login integration object.
-	 *
-	 * @return KunenaLogin
+	/**
+	 * @return KunenaLoginJoomla|null
 	 */
 	public function onKunenaGetLogin()
 	{

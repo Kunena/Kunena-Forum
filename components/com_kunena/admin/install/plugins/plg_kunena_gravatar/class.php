@@ -43,7 +43,8 @@ class KunenaGravatar
 	protected $email = null;
 
 	/**
-	 * @var mixed - The default image to use - either a string of the gravatar-recognized default image "type" to use, a URL, or false if using the...default gravatar default image (hah)
+	 * @var mixed - The default image to use - either a string of the gravatar-recognized default image "type" to use,
+	 *      a URL, or false if using the...default gravatar default image (hah)
 	 */
 	protected $default_image = false;
 
@@ -153,7 +154,8 @@ class KunenaGravatar
 	/**
 	 * Set the default image to use for avatars.
 	 *
-	 * @param mixed $image - The default image to use. Use boolean false for the gravatar default, a string containing a valid image URL, or a string specifying a recognized gravatar "default".
+	 * @param mixed $image - The default image to use. Use boolean false for the gravatar default, a string containing
+	 *                     a valid image URL, or a string specifying a recognized gravatar "default".
 	 *
 	 * @return \emberlabs\GravatarLib\Gravatar - Provides a fluent interface.
 	 *
@@ -175,6 +177,7 @@ class KunenaGravatar
 		// Check $image against recognized gravatar "defaults", and if it doesn't match any of those we need to see if it is a valid URL.
 		$_image         = strtolower($image);
 		$valid_defaults = array('404' => 1, 'mm' => 1, 'identicon' => 1, 'monsterid' => 1, 'wavatar' => 1, 'retro' => 1);
+
 		if (!isset($valid_defaults[$_image]))
 		{
 			if (!filter_var($image, FILTER_VALIDATE_URL))
@@ -220,6 +223,7 @@ class KunenaGravatar
 
 		$rating        = strtolower($rating);
 		$valid_ratings = array('g' => 1, 'pg' => 1, 'r' => 1, 'x' => 1);
+
 		if (!isset($valid_ratings[$rating]))
 		{
 			throw new InvalidArgumentException(sprintf('Invalid rating "%s" specified, only "g", "pg", "r", or "x" are allowed to be used.', $rating));
@@ -251,6 +255,7 @@ class KunenaGravatar
 	public function usingSecureURL()
 	{
 		$uri = JURI::getInstance();
+
 		if ($uri->isSSL())
 		{
 			return true;
@@ -264,7 +269,8 @@ class KunenaGravatar
 	/**
 	 * Build the avatar URL based on the provided email address.
 	 *
-	 * @param string $hash_email - Should we hash the $email variable? (Useful if the email address has a hash stored already)
+	 * @param string $hash_email - Should we hash the $email variable? (Useful if the email address has a hash stored
+	 *                           already)
 	 *
 	 * @return string - The XHTML-safe URL to the gravatar.
 	 */
@@ -300,6 +306,7 @@ class KunenaGravatar
 			$params   = array();
 			$params[] = 's=' . $this->getAvatarSize();
 			$params[] = 'r=' . $this->getMaxRating();
+
 			if ($this->getDefaultImage())
 			{
 				$params[] = 'd=' . $this->getDefaultImage();
@@ -311,6 +318,7 @@ class KunenaGravatar
 
 		// Handle "null" gravatar requests.
 		$tail = '';
+
 		if (empty($this->email))
 		{
 			$tail = !empty($this->params_cache) ? '&amp;f=y' : '?f=y';

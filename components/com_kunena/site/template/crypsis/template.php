@@ -88,7 +88,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	public function initialize()
 	{
-		JHtml::_('behavior.tooltip');
 		// Template requires Bootstrap javascript
 		JHtml::_('bootstrap.framework');
 		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');

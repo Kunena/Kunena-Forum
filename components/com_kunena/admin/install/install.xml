@@ -136,6 +136,9 @@
 		<field name="alias"
 		       type="varchar(255)"
 		       null="0"/>
+		<field name="icon"
+		       type="varchar(20)"
+		       null="0"/>
 		<field name="icon_id"
 		       type="tinyint(4)"
 		       null="0"

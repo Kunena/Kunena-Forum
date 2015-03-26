@@ -641,7 +641,7 @@
 				AFTER `userid`
 			</query>
 		</version>
-		<version version="4.0.0-ALPHA"
+		<version version="4.0.0-DEV"
 		         versiondate="2015-03-26"
 		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `icon` varchar(20) NOT NULL

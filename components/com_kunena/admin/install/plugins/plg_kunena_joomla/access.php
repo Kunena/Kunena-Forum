@@ -435,8 +435,7 @@ class KunenaAccessJoomla
 		$result = (array) $db->loadColumn();
 
 		// Clean up any NULL values, just in case
-		Joomla\Utilities\ArrayHelper::toInteger($result);
-
+		JArrayHelper::toInteger($result);
 		return $result;
 	}
 

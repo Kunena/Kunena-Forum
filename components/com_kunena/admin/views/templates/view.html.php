@@ -93,7 +93,14 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
 		JToolBarHelper::custom('edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
 		JToolBarHelper::divider();
-		JToolBarHelper::custom('publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
+		if (version_compare(JVERSION, '3', '>'))
+		{
+			JToolBarHelper::custom('publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
+		}
+		else
+		{
+			JToolBarHelper::custom('publish', 'default', 'default', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
+		}
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
 		JToolBarHelper::spacer();

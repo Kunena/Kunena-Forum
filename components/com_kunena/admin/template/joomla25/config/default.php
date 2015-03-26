@@ -94,7 +94,7 @@ defined ( '_JEXEC' ) or die ();
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_RSS') ?></td>
 														<td><?php echo $this->lists ['enablerss'] ?></td>
-														<td><img src="<?php echo JUri::base(true) ?>/components/com_kunena/images/livemarks.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
+														<td><img src="<?php echo JUri::base(true) ?>/components/com_kunena/media/icons/small/livemarks.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?></td>

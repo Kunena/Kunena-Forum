@@ -765,19 +765,22 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * Check if alias is already taken.
+	 * Check if category alias is already taken.
 	 *
-	 * @param $category_id
-	 * @param $alias
+	 * @param   int     $category_id  The category id
+	 * @param   string  $alias        The alias to search in table
+	 *
+	 * @since 4.0
 	 *
 	 * @return bool
 	 */
 	static public function getAlias($category_id, $alias)
 	{
 		$db = JFactory::getDbo();
-		$query = "SELECT * FROM #__kunena_categories WHERE id = {$db->quote($category_id)} AND alias = {$db->quote($alias)}";
+		$query = $db->getQuery(true);
+		$query->select('*')->from($db->quoteName('#__kunena_categories'))->where($db->quoteName('alias') . " = " . $db->quote($alias));
 		$db->setQuery($query);
-		$category_items = $db->loadAssoc();
+		$category_aliases = $db->loadAssoc();
 
 		// Check for an error message.
 		if ($db->getErrorNum())
@@ -785,7 +788,7 @@ abstract class KunenaForumCategoryHelper
 			return false;
 		}
 
-		if (is_array($category_items))
+		if (is_array($category_aliases))
 		{
 			return true;
 		}

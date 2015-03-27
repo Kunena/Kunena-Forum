@@ -85,7 +85,7 @@ input[type="color"],
   font-size: @baseFontSize;
   line-height: @baseLineHeight;
   color: @gray;
-  .border-radius(@inputBorderRadius);
+  border-radius:@inputBorderRadius;
 }
 
 // Reset appearance properties for textual inputs and textarea
@@ -419,7 +419,7 @@ select:focus:required:invalid {
     *margin-left: 0;
     font-size: @baseFontSize;
     vertical-align: top;
-    .border-radius(0 @inputBorderRadius @inputBorderRadius 0);
+    border-radius:0 @inputBorderRadius @inputBorderRadius 0;
     // Make input on top when focused so blue border and shadow always show
     &:focus {
       z-index: 2;
@@ -443,7 +443,7 @@ select:focus:required:invalid {
   .btn {
     margin-left: -1px;
     vertical-align: top;
-    .border-radius(0);
+    border-radius:0;
   }
   .active {
     background-color: lighten(@green, 30);

@@ -44,7 +44,15 @@ class KunenaAdminViewAttachments extends KunenaView
 	protected function setToolbar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'files');
+		if (version_compare(JVERSION, '3', '>'))
+		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
+		}
+		else
+		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'files');
+		}
+
 		JToolBarHelper::spacer();
 
 		if (version_compare(JVERSION, '3', '>'))

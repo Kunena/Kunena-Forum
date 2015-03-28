@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 $cols = !empty($this->actions) ? 6 : 5;
-$colspan = !empty($this->actions) ? 5 : 4;
+$colspan = !empty($this->actions) ? 4 : 3;
 ?>
 
 <h2>
@@ -21,17 +21,17 @@ $colspan = !empty($this->actions) ? 5 : 4;
 	</small>
 
 	<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-	<div class="pull-right">
+
+</h2>
+<div class="pull-right">
+	<div class="filter-sel">
 		<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-			  method="post" target="_self" class="form-inline hidden-phone">
+			method="post" target="_self" class="form-inline hidden-phone">
 			<div>
 				<?php $this->displayTimeFilter('sel'); ?>
 			</div>
 		</form>
 	</div>
-</h2>
-
-<div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 		->set('catid', 'all')
 		->setLayout('topic'); ?>

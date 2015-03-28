@@ -32,7 +32,7 @@ class KunenaAdminViewConfig extends KunenaView
 	protected function setToolBarDefault()
 	{
 		$bar = JToolBar::getInstance('toolbar');
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'config');
+
 		JToolbarHelper::spacer();
 		JToolBarHelper::apply();
 		JToolBarHelper::save('save');
@@ -40,6 +40,8 @@ class KunenaAdminViewConfig extends KunenaView
 
 		if (version_compare(JVERSION, '3.0', '>'))
 		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'wrench');
+
 			JHtml::_('bootstrap.modal', 'settingModal');
 			$title = JText::_('COM_KUNENA_RESET_CONFIG');
 			$dhtml = "<button data-toggle=\"modal\" data-target=\"#settingModal\" class=\"btn btn-small\">
@@ -49,6 +51,8 @@ class KunenaAdminViewConfig extends KunenaView
 		}
 		else
 		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CONFIGURATION'), 'config');
+
 			JHtml::_('moobootstrap.modal', 'settingModal');
 			$title = JText::_('COM_KUNENA_RESET_CONFIG');
 			$dhtml = "<a data-toggle=\"modal\" data-target=\"#settingModal\" class=\"toolbar\">

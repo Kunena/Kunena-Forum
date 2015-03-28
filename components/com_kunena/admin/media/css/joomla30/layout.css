@@ -125,3 +125,13 @@ dt {
 .dl-horizontal dd:nth-child(even) {
 	background-color: #f9f9f9;
 }
+.icon-big {
+	font-size  : 32px;
+	margin-top : 20px;
+	padding-right: 10px;
+	padding-bottom: 20px;
+	color: rgba(85, 85, 85, 1);
+}
+.module-title {
+	color: rgba(85, 85, 85, 1) !important;
+}

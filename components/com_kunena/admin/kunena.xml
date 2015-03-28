@@ -48,7 +48,6 @@
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
 			<folder>controllers</folder>
-			<folder>images</folder>
 			<folder>install</folder>
 			<folder>language</folder>
 			<folder>media</folder>

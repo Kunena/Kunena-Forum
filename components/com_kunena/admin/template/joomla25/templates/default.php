@@ -71,10 +71,10 @@ JHtml::_('behavior.tooltip');
 									</td>
 									<td class="center">
 										<?php if ($row->published == 1) { ?>
-											<img src="<?php echo JUri::base(true); ?>/components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
+											<img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/small/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
 										<?php } else { ?>
 											<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo urlencode($row->directory);?>','publish')">
-												<img src="<?php echo JUri::base(true); ?>/components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" />
+												<img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/small/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" />
 											</a>
 										<?php } ?>
 									</td>

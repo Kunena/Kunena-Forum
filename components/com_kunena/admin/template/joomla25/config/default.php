@@ -94,7 +94,7 @@ defined ( '_JEXEC' ) or die ();
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_RSS') ?></td>
 														<td><?php echo $this->lists ['enablerss'] ?></td>
-														<td><img src="<?php echo JUri::base(true) ?>/components/com_kunena/images/livemarks.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
+														<td><img src="<?php echo JUri::base(true) ?>/components/com_kunena/media/icons/small/livemarks.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?></td>
@@ -991,6 +991,16 @@ defined ( '_JEXEC' ) or die ();
 														<td><input type="text" name="cfg_ebay_api_key" value="<?php echo $this->escape($this->config->ebay_api_key) ?>" /></td>
 														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_LABEL') ?></td>
+														<td><input type="text" name="cfg_twitter_consumer_key" value="<?php echo $this->escape($this->config->twitter_consumer_key) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_LABEL') ?></td>
+														<td><input type="text" name="cfg_twitter_consumer_secret" value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
+													</tr>
 													<?php /*
 													// TODO: If you uncomment this feature, please remove forced disable from the KunenaConfig class.
 													<tr>
@@ -1117,11 +1127,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_AVATAR') ?></td>
 														<td><?php echo $this->lists ['userlist_avatar'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME') ?></td>
-														<td><?php echo $this->lists ['userlist_name'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS') ?></td>

@@ -75,7 +75,7 @@ foreach ($this->sections as $section) :
 						<td colspan="2" class="hidden-phone">
 							<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 						</td>
-						<td class="span3 hidden-phone post-info">
+						<td colspan="1" class="hidden-phone post-info">
 							<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 						</td>
 					<?php endif; ?>
@@ -83,7 +83,11 @@ foreach ($this->sections as $section) :
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
 							<td class="span1 center hidden-phone">
-								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
+								<?php if (!empty($category->icon)) : ?>
+									<i class="icon-big <?php echo $category->icon; ?> <?php if (($new = $category->getNewCount()) > 0) : ?>  icon-knewchar <?php endif; ?>"></i>
+								<?php else : ?>
+									<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
+								<?php endif; ?>
 							</td>
 							<td class="span8">
 								<div>
@@ -184,7 +188,7 @@ foreach ($this->sections as $section) :
 										<div class="span2">
 											<?php echo $author->getLink($avatar); ?>
 										</div>
-										<div class="span10">
+										<div class="span10 last-avatar">
 											<?php else : ?>
 											<div class="span12 last-posts">
 												<?php endif; ?>
@@ -198,7 +202,7 @@ foreach ($this->sections as $section) :
 										</div>
 								</td>
 							<?php else : ?>
-								<td class="span3 center hidden-phone">
+								<td class="span3 hidden-phone">
 									<div class="last-post-message">
 										<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>
 									</div>

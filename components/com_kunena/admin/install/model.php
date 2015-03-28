@@ -111,6 +111,8 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * Uninstall Kunena, run from Joomla installer.
+	 *
+	 * @return boolean
 	 */
 	public function uninstall()
 	{
@@ -127,6 +129,8 @@ class KunenaModelInstall extends JModelLegacy
 		$this->uninstallPlugin('kunena', 'kunena');
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('finder', 'kunena');
+		$this->uninstallPlugin('quickicon', 'kunena');
+		$this->uninstallPlugin('content', 'kunena');
 
 		// Uninstall menu module.
 		$this->uninstallModule('mod_kunenamenu');
@@ -142,6 +146,15 @@ class KunenaModelInstall extends JModelLegacy
 		}
 
 		$this->deleteMenu();
+
+		// Uninstall Kunena library
+		$this->uninstallLibrary();
+
+		// Uninstall Kunena media
+		$this->uninstallMedia();
+
+		// Uninstall Kunena system plugin
+		$this->uninstallPlugin('system', 'kunena');
 
 		return true;
 	}
@@ -533,6 +546,58 @@ class KunenaModelInstall extends JModelLegacy
 			$installer = new JInstaller ();
 			$installer->uninstall('plugin', $pluginid);
 		}
+	}
+
+	/**
+	 * Method to uninstall the Kunena library during uninstall process
+	 *
+	 * @return void
+	 */
+	public function uninstallLibrary()
+	{
+		$libraryid = $this->uninstallMediaLibraryQuery('library', 'kunena');
+
+		if ($libraryid)
+		{
+			$installer = new JInstaller;
+			$installer->uninstall('library', $libraryid);
+		}
+	}
+
+	/**
+	 * Method to uninstall the Kunena media during uninstall process
+	 *
+	 * @return void
+	 */
+	public function uninstallMedia()
+	{
+		$mediaid = $this->uninstallMediaLibraryQuery('file', 'kunena_media');
+
+		if ($mediaid)
+		{
+			$installer = new JInstaller;
+			$installer->uninstall('file', $mediaid);
+		}
+	}
+
+	/**
+	 * Method to uninstall the Kunena media during uninstall process
+	 *
+	 * @param   string  $element  Name of the package or of the component
+	 *
+	 * @return int
+	 */
+	private function uninstallMediaLibraryQuery($type, $element)
+	{
+		$query = $this->db->getQuery(true);
+		$query->select($this->db->quoteName('extension_id'));
+		$query->from($this->db->quoteName('#__extensions'));
+		$query->where($this->db->quoteName('type') . "='" . $type . "'");
+		$query->where($this->db->quoteName('element') . "='" . $element . "'");
+		$this->db->setQuery($query);
+		$id = $this->db->loadResult();
+
+		return $id;
 	}
 
 	public function deleteFiles($path, $ignore = array())

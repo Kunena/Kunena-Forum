@@ -218,12 +218,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	public function getUrl($thumb = false, $inline = true, $escape = true)
 	{
-		// Generic thumbnails are special case.
-		if (!$this->isImage())
-		{
-			return JUri::root(true) .'/media/kunena/images/attach_generic.png';
-		}
-
 		$protect = (bool) KunenaConfig::getInstance()->attachment_protection;
 
 		// Use direct URLs to the attachments if protection is turned off and file wasn't protected.
@@ -247,7 +241,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$download = $inline ? '' : '&download=1';
 		$filename = urlencode($this->getFilename(false));
 
-		return KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&filename={$filename}&format=raw", $escape);
+		return KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
 	}
 
 	/**

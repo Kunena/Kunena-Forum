@@ -162,12 +162,29 @@ class KunenaControllerInstall extends JControllerLegacy
 
 		if (class_exists('KunenaForum') && !KunenaForum::isDev())
 		{
-			jimport('joomla.filesystem.folder');
 			jimport('joomla.application.component.helper');
-			JFolder::delete(KPATH_MEDIA);
-			$installer = new JInstaller();
+			jimport('joomla.filesystem.folder');
+			jimport('joomla.filesystem.file');
+
+			$installer = new JInstaller;
 			$component = JComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
+
+			if ( JFolder::exists(KPATH_MEDIA) )
+			{
+				JFolder::delete(KPATH_MEDIA);
+			}
+
+			if ( JFolder::exists(JPATH_ROOT.'/plugins/kunena') )
+			{
+				JFolder::delete(JPATH_ROOT.'/plugins/kunena');
+			}
+
+			if ( JFile::exists(JPATH_ADMINISTRATOR.'/manifests/packages/pkg_kunena.xml') )
+			{
+				JFile::delete(JPATH_ADMINISTRATOR.'/manifests/packages/pkg_kunena.xml');
+			}
+
 			$this->setRedirect('index.php?option=com_installer');
 		}
 		else

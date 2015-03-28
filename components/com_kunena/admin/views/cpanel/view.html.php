@@ -18,7 +18,14 @@ class KunenaAdminViewCpanel extends KunenaView
 {
 	function displayDefault()
 	{
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'cp');
+		if (version_compare(JVERSION, '3', '>'))
+		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'dashboard');
+		}
+		else
+		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'cp');
+		}
 
 		if (JFactory::getUser()->authorise('core.admin', 'com_kunena'))
 		{

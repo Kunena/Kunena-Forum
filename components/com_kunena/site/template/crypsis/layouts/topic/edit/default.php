@@ -23,9 +23,7 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 
-$this->addStyleSheet('css/fileupload.css');
-$this->addStyleSheet('css/fileupload-ui.css');
-$this->addScript('js/jquery.ui.widget.js');
+JHtml::_('jquery.ui');
 $this->addScript('js/load-image.min.js');
 $this->addScript('js/canvas-to-blob.min.js');
 $this->addScript('js/jquery.iframe-transport.js');
@@ -33,34 +31,10 @@ $this->addScript('js/jquery.fileupload.js');
 $this->addScript('js/jquery.fileupload-process.js');
 $this->addScript('js/jquery.fileupload-image.js');
 $this->addScript('js/upload.main.js');
-$this->addScript('js/formyeah.js');
+$this->addStyleSheet('css/fileupload.css');
 
-$editor = KunenaBbcodeEditor::getInstance();
-$editor->initialize('id');
-
-$this->addScriptDeclaration("window.addEvent('domready', function() {
-	if ( typeof pollcategoriesid != 'undefined' ) {
-		var catid = $('kcategory_poll').get('value');
-		if ( pollcategoriesid[catid] !== undefined ) {
-			kbbcode.addFunction('Poll', function() {
-				kToggleOrSwap('kbbcode-poll-options');
-			}, {'id': 'kbbcode-poll-button',
-				'class': 'kbbcode-poll-button',
-				'title': Joomla.JText._('COM_KUNENA_EDITOR_POLL'),
-				'alt': Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_POLL')});
-
-		} else {
-			kbbcode.addFunction('Poll', function() {
-				kToggleOrSwap('kbbcode-poll-options');
-			}, {'id': 'kbbcode-poll-button',
-				'class': 'kbbcode-poll-button',
-				'style':'display: none;',
-				'title': Joomla.JText._('COM_KUNENA_EDITOR_POLL'),
-				'alt': Joomla.JText._('COM_KUNENA_EDITOR_HELPLINE_POLL')});
-		}
-	}
-	kEditorInitialize();
-});");
+$this->addScript('js/markitup.js');
+$this->addScript('js/markitup.set.js');
 
 $this->k = 0;
 
@@ -81,7 +55,7 @@ if ($this->config->pollenabled)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
-
+$this->addScript('js/formyeah.js');
 $this->addScript('js/edit.js');
 ?>
 

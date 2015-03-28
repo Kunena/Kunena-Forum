@@ -1,17 +1,18 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Category
+ *
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Category
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
-$cols = empty($this->checkbox) ? 4 : 5;
+$cols            = empty($this->checkbox) ? 7 : 6;
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
@@ -22,7 +23,9 @@ $cols = empty($this->checkbox) ? 4 : 5;
 <?php endif; ?>
 
 <?php if (!$this->category->isSection()) : ?>
-	<?php if (!empty($this->topics)) : ?>
+
+<?php if (!empty($this->topics)) : ?>
+
 	<h2>
 		<?php echo $this->escape($this->headerText); ?>
 	</h2>
@@ -38,10 +41,10 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			->set('pagination', $this->pagination)
 			->set('display', true); ?>
 	</div>
-	<?php endif; ?>
+<?php endif; ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
-	<input type="hidden" name="view" value="topics"/>
+	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_('form.token'); ?>
 	<div class="kbuttons">
 		<ul class="inline">
@@ -73,7 +76,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			<?php if (!empty($this->topicActions)) : ?>
 				<td class="span1 center">
 					<label>
-						<input class="kcheckall" type="checkbox" name="toggle" value=""/>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>
 				</td>
 			<?php endif; ?>
@@ -81,27 +84,30 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		</thead>
 		<?php endif; ?>
 		<?php if (empty($this->topics)) : ?>
-			<div class="alert">
-				<?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>
-			</div>
+			<tr>
+				<td>
+				</td>
+				<td colspan="3">
+					<span> <?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></span>
+				</td>
+			</tr>
+		<?php endif; ?>
+		<?php if ($this->topics) :
 
-		<?php else :
+			/** @var KunenaForumTopic $previous */
+			$previous = null;
 
-		/** @var KunenaForumTopic $previous */
-		$previous = null;
-
-		foreach ($this->topics as $position => $topic)
-		{
-			echo $this->subLayout('Topic/Row')
-				->set('topic', $topic)
-				->set('spacing', $previous && $previous->ordering != $topic->ordering)
-				->set('position', 'kunena_topic_' . $position)
-				->set('checkbox', !empty($this->topicActions))
-				->setLayout('category');
-			$previous = $topic;
-		}
-
-		?>
+			foreach ($this->topics as $position => $topic)
+			{
+				echo $this->subLayout('Topic/Row')
+					->set('topic', $topic)
+					->set('spacing', $previous && $previous->ordering != $topic->ordering)
+					->set('position', 'kunena_topic_' . $position)
+					->set('checkbox', !empty($this->topicActions))
+					->setLayout('category');
+				$previous = $topic;
+			}
+		endif; ?>
 		<tfoot>
 		<tr>
 			<td class="center hidden-phone">
@@ -115,8 +121,11 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			<td colspan="6" class="hidden-phone">
 				<div class="input-append">
 
-					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri,
-						JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
+					<?php if (!empty($this->moreUri))
+					{
+						echo JHtml::_('kunenaforum.link', $this->moreUri,
+							JText::_('COM_KUNENA_MORE'), null, null, 'follow');
+					} ?>
 
 					<?php if (!empty($this->topicActions)) : ?>
 						<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
@@ -139,14 +148,13 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		</tr>
 		</tfoot>
 	</table>
-
 </form>
 
-	<div class="pull-left">
-		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination)
-			->set('display', true); ?>
-	</div>
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination)
+		->set('display', true); ?>
+</div>
 
 <?php if (!empty($this->moderators))
 {
@@ -155,5 +163,4 @@ $cols = empty($this->checkbox) ? 4 : 5;
 }
 ?>
 
-<?php endif; ?>
 <div class="clearfix"></div>

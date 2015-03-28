@@ -83,7 +83,16 @@ class KunenaAdminViewCategories extends KunenaView
 	protected function setToolBarEdit()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_KUNENA'), 'categories');
+
+		if (version_compare(JVERSION, '3', '>'))
+		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		}
+		else
+		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
+		}
+
 		JToolbarHelper::spacer();
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::save('save');
@@ -103,7 +112,15 @@ class KunenaAdminViewCategories extends KunenaView
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('AdminNavigation');
-		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
+
+		if (version_compare(JVERSION, '3', '>'))
+		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
+		}
+		else
+		{
+			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
+		}
 
 		//TODO STRING
 		JToolBarHelper::spacer();

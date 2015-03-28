@@ -18,7 +18,7 @@ $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 48);
 $config = KunenaConfig::getInstance();
-$cols = empty($this->checkbox) ? 5 : 6;
+$cols = empty($this->checkbox) ? 7 : 6;
 
 if (!empty($this->spacing)) : ?>
 	<tr class="kcontenttablespacer">
@@ -100,23 +100,8 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span2 hidden-phone">
-		<div>
-			<div class="repliesnum pull-right">
-				<span class="topictitle"><strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong></span>
-			</div>
-			<div class="replies pull-left">
-				<span class="topictitle"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong></span>
-			</div>
-		</div>
-		<div class="clearfix"></div>
-		<div>
-			<div class="viewsnum pull-right">
-				<?php echo  $this->formatLargeNumber($topic->hits); ?>
-			</div>
-			<div class="views pull-left">
-				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>:
-			</div>
-		</div>
+		<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong><span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
+		<div class="views"><strong><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</strong> <span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
 
 	<td class="span2 hidden-phone" id="recent-topics">
@@ -129,7 +114,7 @@ if (!empty($this->spacing)) : ?>
 		<?php if (!$config->avataroncat) : ?>
 			<div class="span12">
 		<?php endif; ?>
-				<span><?php echo $this->getTopicLink ( $this->topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
+				<span><?php echo $this->getTopicLink ($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
 					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>
 				<br>
 				<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
@@ -137,7 +122,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-		<td class="center">
+		<td class="span1 center">
 			<label>
 				<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 			</label>

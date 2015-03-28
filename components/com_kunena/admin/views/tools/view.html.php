@@ -85,6 +85,16 @@ class KunenaAdminViewTools extends KunenaView
 		$this->display();
 	}
 
+	function displayUninstall()
+	{
+		$this->setToolBarUninstall();
+
+		$login = KunenaLogin::getInstance();
+		$this->isTFAEnabled = $login->isTFAEnabled();
+
+		$this->display();
+	}
+
 	protected function setToolBarDefault()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
@@ -159,6 +169,14 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('cleanupip', 'apply.png', 'apply_f2.png', 'COM_KUNENA_TOOLS_LABEL_CLEANUP_IP', false);
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
+	}
+
+	protected function setToolBarUninstall()
+	{
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();

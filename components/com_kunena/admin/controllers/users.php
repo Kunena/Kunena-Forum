@@ -608,4 +608,90 @@ class KunenaAdminControllerUsers extends KunenaController
 	{
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
+
+	/**
+	 * Remove categories subscriptions for the users selected
+	 *
+	 * @since 4.0.0
+	 *
+	 * @return void
+	 */
+	public function removecatsubscriptions()
+	{
+		if (!JSession::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$db     = JFactory::getDBO();
+		$cid = $this->app->input->get('cid', array(), 'array');
+
+		if (!empty($cid))
+		{
+			foreach ($cid as $userid)
+			{
+				$query = $db->getQuery(true);
+				$query->update($db->quoteName('#__kunena_user_categories'))->set($db->quoteName('subscribed') . ' = 0')->where($db->quoteName('user_id') . ' = ' . $userid);
+				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (Exception $e)
+				{
+					$e->getMessage();
+				}
+			}
+		}
+
+		$this->app->enqueueMessage(JText::_('COM_KUNENA_USERS_REMOVE_CAT_SUBSCRIPTIONS_DONE'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Remove topics subscriptions for the users selected
+	 *
+	 * @since 4.0.0
+	 *
+	 * @return void
+	 */
+	public function removetopicsubscriptions()
+	{
+		if (!JSession::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$db     = JFactory::getDBO();
+		$cid = $this->app->input->get('cid', array(), 'array');
+
+		if (!empty($cid))
+		{
+			foreach ($cid as $userid)
+			{
+				$query = $db->getQuery(true);
+				$query->update($db->quoteName('#__kunena_user_topics'))->set($db->quoteName('subscribed') . ' = 0')->where($db->quoteName('user_id') . ' = ' . $userid);
+				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (Exception $e)
+				{
+					$e->getMessage();
+				}
+			}
+		}
+
+		$this->app->enqueueMessage(JText::_('COM_KUNENA_USERS_REMOVE_TOPIC_SUBSCRIPTIONS_DONE'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
 }

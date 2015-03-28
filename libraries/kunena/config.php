@@ -365,12 +365,6 @@ class KunenaConfig extends JObject
 	public $userlist_avatar = 1;
 
 	/**
-	 * @var    integer  User list name; select, boolean
-	 * @since  1.0.0
-	 */
-	public $userlist_name = 1;
-
-	/**
 	 * @var    integer  User list posts; select, boolean
 	 * @since  1.0.0
 	 */
@@ -1133,6 +1127,18 @@ class KunenaConfig extends JObject
 	 * @since  3.0.7
 	 */
 	public $ebay_api_key = '';
+
+	/**
+	 * @var    string  Define twitter API consumer key; select, boolean
+	 * @since  3.1.0
+	 */
+	public $twitter_consumer_key = '';
+
+	/**
+	 * @var    string  Define twitter API consumer secret; select, boolean
+	 * @since  3.1.0
+	 */
+	public $twitter_consumer_secret = '';
 
 	/**
 	 * @var    integer  Max Links limit; input, number

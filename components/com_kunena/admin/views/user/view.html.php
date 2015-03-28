@@ -63,6 +63,10 @@ class KunenaAdminViewUser extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
 		JToolBarHelper::spacer();
+		JToolBarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
+		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarMove()

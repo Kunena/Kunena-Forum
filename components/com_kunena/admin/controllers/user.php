@@ -20,4 +20,29 @@ require_once __DIR__ . '/users.php';
  */
 class KunenaAdminControllerUser extends KunenaAdminControllerUsers
 {
+	public function removecatsubscriptions()
+	{
+		$db     = JFactory::getDBO();
+		$userid = $this->getState($this->getName() . '.id');
+
+		$db->setQuery("UPDATE #__kunena_user_categories SET subscribed=0 WHERE user_id='$userid'");
+
+		if (KunenaError::checkDatabaseError())
+		{
+			return array();
+		}
+	}
+
+	public function removetopicsubscriptions()
+	{
+		$db     = JFactory::getDBO();
+		$userid = $this->getState($this->getName() . '.id');
+
+		$db->setQuery("UPDATE #__kunena_user_topics SET subscribed=0 WHERE user_id='$userid'");
+
+		if (KunenaError::checkDatabaseError())
+		{
+			return array();
+		}
+	}
 }

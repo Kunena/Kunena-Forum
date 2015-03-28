@@ -18,7 +18,7 @@ $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 48);
 $config = KunenaConfig::getInstance();
-$cols = empty($this->checkbox) ? 5 : 6;
+$cols = empty($this->checkbox) ? 7 : 6;
 
 if (!empty($this->spacing)) : ?>
 	<tr class="kcontenttablespacer">
@@ -122,7 +122,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>
-		<td class="center">
+		<td class="span1 center">
 			<label>
 				<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]" value="1" />
 			</label>

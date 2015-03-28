@@ -2546,7 +2546,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 				if ($uri->isSSL())
 				{
-					$tweet_data->user->user->profile_image_url = $tweet_data->user->profile_image_url_https;
+					$tweet_data->user->profile_image_url = $tweet_data->user->profile_image_url_https;
 				}
 
 				$tweet_data->user->profile_image_url_big = str_replace('normal', 'bigger', $tweet_data->user->profile_image_url);

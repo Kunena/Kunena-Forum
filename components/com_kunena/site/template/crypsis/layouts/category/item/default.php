@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
-$cols            = empty($this->checkbox) ? 4 : 5;
+$cols            = empty($this->checkbox) ? 7 : 6;
 ?>
 
 <?php if ($this->category->headerdesc) : ?>

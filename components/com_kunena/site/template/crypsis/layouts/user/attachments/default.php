@@ -26,31 +26,31 @@ $attachments = $this->attachments;
 	<table class="table table-bordered table-striped table-hover">
 		<thead>
 			<tr>
-				<th class="center">
+				<th class="span1 center">
 					#
 				</th>
-				<th width="5">
+				<th class="span1">
 					<label>
 						<input type="checkbox" name="checkall-toggle" value="cid"
 							   title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</label>
 				</th>
-				<th class="center">
+				<th class="span2 center">
 					<?php echo JText::_('COM_KUNENA_FILETYPE'); ?>
 				</th>
-				<th>
+				<th class="span2">
 					<?php echo JText::_('COM_KUNENA_FILENAME'); ?>
 				</th>
-				<th>
+				<th class="span2">
 					<?php echo JText::_('COM_KUNENA_FILESIZE'); ?>
 				</th>
-				<th>
+				<th class="span2">
 					<?php echo JText::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?>
 				</th>
-				<th class="center">
+				<th class="span2 center">
 					<?php echo JText::_('COM_KUNENA_PREVIEW'); ?>
 				</th>
-				<th class="center">
+				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_DELETE'); ?>
 				</th>
 			</tr>

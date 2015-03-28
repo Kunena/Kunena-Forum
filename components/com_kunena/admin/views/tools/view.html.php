@@ -178,5 +178,7 @@ class KunenaAdminViewTools extends KunenaView
 	{
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
 	}
 }

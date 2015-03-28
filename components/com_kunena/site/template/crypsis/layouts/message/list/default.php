@@ -10,7 +10,9 @@
  **/
 defined('_JEXEC') or die;
 
-$colspan = !empty($this->actions) ? 6 : 5;
+$colspan = !empty($this->actions) ? 4 : 3;
+$cols = empty($this->checkbox) ? 5 : 6;
+
 ?>
 
 <h3>
@@ -54,13 +56,13 @@ $colspan = !empty($this->actions) ? 6 : 5;
 					<i class="icon-arrow-down hasTooltip"></i>
 				</a>
 			</td>
-			<td class="span1">
+			<td class="span<?php echo $cols;?>">
 				<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
-			<td class="span1">
+			<td class="span2">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
-			<td class="span1">
+			<td class="span2">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->actions)) : ?>

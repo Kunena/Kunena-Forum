@@ -1405,23 +1405,26 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$message = $this->getMessage();
 		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 
-		if (!$moderator && (!$message || !$me->userid || $message->userid != $me->userid))
+		if (($me->userid && $bbcode->parent->userid == $me->userid) || $moderator)
+		{
+			$layout = KunenaLayout::factory('BBCode/Confidential');
+
+			if ($layout->getPath())
+			{
+				return (string) $layout
+					->set('me', $me)
+					->set('content', $content)
+					->set('params', $params);
+			}
+
+			// TODO: Remove in Kunena 4.0
+			// Display but highlight the fact that it is hidden from everyone except admins and mods
+			return '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
+		}
+		else
 		{
 			return '';
 		}
-
-		$layout = KunenaLayout::factory('BBCode/Confidential');
-		if ($layout->getPath())
-		{
-			return (string) $layout
-				->set('me', $me)
-				->set('content', $content)
-				->set('params', $params);
-		}
-
-		// TODO: Remove in Kunena 4.0
-		// Display but highlight the fact that it is hidden from everyone except admins and mods
-		return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT' ) . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
 	}
 
 	/**

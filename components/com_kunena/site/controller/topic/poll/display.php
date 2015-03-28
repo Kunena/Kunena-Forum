@@ -68,6 +68,8 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		{
 			$this->name = 'Topic/Poll/Results';
 
+			$this->show_title = true;
+
 			$this->users_voted_list = array();
 			$this->users_voted_morelist = array();
 

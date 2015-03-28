@@ -95,4 +95,15 @@ jQuery(document).ready(function() {
 	} else {
 		jQuery('.pollbutton').hide();
 	}
+	
+	jQuery('#kpoll_go_results').click(function() {
+		if(jQuery('#poll-results').is(':visible')==true)
+		{
+			jQuery('#poll-results').hide();
+		}
+		else
+		{
+			jQuery('#poll-results').show();
+		}
+	});
 });

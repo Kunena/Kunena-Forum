@@ -85,7 +85,7 @@ jQuery(document).ready(function() {
 	}
 	
 	if ( typeof pollcategoriesid != 'undefined' ) {
-		var catid = jQuery('kcategory_poll').val();
+		var catid = jQuery('#kcategory_poll').val();
 		
 		if ( pollcategoriesid[catid] !== undefined ) {
 			jQuery('.pollbutton').show();

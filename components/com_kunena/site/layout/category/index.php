@@ -44,8 +44,11 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getCategoryIcon($category, $thumb = false)
 	{
-		$path = JPATH_ROOT . '/media/kunena/' . $this->config->catimagepath . '/';
-		$uri  = JUri::root(true) . '/media/kunena/' . $this->config->catimagepath . '/';
+		$template = KunenaFactory::getTemplate();
+		$catimagepath = $template->params->get('catimagepath');
+
+		$path = JPATH_ROOT . '/media/kunena/' . $catimagepath . '/';
+		$uri  = JUri::root(true) . '/media/kunena/' . $catimagepath . '/';
 
 		if (!$thumb)
 		{

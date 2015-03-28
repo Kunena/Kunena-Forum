@@ -35,6 +35,7 @@
 			<option value="white">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_WHITE</option>
 			<option value="black">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_BLACK</option>
 		</field>
+		<field name="catimagepath" type="text" default="category_images" label="COM_KUNENA_CATIMAGEPATH" description="COM_KUNENA_CATIMAGEPATH_DESC" />
 		<field name="templatebyText" type="hidden" default=""/>
 		<field name="templatebyName" type="hidden" default=""/>
 		<field name="templatebyLink" type="hidden" default=""/>

@@ -12,11 +12,11 @@ defined('_JEXEC') or die;
 ?>
 <div class="navbar">
 	<div class="navbar-inner">
-		<div class="hidden-phone hidden-tablet">
+		<div class="visible-desktop">
 			<?php echo $this->subRequest('Widget/Menu'); ?>
 			<?php echo $this->subRequest('Widget/Login'); ?>
 		</div>
-		<div class="visible-phone visible-tablet">
+		<div class="hidden-desktop">
 			<div class="nav navbar-nav">
 				<div><a class="btn btn-link"  data-toggle="collapse" data-target="#nav-menu"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a></div>
 				<div class="nav-collapse collapse in" id="nav-menu"><?php echo $this->subRequest('Widget/Menu'); ?></div>

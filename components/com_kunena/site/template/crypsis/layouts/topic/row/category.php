@@ -100,23 +100,8 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span2 hidden-phone">
-		<div>
-			<div class="repliesnum pull-right">
-				<span class="topictitle"><strong><?php echo $this->formatLargeNumber($topic->getReplies()); ?></strong></span>
-			</div>
-			<div class="replies pull-left">
-				<span class="topictitle"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong></span>
-			</div>
-		</div>
-		<div class="clearfix"></div>
-		<div>
-			<div class="viewsnum pull-right">
-				<?php echo  $this->formatLargeNumber($topic->hits); ?>
-			</div>
-			<div class="views pull-left">
-				<?php echo JText::_('COM_KUNENA_GEN_HITS');?>:
-			</div>
-		</div>
+		<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong><span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
+		<div class="views"><strong><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</strong> <span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
 
 	<td class="span2 hidden-phone" id="recent-topics">

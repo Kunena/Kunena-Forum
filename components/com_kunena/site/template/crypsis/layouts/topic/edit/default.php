@@ -55,12 +55,12 @@ if ($this->config->pollenabled)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
-
+$this->addScript('js/formyeah.js');
 $this->addScript('js/edit.js');
 ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal"
-		id="postform" name="postform" enctype="multipart/form-data">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="formyeah form-horizontal"
+		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
 		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
@@ -235,7 +235,7 @@ $this->addScript('js/edit.js');
 			<input id="kbutton-preview" type="button" name="preview" class="btn"
 				value="<?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>"
 				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW')); ?>:: " tabindex="3" />
-			<input type="button" name="cancel" class="btn"
+			<input type="reset" name="cancel" class="btn"
 				value="<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
 				onclick="javascript:window.history.back();"
 				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" tabindex="5" />

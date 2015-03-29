@@ -15,7 +15,7 @@
 				<option value="unapproved">COM_KUNENA_POSTS_MODE_OPTION_UNAPROVED</option>
 				<option value="deleted">COM_KUNENA_POSTS_MODE_OPTION_DELETED</option>
 			</field>
-			<field name="userid" type="text" default="" label="COM_KUNENA_MENU_USER"/>
+			<field name="userid" type="text" default="" label="COM_KUNENA_MENU_USERID"/>
 		</fieldset>
 	</fields>
 	<fields name="params">

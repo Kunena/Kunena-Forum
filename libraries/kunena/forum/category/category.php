@@ -39,6 +39,7 @@ defined ( '_JEXEC' ) or die ();
  * @property string $class_sfx
  * @property int $allow_polls
  * @property string $topic_ordering
+ * @property string $iconset
  * @property int $numTopics
  * @property int $numPosts
  * @property int $last_topic_id

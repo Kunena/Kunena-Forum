@@ -39,7 +39,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		'emoticons' => 'media/emoticons',
 		'ranks' => 'media/ranks',
 		'icons' => 'media/icons',
-		'topicicons' => 'media/topic_icons',
 		'categoryicons' => 'media/category_icons',
 		'images' => 'media/images',
 		'js' => 'media/js',
@@ -53,13 +52,13 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	protected $userClasses = array(
 		'kwho-',
-		'admin'=>'kwho-admin',
-		'globalmod'=>'kwho-globalmoderator',
-		'moderator'=>'kwho-moderator',
-		'user'=>'kwho-user',
-		'guest'=>'kwho-guest',
-		'banned'=>'kwho-banned',
-		'blocked'=>'kwho-blocked'
+		'admin' => 'kwho-admin',
+		'globalmod' => 'kwho-globalmoderator',
+		'moderator' => 'kwho-moderator',
+		'user' => 'kwho-user',
+		'guest' => 'kwho-guest',
+		'banned' => 'kwho-banned',
+		'blocked' => 'kwho-blocked'
 	);
 
 	/**

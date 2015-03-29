@@ -210,13 +210,11 @@ $paneOptions = array(
 													<td><?php echo $this->options ['topic_ordering']; ?></td>
 													<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 												</tr>
-												<?php /*
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
 													<td><?php echo $this->options ['category_iconset']; ?></td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 												</tr>
-												*/ ?>
 											</table>
 										</fieldset>
 									</div>

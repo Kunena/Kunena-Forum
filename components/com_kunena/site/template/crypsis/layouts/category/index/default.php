@@ -165,10 +165,8 @@ foreach ($this->sections as $section) :
 									</div>
 								<?php endif; ?>
 								<?php if (!empty($this->pending[$category->id])) : ?>
-									<div class="alert" style="max-width:150px;margin-top:20px;">
-										<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id),
-											intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'),
-											'', '', 'nofollow'); ?>
+									<div class="alert" style="margin-top:20px;">
+										<a class="alert-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>" title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING')?>" rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING')?></a>
 									</div>
 								<?php endif; ?>
 

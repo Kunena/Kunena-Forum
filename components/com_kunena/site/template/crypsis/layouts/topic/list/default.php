@@ -101,19 +101,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 		<tbody>
 		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 			<tr>
-				<td colspan="<?php echo $colspan; ?>">
-					<div class="well center filter-state">
-							<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-								<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
-								<?php //if($this->filterActive) : ?>
-								<?php if(true) : ?>
-									<a class="btn" type="button"  onclick="document.getElements('.filter').set('value', 'All');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
-								<?php else : ?>
-									<a class="btn btn-success" type="button"  onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_CATEGORY'); ?></a>
-								<?php endif; ?>
-							</span>
-					</div>
-				</td>
+				<td colspan="4" class="center"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>	</td>
 			</tr>
 		<?php else : ?>
 			<?php foreach ($this->topics as $i => $topic)

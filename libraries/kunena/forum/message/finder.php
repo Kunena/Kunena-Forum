@@ -76,22 +76,26 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	public function filterByCategories(array $categories)
 	{
 		$list = array();
-		foreach ($categories as $category)
+
+		if ( !empty($categories) )
 		{
-			if ($category instanceof KunenaForumCategory)
+			foreach ($categories as $category)
 			{
-				$list[] = (int) $category->id;
+				if ($category instanceof KunenaForumCategory)
+				{
+					$list[] = (int) $category->id;
+				}
+				else
+				{
+					$list[] = (int) $category;
+				}
 			}
-			else
-			{
-				$list[] = (int) $category;
-			}
+
+			$list = implode(',', $list);
+			$this->query->where("a.catid IN ({$list})");
+
+			return $this;
 		}
-
-		$list = implode(',', $list);
-		$this->query->where("a.catid IN ({$list})");
-
-		return $this;
 	}
 
 	/**

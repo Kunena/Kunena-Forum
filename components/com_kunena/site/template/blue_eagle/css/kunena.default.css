@@ -66,11 +66,16 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 
 #Kunena a:hover { color: #FF0000 !important; background-color:transparent !important; }
 
+#Kunena .icon-knewchar,
 #Kunena .knewchar {
 	color: #009900;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
+#Kunena .icon-big {
+	font-size: 32px;
+	margin-top: 5px;
+}
 /* Block styling
 ----------------------------------------------------------------------------------------------- */
 

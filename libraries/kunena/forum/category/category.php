@@ -334,6 +334,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			case 'id':
 				return intval($this->id);
 			case 'name':
+			case 'icon':
 				return KunenaHtmlParser::parseText($this->name);
 			case 'description':
 			case 'headerdesc':

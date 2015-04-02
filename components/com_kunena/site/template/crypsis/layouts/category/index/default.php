@@ -84,7 +84,7 @@ foreach ($this->sections as $section) :
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
 							<td class="span1 center hidden-phone">
 								<?php if (!empty($category->icon)) : ?>
-									<i class="icon-big <?php echo $category->icon; ?> <?php if (($new = $category->getNewCount()) > 0) : ?>  icon-knewchar <?php endif; ?>"></i>
+								<i class="icon-big <?php echo $category->icon; ?> <?php if (($new = $category->getNewCount()) > 0) : ?>  icon-knewchar <?php endif; ?>"></i>
 								<?php else : ?>
 									<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
 								<?php endif; ?>

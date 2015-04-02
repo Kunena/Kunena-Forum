@@ -66,7 +66,7 @@ if ($config->ordering_system == 'mesid')
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
 			<div class="row">
-				<div class="span11">
+				<div class="span10">
 					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
 					<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 						<div class="modal-header">
@@ -75,7 +75,7 @@ if ($config->ordering_system == 'mesid')
 						</div>
 					</div>
 				</div>
-				<div class="span1">
+				<div class="span2">
 					<p class="ip"> <?php echo $this->ipLink; ?> </p>
 				</div>
 			</div>

@@ -65,7 +65,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 			<?php endif ?>
 			<?php if (!empty($this->reportMessageLink)) : ?>
 				<div class="row">
-					<div class="span11">
+					<div class="span10">
 						<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
 						<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 							<div class="modal-header">
@@ -74,7 +74,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 							</div>
 						</div>
 					</div>
-					<div class="span1">
+					<div class="span2">
 						<p class="ip"> <?php echo $this->ipLink; ?> </p>
 					</div>
 				</div>

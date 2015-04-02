@@ -53,32 +53,11 @@ table.kpostbuttonset {
 }
 
 .form-horizontal .control-label {
-	width : 80px;
+	width : auto;
 }
 
 .ktxtarea {
 	margin-left : -80px
-}
-
-#postform input[type=radio] {
-	display : none;
-}
-
-input[type=radio] + label {
-	display          : inline-block;
-	margin           : -2px;
-	padding          : 4px 12px;
-	background-color : transparent;
-}
-
-input[type=radio]:checked + label {
-	background    : rgba(0, 0, 0, 0.07) none;
-	border        : 1px solid rgba(0, 0, 0, 0.2);
-	border-radius : 4px;
-}
-
-label img {
-	pointer-events : none;
 }
 
 #kbbcode-smilies-button {
@@ -429,10 +408,9 @@ label img {
 }
 
 #klabel_info_drop_browse {
-	display : block;
-	padding : 5px 10px;
-	width   : 350px;
-	margin  : 50px auto 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 #files {

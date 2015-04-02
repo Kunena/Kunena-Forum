@@ -141,6 +141,30 @@ class KunenaModelUser extends KunenaModel {
 				$this->setState ( 'list.start', $limitstart );
 			}
 
+			$direction = $this->getState('list.direction');
+
+			switch ($this->getState('list.ordering'))
+			{
+				case 'posts':
+					$orderby = 'ku.posts ';
+					break;
+				case 'karma':
+					$orderby = 'ku.karma ';
+					break;
+				case 'registerDate':
+					$orderby = 'u.registerDate ';
+					break;
+				case 'lastvisitDate':
+					$orderby = 'u.lastvisitDate ';
+					break;
+				case 'uhits':
+					$orderby = 'ku.uhits ';
+					break;
+				case 'username':
+				default:
+					$orderby = 'u.username ';
+			}
+
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
@@ -148,7 +172,7 @@ class KunenaModelUser extends KunenaModel {
 				FROM #__users AS u
 				LEFT JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
-			$query .= " ORDER BY {$db->quoteName($this->getState ( 'list.ordering'))} {$this->getState ( 'list.direction')}";
+			$query .= " ORDER BY {$orderby} {$direction}";
 
 			$db->setQuery ( $query, $limitstart, $limit );
 			$items = $db->loadColumn();

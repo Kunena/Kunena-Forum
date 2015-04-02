@@ -53,7 +53,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		{
 			// Add Reply topic button.
 			$this->topicButtons->set('reply',
-				$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', true)
+				$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication')
 			);
 		}
 

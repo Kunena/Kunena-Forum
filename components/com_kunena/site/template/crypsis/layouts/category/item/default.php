@@ -87,7 +87,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 			<tr>
 				<td>
 				</td>
-				<td colspan="3">
+				<td colspan="3" class="center">
 					<span> <?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></span>
 				</td>
 			</tr>

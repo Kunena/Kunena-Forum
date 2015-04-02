@@ -41,9 +41,9 @@ defined('_JEXEC') or die;
 			<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
 		</td>
 		<td>
-			<div>
-				<input id="kavatar-upload" type="file" class="button" name="avatarfile" />
-			</div>
+			<label class="span10" for="kavatar-upload">
+				<input id="kavatar-upload" type="file"  name="avatarfile">
+			</label>
 		</td>
 	</tr>
 	<?php endif; ?>

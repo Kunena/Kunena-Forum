@@ -447,12 +447,6 @@ div.kmsgtext-confidential {
 	margin: 0;
 }
 
-.msgfooter {
-	bottom: 0;
-	padding: 10px 5px;
-	height: 20px;
-}
-
 #nav1 > li {
 	float: left;
 }
@@ -645,10 +639,6 @@ table .well {
 	line-height: 150%
 }
 
-.modal {
-	z-index: 2000;
-}
-
 .nav .dropdown-menu a {
 	display: inline-block;
 	text-decoration:none;
@@ -732,7 +722,10 @@ h2 .pull-right select {
 	border: 1px solid #dddddd;
 	margin: 0;
 }
-
+#recent-topics .span2,
+#recent-topics .span10 {
+	margin-left: 0;
+}
 #recent-topics img.img-thumbnail {
 	vertical-align: text-top;
 	margin-right: 10px;
@@ -787,8 +780,8 @@ div.kmsg > li {
 #logout-form {
 	float: left;
 	.btn-link {
-		color: inherit;
 		text-decoration:none;
+		margin-left: 5px;
 	}
 }
 
@@ -927,4 +920,38 @@ select#postcatid {
 
 #ktopicsform [class*='span'] {
 	margin-left: 0 !important;
+}
+
+.ip {
+	margin: 0 0 10px;
+	width: 150px;
+}
+
+.report {
+	margin-left: 20px;
+	text-decoration: none;
+}
+
+.intro {
+	margin: 0 0 10px 60px;
+}
+
+input[type=radio] + label {
+	display          : inline-block;
+	margin           : -2px;
+	padding          : 4px 12px;
+	background-color : transparent;
+}
+
+input[type=radio]:checked + label {
+	background    : rgba(0, 0, 0, 0.07) none;
+	border        : 1px solid rgba(0, 0, 0, 0.2);
+	border-radius : 4px;
+}
+
+label img {
+	pointer-events : none;
+}
+input[type=radio] {
+	display : none;
 }

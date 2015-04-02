@@ -84,7 +84,7 @@ foreach ($this->sections as $section) :
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
 							<td class="span1 center hidden-phone">
 								<?php if (!empty($category->icon)) : ?>
-									<i class="icon-big <?php echo $category->icon; ?> <?php if (($new = $category->getNewCount()) > 0) : ?>  icon-knewchar <?php endif; ?>"></i>
+								<i class="icon-big <?php echo $category->icon; ?> <?php if (($new = $category->getNewCount()) > 0) : ?>  icon-knewchar <?php endif; ?>"></i>
 								<?php else : ?>
 									<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
 								<?php endif; ?>
@@ -165,10 +165,8 @@ foreach ($this->sections as $section) :
 									</div>
 								<?php endif; ?>
 								<?php if (!empty($this->pending[$category->id])) : ?>
-									<div class="alert" style="max-width:150px;margin-top:20px;">
-										<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id),
-											intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'),
-											'', '', 'nofollow'); ?>
+									<div class="alert" style="margin-top:20px;">
+										<a class="alert-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>" title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING')?>" rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING')?></a>
 									</div>
 								<?php endif; ?>
 

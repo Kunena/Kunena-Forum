@@ -65,16 +65,18 @@ if ($config->ordering_system == 'mesid')
 	<?php endif ?>
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
-			<div class="msgfooter">
-				<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link" data-toggle="modal"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-				<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+			<div class="row">
+				<div class="span10">
+					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
+					<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+						</div>
 					</div>
 				</div>
-				<div class="pull-right">
-					<p> <?php echo $this->ipLink; ?> </p>
+				<div class="span2">
+					<p class="ip"> <?php echo $this->ipLink; ?> </p>
 				</div>
 			</div>
 		<?php endif; ?>

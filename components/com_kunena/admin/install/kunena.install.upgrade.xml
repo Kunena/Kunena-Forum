@@ -648,6 +648,7 @@
 				DEFAULT '' AFTER `alias`
 			</query>
 		</version>
+<<<<<<< HEAD
 		<version version="4.0.0-ALPHA3"
 		         versiondate="2015-03-30"
 		         versionname="Internal">
@@ -655,6 +656,8 @@
 				DEFAULT '' AFTER `topic_ordering`
 			</query>
 		</version>
+=======
+>>>>>>> upstream/develop
 		<version version="@kunenaversion@"
 		         versiondate="@kunenaversiondate@"
 		         versionname="@kunenaversionname@">

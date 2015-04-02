@@ -10,30 +10,31 @@
  **/
 defined('_JEXEC') or die;
 
-// TODO: Move from widget to announcement
 ?>
-<div class=" collapse in" id="announcement<?php echo $this->announcement->id; ?>">
+<div class="collapse in" id="announcement<?php echo $this->announcement->id; ?>">
 	<div class="alert alert-info">
-	<div class="close" data-toggle="collapse" data-target="#announcement<?php echo $this->announcement->id; ?>">&times;</div>
-	<h5>
-		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(),
-			$this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'),
-			null, 'follow'); ?>
+		<div class="close" data-toggle="collapse" data-target="#announcement<?php echo $this->announcement->id; ?>">&times;</div>
+		<h5>
+			<a class="btn-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>" title="<?php echo  $this->announcement->displayField('title')?>" rel="follow">
+				<?php echo $this->announcement->displayField('title') ;?>
+			</a>
 
-		<?php if ($this->announcement->showdate) : ?>
-		<small>(<?php echo $this->announcement->displayField('created', 'date_today'); ?>)</small>
-		<?php endif; ?>
+			<?php if ($this->announcement->showdate) : ?>
+				<small>(<?php echo $this->announcement->displayField('created', 'date_today'); ?>)</small>
+			<?php endif; ?>
+		</h5>
 
-	</h5>
-	<div>
-		<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
+		<div>
+			<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
 
-		<?php if (!empty($this->announcement->description)) : ?>
-		<p>
-		<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), JText::_('COM_KUNENA_ANN_READMORE'),
-				null, 'follow'); ?></p>
-		<?php endif; ?>
-
-	</div>
+			<?php if (!empty($this->announcement->description)) : ?>
+				<p>
+					<a class="btn-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>" title="<?php echo  $this->announcement->displayField('title')?>" rel="follow">
+						<?php echo JText::_('COM_KUNENA_ANN_READMORE') ;?>
+					</a>
+				</p>
+			<?php endif; ?>
+		</div>
 	</div>
 </div>
+

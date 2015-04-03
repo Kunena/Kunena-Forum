@@ -223,6 +223,10 @@
 		       type="varchar(16)"
 		       null="0"
 		       default="lastpost"/>
+		<field name="iconset"
+		       type="varchar(255)"
+		       null="0"
+		       default=""/>
 		<field name="numTopics"
 		       type="mediumint(8)"
 		       null="0"

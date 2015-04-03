@@ -64,6 +64,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		<div class="views"><strong><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</strong> <span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
 	<td class="span2" id="recent-topics">
+		<div class="row-fluid">
 		<?php if ($config->avataroncat) : ?>
 			<div class="span2 hidden-phone">
 				<?php echo $avatar; ?>
@@ -80,6 +81,7 @@ $cols = empty($this->checkbox) ? 4 : 5;
 			<br />
 			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
 			</div>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

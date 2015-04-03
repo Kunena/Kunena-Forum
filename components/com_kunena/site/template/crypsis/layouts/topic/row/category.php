@@ -105,6 +105,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span2 hidden-phone" id="recent-topics">
+		<div class="row-fluid">
 		<?php if ($config->avataroncat) : ?>
 			<div class="span2 hidden-phone">
 				<?php echo $avatar; ?>
@@ -119,6 +120,7 @@ if (!empty($this->spacing)) : ?>
 				<br>
 				<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 			</div>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

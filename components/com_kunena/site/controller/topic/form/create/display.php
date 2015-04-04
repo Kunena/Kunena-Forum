@@ -50,12 +50,6 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			}
 		}
 
-		// Get topic icons if they are enabled.
-		if ($this->config->topicicons)
-		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
-		}
-
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$arrayanynomousbox = array();
 		$arraypollcatid = array();
@@ -88,6 +82,13 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		{
 			throw new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
+
+		// Get topic icons if they are enabled.
+		if ($this->config->topicicons)
+		{
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->category->iconset);
+		}
+
 
 		$options = array();
 		$selected = $this->topic->category_id;

@@ -144,7 +144,7 @@ $this->addScript('js/edit.js');
 									<?php foreach ($this->topicIcons as $id => $icon): ?>
 										<span class="kiconsel">
 										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-										<label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true); ?>" alt="" border="0" />
+										<label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
 										</label>
 									</span>
 									<?php endforeach; ?>

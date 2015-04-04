@@ -79,6 +79,11 @@ class KunenaTemplate extends JObject
 	protected $hmvc;
 
 	/**
+	 * @var string
+	 */
+	protected $category_iconset = '';
+
+	/**
 	 * Constructor
 	 *
 	 * @access    protected
@@ -539,16 +544,25 @@ HTML;
 		return $this->getFile($filename, $url, $this->pathTypes['ranks'], 'media/kunena/ranks');
 	}
 
-	public function getTopicIconPath($filename='', $url = true)
+	public function getTopicIconPath($filename='', $url = true, $category_iconset= '')
 	{
-		$set = $this->isHmvc() ? '/default' : '';
-		return $this->getFile($filename, $url, $this->pathTypes['topicicons'].$set, 'media/kunena/topic_icons/default');
+		if ( !empty($category_iconset) )
+		{
+			$category_iconset = '/' . $category_iconset;
+		}
+
+		return $this->getFile($filename, $url, $this->pathTypes['topicicons'].$set, 'media/kunena/topic_icons/' . $category_iconset);
 	}
 
-	public function getCategoryIconPath($filename='', $url = true)
+	public function getCategoryIconPath($filename='', $url = true, $category_iconset)
 	{
-		$set = $this->isHmvc() ? '/default' : '';
-		return $this->getFile($filename, $url, $this->pathTypes['categoryicons'].$set, 'media/kunena/category_icons/default');
+		if ( !$this->isHmvc() )
+		{
+			$set = '';
+			$category_iconset = 'default';
+		}
+
+		return $this->getFile($filename, $url, $this->pathTypes['categoryicons'].$set, 'media/kunena/category_icons/' . $category_iconset);
 	}
 
 	public function getImagePath($filename='', $url = true)
@@ -556,11 +570,11 @@ HTML;
 		return $this->getFile($filename, $url, $this->pathTypes['images'], 'media/kunena/images');
 	}
 
-	public function getTopicIcons($all = false, $checked = 0)
+	public function getTopicIcons($all = false, $checked = 0, $category_iconset='')
 	{
 		if (empty($this->topicIcons))
 		{
-			$xmlfile = $this->getTopicIconPath('topicicons.xml', false);
+			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
 
 			if (is_file($xmlfile))
 			{
@@ -592,6 +606,7 @@ HTML;
 							$icon->filename = (string) $attributes->src;
 							$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
 							$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
+							$icon->relpath = $this->getTopicIconPath("{$icon->filename}", false, $this->category_iconset);
 							$this->topicIcons[$icon->id] = $icon;
 						}
 					}
@@ -610,7 +625,7 @@ HTML;
 				$icon->filename = 'default.png';
 				$icon->width = 48;
 				$icon->height = 48;
-				$icon->relpath = $this->getTopicIconPath("user/{$icon->filename}", false);
+				$icon->relpath = $this->getTopicIconPath("user/{$icon->filename}", false, $category_iconset);
 				$this->topicIcons[0] = $icon;
 			}
 		}
@@ -750,6 +765,11 @@ HTML;
 	 */
 	public function getTopicIcon($topic)
 	{
+		if (!empty($topic->getCategory()->iconset))
+		{
+			$this->category_iconset = $topic->getCategory()->iconset;
+		}
+
 		$config = KunenaFactory::getConfig();
 		if ($config->topicicons)
 		{

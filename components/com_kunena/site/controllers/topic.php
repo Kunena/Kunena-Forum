@@ -133,7 +133,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		// Make sure that message has visible content (text, images or objects) to be shown.
 		$text = KunenaHtmlParser::parseBBCode($message->message);
-		if (!preg_match('!(<img |<object )!', $text)) {
+		if (!preg_match('!(<img |<object |<iframe )!', $text)) {
 			$text = trim(JFilterOutput::cleanText($text));
 		}
 		if (!$text) {

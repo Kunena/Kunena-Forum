@@ -90,5 +90,11 @@ jQuery(document).ready(function() {
 	jQuery('#kbbcode-message').bind('input propertychange', function() {
 		kPreviewHelper(previewActive);
 	});
+	
+	/* Store form data into localstorage every 1 second */
+	jQuery("#postform").sisyphus( {
+		locationBased: false,
+		timeout: 1
+	});
 });
 

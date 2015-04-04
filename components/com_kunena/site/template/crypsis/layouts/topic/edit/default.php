@@ -55,11 +55,11 @@ if ($this->config->pollenabled)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
-$this->addScript('js/formyeah.js');
+$this->addScript('js/sisyphus.js');
 $this->addScript('js/edit.js');
 ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="formyeah form-horizontal"
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />

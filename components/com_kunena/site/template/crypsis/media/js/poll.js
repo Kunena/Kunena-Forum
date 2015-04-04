@@ -100,10 +100,28 @@ jQuery(document).ready(function() {
 		if(jQuery('#poll-results').is(':visible')==true)
 		{
 			jQuery('#poll-results').hide();
+			jQuery('#kpoll_hide_results').hide();
 		}
 		else
 		{
 			jQuery('#poll-results').show();
+			jQuery('#kpoll_hide_results').show();
+			jQuery('#kpoll_go_results').hide();
+		}
+	});
+	
+	jQuery('#kpoll_hide_results').click(function() {
+		if(jQuery('#poll-results').is(':visible')==true)
+		{
+			jQuery('#poll-results').hide();
+      jQuery('#kpoll_go_results').show();
+			jQuery('#kpoll_hide_results').hide();
+		}
+		else
+		{
+			jQuery('#poll-results').show();
+			jQuery('#kpoll_hide_results').show();
+			jQuery('#kpoll_go_results').hide();
 		}
 	});
 });

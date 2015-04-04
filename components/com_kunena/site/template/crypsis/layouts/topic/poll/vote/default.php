@@ -46,7 +46,8 @@ $this->addScript('poll.js');
 		       value="<?php echo $this->voted && $this->config->pollallowvoteone
 			       ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
 			       : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
-		<input id="kpoll_go_results" type="button" class="btn btn-success" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>">
+		<input id="kpoll_go_results" type="button" class="btn btn-success" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>" />
+		<input id="kpoll_hide_results" type="button" class="btn btn-success" style="display:none;" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>" />
 	</div>
 </form>
 </div>

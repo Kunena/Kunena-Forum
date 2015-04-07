@@ -12,6 +12,7 @@
 defined('_JEXEC') or die ();
 
 JHtml::_('behavior.tooltip');
+JHTML::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
@@ -59,7 +60,7 @@ $this->addScript('js/formyeah.js');
 $this->addScript('js/edit.js');
 ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="formyeah form-horizontal"
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="formyeah form-horizontal form-validate"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />

@@ -214,7 +214,14 @@ jQuery(function($) {
 				if($.isEmptyObject(data.files)==false) {
 					fileCount = Object.keys(data.files).length;
 					$( data.files ).each(function( index, file ) {
-						var object = $( '<div><p><img src="'+file.path+'" width="100" height="100" /><br /><span>'+file.name+'</span><br /></p></div>' );
+						var image = '';
+						if (file.image===true) {
+							image = '<img src="'+file.path+'" width="100" height="100" /><br />';
+						} else {
+              image = '<i class="icon-flag-2 icon-big"></i><br />';
+            }
+						
+						var object = $( '<div><p>'+image+'<span>'+file.name+'</span><br /></p></div>' );
 						data.uploaded = true;
 						data.result= false;
 						data.file_id = file.id;

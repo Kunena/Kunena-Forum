@@ -1747,16 +1747,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					$ebay_object = '<div style="border: 1px solid #e5e5e5;margin:10px;padding:10px;border-radius:5px">';
 					$ebay_object .= '<img src="https://securepics.ebaystatic.com/api/ebay_market_108x45.gif" />';
 					$ebay_object .= '<div style="margin:10px 0" /></div>';
-					$ebay_object .= '<div style="text-align: center;"><a href="' . $resp->Item->ViewItemURLForNaturalSearch . '"> <img  src="' . $resp->Item->PictureURL[0] . '" /></a></div>';
+					$ebay_object .= '<div style="text-align: center;"><a href="' . $resp->Item->ViewItemURLForNaturalSearch . '" target="_blank"> <img  src="' . $resp->Item->PictureURL[0] . '" /></a></div>';
 					$ebay_object .= '<div style="margin:10px 0" /></div>';
-					$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . $resp->Item->Title . '</a>';
+					$ebay_object .= '<a href="' . $resp->Item->ViewItemURLForNaturalSearch . '" target="_blank">' . $resp->Item->Title . '</a>';
 					$ebay_object .= '<div style="margin:10px 0" /></div>';
 					$ebay_object .= $resp->Item->ConvertedCurrentPrice->CurrencyID . '  ' . $resp->Item->ConvertedCurrentPrice->Value;
 					$ebay_object .= '<div style="margin:10px 0" /></div>';
 
 					if ($resp->Item->ListingStatus == "Active")
 					{
-						$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '">' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') . '</a>';
+						$ebay_object .= '<a class="btn" href="' . $resp->Item->ViewItemURLForNaturalSearch . '" target="_blank">' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_BUY_IT_NOW') . '</a>';
 					}
 					else
 					{

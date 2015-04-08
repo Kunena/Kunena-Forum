@@ -877,6 +877,15 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			}
 		}
 
+		// When moving only first message keep poll only on target topic
+		if ($this->poll_id && $target != $this && $ids)
+		{
+			if ($ids && $this->first_post_id)
+			{
+				$this->poll_id = 0;
+			}
+		}
+
 		if (!$ids && $target != $this) {
 			// Leave shadow from old topic
 			$this->moved_id = $target->id;

@@ -61,6 +61,7 @@ class KunenaControllerTopic extends KunenaController
 			$object->caption = $attach->caption;
 			$object->type    = $attach->filetype;
 			$object->path    = $attach->getUrl();
+			$object->image   = $attach->isImage();
 			$list['files'][] = $object;
 		}
 
@@ -440,15 +441,15 @@ class KunenaControllerTopic extends KunenaController
 		$http = substr_count($text, "http");
  		$href = substr_count($text, "href");
  		$url = substr_count($text, "[url");
-		
+
 		$countlink = $http += $href += $url;
-		
+
 		if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
 			$this->setRedirectBack();
 			return;
 		}
-		
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 
@@ -683,20 +684,20 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
-		
+
 		// Check max links in message to check spam
 		$http = substr_count($text, "http");
  		$href = substr_count($text, "href");
  		$url = substr_count($text, "[url");
-		
+
 		$countlink = $http += $href += $url;
-		
+
 		if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
 			$this->setRedirectBack();
 			return;
 		}
-		
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onBeforeEdit($message);

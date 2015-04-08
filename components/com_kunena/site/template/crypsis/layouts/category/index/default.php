@@ -129,7 +129,12 @@ foreach ($this->sections as $section) :
 											<li>
 												<?php
 												// FIXME: Implement small category icons.
-												// FIXME: echo $this->getCategoryIcon($subcategory, true);
+												if (!empty($subcategory->icon)) : ?>
+													<i class="<?php echo $subcategory->icon; ?>"></i>
+												<?php else : ?>
+													<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
+												<?php endif; ?>
+												<?php
 												echo $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
 													. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 													. ')</small>';

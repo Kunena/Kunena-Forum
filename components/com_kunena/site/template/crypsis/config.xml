@@ -33,6 +33,10 @@
 			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
 			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
 		</field>
+		<field name="formRecover" type="list" default="0" label="COM_KUNENA_TEMPLATE_RECOVER" description="COM_KUNENA_TEMPLATE_RECOVER_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="avatar">

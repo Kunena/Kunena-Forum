@@ -36,7 +36,11 @@ $this->addStyleSheet('css/atwho.css');
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addScript('js/edit.js');
-$this->addScript('js/formyeah.js');
+
+if ($this->ktemplate->params->get('formRecover', 1))
+{
+	$this->addScript('js/formyeah.js');
+}
 ?>
 
 <div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">

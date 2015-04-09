@@ -37,7 +37,7 @@ $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addScript('js/edit.js');
 
-if ($this->ktemplate->params->get('formRecover', 1))
+if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
 	$this->addScript('js/formyeah.js');
 }

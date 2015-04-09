@@ -31,7 +31,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 <?php if (!empty($this->embedded)) : ?>
 	<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 		  method="post" target="_self" class="timefilter pull-right">
-		<?php $this->displayTimeFilter('sel'); ?>
+		<?php // Fix Me: Beta2 $this->displayTimeFilter('sel'); ?>
 	</form>
 <?php endif; ?>
 
@@ -123,6 +123,6 @@ $cols = empty($this->checkbox) ? 5 : 6;
 <?php if (!empty($this->embedded)) : ?>
 	<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 		  method="post" target="_self" class="timefilter pull-right">
-		<?php $this->displayTimeFilter('sel'); ?>
+		<?php // Fix Me: Beta2 $this->displayTimeFilter('sel'); ?>
 	</form>
 <?php endif; ?>

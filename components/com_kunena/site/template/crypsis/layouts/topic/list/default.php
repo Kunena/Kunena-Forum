@@ -13,25 +13,30 @@ defined('_JEXEC') or die;
 $cols = !empty($this->actions) ? 6 : 5;
 $colspan = !empty($this->actions) ? 4 : 3;
 ?>
+<div class="row-fluid">
+	<div class="span12">
+		<h2>
+			<?php echo $this->escape($this->headerText); ?>
+			<small class="hidden-phone">
+				(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
+			</small>
 
-<h2>
-	<?php echo $this->escape($this->headerText); ?>
-	<small class="hidden-phone">
-		(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
-	</small>
+			<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+		</h2>
 
-	<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-
-</h2>
-<div class="pull-right">
-	<div class="filter-sel">
-		<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-			method="post" target="_self" class="form-inline hidden-phone">
-			<div>
-				<?php $this->displayTimeFilter('sel'); ?>
+		<div id="filter-time">
+			<div class="filter-sel pull-right">
+				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+					method="post" target="_self" class="form-inline hidden-phone">
+					<div>
+						<?php $this->displayTimeFilter('sel'); ?>
+					</div>
+				</form>
 			</div>
-		</form>
+		</div>
 	</div>
+</div>
+<div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 		->set('catid', 'all')
 		->setLayout('topic'); ?>

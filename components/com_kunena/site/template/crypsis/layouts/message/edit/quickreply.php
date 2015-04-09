@@ -39,20 +39,20 @@ $this->addScript('js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
-	$this->addScript('js/formyeah.js');
+	$this->addScript('js/sisyphus.js');
 }
 ?>
 
 <div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>
 			<?php echo JText::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
 		</h3>
 	</div>
 
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
-	      enctype="multipart/form-data" name="postform" id="postform" class="formyeah" data-page-identifier="1">
+	      enctype="multipart/form-data" name="postform" id="postform">
 		<input type="hidden" name="task" value="post" />
 		<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
 		<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />

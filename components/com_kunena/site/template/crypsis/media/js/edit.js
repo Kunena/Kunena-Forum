@@ -93,8 +93,8 @@ jQuery(document).ready(function() {
 	
 	/* Store form data into localstorage every 1 second */
 	jQuery("#postform").sisyphus( {
-		locationBased: false,
-		timeout: 1
+		locationBased: true,
+		timeout: 5
 	});
 });
 

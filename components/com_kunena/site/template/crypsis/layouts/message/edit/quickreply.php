@@ -36,7 +36,11 @@ $this->addStyleSheet('css/atwho.css');
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addScript('js/edit.js');
-$this->addScript('js/sisyphus.js');
+
+if (KunenaFactory::getTemplate()->params->get('formRecover'))
+{
+	$this->addScript('js/sisyphus.js');
+}
 ?>
 
 <div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">

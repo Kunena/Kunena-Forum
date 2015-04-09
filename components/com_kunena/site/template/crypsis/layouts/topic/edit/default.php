@@ -12,6 +12,7 @@
 defined('_JEXEC') or die ();
 
 JHtml::_('behavior.tooltip');
+JHTML::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
@@ -55,11 +56,15 @@ if ($this->config->pollenabled)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
-$this->addScript('js/sisyphus.js');
 $this->addScript('js/edit.js');
+
+if (KunenaFactory::getTemplate()->params->get('formRecover'))
+{
+	$this->addScript('js/sisyphus.js');
+}
 ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal"
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />

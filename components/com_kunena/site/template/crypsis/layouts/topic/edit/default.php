@@ -56,8 +56,12 @@ if ($this->config->pollenabled)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
-$this->addScript('js/formyeah.js');
 $this->addScript('js/edit.js');
+
+if ($this->ktemplate->params->get('formRecover', 1))
+{
+	$this->addScript('js/formyeah.js');
+}
 ?>
 
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="formyeah form-horizontal form-validate"

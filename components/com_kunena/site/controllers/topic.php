@@ -813,16 +813,12 @@ class KunenaControllerTopic extends KunenaController
 	{
 		$type = JRequest::getString('task');
 		$this->setThankyou($type);
-
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
 	}
 
 	public function unthankyou()
 	{
 		$type = JRequest::getString('task');
 		$this->setThankyou($type);
-
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
 	}
 
 	protected function setThankyou($type)
@@ -858,6 +854,8 @@ class KunenaControllerTopic extends KunenaController
 				return;
 			}
 
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
+
 			$activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
 		}
 		else
@@ -871,6 +869,8 @@ class KunenaControllerTopic extends KunenaController
 
 				return;
 			}
+
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
 
 			$activityIntegration->onAfterUnThankyou($this->me->userid, $userid, $message);
 		}

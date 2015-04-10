@@ -52,7 +52,7 @@
 			</field>
 			<field name="topics_time"
 			       type="list"
-			       default="-1"
+			       default=""
 			       label="COM_KUNENA_A_TOPICS_TIME"
 			       description="COM_KUNENA_A_TOPICS_TIME_DESC">
 				<option value="">COM_KUNENA_A_USE_GLOBAL</option>

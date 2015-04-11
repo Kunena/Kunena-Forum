@@ -53,6 +53,10 @@ JHtml::_('dropdown.init');
 										<a href="#tab_bbcode" data-toggle="tab">
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_BBCODE'); ?> </a>
 									</li>
+									<li>
+										<a href="#tab_colors" data-toggle="tab">
+											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COLORS'); ?> </a>
+									</li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_info">
@@ -113,6 +117,11 @@ JHtml::_('dropdown.init');
 										?>
 									</div>
 									<div class="tab-pane" id="tab_bbcode">
+										<table class="table table-bordered table-striped">
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_FEATURE_NOT_AVAILABLE_IN_BETA'); ?>:</td>
+											</tr>
+										</table>
 										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
 											<table class="table table-bordered table-striped">
 												<?php foreach($this->form->getFieldset('bbcode') as $field) : if (!$field->hidden) : ?>
@@ -127,6 +136,13 @@ JHtml::_('dropdown.init');
 											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
 										endif;
 										?>
+									</div>
+									<div class="tab-pane" id="tab_colors">
+										<table class="table table-bordered table-striped">
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_FEATURE_NOT_AVAILABLE_IN_BETA'); ?>:</td>
+											</tr>
+										</table>
 									</div>
 								</div>
 							</div>

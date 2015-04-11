@@ -43,6 +43,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getCategoryIcon($category)
 	{
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
 		if ($category->getNewCount())
 		{
 			if (!empty($category->icon))
@@ -51,7 +53,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			}
 			else
 			{
-				return '<i class="icon-folder-close icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/> </i>';
+				return '<i class="'. $defaultcategoryicon .' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/> </i>';
 			}
 		}
 		else
@@ -62,7 +64,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			}
 			else
 			{
-				return '<i class="icon-folder icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" /> </i>';
+				return '<i class="'. $defaultcategoryicon .' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" /> </i>';
 			}
 		}
 	}
@@ -76,6 +78,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
 		if ($subcategory->getNewCount())
 		{
 			if (!empty($subcategory->icon))
@@ -84,7 +88,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			}
 			else
 			{
-				return '<i class="icon-folder-close icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/> </i>';
+				return '<i class="' . $defaultcategoryicon . ' icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/> </i>';
 			}
 		}
 		else
@@ -95,7 +99,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			}
 			else
 			{
-				return '<i class="icon-folder" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" /> </i>';
+				return '<i class="' . $defaultcategoryicon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" /> </i>';
 			}
 		}
 	}

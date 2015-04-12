@@ -95,14 +95,35 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.modal');
 
-		// JHtml::_('formbehavior.chosen', 'select');
-
 		// Load JavaScript.
 		$this->addScript('main.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
+
+		// Load template colors settings
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$styles = <<<EOF
+		/* Kunena Custom CSS */
+EOF;
+		$iconcolor = $this->ktemplate->params->get('IconColor');
+		if ($iconcolor) {
+			$styles .= <<<EOF
+		.layout#kunena [class*="category"] i { color: {$iconcolor}; }
+EOF;
+		}
+
+		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
+		if ($iconcolornew) {
+			$styles .= <<<EOF
+		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
+EOF;
+		}
+
+		$document = JFactory::getDocument();
+		$document->addStyleDeclaration($styles);
 
 		parent::initialize();
 	}

@@ -40,6 +40,11 @@
 		</field>
 	</fieldset>
 
+	<fieldset name="colors">
+		<field name="IconColor" type="color" default="inherit" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS" description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_DESC"/>
+		<field name="IconColorNew" type="color" default="#48a348" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW" description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW_DESC"/>
+	</fieldset>
+
 	<fieldset name="avatar">
 		<field name="templatebyText" default=""/>
 		<field name="templatebyName"  default=""/>

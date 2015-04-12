@@ -259,6 +259,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		{
 			$user = KunenaFactory::getUser($this->userid);
 			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->message );
+			$text = preg_replace('/\[hide\](.*?)\[\/hide\]/su', '', $this->message );
 			$message->message = "[quote=\"{$user->getName($this->name)}\" post={$this->id}]" .  $text . "[/quote]";
 		}
 		else
@@ -385,9 +386,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 
 			$mailsender = JMailHelper::cleanAddress($config->board_title);
-			$mailsubject = JMailHelper::cleanSubject(
-				"[{$config->board_title}] {$topic->subject} ({$this->getCategory()->name})"
-			);
+			$mailsubject = JMailHelper::cleanSubject ( $config->board_title . ' ' . $topic->subject . " (" . $this->getCategory()->name . ")" );
 			$subject = $this->subject ? $this->subject : $topic->subject;
 
 			// Create email.

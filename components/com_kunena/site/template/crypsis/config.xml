@@ -2,6 +2,7 @@
 <!DOCTYPE config>
 <config>
 	<fieldset name="advanced">
+		<field name="DefaultCategoryicon" type="text" default="icon-folder" label="COM_KUNENA_TEMPLATE_DEFAULT_ICON" description="COM_KUNENA_TEMPLATE_DEFAULT_ICON_DESC"/>
 		<field name="buttonIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_BUTTON_SET" description="COM_KUNENA_TEMPLATE_BUTTON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 			<option value="bluebird">COM_KUNENA_TEMPLATE_BUTTON_SET_BLUEBIRD</option>
@@ -19,7 +20,7 @@
 			<option value="white">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_WHITE</option>
 			<option value="black">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_BLACK</option>
 		</field>
-				<field name="SubjectLengthMessage" type="text" default="80" label="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH" description="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH_DESC"/>
+		<field name="SubjectLengthMessage" type="text" default="80" label="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH" description="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH_DESC"/>
 	</fieldset>
 
 	<fieldset name="features">
@@ -37,6 +38,11 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+	</fieldset>
+
+	<fieldset name="colors">
+		<field name="IconColor" type="color" default="inherit" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS" description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_DESC"/>
+		<field name="IconColorNew" type="color" default="#48a348" label="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW" description="COM_KUNENA_TEMPLATE_COLORS_ICONS_COLORS_NEW_DESC"/>
 	</fieldset>
 
 	<fieldset name="avatar">

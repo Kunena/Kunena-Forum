@@ -83,11 +83,7 @@ foreach ($this->sections as $section) :
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
 							<td class="span1 center hidden-phone">
-								<?php if (!empty($category->icon)) : ?>
-								<i class="icon-big <?php echo $category->icon; ?> <?php if (($new = $category->getNewCount()) > 0) : ?>  icon-knewchar <?php endif; ?>"></i>
-								<?php else : ?>
-									<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
-								<?php endif; ?>
+								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
 							</td>
 							<td class="span8">
 								<div>
@@ -127,15 +123,7 @@ foreach ($this->sections as $section) :
 
 										<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 											<li>
-												<?php
-												// FIXME: Implement small category icons.
-												if (!empty($subcategory->icon)) : ?>
-													<i class="<?php echo $subcategory->icon; ?>"></i>
-												<?php else : ?>
-													<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
-												<?php endif; ?>
-												<?php
-												echo $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
+												<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
 													. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 													. ')</small>';
 												if (($new = $subcategory->getNewCount()) > 0)

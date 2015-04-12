@@ -56,6 +56,15 @@ class KunenaControllerUser extends KunenaController
 			}
 		}
 
+		$layout = JRequest::getCmd('layout', 'default');
+		if ($layout == 'list')
+		{
+			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
+			{
+				$this->redirectBack();
+			}
+		}
+
 		parent::display();
 	}
 

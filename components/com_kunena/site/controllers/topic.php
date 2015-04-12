@@ -424,7 +424,7 @@ class KunenaControllerTopic extends KunenaController
 		// Make sure that message has visible content (text, images or objects) to be shown.
 		$text = KunenaHtmlParser::parseBBCode($message->message);
 
-		if (!preg_match('!(<img |<object )!', $text))
+		if (!preg_match('!(<img |<object |<iframe )!', $text))
 		{
 			$text = trim(JFilterOutput::cleanText($text));
 		}
@@ -1355,11 +1355,6 @@ class KunenaControllerTopic extends KunenaController
 			$shadow         = JRequest::getBool('shadow', false);
 			$topic_emoticon = JRequest::getInt('topic_emoticon', null);
 
-			if (!is_null($topic_emoticon))
-			{
-				$topic->icon_id = $topic_emoticon;
-			}
-
 			if ($object instanceof KunenaForumMessage)
 			{
 				$mode = JRequest::getWord('mode', 'selected');
@@ -1380,7 +1375,7 @@ class KunenaControllerTopic extends KunenaController
 				$ids = false;
 			}
 
-			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject);
+			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon);
 
 			if (!$targetobject)
 			{

@@ -76,7 +76,16 @@ class KunenaUploadHelper
 				}
 				else
 				{
-					return false;
+					$ext = JFile::getExt($file['name']);
+					$name = JFile::stripExt($file['name']);
+					$newFileName = '';
+
+					for ($i = 2; file_exists("{$uploadfolder}/{$newFileName}"); $i++)
+					{
+						$newFileName = $name . "-$i." . $ext;
+					}
+
+					$filepath = $uploadfolder . '/' . $newFileName;
 				}
 			}
 

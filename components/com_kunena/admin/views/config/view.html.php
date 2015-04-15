@@ -62,6 +62,7 @@ class KunenaAdminViewConfig extends KunenaView
 		}
 
 		JToolbarHelper::spacer();
-		//$bar->appendButton('Popup', 'restore', 'COM_KUNENA_RESET_CONFIG', 'index.php?option=com_kunena&amp;view=config&amp;layout=modal&amp;tmpl=component', 450, 200);
+		$help_url  = 'http://www.kunena.org/docs/Configuration';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 }

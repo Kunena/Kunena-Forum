@@ -26,6 +26,7 @@ if ($config->ordering_system == 'mesid')
 	$this->numLink = $message->replynum;
 }
 
+$list = array();
 ?>
 
 <small class="text-muted pull-right hidden-phone">
@@ -98,7 +99,20 @@ if ($message->modified_time) {
 <?php if (!empty($this->thankyou)): ?>
 <div class="kmessage-thankyou">
 	<?php
-	echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
+	foreach($this->thankyou as $userid => $thank)
+	{
+		if ( !empty($this->thankyou_delete[$userid]) )
+		{
+			$list[] = $thank . ' <a title="' . JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
+						. $this->thankyou_delete[$userid] . '"><i class="icon-remove"></i></a>';
+		}
+		else
+		{
+			$list[] = $thank;
+		}
+	}
+
+	echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $list) . ' ';
 	if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
 	?>
 </div>

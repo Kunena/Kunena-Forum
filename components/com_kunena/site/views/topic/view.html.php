@@ -896,8 +896,9 @@ class KunenaViewTopic extends KunenaView
 		$catid = $this->state->get('item.catid');
 		$id    = $this->topic->id;
 		$mesid = $this->message->id;
+		$targetuserid = $this->me->userid;
 
-		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&" . JSession::getFormToken() . '=1';
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . JSession::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
 		$this->messageButtons = new JObject();
@@ -921,6 +922,12 @@ class KunenaViewTopic extends KunenaView
 		if ($this->message->authorise('thankyou') && !array_key_exists($this->me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('thankyou', $this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user'));
+		}
+
+		// Unthank you
+		if ($this->message->authorise('unthankyou') && array_key_exists($this->me->userid, $this->message->thankyou))
+		{
+			$this->messageButtons->set('unthankyou', $this->getButton(sprintf($task, 'unthankyou'), 'unthankyou', 'message', 'moderation'));
 		}
 
 		// Report this
@@ -1003,7 +1010,7 @@ class KunenaViewTopic extends KunenaView
 					$thankyous = $message->thankyou;
 				}
 
-				if ($this->message->authorise('unthankyou'))
+				if ($this->message->authorise('unthankyou') &&  $this->me->isModerator($this->message->getCategory()))
 				{
 					$canUnthankyou = true;
 				}
@@ -1020,6 +1027,8 @@ class KunenaViewTopic extends KunenaView
 				}
 
 				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
+
+				$thankyou_delete  = '';
 
 				foreach ($loaded_users as $userid => $user)
 				{

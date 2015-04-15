@@ -61,6 +61,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->thankyou = array();
 		$this->total_thankyou = 0;
 		$this->more_thankyou = 0;
+		$this->thankyou_delete = array();
 
 		if (isset($this->message->thankyou))
 		{
@@ -97,7 +98,12 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 				foreach ($loaded_users as $userid => $user)
 				{
-					$this->thankyou[] = $loaded_users[$userid]->getLink();
+					if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
+					{
+						$this->thankyou_delete[$userid]  = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
+					}
+
+					$this->thankyou[$userid] = $loaded_users[$userid]->getLink();
 				}
 			}
 		}

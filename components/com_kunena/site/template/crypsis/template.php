@@ -110,7 +110,9 @@ EOF;
 		$iconcolor = $this->ktemplate->params->get('IconColor');
 		if ($iconcolor) {
 			$styles .= <<<EOF
-		.layout#kunena [class*="category"] i { color: {$iconcolor}; }
+		.layout#kunena [class*="category"] i,
+		.layout#kunena #kwho i.icon-big,
+		.layout#kunena#kstats i.icon-big { color: {$iconcolor}; }
 EOF;
 		}
 

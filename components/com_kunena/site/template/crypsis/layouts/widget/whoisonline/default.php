@@ -28,6 +28,7 @@ defined('_JEXEC') or die;
 
 	<div class="row-fluid collapse in" id="kwho">
 		<div class="well well-small">
+			<ul class="unstyled span1"><a><i class="icon-users icon-big"></i></a></ul>
 			<p>
 				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 			</p>
@@ -63,22 +64,22 @@ defined('_JEXEC') or die;
 			<p>
 				<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
 				<span class="kwho-admin">
-					<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+					<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
 				</span>
 				<span class="kwho-globalmoderator">
-					<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
+					<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
 				</span>
 				<span class="kwho-moderator">
-					<?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
+					<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
 				</span>
 				<span class="kwho-banned">
-					<?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
+					<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
 				</span>
 				<span class="kwho-user">
-					<?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
+					<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
 				</span>
 				<span class="kwho-guest">
-					<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
+					<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
 				</span>
 			</p>
 			<?php endif; ?>

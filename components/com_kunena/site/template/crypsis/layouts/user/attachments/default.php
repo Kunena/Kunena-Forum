@@ -41,13 +41,13 @@ $attachments = $this->attachments;
 				<th class="span2">
 					<?php echo JText::_('COM_KUNENA_FILENAME'); ?>
 				</th>
-				<th class="span1">
+				<th class="span2">
 					<?php echo JText::_('COM_KUNENA_FILESIZE'); ?>
 				</th>
-				<th class="span3">
+				<th class="span2">
 					<?php echo JText::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?>
 				</th>
-				<th class="span2 center">
+				<th class="span1 center">
 					<?php echo JText::_('COM_KUNENA_PREVIEW'); ?>
 				</th>
 				<th class="span1 center">

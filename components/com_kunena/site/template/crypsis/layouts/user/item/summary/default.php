@@ -171,7 +171,7 @@ if ($this->config->showuserstats)
 				<?php endif; ?>
 			</div>
 		</div>
-		<div class="span6">
+		<div class="span6 pull-right">
 			<div class="well"> <?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?> </div>
 		</div>
 	</div>

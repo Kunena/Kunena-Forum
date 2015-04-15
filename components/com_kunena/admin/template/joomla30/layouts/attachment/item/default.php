@@ -14,5 +14,13 @@ defined ( '_JEXEC' ) or die ();
 $attachment = $this->attachment;
 ?>
 <a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
-	<img src="<?php echo $attachment->getUrl(true); ?>" height="40" width="40" />
+	<?php if ($attachment->isImage())
+	{
+		echo '<img src="' . $attachment->getUrl(true) . ' " height="40" width="40" />';
+	}
+	else
+	{
+		echo '<i class="icon-flag-2 icon-big"></i>';
+	}
+	?>
 </a>

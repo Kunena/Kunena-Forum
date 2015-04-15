@@ -16,7 +16,7 @@ $topic = $this->topic;
 $category = $topic->getCategory();
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 48);
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 7 : 6;
 
@@ -104,19 +104,17 @@ if (!empty($this->spacing)) : ?>
 		<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:<span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
 
-	<td class="span2 hidden-phone" id="recent-topics">
+	<td class="span2 hidden-phone">
 		<div class="row-fluid">
-		<?php if ($config->avataroncat) : ?>
-			<div class="span2 hidden-phone">
-				<?php echo $avatar; ?>
-			</div>
-			<div class="span10 last-avatar">
-		<?php endif; ?>
-		<?php if (!$config->avataroncat) : ?>
-			<div class="span12">
-		<?php endif; ?>
-				<span><?php echo $this->getTopicLink ($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
-					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>
+			<?php if ($config->avataroncat) : ?>
+				<div class="media pull-left">
+					<?php echo $avatar; ?>
+				</div>
+			<?php endif; ?>
+			<div class="media-body">
+				<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
+					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+				</span>
 				<br>
 				<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 			</div>

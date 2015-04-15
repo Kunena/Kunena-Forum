@@ -16,7 +16,8 @@ $topic = $this->topic;
 $category = $topic->getCategory();
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 48);
+$author = $topic->getLastPostAuthor();
+$avatar = $author->getAvatarImage('img-rounded', 48);
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 7 : 6;
 
@@ -108,7 +109,7 @@ if (!empty($this->spacing)) : ?>
 		<div class="row-fluid">
 			<?php if ($config->avataroncat) : ?>
 				<div class="media pull-left">
-					<?php echo $avatar; ?>
+					<?php echo $author->getLink($avatar); ?>
 				</div>
 			<?php endif; ?>
 			<div class="media-body">

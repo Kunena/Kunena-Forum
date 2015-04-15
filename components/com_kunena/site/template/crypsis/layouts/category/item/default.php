@@ -25,28 +25,31 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 <?php if (!$this->category->isSection()) : ?>
 
 <?php if (!empty($this->topics)) : ?>
+<div class="row-fluid">
+	<div class="span12">
+		<h2>
+			<?php echo $this->escape($this->headerText); ?>
+		</h2>
 
-	<h2>
-		<?php echo $this->escape($this->headerText); ?>
-	</h2>
+		<div class="pull-right">
+			<?php echo $this->subLayout('Widget/Search')
+				->set('catid', $this->category->id)
+				->setLayout('topic'); ?>
+		</div>
 
-	<div class="pull-right">
-		<?php echo $this->subLayout('Widget/Search')
-			->set('catid', $this->category->id)
-			->setLayout('topic'); ?>
+		<div class="pull-left">
+			<?php echo $this->subLayout('Widget/Pagination/List')
+				->set('pagination', $this->pagination)
+				->set('display', true); ?>
+		</div>
 	</div>
-
-	<div class="pull-left">
-		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination)
-			->set('display', true); ?>
-	</div>
+</div>
 <?php endif; ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_('form.token'); ?>
-	<div class="kbuttons">
+	<div>
 		<ul class="inline">
 			<?php if ($categoryActions) : ?>
 				<li class="hidden-phone">
@@ -83,15 +86,6 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 		</tr>
 		</thead>
 		<?php endif; ?>
-		<?php if (empty($this->topics)) : ?>
-			<tr>
-				<td>
-				</td>
-				<td colspan="3" class="center">
-					<span> <?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></span>
-				</td>
-			</tr>
-		<?php endif; ?>
 		<?php if ($this->topics) :
 
 			/** @var KunenaForumTopic $previous */
@@ -107,7 +101,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 					->setLayout('category');
 				$previous = $topic;
 			}
-		endif; ?>
+		?>
 		<tfoot>
 		<tr>
 			<td class="center hidden-phone">
@@ -147,14 +141,17 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 			</td>
 		</tr>
 		</tfoot>
+		<?php endif; ?>
 	</table>
 </form>
 
-<div class="pull-left">
-	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination)
-		->set('display', true); ?>
-</div>
+<?php if ($this->topics) : ?>
+	<div class="pull-left">
+		<?php echo $this->subLayout('Widget/Pagination/List')
+			->set('pagination', $this->pagination)
+			->set('display', true); ?>
+	</div>
+<?php endif; ?>
 
 <?php if (!empty($this->moderators))
 {

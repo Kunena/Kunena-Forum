@@ -104,6 +104,8 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
 		JToolBarHelper::spacer();
+		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
 	protected function setToolBarAdd()
@@ -118,6 +120,10 @@ class KunenaAdminViewTemplates extends KunenaView
 		}
 
 		JToolBarHelper::spacer();
+		JToolBarHelper::back();
+		JToolBarHelper::spacer();
+		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	protected function setToolBarEdit()
@@ -138,6 +144,8 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
+		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
 	protected function setToolBarChoosecss()

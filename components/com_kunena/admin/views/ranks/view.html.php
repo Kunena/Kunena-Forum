@@ -61,6 +61,8 @@ class KunenaAdminViewRanks extends KunenaView
 		JToolBarHelper::deleteList();
 		//}
 		JToolBarHelper::spacer();
+		$help_url  = 'http://www.kunena.org/docs/Ranks_management';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
 	/**

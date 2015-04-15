@@ -43,5 +43,7 @@ class KunenaAdminViewSmiley extends KunenaView
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
+		$help_url  = 'http://www.kunena.org/docs/Smiley_management';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 }

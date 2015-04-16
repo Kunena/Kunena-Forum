@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 $colspan = !empty($this->actions) ? 4 : 3;
-$cols    = empty($this->checkbox) ? 5 : 6;
+$cols    = empty($this->checkbox) ? 4 : 5;
 
 ?>
 
@@ -23,18 +23,14 @@ $cols    = empty($this->checkbox) ? 5 : 6;
 	<?php // To Do:: echo $this->topics->count->unread;<span class="badge badge-success"> </span>?>
 </h3>
 
-<?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-	<div class="pagination pull-left">
-		<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
-	</div>
-<?php endif; ?>
+<div class="pagination pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4))->set('display', true); ?>
+</div>
 
-<?php if (!empty($this->embedded)) : ?>
-	<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-		method="post" target="_self" class="timefilter pull-right">
-		<?php // Fix Me: Beta2 $this->displayTimeFilter('sel'); ?>
-	</form>
-<?php endif; ?>
+<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+	method="post" target="_self" class="timefilter pull-right">
+	<?php $this->displayTimeFilter('sel'); ?>
+</form>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
 	name="ktopicsform" id="ktopicsform">
@@ -63,7 +59,7 @@ $cols    = empty($this->checkbox) ? 5 : 6;
 			<td class="span2">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
-			<td class="span2">
+			<td class="span3">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->actions)) : ?>
@@ -89,7 +85,7 @@ $cols    = empty($this->checkbox) ? 5 : 6;
 				<div class="input-append">
 					<?php if (!empty($this->moreUri))
 					{
-						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
+						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'nofollow');
 					} ?>
 					<?php if (!empty($this->actions)) : ?>
 						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
@@ -118,16 +114,13 @@ $cols    = empty($this->checkbox) ? 5 : 6;
 	</table>
 </form>
 
-<?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-	<div class="pagination pull-left">
-		<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4)); ?>
-	</div>
-<?php endif; ?>
+<div class="pagination pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4))->set('display', true); ?>
+</div>
 
-<?php if (!empty($this->embedded)) : ?>
-	<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-		method="post" target="_self" class="timefilter pull-right">
-		<?php // Fix Me: Beta2 $this->displayTimeFilter('sel'); ?>
-	</form>
-<?php endif; ?>
+<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+	method="post" target="_self" class="timefilter pull-right">
+	<?php $this->displayTimeFilter('sel'); ?>
+</form>
+
 <div class="clearfix"></div>

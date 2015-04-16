@@ -89,7 +89,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 			<td colspan="<?php echo $colspan; ?>">
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 				<div class="input-append">
-					<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
+					<?php if (!empty($this->topics) && !empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 					<?php if (!empty($this->actions)) : ?>
 						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 						<?php if (isset($this->actions['move'])) :
@@ -106,7 +106,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 		<tbody>
 		<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
 			<tr>
-				<td colspan="4" class="center"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?>	</td>
+				<td colspan="4" class="center"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
 			</tr>
 		<?php else : ?>
 			<?php foreach ($this->topics as $i => $topic)
@@ -121,11 +121,11 @@ $colspan = !empty($this->actions) ? 4 : 3;
 	</table>
 </form>
 
-<?php if (!empty($this->topics) && empty($this->subcategories)) : ?>
-	<div class="pull-left">
-		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination->setDisplayedPages(4));
-		?>
-	</div>
-<?php endif; ?>
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination->setDisplayedPages(4))
+		->set('display', true); ?>
+</div>
+
 <div class="clearfix"></div>
+

@@ -58,4 +58,48 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 
 		return null;
 	}
+
+	/**
+	 * Define javascript variables to show or disable some bbcode buttons
+	 *
+	 * @return void
+	 */
+	public function getBBcodesEnabled()
+	{
+		if ($this->config->showvideotag)
+		{
+			$this->addScriptDeclaration("kunena_showvideotag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showvideotag=0;");
+		}
+
+		if (!$this->config->disemoticons)
+		{
+			$this->addScriptDeclaration("kunena_disemoticons=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_disemoticons=0;");
+		}
+
+		if ($this->config->showebaytag)
+		{
+			$this->addScriptDeclaration("kunena_showebaytag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showebaytag=0;");
+		}
+
+		if ($this->config->showspoilertag)
+		{
+			$this->addScriptDeclaration("kunena_showspoilertag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showspoilertag=0;");
+		}
+	}
 }

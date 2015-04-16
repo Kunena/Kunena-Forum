@@ -346,4 +346,20 @@ jQuery(document).ready(function (){
 		);
 		return false;
 	});
+	
+	if (!kunena_showvideotag) {
+		jQuery('.videodropdownbutton').remove();
+	}
+
+	if (!kunena_disemoticons) {
+		jQuery('.emoticonsbutton').remove();
+	}
+
+	if (!kunena_showebaytag) {
+		jQuery('.ebaybutton').remove();
+	}
+
+	if (!kunena_showspoilertag) {
+		jQuery('.spoilerbutton').remove();
+	}
 });

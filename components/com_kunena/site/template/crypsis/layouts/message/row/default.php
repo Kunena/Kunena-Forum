@@ -63,18 +63,15 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong><span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
 		<div class="views"><strong><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</strong> <span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
-	<td class="span2" id="recent-topics">
+	<td class="span3">
 		<div class="row-fluid">
 		<?php if ($config->avataroncat) : ?>
-			<div class="span2 hidden-phone">
+			<div class="media pull-left">
 				<?php echo $avatar; ?>
 			</div>
-			<div class="span10 last-avatar">
 		<?php endif; ?>
-		<?php if (!$config->avataroncat) : ?>
-			<div class="span12">
-		<?php endif; ?>
-			<?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
+			<div class="media-body">
+			<span><?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?></span>
 			<?php if ($message->userid) : ?>
 				<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 			<?php endif; ?>

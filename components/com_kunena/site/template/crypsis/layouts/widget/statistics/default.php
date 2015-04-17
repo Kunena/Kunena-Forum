@@ -27,8 +27,8 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 	</h2>
 	<div class="row-fluid collapse in" id="kstats">
-	<div class="well well-small span12">
-		<ul class="unstyled span1"><a><i class="icon-bars icon-big"></i></a></ul>
+	<div class="well-small">
+		<ul class="unstyled span1 btn-link"><i class="icon-bars icon-big"></i></ul>
 		<ul class="unstyled span3">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:

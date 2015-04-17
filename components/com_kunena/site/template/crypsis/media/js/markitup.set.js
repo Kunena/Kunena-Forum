@@ -346,7 +346,7 @@ jQuery(document).ready(function (){
 		);
 		return false;
 	});
-	
+
 	if (!kunena_showvideotag) {
 		jQuery('.videodropdownbutton').remove();
 	}
@@ -361,5 +361,41 @@ jQuery(document).ready(function (){
 
 	if (!kunena_showspoilertag) {
 		jQuery('.spoilerbutton').remove();
+	}
+
+	if (!kunena_showmapstag) {
+		jQuery('.mapbutton').remove();
+	}
+
+	if (!kunena_showtwittertag) {
+		jQuery('.tweetbutton').remove();
+	}
+
+	if (!kunena_showlinktag) {
+		jQuery('.linkbutton').remove();
+	}
+
+	if (!kunena_showpicturetag) {
+		jQuery('.picturebutton').remove();
+	}
+
+	if (!kunena_showhidetag) {
+		jQuery('.hiddentextbutton').remove();
+	}
+
+	if (!kunena_showtabletag) {
+		jQuery('.tablebutton').remove();
+	}
+
+	if (!kunena_showcodetag) {
+		jQuery('.codesimplebutton').remove();
+	}
+
+	if (!kunena_showquotetag) {
+		jQuery('.quotebutton').remove();
+	}
+
+	if (!kunena_showdividertag) {
+		jQuery('.markItUpSeparator').remove();
 	}
 });

@@ -66,7 +66,8 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 */
 	public function getBBcodesEnabled()
 	{
-		if ($this->config->showvideotag)
+		$templatesettings = KunenaFactory::getTemplate()->params;
+		if ($this->config->showvideotag && $templatesettings->get('video'))
 		{
 			$this->addScriptDeclaration("kunena_showvideotag=1;");
 		}
@@ -75,7 +76,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showvideotag=0;");
 		}
 
-		if (!$this->config->disemoticons)
+		if (!$this->config->disemoticons && $templatesettings->get('emoticons'))
 		{
 			$this->addScriptDeclaration("kunena_disemoticons=1;");
 		}
@@ -84,7 +85,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_disemoticons=0;");
 		}
 
-		if ($this->config->showebaytag)
+		if ($this->config->showebaytag && $templatesettings->get('ebay'))
 		{
 			$this->addScriptDeclaration("kunena_showebaytag=1;");
 		}
@@ -93,13 +94,94 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showebaytag=0;");
 		}
 
-		if ($this->config->showspoilertag)
+		if ($templatesettings->get('spoiler'))
 		{
 			$this->addScriptDeclaration("kunena_showspoilertag=1;");
 		}
 		else
 		{
 			$this->addScriptDeclaration("kunena_showspoilertag=0;");
+		}
+
+		if ($templatesettings->get('maps'))
+		{
+			$this->addScriptDeclaration("kunena_showmapstag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showmapstag=0;");
+		}
+
+		if ($templatesettings->get('twitter'))
+		{
+			$this->addScriptDeclaration("kunena_showtwittertag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showtwittertag=0;");
+		}
+
+		if ($templatesettings->get('link'))
+		{
+			$this->addScriptDeclaration("kunena_showlinktag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showlinktag=0;");
+		}
+
+		if ($this->config->image_upload != "" && $templatesettings->get('picture'))
+		{
+			$this->addScriptDeclaration("kunena_showpicturetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showpicturetag=0;");
+		}
+
+		if ($templatesettings->get('hide'))
+		{
+			$this->addScriptDeclaration("kunena_showhidetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showhidetag=0;");
+		}
+
+		if ($templatesettings->get('table'))
+		{
+			$this->addScriptDeclaration("kunena_showtabletag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showtabletag=0;");
+		}
+
+		if ($templatesettings->get('code'))
+		{
+			$this->addScriptDeclaration("kunena_showcodetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showcodetag=0;");
+		}
+
+		if ($templatesettings->get('quote'))
+		{
+			$this->addScriptDeclaration("kunena_showquotetag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showquotetag=0;");
+		}
+
+		if ($templatesettings->get('divider'))
+		{
+			$this->addScriptDeclaration("kunena_showdividertag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showdividertag=0;");
 		}
 	}
 }

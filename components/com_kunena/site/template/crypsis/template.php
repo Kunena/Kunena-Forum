@@ -111,8 +111,8 @@ EOF;
 		if ($iconcolor) {
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] i,
-		.layout#kunena #kwho i.icon-big,
-		.layout#kunena#kstats i.icon-big { color: {$iconcolor}; }
+		.layout#kunena #kwho i.icon-users,
+		.layout#kunena#kstats i.icon-bars { color: {$iconcolor}; }
 EOF;
 		}
 

@@ -257,6 +257,16 @@ class KunenaBbcode extends NBBC_BBCode
 			}
 		}
 
+		if (isset($params['host']) && strstr($params['host'], 'twitter.') )
+		{
+			$path = explode('/', $params['path']);
+
+			if ( isset($path[3]) )
+			{
+				return $this->defaults->renderTweet($path[3]);
+			}
+		}
+
 		if ($config->autolink)
 		{
 			$layout = KunenaLayout::factory('BBCode/URL');
@@ -2439,6 +2449,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . JText::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
 		}
 
+		return $this->renderTweet($tweetid);
+	}
+
+	/**
+	 * Render the tweet by loading the right layout
+	 *
+	 * @param   int  $tweetid  The tweet id to render in layout
+	 *
+	 * @return string
+	 */
+	public function renderTweet($tweetid)
+	{
 		$tweet = $this->getTweet($tweetid);
 
 		$layout = KunenaLayout::factory('BBCode/twitter');
@@ -2448,17 +2470,17 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			if ($layout->getPath())
 			{
 				return (string) $layout
-					->set('tweetid', $tweet->id_str)
-					->set('user_profile_url_normal', $tweet->user->profile_image_url)
-					->set('user_profile_url_big', $tweet->user->profile_image_url_big)
-					->set('user_name', $tweet->user->name)
-					->set('user_screen_name', $tweet->user->screen_name)
-					->set('tweet_created_at', $tweet->created_at)
-					->set('tweet_text', $tweet->text)
-					->set('retweet_count', $tweet->retweet_count)
-					->set('favorite_count', $tweet->favorite_count)
-					->set('verified', $tweet->user->verified)
-					->setLayout('default');
+				->set('tweetid', $tweet->id_str)
+				->set('user_profile_url_normal', $tweet->user->profile_image_url)
+				->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+				->set('user_name', $tweet->user->name)
+				->set('user_screen_name', $tweet->user->screen_name)
+				->set('tweet_created_at', $tweet->created_at)
+				->set('tweet_text', $tweet->text)
+				->set('retweet_count', $tweet->retweet_count)
+				->set('favorite_count', $tweet->favorite_count)
+				->set('verified', $tweet->user->verified)
+				->setLayout('default');
 			}
 		}
 	}

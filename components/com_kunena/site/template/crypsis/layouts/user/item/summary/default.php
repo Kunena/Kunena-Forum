@@ -34,7 +34,6 @@ if ($this->config->showuserstats)
 
 <div class="row-fluid">
 	<div class="span12">
-		<div class="row-fluid">
 			<?php if ($avatar) : ?>
 				<div class="span2">
 					<div class="center"> <?php echo $avatar; ?> </div>
@@ -88,18 +87,24 @@ if ($this->config->showuserstats)
 				</li>
 			</ul>
 			<ul class="unstyled span2">
+				<?php if (!empty($profile->posts)) : ?>
 				<li>
 					<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
 					<span> <?php echo JText::sprintf((int)$profile->posts); ?> </span>
 				</li>
+				<?php endif; ?>
+				<?php if (!empty($profile->uhits)) : ?>
 				<li>
 					<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
 					<span> <?php echo JText::sprintf((int)$profile->uhits); ?> </span>
 				</li>
+				<?php endif; ?>
+				<?php if (!empty($profile->thankyou)) : ?>
 				<li>
 					<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 					<span> <?php echo JText::sprintf((int)$profile->thankyou); ?> </span>
 				</li>
+				<?php endif; ?>
 				<?php if (isset($profile->points)) : ?>
 					<li>
 						<strong> <?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?> </strong>
@@ -108,25 +113,31 @@ if ($this->config->showuserstats)
 				<?php endif; ?>
 			</ul>
 			<ul class="unstyled span3">
+				<?php if (!empty($profile->location)) : ?>
 				<li>
 					<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
-				<span>
-					<?php if ($profile->location) : ?>
-						<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
-						   target="_blank"><?php echo $this->escape($profile->location); ?></a>
-					<?php else : ?>
-						<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
-					<?php endif; ?>
-				</span>
+					<span>
+						<?php if ($profile->location) : ?>
+							<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
+							   target="_blank"><?php echo $this->escape($profile->location); ?></a>
+						<?php else : ?>
+							<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
+						<?php endif; ?>
+					</span>
 				</li>
+				<?php endif; ?>
+				<?php if ($profile->getGender() >= 1) : ?>
 				<li>
 					<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
 					<span> <?php echo $profile->getGender(); ?> </span>
 				</li>
+				<?php endif; ?>
+				<?php if ($profile->birthdate >= '1901-01-01') : ?>
 				<li>
 					<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
 					<span> <?php echo KunenaDate::getInstance($profile->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 				</li>
+				<?php endif; ?>
 				<?php if (!empty($profile->medals)) : ?>
 					<li>
 						<strong> <?php echo JText::_('COM_KUNENA_AUP_MEDALS'); ?> </strong>
@@ -134,25 +145,9 @@ if ($this->config->showuserstats)
 					</li>
 				<?php endif; ?>
 			</ul>
-		</div>
-	</div>
-</div>
-<br />
-<div class="row-fluid">
-	<div class="span12">
-		<div class="span6">
-			<?php if ($signature) : ?>
-				<blockquote>
-					<span><?php echo $signature; ?></span>
-				</blockquote>
-			<?php endif; ?>
-			<?php if ($personalText) : ?>
-				<blockquote>
-					<span> <?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?> </span>
-					<span> <?php echo $personalText; ?> </span>
-				</blockquote>
-			<?php endif; ?>
-			<div class="btn-toolbar">
+		<div class="span10">
+			<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile); ?>
+			<div class="pull-right">
 				<?php if (!empty($private)) : ?>
 					<a class="btn btn-small" href="<?php echo $private; ?>">
 						<i class="icon-comments-2"></i>
@@ -171,8 +166,24 @@ if ($this->config->showuserstats)
 				<?php endif; ?>
 			</div>
 		</div>
-		<div class="span6 pull-right">
-			<div class="well"> <?php echo $this->subLayout('User/Item/Social')->set('profile', $profile)->set('showAll', true); ?> </div>
+	</div>
+</div>
+<br />
+<div class="row-fluid">
+	<div class="span12">
+		<div class="span6">
+			<?php if ($signature) : ?>
+				<blockquote>
+					<span><?php echo $signature; ?></span>
+				</blockquote>
+			<?php endif; ?>
+			<?php if ($personalText) : ?>
+				<blockquote>
+					<span> <?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>: </span>
+					<br />
+					<span> <?php echo $personalText; ?> </span>
+				</blockquote>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

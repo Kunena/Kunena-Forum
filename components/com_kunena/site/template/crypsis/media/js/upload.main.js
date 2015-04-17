@@ -2,10 +2,14 @@ jQuery(function($) {
 	'use strict';
 
 	// Insert bbcode in message
-	function insertInMessage(attachid,filename) {
+	function insertInMessage(attachid,filename,button) {
 		var value = jQuery('#kbbcode-message').val();
 
 		jQuery('#kbbcode-message').val(value+' [attachment='+attachid+']'+filename+'[/attachment]');
+		
+		button.removeClass('btn-primary');
+		button.addClass('btn-success');
+		button.html('<i class="icon-upload"></i> '+Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 	}
 
 	var fileCount = null;
@@ -31,7 +35,7 @@ jQuery(function($) {
 				filename = data.name;
 			}
 
-			insertInMessage(file_id,filename);
+			insertInMessage(file_id,filename, $this);
 		});
 
 	var removeButton = $('<button/>')

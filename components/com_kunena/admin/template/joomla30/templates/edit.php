@@ -117,16 +117,11 @@ JHtml::_('dropdown.init');
 										?>
 									</div>
 									<div class="tab-pane" id="tab_bbcode">
-										<table class="table table-bordered table-striped">
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_FEATURE_NOT_AVAILABLE_IN_BETA'); ?></td>
-											</tr>
-										</table>
 										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
 											<table class="table table-bordered table-striped">
 												<?php foreach($this->form->getFieldset('bbcode') as $field) : if (!$field->hidden) : ?>
 													<tr>
-														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
+														<td width="20%" class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
 												<?php endif; endforeach; ?>

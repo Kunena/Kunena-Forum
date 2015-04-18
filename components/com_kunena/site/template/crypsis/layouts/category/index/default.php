@@ -170,22 +170,24 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time   = $last->getLastPostTime();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 48) : null;
+								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded',48) : null;
 							?>
 
-								<td class="span3 hidden-phone" id="index-avatar">
-									<div class="row-fluid">
-										<?php if ($avatar) : ?>
-											<div class="media pull-left">
-												<?php echo $author->getLink($avatar); ?>
+								<td class="span3 hidden-phone">
+									<div class="container-fluid">
+										<div class="row-fluid">
+											<?php if ($avatar) : ?>
+												<div class="span3">
+													<?php echo $author->getLink($avatar); ?>
+												</div>
+											<?php endif; ?>
+											<div class="span9">
+												<span><?php echo $this->getLastPostLink($category) ?></span>
+												<br>
+												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?></span>
+												<br>
+												<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>
-										<?php endif; ?>
-										<div class="media-body">
-											<span><?php echo $this->getLastPostLink($category) ?></span>
-											<br>
-											<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?></span>
-											<br>
-											<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 										</div>
 									</div>
 								</td>

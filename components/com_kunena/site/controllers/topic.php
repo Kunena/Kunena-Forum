@@ -136,7 +136,7 @@ class KunenaControllerTopic extends KunenaController {
 		if (!preg_match('!(<img |<object |<iframe )!', $text)) {
 			$text = trim(JFilterOutput::cleanText($text));
 		}
-		if (!$text) {
+		if (!empty($text)) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error' );
 			$this->redirectBack ();
 		}

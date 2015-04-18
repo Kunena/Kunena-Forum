@@ -42,7 +42,6 @@ if ($this->config->showuserstats)
 				</div>
 			</div>
 			<?php endif; ?>
-			<br />
 			<div class="span10">
 				<div class="row-fluid">
 					<div class="span12">

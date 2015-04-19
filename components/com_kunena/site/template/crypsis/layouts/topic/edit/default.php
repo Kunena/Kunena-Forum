@@ -235,16 +235,15 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		</div>
 		<div class="center">
-			<input type="submit" name="ksubmit" class="btn btn-primary"
-				value="<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>"
-				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>" tabindex="4" />
-			<input id="kbutton-preview" type="button" name="preview" class="btn"
-				value="<?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>"
-				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW')); ?>:: " tabindex="3" />
-			<input type="reset" name="cancel" class="btn"
-				value="<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
-				onclick="javascript:window.history.back();"
-				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" tabindex="5" />
+			<button type="submit" class="btn btn-success" tabindex="4">
+				<i class="icon-edit icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+			</button>
+			<button id="kbutton-preview" name="preview" type="button" class="btn" tabindex="5">
+				<i class="icon-eye-open"></i><?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>
+			</button>
+			<button type="reset" class="btn" onclick="javascript:window.history.back();" tabindex="6">
+				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+			</button>
 		</div>
 		<?php
 		if (!$this->message->name)

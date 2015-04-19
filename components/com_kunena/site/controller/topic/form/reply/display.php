@@ -43,18 +43,6 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		$captcha = KunenaSpamRecaptcha::getInstance();
-
-		if ($captcha->enabled())
-		{
-			$this->captchaHtml = $captcha->getHtml();
-
-			if (!$this->captchaHtml)
-			{
-				throw new RuntimeException($captcha->getError(), 500);
-			}
-		}
-
 		if (!$mesid)
 		{
 			$this->topic = KunenaForumTopicHelper::get($id);
@@ -67,6 +55,22 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		}
 
 		$this->category = $this->topic->getCategory();
+
+		if ( $this->category->canDoCaptcha() )
+		{
+			if (JPluginHelper::isEnabled('captcha'))
+			{
+				JPluginHelper::importPlugin('captcha');
+				$dispatcher = JDispatcher::getInstance();
+				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+
+				$this->captchaEnabled = $result[0];
+			}
+			else
+			{
+				$this->captchaEnabled = false;
+			}
+		}
 
 		$parent->tryAuthorise('reply');
 

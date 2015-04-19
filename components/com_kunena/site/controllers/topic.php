@@ -288,23 +288,10 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
+		$template = KunenaFactory::getTemplate();
+
 		// Load language file from the template.
-		KunenaFactory::getTemplate()->loadLanguage();
-
-		$captcha = KunenaSpamRecaptcha::getInstance();
-
-		if ($captcha->enabled())
-		{
-			$success = $captcha->verify();
-
-			if (!$success)
-			{
-				$this->app->enqueueMessage($captcha->getError(), 'error');
-				$this->setRedirectBack();
-
-				return;
-			}
-		}
+		$template->loadLanguage();
 
 		if (!$this->id)
 		{
@@ -336,6 +323,44 @@ class KunenaControllerTopic extends KunenaController
 
 			list ($topic, $message) = $parent->newReply($fields);
 			$category = $topic->getCategory();
+		}
+
+
+		if ( $template->getTemplateDetails()->kversion > 4.0)
+		{
+			if ($category->canDoCaptcha())
+			{
+				if (JPluginHelper::isEnabled('captcha'))
+				{
+					JPluginHelper::importPlugin('captcha');
+					$dispatcher = JDispatcher::getInstance();
+					$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+
+					if (!$res[0]) {
+						$this->app->enqueueMessage($captcha->getError(), 'error');
+						$this->setRedirectBack();
+
+						return;
+					}
+				}
+			}
+		}
+		else
+		{
+			$captcha = KunenaSpamRecaptcha::getInstance();
+
+			if ($captcha->enabled())
+			{
+				$success = $captcha->verify();
+
+				if (!$success)
+				{
+					$this->app->enqueueMessage($captcha->getError(), 'error');
+					$this->setRedirectBack();
+
+					return;
+				}
+			}
 		}
 
 		// Redirect to full reply instead.

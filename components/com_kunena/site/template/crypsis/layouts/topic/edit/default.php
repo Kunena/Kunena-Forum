@@ -222,11 +222,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php if (!empty($this->captchaHtml)) : ?>
+						<?php if (!empty($this->captchaEnabled)) : ?>
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
 
-								<div class="controls"> <?php echo $this->captchaHtml ?> </div>
+								<div class="controls"> <div id="dynamic_recaptcha_1"> </div> </div>
 							</div>
 						<?php endif; ?>
 

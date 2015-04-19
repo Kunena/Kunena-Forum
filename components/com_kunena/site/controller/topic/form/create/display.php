@@ -38,18 +38,6 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		$captcha = KunenaSpamRecaptcha::getInstance();
-
-		if ($captcha->enabled())
-		{
-			$this->captchaHtml = $captcha->getHtml();
-
-			if (!$this->captchaHtml)
-			{
-				throw new RuntimeException($captcha->getError(), 500);
-			}
-		}
-
 		// Get topic icons if they are enabled.
 		if ($this->config->topicicons)
 		{
@@ -83,6 +71,22 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
+
+		if ( $this->category->canDoCaptcha() )
+		{
+			if (JPluginHelper::isEnabled('captcha'))
+			{
+				JPluginHelper::importPlugin('captcha');
+				$dispatcher = JDispatcher::getInstance();
+				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+
+				$this->captchaEnabled = $result[0];
+			}
+			else
+			{
+				$this->captchaEnabled = false;
+			}
+		}
 
 		if (!$this->topic->category_id)
 		{

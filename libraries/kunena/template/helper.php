@@ -111,6 +111,7 @@ abstract class KunenaTemplateHelper
 		$data->version = (string) $xml->version;
 		$data->description = (string) $xml->description;
 		$data->thumbnail = (string) $xml->thumbnail;
+		$data->kversion = (string) $xml->attributes()->version;
 
 		if ($data->version == '@kunenaversion@')
 		{

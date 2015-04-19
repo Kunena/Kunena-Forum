@@ -57,6 +57,22 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->profile = $this->message->getAuthor();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
+		if ( $this->category->canDoCaptcha() )
+		{
+			if (JPluginHelper::isEnabled('captcha'))
+			{
+				JPluginHelper::importPlugin('captcha');
+				$dispatcher = JDispatcher::getInstance();
+				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+
+				$this->captchaEnabled = $result[0];
+			}
+			else
+			{
+				$this->captchaEnabled = false;
+			}
+		}
+
 		// Thank you info and buttons.
 		$this->thankyou = array();
 		$this->total_thankyou = 0;

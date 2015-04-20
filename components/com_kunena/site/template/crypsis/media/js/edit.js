@@ -98,5 +98,16 @@ jQuery(document).ready(function() {
 			timeout: 5
 		});
 	}
+	
+	jQuery('#kshow_attach_form').click(function() {
+		if (jQuery('#kattach_form').is(":visible"))
+		{
+			jQuery('#kattach_form').hide();
+		}
+		else
+		{
+			jQuery('#kattach_form').show();
+		}
+	});	
 });
 

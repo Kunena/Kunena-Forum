@@ -72,7 +72,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 
-		if ( $this->category->canDoCaptcha() )
+		if ( $this->message->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
@@ -82,10 +82,10 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 				$this->captchaEnabled = $result[0];
 			}
-			else
-			{
-				$this->captchaEnabled = false;
-			}
+		}
+		else
+		{
+			$this->captchaEnabled = false;
 		}
 
 		if (!$this->topic->category_id)

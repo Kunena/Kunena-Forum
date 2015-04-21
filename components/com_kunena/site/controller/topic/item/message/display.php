@@ -57,7 +57,8 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->profile = $this->message->getAuthor();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
-		if ( $this->category->canDoCaptcha() )
+		$this->captchaEnabled = false;
+		if ( $this->message->isAuthorised('reply') && $this->me->canDoCaptcha() )
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
@@ -66,10 +67,6 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 
 				$this->captchaEnabled = $result[0];
-			}
-			else
-			{
-				$this->captchaEnabled = false;
 			}
 		}
 

@@ -1319,4 +1319,32 @@ class KunenaUser extends JObject
 
 		return null;
 	}
+
+	/**
+	 * Check if captcha is allowed
+	 *
+	 * @return boolean
+	 */
+	public function canDoCaptcha()
+	{
+		$config = KunenaFactory::getConfig();
+
+		if ( $this->isModerator() )
+		{
+			return false;
+		}
+
+		if ( $this->exists() && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+		{
+			return true;
+		}
+		else if ( !$this->exists() && $config->captcha )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

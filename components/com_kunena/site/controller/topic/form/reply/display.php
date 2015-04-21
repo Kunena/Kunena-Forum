@@ -56,7 +56,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$this->category = $this->topic->getCategory();
 
-		if ( $this->category->canDoCaptcha() )
+		if ( $parent->isAuthorised('reply') && $this->me->canDoCaptcha() )
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{

@@ -328,20 +328,17 @@ class KunenaControllerTopic extends KunenaController
 
 		if ( $template->getTemplateDetails()->kversion > 4.0)
 		{
-			if ($category->canDoCaptcha())
+			if (JPluginHelper::isEnabled('captcha'))
 			{
-				if (JPluginHelper::isEnabled('captcha'))
-				{
-					JPluginHelper::importPlugin('captcha');
-					$dispatcher = JDispatcher::getInstance();
-					$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+				JPluginHelper::importPlugin('captcha');
+				$dispatcher = JDispatcher::getInstance();
+				$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
 
-					if (!$res[0]) {
-						$this->app->enqueueMessage($captcha->getError(), 'error');
-						$this->setRedirectBack();
+				if (!$res[0]) {
+					$this->app->enqueueMessage($captcha->getError(), 'error');
+					$this->setRedirectBack();
 
-						return;
-					}
+					return;
 				}
 			}
 		}

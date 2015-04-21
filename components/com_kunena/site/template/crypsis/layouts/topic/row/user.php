@@ -104,18 +104,20 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span2 hidden-phone">
-		<div class="row-fluid">
-			<?php if ($config->avataroncat) : ?>
-				<div class="media pull-left">
-					<?php echo $author->getLink($avatar); ?>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<?php if ($config->avataroncat) : ?>
+					<div class="span3">
+						<?php echo $author->getLink($avatar); ?>
+					</div>
+				<?php endif; ?>
+				<div class="span9">
+					<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+					</span>
+					<br>
+					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
-			<?php endif; ?>
-			<div class="media-body">
-				<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
-					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
-				</span>
-				<br>
-				<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 			</div>
 		</div>
 	</td>

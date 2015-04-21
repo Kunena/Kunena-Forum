@@ -1755,30 +1755,4 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		return null;
 	}
-
-	/**
-	 * Check if captcha should be used
-	 *
-	 *@return bool
-	 */
-	public function canDoCaptcha()
-	{
-		$me = KunenaUserHelper::getMyself();
-		$config = KunenaFactory::getConfig();
-
-		// Enabled if guest captcha is enabled and user is not logged in
-		if (!$me->exists())
-		{
-			return true;
-		}
-
-		// Enabled if user is moderator or has more posts than the threshold
-		// FIXME: we need a better logic for trusted users
-		if ($me->exists() && !$me->isModerator() && $me->posts < $config->captcha_post_limit)
-		{
-			return true;
-		}
-
-		return false;
-	}
 }

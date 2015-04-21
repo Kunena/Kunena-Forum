@@ -15,9 +15,11 @@ $config = KunenaConfig::getInstance();
 
 <?php if (empty($this->message_closed)) : ?>
 <div class="btn-toolbar btn-marging kmessagepadding">
-	<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
-	   data-toggle="modal"><i class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
-	</a>
+	<?php if($this->quickreply): ?>
+		<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
+		   data-toggle="modal"><i class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+		</a>
+	<?php endif; ?>
 	<div class="btn-group">
 		<button class="btn" data-toggle="dropdown">
 			<i class="icon-pencil"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>

@@ -88,6 +88,12 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<?php endif; ?>
 			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-small btn-link pull-right"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 		</div>
+		<?php if (!empty($this->captchaEnabled)) : ?>
+			<div class="control-group">
+				<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
+					<div class="controls"> <div id="dynamic_recaptcha_1"> </div> </div>
+			</div>
+		<?php endif; ?>
 		<div class="modal-footer">
 			<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
 			<input type="submit" class="btn btn-primary kreply-submit" name="submit"

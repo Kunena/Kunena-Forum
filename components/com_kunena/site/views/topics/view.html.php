@@ -298,8 +298,33 @@ class KunenaViewTopics extends KunenaView {
 
 			// TODO: add keywords
 
-			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-			$this->setDescription ( $description );
+			$active = $this->app->getMenu()->getActive();
+
+			if ( version_compare(JVERSION, '3.0', '<') )
+			{
+				$menuMetaDescription = $this->app->getMenu()->getParams($active->id)->getValue('menu-meta_description');
+				$menuMetaKeywords = $this->app->getMenu()->getParams($active->id)->getValue('menu-meta_keywords');
+			}
+			else
+			{
+				$menuMetaDescription = $this->app->getMenu()->getParams($active->id)->get('menu-meta_description');
+				$menuMetaKeywords = $this->app->getMenu()->getParams($active->id)->get('menu-meta_keywords');
+			}
+
+			if ( !empty($menuMetaDescription) )
+			{
+				$this->setDescription ($menuMetaDescription);
+			}
+			else
+			{
+				$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+				$this->setDescription ( $description );
+			}
+
+			if ( !empty($menuMetaKeywords) )
+			{
+				$this->setKeywords($menuMetaKeywords);
+			}
 
 		} elseif($type=='user'){
 

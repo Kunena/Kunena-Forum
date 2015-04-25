@@ -57,7 +57,7 @@ $this->addScriptDeclaration("
 			center: latlng,
 			mapTypeId: google.maps.MapTypeId.{$map_type}
 		};
-		$mapid = new google.maps.Map(document.id('{$mapid}'), myOptions);
+		$mapid = new google.maps.Map(document.getElementById('{$mapid}'), myOptions);
 
 		var address = {$content};
 		if (geocoder) {

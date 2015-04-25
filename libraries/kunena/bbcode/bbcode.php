@@ -1453,10 +1453,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
+		$config = KunenaFactory::getTemplate()->params;
+
 		$document = JFactory::getDocument();
 
 		// Display only link in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof JDocumentHTML))
+		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof JDocumentHTML) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
 		{
 			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 
@@ -1543,6 +1545,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 		{
 			return true;
+		}
+
+		$config = KunenaFactory::getTemplate()->params;
+		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('ebay'))
+		{
+			return false;
 		}
 
 		$config = KunenaFactory::getConfig();
@@ -1852,7 +1860,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		if (!$content)
+		$config = KunenaFactory::getTemplate()->params;
+		if (!$content || KunenaFactory::getTemplate()->isHmvc() && !$config->get('video'))
 		{
 			return '';
 		}
@@ -2434,6 +2443,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 		{
 			return true;
+		}
+
+		$config = KunenaFactory::getTemplate()->params;
+		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('twitter'))
+		{
+			return false;
 		}
 
 		$tweetid = trim($content);

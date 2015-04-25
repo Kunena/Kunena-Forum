@@ -39,6 +39,7 @@ defined ( '_JEXEC' ) or die ();
  * @property string $class_sfx
  * @property int $allow_polls
  * @property string $topic_ordering
+ * @property string $iconset
  * @property int $numTopics
  * @property int $numPosts
  * @property int $last_topic_id
@@ -334,6 +335,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			case 'id':
 				return intval($this->id);
 			case 'name':
+			case 'icon':
 				return KunenaHtmlParser::parseText($this->name);
 			case 'description':
 			case 'headerdesc':

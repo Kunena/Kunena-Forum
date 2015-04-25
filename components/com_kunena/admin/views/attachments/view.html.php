@@ -43,6 +43,8 @@ class KunenaAdminViewAttachments extends KunenaView
 
 	protected function setToolbar()
 	{
+		$help_url  = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 		// Set the titlebar text
 		if (version_compare(JVERSION, '3', '>'))
 		{

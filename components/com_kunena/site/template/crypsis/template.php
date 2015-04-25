@@ -39,7 +39,6 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		'emoticons' => 'media/emoticons',
 		'ranks' => 'media/ranks',
 		'icons' => 'media/icons',
-		'topicicons' => 'media/topic_icons',
 		'categoryicons' => 'media/category_icons',
 		'images' => 'media/images',
 		'js' => 'media/js',
@@ -53,13 +52,13 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	protected $userClasses = array(
 		'kwho-',
-		'admin'=>'kwho-admin',
-		'globalmod'=>'kwho-globalmoderator',
-		'moderator'=>'kwho-moderator',
-		'user'=>'kwho-user',
-		'guest'=>'kwho-guest',
-		'banned'=>'kwho-banned',
-		'blocked'=>'kwho-blocked'
+		'admin' => 'kwho-admin',
+		'globalmod' => 'kwho-globalmoderator',
+		'moderator' => 'kwho-moderator',
+		'user' => 'kwho-user',
+		'guest' => 'kwho-guest',
+		'banned' => 'kwho-banned',
+		'blocked' => 'kwho-blocked'
 	);
 
 	/**
@@ -96,14 +95,37 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.modal');
 
-		// JHtml::_('formbehavior.chosen', 'select');
-
 		// Load JavaScript.
 		$this->addScript('main.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
+
+		// Load template colors settings
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$styles = <<<EOF
+		/* Kunena Custom CSS */
+EOF;
+		$iconcolor = $this->ktemplate->params->get('IconColor');
+		if ($iconcolor) {
+			$styles .= <<<EOF
+		.layout#kunena [class*="category"] i,
+		.layout#kunena #kwho i.icon-users,
+		.layout#kunena#kstats i.icon-bars { color: {$iconcolor}; }
+EOF;
+		}
+
+		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
+		if ($iconcolornew) {
+			$styles .= <<<EOF
+		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
+EOF;
+		}
+
+		$document = JFactory::getDocument();
+		$document->addStyleDeclaration($styles);
 
 		parent::initialize();
 	}

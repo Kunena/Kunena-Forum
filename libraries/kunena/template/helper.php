@@ -111,6 +111,7 @@ abstract class KunenaTemplateHelper
 		$data->version = (string) $xml->version;
 		$data->description = (string) $xml->description;
 		$data->thumbnail = (string) $xml->thumbnail;
+		$data->kversion = (string) $xml->attributes()->version;
 
 		if ($data->version == '@kunenaversion@')
 		{
@@ -138,5 +139,22 @@ abstract class KunenaTemplateHelper
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Check if crypsis template can be used on Joomla! version used
+	 *
+	 * @param   string  $templatename  The name of template which needs to be checked
+	 *
+	 * @return boolean
+	 */
+	public static function templateCanBeUsed($templatename)
+	{
+		if ( $templatename == 'Crypsis' && version_compare(JVERSION, '3.0', '<') )
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

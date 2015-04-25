@@ -54,6 +54,18 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		$this->messageButtons = new JObject;
 		$this->message_closed = null;
 
+		if ($this->message->isAuthorised('reply'))
+		{
+			if ($me->canDoCaptcha())
+			{
+				$this->quickreply = false;
+			}
+			else
+			{
+				$this->quickreply = true;
+			}
+		}
+
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
@@ -193,6 +205,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{
 		return KunenaLayout::factory('Widget/Button')
-			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal));
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal, 'icon' => ''));
 	}
 }

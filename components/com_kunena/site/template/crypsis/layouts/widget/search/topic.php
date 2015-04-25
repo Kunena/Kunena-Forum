@@ -29,7 +29,7 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<div class="input-append">
-		<input class="input-medium search-query" type="text" name="query" value="" placeholder="" />
+		<input class="input-medium search-query" type="text" name="query" value="" placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>" />
 		<button class="btn btn-default" type="submit"><span class="icon icon-search"></span></button>
 	</div>
 </form>

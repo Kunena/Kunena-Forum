@@ -20,7 +20,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$this->params = $params;
 	}
 
-	public function onAfterPost(KunenaForumMessage $message) {
+	public function onAfterPost($message) {
 		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 			CFactory::load ( 'libraries', 'userpoints' );
 			CUserPoints::assignPoint ( 'com_kunena.thread.new' );
@@ -31,8 +31,8 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
 		$act->title = JText::_('{actor} ' . JText::sprintf(
-			'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
-			' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
+				'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
+				' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>')
 		);
 		$act->content = $this->buildContent($message);
 		$act->app = 'kunena.thread.post';
@@ -55,7 +55,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		}
 	}
 
-	public function onAfterReply(KunenaForumMessage $message) {
+	public function onAfterReply($message) {
 		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 			CFactory::load ( 'libraries', 'userpoints' );
 			CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
@@ -91,7 +91,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
-		$act->title = JText::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_WALL',$params->get('actor_url'),$params->get('actor'),$params->get('title_url'),$params->get('title'));
+		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf ( 'PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>' ) );
 		$act->content = $this->buildContent($message);
 		$act->app = 'kunena.thread.reply';
 		$act->cid = $message->thread;
@@ -113,7 +113,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		}
 	}
 
-	public function onAfterThankyou($actor, $target, KunenaForumMessage $message) {
+	public function onAfterThankyou($actor, $target, $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $target );
 
@@ -165,7 +165,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		CFactory::load ( 'libraries', 'activities' );
 		CActivityStream::remove('kunena.thread.post', $target->id);
 
-		 // TODO: Need get replied id
+		// TODO: Need get replied id
 		CActivityStream::remove('kunena.thread.replied', $target->id);
 	}
 
@@ -178,11 +178,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 		}
 		// FIXME: Joomla 2.5 can mix up groups and access levels
 		if (($accesstype == 'joomla.level' && $category->access == 1)
-				|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))) {
+			|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))) {
 			// Public
 			$access = 0;
 		} elseif (($accesstype == 'joomla.level' && $category->access == 2)
-				|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))) {
+			|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))) {
 			// Registered
 			$access = 20;
 		} else {

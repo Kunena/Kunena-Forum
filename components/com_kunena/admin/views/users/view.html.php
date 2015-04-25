@@ -29,6 +29,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$this->filterSearch    = $this->escape($this->state->get('filter.search'));
 		$this->filterUsername  = $this->escape($this->state->get('filter.username'));
 		$this->filterEmail     = $this->escape($this->state->get('filter.email'));
+		$this->filterRank      = $this->escape($this->state->get('filter.rank'));
 		$this->filterSignature = $this->escape($this->state->get('filter.signature'));
 		$this->filterBlock     = $this->escape($this->state->get('filter.block'));
 		$this->filterBanned    = $this->escape($this->state->get('filter.banned'));
@@ -76,6 +77,12 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
 		JToolBarHelper::deleteList();
 		JToolBarHelper::spacer();
+		JToolBarHelper::custom('removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
+		JToolBarHelper::spacer();
+		$help_url  = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
 	/**
@@ -144,6 +151,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
 		//$sortFields[] = JHtml::_('select.option', 'name', JText::_('COM_KUNENA_USRL_REALNAME'));
 		$sortFields[] = JHtml::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = JHtml::_('select.option', 'rank', JText::_('COM_KUNENA_A_RANKS'));
 		$sortFields[] = JHtml::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
 		$sortFields[] = JHtml::_('select.option', 'enabled', JText::_('COM_KUNENA_USRL_ENABLED'));
 		$sortFields[] = JHtml::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));

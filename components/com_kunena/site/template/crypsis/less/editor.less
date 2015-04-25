@@ -31,20 +31,14 @@ table.kpostbuttonset {
 	}
 }
 
-.kfile-input {
-	display    : block;
-	overflow   : hidden;
-	visibility : visible;
-}
-
 #kattachments {
 	line-height : 18px;
 	a {
-		background          : url("iconsets/editor/default/default.png") no-repeat -216px -18px;
-		display             : inline-block;
-		height              : 18px;
-		width               : 18px;
-		margin-right        : 2px;
+		background   : url("iconsets/editor/default/default.png") no-repeat -216px -18px;
+		display      : inline-block;
+		height       : 18px;
+		width        : 18px;
+		margin-right : 2px;
 	}
 }
 
@@ -53,32 +47,11 @@ table.kpostbuttonset {
 }
 
 .form-horizontal .control-label {
-	width : 80px;
+	width : auto;
 }
 
 .ktxtarea {
 	margin-left : -80px
-}
-
-#postform input[type=radio] {
-	display : none;
-}
-
-input[type=radio] + label {
-	display          : inline-block;
-	margin           : -2px;
-	padding          : 4px 12px;
-	background-color : transparent;
-}
-
-input[type=radio]:checked + label {
-	background    : rgba(0, 0, 0, 0.07) none;
-	border        : 1px solid rgba(0, 0, 0, 0.2);
-	border-radius : 4px;
-}
-
-label img {
-	pointer-events : none;
 }
 
 #kbbcode-smilies-button {
@@ -153,7 +126,8 @@ label img {
 	background-image : url(images/quotes.png);
 }
 
-.markItUp .codemodalboxbutton a, .markItUp .codesimplebutton a {
+.markItUp .codemodalboxbutton a,
+.markItUp .codesimplebutton a {
 	background-image : url(images/code.png);
 }
 
@@ -339,13 +313,13 @@ label img {
 }
 
 .markItUpHeader ul .markItUpSeparator {
-	width            : 1px;
-	color            : #ccc;
-	height           : 24px;
-	margin-right     : 5px;
-	overflow         : hidden;
-	border-left      : 1px solid #ccc;
-	text-indent      : -10000px;
+	width        : 1px;
+	color        : #ccc;
+	height       : 24px;
+	margin-right : 5px;
+	overflow     : hidden;
+	border-left  : 1px solid #ccc;
+	text-indent  : -10000px;
 }
 
 .markItUpHeader ul ul .markItUpSeparator {
@@ -393,12 +367,16 @@ label img {
 }
 
 .markItUpButton {
-	display               : inline-block;
-	margin-bottom         : 0;
-	padding-top           : 4px;
-	font-size             : 14px;
-	line-height           : 12px;
-	*margin-left          : .3em;
+	display       : inline-block;
+	margin-bottom : 0;
+	padding-top   : 4px;
+	font-size     : 14px;
+	line-height   : 12px;
+	*margin-left  : .3em;
+}
+
+li.markItUpButton ul {
+	z-index: 1;
 }
 
 .dropzone .message {
@@ -429,10 +407,9 @@ label img {
 }
 
 #klabel_info_drop_browse {
-	display : block;
-	padding : 5px 10px;
-	width   : 350px;
-	margin  : 50px auto 0 auto;
+	display         : flex;
+	align-items     : center;
+	justify-content : center;
 }
 
 #files {

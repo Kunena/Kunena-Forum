@@ -44,6 +44,8 @@ defined ( '_JEXEC' ) or die ();
 
 /**
  * Class KunenaSpamRecaptcha
+ *
+ * @deprecated 4.0
  */
 class KunenaSpamRecaptcha
 {

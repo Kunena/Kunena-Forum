@@ -122,10 +122,23 @@ $paneOptions = array(
 														<?php endif ?>
 													</td>
 												</tr>
-
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?>:</td>
 													<td><?php echo $this->options ['published']; ?></td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_ICON'); ?></td>
+													<td>
+														<input class="inputbox" type="text" name="icon" size="80" value="<?php echo $this->escape ( $this->category->icon ); ?>" />
+														<p><?php echo JText::_('COM_KUNENA_ICON_DESC'); ?></p>
+													</td>
+												</tr>
+												<tr>
+													<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
+													<td>
+														<input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" />
+														<p><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></p>
+													</td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
@@ -137,13 +150,6 @@ $paneOptions = array(
 													<td><?php echo JText::_('COM_KUNENA_HEADERADD'); ?></td>
 													<td>
 														<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo $this->escape ( $this->category->headerdesc ); ?></textarea>
-													</td>
-												</tr>
-												<tr>
-													<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
-													<td>
-														<input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" />
-														<p><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></p>
 													</td>
 												</tr>
 											</table>
@@ -210,13 +216,12 @@ $paneOptions = array(
 													<td><?php echo $this->options ['topic_ordering']; ?></td>
 													<td><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 												</tr>
-												<?php /*
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
-													<td><?php echo $this->options ['category_iconset']; ?></td>
+													<td><?php echo JText::_('COM_KUNENA_FEATURE_NOT_AVAILABLE_IN_BETA');?></td>
+													<!--<td>--><?php //echo $this->options ['category_iconset']; ?><!--</td>-->
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 												</tr>
-												*/ ?>
 											</table>
 										</fieldset>
 									</div>

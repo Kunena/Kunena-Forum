@@ -9,25 +9,54 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
-$config = KunenaFactory::getTemplate()->params->get('displayMenu');
+$config = KunenaFactory::getTemplate()->params;
 ?>
+
 <div id="kunena" class="layout">
-	<?php
-	if ($config)
+<?php
+
+	if ($config->get('displayMenu'))
 	{
 		echo $this->subLayout('Widget/MenuBar');
 	}
 
-	echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
-	echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
-	echo $this->subRequest('Widget/Announcement');
-	echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
+	if ($config->get('displayModule'))
+	{
+		echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
+	}
+
+	if ($config->get('displayBreadcrumb'))
+	{
+		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+	}
+
+	if ($config->get('displayAnnouncement'))
+	{
+		echo $this->subRequest('Widget/Announcement');if ($config->get('displayMenu'));
+	}
+
+	if ($config->get('displayModule'))
+	{
+		echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
+	}
 
 	// Display current view/layout
 	echo $this->content;
 
+	if ($config->get('displayBreadcrumb'))
+	{
 	echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+	}
+
+
+	if ($config->get('displayModule'))
+	{
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
+	}
+
+	if ($config->get('displayFooter'))
+	{
 	echo $this->subLayout('Widget/Footer');
-	?>
+	}
+?>
 </div>

@@ -38,11 +38,10 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 * Method to retrieve category icon
 	 *
 	 * @param   KunenaCategory $category The KunenaCategory object
-	 * @param   boolean        $thumb    Define if it's the thumb which will be loaded
 	 *
 	 * @return string
 	 */
-	public function getCategoryIcon($category, $thumb = false)
+	public function getCategoryIcon($category)
 	{
 		$template = KunenaFactory::getTemplate();
 		$catimagepath = $template->params->get('catimagepath');
@@ -51,84 +50,63 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 		$uri  = JUri::root(true) . '/media/kunena/' . $catimagepath . '/';
 
 		if (!$thumb)
+
 		{
-			if ($category->getNewCount())
+			if (!empty($category->icon))
 			{
-				// Check Unread Cat Images
-				$file = $this->getCategoryIconFile($category->id . '_on', $path);
-
-				if ($file)
-				{
-					return '<img src="' . $uri . $file . '" border="0" class="kforum-cat-image" alt=" " />';
-				}
-
-				return $this->getIcon('kunreadforum', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST'));
+				return '<i class="' . $category->icon . ' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/> </i>';
 			}
 			else
 			{
-				// Check Read Cat Images
-				$file = $this->getCategoryIconFile($category->id . '_off', $path);
-
-				if ($file)
-				{
-					return '<img src="' . $uri . $file . '" border="0" class="kforum-cat-image" alt=" " />';
-				}
-
-				return $this->getIcon('kreadforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW'));
+				return '<i class="'. $defaultcategoryicon .' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/> </i>';
 			}
 		}
-		elseif ($this->config->showchildcaticon)
+		else
 		{
-			if ($category->getNewCount())
+			if (!empty($category->icon))
 			{
-				// Check Unread Cat Images
-				$file = $this->getCategoryIconFile($category->id . '_on_childsmall', $path);
-
-				if ($file)
-				{
-					return '<img src="' . $uri . $file . '" border="0" class="kforum-cat-image" alt=" " />';
-				}
-
-				return $this->getIcon('kunreadforum-sm', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST'));
+				return '<i class="' . $category->icon . ' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" /> </i>';
 			}
 			else
 			{
-				// Check Read Cat Images
-				$file = $this->getCategoryIconFile($category->id . '_off_childsmall', $path);
-
-				if ($file)
-				{
-					return '<img src="' . $uri . $file . '" border="0" class="kforum-cat-image" alt=" " />';
-				}
-
-				return $this->getIcon('kunreadforum-sm', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW'));
+				return '<i class="'. $defaultcategoryicon .' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" /> </i>';
 			}
 		}
-
-		return '';
 	}
 
 	/**
-	 * Method to retrieve the category icon file
+	 * Method to retrieve small category icon
 	 *
-	 * @param   string $filename The filename for the category icon
-	 * @param   string $path     The path for the category icon
+	 * @param   KunenaSubCategory $subcategory The KunenaCategory object
 	 *
-	 * @return string|boolean
+	 * @return string
 	 */
-	private function getCategoryIconFile($filename, $path = '')
+	public function getSmallCategoryIcon($subcategory)
 	{
-		$types = array('.gif', '.png', '.jpg');
-
-		foreach ($types as $ext)
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
+		if ($subcategory->getNewCount())
 		{
-			if (is_file($path . $filename . $ext))
+			if (!empty($subcategory->icon))
 			{
-				return $filename . $ext;
+				return '<i class="' . $subcategory->icon . ' icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/> </i>';
+			}
+			else
+			{
+				return '<i class="' . $defaultcategoryicon . ' icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/> </i>';
 			}
 		}
-
-		return false;
+		else
+		{
+			if (!empty($subcategory->icon))
+			{
+				return '<i class="' . $subcategory->icon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" /> </i>';
+			}
+			else
+			{
+				return '<i class="' . $defaultcategoryicon . '" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" /> </i>';
+			}
+		}
 	}
 
 	/**

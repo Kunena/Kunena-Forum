@@ -22,6 +22,7 @@ class TableKunenaCategories extends KunenaTable
 	public $parent_id = null;
 	public $name = null;
 	public $alias = null;
+	public $icon = null;
 	public $icon_id = null;
 	public $locked = null;
 	public $accesstype = null;
@@ -44,6 +45,7 @@ class TableKunenaCategories extends KunenaTable
 	public $class_sfx = null;
 	public $allow_polls = null;
 	public $topic_ordering = null;
+	public $iconset = null;
 	public $numTopics = null;
 	public $numPosts = null;
 	public $last_topic_id = null;

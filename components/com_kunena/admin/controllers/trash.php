@@ -88,7 +88,14 @@ class KunenaAdminControllerTrash extends KunenaController
 			}
 			$this->app->setUserState('com_kunena.purge', null);
 			$this->app->setUserState('com_kunena.type', null);
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			if ($type == 'messages')
+			{
+				$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
+			}
+			else
+			{
+				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			}
 
 			return;
 

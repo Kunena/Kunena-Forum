@@ -14,12 +14,14 @@ defined('_JEXEC') or die;
 $this->addScript('poll.js');
 ?>
 
+<?php if ($this->show_title) : ?>
 <div class="pull-right btn btn-small" data-toggle="collapse" data-target="#poll-results">&times;</div>
 <h2>
 	<?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
 </h2>
+<?php endif; ?>
 
-<div class="collapse in" id="poll-results">
+<div class="collapse in" id="poll-results" <?php echo $this->show_title ? '': 'style="display:none;"'; ?>>
 <table class="table table-striped table-bordered table-condensed">
 
 	<?php
@@ -73,7 +75,7 @@ $this->addScript('poll.js');
 
 				<?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
 
-				<?php elseif ($this->topic->isAuthorised('poll.vote')) : ?>
+				<?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title) : ?>
 
 				<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>>">
 					<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>

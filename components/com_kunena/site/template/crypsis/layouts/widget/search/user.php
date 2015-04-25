@@ -25,7 +25,7 @@ $state = $this->state;
 	<div class="input-append">
 		<label>
 			<input id="kusersearch" class="input-medium search-query" type="text" name="search"
-				   value="<?php echo $this->escape($state); ?>" placeholder=""/>
+				   value="<?php echo $this->escape($state); ?>" placeholder="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
 		</label>
 
 		<button type="submit" class="btn"><span class="icon icon-search"></span></button>

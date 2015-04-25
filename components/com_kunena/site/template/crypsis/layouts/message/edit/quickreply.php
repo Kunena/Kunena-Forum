@@ -32,24 +32,27 @@ $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-
+$this->addStyleSheet('css/atwho.css');
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
-$this->addStyleSheet('css/atwho.css');
-
 $this->addScript('js/edit.js');
+
+if (KunenaFactory::getTemplate()->params->get('formRecover'))
+{
+	$this->addScript('js/sisyphus.js');
+}
 ?>
 
 <div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>
 			<?php echo JText::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
 		</h3>
 	</div>
 
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
-	      enctype="multipart/form-data" name="postform" id="postform">
+	      enctype="multipart/form-data" name="postform" id="postform" class="form-inline">
 		<input type="hidden" name="task" value="post" />
 		<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
 		<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
@@ -69,28 +72,37 @@ $this->addScript('js/edit.js');
 			<input type="hidden" name="authorname" value="<?php echo $this->escape($me->getName()); ?>" />
 			<?php endif; ?>
 
-			<input type="text" name="subject" size="35" class="inputbox"
+			<input type="text" id="subject" name="subject" size="35" class="inputbox"
 			       maxlength="<?php echo (int) $config->maxsubject; ?>"
 			       value="<?php echo $message->displayField('subject'); ?>" />
-			<textarea class="span12 qreply" name="message" rows="6" cols="60"></textarea>
+			<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
-			<input type="checkbox" name="subscribeMe" value="1"
-				<?php echo ($config->subscriptionschecked == 1 && $me->canSubscribe || $config->subscriptionschecked == 0 && $me->canSubscribe) ? 'checked="checked"' : ''; ?> />
-			<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
-			<br />
+			<div class="control-group">
+				<div class="controls">
+					<input type="checkbox" name="subscribeMe" value="1"
+					<?php echo ($config->subscriptionschecked == 1 && $me->canSubscribe || $config->subscriptionschecked == 0 && $me->canSubscribe) ? 'checked="checked"' : ''; ?> />
+					<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+				</div>
+			</div>
 			<?php endif; ?>
-
+			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-small btn-link pull-right"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 		</div>
+		<?php if (!empty($this->captchaEnabled)) : ?>
+			<div class="control-group">
+				<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
+					<div class="controls"> <div id="dynamic_recaptcha_1"> </div> </div>
+			</div>
+		<?php endif; ?>
 		<div class="modal-footer">
 			<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
 			<input type="submit" class="btn btn-primary kreply-submit" name="submit"
 			       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
 			       title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>" />
-			<button class="btn" data-dismiss="modal" aria-hidden="true"
-			        title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>">
-				<?php echo JText::_('COM_KUNENA_CANCEL'); ?>
-			</button>
+			<?php //TODO: remove data on cancel. ?>
+			<input type="reset" name="reset" class="btn"
+				value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
+				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" data-dismiss="modal" aria-hidden="true" />
 		</div>
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disemoticons ?>" />

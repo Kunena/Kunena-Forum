@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 	<div class="container-fluid pull-left">
 		<img src="<?php echo $this->logo; ?>" alt="Kunena" />
 	</div>
-	<p>
+	<p class="intro">
 		<?php echo $this->intro; ?>
 	</p>
 	<div class="clearfix"></div>

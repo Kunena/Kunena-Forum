@@ -16,9 +16,17 @@ $topic = $this->topic;
 $category = $topic->getCategory();
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
-$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 48);
+$author = $topic->getLastPostAuthor();
+$avatar = $author->getAvatarImage('img-rounded', 48);
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 7 : 6;
+if ($this->topic->ordering)
+{
+	$txt = '-stickymsg';
+}
+else {
+	$txt = '';
+}
 
 if (!empty($this->spacing)) : ?>
 	<tr class="kcontenttablespacer">
@@ -26,7 +34,7 @@ if (!empty($this->spacing)) : ?>
 	</tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
+<tr class="category<?php echo $this->escape($category->class_sfx); ?> krow1<?php echo $txt;?>">
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
@@ -100,25 +108,27 @@ if (!empty($this->spacing)) : ?>
 	</td>
 
 	<td class="span2 hidden-phone">
-		<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong><span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
-		<div class="views"><strong><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</strong> <span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
+		<div class="replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:<span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
+		<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:<span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
 
-	<td class="span2 hidden-phone" id="recent-topics">
-		<?php if ($config->avataroncat) : ?>
-			<div class="span2 hidden-phone">
-				<?php echo $avatar; ?>
+	<td class="span2 hidden-phone">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<?php if ($config->avataroncat) : ?>
+					<div class="span3">
+						<?php echo $author->getLink($avatar); ?>
+					</div>
+				<?php endif; ?>
+				<div class="span9">
+					<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+					</span>
+					<br>
+					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
+				</div>
 			</div>
-			<div class="span10 last-avatar">
-		<?php endif; ?>
-		<?php if (!$config->avataroncat) : ?>
-			<div class="span12">
-		<?php endif; ?>
-				<span><?php echo $this->getTopicLink ($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
-					<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?></span>
-				<br>
-				<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
-			</div>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

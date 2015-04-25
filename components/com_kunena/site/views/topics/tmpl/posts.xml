@@ -21,7 +21,7 @@
 			<field name="userid"
 			       type="text"
 			       default=""
-			       label="COM_KUNENA_MENU_USER"/>
+			       label="COM_KUNENA_MENU_USERID"/>
 		</fieldset>
 	</fields>
 	<fields name="params">

@@ -62,34 +62,13 @@ class KunenaGravatar
 	}
 
 	/**
-	 * Check if the email is valid by comparing it against regular expression
-	 *
-	 * @return boolean
-	 */
-	public function isValidEmail($email)
-	{
-		// Source: http://www.zend.com/zend/spotlight/ev12apr.php
-		if (preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i', $email) !== false)
-		{
-			return true;
-		}
-		else
-		{
-			false;
-		}
-	}
-
-	/**
 	 * @param string $email
 	 *
 	 * @return string $email
 	 */
 	public function setEmail($email)
 	{
-		if ($this->isValidEmail($email))
-		{
-			$this->email = $email;
-		}
+		$this->email = $email;
 	}
 
 	/**

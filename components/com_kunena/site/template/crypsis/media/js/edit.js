@@ -90,5 +90,24 @@ jQuery(document).ready(function() {
 	jQuery('#kbbcode-message').bind('input propertychange', function() {
 		kPreviewHelper(previewActive);
 	});
+	
+	/* Store form data into localstorage every 1 second */
+	if ( jQuery.fn.sisyphus!=undefined ) {
+		jQuery("#postform").sisyphus( {
+			locationBased: true,
+			timeout: 5
+		});
+	}
+	
+	jQuery('#kshow_attach_form').click(function() {
+		if (jQuery('#kattach_form').is(":visible"))
+		{
+			jQuery('#kattach_form').hide();
+		}
+		else
+		{
+			jQuery('#kattach_form').show();
+		}
+	});	
 });
 

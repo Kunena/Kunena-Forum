@@ -41,9 +41,9 @@ defined('_JEXEC') or die;
 			<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
 		</td>
 		<td>
-			<div>
-				<input id="kavatar-upload" type="file" class="button" name="avatarfile" />
-			</div>
+			<label class="span10" for="kavatar-upload">
+				<input id="kavatar-upload" type="file"  name="avatarfile">
+			</label>
 		</td>
 	</tr>
 	<?php endif; ?>
@@ -71,9 +71,9 @@ defined('_JEXEC') or die;
 
 				<?php foreach ($this->galleryImages as $image) : ?>
 				<li class="span2">
-					<label class="thumbnail">
+					<input type="radio" name="avatar" id="radio<?php echo $image ?>" value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
+					<label class=" radio thumbnail" for="radio<?php echo $image ?>">
 						<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="" />
-						<input type="radio" name="avatar" value="<?php echo "gallery/{$image}"; ?>" />
 					</label>
 				</li>
 				<?php endforeach; ?>

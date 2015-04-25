@@ -85,7 +85,7 @@ jQuery(document).ready(function() {
 	}
 	
 	if ( typeof pollcategoriesid != 'undefined' ) {
-		var catid = jQuery('kcategory_poll').val();
+		var catid = jQuery('#kcategory_poll').val();
 		
 		if ( pollcategoriesid[catid] !== undefined ) {
 			jQuery('.pollbutton').show();
@@ -95,4 +95,33 @@ jQuery(document).ready(function() {
 	} else {
 		jQuery('.pollbutton').hide();
 	}
+	
+	jQuery('#kpoll_go_results').click(function() {
+		if(jQuery('#poll-results').is(':visible')==true)
+		{
+			jQuery('#poll-results').hide();
+			jQuery('#kpoll_hide_results').hide();
+		}
+		else
+		{
+			jQuery('#poll-results').show();
+			jQuery('#kpoll_hide_results').show();
+			jQuery('#kpoll_go_results').hide();
+		}
+	});
+	
+	jQuery('#kpoll_hide_results').click(function() {
+		if(jQuery('#poll-results').is(':visible')==true)
+		{
+			jQuery('#poll-results').hide();
+      jQuery('#kpoll_go_results').show();
+			jQuery('#kpoll_hide_results').hide();
+		}
+		else
+		{
+			jQuery('#poll-results').show();
+			jQuery('#kpoll_hide_results').show();
+			jQuery('#kpoll_go_results').hide();
+		}
+	});
 });

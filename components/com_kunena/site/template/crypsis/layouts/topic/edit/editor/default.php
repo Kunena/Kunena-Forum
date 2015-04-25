@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die ();
 
+$this->getBBcodesEnabled();
+
 // Kunena bbcode editor
 ?>
 

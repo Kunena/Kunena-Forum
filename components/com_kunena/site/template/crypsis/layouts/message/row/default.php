@@ -63,23 +63,24 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong><span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
 		<div class="views"><strong><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</strong> <span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
-	<td class="span2" id="recent-topics">
-		<?php if ($config->avataroncat) : ?>
-			<div class="span2 hidden-phone">
-				<?php echo $avatar; ?>
-			</div>
-			<div class="span10 last-avatar">
-		<?php endif; ?>
-		<?php if (!$config->avataroncat) : ?>
-			<div class="span12">
-		<?php endif; ?>
-			<?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?>
-			<?php if ($message->userid) : ?>
-				<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+	<td class="span3">
+		<div class="container-fluid">
+			<div class="row-fluid">
+			<?php if ($config->avataroncat) : ?>
+				<div class="span3">
+					<?php echo $avatar; ?>
+				</div>
 			<?php endif; ?>
-			<br />
-			<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+				<div class="span9">
+				<span><?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?></span>
+				<?php if ($message->userid) : ?>
+					<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+				<?php endif; ?>
+				<br />
+				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+				</div>
 			</div>
+		</div>
 	</td>
 
 	<?php if (!empty($this->checkbox)) : ?>

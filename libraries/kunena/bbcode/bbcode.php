@@ -228,8 +228,8 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebay_language . '&mode=search&query='
-					. urlencode($query['_nkw']) .'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid=5336042350"></embed></object>';
+					. urlencode($query['_nkw']) .'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebay_language . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
 
 			}
 
@@ -252,8 +252,18 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="355"><param name="movie" value="http://togo.ebay.com/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid=5336042350"></embed></object>';
+					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
+			}
+		}
+
+		if (isset($params['host']) && strstr($params['host'], 'twitter.') )
+		{
+			$path = explode('/', $params['path']);
+
+			if ( isset($path[3]) )
+			{
+				return $this->defaults->renderTweet($path[3]);
 			}
 		}
 
@@ -2439,6 +2449,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . JText::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
 		}
 
+		return $this->renderTweet($tweetid);
+	}
+
+	/**
+	 * Render the tweet by loading the right layout
+	 *
+	 * @param   int  $tweetid  The tweet id to render in layout
+	 *
+	 * @return string
+	 */
+	public function renderTweet($tweetid)
+	{
 		$tweet = $this->getTweet($tweetid);
 
 		$layout = KunenaLayout::factory('BBCode/twitter');
@@ -2448,17 +2470,17 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			if ($layout->getPath())
 			{
 				return (string) $layout
-					->set('tweetid', $tweet->id_str)
-					->set('user_profile_url_normal', $tweet->user->profile_image_url)
-					->set('user_profile_url_big', $tweet->user->profile_image_url_big)
-					->set('user_name', $tweet->user->name)
-					->set('user_screen_name', $tweet->user->screen_name)
-					->set('tweet_created_at', $tweet->created_at)
-					->set('tweet_text', $tweet->text)
-					->set('retweet_count', $tweet->retweet_count)
-					->set('favorite_count', $tweet->favorite_count)
-					->set('verified', $tweet->user->verified)
-					->setLayout('default');
+				->set('tweetid', $tweet->id_str)
+				->set('user_profile_url_normal', $tweet->user->profile_image_url)
+				->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+				->set('user_name', $tweet->user->name)
+				->set('user_screen_name', $tweet->user->screen_name)
+				->set('tweet_created_at', $tweet->created_at)
+				->set('tweet_text', $tweet->text)
+				->set('retweet_count', $tweet->retweet_count)
+				->set('favorite_count', $tweet->favorite_count)
+				->set('verified', $tweet->user->verified)
+				->setLayout('default');
 			}
 		}
 	}

@@ -423,35 +423,69 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 */
 	function upload($key = 'kattachment', $catid = null)
 	{
-		// TODO: get rid of the legacy upload class.
-		require_once KPATH_SITE . '/lib/kunena.upload.class.php';
+		jimport( 'joomla.filesystem.folder' );
+		$config = KunenaFactory::getConfig();
+		$input = JFactory::getApplication()->input;
+		$fileInput = $input->files->get($key);
 
-		$path = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid;
-		$upload = new CKunenaUpload($catid);
-		$protection = (bool) KunenaConfig::getInstance()->attachment_protection;
-		$filename = $protection ? null : '';
-		$upload->uploadFile($path, $key, $filename, false);
-		$fileinfo = $upload->getFileInfo();
+		$upload = KunenaUpload::getInstance();
 
-		if ($fileinfo ['status'] && $fileinfo['ready'] === true)
+		if ( !JFolder::exists(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/') )
 		{
-			$this->protected = (int) $protection;
-			$this->hash =$fileinfo ['hash'];
-			$this->size = $fileinfo ['size'];
+			mkdir(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/');
+		}
+
+		$file = $upload->upload($fileInput, JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . JFile::stripExt($fileInput['name']));
+
+		if ($file->success)
+		{
+			$imageInfo = KunenaImage::getImageFileProperties(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+
+			if (stripos($imageInfo->mime, 'image/') !== false)
+			{
+				if (number_format($file->size / 1024, 2) > $config->imagesize || $imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
+				{
+					// Calculate quality for both JPG and PNG.
+					$quality = $config->imagequality;
+					if ($quality < 1 || $quality > 100)
+					{
+						$quality = 70;
+					}
+					if ($imageInfo->type == IMAGETYPE_PNG)
+					{
+						$quality = intval(($quality - 1) / 10);
+					}
+					$options = array('quality' => $quality);
+
+					try
+					{
+						$image = new KunenaImage(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+						$image = $image->resize($config->imagewidth, $config->imagewidth, false);
+						$image->toFile(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name'], $imageInfo->type, $options);
+						unset($image);
+					}
+					catch (Exception $e)
+					{
+						// TODO: better error message.
+						echo $e->getMessage();
+
+						return false;
+					}
+				}
+
+				$this->filetype = $imageInfo->mime;
+			}
+
+			$this->protected = 	(bool) $config->attachment_protection;
+			$this->hash = md5_file(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+			$this->size = $file->size;
 			$this->folder = 'media/kunena/attachments/' . $this->userid;
-			$this->filetype = $fileinfo ['mime'];
-			$this->filename = $fileinfo ['name'];
-			$this->filename_real = $fileinfo ['real'];
+			$this->filename = $fileInput['name'];
+			$this->filename_real = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name'];
 			$this->caption = '';
 
 			return true;
 		}
-
-		$this->setError(
-			JText::sprintf('COM_KUNENA_UPLOAD_FAILED', htmlspecialchars($fileinfo['name'], ENT_COMPAT, 'UTF-8'))
-			. ': ' . htmlspecialchars($fileinfo['error'], ENT_COMPAT, 'UTF-8'));
-
-		return false;
 	}
 
 	/**

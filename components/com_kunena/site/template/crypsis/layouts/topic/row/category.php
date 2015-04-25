@@ -20,6 +20,13 @@ $author = $topic->getLastPostAuthor();
 $avatar = $author->getAvatarImage('img-rounded', 48);
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 7 : 6;
+if ($this->topic->ordering)
+{
+	$txt = '-stickymsg';
+}
+else {
+	$txt = '';
+}
 
 if (!empty($this->spacing)) : ?>
 	<tr class="kcontenttablespacer">
@@ -27,7 +34,7 @@ if (!empty($this->spacing)) : ?>
 	</tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
+<tr class="category<?php echo $this->escape($category->class_sfx); ?> krow1<?php echo $txt;?>">
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>

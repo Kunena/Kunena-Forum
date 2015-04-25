@@ -20,6 +20,13 @@ $avatar = $author->getAvatarImage('img-rounded', 48);
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
+if ($this->topic->ordering)
+{
+	$txt = '-stickymsg';
+}
+else {
+	$txt = '';
+}
 
 if (!empty($this->spacing)) : ?>
 <tr>
@@ -27,7 +34,7 @@ if (!empty($this->spacing)) : ?>
 </tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
+<tr class="category<?php echo $this->escape($category->class_sfx); ?> krow1<?php echo $txt;?>">
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>

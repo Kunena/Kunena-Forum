@@ -33,13 +33,17 @@ $this->addScript('js/search.js');
 	<?php endif; ?>
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#search">&times;</div>
+	<div class="btn-toolbar pull-right">
+		<div class="btn-group">
+			<div class="btn btn-small" data-toggle="collapse" data-target="#search">&times;</div>
+		</div>
+	</div>
 	<h2>
 		<?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
 	</h2>
 
 	<div class="collapse in" id="search">
-		<div class="well">
+	<div class="well">
 			<div class="row-fluid">
 				<fieldset class="span6">
 					<legend>
@@ -149,9 +153,12 @@ $this->addScript('js/search.js');
 		</div>
 
 		<div class="center">
-			<input class="btn btn-primary" type="submit" value="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>" />
-			<input class="btn" type="reset" value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"
-			       onclick="window.history.back();" />
+			<button type="submit" class="btn btn-primary">
+				<i class="icon-search icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
+			</button>
+			<button type="reset" class="btn" onclick="javascript:window.history.back();">
+				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+			</button>
 		</div>
 	</div>
 </form>

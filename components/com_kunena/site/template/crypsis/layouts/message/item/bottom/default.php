@@ -76,7 +76,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 		</div>
 	</div>
 	<div class="profile-horizontal-bottom">
-	<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter); ?>
+	<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 </div>
 </div>
 <?php if ($message->modified_by && $this->config->editmarkup) :

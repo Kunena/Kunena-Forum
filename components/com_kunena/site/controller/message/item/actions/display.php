@@ -56,7 +56,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		if ($this->message->isAuthorised('reply'))
 		{
-			if ($me->canDoCaptcha())
+			if ($me->canDoCaptcha() || !$me->exists())
 			{
 				$this->quickreply = false;
 			}

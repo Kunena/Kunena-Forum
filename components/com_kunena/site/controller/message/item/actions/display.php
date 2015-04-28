@@ -97,7 +97,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			$login = KunenaLogin::getInstance();
 			$logintext =  '<a class="btn-link" href="#klogin"> ' . JText::_('JLOGIN'). '</a>';
 			if ($login->getRegistrationUrl()) {
-				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="#klogin">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
+				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="' . $login->getRegistrationUrl() . '">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
 			}
 			else {
 				$register = '';

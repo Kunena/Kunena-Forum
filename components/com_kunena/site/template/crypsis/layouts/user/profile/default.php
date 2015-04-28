@@ -60,6 +60,7 @@ if ($show)
 	</li>
 	<?php endif; ?>
 </ul>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
 <div class="profile-expand center">
 	<span class="heading btn btn-small heading-less" style="display:none;"><i class="icon-arrow-up"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
 	<span class="heading btn btn-small"><i class="icon-arrow-down"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
@@ -95,6 +96,7 @@ if ($show)
 				<?php echo $user->profileIcon('private'); ?>
 				<?php echo $user->profileIcon('email'); ?>
 			</li>
+			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofilemore'); ?>
 		</ul>
 	</div>
 </div>

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement'); ?>
 <div class="collapse in" id="announcement<?php echo $this->announcement->id; ?>">
 	<div class="alert alert-info">
 		<div class="close" data-toggle="collapse" data-target="#announcement<?php echo $this->announcement->id; ?>">&times;</div>

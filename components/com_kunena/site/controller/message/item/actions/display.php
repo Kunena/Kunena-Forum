@@ -95,9 +95,9 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		if (!$me->exists() && !$this->message_closed || !$me->exists() && !$this->topic->locked) {
 			JHtml::_('behavior.modal');
 			$login = KunenaLogin::getInstance();
-			$logintext =  '<a class="modal" href="' . $login->getLoginURL() . '&tmpl=component"> ' . JText::_('JLOGIN'). '</a>';
+			$logintext =  '<a class="btn-link" href="#klogin"> ' . JText::_('JLOGIN'). '</a>';
 			if ($login->getRegistrationUrl()) {
-				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="modal" href="' . $login->getRegistrationURL() . '&tmpl=component">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
+				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="#klogin">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
 			}
 			else {
 				$register = '';

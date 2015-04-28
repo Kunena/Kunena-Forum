@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 ?>
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin">
 			<i class="icon-large icon-user"></i> <b class="caret"></b>
 		</a>
 
@@ -36,7 +36,7 @@ defined('_JEXEC') or die;
 						</div>
 					</div>
 				</div>
-				
+
 				<div id="form-login-password" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">
@@ -51,19 +51,19 @@ defined('_JEXEC') or die;
 						</div>
 					</div>
 				</div>
-				
+
 				<?php $login = KunenaLogin::getInstance(); ?>
 				<?php if ($login->getTwoFactorMethods() > 1) : ?>
 				<div id="form-login-tfa" class="control-group center">
 					<div class="controls">
 						<div class="input-prepend input-append">
-							<span class="add-on"> 
+							<span class="add-on">
 								<i class="icon-star tip" title="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"></i>
 								<label for="k-lgn-secretkey" class="element-invisible">
 									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 								</label>
 						  </span>
-							<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" tabindex="3" 
+							<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" tabindex="3"
 										size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
 						</div>
 					</div>

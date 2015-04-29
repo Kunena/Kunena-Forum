@@ -117,6 +117,8 @@
 	</fieldset>
 
 	<fieldset name="avatar">
+		<field name="avatarSizeX" default="40"/>
+		<field name="avatarSizeY"  default="90"/>
 		<field name="templatebyText" default=""/>
 		<field name="templatebyName"  default=""/>
 		<field name="templatebyLink"  default=""/>

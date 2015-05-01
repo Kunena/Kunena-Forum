@@ -2516,11 +2516,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$consumer_key = trim($config->twitter_consumer_key);
 		$consumer_secret = trim($config->twitter_consumer_secret);
 
-		$tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
-
-		if ($tweet_data !== false)
+		if ( JFile::exists(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json') )
 		{
-			return json_decode($tweet_data);
+			$tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
+
+			if ($tweet_data !== false)
+			{
+				return json_decode($tweet_data);
+			}
 		}
 
 		if (!empty($consumer_key) && !empty($consumer_secret) && empty($this->token))

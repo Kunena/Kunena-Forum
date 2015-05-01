@@ -66,9 +66,16 @@ class KunenaAvatar
 	public function getSize($sizex = 90, $sizey = 90)
 	{
 		$size = new StdClass();
-		$templatesettings = KunenaFactory::getTemplate()->params;
-		$size->x = $templatesettings->get('avatarSizeX');
-		$size->y = $templatesettings->get('avatarSizeY');
+		$size->x = intval($sizex);
+		$size->y = intval($sizey);
+
+		if (!intval($sizex))
+		{
+			$template = KunenaFactory::getTemplate();
+			$name = ucfirst(strtolower($sizex));
+			$size->x = intval($template->params->get('avatarSizeX'.$name, 90));
+			$size->y = intval($template->params->get('avatarSizeY'.$name, 90));
+		}
 
 		return $size;
 	}

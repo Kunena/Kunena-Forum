@@ -1415,7 +1415,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$message = $this->getMessage();
 		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 
-		if (($me->userid && $bbcode->parent->userid == $me->userid) || $moderator)
+		if ( isset($bbcode->parent->message->userid))
+		{
+			$message_userid = $bbcode->parent->message->userid;
+		}
+		else
+		{
+			$message_userid = $bbcode->parent->userid;
+		}
+
+		if (($me->userid && $message_userid == $me->userid) || $moderator)
 		{
 			$layout = KunenaLayout::factory('BBCode/Confidential');
 

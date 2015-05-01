@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 $options = $this->getOptions();
+JHtml::_('behavior.core');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"

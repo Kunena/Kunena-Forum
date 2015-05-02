@@ -195,7 +195,7 @@ class KunenaViewCommon extends KunenaView
 			elseif ($id)
 			{
 				$topic = KunenaForumTopicHelper::get($id);
-				$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC')), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
+				$pathway->addItem($this->escape($topic->subject), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
 			}
 
 			if ($view == 'topic')

@@ -130,11 +130,6 @@ class KunenaViewUser extends KunenaView
 
 		$this->name = $this->user->username;
 
-		if ($this->config->userlist_name)
-		{
-			$this->name = $this->profile->getName() . ($this->me->isModerator() ? ' (' . $this->name . ')' : '');
-		}
-
 		if ($this->config->showuserstats)
 		{
 			$this->rank_image = $this->profile->getRank(0, 'image');

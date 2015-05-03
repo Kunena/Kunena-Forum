@@ -439,10 +439,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		if ($file->success)
 		{
-			$imageInfo = KunenaImage::getImageFileProperties(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+			$finfo = new finfo(FILEINFO_MIME);
 
-			if (stripos($imageInfo->mime, 'image/') !== false)
+			$type = $finfo->file(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+
+			if (stripos($type, 'image/') !== false)
 			{
+				$imageInfo = KunenaImage::getImageFileProperties(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+
 				if (number_format($file->size / 1024, 2) > $config->imagesize || $imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
 				{
 					// Calculate quality for both JPG and PNG.

@@ -143,10 +143,26 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $details;
 	}
 
+	function getFileLessParsed()
+	{
+		$template = $this->app->getUserState('kunena.edit.template');
+		$filename = $this->app->getUserState('kunena.edit.filename');
+		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/less/' . $filename);
+
+		if ($content === false)
+		{
+			return null;
+		}
+
+		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
+
+		return $content;
+	}
+
 	function getFileContentParsed()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
-		$filename = $this->app->getUserState('kunena.editcss.filename');
+		$filename = $this->app->getUserState('kunena.edit.filename');
 		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/css/' . $filename);
 
 		if ($content === false)

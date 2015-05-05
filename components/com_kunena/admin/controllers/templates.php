@@ -252,18 +252,157 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	function chooseless()
+	{
+		$jinput = JFactory::getApplication()->input;
+
+		$template = $jinput->get('id', '', 'method', 'cmd');
+		$this->app->setUserState('kunena.chooseless', $template);
+
+		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseless", false));
+	}
+
+	function editless()
+	{
+		$jinput = JFactory::getApplication()->input;
+		$template = $jinput->get('id', '', 'method', 'cmd');
+		$filename = $jinput->get('filename', '', 'method', 'cmd');
+
+		if (KunenaFile::getExt($filename) !== 'less')
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_LESS'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
+		}
+
+		$this->app->setUserState('kunena.editless.tmpl', $template);
+		$this->app->setUserState('kunena.editless.filename', $filename);
+
+		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editless", false));
+	}
+
 	function choosecss()
 	{
-		$template = JRequest::getVar('id', '', 'method', 'cmd');
+		$jinput = JFactory::getApplication()->input;
+		$template = $jinput->get('id', '', 'method', 'cmd');
 		$this->app->setUserState('kunena.choosecss', $template);
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
 	}
 
+	function applyless()
+	{
+		$jinput = JFactory::getApplication()->input;
+		$template    = $jinput->get('id', '', 'post', 'cmd');
+		$filename    = $jinput->get('filename', '', 'post', 'cmd');
+		$filecontent = $jinput->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+
+		if (!JSession::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (!$template)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (!$filecontent)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONTENT_EMPTY'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		// Set FTP credentials, if given
+		JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp  = JClientHelper::getCredentials('ftp');
+		$file = KPATH_SITE . '/template/' . $template . '/less/' . $filename;
+
+		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0755'))
+		{
+			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_LESS_WRITABLE'));
+		}
+
+		$return = KunenaFile::write($file, $filecontent);
+
+		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0555'))
+		{
+			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_LESS_UNWRITABLE'));
+		}
+	}
+
+	function saveless()
+	{
+		$jinput = JFactory::getApplication()->input;
+		$template    = $jinput->get('id', '', 'post', 'cmd');
+		$filename    = $jinput->get('filename', '', 'post', 'cmd');
+		$filecontent = $jinput->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+
+		if (!JSession::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (!$template)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (!$filecontent)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONTENT_EMPTY'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		// Set FTP credentials, if given
+		JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp  = JClientHelper::getCredentials('ftp');
+		$file = KPATH_SITE . '/template/' . $template . '/less/' . $filename;
+
+		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0755'))
+		{
+			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_LESS_WRITABLE'));
+		}
+
+		$return = KunenaFile::write($file, $filecontent);
+
+		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0555'))
+		{
+			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_LESS_UNWRITABLE'));
+		}
+
+		if ($return)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
+		}
+	}
+
 	function editcss()
 	{
-		$template = JRequest::getVar('id', '', 'method', 'cmd');
-		$filename = JRequest::getVar('filename', '', 'method', 'cmd');
+		$jinput = JFactory::getApplication()->input;
+		$template = $jinput->get('id', '', 'method', 'cmd');
+		$filename = $jinput->get('filename', '', 'method', 'cmd');
 
 		if (KunenaFile::getExt($filename) !== 'css')
 		{
@@ -279,9 +418,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function savecss()
 	{
-		$template    = JRequest::getVar('id', '', 'post', 'cmd');
-		$filename    = JRequest::getVar('filename', '', 'post', 'cmd');
-		$filecontent = JRequest::getVar('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$jinput = JFactory::getApplication()->input;
+		$template    = $jinput->get('id', '', 'post', 'cmd');
+		$filename    = $jinput->get('filename', '', 'post', 'cmd');
+		$filecontent = $jinput->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 		if (!JSession::checkToken('post'))
 		{

@@ -17,6 +17,10 @@
 
 /* Smartphones */
 @media (max-width: 480px) {
+	.knav-collapse {
+		-webkit-transform: translate3d(0, 0, 0);
+	}
+
 	.pagination  ul > li > a, .pagination ul > li > span {
 		display: none;
 	}
@@ -123,57 +127,57 @@
 	// COLLAPSIBLE NAVBAR
 	// ------------------
 	// Nav collapse clears brand
-	.nav-collapse {
+	.knav-collapse {
 		clear: both;
 	}
 
 	// Block-level the nav
-	.nav-collapse .nav {
+	.knav-collapse .nav {
 		float: none;
 	}
 
-	.nav-collapse .nav > li {
+	.knav-collapse .nav > li {
 		float: none;
 	}
 
-	.nav-collapse .nav > li > a {
+	.knav-collapse .nav > li > a {
 		margin-bottom: 2px;
 	}
 
-	.nav-collapse .nav > .divider-vertical {
+	.knav-collapse .nav > .divider-vertical {
 		display: none;
 	}
 
-	.nav-collapse .nav .nav-header {
+	.knav-collapse .nav .nav-header {
 		text-shadow: none;
 	}
 
 	// Nav and dropdown links in navbar
-	.nav-collapse .nav > li > a,
-	.nav-collapse .dropdown-menu a {
+	.knav-collapse .nav > li > a,
+	.knav-collapse .dropdown-menu a {
 		padding: 9px 15px;
 		font-weight: bold;
 		border-radius:3px;
 	}
 
 	// Buttons
-	.nav-collapse .btn {
+	.knav-collapse .btn {
 		padding: 4px 10px 4px;
 		font-weight: normal;
 	}
 
-	.nav-collapse .dropdown-menu li + li a {
+	.knav-collapse .dropdown-menu li + li a {
 		margin-bottom: 2px;
 	}
 
 	// Buttons in the navbar
-	.nav-collapse.in .btn-group {
+	.knav-collapse.in .btn-group {
 		margin-top: 5px;
 		padding: 0;
 	}
 
 	// Dropdowns in the navbar
-	.nav-collapse .dropdown-menu {
+	.knav-collapse .dropdown-menu {
 		position: static;
 		top: auto;
 		left: auto;
@@ -188,20 +192,20 @@
 		box-shadow:none;
 	}
 
-	.nav-collapse .open > .dropdown-menu {
+	.knav-collapse .open > .dropdown-menu {
 		display: block;
 	}
 
-	.nav-collapse .dropdown-menu:before,
-	.nav-collapse .dropdown-menu:after {
+	.knav-collapse .dropdown-menu:before,
+	.knav-collapse .dropdown-menu:after {
 		display: none;
 	}
 
-	.nav-collapse .dropdown-menu .divider {
+	.knav-collapse .dropdown-menu .divider {
 		display: none;
 	}
 
-	.nav-collapse .nav > li > .dropdown-menu {
+	.knav-collapse .nav > li > .dropdown-menu {
 		&:before,
 		&:after {
 			display: none;

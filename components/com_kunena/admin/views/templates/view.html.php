@@ -61,8 +61,19 @@ class KunenaAdminViewTemplates extends KunenaView
 	{
 		$this->setToolBarChooseless();
 		$this->templatename = $this->app->getUserState('kunena.edit.template');
-		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/less';
+		$file = KPATH_SITE . '/template/' . $this->templatename . '/less/custom.less';
+
+		if(!file_exists($file))
+		{
+			$fp = fopen($file,"w");
+			fwrite($fp,"");
+			fclose($fp);
+		}
+
+		$this->dir = KPATH_SITE . '/template/' . $this->templatename . '/less';
+
 		jimport('joomla.filesystem.folder');
+
 		$this->files = JFolder::files($this->dir, '\.less$', false, false);
 		$this->display();
 	}
@@ -73,7 +84,8 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->templatename = $this->app->getUserState('kunena.edit.template');
 		$this->filename     = $this->app->getUserState('kunena.editless.filename');
 		$this->content      = $this->get('FileLessParsed');
-		$this->css_path     = KPATH_SITE . '/template/' . $this->templatename . '/less/' . $this->filename;
+
+		$this->less_path     = KPATH_SITE . '/template/' . $this->templatename . '/less/' . $this->filename;
 		$this->ftp          = $this->get('FTPcredentials');
 		$this->display();
 	}
@@ -82,6 +94,16 @@ class KunenaAdminViewTemplates extends KunenaView
 	{
 		$this->setToolBarChoosecss();
 		$this->templatename = $this->app->getUserState('kunena.edit.template');
+
+		$file = KPATH_SITE . '/template/' . $this->templatename . '/css/custom.css';
+
+		if(!file_exists($file))
+		{
+			$fp = fopen($file,"w");
+			fwrite($fp,"");
+			fclose($fp);
+		}
+
 		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/css';
 		jimport('joomla.filesystem.folder');
 		$this->files = JFolder::files($this->dir, '\.css$', false, false);
@@ -125,10 +147,13 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('choosecss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
-		JToolBarHelper::divider();
-		JToolBarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
-		JToolBarHelper::divider();
+		if (version_compare(JVERSION, '3', '>'))
+		{
+			JToolBarHelper::custom('choosecss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+			JToolBarHelper::divider();
+			JToolBarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+			JToolBarHelper::divider();
+		}
 		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}

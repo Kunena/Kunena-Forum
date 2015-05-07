@@ -146,14 +146,9 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	function getFileLessParsed()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
-		$filename = $this->app->getUserState('kunena.edit.filename');
+		$filename = $this->app->getUserState('kunena.editless.filename');
+
 		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/less/' . $filename);
-
-		if ($content === false)
-		{
-			return null;
-		}
-
 		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
 
 		return $content;
@@ -162,7 +157,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	function getFileContentParsed()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
-		$filename = $this->app->getUserState('kunena.edit.filename');
+		$filename = $this->app->getUserState('kunena.editcss.filename');
 		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/css/' . $filename);
 
 		if ($content === false)

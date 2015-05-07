@@ -28,11 +28,11 @@ defined ( '_JEXEC' ) or die ();
 
 			<?php // TODO: redo FTP protection fields ?>
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_CSS_TEMPLATE'); ?></legend>
+				<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_LESS_TEMPLATE'); ?></legend>
 				<table class="table table-bordered table-striped">
 					<tr>
 						<th>
-							<?php echo $this->escape($this->css_path); ?>
+							<?php echo $this->escape($this->less_path); ?>
 						</th>
 					</tr>
 					<tr>

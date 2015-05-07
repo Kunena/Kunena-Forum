@@ -18,8 +18,8 @@ defined('_JEXEC') or die;
 		</div>
 		<div class="hidden-desktop">
 			<ul class="nav navbar-nav pull-left">
-				<div><a class="btn btn-link" data-toggle="collapse" data-target=".nav-collapse" style="float:left"> <i class="icon-large icon-list"></i> <b class="caret"></b> </a></div>
-				<div class="nav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
+				<div><a class="btn btn-link" data-toggle="collapse" data-target=".knav-collapse"><i class="icon-large icon-list"></i> <b class="caret"></b> </a></div>
+				<div class="knav-collapse"><?php echo $this->subRequest('Widget/Menu'); ?></div>
 			</ul>
 			<?php echo $this->subRequest('Widget/Login'); ?>
 		</div>

@@ -255,7 +255,6 @@ class KunenaAdminControllerTemplates extends KunenaController
 	function chooseless()
 	{
 		$jinput = JFactory::getApplication()->input;
-
 		$template = $jinput->get('id', '', 'method', 'cmd');
 		$this->app->setUserState('kunena.chooseless', $template);
 

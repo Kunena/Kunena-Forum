@@ -51,19 +51,19 @@ if (!empty($this->spacing)) : ?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
-				<i class="icon-star hasTooltip"><?php JText::_('COM_KUNENA_FAVORITE'); ?></i>
+				<i class="icon-star hasTooltip" title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"></i>
 			<?php endif; ?>
 
 			<?php if ($userTopic->posts) : ?>
-				<i class="icon-flag hasTooltip"><?php JText::_('COM_KUNENA_MYPOSTS'); ?></i>
+				<i class="icon-flag hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"></i>
 			<?php endif; ?>
 
 			<?php if ($this->topic->attachments) : ?>
-				<i class="icon-flag-2 hasTooltip"><?php JText::_('COM_KUNENA_ATTACH'); ?></i>
+				<i class="icon-flag-2 hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
 			<?php endif; ?>
 
 			<?php if ($this->topic->poll_id) : ?>
-				<i class="icon-bars hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
+				<i class="icon-bars hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
 			<?php endif; ?>
 		</div>
 
@@ -121,7 +121,7 @@ if (!empty($this->spacing)) : ?>
 					</div>
 				<?php endif; ?>
 				<div class="span9">
-					<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST')); ?>
+					<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
 						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
 					</span>
 					<br>

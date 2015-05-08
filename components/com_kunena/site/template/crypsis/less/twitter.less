@@ -4,35 +4,18 @@
 	font-weight : normal
 }
 
-[id*="twitter-widget"] {
+.twitter-tweet {
 	width                      : 500px;
 	padding                    : 0;
 	margin                     : 10px 0;
-	border-top-color           : #eee;
-	border-right-color         : #ddd;
-	border-bottom-color        : #bbb;
-	border-left-color          : #ddd;
-	border-top-width           : 1px;
-	border-right-width         : 1px;
-	border-bottom-width        : 1px;
-	border-left-width          : 1px;
-	border-top-style           : solid;
-	border-right-style         : solid;
-	border-bottom-style        : solid;
-	border-left-style          : solid;
+	border                     : 1px solid #e5e5e5;
 	display                    : block;
 	visibility                 : visible;
 	position                   : static;
 	min-width                  : 220px;
 	max-width                  : 99%;
-	border-top-left-radius     : 5px;
-	border-top-right-radius    : 5px;
-	border-bottom-right-radius : 5px;
-	border-bottom-left-radius  : 5px;
-	box-shadow                 : 0px 1px 3px rgba(0, 0, 0, 0.15);
-	border-image-source        : none;
-	border-image-outset        : 0;
-	border-image-repeat        : stretch;
+	border-radius              : 5px;
+	box-shadow                 : 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .p-autho {
@@ -172,8 +155,8 @@ html, .SandboxRoot, .p-author .profile .p-name, .custom-timeline-owner-profile .
 	height                : 30px;
 	background-position   : 0 -161px;
 	background-position-y : -155px;
-	zoom                  : 0.37;
-	-moz-transform        : scale(0.37);
+	zoom                  : 0.36;
+	-moz-transform        : scale(0.36);
 	-moz-transform-origin : 0 0;
 }
 
@@ -567,7 +550,8 @@ a.tweet-box-button {
 	position    : absolute;
 	_position   : static;
 	right       : 0;
-	bottom      : -30px;
+	bottom      : -15px;
+	z-index     : 99999;
 	_float      : right;
 	background  : #fff;
 	visibility  : hidden;

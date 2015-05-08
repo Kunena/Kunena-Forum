@@ -62,6 +62,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->setToolBarChooseless();
 		$this->templatename = $this->app->getUserState('kunena.edit.template');
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/less/custom.less';
+		$this->dir = KPATH_SITE . '/template/' . $this->templatename . '/less';
 
 		if(!file_exists($file))
 		{
@@ -69,8 +70,6 @@ class KunenaAdminViewTemplates extends KunenaView
 			fwrite($fp,"");
 			fclose($fp);
 		}
-
-		$this->dir = KPATH_SITE . '/template/' . $this->templatename . '/less';
 
 		jimport('joomla.filesystem.folder');
 
@@ -230,7 +229,8 @@ class KunenaAdminViewTemplates extends KunenaView
 		{
 			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates');
 		}
-
+		JToolBarHelper::spacer();
+		JToolBarHelper::apply('applycss');
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('savecss');
 		JToolBarHelper::spacer();

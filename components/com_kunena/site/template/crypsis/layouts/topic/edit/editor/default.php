@@ -89,7 +89,7 @@ $this->getBBcodesEnabled();
 		<?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
 		?>
-		<select id="kvideoprovider-modal"
+		<select id="kvideoprovider-list-modal"
 			name="provider" class="kbutton">
 			<?php
 				$vid_provider = array ('', 'Bofunk', 'Break', 'Clipfish', 'DivX,divx]http://', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'MediaPlayer,mediaplayer]http://', 'Metacafe', 'MySpace', 'QuickTime,quicktime]http://', 'RealPlayer,realplayer]http://', 'RuTube', 'Sapo', 'Streetfire', 'Veoh', 'Videojug', 'Vimeo', 'Wideo.fr', 'YouTube' );

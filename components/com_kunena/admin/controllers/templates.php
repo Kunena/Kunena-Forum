@@ -31,7 +31,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function publish()
 	{
-		$cid = JRequest::getVar('cid', array(), 'method', 'array');
+		$cid = $this->app->input->get('cid', array(), 'method', 'array');
 		$id  = array_shift($cid);
 
 		if (!JSession::checkToken('post'))
@@ -70,7 +70,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function edit()
 	{
-		$cid      = JRequest::getVar('cid', array(), 'method', 'array');
+		$cid      = $this->app->input->get('cid', array(), 'method', 'array');
 		$template = array_shift($cid);
 
 		if (!$template)
@@ -99,7 +99,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$tmp  = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
-		$file = JRequest::getVar('install_package', null, 'files', 'array'); // File upload
+		$file = $this->app->input->get('install_package', null, 'files', 'array'); // File upload
 
 		if (!JSession::checkToken('post'))
 		{
@@ -194,7 +194,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function uninstall()
 	{
-		$cid      = JRequest::getVar('cid', array(), 'method', 'array');
+		$cid      = $this->app->input->get('cid', array(), 'method', 'array');
 		$id       = array_shift($cid);
 		$template = $id;
 
@@ -254,18 +254,15 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function chooseless()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$template = $jinput->get('id', '', 'method', 'cmd');
-		$this->app->setUserState('kunena.chooseless', $template);
+		$this->app->input->get('id', '', 'method', 'cmd');
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseless", false));
 	}
 
 	function editless()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$template = $jinput->get('id', '', 'method', 'cmd');
-		$filename = $jinput->get('filename', '', 'method', 'cmd');
+		$template = $this->app->input->get('id', '', 'method', 'cmd');
+		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
 
 		if (KunenaFile::getExt($filename) !== 'less')
 		{
@@ -281,8 +278,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function choosecss()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$template = $jinput->get('id', '', 'method', 'cmd');
+		$template = $this->app->input->get('id', '', 'method', 'cmd');
 		$this->app->setUserState('kunena.choosecss', $template);
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
@@ -290,10 +286,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function applyless()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$template    = $jinput->get('id', '', 'post', 'cmd');
-		$filename    = $jinput->get('filename', '', 'post', 'cmd');
-		$filecontent = $jinput->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$template = $this->app->input->get('id', '', 'method', 'cmd');
+		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
+		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 		if (!JSession::checkToken('post'))
 		{
@@ -319,30 +314,24 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		// Set FTP credentials, if given
-		JClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = JClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE . '/template/' . $template . '/less/' . $filename;
-
-		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0755'))
-		{
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_LESS_WRITABLE'));
-		}
-
 		$return = KunenaFile::write($file, $filecontent);
 
-		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0555'))
+		if ($return)
 		{
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_LESS_UNWRITABLE'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
 		}
 	}
 
 	function saveless()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$template    = $jinput->get('id', '', 'post', 'cmd');
-		$filename    = $jinput->get('filename', '', 'post', 'cmd');
-		$filecontent = $jinput->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$template    = $this->app->input->get('id', '', 'post', 'cmd');
+		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
+		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 		if (!JSession::checkToken('post'))
 		{
@@ -368,22 +357,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		// Set FTP credentials, if given
-		JClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = JClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE . '/template/' . $template . '/less/' . $filename;
-
-		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0755'))
-		{
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_LESS_WRITABLE'));
-		}
-
 		$return = KunenaFile::write($file, $filecontent);
-
-		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0555'))
-		{
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_LESS_UNWRITABLE'));
-		}
 
 		if ($return)
 		{
@@ -399,9 +374,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function editcss()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$template = $jinput->get('id', '', 'method', 'cmd');
-		$filename = $jinput->get('filename', '', 'method', 'cmd');
+		$template = $this->app->input->get('id', '', 'method', 'cmd');
+		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
 
 		if (KunenaFile::getExt($filename) !== 'css')
 		{
@@ -417,10 +391,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function applycss()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$template    = $jinput->get('id', '', 'post', 'cmd');
-		$filename    = $jinput->get('filename', '', 'post', 'cmd');
-		$filecontent = $jinput->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$template    = $this->app->input->get('id', '', 'post', 'cmd');
+		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
+		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 		if (!JSession::checkToken('post'))
 		{
@@ -446,30 +419,24 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		// Set FTP credentials, if given
-		JClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = JClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE . '/template/' . $template . '/css/' . $filename;
-
-		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0755'))
-		{
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_WRITABLE'));
-		}
-
 		$return = KunenaFile::write($file, $filecontent);
 
-		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0555'))
+		if ($return)
 		{
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_UNWRITABLE'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
 		}
 	}
 
 	function savecss()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$template    = $jinput->get('id', '', 'post', 'cmd');
-		$filename    = $jinput->get('filename', '', 'post', 'cmd');
-		$filecontent = $jinput->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$template    = $this->app->input->get('id', '', 'post', 'cmd');
+		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
+		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 		if (!JSession::checkToken('post'))
 		{
@@ -495,22 +462,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		// Set FTP credentials, if given
-		JClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = JClientHelper::getCredentials('ftp');
 		$file = KPATH_SITE . '/template/' . $template . '/css/' . $filename;
-
-		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0755'))
-		{
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_WRITABLE'));
-		}
-
 		$return = KunenaFile::write($file, $filecontent);
-
-		if (!$ftp['enabled'] && KunenaPath::isOwner($file) && !KunenaPath::setPermissions($file, '0555'))
-		{
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_UNWRITABLE'));
-		}
 
 		if ($return)
 		{
@@ -526,8 +479,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function apply()
 	{
-		$template = JRequest::getVar('templatename', '', 'method', 'cmd');
-		$menus    = JRequest::getVar('selections', array(), 'post', 'array');
+		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
+		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
 		JArrayHelper::toInteger($menus);
 
 		if (!JSession::checkToken('post'))
@@ -554,8 +507,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function save()
 	{
-		$template = JRequest::getVar('templatename', '', 'method', 'cmd');
-		$menus    = JRequest::getVar('selections', array(), 'post', 'array');
+		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
+		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
 		JArrayHelper::toInteger($menus);
 
 		if (!JSession::checkToken('post'))
@@ -590,7 +543,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	 */
 	protected function _saveParamFile($template)
 	{
-		$params = JRequest::getVar('jform', array(), 'post', 'array');
+		$params = $this->app->input->get('jform', array(), 'post', 'array');
 
 		// Set FTP credentials, if given
 		JClientHelper::setCredentialsFromRequest('ftp');

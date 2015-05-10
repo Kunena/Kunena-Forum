@@ -40,7 +40,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				</p>
 				<p>
 					<i class="icon-clock"></i>
-					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat', 'ago'); ?>
+					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 				</p>
 			</div>
 			<div class="divider"></div>

@@ -65,6 +65,10 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				$this->quickreply = true;
 			}
 		}
+		else
+		{
+			$this->quickreply = false;
+		}
 
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))

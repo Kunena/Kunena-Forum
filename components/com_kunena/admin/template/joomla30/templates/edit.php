@@ -155,20 +155,25 @@ JHtml::_('dropdown.init');
 										?>
 									</div>
 									<div class="tab-pane" id="tab_avatars">
-										<?php if ($this->form !== false && count($this->form->getFieldset())) : ?>
+										<table class="table table-bordered table-striped">
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_FEATURE_NOT_AVAILABLE_IN_BETA'); ?>:</td>
+											</tr>
+										</table>
+										<?php /*if ($this->form !== false && count($this->form->getFieldset())) : */?><!--
 											<table class="table table-bordered table-striped">
-												<?php foreach($this->form->getFieldset('avatar') as $field) : if (!$field->hidden) : ?>
+												<?php /*foreach($this->form->getFieldset('avatar') as $field) : if (!$field->hidden) : */?>
 													<tr>
-														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
-														<td class="paramlist_value"><?php echo $field->input; ?></td>
+														<td width="40%" class="paramlist_key"><?php /*echo $field->label; */?></td>
+														<td class="paramlist_value"><?php /*echo $field->input; */?></td>
 													</tr>
-												<?php endif; endforeach; ?>
+												<?php /*endif; endforeach; */?>
 											</table>
-										<?php
-										else :
+										--><?php
+/*										else :
 											echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
 										endif;
-										?>
+										*/?>
 									</div>
 								</div>
 							</div>

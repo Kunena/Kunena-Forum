@@ -60,27 +60,28 @@ class KunenaAdminViewTemplates extends KunenaView
 	function displayChooseless()
 	{
 		$this->setToolBarChooseless();
-		$this->templatename = $this->app->getUserState('kunena.edit.template');
-		$file = KPATH_SITE . '/template/' . $this->templatename . '/less/custom.less';
-		$this->dir = KPATH_SITE . '/template/' . $this->templatename . '/less';
+		$this->templatename = $this->app->getUserState('kunena.templatename');
+		jimport('joomla.filesystem.folder');
 
-		if(!file_exists($file))
+		$file = KPATH_SITE . '/template/' . $this->templatename . '/less/custom.less';
+
+		if (!file_exists($file))
 		{
 			$fp = fopen($file,"w");
 			fwrite($fp,"");
 			fclose($fp);
 		}
 
-		jimport('joomla.filesystem.folder');
-
+		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/less';
 		$this->files = JFolder::files($this->dir, '\.less$', false, false);
+
 		$this->display();
 	}
 
 	function displayEditless()
 	{
 		$this->setToolBarEditless();
-		$this->templatename = $this->app->getUserState('kunena.edit.template');
+		$this->templatename = $this->app->getUserState('kunena.templatename');
 		$this->filename     = $this->app->getUserState('kunena.editless.filename');
 		$this->content      = $this->get('FileLessParsed');
 
@@ -92,7 +93,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	function displayChoosecss()
 	{
 		$this->setToolBarChoosecss();
-		$this->templatename = $this->app->getUserState('kunena.edit.template');
+		$this->templatename = $this->app->getUserState('kunena.templatename');
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/css/custom.css';
 
@@ -112,7 +113,7 @@ class KunenaAdminViewTemplates extends KunenaView
 	function displayEditcss()
 	{
 		$this->setToolBarEditcss();
-		$this->templatename = $this->app->getUserState('kunena.editcss.tmpl');
+		$this->templatename = $this->app->getUserState('kunena.templatename');
 		$this->filename     = $this->app->getUserState('kunena.editcss.filename');
 		$this->content      = $this->get('FileContentParsed');
 		$this->css_path     = KPATH_SITE . '/template/' . $this->templatename . '/css/' . $this->filename;
@@ -281,3 +282,4 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::spacer();
 	}
 }
+

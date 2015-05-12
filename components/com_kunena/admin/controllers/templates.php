@@ -254,14 +254,27 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function chooseless()
 	{
-		$this->app->input->get('id', '', 'method', 'cmd');
+		$template = $this->app->input->getArray(array('cid' => ''));
+		$templatename = array_shift($template['cid']);
+
+		$file = KPATH_SITE . '/template/' . $templatename . '/less/';
+		$return = KunenaFile::write($file);
+
+		if (!$return)
+		{
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+
+		$this->app->setUserState('kunena.templatename', $templatename);
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseless", false));
 	}
 
 	function editless()
 	{
-		$template = $this->app->input->get('id', '', 'method', 'cmd');
+		$template = $this->app->input->getArray(array('cid' => ''));
+		$templatename = array_shift($template['cid']);
+
 		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
 
 		if (KunenaFile::getExt($filename) !== 'less')
@@ -270,7 +283,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
 		}
 
-		$this->app->setUserState('kunena.editless.tmpl', $template);
+		$this->app->setUserState('kunena.templatename', $templatename);
 		$this->app->setUserState('kunena.editless.filename', $filename);
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editless", false));
@@ -278,15 +291,19 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function choosecss()
 	{
-		$template = $this->app->input->get('id', '', 'method', 'cmd');
-		$this->app->setUserState('kunena.choosecss', $template);
+		$template = $this->app->input->getArray(array('cid' => ''));
+		$templatename = array_shift($template['cid']);
+
+		$this->app->setUserState('kunena.templatename', $templatename);
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
 	}
 
 	function applyless()
 	{
-		$template = $this->app->input->get('id', '', 'method', 'cmd');
+		$template = $this->app->input->getArray(array('cid' => ''));
+		$templatename = array_shift($template['cid']);
+
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
 		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
@@ -298,7 +315,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		if (!$template)
+		if (!$templatename)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -314,7 +331,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $template . '/less/' . $filename;
+		$file = KPATH_SITE . '/template/' . $templatename . '/less/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -329,7 +346,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function saveless()
 	{
-		$template    = $this->app->input->get('id', '', 'post', 'cmd');
+		$template = $this->app->input->getArray(array('cid' => ''));
+		$templatename = array_shift($template['cid']);
+
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
 		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
@@ -341,7 +360,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		if (!$template)
+		if (!$templatename)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -357,33 +376,35 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $template . '/less/' . $filename;
+		$file = KPATH_SITE . '/template/' . $templatename . '/less/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $templatename , false));
 		}
 		else
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $templatename, false));
 		}
 	}
 
 	function editcss()
 	{
-		$template = $this->app->input->get('id', '', 'method', 'cmd');
+		$template = $this->app->input->getArray(array('cid' => ''));
+		$templatename = array_shift($template['cid']);
+
 		$filename = $this->app->input->get('filename', '', 'method', 'cmd');
 
 		if (KunenaFile::getExt($filename) !== 'css')
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $template, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename , false));
 		}
 
-		$this->app->setUserState('kunena.editcss.tmpl', $template);
+		$this->app->setUserState('kunena.editcss.tmpl', $templatename);
 		$this->app->setUserState('kunena.editcss.filename', $filename);
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editcss", false));
@@ -391,7 +412,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function applycss()
 	{
-		$template    = $this->app->input->get('id', '', 'post', 'cmd');
+		$template = $this->app->input->getArray(array('cid' => ''));
+		$templatename = array_shift($template['cid']);
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
 		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
@@ -403,7 +425,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		if (!$template)
+		if (!$templatename)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -419,7 +441,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $template . '/css/' . $filename;
+		$file = KPATH_SITE . '/template/' . $templatename . '/css/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -434,7 +456,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 	function savecss()
 	{
-		$template    = $this->app->input->get('id', '', 'post', 'cmd');
+		$template = $this->app->input->getArray(array('cid' => ''));
+		$templatename = array_shift($template['cid']);
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
 		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
@@ -446,7 +469,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		if (!$template)
+		if (!$templatename)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -462,18 +485,18 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $template . '/css/' . $filename;
+		$file = KPATH_SITE . '/template/' . $templatename . '/css/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=edit&cid[]='.$template", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=edit&cid[]='.$templatename", false));
 		}
 		else
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $template, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename , false));
 		}
 	}
 
@@ -577,3 +600,4 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 	}
 }
+

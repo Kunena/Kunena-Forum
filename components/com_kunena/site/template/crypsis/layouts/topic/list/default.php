@@ -84,9 +84,12 @@ $colspan = !empty($this->actions) ? 4 : 3;
 				<a href="#forumtop" rel="nofollow">
 					<i class="icon-arrow-up hasTooltip"></i>
 				</a>
-				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
+			<?php if (empty($this->actions)) : ?>
+			<td colspan="<?php echo $colspan; ?>" class="hidden-phone">
+			<?php else : ?>
 			<td colspan="<?php echo $colspan; ?>">
+			<?php endif; ?>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 				<div class="input-append">
 					<?php if (!empty($this->topics) && !empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>

@@ -664,7 +664,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to archive one or multiples categories
 	 *
-	 * @since 3.1
+	 * @since K4.0
 	 *
 	 * @return void
 	 */
@@ -682,7 +682,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to put in trash one or multiple categories
 	 *
-	 * @since 3.1
+	 * @since K4.0
 	 *
 	 * @return void
 	 */

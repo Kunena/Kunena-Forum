@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * KunenaLayoutSearchForm
  *
- * @since  3.1
+ * @since  K4.0
  *
  */
 class KunenaLayoutSearchForm extends KunenaLayout

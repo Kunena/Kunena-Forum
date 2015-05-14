@@ -35,7 +35,7 @@ function KunenaBuildRoute(&$query)
 	$segments = array();
 
 	// If Kunena Forum isn't installed or SEF is not enabled, do nothing
-	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1') || !KunenaForum::installed() || !KunenaRoute::$config->sef)
+	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed() || !KunenaRoute::$config->sef)
 	{
 		return $segments;
 	}
@@ -254,7 +254,7 @@ function KunenaBuildRoute(&$query)
 function KunenaParseRoute($segments)
 {
 	// If Kunena Forum isn't installed do nothing
-	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1') || !KunenaForum::installed())
+	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
 	{
 		return array();
 	}

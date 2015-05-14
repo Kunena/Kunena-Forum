@@ -147,7 +147,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getState()
 	{
@@ -569,7 +569,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -587,7 +587,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -656,7 +656,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{
@@ -757,7 +757,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Currently only orphan attachments can be added.
 	 *
 	 * @param array $ids
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function addAttachments(array $ids)
 	{
@@ -768,7 +768,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Remove listed attachments from the message.
 	 *
 	 * @param array $ids
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function removeAttachments(array $ids)
 	{
@@ -779,7 +779,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Remove listed attachments from the message.
 	 *
 	 * @param bool|int|array $ids
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function removeAttachment($ids)
 	{
@@ -1432,7 +1432,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 		catch (Exception $e)
 		{
-			// TODO: Deprecated in 3.1, remove in 4.0
+			// TODO: Deprecated in K4.0, remove in K5.0
 			// Clean up the message for review.
 			$message = KunenaHtmlParser::stripBBCode($this->message, 0, false);
 

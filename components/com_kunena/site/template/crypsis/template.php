@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * Crypsis template.
  *
- * @since  K3.1
+ * @since  K4.0
  */
 class KunenaTemplateCrypsis extends KunenaTemplate
 {

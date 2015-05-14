@@ -1550,7 +1550,7 @@ class KunenaControllerTopic extends KunenaController
 
 				catch (Exception $e)
 				{
-					// TODO: Deprecated in 3.1, remove in 4.0
+					// TODO: Deprecated in K4.0, remove in K5.0
 					$mailmessage = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})";
 					$mailmessage .= "\n";
 					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_RREASON') . " " . $reason;

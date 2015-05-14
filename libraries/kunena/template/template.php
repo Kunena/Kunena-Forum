@@ -859,7 +859,7 @@ HTML;
 	 * @param $filename
 	 *
 	 * @return string
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function getTopicsIconPath($filename)
 	{
@@ -932,7 +932,7 @@ HTML;
 	 *
 	 * @param $search
 	 * @return array
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function mapLegacyView($search)
 	{

@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * KunenaLayoutUserItem
  *
- * @since  3.1
+ * @since  K4.0
  *
  */
 class KunenaLayoutUserItem extends KunenaLayout

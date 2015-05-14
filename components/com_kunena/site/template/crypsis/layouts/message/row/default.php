@@ -20,19 +20,13 @@ $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
 $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 48);
 $config = KunenaFactory::getConfig();
-$cols = empty($this->checkbox) ? 4 : 5;
+$cols = empty($this->checkbox) ? 5 : 6;
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx); ?>">
 	<td class="span1 hidden-phone center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span5">
-		<?php
-		// FIXME:
-		/*if ($message->attachments) {
-			echo $this->getIcon('ktopicattach', JText::_('COM_KUNENA_ATTACH'));
-		}*/
-		?>
+	<td class="span<?php echo $cols?>">
 		<div>
 			<?php echo $this->getTopicLink(
 				$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
@@ -60,10 +54,10 @@ $cols = empty($this->checkbox) ? 4 : 5;
 		</div>
 	</td>
 	<td class="span2 hidden-phone">
-		<div class="replies"><strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:</strong><span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
-		<div class="views"><strong><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:</strong> <span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
+		<div class="replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:<span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
+		<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:<span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
-	<td class="span3">
+	<td class="span2">
 		<div class="container-fluid">
 			<div class="row-fluid">
 			<?php if ($config->avataroncat) : ?>

@@ -691,7 +691,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @since 3.1.0
+	 * @since K4.0
 	 */
 	public function cancel()
 	{
@@ -703,7 +703,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @since 3.1.0
+	 * @since K4.0
 	 */
 	public function uninstall()
 	{

@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerUserEditAvatarDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaControllerUserEditDisplay
 {

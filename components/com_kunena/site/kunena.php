@@ -11,7 +11,7 @@
 defined('_JEXEC') or die ();
 
 // Display offline message if Kunena hasn't been fully installed.
-if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1') || !KunenaForum::installed())
+if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
 {
 	$lang = JFactory::getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');

@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  *
  * TODO: merge to another controller...
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerDisplay
 {

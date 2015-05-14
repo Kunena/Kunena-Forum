@@ -188,7 +188,7 @@ abstract class KunenaForum
 		}
 
 		// Development version support.
-		if ($version == '3.1') {
+		if ($version == '4.0') {
 			return true;
 		}
 

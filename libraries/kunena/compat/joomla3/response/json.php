@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  *
  * @package     Joomla.Libraries
  * @subpackage  Response
- * @since       3.1
+ * @since       K4.0
  */
 class KunenaCompatResponseJson
 {
@@ -25,7 +25,7 @@ class KunenaCompatResponseJson
 	 * Determines whether the request was successful
 	 *
 	 * @var    boolean
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public $success = true;
 
@@ -33,7 +33,7 @@ class KunenaCompatResponseJson
 	 * The main response message
 	 *
 	 * @var    string
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public $message = null;
 
@@ -41,7 +41,7 @@ class KunenaCompatResponseJson
 	 * Array of messages gathered in the JApplication object
 	 *
 	 * @var    array
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public $messages = null;
 
@@ -49,7 +49,7 @@ class KunenaCompatResponseJson
 	 * The response data
 	 *
 	 * @var    mixed
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public $data = null;
 
@@ -61,7 +61,7 @@ class KunenaCompatResponseJson
 	 * @param   boolean  $error           True, if the success flag shall be set to false, defaults to false
 	 * @param   boolean  $ignoreMessages  True, if the message queue shouldn't be included, defaults to false
 	 *
-	 * @since   3.1
+	 * @since   K4.0
 	 */
 	public function __construct($response = null, $message = null, $error = false, $ignoreMessages = false)
 	{
@@ -113,7 +113,7 @@ class KunenaCompatResponseJson
 	 *
 	 * @return  string  The response in JSON format
 	 *
-	 * @since   3.1
+	 * @since   K4.0
 	 */
 	public function __toString()
 	{

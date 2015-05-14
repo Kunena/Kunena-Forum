@@ -449,7 +449,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * The bearer token to get tweet data
 	 *
 	 * @var string
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public $token = null;
 

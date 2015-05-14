@@ -602,7 +602,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @since 3.1
+	 * @since K4.0
 	 */
 	public function cancel()
 	{

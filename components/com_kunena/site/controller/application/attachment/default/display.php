@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  *
  * Only implemented on raw format as it's faster to run.
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends KunenaControllerApplicationDisplay
 {

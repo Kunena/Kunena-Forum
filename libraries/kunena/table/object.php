@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
  *
  * Note: If you set default values for the fields, please keep at least one default key value as null!
  *
- * @since       3.1
+ * @since       K4.0
  */
 abstract class KunenaTableObject
 {
@@ -26,7 +26,7 @@ abstract class KunenaTableObject
 	 * Always override this variable in your own class!
 	 *
 	 * @var array  If you want to store instances, initialise to array()
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	static protected $instances = null;
 
@@ -35,7 +35,7 @@ abstract class KunenaTableObject
 	 * Always override this variable in your own class!
 	 *
 	 * @var    string
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	static protected $tbl = '';
 
@@ -44,7 +44,7 @@ abstract class KunenaTableObject
 	 * You can either fill up your table structure or leave base class to fetch the fields for you.
 	 *
 	 * @var array
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	static protected $tbl_fields;
 
@@ -53,7 +53,7 @@ abstract class KunenaTableObject
 	 * Always override this variable in your own class!
 	 *
 	 * @var    string
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	static protected $tbl_keys = array();
 
@@ -61,7 +61,7 @@ abstract class KunenaTableObject
 	 * JDatabaseDriver object.
 	 *
 	 * @var    JDatabaseDriver
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	static protected $db;
 
@@ -69,7 +69,7 @@ abstract class KunenaTableObject
 	 * Indicator that the tables have been locked.
 	 *
 	 * @var    boolean
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	static protected $_locked = false;
 
@@ -77,14 +77,14 @@ abstract class KunenaTableObject
 	 * Flag whether the object exists in the database or not.
 	 *
 	 * @var bool
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	protected $_exists = false;
 
 	/**
 	 * Serialized key for the object.
 	 * @var string
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	protected $_key;
 
@@ -93,7 +93,7 @@ abstract class KunenaTableObject
 	 *
 	 * @param   array            $keys   Name of the primary key field in the table.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function __construct($keys = null)
 	{
@@ -168,7 +168,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  JDatabaseDriver  The internal database driver object.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public static function getDbo()
 	{
@@ -183,7 +183,7 @@ abstract class KunenaTableObject
 	 * @return  boolean  True on success.
 	 *
 	 * @link    http://docs.joomla.org/JTable/setDbo
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public static function setDbo(JDatabaseDriver $db)
 	{
@@ -197,7 +197,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  mixed  An array of the field names, or false if an error occurs.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 * @throws  UnexpectedValueException
 	 */
 	static public function getFields()
@@ -227,7 +227,7 @@ abstract class KunenaTableObject
 	 * Can be used for example if the database fields need to be converted to array or JRegistry.
 	 *
 	 * @param  bool  $sqlFetch  True only if properties were assigned before constructor was called.
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	protected function initialise($sqlFetch = false)
 	{
@@ -238,7 +238,7 @@ abstract class KunenaTableObject
 	 * Create almost identical copy of the object, but clean up the key fields.
 	 *
 	 * New object will also return false on $new->exists() until it gets saved.
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function __clone()
 	{
@@ -259,7 +259,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  KunenaDatabaseObject
 	 * @throw   RuntimeException
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	static public function getInstance($keys)
 	{
@@ -308,7 +308,7 @@ abstract class KunenaTableObject
 	 * Removes all or selected instances from the object cache.
 	 *
 	 * @param null|int|array  $ids
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	static public function freeInstances($ids = null)
 	{
@@ -335,7 +335,7 @@ abstract class KunenaTableObject
 	 * @param   boolean  $exists  Internal parameter to change state.
 	 *
 	 * @return  boolean  True if object exists in database.
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function exists($exists = null)
 	{
@@ -357,7 +357,7 @@ abstract class KunenaTableObject
 	 * If you want to reset other properties, you need to override the function.
 	 *
 	 * @return  KunenaTableObject
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function reset()
 	{
@@ -379,7 +379,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  array
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function getProperties()
 	{
@@ -401,7 +401,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  KunenaTableObject
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 * @throws  InvalidArgumentException
 	 */
 	public function bind($src, $ignore = array())
@@ -503,7 +503,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function check()
 	{
@@ -553,7 +553,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 /*	public function save($src, $orderingFilter = '', $ignore = '')
 	{
@@ -606,7 +606,7 @@ abstract class KunenaTableObject
 	 * @return  boolean  True on success.
 	 * @throws UnexpectedValueException
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function delete($keys = null)
 	{
@@ -644,7 +644,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function checkOut($userId, $pk = null)
 	{
@@ -690,7 +690,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function checkIn($pk = null)
 	{
@@ -734,7 +734,7 @@ abstract class KunenaTableObject
 	 *
 	 * @internal param mixed $pk An optional primary key value to increment. If not set the instance property value is used.
 	 *
-	 * @since    3.1
+	 * @since    K4.0
 	 */
 	public function hit()
 	{
@@ -781,7 +781,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True if checked out.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	public function isCheckedOut($with = 0, $against = null)
 	{
@@ -810,7 +810,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 * @throws  RuntimeException
 	 */
 	protected function lock()
@@ -826,7 +826,7 @@ abstract class KunenaTableObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	protected function unlock()
 	{
@@ -869,7 +869,7 @@ abstract class KunenaTableObject
 	 *
 	 * @param array|string $fields
 	 * @return array
-	 * @since  3.1
+	 * @since  K4.0
 	 * @throws UnexpectedValueException
 	 */
 	protected function getKeyValues($fields = null, $throw = true)
@@ -945,7 +945,7 @@ abstract class KunenaTableObject
 	 *
 	 * @param array|string $fields
 	 * @return array
-	 * @since  3.1
+	 * @since  K4.0
 	 * @throws UnexpectedValueException
 	 */
 	static protected function resolveKeys($fields)

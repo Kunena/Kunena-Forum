@@ -90,7 +90,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param $view
 	 * @param $layout
 	 * @param null $template
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function displayTemplateFile($view, $layout, $template = null)
 	{
@@ -104,7 +104,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param $property
 	 * @return mixed
 	 * @throws InvalidArgumentException
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function __get($property)
 	{
@@ -144,7 +144,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param $arguments
 	 * @return mixed
 	 * @throws InvalidArgumentException
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function __call($name, $arguments)
 	{
@@ -170,7 +170,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @param $property
 	 * @return bool
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function __isset($property)
 	{

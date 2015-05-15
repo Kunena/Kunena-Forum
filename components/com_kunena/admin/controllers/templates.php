@@ -256,16 +256,16 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
 		$templatename = array_shift($template['cid']);
-
-		$file = KPATH_SITE . '/template/' . $templatename . '/less/';
-		$return = KunenaFile::write($file);
-
-		if (!$return)
-		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-		}
-
 		$this->app->setUserState('kunena.templatename', $templatename);
+
+		$tBaseDir = KunenaPath::clean(KPATH_SITE . '/template');
+
+		if (!is_dir($tBaseDir . '/' . $templatename . '/less'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_LESS'), 'warning');
+
+			return;
+		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseless", false));
 	}
@@ -279,7 +279,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (KunenaFile::getExt($filename) !== 'less')
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_LESS'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_LESS'), 'warning');
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $template, false));
 		}
 
@@ -323,14 +323,6 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		if (!$filecontent)
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONTENT_EMPTY'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
 		$file = KPATH_SITE . '/template/' . $templatename . '/less/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
@@ -340,7 +332,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
 		}
 	}
 
@@ -363,14 +355,6 @@ class KunenaAdminControllerTemplates extends KunenaController
 		if (!$templatename)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		if (!$filecontent)
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONTENT_EMPTY'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -433,14 +417,6 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		if (!$filecontent)
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONTENT_EMPTY'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
 		$file = KPATH_SITE . '/template/' . $templatename . '/css/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
@@ -472,14 +448,6 @@ class KunenaAdminControllerTemplates extends KunenaController
 		if (!$templatename)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		if (!$filecontent)
-		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONTENT_EMPTY'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;

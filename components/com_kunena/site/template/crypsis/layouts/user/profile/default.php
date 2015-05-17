@@ -66,9 +66,11 @@ if ($show)
 	<span class="heading btn btn-small"><i class="icon-arrow-down"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
 	<div class="content" style="display:none;">
 		<ul>
+			<?php if ($user->posts >= 1) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
 			</li>
+			<?php endif; ?>
 
 			<?php if ($show && isset($user->thankyou)) : ?>
 			<li>

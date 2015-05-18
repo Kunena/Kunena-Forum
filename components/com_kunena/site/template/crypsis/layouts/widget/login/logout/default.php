@@ -131,7 +131,9 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				</div>
 			<?php endif ?>
 			<div class="divider"></div>
-			<?php $this->displayModulePosition( 'kunena_logout' ); ?>
+
+			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
+
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div>
 					<button class="btn btn-link" name="submit" type="submit">

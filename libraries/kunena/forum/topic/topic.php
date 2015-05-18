@@ -486,7 +486,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  RuntimeException  If there is a redirect loop on moved_id.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getTopic()
 	{
@@ -594,7 +594,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getState() {
 		switch ($this->hold)
@@ -872,7 +872,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -890,7 +890,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -960,7 +960,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{
@@ -1256,6 +1256,15 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				$this->setError($this->_db->getError());
 				return false;
+			}
+		}
+
+		// When moving only first message keep poll only on target topic
+		if ($this->poll_id && $target != $this && $ids)
+		{
+			if ($ids && $this->first_post_id)
+			{
+				$this->poll_id = 0;
 			}
 		}
 

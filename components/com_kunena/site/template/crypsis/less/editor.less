@@ -31,20 +31,14 @@ table.kpostbuttonset {
 	}
 }
 
-.kfile-input {
-	display    : block;
-	overflow   : hidden;
-	visibility : visible;
-}
-
 #kattachments {
 	line-height : 18px;
 	a {
-		background          : url("iconsets/editor/default/default.png") no-repeat -216px -18px;
-		display             : inline-block;
-		height              : 18px;
-		width               : 18px;
-		margin-right        : 2px;
+		background   : url("iconsets/editor/default/default.png") no-repeat -216px -18px;
+		display      : inline-block;
+		height       : 18px;
+		width        : 18px;
+		margin-right : 2px;
 	}
 }
 
@@ -132,7 +126,8 @@ table.kpostbuttonset {
 	background-image : url(images/quotes.png);
 }
 
-.markItUp .codemodalboxbutton a, .markItUp .codesimplebutton a {
+.markItUp .codemodalboxbutton a,
+.markItUp .codesimplebutton a {
 	background-image : url(images/code.png);
 }
 
@@ -318,13 +313,13 @@ table.kpostbuttonset {
 }
 
 .markItUpHeader ul .markItUpSeparator {
-	width            : 1px;
-	color            : #ccc;
-	height           : 24px;
-	margin-right     : 5px;
-	overflow         : hidden;
-	border-left      : 1px solid #ccc;
-	text-indent      : -10000px;
+	width        : 1px;
+	color        : #ccc;
+	height       : 24px;
+	margin-right : 5px;
+	overflow     : hidden;
+	border-left  : 1px solid #ccc;
+	text-indent  : -10000px;
 }
 
 .markItUpHeader ul ul .markItUpSeparator {
@@ -372,12 +367,16 @@ table.kpostbuttonset {
 }
 
 .markItUpButton {
-	display               : inline-block;
-	margin-bottom         : 0;
-	padding-top           : 4px;
-	font-size             : 14px;
-	line-height           : 12px;
-	*margin-left          : .3em;
+	display       : inline-block;
+	margin-bottom : 0;
+	padding-top   : 4px;
+	font-size     : 14px;
+	line-height   : 12px;
+	*margin-left  : .3em;
+}
+
+li.markItUpButton ul {
+	z-index: 1;
 }
 
 .dropzone .message {
@@ -408,9 +407,9 @@ table.kpostbuttonset {
 }
 
 #klabel_info_drop_browse {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	display         : flex;
+	align-items     : center;
+	justify-content : center;
 }
 
 #files {
@@ -423,4 +422,8 @@ table.kpostbuttonset {
 
 #files p {
 	margin : 15px 0 0 0;
+}
+
+#kbbcode-preview {
+	height: auto !important;
 }

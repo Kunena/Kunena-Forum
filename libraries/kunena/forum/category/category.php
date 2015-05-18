@@ -473,7 +473,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getState()
 	{
@@ -701,7 +701,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -719,7 +719,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -809,7 +809,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{

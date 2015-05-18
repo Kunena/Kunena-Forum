@@ -152,7 +152,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -170,7 +170,7 @@ class KunenaUser extends JObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -646,7 +646,7 @@ class KunenaUser extends JObject
 			$type = 'user';
 		}
 
-		// Deprecated in 3.1
+		// Deprecated in K4.0
 		if ($code === 'class')
 		{
 			$userClasses = KunenaFactory::getTemplate()->getUserClasses();
@@ -980,7 +980,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  URL.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getPrivateMsgLink()
 	{
@@ -1013,7 +1013,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  Cloaked email address or empty string.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getEmailLink()
 	{
@@ -1038,7 +1038,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  URL to the website.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getWebsiteURL()
 	{
@@ -1057,7 +1057,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  Name to the website or the URL if the name isn't set.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getWebsiteName()
 	{
@@ -1071,7 +1071,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  Link to the website.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getWebsiteLink()
 	{
@@ -1096,7 +1096,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  One of: male, female or unknown.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getGender($translate = true)
 	{
@@ -1120,7 +1120,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getPersonalText()
 	{
@@ -1137,7 +1137,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getSignature()
 	{
@@ -1318,5 +1318,33 @@ class KunenaUser extends JObject
 			E_USER_NOTICE);
 
 		return null;
+	}
+
+	/**
+	 * Check if captcha is allowed
+	 *
+	 * @return boolean
+	 */
+	public function canDoCaptcha()
+	{
+		$config = KunenaFactory::getConfig();
+
+		if ( $this->isModerator() )
+		{
+			return false;
+		}
+
+		if ( $this->exists() && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+		{
+			return true;
+		}
+		else if ( !$this->exists() && $config->captcha )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }

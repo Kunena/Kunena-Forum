@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerTopicItemActionsDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerDisplay
 {
@@ -171,6 +171,6 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true)
 	{
 		return KunenaLayout::factory('Widget/Button')
-			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal));
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => ''));
 	}
 }

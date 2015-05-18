@@ -195,7 +195,7 @@ class KunenaViewCommon extends KunenaView
 			elseif ($id)
 			{
 				$topic = KunenaForumTopicHelper::get($id);
-				$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC')), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
+				$pathway->addItem($this->escape($topic->subject), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
 			}
 
 			if ($view == 'topic')
@@ -607,13 +607,25 @@ class KunenaViewCommon extends KunenaView
 
 	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '')
 	{
-		$link = KunenaFactory::getProfile()->getUserListURL($action);
+		$my = KunenaFactory::getUser();
 
-		if ($link)
-		{
-			return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
+		if ($name == $this->memberCount) {
+			$link = KunenaFactory::getProfile ()->getUserListURL ( $action );
+
+			if ($link)
+			{
+				return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
+			}
+			else {
+				return  $name;
+			}
 		}
-
-		return $name;
+		elseif ($my->userid == 0 && KunenaFactory::getConfig()->userlist_allowed) {
+			return false;
+		}
+		else {
+			$link = KunenaFactory::getProfile ()->getUserListURL ( $action );
+			return '<a href="'. $link .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
+		}
 	}
 }

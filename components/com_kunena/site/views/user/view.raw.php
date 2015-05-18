@@ -49,7 +49,7 @@ class KunenaViewUser extends KunenaView
 	 *
 	 * @param   string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
-	 * @since 3.1
+	 * @since K4.0
 	 * @return JSon
 	 */
 	public function displayListMention($tpl = null)

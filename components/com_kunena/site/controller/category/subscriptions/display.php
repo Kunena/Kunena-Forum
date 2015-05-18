@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerCategorySubscriptionsDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaControllerDisplay
 {

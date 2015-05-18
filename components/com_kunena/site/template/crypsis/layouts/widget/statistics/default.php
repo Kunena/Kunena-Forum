@@ -27,8 +27,9 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 	</h2>
 	<div class="row-fluid collapse in" id="kstats">
-	<div class="well well-small span12">
-		<ul class="unstyled span4">
+	<div class="well-small">
+		<ul class="unstyled span1 btn-link"><i class="icon-bars icon-super"></i></ul>
+		<ul class="unstyled span3">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
 				<strong><?php echo (int) $this->messageCount; ?></strong>
@@ -46,7 +47,7 @@ defined('_JEXEC') or die;
 				<strong><?php echo (int) $this->todayReplyCount; ?></strong>
 			</li>
 		</ul>
-		<ul class="unstyled span4">
+		<ul class="unstyled span3">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
 				<strong><?php echo (int) $this->topicCount; ?></strong>
@@ -64,7 +65,7 @@ defined('_JEXEC') or die;
 				<strong><?php echo (int) $this->yesterdayReplyCount; ?></strong>
 			</li>
 		</ul>
-		<ul class="unstyled span4">
+		<ul class="unstyled span3">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
 				<strong><?php echo $this->memberCount; ?></strong>

@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * KunenaLayoutAnnouncementListRow
  *
- * @since  3.1
+ * @since  K4.0
  *
  */
 class KunenaLayoutAnnouncementListRow extends KunenaLayout

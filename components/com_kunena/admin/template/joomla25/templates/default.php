@@ -59,6 +59,7 @@ JHtml::_('behavior.tooltip');
 								$k = 0;
 								$i = 0;
 								foreach ( $this->templates as $id => $row) {
+									if (KunenaTemplateHelper::templateCanBeUsed($row->name)):
 							?>
 								<tr <?php echo 'class = "row' . $k . '"'; ?>>
 									<td>
@@ -97,6 +98,7 @@ JHtml::_('behavior.tooltip');
 								</tr>
 								<?php $k = 1 - $k;
 									$i++;
+									endif;
 								} ?>
 							</tbody>
 						</table>

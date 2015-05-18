@@ -11,6 +11,8 @@
  **/
 defined('_JEXEC') or die ();
 
+$this->getBBcodesEnabled();
+
 // Kunena bbcode editor
 ?>
 
@@ -87,7 +89,7 @@ defined('_JEXEC') or die ();
 		<?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
 		?>
-		<select id="kvideoprovider-modal"
+		<select id="kvideoprovider-list-modal"
 			name="provider" class="kbutton">
 			<?php
 				$vid_provider = array ('', 'Bofunk', 'Break', 'Clipfish', 'DivX,divx]http://', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'MediaPlayer,mediaplayer]http://', 'Metacafe', 'MySpace', 'QuickTime,quicktime]http://', 'RealPlayer,realplayer]http://', 'RuTube', 'Sapo', 'Streetfire', 'Veoh', 'Videojug', 'Vimeo', 'Wideo.fr', 'YouTube' );
@@ -189,7 +191,7 @@ defined('_JEXEC') or die ();
 <div class="control-group">
 	<label class="control-label"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
 	<div class="controls">
-		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 	<!-- Hidden preview placeholder -->
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>

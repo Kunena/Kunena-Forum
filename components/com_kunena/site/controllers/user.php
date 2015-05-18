@@ -56,6 +56,15 @@ class KunenaControllerUser extends KunenaController
 			}
 		}
 
+		$layout = JRequest::getCmd('layout', 'default');
+		if ($layout == 'list')
+		{
+			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
+			{
+				$this->redirectBack();
+			}
+		}
+
 		parent::display();
 	}
 
@@ -855,9 +864,25 @@ class KunenaControllerUser extends KunenaController
 			foreach ($cid as $id)
 			{
 				$attachment = KunenaAttachmentHelper::get($id);
+				$message = $attachment->getMessage();
+				$attachments = array($attachment->id, 1);
+				$attach = array();
+				$removeList = array_keys(array_diff_key($attachments, $attach));
+				JArrayHelper::toInteger($removeList);
+				$message->removeAttachments($removeList);
+
+				$topic = $message->getTopic();
 
 				if ($attachment->isAuthorised('delete') && $attachment->delete())
 				{
+					$message->save();
+
+					if ( $topic->attachments > 0 )
+					{
+						$topic->attachments = $topic->attachments - 1;
+						$topic->save(false);
+					}
+
 					$number++;
 				}
 			}

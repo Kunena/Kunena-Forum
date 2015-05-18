@@ -40,7 +40,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				</p>
 				<p>
 					<i class="icon-clock"></i>
-					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat', 'ago'); ?>
+					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 				</p>
 			</div>
 			<div class="divider"></div>
@@ -131,6 +131,9 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				</div>
 			<?php endif ?>
 			<div class="divider"></div>
+
+			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
+
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div>
 					<button class="btn btn-link" name="submit" type="submit">

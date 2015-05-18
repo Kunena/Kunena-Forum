@@ -68,6 +68,9 @@ class KunenaAdminViewTrash extends KunenaView
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		JToolBarHelper::spacer();
+
+		$help_url  = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
 	protected function setToolBarPurge()
@@ -79,6 +82,9 @@ class KunenaAdminViewTrash extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
+
+		$help_url  = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
 	protected function getSortFields()

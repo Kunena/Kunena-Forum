@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * Crypsis template.
  *
- * @since  K3.1
+ * @since  K4.0
  */
 class KunenaTemplateCrypsis extends KunenaTemplate
 {
@@ -95,14 +95,38 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.modal');
 
-		// JHtml::_('formbehavior.chosen', 'select');
-
 		// Load JavaScript.
 		$this->addScript('main.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');
+		$this->addStyleSheet('css/custom.css');
 		$this->addStyleSheet('kunena.css');
+
+		// Load template colors settings
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$styles = <<<EOF
+		/* Kunena Custom CSS */
+EOF;
+		$iconcolor = $this->ktemplate->params->get('IconColor');
+		if ($iconcolor) {
+			$styles .= <<<EOF
+		.layout#kunena [class*="category"] i,
+		.layout#kunena #kwho i.icon-users,
+		.layout#kunena#kstats i.icon-bars { color: {$iconcolor}; }
+EOF;
+		}
+
+		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
+		if ($iconcolornew) {
+			$styles .= <<<EOF
+		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
+EOF;
+		}
+
+		$document = JFactory::getDocument();
+		$document->addStyleDeclaration($styles);
 
 		parent::initialize();
 	}

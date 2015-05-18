@@ -446,7 +446,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena h1 a:link,
 #Kunena h1 a:active,
 #Kunena h1 a:visited {
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 }
 #Kunena h2 span.kheadbtn a {
 	border-color: #FFF;

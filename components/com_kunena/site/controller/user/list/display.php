@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerUserListDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 {

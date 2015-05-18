@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * KunenaLayoutCategoryItem
  *
- * @since  3.1
+ * @since  K4.0
  *
  */
 class KunenaLayoutCategoryItem extends KunenaLayout
@@ -63,7 +63,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 		if ($url)
 		{
 			$actions['create'] = $this->subLayout('Widget/Button')
-				->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'primary' => true));
+				->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true, 'icon' => 'icon-edit icon-white'));
 		}
 
 		if ($category->getTopics() > 0)
@@ -74,7 +74,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			if ($url)
 			{
 				$actions['markread'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user'));
+					->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer'));
 			}
 
 			// Is user allowed to subscribe category?
@@ -86,7 +86,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 				{
 					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user'));
+						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-bookmark'));
 				}
 				else
 				{

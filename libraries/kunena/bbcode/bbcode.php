@@ -228,8 +228,8 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebay_language . '&mode=search&query='
-					. urlencode($query['_nkw']) .'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid=5336042350"></embed></object>';
+					. urlencode($query['_nkw']) .'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebay_language . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
 
 			}
 
@@ -252,8 +252,18 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="355"><param name="movie" value="http://togo.ebay.com/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid=5336042350"></embed></object>';
+					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
+			}
+		}
+
+		if (isset($params['host']) && strstr($params['host'], 'twitter.') )
+		{
+			$path = explode('/', $params['path']);
+
+			if ( isset($path[3]) )
+			{
+				return $this->defaults->renderTweet($path[3]);
 			}
 		}
 
@@ -439,7 +449,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 * The bearer token to get tweet data
 	 *
 	 * @var string
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public $token = null;
 
@@ -1405,7 +1415,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$message = $this->getMessage();
 		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 
-		if (($me->userid && $bbcode->parent->userid == $me->userid) || $moderator)
+		if ( isset($bbcode->parent->message->userid))
+		{
+			$message_userid = $bbcode->parent->message->userid;
+		}
+		else
+		{
+			$message_userid = $bbcode->parent->userid;
+		}
+
+		if (($me->userid && $message_userid == $me->userid) || $moderator)
 		{
 			$layout = KunenaLayout::factory('BBCode/Confidential');
 
@@ -1443,10 +1462,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
+		$config = KunenaFactory::getTemplate()->params;
+
 		$document = JFactory::getDocument();
 
 		// Display only link in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof JDocumentHTML))
+		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof JDocumentHTML) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
 		{
 			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 
@@ -1533,6 +1554,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 		{
 			return true;
+		}
+
+		$config = KunenaFactory::getTemplate()->params;
+		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('ebay'))
+		{
+			return false;
 		}
 
 		$config = KunenaFactory::getConfig();
@@ -1842,7 +1869,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		if (!$content)
+		$config = KunenaFactory::getTemplate()->params;
+		if (!$content || KunenaFactory::getTemplate()->isHmvc() && !$config->get('video'))
 		{
 			return '';
 		}
@@ -2426,6 +2454,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
+		$config = KunenaFactory::getTemplate()->params;
+		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('twitter'))
+		{
+			return false;
+		}
+
 		$tweetid = trim($content);
 
 		if (!is_numeric($tweetid))
@@ -2439,27 +2473,43 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . JText::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
 		}
 
+		return $this->renderTweet($tweetid);
+	}
+
+	/**
+	 * Render the tweet by loading the right layout
+	 *
+	 * @param   int  $tweetid  The tweet id to render in layout
+	 *
+	 * @return string
+	 */
+	public function renderTweet($tweetid)
+	{
 		$tweet = $this->getTweet($tweetid);
 
 		$layout = KunenaLayout::factory('BBCode/twitter');
 
-		if ($tweet !== false)
+		if ($tweet->error === false)
 		{
 			if ($layout->getPath())
 			{
 				return (string) $layout
-					->set('tweetid', $tweet->id_str)
-					->set('user_profile_url_normal', $tweet->user->profile_image_url)
-					->set('user_profile_url_big', $tweet->user->profile_image_url_big)
-					->set('user_name', $tweet->user->name)
-					->set('user_screen_name', $tweet->user->screen_name)
-					->set('tweet_created_at', $tweet->created_at)
-					->set('tweet_text', $tweet->text)
-					->set('retweet_count', $tweet->retweet_count)
-					->set('favorite_count', $tweet->favorite_count)
-					->set('verified', $tweet->user->verified)
-					->setLayout('default');
+				->set('tweetid', $tweet->id_str)
+				->set('user_profile_url_normal', $tweet->user->profile_image_url)
+				->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+				->set('user_name', $tweet->user->name)
+				->set('user_screen_name', $tweet->user->screen_name)
+				->set('tweet_created_at', $tweet->created_at)
+				->set('tweet_text', $tweet->text)
+				->set('retweet_count', $tweet->retweet_count)
+				->set('favorite_count', $tweet->favorite_count)
+				->set('verified', $tweet->user->verified)
+				->setLayout('default');
 			}
+		}
+		else
+		{
+			return '<b>' . $tweet->error . '</b>';
 		}
 	}
 
@@ -2479,11 +2529,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$consumer_key = trim($config->twitter_consumer_key);
 		$consumer_secret = trim($config->twitter_consumer_secret);
 
-		$tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
-
-		if ($tweet_data !== false)
+		if ( JFile::exists(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json') )
 		{
-			return json_decode($tweet_data);
+			$tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
+
+			if ($tweet_data !== false)
+			{
+				return json_decode($tweet_data);
+			}
 		}
 
 		if (!empty($consumer_key) && !empty($consumer_secret) && empty($this->token))
@@ -2513,16 +2566,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 			else
 			{
-				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
+				$tweet = new stdClass;
+				$tweet->error = JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
 
-				return false;
+				return $tweet;
 			}
 		}
 		elseif (empty($consumer_key) || empty($consumer_secret) )
 		{
-			echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_CONSUMMER_KEY_SECRET_INVALID');
+			$tweet = new stdClass;
+			$tweet->error = JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_CONSUMMER_KEY_SECRET_INVALID');
 
-			return false;
+			return $tweet;
 		}
 
 		if ( !empty($this->token) )
@@ -2645,15 +2700,18 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					JFolder::create(JPATH_CACHE . '/kunena_tweet');
 				}
 
+				$tweet_data->error = false;
+
 				file_put_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json', json_encode($tweet_data));
 
 				return $tweet_data;
 			}
 			else
 			{
-				echo JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
+				$tweet = new stdClass;
+				$tweet->error = JText::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
 
-				return false;
+				return $tweet;
 			}
 		}
 	}

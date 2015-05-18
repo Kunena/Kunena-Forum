@@ -181,7 +181,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public static function getAvailableFilename($folder, $basename, $extension, $protected = null)
 	{

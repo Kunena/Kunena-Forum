@@ -61,6 +61,7 @@ class KunenaControllerTopic extends KunenaController
 			$object->caption = $attach->caption;
 			$object->type    = $attach->filetype;
 			$object->path    = $attach->getUrl();
+			$object->image   = $attach->isImage();
 			$list['files'][] = $object;
 		}
 
@@ -287,23 +288,10 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
+		$template = KunenaFactory::getTemplate();
+
 		// Load language file from the template.
-		KunenaFactory::getTemplate()->loadLanguage();
-
-		$captcha = KunenaSpamRecaptcha::getInstance();
-
-		if ($captcha->enabled())
-		{
-			$success = $captcha->verify();
-
-			if (!$success)
-			{
-				$this->app->enqueueMessage($captcha->getError(), 'error');
-				$this->setRedirectBack();
-
-				return;
-			}
-		}
+		$template->loadLanguage();
 
 		if (!$this->id)
 		{
@@ -335,6 +323,41 @@ class KunenaControllerTopic extends KunenaController
 
 			list ($topic, $message) = $parent->newReply($fields);
 			$category = $topic->getCategory();
+		}
+
+
+		if ( $template->getTemplateDetails()->kversion > 4.0)
+		{
+			if (JPluginHelper::isEnabled('captcha'))
+			{
+				JPluginHelper::importPlugin('captcha');
+				$dispatcher = JDispatcher::getInstance();
+				$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+
+				if (!$res[0]) {
+					$this->app->enqueueMessage($captcha->getError(), 'error');
+					$this->setRedirectBack();
+
+					return;
+				}
+			}
+		}
+		else
+		{
+			$captcha = KunenaSpamRecaptcha::getInstance();
+
+			if ($captcha->enabled())
+			{
+				$success = $captcha->verify();
+
+				if (!$success)
+				{
+					$this->app->enqueueMessage($captcha->getError(), 'error');
+					$this->setRedirectBack();
+
+					return;
+				}
+			}
 		}
 
 		// Redirect to full reply instead.
@@ -423,7 +446,7 @@ class KunenaControllerTopic extends KunenaController
 		// Make sure that message has visible content (text, images or objects) to be shown.
 		$text = KunenaHtmlParser::parseBBCode($message->message);
 
-		if (!preg_match('!(<img |<object )!', $text))
+		if (!preg_match('!(<img |<object |<iframe )!', $text))
 		{
 			$text = trim(JFilterOutput::cleanText($text));
 		}
@@ -440,15 +463,15 @@ class KunenaControllerTopic extends KunenaController
 		$http = substr_count($text, "http");
  		$href = substr_count($text, "href");
  		$url = substr_count($text, "[url");
-		
+
 		$countlink = $http += $href += $url;
-		
+
 		if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
 			$this->setRedirectBack();
 			return;
 		}
-		
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 
@@ -683,20 +706,20 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
-		
+
 		// Check max links in message to check spam
 		$http = substr_count($text, "http");
  		$href = substr_count($text, "href");
  		$url = substr_count($text, "[url");
-		
+
 		$countlink = $http += $href += $url;
-		
+
 		if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
 			$this->setRedirectBack();
 			return;
 		}
-		
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onBeforeEdit($message);
@@ -812,16 +835,12 @@ class KunenaControllerTopic extends KunenaController
 	{
 		$type = JRequest::getString('task');
 		$this->setThankyou($type);
-
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
 	}
 
 	public function unthankyou()
 	{
 		$type = JRequest::getString('task');
 		$this->setThankyou($type);
-
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
 	}
 
 	protected function setThankyou($type)
@@ -857,6 +876,8 @@ class KunenaControllerTopic extends KunenaController
 				return;
 			}
 
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
+
 			$activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
 		}
 		else
@@ -870,6 +891,8 @@ class KunenaControllerTopic extends KunenaController
 
 				return;
 			}
+
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
 
 			$activityIntegration->onAfterUnThankyou($this->me->userid, $userid, $message);
 		}
@@ -1354,11 +1377,6 @@ class KunenaControllerTopic extends KunenaController
 			$shadow         = JRequest::getBool('shadow', false);
 			$topic_emoticon = JRequest::getInt('topic_emoticon', null);
 
-			if (!is_null($topic_emoticon))
-			{
-				$topic->icon_id = $topic_emoticon;
-			}
-
 			if ($object instanceof KunenaForumMessage)
 			{
 				$mode = JRequest::getWord('mode', 'selected');
@@ -1379,7 +1397,7 @@ class KunenaControllerTopic extends KunenaController
 				$ids = false;
 			}
 
-			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject);
+			$targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon);
 
 			if (!$targetobject)
 			{
@@ -1532,7 +1550,7 @@ class KunenaControllerTopic extends KunenaController
 
 				catch (Exception $e)
 				{
-					// TODO: Deprecated in 3.1, remove in 4.0
+					// TODO: Deprecated in K4.0, remove in K5.0
 					$mailmessage = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})";
 					$mailmessage .= "\n";
 					$mailmessage .= "" . JText::_('COM_KUNENA_REPORT_RREASON') . " " . $reason;

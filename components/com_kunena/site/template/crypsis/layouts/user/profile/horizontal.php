@@ -71,22 +71,28 @@ if ($show)
 </div>
 <br />
 <ul class="span2">
+	<?php if ($user->posts >= 1) : ?>
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
 		<span> <?php echo JText::sprintf((int) $user->posts); ?> </span>
 	</li>
-	<li>
-		<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
-		<span> <?php echo JText::sprintf((int) $user->uhits); ?> </span>
-	</li>
+	<?php endif; ?>
+
+	<?php if ($show && isset($user->thankyou)) : ?>
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 		<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>
 	</li>
+	<?php endif; ?>
 	<?php if (isset($user->points)) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?> </strong>
 			<span> <?php echo (int) $user->points; ?> </span>
+		</li>
+	<?php endif; ?>
+	<?php if ($show && !empty($user->medals)) : ?>
+		<li>
+			<?php echo implode(' ', $user->medals); ?>
 		</li>
 	<?php endif; ?>
 </ul>
@@ -99,10 +105,5 @@ if ($show)
 		<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
 		<span> <?php echo KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 	</li>
-	<?php if (!empty($user->medals)) : ?>
-		<li>
-			<strong> <?php echo JText::_('COM_KUNENA_AUP_MEDALS'); ?> </strong>
-			<span> <?php echo implode(' ', $user->medals); ?> </span>
-		</li>
-	<?php endif; ?>
 </ul>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal'); ?>

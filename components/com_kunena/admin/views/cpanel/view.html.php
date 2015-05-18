@@ -18,6 +18,9 @@ class KunenaAdminViewCpanel extends KunenaView
 {
 	function displayDefault()
 	{
+		$help_url  = 'http://www.kunena.org/docs/Category:Installation';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+
 		if (version_compare(JVERSION, '3', '>'))
 		{
 			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'dashboard');

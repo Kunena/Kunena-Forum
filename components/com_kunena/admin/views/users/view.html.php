@@ -81,6 +81,8 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		JToolBarHelper::spacer();
+		$help_url  = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
 	/**

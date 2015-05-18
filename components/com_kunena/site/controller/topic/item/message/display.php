@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerTopicItemMessageDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerDisplay
 {
@@ -57,10 +57,24 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->profile = $this->message->getAuthor();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
+		$this->captchaEnabled = false;
+		if ( $this->message->isAuthorised('reply') && $this->me->canDoCaptcha() )
+		{
+			if (JPluginHelper::isEnabled('captcha'))
+			{
+				JPluginHelper::importPlugin('captcha');
+				$dispatcher = JDispatcher::getInstance();
+				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+
+				$this->captchaEnabled = $result[0];
+			}
+		}
+
 		// Thank you info and buttons.
 		$this->thankyou = array();
 		$this->total_thankyou = 0;
 		$this->more_thankyou = 0;
+		$this->thankyou_delete = array();
 
 		if (isset($this->message->thankyou))
 		{
@@ -97,7 +111,12 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 				foreach ($loaded_users as $userid => $user)
 				{
-					$this->thankyou[] = $loaded_users[$userid]->getLink();
+					if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
+					{
+						$this->thankyou_delete[$userid]  = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
+					}
+
+					$this->thankyou[$userid] = $loaded_users[$userid]->getLink();
 				}
 			}
 		}

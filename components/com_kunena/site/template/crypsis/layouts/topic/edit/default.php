@@ -12,10 +12,12 @@
 defined('_JEXEC') or die ();
 
 JHtml::_('behavior.tooltip');
+JHTML::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
 JText::script('COM_KUNENA_EDITOR_INSERT');
+JText::script('COM_KUNENA_EDITOR_IN_MESSAGE');
 JText::script('COM_KUNENA_GEN_REMOVE_FILE');
 JText::sprintf('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES', $this->config->attachment_limit, array('script' => true));
 JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
@@ -55,11 +57,15 @@ if ($this->config->pollenabled)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
-$this->addScript('js/formyeah.js');
 $this->addScript('js/edit.js');
+
+if (KunenaFactory::getTemplate()->params->get('formRecover'))
+{
+	$this->addScript('js/sisyphus.js');
+}
 ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="formyeah form-horizontal"
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
@@ -115,7 +121,7 @@ $this->addScript('js/edit.js');
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 
 							<div class="controls">
-								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" value="<?php echo $this->escape($this->message->name); ?>" required />
+								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 							</div>
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>
@@ -123,7 +129,7 @@ $this->addScript('js/edit.js');
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
 
 								<div class="controls">
-									<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xlarge" maxlength="35" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
+									<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xlarge" maxlength="35" tabindex="5" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
 									<br />
 									<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 								</div>
@@ -133,7 +139,7 @@ $this->addScript('js/edit.js');
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 
 							<div class="controls">
-								<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->message->subject); ?>" tabindex="1" required />
+								<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
 							</div>
 						</div>
 						<?php if (!empty($this->topicIcons)) : ?>
@@ -157,31 +163,29 @@ $this->addScript('js/edit.js');
 						?>
 						<?php if ($this->allowedExtensions) : ?>
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></label>
-
+								<label class="control-label"></label>
 								<div class="controls">
-									<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
-									<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
-									<!-- The fileinput-button span is used to style the file input field as button -->
-							<span class="btn btn-primary fileinput-button">
-								<i class="icon-plus"></i>
-								<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
-								<!-- The file input field used as target for the file upload widget -->
-								<input id="fileupload" type="file" name="file" multiple>
-							</span>
-									<br>
-									<br>
-									<!-- The container for the uploaded files -->
-									<div id="files" class="files"></div>
-									<div id="dropzone">
-										<div class="dropzone">
-											<div class="default message">
-												<span id="klabel_info_drop_browse"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
+									<button class="btn" id="kshow_attach_form" type="button"><i class="icon-flag-2 icon-white"></i> <?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
+									<div id="kattach_form" style="display: none;">
+										<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
+										<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
+										<!-- The fileinput-button span is used to style the file input field as button -->
+										<span class="btn btn-primary fileinput-button">
+											<i class="icon-plus"></i>
+											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
+											<!-- The file input field used as target for the file upload widget -->
+											<input id="fileupload" type="file" name="file" multiple>
+										</span>
+										<!-- The container for the uploaded files -->
+										<div id="files" class="files"></div>
+										<div id="dropzone">
+											<div class="dropzone">
+												<div class="default message">
+													<span id="klabel_info_drop_browse"><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
+												</div>
 											</div>
 										</div>
 									</div>
-
-									<br>
 								</div>
 							</div>
 						<?php endif; ?>
@@ -216,11 +220,11 @@ $this->addScript('js/edit.js');
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php if (!empty($this->captchaHtml)) : ?>
+						<?php if (!empty($this->captchaEnabled)) : ?>
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
 
-								<div class="controls"> <?php echo $this->captchaHtml ?> </div>
+								<div class="controls"> <div id="dynamic_recaptcha_1"> </div> </div>
 							</div>
 						<?php endif; ?>
 
@@ -229,16 +233,15 @@ $this->addScript('js/edit.js');
 			</div>
 		</div>
 		<div class="center">
-			<input type="submit" name="ksubmit" class="btn btn-primary"
-				value="<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>"
-				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>" tabindex="4" />
-			<input id="kbutton-preview" type="button" name="preview" class="btn"
-				value="<?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>"
-				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW')); ?>:: " tabindex="3" />
-			<input type="reset" name="cancel" class="btn"
-				value="<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
-				onclick="javascript:window.history.back();"
-				title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" tabindex="5" />
+			<button type="submit" class="btn btn-success" tabindex="8">
+				<i class="icon-edit icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+			</button>
+			<button id="kbutton-preview" name="preview" type="button" class="btn" tabindex="9">
+				<i class="icon-eye-open"></i><?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>
+			</button>
+			<button type="reset" class="btn" onclick="javascript:window.history.back();" tabindex="10">
+				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+			</button>
 		</div>
 		<?php
 		if (!$this->message->name)

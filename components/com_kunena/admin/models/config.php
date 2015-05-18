@@ -382,7 +382,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['access_component'] = JHtml::_('select.genericlist', $yesno, 'cfg_access_component', 'class="inputbox" size="1"', 'value', 'text', $this->config->access_component);
 		$lists ['componentUrl']     = preg_replace('|/+|', '/', JUri::root() . ($this->config->get('sef_rewrite') ? '' : 'index.php') . ($this->config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
 
-		// Added new options into Kunena 3.1.0
+		// Added new options into Kunena 4.0.0
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('version')->from('#__kunena_version')->order('id');

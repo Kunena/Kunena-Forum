@@ -380,7 +380,7 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @deprecated    3.1
+	 * @deprecated    K4.0
 	 */
 	function getCategoryActions()
 	{

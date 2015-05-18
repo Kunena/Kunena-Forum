@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
- * @since  3.1
+ * @since  4.0
  */
 class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 {
@@ -28,7 +28,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	public $thanks;
 
 	/**
-	 * Prapare credits display.
+	 * Prepare credits display.
 	 *
 	 * @return void
 	 */
@@ -58,10 +58,6 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 				'url' => 'http://www.kunena.org/forum/user/151-mortti',
 				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
 			array(
-				'name' => 'Joe Collins',
-				'url' => 'http://www.kunena.org/forum/user/26335-jiminimonka',
-				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
-			array(
 				'name' => 'Oliver Ratzesberger',
 				'url' => 'http://www.kunena.org/forum/user/64-fxstein',
 				'title' => JText::_('COM_KUNENA_CREDITS_FOUNDER')),
@@ -73,11 +69,6 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 				'name' => 'Joshua Weiss',
 				'url' => 'http://www.kunena.org/forum/user/10809-coder4life',
 				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_DESIGN'), JText::_('COM_KUNENA_CREDITS_DEVELOPMENT'))),
-			array(
-				'name' => 'Sven Schultschik ',
-				'url' => 'http://www.kunena.org/forum/user/2171-svanschu',
-				'title' => JText::_('COM_KUNENA_CREDITS_LANGUAGES')),
-
 		);
 		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'http://www.kunena.org',

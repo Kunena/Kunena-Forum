@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
 
 	/* Hide search form when there are search results found */
 	if ( jQuery('#kunena_search_results').is(':visible') ) {
-		jQuery('#search').hide();
+		jQuery('#search').collapse("hide");
 	}
 
 });

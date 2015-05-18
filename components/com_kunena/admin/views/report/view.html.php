@@ -21,6 +21,10 @@ class KunenaAdminViewReport extends KunenaView
 		$this->systemreport = $this->get('SystemReport');
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
 
+		JToolBarHelper::back();
+		JToolBarHelper::spacer();
+		$help_url  = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 		$this->display();
 	}
 }

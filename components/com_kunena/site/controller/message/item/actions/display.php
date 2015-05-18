@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControllerDisplay
 {
@@ -54,6 +54,22 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		$this->messageButtons = new JObject;
 		$this->message_closed = null;
 
+		if ($this->message->isAuthorised('reply'))
+		{
+			if ($me->canDoCaptcha() || !$me->exists())
+			{
+				$this->quickreply = false;
+			}
+			else
+			{
+				$this->quickreply = true;
+			}
+		}
+		else
+		{
+			$this->quickreply = false;
+		}
+
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
@@ -80,12 +96,11 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED'): ' ');
 		}
 
-		if (!$me->exists() && !$this->message_closed || !$me->exists() && !$this->topic->locked) {
-			JHtml::_('behavior.modal');
-			$login = KunenaLogin::getInstance();
-			$logintext =  '<a class="modal" href="' . $login->getLoginURL() . '&tmpl=component"> ' . JText::_('JLOGIN'). '</a>';
+		$login = KunenaLogin::getInstance();
+		if (!$me->exists() && !$this->message_closed && $login->enabled() || !$me->exists() && !$this->topic->locked && $login->enabled()) {
+			$logintext =  '<a class="btn-link" href="#klogin"> ' . JText::_('JLOGIN'). '</a>';
 			if ($login->getRegistrationUrl()) {
-				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="modal" href="' . $login->getRegistrationURL() . '&tmpl=component">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
+				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="' . $login->getRegistrationUrl() . '">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
 			}
 			else {
 				$register = '';
@@ -193,6 +208,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{
 		return KunenaLayout::factory('Widget/Button')
-			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal));
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal, 'icon' => ''));
 	}
 }

@@ -26,7 +26,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=attachments';
 	}
 
-	function delete()
+	public function delete()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -50,7 +50,23 @@ class KunenaAdminControllerAttachments extends KunenaController
 		foreach ($cid as $id)
 		{
 			$attachment = KunenaAttachmentHelper::get($id);
+
+			$message = $attachment->getMessage();
+			$attachments = array($attachment->id, 1);
+			$attach = array();
+			$removeList = array_keys(array_diff_key($attachments, $attach));
+			JArrayHelper::toInteger($removeList);
+			$message->removeAttachments($removeList);
+			$message->save();
+
+			$topic = $message->getTopic();
 			$attachment->delete();
+
+			if ( $topic->attachments > 0 )
+			{
+				$topic->attachments = $topic->attachments - 1;
+				$topic->save(false);
+			}
 		}
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY'));

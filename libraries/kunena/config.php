@@ -811,7 +811,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
-	 * @deprecated 3.1 (not used in HMVC)
+	 * @deprecated K4.0 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 
@@ -1070,49 +1070,49 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $legacy_urls = 1;
 
 	/**
 	 * @var    integer  Attachment protection; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $attachment_protection = 0;
 
 	/**
 	 * @var    integer  Category icons; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $categoryicons = 1;
 
 	/**
 	 * @var    integer  Avatar resize method; select, selection
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $avatarresizemethod = 1;
 
 	/**
 	 * @var    integer  Avatar crop; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $avatarcrop = 0;
 
 	/**
 	 * @var    integer  User can report himself; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $user_report = 1;
 
 	/**
 	 * @var    integer  Search time; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $searchtime = 365;
 
 	/**
 	 * @var    integer  Teaser; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $teaser = 0;
 
@@ -1130,19 +1130,19 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @var    string  Define twitter API consumer key; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $twitter_consumer_key = '';
 
 	/**
 	 * @var    string  Define twitter API consumer secret; select, boolean
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $twitter_consumer_secret = '';
 
 	/**
 	 * @var    integer  Max Links limit; input, number
-	 * @since  3.1.0
+	 * @since  K4.0.0
 	 */
 	public $max_links = 6;
 

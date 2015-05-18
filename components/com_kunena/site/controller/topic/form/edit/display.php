@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerTopicFormEditDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisplay
 {
@@ -44,7 +44,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
 		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id, $this->topic->getCategory()->iconset);
 		}
 
 		// Run onKunenaPrepare event.

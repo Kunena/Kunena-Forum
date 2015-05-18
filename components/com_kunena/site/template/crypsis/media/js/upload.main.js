@@ -2,10 +2,14 @@ jQuery(function($) {
 	'use strict';
 
 	// Insert bbcode in message
-	function insertInMessage(attachid,filename) {
+	function insertInMessage(attachid,filename,button) {
 		var value = jQuery('#kbbcode-message').val();
 
 		jQuery('#kbbcode-message').val(value+' [attachment='+attachid+']'+filename+'[/attachment]');
+		
+		button.removeClass('btn-primary');
+		button.addClass('btn-success');
+		button.html('<i class="icon-upload"></i> '+Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 	}
 
 	var fileCount = null;
@@ -31,7 +35,7 @@ jQuery(function($) {
 				filename = data.name;
 			}
 
-			insertInMessage(file_id,filename);
+			insertInMessage(file_id,filename, $this);
 		});
 
 	var removeButton = $('<button/>')
@@ -214,7 +218,14 @@ jQuery(function($) {
 				if($.isEmptyObject(data.files)==false) {
 					fileCount = Object.keys(data.files).length;
 					$( data.files ).each(function( index, file ) {
-						var object = $( '<div><p><img src="'+file.path+'" width="100" height="100" /><br /><span>'+file.name+'</span><br /></p></div>' );
+						var image = '';
+						if (file.image===true) {
+							image = '<img src="'+file.path+'" width="100" height="100" /><br />';
+						} else {
+              image = '<i class="icon-flag-2 icon-big"></i><br />';
+            }
+						
+						var object = $( '<div><p>'+image+'<span>'+file.name+'</span><br /></p></div>' );
 						data.uploaded = true;
 						data.result= false;
 						data.file_id = file.id;

@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerWidgetStatisticsDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerDisplay
 {

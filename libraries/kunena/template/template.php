@@ -550,8 +550,12 @@ HTML;
 		{
 			$category_iconset = '/' . $category_iconset;
 		}
+		else
+		{
+			$category_iconset = '/default';
+		}
 
-		return $this->getFile($filename, $url, $this->pathTypes['topicicons'].$set, 'media/kunena/topic_icons/' . $category_iconset);
+		return $this->getFile($filename, $url, $this->pathTypes['topicicons'], 'media/kunena/topic_icons' . $category_iconset);
 	}
 
 	public function getCategoryIconPath($filename='', $url = true, $category_iconset)
@@ -606,7 +610,7 @@ HTML;
 							$icon->filename = (string) $attributes->src;
 							$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
 							$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
-							$icon->relpath = $this->getTopicIconPath("{$icon->filename}", false, $this->category_iconset);
+							$icon->relpath = $this->getTopicIconPath("{$icon->filename}", false, $category_iconset);
 							$this->topicIcons[$icon->id] = $icon;
 						}
 					}
@@ -879,7 +883,7 @@ HTML;
 	 * @param $filename
 	 *
 	 * @return string
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function getTopicsIconPath($filename)
 	{
@@ -952,7 +956,7 @@ HTML;
 	 *
 	 * @param $search
 	 * @return array
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function mapLegacyView($search)
 	{

@@ -116,7 +116,7 @@ defined('_JEXEC') or die;
 					</p>
 				</div>
 			</form>
-			<?php $this->displayModulePosition( 'kunena_login' ); ?>
+			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_login'); ?>
 		</div>
 	</li>
 </ul>

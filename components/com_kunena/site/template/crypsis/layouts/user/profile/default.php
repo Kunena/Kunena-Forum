@@ -60,6 +60,7 @@ if ($show)
 	</li>
 	<?php endif; ?>
 </ul>
+<?php $this->displayModulePosition( 'kunena_profile_default' ); ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
 <div class="profile-expand center">
 	<span class="heading btn btn-small heading-less" style="display:none;"><i class="icon-arrow-up"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>

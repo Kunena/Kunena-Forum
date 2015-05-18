@@ -106,3 +106,4 @@ if ($show)
 		<span> <?php echo KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 	</li>
 </ul>
+<?php $this->displayModulePosition( 'kunena_profile_horizontal' ); ?>

@@ -23,28 +23,13 @@ foreach ($this->sections as $section) :
 	?>
 	<div class="kfrontend">
 		<div class="btn-toolbar pull-right">
-
 			<?php if (count($this->sections) > 0) : ?>
 				<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>">&times;</div>
 			<?php endif; ?>
-
 		</div>
+
 		<h2>
-
-			<?php if ($section->parent_id) : ?>
-				<?php echo $this->getCategoryLink($section->getParent(), $this->escape($section->getParent()->name)); ?> /
-			<?php endif; ?>
-
-			<?php
-			if ($section->parent_id == 0)
-			{
-				echo $this->getCategoryLink($section, $this->escape($section->name));
-			}
-			else
-			{
-				echo $this->escape($section->name);
-			}
-			?>
+			<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
 			<small class="hidden-phone nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 					$this->formatLargeNumber($section->getTopics())); ?>)
 			</small>
@@ -133,6 +118,7 @@ foreach ($this->sections as $section) :
 												?>
 											</li>
 										<?php endforeach; ?>
+
 										<?php if (!empty($this->more[$category->id])) : ?>
 											<li>
 												<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE')); ?>
@@ -144,6 +130,7 @@ foreach ($this->sections as $section) :
 
 									</ul>
 								<?php endif; ?>
+
 								<?php if (!empty($category->moderators)) : ?>
 									<div class="kthead-moderators ks">
 										<?php
@@ -157,12 +144,12 @@ foreach ($this->sections as $section) :
 										?>
 									</div>
 								<?php endif; ?>
+
 								<?php if (!empty($this->pending[$category->id])) : ?>
 									<div class="alert" style="margin-top:20px;">
 										<a class="alert-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>" title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING')?>" rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING')?></a>
 									</div>
 								<?php endif; ?>
-
 							</td>
 
 							<?php $last = $category->getLastTopic(); ?>
@@ -198,10 +185,8 @@ foreach ($this->sections as $section) :
 									</div>
 								</td>
 							<?php endif; ?>
-
 						</tr>
 					<?php endforeach; ?>
-
 				<?php endif; ?>
 
 				<?php if (!empty($this->more[$section->id])) : ?>

@@ -325,14 +325,36 @@ class KunenaControllerTopic extends KunenaController
 			$category = $topic->getCategory();
 		}
 
+		$templates = KunenaTemplateHelper::parseXmlFiles();
 
-		if ( $template->getTemplateDetails()->kversion > 4.0)
+		// set dynamic template information
+		foreach ($templates as $tmpl)
+		{
+			if(KunenaTemplateHelper::isDefault($tmpl->directory))
+			{
+				$template = $tmpl;
+			}
+		}
+
+		if ( $template->kversion >= 4.0)
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
 				JPluginHelper::importPlugin('captcha');
 				$dispatcher = JDispatcher::getInstance();
-				$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+
+				$captcha_response = $this->app->input->getString('g-recaptcha-response');
+
+				if ( !empty($captcha_response) )
+				{
+					// For ReCaptcha API 2.0
+					$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
+				}
+				else
+				{
+					// For ReCaptcha API 1.0
+					$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+				}
 
 				if (!$res[0]) {
 					$this->app->enqueueMessage($captcha->getError(), 'error');
@@ -352,7 +374,6 @@ class KunenaControllerTopic extends KunenaController
 
 				if (!$success)
 				{
-					$this->app->enqueueMessage($captcha->getError(), 'error');
 					$this->setRedirectBack();
 
 					return;

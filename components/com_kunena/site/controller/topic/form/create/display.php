@@ -72,7 +72,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 
-		if ( $this->message->isAuthorised('reply') && $this->me->canDoCaptcha())
+		if ( $this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{

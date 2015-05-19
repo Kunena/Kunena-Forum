@@ -544,11 +544,11 @@ HTML;
 		return $this->getFile($filename, $url, $this->pathTypes['ranks'], 'media/kunena/ranks');
 	}
 
-	public function getTopicIconPath($filename='', $url = true, $category_iconset= '')
+	public function getTopicIconPath($filename='', $url = true)
 	{
-		if ( !empty($category_iconset) )
+		if ( $this->isHMVC() )
 		{
-			$category_iconset = '/' . $category_iconset;
+			$category_iconset = $this->category_iconset;
 		}
 		else
 		{
@@ -574,11 +574,20 @@ HTML;
 		return $this->getFile($filename, $url, $this->pathTypes['images'], 'media/kunena/images');
 	}
 
-	public function getTopicIcons($all = false, $checked = 0, $category_iconset='')
+	public function getTopicIcons($all = false, $checked = 0)
 	{
+		if ( $this->isHMVC() )
+		{
+			$category_iconset = $this->category_iconset;
+		}
+		else
+		{
+			$category_iconset = 'default';
+		}
+
 		if (empty($this->topicIcons))
 		{
-			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
+			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/'. $category_iconset .'/topicicons.xml';
 
 			if (is_file($xmlfile))
 			{
@@ -733,7 +742,7 @@ HTML;
 	{
 		if (empty($this->topicIcons))
 		{
-			$this->getTopicIcons();
+			$this->getTopicIcons(false, 0, $this->category_iconset);
 		}
 
 		if (empty($this->topicIcons[$index]->published))
@@ -767,11 +776,11 @@ HTML;
 	 * @param KunenaForumTopic	$topic
 	 * @return string
 	 */
-	public function getTopicIcon($topic)
+	public function getTopicIcon($topic, $category_iconset='')
 	{
-		if (!empty($topic->getCategory()->iconset))
+		if ( $this->isHMVC() && !empty($category_iconset) )
 		{
-			$this->category_iconset = $topic->getCategory()->iconset;
+			$this->category_iconset = '/' . $category_iconset;
 		}
 
 		$config = KunenaFactory::getConfig();
@@ -994,6 +1003,16 @@ HTML;
 		}
 
 		return $this->hmvc;
+	}
+
+	/**
+	 * Set the category iconset value
+	 *
+	 * @return void
+	 */
+	public function setCategoryIconset($iconset = '/default')
+	{
+		$this->category_iconset = '/' . $iconset;
 	}
 
 	/**

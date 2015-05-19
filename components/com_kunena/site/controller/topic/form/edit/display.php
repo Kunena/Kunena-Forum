@@ -42,9 +42,11 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		$this->topic = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 
+		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
+
 		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
 		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id, $this->topic->getCategory()->iconset);
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
 		// Run onKunenaPrepare event.

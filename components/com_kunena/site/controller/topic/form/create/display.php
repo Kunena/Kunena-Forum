@@ -66,6 +66,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 
+		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
+
 		// Get topic icons if they are enabled.
 		if ($this->config->topicicons)
 		{
@@ -92,13 +94,6 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		{
 			throw new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
-
-		// Get topic icons if they are enabled.
-		if ($this->config->topicicons)
-		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->category->iconset);
-		}
-
 
 		$options = array();
 		$selected = $this->topic->category_id;

@@ -99,7 +99,7 @@ class Pkg_KunenaInstallerScript {
 		$app = JFactory::getApplication();
 		if (version_compare(JVERSION, '3.0', '>')) {
 			$modal = <<<EOS
-<div id="kunena-modal" class="modal hide fade"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
+<div id="kunena-modal" class="modal hide fade" style="width:34%;margin-left:-20%;top:25%;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;
 
 		} else {

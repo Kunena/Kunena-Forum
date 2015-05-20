@@ -338,7 +338,7 @@ class KunenaControllerTopic extends KunenaController
 
 		if ( $template->kversion >= 4.0)
 		{
-			if (JPluginHelper::isEnabled('captcha'))
+			if (JPluginHelper::isEnabled('captcha') && $this->config->captcha)
 			{
 				JPluginHelper::importPlugin('captcha');
 				$dispatcher = JDispatcher::getInstance();
@@ -357,7 +357,6 @@ class KunenaControllerTopic extends KunenaController
 				}
 
 				if (!$res[0]) {
-					$this->app->enqueueMessage($captcha->getError(), 'error');
 					$this->setRedirectBack();
 
 					return;
@@ -374,6 +373,7 @@ class KunenaControllerTopic extends KunenaController
 
 				if (!$success)
 				{
+					$this->app->enqueueMessage($captcha->getError(), 'error');
 					$this->setRedirectBack();
 
 					return;

@@ -776,16 +776,19 @@ class KunenaViewUser extends KunenaView
 
 			$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . " ({$page}/{$pages})";
 			$this->setTitle($title);
-			// TODO: set keywords and description
-
+			$keywords = $this->config->board_title;
+			$this->setKeywords($keywords);
+			$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title;
+			$this->setDescription($description);
 		}
-		elseif ($type == 'common')
+		else
 		{
-
 			$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 			$this->setTitle($title);
-			// TODO: set keywords and description
-
+			$keywords = $this->config->board_title . ', ' . $this->profile->getName();
+			$this->setKeywords($keywords);
+			$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(), $this->config->board_title, $this->profile->getName(), $this->config->board_title);
+			$this->setDescription($description);
 		}
 	}
 }

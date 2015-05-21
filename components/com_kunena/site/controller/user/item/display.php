@@ -86,6 +86,12 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$this->setTitle($this->headerText);
+		$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+		$this->setTitle($title);
+		$keywords = $this->config->board_title . ', ' .$this->profile->getName();
+		$this->setKeywords($keywords);
+		$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(), $this->config->board_title, $this->profile->getName(), $this->config->board_title);
+		$this->setDescription($description);
+
 	}
 }

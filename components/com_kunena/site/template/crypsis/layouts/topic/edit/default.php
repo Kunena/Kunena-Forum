@@ -118,8 +118,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php endif; ?>
 						<div class="control-group" id="kanynomous-check-name"
 							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
-							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
+							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
 
+							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<div class="controls">
 								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 							</div>

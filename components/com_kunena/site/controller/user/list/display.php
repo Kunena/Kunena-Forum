@@ -86,5 +86,9 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 
 		$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . $pagesText;
 		$this->setTitle($title);
+		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_VIEW_USER_LIST');
+		$this->setKeywords($keywords);
+		$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title ;
+		$this->setDescription($description);
 	}
 }

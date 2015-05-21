@@ -58,5 +58,9 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	protected function prepareDocument()
 	{
 		$this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));
+		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_STAT_FORUMSTATS');
+		$this->setKeywords($keywords);
+		$description = JText::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title ;
+		$this->setDescription($description);
 	}
 }

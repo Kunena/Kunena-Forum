@@ -430,24 +430,40 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		$upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));
 
-		if ( !JFolder::exists(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/') )
+		$uploadBasePath = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/';
+
+		if ( !JFolder::exists($uploadBasePath) )
 		{
 			mkdir(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/');
 		}
 
 		$upload->splitFilename($fileInput['name']);
 
-		$file = $upload->upload($fileInput, JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . JFile::stripExt($fileInput['name']));
+		$fileNameWithoutExt = JFile::stripExt($fileInput['name']);
+		$fileExt = JFile::getExt($fileInput['name']);
+		$fileNameWithExt = $fileInput['name'];
+
+		if (file_exists($uploadBasePath . $fileInput['name'])) {
+
+			for ($i=2; file_exists($uploadBasePath . $fileNameWithoutExt . '.' . $fileExt); $i++) {
+				$fileNameWithoutExt = $fileNameWithoutExt . "-$i";
+				$fileNameWithExt = $fileNameWithoutExt. '.' . $fileExt;
+			}
+		}
+
+		$fileInput['name'] = $fileNameWithExt;
+
+		$file = $upload->upload($fileInput, $uploadBasePath . $fileNameWithoutExt);
 
 		if ($file->success)
 		{
 			$finfo = new finfo(FILEINFO_MIME);
 
-			$type = $finfo->file(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+			$type = $finfo->file($uploadBasePath . $fileNameWithExt);
 
 			if (stripos($type, 'image/') !== false)
 			{
-				$imageInfo = KunenaImage::getImageFileProperties(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+				$imageInfo = KunenaImage::getImageFileProperties($uploadBasePath . $fileNameWithExt);
 
 				if (number_format($file->size / 1024, 2) > $config->imagesize || $imageInfo->width > $config->imagewidth || $imageInfo->height > $config->imageheight)
 				{
@@ -465,9 +481,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 					try
 					{
-						$image = new KunenaImage(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+						$image = new KunenaImage($uploadBasePath . $fileNameWithExt);
 						$image = $image->resize($config->imagewidth, $config->imagewidth, false);
-						$image->toFile(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name'], $imageInfo->type, $options);
+						$image->toFile($uploadBasePath . $fileNameWithExt, $imageInfo->type, $options);
 						unset($image);
 					}
 					catch (Exception $e)
@@ -483,11 +499,11 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 
 			$this->protected = 	(bool) $config->attachment_protection;
-			$this->hash = md5_file(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name']);
+			$this->hash = md5_file($uploadBasePath . $fileNameWithExt);
 			$this->size = $file->size;
 			$this->folder = 'media/kunena/attachments/' . $this->userid;
 			$this->filename = $fileInput['name'];
-			$this->filename_real = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . $fileInput['name'];
+			$this->filename_real = $uploadBasePath . $fileNameWithExt;
 			$this->caption = '';
 
 			return true;

@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 /** @var KunenaUser $user */
 $user = $this->user;
-$avatar = $user->getAvatarImage('img-polaroid', 120, 120);
+$avatar = $user->getAvatarImage('img-polaroid', 'post');
 $show = KunenaConfig::getInstance()->showuserstats;
 
 if ($show)

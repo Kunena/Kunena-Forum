@@ -428,12 +428,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$input = JFactory::getApplication()->input;
 		$fileInput = $input->files->get($key);
 
-		$upload = KunenaUpload::getInstance();
+		$upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));
 
 		if ( !JFolder::exists(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/') )
 		{
 			mkdir(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/');
 		}
+
+		$upload->splitFilename($fileInput['name']);
 
 		$file = $upload->upload($fileInput, JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/' . JFile::stripExt($fileInput['name']));
 

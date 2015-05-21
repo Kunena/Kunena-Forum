@@ -91,7 +91,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<?php JHtml::_('bootstrap.modal', 'statusText'); ?>
 				<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
 					<i class="icon-pencil green"></i>
-					<?php echo JText::_('Status Text') ?>
+					<?php echo JText::_('COM_KUNENA_STATUS') ?>
 				</a>
 			</div>
 			<div class="divider"></div>

@@ -90,8 +90,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$this->setTitle($title);
 		$keywords = $this->config->board_title . ', ' .$this->profile->getName();
 		$this->setKeywords($keywords);
-		//Todo add language strings
-		$description = $this->profile->getName().' is on ' . $this->config->board_title. '. To connect with '. $this->profile->getName() . ', join '. $this->config->board_title. ' today.';
+		$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(), $this->config->board_title, $this->profile->getName(), $this->config->board_title);
 		$this->setDescription($description);
+
 	}
 }

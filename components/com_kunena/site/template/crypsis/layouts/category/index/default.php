@@ -157,7 +157,7 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time   = $last->getLastPostTime();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded',48) : null;
+								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 'thumb') : null;
 							?>
 
 								<td class="span3 hidden-phone">

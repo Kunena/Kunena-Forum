@@ -72,7 +72,7 @@ $this->addScript('js/topic.js');
 					<hr/>
 					<h3>
 						<div class="pull-left thumbnail">
-							<?php echo $this->message->getAuthor()->getAvatarImage('', 'list'); ?>
+							<?php echo $this->message->getAuthor()->getAvatarImage('img-thumbnail', 'list'); ?>
 						</div>
 						<?php echo $this->message->displayField('subject'); ?>
 						<br/>

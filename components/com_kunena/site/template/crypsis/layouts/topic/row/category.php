@@ -17,7 +17,7 @@ $category = $topic->getCategory();
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage('img-rounded', 48);
+$avatar = $author->getAvatarImage('img-rounded', 'thumb');
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 7 : 6;
 if ($this->topic->ordering)

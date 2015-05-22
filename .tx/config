@@ -123,6 +123,12 @@ source_file = components/com_kunena/site/language/en-GB/en-GB.com_kunena.tpl_blu
 source_lang = en-GB
 minimum_perc = 80
 
+[Kunena.site-com_kunena_tmpl_crypsis]
+file_filter = components/com_kunena/site/language/<lang>/<lang>.kunena_tmpl_crypsis.ini
+source_file = components/com_kunena/site/language/en-GB/en-GB.kunena_tmpl_crypsis.ini
+source_lang = en-GB
+minimum_perc = 80
+
 [Kunena.site-com_kunena-views]
 file_filter = components/com_kunena/site/language/<lang>/<lang>.com_kunena.views.ini
 source_file = components/com_kunena/site/language/en-GB/en-GB.com_kunena.views.ini

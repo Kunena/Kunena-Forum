@@ -282,9 +282,18 @@ class KunenaView extends JViewLegacy
 		return $html;
 	}
 
-	public function parse($text, $len=0)
+	public function parse($text, $len=0, $parent)
 	{
-		return KunenaHtmlParser::parseBBCode($text, $this, $len);
+		if ($this instanceof KunenaViewSearch)
+		{
+			$parent_object = $parent;
+		}
+		else
+		{
+			$parent_object = $this;
+		}
+
+		return KunenaHtmlParser::parseBBCode($text, $parent_object, $len);
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null)

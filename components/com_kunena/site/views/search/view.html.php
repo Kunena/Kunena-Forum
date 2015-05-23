@@ -165,8 +165,7 @@ class KunenaViewSearch extends KunenaView
 				}
 
 				$ressubject = preg_replace("/" . preg_quote($searchword, '/') . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
-				// FIXME: enable highlighting, but only after we can be sure that we do not break html
-				//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+				$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
 
 			$this->author      = $this->message->getAuthor();

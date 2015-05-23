@@ -1102,3 +1102,7 @@ ul.autocompleter-choices li {
 	max-width: none !important;
 }
 /* --------------------------------------------------------------- */
+
+#Kunena .searchword {
+	background-color: yellow;
+}

@@ -68,6 +68,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
+		<input id="kurl_topicons_request" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
 		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
 		<?php if ($this->message->exists()) : ?>
@@ -118,8 +119,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php endif; ?>
 						<div class="control-group" id="kanynomous-check-name"
 							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
-							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
+							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
 
+							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<div class="controls">
 								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 							</div>
@@ -146,14 +148,16 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 
-								<div class="controls controls-select">
-									<?php foreach ($this->topicIcons as $id => $icon): ?>
-										<span class="kiconsel">
-										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-										<label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
-										</label>
-									</span>
-									<?php endforeach; ?>
+								<div id="iconset_inject" class="controls controls-select">
+									<div id="iconset_topic_list">
+										<?php foreach ($this->topicIcons as $id => $icon): ?>
+											<span class="kiconsel">
+											<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+											<label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+											</label>
+										</span>
+										<?php endforeach; ?>
+									</div>
 								</div>
 							</div>
 						<?php endif; ?>

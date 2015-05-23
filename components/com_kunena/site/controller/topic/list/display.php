@@ -96,6 +96,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
 
 		$this->setTitle($headerText);
+		$keywords = $this->config->board_title;
+		$this->setKeywords($keywords);
+		$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title ;
+		$this->setDescription($description);
 	}
 
 	/**

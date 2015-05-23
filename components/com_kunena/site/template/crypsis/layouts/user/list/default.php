@@ -124,7 +124,7 @@ $this->addScript('js/search.js');
 
 		/** @var KunenaUser $user */
 		foreach ($this->users as $user) :
-			$avatar = $config->userlist_avatar ? $user->getAvatarImage('img-polaroid', 48, 48) : null;
+			$avatar = $config->userlist_avatar ? $user->getAvatarImage('img-polaroid', 'thumb') : null;
 		?>
 			<tr>
 				<td class="span1 center">

@@ -17,14 +17,14 @@ $show = KunenaConfig::getInstance()->showuserstats;
 
 if ($show)
 {
-	$rankImage = $user->getRank(0, 'image');
-	$rankTitle = $user->getRank(0, 'title');
+	$rankImage = $user->getRank($this->category_id, 'image');
+	$rankTitle = $user->getRank($this->category_id, 'title');
 	$personalText = $user->getPersonalText();
 }
 ?>
 <ul class="unstyled center profilebox">
 	<li>
-		<strong><?php echo $user->getLink(); ?></strong>
+		<strong><?php echo $user->getLink(null, null, 'nofollow', '', null, $this->category_id); ?></strong>
 	</li>
 
 	<?php if ($avatar) : ?>

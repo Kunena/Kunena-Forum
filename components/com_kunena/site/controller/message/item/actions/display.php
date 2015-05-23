@@ -97,7 +97,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		$login = KunenaLogin::getInstance();
-		if (!$me->exists() && !$this->message_closed && $login->enabled() || !$me->exists() && !$this->topic->locked && $login->enabled()) {
+		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()) {
 			$logintext =  '<a class="btn-link" href="#klogin"> ' . JText::_('JLOGIN'). '</a>';
 			if ($login->getRegistrationUrl()) {
 				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="' . $login->getRegistrationUrl() . '">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';

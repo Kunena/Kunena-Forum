@@ -52,5 +52,9 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	protected function prepareDocument()
 	{
 		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH');
+		$this->setKeywords($keywords);
+		$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title ;
+		$this->setDescription($description);
 	}
 }

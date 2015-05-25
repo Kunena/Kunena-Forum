@@ -23,6 +23,8 @@ class KunenaBbcodeEditor
 
 	var $editor_elements = array();
 
+	var $isHMVC = false;
+
 	/**
 	 * @param array $config
 	 */
@@ -153,7 +155,15 @@ class KunenaBbcodeEditor
 			}
 
 			$class = "KunenaBbcodeEditor" . strtoupper($xml_item->getName());
-			$item = call_user_func(array($class, 'parseXML'), $xml_item);
+
+			if( $this->isHMVC )
+			{
+				$item = call_user_func(array($class, 'parseHMVCXML'), $xml_item);
+			}
+			else
+			{
+				$item = call_user_func(array($class, 'parseXML'), $xml_item);
+			}
 
 			$elements[$item->name] = $item;
 		}
@@ -162,9 +172,65 @@ class KunenaBbcodeEditor
 	}
 
 	/**
+	 *
 	 * @param string $identifier
 	 */
 	public function initialize($identifier='class')
+	{
+		$template = KunenaFactory::getTemplate();
+
+		$this->isHMVC = $template->isHmvc();
+
+		if ( $this->isHMVC )
+		{
+			$this->initializeHMVC();
+		}
+		else
+		{
+			$this->initializeLegacy($identifier);
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function initializeHMVC()
+	{
+		$xml_file = simplexml_load_file(dirname(__FILE__).'/crypsis_editor.xml');
+
+		$this->editor_elements = self::parseXML($xml_file);
+
+		//Hook to manipulate the Editor XML like adding buttons
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher->trigger( 'onKunenaBbcodeEditorInit', array ( $this ) );
+
+		$js = "bbcodeSettings = {
+    	previewParserPath:	'',
+    	markupSet: [";
+
+		$itemjs = array();
+
+		foreach ($this->editor_elements as $item)
+		{
+
+			$itemjs[] = $item->generateHMVCJs();
+		}
+
+		$itemjs = implode(',', $itemjs);
+
+		$js .=$itemjs;
+
+		$js .=	']};';
+
+		// Write the js elements into editor.markitup.js file
+		file_put_contents(KPATH_SITE . '/template/crypsis/media/js/markitup.editor.js', $js);
+	}
+
+	/**
+	 * @param string $identifier
+	 */
+	public function initializeLegacy($identifier='class')
 	{
 		$js = "window.addEvent('domready', function() {
 	kbbcode = new kbbcode('kbbcode-message', 'kbbcode-toolbar', {
@@ -227,6 +293,15 @@ abstract class KunenaBbcodeEditorElement
 	 * @param $xml
 	 */
 	public static function parseXML (SimpleXMLElement $xml) {}
+
+	/**
+	 * Internal function that is used to parse an XML representation of an element.
+	 *
+	 * @static
+	 * @abstract
+	 * @param $xml
+	 */
+	public static function parseHMVCXML (SimpleXMLElement $xml) {}
 }
 
 /**
@@ -318,6 +393,80 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 		return $obj;
 	}
 
+	public static function parseHMVCXML(SimpleXMLElement $xml)
+	{
+		$obj = new KunenaBbcodeEditorButton((string)$xml['name'], (string)$xml['class'], (string)$xml['tag'], (string)$xml['title'], (string)$xml['alt']);
+
+		foreach ($xml as $xml_item)
+		{
+			//var_dump($xml_item);
+
+			$item = array();
+			$item['type'] = $xml_item->getName();
+			$item['tag'] = (string)$xml_item['tag'];
+
+			if ($xml_item['disabled'] == 'disabled')
+			{
+				continue;
+			}
+
+			if ($xml_item['config'])
+			{
+				$cfgVariable = (string) $xml_item['config'];
+				$cfgValue = intval($cfgVariable[0] != '!');
+
+				if (!$cfgValue)
+				{
+					$cfgVariable = substr($cfgVariable, 1);
+				}
+
+				if (KunenaFactory::getConfig()->$cfgVariable != $cfgValue)
+				{
+					continue;
+				}
+			}
+
+			switch ($item['type'])
+			{
+				case 'wrap-selection':
+					$item['empty_before'] = (string)$xml_item['empty_before'];
+					$item['empty_after'] = (string)$xml_item['empty_after'];
+					$item['repeat'] = (string)$xml_item['repeat'];
+					$item['start'] = (string)$xml_item['start'];
+					$item['end'] = (string)$xml_item['end'];
+					$item['before'] = (string)$xml_item['before'];
+					$item['after'] = (string)$xml_item['after'];
+					$item['class'] = (string)$xml_item['class'];
+					$item['key'] = (string)$xml_item['key'];
+					$item['name'] = (string)$xml_item['name'];
+
+					break;
+				case 'dropdown':
+					$item['start'] = (string)$xml_item['start'];
+					$item['end'] = (string)$xml_item['end'];
+					$item['selection'] = (string)$xml_item['selection'];
+					$item['class'] = (string)$xml_item['class'];
+					$item['key'] = (string)$xml_item['key'];
+					$item['name'] = (string)$xml_item['name'];
+					break;
+				case 'modal':
+					$item['key'] = (string)$xml_item['key'];
+					$item['start'] = (string)$xml_item['start'];
+					$item['end'] = (string)$xml_item['end'];
+					$item['class'] = (string)$xml_item['class'];
+					$item['name'] = (string)$xml_item['name'];
+					break;
+				case 'link':
+					$item['url'] = (string)$xml_item['url'];
+					break;
+			}
+
+			$obj->actions[] = $item;
+		}
+
+		return $obj;
+	}
+
 	/**
 	 * Generate the JavaScript for each of the actions that the button has.
 	 *
@@ -381,6 +530,115 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					break;
 			}
 		}
+		return $js;
+	}
+
+	protected function editorActionHMVCJs()
+	{
+		$js = '';
+
+		foreach ($this->actions as $action)
+		{
+			var_dump($action);
+
+
+			switch ($action['type'])
+			{
+				case 'wrap-selection':
+					$selection = array();
+
+					$classname = '';
+					if ( !empty($action['class']) )
+					{
+						$selection[]="className: '" .$action['class']. "'";
+					}
+
+					$name = '';
+					if ( !empty($action['name']) )
+					{
+						$selection[]="name: '" .$action['name']. "'";
+					}
+
+					$key = '';
+					if ( !empty($action['key']) )
+					{
+						$selection[]="key: '" .$action['key']. "'";
+					}
+
+					$start = '';
+					if ( !empty($action['start']) )
+					{
+						$selection[]="openWith: '" .$action['start']. "'";
+					}
+
+					$end = '';
+					if ( !empty($action['end']) )
+					{
+						$selection[]="closeWith: '" .$action['end']. "'";
+					}
+
+					$selection = implode(',',$selection);
+
+					$js = "{".$selection."}";
+					break;
+				case 'dropdown':
+					if ($action['name']=="Size")
+					{
+						$js = "{className: '" .$action['class']. "', name:'" .$action['name']. "', key:'" .$action['key']. "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',	dropMenu :[
+			{name:'Very very small', openWith:'[size=1]', 	closeWith:'[/size]' },
+			{name:'Very Small', openWith:'[size=2]', 	closeWith:'[/size]' },
+			{name:'Small', openWith:'[size=3]', closeWith:'[/size]' },
+			{name:'Normal', openWith:'[size=4]', closeWith:'[/size]' },
+			{name:'Big', openWith:'[size=5]', closeWith:'[/size]' },
+			{name:'Super Bigger', openWith:'[size=6]', closeWith:'[/size]' }
+			]}";
+					}
+					elseif ($action['name']=="Colors")
+					{
+						$js = "{className: '" .$action['class']. "', name:'" .$action['name']. "', key:'" .$action['key']. "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',dropMenu: [
+					{name:'Black',	openWith:'[color=#000000]', 	closeWith:'[/color]', className:'col1-1' },
+					{name:'Orange',	openWith:'[color=#000044]', 	closeWith:'[/color]', className:'col1-2' },
+					{name:'Red', 	openWith:'[color=#000088]', 	closeWith:'[/color]', className:'col1-3' },
+
+					{name:'Blue', 	openWith:'[color=blue]', 	closeWith:'[/color]', className:'col2-1' },
+					{name:'Purple', openWith:'[color=purple]', 	closeWith:'[/color]', className:'col2-2' },
+					{name:'Green', 	openWith:'[color=green]', 	closeWith:'[/color]', className:'col2-3' },
+
+					{name:'White', 	openWith:'[color=white]', 	closeWith:'[/color]', className:'col3-1' },
+					{name:'Gray', 	openWith:'[color=gray]', 	closeWith:'[/color]', className:'col3-2' }
+				]}";
+					}
+					break;
+				case 'modal':
+					$js = "{name:'" .$action['name']. "', className: '" .$action['class']. "', beforeInsert:function() {
+			jQuery('#" .$action['name']. "-modal-submit').click(function(event) {
+				event.preventDefault();
+
+				jQuery('#modal-" .$action['name']. "').modal('hide');
+			});
+
+			jQuery('#modal-" .$action['name']. "').modal(
+				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+					dialog.overlay.fadeIn('slow', function () {
+						dialog.container.slideDown('slow', function () {
+							dialog.data.fadeIn('slow');
+						});
+					});
+				}});
+			}
+		}";
+					break;
+			}
+
+		}
+
+		return $js;
+	}
+
+	function generateHMVCJs()
+	{
+		$js = $this->editorActionHMVCJs($this->name);
+
 		return $js;
 	}
 
@@ -475,6 +733,17 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
  */
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 {
+	/**
+	 *
+	 * @return string
+	 */
+	public function generateHMVCJs()
+	{
+		$js = "{separator:'|' }";
+
+		return $js;
+	}
+
 	public function generateJs ($identifier)
 	{
 		$js = "\nkbbcode.addFunction('#', function() {";
@@ -486,6 +755,16 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 	}
 
 	public static function parseXML (SimpleXMLElement $xml)
+	{
+		return new KunenaBbcodeEditorSeparator((string)$xml['name']);
+	}
+
+	/**
+	 *
+	 * @param SimpleXMLElement $xml
+	 * @return KunenaBbcodeEditorSeparator
+	 */
+	public static function parseHMVCXML (SimpleXMLElement $xml)
 	{
 		return new KunenaBbcodeEditorSeparator((string)$xml['name']);
 	}

@@ -459,12 +459,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 		if ($return)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=edit&cid[]='.$templatename", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
 		}
 		else
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename , false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
 		}
 	}
 

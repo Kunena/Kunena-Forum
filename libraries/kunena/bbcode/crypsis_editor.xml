@@ -83,9 +83,9 @@
                     end="\n[/li]" />
 	</button>
 	<button tag="hr" name="hr" title="COM_KUNENA_EDITOR_HR" alt="COM_KUNENA_EDITOR_HELPLINE_HR">
-		<wrap-selection start="hrbutton"
-                    key="" 
-              class="[hr]"/>
+		<wrap-selection key=""
+                    start="[hr]"
+              class="hrbutton"/>
 	</button>
 	<button tag="left" name="left" title="COM_KUNENA_EDITOR_LEFT" alt="COM_KUNENA_EDITOR_HELPLINE_LEFT">
 		<wrap-selection class="alignleftbutton"
@@ -115,8 +115,15 @@
                     start="[quote]"
                     end="[/quote]" />
 	</button>
+	<button tag="code" name="codesimplebutton" title="COM_KUNENA_EDITOR_QUOTE" alt="COM_KUNENA_EDITOR_HELPLINE_QUOTE">
+		<wrap-selection class="codesimplebutton"
+                    key=""
+                    name="Quote"
+                    start="[code]"
+                    end="[code]" />
+	</button>
 	<button tag="code" name="code" title="COM_KUNENA_EDITOR_CODE" alt="COM_KUNENA_EDITOR_HELPLINE_CODE">   
-		<modal class="codemodalboxbutton" />		
+		<modal name="code" class="codemodalboxbutton" />		
 	</button>
 	<button tag="table" name="table" title="COM_KUNENA_EDITOR_TABLE" alt="COM_KUNENA_EDITOR_HELPLINE_TABLE">
 		<wrap-selection empty_before="[table]\n  [tr]\n    [td]"
@@ -139,10 +146,10 @@
 	<separator name="embeding" />
 
 	<button tag="img" name="image" title="COM_KUNENA_EDITOR_IMAGELINK" alt="COM_KUNENA_EDITOR_HELPLINE_IMAGELINK">
-		<modal class="picturebutton" />
+		<modal name="picture" class="picturebutton" />
 	</button>
 	<button tag="url" name="link" title="COM_KUNENA_EDITOR_LINK" alt="COM_KUNENA_EDITOR_HELPLINE_LINK">
-		<modal class="linkbutton" />
+		<modal name="link" class="linkbutton" />
 	</button>
 
 	<separator name="external" />
@@ -151,19 +158,25 @@
 		<wrap-selection class="ebaybutton" key="E" start="[ebay]" end="[/ebay]" />
 	</button>
 	<button tag="video" name="video" config="showvideotag" title="COM_KUNENA_EDITOR_VIDEO" alt="COM_KUNENA_EDITOR_HELPLINE_VIDEO">
-		<display class="videodropdownbutton" />
+		<modal name="" class="videourlprovider" />
 	</button>
-	<button tag="map" name="map" title="COM_KUNENA_EDITOR_MAP" alt="COM_KUNENA_EDITOR_HELPLINE_MAP">
-		<modal class="mapbutton" />
+	<button tag="map" name="map" title="COM_KUNENA_EDITOR_VIDEO" alt="COM_KUNENA_EDITOR_HELPLINE_VIDEO">
+		<modal name="map" class="mapbutton" />
 	</button>
-	<button tag="smilies" name="smilies" title="COM_KUNENA_EDITOR_SMILIES" alt="COM_KUNENA_EDITOR_HELPLINE_SMILIES">
-		<display name="kbbcode-smilies-options" selection="kbbcode-smilies-options" />
+	<button tag="poll-settings" name="poll-settings" title="COM_KUNENA_EDITOR_MAP" alt="COM_KUNENA_EDITOR_HELPLINE_MAP">
+		<modal name="poll-settings" class="pollbutton" />
 	</button>
-
+	<button tag="url" name="link" title="COM_KUNENA_EDITOR_LINK" alt="COM_KUNENA_EDITOR_HELPLINE_LINK">
+		<modal class="linkbutton" />
+	</button>
 	<button tag="tweet" name="tweet" title="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK" alt="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK">
-		<wrap-selection />
+		<wrap-selection class="tweetbutton"
+						start="[tweet]"
+						end="[/tweet]" />
 	</button>
-
+	<button tag="emoticons" name="emoticons" title="COM_KUNENA_EDITOR_SMILIES" alt="COM_KUNENA_EDITOR_HELPLINE_SMILIES">
+		<modal name="emoticons" class="emoticonsbutton" />
+	</button>
 	<separator name="misc" />
 
 	<button name="help" title="COM_KUNENA_EDITOR_HELP" alt="COM_KUNENA_EDITOR_HELPLINE_HELP">

@@ -62,7 +62,7 @@ if ($show)
 </ul>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default'); ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
-<?php if (!$user->guest) : ?>
+<?php if ($user->userid > 1) : ?>
 <div class="profile-expand center">
 	<span class="heading btn btn-small heading-less" style="display:none;"><i class="icon-arrow-up"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
 	<span class="heading btn btn-small"><i class="icon-arrow-down"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>

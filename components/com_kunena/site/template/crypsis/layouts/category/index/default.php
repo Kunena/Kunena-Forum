@@ -24,7 +24,7 @@ foreach ($this->sections as $section) :
 	<div class="kfrontend">
 		<div class="btn-toolbar pull-right">
 			<?php if (count($this->sections) > 0) : ?>
-				<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>">&times;</div>
+				<div class="btn btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>"></div>
 			<?php endif; ?>
 		</div>
 

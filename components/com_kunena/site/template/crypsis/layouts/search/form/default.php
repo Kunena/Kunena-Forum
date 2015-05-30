@@ -35,7 +35,7 @@ $this->addScript('js/search.js');
 
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-small" data-toggle="collapse" data-target="#search">&times;</div>
+			<div class="btn btn-small" data-toggle="collapse" data-target="#search"></div>
 		</div>
 	</div>
 	<h2>
@@ -76,7 +76,7 @@ $this->addScript('js/search.js');
 			</div>
 		</div>
 
-		<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#search-options">&times;</div>
+		<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#search-options"></div>
 		<h3>
 			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h3>

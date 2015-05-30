@@ -411,7 +411,14 @@ class KunenaUser extends JObject
 			$default = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
 		}
 
-		return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
+		if ( $this->exists() )
+		{
+			return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
+		}
+		else
+		{
+			return $default == 'asc' ? 'asc' : 'desc';
+		}
 	}
 
 	/**

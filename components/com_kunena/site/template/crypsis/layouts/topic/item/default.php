@@ -33,7 +33,7 @@ $this->addScript('js/topic.js');
 <?php endif; ?>
 
 <h3>
-	<?php echo $topic->getIcon(); ?>
+	<?php echo $topic->getIcon($topic->getCategory()->iconset); ?>
 	<?php echo $topic->displayField('subject'); ?>
 </h3>
 

@@ -34,7 +34,7 @@ if (!empty($this->spacing)) : ?>
 <?php else :  ?>
 	<td class="hidden-phone span1 center">
 		<?php endif;?>
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div>

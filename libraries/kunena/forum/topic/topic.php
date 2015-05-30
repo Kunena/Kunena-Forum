@@ -529,9 +529,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @return string
 	 */
-	public function getIcon()
+	public function getIcon($category_icon = '')
 	{
-		return KunenaFactory::getTemplate()->getTopicIcon($this);
+		return KunenaFactory::getTemplate()->getTopicIcon($this, $category_icon);
 	}
 
 	/**

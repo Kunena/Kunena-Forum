@@ -38,12 +38,6 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		// Get topic icons if they are enabled.
-		if ($this->config->topicicons)
-		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
-		}
-
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$arrayanynomousbox = array();
 		$arraypollcatid = array();
@@ -71,6 +65,14 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
+
+		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
+
+		// Get topic icons if they are enabled.
+		if ($this->config->topicicons)
+		{
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->topic->getCategory()->iconset);
+		}
 
 		if ( $this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{

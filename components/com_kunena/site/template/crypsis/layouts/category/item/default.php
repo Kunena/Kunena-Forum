@@ -17,7 +17,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 
 <?php if ($this->category->headerdesc) : ?>
 	<div class="alert alert-info kfrontend">
-		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		<a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
 	</div>
 <?php endif; ?>

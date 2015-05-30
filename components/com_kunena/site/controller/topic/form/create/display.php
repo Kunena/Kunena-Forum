@@ -77,10 +77,18 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			if (JPluginHelper::isEnabled('captcha'))
 			{
 				JPluginHelper::importPlugin('captcha');
-				$dispatcher = JDispatcher::getInstance();
-				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+				$plugin = JPluginHelper::getPlugin('captcha');
+				$params = new JRegistry($plugin[0]->params);
+				$captcha_pubkey = $params->get('public_key');
+				$catcha_privkey = $params->get('private_key');
+				
+				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+				{
+					$dispatcher = JDispatcher::getInstance();
+					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 
-				$this->captchaEnabled = $result[0];
+					$this->captchaEnabled = $result[0];
+				}
 			}
 		}
 		else

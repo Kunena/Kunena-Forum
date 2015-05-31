@@ -340,7 +340,6 @@ class KunenaControllerTopic extends KunenaController
 		{
 			if (JPluginHelper::isEnabled('captcha') && $this->config->captcha)
 			{
-				JPluginHelper::importPlugin('captcha');
 				$plugin = JPluginHelper::getPlugin('captcha');
 				$params = new JRegistry($plugin[0]->params);
 				
@@ -349,6 +348,7 @@ class KunenaControllerTopic extends KunenaController
 				
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{				
+					JPluginHelper::importPlugin('captcha');
 					$dispatcher = JDispatcher::getInstance();
 	
 					$captcha_response = $this->app->input->getString('g-recaptcha-response');

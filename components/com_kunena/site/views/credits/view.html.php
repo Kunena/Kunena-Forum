@@ -39,10 +39,6 @@ class KunenaViewCredits extends KunenaView
 				'url' => 'http://www.kunena.org/forum/user/151-mortti',
 				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
 			array(
-				'name' => 'Oliver Ratzesberger',
-				'url' => 'http://www.kunena.org/forum/user/64-fxstein',
-				'title' => JText::_('COM_KUNENA_CREDITS_FOUNDER')),
-			array(
 				'name' => 'Matias Griese',
 				'url' => 'http://www.kunena.org/forum/user/63-matias',
 				'title' => JText::_('COM_KUNENA_CREDITS_DEVELOPMENT')),
@@ -50,6 +46,10 @@ class KunenaViewCredits extends KunenaView
 				'name' => 'Joshua Weiss',
 				'url' => 'http://www.kunena.org/forum/user/10809-coder4life',
 				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_DESIGN'), JText::_('COM_KUNENA_CREDITS_DEVELOPMENT'))),
+			array(
+				'name' => 'Oliver Ratzesberger',
+				'url' => 'http://www.kunena.org/forum/user/64-fxstein',
+				'title' => JText::_('COM_KUNENA_CREDITS_FOUNDER')),
 		);
 		$this->thanks     = JText::sprintf('COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'http://www.kunena.org',

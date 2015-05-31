@@ -340,26 +340,35 @@ class KunenaControllerTopic extends KunenaController
 		{
 			if (JPluginHelper::isEnabled('captcha') && $this->config->captcha)
 			{
-				JPluginHelper::importPlugin('captcha');
-				$dispatcher = JDispatcher::getInstance();
-
-				$captcha_response = $this->app->input->getString('g-recaptcha-response');
-
-				if ( !empty($captcha_response) )
-				{
-					// For ReCaptcha API 2.0
-					$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
-				}
-				else
-				{
-					// For ReCaptcha API 1.0
-					$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
-				}
-
-				if (!$res[0]) {
-					$this->setRedirectBack();
-
-					return;
+				$plugin = JPluginHelper::getPlugin('captcha');
+				$params = new JRegistry($plugin[0]->params);
+				
+				$captcha_pubkey = $params->get('public_key');
+				$catcha_privkey = $params->get('private_key');
+				
+				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+				{				
+					JPluginHelper::importPlugin('captcha');
+					$dispatcher = JDispatcher::getInstance();
+	
+					$captcha_response = $this->app->input->getString('g-recaptcha-response');
+	
+					if ( !empty($captcha_response) )
+					{
+						// For ReCaptcha API 2.0
+						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
+					}
+					else
+					{
+						// For ReCaptcha API 1.0
+						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+					}
+	
+					if (!$res[0]) {
+						$this->setRedirectBack();
+	
+						return;
+					}
 				}
 			}
 		}

@@ -37,6 +37,7 @@
 			<filename>vi-VN.com_kunena.templates.ini</filename>
 			<filename>vi-VN.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>vi-VN.com_kunena.views.ini</filename>
+			<filename>vi-VN.kunena_tmpl_crypsis</filename>
 		</files>
 	</fileset>
 </extension>

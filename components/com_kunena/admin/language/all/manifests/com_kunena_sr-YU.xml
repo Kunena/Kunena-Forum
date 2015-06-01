@@ -37,6 +37,7 @@
 			<filename>sr-YU.com_kunena.templates.ini</filename>
 			<filename>sr-YU.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>sr-YU.com_kunena.views.ini</filename>
+			<filename>sr-YU.kunena_tmpl_crypsis</filename>
 		</files>
 	</fileset>
 </extension>

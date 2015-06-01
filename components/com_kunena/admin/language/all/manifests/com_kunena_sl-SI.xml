@@ -36,6 +36,7 @@
 			<filename>sl-SI.com_kunena.templates.ini</filename>
 			<filename>sl-SI.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>sl-SI.com_kunena.views.ini</filename>
+			<filename>sl-SI.kunena_tmpl_crypsis</filename>
 		</files>
 	</fileset>
 </extension>

@@ -37,6 +37,7 @@
 			<filename>fa-IR.com_kunena.templates.ini</filename>
 			<filename>fa-IR.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>fa-IR.com_kunena.views.ini</filename>
+			<filename>fa-IR.kunena_tmpl_crypsis</filename>
 		</files>
 	</fileset>
 </extension>

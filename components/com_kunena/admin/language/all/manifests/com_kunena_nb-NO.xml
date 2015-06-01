@@ -37,7 +37,7 @@
 			<filename>nb-NO.com_kunena.templates.ini</filename>
 			<filename>nb-NO.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>nb-NO.com_kunena.views.ini</filename>
-			<filename>nb-NO.kunena_tmpl_crypsis</filename>
+			<filename>nb-NO.kunena_tmpl_crypsis.ini</filename>
 		</files>
 	</fileset>
 </extension>

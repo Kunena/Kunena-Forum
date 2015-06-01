@@ -37,7 +37,7 @@
 			<filename>uk-UA.com_kunena.templates.ini</filename>
 			<filename>uk-UA.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>uk-UA.com_kunena.views.ini</filename>
-			<filename>uk-UA.kunena_tmpl_crypsis</filename>
+			<filename>uk-UA.kunena_tmpl_crypsis.ini</filename>
 		</files>
 	</fileset>
 </extension>

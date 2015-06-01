@@ -36,7 +36,7 @@
 			<filename>cy-GB.com_kunena.templates.ini</filename>
 			<filename>cy-GB.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>cy-GB.com_kunena.views.ini</filename>
-			<filename>cy-GB.kunena_tmpl_crypsis</filename>
+			<filename>cy-GB.kunena_tmpl_crypsis.ini</filename>
 		</files>
 	</fileset>
 </extension>

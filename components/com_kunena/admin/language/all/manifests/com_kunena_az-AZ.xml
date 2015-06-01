@@ -37,7 +37,7 @@
 			<filename>az-AZ.com_kunena.templates.ini</filename>
 			<filename>az-AZ.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>az-AZ.com_kunena.views.ini</filename>
-			<filename>az-AZ.kunena_tmpl_crypsis</filename>
+			<filename>az-AZ.kunena_tmpl_crypsis.ini</filename>
 		</files>
 	</fileset>
 </extension>

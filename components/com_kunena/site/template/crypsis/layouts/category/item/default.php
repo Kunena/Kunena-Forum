@@ -52,7 +52,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 	<div>
 		<ul class="inline">
 			<?php if ($categoryActions) : ?>
-				<li class="hidden-phone">
+				<li>
 					<?php echo implode($categoryActions); ?>
 				</li>
 			<?php endif; ?>
@@ -74,7 +74,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 			<td class="span2 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
-			<td class="span3">
+			<td class="span3 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->topicActions)) : ?>

@@ -54,7 +54,7 @@ class KunenaViewUser extends KunenaView
 	 */
 	public function displayListMention($tpl = null)
 	{
-		$response['names'] = array();
+		$response = array();
 
 		if ($this->me->exists())
 		{
@@ -62,11 +62,13 @@ class KunenaViewUser extends KunenaView
 
 			foreach ($users as $user)
 			{
-				$name['id']       = $user->id;
-				$name['name']     = $user->name;
-				$name['username'] = $user->username;
+				$user_obj = new stdClass();
 
-				$response['names'][] = $name;
+				$user_obj->id = $user->id;
+				$user_obj->photo = $user->getAvatarURL();
+				$user_obj->name = $user->username;
+
+				$response[] = $user_obj;
 			}
 		}
 

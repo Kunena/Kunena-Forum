@@ -71,7 +71,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		'undelete'=>array('Read'),
 		'permdelete'=>array('Read'),
 		'attachment.read'=>array('Read'),
-		'attachment.create'=>array('Read','Own'),
+		'attachment.create'=>array('Read','Attachments'),
 		'attachment.delete'=>array(),
 		// TODO: In the future we might want to restrict this: array('Read','EditTime'),
 	);
@@ -1384,6 +1384,44 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id))
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Check if user has the right to upload attachment
+	 *
+	 * @param KunenaUser $user
+	 * @return KunenaExceptionAuthorise|NULL
+	 */
+	protected function authoriseAttachments(KunenaUser $user)
+	{
+		if (empty(KunenaFactory::getConfig()->image_upload) || empty(KunenaFactory::getConfig()->file_upload) )
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
+		}
+
+		if (($user->userid || $user->isModerator()) && !$user->isAdmin())
+		{
+			if (KunenaFactory::getConfig()->image_upload=='admin' || KunenaFactory::getConfig()->file_upload=='admin' )
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_ONLY_FOR_ADMINISTRATORS'), 403);
+			}
+		}
+		else if (!$user->userid )
+		{
+			if (KunenaFactory::getConfig()->image_upload=='registered' || KunenaFactory::getConfig()->file_upload=='registered' )
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_ONLY_FOR_REGISTERED_USERS'), 403);
+			}
+		}
+		else if (!$user->isModerator() && ($user->isAdmin() || $user->userid))
+		{
+			if (KunenaFactory::getConfig()->image_upload=='moderator' || KunenaFactory::getConfig()->file_upload=='moderator' )
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_ONLY_FOR_MODERATORS'), 403);
+			}
 		}
 
 		return null;

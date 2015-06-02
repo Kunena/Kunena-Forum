@@ -36,7 +36,7 @@ if (!empty($this->spacing)) : ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx); ?> krow1<?php echo $txt;?>">
 	<td class="span1 hidden-phone center">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div>

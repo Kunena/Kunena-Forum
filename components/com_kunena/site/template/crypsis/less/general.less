@@ -813,3 +813,16 @@ div.pagination a.disabled:hover {
 .knav-collapse.collapse.in > .nav {
 	display: inline-block;
 }
+
+.btn-toolbar .btn.btn-small:before,
+#search .btn.btn-small:before {
+	content: "×";
+	font-size: 14px;
+}
+
+.btn-toolbar .btn.btn-small.collapsed:before,
+#search .btn.btn-small.collapsed:before {
+	content: "";
+	font-family: "icomoon";
+	font-size: 8px;
+}

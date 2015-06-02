@@ -17,7 +17,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 
 <?php if ($this->category->headerdesc) : ?>
 	<div class="alert alert-info kfrontend">
-		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		<a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
 	</div>
 <?php endif; ?>
@@ -58,6 +58,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 			<?php endif; ?>
 		</ul>
 	</div>
+	<?php if ($this->topics) : ?>
 	<table class="table table-bordered">
 		<thead>
 		<tr>
@@ -86,8 +87,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 		</tr>
 		</thead>
 		<?php endif; ?>
-		<?php if ($this->topics) :
-
+		<?php
 			/** @var KunenaForumTopic $previous */
 			$previous = null;
 
@@ -103,6 +103,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 			}
 		?>
 		<tfoot>
+		<?php if ($this->topics) : ?>
 		<tr>
 			<td class="center hidden-phone">
 				<a id="forumbottom"> </a>
@@ -140,6 +141,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 				</div>
 			</td>
 		</tr>
+		<?php endif; ?>
 		</tfoot>
 		<?php endif; ?>
 	</table>

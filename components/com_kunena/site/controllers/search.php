@@ -26,7 +26,7 @@ class KunenaControllerSearch extends KunenaController
 	public function results()
 	{
 		$model = $this->getModel('Search');
-		$this->setRedirect($model->getSearchURL('advsearch', $model->getState('searchwords'),
+		$this->setRedirect($model->getSearchURL('search', $model->getState('searchwords'),
 			$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false));
 	}
 }

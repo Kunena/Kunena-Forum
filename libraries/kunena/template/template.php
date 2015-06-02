@@ -782,6 +782,10 @@ HTML;
 		{
 			$this->category_iconset = '/' . $category_iconset;
 		}
+		else
+		{
+			$this->category_iconset = '/default';
+		}
 
 		$config = KunenaFactory::getConfig();
 		if ($config->topicicons)

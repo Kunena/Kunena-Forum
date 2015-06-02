@@ -15,6 +15,25 @@ $this->getBBcodesEnabled();
 
 // Kunena bbcode editor
 ?>
+<div class="control-group">
+	<label class="control-label"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
+	<div class="controls">
+		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+	</div>
+	<!-- Hidden preview placeholder -->
+	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
+</div>
+
+<?php if ($this->message->exists()) : ?>
+
+	<div class="control-group">
+		<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+
+		<div class="controls">
+			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+		</div>
+	</div>
+<?php endif; ?>
 
 <!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -188,22 +207,3 @@ $this->getBBcodesEnabled();
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $this->config->disemoticons ?>" />
 	</div>
 </div>
-<div class="control-group">
-	<label class="control-label"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
-	<div class="controls">
-		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
-	</div>
-	<!-- Hidden preview placeholder -->
-	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
-</div>
-
-<?php if ($this->message->exists()) : ?>
-
-	<div class="control-group">
-		<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
-
-		<div class="controls">
-			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
-		</div>
-	</div>
-<?php endif; ?>

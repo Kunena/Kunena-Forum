@@ -31,7 +31,10 @@ if ($show)
 	<li>
 		<?php echo $user->getLink($avatar); ?>
 		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-				<span class="topic-starter"></span>
+				<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+		<?php endif;?>
+		<?php if (!$this->topic_starter && $user->isModerator()) : ?>
+			<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
 		<?php endif;?>
 	</li>
 	<?php endif; ?>

@@ -18,12 +18,7 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
-// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('js/caret.js');
-$this->addScript('js/atwho.js');
-$this->addStyleSheet('css/atwho.css');
 $this->addScript('js/search.js');
-
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">
@@ -63,7 +58,7 @@ $this->addScript('js/search.js');
 					</legend>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
-						<input id="kusersearch" type="text" name="searchuser"
+						<input id="kusersearch" data-provide="typeahead" type="text" name="searchuser" autocomplete="off"
 						       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" />
 					</label>
 

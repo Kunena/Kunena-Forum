@@ -99,7 +99,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	{
 		$tmp  = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
-		$file = $this->app->input->get('install_package', null, 'files', 'array'); // File upload
+		$file = $this->app->input->files->get('install_package');
 
 		if (!JSession::checkToken('post'))
 		{

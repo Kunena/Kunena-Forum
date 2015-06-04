@@ -66,7 +66,7 @@
 		-->
 		<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
 			<classpath>
-				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.7.jar" />
+				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.8.jar" />
 				<pathelement path="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
 			</classpath>
 		</taskdef>
@@ -201,14 +201,21 @@
 
 		<!-- Readme -->
 		<copy file="${project_dir}/README.md" tofile="${package_dir}/README.txt" overwrite="true" filtering="true" />
+
+		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsisb3" />
+
 	</target>
 
 	<target name="minify" depends="build">
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/com_kunena/site" todir="${tmp_dir}/packages/com_kunena/site">
+			<exclude name="**/*-min.js" />
+			<exclude name="**/*-min.css" />
 			<include name="**/*.js" />
 			<include name="**/*.css" />
 		</yui-compressor>
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
+			<exclude name="**/*-min.js" />
+			<exclude name="**/*-min.css" />
 			<include name="**/*.js" />
 		</yui-compressor>
 	</target>

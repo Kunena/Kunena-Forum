@@ -131,7 +131,6 @@
 				<exclude name="template/**/params.ini"/>
 			</fileset>
 		</copy>
-		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsisb3" />
 	</target>
 
 	<target name="build" depends="init">
@@ -179,6 +178,7 @@
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
+		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsisb3" />
 
 		<!-- Move files needed by the installer -->
 		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />

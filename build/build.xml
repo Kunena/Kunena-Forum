@@ -45,6 +45,7 @@
 		<mkdir dir="${tmp_dir}" />
 		<mkdir dir="${tmp_dir}/languages_extra" />
 		<mkdir dir="${tmp_dir}/languages_extra/language" />
+		<mkdir dir="${tmp_dir}/crypsis_b3" />
 		<mkdir dir="${build_dir}" />
 		<mkdir dir="${package_dir}" />
 		<mkdir dir="${package_dir}/archive" />
@@ -201,9 +202,13 @@
 
 		<!-- Readme -->
 		<copy file="${project_dir}/README.md" tofile="${package_dir}/README.txt" overwrite="true" filtering="true" />
-
+		
+		<!-- Put template crypsis boostrap 3 in his own package -->
+		<copy todir="${tmp_dir}/crypsis_b3" overwrite="true">
+			<fileset dir="${project_dir}/${kunena.site}/template/crypsisb3"/>
+		</copy>
+		
 		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsisb3" />
-
 	</target>
 
 	<target name="minify" depends="build">
@@ -353,6 +358,7 @@
 		<archive destfile="${build_dir}/packages/kunena_media${str.version}" basedir="${tmp_dir}/packages/kunena_media" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
+		<archive destfile="${package_dir}/tmpl_crypsis_b3${str.fileversion}" basedir="${tmp_dir}/crypsis_b3" />
 	</target>
 
 	<target name="info" depends="copy">

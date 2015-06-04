@@ -178,7 +178,6 @@
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
-		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsisb3" />
 
 		<!-- Move files needed by the installer -->
 		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -202,6 +201,9 @@
 
 		<!-- Readme -->
 		<copy file="${project_dir}/README.md" tofile="${package_dir}/README.txt" overwrite="true" filtering="true" />
+
+		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsisb3" />
+
 	</target>
 
 	<target name="minify" depends="build">

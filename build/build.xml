@@ -129,6 +129,7 @@
 			<fileset dir="${project_dir}/${kunena.site}">
 				<exclude name="language/**"/>
 				<exclude name="template/**/params.ini"/>
+				<exclude name="template/crypsisb3"/>
 			</fileset>
 		</copy>
 	</target>

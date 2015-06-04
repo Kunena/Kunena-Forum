@@ -90,7 +90,7 @@ jQuery(document).ready(function() {
 	jQuery('#kbbcode-message').bind('input propertychange', function() {
 		kPreviewHelper(previewActive);
 	});
-	
+
 	/* Store form data into localstorage every 1 second */
 	if ( jQuery.fn.sisyphus!=undefined ) {
 		jQuery("#postform").sisyphus( {
@@ -98,7 +98,7 @@ jQuery(document).ready(function() {
 			timeout: 5
 		});
 	}
-	
+
 	jQuery('#kshow_attach_form').click(function() {
 		if (jQuery('#kattach_form').is(":visible"))
 		{
@@ -109,8 +109,8 @@ jQuery(document).ready(function() {
 			jQuery('#kattach_form').show();
 		}
 	});
-	
-	// Load topic icons by ajax request   
+
+	// Load topic icons by ajax request
 	jQuery('#postcatid').change(function() {
 		var kurl_topicons_request = jQuery('#kurl_topicons_request').val();
 
@@ -138,11 +138,11 @@ jQuery(document).ready(function() {
 							{
 								var input = jQuery('<input>', {type: 'radio', id: 'radio'+value.id, name: 'topic_emoticon', value: value.id});
 							}
-							
-							var span_object = jQuery('<span>', {class: 'kiconsel'}).append(input);
-							var label = jQuery('<label>', {class: 'radio inline', for: value.id}).append(jQuery('<img>', {src: value.path, border: '0', al: ''})); 
+
+							var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
+							var label = jQuery('<label>', {'class': 'radio inline', for: value.id}).append(jQuery('<img>', {src: value.path, border: '0', al: ''}));
 							span_object.append(label);
-	
+
 							jQuery('#iconset_topic_list').append(span_object);
 						}
 					});

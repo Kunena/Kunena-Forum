@@ -35,7 +35,7 @@ foreach ($this->sections as $section) :
 			</small>
 		</h2>
 
-		<div class="row collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
+		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 			<table class="table table-bordered">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-sm">
@@ -146,7 +146,7 @@ foreach ($this->sections as $section) :
 								<?php endif; ?>
 
 								<?php if (!empty($this->pending[$category->id])) : ?>
-									<div class="alert" style="margin-top:20px;">
+									<div class="alert alert-warning" role="alert" style="margin-top:20px;">
 										<a class="alert-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>" title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING')?>" rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING')?></a>
 									</div>
 								<?php endif; ?>

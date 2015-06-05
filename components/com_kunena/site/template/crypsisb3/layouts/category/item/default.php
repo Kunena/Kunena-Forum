@@ -68,7 +68,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
 				</a>
 			</td>
-			<td class="span<?php echo $cols ?>">
+			<td class="col-md-<?php echo $cols ?>">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
 			<td class="col-md-2 hidden-sm">

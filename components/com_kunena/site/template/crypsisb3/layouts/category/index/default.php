@@ -162,7 +162,7 @@ foreach ($this->sections as $section) :
 
 								<td class="col-md-3 hidden-sm">
 									<div class="container-fluid">
-										<div class="row">
+										<div class="col-md-12">
 											<?php if ($avatar) : ?>
 												<div class="col-md-3">
 													<?php echo $author->getLink($avatar); ?>

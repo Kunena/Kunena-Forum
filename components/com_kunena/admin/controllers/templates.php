@@ -95,9 +95,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=edit&name={$template}", false));
 	}
 
-	function install()
+	public function install()
 	{
-		$tmp  = JPATH_ROOT . '/tmp/kinstall/';
+		$tmp  = JPATH_ROOT . '/tmp/';
+		$tmp_kunena = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
 		$file = $this->app->input->files->get('install_package');
 
@@ -119,23 +120,25 @@ class KunenaAdminControllerTemplates extends KunenaController
 		else
 		{
 			$success = KunenaFile::upload($file ['tmp_name'], $tmp . $file ['name']);
+
 			if ($success)
 			{
-				$success = JArchive::extract($tmp . $file ['name'], $tmp);
+				try
+				{
+					JArchive::extract($tmp . $file ['name'], $tmp_kunena);
+				}
+				catch (Exception $e)
+				{
+					$this->app->enqueueMessage(
+						JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
+						'notice'
+					);
+				}
 			}
 
-			if (!$success)
+			if (is_dir($tmp_kunena))
 			{
-				$this->app->enqueueMessage(
-					JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
-					'notice'
-				);
-			}
-
-			// Delete the tmp install directory
-			if (is_dir($tmp))
-			{
-				$templates = KunenaTemplateHelper::parseXmlFiles($tmp);
+				$templates = KunenaTemplateHelper::parseXmlFiles($tmp_kunena);
 
 				if (!empty($templates))
 				{
@@ -151,15 +154,15 @@ class KunenaAdminControllerTemplates extends KunenaController
 						{
 							if (is_file($dest . $template->directory . '/params.ini'))
 							{
-								if (is_file($tmp . $template->sourcedir . '/params.ini'))
+								if (is_file($tmp_kunena . $template->sourcedir . '/params.ini'))
 								{
-									KunenaFile::delete($tmp . $template->sourcedir . '/params.ini');
+									KunenaFile::delete($tmp_kunena . $template->sourcedir . '/params.ini');
 								}
-								KunenaFile::move($dest . $template->directory . '/params.ini', $tmp . $template->sourcedir . '/params.ini');
+								KunenaFile::move($dest . $template->directory . '/params.ini', $tmp_kunena . $template->sourcedir . '/params.ini');
 							}
 							KunenaFolder::delete($dest . $template->directory);
 						}
-						$success = KunenaFolder::move($tmp . $template->sourcedir, $dest . $template->directory);
+						$success = KunenaFolder::move($tmp_kunena . $template->sourcedir, $dest . $template->directory);
 
 						if ($success !== true)
 						{
@@ -171,9 +174,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 						}
 					}
 
-					if (is_dir($tmp))
+					// Delete the tmp install directory
+					if (is_dir($tmp_kunena))
 					{
-						KunenaFolder::delete($tmp);
+						KunenaFolder::delete($tmp_kunena);
 					}
 
 					// Clear all cache, just in case.
@@ -189,6 +193,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 				JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
 			}
 		}
+
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

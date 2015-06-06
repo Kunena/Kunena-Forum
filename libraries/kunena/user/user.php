@@ -1345,7 +1345,7 @@ class KunenaUser extends JObject
 		{
 			return true;
 		}
-		else if ( !$this->exists() && $config->captcha )
+		else if ( !$this->exists() && $config->captcha && JPluginHelper::isEnabled('captcha'))
 		{
 			return true;
 		}

@@ -1328,7 +1328,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Check if captcha is allowed
+	 * Check if captcha is allowed for guests users or registered users
 	 *
 	 * @return boolean
 	 */
@@ -1341,15 +1341,15 @@ class KunenaUser extends JObject
 			return false;
 		}
 
-		if ( $this->exists() && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+		if ( $this->exists() && !$config->captcha && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
 		{
 			return true;
 		}
-		else if ( !$this->exists() && $config->captcha )
+		elseif ( !$this->exists() && $config->captcha )
 		{
 			return true;
 		}
-		else
+		elseif ( $config->captcha == '-1' )
 		{
 			return false;
 		}

@@ -164,7 +164,13 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['userlist_lastvisitdate'] = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_lastvisitdate', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_lastvisitdate);
 		$lists ['userlist_userhits']      = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_userhits);
 		$lists ['reportmsg']              = JHtml::_('select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $this->config->reportmsg);
-		$lists ['captcha']                = JHtml::_('select.genericlist', $yesno, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $this->config->captcha);
+
+		$captcha = array();
+		$captcha = JHtml::_('select.option', '-1', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_NOBODY'));
+		$captcha = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_REGISTERED_USERS'));
+		$captcha = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_GUESTS_USERS'));
+
+		$lists ['captcha']                = JHtml::_('select.genericlist', $captcha, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $this->config->captcha);
 		$lists ['mailfull']               = JHtml::_('select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailfull);
 		// New for 1.0.5
 		$lists ['showspoilertag']   = JHtml::_('select.genericlist', $yesno, 'cfg_showspoilertag', 'class="inputbox" size="1"', 'value', 'text', $this->config->showspoilertag);

@@ -1336,20 +1336,17 @@ class KunenaUser extends JObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ( $this->isModerator() )
+		if ( !$this->exists() && $config->captcha == 1 )
 		{
-			return false;
+			return true;
 		}
 
-		if ( $this->exists() && !$config->captcha && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+		if ( $this->exists() && $config->captcha >= 0 && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
 		{
 			return true;
 		}
-		elseif ( !$this->exists() && $config->captcha )
-		{
-			return true;
-		}
-		elseif ( $config->captcha == '-1' )
+
+		if ( $config->captcha == '-1' )
 		{
 			return false;
 		}

@@ -546,13 +546,20 @@ HTML;
 
 	public function getTopicIconPath($filename='', $url = true)
 	{
-		if ( $this->isHMVC() )
+		$category_iconset = '';
+
+		$config = KunenaFactory::getConfig();
+
+		if ( $config->topicicons )
 		{
-			$category_iconset = $this->category_iconset;
-		}
-		else
-		{
-			$category_iconset = '/default';
+			if ( $this->isHMVC() )
+			{
+				$category_iconset = $this->category_iconset;
+			}
+			else
+			{
+				$category_iconset = '/default';
+			}
 		}
 
 		return $this->getFile($filename, $url, $this->pathTypes['topicicons'], 'media/kunena/topic_icons' . $category_iconset);
@@ -778,16 +785,20 @@ HTML;
 	 */
 	public function getTopicIcon($topic, $category_iconset='')
 	{
+		$config = KunenaFactory::getConfig();
+
 		if ( $this->isHMVC() && !empty($category_iconset) )
 		{
 			$this->category_iconset = '/' . $category_iconset;
 		}
 		else
 		{
-			$this->category_iconset = '/default';
+			if($config->topicicons)
+			{
+				$this->category_iconset = '/default';
+			}
 		}
 
-		$config = KunenaFactory::getConfig();
 		if ($config->topicicons)
 		{
 			// TODO: use xml file instead

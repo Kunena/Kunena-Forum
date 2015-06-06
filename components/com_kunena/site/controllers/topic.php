@@ -492,16 +492,13 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		// Check max links in message to check spam
-		$http = substr_count($text, "http");
- 		$href = substr_count($text, "href");
- 		$url = substr_count($text, "[url");
+		$maxlinks = $this->checkMaxLinks($text, $topic);
 
-		$countlink = $http += $href += $url;
-
-		if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
+		if (!$maxlinks )
+		{
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
 			$this->setRedirectBack();
+
 			return;
 		}
 
@@ -740,16 +737,13 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		// Check max links in message to check spam
-		$http = substr_count($text, "http");
- 		$href = substr_count($text, "href");
- 		$url = substr_count($text, "[url");
+		$maxlinks = $this->checkMaxLinks($text, $topic);
 
-		$countlink = $http += $href += $url;
-
-		if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
+		if (!$maxlinks )
+		{
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
 			$this->setRedirectBack();
+
 			return;
 		}
 
@@ -862,6 +856,49 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$this->setRedirect($message->getUrl($this->return, false));
+	}
+
+	/**
+	 * Check in the text the max links
+	 *
+	 * @return void;
+	 */
+	protected function checkMaxLinks($text, $topic)
+	{
+		preg_match_all('/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', $text, $ebay_matches);
+
+		$ignore = false;
+		foreach($ebay_matches as $match)
+		{
+			if ( !empty($match) ) {
+				$ignore = true;
+			}
+		}
+
+		preg_match_all('/<div id=\"kunena_twitter_widget\"(.*?)>(.*?)<\/div>/s', $text, $twitter_matches);
+
+		foreach($twitter_matches as $match)
+		{
+			if ( !empty($match) ) {
+				$ignore = true;
+			}
+		}
+
+		if ( !$ignore )
+		{
+			// Check max links in message to check spam
+			$http = substr_count($text, "http");
+			$href = substr_count($text, "href");
+			$url = substr_count($text, "[url");
+
+			$countlink = $http += $href += $url;
+
+			if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public function thankyou()

@@ -13,23 +13,49 @@ jQuery(document).ready(function() {
 	if ( jQuery( '#kurl_users' ).length > 0 ) {
 		var users_url = jQuery( '#kurl_users' ).val();
 
-		jQuery('#kusersearch').atwho({
-			at: "",
-			tpl: '<li data-value="${username}"><i class="icon-user"></i> ${username} <small>(${name})</small></li>',
-			limit: 7,
-			callbacks: {
-				remote_filter: function(query, callback)  {
-					jQuery.ajax({
-						url: users_url,
-						data: {
-							search : query
-						},
-						success: function(data) {
-							callback(data.names);
-						}
+		var NameObjs = {};
+		var UserNames = [];
+
+		jQuery("#kusersearch").typeahead({
+			source: function ( query, process ) {
+
+			jQuery.ajax({
+				url: users_url
+				,cache: false
+				,success: function(data){
+					//reset these containers every time the user searches
+					//because we're potentially getting entirely different results from the api
+					NameObjs = {};
+					UserNames = [];
+					
+					jQuery.each( data, function( index, item ){
+
+						//for each iteration of this loop the "item" argument contains
+						//1 user object from the array in our json, such as:
+						// { "id":7, "name":"Pierce Brosnan" }
+
+						//add the label to the display array
+						UserNames.push( item.name );
+
+						//also store a hashmap so that when bootstrap gives us the selected
+						//name we can map that back to an id value
+						NameObjs[ item.name ] = item;
 					});
+
+					//send the array of results to bootstrap for display
+					process( UserNames );
 				}
+			});
+
 			}
+			,highlighter: function( item ){
+				var user = NameObjs[ item ];
+				
+				return '<div class="bond">'
+					+'<img src="' + user.photo + '" title="" />'
+					+'<br/><strong>' + user.name + '</strong>'
+					+'</div>';
+				}
 		});
 	}
 
@@ -37,6 +63,5 @@ jQuery(document).ready(function() {
 	if ( jQuery('#kunena_search_results').is(':visible') ) {
 		jQuery('#search').collapse("hide");
 	}
-
 });
 

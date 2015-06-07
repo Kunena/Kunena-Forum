@@ -1328,7 +1328,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Check if captcha is allowed
+	 * Check if captcha is allowed for guests users or registered users
 	 *
 	 * @return boolean
 	 */
@@ -1336,20 +1336,17 @@ class KunenaUser extends JObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ( $this->isModerator() )
+		if ( !$this->exists() && $config->captcha == 1 )
 		{
-			return false;
+			return true;
 		}
 
-		if ( $this->exists() && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+		if ( $this->exists() && $config->captcha >= 0 && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
 		{
 			return true;
 		}
-		else if ( !$this->exists() && $config->captcha )
-		{
-			return true;
-		}
-		else
+
+		if ( $config->captcha == '-1' )
 		{
 			return false;
 		}

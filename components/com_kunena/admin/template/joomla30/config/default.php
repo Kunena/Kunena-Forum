@@ -708,9 +708,9 @@ if (version_compare(JVERSION, '3.2', '>'))
 											</thead>
 											<tbody>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_TITLE') ?></td>
 												<td><?php echo $this->lists ['captcha'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS_DESC') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT') ?></td>

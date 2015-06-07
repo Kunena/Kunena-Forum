@@ -336,56 +336,59 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
-		if ( $template->kversion >= 4.0)
+		if ( $this->me->canDoCaptcha() )
 		{
-			if (JPluginHelper::isEnabled('captcha') && $this->config->captcha)
+			if ( $template->kversion >= 4.0)
 			{
-				$plugin = JPluginHelper::getPlugin('captcha');
-				$params = new JRegistry($plugin[0]->params);
-
-				$captcha_pubkey = $params->get('public_key');
-				$catcha_privkey = $params->get('private_key');
-
-				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+				if (JPluginHelper::isEnabled('captcha'))
 				{
-					JPluginHelper::importPlugin('captcha');
-					$dispatcher = JDispatcher::getInstance();
+					$plugin = JPluginHelper::getPlugin('captcha');
+					$params = new JRegistry($plugin[0]->params);
 
-					$captcha_response = $this->app->input->getString('g-recaptcha-response');
+					$captcha_pubkey = $params->get('public_key');
+					$catcha_privkey = $params->get('private_key');
 
-					if ( !empty($captcha_response) )
+					if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 					{
-						// For ReCaptcha API 2.0
-						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
-					}
-					else
-					{
-						// For ReCaptcha API 1.0
-						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
-					}
+						JPluginHelper::importPlugin('captcha');
+						$dispatcher = JDispatcher::getInstance();
 
-					if (!$res[0]) {
+						$captcha_response = $this->app->input->getString('g-recaptcha-response');
+
+						if ( !empty($captcha_response) )
+						{
+							// For ReCaptcha API 2.0
+							$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
+						}
+						else
+						{
+							// For ReCaptcha API 1.0
+							$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+						}
+
+						if (!$res[0]) {
+							$this->setRedirectBack();
+
+							return;
+						}
+					}
+				}
+			}
+			else
+			{
+				$captcha = KunenaSpamRecaptcha::getInstance();
+
+				if ($captcha->enabled())
+				{
+					$success = $captcha->verify();
+
+					if (!$success)
+					{
+						$this->app->enqueueMessage($captcha->getError(), 'error');
 						$this->setRedirectBack();
 
 						return;
 					}
-				}
-			}
-		}
-		else
-		{
-			$captcha = KunenaSpamRecaptcha::getInstance();
-
-			if ($captcha->enabled())
-			{
-				$success = $captcha->verify();
-
-				if (!$success)
-				{
-					$this->app->enqueueMessage($captcha->getError(), 'error');
-					$this->setRedirectBack();
-
-					return;
 				}
 			}
 		}

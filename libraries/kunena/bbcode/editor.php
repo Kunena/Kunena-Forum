@@ -605,6 +605,42 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 						{name:'Super Bigger', openWith:'[size=6]', closeWith:'[/size]' }
 						]}";
 					}
+					elseif ($action['name'] == "videodropdownbutton")
+					{
+						$js = "{name:'Video', className: 'videodropdownbutton', dropMenu: [{name: '" . $action['class'] . "', className: '" . $action['class'] . "', beforeInsert:function() {
+							jQuery('#videosettings-modal-submit').click(function(event) {
+								event.preventDefault();
+
+								jQuery('#modal-video-settings').modal('hide');
+							});
+
+							jQuery('#modal-video-settings').modal(
+								{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+									dialog.overlay.fadeIn('slow', function () {
+										dialog.container.slideDown('slow', function () {
+											dialog.data.fadeIn('slow');
+										});
+									});
+								}});
+							} },
+						{name: 'Video Provider URL', className: 'videoURLbutton', beforeInsert:function() {
+							jQuery('#videourlprovider-modal-submit').click(function(event) {
+								event.preventDefault();
+
+								jQuery('#modal-video-urlprovider').modal('hide');
+							});
+
+							jQuery('#modal-video-urlprovider').modal(
+								{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+									dialog.overlay.fadeIn('slow', function () {
+										dialog.container.slideDown('slow', function () {
+											dialog.data.fadeIn('slow');
+										});
+									});
+								}});
+							} }
+						]}";
+					}
 					elseif ($action['name'] == "Colors")
 					{
 						$js = "{className: '" . $action['class'] . "', name:'" . $action['name'] . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',dropMenu: [
@@ -725,6 +761,10 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 			$item['after'] = $after;
 		}
 
+		$item['start'] = $start;
+		$item['end'] = $end;
+		$item['name'] = $this->class;
+		$item['class'] = $this->class;
 		$item['tag'] = $tag;
 
 		$this->actions[] = $item;

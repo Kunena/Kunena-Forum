@@ -158,16 +158,13 @@
 		<wrap-selection class="ebaybutton" key="E" start="[ebay]" end="[/ebay]" />
 	</button>
 	<button tag="video" name="video" config="showvideotag" title="COM_KUNENA_EDITOR_VIDEO" alt="COM_KUNENA_EDITOR_HELPLINE_VIDEO">
-		<modal name="" class="videourlprovider" />
+		<dropdown name="videodropdownbutton" class="videourlprovider" />
 	</button>
 	<button tag="map" name="map" title="COM_KUNENA_EDITOR_VIDEO" alt="COM_KUNENA_EDITOR_HELPLINE_VIDEO">
 		<modal name="map" class="mapbutton" />
 	</button>
 	<button tag="poll-settings" name="poll-settings" title="COM_KUNENA_EDITOR_MAP" alt="COM_KUNENA_EDITOR_HELPLINE_MAP">
 		<modal name="poll-settings" class="pollbutton" />
-	</button>
-	<button tag="url" name="link" title="COM_KUNENA_EDITOR_LINK" alt="COM_KUNENA_EDITOR_HELPLINE_LINK">
-		<modal class="linkbutton" />
 	</button>
 	<button tag="tweet" name="tweet" title="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK" alt="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK">
 		<wrap-selection class="tweetbutton"

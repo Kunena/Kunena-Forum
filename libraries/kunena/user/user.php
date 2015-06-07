@@ -1341,9 +1341,12 @@ class KunenaUser extends JObject
 			return true;
 		}
 
-		if ( $this->exists() && $config->captcha >= 0 && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+		if ( $this->exists() && !$this->isModerator() && $config->captcha >= 0)
 		{
-			return true;
+			if ($config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+			{
+				return true;
+			}
 		}
 
 		if ( $config->captcha == '-1' )

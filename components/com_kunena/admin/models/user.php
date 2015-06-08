@@ -82,7 +82,6 @@ class KunenaAdminModelUser extends KunenaModel
 
 	public function getCatsubcriptions()
 	{
-		$db     = JFactory::getDBO();
 		$userid = $this->getState($this->getName() . '.id');
 
 		$subscatslist = KunenaForumCategoryHelper::getSubscriptions($userid);

@@ -47,12 +47,6 @@ class KunenaViewInstall extends JViewLegacy
 
 		JRequest::setVar('hidemainmenu', 1);
 
-		// Joomla 2.5 support
-		if ($layout == 'default' && !$tpl && version_compare(JVERSION, '3.0', '<'))
-		{
-			$tpl = 'j25';
-		}
-
 		parent::display($tpl);
 	}
 

@@ -1,26 +1,34 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Joomla30
+ *
+ * @package       Kunena.Template.Joomla30
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
-class KunenaAdminTemplate30 {
+class KunenaAdminTemplate30
+{
 
-	public function initialize() {
+	public function initialize()
+	{
 		$document = JFactory::getDocument();
-		$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/joomla30/layout.css' );
-		$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/joomla30/styles.css' );
+		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/joomla30/layout.css');
+		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/joomla30/styles.css');
 	}
 
-	public function getTemplatePaths($path = '', $fullpath = false) {
-		if ($path) $path = JPath::clean("/$path");
-		$array = array();
-		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE).'/template/joomla30'.$path;
+	public function getTemplatePaths($path = '', $fullpath = false)
+	{
+		if ($path)
+		{
+			$path = KunenaPath::clean("/$path");
+		}
+
+		$array   = array();
+		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE) . '/template/joomla30' . $path;
 
 		return $array;
 	}
@@ -28,7 +36,7 @@ class KunenaAdminTemplate30 {
 	/**
 	 * Renders an item in the pagination block
 	 *
-	 * @param   JPaginationObject  $item  The current pagination object
+	 * @param   JPaginationObject $item The current pagination object
 	 *
 	 * @return  string  HTML markup for active item
 	 *
@@ -37,7 +45,8 @@ class KunenaAdminTemplate30 {
 	public function paginationItem(JPaginationObject $item)
 	{
 		// Special cases for "Start", "Prev", "Next", "End".
-		switch ($item->text) {
+		switch ($item->text)
+		{
 			case JText::_('JLIB_HTML_START') :
 				$display = '<i class="icon-first"></i>';
 				break;
@@ -55,14 +64,16 @@ class KunenaAdminTemplate30 {
 		}
 
 		// Check if the item can be clicked.
-		if (!is_null($item->base)) {
+		if (!is_null($item->base))
+		{
 			$limit = 'limitstart.value=' . (int) $item->base;
 
 			return '<li><a href="#" title="' . $item->text . '" onclick="document.adminForm.' . $item->prefix . $limit . '; Joomla.submitform();return false;">' . $display . '</a></li>';
 		}
 
 		// Check if the item is the active (or current) page.
-		if (!empty($item->active)) {
+		if (!empty($item->active))
+		{
 			return '<li class="active"><a>' . $display . '</a></li>';
 		}
 

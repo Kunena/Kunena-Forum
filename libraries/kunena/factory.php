@@ -12,7 +12,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaFactory
  */
-abstract class KunenaFactory {
+abstract class KunenaFactory
+{
 	static $session = null;
 
 	/**
@@ -22,7 +23,8 @@ abstract class KunenaFactory {
 	 *
 	 * @return KunenaConfig
 	 */
-	public static function getConfig() {
+	public static function getConfig()
+	{
 		return KunenaConfig::getInstance();
 	}
 
@@ -34,10 +36,10 @@ abstract class KunenaFactory {
 	 * @param	string	$name
 	 * @return KunenaTemplate
 	 */
-	public static function getTemplate($name = null) {
+	public static function getTemplate($name = null)
+	{
 		return KunenaTemplate::getInstance($name);
 	}
-
 
 	/**
 	 * Get a Kunena template object
@@ -46,16 +48,21 @@ abstract class KunenaFactory {
 	 *
 	 * @return KunenaTemplate
 	 */
-	public static function getAdminTemplate() {
-		if (version_compare(JVERSION, '3.0', '>')) {
+	public static function getAdminTemplate()
+	{
+		if (version_compare(JVERSION, '3.0', '>'))
+		{
 			// Joomla 3.0+ template:
 			require_once KPATH_ADMIN.'/template/joomla30/template.php';
 			$template = new KunenaAdminTemplate30;
-		} else {
+		}
+		else
+		{
 			// Joomla 2.5 template:
 			require_once KPATH_ADMIN.'/template/joomla25/template.php';
 			$template = new KunenaAdminTemplate25;
 		}
+
 		return $template;
 	}
 
@@ -69,7 +76,8 @@ abstract class KunenaFactory {
 	 *
 	 * @return KunenaUser
 	 */
-	public static function getUser($id = null, $reload = false) {
+	public static function getUser($id = null, $reload = false)
+	{
 		return KunenaUserHelper::get($id, $reload);
 	}
 
@@ -81,10 +89,13 @@ abstract class KunenaFactory {
 	 * @param array|bool $update	An array containing session options
 	 * @return KunenaSession
 	 */
-	public static function getSession($update = false) {
-		if (!is_object(KunenaFactory::$session)) {
+	public static function getSession($update = false)
+	{
+		if (!is_object(KunenaFactory::$session))
+		{
 			KunenaFactory::$session = KunenaSession::getInstance($update);
 		}
+
 		return KunenaFactory::$session;
 	}
 
@@ -95,7 +106,8 @@ abstract class KunenaFactory {
 	 *
 	 * @return KunenaAvatar
 	 */
-	public static function getAvatarIntegration() {
+	public static function getAvatarIntegration()
+	{
 		return KunenaAvatar::getInstance();
 	}
 
@@ -106,7 +118,8 @@ abstract class KunenaFactory {
 	 *
 	 * @return KunenaPrivate
 	 */
-	public static function getPrivateMessaging() {
+	public static function getPrivateMessaging()
+	{
 		return KunenaPrivate::getInstance();
 	}
 
@@ -117,7 +130,8 @@ abstract class KunenaFactory {
 	 *
 	 * @return KunenaIntegrationActivity
 	 */
-	public static function getActivityIntegration() {
+	public static function getActivityIntegration()
+	{
 		return KunenaIntegrationActivity::getInstance();
 	}
 
@@ -128,7 +142,8 @@ abstract class KunenaFactory {
 	 *
 	 * @return KunenaProfile
 	 */
-	public static function getProfile() {
+	public static function getProfile()
+	{
 		return KunenaProfile::getInstance();
 	}
 
@@ -138,36 +153,50 @@ abstract class KunenaFactory {
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
 	 */
-	public static function loadLanguage( $file = 'com_kunena', $client = 'site' ) {
+	public static function loadLanguage( $file = 'com_kunena', $client = 'site' )
+	{
 		static $loaded = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		if ($client == 'site') {
+		if ($client == 'site')
+		{
 			$lookup1 = JPATH_SITE;
 			$lookup2 = KPATH_SITE;
-		} else {
+		}
+		else
+		{
 			$client = 'admin';
 			$lookup1 = JPATH_ADMINISTRATOR;
 			$lookup2 = KPATH_ADMIN;
 		}
-		if (empty($loaded["{$client}/{$file}"])) {
+
+		if (empty($loaded["{$client}/{$file}"]))
+		{
 			$lang = JFactory::getLanguage();
 
 			$english = false;
+
 			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
-					&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')) {
+					&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english'))
+			{
 				$lang->load($file, $lookup2, 'en-GB', true, false);
 				$english = true;
 			}
+
 			$loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
 				|| $lang->load($file, $lookup2, null, $english, false);
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		return $loaded[$file];
 }
 
-	protected static function parseLanguage($lang, $filename) {
-		if (!file_exists($filename)) return false;
+	protected static function parseLanguage($lang, $filename)
+	{
+		if (!is_file($filename))
+		{
+			return false;
+		}
 
 		$version = phpversion();
 
@@ -176,15 +205,20 @@ abstract class KunenaFactory {
 		$track_errors = ini_get('track_errors');
 		ini_set('track_errors', true);
 
-		if ($version >= '5.3.1') {
+		if ($version >= '5.3.1')
+		{
 			$contents = file_get_contents($filename);
 			$contents = str_replace('_QQ_', '"\""', $contents);
 			$strings = @parse_ini_string($contents);
-		} else {
+		}
+		else
+		{
 			$strings = @parse_ini_file($filename);
 
-			if ($version == '5.3.0' && is_array($strings)) {
-				foreach ($strings as $key => $string) {
+			if ($version == '5.3.0' && is_array($strings))
+			{
+				foreach ($strings as $key => $string)
+				{
 					$strings[$key] = str_replace('_QQ_', '"', $string);
 				}
 			}
@@ -193,11 +227,13 @@ abstract class KunenaFactory {
 		// Restore error tracking to what it was before.
 		ini_set('track_errors', $track_errors);
 
-		if (!is_array($strings)) {
+		if (!is_array($strings))
+		{
 			$strings = array();
 		}
 
 		$lang->_strings = array_merge($lang->_strings, $strings);
+
 		return !empty($strings);
 	}
 }

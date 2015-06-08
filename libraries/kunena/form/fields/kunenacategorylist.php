@@ -15,14 +15,17 @@ jimport('joomla.form.formfield');
 /**
  * Class JFormFieldKunenaCategoryList
  */
-class JFormFieldKunenaCategoryList extends JFormField {
+class JFormFieldKunenaCategoryList extends JFormField
+{
 	protected $type = 'KunenaCategoryList';
 
-    /**
-     * @return string
-     */
-    protected function getInput() {
-		if (!class_exists('KunenaForum') || !KunenaForum::installed()) {
+	/**
+	* @return string
+	*/
+	protected function getInput()
+	{
+		if (!class_exists('KunenaForum') || !KunenaForum::installed())
+		{
 			echo '<a href="index.php?option=com_kunena">PLEASE COMPLETE KUNENA INSTALLATION</a>';
 			return '';
 		}
@@ -33,14 +36,21 @@ class JFormFieldKunenaCategoryList extends JFormField {
 		$class = $this->element['class'];
 
 		$attribs = ' ';
-		if ($size) {
+
+		if ($size)
+		{
 			$attribs .= 'size="' . $size . '"';
 		}
-		if ($class) {
+
+		if ($class)
+		{
 			$attribs .= 'class="' . $class . '"';
-		} else {
+		}
+		else
+		{
 			$attribs .= 'class="inputbox"';
 		}
+
 		if (!empty($this->element['multiple'])) {
 			$attribs .= ' multiple="multiple"';
 		}
@@ -62,10 +72,12 @@ class JFormFieldKunenaCategoryList extends JFormField {
 		// Initialize variables.
 		$options = array();
 
-		foreach ($this->element->children() as $option) {
+		foreach ($this->element->children() as $option)
+		{
 
 			// Only add <option /> elements.
-			if ($option->getName() != 'option') {
+			if ($option->getName() != 'option')
+			{
 				continue;
 			}
 

@@ -21,6 +21,7 @@ if ($this->saveOrder) {
 	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', $this->listDirection, $this->saveOrderingUrl, false, true);
 }
 
+$filterItem = $this->escape($this->state->get('item.id'));
 ?>
 
 <script type="text/javascript">
@@ -46,6 +47,7 @@ if ($this->saveOrder) {
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>" method="post" name="adminForm" id="adminForm">
 			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="catid" value="<?php echo $filterItem; ?>" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>" />
@@ -78,6 +80,14 @@ if ($this->saveOrder) {
 						<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 					</select>
 				</div>
+				<!-- TODO: not implemented
+				<div class="btn-group pull-right">
+					<label for="sortTable" class="element-invisible"><?php //echo JText::_('JGLOBAL_SORT_BY');?></label>
+					<select name="levellimit" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+						<option value=""><?php //echo JText::_('JOPTION_SELECT_MAX_LEVELS');?></option>
+						<?php //echo JHtml::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
+					</select>
+				</div>-->
 				<div class="clearfix"></div>
 			</div>
 
@@ -92,6 +102,9 @@ if ($this->saveOrder) {
 						</th>
 						<th width="5%" class="nowrap center">
 							<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
+						</th>
+						<th class="nowrap">
+							<?php echo JText::_('COM_KUNENA_GO'); ?>
 						</th>
 						<th class="nowrap">
 							<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
@@ -126,6 +139,8 @@ if ($this->saveOrder) {
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 								<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
 							</select>
+						</td>
+						<td>
 						</td>
 						<td class="nowrap">
 							<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
@@ -234,7 +249,18 @@ if ($this->saveOrder) {
 							<?php echo JHtml::_('grid.id', $i, (int) $item->id); ?>
 						</td>
 						<td class="center">
-							<?php echo JHtml::_('jgrid.published', (bool) $item->published, $i, '','cb'); ?>
+							<?php echo JHtml::_('jgrid.published', $item->published, $i, '','cb'); ?>
+						</td>
+						<td class="center">
+							<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id)) : ?>
+								<button class="btn btn-micro" title="Display only this item and its children" onclick="jQuery('input[name=catid]').val(<?php echo $item->id ?>);this.form.submit()">
+									<i class="icon-location"></i>
+								</button>
+							<?php else : ?>
+								<button class="btn btn-micro" title="Display only this item and its children" onclick="jQuery('input[name=catid]').val(<?php echo $item->parent_id ?>);this.form.submit()">
+									<i class="icon-arrow-up"></i>
+								</button>
+							<?php endif; ?>
 						</td>
 						<td class="has-context">
 							<?php
@@ -253,7 +279,7 @@ if ($this->saveOrder) {
 							</small>
 						</td>
 						<td class="center hidden-phone">
-							<span><?php echo $this->escape($item->accessname); ?></span>
+							<span><?php echo $item->accessname; ?></span>
 							<small>
 								<?php echo JText::sprintf('(Access: %s)', $this->escape( $item->accesstype ));?>
 							</small>

@@ -28,12 +28,12 @@ $template->addScript ( 'js/default.js' );
 $rtl = JFactory::getLanguage()->isRTL();
 $skinner = $template->params->get('enableSkinner', 0);
 
-if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css" )) {
+if (is_file(JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css")) {
 	// Load css from Joomla template
 	CKunenaTools::addStyleSheet ( JUri::root(true). "/templates/{$app->getTemplate()}/css/kunena.forum.css" );
-	if ($skinner && file_exists ( JPATH_ROOT. "/templates/{$app->getTemplate()}/css/kunena.skinner.css" )){
+	if ($skinner && is_file(JPATH_ROOT. "/templates/{$app->getTemplate()}/css/kunena.skinner.css")){
 		CKunenaTools::addStyleSheet ( JUri::root(true). "/templates/{$app->getTemplate()}/css/kunena.skinner.css" );
-	} elseif (!$skinner && file_exists ( JPATH_ROOT. "/templates/{$app->getTemplate()}/css/kunena.default.css" )) {
+	} elseif (!$skinner && is_file(JPATH_ROOT. "/templates/{$app->getTemplate()}/css/kunena.default.css")) {
 		CKunenaTools::addStyleSheet ( JUri::root(true). "/templates/{$app->getTemplate()}/css/kunena.default.css" );
 	}
 } else {

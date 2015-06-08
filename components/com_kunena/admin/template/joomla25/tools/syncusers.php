@@ -44,6 +44,11 @@ defined ( '_JEXEC' ) or die ();
 									<td><input type="checkbox" name="userrename" value="1" /></td>
 									<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME_DESC'); ?></td>
 								</tr>
+								<tr>
+									<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DELLIFE'); ?></td>
+									<td><input type="checkbox" name="userdellife" value="1" /></td>
+									<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DELLIFE_DESC'); ?></td>
+								</tr>
 							</table>
 						</fieldset>
 					</form>

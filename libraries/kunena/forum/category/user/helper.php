@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaForumCategoryUserHelper
  */
-abstract class KunenaForumCategoryUserHelper {
+abstract class KunenaForumCategoryUserHelper
+{
 	// Global for every instance
 	protected static $_instances = array();
 
@@ -26,17 +27,23 @@ abstract class KunenaForumCategoryUserHelper {
 	 *
 	 * @return KunenaForumCategoryUser	The user category object.
 	 */
-	static public function get($category = null, $user = null, $reload = false) {
-		if ($category instanceof KunenaForumCategory) {
+	static public function get($category = null, $user = null, $reload = false)
+	{
+		if ($category instanceof KunenaForumCategory)
+		{
 			$category = $category->id;
 		}
+
 		$category = intval ( $category );
 		$user = KunenaUserHelper::get($user);
 
 		if ($category === null)
+		{
 			return new KunenaForumCategoryUser (null, $user);
+		}
 
-		if ($reload || empty ( self::$_instances [$user->userid][$category] )) {
+		if ($reload || empty ( self::$_instances [$user->userid][$category] ))
+		{
 			$user_categories = KunenaForumCategoryUserHelper::getCategories ( $category, $user );
 			self::$_instances [$user->userid][$category] = array_pop( $user_categories );
 		}
@@ -52,29 +59,86 @@ abstract class KunenaForumCategoryUserHelper {
 	 *
 	 * @return KunenaForumCategoryUser[]
 	 */
-	static public function getCategories($ids = false, $user=null) {
+	static public function getCategories($ids = false, $user = null)
+	{
 		$user = KunenaUserHelper::get($user);
-		if ($ids === false) {
+
+		if ($ids === false)
+		{
 			// Get categories which are seen by current user
 			$ids = KunenaForumCategoryHelper::getCategories();
-		} elseif (!is_array ($ids) ) {
+		}
+		elseif (!is_array ($ids) )
+		{
 			$ids = array($ids);
 		}
+
 		// Convert category objects into ids
-		foreach ($ids as $i=>$id) {
+		foreach ($ids as $i => $id)
+		{
 			if ($id instanceof KunenaForumCategory) $ids[$i] = $id->id;
 		}
+
 		$ids = array_unique($ids);
 		self::loadCategories($ids, $user);
 
 		$list = array ();
-		foreach ( $ids as $id ) {
+		foreach ( $ids as $id )
+		{
 			if (!empty(self::$_instances [$user->userid][$id])) {
 				$list [$id] = self::$_instances [$user->userid][$id];
 			}
 		}
 
 		return $list;
+	}
+
+	static public function markRead(array $ids, $user = null)
+	{
+		$user = KunenaUserHelper::get($user);
+
+		$items = KunenaForumCategoryUserHelper::getCategories($ids, $user);
+		$updateList = array();
+		$insertList = array();
+
+		$db = JFactory::getDbo();
+		$time = JFactory::getDate()->toUnix();
+
+		foreach ($items as $item)
+		{
+			if ($item->exists())
+			{
+				$updateList[] = (int) $item->category_id;
+			}
+			else
+			{
+				$insertList[] = "{$db->quote($user->userid)}, {$db->quote($item->category_id)}, {$db->quote($time)}";
+			}
+		}
+
+		if ($updateList)
+		{
+			$idlist = implode(',', $updateList);
+			$query = $db->getQuery(true);
+			$query
+				->update('#__kunena_user_categories')
+				->set("allreadtime={$db->quote($time)}")
+				->where("user_id={$db->quote($user->userid)}")
+				->where("category_id IN ({$idlist})");
+			$db->setQuery($query);
+			$db->execute();
+		}
+
+		if ($insertList)
+		{
+			$query = $db->getQuery(true);
+			$query
+				->insert('#__kunena_user_categories')
+				->columns('user_id, category_id, allreadtime')
+				->values($insertList);
+			$db->setQuery($query);
+			$db->execute();
+		}
 	}
 
 	// Internal functions
@@ -85,14 +149,21 @@ abstract class KunenaForumCategoryUserHelper {
 	 * @param array			$ids		The category ids to load.
 	 * @param KunenaUser	$user
 	 */
-	static protected function loadCategories(array $ids, KunenaUser $user) {
-		foreach ($ids as $i=>$id) {
+	static protected function loadCategories(array $ids, KunenaUser $user)
+	{
+		foreach ($ids as $i => $id)
+		{
 			$iid = intval($id);
 			if ($iid != $id || isset(self::$_instances [$user->userid][$id]))
+			{
 				unset($ids[$i]);
+			}
 		}
+
 		if (empty($ids))
+		{
 			return;
+		}
 
 		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO ();
@@ -101,16 +172,21 @@ abstract class KunenaForumCategoryUserHelper {
 		$results = (array) $db->loadAssocList ('category_id');
 		KunenaError::checkDatabaseError ();
 
-		foreach ( $ids as $id ) {
-			if (isset($results[$id])) {
+		foreach ( $ids as $id )
+		{
+			if (isset($results[$id]))
+			{
 				$instance = new KunenaForumCategoryUser ();
 				$instance->bind ( $results[$id] );
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = $instance;
-			} else {
+			}
+			else
+			{
 				self::$_instances [$user->userid][$id] = new KunenaForumCategoryUser ($id, $user);
 			}
 		}
+
 		unset ($results);
 	}
 }

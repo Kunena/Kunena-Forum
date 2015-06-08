@@ -13,234 +13,1161 @@
  * @link http://www.bestofjoomla.com
  **/
 
-// Dont allow direct linking
+// Do not allow direct linking
 defined ( '_JEXEC' ) or die ();
 
 /**
  * Class KunenaConfig
  */
-class KunenaConfig extends JObject {
+class KunenaConfig extends JObject
+{
 
-	// New in Kunena 1.5.2: $id for JoomFish support
+	/**
+	 * @var    integer  ID; input, hidden
+	 * @since  1.5.2
+	 */
 	public $id = 0;
+
+	/**
+	 * @var    string  Board Title; input, text
+	 * @since  1.0.0
+	 */
 	public $board_title = 'Kunena';
+
+	/**
+	 * @var    string  Email; input, email
+	 * @since  1.0.0
+	 */
 	public $email = '';
+
+	/**
+	 * @var    integer  Board offline; select, boolean
+	 * @since  1.0.0
+	 */
 	public $board_offline = 0;
+
+	/**
+	 * @var    string  Offline message; input, text
+	 * @since  1.0.0
+	 */
 	public $offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
+
+	/**
+	 * @var    integer Enable RSS; select, boolean
+	 * @since  1.0.0
+	 */
 	public $enablerss = 1;
+
+	/**
+	 * @var    integer	Threads per page; input, number
+	 * @since  1.0.0
+	 */
 	public $threads_per_page = 20;
+
+	/**
+	 * @var    integer  Messages per page; input, number
+	 * @since  1.0.0
+	 */
 	public $messages_per_page = 6;
+
+	/**
+	 * @var    integer  Messages per page search; input, number
+	 * @since  1.0.0
+	 */
 	public $messages_per_page_search = 15;
+
+	/**
+	 * @var    integer  Show history; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showhistory = 1;
+
+	/**
+	 * @var    integer  History limit; input, number
+	 * @since  1.0.0
+	 */
 	public $historylimit = 6;
+
+	/**
+	 * @var    integer  Show new; select, boolean
+	 * @since  1.0.0
+	 */
 	public $shownew = 1;
+
+	/**
+	 * @var    integer  Disable emoticons; select, boolean
+	 * @since  1.0.0
+	 */
 	public $disemoticons = 0;
+
+	/**
+	 * @var    string  Template; input, hidden
+	 * @since  1.0.0
+	 */
 	public $template = 'blue_eagle';
+
+	/**
+	 * @var    integer  Show announcement; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showannouncement = 1;
+
+	/**
+	 * @var    integer  Avatar on category; select, boolean
+	 * @since  1.0.0
+	 */
 	public $avataroncat = 0;
+
+	/**
+	 * @var    string  Category image path; input, text
+	 * @since  1.0.0
+	 */
 	public $catimagepath = 'category_images';
+
+	/**
+	 * @var    integer  Show child category icon; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showchildcaticon = 1;
+
+	/**
+	 * @var    integer  Text area width; input, number
+	 * @since  1.0.0
+	 */
 	public $rtewidth = 450;
+
+	/**
+	 * @var    integer  Text area height; input, number
+	 * @since  1.0.0
+	 */
 	public $rteheight = 300;
+
+	/**
+	 * @var    integer  Enable forum jump; select, boolean
+	 * @since  1.0.0
+	 */
 	public $enableforumjump = 1;
+
+	/**
+	 * @var    integer  Report message; select, boolean
+	 * @since  1.0.0
+	 */
 	public $reportmsg = 1;
+
+	/**
+	 * @var    integer  Username; select, boolean
+	 * @since  1.0.0
+	 */
 	public $username = 1;
+
+	/**
+	 * @var    integer  Ask email; select, boolean
+	 * @since  1.0.0
+	 */
 	public $askemail = 0;
+
+	/**
+	 * @var    integer  Show email; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showemail = 0;
+
+	/**
+	 * @var    integer  Show user statistics; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showuserstats = 1;
+
+	/**
+	 * @var    integer  Show karma; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showkarma = 1;
+
+	/**
+	 * @var    integer  User edit; select, boolean
+	 * @since  1.0.0
+	 */
 	public $useredit = 1;
+
+	/**
+	 * @var    integer  User edit time; input, number
+	 * @since  1.0.0
+	 */
 	public $useredittime = 0;
-	public $useredittimegrace = 600;
+
+	/**
+	 * @var    integer  User edit time Grace; input, number
+	 * @since  1.0.0
+	 */
+	public $useredittimegrace = 600; // input, number, time
+
+	/**
+	 * @var    integer  Edit markup; select, boolean
+	 * @since  1.0.0
+	 */
 	public $editmarkup = 1;
+
+	/**
+	 * @var    integer  Allow subscriptions; select, boolean
+	 * @since  1.0.0
+	 */
 	public $allowsubscriptions = 1;
+
+	/**
+	 * @var    integer  Subscriptions Checked; select, boolean
+	 * @since  1.0.0
+	 */
 	public $subscriptionschecked = 1;
+
+	/**
+	 * @var    integer  Allow favorites; select, boolean
+	 * @since  1.0.0
+	 */
 	public $allowfavorites = 1;
+
+	/**
+	 * @var    integer  Max subject; input, number
+	 * @since  1.0.0
+	 */
 	public $maxsubject = 50;
+
+	/**
+	 * @var    integer  Max signature length; input, number
+	 * @since  1.0.0
+	 */
 	public $maxsig = 300;
+
+	/**
+	 * @var    integer  Registered users only
+	 * @since  1.0.0
+	 */
 	public $regonly = 0;
+
+	/**
+	 * @var    integer  Public write; select, boolean
+	 * @since  1.0.0
+	 */
 	public $pubwrite = 0;
+
+	/**
+	 * @var    integer  Flood projection; select, boolean
+	 * @since  1.0.0
+	 */
 	public $floodprotection = 0;
+
+	/**
+	 * @var    integer  Mail moderators
+	 * @since  1.0.0
+	 */
 	public $mailmod = 0;
+
+	/**
+	 * @var    integer  Mail admin
+	 * @since  1.0.0
+	 */
 	public $mailadmin = 0;
+
+	/**
+	 * @var    integer  CAPTCHA
+	 * @since  1.0.0
+	 */
 	public $captcha = 0;
+
+	/**
+	 * @var    integer  Mail full; select, selection
+	 * @since  1.0.0
+	 */
 	public $mailfull = 1;
+
+	/**
+	 * @var    integer  Allow avatar upload; select, boolean
+	 * @since  1.0.0
+	 */
 	public $allowavatarupload = 1;
+
+	/**
+	 * @var    integer  Allow avatar gallery; select, boolean
+	 * @since  1.0.0
+	 */
 	public $allowavatargallery = 1;
+
+	/**
+	 * @var    integer  Avatar quality; input, number
+	 * @since  1.0.0
+	 */
 	public $avatarquality = 75;
+
+	/**
+	 * @var    integer  Avatar size; input, number
+	 * @since  1.0.0
+	 */
 	public $avatarsize = 2048;
+
+	/**
+	 * @var    integer  Image height; input, number
+	 * @since  1.0.0
+	 */
 	public $imageheight = 800;
-	public $imagewidth = 800;
+
+	/**
+	 * @var    integer  Image width; input, number
+	 * @since  1.0.0
+	 */
+	public $imagewidth = 800; // input, number
+
+	/**
+	 * @var    integer  Image size
+	 * @since  1.0.0
+	 */
 	public $imagesize = 150;
+
+	/**
+	 * @var    string  File types; input, text
+	 * @since  1.0.0
+	 */
 	public $filetypes = 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2';
+
+	/**
+	 * @var    integer  File size; input, number
+	 * @since  1.0.0
+	 */
 	public $filesize = 120;
+
+	/**
+	 * @var    integer  Show ranking; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showranking = 1;
+
+	/**
+	 * @var    integer  Rank images; select, boolean
+	 * @since  1.0.0
+	 */
 	public $rankimages = 1;
+
+	/**
+	 * @var    integer  User list rows
+	 * @since  1.0.0
+	 */
 	public $userlist_rows = 30;
+
+	/**
+	 * @var    integer  User list online
+	 * @since  1.0.0
+	 */
 	public $userlist_online = 1;
+
+	/**
+	 * @var    integer  user list avatar; select, boolean
+	 * @since  1.0.0
+	 */
 	public $userlist_avatar = 1;
-	public $userlist_name = 1;
+
+	/**
+	 * @var    integer  User list posts; select, boolean
+	 * @since  1.0.0
+	 */
 	public $userlist_posts = 1;
+
+	/**
+	 * @var    integer  User list karma; select, boolean
+	 * @since  1.0.0
+	 */
 	public $userlist_karma = 1;
+
+	/**
+	 * @var    integer  User list email; select, boolean
+	 * @since  1.0.0
+	 */
 	public $userlist_email = 0;
+
+	/**
+	 * @var    integer  User list join date; select, boolean
+	 * @since  1.0.0
+	 */
 	public $userlist_joindate = 1;
+
+	/**
+	 * @var    integer  User list lst visit date; select, boolean
+	 * @since  1.0.0
+	 */
 	public $userlist_lastvisitdate = 1;
+
+	/**
+	 * @var    integer  User list user hits; select, boolean
+	 * @since  1.0.0
+	 */
 	public $userlist_userhits = 1;
+
+	/**
+	 * @var    string  Latest category; select, integer multiple
+	 * @since  1.0.0
+	 */
 	public $latestcategory = '';
+
+	/**
+	 * @var    integer  Show stats; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showstats = 1;
+
+	/**
+	 * @var    integer  Show who is online; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showwhoisonline = 1;
+
+	/**
+	 * @var    integer  Show general statistics; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showgenstats = 1;
+
+	/**
+	 * @var    integer  Show population user statistics; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showpopuserstats = 1;
+
+	/**
+	 * @var    integer  Population user count; input, number
+	 * @since  1.0.0
+	 */
 	public $popusercount = 5;
+
+	/**
+	 * @var    integer  Show population subject statistics; select, boolean
+	 * @since  1.0.0
+	 */
 	public $showpopsubjectstats = 1;
+
+	/**
+	 * @var    integer  Population subject count; input, number
+	 * @since  1.0.0
+	 */
 	public $popsubjectcount = 5;
-	public $usernamechange = 0;
-	// New 1.0.5 config variables
-	// bbcode options
+
+	/**
+	 * @var    integer  Show spoiler tag; select, boolean
+	 * @since  1.0.5
+	 */
 	public $showspoilertag = 1;
+
+	/**
+	 * @var    integer  Show video tag; select, boolean
+	 * @since  1.0.5
+	 */
 	public $showvideotag = 1;
+
+	/**
+	 * @var    integer  Show ebay tag; select, boolean
+	 * @since  1.0.5
+	 */
 	public $showebaytag = 1;
+
+	/**
+	 * @var    integer  Trim long URLs; select, boolean
+	 * @since  1.0.5
+	 */
 	public $trimlongurls = 1;
+
+	/**
+	 * @var    integer  Trim long URLs in front; input, number
+	 * @since  1.0.5
+	 */
 	public $trimlongurlsfront = 40;
+
+	/**
+	 * @var    integer  Trim long URLs in back, input, number
+	 * @since  1.0.5
+	 */
 	public $trimlongurlsback = 20;
+
+	/**
+	 * @var    integer  Auto embed youtube; select, boolean
+	 * @since  1.0.5
+	 */
 	public $autoembedyoutube = 1;
+
+	/**
+	 * @var    integer  Auto embed ebay; select, boolean
+	 * @since  1.0.5
+	 */
 	public $autoembedebay = 1;
-	public $sessiontimeout = 1800; // in seconds
-	// New 1.0.5RC2 config variables
+
+	/**
+	 * @var    string  Ebay language code; input, text
+	 * @since  1.0.5
+	 */
+	public $ebaylanguagecode = 'en-us';
+
+	/**
+	 * @var    integer  Session time out. In seconds; input, number
+	 * @since  1.0.5
+	 */
+	public $sessiontimeout = 1800;
+
+	/**
+	 * @var    integer  Highlight code; select, boolean
+	 * @since  1.0.5RC2
+	 */
 	public $highlightcode = 0;
-	// New 1.6 rss config vars
+
+	/**
+	 * @var    string  RSS type; select, selection
+	 * @since  1.0.6
+	 */
 	public $rss_type = 'topic';
+
+	/**
+	 * @var    string  RSS time limit; select, selection
+	 * @since  1.0.6
+	 */
 	public $rss_timelimit = 'month';
+
+	/**
+	 * @var    integer  RSS limit; input, number
+	 * @since  1.0.6
+	 */
 	public $rss_limit = 100;
+
+	/**
+	 * @var    string  RSS included categories; select, selection
+	 * @since  1.0.6
+	 */
 	public $rss_included_categories = '';
+
+	/**
+	 * @var    string  RSS excluded categories; select, selection
+	 * @since  1.0.6
+	 */
 	public $rss_excluded_categories = '';
+
+	/**
+	 * @var    string  RSS specification; select, selection
+	 * @since  1.0.6
+	 */
 	public $rss_specification = 'rss2.0';
+
+	/**
+	 * @var    integer  RSS allow HTML; select, boolean
+	 * @since  1.0.6
+	 */
 	public $rss_allow_html = 1;
+
+	/**
+	 * @var    string  RSS author format; select, selection
+	 * @since  1.0.6
+	 */
 	public $rss_author_format = 'name';
+
+	/**
+	 * @var    integer  RSS author in title; select, boolean
+	 * @since  1.0.6
+	 */
 	public $rss_author_in_title = 1;
+
+	/**
+	 * @var    string  RSS word count; select, selection
+	 * @since  1.0.6
+	 */
 	public $rss_word_count = '0';
+
+	/**
+	 * @var    integer  RSS old titles; select, boolean
+	 * @since  1.0.6
+	 */
 	public $rss_old_titles = 1;
+
+	/**
+	 * @var    integer  RSS cache; input, selection
+	 * @since  1.0.6
+	 */
 	public $rss_cache = 900;
+
+	/**
+	 * @var    string  Default page; select, selection
+	 * @since  1.0.6
+	 */
 	public $defaultpage = 'recent';
-	// New 1.0.8 config variables
-	public $default_sort = 'asc'; // 'desc' for latest post first
-	// New 1.5.8 config variables
+
+	/**
+	 * @var    string  Default sort.  Description for the latest post first; select, selection
+	 * @since  1.0.8
+	 */
+	public $default_sort = 'asc';
+
+	/**
+	 * @var    integer  Search engine friendly URLs
+	 * @since  1.5.8
+	 */
 	public $sef = 1;
-	// New for 1.6 -> Hide images and files for guests
+
+	/**
+	 * @var    integer  Showing For Guest
+	 * @since  1.6.0
+	 */
 	public $showimgforguest = 1;
+
+	/**
+	 * @var    integer  Show file for guest
+	 * @since  1.6.0
+	 */
 	public $showfileforguest = 1;
-	//New for 1.6 -> Poll
-	public $pollnboptions = 4; //For poll integration, set the number maximum of options
-	public $pollallowvoteone = 1; //For poll integration, set if yes or no the user can vote one or more time for a poll
-	public $pollenabled = 1; //For poll integration, for disable the poll
+
+	/**
+	 * @var    integer  Major version number
+	 * @since  1.6.0
+	 */
+	public $pollnboptions = 4; //For poll integration, set the number maximum of options, input, number
+
+	/**
+	 * @var    integer  Pool allow one ore more time; select, boolean
+	 * @since  1.6.0
+	 */
+	public $pollallowvoteone = 1;
+
+	/**
+	 * @var    integer  Poll enabled.  For poll integration; select, boolean
+	 * @since  1.6.0
+	 */
+	public $pollenabled = 1;
+
+	/**
+	 * @var    integer  Population poll count; input, number
+	 * @since  1.6.0
+	 */
 	public $poppollscount = 5;
+
+	/**
+	 * @var    integer  Show population poll statistics; select, boolean
+	 * @since  1.6.0
+	 */
 	public $showpoppollstats = 1;
+
+	/**
+	 * @var    integer  Poll time by votes; input, time
+	 * @since  1.6.0
+	 */
 	public $polltimebtvotes = '00:15:00';
+
+	/**
+	 * @var    integer  Poll and votes by user; input, number
+	 * @since  1.6.0
+	 */
 	public $pollnbvotesbyuser = 100;
+
+	/**
+	 * @var    integer  Poll result user list; select, boolean
+	 * @since  1.6.0
+	 */
 	public $pollresultsuserslist = 1;
-	// New for 1.6 -> Max length for personnal text
+
+	/**
+	 * @var    integer  Max person text; input, number
+	 * @since  1.6.0
+	 */
 	public $maxpersotext = 50;
-	// New for 1.6 -> Choose ordering system
+
+	/**
+	 * @var    string  Ordering system; select, selection
+	 * @since  1.6.0
+	 */
 	public $ordering_system = 'mesid';
-	// New for 1.6 -> dateformat
-	public $post_dateformat = 'ago'; // See KunenaDate
-	public $post_dateformat_hover = 'datetime'; // See KunenaDate
-	// New for 1.6 -> hide IP
+
+	/**
+	 * @var    string  Post date format; select, selection
+	 * @since  1.6.0
+	 */
+	public $post_dateformat = 'ago';
+
+	/**
+	 * @var    string  Post date format hover; select, selection
+	 * @since  1.6.0
+	 */
+	public $post_dateformat_hover = 'datetime';
+
+	/**
+	 * @var    integer  Hide IP; select, boolean
+	 * @since  1.6.0
+	 */
 	public $hide_ip = 1;
-	// New for 1.6 -> image file types
+
+	/**
+	 * @var    string  Image types; textbox, string
+	 * @since  1.6.0
+	 */
 	public $imagetypes = 'jpg,jpeg,gif,png';
+
+	/**
+	 * @var    integer  Check MIM types; select, boolean
+	 * @since  1.6.0
+	 */
 	public $checkmimetypes = 1;
+
+	/**
+	 * @var    string  Image MIME types; textbox, string
+	 * @since  1.6.0
+	 */
 	public $imagemimetypes = 'image/jpeg,image/jpg,image/gif,image/png';
+
+	/**
+	 * @var    integer  Image quality; input, number
+	 * @since  1.6.0
+	 */
 	public $imagequality = 50;
+
+	/**
+	 * @var    integer  Thumbnail height; input, number
+	 * @since  1.6.0
+	 */
 	public $thumbheight = 32;
+
+	/**
+	 * @var    integer  Thumbnail width; input, number
+	 * @since  1.6.0
+	 */
 	public $thumbwidth = 32;
-	// New for 1.6: hide profile info when user is deleted from joomla!
+
+	/**
+	 * @var    string  Hide user profile info
+	 * @since  1.6.0
+	 */
 	public $hideuserprofileinfo = 'put_empty';
-	//New for 1.6: choose if you want that ghost message box checked by default
+
+	/**
+	 * @var    integer  Box ghost message; select, selection
+	 * @since  1.6.0
+	 */
 	public $boxghostmessage = 0;
+
+	/**
+	 * @var    integer  User delete message; select, selection
+	 * @since  1.6.0
+	 */
 	public $userdeletetmessage = 0;
+
+	/**
+	 * @var    integer  Latest category in; select, boolean
+	 * @since  1.6.0
+	 */
 	public $latestcategory_in = 1;
+
+	/**
+	 * @var    integer  Topic icons; select, boolean
+	 * @since  1.6.0
+	 */
 	public $topicicons = 1;
+
+	/**
+	 * @var    integer  Debug; select, boolean
+	 * @since  1.6.0
+	 */
 	public $debug = 0;
+
+	/**
+	 * @var    integer  Category auto subscribe; select, boolean
+	 * @since  1.6.0
+	 */
 	public $catsautosubscribed = 0;
+
+	/**
+	 * @var    integer  SHow ban reason; select, boolean
+	 * @since  1.6.0
+	 */
 	public $showbannedreason = 0;
-	public $version_check = 1;
-	//New for 1.6: choose if you want a Thank you function
+
+	/**
+	 * @var    integer  Show thank you; select, boolean
+	 * @since  1.6.0
+	 */
 	public $showthankyou = 1;
+
+	/**
+	 * @var    integer  Show population thank you statistics; select, boolean
+	 * @since  1.6.0
+	 */
 	public $showpopthankyoustats = 1;
+
+	/**
+	 * @var    integer  Population thank you count; input, number
+	 * @since  1.6.0
+	 */
 	public $popthankscount = 5;
-	//New for 1.6: choose to allow moderators to see deleted messages
+
+	/**
+	 * @var    integer  Moderators see deleted topics; select, boolean
+	 * @since  1.6.0
+	 */
 	public $mod_see_deleted = 0;
-	//New for 1.6: allow only secure image extensions (jpg/gif/png) in IMG tag
+
+	/**
+	 * @var    string  BBCode image secure.  Allow only secure image extensions (jpg/gif/png); select, selection
+	 * @since  1.6.0
+	 */
 	public $bbcode_img_secure = 'text';
+
+	/**
+	 * @var    integer  List category show moderators; select, boolean
+	 * @since  1.6.0
+	 * @deprecated K4.0 (not used in HMVC)
+	 */
 	public $listcat_show_moderators = 1;
-	//New for 1.6.1: allow the admin to disable lightbox
+
+	/**
+	 * @var    integer  Major version number; select, boolean
+	 * @since  1.6.1
+	 */
 	public $lightbox = 1;
-	//New for 1.6.2: choose the time since which to show the topics
+
+	/**
+	 * @var    integer  Show list time; select, selection
+	 * @since  1.6.1
+	 */
 	public $show_list_time = 720;
-	//New for 1.6.2: configuration option to show online users by minutes or session time
+
+	/**
+	 * @var    integer  Show session type; select, selection
+	 * @since  1.6.1
+	 */
 	public $show_session_type = 2;
+
+	/**
+	 * @var    integer  Show session start time; select, selection
+	 * @since  1.6.1
+	 */
 	public $show_session_starttime = 1800;
-	// New for 1.6.2: configuration option to set all users or only registred users to see userlist
+
+	/**
+	 * @var    integer  User list allowed; select, boolean
+	 * @since  1.6.2
+	 */
 	public $userlist_allowed = 0;
-	// New for 1.6.4
+
+	/**
+	 * @var    integer  User list count users; select, selection
+	 * @since  1.6.4
+	 */
 	public $userlist_count_users = 1;
+
+	/**
+	 * @var    integer  Enable threaded layouts; select, boolean
+	 * @since  1.6.4
+	 */
 	public $enable_threaded_layouts = 0;
+
+	/**
+	 * @var    string  Category subscriptions; select, selection
+	 * @since  1.6.4
+	 */
 	public $category_subscriptions = 'post';
+
+	/**
+	 * @var    string  Topic subscriptions; select, selection
+	 * @since  1.6.4
+	 */
 	public $topic_subscriptions = 'every';
+
+	/**
+	 * @var    integer  Public profile; select, boolean
+	 * @since  1.6.4
+	 */
 	public $pubprofile = 1;
-	// New for 1.6.5
+
+	/**
+	 * @var    integer  Thank you max; input, number
+	 * @since  1.6.5
+	 */
 	public $thankyou_max = 10;
-	// New for 1.6.6
+
+	/**
+	 * @var    integer  Email recipient count; select, integer
+	 * @since  1.6.6
+	 */
 	public $email_recipient_count = 0;
+
+	/**
+	 * @var    string  Email recipient pricing; select, selection
+	 * @since  1.6.6
+	 */
 	public $email_recipient_privacy = 'bcc';
+
+	/**
+	 * @var    string  Email visible address; input, text
+	 * @since  1.6.6
+	 */
 	public $email_visible_address = '';
+
+	/**
+	 * @var    integer  CAPTCHA post limit; input, number
+	 * @since  1.6.6
+	 */
 	public $captcha_post_limit = 0;
+
+	/**
+	 * @var    string  reCAPTCHA public key; input, text
+	 * @since  1.6.6
+	 */
 	public $recaptcha_publickey = '';
+
+	/**
+	 * @var    string  reCAPTCHA private key; input, text
+	 * @since  1.6.6
+	 */
 	public $recaptcha_privatekey = '';
-	public $recaptcha_theme = 'white';
-	// New for 2.0.0
+
+	/**
+	 * @var    string  reCAPTCHA; select, selection
+	 * @since  1.6.6
+	 */
+	public $recaptcha_theme = 'white'; // select, selection
+
+	/**
+	 * @var    integer  Keyword; select, boolean
+	 * @since  2.0.0
+	 */
 	public $keywords = 1;
+
+	/**
+	 * @var    integer  User keywords; select, boolean
+	 * @since  2.0.0
+	 */
 	public $userkeywords = 0;
+
+	/**
+	 * @var    string  Image upload; select, selection
+	 * @since  2.0.0
+	 */
 	public $image_upload = 'registered';
+
+	/**
+	 * @var    string  File upload; select, selection
+	 * @since  2.0.0
+	 */
 	public $file_upload = 'registered';
+
+	/**
+	 * @var    string  Topic layout; select, selection
+	 * @since  2.0.0
+	 */
 	public $topic_layout = 'flat';
+
+	/**
+	 * @var    integer  Time to create page; select, boolean
+	 * @since  2.0.0
+	 */
 	public $time_to_create_page = 1;
+
+	/**
+	 * @var    integer  Show image files in mange profile; select, boolean
+	 * @since  2.0.0
+	 */
 	public $show_imgfiles_manage_profile = 1;
+
+	/**
+	 * @var    integer  Hold new users posts; select, boolean
+	 * @since  2.0.0
+	 */
 	public $hold_newusers_posts = 0;
+
+	/**
+	 * @var    integer  Hold guest posts; select, boolean
+	 * @since  2.0.0
+	 */
 	public $hold_guest_posts = 0;
+
+	/**
+	 * @var    integer  Attachment limit; input, number
+	 * @since  2.0.0
+	 */
 	public $attachment_limit = 8;
+
+	/**
+	 * @var    integer  Pickup category; select, boolean
+	 * @since  2.0.0
+	 */
 	public $pickup_category = 0;
+
+	/**
+	 * @var    string  Article display; select selection
+	 * @since  2.0.0
+	 */
 	public $article_display = 'intro';
-	public $send_emails = 1;
+
+	/**
+	 * @var    integer  Send emails; select, boolean
+	 * @since  2.0.0
+	 */
+	public $send_emails = 1; // select, boolean
+
+	/**
+	 * @var    string  StopForumSpam key; input, text
+	 * @since  2.0.0
+	 */
 	public $stopforumspam_key = '';
+
+	/**
+	 * @var    integer  Fallback english; select, boolean
+	 * @since  2.0.0
+	 */
 	public $fallback_english = 1;
+
+	/**
+	 * @var    integer  Cache; select, boolean
+	 * @since  2.0.0
+	 */
 	public $cache = 1;
-	public $cache_time = 60; // 1 minute
+
+	/**
+	 * @var    integer  Cache time; input, number
+	 * @since  2.0.0
+	 */
+	public $cache_time = 60;
+
+	/**
+	 * @var    integer  Ebay affiliate ID; input, text
+	 * @since  2.0.0
+	 */
 	public $ebay_affiliate_id = 5337089937;
+
+	/**
+	 * @var    integer  IP tracking; select, boolean
+	 * @since  2.0.0
+	 */
 	public $iptracking = 1;
-	// New for 2.0.3
+
+	/**
+	 * @var    string  RSS feebburner URL; input, text
+	 * @since  2.0.3
+	 */
 	public $rss_feedburner_url = '';
 	// New for 3.0.0
+
+	/**
+	 * @var    integer  Auto link; select, boolean
+	 * @since  3.0.0
+	 */
 	public $autolink = 1;
+
+	/**
+	 * @var    integer  Access component; select, boolean
+	 * @since  3.0.0
+	 */
 	public $access_component = 1;
-	// New for 3.0.4
+
+	/**
+	 * @var    integer  Statistic link allowed; select, boolean
+	 * @since  3.0.4
+	 */
 	public $statslink_allowed = 1;
-	// New for 3.0.6
+
+	/**
+	 * @var    integer  Super admin user list; select, boolean
+	 * @since  3.0.6
+	 */
 	public $superadmin_userlist = 0;
-	// New for 3.0.7
+
+	/**
+	 * @var    integer  Legacy URLs; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $legacy_urls = 1;
+
+	/**
+	 * @var    integer  Attachment protection; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $attachment_protection = 0;
+
+	/**
+	 * @var    integer  Category icons; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $categoryicons = 1;
+
+	/**
+	 * @var    integer  Avatar resize method; select, selection
+	 * @since  K4.0.0
+	 */
+	public $avatarresizemethod = 1;
+
+	/**
+	 * @var    integer  Avatar crop; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $avatarcrop = 0;
+
+	/**
+	 * @var    integer  User can report himself; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $user_report = 1;
+
+	/**
+	 * @var    integer  Search time; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $searchtime = 365;
+
+	/**
+	 * @var    integer  Teaser; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $teaser = 0;
+
+	/**
+	 * @var    integer  Define ebay widget language; select, boolean
+	 * @since  3.0.7
+	 */
 	public $ebay_language = 0;
+
+	/**
+	 * @var    integer  Define ebay Api key to be allowed to display ebay widget; select, boolean
+	 * @since  3.0.7
+	 */
 	public $ebay_api_key = '';
 
-	public function __construct() {
+	/**
+	 * @var    string  Define twitter API consumer key; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $twitter_consumer_key = '';
+
+	/**
+	 * @var    string  Define twitter API consumer secret; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $twitter_consumer_secret = '';
+
+	/**
+	 * @var    integer  Max Links limit; input, number
+	 * @since  K4.0.0
+	 */
+	public $max_links = 6;
+
+	public function __construct()
+	{
 		parent::__construct ();
 	}
 
-	public static function getInstance() {
+	public static function getInstance()
+	{
 		static $instance = null;
-		if (! $instance) {
-			$instance = new KunenaConfig ();
-			$instance->load ();
+
+		if (!$instance)
+		{
+			/** @var JCache|JCacheController $cache */
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$instance = $cache->get('configuration', 'com_kunena');
+
+			if (!$instance)
+			{
+				$instance = new KunenaConfig();
+				$instance->load();
+			}
+
+			$cache->store($instance, 'configuration', 'com_kunena');
 		}
 		return $instance;
 	}
@@ -248,7 +1175,8 @@ class KunenaConfig extends JObject {
 	/**
 	 * @param mixed $properties
 	 */
-	public function bind($properties) {
+	public function bind($properties)
+	{
 		$this->setProperties($properties);
 
 		// Disable some experimental features
@@ -256,7 +1184,8 @@ class KunenaConfig extends JObject {
 		$this->userkeywords = 0;
 	}
 
-	public function save() {
+	public function save()
+	{
 		$db = JFactory::getDBO ();
 
 		// Perform custom validation of config data before we write it.
@@ -274,7 +1203,8 @@ class KunenaConfig extends JObject {
 		KunenaCacheHelper::clear();
 	}
 
-	public function reset() {
+	public function reset()
+	{
 		$instance = new KunenaConfig ();
 		$this->bind($instance->getProperties());
 	}
@@ -283,13 +1213,15 @@ class KunenaConfig extends JObject {
 	 * Load config settings from database table.
 	 * @param null $userinfo Not used.
 	 */
-	public function load($userinfo = null) {
+	public function load($userinfo = null)
+	{
 		$db = JFactory::getDBO ();
 		$db->setQuery ( "SELECT * FROM #__kunena_configuration WHERE id=1" );
 		$config = $db->loadAssoc ();
 		KunenaError::checkDatabaseError ();
 
-		if ($config) {
+		if ($config)
+		{
 			$params = json_decode($config['params']);
 			$this->bind ($params);
 		}
@@ -302,9 +1234,17 @@ class KunenaConfig extends JObject {
 		$plugins = array();
 		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
 		$this->plugins = array();
-		foreach ($plugins as $name => $registry) {
-			if ($name == '38432UR24T5bBO6') $this->bind($registry->toArray());
-			elseif ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
+
+		foreach ($plugins as $name => $registry)
+		{
+			if ($name == '38432UR24T5bBO6')
+			{
+				$this->bind($registry->toArray());
+			}
+			elseif ($name && $registry instanceof JRegistry)
+			{
+				$this->plugins[$name] = $registry;
+			}
 		}
 	}
 
@@ -315,25 +1255,33 @@ class KunenaConfig extends JObject {
 	 *
 	 * @internal
 	 */
-	public function getPlugin($name) {
+	public function getPlugin($name)
+	{
 		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry();
 	}
 
-	public function check() {
+	/**
+	 * Messages per page
+	 */
+	public function check()
+	{
 		// Add anything that requires validation
 
 		// Need to have at least two per page of these
 		$this->messages_per_page = max ( $this->messages_per_page, 2 );
 		$this->messages_per_page_search = max ( $this->messages_per_page_search, 2 );
 		$this->threads_per_page = max ( $this->threads_per_page, 2 );
-
 	}
 
 	/**
+	 * Email set for the configuration
+	 *
 	 * @return string
 	 */
-	public function getEmail() {
+	public function getEmail()
+	{
 		$email = $this->get('email');
+
 		return !empty($email) ? $email : JFactory::getApplication()->getCfg('mailfrom', '');
 	}
 }

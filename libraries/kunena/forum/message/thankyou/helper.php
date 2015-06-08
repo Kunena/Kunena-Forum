@@ -14,11 +14,17 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Message Thank You Helper Class
  * @since 2.0
  */
-abstract class KunenaForumMessageThankyouHelper {
+abstract class KunenaForumMessageThankyouHelper
+{
 	/**
 	 * @var KunenaForumMessageThankyou[]
 	 */
 	protected static $_instances = array();
+
+	public static function cleanup()
+	{
+		self::$_instances = array();
+	}
 
 	/**
 	 * @param int  $identifier	The message to load - Can be only an integer.
@@ -26,16 +32,23 @@ abstract class KunenaForumMessageThankyouHelper {
 	 *
 	 * @return KunenaForumMessageThankyou
 	 */
-	static public function get($identifier, $reload = false) {
-		if ($identifier instanceof KunenaForumMessageThankyou) {
+	static public function get($identifier, $reload = false)
+	{
+		if ($identifier instanceof KunenaForumMessageThankyou)
+		{
 			return $identifier;
 		}
+
 		$id = intval ( $identifier );
+
 		// TODO: why this returns null? Does it have side effect?
 		if ($id < 1)
+		{
 			return;
+		}
 
-		if ($reload || empty ( self::$_instances [$id] )) {
+		if ($reload || empty ( self::$_instances [$id] ))
+		{
 			unset(self::$_instances [$id]);
 			self::loadMessages ( array($id) );
 		}
@@ -51,16 +64,28 @@ abstract class KunenaForumMessageThankyouHelper {
 	 *
 	 * @return int
 	 */
-	static public function getTotal($starttime = null, $endtime = null) {
+	static public function getTotal($starttime = null, $endtime = null)
+	{
 		$db = JFactory::getDBO();
 		$where = array ();
+
 		if (! empty ( $starttime ))
+		{
 			$where [] = "time >= UNIX_TIMESTAMP({$db->quote(intval($starttime))})";
+		}
+
 		if (! empty ( $endtime ))
+		{
 			$where [] = "time <= UNIX_TIMESTAMP({$db->quote(intval($endtime))})";
+		}
+
 		$query = "SELECT COUNT(*) FROM #__kunena_thankyou";
+
 		if (! empty ( $where ))
+		{
 			$query .= " WHERE " . implode ( " AND ", $where );
+		}
+
 		$db->setQuery ( $query );
 		$results = (int) $db->loadResult ();
 		KunenaError::checkDatabaseError();
@@ -77,10 +102,14 @@ abstract class KunenaForumMessageThankyouHelper {
 	 *
 	 * @return array
 	 */
-	static public function getTopUsers($target=true, $limitstart=0, $limit=10) {
+	static public function getTopUsers($target = true, $limitstart = 0, $limit = 10)
+	{
 		$field = 'targetuserid';
+
 		if (!$target)
+		{
 			$field = 'userid';
+		}
 
 		$db = JFactory::getDBO();
 		$query = "SELECT s.userid, count(s.{$field}) AS countid, u.username
@@ -104,7 +133,8 @@ abstract class KunenaForumMessageThankyouHelper {
 	 *
 	 * @return array
 	 */
-	static public function getTopMessages($limitstart=0, $limit=10) {
+	static public function getTopMessages($limitstart = 0, $limit = 10)
+	{
 		$db = JFactory::getDBO();
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$catlist = implode(',', array_keys($categories));
@@ -133,11 +163,16 @@ abstract class KunenaForumMessageThankyouHelper {
 	 *
 	 * @return array
 	 */
-	static public function getUserMessages($userid, $target=true, $limitstart=0, $limit=10) {
+	static public function getUserMessages($userid, $target = true, $limitstart = 0, $limit = 10)
+	{
 		$db = JFactory::getDBO();
 		$field = 'targetuserid';
+
 		if (!$target)
+		{
 			$field = 'userid';
+		}
+
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$catlist = implode(',', array_keys($categories));
 		$query = "SELECT m.catid, m.thread, m.id
@@ -157,14 +192,21 @@ abstract class KunenaForumMessageThankyouHelper {
 	 *
 	 * @param array $ids
 	 */
-	static protected function loadMessages(array $ids) {
-		foreach ($ids as $i=>$id) {
+	static protected function loadMessages(array $ids)
+	{
+		foreach ($ids as $i => $id)
+		{
 			$id = intval($id);
 			if (!$id || isset(self::$_instances [$id]))
+			{
 				unset($ids[$i]);
+			}
 		}
+
 		if (empty($ids))
+		{
 			return;
+		}
 
 		$idlist = implode(',', $ids);
 
@@ -176,12 +218,16 @@ abstract class KunenaForumMessageThankyouHelper {
 		$results = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 
-		foreach ( $ids as $id ) {
+		foreach ($ids as $id)
+		{
 			self::$_instances [$id] = new KunenaForumMessageThankyou ($id);
 		}
-		foreach ( $results as $result ) {
+
+		foreach ($results as $result)
+		{
 			self::$_instances [$result->postid]->_add($result->userid, $result->time);
 		}
+
 		unset ($results);
 	}
 
@@ -190,7 +236,8 @@ abstract class KunenaForumMessageThankyouHelper {
 	 *
 	 * @return bool|int	Number of rows is successful, false on error.
 	 */
-	static public function recount() {
+	static public function recount()
+	{
 		$db = JFactory::getDBO ();
 
 		// Users who have no thank yous, set thankyou count to 0
@@ -200,8 +247,12 @@ abstract class KunenaForumMessageThankyouHelper {
 			WHERE t.targetuserid IS NULL";
 		$db->setQuery($query);
 		$db->query ();
+
 		if (KunenaError::checkDatabaseError ())
+		{
 			return false;
+		}
+
 		$rows = $db->getAffectedRows ();
 
 		// Update user thankyou count
@@ -212,8 +263,12 @@ abstract class KunenaForumMessageThankyouHelper {
 			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
 		$db->setQuery ($query);
 		$db->query ();
+
 		if (KunenaError::checkDatabaseError ())
+		{
 			return false;
+		}
+
 		$rows += $db->getAffectedRows ();
 
 		return $rows;
@@ -226,28 +281,44 @@ abstract class KunenaForumMessageThankyouHelper {
 	 *
 	 * @return KunenaForumMessageThankyou[]
 	 */
-	static public function getByMessage($ids = false) {
-		if ($ids === false) {
+	static public function getByMessage($ids = false)
+	{
+		if ($ids === false)
+		{
 			return self::$_instances;
-		} elseif ( is_array($ids) ) {
+		}
+		elseif ( is_array($ids) )
+		{
 			$ids2 = array();
-			foreach ($ids as $id) {
-				if ($id instanceof KunenaForumMessage) $id = $id->id;
+
+			foreach ($ids as $id)
+			{
+				if ($id instanceof KunenaForumMessage)
+				{
+					$id = $id->id;
+				}
+
 				$ids2[(int)$id] = (int)$id;
 			}
+
 			$ids = $ids2;
-		} else {
+		}
+		else
+		{
 			$ids = array($ids);
 		}
 
 		self::loadMessages ( $ids );
 
 		$list = array();
-		foreach($ids as $id) {
-			if ( !empty(self::$_instances [$id]) ) {
+		foreach($ids as $id)
+		{
+			if ( !empty(self::$_instances [$id]) )
+			{
 				$list[$id] =self::$_instances [$id];
 			}
 		}
+
 		return $list;
 	}
 }

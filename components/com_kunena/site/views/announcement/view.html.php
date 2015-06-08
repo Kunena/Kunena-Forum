@@ -1,25 +1,29 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Views
+ *
+ * @package       Kunena.Site
+ * @subpackage    Views
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
-jimport ( 'joomla.cache.handler.output' );
+jimport('joomla.cache.handler.output');
 
 /**
  * Announcement view
  */
-class KunenaViewAnnouncement extends KunenaView {
-	function displayDefault($tpl = null) {
-		$this->announcement = $this->get ( 'Announcement' );
+class KunenaViewAnnouncement extends KunenaView
+{
+	function displayDefault($tpl = null)
+	{
+		$this->announcement = $this->get('Announcement');
 
-		if (!$this->announcement->authorise('read')) {
+		if (!$this->announcement->authorise('read'))
+		{
 			$this->setError($this->announcement->getError());
 		}
 
@@ -28,18 +32,23 @@ class KunenaViewAnnouncement extends KunenaView {
 		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
-		if ($errors) {
+
+		if ($errors)
+		{
 			$this->displayNoAccess($errors);
+
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Item', $tpl);
 	}
 
-	function displayCreate($tpl = null) {
-		$this->announcement = $this->get ( 'NewAnnouncement' );
+	function displayCreate($tpl = null)
+	{
+		$this->announcement = $this->get('NewAnnouncement');
 
-		if (!$this->announcement->authorise('create')) {
+		if (!$this->announcement->authorise('create'))
+		{
 			$this->setError($this->announcement->getError());
 		}
 
@@ -48,18 +57,23 @@ class KunenaViewAnnouncement extends KunenaView {
 		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
-		if ($errors) {
+
+		if ($errors)
+		{
 			$this->displayNoAccess($errors);
+
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Edit', $tpl);
 	}
 
-	function displayEdit($tpl = null) {
-		$this->announcement = $this->get ( 'Announcement' );
+	function displayEdit($tpl = null)
+	{
+		$this->announcement = $this->get('Announcement');
 
-		if (!$this->announcement->authorise('edit')) {
+		if (!$this->announcement->authorise('edit'))
+		{
 			$this->setError($this->announcement->getError());
 		}
 
@@ -68,111 +82,158 @@ class KunenaViewAnnouncement extends KunenaView {
 		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
-		if ($errors) {
+
+		if ($errors)
+		{
 			$this->displayNoAccess($errors);
+
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/Edit', $tpl);
 	}
 
-	function displayList($tpl = null) {
-		$this->announcements = $this->get ( 'Announcements' );
-		$new = new KunenaForumAnnouncement;
+	function displayList($tpl = null)
+	{
+		$this->announcements = $this->get('Announcements');
+		$new                 = new KunenaForumAnnouncement;
 
 		$this->actions = array();
-		if ($new->authorise('create')) $this->actions['add'] = $new->getUri('create');
-		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUri('list');
 
-		$this->announcementActions = $this->get ( 'announcementActions' );
+		if ($new->authorise('create'))
+		{
+			$this->actions['add'] = $new->getUri('create');
+		}
+
+		if ($this->actions)
+		{
+			$this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUri('list');
+		}
+
+		$this->announcementActions = $this->get('announcementActions');
 
 		$this->_prepareDocument();
 
 		$this->total = $this->get('Total');
 
 		$errors = $this->getErrors();
-		if ($errors) {
+
+		if ($errors)
+		{
 			$this->displayNoAccess($errors);
+
 			return;
 		}
 
-		$this->display();
+		$this->render('Announcement/List', $tpl);
 	}
 
-	function displayItems() {
+	function displayItems()
+	{
 		$this->row = 0;
-		$this->k = 0;
-		foreach ($this->announcements as $this->announcement) {
+		$this->k   = 0;
+
+		foreach ($this->announcements as $this->announcement)
+		{
 			$this->displayItem();
 		}
 	}
 
-	function displayItem() {
-		$this->k= 1 - $this->k;
-		echo $this->loadTemplateFile ( 'item' );
+	function displayItem()
+	{
+		$this->k = 1 - $this->k;
+		echo $this->loadTemplateFile('item');
 		$this->row++;
 	}
 
-	function displayActions() {
+	function displayActions()
+	{
 		$this->buttons = array();
+
 		if ($this->announcement->authorise('edit'))
+		{
 			$this->buttons['edit'] = $this->getButton($this->announcement->getUri('edit'), 'edit', 'announcement', 'moderation');
+		}
+
 		if ($this->announcement->authorise('delete'))
+		{
 			$this->buttons['delete'] = $this->getButton($this->announcement->getTaskUri('delete'), 'delete', 'announcement', 'permanent');
+		}
+
 		if ($this->buttons)
+		{
 			$this->buttons['cpanel'] = $this->getButton(KunenaForumAnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
+		}
 
 		$contents = $this->loadTemplateFile('actions');
+
 		return $contents;
 	}
 
-	function displayField($name, $mode=null) {
+	function displayField($name, $mode = null)
+	{
 		return $this->announcement->displayField($name, $mode);
 	}
 
-	function displayInput($name, $attributes='', $id=null) {
-		switch ($name) {
+	function displayInput($name, $attributes = '', $id = null)
+	{
+		switch ($name)
+		{
 			case 'id':
-				return '<input type="hidden" name="id" value="'.intval($this->announcement->id).'" />';
+				return '<input type="hidden" name="id" value="' . intval($this->announcement->id) . '" />';
 			case 'title':
-				return '<input type="text" name="title" '.$attributes.' value="'.$this->escape($this->announcement->title).'"/>';
+				return '<input type="text" name="title" ' . $attributes . ' value="' . $this->escape($this->announcement->title) . '"/>';
 			case 'sdescription':
-				return '<textarea name="sdescription" '.$attributes.'>'.$this->escape($this->announcement->sdescription).'</textarea>';
+				return '<textarea name="sdescription" ' . $attributes . '>' . $this->escape($this->announcement->sdescription) . '</textarea>';
 			case 'description':
-				return '<textarea name="description" '.$attributes.'>'.$this->escape($this->announcement->description).'</textarea>';
+				return '<textarea name="description" ' . $attributes . '>' . $this->escape($this->announcement->description) . '</textarea>';
 			case 'created':
 				return JHtml::_('calendar', $this->escape($this->announcement->created), 'created', $id);
 			case 'showdate':
-				$options	= array();
-				$options[]	= JHtml::_('select.option',  '0', JText::_('COM_KUNENA_NO') );
-				$options[]	= JHtml::_('select.option',  '1', JText::_('COM_KUNENA_YES') );
-				return JHtml::_('select.genericlist',  $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id );
+				$options   = array();
+				$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+				$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
+
+				return JHtml::_('select.genericlist', $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id);
 			case 'published':
-				$options	= array();
-				$options[]	= JHtml::_('select.option',  '0', JText::_('COM_KUNENA_NO') );
-				$options[]	= JHtml::_('select.option',  '1', JText::_('COM_KUNENA_YES') );
-				return JHtml::_('select.genericlist',  $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id );
+				$options   = array();
+				$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+				$options[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
+
+				return JHtml::_('select.genericlist', $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id);
 		}
 	}
 
-	function canPublish() {
+	function canPublish()
+	{
 		return $this->announcement->authorise('edit');
 	}
-	function canEdit() {
+
+	function canEdit()
+	{
 		return $this->announcement->authorise('edit');
 	}
-	function canDelete() {
+
+	function canDelete()
+	{
 		return $this->announcement->authorise('delete');
 	}
 
-	function getPagination($maxpages) {
+	function getPaginationObject($maxpages)
+	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
 		$pagination->setDisplayedPages($maxpages);
 
-		return $pagination->getPagesLinks();
+		return $pagination;
 	}
 
-	protected function _prepareDocument(){
+	function getPagination($maxpages)
+	{
+		return $this->getPaginationObject($maxpages)->getPagesLinks();
+	}
+
+	protected function _prepareDocument()
+	{
 		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 
 		// TODO: set keywords and description

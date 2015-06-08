@@ -13,16 +13,23 @@
 	<license>GNU/GPLv3 or later</license>
 	<description>Kunena Framework.</description>
 	<files>
-        <folder>activity</folder>
+		<folder>activity</folder>
+		<folder>attachment</folder>
 		<folder>bbcode</folder>
 		<folder>cache</folder>
+		<folder>collection</folder>
+		<folder>compat</folder>
+		<folder>controller</folder>
 		<folder>database</folder>
+		<folder>email</folder>
+		<folder>exception</folder>
 		<folder>external</folder>
 		<folder>file</folder>
 		<folder>folder</folder>
 		<folder>form</folder>
 		<folder>forum</folder>
 		<folder>html</folder>
+		<folder>image</folder>
 		<folder>integration</folder>
 		<folder>keyword</folder>
 		<folder>layout</folder>
@@ -30,14 +37,15 @@
 		<folder>module</folder>
 		<folder>pagination</folder>
 		<folder>path</folder>
+		<folder>response</folder>
 		<folder>request</folder>
 		<folder>route</folder>
 		<folder>spam</folder>
+		<folder>table</folder>
 		<folder>tables</folder>
 		<folder>template</folder>
 		<folder>upload</folder>
 		<folder>user</folder>
-		<filename>index.html</filename>
 		<filename>access.php</filename>
 		<filename>bootstrap.php</filename>
 		<filename>config.php</filename>

@@ -8,14 +8,10 @@
 
 ## REQUIREMENTS
 
-*Kunena* 3.0 requires
+*Kunena* 4.0 requires
 
-    Joomla! 2.5: version 2.5.9 or greater (>= 2.5.28 recommended)
-    Joomla! 3.0: version 3.0.4 or greater (>= 3.4.1 recommended)
-    Joomla! 3.1: version 3.1.5 or greater (>= 3.4.1 recommended)
-    Joomla! 3.2: version 3.2.7 or greater (>= 3.4.1 recommended)
-    Joomla! 3.3: version 3.3.6 or greater (>= 3.4.1 recommended)
     Joomla! 3.4: version 3.4.1 or greater (>= 3.4.1 recommended)
+    Joomla! 2.5: version 2.5.28 or greater (>= 2.5.28 recommended)
     PHP: version 5.3.1 or greater (>= 5.4.31 recommended)
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
@@ -31,7 +27,8 @@ In addition we recommend the following PHP settings:
 
 *Kunena* requires the following Joomla settings:
 
-    * Mootools 1.4+ compatible template
+    * Mootools 1.4+ compatible template (Blue Eagle Template)
+    * Bootstrap 2 compatible template (Crypsis Template)
     * Upgraded to latest versions all extensions that claim to integrate with Kunena 2.0 or 3.0
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 
@@ -43,7 +40,7 @@ If you are looking for examples on how *Kunena* works or can be installed, we re
 
 ## INSTALLATION
 
-*Kunena* is installed via the Joomla component/extension installer. You may download our releases from joomlacode.org via: http://joomlacode.org/gf/project/kunena/frs/ or from our downloads manager at: http://www.kunena.org/download
+*Kunena* is installed via the Joomla component/extension installer. You may download our releases from our downloads page at: http://www.kunena.org/download
 
 The Joomla installers allows you to directly install *Kunena* via package URL or from a local download of yours.
 

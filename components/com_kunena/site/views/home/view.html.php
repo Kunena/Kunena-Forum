@@ -1,20 +1,23 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Views
+ *
+ * @package       Kunena.Site
+ * @subpackage    Views
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Home View
  */
-class KunenaViewHome extends KunenaView {
-	function displayDefault($tpl = null) {
+class KunenaViewHome extends KunenaView
+{
+	function displayDefault($tpl = null)
+	{
 		echo " ";
 	}
 }

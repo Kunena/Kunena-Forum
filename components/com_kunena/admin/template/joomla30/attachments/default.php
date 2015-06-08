@@ -130,25 +130,24 @@ JHtml::_('dropdown.init');
 				</tfoot>
 				<tbody>
 				<?php
-				$k = $i = 0;
+				$i = 0;
 				if($this->pagination->total > 0) :
-				foreach ($this->attachments_instance as $attachment)
-				{
+				foreach($this->items as $id=>$attachment) :
+				$message = $attachment->getMessage();
 				?>
-				<tr <?php echo 'class = "row' . $k . '"';?>>
-					<td><?php echo JHtml::_('grid.id', $i, intval($attachment->attachment->id)) ?></td>
-					<td><?php echo $attachment->attachment->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->attachment->filename, 10, 15) ?></td>
-					<td><?php echo $this->escape($attachment->attachment->filetype); ?></td>
-					<td><?php echo number_format ( intval ( $attachment->attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
-					<td><?php echo isset($attachment->width) && isset($attachment->height) ? $attachment->width . ' x ' . $attachment->height  : '' ?></td>
-					<td><?php echo $this->escape($attachment->message->name); ?></td>
-					<td><?php echo $this->escape($attachment->message->subject); ?></td>
-					<td><?php echo intval($attachment->attachment->id); ?></td>
-				</tr>
+					<tr>
+						<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
+						<td><?php echo $attachment->getLayout()->render('thumbnail') . '<br />' . $attachment->getShortName(5, 5) ?></td>
+						<td><?php echo $this->escape($attachment->filetype); ?></td>
+						<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' ' . JText::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
+						<td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height  : '' ?></td>
+						<td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
+						<td><?php echo $this->escape($message->subject); ?></td>
+						<td><?php echo intval($attachment->id); ?></td>
+					</tr>
 				<?php
 				$i++;
-				$k = 1 - $k;
-				}
+				endforeach;
 				else : ?>
 					<tr>
 						<td colspan="10">

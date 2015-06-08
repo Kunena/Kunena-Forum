@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaDatabaseObject
  */
-abstract class KunenaDatabaseObject extends JObject {
+abstract class KunenaDatabaseObject extends JObject
+{
 	public $id = null;
 
 	protected $_name = null;
@@ -28,8 +29,12 @@ abstract class KunenaDatabaseObject extends JObject {
 	 * @param  boolean  $reload      Force object reload from the database.
 	 *
 	 * @return  KunenaDatabaseObject
+	 * @throws  Exception
 	 */
-	static public function getInstance($identifier = null, $reload = false) {}
+	static public function getInstance($identifier = null, $reload = false)
+	{
+		throw new Exception(__CLASS__ . '::' . __FUNCTION__ . '(): Not defined.');
+	}
 
 	/**
 	 * Returns true if the object exists in the database.
@@ -37,9 +42,15 @@ abstract class KunenaDatabaseObject extends JObject {
 	 * @param   boolean  $exists  Internal parameter to change state.
 	 * @return  boolean  True if object exists in database.
 	 */
-	public function exists($exists = null) {
+	public function exists($exists = null)
+	{
 		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = (bool) $exists;
+
+		if ($exists !== null)
+		{
+			$this->_exists = (bool) $exists;
+		}
+
 		return $return;
 	}
 
@@ -54,13 +65,20 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public function bind(array $src = null, array $fields = null, $include = false) {
-		if (empty($src)) return false;
+	public function bind(array $src = null, array $fields = null, $include = false)
+	{
+		if (empty($src))
+		{
+			return false;
+		}
 
-		if (!empty($fields)) {
+		if (!empty($fields))
+		{
 			$src = $include ? array_intersect_key($src, array_flip($fields)) : array_diff_key($src, array_flip($fields));
 		}
+
 		$this->setProperties ( $src );
+
 		return true;
 	}
 
@@ -71,14 +89,21 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public function load($id = null) {
-		if ($id !== null) $this->id = intval($id);
+	public function load($id = null)
+	{
+		if ($id !== null)
+		{
+			$this->id = intval($id);
+		}
 
 		// Create the table object
 		$table = $this->getTable ();
 
 		// Load the object based on id
-		if ($this->id) $this->_exists = $table->load ( $this->id );
+		if ($this->id)
+		{
+			$this->_exists = $table->load ( $this->id );
+		}
 
 		// Always set id
 		$table->id = $this->id;
@@ -97,11 +122,13 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public function save() {
+	public function save()
+	{
 		$this->_saving = true;
 
 		// Check the object.
-		if (! $this->check ()) {
+		if (! $this->check ())
+		{
 			return $this->_saving = false;
 		}
 
@@ -112,7 +139,8 @@ abstract class KunenaDatabaseObject extends JObject {
 		$isNew = ! $this->_exists;
 
 		// Check the table object.
-		if (! $table->check ()) {
+		if (! $table->check ())
+		{
 			$this->setError ( $table->getError () );
 			return $this->_saving = false;
 		}
@@ -123,19 +151,23 @@ abstract class KunenaDatabaseObject extends JObject {
 
 		// Trigger the onKunenaBeforeSave event.
 		$result = $dispatcher->trigger('onKunenaBeforeSave', array("com_kunena.{$this->_name}", &$table, $isNew));
-		if (in_array(false, $result, true)) {
+
+		if (in_array(false, $result, true))
+		{
 			$this->setError($table->getError());
 			return $this->_saving = false;
 		}
 
 		// Store the data.
-		if (!$table->store()) {
+		if (!$table->store())
+		{
 			$this->setError($table->getError());
 			return $this->_saving = false;
 		}
 
 		// If item was created, load the object.
-		if ($isNew) {
+		if ($isNew)
+		{
 			$this->load ( $table->id );
 		}
 
@@ -153,9 +185,11 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return	boolean	True on success.
 	 */
-	public function delete() {
+	public function delete()
+	{
 		// TODO: return false
-		if (!$this->exists()) {
+		if (!$this->exists())
+		{
 			return true;
 		}
 
@@ -170,7 +204,8 @@ abstract class KunenaDatabaseObject extends JObject {
 
 		// Trigger the onKunenaBeforeDelete event.
 		$result = $dispatcher->trigger('onKunenaBeforeDelete', array("com_kunena.{$this->_name}", $table));
-		if (in_array(false, $result, true)) {
+		if (in_array(false, $result, true))
+		{
 			$this->setError($table->getError());
 			return false;
 		}
@@ -179,6 +214,7 @@ abstract class KunenaDatabaseObject extends JObject {
 			$this->setError($table->getError());
 			return false;
 		}
+
 		$this->_exists = false;
 
 		// Trigger the onKunenaAfterDelete event.
@@ -196,7 +232,8 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 */
-	public function check() {
+	public function check()
+	{
 		return true;
 	}
 
@@ -211,13 +248,27 @@ abstract class KunenaDatabaseObject extends JObject {
 	 * @return  KunenaDatabaseObject
 	 * @internal
 	 */
-	public function __construct(array $properties = null)
+	public function __construct($properties = null)
 	{
-		if (!$this->_name) $this->_name = get_class ($this);
-		if ($properties) {
-			$this->bind ($properties);
-		} else {
-			$this->load ();
+		if (!$this->_name)
+		{
+			$this->_name = get_class($this);
+		}
+
+		// Load properties from database.
+		if (!empty($this->id))
+		{
+			$this->_exists = true;
+		}
+		// Bind properties provided as parameters.
+		elseif ($properties !== null)
+		{
+			$this->bind($properties);
+		}
+		// Initialize new object.
+		else
+		{
+			$this->load();
 		}
 	}
 
@@ -226,7 +277,8 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  JTable|KunenaTable  The table object.
 	 */
-	protected function getTable() {
+	protected function getTable()
+	{
 		return JTable::getInstance ( $this->_table, 'Table' );
 	}
 
@@ -235,7 +287,8 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  boolean  True on success.
 	 */
-	protected function saveInternal() {
+	protected function saveInternal()
+	{
 		return true;
 	}
 }

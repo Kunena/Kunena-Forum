@@ -18,7 +18,8 @@ defined ( '_JEXEC' ) or die ();
  * This class can be used to detect and initialize Kunena framework and to make sure that your extension
  * is compatible with the current version.
  */
-abstract class KunenaForum {
+abstract class KunenaForum
+{
 	protected static $version = false;
 	protected static $version_major = false;
 	protected static $version_date = false;
@@ -57,7 +58,8 @@ abstract class KunenaForum {
 	 *
 	 * @return boolean True if Kunena has been fully installed.
 	 */
-	public static function installed() {
+	public static function installed()
+	{
 		return !is_file(KPATH_ADMIN . '/install.php') || self::isDev();
 	}
 
@@ -90,11 +92,15 @@ abstract class KunenaForum {
 	 * @param boolean $checkAdmin True if administrator is considered as a special case.
 	 * @return boolean True if online.
 	 */
-	public static function enabled($checkAdmin = true) {
-		if (!JComponentHelper::isEnabled ( 'com_kunena', true )) {
+	public static function enabled($checkAdmin = true)
+	{
+		if (!JComponentHelper::isEnabled('com_kunena', true))
+		{
 			return false;
 		}
-		$config = KunenaFactory::getConfig ();
+
+		$config = KunenaFactory::getConfig();
+
 		return !$config->board_offline
 			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
 	}
@@ -125,7 +131,8 @@ abstract class KunenaForum {
 	 *
 	 * @since 2.0.0-BETA2
 	 */
-	public static function setup() {
+	public static function setup()
+	{
 		$config = KunenaFactory::getConfig();
 
 		// Load language file for libraries.
@@ -133,7 +140,12 @@ abstract class KunenaForum {
 
 		// Setup output caching.
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if (!$config->get('cache')) $cache->setCaching(0);
+
+		if (!$config->get('cache'))
+		{
+			$cache->setCaching(0);
+		}
+
 		$cache->setLifeTime($config->get('cache_time', 60));
 
 		// Setup error logging.
@@ -141,7 +153,7 @@ abstract class KunenaForum {
 		$options = array('logger'=>'w3c', 'text_file'=>'kunena.php');
 		$categories = array('kunena');
 		$levels = JDEBUG || $config->debug ? JLog::ALL :
-			JLog::EMERGENCY & JLog::ALERT & JLog::CRITICAL & JLog::ERROR;
+			JLog::EMERGENCY | JLog::ALERT | JLog::CRITICAL | JLog::ERROR;
 		JLog::addLogger($options, $levels, $categories);
 	}
 
@@ -163,20 +175,29 @@ abstract class KunenaForum {
 	 *
 	 * @see KunenaForum::installed()
 	 *
-	 * @param string $version Minumum required version.
+	 * @param string $version Minimum required version.
 	 *
 	 * @return boolean Yes, if it is safe to use Kunena Framework.
 	 */
-	public static function isCompatible($version) {
+	public static function isCompatible($version)
+	{
 		// If requested version is smaller than 2.0, it's not compatible
-		if (version_compare($version, '2.0', '<')) {
+		if (version_compare($version, '2.0', '<'))
+		{
 			return false;
 		}
 
+		// Development version support.
+		if ($version == '4.0') {
+			return true;
+		}
+
 		// Check if future version is needed (remove GIT and DEVn from the current version)
-		if (version_compare($version, preg_replace('/(-DEV\d*)?(-GIT)?/i', '', self::version()), '>')) {
+		if (version_compare($version, preg_replace('/(-DEV\d*)?(-GIT)?/i', '', self::version()), '>'))
+		{
 			return false;
 		}
+
 		return true;
 	}
 
@@ -190,10 +211,13 @@ abstract class KunenaForum {
 	 *
 	 * @return boolean True if Git repository is detected.
 	 */
-	public static function isDev() {
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
+	public static function isDev()
+	{
+		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
+		{
 			return true;
 		}
+
 		return false;
 	}
 
@@ -202,22 +226,28 @@ abstract class KunenaForum {
 	 *
 	 * @return string Version number.
 	 */
-	public static function version() {
-		if (self::$version === false) {
+	public static function version()
+	{
+		if (self::$version === false)
+		{
 			self::buildVersion();
 		}
+
 		return self::$version;
 	}
 
 	/**
-	 * Returns major version number (2.0, 2.1, 3.0 and so on).
+	 * Returns major version number (2.0, 3.0, 3.1 and so on).
 	 *
 	 * @return string Major version in xxx.yyy format.
 	 */
-	public static function versionMajor() {
-		if (self::$version_major === false) {
+	public static function versionMajor()
+	{
+		if (self::$version_major === false)
+		{
 			self::buildVersion();
 		}
+
 		return self::$version_major;
 	}
 
@@ -226,10 +256,13 @@ abstract class KunenaForum {
 	 *
 	 * @return string Date in yyyy-mm-dd format.
 	 */
-	public static function versionDate() {
-		if (self::$version_date === false) {
+	public static function versionDate()
+	{
+		if (self::$version_date === false)
+		{
 			self::buildVersion();
 		}
+
 		return self::$version_date;
 	}
 
@@ -238,10 +271,13 @@ abstract class KunenaForum {
 	 *
 	 * @return string Codename.
 	 */
-	public static function versionName() {
-		if (self::$version_name === false) {
+	public static function versionName()
+	{
+		if (self::$version_name === false)
+		{
 			self::buildVersion();
 		}
+
 		return self::$version_name;
 	}
 
@@ -250,12 +286,14 @@ abstract class KunenaForum {
 	 *
 	 * @return object stdClass containing (version, major, date, name).
 	 */
-	public static function getVersionInfo() {
+	public static function getVersionInfo()
+	{
 		$version = new stdClass();
 		$version->version = self::version();
 		$version->major = self::versionMajor(); // New in K2.0.0-BETA2
 		$version->date = self::versionDate();
 		$version->name = self::versionName();
+
 		return $version;
 	}
 
@@ -271,7 +309,8 @@ abstract class KunenaForum {
 	 * @param null|string $template Name of the template file.
 	 * @param array|JRegistry $params Extra parameters to control the model.
 	 */
-	public static function display($viewName, $layout='default', $template=null, $params = array()) {
+	public static function display($viewName, $layout='default', $template=null, $params = array())
+	{
 		// Filter input
 		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
 		$layout = preg_replace( '/[^A-Z0-9_]/i', '', $layout );
@@ -289,27 +328,44 @@ abstract class KunenaForum {
 		require_once KPATH_SITE . '/views/common/view.html.php';
 		require_once KPATH_SITE . '/models/common.php';
 
-		if ( !class_exists( $view ) ) {
+		if ( !class_exists( $view ) )
+		{
 			$vpath = KPATH_SITE . '/views/'.$viewName.'/view.html.php';
-			if (!is_file($vpath)) return;
+
+			if (!is_file($vpath))
+			{
+				return;
+			}
+
 			require_once $vpath;
 		}
-		if ( $viewName != 'common' && !class_exists( $model ) ) {
+
+		if ( $viewName != 'common' && !class_exists( $model ) )
+		{
 			$mpath = KPATH_SITE . '/models/'.$viewName.'.php';
-			if (!is_file($mpath)) return;
+
+			if (!is_file($mpath))
+			{
+				return;
+			}
+
 			require_once $mpath;
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
 		/** @var KunenaView $view */
 
-		if ($params instanceof JRegistry) {
+		if ($params instanceof JRegistry)
+		{
 			// Do nothing
-		} else {
+		}
+		else
+		{
 			$params = new JRegistry($params);
 		}
 
 		$params->set('layout', $layout);
+
 		// Push the model into the view (as default).
 		$model = new $model();
 		/** @var KunenaModel $model */
@@ -317,12 +373,17 @@ abstract class KunenaForum {
 		$view->setModel ( $model, true );
 
 		// Add template path
-		if ($params->get('templatepath')) $view->addTemplatePath($params->get('templatepath'));
+		if ($params->get('templatepath'))
+		{
+			$view->addTemplatePath($params->get('templatepath'));
+		}
 
-		if ($viewName != 'common') {
+		if ($viewName != 'common')
+		{
 			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
 			$view->common->embedded = true;
 		}
+
 		// Flag view as being embedded
 		$view->embedded = true;
 
@@ -335,14 +396,19 @@ abstract class KunenaForum {
 
 	// Internal functions
 
-	protected static function buildVersion() {
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
+	protected static function buildVersion()
+	{
+		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
+		{
 			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
 			$manifest = simplexml_load_file($file);
 			self::$version = (string) $manifest->version . '-GIT';
-		} else {
+		}
+		else
+		{
 			self::$version = strtoupper ( '@kunenaversion@' );
 		}
+
 		self::$version_major = substr(self::$version, 0, 3);
 		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';

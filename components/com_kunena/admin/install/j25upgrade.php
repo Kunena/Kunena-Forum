@@ -1,25 +1,32 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Installer
+ *
+ * @package       Kunena.Installer
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Kunena 2.0 jUpgrade migration class from Joomla! 1.5 to Joomla! 2.5
  *
  */
-class jUpgradeComponentKunena extends jUpgradeExtensions {
+class jUpgradeComponentKunena extends jUpgradeExtensions
+{
 
-	public function __construct($step = null) {
+	public function __construct($step = null)
+	{
 		// Joomla 2.5 support
-		if (file_exists(JPATH_LIBRARIES.'/cms/version/version.php')) require_once JPATH_LIBRARIES.'/cms/version/version.php';
+		if (is_file(JPATH_LIBRARIES . '/cms/version/version.php'))
+		{
+			require_once JPATH_LIBRARIES . '/cms/version/version.php';
+		}
 
-		if (!defined('JVERSION')) {
+		if (!defined('JVERSION'))
+		{
 			$version = new JVersion();
 			define('JVERSION', $version->getShortVersion());
 		}
@@ -30,10 +37,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 	/**
 	 * Check if Kunena migration is supported.
 	 *
-	 * @return	boolean
-	 * @since	1.6.4
+	 * @return    boolean
+	 * @since    1.6.4
 	 */
-	protected function detectExtension() {
+	protected function detectExtension()
+	{
 		// Install Kunena 2.0 only into Joomla 2.5
 		return version_compare(JVERSION, '2.5', '>=');
 	}
@@ -41,14 +49,16 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 	/**
 	 * Get tables to be migrated.
 	 *
-	 * @return	array	List of tables without prefix
-	 * @since	1.6.4
+	 * @return    array    List of tables without prefix
+	 * @since    1.6.4
 	 */
-	protected function getCopyTables() {
+	protected function getCopyTables()
+	{
 		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 		require_once KPATH_ADMIN . '/install/schema.php';
 		$schema = new KunenaModelSchema();
 		$tables = $schema->getSchemaTables('');
+
 		return array_values($tables);
 	}
 
@@ -63,11 +73,13 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
 	 * @param string $table
-	 * @return	boolean Ready (true/false)
-	 * @since	1.6.4
-	 * @throws	Exception
+	 *
+	 * @return    boolean Ready (true/false)
+	 * @since    1.6.4
+	 * @throws    Exception
 	 */
-	protected function copyTable_kunena_categories($table) {
+	protected function copyTable_kunena_categories($table)
+	{
 		$this->source = $this->destination = "#__{$table}";
 
 		// Clone table
@@ -77,57 +89,90 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 		$rows = parent::getSourceData('*');
 
 		// Do some custom post processing on the list.
-		foreach ($rows as &$row) {
+		foreach ($rows as &$row)
+		{
 			$row['params'] = $this->convertParams($row['params']);
-			if (!isset($row['accesstype']) || $row['accesstype'] == 'joomla.group' ) {
-				if ($row['admin_access'] != 0) {
+			if (!isset($row['accesstype']) || $row['accesstype'] == 'joomla.group')
+			{
+				if ($row['admin_access'] != 0)
+				{
 					$row['admin_access'] = $this->mapUserGroup($row['admin_access']);
 				}
-				if ($row['pub_access'] == -1) {
+
+				if ($row['pub_access'] == -1)
+				{
 					// All registered
-					$row['pub_access'] = 2;
+					$row['pub_access']  = 2;
 					$row['pub_recurse'] = 1;
-				} elseif ($row['pub_access'] == 0) {
+				}
+				elseif ($row['pub_access'] == 0)
+				{
 					// Everybody
-					$row['pub_access'] = 1;
+					$row['pub_access']  = 1;
 					$row['pub_recurse'] = 1;
-				} elseif ($row['pub_access'] == 1) {
+				}
+				elseif ($row['pub_access'] == 1)
+				{
 					// Nobody
 					$row['pub_access'] = 8;
-				} else {
+				}
+				else
+				{
 					// User groups
 					$row['pub_access'] = $this->mapUserGroup($row['pub_access']);
 				}
-			} elseif ($row['accesstype'] == 'joomla.level') {
+			}
+			elseif ($row['accesstype'] == 'joomla.level')
+			{
 				// Convert Joomla access levels
 				$row['access']++;
 			}
 		}
 		$this->setDestinationData($rows);
+
 		return true;
 	}
 
 	/**
 	 * A hook to be able to modify params prior as they are converted to JSON.
 	 *
-	 * @param	object	$object	A reference to the parameters as an object.
+	 * @param    object $object A reference to the parameters as an object.
 	 *
-	 * @return	void
-	 * @since	0.4.
-	 * @throws	Exception
+	 * @return    void
+	 * @since    0.4.
+	 * @throws    Exception
 	 */
-	protected function convertParamsHook(&$object) {
-		if (isset($object->access_post)) $object->access_post = $this->mapUserGroups($object->access_post);
-		if (isset($object->access_reply)) $object->access_reply = $this->mapUserGroups($object->access_reply);
+	protected function convertParamsHook(&$object)
+	{
+		if (isset($object->access_post))
+		{
+			$object->access_post = $this->mapUserGroups($object->access_post);
+		}
+
+		if (isset($object->access_reply))
+		{
+			$object->access_reply = $this->mapUserGroups($object->access_reply);
+		}
 	}
 
-	protected function mapUserGroups($list) {
-		if (!is_array($list)) $list = explode('|', $list);
-		foreach ($list as &$groupid) {
+	protected function mapUserGroups($list)
+	{
+		if (!is_array($list))
+		{
+			$list = explode('|', $list);
+		}
+
+		foreach ($list as &$groupid)
+		{
 			$groupid = $this->mapUserGroup($groupid);
 		}
+
 		// Always give Super Users group access
-		if (!in_array(8, $list)) $list[] = 8;
+		if (!in_array(8, $list))
+		{
+			$list[] = 8;
+		}
+
 		return $list;
 	}
 
@@ -141,29 +186,30 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
-	 * @return	boolean Ready (true/false)
-	 * @since	1.6.4
-	 * @throws	Exception
+	 * @return    boolean Ready (true/false)
+	 * @since    1.6.4
+	 * @throws    Exception
 	 */
-	protected function migrateExtensionCustom() {
+	protected function migrateExtensionCustom()
+	{
 		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 		// Need to initialize application
-		jimport ('joomla.environment.uri');
+		jimport('joomla.environment.uri');
 
 		// Get component object
-		$component = JTable::getInstance ( 'extension', 'JTable', array('dbo'=>$this->db_new) );
-		$component->load(array('type'=>'component', 'element'=>$this->name));
+		$component = JTable::getInstance('extension', 'JTable', array('dbo' => $this->db_new));
+		$component->load(array('type' => 'component', 'element' => $this->name));
 
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db_new->quote($component->extension_id)} WHERE type = 'component' AND link LIKE '%option={$this->name}%'";
-		$this->db_new->setQuery ( $query );
-		$this->db_new->query ();
+		$this->db_new->setQuery($query);
+		$this->db_new->query();
 
 		$menumap = $this->getMapList('menus');
 
 		// Get all menu items from the component (JMenu style)
-		$query	= $this->db_new->getQuery(true);
+		$query = $this->db_new->getQuery(true);
 		$query->select('*');
 		$query->from('#__menu');
 		$query->where("component_id = {$component->extension_id}");
@@ -171,51 +217,73 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 		$query->order('lft');
 		$this->db_new->setQuery($query);
 		$menuitems = $this->db_new->loadObjectList('id');
-		foreach ($menuitems as &$menuitem) {
+
+		foreach ($menuitems as &$menuitem)
+		{
 			// Get parent information.
 			$parent_tree = array();
-			if (isset($menuitems[$menuitem->parent_id])) {
-				$parent_tree  = $menuitems[$menuitem->parent_id]->tree;
+
+			if (isset($menuitems[$menuitem->parent_id]))
+			{
+				$parent_tree = $menuitems[$menuitem->parent_id]->tree;
 			}
+
 			// Create tree.
-			$parent_tree[] = $menuitem->id;
+			$parent_tree[]  = $menuitem->id;
 			$menuitem->tree = $parent_tree;
 
 			// Create the query array.
 			$url = str_replace('index.php?', '', $menuitem->link);
-			$url = str_replace('&amp;','&',$url);
+			$url = str_replace('&amp;', '&', $url);
 			parse_str($url, $menuitem->query);
 		}
 
 		// Update menu items
-		foreach ($menuitems as $menuitem) {
-			if (!isset($menuitem->query['view'])) continue;
+		foreach ($menuitems as $menuitem)
+		{
+			if (!isset($menuitem->query['view']))
+			{
+				continue;
+			}
+
 			$update = false;
-			switch ($menuitem->query['view']) {
+			switch ($menuitem->query['view'])
+			{
 				case 'home':
 					// Update default menu item
-					if (!empty($menuitem->query['defaultmenu'])) {
+					if (!empty($menuitem->query['defaultmenu']))
+					{
 						$menuitem->query['defaultmenu'] = isset($menumap[$menuitem->query['defaultmenu']]) ? $menumap[$menuitem->query['defaultmenu']]->new : 0;
-						$update = true;
+						$update                         = true;
 					}
 					break;
 			}
-			if ($update) {
+			if ($update)
+			{
 				// Update menuitem link
 				$query_string = array();
-				foreach ($menuitem->query as $k => $v) {
-					$query_string[] = $k.'='.$v;
+
+				foreach ($menuitem->query as $k => $v)
+				{
+					$query_string[] = $k . '=' . $v;
 				}
-				$menuitem->link = 'index.php?'.implode('&', $query_string);
+
+				$menuitem->link = 'index.php?' . implode('&', $query_string);
 
 				// Save menu object
-				$menu = JTable::getInstance ( 'menu', 'JTable', array('dbo'=>$this->db_new) );
+				$menu = JTable::getInstance('menu', 'JTable', array('dbo' => $this->db_new));
 				$menu->bind(get_object_vars($menuitem), array('tree', 'query'));
 				$success = $menu->check();
-				if ($success) {
+
+				if ($success)
+				{
 					$success = $menu->store();
 				}
-				if (!$success) echo "ERROR";
+
+				if (!$success)
+				{
+					echo "ERROR";
+				}
 			}
 		}
 

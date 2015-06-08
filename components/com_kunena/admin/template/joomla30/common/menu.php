@@ -21,7 +21,7 @@ $view = JRequest::getCmd('view', 'cpanel');
 	<li<?php if ($view == 'ranks' || $view == 'rank') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=ranks'); ?>"><i class="icon-star-2"></i> <?php echo JText::_('COM_KUNENA_A_RANK_MANAGER'); ?></a></li>
 	<li<?php if ($view == 'templates' || $view == 'template') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=templates'); ?>"><i class="icon-color-palette"></i> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a></li>
 	<li<?php if ($view == 'config') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=config'); ?>"><i class="icon-wrench"></i> <?php echo JText::_('COM_KUNENA_MENU_DESC_CONFIGURATION'); ?></a></li>
-	<li<?php if ($view == 'plugins') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=plugins'); ?>"><i class="icon-cube"></i> <?php echo JText::_('COM_KUNENA_PLUGIN_MANAGER'); ?></a></li>
+	<li<?php if ($view == 'plugins') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=plugins'); ?>"><i class="icon-puzzle"></i> <?php echo JText::_('COM_KUNENA_PLUGIN_MANAGER'); ?></a></li>
 	<li<?php if ($view == 'tools') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=tools'); ?>"><i class="icon-tools"></i> <?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS'); ?></a></li>
 	<li<?php if ($view == 'trash') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=trash'); ?>"><i class="icon-trash"></i> <?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a></li>
 </ul>

@@ -30,22 +30,26 @@ class KunenaPath extends JPath
 	 */
 	public static function tmpdir()
 	{
-		if (!self::$tmpdir) {
+		if (!self::$tmpdir)
+		{
 			// Find Apache writable temporary directory defaulting to Joomla.
 			$temp = @tempnam(JFactory::getConfig()->get('tmp_path'), 'jj');
 
 			// If the previous call fails, let's try system default instead.
-			if ($temp === false) {
+			if ($temp === false)
+			{
 				$temp = @tempnam(sys_get_temp_dir(), 'jj');
 			}
 
 			// Set the temporary directory and remove created file.
-			if ($temp !== false) {
+			if ($temp !== false)
+			{
 				self::$apache = fileowner($temp);
 				self::$tmpdir = dirname($temp);
 				unlink($temp);
 			}
 		}
+
 		return realpath(self::$tmpdir);
 	}
 
@@ -58,7 +62,8 @@ class KunenaPath extends JPath
 	 */
 	public static function isOwner($path)
 	{
-		if (!self::$owner) {
+		if (!self::$owner)
+		{
 			$dir = JFactory::getConfig()->get('tmp_path');
 			$tmp = 'jj'.md5(mt_rand());
 
@@ -68,7 +73,10 @@ class KunenaPath extends JPath
 			$content = 'test';
 			$success = KunenaFile::write($test, $content, false);
 
-			if (!$success) return false;
+			if (!$success)
+			{
+				return false;
+			}
 
 			self::$owner = fileowner($test);
 
@@ -88,7 +96,11 @@ class KunenaPath extends JPath
 	 */
 	public static function isWritable($path)
 	{
-		if (is_writable($path) || self::isOwner($path)) return true;
+		if (is_writable($path) || self::isOwner($path))
+		{
+			return true;
+		}
+
 		return false;
 	}
 }

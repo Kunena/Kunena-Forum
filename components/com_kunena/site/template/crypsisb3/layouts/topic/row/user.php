@@ -38,7 +38,7 @@ if (!empty($this->spacing)) : ?>
 	<td class="col-md-1 hidden-sm center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span<?php echo $cols; ?>">
+	<td class="col-md-<?php echo $cols; ?>">
 		<div>
 			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
@@ -112,7 +112,7 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="col-md-2 hidden-sm">
 		<div class="container-fluid">
-			<div class="row">
+			<div class="col-md-12">
 				<?php if ($config->avataroncat) : ?>
 					<div class="col-md-3">
 						<?php echo $author->getLink($avatar); ?>

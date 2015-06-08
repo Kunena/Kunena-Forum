@@ -10,10 +10,27 @@
  **/
 defined('_JEXEC') or die;
 
-if (!class_exists('JLoader')) return;
+if (!class_exists('JLoader'))
+{
+	return;
+}
 
 // Define Kunena framework path.
 define('KPATH_FRAMEWORK', __DIR__);
+
+// Register the Joomla compatibility layer.
+if (version_compare(JVERSION, '3.2', '>'))
+{
+	JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla32');
+}
+elseif (version_compare(JVERSION, '3', '>'))
+{
+	JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla3');
+}
+else
+{
+	JLoader::registerPrefix('KunenaCompat', KPATH_FRAMEWORK . '/compat/joomla2');
+}
 
 // Register the library base path for Kunena Framework.
 JLoader::registerPrefix('Kunena', KPATH_FRAMEWORK);
@@ -50,7 +67,6 @@ JLoader::register('KunenaForumAnnouncement', KPATH_FRAMEWORK . '/forum/announcem
 JLoader::register('KunenaForumCategory', KPATH_FRAMEWORK . '/forum/category/category.php');
 JLoader::register('KunenaForumCategoryUser', KPATH_FRAMEWORK . '/forum/category/user/user.php');
 JLoader::register('KunenaForumMessage', KPATH_FRAMEWORK . '/forum/message/message.php');
-JLoader::register('KunenaForumMessageAttachment', KPATH_FRAMEWORK . '/forum/message/attachment/attachment.php');
 JLoader::register('KunenaForumMessageThankyou', KPATH_FRAMEWORK . '/forum/message/thankyou/thankyou.php');
 JLoader::register('KunenaForumTopic', KPATH_FRAMEWORK . '/forum/topic/topic.php');
 JLoader::register('KunenaForumTopicPoll', KPATH_FRAMEWORK . '/forum/topic/poll/poll.php');
@@ -58,4 +74,7 @@ JLoader::register('KunenaForumTopicUser', KPATH_FRAMEWORK . '/forum/topic/user/u
 JLoader::register('KunenaForumTopicUserRead', KPATH_FRAMEWORK . '/forum/topic/user/read/read.php');
 
 // Register CKunenaLink class in order to allow old templates to work
-JLoader::register('CKunenaLink', KPATH_SITE . '/lib/kunena.link.class.php');
+if (defined('KPATH_SITE'))
+{
+	JLoader::register('CKunenaLink', KPATH_SITE . '/lib/kunena.link.class.php');
+}

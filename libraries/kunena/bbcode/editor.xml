@@ -47,6 +47,13 @@
 	<button tag="li" name="list" title="COM_KUNENA_EDITOR_LIST" alt="COM_KUNENA_EDITOR_HELPLINE_LIST">
 		<wrap-selection />
 	</button>
+	<button tag="hr" name="hr" title="COM_KUNENA_EDITOR_HR" alt="COM_KUNENA_EDITOR_HELPLINE_HR">
+		<wrap-selection empty_before="\n[hr]\n"
+						empty_after="\n"
+						repeat="line"
+						before="\n[hr]\n"
+						after="\n"/>
+	</button>
 	<button tag="left" name="left" title="COM_KUNENA_EDITOR_LEFT" alt="COM_KUNENA_EDITOR_HELPLINE_LEFT">
 		<wrap-selection />
 	</button>
@@ -100,6 +107,13 @@
 		<display name="kbbcode-video-options" />
 	</button>
 	<button tag="map" name="map" title="COM_KUNENA_EDITOR_MAP" alt="COM_KUNENA_EDITOR_HELPLINE_MAP">
+		<wrap-selection />
+	</button>
+	<button tag="smilies" name="smilies" title="COM_KUNENA_EDITOR_SMILIES" alt="COM_KUNENA_EDITOR_HELPLINE_SMILIES">
+		<display name="kbbcode-smilies-options" selection="kbbcode-smilies-options" />
+	</button>
+
+	<button tag="tweet" name="tweet" title="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK" alt="COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK">
 		<wrap-selection />
 	</button>
 

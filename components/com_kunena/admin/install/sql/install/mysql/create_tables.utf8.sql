@@ -24,16 +24,141 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
 	`id` int(11) NOT NULL auto_increment,
 	`mesid` int(11) NOT NULL default '0',
 	`userid` int(11) NOT NULL default '0',
+	`protected` tinyint(4) NOT NULL default '0',
 	`hash` char(32) NULL,
 	`size` int(11) NULL,
 	`folder` varchar(255) NOT NULL,
 	`filetype` varchar(20) NOT NULL,
 	`filename` varchar(255) NOT NULL,
+	`filename_real` varchar(255) NOT NULL default '' COMMENT 'Filename for downloads',
+	`caption` varchar(255) NOT NULL default '',
 	PRIMARY KEY (id),
 	KEY `mesid` (mesid),
 	KEY `userid` (userid),
 	KEY `hash` (hash),
-	KEY `filename` (filename) ) DEFAULT CHARACTER SET utf8;
+	KEY `filename` (filename),
+	KEY `filename_real` (filename_real) ) DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
+	`id` int(11) NOT NULL auto_increment,
+	`parent_id` int(11) NULL default '0',
+	`name` tinytext NULL,
+	`alias` varchar(255) NOT NULL,
+	`icon` varchar(20) NOT NULL,
+	`icon_id` tinyint(4) NOT NULL default '0',
+	`locked` tinyint(4) NOT NULL default '0',
+	`accesstype` varchar(20) NOT NULL default 'joomla.level',
+	`access` int(11) NOT NULL default '0',
+	`pub_access` int(11) NOT NULL default '1',
+	`pub_recurse` tinyint(4) NULL default '1',
+	`admin_access` int(11) NOT NULL default '0',
+	`admin_recurse` tinyint(4) NULL default '1',
+	`ordering` smallint(6) NOT NULL default '0',
+	`published` tinyint(4) NOT NULL default '0',
+	`channels` text NULL,
+	`checked_out` tinyint(4) NOT NULL default '0',
+	`checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
+	`review` tinyint(4) NOT NULL default '0',
+	`allow_anonymous` tinyint(4) NOT NULL default '0',
+	`post_anonymous` tinyint(4) NOT NULL default '0',
+	`hits` int(11) NOT NULL default '0',
+	`description` text NOT NULL,
+	`headerdesc` text NOT NULL,
+	`class_sfx` varchar(20) NOT NULL,
+	`allow_polls` tinyint(4) NOT NULL default '0',
+	`topic_ordering` varchar(16) NOT NULL default 'lastpost',
+	`iconset` varchar(255) NOT NULL,
+	`numTopics` mediumint(8) NOT NULL default '0',
+	`numPosts` mediumint(8) NOT NULL default '0',
+	`last_topic_id` int(11) NOT NULL default '0',
+	`last_post_id` int(11) NOT NULL default '0',
+	`last_post_time` int(11) NOT NULL default '0',
+	`params` text NOT NULL,
+	PRIMARY KEY (id),
+	KEY `parent_id` (parent_id),
+	KEY `category_access` (accesstype,access),
+	KEY `published_pubaccess_id` (published,pub_access,id) ) DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_configuration` (
+	`id` int(11) NOT NULL default '0',
+	`params` text NULL,
+	PRIMARY KEY (id) ) DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_keywords` (
+	`id` int(11) NOT NULL auto_increment,
+	`name` varchar(40) NOT NULL,
+	`public_count` int(11) NOT NULL,
+	`total_count` int(11) NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE KEY `name` (name),
+	KEY `public_count` (public_count),
+	KEY `total_count` (total_count) ) DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_keywords_map` (
+	`keyword_id` int(11) NOT NULL,
+	`user_id` int(11) NOT NULL,
+	`topic_id` int(11) NOT NULL,
+	UNIQUE KEY `keyword_user_topic` (keyword_id,user_id,topic_id),
+	KEY `user_id` (user_id),
+	KEY `topic_user` (topic_id,user_id) ) DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
+	`id` int(11) NOT NULL auto_increment,
+	`category_id` int(11) NOT NULL default '0',
+	`subject` tinytext NULL,
+	`icon_id` int(11) NOT NULL default '0',
+	`locked` tinyint(4) NOT NULL default '0',
+	`hold` tinyint(4) NOT NULL default '0',
+	`ordering` int(11) NOT NULL default '0',
+	`posts` int(11) NOT NULL default '0',
+	`hits` int(11) NOT NULL default '0',
+	`attachments` int(11) NOT NULL default '0',
+	`poll_id` int(11) NOT NULL default '0',
+	`moved_id` int(11) NOT NULL default '0',
+	`first_post_id` int(11) NOT NULL default '0',
+	`first_post_time` int(11) NOT NULL default '0',
+	`first_post_userid` int(11) NOT NULL default '0',
+	`first_post_message` text NULL,
+CREATE TABLE IF NOT EXISTS `#__kunena_aliases` (
+	`alias` varchar(255) NOT NULL,
+	`type` varchar(10) NOT NULL,
+	`item` varchar(32) NOT NULL,
+	`state` tinyint(4) NOT NULL default '0',
+	UNIQUE KEY `alias` (alias),
+	KEY `state` (state),
+	KEY `item` (item),
+	KEY `type` (type) ) DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_announcement` (
+	`id` int(3) NOT NULL auto_increment,
+	`title` tinytext NOT NULL,
+	`created_by` int(11) NOT NULL default '0',
+	`sdescription` text NOT NULL,
+	`description` text NOT NULL,
+	`created` datetime NOT NULL default '0000-00-00 00:00:00',
+	`published` tinyint(1) NOT NULL default '0',
+	`ordering` tinyint(4) NOT NULL default '0',
+	`showdate` tinyint(1) NOT NULL default '1',
+	PRIMARY KEY (id) ) DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
+	`id` int(11) NOT NULL auto_increment,
+	`mesid` int(11) NOT NULL default '0',
+	`userid` int(11) NOT NULL default '0',
+	`protected` tinyint(4) NOT NULL default '0',
+	`hash` char(32) NULL,
+	`size` int(11) NULL,
+	`folder` varchar(255) NOT NULL,
+	`filetype` varchar(20) NOT NULL,
+	`filename` varchar(255) NOT NULL,
+	`filename_real` varchar(255) NOT NULL default '' COMMENT 'Filename for downloads',
+	`caption` varchar(255) NOT NULL default '',
+	PRIMARY KEY (id),
+	KEY `mesid` (mesid),
+	KEY `userid` (userid),
+	KEY `hash` (hash),
+	KEY `filename` (filename),
+	KEY `filename_real` (filename_real) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 	`id` int(11) NOT NULL auto_increment,
@@ -129,7 +254,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 	KEY `first_post_userid` (first_post_userid),
 	KEY `last_post_userid` (last_post_userid),
 	KEY `first_post_time` (first_post_time),
-	KEY `last_post_time` (last_post_time) ) DEFAULT CHARACTER SET utf8;
+	KEY `last_post_time` (last_post_time)
+	KEY `last_post_id` (last_post_id) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
 	`id` int(11) NOT NULL auto_increment,
@@ -228,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_categories` (
 	`user_id` int(11) NOT NULL,
 	`category_id` int(11) NOT NULL,
 	`role` tinyint(4) NOT NULL default '0',
-	`allreadtime` datetime NULL,
+	`allreadtime` int(11) NOT NULL default '0',
 	`subscribed` tinyint(4) NOT NULL default '0',
 	`params` text NOT NULL,
 	PRIMARY KEY (user_id,category_id),
@@ -264,6 +390,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_topics` (
 
 CREATE TABLE IF NOT EXISTS `#__kunena_users` (
 	`userid` int(11) NOT NULL default '0',
+	`status` tinyint(1) NOT NULL DEFAULT '0',
+	`status_text` varchar(255) NOT NULL DEFAULT '',
 	`view` varchar(8) NOT NULL default '',
 	`signature` text NULL,
 	`moderator` int(11) NULL default '0',
@@ -300,6 +428,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users` (
 	`rank` tinyint(4) NOT NULL default '0',
 	`hideEmail` tinyint(1) NOT NULL default '1',
 	`showOnline` tinyint(1) NOT NULL default '1',
+	`canSubscribe` tinyint(1) NOT NULL default '1',
+	`userListtime` int(11) NULL default '-2',
 	`thankyou` int(11) NULL default '0',
 	PRIMARY KEY (userid),
 	KEY `group_id` (group_id),

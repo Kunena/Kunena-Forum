@@ -13,12 +13,14 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaCacheHelper has helper functions to clear all caches that affects Kunena.
  */
-abstract class KunenaCacheHelper {
+abstract class KunenaCacheHelper
+{
 	/**
 	 * Clear all cache types. Please avoid using this function except after installation and
 	 * when user wants to do it manually.
 	 */
-	public static function clearAll() {
+	public static function clearAll()
+	{
 		self::clearKunena();
 		self::clearSystem();
 		self::clearMenu();
@@ -32,7 +34,8 @@ abstract class KunenaCacheHelper {
 	/**
 	 * Perform normal cache cleanup.
 	 */
-	public static function clear() {
+	public static function clear()
+	{
 		self::clearKunena();
 		self::clearSystem();
 		self::clearMenu();
@@ -42,16 +45,28 @@ abstract class KunenaCacheHelper {
 	/**
 	 * Clear Kunena cache.
 	 */
-	public static function clearKunena() {
+	public static function clearKunena()
+	{
 		/** @var JCache|JCacheController $cache */
 		$cache = JFactory::getCache();
 		$cache->clean('com_kunena');
 	}
 
 	/**
-	 * Crear Joomla system cache.
+	 * Clear Category cache.
 	 */
-	public static function clearSystem() {
+	public static function clearCategories()
+	{
+		/** @var JCache|JCacheController $cache */
+		$cache = JFactory::getCache();
+		$cache->remove('categories', 'com_kunena');
+	}
+
+	/**
+	 * Clear Joomla system cache.
+	 */
+	public static function clearSystem()
+	{
 		/** @var JCache|JCacheController $cache */
 		$cache = JFactory::getCache();
 		$cache->clean('_system');
@@ -60,54 +75,73 @@ abstract class KunenaCacheHelper {
 	/**
 	 * Clear Joomla menu cache.
 	 */
-	public static function clearMenu() {
+	public static function clearMenu()
+	{
 		KunenaMenuHelper::cleanCache();
 	}
 
 	/**
 	 * Clear Kunena access cache.
 	 */
-	public static function clearAccess() {
+	public static function clearAccess()
+	{
 		KunenaAccess::getInstance()->clearCache();
 	}
 
 	/**
 	 * Clear cached files from Kunena.
 	 */
-	public static function clearCacheFiles() {
+	public static function clearCacheFiles()
+	{
 		// Delete all cached files.
 		$cacheDir = JPATH_CACHE.'/kunena';
-		if (is_dir($cacheDir)) JFolder::delete($cacheDir);
-		JFolder::create($cacheDir);
+
+		if (is_dir($cacheDir))
+		{
+			KunenaFolder::delete($cacheDir);
+		}
+
+		KunenaFolder::create($cacheDir);
 	}
 
 	/**
 	 * Clear cached template files.
 	 */
-	public static function clearTemplateFiles() {
+	public static function clearTemplateFiles()
+	{
 		// Delete all cached files.
 		$cacheDir = JPATH_ROOT."/media/kunena/cache";
-		if (is_dir($cacheDir)) JFolder::delete($cacheDir);
-		JFolder::create($cacheDir);
+
+		if (is_dir($cacheDir))
+		{
+			KunenaFolder::delete($cacheDir);
+		}
+
+		KunenaFolder::create($cacheDir);
 	}
 
 	/**
 	 * Clear PHP statcache (contains file size etc).
 	 */
-	public static function clearStatCache() {
+	public static function clearStatCache()
+	{
 		clearstatcache();
 	}
 
 	/**
 	 * Clear compiled PHP files, handy during installation when PHP files change.
 	 */
-	public static function clearCompiledPHP() {
+	public static function clearCompiledPHP()
+	{
 		// Remove all compiled files from APC cache.
-		if (function_exists('apc_clear_cache')) {
+		if (function_exists('apc_clear_cache'))
+		{
 			@apc_clear_cache();
 		}
+
 		// Remove all compiled files from XCache.
-		if (function_exists('xcache_clear_cache')) {
+		if (function_exists('xcache_clear_cache'))
+		{
 			@xcache_clear_cache(XC_TYPE_PHP);
 		}
 	}

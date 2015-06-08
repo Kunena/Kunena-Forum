@@ -94,7 +94,7 @@ defined ( '_JEXEC' ) or die ();
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_RSS') ?></td>
 														<td><?php echo $this->lists ['enablerss'] ?></td>
-														<td><img src="<?php echo JUri::base(true) ?>/components/com_kunena/images/livemarks.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
+														<td><img src="<?php echo JUri::base(true) ?>/components/com_kunena/media/icons/small/livemarks.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?></td>
@@ -105,11 +105,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH') ?></td>
 														<td><?php echo $this->lists ['fallback_english'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK') ?></td>
-														<td><?php echo $this->lists ['version_check'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?></td>
@@ -140,6 +135,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_CFG_ACCESS_COMPONENT') ?></td>
 														<td><?php echo $this->lists ['access_component'] ?></td>
 														<td><?php echo JText::sprintf('COM_KUNENA_CFG_ACCESS_COMPONENT_DESC', $this->lists ['componentUrl'], JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND')) ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CFG_LEGACY_URLS') ?></td>
+														<td><?php echo $this->lists ['legacy_urls'] ?></td>
+														<td><?php echo JText::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacy_urls_version'], $this->lists['legacy_urls_desc']) ?></td>
 													</tr>
 												</tbody>
 											</table>
@@ -329,11 +329,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS_DESC') ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
-														<td><input type="text" name="cfg_attachment_limit" value="<?php echo $this->escape($this->config->attachment_limit) ?>" /></td>
-														<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
-													</tr>
-													<tr>
 														<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY') ?></td>
 														<td><?php echo $this->lists ['pickup_category'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY_DESC') ?></td>
@@ -347,6 +342,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT') ?></td>
 														<td><?php echo $this->lists ['default_sort'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME') ?></td>
+														<td><?php echo $this->lists ['searchtime'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME_DESC') ?></td>
 													</tr>
 												</tbody>
 											</table>
@@ -469,6 +469,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['show_imgfiles_manage_profile'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT') ?></td>
+														<td><?php echo $this->lists ['user_report'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -581,11 +586,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED_DESC') ?></td>
 													</tr>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_ALLOW_USERNAME_CHANGE') ?></td>
-														<td><?php echo $this->lists ['usernamechange'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_ALLOW_USERNAME_CHANGE_DESC') ?></td>
-													</tr>
-													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_FLOOD') ?></td>
 														<td><input type="text" name="cfg_floodprotection" value="<?php echo $this->escape($this->config->floodprotection) ?>" /></td>
 														<td><?php echo JText::_('COM_KUNENA_A_FLOOD_DESC') ?></td>
@@ -610,6 +610,16 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['statslink_allowed'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS') ?></td>
+														<td><input type="text" name="cfg_max_links" value="<?php echo $this->escape ( $this->config->max_links ) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_TEASER') ?></td>
+														<td><?php echo $this->lists ['teaser'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_TEASER_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -625,9 +635,9 @@ defined ( '_JEXEC' ) or die ();
 												</thead>
 												<tbody>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS') ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_TITLE') ?></td>
 														<td><?php echo $this->lists ['captcha'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS_DESC') ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT') ?></td>
@@ -705,12 +715,46 @@ defined ( '_JEXEC' ) or die ();
 														<td class="nowrap"><input type="text" name="cfg_avatarquality" class="ksm-field" value="<?php echo $this->escape($this->config->avatarquality) ?>" /> %</td>
 														<td></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_AVATAR_RESIZE_METHOD') ?></td>
+														<td><?php echo $this->lists ['avatarresizemethod'] ?></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_AVATAR_CROP') ?></td>
+														<td><?php echo $this->lists ['avatarcrop'] ?></td>
+														<td></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>
 									</div>
 
 									<div class="tab-pane" id="tab_uploads">
+										<fieldset>
+											<legend><?php echo JText::_('COM_KUNENA_A_ATTACHMENTS') ?></legend>
+											<table class="table table-striped">
+												<thead>
+													<tr>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
+														<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
+														<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
+														<td><input type="text" name="cfg_attachment_limit" value="<?php echo $this->escape($this->config->attachment_limit) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_PROTECTION') ?></td>
+														<td><?php echo $this->lists ['attachment_protection'] ?></td>
+														<td><?php echo JText::sprintf('COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC', JUri::root(false) . 'media/kunena/attachments/image.png') ?></td>
+													</tr>
+												</tbody>
+											</table>
+										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_IMAGE') ?></legend>
 											<table class="table table-striped">
@@ -942,6 +986,16 @@ defined ( '_JEXEC' ) or die ();
 														<td><input type="text" name="cfg_ebay_api_key" value="<?php echo $this->escape($this->config->ebay_api_key) ?>" /></td>
 														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_LABEL') ?></td>
+														<td><input type="text" name="cfg_twitter_consumer_key" value="<?php echo $this->escape($this->config->twitter_consumer_key) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_DESC') ?></td>
+													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_LABEL') ?></td>
+														<td><input type="text" name="cfg_twitter_consumer_secret" value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>" /></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
+													</tr>
 													<?php /*
 													// TODO: If you uncomment this feature, please remove forced disable from the KunenaConfig class.
 													<tr>
@@ -1044,7 +1098,7 @@ defined ( '_JEXEC' ) or die ();
 
 									<div class="tab-pane" id="tab_extra">
 										<fieldset>
-											<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
+											<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_SETTINGS') ?></legend>
 											<table class="table table-striped">
 												<thead>
 													<tr>
@@ -1068,11 +1122,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_AVATAR') ?></td>
 														<td><?php echo $this->lists ['userlist_avatar'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME') ?></td>
-														<td><?php echo $this->lists ['userlist_name'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS') ?></td>

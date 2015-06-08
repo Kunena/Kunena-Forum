@@ -33,8 +33,8 @@ class pkg_kunena_languagesInstallerScript {
 		$app = JFactory::getApplication();
 
 		// Do not install if Kunena doesn't exist.
-		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0')) {
-			$app->enqueueMessage(sprintf ( 'Kunena %s has not been installed, aborting!', '3.0' ), 'notice');
+		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0')) {
+			$app->enqueueMessage(sprintf ( 'Kunena %s has not been installed, aborting!', '4.0' ), 'notice');
 			return false;
 		}
 		if (KunenaForum::isDev()) {

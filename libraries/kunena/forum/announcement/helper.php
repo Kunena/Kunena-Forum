@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaForumAnnouncementHelper
  */
-abstract class KunenaForumAnnouncementHelper {
+abstract class KunenaForumAnnouncementHelper
+{
 	/**
 	 * @var KunenaForumAnnouncement[]
 	 */
@@ -27,19 +28,27 @@ abstract class KunenaForumAnnouncementHelper {
 	 *
 	 * @return KunenaForumAnnouncement
 	 */
-	static public function get($identifier = null, $reload = false) {
-		if ($identifier instanceof KunenaForumAnnouncement) {
+	static public function get($identifier = null, $reload = false)
+	{
+		if ($identifier instanceof KunenaForumAnnouncement)
+		{
 			return $identifier;
 		}
-		if (!is_numeric($identifier)) {
+
+		if (!is_numeric($identifier))
+		{
 			return new KunenaForumAnnouncement;
 		}
 
 		$id = intval ( $identifier );
-		if (empty ( self::$_instances [$id] )) {
+
+		if (empty ( self::$_instances [$id] ))
+		{
 			self::$_instances [$id] = new KunenaForumAnnouncement (array('id'=>$id));
 			self::$_instances [$id]->load();
-		} elseif ($reload) {
+		}
+		elseif ($reload)
+		{
 			self::$_instances [$id]->load();
 		}
 
@@ -52,8 +61,10 @@ abstract class KunenaForumAnnouncementHelper {
 	 *
 	 * @return string
 	 */
-	static public function getUrl($layout = null, $xhtml = true) {
+	static public function getUrl($layout = null, $xhtml = true)
+	{
 		$uri = self::getUri($layout);
+
 		return KunenaRoute::_($uri, $xhtml);
 	}
 
@@ -62,9 +73,15 @@ abstract class KunenaForumAnnouncementHelper {
 	 *
 	 * @return JUri
 	 */
-	static public function getUri($layout = null) {
+	static public function getUri($layout = null)
+	{
 		$uri = new JUri('index.php?option=com_kunena&view=announcement');
-		if ($layout) $uri->setVar('layout', $layout);
+
+		if ($layout)
+		{
+			$uri->setVar('layout', $layout);
+		}
+
 		return $uri;
 	}
 
@@ -75,7 +92,8 @@ abstract class KunenaForumAnnouncementHelper {
 	 *
 	 * @return KunenaForumAnnouncement[]
 	 */
-	static public function getAnnouncements($start = 0, $limit = 1, $filter = true) {
+	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
+	{
 		$db = JFactory::getDBO ();
 		$where = $filter ? "WHERE published=1" : '';
 		$query = "SELECT * FROM #__kunena_announcement {$where} ORDER BY created DESC";
@@ -85,14 +103,20 @@ abstract class KunenaForumAnnouncementHelper {
 
 		self::$_instances = array();
 		$list = array();
-		foreach ( $results as $announcement ) {
-			if (isset(self::$_instances [$announcement['id']])) continue;
+		foreach ( $results as $announcement )
+		{
+			if (isset(self::$_instances [$announcement['id']]))
+			{
+				continue;
+			}
+
 			$instance = new KunenaForumAnnouncement ($announcement);
 			$instance->exists (true);
 			self::$_instances [$instance->id] = $instance;
 			$list[] = $instance;
 		}
 		unset ($results);
+
 		return $list;
 	}
 
@@ -101,7 +125,8 @@ abstract class KunenaForumAnnouncementHelper {
 	 *
 	 * @return int
 	 */
-	static public function getCount($filter = true) {
+	static public function getCount($filter = true)
+	{
 		$db = JFactory::getDBO ();
 		$where = $filter ? "WHERE published=1" : '';
 
@@ -116,7 +141,8 @@ abstract class KunenaForumAnnouncementHelper {
 	/**
 	 * Free up memory by cleaning up all cached items.
 	 */
-	public static function cleanup() {
+	public static function cleanup()
+	{
 		self::$_instances = array();
 	}
 }

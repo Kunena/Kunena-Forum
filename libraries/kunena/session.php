@@ -16,31 +16,44 @@ class KunenaSession extends JObject
 {
 	protected $_exists = false;
 	protected $_sessiontimeout = false;
+	protected $allreadtime;
+
 	private static $_instance;
 
 	public function __construct($identifier)
 	{
 		$this->load($identifier);
-		$now = JFactory::getDate()->toUnix();
-		if (!$this->currvisit) {
+
+		if (!$this->currvisit)
+		{
 			// For new users new indication displays 14 days
+			$now = JFactory::getDate()->toUnix();
 			$this->lasttime = $now - 14*24*60*60; // 14 days ago
+			$this->allreadtime = $this->lasttime;
 			$this->currvisit = $now;
 			$this->readtopics = 0;
-		} else {
-			// For existing users new indication expires after 2 months
-			$monthAgo = $now - 61*24*60*60;
-			$this->lasttime = ($this->lasttime > $monthAgo ? $this->lasttime : $monthAgo);
+		}
+		else
+		{
+			// Deal with users who do not (yet) have all readtime set.
+			$userCategory = KunenaForumCategoryUserHelper::get(0, (int) $identifier);
+			$this->allreadtime = $userCategory->allreadtime ? $userCategory->allreadtime : $this->lasttime;
 		}
 	}
 
 	public static function getInstance( $update=false, $userid = null )
 	{
-		if (!self::$_instance) {
+		if (!self::$_instance)
+		{
 			$my = JFactory::getUser();
 			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
-			if ($update) self::$_instance->updateSessionInfo();
+
+			if ($update)
+			{
+				self::$_instance->updateSessionInfo();
+			}
 		}
+
 		return self::$_instance;
 	}
 
@@ -62,7 +75,8 @@ class KunenaSession extends JObject
 		static $tabletype = null;
 
 		//Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype['name'] || $prefix != $tabletype['prefix']) {
+		if ($tabletype === null || $type != $tabletype['name'] || $prefix != $tabletype['prefix'])
+		{
 			$tabletype['name']		= $type;
 			$tabletype['prefix']	= $prefix;
 		}
@@ -85,7 +99,8 @@ class KunenaSession extends JObject
 		$table	= $this->getTable();
 
 		// Load the KunenaTableUser object based on the user id
-		if ($table->load($userid)) {
+		if ($table->load($userid))
+		{
 			$this->_exists = true;
 		}
 
@@ -107,17 +122,21 @@ class KunenaSession extends JObject
 	public function save($updateOnly = false)
 	{
 		// Do not save session for anonymous users
-		if (!$this->userid) {
+		if (!$this->userid)
+		{
 			return false;
 		}
+
 		// Create the user table object
 		$table	= $this->getTable();
 		$table->bind($this->getProperties());
 		$table->exists($this->_exists);
 
 		// Check and store the object.
-		if (!$table->check()) {
+		if (!$table->check())
+		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 
@@ -125,18 +144,29 @@ class KunenaSession extends JObject
 		$isnew = !$this->_exists;
 
 		// If we aren't allowed to create new users return
-		if ($isnew && $updateOnly) {
+		if ($isnew && $updateOnly)
+		{
 			return true;
 		}
 
 		//Store the user data in the database
-		if (!$result = $table->store()) {
+		if (!$result = $table->store())
+		{
 			$this->setError($table->getError());
 		}
 
 		// Set the id for the JUser object in case we created a new user.
-		if (empty($this->userid)) {
+		if (empty($this->userid))
+		{
 			$this->userid = $table->get('userid');
+		}
+
+		// Read indication has moved outside of the session table -- let's update it too.
+		$userCategory = KunenaForumCategoryUserHelper::get(0, $this->userid);
+		if ($userCategory->allreadtime != $this->allreadtime)
+		{
+			$userCategory->allreadtime = $this->allreadtime;
+			$userCategory->save();
 		}
 
 		return $result;
@@ -158,8 +188,8 @@ class KunenaSession extends JObject
 		if (!$result) {
 			$this->setError($table->getError());
 		}
-		return $result;
 
+		return $result;
 	}
 
 	public function isNewUser()
@@ -172,12 +202,22 @@ class KunenaSession extends JObject
 		// perform session timeout check
 		$lifetime = max(intval(JFactory::getConfig()->get( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->sessiontimeout));
 		$this->_sessiontimeout = ($this->currvisit + $lifetime < JFactory::getDate()->toUnix());
+
 		return $this->_sessiontimeout;
+	}
+
+	public function getAllReadTime()
+	{
+		// For existing users new indication expires after 3 months
+		$monthsAgo = JFactory::getDate()->toUnix() - 91*24*60*60;
+		$allreadtime = ($this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo);
+
+		return $allreadtime;
 	}
 
 	public function markAllCategoriesRead()
 	{
-		$this->lasttime = JFactory::getDate()->toUnix();
+		$this->allreadtime = JFactory::getDate()->toUnix();
 		$this->readtopics = 0;
 	}
 
@@ -190,6 +230,7 @@ class KunenaSession extends JObject
 			$this->lasttime = $this->currvisit;
 			$this->readtopics = 0;
 		}
+
 		$this->currvisit = JFactory::getDate()->toUnix();
 	}
 }

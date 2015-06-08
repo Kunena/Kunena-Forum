@@ -1,65 +1,126 @@
 <?php
 /**
  * Kunena Plugin
- * @package Kunena.Plugins
- * @subpackage Joomla25
+ *
+ * @package       Kunena.Plugins
+ * @subpackage    Joomla
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
-class KunenaLoginJoomla {
+class KunenaLoginJoomla
+{
 	protected $params = null;
 
-	public function __construct($params) {
+	/**
+	 * @param $params
+	 */
+	public function __construct($params)
+	{
 		$this->params = $params;
-		require_once JPATH_SITE.'/components/com_users/helpers/route.php';
+		require_once JPATH_SITE . '/components/com_users/helpers/route.php';
 	}
 
-	public function loginUser($username, $password, $rememberme) {
+	/**
+	 * Method to login via Joomla! framework
+	 *
+	 * @param   string  $username   Username of user
+	 * @param   string  $password   Password of user
+	 * @param   boolean $rememberme Remember the user next time it wants login
+	 * @param   string  $secretkey  The secretkey given by user when TFA is enabled
+	 *
+	 * @return boolean
+	 */
+	public function loginUser($username, $password, $rememberme, $secretkey = null)
+	{
 		$credentials = array('username' => $username, 'password' => $password);
+
+		if ($secretkey)
+		{
+			$credentials['secretkey'] = $secretkey;
+		}
+
 		$options = array('remember' => $rememberme);
-		$error = JFactory::getApplication()->login ( $credentials, $options );
+		$error   = JFactory::getApplication()->login($credentials, $options);
+
 		return is_bool($error) ? '' : $error;
 	}
 
-	public function logoutUser() {
-		$error = JFactory::getApplication()->logout ();
+	/**
+	 * @return bool|string
+	 * @throws Exception
+	 */
+	public function logoutUser()
+	{
+		$error = JFactory::getApplication()->logout();
+
 		return is_bool($error) ? '' : $error;
 	}
 
-	public function getRememberMe() {
+	/**
+	 * @return bool
+	 */
+	public function getRememberMe()
+	{
 		return (bool) JPluginHelper::isEnabled('system', 'remember');
 	}
 
-	public function getLoginURL() {
+	/**
+	 * @return string
+	 */
+	public function getLoginURL()
+	{
 		$Itemid = UsersHelperRoute::getLoginRoute();
-		return JRoute::_('index.php?option=com_users&view=login'.($Itemid ? "&Itemid={$Itemid}" : ''));
+
+		return JRoute::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
-	public function getLogoutURL() {
+	/**
+	 * @return string
+	 */
+	public function getLogoutURL()
+	{
 		$Itemid = UsersHelperRoute::getLoginRoute();
-		return JRoute::_('index.php?option=com_users&view=login'.($Itemid ? "&Itemid={$Itemid}" : ''));
+
+		return JRoute::_('index.php?option=com_users&view=login' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
-	public function getRegistrationURL() {
-		$usersConfig = JComponentHelper::getParams ( 'com_users' );
-		if ($usersConfig->get ( 'allowUserRegistration' )) {
+	/**
+	 * @return null|string
+	 */
+	public function getRegistrationURL()
+	{
+		$usersConfig = JComponentHelper::getParams('com_users');
+		if ($usersConfig->get('allowUserRegistration'))
+		{
 			$Itemid = UsersHelperRoute::getRegistrationRoute();
-			return JRoute::_('index.php?option=com_users&view=registration'.($Itemid ? "&Itemid={$Itemid}" : ''));
+
+			return JRoute::_('index.php?option=com_users&view=registration' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 		}
+
 		return null;
 	}
 
-	public function getResetURL() {
+	/**
+	 * @return string
+	 */
+	public function getResetURL()
+	{
 		$Itemid = UsersHelperRoute::getResetRoute();
-		return JRoute::_('index.php?option=com_users&view=reset'.($Itemid ? "&Itemid={$Itemid}" : ''));
+
+		return JRoute::_('index.php?option=com_users&view=reset' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
-	public function getRemindURL() {
+	/**
+	 * @return string
+	 */
+	public function getRemindURL()
+	{
 		$Itemid = UsersHelperRoute::getRemindRoute();
-		return JRoute::_('index.php?option=com_users&view=remind'.($Itemid ? "&Itemid={$Itemid}" : ''));
+
+		return JRoute::_('index.php?option=com_users&view=remind' . ($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 }

@@ -11,187 +11,174 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Implements Kunena layouts for the views.
+ * Implements Kunena specific functions for all layouts.
  *
- * This class is part of Kunena HMVC implementation, allowing calls to
- * any layout file.
- *
- * <code>
- *	echo KunenaLayout::factory('pagination')->set('pagination', $this->pagination);
- *	echo KunenaLayout::factory('pagination/footer')->set('pagination', $this->pagination);
- * </code>
- *
- * Individual layout classes are located in /components/com_kunena/layouts,
- * but they are not needed to get layouts to work. They are useful, though,
- * if template files would otherwise have too much code in them.
- *
- * Layout template files can be found from /components/com_Kunena/template/[template]/layouts.
- * Default layout can be overridden by ->setLayout():
- *
- * <code>
- *	echo KunenaLayout::factory('pagination')->set('pagination', $this->pagination)->setLayout('mini');
- * </code>
- *
- * @see KunenaRequest
+ * @see KunenaLayoutBase
  */
-class KunenaLayout
+class KunenaLayout extends KunenaLayoutBase
 {
 	/**
-	 * The view layout.
+	 * Content to be appended after the main output.
 	 *
-	 * @var    string
+	 * @var array
 	 */
-	protected $layout = 'default';
+	protected $after = array();
+
+	protected $legacy;
 
 	/**
-	 * The paths queue.
+	 * Append HTML after the layout content.
 	 *
-	 * @var    SplPriorityQueue
+	 * @param  string  $content
 	 */
-	protected $paths;
-
-	/**
-	 * Method to instantiate the layout.
-	 *
-	 * @param   SplPriorityQueue  $paths  The paths queue.
-	 */
-	public function __construct(SplPriorityQueue $paths = null)
+	public function appendAfter($content)
 	{
-		// Setup dependencies.
-		$this->paths = isset($paths) ? $paths : $this->loadPaths();
+		$this->after[] = $content;
 	}
 
 	/**
-	 * Magic toString method that is a proxy for the render method.
-	 *
-	 * @return  string
+	 * @param $key
+	 * @return string
 	 */
-	public function __toString()
+	public function text($key)
 	{
-		try {
-			return (string) $this->render();
-		} catch (Exception $e) {
-			// Exceptions aren't allowed in string conversion, use PHP error instead.
-			trigger_error($e->getMessage(), E_USER_ERROR);
-			return '';
-		}
-	}
-
-	/**
-	 * Method to escape output.
-	 *
-	 * @param   string  $output  The output to escape.
-	 *
-	 * @return  string  The escaped output.
-	 *
-	 * @see     JView::escape()
-	 */
-	public function escape($output)
-	{
-		// Escape the output.
-		return htmlspecialchars($output, ENT_COMPAT, 'UTF-8');
+		return JText::_($key);
 	}
 
 	/**
 	 * Method to render the view.
 	 *
+	 * @param   string  Layout.
+	 *
 	 * @return  string  The rendered view.
-	 * @throws  RuntimeException
+	 *
+	 * @throws  Exception|RunTimeException
 	 */
-	public function render()
+	public function render($layout = null)
 	{
-		// Get the layout path.
-		$path = $this->getPath($this->getLayout());
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start("render layout '{$this->_name}'") : null;
 
-		// Check if the layout path was found.
-		if (!$path) {
-			throw new RuntimeException("Layout Path For '{$this->getLayout()}' Not Found");
+		try
+		{
+			$output = parent::render($layout);
+
+			foreach ($this->after as $content)
+			{
+				$output .= (string) $content;
+			}
+		}
+		catch (Exception $e)
+		{
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
+			throw $e;
 		}
 
-		// Start an output buffer.
-		ob_start();
-
-		// Load the layout.
-		include $path;
-
-		// Get the layout contents.
-		$output = ob_get_clean();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 
 		return $output;
 	}
 
-	/**
-	 * Method to get the view layout.
-	 *
-	 * @return  string  The layout name.
-	 */
-	public function getLayout()
-	{
-		return $this->layout;
+	public function setLegacy(KunenaView $view = null) {
+		$this->legacy = $view;
+
+		return $this;
 	}
 
 	/**
-	 * Method to get the layout path.
+	 * Add legacy template support.
 	 *
-	 * @param   string  $layout  The layout name.
-	 *
-	 * @return  mixed  The layout file name if found, false otherwise.
+	 * @param $view
+	 * @param $layout
+	 * @param null $template
+	 * @deprecated K4.0
 	 */
-	public function getPath($layout)
+	public function displayTemplateFile($view, $layout, $template = null)
 	{
-		// Get the layout file name.
-		$file = JPath::clean($layout . '.php');
+		list($layout, $template) = KunenaFactory::getTemplate()->mapLegacyView("{$view}/{$layout}_{$template}");
+		echo $this->subLayout($layout)->setLayout($template)->setLegacy($this->legacy);
+	}
 
-		$paths = array();
-		foreach ($this->paths as $path) {
-			$paths[] = $path;
+	/**
+	 * Add legacy template support. Overrides the parent class.
+	 *
+	 * @param $property
+	 * @return mixed
+	 * @throws InvalidArgumentException
+	 * @deprecated K4.0
+	 */
+	public function __get($property)
+	{
+		if (!array_key_exists($property, $this->closures))
+		{
+			if ($this->legacy)
+			{
+				if (isset($this->legacy->{$property}))
+				{
+					return $this->legacy->{$property};
+				}
+
+				$properties = $this->legacy->getProperties();
+
+				if (array_key_exists($property, $properties))
+				{
+					return $this->legacy->{$property};
+				}
+			}
+			if (JDEBUG)
+			{
+				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
+			}
+			else
+			{
+				return null;
+			}
 		}
-		// Find the layout file path.
-		$path = JPath::find($paths, $file);
 
-		return $path;
+		return $this->closures[$property]();
 	}
 
 	/**
-	 * Method to get the view paths.
+	 * Add legacy template support.
 	 *
-	 * @return  SplPriorityQueue  The paths queue.
+	 * @param $name
+	 * @param $arguments
+	 * @return mixed
+	 * @throws InvalidArgumentException
+	 * @deprecated K4.0
 	 */
-	public function getPaths()
+	public function __call($name, $arguments)
 	{
-		return $this->paths;
+		try
+		{
+			return parent::__call($name, $arguments);
+		}
+		catch (InvalidArgumentException $e)
+		{
+			$callable = array($this->legacy, $name);
+
+			if ($this->legacy && is_callable($callable))
+			{
+				return call_user_func_array($callable, $arguments);
+			}
+
+			throw $e;
+		}
 	}
 
 	/**
-	 * Method to set the view layout.
+	 * Add legacy template support.
 	 *
-	 * @param   string  $layout  The layout name.
-	 *
-	 * @return  KunenaLayout  Method supports chaining.
+	 * @param $property
+	 * @return bool
+	 * @deprecated K4.0
 	 */
-	public function setLayout($layout)
+	public function __isset($property)
 	{
-		$this->layout = $layout;
-
-		return $this;
+		return parent::__isset($property) || ($this->legacy && (isset($this->legacy->{$property})));
 	}
 
 	/**
-	 * Method to set the view paths.
-	 *
-	 * @param   SplPriorityQueue  $paths  The paths queue.
-	 *
-	 * @return  KunenaLayout  Method supports chaining.
-	 */
-	public function setPaths(SplPriorityQueue $paths)
-	{
-		$this->paths = $paths;
-
-		return $this;
-	}
-
-	/**
-	 * Modifies a property of the object, creating it if it does not already exist.
+	 * Add legacy template support.
 	 *
 	 * @param   string  $property  The name of the property.
 	 * @param   mixed   $value     The value of the property to set.
@@ -200,98 +187,166 @@ class KunenaLayout
 	 */
 	public function set($property, $value = null)
 	{
-		$this->$property = $value;
+		$isFactory = is_object($value) && method_exists($value, '__invoke');
 
-		return $this;
-	}
-
-	/**
-	 * Set the object properties based on a named array/hash.
-	 *
-	 * @param   mixed  $properties  Either an associative array or another object.
-	 *
-	 * @return  KunenaLayout  Method supports chaining.
-	 *
-	 * @see     set()
-	 * @throws \InvalidArgumentException
-	 */
-	public function setProperties($properties)
-	{
-		if (!is_array($properties) && !is_object($properties)) {
-			throw new \InvalidArgumentException('Parameter should be either array or an object.');
+		if ($isFactory)
+		{
+			$this->closures[$property] = $value;
 		}
-
-		foreach ((array) $properties as $k => $v) {
-			// Use the set function which might be overridden.
-			$this->set($k, $v);
+		elseif ($this->legacy)
+		{
+			$this->legacy->{$property} = $value;
+		}
+		else
+		{
+			$this->{$property} = $value;
 		}
 
 		return $this;
 	}
 
 	/**
-	 * Method to load the paths queue.
+	 * Add legacy template support.
 	 *
-	 * @return  SplPriorityQueue  The paths queue.
-	 */
-	protected function loadPaths()
-	{
-		return new SplPriorityQueue();
-	}
-
-	/**
-	 * Returns layout class.
-	 *
-	 * <code>
-	 *	// Output pagination/pages layout with current cart instance.
-	 *	echo KunenaLayout::factory('pagination/pages')->set('pagination', $this->pagination);
-	 * </code>
-	 *
-	 * @param   mixed $paths String or array of strings.
+	 * @param   $path
 	 * @return  KunenaLayout
 	 */
-	public static function factory($paths) {
-		if (!is_array($paths)) $paths = (array) $paths;
+	public function subLayout($path)
+	{
+		return parent::subLayout($path)->setLegacy($this->legacy)->setLayout($this->layout);
+	}
 
-		$app = JFactory::getApplication();
-		// Add all paths for the template overrides.
-		$templatePaths = new SplPriorityQueue();
-		if ($app->isAdmin()) {
-			$template = KunenaFactory::getAdminTemplate();
-			$base = 'layouts';
-		} else {
-			$template = KunenaFactory::getTemplate();
-			$base = 'html/layouts';
+	public function getButton($link, $name, $scope, $type, $id = null)
+	{
+		return KunenaFactory::getTemplate()->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
+	}
+
+	public function getIcon($name, $title='')
+	{
+		return KunenaFactory::getTemplate()->getIcon($name, $title);
+	}
+
+	/**
+	 * This function formats a number to n significant digits when above
+	 * 10,000. Starting at 10,0000 the out put changes to 10k, starting
+	 * at 1,000,000 the output switches to 1m. Both k and m are defined
+	 * in the language file. The significant digits are used to limit the
+	 * number of digits displayed when in 10k or 1m mode.
+	 *
+	 * @param int $number 		Number to be formated
+	 * @param int $precision	Significant digits for output
+	 * @return string
+	 */
+	public function formatLargeNumber($number, $precision = 3)
+	{
+		// Do we need to reduce the number of significant digits?
+		if ($number >= 10000)
+		{
+			// Round the number to n significant digits
+			$number = round ($number, -1*(log10($number)+1) + $precision);
 		}
 
-		foreach ($paths as $path) {
-			if (!$path) continue;
+		if ($number < 10000)
+		{
+			$output = $number;
+		}
+		elseif ($number >= 1000000)
+		{
+			$output = $number / 1000000 . JText::_('COM_KUNENA_MILLION');
+		}
+		else
+		{
+			$output = $number / 1000 . JText::_('COM_KUNENA_THOUSAND');
+		}
 
-			$lookup = $template->getTemplatePaths("{$base}/{$path}", true);
-			foreach ($lookup as $loc) {
-				$templatePaths->insert($loc, 1);
+		return $output;
+	}
+
+	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
+	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		if (!$content)
+		{
+			$content = $this->escape($category->name);
+		}
+
+		if ($title === null)
+		{
+			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+		}
+
+		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		return $link;
+	}
+
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
+	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		$url = $topic->getUrl($category ? $category : (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
+
+		if (!$content)
+		{
+			$content = KunenaHtmlParser::parseText($topic->subject);
+		}
+
+		if ($title === null)
+		{
+			if ($action instanceof KunenaForumMessage)
+			{
+				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
 			}
-		}
-
-		// Go through all the matching layouts.
-		foreach ($paths as $path) {
-			if (!$path) continue;
-
-			// Attempt to load layout class if it doesn't exist.
-			$class = 'KunenaLayout' . (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
-			if (!class_exists($class)) {
-				$filename = JPATH_BASE . "/components/com_kunena/layouts/{$path}/layout.php";
-				if (!is_file($filename)) {
-					continue;
+			else
+			{
+				switch ($action) {
+					case 'first':
+						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
+						break;
+					case 'last':
+						$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
+						break;
+					case 'unread':
+						$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
+						break;
+					default:
+						$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
 				}
-				require_once $filename;
 			}
+		}
+		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
 
-			// Create layout object.
-			return new $class($templatePaths);
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		return $link;
+	}
+
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30)
+	{
+		$lastTopic = $category->getLastTopic();
+		$channels = $category->getChannels();
+
+		if (!isset($channels[$lastTopic->category_id]))
+		{
+			$category = $lastTopic->getCategory();
 		}
 
-		// Create default layout object.
-		return new KunenaLayout($templatePaths);
+		$uri = $lastTopic->getUrl($category, true, 'last');
+
+		if (!$content)
+		{
+			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE').' ' : '';
+			$content .= KunenaHtmlParser::parseText($lastTopic->subject, $length);
+		}
+
+		if ($title === null)
+		{
+			$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
+		}
+
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 }

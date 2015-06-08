@@ -16,7 +16,8 @@ require_once(__DIR__ . '/kunena.php');
  * Kunena Messages
  * Provides access to the #__kunena_messages table
  */
-class TableKunenaMessages extends KunenaTable {
+class TableKunenaMessages extends KunenaTable
+{
 	public $id = null;
 	public $parent = null;
 	public $thread = null;
@@ -39,11 +40,13 @@ class TableKunenaMessages extends KunenaTable {
 	public $params = null;
 	public $message = null;
 
-	public function __construct($db) {
+	public function __construct($db)
+	{
 		parent::__construct ( '#__kunena_messages', 'id', $db );
 	}
 
-	public function reset() {
+	public function reset()
+	{
 		parent::reset();
 		$this->message = null;
 	}
@@ -52,17 +55,24 @@ class TableKunenaMessages extends KunenaTable {
 	{
 		$this->_exists = false;
 		$k = $this->_tbl_key;
+
 		// Get the id to load.
-		if ($id !== null) {
+		if ($id !== null)
+		{
 			$this->$k = $id;
 		}
 
 		// Reset the table.
-		if ($reset) $this->reset();
+		if ($reset)
+		{
+			$this->reset();
+		}
 
 		// Check for a valid id to load.
-		if ($this->$k === null || intval($this->$k) < 1) {
+		if ($this->$k === null || intval($this->$k) < 1)
+		{
 			$this->$k = 0;
+
 			return false;
 		}
 
@@ -72,43 +82,60 @@ class TableKunenaMessages extends KunenaTable {
 		$data = $this->_db->loadAssoc();
 
 		// Check for an error message.
-		if ($this->_db->getErrorNum()) {
+		if ($this->_db->getErrorNum())
+		{
 			$this->setError($this->_db->getErrorMsg());
+
 			return false;
 		}
 
 		if(!$data)
 		{
 			$this->$k = 0;
+
 			return false;
 		}
 		$this->_exists = true;
 
 		// Bind the data to the table.
 		$this->bind($data);
+
 		return $this->_exists;
 	}
 
-	public function check() {
+	public function check()
+	{
 		$category = KunenaForumCategoryHelper::get($this->catid);
-		if (!$category->exists()) {
+
+		if (!$category->exists())
+		{
 			// TODO: maybe we should have own error message? or not?
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid ) );
-		} else {
+		}
+		else
+		{
 			$this->catid = $category->id;
 		}
+
 		$this->subject = trim($this->subject);
-		if (!$this->subject) {
+		if (!$this->subject)
+		{
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT' ) );
 		}
+
 		$this->message = trim($this->message);
-		if (!$this->message) {
+		if (!$this->message)
+		{
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE' ) );
 		}
-		if (!$this->time) {
+
+		if (!$this->time)
+		{
 			$this->time = JFactory::getDate()->toUnix();
 		}
+
 		$this->modified_reason = trim($this->modified_reason);
+
 		return ($this->getError () == '');
 	}
 
@@ -117,28 +144,40 @@ class TableKunenaMessages extends KunenaTable {
 	 * @return bool
 	 * @see KunenaTable::store()
 	 */
-	public function store($updateNulls = false) {
+	public function store($updateNulls = false)
+	{
 		$k = $this->_tbl_key;
 		$update = $this->_exists;
 		$message = $this->message;
 		unset($this->message);
+
 		if (!parent::store())
+		{
 			return false;
+		}
+
 		$this->message = $message;
 
-		if ($update) {
+		if ($update)
+		{
 			$query = "UPDATE #__kunena_messages_text SET message={$this->_db->quote($this->message)} WHERE mesid = {$this->$k}";
-		} else {
+		}
+		else
+		{
 			$query = "INSERT INTO #__kunena_messages_text (mesid, message) VALUES ({$this->$k}, {$this->_db->quote($this->message)})";
 		}
+
 		$this->_db->setQuery($query);
 		$this->_db->query();
 
 		// Check for an error message.
-		if ($this->_db->getErrorNum()) {
+		if ($this->_db->getErrorNum())
+		{
 			$this->setError($this->_db->getErrorMsg());
+
 			return false;
 		}
+
 		return true;
 	}
 }

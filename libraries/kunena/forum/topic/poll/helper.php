@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Class KunenaForumTopicPollHelper
  */
-abstract class KunenaForumTopicPollHelper {
+abstract class KunenaForumTopicPollHelper
+{
 	protected static $_instances = array();
 
 	/**
@@ -24,18 +25,38 @@ abstract class KunenaForumTopicPollHelper {
 	 *
 	 * @return KunenaForumTopicPoll
 	 */
-	static public function get($identifier = null, $reload = false) {
-		if ($identifier instanceof KunenaForumTopicPoll) {
+	static public function get($identifier = null, $reload = false)
+	{
+		if ($identifier instanceof KunenaForumTopicPoll)
+		{
 			return $identifier;
 		}
-		$id = intval ( $identifier );
-		if ($id < 1)
-			return new KunenaForumTopicPoll ();
 
-		if ($reload || empty ( self::$_instances [$id] )) {
+		$id = intval ( $identifier );
+
+		if ($id < 1)
+		{
+			return new KunenaForumTopicPoll ();
+		}
+
+		if ($reload || empty ( self::$_instances [$id] ))
+		{
 			self::$_instances [$id] = new KunenaForumTopicPoll ( $id );
 		}
 
 		return self::$_instances [$id];
+	}
+
+	static public function recount()
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query
+			->update('#__kunena_topics AS a')
+			->innerJoin('#__kunena_polls AS b ON a.id=b.threadid')
+			->set('a.poll_id=b.id');
+
+		$db->setQuery($query);
+		$db->execute();
 	}
 }

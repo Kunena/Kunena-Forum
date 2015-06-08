@@ -440,7 +440,7 @@
 		padding-right:10px;
 	}
 
-	#Kunena div.kmsgsignature img {
-		max-width:90% !important;
-	}
+    #Kunena div.kmsgsignature img {
+        max-width:90% !important;
+    }
 }

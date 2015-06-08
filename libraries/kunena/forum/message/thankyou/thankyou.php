@@ -18,7 +18,8 @@ defined ( '_JEXEC' ) or die ();
  * @property int $targetuserid
  * @property string $time
  */
-class KunenaForumMessageThankyou extends JObject {
+class KunenaForumMessageThankyou extends JObject
+{
 	/**
 	 * @var int
 	 */
@@ -30,7 +31,8 @@ class KunenaForumMessageThankyou extends JObject {
 	 *
 	 * @internal
 	 */
-	public function __construct($id) {
+	public function __construct($id)
+	{
 		$this->id = (int) $id;
 	}
 
@@ -40,7 +42,8 @@ class KunenaForumMessageThankyou extends JObject {
 	 *
 	 * @return KunenaForumMessageThankyou
 	 */
-	static public function getInstance($identifier = null, $reload = false) {
+	static public function getInstance($identifier = null, $reload = false)
+	{
 		return KunenaForumMessageThankyouHelper::get($identifier, $reload);
 	}
 
@@ -51,7 +54,8 @@ class KunenaForumMessageThankyou extends JObject {
 	 *
 	 * @return bool
 	 */
-	public function exists($userid) {
+	public function exists($userid)
+	{
 		return isset($this->users[(int) $userid]);
 	}
 
@@ -70,19 +74,25 @@ class KunenaForumMessageThankyou extends JObject {
 	 *
 	 * @return bool
 	 */
-	public function save($user) {
+	public function save($user)
+	{
 		$user = KunenaFactory::getUser($user);
 		$message = KunenaForumMessageHelper::get($this->id);
 
-		if (!$user->exists()) {
+		if (!$user->exists())
+		{
 			$this->setError( JText::_('COM_KUNENA_THANKYOU_LOGIN') );
 			return false;
 		}
-		if ($user->userid == $message->userid) {
+
+		if ($user->userid == $message->userid)
+		{
 			$this->setError( JText::_ ( 'COM_KUNENA_THANKYOU_NOT_YOURSELF' ) );
 			return false;
 		}
-		if ($this->exists ( $user->userid )) {
+
+		if ($this->exists ( $user->userid ))
+		{
 			$this->setError( JText::_ ( 'COM_KUNENA_THANKYOU_ALLREADY' ) );
 			return false;
 		}
@@ -95,8 +105,9 @@ class KunenaForumMessageThankyou extends JObject {
 		$db->query ();
 
 		// Check for an error message.
-		if ($db->getErrorNum ()) {
-			$this->setError ( $db->getErrorMsg () );
+		if ($db->getErrorNum())
+		{
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 
@@ -110,7 +121,8 @@ class KunenaForumMessageThankyou extends JObject {
 	 *
 	 * @return bool
 	 */
-	protected function _savethankyou(KunenaForumMessage $message) {
+	protected function _savethankyou(KunenaForumMessage $message)
+	{
 		$db = JFactory::getDBO ();
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
@@ -118,8 +130,9 @@ class KunenaForumMessageThankyou extends JObject {
 		$db->query ();
 
 		// Check for an error message.
-		if ($db->getErrorNum ()) {
-			$this->setError ( $db->getErrorMsg () );
+		if ($db->getErrorNum())
+		{
+			$this->setError ( $db->getErrorMsg() );
 			return false;
 		}
 
@@ -130,7 +143,8 @@ class KunenaForumMessageThankyou extends JObject {
 	 * Get all users who have given thank you to this message.
 	 * @return array List of userid=>time.
 	 */
-	public function getList() {
+	public function getList()
+	{
 		return $this->users;
 	}
 
@@ -141,18 +155,23 @@ class KunenaForumMessageThankyou extends JObject {
 	 *
 	 * @return bool
 	 */
-	public function delete($user) {
+	public function delete($user)
+	{
 		$user = KunenaFactory::getUser($user);
 		$message = KunenaForumMessageHelper::get($this->id);
 
-		if (!$user->exists()) {
+		if (!$user->exists())
+		{
 			$this->setError( JText::_('COM_KUNENA_THANKYOU_LOGIN') );
 			return false;
 		}
-		if (!$this->exists ( $user->userid )) {
+
+		if (!$this->exists ( $user->userid ))
+		{
 			$this->setError( JText::_ ( 'COM_KUNENA_THANKYOU_NOT_PRESENT' ) );
 			return false;
 		}
+
 		$db = JFactory::getDBO ();
 		$query = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)} AND userid={$db->quote($user->userid)}";
 		$db->setQuery ( $query );
@@ -163,7 +182,8 @@ class KunenaForumMessageThankyou extends JObject {
 		$db->query ();
 
 		// Check for an error message.
-		if ($db->getErrorNum ()) {
+		if ($db->getErrorNum ())
+		{
 			$this->setError ( $db->getErrorMsg () );
 			return false;
 		}

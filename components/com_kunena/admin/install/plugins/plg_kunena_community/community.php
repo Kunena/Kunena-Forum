@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @copyright (C) 2013 - 2014 iJoomla, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 class plgKunenaCommunity extends JPlugin {
 	public function __construct(&$subject, $config) {
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed())) return;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed())) return;
 
 		// Do not load if JomSocial is not installed
 		$path = JPATH_ROOT . '/components/com_community/libraries/core.php';

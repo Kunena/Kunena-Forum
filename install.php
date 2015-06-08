@@ -20,19 +20,19 @@ class Pkg_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
-			'0' => '5.4.14' // Preferred version
+			'0' => '5.4.15' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.4' => '3.4.0-dev',
+			'3.4' => '3.4.0',
 			'3.3' => '3.3.6',
 			'3.2' => '3.2.7',
 			'3.1' => '3.1.5',
 			'3.0' => '3.0.4',
-			'2.5' => '2.5.9',
+			'2.5' => '2.5.28',
 			'0' => '3.3.6' // Preferred version
 		)
 	);
@@ -67,7 +67,7 @@ class Pkg_KunenaInstallerScript {
 
 		// Remove old log file before installation.
 		$logFile = JFactory::getConfig()->get('log_path').'/kunena.php';
-		if (file_exists($logFile)) {
+		if (is_file($logFile)) {
 			@unlink($logFile);
 		}
 
@@ -99,7 +99,7 @@ class Pkg_KunenaInstallerScript {
 		$app = JFactory::getApplication();
 		if (version_compare(JVERSION, '3.0', '>')) {
 			$modal = <<<EOS
-<div id="kunena-modal" class="modal hide fade"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
+<div id="kunena-modal" class="modal hide fade" style="width:34%;margin-left:-20%;top:25%;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;
 
 		} else {
@@ -176,7 +176,7 @@ EOS;
 
 		// Always load Kunena API if it exists.
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (file_exists ( $api )) require_once $api;
+		if (is_file($api)) require_once $api;
 
 		// Do not install over Git repository (K1.6+).
 		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
@@ -223,9 +223,9 @@ EOS;
 		$list = (array) $db->loadColumn();
 
 		$query = $db->getQuery(true)
-			->set($db->quoteName('name').'='.$db->quote('Kunena 3.0 Update Site'))
+			->set($db->quoteName('name').'='.$db->quote('Kunena 4.0 Update Site'))
 			->set($db->quoteName('type').'='.$db->quote('collection'))
-			->set($db->quoteName('location').'='.$db->quote('http://update.kunena.org/3.0/list.xml'))
+			->set($db->quoteName('location').'='.$db->quote('http://update.kunena.org/4.0/list.xml'))
 			->set($db->quoteName('enabled').'=1')
 			->set($db->quoteName('last_check_timestamp').'=0');
 

@@ -21,20 +21,30 @@ class KunenaIntegrationActivity
 
 	protected static $instance;
 
-	public function __construct() {
+	public function __construct()
+	{
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher = JDispatcher::getInstance();
 		$classes = $dispatcher->trigger('onKunenaGetActivity');
-		foreach ($classes as $class) {
-			if (!is_object($class)) continue;
+
+		foreach ($classes as $class)
+		{
+			if (!is_object($class))
+			{
+				continue;
+			}
+
 			$this->instances[] = $class;
 		}
 	}
 
-	static public function getInstance() {
-		if (!self::$instance) {
+	static public function getInstance()
+	{
+		if (!self::$instance)
+		{
 			self::$instance = new static;
 		}
+
 		return self::$instance;
 	}
 
@@ -46,15 +56,22 @@ class KunenaIntegrationActivity
 	 *
 	 * @return mixed
 	 */
-	public function __call($method, $arguments) {
+	public function __call($method, $arguments)
+	{
 		$ret = null;
-		foreach ($this->instances as $instance) {
-			if (method_exists($instance, $method)) {
+		foreach ($this->instances as $instance)
+		{
+			if (method_exists($instance, $method))
+			{
 				$r = call_user_func_array(array($instance, $method), $arguments);
+
 				if($r !== null & $ret === null)
+				{
 					$ret = $r;
+				}
 			}
 		}
+
 		return $ret;
 	}
 }

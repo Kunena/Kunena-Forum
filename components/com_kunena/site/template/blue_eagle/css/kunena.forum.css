@@ -2214,6 +2214,7 @@ POST PAGE
 #Kunena .kbuttonmod span.split {background-position: 0 -160px;}
 #Kunena .kbuttonmod span.approve {background-position: 0 -180px;}
 #Kunena .kbuttonmod span.moderate {background-position: 0 -120px;}
+#Kunena .kbuttonmod span.unthankyou {background-position: 0 -40px;}
 
 /* Goto Up/down buttons */
 
@@ -2382,6 +2383,9 @@ BBCODE BUTTONS
 #Kunena ul#kbbcode-toolbar li a#kbbcode-previewbottom-button {background-position:-252px -18px;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-previewright-button {background-position:-270px -18px;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-help-button {background-position:-396px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-smilies-button {display:none;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-hr-button{display:none;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-tweet-button{display:none;}
 
 #Kunena .kspoiler {
 	cursor:pointer;

@@ -29,14 +29,15 @@ class KunenaAdminViewPlugin extends KunenaView
 	 */
 	public function displayEdit($tpl = null)
 	{
-		$this->state	= $this->get('State');
-		$this->item		= $this->get('Item');
-		$this->form		= $this->get('Form');
+		$this->state = $this->get('State');
+		$this->item  = $this->get('Item');
+		$this->form  = $this->get('Form');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
 			JError::raiseError(500, implode("\n", $errors));
+
 			return;
 		}
 
@@ -55,15 +56,19 @@ class KunenaAdminViewPlugin extends KunenaView
 
 		//$canDo = PluginsHelper::getActions();
 
-		JToolbarHelper::title( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'pluginsmanager');
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'pluginsmanager');
 		JToolbarHelper::spacer();
+
 		// If not checked out, can save the item.
 		//if ($canDo->get('core.edit'))
 		//{
-			JToolbarHelper::apply('apply');
-			JToolbarHelper::save('save');
+		JToolbarHelper::apply('apply');
+		JToolbarHelper::save('save');
 		//}
 		JToolbarHelper::cancel('cancel', 'JTOOLBAR_CLOSE');
 		JToolbarHelper::spacer();
+
+		$help_url  = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 }

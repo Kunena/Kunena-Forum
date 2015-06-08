@@ -27,7 +27,7 @@ $count = count($this->purgeitems);
         <div id="j-sidebar-container" class="span2">
           <div id="sidebar">
             <div class="sidebar-nav">
-              <?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?>
+              <?php include KPATH_ADMIN.'/template/common/menu.php'; ?>
             </div>
           </div>
         </div>

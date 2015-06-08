@@ -16,8 +16,8 @@ class KunenaAdminTemplate30
 	public function initialize()
 	{
 		$document = JFactory::getDocument();
-		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/joomla30/layout.css');
-		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/joomla30/styles.css');
+		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/layout.css');
+		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/styles.css');
 	}
 
 	public function getTemplatePaths($path = '', $fullpath = false)
@@ -28,7 +28,7 @@ class KunenaAdminTemplate30
 		}
 
 		$array   = array();
-		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE) . '/template/joomla30' . $path;
+		$array[] = ($fullpath ? KPATH_ADMIN : KPATH_COMPONENT_RELATIVE) . '/template/' . $path;
 
 		return $array;
 	}

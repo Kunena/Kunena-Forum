@@ -84,7 +84,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		$this->setState('item.folder', $folder);
 		$this->setState('item.element', $element);
 
-		$pluginfile = version_compare(JVERSION, '3.2', '<') ? 'plugin25' : 'plugin';
+		$pluginfile = 'plugin';
 
 		// Get the form.
 		$form = $this->loadForm('com_kunena.plugin', $pluginfile, array('control' => 'jform', 'load_data' => $loadData));

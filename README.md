@@ -10,7 +10,6 @@
 
 *Kunena* 4.0 requires
 
-
     Joomla! 3.4: version 3.4.1 or greater (>= 3.4.1 recommended)
     Joomla! 2.5: version 2.5.28 or greater (>= 2.5.28 recommended)
     PHP: version 5.3.1 or greater (>= 5.4.31 recommended)

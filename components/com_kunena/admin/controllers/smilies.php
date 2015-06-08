@@ -126,7 +126,6 @@ class KunenaAdminControllerSmilies extends KunenaController
 		$file   = JRequest::getVar('Filedata', null, 'files', 'array'); // File upload
 		$format = JRequest::getCmd('format', 'html');
 
-
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), $format);
 		if ($upload)
 		{

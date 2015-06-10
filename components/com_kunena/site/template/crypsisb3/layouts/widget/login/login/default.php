@@ -10,70 +10,53 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<ul class="nav pull-right">
+<ul class="nav navbar-nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin">
-			<i class="glyphicon glyphicon-large glyphicon glyphicon-user"></i> <b class="caret"></b>
+			<i class="glyphicon glyphicon-large glyphicon-white glyphicon-user "></i> <b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu" id="userdropdown">
+		<div class="dropdown-menu" id="userdropdown" role="menu">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="login" />
 				<?php echo JHtml::_('form.token'); ?>
 
-				<div id="form-login-username" class="control-group center">
-					<div class="controls">
-						<div class="input-group input-group">
-							<span class="input-group-addon">
-								<i class="glyphicon glyphicon-user tip" title="<?php echo JText::_('JGLOBAL_USERNAME'); ?>"></i>
-								<label for="login-username" class="element-invisible">
-									<?php echo JText::_('JGLOBAL_USERNAME'); ?>
-								</label>
-							</span>
-							<input id="login-username" type="text" name="username" class="input-small" tabindex="1"
-							       size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>" />
-						</div>
-					</div>
+				<div class="input-group input-group-sm">
+					<i class="glyphicon glyphicon-user" title="<?php echo JText::_('JGLOBAL_USERNAME'); ?>"></i>
+					<label for="login-username" class="element-invisible">
+						<?php echo JText::_('JGLOBAL_USERNAME'); ?>
+					</label>
+					<input id="login-username" type="text" name="username" class="form-control input-sm" tabindex="1"
+				       size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>" />
 				</div>
 
-				<div id="form-login-password" class="control-group center">
-					<div class="controls">
-						<div class="input-group input-group">
-							<span class="input-group-addon">
-								<i class="glyphicon glyphicon-lock tip" title="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>"></i>
-								<label for="login-passwd" class="element-invisible">
-									<?php echo JText::_('JGLOBAL_PASSWORD'); ?>
-								</label>
-							</span>
-							<input id="login-passwd" type="password" name="password" class="input-small" tabindex="2"
+				<div class="input-group input-group-sm">
+					<i class="glyphicon glyphicon-lock tip" title="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>"></i>
+					<label>
+						<?php echo JText::_('JGLOBAL_PASSWORD'); ?>
+					</label>
+					<input id="login-passwd" type="password" name="password" class="form-control input-sm" tabindex="2"
 							       size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" />
-						</div>
-					</div>
 				</div>
-
 				<?php $login = KunenaLogin::getInstance(); ?>
 				<?php if ($login->getTwoFactorMethods() > 1) : ?>
-				<div id="form-login-tfa" class="control-group center">
-					<div class="controls">
-						<div class="input-group input-group">
-							<span class="input-group-addon">
-								<i class="glyphicon glyphicon-star tip" title="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"></i>
-								<label for="k-lgn-secretkey" class="element-invisible">
-									<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
-								</label>
-						  </span>
-							<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small" tabindex="3"
-										size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
-						</div>
-					</div>
+				<div class="input-group input-group-sm">
+					<i class="glyphicon glyphicon-star tip" title="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"></i>
+					<label for="k-lgn-secretkey" class="element-invisible">
+						<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
+					</label>
+					<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-large" tabindex="3"
+						size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
 				</div>
 				<?php endif; ?>
 
 				<?php if ($this->rememberMe) : ?>
-				<div id="form-login-remember" class="control-group center">
+					<div class="clearfix"></div>
+
+					<div id="form-login-remember" class="control-group center">
 					<div class="controls">
-						<div class="input-group input-group">
+						<div class="input-group input-group-sm">
 							<div class="input-group-addon">
 								<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
 								<label for="login-remember" class="control-label">

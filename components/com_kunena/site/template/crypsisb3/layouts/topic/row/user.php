@@ -112,7 +112,7 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="col-md-2 hidden-sm">
 		<div class="container-fluid">
-			<div class="col-md-12">
+			<div class="row">
 				<?php if ($config->avataroncat) : ?>
 					<div class="col-md-3">
 						<?php echo $author->getLink($avatar); ?>

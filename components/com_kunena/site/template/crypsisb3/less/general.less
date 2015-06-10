@@ -793,7 +793,7 @@ ul.inline i {
 }
 
 .dropdown-menu {
-	min-width : 160px;
+	min-width : 190px;
 }
 
 #search [class*='span'] {
@@ -845,4 +845,62 @@ div.pagination a.disabled:hover {
 .center {
 	margin: 0px auto;
 	text-align: center;
+}
+.form-group label {
+	float: left;
+	text-align: left;
+	font-weight: normal;
+}
+.form-group select {
+	display: inline-block;
+	width: auto;
+	vertical-align: middle;
+}
+
+
+.search {
+	padding: 5px 0;
+	width: 230px;
+	height: 30px;
+	position: relative;
+	left: 10px;
+	float: left;
+	line-height: 22px;
+}
+
+.search input {
+	position: absolute;
+	width: 0px;
+	float: Left;
+	margin-left: 210px;
+	-webkit-transition: all 0.7s ease-in-out;
+	-moz-transition: all 0.7s ease-in-out;
+	-o-transition: all 0.7s ease-in-out;
+	transition: all 0.7s ease-in-out;
+	height: 30px;
+	line-height: 18px;
+	padding: 0 2px 0 2px;
+	border-radius:1px;
+}
+
+.search:hover input, .search input:focus {
+	width: 200px;
+	margin-left: 0px;
+}
+
+.search .btn {
+	height: 30px;
+	position: absolute;
+	right: 0;
+	top: 5px;
+	border-radius:1px;
+	i {
+		margin-top: -3px;
+	}
+}
+.glyphicon-white {
+	color: #FFF;
+}
+.dropdown-menu form {
+	padding: 10px;
 }

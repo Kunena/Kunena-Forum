@@ -28,9 +28,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 			<div class="filter-sel pull-right">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					method="post" target="_self" class="form-inline hidden-sm">
-					<div>
 						<?php $this->displayTimeFilter('sel'); ?>
-					</div>
 				</form>
 			</div>
 		</div>
@@ -91,16 +89,18 @@ $colspan = !empty($this->actions) ? 4 : 3;
 			<td colspan="<?php echo $colspan; ?>">
 			<?php endif; ?>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
-				<div class="input-group">
+				<div class="form-group">
+					<label>
 					<?php if (!empty($this->topics) && !empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
 					<?php if (!empty($this->actions)) : ?>
-						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class=" form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 						<?php if (isset($this->actions['move'])) :
 							$options = array (JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
 							echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class=" form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 						endif;?>
-						<input type="submit" name="kcheckgo" class="input-group-addon" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+						<input type="submit" name="kcheckgo" class="btn btn-default" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
+						</label>
 				</div>
 				<?php endif; ?>
 			</td>

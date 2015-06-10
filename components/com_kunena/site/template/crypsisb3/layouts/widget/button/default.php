@@ -16,7 +16,7 @@ if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG") $title = ''
 $id = isset($this->id) ? 'id="' . $this->id . '"' : '';
 $success = !empty($this->success) ? ' btn-success' : '';
 $primary = !empty($this->primary) ? ' btn-primary' : '';
-$normal = !empty($this->normal) ? 'btn-small' : 'btn';
+$normal = !empty($this->normal) ? 'btn-small' : 'btn btn-default';
 $icon = $this->icon;
 ?>
 

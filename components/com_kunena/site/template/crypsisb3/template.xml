@@ -2,7 +2,7 @@
 <!DOCTYPE kinstall>
 <kinstall type="kunena-template" version="4.0">
 	<name>Crypsisb3</name>
-	<creationDate>2015-06-06</creationDate>
+	<creationDate>2015-06-10</creationDate>
 	<version>4.0.1-DEV</version>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>

@@ -101,7 +101,11 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
-		$this->addStyleSheet('css/custom.css');
+		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css';
+		if (file_exists($filename))
+		{
+			$this->addStyleSheet ( 'custom.css' );
+		}
 
 
 		// Load template colors settings

@@ -101,7 +101,11 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsisb3.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
-		$this->addStyleSheet('css/custom.css');
+		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css';
+		if (file_exists($filename))
+		{
+			$this->addStyleSheet ( 'custom.css' );
+		}
 
 
 		// Load template colors settings

@@ -32,8 +32,12 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 		KunenaTemplateLegacy::load();
 
 		require_once JPATH_SITE. '/' . $this->getFile('initialize.php');
-		$this->addStyleSheet ( 'css/kunena.20.css' );
-		$this->addStyleSheet ( 'css/custom.css' );
+		$this->addStyleSheet ( 'kunena.20.css' );
+		$filename = JPATH_SITE . '/components/com_kunena/template/blue_eagle/css/custom.css';
+		if (file_exists($filename))
+		{
+			$this->addStyleSheet ( 'custom.css' );
+		}
 
 		// Toggler language strings
 		JFactory::getDocument()->addScriptDeclaration('// <![CDATA[

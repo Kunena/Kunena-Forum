@@ -206,19 +206,19 @@ class KunenaViewCommon extends KunenaView
 					case 'create':
 						if ($active_layout != 'create')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC_CREATE'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_NEW'), KunenaRoute::normalize()));
 						}
 						break;
 					case 'reply':
 						if ($active_layout != 'reply')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC_REPLY'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY'), KunenaRoute::normalize()));
 						}
 						break;
 					case 'edit':
 						if ($active_layout != 'edit')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC_EDIT'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_EDIT'), KunenaRoute::normalize()));
 						}
 						break;
 				}

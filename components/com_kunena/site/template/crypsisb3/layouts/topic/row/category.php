@@ -17,9 +17,9 @@ $category = $topic->getCategory();
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage('img-rounded', 'thumb');
+$avatar = $author->getAvatarImage('img-rounded', 'post');
 $config = KunenaConfig::getInstance();
-$cols = empty($this->checkbox) ? 7 : 6;
+$cols = empty($this->checkbox) ? 5 : 6;
 if ($this->topic->ordering)
 {
 	$txt = '-stickymsg';
@@ -114,7 +114,6 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="col-md-2 hidden-sm">
 		<div class="container-fluid">
-			<div class="row">
 				<?php if ($config->avataroncat) : ?>
 					<div class="col-md-3">
 						<?php echo $author->getLink($avatar); ?>
@@ -127,7 +126,6 @@ if (!empty($this->spacing)) : ?>
 					<br>
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
-			</div>
 		</div>
 	</td>
 

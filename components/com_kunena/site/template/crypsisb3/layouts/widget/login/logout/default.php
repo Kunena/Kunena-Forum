@@ -29,7 +29,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu" id="nav-menu">
+		<div class="dropdown-menu" id="nav-menu userdropdownlogout" role="menu">
 
 			<div class="center">
 				<p><strong><?php echo $this->me->getLink(null, null, 'nofollow', '', null); ?></strong></p>
@@ -97,7 +97,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<?php if (!empty($this->announcementsUrl)) : ?>
 				<div>
 					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
-						<i class="glyphicon glyphicon-pencil-2"></i>
+						<i class="glyphicon glyphicon-pencil"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>
 				</div>
@@ -106,7 +106,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<?php if (!empty($this->pm_link)) : ?>
 				<div>
 					<a href="<?php echo $this->pm_link; ?>" class="btn btn-link">
-						<i class="glyphicon glyphicon-mail"></i>
+						<i class="glyphicon glyphicon-envelope"></i>
 						<?php echo $this->inboxCount; ?>
 					</a>
 				</div>
@@ -123,7 +123,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<?php if ($markAllReadUrl) : ?>
 				<div>
 					<a href="<?php echo $markAllReadUrl; ?>" class="btn btn-link">
-						<i class="glyphicon glyphicon-drawer"></i>
+						<i class="glyphicon glyphicon-ok"></i>
 						<?php echo JText::_('COM_KUNENA_MARK_ALL_READ'); ?>
 					</a>
 				</div>
@@ -135,7 +135,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div>
 					<button class="btn btn-link" name="submit" type="submit">
-						<i class="glyphicon glyphicon-out"></i>
+						<i class="glyphicon glyphicon-log-out"></i>
 						<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
 					</button>
 				</div>

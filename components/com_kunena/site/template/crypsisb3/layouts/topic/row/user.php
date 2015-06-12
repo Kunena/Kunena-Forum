@@ -16,7 +16,7 @@ $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage('img-rounded', 'thumb');
+$avatar = $author->getAvatarImage('img-rounded', 'post');
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
@@ -112,7 +112,6 @@ if (!empty($this->spacing)) : ?>
 
 	<td class="col-md-2 hidden-sm">
 		<div class="container-fluid">
-			<div class="row">
 				<?php if ($config->avataroncat) : ?>
 					<div class="col-md-3">
 						<?php echo $author->getLink($avatar); ?>
@@ -125,7 +124,6 @@ if (!empty($this->spacing)) : ?>
 					<br>
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
-			</div>
 		</div>
 	</td>
 

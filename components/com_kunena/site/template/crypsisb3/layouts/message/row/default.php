@@ -18,7 +18,7 @@ $topic = $message->getTopic();
 $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
-$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 'thumb');
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 'posts');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
 ?>
@@ -26,7 +26,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 	<td class="col-md-1 hidden-sm center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>
-	<td class="span<?php echo $cols?>">
+	<td class="col-md-<?php echo $cols?>">
 		<div>
 			<?php echo $this->getTopicLink(
 				$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
@@ -59,7 +59,6 @@ $cols = empty($this->checkbox) ? 5 : 6;
 	</td>
 	<td class="col-md-2">
 		<div class="container-fluid">
-			<div class="row">
 			<?php if ($config->avataroncat) : ?>
 				<div class="col-md-3">
 					<?php echo $avatar; ?>
@@ -73,7 +72,6 @@ $cols = empty($this->checkbox) ? 5 : 6;
 				<br />
 				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
 				</div>
-			</div>
 		</div>
 	</td>
 

@@ -28,14 +28,14 @@ foreach ($this->sections as $section) :
 			<?php endif; ?>
 		</div>
 
-		<h2>
+		<h2 class="btn-link">
 			<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
 			<small class="hidden-sm nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 					$this->formatLargeNumber($section->getTopics())); ?>)
 			</small>
 		</h2>
 
-		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
+		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>" style="display: inline-block;">
 			<table class="table table-bordered">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-sm">
@@ -157,12 +157,12 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time   = $last->getLastPostTime();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 'thumb') : null;
+								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 'post') : null;
 							?>
 
 								<td class="col-md-3 hidden-sm">
 									<div class="container-fluid">
-										<div class="row">
+										<div class="col-md-12">
 											<?php if ($avatar) : ?>
 												<div class="col-md-3">
 													<?php echo $author->getLink($avatar); ?>

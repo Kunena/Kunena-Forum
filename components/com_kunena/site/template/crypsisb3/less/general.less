@@ -51,6 +51,7 @@ input[type='checkbox']:focus {
 h2 {
 	padding-bottom : 2%;
 	margin-bottom  : 10px;
+	margin-top: 0px;
 }
 
 .kgooglemap {
@@ -604,7 +605,7 @@ div.btn-toolbar .font-size-is-default {
 }
 
 select#categorylist {
-	width : auto;
+	width : 100%;
 }
 
 div#editprofile input,
@@ -685,11 +686,9 @@ small.text-muted {
 #topic-actions {
 	padding-bottom : 10px;
 }
-
-#userdropdown {
-	padding-top : 20px;
+.navbar-nav > li > .dropdown-menu {
+	margin-top: 5px;
 }
-
 #status-form label.btn a.btn {
 	padding : 0 0 0 5px;
 }
@@ -792,10 +791,6 @@ ul.inline i {
 	padding-left: 20px;
 }
 
-.dropdown-menu {
-	min-width : 190px;
-}
-
 #search [class*='span'] {
 	margin-left: 6px;
 }
@@ -863,7 +858,6 @@ div.pagination a.disabled:hover {
 	width: 230px;
 	height: 30px;
 	position: relative;
-	left: 10px;
 	float: left;
 	line-height: 22px;
 }
@@ -898,9 +892,52 @@ div.pagination a.disabled:hover {
 		margin-top: -3px;
 	}
 }
+
 .glyphicon-white {
 	color: #FFF;
 }
+
 .dropdown-menu form {
 	padding: 10px;
+}
+#filter-time {
+	margin-top: 25px;
+}
+
+.container-fluid [class*="col"]{
+	padding-left: 0;
+}
+
+.form-control {
+	height: auto;
+	font-size: 15px;
+}
+
+i {
+	margin: 0;
+}
+
+.mobile-user a,
+.mobile-user a:hover,
+.mobile-user a:focus
+.open,
+.open a,
+.open a:hover,
+.open a:focus {
+	background-color: transparent;
+}
+
+.legend i {
+	padding-right: 5px;
+}
+
+label.radio {
+	padding-left: 20px;
+}
+
+.navbar-nav {
+	margin: 0;
+}
+textarea {
+	width: 100%;
 }

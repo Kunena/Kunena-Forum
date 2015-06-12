@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
-$cols            = empty($this->checkbox) ? 7 : 6;
+$cols = empty($this->checkbox) ? 5 : 6;
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
@@ -116,7 +116,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 			<td colspan="6" class="hidden-sm">
-				<div class="input-group">
+				<div class="form-group">
 
 					<?php if (!empty($this->moreUri))
 					{
@@ -126,18 +126,18 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 
 					<?php if (!empty($this->topicActions)) : ?>
 						<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
-							'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
+							'class="form-control kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
 						<?php if ($this->actionMove) : ?>
 							<?php
 							$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
 							echo JHtml::_(
 								'kunenaforum.categorylist', 'target', 0, $options, array(),
-								' disabled="disabled"', 'value', 'text', 0,
+								'class="form-control fbs" disabled="disabled"', 'value', 'text', 0,
 								'kchecktarget'
 							);
 							?>
-							<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
+							<button class="btn btn-default" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
 						<?php endif; ?>
 					<?php endif; ?>
 				</div>

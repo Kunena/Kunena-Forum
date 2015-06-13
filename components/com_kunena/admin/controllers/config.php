@@ -20,6 +20,9 @@ class KunenaAdminControllerConfig extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -27,11 +30,17 @@ class KunenaAdminControllerConfig extends KunenaController
 		$this->kunenabaseurl = 'administrator/index.php?option=com_kunena';
 	}
 
+	/**
+	 *
+	 */
 	function apply()
 	{
 		$this->save($this->baseurl);
 	}
 
+	/**
+	 * @param null $url
+	 */
 	function save($url = null)
 	{
 		if (!JSession::checkToken('post'))
@@ -43,16 +52,16 @@ class KunenaAdminControllerConfig extends KunenaController
 		}
 
 		$properties = $this->config->getProperties();
-		foreach (JRequest::get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue)
+		foreach (JFactory::getApplication()->input->get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue)
 		{
-			if (JString::strpos($postsetting, 'cfg_') === 0)
+			if (\Joomla\String\String::strpos($postsetting, 'cfg_') === 0)
 			{
 				//remove cfg_ and force lower case
 				if (is_array($postvalue))
 				{
 					$postvalue = implode(',', $postvalue);
 				}
-				$postname = JString::strtolower(JString::substr($postsetting, 4));
+				$postname = \Joomla\String\String::strtolower(\Joomla\String\String::substr($postsetting, 4));
 
 				// No matter what got posted, we only store config parameters defined
 				// in the config class. Anything else posted gets ignored.
@@ -77,6 +86,9 @@ class KunenaAdminControllerConfig extends KunenaController
 		$this->setRedirect(KunenaRoute::_($url, false));
 	}
 
+	/**
+	 *
+	 */
 	function setdefault()
 	{
 		if (!JSession::checkToken('post'))

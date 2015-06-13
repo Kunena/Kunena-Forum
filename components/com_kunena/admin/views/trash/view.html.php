@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewTrash extends KunenaView
 {
+	/**
+	 *
+	 */
 	function displayDefault()
 	{
 		$this->setLayout($this->state->get('layout'));
@@ -41,6 +44,9 @@ class KunenaAdminViewTrash extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayPurge()
 	{
 		$this->purgeitems    = $this->get('PurgeItems');
@@ -50,6 +56,9 @@ class KunenaAdminViewTrash extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarDefault()
 	{
 		// Set the titlebar text
@@ -64,6 +73,9 @@ class KunenaAdminViewTrash extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarPurge()
 	{
 		// Set the titlebar text
@@ -78,6 +90,9 @@ class KunenaAdminViewTrash extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields = array();
@@ -104,6 +119,9 @@ class KunenaAdminViewTrash extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

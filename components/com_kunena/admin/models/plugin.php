@@ -50,6 +50,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 */
 	protected $event_before_save = 'onExtensionBeforeSave';
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
@@ -76,8 +79,8 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		}
 		else
 		{
-			$folder  = JArrayHelper::getValue($data, 'folder', '', 'cmd');
-			$element = JArrayHelper::getValue($data, 'element', '', 'cmd');
+			$folder  = Joomla\Utilities\ArrayHelper::getValue($data, 'folder', '', 'cmd');
+			$element = Joomla\Utilities\ArrayHelper::getValue($data, 'element', '', 'cmd');
 		}
 
 		// These variables are used to add data from the plugin XML files.
@@ -144,8 +147,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	protected function preprocessData($context, &$data)
 	{
 		// Get the dispatcher and load the users plugins.
-		// TODO: rename to JEventDispatcher::getInstance() after dropping J2.5 support (used also elsewhere).
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.
@@ -189,7 +191,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 
 			// Convert to the JObject before adding other data.
 			$properties        = $table->getProperties(1);
-			$this->_cache[$pk] = JArrayHelper::toObject($properties, 'JObject');
+			$this->_cache[$pk] = Joomla\Utilities\ArrayHelper::toObject($properties, 'JObject');
 
 			// Convert the params field to an array.
 			$registry = new JRegistry;

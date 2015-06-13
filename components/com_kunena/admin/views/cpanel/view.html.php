@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewCpanel extends KunenaView
 {
+	/**
+	 *
+	 */
 	function displayDefault()
 	{
 		$help_url  = 'http://www.kunena.org/docs/Category:Installation';

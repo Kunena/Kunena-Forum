@@ -20,6 +20,9 @@ jimport('joomla.application.component.model');
  */
 class KunenaAdminModelConfig extends KunenaModel
 {
+	/**
+	 * @return array
+	 */
 	function getConfiglists()
 	{
 		$lists = array();
@@ -357,8 +360,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['fallback_english'] = JHtml::_('select.genericlist', $yesno, 'cfg_fallback_english', 'class="inputbox" size="1"', 'value', 'text', $this->config->fallback_english);
 
 		$cache       = array();
-		$cachetime[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CFG_OPTION_USE_GLOBAL'));
-		$cachetime[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CFG_OPTION_NO_CACHING'));
+		$cache[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CFG_OPTION_USE_GLOBAL'));
+		$cache[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CFG_OPTION_NO_CACHING'));
 
 		$cachetime            = array();
 		$cachetime[]          = JHtml::_('select.option', '60', JText::_('COM_KUNENA_CFG_OPTION_1_MINUTE'));

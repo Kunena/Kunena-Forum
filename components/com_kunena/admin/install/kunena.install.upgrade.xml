@@ -655,9 +655,9 @@
 				DEFAULT '' AFTER `topic_ordering`
 			</query>
 		</version>
-		<version version="@kunenaversion@"
-		         versiondate="@kunenaversiondate@"
-		         versionname="@kunenaversionname@">
+		<version version="4.1.0-DEV"
+		         versiondate="2015-06-09"
+		         versionname="Internal">
 		</version>
 	</upgrade>
 </comupgrade>

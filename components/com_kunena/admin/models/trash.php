@@ -48,7 +48,7 @@ class KunenaAdminModelTrash extends KunenaModel
 		}
 
 		// List state information
-		$value = $this->getUserStateFromRequest("com_kunena.admin.trash.list.limit", 'limit', $this->app->getCfg('list_limit'), 'int');
+		$value = $this->getUserStateFromRequest("com_kunena.admin.trash.list.limit", 'limit', $this->app->get('list_limit'), 'int');
 		$this->setState('list.limit', $value);
 
 		$value = $this->getUserStateFromRequest("com_kunena.admin.trash.list.start", 'limitstart', 0, 'int');

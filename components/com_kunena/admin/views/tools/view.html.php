@@ -16,12 +16,18 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewTools extends KunenaView
 {
+	/**
+	 *
+	 */
 	function displayDefault()
 	{
 		$this->setToolBarDefault();
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayPrune()
 	{
 		$this->forumList       = $this->get('PruneCategories');
@@ -33,6 +39,9 @@ class KunenaAdminViewTools extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displaySubscriptions()
 	{
 		$id = $this->app->input->get('id', 0, 'int');
@@ -51,40 +60,57 @@ class KunenaAdminViewTools extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displaySyncUsers()
 	{
 		$this->setToolBarSyncUsers();
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayRecount()
 	{
 		$this->setToolBarRecount();
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayMenu()
 	{
 		$this->legacy    = KunenaMenuFix::getLegacy();
 		$this->invalid   = KunenaMenuFix::getInvalid();
-		$this->conflicts = KunenaMenuFix::getConflicts();
 
 		$this->setToolBarMenu();
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayPurgeReStatements()
 	{
 		$this->setToolBarPurgeReStatements();
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayCleanupIP()
 	{
 		$this->setToolCleanupIP();
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayUninstall()
 	{
 		$this->setToolBarUninstall();
@@ -95,6 +121,9 @@ class KunenaAdminViewTools extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarDefault()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
@@ -102,6 +131,9 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarPrune()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -114,6 +146,9 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarSyncUsers()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -126,6 +161,9 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarRecount()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -138,6 +176,9 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarMenu()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -156,6 +197,9 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarPurgeReStatements()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -168,6 +212,9 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolCleanupIP()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
@@ -180,6 +227,9 @@ class KunenaAdminViewTools extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarUninstall()
 	{
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );

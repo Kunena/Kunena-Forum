@@ -20,6 +20,11 @@ jimport('joomla.application.component.controllerform');
  */
 class KunenaAdminControllerPlugin extends KunenaController
 {
+	/**
+	 * @param array $config
+	 *
+	 * @throws Exception
+	 */
 	public function __construct($config = array())
 	{
 		$this->option      = 'com_kunena';
@@ -63,13 +68,12 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * Extended classes can override this if necessary.
 	 *
-	 * @param   array $data An array of input data.
+	 * @return bool
+	 * @internal param array $data An array of input data.
 	 *
-	 * @return  boolean
-	 *
-	 * @since   12.2
+	 * @since    12.2
 	 */
-	protected function allowAdd($data = array())
+	protected function allowAdd()
 	{
 		$user = JFactory::getUser();
 

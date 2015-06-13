@@ -137,8 +137,8 @@ class KunenaDate extends JDate
 		{
 			$app = JFactory::getApplication ();
 			$my = JFactory::getUser();
-			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg ( 'offset', 'utc' ));
-			else $offset = $app->getCfg ( 'offset', 'utc' );
+			if ($my->id) $offset = $my->getParam('timezone', $app->get( 'offset', 'utc' ));
+			else $offset = $app->get( 'offset', 'utc' );
 		}
 
 		try

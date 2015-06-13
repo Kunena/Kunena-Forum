@@ -1282,6 +1282,6 @@ class KunenaConfig extends JObject
 	{
 		$email = $this->get('email');
 
-		return !empty($email) ? $email : JFactory::getApplication()->getCfg('mailfrom', '');
+		return !empty($email) ? $email : JFactory::getApplication()->get('mailfrom', '');
 	}
 }

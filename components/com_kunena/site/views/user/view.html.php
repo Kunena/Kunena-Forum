@@ -192,7 +192,7 @@ class KunenaViewUser extends KunenaView
 
 		try
 		{
-			$offset = new DateTimeZone($this->user->getParam('timezone', $this->app->getCfg('offset', null)));
+			$offset = new DateTimeZone($this->user->getParam('timezone', $this->app->get('offset', null)));
 		}
 		catch (Exception $e)
 		{

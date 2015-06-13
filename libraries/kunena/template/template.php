@@ -508,7 +508,7 @@ HTML;
 
 		if (!isset($this->filecache[$filepath]))
 		{
-			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/blue_eagle/{$file}";
+			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/crypsis/{$file}";
 			foreach ($this->default as $template)
 			{
 				if ($template == $ignore)
@@ -1058,7 +1058,7 @@ HTML;
 			{
 				// If template xml doesn't exist, raise warning and use blue eagle instead
 				$file = JPATH_THEMES."/{$app->getTemplate()}/html/com_kunena/template.php";
-				$templatename = 'blue_eagle';
+				$templatename = 'crypsis';
 				$classname = "KunenaTemplate{$templatename}";
 
 				if (is_dir(KPATH_SITE . "/template/{$templatename}")){
@@ -1071,8 +1071,8 @@ HTML;
 				$file = KPATH_SITE."/template/{$templatename}/template.php";
 				if (!is_file($file))
 				{
-					$classname = "KunenaTemplateBlue_Eagle";
-					$file = KPATH_SITE."/template/blue_eagle/template.php";
+					$classname = "KunenaTemplatecrypsis";
+					$file = KPATH_SITE."/template/crypsis/template.php";
 				}
 
 				if (is_file($file))

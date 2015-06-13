@@ -86,7 +86,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					JPluginHelper::importPlugin('captcha');
-					$dispatcher = JDispatcher::getInstance();
+					$dispatcher = JEventDispatcher::getInstance();
 					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 
 					$this->captchaEnabled = $result[0];

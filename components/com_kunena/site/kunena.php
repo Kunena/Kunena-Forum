@@ -122,7 +122,7 @@ else
 }
 
 // Prepare and display the output.
-$dispatcher = JDispatcher::getInstance();
+$dispatcher = JEventDispatcher::getInstance();
 $dispatcher->trigger('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
 $contents = (string) $contents;
 $dispatcher->trigger('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));

@@ -135,7 +135,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));

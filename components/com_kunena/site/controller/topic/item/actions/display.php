@@ -152,7 +152,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 	}
 

@@ -168,7 +168,7 @@ class plgSystemKunena extends JPlugin
 	 */
 	protected function runJoomlaContentEvent( &$text, &$params, $page = 0 )
 	{
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
 		$row = new stdClass();

@@ -22,7 +22,7 @@ class KunenaProfile
 		if (self::$instance === false)
 		{
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$classes = $dispatcher->trigger('onKunenaGetProfile');
 
 			foreach ($classes as $class)

@@ -51,7 +51,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 			$form = JForm::getInstance('com_users.profile', 'frontend');
 			$data = new StdClass;
 			$data->params = $registry->toArray();
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onContentPrepareForm', array($form, $data));
 
 			$form->bind($data);

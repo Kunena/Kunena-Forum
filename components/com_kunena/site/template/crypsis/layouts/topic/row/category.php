@@ -71,7 +71,7 @@ if (!empty($this->spacing)) : ?>
 			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
 			<?php echo JText::_('COM_KUNENA_BY') ?>
-			<?php echo $topic->getAuthor()->getLink(); ?>
+			<?php echo $topic->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -117,12 +117,12 @@ if (!empty($this->spacing)) : ?>
 			<div class="row-fluid">
 				<?php if ($config->avataroncat) : ?>
 					<div class="span3">
-						<?php echo $author->getLink($avatar); ?>
+						<?php echo $author->getLink($avatar, null, 'nofollow', '', null, $category->id); ?>
 					</div>
 				<?php endif; ?>
 				<div class="span9">
 					<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
-						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
 					</span>
 					<br>
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>

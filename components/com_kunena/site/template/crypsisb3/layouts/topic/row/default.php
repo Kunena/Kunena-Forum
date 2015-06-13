@@ -121,7 +121,7 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 				<div class="col-md-9">
 					<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
-						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
 					</span>
 					<br>
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>

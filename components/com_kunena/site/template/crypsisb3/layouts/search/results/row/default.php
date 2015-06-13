@@ -22,7 +22,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 <div id="kunena_search_results" class="row">
 	<div class="col-md-2 center">
 		<ul class="unstyled center profilebox">
-			<li><strong><?php echo $author->getLink(); ?></strong></li>
+			<li><strong><?php echo $author->getLink(null, null, 'nofollow', '', null, $topic->getCategory()->id); ?></strong></li>
 			<li><?php echo $author->getLink($author->getAvatarImage('img-thumbnail', 'post')); ?></li>
 		</ul>
 	</div>

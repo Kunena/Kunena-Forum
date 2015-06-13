@@ -44,7 +44,7 @@ defined ( '_JEXEC' ) or die ();
 		</li>
 		<?php endif; ?>
 		<li class="kpost-username">
-			<?php echo $this->profile->getLink() ?>
+			<?php echo $this->profile->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id) ?>
 		</li>
 		<?php if (!empty($this->usertype)) : ?>
 		<li class="kpost-usertype">

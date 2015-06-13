@@ -180,8 +180,8 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		JPluginHelper::importPlugin('system');
-		// TODO: Rename into JEventDispatcher when dropping Joomla! 2.5 support
-		$dispatcher = JDispatcher::getInstance();
+		
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('OnAfterKunenaProfileUpdate', array($this->me, $success));
 
 		if ($errors)

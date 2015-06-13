@@ -176,8 +176,8 @@ class KunenaBbcodeEditor
 
 		$this->editor_elements = self::parseXML($xml_file);
 
-		//Hook to manipulate the Editor XML like adding buttons
-		$dispatcher = JDispatcher::getInstance();
+		// Hook to manipulate the Editor XML like adding buttons
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher->trigger( 'onKunenaBbcodeEditorInit', array ( $this ) );
 

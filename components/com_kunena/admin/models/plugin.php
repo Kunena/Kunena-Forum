@@ -144,8 +144,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	protected function preprocessData($context, &$data)
 	{
 		// Get the dispatcher and load the users plugins.
-		// TODO: rename to JEventDispatcher::getInstance() after dropping J2.5 support (used also elsewhere).
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.

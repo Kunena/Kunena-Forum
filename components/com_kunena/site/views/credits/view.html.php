@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewCredits extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 
@@ -60,6 +63,9 @@ class KunenaViewCredits extends KunenaView
 		$this->render('Credits', $tpl);
 	}
 
+	/**
+	 *
+	 */
 	protected function _prepareDocument()
 	{
 		$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');

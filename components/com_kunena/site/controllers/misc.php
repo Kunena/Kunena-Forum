@@ -18,14 +18,20 @@ defined('_JEXEC') or die ();
  */
 class KunenaControllerMisc extends KunenaController
 {
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function template()
 	{
-		$name = JRequest::getString('name', JRequest::getString('kunena_template', '', 'COOKIE'));
+		$name = JFactory::getApplication()->input->getString('name', JFactory::getApplication()->input->getString('kunena_template', '', 'COOKIE'));
 
 		if ($name)
 		{

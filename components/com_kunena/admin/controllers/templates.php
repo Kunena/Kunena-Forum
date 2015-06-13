@@ -21,7 +21,7 @@ jimport('joomla.filesystem.archive');
 class KunenaAdminControllerTemplates extends KunenaController
 {
 	protected $baseurl = null;
-	protected $locked = array('blue_eagle');
+	protected $locked = array('crypsis');
 
 	/**
 	 * @param array $config

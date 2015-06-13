@@ -121,7 +121,8 @@ class Com_KunenaInstallerScript
 			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
 			$this->deleteFolder($adminPath, $ignoreAdmin);
 			$this->deleteFolder($sitePath, $ignoreSite);
-			$this->deleteFolder($sitePath . '/template/blue_eagle', array('params.ini'));
+			// Remove Blue Eagle template on K4.1
+			$this->deleteFolder($sitePath . '/template/blue_eagle');
 			// TODO: delete also en-GB files!
 		}
 

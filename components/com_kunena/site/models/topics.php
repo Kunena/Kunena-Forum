@@ -24,6 +24,9 @@ class KunenaModelTopics extends KunenaModel
 	protected $topicActions = false;
 	protected $actionMove = false;
 
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$params = $this->getParameters();
@@ -173,6 +176,9 @@ class KunenaModelTopics extends KunenaModel
 		$this->setState('list.direction', $value);
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getTopics()
 	{
 		if ($this->topics === false)
@@ -218,6 +224,9 @@ class KunenaModelTopics extends KunenaModel
 		return $this->topics;
 	}
 
+	/**
+	 *
+	 */
 	protected function getRecentTopics()
 	{
 		$catid      = $this->getState('item.id');
@@ -304,6 +313,9 @@ class KunenaModelTopics extends KunenaModel
 		$this->_common();
 	}
 
+	/**
+	 *
+	 */
 	protected function getUserTopics()
 	{
 		$catid      = $this->getState('item.id');
@@ -358,6 +370,9 @@ class KunenaModelTopics extends KunenaModel
 		$this->_common();
 	}
 
+	/**
+	 *
+	 */
 	protected function getPosts()
 	{
 		$this->topics = array();
@@ -405,6 +420,10 @@ class KunenaModelTopics extends KunenaModel
 		$this->_common($userlist, $postlist);
 	}
 
+	/**
+	 * @param array $userlist
+	 * @param array $postlist
+	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
 	{
 		if ($this->total > 0)
@@ -437,6 +456,9 @@ class KunenaModelTopics extends KunenaModel
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getMessages()
 	{
 		if ($this->topics === false)
@@ -447,6 +469,9 @@ class KunenaModelTopics extends KunenaModel
 		return $this->messages;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotal()
 	{
 		if ($this->topics === false)
@@ -457,6 +482,9 @@ class KunenaModelTopics extends KunenaModel
 		return $this->total;
 	}
 
+	/**
+	 * @return array|null
+	 */
 	public function getTopicActions()
 	{
 		if ($this->topics === false)
@@ -539,6 +567,9 @@ class KunenaModelTopics extends KunenaModel
 		return $actionDropdown;
 	}
 
+	/**
+	 * @return array|null
+	 */
 	public function getPostActions()
 	{
 		if ($this->messages === false)
@@ -601,6 +632,9 @@ class KunenaModelTopics extends KunenaModel
 		return $actionDropdown;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getActionMove()
 	{
 		return $this->actionMove;

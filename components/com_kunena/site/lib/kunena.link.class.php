@@ -29,6 +29,17 @@ class CKunenaLink
 	//
 	// Basic universal href link
 	//
+	/**
+	 * @param        $link
+	 * @param        $name
+	 * @param string $title
+	 * @param string $rel
+	 * @param string $class
+	 * @param string $anker
+	 * @param string $attr
+	 *
+	 * @return string
+	 */
 	static function GetHrefLink($link, $name, $title = '', $rel = 'nofollow', $class = '', $anker = '', $attr = '')
 	{
 		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="' . $link . ($anker ? ('#' . $anker) : '') . '" title="' . $title . '"' . ($rel ? ' rel="' . $rel . '"' : '') . ($attr ? ' ' . $attr : '') . '>' . $name . '</a>';
@@ -37,6 +48,17 @@ class CKunenaLink
 	//
 	// Basic universal href link
 	//
+	/**
+	 * @param        $link
+	 * @param        $name
+	 * @param string $title
+	 * @param string $rel
+	 * @param string $class
+	 * @param string $anker
+	 * @param string $attr
+	 *
+	 * @return mixed
+	 */
 	static function GetSefHrefLink($link, $name, $title = '', $rel = 'nofollow', $class = '', $anker = '', $attr = '')
 	{
 		$uri = $link instanceof JUri ? $link : JUri::getInstance($link);
@@ -52,16 +74,38 @@ class CKunenaLink
 	// Central Consolidation of all internal href links
 	//
 
+	/**
+	 * @param        $folder
+	 * @param        $filename
+	 * @param        $name
+	 * @param string $title
+	 * @param string $rel
+	 *
+	 * @return string
+	 */
 	static function GetAttachmentLink($folder, $filename, $name, $title = '', $rel = 'nofollow')
 	{
 		return self::GetHrefLink(JUri::root() . "{$folder}/{$filename}", $name, $title, $rel);
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $rel
+	 * @param string $params
+	 *
+	 * @return string
+	 */
 	static function GetRSSLink($name, $rel = 'follow', $params = '')
 	{
 		return self::GetHrefLink(self::GetRSSURL($params), $name, '', $rel, '', '', 'target="_blank"');
 	}
 
+	/**
+	 * @param string $params
+	 * @param bool   $xhtml
+	 *
+	 * @return bool|string
+	 */
 	static function GetRSSURL($params = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -75,6 +119,17 @@ class CKunenaLink
 		}
 	}
 
+	/**
+	 * @param        $task
+	 * @param        $catid
+	 * @param        $catname
+	 * @param string $rel
+	 * @param string $class
+	 * @param string $title
+	 * @param string $extra
+	 *
+	 * @return mixed
+	 */
 	static function GetCategoryActionLink($task, $catid, $catname, $rel = 'follow', $class = '', $title = '', $extra = '')
 	{
 		$token = '&' . JSession::getFormToken() . '=1';
@@ -82,16 +137,42 @@ class CKunenaLink
 		return self::GetSefHrefLink("index.php?option=com_kunena&view=category&task={$task}&catid={$catid}{$extra}{$token}", $catname, $title, $rel, $class);
 	}
 
+	/**
+	 * @param        $catid
+	 * @param        $catname
+	 * @param string $rel
+	 * @param string $class
+	 *
+	 * @return mixed
+	 */
 	static function GetCategoryReviewListLink($catid, $catname, $rel = 'nofollow', $class = '')
 	{
 		return self::GetSefHrefLink("index.php?option=com_kunena&view=review&action=list&catid={$catid}", $catname, '', $rel, $class);
 	}
 
+	/**
+	 * @param        $anker
+	 * @param        $name
+	 * @param string $rel
+	 * @param string $class
+	 *
+	 * @return string
+	 */
 	static function GetSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
 	{
 		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 
+	/**
+	 * @param        $catid
+	 * @param        $id
+	 * @param        $name
+	 * @param string $rel
+	 * @param string $class
+	 * @param string $title
+	 *
+	 * @return mixed
+	 */
 	static function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow', $class = '', $title = '')
 	{
 		$message = KunenaForumMessageHelper::get($id);
@@ -99,6 +180,12 @@ class CKunenaLink
 		return self::GetSefHrefLink("index.php?option=com_kunena&view=topic&layout=report&catid={$catid}&id={$message->thread}&mesid={$message->id}", $name, $title, $rel, $class);
 	}
 
+	/**
+	 * @param        $msg_ip
+	 * @param string $rel
+	 *
+	 * @return string
+	 */
 	static function GetMessageIPLink($msg_ip, $rel = 'nofollow')
 	{
 		if (!empty ($msg_ip))
@@ -115,6 +202,15 @@ class CKunenaLink
 	}
 
 	// Returns always link to Kunena profile
+	/**
+	 * @param        $userid
+	 * @param null   $name
+	 * @param string $rel
+	 * @param string $task
+	 * @param string $class
+	 *
+	 * @return string
+	 */
 	static function GetMyProfileLink($userid, $name = null, $rel = 'nofollow', $task = '', $class = '')
 	{
 		if (!$name)
@@ -127,6 +223,14 @@ class CKunenaLink
 	}
 
 	// Returns always url to Kunena profile
+	/**
+	 * @param int    $userid
+	 * @param string $task
+	 * @param bool   $xhtml
+	 * @param string $extra
+	 *
+	 * @return bool
+	 */
 	static function GetMyProfileURL($userid = 0, $task = '', $xhtml = true, $extra = '')
 	{
 		$my = JFactory::getUser();
@@ -146,6 +250,10 @@ class CKunenaLink
 		return KunenaRoute::_("index.php?option=com_kunena&view=profile{$userid}{$task}{$extra}", $xhtml);
 	}
 
+	/**
+	 * @param string $action
+	 * @param bool   $xhtml
+	 */
 	static function GetUserlistURL($action = '', $xhtml = true)
 	{
 		$profile = KunenaFactory::getProfile();
@@ -153,11 +261,28 @@ class CKunenaLink
 		return $profile->getUserListURL($action, $xhtml);
 	}
 
+	/**
+	 * @param        $userid
+	 * @param null   $name
+	 * @param string $title
+	 * @param string $rel
+	 * @param string $class
+	 *
+	 * @return mixed
+	 */
 	static function GetModerateUserLink($userid, $name = null, $title = '', $rel = 'nofollow', $class = '')
 	{
 		return self::GetSefHrefLink("index.php?option=com_kunena&view=moderateuser&userid={$userid}", $name, $title, $rel, $class);
 	}
 
+	/**
+	 * @param        $action
+	 * @param        $name
+	 * @param string $rel
+	 * @param string $class
+	 *
+	 * @return string
+	 */
 	static function GetUserlistLink($action, $name, $rel = 'nofollow', $class = '')
 	{
 		$link = self::GetUserlistURL($action);
@@ -169,6 +294,13 @@ class CKunenaLink
 		return $name;
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $do
+	 * @param string $rel
+	 *
+	 * @return mixed
+	 */
 	static function GetShowLatestLink($name, $do = '', $rel = 'follow')
 	{
 		if ($do)
@@ -179,6 +311,16 @@ class CKunenaLink
 		return self::GetSefHrefLink("index.php?option=com_kunena&view=latest{$do}", $name, '', $rel);
 	}
 
+	/**
+	 * @param        $do
+	 * @param        $catid
+	 * @param        $pid
+	 * @param        $userid
+	 * @param        $name
+	 * @param string $rel
+	 *
+	 * @return mixed
+	 */
 	static function GetKarmaLink($do, $catid, $pid, $userid, $name, $rel = 'nofollow')
 	{
 		$token = '&' . JSession::getFormToken() . '=1';
@@ -186,6 +328,16 @@ class CKunenaLink
 		return self::GetSefHrefLink("index.php?option=com_kunena&view=karma&do={$do}&userid={$userid}&catid={$catid}&pid={$pid}{$token}", $name, '', $rel);
 	}
 
+	/**
+	 * @param        $view
+	 * @param string $searchword
+	 * @param int    $limitstart
+	 * @param int    $limit
+	 * @param string $params
+	 * @param bool   $xhtml
+	 *
+	 * @return bool
+	 */
 	static function GetSearchURL($view, $searchword = '', $limitstart = 0, $limit = 0, $params = '', $xhtml = true)
 	{
 		$config   = KunenaFactory::getConfig();
@@ -206,6 +358,13 @@ class CKunenaLink
 		return KunenaRoute::_("index.php?option=com_kunena&view={$view}{$searchword}{$params}{$limitstr}", $xhtml);
 	}
 
+	/**
+	 * @param      $do
+	 * @param null $id
+	 * @param int  $catid
+	 *
+	 * @return bool
+	 */
 	static function GetPollURL($do, $id = null, $catid = 0)
 	{
 		$idstring = '';
@@ -222,6 +381,13 @@ class CKunenaLink
 		return KunenaRoute::_("index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}");
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $class
+	 * @param string $rel
+	 *
+	 * @return string
+	 */
 	static function GetStatsLink($name, $class = '', $rel = 'follow')
 	{
 		return self::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=stats'), $name, '', $rel, $class);

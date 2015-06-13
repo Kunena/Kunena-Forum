@@ -16,6 +16,11 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewSmiley extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 *
+	 * @return mixed|void
+	 */
 	public function display($tpl = null)
 	{
 		$this->setLayout('edit');
@@ -28,6 +33,9 @@ class KunenaAdminViewSmiley extends KunenaView
 		parent::display($tpl);
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolbar()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');

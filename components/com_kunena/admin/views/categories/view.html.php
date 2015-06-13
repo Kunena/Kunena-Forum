@@ -21,11 +21,17 @@ class KunenaAdminViewCategories extends KunenaView
 	 */
 	public $categories = array();
 
+	/**
+	 *
+	 */
 	function displayCreate()
 	{
 		$this->displayEdit();
 	}
 
+	/**
+	 *
+	 */
 	function displayEdit()
 	{
 		$this->category = $this->get('AdminCategory');
@@ -43,6 +49,9 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayDefault()
 	{
 		$this->categories = $this->get('AdminCategories');
@@ -81,6 +90,9 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarEdit()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
@@ -101,6 +113,9 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarDefault()
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
@@ -169,6 +184,9 @@ class KunenaAdminViewCategories extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function allowpollsOptions()
 	{
 		// Build the active state filter options.
@@ -194,6 +212,9 @@ class KunenaAdminViewCategories extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -210,6 +231,9 @@ class KunenaAdminViewCategories extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

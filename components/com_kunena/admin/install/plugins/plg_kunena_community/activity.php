@@ -21,7 +21,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 	}
 
 	public function onAfterPost($message) {
-		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+		if (\Joomla\String\String::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 			CFactory::load ( 'libraries', 'userpoints' );
 			CUserPoints::assignPoint ( 'com_kunena.thread.new' );
 		}
@@ -56,7 +56,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 	}
 
 	public function onAfterReply($message) {
-		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+		if (\Joomla\String\String::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 			CFactory::load ( 'libraries', 'userpoints' );
 			CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
 		}

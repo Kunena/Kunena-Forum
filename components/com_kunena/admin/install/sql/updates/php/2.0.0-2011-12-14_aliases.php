@@ -101,7 +101,7 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 		// There can be only one primary alias
 		$query = "UPDATE #__kunena_aliases SET state=0 WHERE type={$db->Quote($type)} AND item={$db->Quote($item)} AND alias!={$db->Quote($alias)} AND state=1";
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 	}
 
 	return $success;
@@ -119,7 +119,7 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
 		// Update primary alias into category table
 		$query = "UPDATE #__kunena_categories SET alias={$db->Quote($alias)} WHERE id={$db->Quote($category->id)}";
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 	}
 
 	return $success;
@@ -127,5 +127,5 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
 
 function kStringURLSafe($str)
 {
-	return JString::trim(preg_replace(array('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u'), array('-', ''), $str));
+	return \Joomla\String\String::trim(preg_replace(array('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u'), array('-', ''), $str));
 }

@@ -20,12 +20,18 @@ class KunenaAdminControllerUsers extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=users';
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function edit()
 	{
 		if (!JSession::checkToken('post'))
@@ -36,8 +42,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -53,6 +59,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=user&layout=edit&userid={$userid}", false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function save()
 	{
 		if (!JSession::checkToken('post'))
@@ -63,16 +72,16 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$newview      = JRequest::getString('newview');
-		$newrank      = JRequest::getString('newrank');
-		$signature    = JRequest::getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
-		$deleteSig    = JRequest::getInt('deleteSig');
-		$moderator    = JRequest::getInt('moderator');
-		$uid          = JRequest::getInt('uid');
-		$deleteAvatar = JRequest::getInt('deleteAvatar');
-		$neworder     = JRequest::getInt('neworder');
-		$modCatids    = $moderator ? JRequest::getVar('catid', array(), 'post', 'array') : array(); // Array of integers
-		JArrayHelper::toInteger($modCatids);
+		$newview      = JFactory::getApplication()->input->getString('newview');
+		$newrank      = JFactory::getApplication()->input->getString('newrank');
+		$signature    = JFactory::getApplication()->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
+		$deleteSig    = JFactory::getApplication()->input->getInt('deleteSig');
+		$moderator    = JFactory::getApplication()->input->getInt('moderator');
+		$uid          = JFactory::getApplication()->input->getInt('uid');
+		$deleteAvatar = JFactory::getApplication()->input->getInt('deleteAvatar');
+		$neworder     = JFactory::getApplication()->input->getInt('neworder');
+		$modCatids    = $moderator ? JFactory::getApplication()->input->get('catid', array(), 'post', 'array') : array(); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($modCatids);
 
 		if ($uid)
 		{
@@ -121,6 +130,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function trashusermessages()
 	{
 		if (!JSession::checkToken('post'))
@@ -131,8 +143,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if ($cid)
 		{
@@ -157,6 +169,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function move()
 	{
 		if (!JSession::checkToken('post'))
@@ -167,8 +182,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
 		{
@@ -183,6 +198,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=user&layout=move", false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function movemessages()
 	{
 		if (!JSession::checkToken('post'))
@@ -193,7 +211,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$catid = JRequest::getInt('catid');
+		$catid = JFactory::getApplication()->input->getInt('catid');
 		$uids  = (array) $this->app->getUserState('kunena.usermove.userids');
 
 		$error = null;
@@ -244,6 +262,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function logout()
 	{
 		if (!JSession::checkToken('post'))
@@ -254,8 +275,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$id = array_shift($cid);
 
 		if ($id <= 0)
@@ -283,8 +304,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
 		{
@@ -342,6 +363,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function ban()
 	{
 		if (!JSession::checkToken('post'))
@@ -352,8 +376,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -392,6 +416,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function unban()
 	{
 		if (!JSession::checkToken('post'))
@@ -402,8 +429,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -442,6 +469,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function block()
 	{
 		if (!JSession::checkToken('post'))
@@ -452,8 +482,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -492,6 +522,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function unblock()
 	{
 		if (!JSession::checkToken('post'))
@@ -502,8 +535,8 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
 		if ($userid <= 0)
@@ -542,6 +575,9 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function batch_moderators()
 	{
 		if (!JSession::checkToken('post'))
@@ -552,10 +588,10 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
-		$catids = JRequest::getVar('catid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($catids);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
+		$catids = JFactory::getApplication()->input->get('catid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($catids);
 
 		if (empty($cid))
 		{

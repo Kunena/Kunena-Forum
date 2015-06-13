@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewStats extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'kunena.png');
@@ -25,7 +28,7 @@ class KunenaAdminViewStats extends KunenaView
 
 		$kunena_stats = KunenaForumStatistics::getInstance();
 		$kunena_stats->loadAll(true);
-		$this->assign($kunena_stats);
+		$this->kunena_stats = $kunena_stats;
 
 		$this->display();
 	}

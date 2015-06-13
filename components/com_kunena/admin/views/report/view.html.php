@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewReport extends KunenaView
 {
+	/**
+	 *
+	 */
 	function displayDefault()
 	{
 		$this->systemreport = $this->get('SystemReport');

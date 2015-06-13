@@ -28,7 +28,7 @@ function kunena_160_2010_05_30_attachments($parent)
 
 	$query = "DROP TABLE IF EXISTS `#__kunena_attachments_bak`";
 	$db->setQuery($query);
-	$db->query();
+	$db->execute();
 	if ($db->getErrorNum())
 	{
 		throw new KunenaInstallerException ($db->getErrorMsg(), $db->getErrorNum());
@@ -38,7 +38,7 @@ function kunena_160_2010_05_30_attachments($parent)
 	// hash and size ommited -> NULL
 	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";
 	$db->setQuery($query);
-	$db->query();
+	$db->execute();
 	if ($db->getErrorNum())
 	{
 		throw new KunenaInstallerException ($db->getErrorMsg(), $db->getErrorNum());
@@ -64,7 +64,7 @@ function kunena_160_2010_05_30_attachments($parent)
 					KEY `hash` (`hash`),
 					KEY `filename` (`filename`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
 	$db->setQuery($query);
-	$db->query();
+	$db->execute();
 	if ($db->getErrorNum())
 	{
 		throw new KunenaInstallerException ($db->getErrorMsg(), $db->getErrorNum());
@@ -78,7 +78,7 @@ function kunena_160_2010_05_30_attachments($parent)
 				FROM #__kunena_attachments_bak AS a
 				JOIN #__kunena_messages AS m ON a.mesid = m.id";
 	$db->setQuery($query);
-	$db->query();
+	$db->execute();
 	if ($db->getErrorNum())
 	{
 		throw new KunenaInstallerException ($db->getErrorMsg(), $db->getErrorNum());

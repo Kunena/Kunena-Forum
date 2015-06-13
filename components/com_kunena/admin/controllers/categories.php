@@ -272,7 +272,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$post       = JFactory::getApplication()->input->get('post', JREQUEST_ALLOWRAW);
+		$post       = JRequest::get('post', JREQUEST_ALLOWRAW);
 		$accesstype = strtr(JFactory::getApplication()->input->getCmd('accesstype', 'joomla.level'), '.', '-');
 
 		$post['access'] = JFactory::getApplication()->input->getInt("access-{$accesstype}", JFactory::getApplication()->input->getInt('access', null));
@@ -283,7 +283,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$category = KunenaForumCategoryHelper::get(intval($post ['catid']));
 		$parent   = KunenaForumCategoryHelper::get(intval($post ['parent_id']));
 
-		if ($category->exists() && !$category->tryAuthorise('admin'))
+		if ($category->exists() && !$category->authorise('admin'))
 		{
 			// Category exists and user is not admin in category
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');

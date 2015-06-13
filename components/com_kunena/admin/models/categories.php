@@ -54,7 +54,7 @@ class KunenaAdminModelCategories extends KunenaModel
 		$value = $this->getUserStateFromRequest($this->context . '.list.start', 'limitstart', 0, 'int');
 		$this->setState('list.start', $value);
 
-		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->getCfg('list_limit'), 'int');
+		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
 		$this->setState('list.limit', $value);
 
 		$value = $this->getUserStateFromRequest($this->context . '.list.ordering', 'filter_order', 'ordering', 'cmd');

@@ -251,14 +251,14 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		if (!$replace)
 		{
 			// Obey Joomla configuration.
-			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
+			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title .' - '. $title);
 
 			}
-			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
+			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
+				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->get('sitename'));
 
 			}
 			else

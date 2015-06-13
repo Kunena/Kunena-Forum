@@ -159,11 +159,11 @@ class KunenaViewUser extends KunenaView
 		$this->personalText  = $this->profile->personalText;
 		$this->signature     = $this->profile->signature;
 		$this->signatureHtml = KunenaHtmlParser::parseBBCode($this->signature, null, $this->config->maxsig);
-		$this->localtime     = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg('offset', null)));
+		$this->localtime     = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->get('offset', null)));
 
 		try
 		{
-			$offset = new DateTimeZone($this->user->getParam('timezone', $this->app->getCfg('offset', null)));
+			$offset = new DateTimeZone($this->user->getParam('timezone', $this->app->get('offset', null)));
 		}
 		catch (Exception $e)
 		{

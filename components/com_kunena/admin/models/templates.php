@@ -51,7 +51,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		$this->setState('template', $value);
 
 		// List state information
-		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->getCfg('list_limit'), 'int');
+		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
 		$this->setState('list.limit', $value);
 
 		$value = $this->getUserStateFromRequest($this->context . '.list.ordering', 'filter_order', 'ordering', 'cmd');

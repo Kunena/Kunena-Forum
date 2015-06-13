@@ -295,7 +295,7 @@ abstract class KunenaUserHelper
 			elseif ($config->show_session_type > 0)
 			{
 				// Calculate Joomla session expiration point.
-				$time = JFactory::getDate()->toUnix() - ($app->getCfg('lifetime', 15) * 60);
+				$time = JFactory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
 				$query->where('time > ' . $time);
 			}
 
@@ -336,7 +336,7 @@ abstract class KunenaUserHelper
 			elseif ($config->show_session_type > 0)
 			{
 				// Calculate Joomla session expiration point.
-				$time = JFactory::getDate()->toUnix() - ($app->getCfg('lifetime', 15) * 60);
+				$time = JFactory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
 				$query->where('time > ' . $time);
 			}
 
@@ -378,7 +378,7 @@ abstract class KunenaUserHelper
 			{
 				self::getOnlineUsers();
 			}
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time >  time() - JFactory::getApplication()->getCfg ( 'lifetime', 15 ) * 60) : false;
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time >  time() - JFactory::getApplication()->get( 'lifetime', 15 ) * 60) : false;
 		}
 
 		if ($yes)
@@ -409,7 +409,7 @@ abstract class KunenaUserHelper
 				self::getOnlineUsers();
 			}
 
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - JFactory::getApplication()->getCfg('lifetime', 15) * 60) : false;
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - JFactory::getApplication()->get('lifetime', 15) * 60) : false;
 		}
 
 		if (!$online || ($user->status == 3 && !$user->isMyself() && !self::getMyself()->isModerator()))

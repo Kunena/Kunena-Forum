@@ -2,8 +2,8 @@
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="kunena" method="upgrade">
 	<name>plg_kunena_gravatar</name>
-	<version>4.1.0-DEV</version>
-	<creationDate>2015-06-09</creationDate>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>Kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>

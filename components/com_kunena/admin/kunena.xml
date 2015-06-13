@@ -21,7 +21,6 @@
 		<folder>controllers</folder>
 		<folder>language</folder>
 		<folder>layout</folder>
-		<folder>lib</folder>
 		<folder>models</folder>
 		<folder>template</folder>
 		<folder>views</folder>

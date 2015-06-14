@@ -218,8 +218,7 @@ $paneOptions = array(
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
-													<td><?php echo JText::_('COM_KUNENA_FEATURE_NOT_AVAILABLE_IN_BETA');?></td>
-													<!--<td>--><?php //echo $this->options ['category_iconset']; ?><!--</td>-->
+													<td><?php echo $this->options ['category_iconset']; ?></td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 												</tr>
 											</table>

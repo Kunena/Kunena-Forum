@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewUsers extends KunenaView
 {
+	/**
+	 *
+	 */
 	public function displayDefault()
 	{
 		$this->setToolbar();
@@ -41,6 +44,9 @@ class KunenaAdminViewUsers extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolbar()
 	{
 		// Get the toolbar object instance
@@ -134,6 +140,9 @@ class KunenaAdminViewUsers extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -150,6 +159,9 @@ class KunenaAdminViewUsers extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

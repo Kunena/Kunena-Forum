@@ -19,12 +19,18 @@ defined('_JEXEC') or die ();
 class KunenaControllerAnnouncement extends KunenaController
 {
 
+	/**
+	 *
+	 */
 	public function none()
 	{
 		// FIXME: This is workaround for task=none on edit.
 		$this->edit();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function publish()
 	{
 		if (!JSession::checkToken('post'))
@@ -35,8 +41,8 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
@@ -59,6 +65,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function unpublish()
 	{
 		if (!JSession::checkToken('post'))
@@ -69,8 +78,8 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
@@ -96,16 +105,22 @@ class KunenaControllerAnnouncement extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function edit()
 	{
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
 
 		$this->setRedirect($announcement->getUrl('edit', false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function delete()
 	{
 		if (!JSession::checkToken('request'))
@@ -116,8 +131,8 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', (array) JRequest::getInt('id'), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', (array) JFactory::getApplication()->input->getInt('id'), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
@@ -136,6 +151,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		$this->setRedirect(KunenaForumAnnouncementHelper::getUrl('list', false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function save()
 	{
 		if (!JSession::checkToken('post'))
@@ -148,14 +166,14 @@ class KunenaControllerAnnouncement extends KunenaController
 
 		$now                    = new JDate();
 		$fields                 = array();
-		$fields['title']        = JRequest::getString('title', '', 'post', JREQUEST_ALLOWRAW);
-		$fields['description']  = JRequest::getString('description', '', 'post', JREQUEST_ALLOWRAW);
-		$fields['sdescription'] = JRequest::getString('sdescription', '', 'post', JREQUEST_ALLOWRAW);
-		$fields['created']      = JRequest::getString('created', $now->toSql());
-		$fields['published']    = JRequest::getInt('published', 1);
-		$fields['showdate']     = JRequest::getInt('showdate', 1);
+		$fields['title']        = JFactory::getApplication()->input->getString('title', '', 'post', 'raw');
+		$fields['description']  = JFactory::getApplication()->input->getString('description', '', 'post', 'raw');
+		$fields['sdescription'] = JFactory::getApplication()->input->getString('sdescription', '', 'post', 'raw');
+		$fields['created']      = JFactory::getApplication()->input->getString('created', $now->toSql());
+		$fields['published']    = JFactory::getApplication()->input->getInt('published', 1);
+		$fields['showdate']     = JFactory::getApplication()->input->getInt('showdate', 1);
 
-		$id           = JRequest::getInt('id');
+		$id           = JFactory::getApplication()->input->getInt('id');
 		$announcement = KunenaForumAnnouncementHelper::get($id);
 		$announcement->bind($fields);
 

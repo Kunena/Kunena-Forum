@@ -78,7 +78,8 @@ function kunena_160_2010_05_30_attachments($parent)
 				FROM #__kunena_attachments_bak AS a
 				JOIN #__kunena_messages AS m ON a.mesid = m.id";
 	$db->setQuery($query);
-	$db->executey();
+	$db->execute();
+
 	if ($db->getErrorNum())
 	{
 		throw new KunenaInstallerException ($db->getErrorMsg(), $db->getErrorNum());

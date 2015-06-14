@@ -251,6 +251,12 @@ function KunenaBuildRoute(&$query)
 	return $segments;
 }
 
+/**
+ * @param $segments
+ *
+ * @return array
+ * @throws Exception
+ */
 function KunenaParseRoute($segments)
 {
 	// If Kunena Forum isn't installed do nothing

@@ -21,14 +21,20 @@ jimport('joomla.filesystem.archive');
 class KunenaAdminControllerTemplates extends KunenaController
 {
 	protected $baseurl = null;
-	protected $locked = array('blue_eagle');
+	protected $locked = array('crypsis');
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=templates';
 	}
 
+	/**
+	 *
+	 */
 	function publish()
 	{
 		$cid = $this->app->input->get('cid', array(), 'method', 'array');
@@ -55,6 +61,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 *
+	 */
 	function add()
 	{
 		if (!JSession::checkToken('post'))
@@ -68,6 +77,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=add", false));
 	}
 
+	/**
+	 *
+	 */
 	function edit()
 	{
 		$cid      = $this->app->input->get('cid', array(), 'method', 'array');
@@ -95,6 +107,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=edit&name={$template}", false));
 	}
 
+	/**
+	 *
+	 */
 	public function install()
 	{
 		$tmp  = JPATH_ROOT . '/tmp/';
@@ -197,6 +212,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 *
+	 */
 	function uninstall()
 	{
 		$cid      = $this->app->input->get('cid', array(), 'method', 'array');
@@ -257,6 +275,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 *
+	 */
 	function chooseless()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
@@ -275,6 +296,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseless", false));
 	}
 
+	/**
+	 *
+	 */
 	function editless()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
@@ -294,6 +318,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editless", false));
 	}
 
+	/**
+	 *
+	 */
 	function choosecss()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
@@ -304,6 +331,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=choosecss", false));
 	}
 
+	/**
+	 *
+	 */
 	function applyless()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
@@ -341,6 +371,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 	}
 
+	/**
+	 *
+	 */
 	function saveless()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
@@ -380,6 +413,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 	}
 
+	/**
+	 *
+	 */
 	function editcss()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
@@ -399,6 +435,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editcss", false));
 	}
 
+	/**
+	 *
+	 */
 	function applycss()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
@@ -435,6 +474,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 	}
 
+	/**
+	 *
+	 */
 	function savecss()
 	{
 		$template = $this->app->input->getArray(array('cid' => ''));
@@ -473,11 +515,14 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 	}
 
+	/**
+	 *
+	 */
 	function apply()
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
-		JArrayHelper::toInteger($menus);
+		Joomla\Utilities\ArrayHelper::toInteger($menus);
 
 		if (!JSession::checkToken('post'))
 		{
@@ -501,11 +546,14 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=edit&cid[]=' . $template, false));
 	}
 
+	/**
+	 *
+	 */
 	function save()
 	{
 		$template = $this->app->input->get('templatename', '', 'method', 'cmd');
 		$menus    = $this->app->input->get('selections', array(), 'post', 'array');
-		JArrayHelper::toInteger($menus);
+		Joomla\Utilities\ArrayHelper::toInteger($menus);
 
 		if (!JSession::checkToken('post'))
 		{

@@ -31,6 +31,11 @@ class Com_KunenaInstallerScript
 	);
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function install($parent)
 	{
 		// Delete all cached files.
@@ -44,16 +49,31 @@ class Com_KunenaInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function discover_install($parent)
 	{
 		return self::install($parent);
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function update($parent)
 	{
 		return self::install($parent);
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function uninstall($parent)
 	{
 		$adminpath = $parent->getParent()->getPath('extension_administrator');
@@ -68,6 +88,12 @@ class Com_KunenaInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param $type
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function preflight($type, $parent)
 	{
 		$parent   = $parent->getParent();
@@ -95,7 +121,8 @@ class Com_KunenaInstallerScript
 			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
 			$this->deleteFolder($adminPath, $ignoreAdmin);
 			$this->deleteFolder($sitePath, $ignoreSite);
-			$this->deleteFolder($sitePath . '/template/blue_eagle', array('params.ini'));
+			// Remove Blue Eagle template on K4.1
+			$this->deleteFolder($sitePath . '/template/blue_eagle');
 			// TODO: delete also en-GB files!
 		}
 
@@ -111,11 +138,22 @@ class Com_KunenaInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param $type
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function postflight($type, $parent)
 	{
 		return true;
 	}
 
+	/**
+	 * @param $version
+	 *
+	 * @return bool|int
+	 */
 	public function checkRequirements($version)
 	{
 		$db   = JFactory::getDbo();
@@ -131,6 +169,13 @@ class Com_KunenaInstallerScript
 
 	// Internal functions
 
+	/**
+	 * @param $name
+	 * @param $version
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
 	protected function checkVersion($name, $version)
 	{
 		$app = JFactory::getApplication();
@@ -160,6 +205,13 @@ class Com_KunenaInstallerScript
 		return false;
 	}
 
+	/**
+	 * @param $name
+	 * @param $types
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
 	protected function checkDbo($name, $types)
 	{
 		$app = JFactory::getApplication();
@@ -174,6 +226,12 @@ class Com_KunenaInstallerScript
 		return false;
 	}
 
+	/**
+	 * @param $extensions
+	 *
+	 * @return int
+	 * @throws Exception
+	 */
 	protected function checkExtensions($extensions)
 	{
 		$app = JFactory::getApplication();
@@ -191,6 +249,12 @@ class Com_KunenaInstallerScript
 		return $pass;
 	}
 
+	/**
+	 * @param $version
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
 	protected function checkKunena($version)
 	{
 		$app = JFactory::getApplication();
@@ -262,6 +326,10 @@ class Com_KunenaInstallerScript
 		return false;
 	}
 
+	/**
+	 * @param       $path
+	 * @param array $ignore
+	 */
 	public function deleteFiles($path, $ignore = array())
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
@@ -278,6 +346,10 @@ class Com_KunenaInstallerScript
 		}
 	}
 
+	/**
+	 * @param       $path
+	 * @param array $ignore
+	 */
 	public function deleteFolders($path, $ignore = array())
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
@@ -294,6 +366,10 @@ class Com_KunenaInstallerScript
 		}
 	}
 
+	/**
+	 * @param       $path
+	 * @param array $ignore
+	 */
 	public function deleteFolder($path, $ignore = array())
 	{
 		$this->deleteFiles($path, $ignore);

@@ -21,6 +21,9 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelSmilies extends JModelList
 {
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields']))
@@ -77,6 +80,11 @@ class KunenaAdminModelSmilies extends JModelList
 		parent::populateState('id', 'asc');
 	}
 
+	/**
+	 * @param string $id
+	 *
+	 * @return string
+	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
@@ -86,6 +94,9 @@ class KunenaAdminModelSmilies extends JModelList
 		return parent::getStoreId($id);
 	}
 
+	/**
+	 * @return JDatabaseQuery
+	 */
 	protected function getListQuery()
 	{
 		$db    = $this->getDbo();

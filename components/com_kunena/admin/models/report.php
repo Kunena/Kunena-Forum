@@ -531,6 +531,9 @@ class KunenaAdminModelReport extends KunenaModel
 		return $version;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getIntegrationSettings()
 	{
 		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');

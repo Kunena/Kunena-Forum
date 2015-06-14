@@ -20,6 +20,13 @@ class KunenaControllerHome extends KunenaController
 {
 	public $home = 1;
 
+	/**
+	 * @param bool $cachable
+	 * @param bool $urlparams
+	 *
+	 * @return JControllerLegacy|void
+	 * @throws Exception
+	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		$menu = $this->app->getMenu();
@@ -27,8 +34,8 @@ class KunenaControllerHome extends KunenaController
 
 		if (!$home)
 		{
-			JRequest::setVar('view', 'category');
-			JRequest::setVar('layout', 'list');
+			JFactory::getApplication()->input->get('view', 'category');
+			JFactory::getApplication()->input->get('layout', 'list');
 			//JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 
 		}
@@ -65,11 +72,11 @@ class KunenaControllerHome extends KunenaController
 			// Add query variables from shown menu item
 			foreach ($default->query as $var => $value)
 			{
-				JRequest::setVar($var, $value);
+				JFactory::getApplication()->input->get($var, $value);
 			}
 
 			// Remove query variables coming from the home menu item
-			JRequest::setVar('defaultmenu', null);
+			JFactory::getApplication()->input->get('defaultmenu', null);
 
 			// Set active menu item to point the real page
 			$menu->setActive($default->id);
@@ -86,6 +93,13 @@ class KunenaControllerHome extends KunenaController
 		$this->setRedirect($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
 	}
 
+	/**
+	 * @param       $menu
+	 * @param       $active
+	 * @param array $visited
+	 *
+	 * @return null
+	 */
 	protected function _getDefaultMenuItem($menu, $active, $visited = array())
 	{
 

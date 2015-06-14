@@ -390,7 +390,7 @@ abstract class KunenaForumTopicHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 
@@ -427,7 +427,7 @@ abstract class KunenaForumTopicHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 

@@ -1036,7 +1036,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 

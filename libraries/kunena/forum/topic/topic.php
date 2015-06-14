@@ -1212,7 +1212,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 
 		if ($this->_db->getErrorNum())
 		{
@@ -1402,7 +1402,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 
@@ -1453,7 +1453,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			foreach ($queries as $query)
 			{
 				$db->setQuery($query);
-				$db->query();
+				$db->execute();
 				KunenaError::checkDatabaseError ();
 			}
 

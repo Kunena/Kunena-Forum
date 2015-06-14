@@ -92,7 +92,7 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -107,7 +107,7 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}
 				WHERE rank_id={$db->quote($rankid)}");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -164,7 +164,7 @@ class KunenaAdminControllerRanks extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{

@@ -87,7 +87,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -101,7 +101,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
 				WHERE id = '$smileyid'");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -159,7 +159,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_smileys WHERE id IN ($cids)");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{

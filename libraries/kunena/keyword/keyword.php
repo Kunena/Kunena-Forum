@@ -63,7 +63,7 @@ class KunenaKeyword extends JObject
 
 		$query = "INSERT INTO #__kunena_keywords_map (keyword_id, user_id, topic_id) VALUES ({$this->id}, {$user_id}, {$topic_id})";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		KunenaError::checkDatabaseError ();
 
 		return true;
@@ -85,7 +85,7 @@ class KunenaKeyword extends JObject
 
 		$query = "DELETE FROM #__kunena_keywords_map WHERE keyword_id={$this->id} AND topic_id={$topic_id} AND user_id={$user_id}";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		KunenaError::checkDatabaseError ();
 
 		return true;
@@ -236,7 +236,7 @@ class KunenaKeyword extends JObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			$result = $result && KunenaError::checkDatabaseError ();
 		}
 

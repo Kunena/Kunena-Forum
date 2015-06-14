@@ -168,7 +168,7 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 
 		// Check for an error message.
 		if ($this->_db->getErrorNum())

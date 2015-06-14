@@ -193,7 +193,7 @@ class KunenaAdminControllerTools extends KunenaController
 					FROM #__users AS a
 					LEFT JOIN #__kunena_users AS b ON b.userid=a.id
 					WHERE b.userid IS NULL");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -209,7 +209,7 @@ class KunenaAdminControllerTools extends KunenaController
 					FROM #__kunena_users AS a
 					LEFT JOIN #__users AS b ON a.userid=b.id
 					WHERE b.username IS NULL");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -225,12 +225,12 @@ class KunenaAdminControllerTools extends KunenaController
 			FROM #__kunena_users AS a
 			LEFT JOIN #__users AS b ON a.userid=b.id
 			WHERE banned='0000-00-00 00:00:00'");
-			$db->query();
+			$db->execute();
 
 			$db->setQuery("DELETE a
 			FROM #__users AS a
 			WHERE block='1'");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -249,7 +249,7 @@ class KunenaAdminControllerTools extends KunenaController
 					SET m.name = u.{$queryName}
 					WHERE m.userid = u.id";
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -262,10 +262,10 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdellife)
 		{
 			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='0000-00-00 00:00:00'");
-			$db->query();
+			$db->execute();
 
 			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{

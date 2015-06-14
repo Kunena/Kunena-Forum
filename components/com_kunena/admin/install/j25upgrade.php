@@ -204,7 +204,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db_new->quote($component->extension_id)} WHERE type = 'component' AND link LIKE '%option={$this->name}%'";
 		$this->db_new->setQuery($query);
-		$this->db_new->query();
+		$this->db_new->execute();
 
 		$menumap = $this->getMapList('menus');
 

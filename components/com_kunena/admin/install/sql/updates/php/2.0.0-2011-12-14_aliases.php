@@ -95,13 +95,13 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 	$db    = JFactory::getDbo();
 	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
 	$db->setQuery($query);
-	$success = $db->query() && $db->getAffectedRows();
+	$success = $db->execute() && $db->getAffectedRows();
 	if ($success && $state)
 	{
 		// There can be only one primary alias
 		$query = "UPDATE #__kunena_aliases SET state=0 WHERE type={$db->Quote($type)} AND item={$db->Quote($item)} AND alias!={$db->Quote($alias)} AND state=1";
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 	}
 
 	return $success;
@@ -113,13 +113,13 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
 	$db    = JFactory::getDbo();
 	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
 	$db->setQuery($query);
-	$success = $db->query() && $db->getAffectedRows();
+	$success = $db->execute() && $db->getAffectedRows();
 	if ($success && $state)
 	{
 		// Update primary alias into category table
 		$query = "UPDATE #__kunena_categories SET alias={$db->Quote($alias)} WHERE id={$db->Quote($category->id)}";
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 	}
 
 	return $success;

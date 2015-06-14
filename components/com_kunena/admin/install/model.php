@@ -1175,7 +1175,7 @@ class KunenaModelInstall extends JModelLegacy
 
 				try
 				{
-					$this->db->query();
+					$this->db->execute();
 
 					if (!$this->db->getErrorNum())
 					{
@@ -1345,7 +1345,7 @@ class KunenaModelInstall extends JModelLegacy
 			{
 				$query = "UPDATE #__kunena_users SET avatar={$this->db->quote($newfile)} WHERE userid={$this->db->quote($userid)}";
 				$this->db->setQuery($query);
-				$this->db->query();
+				$this->db->execute();
 
 				if ($this->db->getErrorNum())
 				{
@@ -1603,7 +1603,7 @@ class KunenaModelInstall extends JModelLegacy
 				$query = "UPDATE #__kunena_attachments SET folder='media/kunena/attachments/legacy/{$lastpath}', size={$this->db->quote($size)}, hash={$this->db->quote($hash)}, filetype={$this->db->quote($attachment->filetype)}
 					WHERE id={$this->db->quote($attachment->id)}";
 				$this->db->setQuery($query);
-				$this->db->query();
+				$this->db->execute();
 
 				if ($this->db->getErrorNum())
 				{
@@ -1628,7 +1628,7 @@ class KunenaModelInstall extends JModelLegacy
 			// Note: com_fireboard has been replaced by com_kunena during 1.0.8 upgrade, use it instead
 			$query = "UPDATE #__kunena_messages_text SET message = REPLACE(REPLACE(message, '/images/fbfiles', '/media/kunena/attachments/legacy'), '/components/com_kunena/uploaded', '/media/kunena/attachments/legacy');";
 			$this->db->setQuery($query);
-			$this->db->query();
+			$this->db->execute();
 
 			if ($this->db->getErrorNum())
 			{
@@ -1948,7 +1948,7 @@ class KunenaModelInstall extends JModelLegacy
 	{
 		// Insert data from the new version
 		$this->db->setQuery("UPDATE " . $this->db->quoteName($this->db->getPrefix() . 'kunena_version') . " SET state = " . $this->db->Quote($state) . " ORDER BY id DESC LIMIT 1");
-		$this->db->query();
+		$this->db->execute();
 
 		if ($this->db->getErrorNum())
 		{
@@ -2148,7 +2148,7 @@ class KunenaModelInstall extends JModelLegacy
 		$create .= " DEFAULT CHARACTER SET utf8 COLLATE {$collation}";
 		$query = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
 		$this->db->setQuery($query);
-		$this->db->query();
+		$this->db->execute();
 
 		if ($this->db->getErrorNum())
 		{
@@ -2160,7 +2160,7 @@ class KunenaModelInstall extends JModelLegacy
 		// And copy data into it
 		$sql = "INSERT INTO " . $this->db->quoteName($this->db->getPrefix() . $newtable) . ' ' . $this->selectWithStripslashes($this->db->getPrefix() . $oldtable);
 		$this->db->setQuery($sql);
-		$this->db->query();
+		$this->db->execute();
 
 		if ($this->db->getErrorNum())
 		{
@@ -2214,7 +2214,7 @@ class KunenaModelInstall extends JModelLegacy
 		PRIMARY KEY (`id`)
 		) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
 		$this->db->setQuery($query);
-		$this->db->query();
+		$this->db->execute();
 
 		if ($this->db->getErrorNum())
 		{
@@ -2235,7 +2235,7 @@ class KunenaModelInstall extends JModelLegacy
 			`installdate` = CURDATE(),
 			`versionname` = {$this->db->quote($versionname)},
 			`state` = {$this->db->quote($state)}");
-		$this->db->query();
+		$this->db->execute();
 
 		if ($this->db->getErrorNum())
 		{
@@ -2276,7 +2276,7 @@ class KunenaModelInstall extends JModelLegacy
 		foreach ($tables as $table)
 		{
 			$this->db->setQuery("DROP TABLE IF EXISTS " . $this->db->quoteName($this->db->getPrefix() . $table));
-			$this->db->query();
+			$this->db->execute();
 
 			if ($this->db->getErrorNum())
 			{
@@ -2337,7 +2337,7 @@ class KunenaModelInstall extends JModelLegacy
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db->quote($component_id)} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
 		$this->db->setQuery($query);
-		$this->db->query();
+		$this->db->execute();
 
 		if ($this->db->getErrorNum())
 		{

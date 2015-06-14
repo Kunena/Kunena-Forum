@@ -126,9 +126,7 @@ JHtml::_('behavior.tabstate');
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_RSS') ?></td>
 												<td><?php echo $this->lists ['enablerss'] ?></td>
-												<td>
-													<img src="<?php echo JUri::base(true) ?>/components/com_kunena/media/icons/small/livemarks.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?>
-												</td>
+												<td><?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?></td>
@@ -211,7 +209,7 @@ JHtml::_('behavior.tabstate');
 										<table class="table table-striped">
 											<thead>
 											<tr>
-												<th width=""></th>
+												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
 												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
 												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
 											</tr>
@@ -293,20 +291,6 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC') ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_TAWIDTH') ?></td>
-												<td>
-													<input type="text" name="cfg_rtewidth" value="<?php echo $this->escape($this->config->rtewidth) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_A_TAWIDTH_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_TAHEIGHT') ?></td>
-												<td>
-													<input type="text" name="cfg_rteheight" value="<?php echo $this->escape($this->config->rteheight) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_A_TAHEIGHT_DESC') ?></td>
-											</tr>
-											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_FORUM_JUMP') ?></td>
 												<td><?php echo $this->lists ['enableforumjump'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_FORUM_JUMP_DESC') ?></td>
@@ -374,11 +358,6 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC') ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS') ?></td>
-												<td><?php echo $this->lists ['enable_threaded_layouts'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_COM_A_ENABLE_THREADED_LAYOUTS_DESC') ?></td>
-											</tr>
-											<tr>
 												<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY') ?></td>
 												<td><?php echo $this->lists ['pickup_category'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY_DESC') ?></td>
@@ -397,41 +376,6 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME') ?></td>
 												<td><?php echo $this->lists ['searchtime'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME_DESC') ?></td>
-											</tr>
-											</tbody>
-										</table>
-									</fieldset>
-									<fieldset>
-										<legend><?php echo JText::_('COM_KUNENA_A_LENGTHS') ?></legend>
-										<table class="table table-striped">
-											<thead>
-											<tr>
-												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
-												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
-												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
-											</tr>
-											</thead>
-											<tbody>
-											<tr>
-												<td align="left" width="25%" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH') ?></td>
-												<td align="left" width="25%" valign="top">
-													<input type="text" name="cfg_maxsubject" value="<?php echo $this->escape($this->config->maxsubject) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
-												<td>
-													<input type="text" name="cfg_maxsig" value="<?php echo $this->escape($this->config->maxsig) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT') ?></td>
-												<td>
-													<input type="text" name="cfg_maxpersotext" value="<?php echo $this->escape($this->config->maxpersotext) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>
@@ -715,46 +659,6 @@ JHtml::_('behavior.tabstate');
 													<input type="text" name="cfg_captcha_post_limit" class="ksm-field" value="<?php echo $this->escape($this->config->captcha_post_limit) ?>" />
 												</td>
 												<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PUBLICKEY') ?></td>
-												<td>
-													<input type="text" name="cfg_recaptcha_publickey" class="ksm-field-large" value="<?php echo $this->escape($this->config->recaptcha_publickey) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PUBLICKEY_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PRIVATEKEY') ?></td>
-												<td>
-													<input type="text" name="cfg_recaptcha_privatekey" class="ksm-field-large" value="<?php echo $this->escape($this->config->recaptcha_privatekey) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PRIVATEKEY_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_THEME') ?></td>
-												<td><?php echo $this->lists ['recaptcha_theme'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_THEME_DESC') ?></td>
-											</tr>
-											</tbody>
-										</table>
-									</fieldset>
-									<fieldset>
-										<legend><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_CONFIGURATION') ?></legend>
-										<table class="table table-striped">
-											<thead>
-											<tr>
-												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_TITLE') ?></th>
-												<th width="25%"><?php echo JText::_('COM_KUNENA_TABLEHEAD_OPTION') ?></th>
-												<th><?php echo JText::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?></th>
-											</tr>
-											</thead>
-											<tbody>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
-												<td>
-													<input type="text" name="cfg_stopforumspam_key" class="ksm-field-large" value="<?php echo $this->escape($this->config->stopforumspam_key) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>

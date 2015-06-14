@@ -906,24 +906,6 @@ class KunenaConfig extends JObject
 	public $captcha_post_limit = 0;
 
 	/**
-	 * @var    string  reCAPTCHA public key; input, text
-	 * @since  1.6.6
-	 */
-	public $recaptcha_publickey = '';
-
-	/**
-	 * @var    string  reCAPTCHA private key; input, text
-	 * @since  1.6.6
-	 */
-	public $recaptcha_privatekey = '';
-
-	/**
-	 * @var    string  reCAPTCHA; select, selection
-	 * @since  1.6.6
-	 */
-	public $recaptcha_theme = 'white'; // select, selection
-
-	/**
 	 * @var    integer  Keyword; select, boolean
 	 * @since  2.0.0
 	 */
@@ -1000,12 +982,6 @@ class KunenaConfig extends JObject
 	 * @since  2.0.0
 	 */
 	public $send_emails = 1; // select, boolean
-
-	/**
-	 * @var    string  StopForumSpam key; input, text
-	 * @since  2.0.0
-	 */
-	public $stopforumspam_key = '';
 
 	/**
 	 * @var    integer  Fallback english; select, boolean

@@ -143,8 +143,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Get keywords, captcha & quick reply
-		$this->captcha    = KunenaSpamRecaptcha::getInstance();
-		$this->quickreply = ($this->topic->authorise('reply', null, false) && $this->me->exists() && !$this->captcha->enabled());
+		$this->quickreply = ($this->topic->authorise('reply', null, false) && $this->me->exists());
 		$this->keywords   = $this->topic->getKeywords(false, ', ');
 
 		$this->_prepareDocument('default');

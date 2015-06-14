@@ -346,53 +346,33 @@ class KunenaControllerTopic extends KunenaController
 
 		if ( $this->me->canDoCaptcha() )
 		{
-			if ( $template->kversion >= 4.0)
+			if (JPluginHelper::isEnabled('captcha'))
 			{
-				if (JPluginHelper::isEnabled('captcha'))
+				$plugin = JPluginHelper::getPlugin('captcha');
+				$params = new JRegistry($plugin[0]->params);
+
+				$captcha_pubkey = $params->get('public_key');
+				$catcha_privkey = $params->get('private_key');
+
+				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
-					$plugin = JPluginHelper::getPlugin('captcha');
-					$params = new JRegistry($plugin[0]->params);
+					JPluginHelper::importPlugin('captcha');
+					$dispatcher = JEventDispatcher::getInstance();
 
-					$captcha_pubkey = $params->get('public_key');
-					$catcha_privkey = $params->get('private_key');
+					$captcha_response = $this->app->input->getString('g-recaptcha-response');
 
-					if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+					if ( !empty($captcha_response) )
 					{
-						JPluginHelper::importPlugin('captcha');
-						$dispatcher = JEventDispatcher::getInstance();
-
-						$captcha_response = $this->app->input->getString('g-recaptcha-response');
-
-						if ( !empty($captcha_response) )
-						{
-							// For ReCaptcha API 2.0
-							$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
-						}
-						else
-						{
-							// For ReCaptcha API 1.0
-							$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
-						}
-
-						if (!$res[0]) {
-							$this->setRedirectBack();
-
-							return;
-						}
+						// For ReCaptcha API 2.0
+						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
 					}
-				}
-			}
-			else
-			{
-				$captcha = KunenaSpamRecaptcha::getInstance();
-
-				if ($captcha->enabled())
-				{
-					$success = $captcha->verify();
-
-					if (!$success)
+					else
 					{
-						$this->app->enqueueMessage($captcha->getError(), 'error');
+						// For ReCaptcha API 1.0
+						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
+					}
+
+					if (!$res[0]) {
 						$this->setRedirectBack();
 
 						return;

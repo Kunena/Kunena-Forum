@@ -17,6 +17,11 @@ class KunenaProfile
 {
 	protected static $instance = false;
 
+	/**
+	 * @param null $integration
+	 *
+	 * @return bool|KunenaProfile
+	 */
 	static public function getInstance($integration = null)
 	{
 		if (self::$instance === false)
@@ -45,6 +50,11 @@ class KunenaProfile
 		return self::$instance;
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function getTopHits($limit = 0)
 	{
 		if (!$limit)
@@ -55,6 +65,12 @@ class KunenaProfile
 		return (array) $this->_getTopHits($limit);
 	}
 
+	/**
+	 * @param string $action
+	 * @param bool   $xhtml
+	 *
+	 * @return bool
+	 */
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -68,26 +84,48 @@ class KunenaProfile
 		return KunenaRoute::_('index.php?option=com_kunena&view=statistics'.$action, $xhtml);
 	}
 
+	/**
+	 * @param string $action
+	 * @param bool   $xhtml
+	 */
 	public function getUserListURL($action='', $xhtml = true)
 	{
 
 	}
 
+	/**
+	 * @param        $user
+	 * @param string $task
+	 * @param bool   $xhtml
+	 */
 	public function getProfileURL($user, $task='', $xhtml = true)
 	{
 
 	}
 
+	/**
+	 * @param $view
+	 * @param $params
+	 */
 	public function showProfile($view, &$params)
 	{
 
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	protected function _getTopHits($limit=0)
 	{
 		return array();
 	}
 
+	/**
+	 * @param      $userid
+	 * @param bool $xhtml
+	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 

@@ -41,6 +41,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 */
 	protected $document;
 
+	/**
+	 * @return bool
+	 */
 	public function exists()
 	{
 		if ($this->input->getWord('format', 'html') != 'html')
@@ -55,6 +58,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		return (bool) $this->page->getPath();
 	}
 
+	/**
+	 * @return KunenaLayout
+	 */
 	protected function display()
 	{
 		// Display layout with given parameters.
@@ -66,6 +72,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		return $this->page;
 	}
 
+	/**
+	 * @return JLayoutBase
+	 */
 	public function execute()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
@@ -164,6 +173,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		return $this->output;
 	}
 
+	/**
+	 *
+	 */
 	protected function before()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
@@ -226,15 +238,18 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 	}
 
+	/**
+	 *
+	 */
 	protected function after()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 
 		// Use our own browser side cache settings.
-		JResponse::allowCache(false);
-		JResponse::setHeader( 'Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true );
-		JResponse::setHeader( 'Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true );
-		JResponse::setHeader( 'Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true );
+		JFactory::getApplication()->allowCache(false);
+		JFactory::getApplication()->setHeader( 'Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true );
+		JFactory::getApplication()->setHeader( 'Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true );
+		JFactory::getApplication()->setHeader( 'Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true );
 
 		if ($this->config->get('credits', 1))
 		{
@@ -244,33 +259,41 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
 	}
 
+	/**
+	 * @param int $code
+	 *
+	 * @throws Exception
+	 */
 	public function setResponseStatus($code = 404) {
 		switch ((int) $code)
 		{
 			case 400:
-				JResponse::setHeader('Status', '400 Bad Request', true);
+				JFactory::getApplication()->setHeader('Status', '400 Bad Request', true);
 				break;
 			case 401:
-				JResponse::setHeader('Status', '401 Unauthorized', true);
+				JFactory::getApplication()->setHeader('Status', '401 Unauthorized', true);
 				break;
 			case 403:
-				JResponse::setHeader('Status', '403 Forbidden', true);
+				JFactory::getApplication()->setHeader('Status', '403 Forbidden', true);
 				break;
 			case 404:
-				JResponse::setHeader('Status', '404 Not Found', true);
+				JFactory::getApplication()->setHeader('Status', '404 Not Found', true);
 				break;
 			case 410:
-				JResponse::setHeader('Status', '410 Gone', true);
+				JFactory::getApplication()->setHeader('Status', '410 Gone', true);
 				break;
 			case 503:
-				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
+				JFactory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
 				break;
 			case 500:
 			default:
-				JResponse::setHeader('Status', '500 Internal Server Error', true);
+				JFactory::getApplication()->setHeader('Status', '500 Internal Server Error', true);
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	final public function poweredBy()
 	{
 		$templateText = (string) $this->template->params->get('templatebyText');

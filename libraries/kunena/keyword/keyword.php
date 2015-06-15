@@ -47,6 +47,12 @@ class KunenaKeyword extends JObject
 		return KunenaKeywordHelper::get($identifier, $reset);
 	}
 
+	/**
+	 * @param $topic_id
+	 * @param $user_id
+	 *
+	 * @return bool
+	 */
 	public function addTopic($topic_id, $user_id)
 	{
 		if (!$user_id)
@@ -69,6 +75,12 @@ class KunenaKeyword extends JObject
 		return true;
 	}
 
+	/**
+	 * @param $topic_id
+	 * @param $user_id
+	 *
+	 * @return bool
+	 */
 	public function delTopic($topic_id, $user_id)
 	{
 		if (!$user_id)
@@ -91,6 +103,11 @@ class KunenaKeyword extends JObject
 		return true;
 	}
 
+	/**
+	 * @param null $exists
+	 *
+	 * @return bool
+	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -153,6 +170,10 @@ class KunenaKeyword extends JObject
 		return $this->_exists;
 	}
 
+	/**
+	 * @param       $data
+	 * @param array $allow
+	 */
 	public function bind($data, $allow = array())
 	{
 		if (!empty($allow))
@@ -243,6 +264,9 @@ class KunenaKeyword extends JObject
 		return $result;
 	}
 
+	/**
+	 *
+	 */
 	public function recount()
 	{
 

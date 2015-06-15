@@ -102,7 +102,7 @@ class KunenaForumMessageThankyou extends JObject
 		$query = "INSERT INTO #__kunena_thankyou
 			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toSql())}";
 		$db->setQuery ( $query );
-		$db->query ();
+		$db->execute();
 
 		// Check for an error message.
 		if ($db->getErrorNum())
@@ -127,7 +127,7 @@ class KunenaForumMessageThankyou extends JObject
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery ( $query );
-		$db->query ();
+		$db->execute();
 
 		// Check for an error message.
 		if ($db->getErrorNum())
@@ -175,11 +175,11 @@ class KunenaForumMessageThankyou extends JObject
 		$db = JFactory::getDBO ();
 		$query = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)} AND userid={$db->quote($user->userid)}";
 		$db->setQuery ( $query );
-		$db->query ();
+		$db->execute();
 
 		$query = "UPDATE #__kunena_users SET thankyou=thankyou-1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery ( $query );
-		$db->query ();
+		$db->execute();
 
 		// Check for an error message.
 		if ($db->getErrorNum ())

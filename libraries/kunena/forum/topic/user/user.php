@@ -122,6 +122,9 @@ class KunenaForumTopicUser extends JObject
 		$this->setProperties ( $data );
 	}
 
+	/**
+	 *
+	 */
 	public function reset()
 	{
 		$this->topic_id = 0;

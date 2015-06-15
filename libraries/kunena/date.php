@@ -16,11 +16,20 @@ jimport ( 'joomla.utilities.date' );
  */
 class KunenaDate extends JDate
 {
+	/**
+	 * @param string $date
+	 * @param null   $tz
+	 *
+	 * @return KunenaDate
+	 */
 	public static function getInstance($date = 'now', $tz = null)
 	{
 		return new KunenaDate($date, $tz);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function toTimeAgo()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -83,6 +92,9 @@ class KunenaDate extends JDate
 		return $output;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function toTimezone()
 	{
 		$timezone = $this->getOffsetFromGMT(true);
@@ -90,11 +102,26 @@ class KunenaDate extends JDate
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 
+	/**
+	 * @param string $mode
+	 * @param string $title
+	 * @param bool   $offset
+	 * @param string $class
+	 *
+	 * @return string
+	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class='')
 	{
 		return '<span class="kdate '.$class.'" title="'.$this->toKunena($title, $offset).'">'.$this->toKunena($mode, $offset).'</span>';
 	}
 
+	/**
+	 * @param string $mode
+	 * @param bool   $offset
+	 *
+	 * @return string
+	 * @throws Exception
+	 */
 	public function toKunena($mode = 'datetime_today', $offset = false)
 	{
 		if ($this->format('Y')<1902)

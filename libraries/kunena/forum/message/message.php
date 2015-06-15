@@ -1183,6 +1183,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	// Internal functions
 
+	/**
+	 * @param bool $newTopic
+	 */
 	protected function update($newTopic = false)
 	{
 		// If post was published and then moved, we need to update old topic

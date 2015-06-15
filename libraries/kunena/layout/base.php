@@ -215,6 +215,11 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		return $this;
 	}
 
+	/**
+	 * @param Exception $e
+	 *
+	 * @return string
+	 */
 	public function renderError(Exception $e)
 	{
 		// Exceptions aren't allowed in string conversion, log the error and output it as a string.

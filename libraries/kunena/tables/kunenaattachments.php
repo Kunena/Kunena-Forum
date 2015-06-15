@@ -30,11 +30,17 @@ class TableKunenaAttachments extends KunenaTable
 	public $filename_real = null;
 	public $comment = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_attachments', 'id', $db );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		$user = KunenaUserHelper::get($this->userid);

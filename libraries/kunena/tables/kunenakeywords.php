@@ -23,11 +23,17 @@ class TableKunenaKeywords extends KunenaTable
 	public $public_count = null;
 	public $total_count = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_keywords', 'id', $db );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		$this->name = trim($this->name);

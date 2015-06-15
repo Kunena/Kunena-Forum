@@ -17,8 +17,18 @@ class KunenaUploadHelper
 {
 	protected static $_instances = array ();
 
+	/**
+	 *
+	 */
 	private function __construct() {}
 
+	/**
+	 * @param $file
+	 * @param $uploadfolder
+	 * @param $format
+	 *
+	 * @return bool
+	 */
 	public static function upload($file, $uploadfolder, $format)
 	{
 		jimport( 'joomla.filesystem.folder' );
@@ -48,7 +58,7 @@ class KunenaUploadHelper
 		{
 			$filepath = JPath::clean($uploadfolder.'/'.strtolower($file['name']));
 
-			if (!MediaHelper::canUpload( $file, $err ))
+			if (!JHelperMedia::canUpload( $file, $err ))
 			{
 				if ($format == 'json')
 				{

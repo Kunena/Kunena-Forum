@@ -40,17 +40,29 @@ class TableKunenaMessages extends KunenaTable
 	public $params = null;
 	public $message = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_messages', 'id', $db );
 	}
 
+	/**
+	 *
+	 */
 	public function reset()
 	{
 		parent::reset();
 		$this->message = null;
 	}
 
+	/**
+	 * @param null $id
+	 * @param bool $reset
+	 *
+	 * @return bool
+	 */
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -103,6 +115,9 @@ class TableKunenaMessages extends KunenaTable
 		return $this->_exists;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		$category = KunenaForumCategoryHelper::get($this->catid);

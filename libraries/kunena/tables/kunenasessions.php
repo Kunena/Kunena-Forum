@@ -31,6 +31,12 @@ class TableKunenaSessions extends KunenaTable
 		parent::__construct('#__kunena_sessions', 'userid', $db);
 	}
 
+	/**
+	 * @param null $oid
+	 * @param bool $reset
+	 *
+	 * @return bool
+	 */
 	public function load($oid = null, $reset = true)
 	{
 		if (!$oid)
@@ -41,6 +47,9 @@ class TableKunenaSessions extends KunenaTable
 		return parent::load($oid, $reset);
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		$user = KunenaUserHelper::get($this->userid);

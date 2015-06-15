@@ -53,11 +53,20 @@ class TableKunenaCategories extends KunenaTable
 	public $last_post_time = null;
 	public $params = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_categories', 'id', $db );
 	}
 
+	/**
+	 * @param mixed  $array
+	 * @param string $ignore
+	 *
+	 * @return bool
+	 */
 	public function bind($array, $ignore = '')
 	{
 		if (is_object($array))
@@ -87,6 +96,12 @@ class TableKunenaCategories extends KunenaTable
 		return parent::bind($array, $ignore);
 	}
 
+	/**
+	 * @param null $id
+	 * @param bool $reset
+	 *
+	 * @return bool
+	 */
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -137,6 +152,9 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	// check for potential problems
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		if ($this->id && $this->parent_id)
@@ -164,6 +182,11 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	// check if given forum is one of its own childs
+	/**
+	 * @param $id
+	 *
+	 * @return int|void
+	 */
 	public function isChild($id) {
 		// FIXME: when we have category cache, replace this code
 		if ($id > 0)
@@ -200,6 +223,11 @@ class TableKunenaCategories extends KunenaTable
 		return 0;
 	}
 
+	/**
+	 * @param string $where
+	 *
+	 * @return bool|mixed
+	 */
 	public function reorder($where='')
 	{
 		if (!$where)
@@ -222,6 +250,11 @@ class TableKunenaCategories extends KunenaTable
 		}
 	}
 
+	/**
+	 * @param bool $updateNulls
+	 *
+	 * @return bool
+	 */
 	public function store($updateNulls = false)
 	{
 		$ret = parent::store ( $updateNulls );

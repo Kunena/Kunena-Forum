@@ -338,11 +338,11 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// We have a full, complete, and properly-formatted URL, with protocol.
 				// Now we need to apply the $this->url_pattern template to turn it into HTML.
-				$params = JString::parse_url($url);
+				$params = Joomla\String\String::parse_url($url);
 
 				if (!$invalid && substr($url, 0, 7) == 'mailto:')
 				{
-					$email = JString::substr($url, 7);
+					$email = Joomla\String\String::substr($url, 7);
 
 					if ( $this->canCloakEmail($params) )
 					{
@@ -1010,6 +1010,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			),
 	);
 
+	/**
+	 *
+	 */
 	function __construct()
 	{
 		if (!KunenaFactory::getConfig()->disemoticons)
@@ -1031,6 +1034,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$this->default_tag_rules['quote']['plain_start'] = "\n".JText::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE')."\n";
 	}
 
+	/**
+	 * @return KunenaForumMessage|null
+	 */
 	protected function getMessage()
 	{
 		if (empty($this->parent))
@@ -1159,6 +1165,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	}
 
 	// Format a [size] tag by producing a <span> with a style with a different font-size.
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	public function DoSize($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1208,6 +1224,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	//   [list=i]         Ordered list, lowercase Roman numerals, starting at i
 	//   [list=greek]     Ordered list, lowercase Greek letters, starting at alpha
 	//   [list=01]        Ordered list, two-digit numeric with 0-padding, starting at 01
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	function DoList($bbcode, $action, $name, $default, $params, $content)
 	{
 		// Allowed list styles, striaght from the CSS 2.1 spec.  The only prohibited
@@ -1286,6 +1312,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1333,6 +1369,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			. JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE') . '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	public function DoHide($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1376,6 +1422,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1531,6 +1587,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return '<div id="'.$mapid.'" class="kgooglemap">'.JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE', true).'</div>';
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	public function DoEbay($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1574,6 +1640,17 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 * @throws Exception
+	 */
 	function DoArticle($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1692,6 +1769,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return ($html ? '<div class="kmsgtext-article">' . $html . '</div>' : '') . $link;
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	function DoQuote($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1779,6 +1866,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return '<div class="highlight">'.$code.'</div>';
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	public function doTableau($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -1869,7 +1966,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$vid_maxheight = 720; // max. display size
 		$vid_sizemax = 100; // max. display zoom in percent
 
-		$vid ["type"] = (isset ( $params ["type"] )) ? JString::strtolower ( $params ["type"] ) : '';
+		$vid ["type"] = (isset ( $params ["type"] )) ? Joomla\String\String::strtolower ( $params ["type"] ) : '';
 		$vid ["param"] = (isset ( $params ["param"] )) ? $params ["param"] : '';
 
 		if (! $vid ["type"])
@@ -1896,7 +1993,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			if ($vid_auto)
 			{
-				$vid ["type"] = JString::strtolower ( $vid_regs [1] );
+				$vid ["type"] = Joomla\String\String::strtolower ( $vid_regs [1] );
 
 				switch ($vid ["type"])
 				{
@@ -2073,7 +2170,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$vid_par3 = array ();
 		foreach ( $params as $vid_key => $vid_value )
 		{
-			if (in_array ( JString::strtolower ( $vid_key ), $vid_allowpar ))
+			if (in_array ( Joomla\String\String::strtolower ( $vid_key ), $vid_allowpar ))
 			{
 				array_push ( $vid_par3, array (6, $vid_key, $bbcode->HTMLEncode ( $vid_value ) ) );
 			}
@@ -2127,6 +2224,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return $tag_new;
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	function DoAttachment($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)
@@ -2206,6 +2313,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return $this->renderAttachment($attachment, $bbcode);
 	}
 
+	/**
+	 * @param KunenaAttachment $attachment
+	 * @param                  $bbcode
+	 * @param bool             $displayImage
+	 *
+	 * @return string
+	 */
 	protected function renderAttachment(KunenaAttachment $attachment, $bbcode, $displayImage = true)
 	{
 		$layout = KunenaLayout::factory('BBCode/Attachment')
@@ -2398,6 +2512,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return (string) $layout->set('url', $fileurl);
 	}
 
+	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
 	public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
 	{
 		if ($action == BBCODE_CHECK)

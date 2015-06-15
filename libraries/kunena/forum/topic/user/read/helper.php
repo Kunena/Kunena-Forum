@@ -113,7 +113,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$db = JFactory::getDBO ();
 		$query ="UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -169,7 +169,7 @@ abstract class KunenaForumTopicUserReadHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query ();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError ())
 			{
@@ -194,7 +194,7 @@ abstract class KunenaForumTopicUserReadHelper
 			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
 			SET ur.category_id=t.category_id";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -216,7 +216,7 @@ abstract class KunenaForumTopicUserReadHelper
 		$timestamp = JFactory::getDate()->toUnix() - 60*60*24*$days;
 		$query = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{

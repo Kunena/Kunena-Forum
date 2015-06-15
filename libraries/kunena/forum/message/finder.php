@@ -205,7 +205,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		$query->where("a.moved=0");
 		if (!empty($this->hold))
 		{
-			JArrayHelper::toInteger($this->hold, 0);
+			Joomla\Utilities\ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
 			$query->where("a.hold IN ({$hold})");
 		}

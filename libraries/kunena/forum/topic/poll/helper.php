@@ -47,6 +47,9 @@ abstract class KunenaForumTopicPollHelper
 		return self::$_instances [$id];
 	}
 
+	/**
+	 *
+	 */
 	static public function recount()
 	{
 		$db = JFactory::getDbo();

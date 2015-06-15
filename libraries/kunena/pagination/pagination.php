@@ -296,6 +296,9 @@ class KunenaPagination
 		return $data;
 	}
 
+	/**
+	 *
+	 */
 	protected function setChrome()
 	{
 		$template = KunenaFactory::getTemplate();

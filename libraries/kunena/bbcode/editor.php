@@ -384,6 +384,11 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 		return $js;
 	}
 
+	/**
+	 * @param $identifier
+	 *
+	 * @return string
+	 */
 	function generateJs ($identifier)
 	{
 		// <button tag="i" name="italic" title="COM_KUNENA_EDITOR_ITALIC" alt="COM_KUNENA_EDITOR_HELPLINE_ITALIC">
@@ -475,6 +480,11 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
  */
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 {
+	/**
+	 * @param $identifier
+	 *
+	 * @return string
+	 */
 	public function generateJs ($identifier)
 	{
 		$js = "\nkbbcode.addFunction('#', function() {";
@@ -485,6 +495,11 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement
 		return $js;
 	}
 
+	/**
+	 * @param SimpleXMLElement $xml
+	 *
+	 * @return KunenaBbcodeEditorSeparator
+	 */
 	public static function parseXML (SimpleXMLElement $xml)
 	{
 		return new KunenaBbcodeEditorSeparator((string)$xml['name']);

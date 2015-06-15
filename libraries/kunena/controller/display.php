@@ -136,7 +136,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			$document = JFactory::getDocument();
 			$document->setTitle($e->getResponseStatus());
-			JResponse::setHeader('Status', $e->getResponseStatus(), true);
+			JFactory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
@@ -152,7 +152,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$title = '500 Internal Server Error';
 			$document = JFactory::getDocument();
 			$document->setTitle($title);
-			JResponse::setHeader('Status', $title, true);
+			JFactory::getApplication()->setHeader('Status', $title, true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());
@@ -245,7 +245,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		return $this;
 	}
 
-
+	/**
+	 * @param      $title
+	 * @param bool $replace
+	 */
 	protected function setTitle($title, $replace = false)
 	{
 		if (!$replace)
@@ -271,6 +274,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$this->document->setTitle($title);
 	}
 
+	/**
+	 * @param $keywords
+	 */
 	protected function setKeywords($keywords)
 	{
 		if (!empty($keywords))
@@ -279,6 +285,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		}
 	}
 
+	/**
+	 * @param $description
+	 */
 	protected function setDescription($description)
 	{
 		$this->document->setMetadata('description',  $description);

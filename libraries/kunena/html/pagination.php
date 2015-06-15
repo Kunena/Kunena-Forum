@@ -21,6 +21,10 @@ jimport ( 'joomla.html.pagination' );
  */
 class KunenaHtmlPagination extends KunenaPagination
 {
+	/**
+	 * @param int  $displayedPages
+	 * @param null $uri
+	 */
 	public function setDisplay($displayedPages = 7, $uri = null)
 	{
 		$this->setDisplayedPages($displayedPages);

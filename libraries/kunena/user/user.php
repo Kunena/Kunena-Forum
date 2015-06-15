@@ -551,7 +551,8 @@ class KunenaUser extends JObject
 			$name = $this->getName();
 		}
 
-		$key = "{$name}.{$title}.{$rel}";
+		$key = "{$name}.{$title}.{$rel}.{$catid}";
+
 		if (empty($this->_link[$key]))
 		{
 			if (!$title)
@@ -560,7 +561,7 @@ class KunenaUser extends JObject
 			}
 
 			$class = !is_null($class) ? $class : $this->getType($catid, 'class');
-			$link = $this->getURL (true, $task);
+			$link = $this->getURL(true, $task);
 
 			if (! empty ( $link ))
 			{

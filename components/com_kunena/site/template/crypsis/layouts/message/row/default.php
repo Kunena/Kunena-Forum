@@ -48,7 +48,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 			?>
 		</div>
 		<div>
-			<?php echo $topic->getAuthor()->getLink(); ?>,
+			<?php echo $topic->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 		</div>
@@ -68,7 +68,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 				<div class="span9">
 				<span><?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?></span>
 				<?php if ($message->userid) : ?>
-					<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+					<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?></span>
 				<?php endif; ?>
 				<br />
 				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>

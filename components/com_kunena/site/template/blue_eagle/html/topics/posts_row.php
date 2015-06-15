@@ -62,7 +62,7 @@ $this->cache = false;
 				if ($useravatar) :
 			?>
 			<span class="ktopic-latest-post-avatar">
-			<?php echo $this->message->getAuthor()->getLink( $useravatar ) ?>
+			<?php echo $this->message->getAuthor()->getLink( $useravatar, null, 'nofollow', '', null, $this->topic->getCategory()->id ) ?>
 			</span>
 			<?php
 				endif;
@@ -74,7 +74,7 @@ $this->cache = false;
 
 			<?php if ($this->message->userid) : ?>
 			<br />
-			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(); ?></span>
+			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id); ?></span>
 			<?php endif; ?>
 		</div>
 	</td>

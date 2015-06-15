@@ -138,7 +138,7 @@ foreach ($this->sections as $section) :
 										$modslist = array();
 										foreach ($category->moderators as $moderator)
 										{
-											$modslist[] = KunenaFactory::getUser($moderator)->getLink();
+											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, 'nofollow', '', null, $category->id);
 										}
 										echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
 										?>

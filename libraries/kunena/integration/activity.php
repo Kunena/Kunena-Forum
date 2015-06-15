@@ -21,6 +21,9 @@ class KunenaIntegrationActivity
 
 	protected static $instance;
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		JPluginHelper::importPlugin('kunena');
@@ -38,6 +41,9 @@ class KunenaIntegrationActivity
 		}
 	}
 
+	/**
+	 * @return static
+	 */
 	static public function getInstance()
 	{
 		if (!self::$instance)

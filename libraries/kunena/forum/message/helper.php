@@ -436,7 +436,7 @@ abstract class KunenaForumMessageHelper
 			INNER JOIN #__kunena_topics AS tt ON tt.id=m.thread
 			SET m.catid=tt.category_id {$where}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{

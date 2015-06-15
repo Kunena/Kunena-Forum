@@ -56,6 +56,12 @@ class KunenaModel extends JModelLegacy
 	 */
 	protected $embedded = false;
 
+	/**
+	 * @param array  $config
+	 * @param JInput $input
+	 *
+	 * @throws Exception
+	 */
 	public function __construct($config = array(), JInput $input = null)
 	{
 		$this->option = 'com_kunena';
@@ -67,6 +73,10 @@ class KunenaModel extends JModelLegacy
 		$this->input = $input ? $input : $this->app->input;
 	}
 
+	/**
+	 * @param array $params
+	 * @param bool  $embedded
+	 */
 	public function initialize($params = array(), $embedded = true)
 	{
 		if ($embedded)
@@ -86,6 +96,9 @@ class KunenaModel extends JModelLegacy
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getItemid()
 	{
 		$Itemid = 0;
@@ -110,6 +123,9 @@ class KunenaModel extends JModelLegacy
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
+	/**
+	 * @return JRegistry
+	 */
 	protected function getParameters()
 	{
 		if (!$this->params)
@@ -120,6 +136,14 @@ class KunenaModel extends JModelLegacy
 		return $this->params;
 	}
 
+	/**
+	 * @param        $key
+	 * @param        $request
+	 * @param null   $default
+	 * @param string $type
+	 *
+	 * @return mixed|object
+	 */
 	protected function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
 	{
 		// If we are not in embedded mode, get variable from application
@@ -132,6 +156,14 @@ class KunenaModel extends JModelLegacy
 		return $this->getVar($request, $default, 'request', $type);
 	}
 
+	/**
+	 * @param        $name
+	 * @param null   $default
+	 * @param string $hash
+	 * @param string $type
+	 *
+	 * @return mixed
+	 */
 	protected function getVar($name, $default = null, $hash = 'request', $type = 'none')
 	{
 		// If we are not in embedded mode, get variable from request
@@ -150,31 +182,73 @@ class KunenaModel extends JModelLegacy
 		return $this->filter->clean($this->params->get($name, $default), $type);
 	}
 
+	/**
+	 * @param        $name
+	 * @param bool   $default
+	 * @param string $hash
+	 *
+	 * @return mixed
+	 */
 	protected function getBool($name, $default = false, $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'bool');
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $default
+	 * @param string $hash
+	 *
+	 * @return mixed
+	 */
 	protected function getCmd($name, $default = '', $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'cmd');
 	}
 
+	/**
+	 * @param        $name
+	 * @param float  $default
+	 * @param string $hash
+	 *
+	 * @return mixed
+	 */
 	protected function getFloat($name, $default = 0.0, $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'float');
 	}
 
+	/**
+	 * @param        $name
+	 * @param int    $default
+	 * @param string $hash
+	 *
+	 * @return mixed
+	 */
 	protected function getInt($name, $default = 0, $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'int');
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $default
+	 * @param string $hash
+	 *
+	 * @return mixed
+	 */
 	protected function getString($name, $default = '', $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'string');
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $default
+	 * @param string $hash
+	 *
+	 * @return mixed
+	 */
 	protected function getWord($name, $default = '', $hash = 'request')
 	{
 		return $this->getVar($name, $default, $hash, 'word');

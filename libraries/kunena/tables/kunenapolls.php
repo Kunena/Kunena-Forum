@@ -22,6 +22,9 @@ class TableKunenaPolls extends KunenaTable
 	public $threadid = null;
 	public $polltimetolive = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_polls', 'id', $db );

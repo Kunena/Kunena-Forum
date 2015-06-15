@@ -126,6 +126,9 @@ class KunenaTableMap
 		return $list;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getMirrorInstance()
 	{
 		static $instance = array();
@@ -227,7 +230,7 @@ class KunenaTableMap
 	 */
 	public function setMapped(array $list)
 	{
-		JArrayHelper::toInteger($list);
+		Joomla\Utilities\ArrayHelper::toInteger($list);
 		$this->{$this->_tbl_mapped} = $list;
 	}
 

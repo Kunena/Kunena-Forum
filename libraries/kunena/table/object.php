@@ -440,6 +440,12 @@ abstract class KunenaTableObject
 		return $this;
 	}
 
+	/**
+	 * @param null $keys
+	 * @param bool $reset
+	 *
+	 * @return bool|KunenaTableObject
+	 */
 	protected function load($keys = null, $reset = true)
 	{
 		try
@@ -510,6 +516,11 @@ abstract class KunenaTableObject
 		return true;
 	}
 
+	/**
+	 * @param bool $updateNulls
+	 *
+	 * @return bool
+	 */
 	public function store($updateNulls = false)
 	{
 		if ($this->exists())

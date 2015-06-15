@@ -25,11 +25,17 @@ class TableKunenaUserCategories extends KunenaTable
 	public $subscribed = null;
 	public $params = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_user_categories', array('user_id', 'category_id'), $db );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		$user = KunenaUserHelper::get($this->user_id);

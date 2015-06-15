@@ -1122,11 +1122,17 @@ class KunenaConfig extends JObject
 	 */
 	public $max_links = 6;
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		parent::__construct ();
 	}
 
+	/**
+	 * @return KunenaConfig|mixed
+	 */
 	public static function getInstance()
 	{
 		static $instance = null;
@@ -1160,6 +1166,9 @@ class KunenaConfig extends JObject
 		$this->userkeywords = 0;
 	}
 
+	/**
+	 *
+	 */
 	public function save()
 	{
 		$db = JFactory::getDBO ();
@@ -1172,13 +1181,16 @@ class KunenaConfig extends JObject
 		unset($params['id']);
 
 		$db->setQuery ( "REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-		$db->query ();
+		$db->execute();
 		KunenaError::checkDatabaseError ();
 
 		// Clear cache.
 		KunenaCacheHelper::clear();
 	}
 
+	/**
+	 *
+	 */
 	public function reset()
 	{
 		$instance = new KunenaConfig ();

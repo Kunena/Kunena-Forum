@@ -24,6 +24,12 @@ class KunenaTree implements Iterator
 	protected $heap = null;
 	//	protected $_count = null;
 
+	/**
+	 * @param        $items
+	 * @param string $id
+	 * @param string $parent
+	 * @param string $level
+	 */
 	public function __construct(&$items, $id = 'id', $parent = 'parent_id', $level = 'level')
 	{
 		$this->_tree[0] = array();
@@ -34,6 +40,9 @@ class KunenaTree implements Iterator
 		$this->rewind();
 	}
 
+	/**
+	 *
+	 */
 	public function rewind()
 	{
 		$this->heap = array(0);
@@ -44,6 +53,9 @@ class KunenaTree implements Iterator
 		}
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function current()
 	{
 		$id = reset($this->heap);
@@ -51,11 +63,17 @@ class KunenaTree implements Iterator
 		return $this->_instances[$id];
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function key()
 	{
 		return reset($this->heap);
 	}
 
+	/**
+	 *
+	 */
 	public function next()
 	{
 		$id = array_shift($this->heap);
@@ -76,11 +94,17 @@ class KunenaTree implements Iterator
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function valid()
 	{
 		return !empty($this->heap);
 	}
 
+	/**
+	 * @param $items
+	 */
 	public function add(&$items)
 	{
 		// Prepare tree
@@ -139,11 +163,21 @@ class KunenaTree implements Iterator
 		}
 	}
 
+	/**
+	 * @param $id
+	 *
+	 * @return bool
+	 */
 	public function getLevel($id)
 	{
 		return isset($this->_levels [$id]) ? $this->_levels [$id] : false;
 	}
 
+	/**
+	 * @param int $parent
+	 *
+	 * @return array
+	 */
 	public function getTree($parent = 0)
 	{
 		if ($parent === false)
@@ -154,6 +188,13 @@ class KunenaTree implements Iterator
 		return isset($this->_tree[$parent]) ? $this->_tree[$parent] : array();
 	}
 
+	/**
+	 * @param int   $parent_id
+	 * @param array $itemIndent
+	 * @param bool  $gap
+	 *
+	 * @return array
+	 */
 	public function &getIndentation($parent_id = 0, $itemIndent = array(), $gap = false)
 	{
 		$parent_tree = &$this->_tree[$parent_id];

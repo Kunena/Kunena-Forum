@@ -20,6 +20,9 @@ class KunenaSession extends JObject
 
 	private static $_instance;
 
+	/**
+	 * @param mixed|null $identifier
+	 */
 	public function __construct($identifier)
 	{
 		$this->load($identifier);
@@ -41,6 +44,12 @@ class KunenaSession extends JObject
 		}
 	}
 
+	/**
+	 * @param bool $update
+	 * @param null $userid
+	 *
+	 * @return KunenaSession
+	 */
 	public static function getInstance( $update=false, $userid = null )
 	{
 		if (!self::$_instance)
@@ -192,11 +201,17 @@ class KunenaSession extends JObject
 		return $result;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isNewUser()
 	{
 		return !$this->_exists;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isNewSession()
 	{
 		// perform session timeout check
@@ -206,6 +221,9 @@ class KunenaSession extends JObject
 		return $this->_sessiontimeout;
 	}
 
+	/**
+	 * @return int|string
+	 */
 	public function getAllReadTime()
 	{
 		// For existing users new indication expires after 3 months
@@ -215,12 +233,18 @@ class KunenaSession extends JObject
 		return $allreadtime;
 	}
 
+	/**
+	 *
+	 */
 	public function markAllCategoriesRead()
 	{
 		$this->allreadtime = JFactory::getDate()->toUnix();
 		$this->readtopics = 0;
 	}
 
+	/**
+	 *
+	 */
 	public function updateSessionInfo()
 	{
 		// If this is a new session, reset the lasttime colum with the timestamp

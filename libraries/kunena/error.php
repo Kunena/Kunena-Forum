@@ -20,6 +20,9 @@ abstract class KunenaError
 	static $admin = false;
 	static $format;
 
+	/**
+	 * @throws Exception
+	 */
 	public static function initialize()
 	{
 		if (!self::$enabled)
@@ -44,6 +47,9 @@ abstract class KunenaError
 		}
 	}
 
+	/**
+	 *
+	 */
 	public static function cleanup()
 	{
 		if (self::$enabled && (--self::$enabled) == 0)
@@ -56,6 +62,12 @@ abstract class KunenaError
 		}
 	}
 
+	/**
+	 * @param        $msg
+	 * @param string $where
+	 *
+	 * @throws Exception
+	 */
 	public static function error($msg, $where='default')
 	{
 		if (self::$debug)
@@ -65,6 +77,12 @@ abstract class KunenaError
 		}
 	}
 
+	/**
+	 * @param        $msg
+	 * @param string $where
+	 *
+	 * @throws Exception
+	 */
 	public static function warning($msg, $where='default')
 	{
 		if (self::$debug)
@@ -74,6 +92,10 @@ abstract class KunenaError
 		}
 	}
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public static function checkDatabaseError()
 	{
 		$db = JFactory::getDBO();
@@ -100,6 +122,9 @@ abstract class KunenaError
 		return false;
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function getDatabaseError()
 	{
 		$db = JFactory::getDBO();
@@ -117,6 +142,14 @@ abstract class KunenaError
 		}
 	}
 
+	/**
+	 * @param $errno
+	 * @param $errstr
+	 * @param $errfile
+	 * @param $errline
+	 *
+	 * @return bool
+	 */
 	public static function errorHandler($errno, $errstr, $errfile, $errline)
 	{
 		if (error_reporting () == 0 || !strstr($errfile, 'kunena'))
@@ -169,6 +202,9 @@ abstract class KunenaError
 		return true;
 	}
 
+	/**
+	 * @param $debug
+	 */
 	public static function shutdownHandler($debug)
 	{
 		static $types = array (E_ERROR, E_USER_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_RECOVERABLE_ERROR);

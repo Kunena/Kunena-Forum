@@ -16,6 +16,9 @@ defined ( '_JEXEC' ) or die ();
  */
 abstract class KunenaMenuHelper
 {
+	/**
+	 *
+	 */
 	public static function cleanCache()
 	{
 		/** @var JCache|JCacheController $cache */

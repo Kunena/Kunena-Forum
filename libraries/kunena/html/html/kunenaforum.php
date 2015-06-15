@@ -15,6 +15,20 @@ defined ( '_JEXEC' ) or die ();
  */
 abstract class JHtmlKunenaForum
 {
+	/**
+	 * @param        $name
+	 * @param        $parent
+	 * @param array  $options
+	 * @param array  $params
+	 * @param null   $attribs
+	 * @param string $key
+	 * @param string $text
+	 * @param array  $selected
+	 * @param bool   $idtag
+	 * @param bool   $translate
+	 *
+	 * @return string
+	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
 	{
 		$preselect = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
@@ -135,7 +149,7 @@ abstract class JHtmlKunenaForum
 
 		if (is_array ($attribs))
 		{
-			$attribs = JArrayHelper::toString ($attribs);
+			$attribs = Joomla\Utilities\ArrayHelper::toString ($attribs);
 		}
 
 		$id = $name;

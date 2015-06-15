@@ -28,6 +28,9 @@ class KunenaAccess
 
 	protected static $cacheKey = 'com_kunena.access.global.v1';
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -78,6 +81,9 @@ class KunenaAccess
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
+	/**
+	 * @return KunenaAccess|null
+	 */
 	public static function getInstance()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -92,6 +98,9 @@ class KunenaAccess
 		return self::$instance;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function clearCache()
 	{
 		$this->adminsByCatid = array();
@@ -565,7 +574,7 @@ window.addEvent('domready', function(){
 
 				// Clean up and filter the resulting list by using only array keys.
 				$list = array_keys($list);
-				JArrayHelper::toInteger($list);
+				Joomla\Utilities\ArrayHelper::toInteger($list);
 				$read[$id] = array_combine($list, $list);
 				unset($read[$id][0]);
 				$app->setUserState("com_kunena.user{$id}_read", $read[$id]);

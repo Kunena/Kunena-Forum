@@ -316,7 +316,7 @@ class KunenaForumTopicPoll extends JObject
 			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote,lasttime)
 				VALUES({$this->_db->Quote($this->id)},{$this->_db->Quote($votes->userid)},{$this->_db->Quote($votes->votes)},{$this->_db->Quote($votes->lastvote)},{$this->_db->Quote($votes->lasttime)});";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -332,7 +332,7 @@ class KunenaForumTopicPoll extends JObject
 				SET votes={$this->_db->Quote($votes->votes)},lastvote={$this->_db->Quote($votes->lastvote)},lasttime={$this->_db->Quote($votes->lasttime)}
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($votes->userid)};";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -366,7 +366,7 @@ class KunenaForumTopicPoll extends JObject
 		$query = "UPDATE #__kunena_polls_options SET votes=votes+{$delta} WHERE id={$this->_db->Quote($option)}";
 
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 
 		if (KunenaError::checkDatabaseError())
 		{
@@ -459,13 +459,13 @@ class KunenaForumTopicPoll extends JObject
 		$db = JFactory::getDBO ();
 		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 		KunenaError::checkDatabaseError();
 
 		// Delete votes
 		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 		KunenaError::checkDatabaseError();
 
 		// Remove poll from the topic
@@ -550,7 +550,7 @@ class KunenaForumTopicPoll extends JObject
 			{
 				$query = "DELETE FROM #__kunena_polls_options WHERE id={$this->_db->Quote($key)}";
 				$this->_db->setQuery($query);
-				$this->_db->query();
+				$this->_db->execute();
 				KunenaError::checkDatabaseError();
 				// TODO: Votes in #__kunena_polls_users will be off and there's no way we can fix that
 				// Maybe we should allow option to reset votes when option gets removed
@@ -574,7 +574,7 @@ class KunenaForumTopicPoll extends JObject
 				$query = "INSERT INTO #__kunena_polls_options (text, pollid, votes)
 					VALUES({$this->_db->quote($value)}, {$this->_db->Quote($this->id)}, 0)";
 				$this->_db->setQuery($query);
-				$this->_db->query();
+				$this->_db->execute();
 				KunenaError::checkDatabaseError();
 			}
 			elseif ($options[$key]->text != $value)
@@ -584,7 +584,7 @@ class KunenaForumTopicPoll extends JObject
 					SET text={$this->_db->quote($value)}
 					WHERE id={$this->_db->Quote($key)}";
 				$this->_db->setQuery($query);
-				$this->_db->query();
+				$this->_db->execute();
 				KunenaError::checkDatabaseError();
 			}
 		}

@@ -27,11 +27,17 @@ class TableKunenaAnnouncements extends KunenaTable
 	public $ordering = null;
 	public $showdate = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_announcement', 'id', $db );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		if ($this->created_by)

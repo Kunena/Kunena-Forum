@@ -14,6 +14,11 @@ abstract class KunenaTable extends JTable
 {
 	protected $_exists = false;
 
+	/**
+	 * @param null $exists
+	 *
+	 * @return bool
+	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -25,6 +30,12 @@ abstract class KunenaTable extends JTable
 		return $return;
 	}
 
+	/**
+	 * @param null $keys
+	 * @param bool $reset
+	 *
+	 * @return bool
+	 */
 	public function load($keys = null, $reset = true)
 	{
 		// Implement JObservableInterface: Pre-processing by observers
@@ -127,6 +138,11 @@ abstract class KunenaTable extends JTable
 		return $result;
 	}
 
+	/**
+	 * @param bool $updateNulls
+	 *
+	 * @return bool
+	 */
 	public function store($updateNulls = false)
 	{
 		// Workaround Joomla 3.2 change.

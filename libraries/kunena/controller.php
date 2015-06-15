@@ -20,6 +20,11 @@ class KunenaController extends JControllerLegacy
 	public $me = null;
 	public $config = null;
 
+	/**
+	 * @param array $config
+	 *
+	 * @throws Exception
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct ($config);
@@ -78,7 +83,7 @@ class KunenaController extends JControllerLegacy
 		else
 		{
 			// Base controller.
-			$view = strtolower ( JRequest::getWord ( 'view', $app->isAdmin() ? 'cpanel' : 'home' ) );
+			$view = strtolower ( JFactory::getApplication()->input->getWord('view', $app->isAdmin() ? 'cpanel' : 'home' ));
 		}
 
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
@@ -305,8 +310,8 @@ class KunenaController extends JControllerLegacy
 		$document = JFactory::getDocument ();
 
 		// Set the default view name and format from the Request.
-		$vName = JRequest::getWord ( 'view', $this->app->isAdmin() ? 'cpanel' : 'home' );
-		$lName = JRequest::getWord ( 'layout', 'default' );
+		$vName = JFactory::getApplication()->input->getWord ( 'view', $this->app->isAdmin() ? 'cpanel' : 'home' );
+		$lName = JFactory::getApplication()->input->getWord ( 'layout', 'default' );
 		$vFormat = $document->getType ();
 
 		if ($this->app->isAdmin())

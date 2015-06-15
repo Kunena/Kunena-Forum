@@ -17,6 +17,11 @@ class KunenaPrivate
 {
 	protected static $instance = false;
 
+	/**
+	 * @param null $integration
+	 *
+	 * @return bool|KunenaPrivate
+	 */
 	static public function getInstance($integration = null)
 	{
 		if (self::$instance === false)
@@ -45,16 +50,31 @@ class KunenaPrivate
 		return self::$instance;
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
 	protected function getOnClick($userid)
 	{
 		return '';
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
 	protected function getURL($userid)
 	{
 		return '';
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
 	public function showIcon($userid)
 	{
 		$my = JFactory::getUser();
@@ -79,16 +99,29 @@ class KunenaPrivate
 		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="kicon-profile kicon-profile-pm" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '"></span></a>';
 	}
 
+	/**
+	 * @param $text
+	 *
+	 * @return string
+	 */
 	public function getInboxLink($text)
 	{
 		return '';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getInboxURL()
 	{
 		return '';
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return int
+	 */
 	public function getUnreadCount($userid)
 	{
 		return 0;

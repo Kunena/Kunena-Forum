@@ -35,11 +35,20 @@ class TableKunenaUserBans extends JTable
 	const ANY = 0;
 	const ACTIVE = 1;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_users_banned', 'id', $db);
 	}
 
+	/**
+	 * @param     $userid
+	 * @param int $mode
+	 *
+	 * @return bool
+	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
 		// Reset the table.
@@ -83,6 +92,12 @@ class TableKunenaUserBans extends JTable
 		return true;
 	}
 
+	/**
+	 * @param     $ip
+	 * @param int $mode
+	 *
+	 * @return bool
+	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
 		// Reset the table.
@@ -125,6 +140,9 @@ class TableKunenaUserBans extends JTable
 		return true;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		if (!$this->ip)
@@ -139,6 +157,12 @@ class TableKunenaUserBans extends JTable
 		return ($this->getError () == '');
 	}
 
+	/**
+	 * @param mixed $data
+	 * @param array $ignore
+	 *
+	 * @return bool|void
+	 */
 	public function bind($data, $ignore=array())
 	{
 		if (isset($data['comments']))

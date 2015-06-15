@@ -61,7 +61,15 @@ class KunenaActivity
 
 	/** TODO: Looks like these aren't fully working.. */
 	public function onAfterDelete($message) {}
+
+	/**
+	 * @param $message
+	 */
 	public function onAfterUndelete($message) {}
+
+	/**
+	 * @param $message
+	 */
 	public function onAfterDeleteTopic($message) {}
 
 	/**

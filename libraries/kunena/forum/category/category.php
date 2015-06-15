@@ -251,6 +251,11 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		return KunenaRoute::getCategoryUrl($category, $xhtml);
 	}
 
+	/**
+	 * @param bool $xhtml
+	 *
+	 * @return bool|null
+	 */
 	public function getNewTopicUrl($xhtml = true)
 	{
 		if (!$this->getNewTopicCategory()->exists())
@@ -263,6 +268,12 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		return KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create{$catid}", $xhtml);
 	}
 
+	/**
+	 * @param bool $children
+	 * @param bool $xhtml
+	 *
+	 * @return bool|null
+	 */
 	public function getMarkReadUrl($children = false, $xhtml = true)
 	{
 		if (!KunenaUserHelper::getMyself()->exists())
@@ -441,7 +452,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db = JFactory::getDbo();
 		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($this->id)})";
 		$db->setQuery ($query);
-		$db->query ();
+		$db->execute();
 
 		return KunenaError::checkDatabaseError ();
 	}
@@ -454,7 +465,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	public function deleteAlias($alias)
 	{
 		// Do not delete valid alias.
-		if (JString::strtolower($this->alias) == JString::strtolower($alias))
+		if (Joomla\String\String::strtolower($this->alias) == Joomla\String\String::strtolower($alias))
 		{
 			return false;
 		}
@@ -462,7 +473,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		$db = JFactory::getDbo();
 		$query = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)} AND alias={$db->Quote($alias)}";
 		$db->setQuery ($query);
-		$db->query ();
+		$db->execute();
 		KunenaError::checkDatabaseError ();
 
 		return (bool) $db->getAffectedRows();
@@ -1217,7 +1228,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 

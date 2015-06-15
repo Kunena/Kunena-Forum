@@ -65,6 +65,11 @@ abstract class KunenaRouteLegacy
 		'fb_pdf'=>1,
 	);
 
+	/**
+	 * @param $view
+	 *
+	 * @return bool
+	 */
 	public static function isLegacy($view)
 	{
 		if (!$view || $view=='legacy')
@@ -75,6 +80,13 @@ abstract class KunenaRouteLegacy
 		return isset(self::$functions[$view]);
 	}
 
+	/**
+	 * @param     $uri
+	 * @param int $showstart
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
 	public static function convert($uri, $showstart = 1)
 	{
 		// Make sure that input is JUri to legacy Kunena func=xxx
@@ -682,6 +694,9 @@ abstract class KunenaRouteLegacy
 		return $changed;
 	}
 
+	/**
+	 * @param $item
+	 */
 	public static function convertMenuItem($item)
 	{
 		$uri = JUri::getInstance($item->link);

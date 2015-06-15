@@ -104,7 +104,7 @@ class KunenaConfig extends JObject
 	 * @var    string  Template; input, hidden
 	 * @since  1.0.0
 	 */
-	public $template = 'blue_eagle';
+	public $template = 'crypsis';
 
 	/**
 	 * @var    integer  Show announcement; select, boolean

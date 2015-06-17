@@ -164,8 +164,8 @@ class KunenaViewSearch extends KunenaView
 					continue;
 				}
 
-				$ressubject = preg_replace("/" . preg_quote($searchword, '/') . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
-				$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+				$ressubject = preg_replace ( '/' . preg_quote ( $searchword, '/' ) . "\s+/iu", '<span  class="searchword" >' . $searchword . '</span> ', $ressubject);
+				$resmessage = preg_replace ( '/' . preg_quote ( $searchword, '/' ) . "\s+/iu", '<span  class="searchword" >' . $searchword . '</span> ', $resmessage);
 			}
 
 			$this->author      = $this->message->getAuthor();

@@ -32,12 +32,10 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 		<div class="dropdown-menu" id="nav-menu">
 
 			<div class="center">
+				<p><strong><?php echo $this->me->getLink(null, null, 'nofollow', '', null); ?></strong></p>
 				<a href="<?php echo $this->me->getURL(); ?>">
 					<?php echo $this->me->getAvatarImage('img-polaroid', 128, 128); ?>
 				</a>
-				<p>
-					<strong><?php echo $this->escape($this->me->getName()); ?></strong>
-				</p>
 				<p>
 					<i class="icon-clock"></i>
 					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>

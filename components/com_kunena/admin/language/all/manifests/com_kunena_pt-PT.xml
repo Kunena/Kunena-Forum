@@ -37,6 +37,7 @@
 			<filename>pt-PT.com_kunena.templates.ini</filename>
 			<filename>pt-PT.com_kunena.tpl_blue_eagle.ini</filename>
 			<filename>pt-PT.com_kunena.views.ini</filename>
+			<filename>pt-PT.kunena_tmpl_crypsis.ini</filename>
 		</files>
 	</fileset>
 </extension>

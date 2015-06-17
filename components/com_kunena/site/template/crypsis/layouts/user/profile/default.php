@@ -17,21 +17,24 @@ $show = KunenaConfig::getInstance()->showuserstats;
 
 if ($show)
 {
-	$rankImage = $user->getRank(0, 'image');
-	$rankTitle = $user->getRank(0, 'title');
+	$rankImage = $user->getRank($this->category_id, 'image');
+	$rankTitle = $user->getRank($this->category_id, 'title');
 	$personalText = $user->getPersonalText();
 }
 ?>
 <ul class="unstyled center profilebox">
 	<li>
-		<strong><?php echo $user->getLink(); ?></strong>
+		<strong><?php echo $user->getLink(null, null, 'nofollow', '', null, $this->category_id); ?></strong>
 	</li>
 
 	<?php if ($avatar) : ?>
 	<li>
 		<?php echo $user->getLink($avatar); ?>
 		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-				<span class="topic-starter"></span>
+				<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+		<?php endif;?>
+		<?php if (!$this->topic_starter && $user->isModerator()) : ?>
+			<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
 		<?php endif;?>
 	</li>
 	<?php endif; ?>
@@ -62,6 +65,7 @@ if ($show)
 </ul>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default'); ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
+<?php if ($user->userid > 1) : ?>
 <div class="profile-expand center">
 	<span class="heading btn btn-small heading-less" style="display:none;"><i class="icon-arrow-up"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
 	<span class="heading btn btn-small"><i class="icon-arrow-down"></i> <?php echo JText::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
@@ -103,3 +107,4 @@ if ($show)
 		</ul>
 	</div>
 </div>
+<?php endif; ?>

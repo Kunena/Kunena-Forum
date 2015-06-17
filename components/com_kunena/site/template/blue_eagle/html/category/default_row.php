@@ -59,7 +59,7 @@ $this->cache = false;
 			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
 			</span>
-			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
+			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id) ?></span>
 		  </div>
 
         <div class="ktopic-details-kcategory" style="clear:both;">
@@ -93,13 +93,13 @@ $this->cache = false;
 	<td class="kcol-mid kcol-ktopiclastpost">
 		<div class="klatest-post-info">
 			<?php if (!empty($this->topic->avatar)) : ?>
-			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
+			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar, null, 'nofollow', '', null, $this->topic->getCategory()->id ) ?></span>
 			<?php endif; ?>
 
 			<span class="ktopic-latest-post">
 			<?php
 			echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') );
-			echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
+			echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id);
 			?>
 			</span>
          </div>

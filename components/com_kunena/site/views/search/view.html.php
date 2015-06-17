@@ -152,7 +152,7 @@ class KunenaViewSearch extends KunenaView
 			$this->category     = $this->message->getCategory();
 			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 			$ressubject         = KunenaHtmlParser::parseText($this->message->subject);
-			$resmessage         = $this->parse($this->message->message, 500);
+			$resmessage         = $this->parse($this->message->message, 500, $this->message);
 
 			$profile          = KunenaFactory::getUser((int) $this->message->userid);
 			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');

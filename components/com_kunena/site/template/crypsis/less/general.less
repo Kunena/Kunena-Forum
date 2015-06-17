@@ -156,10 +156,27 @@ img {
 }
 
 .topic-starter {
+	 background    : rgba(229, 229, 229, 0.4);
+	 display       : inline-block;
+	 height        : 15px;
+	 border-radius : 0 0 4px 4px;
+	 white-space   : nowrap;
+	 padding-top   : 4px;
+	 border        : 1px solid #ddd;
+	 border-top    : 0 none;
+	 padding-left  : 8px;
+	 padding-right : 8px;
+	 color          : #3a87ad;
+	 line-height    : 1em;
+	 font-size      : 10px;
+	 font-weight    : bold;
+	 text-transform : uppercase;
+}
+
+.topic-moderator {
 	background    : rgba(229, 229, 229, 0.4);
 	display       : inline-block;
 	height        : 15px;
-	line-height   : 0.8em;
 	border-radius : 0 0 4px 4px;
 	white-space   : nowrap;
 	padding-top   : 4px;
@@ -167,15 +184,11 @@ img {
 	border-top    : 0 none;
 	padding-left  : 8px;
 	padding-right : 8px;
-
-	&.topic-starter:after {
-		content        : "Topic Author";
-		color          : #3a87ad;
-		line-height    : 1em;
-		font-size      : 10px;
-		font-weight    : bold;
-		text-transform : uppercase;
-	}
+	color          : red;
+	line-height    : 1em;
+	font-size      : 10px;
+	font-weight    : bold;
+	text-transform : uppercase;
 }
 
 hr {
@@ -815,6 +828,19 @@ div.pagination a.disabled:hover {
 	display: inline-block;
 }
 
+.btn-toolbar .btn.btn-small:before,
+#search .btn.btn-small:before {
+	content: "×";
+	font-size: 14px;
+}
+
+.btn-toolbar .btn.btn-small.collapsed:before,
+#search .btn.btn-small.collapsed:before {
+	content: "";
+	font-family: "icomoon";
+	font-size: 8px;
+}
+
 .searchword {
-	background-color: yellow;
+	background-color : yellow;
 }

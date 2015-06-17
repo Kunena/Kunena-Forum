@@ -411,7 +411,14 @@ class KunenaUser extends JObject
 			$default = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
 		}
 
-		return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
+		if ( $this->exists() )
+		{
+			return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
+		}
+		else
+		{
+			return $default == 'asc' ? 'asc' : 'desc';
+		}
 	}
 
 	/**
@@ -537,14 +544,15 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 */
-	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null)
+	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0)
 	{
 		if (!$name)
 		{
 			$name = $this->getName();
 		}
 
-		$key = "{$name}.{$title}.{$rel}";
+		$key = "{$name}.{$title}.{$rel}.{$catid}";
+
 		if (empty($this->_link[$key]))
 		{
 			if (!$title)
@@ -552,8 +560,8 @@ class KunenaUser extends JObject
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}
 
-			$class = !is_null($class) ? $class : $this->getType(0, 'class');
-			$link = $this->getURL (true, $task);
+			$class = !is_null($class) ? $class : $this->getType($catid, 'class');
+			$link = $this->getURL(true, $task);
 
 			if (! empty ( $link ))
 			{
@@ -1321,7 +1329,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Check if captcha is allowed
+	 * Check if captcha is allowed for guests users or registered users
 	 *
 	 * @return boolean
 	 */
@@ -1329,20 +1337,20 @@ class KunenaUser extends JObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ( $this->isModerator() )
+		if ( !$this->exists() && $config->captcha == 1 )
 		{
-			return false;
+			return true;
 		}
 
-		if ( $this->exists() && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+		if ( $this->exists() && !$this->isModerator() && $config->captcha >= 0)
 		{
-			return true;
+			if ($config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+			{
+				return true;
+			}
 		}
-		else if ( !$this->exists() && $config->captcha )
-		{
-			return true;
-		}
-		else
+
+		if ( $config->captcha == '-1' )
 		{
 			return false;
 		}

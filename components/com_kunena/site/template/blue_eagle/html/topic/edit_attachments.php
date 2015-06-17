@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $attachment->getThumbnailLink(); ?>
 
 				<span>
-					<span class="kfilename"><?php echo $attachment->getFilename(); ?></span>
+					<span class="kfilename"><?php echo $this->escape($attachment->getShortName()); ?></span>
 					<span><?php echo '('.number_format(intval($attachment->size)/1024,0,'',',').'KB)'; ?></span>
 				</span>
 			</li>

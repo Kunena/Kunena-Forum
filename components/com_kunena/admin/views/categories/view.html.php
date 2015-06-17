@@ -77,6 +77,7 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->listDirection     = $this->escape($this->state->get('list.direction'));
 		$this->saveOrder         = ($this->listOrdering == 'a.ordering' && $this->listDirection == 'asc');
 		$this->saveOrderingUrl   = 'index.php?option=com_kunena&view=categories&task=saveorderajax&tmpl=component';
+		$this->filterLevels      = $this->escape($this->state->get('filter.levels'));
 		$this->display();
 	}
 

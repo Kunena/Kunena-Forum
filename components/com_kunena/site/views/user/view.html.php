@@ -48,6 +48,11 @@ class KunenaViewUser extends KunenaView
 
 	function displayList($tpl = null)
 	{
+		if ($this->config->userlist_allowed && JFactory::getUser()->guest)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+		}
+
 		$this->total = $this->get('Total');
 		$this->count = $this->get('Count');
 		$this->users = $this->get('Items');

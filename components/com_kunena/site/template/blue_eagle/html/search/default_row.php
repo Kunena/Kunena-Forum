@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 								<td rowspan="2" valign="top" class="kprofile-left kresultauthor">
 									<ul class="kpost-profile">
 										<li class="kpost-username">
-											<?php echo $this->message->getAuthor()->getLink() ?>
+											<?php echo $this->message->getAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id) ?>
 										</li>
 										<li>
 											<?php
@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
 											?>
 
 											<span class="kavatar">
-											<?php echo $this->message->getAuthor()->getLink( $this->useravatar ) ?>
+											<?php echo $this->message->getAuthor()->getLink($this->useravatar, null, 'nofollow', '', null, $this->topic->getCategory()->id) ?>
 											</span>
 
 											<?php

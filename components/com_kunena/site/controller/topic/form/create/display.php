@@ -38,12 +38,6 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		// Get topic icons if they are enabled.
-		if ($this->config->topicicons)
-		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
-		}
-
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$arrayanynomousbox = array();
 		$arraypollcatid = array();
@@ -72,15 +66,31 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 
+		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
+
+		// Get topic icons if they are enabled.
+		if ($this->config->topicicons)
+		{
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->topic->getCategory()->iconset);
+		}
+
 		if ( $this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
-				JPluginHelper::importPlugin('captcha');
-				$dispatcher = JDispatcher::getInstance();
-				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+				$plugin = JPluginHelper::getPlugin('captcha');
+				$params = new JRegistry($plugin[0]->params);
+				$captcha_pubkey = $params->get('public_key');
+				$catcha_privkey = $params->get('private_key');
+				
+				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+				{
+					JPluginHelper::importPlugin('captcha');
+					$dispatcher = JDispatcher::getInstance();
+					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 
-				$this->captchaEnabled = $result[0];
+					$this->captchaEnabled = $result[0];
+				}
 			}
 		}
 		else

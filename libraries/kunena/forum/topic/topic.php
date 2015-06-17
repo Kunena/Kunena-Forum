@@ -75,8 +75,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			'poll.delete'=>array('Read','Own', 'Poll'),
 			'poll.vote'=>array('Read', 'Poll', 'Vote'),
 			'post.read'=>array('Read'),
-			'post.thankyou'=>array('Read','NotMoved'),
-			'post.unthankyou'=>array('Read'),
+			'post.thankyou'=>array('Read','NotMoved','Unlocked'),
+			'post.unthankyou'=>array('Read','Unlocked'),
 			'post.reply'=>array('Read','NotHold','NotMoved','Unlocked'),
 			'post.edit'=>array('Read','Unlocked'),
 			'post.move'=>array('Read'),
@@ -529,9 +529,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @return string
 	 */
-	public function getIcon()
+	public function getIcon($category_icon = '')
 	{
-		return KunenaFactory::getTemplate()->getTopicIcon($this);
+		return KunenaFactory::getTemplate()->getTopicIcon($this, $category_icon);
 	}
 
 	/**

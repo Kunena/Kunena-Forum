@@ -44,7 +44,7 @@ $tabclass = array ("row1", "row2" );
 		$profile = KunenaFactory::getUser((int)$last->last_post_userid);
 		$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 		if ($useravatar) : ?>
-			<span class="klatest-avatar"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
+			<span class="klatest-avatar"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar, null, 'nofollow', '', null, $this->category->id ); ?></span>
 		<?php endif; ?>
 	<!-- /Avatar -->
 	<?php endif; ?>
@@ -55,7 +55,7 @@ $tabclass = array ("row1", "row2" );
 	<div class="klatest-subject-by ks">
 	<?php
 			echo JText::_('COM_KUNENA_BY') . ' ';
-			echo $last->getLastPostAuthor()->getLink();
+			echo $last->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $this->category->id);
 			echo '<br /><span class="nowrap" title="' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat_hover') . '">' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat') . '</span>';
 			?>
 	</div>

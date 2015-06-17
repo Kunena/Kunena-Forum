@@ -75,7 +75,7 @@ class KunenaModelTopic extends KunenaModel
 
 		if (!$value)
 		{
-			if ($this->me->ordering != '0')
+			if ($this->me->ordering != '0' && $this->me->exists())
 			{
 				$value = $this->me->ordering == '1' ? 'desc' : 'asc';
 			}

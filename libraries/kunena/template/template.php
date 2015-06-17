@@ -79,6 +79,11 @@ class KunenaTemplate extends JObject
 	protected $hmvc;
 
 	/**
+	 * @var string
+	 */
+	protected $category_iconset = '';
+
+	/**
 	 * Constructor
 	 *
 	 * @access    protected
@@ -541,14 +546,34 @@ HTML;
 
 	public function getTopicIconPath($filename='', $url = true)
 	{
-		$set = $this->isHmvc() ? '/default' : '';
-		return $this->getFile($filename, $url, $this->pathTypes['topicicons'].$set, 'media/kunena/topic_icons/default');
+		$category_iconset = '';
+
+		$config = KunenaFactory::getConfig();
+
+		if ( $config->topicicons )
+		{
+			if ( $this->isHMVC() )
+			{
+				$category_iconset = $this->category_iconset;
+			}
+			else
+			{
+				$category_iconset = '/default';
+			}
+		}
+
+		return $this->getFile($filename, $url, $this->pathTypes['topicicons'], 'media/kunena/topic_icons' . $category_iconset);
 	}
 
-	public function getCategoryIconPath($filename='', $url = true)
+	public function getCategoryIconPath($filename='', $url = true, $category_iconset)
 	{
-		$set = $this->isHmvc() ? '/default' : '';
-		return $this->getFile($filename, $url, $this->pathTypes['categoryicons'].$set, 'media/kunena/category_icons/default');
+		if ( !$this->isHmvc() )
+		{
+			$set = '';
+			$category_iconset = 'default';
+		}
+
+		return $this->getFile($filename, $url, $this->pathTypes['categoryicons'].$set, 'media/kunena/category_icons/' . $category_iconset);
 	}
 
 	public function getImagePath($filename='', $url = true)
@@ -558,9 +583,18 @@ HTML;
 
 	public function getTopicIcons($all = false, $checked = 0)
 	{
+		if ( $this->isHMVC() )
+		{
+			$category_iconset = $this->category_iconset;
+		}
+		else
+		{
+			$category_iconset = 'default';
+		}
+
 		if (empty($this->topicIcons))
 		{
-			$xmlfile = $this->getTopicIconPath('topicicons.xml', false);
+			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/'. $category_iconset .'/topicicons.xml';
 
 			if (is_file($xmlfile))
 			{
@@ -592,6 +626,7 @@ HTML;
 							$icon->filename = (string) $attributes->src;
 							$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
 							$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
+							$icon->relpath = $this->getTopicIconPath("{$icon->filename}", false, $category_iconset);
 							$this->topicIcons[$icon->id] = $icon;
 						}
 					}
@@ -610,7 +645,7 @@ HTML;
 				$icon->filename = 'default.png';
 				$icon->width = 48;
 				$icon->height = 48;
-				$icon->relpath = $this->getTopicIconPath("user/{$icon->filename}", false);
+				$icon->relpath = $this->getTopicIconPath("user/{$icon->filename}", false, $category_iconset);
 				$this->topicIcons[0] = $icon;
 			}
 		}
@@ -714,7 +749,7 @@ HTML;
 	{
 		if (empty($this->topicIcons))
 		{
-			$this->getTopicIcons();
+			$this->getTopicIcons(false, 0, $this->category_iconset);
 		}
 
 		if (empty($this->topicIcons[$index]->published))
@@ -748,9 +783,22 @@ HTML;
 	 * @param KunenaForumTopic	$topic
 	 * @return string
 	 */
-	public function getTopicIcon($topic)
+	public function getTopicIcon($topic, $category_iconset='')
 	{
 		$config = KunenaFactory::getConfig();
+
+		if ( $this->isHMVC() && !empty($category_iconset) )
+		{
+			$this->category_iconset = '/' . $category_iconset;
+		}
+		else
+		{
+			if($config->topicicons)
+			{
+				$this->category_iconset = '/default';
+			}
+		}
+
 		if ($config->topicicons)
 		{
 			// TODO: use xml file instead
@@ -970,6 +1018,16 @@ HTML;
 		}
 
 		return $this->hmvc;
+	}
+
+	/**
+	 * Set the category iconset value
+	 *
+	 * @return void
+	 */
+	public function setCategoryIconset($iconset = '/default')
+	{
+		$this->category_iconset = '/' . $iconset;
 	}
 
 	/**

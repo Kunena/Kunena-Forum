@@ -175,11 +175,11 @@ class KunenaBbcode extends NBBC_BBCode
 			{
 				if (isset($path[3]) && is_numeric($path[3]))
 				{
-					$itemid = intval($path[3]);
+					$itemid = $path[3];
 				}
 				elseif (isset($path[2]) && is_numeric($path[2]))
 				{
-					$itemid = intval($path[2]);
+					$itemid = $path[2];
 				}
 
 				if (isset($itemid))
@@ -189,21 +189,20 @@ class KunenaBbcode extends NBBC_BBCode
 
 					if ($layout->getPath())
 					{
-						$ebay = $bbcode->getEbayItemFromCache($content);
+						$ebay = $this->defaults->getEbayItemFromCache($itemid);
 
 						return (string) $layout
-							->set('content', $content)
 							->set('params', $params)
 							->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
 							->set('pictureurl', $ebay->Item->PictureURL[0])
 							->set('status', $ebay->Item->ListingStatus)
 							->set('ack', $ebay->Ack)
 							->set('title', $ebay->Item->Title)
-							->setLayout(is_numeric($content) ? 'default' : 'search');
+							->setLayout('default');
 					}
 				}
 
-				return $this->getEbayItemFromCache($itemid);
+				return $this->defaults->getEbayItemFromCache($itemid);
 			}
 
 			parse_str($params['query'], $query);
@@ -421,23 +420,6 @@ class KunenaBbcode extends NBBC_BBCode
 		if (preg_match($re, $string)) return true;
 
 		return false;
-	}
-
-	/**
-	 * Load eBay object item from cache
-	 *
-	 * @param   int  $ItemID  The eBay ID of object to query
-	 *
-	 * @return string
-	 */
-	public function getEbayItemFromCache($ItemID)
-	{
-		$cache = JFactory::getCache('Kunena_ebay_request');
-		$cache->setCaching(true);
-		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
-		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
-
-		return $ebay_item;
 	}
 }
 
@@ -1578,7 +1560,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		if ($layout->getPath())
 		{
-			$ebay = $bbcode->getEbayItemFromCache($content);
+			$ebay = $this->getEbayItemFromCache($content);
 
 			return (string) $layout
 				->set('content', $content)
@@ -2749,4 +2731,21 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return '';
 	}
 
+
+	/**
+	 * Load eBay object item from cache
+	 *
+	 * @param   int  $ItemID  The eBay ID of object to query
+	 *
+	 * @return string
+	 */
+	public function getEbayItemFromCache($ItemID)
+	{
+		$cache = JFactory::getCache('Kunena_ebay_request');
+		$cache->setCaching(true);
+		$cache->setLifeTime(KunenaFactory::getConfig()->get('cache_time', 60));
+		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
+
+		return $ebay_item;
+	}
 }

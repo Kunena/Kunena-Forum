@@ -36,6 +36,11 @@ $this->addScript('js/upload.main.js');
 $this->addStyleSheet('css/fileupload.css');
 
 $this->addScript('js/markitup.js');
+
+$editor = KunenaBbcodeEditor::getInstance();
+$editor->initialize();
+
+$this->addScript('js/markitup.editor.js');
 $this->addScript('js/markitup.set.js');
 
 $this->k = 0;
@@ -68,6 +73,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
+		<input id="kurl_topicons_request" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
 		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
 		<?php if ($this->message->exists()) : ?>
@@ -147,14 +153,16 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
 
-								<div class="controls controls-select">
-									<?php foreach ($this->topicIcons as $id => $icon): ?>
-										<span class="kiconsel">
-										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-										<label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true); ?>" alt="" border="0" />
-										</label>
-									</span>
-									<?php endforeach; ?>
+								<div id="iconset_inject" class="controls controls-select">
+									<div id="iconset_topic_list">
+										<?php foreach ($this->topicIcons as $id => $icon): ?>
+											<span class="kiconsel">
+											<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+											<label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+											</label>
+										</span>
+										<?php endforeach; ?>
+									</div>
 								</div>
 							</div>
 						<?php endif; ?>

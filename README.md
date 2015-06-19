@@ -23,7 +23,7 @@ In addition we recommend the following PHP settings:
     memory_limit           >= 32M  (>= 64M recommended) - depends on other Joomla extensions used
     safe_mode               = off
     upload_max_filesize    >= 3M
-    GD, DOM, JSON support installed
+    GD, DOM, JSON, FINFO support installed and opnessl only to embded tweets
 
 *Kunena* requires the following Joomla settings:
 

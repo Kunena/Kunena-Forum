@@ -17,7 +17,6 @@
 
 	<files folder="packages">
 		<filename type="plugin"    group="system"     id="kunena"      >plg_system_kunena_v@kunenaversion@.zip</filename>
-		<filename type="plugin"    group="content"    id="kunena"      >plg_content_kunena_v@kunenaversion@.zip</filename>
 		<filename type="plugin"    group="quickicon"  id="kunena"      >plg_quickicon_kunena_v@kunenaversion@.zip</filename>
 		<filename type="library"                      id="kunena"      >lib_kunena_v@kunenaversion@.zip</filename>
 		<filename type="file"                         id="kunena_media">kunena_media_v@kunenaversion@.zip</filename>

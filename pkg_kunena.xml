@@ -46,7 +46,6 @@
 			<dir>libraries/kunena</dir>
 			<dir>plugins/kunena</dir>
 			<dir>plugins/system/kunena</dir>
-			<dir>plugins/content/kunena</dir>
 			<dir>plugins/quickicon/kunena</dir>
 			<dir>media/kunena</dir>
 		</customdirs>
@@ -65,7 +64,6 @@
 			<lang>plg_kunena_kunena</lang>
 			<lang>plg_kunena_uddeim</lang>
 			<lang>plg_system_kunena</lang>
-			<lang>plg_content_kunena</lang>
 			<lang>plg_quickicon_kunena</lang>
 		</langfiles>
 		<extraprefixes>

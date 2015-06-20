@@ -189,7 +189,7 @@ class plgSystemKunena extends JPlugin
 	 */
 	public function onUserAfterSave($user, $isnew, $success, $msg)
 	{
-		//Don't continue if the user wasn't stored successfully
+		// Don't continue if the user wasn't stored successfully
 		if (!$success)
 		{
 			return;
@@ -201,30 +201,44 @@ class plgSystemKunena extends JPlugin
 			$kuser->save();
 		}
 
-		/*
-		// See: http://www.kunena.org/forum/159-k-16-common-questions/63438-category-subscriptions-default-subscribed#63554
-		// TODO: Subscribe user to every category if he is new and Kunena is configured to do so
-		if ($isnew) {
-			$subscribedCategories = '1,2,3,4,5,6,7,8,9,10';
-			$db = Jfactory::getDBO();
-			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
-				SELECT {{$db->quote($user->userid)} AS user_id, c.id as category_id, 1
-				FROM #__kunena_categories AS c
-				LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={{$db->quote($user->userid)}
-				WHERE c.parent>0 AND c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
-			$db->setQuery ( $query );
-			$db->query ();
-			KunenaError::checkDatabaseError();
+		$subscribedCategories = $this->params->get('ksystem_subscribed_cats');
+		$subscribe_cats = $this->params->get('ksystem_subscribe_users_cat');
+		$subscribe_cats_blocked = $this->params->get('ksystem_subscribe_users_blocked_cat');
 
-			// Here's also query to subscribe all users (including blocked) to all existing cats:
-			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
-				SELECT u.id AS user_id, c.id AS category_id, 1
-				FROM #__users AS u
-				JOIN #__kunena_categories AS c ON c.parent>0
-				LEFT JOIN #__kunena_user_categories AS s ON u.id=s.user_id
-				WHERE c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
+		// See: http://www.kunena.org/forum/159-k-16-common-questions/63438-category-subscriptions-default-subscribed#63554
+		// Subscribe user to every category if he is new and Kunena is configured to do so
+		if ($subscribe_cats)
+		{
+			$db = JFactory::getDbo();
+
+			if ($isnew)
+			{
+				if (!$subscribe_cats_blocked)
+				{
+					$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
+						SELECT {{$db->quote($user->userid)} AS user_id, c.id as category_id, 1
+						FROM #__kunena_categories AS c
+						LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={{$db->quote($user->userid)}
+						WHERE c.parent_id>0 AND c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
+					$db->setQuery($query);
+					$db->execute();
+					KunenaError::checkDatabaseError();
+				}
+				else
+				{
+					// Here's also query to subscribe all users (including blocked) to all existing cats:
+					$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
+						SELECT u.id AS user_id, c.id AS category_id, 1
+						FROM #__users AS u
+						JOIN #__kunena_categories AS c ON c.parent_id>0
+						LEFT JOIN #__kunena_user_categories AS s ON u.id=s.user_id
+						WHERE c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
+					$db->setQuery($query);
+					$db->execute();
+					KunenaError::checkDatabaseError();
+				}
+			}
 		}
-		*/
 	}
 
 	/**

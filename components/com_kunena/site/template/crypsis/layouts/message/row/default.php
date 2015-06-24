@@ -21,6 +21,7 @@ $category = $message->getCategory();
 $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 'thumb');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
+$txt   = '';
 if ($topic->ordering)
 {
 	$txt .= '-stickymsg';

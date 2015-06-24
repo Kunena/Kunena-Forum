@@ -87,7 +87,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (!$template)
 		{
-			JError::raiseWarning(500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED');
 
 			return;
 		}
@@ -96,7 +96,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (!is_dir($tBaseDir . '/' . $template))
 		{
-			JError::raiseWarning(500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND');
 
 			return;
 		}
@@ -200,12 +200,12 @@ class KunenaAdminControllerTemplates extends KunenaController
 				}
 				else
 				{
-					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'));
+					$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'),'error');
 				}
 			}
 			else
 			{
-				JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'), 'error');
 			}
 		}
 
@@ -268,7 +268,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 		else
 		{
-			JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
 			$retval = false;
 		}
 

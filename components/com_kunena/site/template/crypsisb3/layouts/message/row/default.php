@@ -23,33 +23,23 @@ $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
 
-if ($this->topic->ordering)
+if ($topic->ordering)
 {
 	$txt .= '-stickymsg';
 }
 
-if ($this->topic->getCategory()->class_sfx)
-{
-
-	if ($this->topic->ordering)
-	{
-		$txt .= '-stickymsg';
-	}
-	$txt .= $this->escape($this->topic->getCategory()->class_sfx);
-}
-
-if ($this->topic->hold == 1)
+if ($topic->hold == 1)
 {
 	$txt .= ' '. 'unapproved';
 }
 else
 {
-	if ($this->topic->hold)
+	if ($topic->hold)
 	{
 		$txt .= ' '  . 'deleted';
 	}
 }
-if ($this->topic->moved_id > 0)
+if ($topic->moved_id > 0)
 {
 	$txt .= ' ' . 'moved';
 }

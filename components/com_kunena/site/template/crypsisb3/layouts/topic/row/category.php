@@ -20,13 +20,39 @@ $author = $topic->getLastPostAuthor();
 $avatar = $author->getAvatarImage('img-rounded', 'post');
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 5 : 6;
+$txt   = '';
+
 if ($this->topic->ordering)
 {
-	$txt = '-stickymsg';
+	$txt .= '-stickymsg';
 }
-else {
-	$txt = '';
+
+if ($this->topic->getCategory()->class_sfx)
+{
+
+	if ($this->topic->ordering)
+	{
+		$txt .= '-stickymsg';
+	}
+	$txt .= $this->escape($this->topic->getCategory()->class_sfx);
 }
+
+if ($this->topic->hold == 1)
+{
+	$txt .= ' '. 'unapproved';
+}
+else
+{
+	if ($this->topic->hold)
+	{
+		$txt .= ' '  . 'deleted';
+	}
+}
+if ($this->topic->moved_id > 0)
+{
+	$txt .= ' ' . 'moved';
+}
+
 
 if (!empty($this->spacing)) : ?>
 	<tr class="kcontenttablespacer">
@@ -34,7 +60,7 @@ if (!empty($this->spacing)) : ?>
 	</tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx); ?> krow1<?php echo $txt;?>">
+<tr class="category<?php echo $this->escape($category->class_sfx).$txt;?>">
 	<td class="col-md-1 hidden-sm center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
 	</td>

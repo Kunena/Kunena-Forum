@@ -22,13 +22,12 @@ $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 'posts');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
-
 if ($topic->ordering)
 {
 	$txt .= '-stickymsg';
 }
 
-if ($topic->hold == 1)
+if ($topic->hold == 1 || $message->hold == 1)
 {
 	$txt .= ' '. 'unapproved';
 }

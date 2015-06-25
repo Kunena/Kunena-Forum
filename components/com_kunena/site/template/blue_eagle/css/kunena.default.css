@@ -658,6 +658,9 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	background-color: #CCCCCC !important;
 }
 
+#Kunena .kmoved td {
+	background-color: #CCCCCC !important;
+}
 
 /* User info on posts
 ----------------------------------------*/

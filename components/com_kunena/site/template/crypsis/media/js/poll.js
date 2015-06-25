@@ -10,11 +10,11 @@
 jQuery(document).ready(function() {
 	/**
 	 * Get the number of field options inserted in form
-	 */	
+	 */
 	function getOptionsNumber()
 	{
 		var myoptions = jQuery('#kbbcode-poll-options').children('div.polloption');
-		
+
 		return myoptions.length;
 	}
 
@@ -34,7 +34,7 @@ jQuery(document).ready(function() {
 		newInput.setAttribute('name', 'polloptionsID[new'+options+']');
 		newInput.setAttribute('id', 'field_option'+options);
 		newInput.setAttribute('class', 'inputbox');
-		newInput.setAttribute('maxlength', '25');
+		newInput.setAttribute('maxlength', '100');
 		newInput.setAttribute('type', 'text');
 		polldiv.append(newInput);
 	}
@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
 			} else {
 				// Set error message with alert bootstrap way
 				jQuery('#kpoll-alert-error').show();
-				
+
 				jQuery('#kbutton-poll-add').hide();
 			}
 		});
@@ -65,7 +65,7 @@ jQuery(document).ready(function() {
 
 				if (isvisible){
 					jQuery('#kpoll-alert-error').hide();
-					
+
 					jQuery('#kbutton-poll-add').show();
 				}
 				koption.remove();
@@ -83,10 +83,10 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-	
+
 	if ( typeof pollcategoriesid != 'undefined' ) {
 		var catid = jQuery('#kcategory_poll').val();
-		
+
 		if ( pollcategoriesid[catid] !== undefined ) {
 			jQuery('.pollbutton').show();
 		} else {
@@ -95,7 +95,7 @@ jQuery(document).ready(function() {
 	} else {
 		jQuery('.pollbutton').hide();
 	}
-	
+
 	jQuery('#kpoll_go_results').click(function() {
 		if(jQuery('#poll-results').is(':visible')==true)
 		{
@@ -109,7 +109,7 @@ jQuery(document).ready(function() {
 			jQuery('#kpoll_go_results').hide();
 		}
 	});
-	
+
 	jQuery('#kpoll_hide_results').click(function() {
 		if(jQuery('#poll-results').is(':visible')==true)
 		{

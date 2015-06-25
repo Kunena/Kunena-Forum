@@ -851,6 +851,11 @@ HTML;
 				$icon = 'locked';
 			}
 
+			if ($topic->ordering && $topic->locked)
+			{
+				$icon = 'sticky_and_locked';
+			}
+
 			if ($topic->hold == 1)
 			{
 				$icon = 'unapproved';

@@ -35,7 +35,7 @@ foreach ($this->sections as $section) :
 			</small>
 		</h2>
 
-		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>" style="display: inline-block;">
+		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 			<table class="table table-bordered">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-sm">

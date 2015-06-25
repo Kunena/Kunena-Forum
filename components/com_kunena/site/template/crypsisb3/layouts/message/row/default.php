@@ -21,8 +21,29 @@ $category = $message->getCategory();
 $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 'posts');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
+$txt   = '';
+if ($topic->ordering)
+{
+	$txt .= '-stickymsg';
+}
+
+if ($topic->hold == 1 || $message->hold == 1)
+{
+	$txt .= ' '. 'unapproved';
+}
+else
+{
+	if ($topic->hold)
+	{
+		$txt .= ' '  . 'deleted';
+	}
+}
+if ($topic->moved_id > 0)
+{
+	$txt .= ' ' . 'moved';
+}
 ?>
-<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
+<tr class="category<?php echo $this->escape($category->class_sfx).$txt; ?>">
 	<td class="col-md-1 hidden-sm center">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
 	</td>

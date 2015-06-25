@@ -137,7 +137,7 @@
 		       type="varchar(255)"
 		       null="0"/>
 		<field name="icon"
-		       type="varchar(20)"
+		       type="varchar(60)"
 		       null="0"/>
 		<field name="icon_id"
 		       type="tinyint(4)"

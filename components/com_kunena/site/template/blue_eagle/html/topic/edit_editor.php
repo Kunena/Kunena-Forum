@@ -112,7 +112,7 @@ defined ( '_JEXEC' ) or die ();
 				if($this->poll->exists()) {
 					$x = 1;
 					foreach ($this->poll->getOptions() as $poll_option) {
-						echo '<div class="polloption">Option '.$x.' <input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" onmouseover="document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION', true).'\')" /></div>';
+						echo '<div class="polloption">Option '.$x.' <input type="text" size="100" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" onmouseover="document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION', true).'\')" /></div>';
 						$x++;
 					}
 				}

@@ -64,7 +64,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 	<table class="table table-bordered">
 		<thead>
 		<tr>
-			<td class="col-md-1 center hidden-sm">
+			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
 					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
@@ -73,10 +73,10 @@ $cols = empty($this->checkbox) ? 5 : 6;
 			<td class="col-md-<?php echo $cols ?>">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
-			<td class="col-md-2 hidden-sm">
+			<td class="col-md-2 hidden-xs">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
-			<td class="col-md-3 hidden-sm">
+			<td class="col-md-3 hidden-xs">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->topicActions)) : ?>
@@ -107,7 +107,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 		<tfoot>
 		<?php if ($this->topics) : ?>
 		<tr>
-			<td class="center hidden-sm">
+			<td class="center hidden-xs">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<span class="divider"></span>
@@ -115,7 +115,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 				</a>
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
-			<td colspan="6" class="hidden-sm">
+			<td colspan="6" class="hidden-xs">
 				<div class="form-group">
 
 					<?php if (!empty($this->moreUri))

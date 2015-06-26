@@ -32,7 +32,7 @@ echo $this->subLayout('User/Item/Summary')
 	->set('config', $this->config);
 ?>
 
-<div class="tabs hidden-sm">
+<div class="tabs hidden-xs">
 <br />
 <br />
 

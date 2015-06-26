@@ -16,17 +16,15 @@ $this->cache = false;
 // Show one topic row
 ?>
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
-	<td class="kcol-first kcol-ktopicicon">
-		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
+	<td class="kcol-mid kcol-ktopicicon hidden-phone">
+		<?php if ($this->topic->unread) : ?>
+			<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
+		<?php else :  ?>
+			<?php echo $this->getTopicLink ( $this->topic, null , $this->topic->getIcon() ) ?>
+		<?php endif;?>
 	</td>
 
 	<td class="kcol-mid ktopictittle">
-	<?php
-// FIXME:
-		/*if ($this->message->attachments) {
-			echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
-		}*/
-	?>
 		<div class="ktopic-title-cover">
 			<?php echo $this->getTopicLink ( $this->topic, $this->message, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message, 500), 'ktopic-title km' ) ?>
 		</div>

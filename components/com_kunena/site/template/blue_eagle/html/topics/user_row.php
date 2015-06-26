@@ -27,8 +27,12 @@ $this->cache = false;
 		<strong><?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
 	</td>
 
-	<td class="kcol-mid kcol-ktopicicon">
-		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
+	<td class="kcol-mid kcol-ktopicicon hidden-phone">
+		<?php if ($this->topic->unread) : ?>
+			<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
+		<?php else :  ?>
+			<?php echo $this->getTopicLink ( $this->topic, null , $this->topic->getIcon() ) ?>
+		<?php endif;?>
 	</td>
 
 	<td class="kcol-mid kcol-ktopictitle">

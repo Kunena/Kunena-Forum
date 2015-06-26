@@ -21,7 +21,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		<div class="pull-left">
 			<h3>
 				<?php echo $this->escape($this->headerText); ?>
-				<small class="hidden-sm">
+				<small class="hidden-xs">
 					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
 				</small>
 
@@ -32,7 +32,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		<div class="pull-right" id="filter-time">
 			<div class="filter-sel pull-right">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-					method="post" target="_self" class="form-inline hidden-sm">
+					method="post" target="_self" class="form-inline hidden-xs">
 					<?php $this->displayTimeFilter('sel'); ?>
 				</form>
 			</div>
@@ -66,7 +66,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		<?php else : ?>
 
 		<tr class="category">
-			<td class="col-md-1 center hidden-sm">
+			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
 					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
@@ -93,7 +93,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		</thead>
 		<tfoot>
 		<tr>
-			<td class="center hidden-sm">
+			<td class="center hidden-xs">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>

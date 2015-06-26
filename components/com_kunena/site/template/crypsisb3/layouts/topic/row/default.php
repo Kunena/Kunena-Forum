@@ -101,7 +101,7 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 		</div>
 
-		<div class="hidden-sm">
+		<div class="hidden-xs">
 			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
 			<?php echo JText::_('COM_KUNENA_BY') ?>
@@ -143,12 +143,12 @@ if (!empty($this->spacing)) : ?>
 
 	</td>
 
-	<td class="hidden-sm">
+	<td class="hidden-xs">
 		<div class="replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?>:<span class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
 		<div class="views"><?php echo JText::_('COM_KUNENA_GEN_HITS');?>:<span class="viewsnum"><?php echo  $this->formatLargeNumber($topic->hits); ?></span></div>
 	</td>
 
-	<td class="col-md-2 hidden-sm">
+	<td class="col-md-2 hidden-xs">
 		<div class="container-fluid">
 			<?php if ($config->avataroncat) : ?>
 				<div class="col-md-3">

@@ -78,7 +78,7 @@ if (!empty($this->spacing)) : ?>
 			}
 			else
 			{
-				$this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
+				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
 			?>
 		</div>

@@ -62,20 +62,24 @@ if (!empty($this->spacing)) : ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx).$txt; ?>">
 	<?php if ($topic->unread) : ?>
-<td class="hidden-phone center topic-item-unread">
-<?php else :  ?>
-	<td class="hidden-phone span1 center">
-		<?php endif;?>
+	<td class="hidden-phone center topic-item-unread">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<?php else :  ?>
+	<td class="hidden-phone span1 center">
+		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div>
-			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
 			if ($topic->unread)
 			{
-				echo $this->getTopicLink($topic, 'unread',
+				echo $this->getTopicLink($topic,  'unread',
 					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
+			}
+			else
+			{
+				$this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
 			?>
 		</div>

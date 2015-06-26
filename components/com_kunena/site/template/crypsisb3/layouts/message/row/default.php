@@ -44,9 +44,13 @@ if ($topic->moved_id > 0)
 }
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx).$txt; ?>">
-	<td class="col-md-1 hidden-sm center">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
-	</td>
+	<?php if ($topic->unread) : ?>
+	<td class="hidden-phone center topic-item-unread">
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<?php else :  ?>
+	<td class="col-md-1 hidden-xs center">
+		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<?php endif;?>
 	<td class="col-md-<?php echo $cols?>">
 		<div>
 			<?php echo $this->getTopicLink(

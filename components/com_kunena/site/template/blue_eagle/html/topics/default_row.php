@@ -28,7 +28,11 @@ $this->cache = false;
 	</td>
 
 	<td class="kcol-mid kcol-ktopicicon hidden-phone">
-		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
+		<?php if ($this->topic->unread) : ?>
+			<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
+		<?php else :  ?>
+			<?php echo $this->getTopicLink ( $this->topic, null , $this->topic->getIcon() ) ?>
+		<?php endif;?>
 	</td>
 
 	<td class="kcol-mid kcol-ktopictitle">

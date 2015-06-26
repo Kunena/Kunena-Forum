@@ -20,12 +20,37 @@ $author = $topic->getLastPostAuthor();
 $avatar = $author->getAvatarImage('img-rounded', 'thumb');
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 7 : 6;
+$txt   = '';
+
 if ($this->topic->ordering)
 {
-	$txt = '-stickymsg';
+	$txt .= '-stickymsg';
 }
-else {
-	$txt = '';
+
+if ($this->topic->getCategory()->class_sfx)
+{
+
+	if ($this->topic->ordering)
+	{
+		$txt .= '-stickymsg';
+	}
+	$txt .= $this->escape($this->topic->getCategory()->class_sfx);
+}
+
+if ($this->topic->hold == 1)
+{
+	$txt .= ' '. 'unapproved';
+}
+else
+{
+	if ($this->topic->hold)
+	{
+		$txt .= ' '  . 'deleted';
+	}
+}
+if ($this->topic->moved_id > 0)
+{
+	$txt .= ' ' . 'moved';
 }
 
 if (!empty($this->spacing)) : ?>
@@ -34,18 +59,26 @@ if (!empty($this->spacing)) : ?>
 	</tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx); ?> krow1<?php echo $txt;?>">
-	<td class="span1 hidden-phone center">
+<tr class="category<?php echo $this->escape($category->class_sfx).$txt;?>">
+	<?php if ($topic->unread) : ?>
+	<td class="hidden-phone center topic-item-unread">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<?php else :  ?>
+	<td class="hidden-phone span1 center">
+		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div>
-			<?php echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle'); ?>
 			<?php
 			if ($topic->unread)
 			{
-				echo $this->getTopicLink($topic, 'unread',
-					'<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+				echo $this->getTopicLink($topic,  'unread',
+					$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
+			}
+			else
+			{
+				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
 			?>
 		</div>
@@ -71,7 +104,7 @@ if (!empty($this->spacing)) : ?>
 			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON')?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>,
 			<?php echo JText::_('COM_KUNENA_BY') ?>
-			<?php echo $topic->getAuthor()->getLink(); ?>
+			<?php echo $topic->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">
@@ -117,12 +150,12 @@ if (!empty($this->spacing)) : ?>
 			<div class="row-fluid">
 				<?php if ($config->avataroncat) : ?>
 					<div class="span3">
-						<?php echo $author->getLink($avatar); ?>
+						<?php echo $author->getLink($avatar, null, 'nofollow', '', null, $category->id); ?>
 					</div>
 				<?php endif; ?>
 				<div class="span9">
 					<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
-						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
 					</span>
 					<br>
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>

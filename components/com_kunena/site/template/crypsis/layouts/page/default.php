@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 $config = KunenaFactory::getTemplate()->params;
 ?>
 
-<div id="kunena" class="layout">
+<div id="kunena" class="layout <?php echo $this->options->get('pageclass_sfx'); ?>">
 <?php
 
 	if ($config->get('displayMenu'))

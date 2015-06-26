@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 	`parent_id` int(11) NULL default '0',
 	`name` tinytext NULL,
 	`alias` varchar(255) NOT NULL,
+	`icon` varchar(60) NOT NULL default '',
 	`icon_id` tinyint(4) NOT NULL default '0',
 	`locked` tinyint(4) NOT NULL default '0',
 	`accesstype` varchar(20) NOT NULL default 'joomla.level',

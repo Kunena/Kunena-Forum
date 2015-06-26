@@ -43,9 +43,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 }
 ?>
 
-<div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
+<div class="kreply-form modal" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
 	<div class="modal-header">
-		<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
 		<h3>
 			<?php echo JText::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
 		</h3>
@@ -78,6 +78,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<textarea class="col-md-12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
+				<div class="clearfix"></div>
 			<div class="control-group">
 				<div class="controls">
 					<input type="checkbox" name="subscribeMe" value="1"

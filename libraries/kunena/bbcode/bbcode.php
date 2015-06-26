@@ -30,7 +30,7 @@ class KunenaBbcode extends NBBC_BBCode
 	 */
 	public $parent = null;
 
-	 /**
+	/**
 	 * Use KunenaBbcode::getInstance() instead.
 	 *
 	 * @param bool $relative
@@ -80,7 +80,7 @@ class KunenaBbcode extends NBBC_BBCode
 		return $instance[intval($relative)];
 	}
 
-	 /**
+	/**
 	 * @param $params
 	 * @return string
 	 */
@@ -227,8 +227,8 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebay_language . '&mode=search&query='
-					. urlencode($query['_nkw']) .'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
+				. urlencode($query['_nkw']) .'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
+				. $config->ebay_language . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
 
 			}
 
@@ -251,8 +251,8 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="355"><param name="movie" value="http://togo.ebay.com/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
-					. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
+				. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
+				. $config->ebay_language . '&seller=' . urlencode($path[1]) . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
 			}
 		}
 
@@ -278,6 +278,7 @@ class KunenaBbcode extends NBBC_BBCode
 					->set('target', $this->url_target);
 			}
 
+			$url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
 			return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
 		}
 
@@ -285,12 +286,12 @@ class KunenaBbcode extends NBBC_BBCode
 		return $text;
 	}
 
-    /**
-     * @param $string
-     * @return array
-     */
-    function Internal_AutoDetectURLs($string)
-    {
+	/**
+	 * @param $string
+	 * @return array
+	 */
+	function Internal_AutoDetectURLs($string)
+	{
 		$search = preg_split('/(?xi)
 		\b
 		(
@@ -440,574 +441,574 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	public $mapid = 0;
 
 	var $default_tag_rules = array(
-			'b' => array(
-				'simple_start' => "<b>",
-				'simple_end' => "</b>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'plain_start' => "<b>",
-				'plain_end' => "</b>",
-			),
+		'b' => array(
+			'simple_start' => "<b>",
+			'simple_end' => "</b>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'plain_start' => "<b>",
+			'plain_end' => "</b>",
+		),
 
-			'i' => array(
-				'simple_start' => "<i>",
-				'simple_end' => "</i>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'plain_start' => "<i>",
-				'plain_end' => "</i>",
-			),
+		'i' => array(
+			'simple_start' => "<i>",
+			'simple_end' => "</i>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'plain_start' => "<i>",
+			'plain_end' => "</i>",
+		),
 
-			'u' => array(
-				'simple_start' => "<u>",
-				'simple_end' => "</u>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'plain_start' => "<u>",
-				'plain_end' => "</u>",
-			),
+		'u' => array(
+			'simple_start' => "<u>",
+			'simple_end' => "</u>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'plain_start' => "<u>",
+			'plain_end' => "</u>",
+		),
 
-			's' => array(
-				'simple_start' => "<strike>",
-				'simple_end' => "</strike>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'plain_start' => "<i>",
-				'plain_end' => "</i>",
-			),
+		's' => array(
+			'simple_start' => "<strike>",
+			'simple_end' => "</strike>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'plain_start' => "<i>",
+			'plain_end' => "</i>",
+		),
 
-			'strike' => array(
-				'simple_start' => "<strike>",
-				'simple_end' => "</strike>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'plain_start' => "<i>",
-				'plain_end' => "</i>",
-			),
+		'strike' => array(
+			'simple_start' => "<strike>",
+			'simple_end' => "</strike>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'plain_start' => "<i>",
+			'plain_end' => "</i>",
+		),
 
-			'tt' => array(
-				'simple_start' => "<tt>",
-				'simple_end' => "</tt>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'plain_start' => "<i>",
-				'plain_end' => "</i>",
-			),
+		'tt' => array(
+			'simple_start' => "<tt>",
+			'simple_end' => "</tt>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'plain_start' => "<i>",
+			'plain_end' => "</i>",
+		),
 
-			'pre' => array(
-				'simple_start' => "<pre>",
-				'simple_end' => "</pre>",
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'plain_start' => "<i>",
-				'plain_end' => "</i>",
-			),
+		'pre' => array(
+			'simple_start' => "<pre>",
+			'simple_end' => "</pre>",
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'plain_start' => "<i>",
+			'plain_end' => "</i>",
+		),
 
-			'font' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'allow' => array('_default' => '/^[a-zA-Z0-9._ -]+$/'),
-				'method' => 'DoFont',
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-			),
+		'font' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'allow' => array('_default' => '/^[a-zA-Z0-9._ -]+$/'),
+			'method' => 'DoFont',
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+		),
 
-			'color' => array(
-				'mode' => BBCODE_MODE_ENHANCED,
-				'allow' => array('_default' => '/^#?[a-zA-Z0-9._ -]+$/'),
-				'template' => '<span style="color:{$_default/tw}">{$_content/v}</span>',
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-			),
+		'color' => array(
+			'mode' => BBCODE_MODE_ENHANCED,
+			'allow' => array('_default' => '/^#?[a-zA-Z0-9._ -]+$/'),
+			'template' => '<span style="color:{$_default/tw}">{$_content/v}</span>',
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+		),
 
-			'size' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoSize',
-				'allow' => array('_default' => '/^[0-9.]+(px|em|pt|%)?$/D'),
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-			),
+		'size' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoSize',
+			'allow' => array('_default' => '/^[0-9.]+(px|em|pt|%)?$/D'),
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+		),
 
-			'sup' => array(
-				'simple_start' => "<sup>",
-				'simple_end' => "</sup>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-			),
+		'sup' => array(
+			'simple_start' => "<sup>",
+			'simple_end' => "</sup>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+		),
 
-			'sub' => array(
-				'simple_start' => "<sub>",
-				'simple_end' => "</sub>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link')
-			),
+		'sub' => array(
+			'simple_start' => "<sub>",
+			'simple_end' => "</sub>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link')
+		),
 
-			'spoiler' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoSpoiler',
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_REQUIRED,
-				'plain_start' => "\nSpoiler:\n<i>",
-				'plain_end' => "</i>",
-			),
+		'spoiler' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoSpoiler',
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_REQUIRED,
+			'plain_start' => "\nSpoiler:\n<i>",
+			'plain_end' => "</i>",
+		),
 
-			'hide' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoHide',
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_REQUIRED,
-				'plain_content' => array(),
-			),
+		'hide' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoHide',
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_REQUIRED,
+			'plain_content' => array(),
+		),
 
-			'confidential' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoConfidential',
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_REQUIRED,
-				'plain_content' => array(),
-			),
+		'confidential' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoConfidential',
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_REQUIRED,
+			'plain_content' => array(),
+		),
 
-			'map' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoMap',
-				'class' => 'block',
-				'allow' => array( 'type' => '/^[\w\d.-_]*$/', 'zoom' => '/^\d*$/', 'control' => '/^\d*$/' ),
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_VERBATIM,
-			),
+		'map' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoMap',
+			'class' => 'block',
+			'allow' => array( 'type' => '/^[\w\d.-_]*$/', 'zoom' => '/^\d*$/', 'control' => '/^\d*$/' ),
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_VERBATIM,
+		),
 
-			'ebay' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoEbay',
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_VERBATIM,
-				'plain_start' => "[ebay]",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'ebay' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoEbay',
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "[ebay]",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'article' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoArticle',
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_REQUIRED,
-				'plain_start' => "\n[article]\n",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'article' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoArticle',
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_REQUIRED,
+			'plain_start' => "\n[article]\n",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'tableau' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoTableau',
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_VERBATIM,
-				'plain_start' => "\n[tableau]\n",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'tableau' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoTableau',
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "\n[tableau]\n",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'video' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoVideo',
-				'allow' => array( 'type' => '/^[\w\d.-_]*$/', 'param' => '/^[\w]*$/', 'size' => '/^\d*$/', 'width' => '/^\d*$/', 'height' => '/^\d*$/' ),
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_VERBATIM,
-				'plain_start' => "[video]",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'video' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoVideo',
+			'allow' => array( 'type' => '/^[\w\d.-_]*$/', 'param' => '/^[\w]*$/', 'size' => '/^\d*$/', 'width' => '/^\d*$/', 'height' => '/^\d*$/' ),
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "[video]",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'img' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoImage',
-				'allow' => array( 'size' => '/^\d*$/' ),
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns', 'link'),
-				'content' => BBCODE_VERBATIM,
-				'plain_start' => "[image]",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'img' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoImage',
+			'allow' => array( 'size' => '/^\d*$/' ),
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns', 'link'),
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "[image]",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'file' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoFile',
-				'allow' => array( 'size' => '/^\d*$/' ),
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_VERBATIM,
-				'plain_start' => "\n[file]\n",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'file' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoFile',
+			'allow' => array( 'size' => '/^\d*$/' ),
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "\n[file]\n",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'attachment' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoAttachment',
-				'allow' => array( '_default' => '/^\d*$/' ),
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_VERBATIM,
-				'plain_start' => "\n[attachment]\n",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'attachment' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoAttachment',
+			'allow' => array( '_default' => '/^\d*$/' ),
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "\n[attachment]\n",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'highlight' => array(
-				'simple_start' => "<span style='font-weight: 700;'>",
-				'simple_end' => "</span>",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'plain_start' => "<i>",
-				'plain_end' => "</i>",
-			),
+		'highlight' => array(
+			'simple_start' => "<span style='font-weight: 700;'>",
+			'simple_end' => "</span>",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'plain_start' => "<i>",
+			'plain_end' => "</i>",
+		),
 
-			'acronym' => array(
-				'mode' => BBCODE_MODE_ENHANCED,
-				'template' => '<span class="bbcode_acronym" title="{$_default/e}">{$_content/v}</span>',
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-			),
+		'acronym' => array(
+			'mode' => BBCODE_MODE_ENHANCED,
+			'template' => '<span class="bbcode_acronym" title="{$_default/e}">{$_content/v}</span>',
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+		),
 
-			'url' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoUrl',
-				'class' => 'link',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline'),
-				'content' => BBCODE_REQUIRED,
-				'plain_start' => "<a href=\"{\$link}\" rel=\"nofollow\" target=\"_blank\">",
-				'plain_end' => "</a>",
-				'plain_content' => array('_content', '_default'),
-				'plain_link' => array('_default', '_content'),
-			),
+		'url' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoUrl',
+			'class' => 'link',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline'),
+			'content' => BBCODE_REQUIRED,
+			'plain_start' => "<a href=\"{\$link}\" rel=\"nofollow\" target=\"_blank\">",
+			'plain_end' => "</a>",
+			'plain_content' => array('_content', '_default'),
+			'plain_link' => array('_default', '_content'),
+		),
 
-			'email' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoEmail',
-				'class' => 'link',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline'),
-				'content' => BBCODE_VERBATIM,
-				'plain_start' => "<a href=\"mailto:{\$link}\">",
-				'plain_end' => "</a>",
-				'plain_content' => array('_content', '_default'),
-				'plain_link' => array('_default', '_content'),
-			),
+		'email' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoEmail',
+			'class' => 'link',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline'),
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "<a href=\"mailto:{\$link}\">",
+			'plain_end' => "</a>",
+			'plain_content' => array('_content', '_default'),
+			'plain_link' => array('_default', '_content'),
+		),
 
-			'wiki' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => "DoWiki",
-				'class' => 'link',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline'),
-				'end_tag' => BBCODE_PROHIBIT,
-				'content' => BBCODE_PROHIBIT,
-				'plain_start' => "<b>[",
-				'plain_end' => "]</b>",
-				'plain_content' => array('title', '_default'),
-				'plain_link' => array('_default', '_content'),
-			),
+		'wiki' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => "DoWiki",
+			'class' => 'link',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline'),
+			'end_tag' => BBCODE_PROHIBIT,
+			'content' => BBCODE_PROHIBIT,
+			'plain_start' => "<b>[",
+			'plain_end' => "]</b>",
+			'plain_content' => array('title', '_default'),
+			'plain_link' => array('_default', '_content'),
+		),
 
-			'rule' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => "DoRule",
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'end_tag' => BBCODE_PROHIBIT,
-				'content' => BBCODE_PROHIBIT,
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'plain_start' => "\n-----\n",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'rule' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => "DoRule",
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'end_tag' => BBCODE_PROHIBIT,
+			'content' => BBCODE_PROHIBIT,
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'plain_start' => "\n-----\n",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'br' => array(
-				'mode' => BBCODE_MODE_SIMPLE,
-				'simple_start' => "<br />\n",
-				'simple_end' => "",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'end_tag' => BBCODE_PROHIBIT,
-				'content' => BBCODE_PROHIBIT,
-				'before_tag' => "s",
-				'after_tag' => "s",
-				'plain_start' => "\n",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'br' => array(
+			'mode' => BBCODE_MODE_SIMPLE,
+			'simple_start' => "<br />\n",
+			'simple_end' => "",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'end_tag' => BBCODE_PROHIBIT,
+			'content' => BBCODE_PROHIBIT,
+			'before_tag' => "s",
+			'after_tag' => "s",
+			'plain_start' => "\n",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'hr' => array(
-				'mode' => BBCODE_MODE_SIMPLE,
-				'simple_start' => "<hr />\n",
-				'simple_end' => "",
-				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
-				'end_tag' => BBCODE_PROHIBIT,
-				'content' => BBCODE_PROHIBIT,
-				'before_tag' => "s",
-				'after_tag' => "s",
-				'plain_start' => "\n-----\n",
-				'plain_end' => "",
-				'plain_content' => array(),
-			),
+		'hr' => array(
+			'mode' => BBCODE_MODE_SIMPLE,
+			'simple_start' => "<hr />\n",
+			'simple_end' => "",
+			'class' => 'inline',
+			'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'end_tag' => BBCODE_PROHIBIT,
+			'content' => BBCODE_PROHIBIT,
+			'before_tag' => "s",
+			'after_tag' => "s",
+			'plain_start' => "\n-----\n",
+			'plain_end' => "",
+			'plain_content' => array(),
+		),
 
-			'left' => array(
-				'simple_start' => "\n<div class=\"bbcode_left\" style=\"text-align:left\">\n",
-				'simple_end' => "\n</div>\n",
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'left' => array(
+			'simple_start' => "\n<div class=\"bbcode_left\" style=\"text-align:left\">\n",
+			'simple_end' => "\n</div>\n",
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'right' => array(
-				'simple_start' => "\n<div class=\"bbcode_right\" style=\"text-align:right\">\n",
-				'simple_end' => "\n</div>\n",
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'right' => array(
+			'simple_start' => "\n<div class=\"bbcode_right\" style=\"text-align:right\">\n",
+			'simple_end' => "\n</div>\n",
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'center' => array(
-				'simple_start' => "\n<div class=\"bbcode_center\" style=\"text-align:center\">\n",
-				'simple_end' => "\n</div>\n",
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'center' => array(
+			'simple_start' => "\n<div class=\"bbcode_center\" style=\"text-align:center\">\n",
+			'simple_end' => "\n</div>\n",
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'indent' => array(
-				'simple_start' => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em\">\n",
-				'simple_end' => "\n</div>\n",
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'indent' => array(
+			'simple_start' => "\n<div class=\"bbcode_indent\" style=\"margin-left:4em\">\n",
+			'simple_end' => "\n</div>\n",
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'table' => array(
-				'simple_start' => "\n<table>",
-				'simple_end' => "</table>\n",
-				'class' => 'table',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'end_tag' => BBCODE_REQUIRED,
-				'content' => BBCODE_REQUIRED,
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'table' => array(
+			'simple_start' => "\n<table>",
+			'simple_end' => "</table>\n",
+			'class' => 'table',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'end_tag' => BBCODE_REQUIRED,
+			'content' => BBCODE_REQUIRED,
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'tr' => array(
-				'simple_start' => "\n<tr>",
-				'simple_end' => "</tr>\n",
-				'class' => 'tr',
-				'allow_in' => array('table'),
-				'end_tag' => BBCODE_REQUIRED,
-				'content' => BBCODE_REQUIRED,
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'tr' => array(
+			'simple_start' => "\n<tr>",
+			'simple_end' => "</tr>\n",
+			'class' => 'tr',
+			'allow_in' => array('table'),
+			'end_tag' => BBCODE_REQUIRED,
+			'content' => BBCODE_REQUIRED,
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'th' => array(
-				'simple_start' => "<th>",
-				'simple_end' => "</th>",
-				'class' => 'columns',
-				'allow_in' => array('tr'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'th' => array(
+			'simple_start' => "<th>",
+			'simple_end' => "</th>",
+			'class' => 'columns',
+			'allow_in' => array('tr'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'td' => array(
-				'simple_start' => "<td>",
-				'simple_end' => "</td>",
-				'class' => 'columns',
-				'allow_in' => array('tr'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'td' => array(
+			'simple_start' => "<td>",
+			'simple_end' => "</td>",
+			'class' => 'columns',
+			'allow_in' => array('tr'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'columns' => array(
-				'simple_start' => "\n<table class=\"bbcode_columns\"><tbody><tr><td class=\"bbcode_column bbcode_firstcolumn\">\n",
-				'simple_end' => "\n</td></tr></tbody></table>\n",
-				'class' => 'columns',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'end_tag' => BBCODE_REQUIRED,
-				'content' => BBCODE_REQUIRED,
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'columns' => array(
+			'simple_start' => "\n<table class=\"bbcode_columns\"><tbody><tr><td class=\"bbcode_column bbcode_firstcolumn\">\n",
+			'simple_end' => "\n</td></tr></tbody></table>\n",
+			'class' => 'columns',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'end_tag' => BBCODE_REQUIRED,
+			'content' => BBCODE_REQUIRED,
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'nextcol' => array(
-				'simple_start' => "\n</td><td class=\"bbcode_column\">\n",
-				'class' => 'nextcol',
-				'allow_in' => array('columns'),
-				'end_tag' => BBCODE_PROHIBIT,
-				'content' => BBCODE_PROHIBIT,
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "",
-			),
+		'nextcol' => array(
+			'simple_start' => "\n</td><td class=\"bbcode_column\">\n",
+			'class' => 'nextcol',
+			'allow_in' => array('columns'),
+			'end_tag' => BBCODE_PROHIBIT,
+			'content' => BBCODE_PROHIBIT,
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "",
+		),
 
-			'code' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoCode',
-				'allow' => array( 'type' => '/^[\w]*$/', ),
-				'class' => 'code',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_VERBATIM,
-				'before_tag' => "sns",
-				'after_tag' => "sn",
-				'before_endtag' => "sn",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'code' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoCode',
+			'allow' => array( 'type' => '/^[\w]*$/', ),
+			'class' => 'code',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_VERBATIM,
+			'before_tag' => "sns",
+			'after_tag' => "sn",
+			'before_endtag' => "sn",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'quote' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoQuote',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\nQuote:\n",
-				'plain_end' => "\n",
-			),
+		'quote' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoQuote',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\nQuote:\n",
+			'plain_end' => "\n",
+		),
 
-			'list' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoList',
-				'class' => 'list',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'list' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoList',
+			'class' => 'list',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'ul' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoList',
-				'default' => array( '_default' => 'circle' ),
-				'class' => 'list',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'ul' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoList',
+			'default' => array( '_default' => 'circle' ),
+			'class' => 'list',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'ol' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoList',
-				'allow' => array( '_default' => '/^[\d\w]*$/', ),
-				'default' => array( '_default' => '1' ),
-				'class' => 'list',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'before_tag' => "sns",
-				'after_tag' => "sns",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n",
-				'plain_end' => "\n",
-			),
+		'ol' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoList',
+			'allow' => array( '_default' => '/^[\d\w]*$/', ),
+			'default' => array( '_default' => '1' ),
+			'class' => 'list',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'before_tag' => "sns",
+			'after_tag' => "sns",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n",
+			'plain_end' => "\n",
+		),
 
-			'*' => array(
-				'simple_start' => "<li>",
-				'simple_end' => "</li>\n",
-				'class' => 'listitem',
-				'allow_in' => array('list'),
-				'end_tag' => BBCODE_OPTIONAL,
-				'before_tag' => "s",
-				'after_tag' => "s",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n * ",
-				'plain_end' => "\n",
-			),
+		'*' => array(
+			'simple_start' => "<li>",
+			'simple_end' => "</li>\n",
+			'class' => 'listitem',
+			'allow_in' => array('list'),
+			'end_tag' => BBCODE_OPTIONAL,
+			'before_tag' => "s",
+			'after_tag' => "s",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n * ",
+			'plain_end' => "\n",
+		),
 
-			'li' => array(
-				'simple_start' => "<li>",
-				'simple_end' => "</li>\n",
-				'class' => 'listitem',
-				'allow_in' => array('listitem', 'block', 'columns', 'list'),
-				'before_tag' => "s",
-				'after_tag' => "s",
-				'before_endtag' => "sns",
-				'after_endtag' => "sns",
-				'plain_start' => "\n * ",
-				'plain_end' => "\n",
-			),
+		'li' => array(
+			'simple_start' => "<li>",
+			'simple_end' => "</li>\n",
+			'class' => 'listitem',
+			'allow_in' => array('listitem', 'block', 'columns', 'list'),
+			'before_tag' => "s",
+			'after_tag' => "s",
+			'before_endtag' => "sns",
+			'after_endtag' => "sns",
+			'plain_start' => "\n * ",
+			'plain_end' => "\n",
+		),
 
-			'terminal' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoTerminal',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'class' => 'code',
-				'allow' => array( 'colortext' => '/^|#[0-9a-fA-F]+|[a-zA-Z]+$/' ),
-				'before_tag' => "sns",
-				'after_tag' => "sn",
-				'before_endtag' => "ns",
-				'after_endtag' => "sns",
-				'content' => BBCODE_VERBATIM,
-				'plain_start' => "\nTerminal:\n",
-				'plain_end' => "\n",
-			),
+		'terminal' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoTerminal',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'class' => 'code',
+			'allow' => array( 'colortext' => '/^|#[0-9a-fA-F]+|[a-zA-Z]+$/' ),
+			'before_tag' => "sns",
+			'after_tag' => "sn",
+			'before_endtag' => "ns",
+			'after_endtag' => "sns",
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "\nTerminal:\n",
+			'plain_end' => "\n",
+		),
 
-			'tweet' => array(
-				'mode' => BBCODE_MODE_LIBRARY,
-				'method' => 'DoTweet',
-				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_REQUIRED,
-				'plain_content' => array(),
-			),
+		'tweet' => array(
+			'mode' => BBCODE_MODE_LIBRARY,
+			'method' => 'DoTweet',
+			'class' => 'block',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'content' => BBCODE_REQUIRED,
+			'plain_content' => array(),
+		),
 	);
 
 	function __construct()
@@ -1324,13 +1325,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			// Static version
 			return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title
-				. '</span> <span class="kspoiler-hide">' . JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE')
-				. '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
+			. '</span> <span class="kspoiler-hide">' . JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE')
+			. '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
 		}
 
 		return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . $title
-			. '</span> <span class="kspoiler-expand">' . JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND') . '</span><span class="kspoiler-hide" style="display:none">'
-			. JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE') . '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
+		. '</span> <span class="kspoiler-expand">' . JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND') . '</span><span class="kspoiler-hide" style="display:none">'
+		. JText::_('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE') . '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
 	}
 
 	public function DoHide($bbcode, $action, $name, $default, $params, $content)
@@ -1641,7 +1642,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$default = $config->article_display;
 			}
 
-				// Do not display full text if there's no permissions to display the full article.
+			// Do not display full text if there's no permissions to display the full article.
 			if (!empty($denied) && $default == 'full')
 			{
 				$default = 'intro';
@@ -1656,7 +1657,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
 						break;
 					}
-					// continue to intro if fulltext is empty
+				// continue to intro if fulltext is empty
 				case 'intro':
 					if (!empty($article->introtext))
 					{
@@ -1664,7 +1665,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE').'</a>';
 						break;
 					}
-					// continue to link if introtext is empty
+				// continue to link if introtext is empty
 				case 'link':
 				default:
 					$link = '<a href="'.$url.'" class="readon">'.$article->title.'</a>';
@@ -1826,9 +1827,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			// TODO: Remove in Kunena 4.0
 			return '<script type="text/javascript" src="'.$tableauserver.
-					'/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="'.$maxwidth.
-					'" height="'.$maxheight.'" style="display:none;"><param name="name" value="'.$vizualization.
-					'" /><param name="toolbar" value="'.$toolbar.'" /></object>';
+			'/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="'.$maxwidth.
+			'" height="'.$maxheight.'" style="display:none;"><param name="name" value="'.$vizualization.
+			'" /><param name="toolbar" value="'.$toolbar.'" /></object>';
 		}
 
 		return '';
@@ -1909,39 +1910,39 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$vid_providers = array (
 
-		'bofunk' => array ('flash', 446, 370, 0, 0, 'http://www.bofunk.com/e/%vcode%', '', '' ),
+			'bofunk' => array ('flash', 446, 370, 0, 0, 'http://www.bofunk.com/e/%vcode%', '', '' ),
 
-		'break' => array ('flash', 464, 392, 0, 0, 'http://embed.break.com/%vcode%', '', '' ),
+			'break' => array ('flash', 464, 392, 0, 0, 'http://embed.break.com/%vcode%', '', '' ),
 
-		'clipfish' => array ('flash', 464, 380, 0, 0, 'http://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', '' ),
+			'clipfish' => array ('flash', 464, 380, 0, 0, 'http://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', '' ),
 
-		'dailymotion' => array('flash', 464, 380, 0, 0, 'http://www.dailymotion.com/swf/video/%vcode%?autoPlay=0', '\/([\w]*)_', array (array (6, 'wmode', 'transparent' ) )),
+			'dailymotion' => array('flash', 464, 380, 0, 0, 'http://www.dailymotion.com/swf/video/%vcode%?autoPlay=0', '\/([\w]*)_', array (array (6, 'wmode', 'transparent' ) )),
 
-		'metacafe' => array ('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
+			'metacafe' => array ('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'myspace' => array ('flash', 430, 346, 0, 0, 'http://lads.myspace.com/videos/vplayer.swf', 'VideoID=(\d*)', array (array (6, 'flashvars', 'm=%vcode%&v=2&type=video' ) ) ),
+			'myspace' => array ('flash', 430, 346, 0, 0, 'http://lads.myspace.com/videos/vplayer.swf', 'VideoID=(\d*)', array (array (6, 'flashvars', 'm=%vcode%&v=2&type=video' ) ) ),
 
-		'rutube' => array ('flash', 400, 353, 0, 0, 'http://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)' ),
+			'rutube' => array ('flash', 400, 353, 0, 0, 'http://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)' ),
 
-		'sapo' => array ('flash', 400, 322, 0, 0, 'http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/%vcode%/mov/1', 'videos\.sapo\.pt\/([\w]*)', array (array (6, 'wmode', 'transparent' ) ) ),
+			'sapo' => array ('flash', 400, 322, 0, 0, 'http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/%vcode%/mov/1', 'videos\.sapo\.pt\/([\w]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'streetfire' => array ('flash', 428, 352, 0, 0, 'http://videos.streetfire.net/vidiac.swf', '\/([\w-]*).htm', array (array (6, 'flashvars', 'video=%vcode%' ) ) ),
+			'streetfire' => array ('flash', 428, 352, 0, 0, 'http://videos.streetfire.net/vidiac.swf', '\/([\w-]*).htm', array (array (6, 'flashvars', 'video=%vcode%' ) ) ),
 
-		'veoh' => array ('flash', 540, 438, 0, 0, 'http://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', '' ),
+			'veoh' => array ('flash', 540, 438, 0, 0, 'http://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', '' ),
 
-		'videojug' => array ('flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', '' ),
+			'videojug' => array ('flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', '' ),
 
-		'vimeo' => array ('flash', 400, 321, 0, 0, 'http://www.vimeo.com/moogaloop.swf?clip_id=%vcode%&server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=', '\.com\/(\d*)', '' ),
+			'vimeo' => array ('flash', 400, 321, 0, 0, 'http://www.vimeo.com/moogaloop.swf?clip_id=%vcode%&server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=', '\.com\/(\d*)', '' ),
 
-		'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
+			'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'youtube' => array ('iframe', 425, 355, 0, 0, 'http://www.youtube.com/embed/%vcode%', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+			'youtube' => array ('iframe', 425, 355, 0, 0, 'http://www.youtube.com/embed/%vcode%', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'youku' => array ('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+			'youku' => array ('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
-		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
-		//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )
-		//
+			// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
+			//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )
+			//
 		);
 
 		if (isset ( $vid_providers [$vid ["type"]] ))
@@ -2476,17 +2477,17 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			if ($layout->getPath())
 			{
 				return (string) $layout
-				->set('tweetid', $tweet->id_str)
-				->set('user_profile_url_normal', $tweet->user->profile_image_url)
-				->set('user_profile_url_big', $tweet->user->profile_image_url_big)
-				->set('user_name', $tweet->user->name)
-				->set('user_screen_name', $tweet->user->screen_name)
-				->set('tweet_created_at', $tweet->created_at)
-				->set('tweet_text', $tweet->text)
-				->set('retweet_count', $tweet->retweet_count)
-				->set('favorite_count', $tweet->favorite_count)
-				->set('verified', $tweet->user->verified)
-				->setLayout('default');
+					->set('tweetid', $tweet->id_str)
+					->set('user_profile_url_normal', $tweet->user->profile_image_url)
+					->set('user_profile_url_big', $tweet->user->profile_image_url_big)
+					->set('user_name', $tweet->user->name)
+					->set('user_screen_name', $tweet->user->screen_name)
+					->set('tweet_created_at', $tweet->created_at)
+					->set('tweet_text', $tweet->text)
+					->set('retweet_count', $tweet->retweet_count)
+					->set('favorite_count', $tweet->favorite_count)
+					->set('verified', $tweet->user->verified)
+					->setLayout('default');
 			}
 		}
 		else
@@ -2749,3 +2750,4 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		return $ebay_item;
 	}
 }
+

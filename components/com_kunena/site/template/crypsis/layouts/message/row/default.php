@@ -18,28 +18,56 @@ $topic = $message->getTopic();
 $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
-$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 'thumb');
+$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 'thumb');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
+$txt   = '';
+if ($topic->ordering)
+{
+	$txt .= '-stickymsg';
+}
+
+if ($topic->hold == 1 || $message->hold == 1)
+{
+	$txt .= ' '. 'unapproved';
+}
+else
+{
+	if ($topic->hold)
+	{
+		$txt .= ' '  . 'deleted';
+	}
+}
+if ($topic->moved_id > 0)
+{
+	$txt .= ' ' . 'moved';
+}
 ?>
-<tr class="category<?php echo $this->escape($category->class_sfx); ?>">
-	<td class="span1 hidden-phone center">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon()); ?>
+<tr class="category<?php echo $this->escape($category->class_sfx).$txt; ?>">
+	<?php if ($topic->unread) : ?>
+	<td class="hidden-phone center topic-item-unread">
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<?php else :  ?>
+	<td class="hidden-phone span1 center">
+		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset)); ?>
+	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div>
-			<?php echo $this->getTopicLink(
-				$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
-			); ?>
 			<?php
+			if ($topic->unread) {
+				echo $this->getTopicLink($topic, 'unread', ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject') . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
+					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+			}
+			else
+			{
+				echo $this->getTopicLink(
+					$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
+				);
+			}
 
 			if ($topic->getUserTopic()->favorite) {
 				echo $this->getIcon ('kfavoritestar', JText::_('COM_KUNENA_FAVORITE'));
-			}
-
-			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
-					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 
 			if ($topic->locked != 0) {
@@ -48,7 +76,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 			?>
 		</div>
 		<div>
-			<?php echo $topic->getAuthor()->getLink(); ?>,
+			<?php echo $topic->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 		</div>
@@ -68,7 +96,7 @@ $cols = empty($this->checkbox) ? 5 : 6;
 				<div class="span9">
 				<span><?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?></span>
 				<?php if ($message->userid) : ?>
-					<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+					<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?></span>
 				<?php endif; ?>
 				<br />
 				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>

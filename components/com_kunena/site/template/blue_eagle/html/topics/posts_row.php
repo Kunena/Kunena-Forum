@@ -16,31 +16,40 @@ $this->cache = false;
 // Show one topic row
 ?>
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
-	<td class="kcol-first kcol-ktopicicon">
-		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
+	<td class="kcol-mid kcol-ktopicicon hidden-phone">
+		<?php if ($this->topic->unread) : ?>
+			<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
+		<?php else :  ?>
+			<?php echo $this->getTopicLink ( $this->topic, null , $this->topic->getIcon() ) ?>
+		<?php endif;?>
 	</td>
 
 	<td class="kcol-mid ktopictittle">
-	<?php
-// FIXME:
-		/*if ($this->message->attachments) {
-			echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
-		}*/
-	?>
 		<div class="ktopic-title-cover">
-			<?php echo $this->getTopicLink ( $this->topic, $this->message, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message, 500), 'ktopic-title km' ) ?>
+			<?php
+			if ($this->topic->unread) {
+				echo $this->getTopicLink ( $this->topic, 'unread', KunenaHtmlParser::parseText ($this->message->subject, 30), null, 'ktopic-title km' );
+			}
+			else
+			{
+				echo $this->getTopicLink ( $this->topic, $this->message, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message, 500), 'ktopic-title km' );
+			}
+			?>
 		</div>
 	</td>
 
 	<td class="kcol-mid ktopictittle">
 		<div class="ktopic-title-cover">
 			<?php
-			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
+			if ($this->topic->unread) {
+				echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->subject . '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'ktopic-title km' );
+			}
+			else
+			{
+				echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
+			}
 			if ($this->topic->getUserTopic()->favorite) {
 				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
-			}
-			if ($this->topic->unread) {
-				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
 			}
 			if ($this->topic->locked != 0) {
 				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC') );
@@ -62,7 +71,7 @@ $this->cache = false;
 				if ($useravatar) :
 			?>
 			<span class="ktopic-latest-post-avatar">
-			<?php echo $this->message->getAuthor()->getLink( $useravatar ) ?>
+			<?php echo $this->message->getAuthor()->getLink( $useravatar, null, 'nofollow', '', null, $this->topic->getCategory()->id ) ?>
 			</span>
 			<?php
 				endif;
@@ -74,7 +83,7 @@ $this->cache = false;
 
 			<?php if ($this->message->userid) : ?>
 			<br />
-			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(); ?></span>
+			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id); ?></span>
 			<?php endif; ?>
 		</div>
 	</td>

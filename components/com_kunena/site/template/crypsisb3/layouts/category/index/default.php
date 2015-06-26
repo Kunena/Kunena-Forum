@@ -28,9 +28,9 @@ foreach ($this->sections as $section) :
 			<?php endif; ?>
 		</div>
 
-		<h2>
+		<h2 class="btn-link">
 			<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
-			<small class="hidden-sm nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
+			<small class="hidden-xs nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
 					$this->formatLargeNumber($section->getTopics())); ?>)
 			</small>
 		</h2>
@@ -38,7 +38,7 @@ foreach ($this->sections as $section) :
 		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 			<table class="table table-bordered">
 				<?php if (!empty($section->description)) : ?>
-					<thead class="hidden-sm">
+					<thead class="hidden-xs">
 					<tr>
 						<td colspan="3">
 							<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
@@ -57,24 +57,24 @@ foreach ($this->sections as $section) :
 					</tr>
 				<?php else : ?>
 					<?php if (!empty($this->categories[$section->id])) : ?>
-						<td colspan="2" class="hidden-sm">
+						<td colspan="2" class="hidden-xs">
 							<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
 						</td>
-						<td colspan="1" class="hidden-sm post-info">
+						<td colspan="1" class="hidden-xs post-info">
 							<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 						</td>
 					<?php endif; ?>
 					<?php
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
-							<td class="col-md-1 center hidden-sm">
+							<td class="col-md-1 center hidden-xs">
 								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
 							</td>
 							<td class="col-md-8">
 								<div>
 									<h3>
 										<?php echo $this->getCategoryLink($category); ?>
-										<small class="hidden-sm nowrap">
+										<small class="hidden-xs nowrap">
 											(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
@@ -98,7 +98,7 @@ foreach ($this->sections as $section) :
 								</div>
 
 								<?php if (!empty($category->description)) : ?>
-									<div class="hidden-sm header-desc"><?php echo $category->displayField('description'); ?></div>
+									<div class="hidden-xs header-desc"><?php echo $category->displayField('description'); ?></div>
 								<?php endif; ?>
 
 								<?php
@@ -108,7 +108,7 @@ foreach ($this->sections as $section) :
 
 										<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 											<li>
-												<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($subcategory) . '<small class="hidden-sm muted"> ('
+												<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($subcategory) . '<small class="hidden-xs muted"> ('
 													. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 													. ')</small>';
 												if (($new = $subcategory->getNewCount()) > 0)
@@ -122,7 +122,7 @@ foreach ($this->sections as $section) :
 										<?php if (!empty($this->more[$category->id])) : ?>
 											<li>
 												<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE')); ?>
-												<small class="hidden-sm muted">
+												<small class="hidden-xs muted">
 													(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>)
 												</small>
 											</li>
@@ -138,7 +138,7 @@ foreach ($this->sections as $section) :
 										$modslist = array();
 										foreach ($category->moderators as $moderator)
 										{
-											$modslist[] = KunenaFactory::getUser($moderator)->getLink();
+											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, 'nofollow', '', null, $category->id);
 										}
 										echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
 										?>
@@ -157,12 +157,12 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time   = $last->getLastPostTime();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 'thumb') : null;
+								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 'post') : null;
 							?>
 
-								<td class="col-md-3 hidden-sm">
+								<td class="col-md-3 hidden-xs">
 									<div class="container-fluid">
-										<div class="row">
+										<div class="col-md-12">
 											<?php if ($avatar) : ?>
 												<div class="col-md-3">
 													<?php echo $author->getLink($avatar); ?>
@@ -179,7 +179,7 @@ foreach ($this->sections as $section) :
 									</div>
 								</td>
 							<?php else : ?>
-								<td class="col-md-3 hidden-sm">
+								<td class="col-md-3 hidden-xs">
 									<div class="last-post-message">
 										<?php echo JText::_('COM_KUNENA_X_TOPICS_0'); ?>
 									</div>

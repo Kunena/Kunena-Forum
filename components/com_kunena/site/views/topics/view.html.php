@@ -314,6 +314,10 @@ class KunenaViewTopics extends KunenaView
 				$txt .= ' ' . $prefix . 'deleted';
 			}
 		}
+		if ($this->topic->moved_id > 0)
+		{
+			$txt .= ' ' . $prefix . 'moved';
+		}
 
 		return $txt;
 	}

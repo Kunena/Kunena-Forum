@@ -54,13 +54,16 @@ if ($topic->moved_id > 0)
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div>
-			<?php echo $this->getTopicLink(
-				$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
-			);
-
+			<?php
 			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
+				echo $this->getTopicLink($topic, 'unread', ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject') . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
 					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+			}
+			else
+			{
+				echo $this->getTopicLink(
+					$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
+				);
 			}
 
 			if ($topic->getUserTopic()->favorite) {

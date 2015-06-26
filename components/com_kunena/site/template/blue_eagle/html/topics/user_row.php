@@ -41,12 +41,15 @@ $this->cache = false;
 
 		<div class="ktopic-title-cover">
 			<?php
-			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
+			if ($this->topic->unread) {
+				echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->subject . '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'ktopic-title km' );
+			}
+			else
+			{
+				echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
+			}
 			if ($this->topic->getUserTopic()->favorite) {
 				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
-			}
-			if ($this->topic->unread) {
-				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
 			}
 			if ($this->topic->locked != 0) {
 				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC') );

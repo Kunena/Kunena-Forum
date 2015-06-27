@@ -439,6 +439,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		$upload->splitFilename($fileInput['name']);
 
+		$fileInput['name'] = preg_replace('/[[:space:]]/', '',$fileInput['name']);
+
 		$fileNameWithoutExt = JFile::stripExt($fileInput['name']);
 		$fileExt = JFile::getExt($fileInput['name']);
 		$fileNameWithExt = $fileInput['name'];

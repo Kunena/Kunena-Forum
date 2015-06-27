@@ -31,7 +31,7 @@ class Com_KunenaInstallerScript
 			'0'   => '3.4.1' // Preferred version
 		)
 	);
-	protected $extensions = array('dom', 'gd', 'fileinfo', 'json', 'pcre', 'SimpleXML');
+	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	public function install($parent)
 	{

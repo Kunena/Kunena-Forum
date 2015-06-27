@@ -459,9 +459,18 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		if ($file->success)
 		{
-			$finfo = new finfo(FILEINFO_MIME);
+			if ( extension_loaded('fileinfo') )
+			{
+				$finfo = new finfo(FILEINFO_MIME);
 
-			$type = $finfo->file($uploadBasePath . $fileNameWithExt);
+				$type = $finfo->file($uploadBasePath . $fileNameWithExt);
+			}
+			else
+			{
+				$info = getimagesize($uploadBasePath . $fileNameWithExt);
+
+				$type = $info['mime'];
+			}
 
 			if (stripos($type, 'image/') !== false)
 			{

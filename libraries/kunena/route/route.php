@@ -386,7 +386,7 @@ abstract class KunenaRoute
 
 		if (!isset(self::$filtered[$string]))
 		{
-			self::$filtered[$string] = JApplicationCms::stringURLSafe($string);
+			self::$filtered[$string] = JApplicationHelper::stringURLSafe($string);
 
 			// Remove beginning and trailing "whitespace", fixes #1130 where category alias creation fails on error: Duplicate entry '-'.
 			self::$filtered[$string] = trim(self::$filtered[$string], '-_ ');

@@ -170,7 +170,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			case 'sdescription':
 				return KunenaHtmlParser::parseBBCode($this->sdescription);
 			case 'description':
-				return KunenaHtmlParser::parseBBCode($this->description ? $this->description : $this->sdescription);
+				return KunenaHtmlParser::parseBBCode($this->description);
 			case 'created_by':
 				return $this->getAuthor()->getLink();
 			case 'created':

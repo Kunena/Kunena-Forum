@@ -769,7 +769,7 @@ class KunenaControllerUser extends KunenaController
 
 			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
 
-			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid);
+			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid, 'avatar');
 
 			if (!empty($uploaded))
 			{

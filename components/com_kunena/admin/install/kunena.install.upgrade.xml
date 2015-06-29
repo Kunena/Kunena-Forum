@@ -655,9 +655,15 @@
 				DEFAULT '' AFTER `topic_ordering`
 			</query>
 		</version>
-		<version version="4.1.0-DEV"
-		         versiondate="2015-06-09"
+		<version version="4.0.2-DEV2"
+		         versiondate="2015-06-18"
 		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories`
+				CHANGE COLUMN `icon` `icon` VARCHAR(60)</query>
+		</version>
+		<version version="@kunenaversion@"
+		         versiondate="@kunenaversiondate@"
+		         versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

@@ -62,25 +62,25 @@ defined('_JEXEC') or die;
 				<?php endif; ?>
 
 				<?php if (!empty($this->onlineList)) : ?>
-				<div>
+				<div class="legend">
 					<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
 					<span class="kwho-admin">
-						<i class="icon glyphicon glyphicon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+						<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
 					</span>
 					<span class="kwho-globalmoderator">
-						<i class="icon glyphicon glyphicon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
+						<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
 					</span>
 					<span class="kwho-moderator">
-						<i class="icon glyphicon glyphicon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
+						<?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>
 					</span>
 					<span class="kwho-banned">
-						<i class="icon glyphicon glyphicon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
+						<?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?>
 					</span>
 					<span class="kwho-user">
-						<i class="icon glyphicon glyphicon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
+						<?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>
 					</span>
 					<span class="kwho-guest">
-						<i class="icon glyphicon glyphicon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
+						<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
 					</span>
 				</div>
 				<?php endif; ?>

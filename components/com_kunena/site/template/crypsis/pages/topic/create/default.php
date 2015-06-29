@@ -26,19 +26,6 @@ foreach ($parents as $parent)
 }
 
 $this->addBreadcrumb(
-	JText::_('COM_KUNENA_MENU_TOPIC'),
-	$content->topic->getUri()
-);
-
-if ($content->message)
-{
-	$this->addBreadcrumb(
-		JText::_('COM_KUNENA_MESSAGE'),
-		$content->message->getUri()
-	);
-}
-
-$this->addBreadcrumb(
 	JText::_('COM_KUNENA_NEW'),
 	null
 );

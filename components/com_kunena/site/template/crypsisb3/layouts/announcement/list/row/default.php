@@ -15,7 +15,7 @@ $announcement = $this->announcement;
 ?>
 
 <tr>
-	<td class="nowrap hidden-sm">
+	<td class="nowrap hidden-xs">
 		<?php echo $announcement->displayField('created', 'date_today'); ?>
 	</td>
 
@@ -43,7 +43,7 @@ $announcement = $this->announcement;
 	</td>
 	<?php endif; ?>
 
-	<td class="center hidden-sm">
+	<td class="center hidden-xs">
 		<?php echo $announcement->displayField('id'); ?>
 	</td>
 

@@ -704,7 +704,7 @@ class KunenaControllerTopic extends KunenaController
 		// If user removed all the text and message doesn't contain images or objects, delete the message instead.
 		$text = KunenaHtmlParser::parseBBCode($message->message);
 
-		if (!preg_match('!(<img |<object )!', $text))
+		if (!preg_match('!(<img |<object |<iframe )!', $text))
 		{
 			$text = trim(JFilterOutput::cleanText($text));
 		}

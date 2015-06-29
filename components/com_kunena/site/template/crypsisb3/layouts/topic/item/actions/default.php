@@ -33,7 +33,7 @@ defined('_JEXEC') or die;
 			|| $this->topicButtons->get('sticky')
 			|| $this->topicButtons->get('lock')) : ?>
 		<div class="btn-group">
-			<a class="btn btn-primary" data-toggle="dropdown"><i class="glyphicon glyphicon-shuffle"></i>	<?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
+			<a class="btn btn-primary" data-toggle="dropdown"><i class="glyphicon glyphicon-white glyphicon-random"></i>	<?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_LABEL_MODERATION') ?></a>
 			<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><?php echo $this->topicButtons->get('delete') ?></li>

@@ -46,7 +46,6 @@ IF exist %GitTarget%\components\com_kunena ( rmdir /S/q %GitTarget%\components\c
 IF exist %GitTarget%\libraries\kunena ( rmdir /S/q %GitTarget%\libraries\kunena  )
 IF exist %GitTarget%\media\kunena ( rmdir /S/q %GitTarget%\media\kunena )
 IF exist %GitTarget%\plugins\system\kunena ( rmdir /S/q %GitTarget%\plugins\system\kunena )
-IF exist %GitTarget%\plugins\content\kunena ( rmdir /S/q %GitTarget%\plugins\content\kunena )
 IF exist %GitTarget%\plugins\quickicon\kunena ( rmdir /S/q %GitTarget%\plugins\quickicon\kunena )
 echo Put back kunena.xml file in place to allow to uninstall kunena
 Md %GitTarget%\administrator\components\com_kunena

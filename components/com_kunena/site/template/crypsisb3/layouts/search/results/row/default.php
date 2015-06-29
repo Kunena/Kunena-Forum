@@ -22,13 +22,13 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 <div id="kunena_search_results" class="row">
 	<div class="col-md-2 center">
 		<ul class="unstyled center profilebox">
-			<li><strong><?php echo $author->getLink(); ?></strong></li>
+			<li><strong><?php echo $author->getLink(null, null, 'nofollow', '', null, $topic->getCategory()->id); ?></strong></li>
 			<li><?php echo $author->getLink($author->getAvatarImage('img-thumbnail', 'post')); ?></li>
 		</ul>
 	</div>
 
 	<div class="col-md-10">
-		<small class="text-muted pull-right hidden-sm" style="margin-top:-5px;"> <span class="icon glyphicon glyphicon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
+		<small class="text-muted pull-right hidden-xs" style="margin-top:-5px;"> <span class="icon glyphicon glyphicon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
 		<?php //TODO: Find a better way for inline elements like this can displayField contain HTML which would not be valid inside the attribute. ?>
 		<div class="badger-left badger-info khistory" data-badger="<?php echo (!$isReply) ? $author->username . ' created the topic: ' : $author->username. ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
 			<h3>

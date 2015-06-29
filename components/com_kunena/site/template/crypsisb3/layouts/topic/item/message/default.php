@@ -15,7 +15,7 @@ $direction = $template->params->get('avatarPosition');
 
 if ($direction === "left") : ?>
 	<div class="row message message-<?php echo $this->message->getState(); ?>">
-		<div class="col-md-2 hidden-sm">
+		<div class="col-md-2 hidden-xs">
 			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 		<div class="col-md-10">
@@ -31,7 +31,7 @@ if ($direction === "left") : ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 		</div>
-		<div class="col-md-2 hidden-sm">
+		<div class="col-md-2 hidden-xs">
 			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 	</div>

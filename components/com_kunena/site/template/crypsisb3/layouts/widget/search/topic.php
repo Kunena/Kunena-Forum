@@ -27,12 +27,10 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 
 	<input type="hidden" name="childforums" value="<?php echo $childforums; ?>" />
 	<?php echo JHtml::_( 'form.token' ); ?>
-	<div class="col-lg-3 pull-right">
-		<div class="input-group">
-			<input type="text" class="form-control" placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>">
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit"><span class="icon glyphicon glyphicon-search"></span></button>
-			</span>
-		</div>
+	<div class="search">
+		<input type="text" class="form-control input-sm" maxlength="64" placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>" />
+		<button class="btn btn-default" type="submit">
+			<i class="glyphicon glyphicon-search"></i>
+		</button>
 	</div>
 </form>

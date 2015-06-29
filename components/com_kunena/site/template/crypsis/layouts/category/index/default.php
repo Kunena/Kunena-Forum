@@ -171,7 +171,7 @@ foreach ($this->sections as $section) :
 											<div class="span9">
 												<span><?php echo $this->getLastPostLink($category) ?></span>
 												<br>
-												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?></span>
+												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, 'nofollow', '', null, $category->id)); ?></span>
 												<br>
 												<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>

@@ -233,19 +233,19 @@ class KunenaViewCommon extends KunenaView
 					case 'create':
 						if ($active_layout != 'create')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC_CREATE'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_NEW'), KunenaRoute::normalize()));
 						}
 						break;
 					case 'reply':
 						if ($active_layout != 'reply')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC_REPLY'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY'), KunenaRoute::normalize()));
 						}
 						break;
 					case 'edit':
 						if ($active_layout != 'edit')
 						{
-							$pathway->addItem($this->escape(JText::_('COM_KUNENA_MENU_TOPIC_EDIT'), KunenaRoute::normalize()));
+							$pathway->addItem($this->escape(JText::_('COM_KUNENA_EDIT'), KunenaRoute::normalize()));
 						}
 						break;
 				}
@@ -501,7 +501,7 @@ class KunenaViewCommon extends KunenaView
 		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
 		$this->path      = isset($this->active) ? $this->active->tree : array();
 		$this->showAll   = $this->parameters->get('showAllChildren');
-		$this->class_sfx = htmlspecialchars($this->parameters->get('class_sfx'), ENT_COMPAT, 'UTF-8');
+		$this->class_sfx = htmlspecialchars($this->parameters->get('pageclass_sfx'), ENT_COMPAT, 'UTF-8');
 
 		return count($this->list) ? $this->loadTemplateFile('menu') : '';
 	}

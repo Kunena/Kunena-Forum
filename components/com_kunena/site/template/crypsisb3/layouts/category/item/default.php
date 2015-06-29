@@ -12,10 +12,12 @@
 defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
-$cols            = empty($this->checkbox) ? 7 : 6;
+$cols = empty($this->checkbox) ? 5 : 6;
 ?>
 
 <?php if ($this->category->headerdesc) : ?>
+	<div class="clearfix"></div>
+	</br>
 	<div class="alert alert-info kfrontend">
 		<a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
@@ -27,9 +29,9 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 <?php if (!empty($this->topics)) : ?>
 <div class="row">
 	<div class="col-md-12">
-		<h2>
+		<h3>
 			<?php echo $this->escape($this->headerText); ?>
-		</h2>
+		</h3>
 
 		<div class="pull-right">
 			<?php echo $this->subLayout('Widget/Search')
@@ -62,7 +64,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 	<table class="table table-bordered">
 		<thead>
 		<tr>
-			<td class="col-md-1 center hidden-sm">
+			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
 					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
@@ -71,10 +73,10 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 			<td class="col-md-<?php echo $cols ?>">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
-			<td class="col-md-2 hidden-sm">
+			<td class="col-md-2 hidden-xs">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
-			<td class="col-md-3 hidden-sm">
+			<td class="col-md-3 hidden-xs">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->topicActions)) : ?>
@@ -105,7 +107,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 		<tfoot>
 		<?php if ($this->topics) : ?>
 		<tr>
-			<td class="center hidden-sm">
+			<td class="center hidden-xs">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<span class="divider"></span>
@@ -113,8 +115,8 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 				</a>
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
-			<td colspan="6" class="hidden-sm">
-				<div class="input-group">
+			<td colspan="6" class="hidden-xs">
+				<div class="form-group">
 
 					<?php if (!empty($this->moreUri))
 					{
@@ -124,18 +126,18 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 
 					<?php if (!empty($this->topicActions)) : ?>
 						<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
-							'class="inputbox kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
+							'class="form-control kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
 						<?php if ($this->actionMove) : ?>
 							<?php
 							$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
 							echo JHtml::_(
 								'kunenaforum.categorylist', 'target', 0, $options, array(),
-								' disabled="disabled"', 'value', 'text', 0,
+								'class="form-control fbs" disabled="disabled"', 'value', 'text', 0,
 								'kchecktarget'
 							);
 							?>
-							<button class="btn" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
+							<button class="btn btn-default" name="kcheckgo" type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
 						<?php endif; ?>
 					<?php endif; ?>
 				</div>

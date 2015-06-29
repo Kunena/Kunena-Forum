@@ -168,7 +168,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>
 								<div class="controls">
-									<button class="btn" id="kshow_attach_form" type="button"><i class="glyphicon glyphicon-flag-2 glyphicon glyphicon-white"></i> <?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
+									<button class="btn btn-default" id="kshow_attach_form" type="button"><i class="glyphicon glyphicon-paperclip"></i> <?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
 									<div id="kattach_form" style="display: none;">
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
@@ -239,11 +239,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<button type="submit" class="btn btn-success" tabindex="8">
 				<i class="glyphicon glyphicon-edit glyphicon glyphicon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
-			<button id="kbutton-preview" name="preview" type="button" class="btn" tabindex="9">
+			<button id="kbutton-preview" name="preview" type="button" class="btn btn-default" tabindex="9">
 				<i class="glyphicon glyphicon-eye-open"></i><?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>
 			</button>
-			<button type="reset" class="btn" onclick="javascript:window.history.back();" tabindex="10">
-				<i class="glyphicon glyphicon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+			<button type="reset" class="btn btn-default" onclick="javascript:window.history.back();" tabindex="10">
+				<i class="glyphicon glyphicon-remove-circle"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>
 		<?php

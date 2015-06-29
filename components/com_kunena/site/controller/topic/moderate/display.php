@@ -77,6 +77,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 		if ($this->config->topicicons)
 		{
 			$this->template = KunenaTemplate::getInstance();
+			$this->template->setCategoryIconset();
 			$this->topicIcons = $this->template->getTopicIcons(false);
 		}
 

@@ -32,11 +32,17 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	/**
 	 * Load user list.
 	 *
-	 * @return void
+	 * @throws KunenaExceptionAuthorise
 	 */
 	protected function before()
 	{
 		parent::before();
+
+		$config = KunenaConfig::getInstance();
+		if ($config->userlist_allowed && JFactory::getUser()->guest)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+		}
 
 		require_once KPATH_SITE . '/models/user.php';
 		$this->model = new KunenaModelUser(array(), $this->input);

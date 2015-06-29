@@ -18,22 +18,22 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 
 <div class="row">
 	<div class="col-md-12">
-		<h2>
-			<?php echo $this->escape($this->headerText); ?>
-			<small class="hidden-sm">
-				(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
-			</small>
+		<div class="pull-left">
+			<h3>
+				<?php echo $this->escape($this->headerText); ?>
+				<small class="hidden-xs">
+					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
+				</small>
 
-			<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-		</h2>
+				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+			</h3>
+		</div>
 
-		<div id="filter-time">
+		<div class="pull-right" id="filter-time">
 			<div class="filter-sel pull-right">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-					method="post" target="_self" class="form-inline hidden-sm">
-					<div>
-						<?php $this->displayTimeFilter('sel'); ?>
-					</div>
+					method="post" target="_self" class="form-inline hidden-xs">
+					<?php $this->displayTimeFilter('sel'); ?>
 				</form>
 			</div>
 		</div>
@@ -66,13 +66,13 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		<?php else : ?>
 
 		<tr class="category">
-			<td class="col-md-1 center hidden-sm">
+			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
 					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
 				</a>
 			</td>
-			<td class="span<?php echo $cols; ?>">
+			<td class="col-md-<?php echo $cols; ?>">
 				<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
 			<td class="col-md-2">
@@ -93,7 +93,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		</thead>
 		<tfoot>
 		<tr>
-			<td class="center hidden-sm">
+			<td class="center hidden-xs">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
 					<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
@@ -101,18 +101,18 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
 			<td colspan="<?php echo $colspan; ?>">
-				<div class="input-group">
+				<div class="form-group">
 					<?php if (!empty($this->moreUri))
 					{
 						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'nofollow');
 					} ?>
 					<?php if (!empty($this->actions)) : ?>
-						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 						<?php if (isset($this->actions['move'])) :
 							$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-							echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+							echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 						endif; ?>
-						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+						<input type="submit" name="kcheckgo" class="btn btn-default" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 					<?php endif; ?>
 				</div>
 			</td>

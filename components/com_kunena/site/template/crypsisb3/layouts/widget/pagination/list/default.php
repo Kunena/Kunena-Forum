@@ -24,7 +24,7 @@ elseif ($count == 1 && empty($display)) return;
 $last = 0;
 ?>
 
-<nav class="hidden-sm">
+<nav class="hidden-xs">
 	<ul class="pagination">
 		<?php
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);

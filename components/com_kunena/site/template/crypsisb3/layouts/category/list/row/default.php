@@ -21,7 +21,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage('img-
 	<td>
 		<h3>
 			<?php echo $this->getCategoryLink($this->category); ?>
-			<small class="hidden-sm">
+			<small class="hidden-xs">
 				(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->category->getTopics())); ?>)
 			</small>
 		</h3>
@@ -36,7 +36,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage('img-
 
 	<?php if ($avatar) : ?>
 	<td class="center">
-		<span class="hidden-sm">
+		<span class="hidden-xs">
 			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
 		</span>
 	</td>

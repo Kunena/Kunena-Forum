@@ -36,6 +36,11 @@ $this->addScript('js/upload.main.js');
 $this->addStyleSheet('css/fileupload.css');
 
 $this->addScript('js/markitup.js');
+
+$editor = KunenaBbcodeEditor::getInstance();
+$editor->initialize();
+
+$this->addScript('js/markitup.editor.js');
 $this->addScript('js/markitup.set.js');
 
 $this->k = 0;

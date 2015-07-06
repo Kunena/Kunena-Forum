@@ -20,6 +20,11 @@ $this->getBBcodesEnabled();
 	<div class="controls">
 		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
+	<ul id="tabs_kunena_editor" class="nav nav-tabs">
+		<li><a href="#write" data-toggle="tab">Write</a></li>
+		<li><a href="#preview" data-toggle="tab">Preview</a></li>
+	</ul>
+
 	<!-- Hidden preview placeholder -->
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>

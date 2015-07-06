@@ -13,24 +13,44 @@
 var previewActive=false;
 
 function kPreviewHelper(previewActive) {
-	if (previewActive == true){
-		if ( jQuery('#kbbcode-message').val() != null ) {
-			jQuery.ajax({
-				type: 'POST',
-				url: jQuery('#kpreview_url').val(),
-				async: false,
-				dataType: 'json',
-				data: {body : jQuery('#kbbcode-message').val() },
-				success: function(data){
-					jQuery('#kbbcode-preview').html(data.preview);
-				}
-			});
-		}
+	if ( jQuery('#kbbcode-message').val() != null ) {
+		jQuery.ajax({
+			type: 'POST',
+			url: jQuery('#kpreview_url').val(),
+			async: false,
+			dataType: 'json',
+			data: {body : jQuery('#kbbcode-message').val() },
+			success: function(data){
+				jQuery('#kbbcode-preview').html(data.preview);
+			}
+		});
 	}
 }
 
 jQuery(document).ready(function() {
+	jQuery('#tabs_kunena_editor a:first').tab('show');
+	
+	jQuery('#tabs_kunena_editor a:last').click(function (e) {
+		e.preventDefault();
+		
+		var preview = jQuery("#kbbcode-preview");
+		var message = jQuery("#kbbcode-message");
 
+		preview.css('display', 'block');
+
+		message.css('width', '95%');
+
+		kPreviewHelper();
+		
+		preview.attr('class', 'kbbcode-preview-bottom controls');
+		var height = message.css('height');
+		preview.css('height', message.css('height'));
+	})
+	
+	jQuery('#tabs_kunena_editor a:first').click(function (e) {
+		jQuery('#kbbcode-preview').css('display', 'none');
+	})
+	
 	/* To enabled emojis in kunena textera feature like on github */
 	if ( jQuery('#kemojis_allowed').val() ) {
 		var item = '';
@@ -62,34 +82,6 @@ jQuery(document).ready(function() {
 			});
 		}
 	}
-
-	/* To display preview area when clicking on preview button */
-	jQuery("#kbutton-preview").click(function() {
-		var preview = jQuery("#kbbcode-preview");
-		var message = jQuery("#kbbcode-message");
-
-		if ( preview.length > 0 ) {
-			if ( !preview.is(":visible") ) {
-				preview.css('display', 'block');
-
-				message.css('width', '95%');
-
-				previewActive = true;
-				kPreviewHelper(previewActive);
-			} else {
-				previewActive = false;
-				preview.css('display', 'none');
-				message.css('width', '95%');
-			}
-			preview.attr('class', 'kbbcode-preview-bottom controls');
-			var height = message.css('height');
-			preview.css('height', message.css('height'));
-		}
-	});
-
-	jQuery('#kbbcode-message').bind('input propertychange', function() {
-		kPreviewHelper(previewActive);
-	});
 
 	/* Store form data into localstorage every 1 second */
 	if ( jQuery.fn.sisyphus!=undefined ) {

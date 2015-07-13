@@ -21,19 +21,22 @@ $mmm = 0;
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
 	?>
+	<div class="clearfix"></div>
 	<div class="kfrontend">
-		<div class="btn-toolbar pull-right">
-			<?php if (count($this->sections) > 0) : ?>
-				<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>"></div>
-			<?php endif; ?>
-		</div>
 
-		<h2 class="btn-link">
-			<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
-			<small class="hidden-xs nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
-					$this->formatLargeNumber($section->getTopics())); ?>)
-			</small>
-		</h2>
+			<div class="btn-toolbar pull-right">
+				<?php if (count($this->sections) > 0) : ?>
+					<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>"></div>
+				<?php endif; ?>
+			</div>
+
+			<h2 class="btn-link">
+				<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
+				<small class="hidden-xs nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
+						$this->formatLargeNumber($section->getTopics())); ?>)
+				</small>
+			</h2>
+
 
 		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 			<table class="table table-bordered">
@@ -207,3 +210,4 @@ foreach ($this->sections as $section) :
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 	<!-- Finish: Category Module Position -->
 <?php endforeach; ?>
+<div class="clearfix"></div>

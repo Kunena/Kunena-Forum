@@ -18,7 +18,7 @@ $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
 $config = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
-
+$str_counts = substr_count($this->topic->subject, 'solved');
 if ($config->ordering_system == 'mesid')
 {
 	$this->numLink = $this->location ;
@@ -27,6 +27,7 @@ if ($config->ordering_system == 'mesid')
 }
 
 $list = array();
+
 ?>
 
 <small class="text-muted pull-right hidden-xs">
@@ -35,7 +36,7 @@ $list = array();
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
 </small>
 
-<div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
+<div class="badger-left badger-info <?php if ($this->topic->icon_id == 8) : ?> badger-solved <?php endif;?> message-<?php echo $this->message->getState(); ?>"
 	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
@@ -47,7 +48,7 @@ $list = array();
 		</p>
 	</div>
 	<?php if (!empty($attachments)) : ?>
-		<div class="kattach">
+		<div class="kattach col-md-12">
 			<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 			<ul class="thumbnails">
 				<?php foreach ($attachments as $attachment) : ?>
@@ -67,7 +68,7 @@ $list = array();
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
 			<div class="row">
-				<div class="col-md-10">
+				<div class="col-md-9">
 					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="glyphicon glyphicon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
 					<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 						<div class="modal-header">
@@ -76,7 +77,7 @@ $list = array();
 						</div>
 					</div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<p class="ip"> <?php echo $this->ipLink; ?> </p>
 				</div>
 			</div>
@@ -112,7 +113,7 @@ if ($message->modified_time) {
 		}
 	}
 
-	echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $list) . ' ';
+	echo '<i class="glyphicon glyphicon-thumbs-up"></i>'.JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $list) . ' ';
 	if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
 	?>
 </div>

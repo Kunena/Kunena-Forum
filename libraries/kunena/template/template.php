@@ -166,6 +166,9 @@ class KunenaTemplate extends JObject
 		$this->pathTypes += $this->isHmvc() ? $this->pathTypeDefaults : $this->pathTypeOld;
 	}
 
+	/**
+	 * @return bool|mixed|string
+	 */
 	public function getConfigXml()
 	{
 		// Find configuration file.
@@ -192,6 +195,9 @@ class KunenaTemplate extends JObject
 		return $xml;
 	}
 
+	/**
+	 *
+	 */
 	public function loadLanguage()
 	{
 		// Loading language strings for the template
@@ -218,21 +224,39 @@ class KunenaTemplate extends JObject
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function initialize()
 	{
 		$this->loadLanguage();
 	}
 
+	/**
+	 *
+	 */
 	public function initializeBackend()
 	{
 		$this->loadLanguage();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getUserClasses()
 	{
 		return $this->userClasses;
 	}
 
+	/**
+	 * @param      $link
+	 * @param      $name
+	 * @param      $scope
+	 * @param      $type
+	 * @param null $id
+	 *
+	 * @return string
+	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
 		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
@@ -274,16 +298,33 @@ class KunenaTemplate extends JObject
 HTML;
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $title
+	 *
+	 * @return string
+	 */
 	public function getIcon($name, $title='')
 	{
 		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
 	}
 
+	/**
+	 * @param        $image
+	 * @param string $alt
+	 *
+	 * @return string
+	 */
 	public function getImage($image, $alt='')
 	{
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
 	}
 
+	/**
+	 * @param $list
+	 *
+	 * @return string
+	 */
 	public function getPaginationListFooter($list)
 	{
 		$html = '<div class="list-footer">';
@@ -296,6 +337,11 @@ HTML;
 		return $html;
 	}
 
+	/**
+	 * @param $list
+	 *
+	 * @return string
+	 */
 	public function getPaginationListRender($list)
 	{
 		$html = '<ul class="kpagination">';
@@ -313,20 +359,39 @@ HTML;
 		return $html;
 	}
 
+	/**
+	 * @param $item
+	 *
+	 * @return string
+	 */
 	public function getPaginationItemActive($item)
 	{
 		return '<a title="'.$item->text.'" href="'.$item->link.'" class="pagenav">'.$item->text.'</a>';
 	}
 
+	/**
+	 * @param $item
+	 *
+	 * @return string
+	 */
 	public function getPaginationItemInactive($item)
 	{
 		return '<span class="pagenav">'.$item->text.'</span>';
 	}
 
+	/**
+	 * @param        $class
+	 * @param string $class_sfx
+	 *
+	 * @return string
+	 */
 	public function getClass($class, $class_sfx='') {
 		return $class.($class_sfx ? " {$class}.{$class_sfx}" : '');
 	}
 
+	/**
+	 *
+	 */
 	public function loadMootools()
 	{
 		JHtml::_ ( 'behavior.framework', true );
@@ -338,16 +403,31 @@ HTML;
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getStyleVariables()
 	{
 		return $this->style_variables;
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $default
+	 *
+	 * @return string
+	 */
 	public function getStyleVariable($name, $default='')
 	{
 		return isset($this->style_variables[$name]) ? $this->style_variables[$name] : $default;
 	}
 
+	/**
+	 * @param $name
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
 	public function setStyleVariable($name, $value)
 	{
 		$this->compiled_style_variables = null;
@@ -355,6 +435,12 @@ HTML;
 		return $this->style_variables[$name] = $value;
 	}
 
+	/**
+	 * @param        $filename
+	 * @param string $group
+	 *
+	 * @return JDocument
+	 */
 	public function addStyleSheet($filename, $group = 'forum')
 	{
 		if (!preg_match('|https?://|', $filename))
@@ -379,6 +465,10 @@ HTML;
 		return JFactory::getDocument()->addStyleSheet($filename);
 	}
 
+	/**
+	 * @param        $filename
+	 * @param string $condition
+	 */
 	public function addIEStyleSheet($filename, $condition='IE')
 	{
 		$filename = preg_replace('|^css/|u', '', $filename);
@@ -389,6 +479,9 @@ HTML;
 		JFactory::getDocument()->addCustomTag($stylelink);
 	}
 
+	/**
+	 *
+	 */
 	public function clearCache()
 	{
 		$path = JPATH_ROOT."/media/kunena/cache/{$this->name}";
@@ -399,6 +492,11 @@ HTML;
 		}
 	}
 
+	/**
+	 * @param string $filename
+	 *
+	 * @return string
+	 */
 	public function getCachePath($filename='')
 	{
 		if ($filename)
@@ -418,6 +516,11 @@ HTML;
 		return $filename;
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return string
+	 */
 	function findUrl($matches)
 	{
 		$file = trim($matches[1],' \'"');
@@ -469,11 +572,21 @@ HTML;
 		return JFactory::getDocument()->addScript($filename);
 	}
 
+	/**
+	 * @param $path
+	 */
 	public function addPath($path)
 	{
 		$this->paths[] = KunenaPath::clean("/$path");
 	}
 
+	/**
+	 * @param string $path
+	 * @param bool   $fullpath
+	 *
+	 * @return array
+	 * @throws Exception
+	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
 		$app = JFactory::getApplication();
@@ -497,6 +610,15 @@ HTML;
 		return $array;
 	}
 
+	/**
+	 * @param        $file
+	 * @param bool   $url
+	 * @param string $basepath
+	 * @param null   $default
+	 * @param null   $ignore
+	 *
+	 * @return string
+	 */
 	public function getFile($file, $url = false, $basepath = '', $default = null, $ignore = null)
 	{
 		if ($basepath)
@@ -508,7 +630,7 @@ HTML;
 
 		if (!isset($this->filecache[$filepath]))
 		{
-			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/blue_eagle/{$file}";
+			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/crypsis/{$file}";
 			foreach ($this->default as $template)
 			{
 				if ($template == $ignore)
@@ -529,21 +651,45 @@ HTML;
 		return ($url ? JUri::root(true).'/' : '').$this->filecache[$filepath];
 	}
 
+	/**
+	 * @param string $filename
+	 * @param bool   $url
+	 *
+	 * @return string
+	 */
 	public function getAvatarPath($filename='', $url = false)
 	{
 		return $this->getFile($filename, $url, $this->pathTypes['avatars'], 'media/kunena/avatars');
 	}
 
+	/**
+	 * @param string $filename
+	 * @param bool   $url
+	 *
+	 * @return string
+	 */
 	public function getSmileyPath($filename='', $url = false)
 	{
 		return $this->getFile($filename, $url, $this->pathTypes['emoticons'], 'media/kunena/emoticons');
 	}
 
+	/**
+	 * @param string $filename
+	 * @param bool   $url
+	 *
+	 * @return string
+	 */
 	public function getRankPath($filename='', $url = false)
 	{
 		return $this->getFile($filename, $url, $this->pathTypes['ranks'], 'media/kunena/ranks');
 	}
 
+	/**
+	 * @param string $filename
+	 * @param bool   $url
+	 *
+	 * @return string
+	 */
 	public function getTopicIconPath($filename='', $url = true)
 	{
 		$category_iconset = '';
@@ -565,6 +711,13 @@ HTML;
 		return $this->getFile($filename, $url, $this->pathTypes['topicicons'], 'media/kunena/topic_icons' . $category_iconset);
 	}
 
+	/**
+	 * @param string $filename
+	 * @param bool   $url
+	 * @param        $category_iconset
+	 *
+	 * @return string
+	 */
 	public function getCategoryIconPath($filename='', $url = true, $category_iconset)
 	{
 		if ( !$this->isHmvc() )
@@ -576,11 +729,23 @@ HTML;
 		return $this->getFile($filename, $url, $this->pathTypes['categoryicons'].$set, 'media/kunena/category_icons/' . $category_iconset);
 	}
 
+	/**
+	 * @param string $filename
+	 * @param bool   $url
+	 *
+	 * @return string
+	 */
 	public function getImagePath($filename='', $url = true)
 	{
 		return $this->getFile($filename, $url, $this->pathTypes['images'], 'media/kunena/images');
 	}
 
+	/**
+	 * @param bool $all
+	 * @param int  $checked
+	 *
+	 * @return array|SimpleXMLElement
+	 */
 	public function getTopicIcons($all = false, $checked = 0)
 	{
 		if ( $this->isHMVC() )
@@ -670,6 +835,12 @@ HTML;
 		return $icons;
 	}
 
+	/**
+	 * @param bool $all
+	 * @param int  $checked
+	 *
+	 * @return array|SimpleXMLElement
+	 */
 	public function getCategoryIcons($all = false, $checked = 0)
 	{
 		if (empty($this->categoryIcons))
@@ -745,6 +916,12 @@ HTML;
 		return $icons;
 	}
 
+	/**
+	 * @param      $index
+	 * @param bool $url
+	 *
+	 * @return string
+	 */
 	public function getTopicIconIndexPath($index, $url = false)
 	{
 		if (empty($this->topicIcons))
@@ -762,6 +939,12 @@ HTML;
 		return $this->getTopicIconPath($icon->filename, $url);
 	}
 
+	/**
+	 * @param      $index
+	 * @param bool $url
+	 *
+	 * @return string
+	 */
 	public function getCategoryIconIndexPath($index, $url = false)
 	{
 		if (empty($this->categoryIcons))
@@ -851,6 +1034,11 @@ HTML;
 				$icon = 'locked';
 			}
 
+			if ($topic->ordering && $topic->locked)
+			{
+				$icon = 'sticky_and_locked';
+			}
+
 			if ($topic->hold == 1)
 			{
 				$icon = 'unapproved';
@@ -919,12 +1107,19 @@ HTML;
 		return "media/kunena/topicicons/{$filename}";
 	}
 
+	/**
+	 * @return SimpleXMLElement
+	 */
 	public function getTemplateDetails()
 	{
 		$xml = simplexml_load_file(KPATH_SITE . "/template/{$this->name}/template.xml");
 		return $xml;
 	}
 
+	/**
+	 * @param $inputFile
+	 * @param $outputFile
+	 */
 	function compileLess($inputFile, $outputFile)
 	{
 		if (!class_exists('lessc'))
@@ -1002,6 +1197,10 @@ HTML;
 		return array($search, 'default');
 	}
 
+	/**
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function isHmvc()
 	{
 		$app = JFactory::getApplication();
@@ -1043,7 +1242,7 @@ HTML;
 		$app = JFactory::getApplication();
 		if (!$name)
 		{
-			$name = JRequest::getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );
+			$name = JFactory::getApplication()->input->getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );
 		}
 
 		$name = KunenaPath::clean($name);
@@ -1058,7 +1257,7 @@ HTML;
 			{
 				// If template xml doesn't exist, raise warning and use blue eagle instead
 				$file = JPATH_THEMES."/{$app->getTemplate()}/html/com_kunena/template.php";
-				$templatename = 'blue_eagle';
+				$templatename = 'crypsis';
 				$classname = "KunenaTemplate{$templatename}";
 
 				if (is_dir(KPATH_SITE . "/template/{$templatename}")){
@@ -1071,8 +1270,8 @@ HTML;
 				$file = KPATH_SITE."/template/{$templatename}/template.php";
 				if (!is_file($file))
 				{
-					$classname = "KunenaTemplateBlue_Eagle";
-					$file = KPATH_SITE."/template/blue_eagle/template.php";
+					$classname = "KunenaTemplateCrypsis";
+					$file = KPATH_SITE."/template/crypsis/template.php";
 				}
 
 				if (is_file($file))

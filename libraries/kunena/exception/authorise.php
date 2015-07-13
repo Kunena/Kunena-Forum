@@ -25,11 +25,17 @@ class KunenaExceptionAuthorise extends RuntimeException
 		503 => '503 Service Temporarily Unavailable'
 	);
 
+	/**
+	 * @return int
+	 */
 	public function getResponseCode()
 	{
 		return isset($this->responseCodes[$this->code]) ? (int) $this->code : 500;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getResponseStatus()
 	{
 		return $this->responseCodes[$this->getResponseCode()];

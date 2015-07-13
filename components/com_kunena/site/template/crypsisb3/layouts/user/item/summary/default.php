@@ -154,13 +154,13 @@ if ($this->config->showuserstats)
 						</div>
 						<div class="col-md-3 pull-right">
 							<?php if (!empty($private)) : ?>
-								<a class="btn btn-default btn-small" href="<?php echo $private; ?>">
+								<a class="btn btn-default" href="<?php echo $private; ?>">
 									<i class="glyphicon glyphicon-comments-2"></i>
 									<?php echo $privateLabel ?>
 								</a>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-default btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="glyphicon glyphicon-mail"></i></a>
+								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>"><i class="glyphicon glyphicon-envelope"></i></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL!='http://') : ?>
 								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><i class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteName ?></a>

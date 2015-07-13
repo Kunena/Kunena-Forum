@@ -21,10 +21,13 @@ class KunenaLogin
 	 */
 	protected $instances = array();
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$classes = $dispatcher->trigger('onKunenaGetLogin');
 
 		foreach ($classes as $class)
@@ -38,12 +41,20 @@ class KunenaLogin
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function enabled()
 	{
 		// TODO: do better
 		return !empty($this->instances);
 	}
 
+	/**
+	 * @param null $integration
+	 *
+	 * @return bool|KunenaLogin
+	 */
 	public static function getInstance($integration = null)
 	{
 		if (self::$instance === false)
@@ -77,6 +88,11 @@ class KunenaLogin
 		return false;
 	}
 
+	/**
+	 * @param null $return
+	 *
+	 * @return bool
+	 */
 	public function logoutUser($return=null)
 	{
 		foreach ($this->instances as $login)
@@ -90,6 +106,9 @@ class KunenaLogin
 		return false;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getRememberMe()
 	{
 		foreach ($this->instances as $login)
@@ -103,6 +122,9 @@ class KunenaLogin
 		return false;
 	}
 
+	/**
+	 * @return null
+	 */
 	public function getLoginURL()
 	{
 		foreach ($this->instances as $login)
@@ -116,6 +138,9 @@ class KunenaLogin
 		return null;
 	}
 
+	/**
+	 * @return null
+	 */
 	public function getLogoutURL()
 	{
 		foreach ($this->instances as $login)
@@ -129,6 +154,9 @@ class KunenaLogin
 		return null;
 	}
 
+	/**
+	 * @return null
+	 */
 	public function getRegistrationURL()
 	{
 		foreach ($this->instances as $login)
@@ -142,6 +170,9 @@ class KunenaLogin
 		return null;
 	}
 
+	/**
+	 * @return null
+	 */
 	public function getResetURL()
 	{
 		foreach ($this->instances as $login)
@@ -155,6 +186,9 @@ class KunenaLogin
 		return null;
 	}
 
+	/**
+	 * @return null
+	 */
 	public function getRemindURL()
 	{
 		foreach ($this->instances as $login)

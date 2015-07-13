@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewHome extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		echo " ";

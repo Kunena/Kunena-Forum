@@ -18,6 +18,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaModelCommon extends KunenaModel
 {
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$params = $this->getParameters();

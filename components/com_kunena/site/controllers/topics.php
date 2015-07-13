@@ -19,12 +19,18 @@ defined('_JEXEC') or die ();
 class KunenaControllerTopics extends KunenaController
 {
 
+	/**
+	 *
+	 */
 	function none()
 	{
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_CONTROLLER_NO_TASK'));
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function permdel()
 	{
 		if (!JSession::checkToken('post'))
@@ -36,8 +42,8 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$message = '';
-		$ids     = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids     = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
 
@@ -71,6 +77,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function delete()
 	{
 		if (!JSession::checkToken('post'))
@@ -81,8 +90,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
 		$topics  = KunenaForumTopicHelper::getTopics($ids);
@@ -114,6 +123,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function restore()
 	{
 		if (!JSession::checkToken('post'))
@@ -124,8 +136,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
 		$topics  = KunenaForumTopicHelper::getTopics($ids);
@@ -157,6 +169,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function approve()
 	{
 		if (!JSession::checkToken('post'))
@@ -167,8 +182,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
 		$topics  = KunenaForumTopicHelper::getTopics($ids);
@@ -201,6 +216,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function move()
 	{
 		if (!JSession::checkToken('post'))
@@ -211,8 +229,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
 
@@ -222,7 +240,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 		else
 		{
-			$target = KunenaForumCategoryHelper::get(JRequest::getInt('target', 0));
+			$target = KunenaForumCategoryHelper::get(JFactory::getApplication()->input->getInt('target', 0));
 
 			if (!$target->authorise('read'))
 			{
@@ -252,6 +270,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function unfavorite()
 	{
 		if (!JSession::checkToken('post'))
@@ -262,8 +283,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
 
@@ -279,6 +300,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function unsubscribe()
 	{
 		if (!JSession::checkToken('post'))
@@ -289,8 +313,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('topics', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
 
@@ -306,6 +330,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function approve_posts()
 	{
 		if (!JSession::checkToken('post'))
@@ -316,8 +343,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -350,6 +377,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function delete_posts()
 	{
 		if (!JSession::checkToken('post'))
@@ -360,8 +390,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -393,6 +423,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function restore_posts()
 	{
 		if (!JSession::checkToken('post'))
@@ -403,8 +436,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);
@@ -435,6 +468,9 @@ class KunenaControllerTopics extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function permdel_posts()
 	{
 		if (!JSession::checkToken('post'))
@@ -445,8 +481,8 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JRequest::getVar('posts', array(), 'post', 'array')); // Array of integer keys
-		JArrayHelper::toInteger($ids);
+		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array')); // Array of integer keys
+		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
 		$messages = KunenaForumMessageHelper::getMessages($ids);

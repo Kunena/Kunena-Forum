@@ -20,7 +20,7 @@ window.addEvent('domready', function() {
 			name:'polloptionsID[new'+optionid+']',
 			id:'field_option'+optionid,
 			type: 'text',
-			maxlength:'35',
+			maxlength:'100',
 			onmouseover: 'document.id("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
 		});
 		mydiv.inject(polldiv);

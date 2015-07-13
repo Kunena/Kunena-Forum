@@ -51,6 +51,7 @@ input[type='checkbox']:focus {
 h2 {
 	padding-bottom : 2%;
 	margin-bottom  : 10px;
+	margin-top: 0px;
 }
 
 .kgooglemap {
@@ -604,7 +605,7 @@ div.btn-toolbar .font-size-is-default {
 }
 
 select#categorylist {
-	width : auto;
+	width : 100%;
 }
 
 div#editprofile input,
@@ -685,11 +686,9 @@ small.text-muted {
 #topic-actions {
 	padding-bottom : 10px;
 }
-
-#userdropdown {
-	padding-top : 20px;
+.navbar-nav > li > .dropdown-menu {
+	margin-top: 5px;
 }
-
 #status-form label.btn a.btn {
 	padding : 0 0 0 5px;
 }
@@ -792,10 +791,6 @@ ul.inline i {
 	padding-left: 20px;
 }
 
-.dropdown-menu {
-	min-width : 160px;
-}
-
 #search [class*='span'] {
 	margin-left: 6px;
 }
@@ -845,4 +840,112 @@ div.pagination a.disabled:hover {
 .center {
 	margin: 0px auto;
 	text-align: center;
+}
+.form-group label {
+	float: left;
+	text-align: left;
+	font-weight: normal;
+}
+.form-group select {
+	display: inline-block;
+	width: auto;
+	vertical-align: middle;
+}
+
+
+.search {
+	padding: 5px 0;
+	width: 230px;
+	height: 30px;
+	position: relative;
+	float: left;
+	line-height: 22px;
+}
+
+.search input {
+	position: absolute;
+	width: 0px;
+	float: Left;
+	margin-left: 210px;
+	-webkit-transition: all 0.7s ease-in-out;
+	-moz-transition: all 0.7s ease-in-out;
+	-o-transition: all 0.7s ease-in-out;
+	transition: all 0.7s ease-in-out;
+	height: 30px;
+	line-height: 18px;
+	padding: 0 2px 0 2px;
+	border-radius:1px;
+}
+
+.search:hover input, .search input:focus {
+	width: 200px;
+	margin-left: 0px;
+}
+
+.search .btn {
+	height: 30px;
+	position: absolute;
+	right: 0;
+	top: 5px;
+	border-radius:1px;
+	i {
+		margin-top: -3px;
+	}
+}
+
+.glyphicon-white {
+	color: #FFF;
+}
+
+.dropdown-menu form {
+	padding: 10px;
+}
+#filter-time {
+	margin-top: 25px;
+}
+
+.container-fluid [class*="col"]{
+	padding-left: 0;
+}
+
+.form-control {
+	height: auto;
+	font-size: 15px;
+}
+
+i {
+	margin: 0;
+}
+
+.mobile-user a,
+.mobile-user a:hover,
+.mobile-user a:focus
+.open,
+.open a,
+.open a:hover,
+.open a:focus {
+	background-color: transparent;
+}
+
+.legend i {
+	padding-right: 5px;
+}
+
+label.radio {
+	padding-left: 20px;
+}
+
+.navbar-nav {
+	margin: 0;
+}
+textarea {
+	width: 100%;
+}
+
+.moved,
+.message-unapproved .badger-left,
+.unapproved,
+.category-stickymsg,
+.deleted {
+	background-color: rgba(0, 0, 0, 0.05);
 }

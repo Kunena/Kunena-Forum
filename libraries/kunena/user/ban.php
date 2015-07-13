@@ -55,16 +55,25 @@ class KunenaUserBan extends JObject
 		$this->_db = JFactory::getDBO ();
 	}
 
+	/**
+	 * @return KunenaUser
+	 */
 	public function getUser()
 	{
 		return KunenaUserHelper::get((int) $this->userid);
 	}
 
+	/**
+	 * @return KunenaUser
+	 */
 	public function getCreator()
 	{
 		return KunenaUserHelper::get((int) $this->created_by);
 	}
 
+	/**
+	 * @return KunenaUser
+	 */
 	public function getModifier()
 	{
 		return KunenaUserHelper::get((int) $this->modified_by);
@@ -131,6 +140,9 @@ class KunenaUserBan extends JObject
 		}
 	}
 
+	/**
+	 * @param $userid
+	 */
 	private static function cacheUserid($userid)
 	{
 		if ($userid > 0)
@@ -222,6 +234,12 @@ class KunenaUserBan extends JObject
 		return $create || !empty(self::$_instancesByIP[$identifier]->id) ? self::$_instancesByIP[$identifier] : null;
 	}
 
+	/**
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public static function getBannedUsers($start = 0, $limit = 50)
 	{
 		$c = __CLASS__;
@@ -250,6 +268,11 @@ class KunenaUserBan extends JObject
 		return $list;
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return array
+	 */
 	public static function getUserHistory($userid)
 	{
 		if (!$userid)
@@ -281,6 +304,9 @@ class KunenaUserBan extends JObject
 		return $list;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function exists()
 	{
 		return $this->_exists;
@@ -314,6 +340,9 @@ class KunenaUserBan extends JObject
 		return JTable::getInstance($tabletype['name'], $tabletype['prefix']);
 	}
 
+	/**
+	 * @param $data
+	 */
 	protected function bind($data)
 	{
 		$this->setProperties($data);
@@ -387,6 +416,10 @@ class KunenaUserBan extends JObject
 		return $exists;
 	}
 
+	/**
+	 * @param null $public
+	 * @param null $private
+	 */
 	public function setReason($public = null, $private = null)
 	{
 		$set = false;
@@ -410,6 +443,9 @@ class KunenaUserBan extends JObject
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function canBan()
 	{
 		$userid = $this->userid;
@@ -449,6 +485,9 @@ class KunenaUserBan extends JObject
 		return true;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isEnabled()
 	{
 		if ($this->isLifetime())
@@ -466,11 +505,17 @@ class KunenaUserBan extends JObject
 		return false;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isLifetime()
 	{
 		return $this->expiration == $this->_db->getNullDate();
 	}
 
+	/**
+	 * @param $comment
+	 */
 	public function addComment($comment)
 	{
 		if (is_string($comment) && !empty($comment))
@@ -483,6 +528,10 @@ class KunenaUserBan extends JObject
 		}
 	}
 
+	/**
+	 * @param        $expiration
+	 * @param string $comment
+	 */
 	public function setExpiration($expiration, $comment = '')
 	{
 		// Cannot change expiration if ban is not enabled
@@ -509,6 +558,15 @@ class KunenaUserBan extends JObject
 		$this->addComment($comment);
 	}
 
+	/**
+	 * @param null   $userid
+	 * @param null   $ip
+	 * @param int    $block
+	 * @param null   $expiration
+	 * @param string $reason_private
+	 * @param string $reason_public
+	 * @param string $comment
+	 */
 	public function ban($userid=null, $ip=null, $block=0, $expiration=null, $reason_private='', $reason_public='', $comment='')
 	{
 		$this->userid = intval($userid) > 0 ? (int)$userid : null;
@@ -520,6 +578,9 @@ class KunenaUserBan extends JObject
 		$this->addComment($comment);
 	}
 
+	/**
+	 * @param string $comment
+	 */
 	public function unBan($comment = '')
 	{
 		// Cannot change expiration if ban is not enabled

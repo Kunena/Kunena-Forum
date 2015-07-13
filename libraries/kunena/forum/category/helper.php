@@ -559,8 +559,8 @@ abstract class KunenaForumCategoryHelper
 
 				if (!$optimize)
 				{
-					$filtered |= isset($params['filter_title']) && (JString::stristr($instance->name, (string) $params['filter_title']) === false
-							&& JString::stristr($instance->alias, (string) $params['filter_title']) === false);
+					$filtered |= isset($params['filter_title']) && (Joomla\String\String::stristr($instance->name, (string) $params['filter_title']) === false
+							&& Joomla\String\String::stristr($instance->alias, (string) $params['filter_title']) === false);
 					$filtered |= isset($params['filter_type']);
 					$filtered |= isset($params['filter_access']) && ($instance->accesstype != 'joomla.level' || $instance->access != $params['filter_access']);
 					$filtered |= isset($params['filter_locked']) && $instance->locked != (int) $params['filter_locked'];
@@ -588,7 +588,7 @@ abstract class KunenaForumCategoryHelper
 					continue;
 				}
 
-				if (! empty ( $clist ) || ! $params['search'] || intval ( $params['search'] ) == $id || JString::stristr ( $instance->name, ( string ) $params['search'] )) {
+				if (! empty ( $clist ) || ! $params['search'] || intval ( $params['search'] ) == $id || Joomla\String\String::stristr ( $instance->name, ( string ) $params['search'] )) {
 					if (!$filtered && (empty ( $clist ) || $params['parents'])) $list [$id] = $instance;
 					$list += $clist;
 				}
@@ -695,7 +695,7 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time";
 		$db->setQuery ( $query );
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -714,7 +714,7 @@ abstract class KunenaForumCategoryHelper
 				c.last_post_time=0
 			WHERE tt.id IS NULL";
 		$db->setQuery ( $query );
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -751,7 +751,7 @@ abstract class KunenaForumCategoryHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery ( $query );
-			$db->query ();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError ())
 			{
@@ -795,6 +795,9 @@ abstract class KunenaForumCategoryHelper
 
 	// Internal functions:
 
+	/**
+	 * @return array
+	 */
 	static public function &loadCategories()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -827,6 +830,9 @@ abstract class KunenaForumCategoryHelper
 		return $instances;
 	}
 
+	/**
+	 * @param array $instances
+	 */
 	static protected function buildTree(array &$instances)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -857,7 +863,7 @@ abstract class KunenaForumCategoryHelper
 			return 0;
 		}
 
-		return JString::strcasecmp(self::$_instances[$a]->name, self::$_instances[$b]->name);
+		return Joomla\String\String::strcasecmp(self::$_instances[$a]->name, self::$_instances[$b]->name);
 	}
 
 	/**
@@ -873,9 +879,15 @@ abstract class KunenaForumCategoryHelper
 			return 0;
 		}
 
-		return JString::strcasecmp(self::$_instances[$b]->name, self::$_instances[$a]->name);
+		return Joomla\String\String::strcasecmp(self::$_instances[$b]->name, self::$_instances[$a]->name);
 	}
 
+	/**
+	 * @param $original
+	 * @param $strip
+	 *
+	 * @return mixed
+	 */
 	static public function stripName($original, $strip)
 	{
 		$strip = trim($strip);

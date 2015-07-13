@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewMisc extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		$params       = $this->app->getParams('com_kunena');
@@ -43,6 +46,9 @@ class KunenaViewMisc extends KunenaView
 		$this->render('Widget/Custom', $tpl);
 	}
 
+	/**
+	 *
+	 */
 	protected function _prepareDocument()
 	{
 		$this->setTitle($this->header);

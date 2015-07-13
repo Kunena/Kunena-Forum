@@ -24,11 +24,17 @@ class TableKunenaUserRead extends KunenaTable
 	public $message_id = null;
 	public $time = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_user_read', array('user_id', 'topic_id'), $db );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		$user = KunenaUserHelper::get($this->user_id);

@@ -266,7 +266,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php
 								echo str_repeat('<span class="gi">&mdash;</span>', $item->level);
 								if ($item->checked_out) {
-									$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkin');
+									$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->tryAuthorise('core.admin', 'com_checkin');
 									$editor = KunenaFactory::getUser($item->editor)->getName();
 									echo JHtml::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 								}

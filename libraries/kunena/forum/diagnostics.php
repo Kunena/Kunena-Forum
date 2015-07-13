@@ -117,7 +117,7 @@ abstract class KunenaForumDiagnostics
 			$db = JFactory::getDbo();
 			$db->setQuery($query);
 
-			return (bool) $db->query();
+			return (bool) $db->execute();
 		}
 
 		return false;
@@ -155,7 +155,7 @@ abstract class KunenaForumDiagnostics
 			$db = JFactory::getDbo();
 			$db->setQuery($query);
 
-			return (bool) $db->query();
+			return (bool) $db->execute();
 		}
 
 		return false;

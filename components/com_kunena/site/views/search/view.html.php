@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewSearch extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->message_ordering = $this->me->getMessageOrdering();
@@ -50,6 +53,9 @@ class KunenaViewSearch extends KunenaView
 		$this->render('Search', $tpl);
 	}
 
+	/**
+	 *
+	 */
 	function displaySearchResults()
 	{
 		if ($this->results)
@@ -58,6 +64,10 @@ class KunenaViewSearch extends KunenaView
 		}
 	}
 
+	/**
+	 * @param        $id
+	 * @param string $attributes
+	 */
 	function displayModeList($id, $attributes = '')
 	{
 		$options   = array();
@@ -66,6 +76,10 @@ class KunenaViewSearch extends KunenaView
 		echo JHtml::_('select.genericlist', $options, 'titleonly', $attributes, 'value', 'text', $this->state->get('query.titleonly'), $id);
 	}
 
+	/**
+	 * @param        $id
+	 * @param string $attributes
+	 */
 	function displayDateList($id, $attributes = '')
 	{
 		$options   = array();
@@ -81,6 +95,10 @@ class KunenaViewSearch extends KunenaView
 		echo JHtml::_('select.genericlist', $options, 'searchdate', $attributes, 'value', 'text', $this->state->get('query.searchdate'), $id);
 	}
 
+	/**
+	 * @param        $id
+	 * @param string $attributes
+	 */
 	function displayBeforeAfterList($id, $attributes = '')
 	{
 		$options   = array();
@@ -89,6 +107,10 @@ class KunenaViewSearch extends KunenaView
 		echo JHtml::_('select.genericlist', $options, 'beforeafter', $attributes, 'value', 'text', $this->state->get('query.beforeafter'), $id);
 	}
 
+	/**
+	 * @param        $id
+	 * @param string $attributes
+	 */
 	function displaySortByList($id, $attributes = '')
 	{
 		$options   = array();
@@ -102,6 +124,10 @@ class KunenaViewSearch extends KunenaView
 		echo JHtml::_('select.genericlist', $options, 'sortby', $attributes, 'value', 'text', $this->state->get('query.sortby'), $id);
 	}
 
+	/**
+	 * @param        $id
+	 * @param string $attributes
+	 */
 	function displayOrderList($id, $attributes = '')
 	{
 		$options   = array();
@@ -110,6 +136,10 @@ class KunenaViewSearch extends KunenaView
 		echo JHtml::_('select.genericlist', $options, 'order', $attributes, 'value', 'text', $this->state->get('query.order'), $id);
 	}
 
+	/**
+	 * @param        $id
+	 * @param string $attributes
+	 */
 	function displayLimitList($id, $attributes = '')
 	{
 		// Limit value list
@@ -121,6 +151,10 @@ class KunenaViewSearch extends KunenaView
 		echo JHtml::_('select.genericlist', $options, 'limit', $attributes, 'value', 'text', $this->state->get('list.limit'), $id);
 	}
 
+	/**
+	 * @param        $id
+	 * @param string $attributes
+	 */
 	function displayCategoryList($id, $attributes = '')
 	{
 		//category select list
@@ -131,6 +165,9 @@ class KunenaViewSearch extends KunenaView
 		echo JHtml::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id);
 	}
 
+	/**
+	 *
+	 */
 	function displayRows()
 	{
 		$this->row(true);
@@ -141,7 +178,7 @@ class KunenaViewSearch extends KunenaView
 		$params->set('kunena_view', 'search');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->results, &$params, 0));
@@ -181,6 +218,11 @@ class KunenaViewSearch extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return string
+	 */
 	function fillTopicInfo($matches)
 	{
 		switch ($matches[1])
@@ -196,6 +238,11 @@ class KunenaViewSearch extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return KunenaPagination
+	 */
 	function getPaginationObject($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
@@ -204,11 +251,19 @@ class KunenaViewSearch extends KunenaView
 		return $pagination;
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return string
+	 */
 	function getPagination($maxpages)
 	{
 		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
+	/**
+	 *
+	 */
 	protected function _prepareDocument()
 	{
 		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));

@@ -43,6 +43,10 @@ class KunenaAdminModelRank extends KunenaModel
 		$this->setState('item.id', $value);
 	}
 
+	/**
+	 * @return mixed|null
+	 * @throws Exception
+	 */
 	public function getRank()
 	{
 		$db = JFactory::getDBO();
@@ -65,6 +69,9 @@ class KunenaAdminModelRank extends KunenaModel
 		return null;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getRankspaths()
 	{
 		$template = KunenaFactory::getTemplate();

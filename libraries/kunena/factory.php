@@ -181,6 +181,12 @@ abstract class KunenaFactory
 		return $loaded[$file];
 }
 
+	/**
+	 * @param $lang
+	 * @param $filename
+	 *
+	 * @return bool
+	 */
 	protected static function parseLanguage($lang, $filename)
 	{
 		if (!is_file($filename))

@@ -22,6 +22,9 @@ class KunenaKeywordHelper
 	protected static $_topics = array();
 	protected static $_users = array();
 
+	/**
+	 *
+	 */
 	private function __construct() {}
 
 	/**
@@ -54,6 +57,11 @@ class KunenaKeywordHelper
 		return self::$_instances [$keyword];
 	}
 
+	/**
+	 * @param $keyword
+	 *
+	 * @return mixed|string
+	 */
 	static public function cleanKeyword($keyword)
 	{
 		// Keyword must always be a string
@@ -66,6 +74,12 @@ class KunenaKeywordHelper
 		return preg_replace(array('/\s+/u', '/[",]/u'), array(' ', ''), trim($keyword));
 	}
 
+	/**
+	 * @param      $keywords
+	 * @param null $glue
+	 *
+	 * @return array
+	 */
 	static public function cleanKeywords($keywords, $glue = null)
 	{
 		if (is_string($keywords))
@@ -106,6 +120,12 @@ class KunenaKeywordHelper
 		return $keywords;
 	}
 
+	/**
+	 * @param      $keywords
+	 * @param null $glue
+	 *
+	 * @return array
+	 */
 	static public function getByKeywords($keywords, $glue = null)
 	{
 		$keywords = self::cleanKeywords($keywords, $glue);
@@ -129,6 +149,12 @@ class KunenaKeywordHelper
 		return $list;
 	}
 
+	/**
+	 * @param bool $ids
+	 * @param int  $userid
+	 *
+	 * @return array
+	 */
 	static public function getByTopics($ids = false, $userid = 0)
 	{
 		$userid = (int) $userid;
@@ -169,6 +195,14 @@ class KunenaKeywordHelper
 		return $list;
 	}
 
+	/**
+	 * @param      $keywords
+	 * @param      $topicid
+	 * @param      $userid
+	 * @param null $glue
+	 *
+	 * @return array
+	 */
 	static public function setTopicKeywords($keywords, $topicid, $userid, $glue = null)
 	{
 		// Load keywords from the topic
@@ -202,6 +236,9 @@ class KunenaKeywordHelper
 		return $keywords;
 	}
 
+	/**
+	 * @param bool $ids
+	 */
 	static function recount($ids=false)
 	{
 
@@ -209,6 +246,10 @@ class KunenaKeywordHelper
 
 	// Internal functions
 
+	/**
+	 * @param      $keywords
+	 * @param bool $reload
+	 */
 	static protected function loadKeywords($keywords, $reload = false)
 	{
 		$db = JFactory::getDBO ();
@@ -241,6 +282,11 @@ class KunenaKeywordHelper
 		unset ($results);
 	}
 
+	/**
+	 * @param      $ids
+	 * @param      $userid
+	 * @param bool $reload
+	 */
 	static protected function loadTopics($ids, $userid, $reload = false)
 	{
 		foreach ($ids as $i=>$id)

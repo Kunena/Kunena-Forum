@@ -18,6 +18,12 @@ abstract class KunenaHtmlParser
 	static $emoticons = null;
 	static $relative = true;
 
+	/**
+	 * @param bool $grayscale
+	 * @param bool $emoticonbar
+	 *
+	 * @return array
+	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
 	{
 		$db = JFactory::getDBO ();
@@ -63,6 +69,12 @@ abstract class KunenaHtmlParser
 		return JText::_($txt, true);
 	}
 
+	/**
+	 * @param     $txt
+	 * @param int $len
+	 *
+	 * @return mixed|string|void
+	 */
 	public static function parseText($txt, $len = 0)
 	{
 		if (!$txt)
@@ -70,9 +82,9 @@ abstract class KunenaHtmlParser
 			return;
 		}
 
-		if ($len && JString::strlen($txt) > $len)
+		if ($len && Joomla\String\String::strlen($txt) > $len)
 		{
-			$txt = JString::substr ( $txt, 0, $len ) . ' ...';
+			$txt = Joomla\String\String::substr ( $txt, 0, $len ) . ' ...';
 		}
 
 		$txt = self::escape ( $txt );
@@ -82,6 +94,11 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
+	/**
+	 * @param      $txt
+	 * @param null $parent
+	 * @param int  $len
+	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0)
 	{
 		if (!$txt)
@@ -103,6 +120,10 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
+	/**
+	 * @param     $txt
+	 * @param int $len
+	 */
 	public static function plainBBCode($txt, $len = 0)
 	{
 		if (!$txt)
@@ -119,6 +140,13 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
+	/**
+	 * @param      $txt
+	 * @param int  $len
+	 * @param bool $html
+	 *
+	 * @return string|void
+	 */
 	public static function stripBBCode($txt, $len=0, $html = true)
 	{
 		if (!$txt)
@@ -142,7 +170,12 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
-
+	/**
+	 * @param        $content
+	 * @param string $target
+	 *
+	 * @return mixed
+	 */
 	public static function &prepareContent(&$content, $target='body')
 	{
 		$config = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
@@ -157,7 +190,7 @@ abstract class KunenaHtmlParser
 			$params = new JRegistry();
 			$params->set('ksource', 'kunena');
 
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
 			$dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
 			$content = $row->text;
@@ -166,6 +199,11 @@ abstract class KunenaHtmlParser
 		return $content;
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return string
+	 */
 	public static function escape($string)
 	{
 		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');

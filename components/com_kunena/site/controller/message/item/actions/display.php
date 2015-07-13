@@ -78,7 +78,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', null, true)
 			);
 
-			if ($me->exists() && !KunenaSpamRecaptcha::getInstance()->enabled())
+			if ($me->exists())
 			{
 				$this->messageButtons->set('quickreply',
 					$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")
@@ -189,7 +189,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 	}
 

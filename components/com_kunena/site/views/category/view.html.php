@@ -18,6 +18,9 @@ class KunenaViewCategory extends KunenaView
 {
 	public $pagination = null;
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->Itemid   = $this->get('Itemid');
@@ -55,6 +58,9 @@ class KunenaViewCategory extends KunenaView
 		$this->render('Category/Item', $tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayList($tpl = null)
 	{
 		$this->Itemid   = $this->get('Itemid');
@@ -99,6 +105,9 @@ class KunenaViewCategory extends KunenaView
 		$this->render('Category/Index', $tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayUser($tpl = null)
 	{
 		$this->Itemid          = $this->get('Itemid');
@@ -117,6 +126,9 @@ class KunenaViewCategory extends KunenaView
 		$this->render('Category/User', $tpl);
 	}
 
+	/**
+	 * @param $tpl
+	 */
 	function displayManage($tpl)
 	{
 		$admin = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
@@ -140,11 +152,17 @@ class KunenaViewCategory extends KunenaView
 		$this->render('Category/Manage', $tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayCreate($tpl = null)
 	{
 		$this->displayEdit($tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayEdit($tpl = null)
 	{
 		$this->category = $this->get('AdminCategory');
@@ -168,6 +186,15 @@ class KunenaViewCategory extends KunenaView
 		$this->render('Category/Edit', $tpl);
 	}
 
+	/**
+	 * @param      $category
+	 * @param null $content
+	 * @param null $title
+	 * @param null $class
+	 * @param int  $length
+	 *
+	 * @return mixed
+	 */
 	function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 20)
 	{
 		$lastTopic = $category->getLastTopic();
@@ -193,6 +220,12 @@ class KunenaViewCategory extends KunenaView
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
+	/**
+	 * @param      $category
+	 * @param bool $thumb
+	 *
+	 * @return string
+	 */
 	public function getCategoryIcon($category, $thumb = false)
 	{
 		$path = JPATH_ROOT . '/media/kunena/' . $this->config->catimagepath . '/';
@@ -256,6 +289,12 @@ class KunenaViewCategory extends KunenaView
 		return '';
 	}
 
+	/**
+	 * @param        $filename
+	 * @param string $path
+	 *
+	 * @return bool|string
+	 */
 	private function getCategoryIconFile($filename, $path = '')
 	{
 		$types = array('.gif', '.png', '.jpg');
@@ -271,16 +310,29 @@ class KunenaViewCategory extends KunenaView
 		return false;
 	}
 
+	/**
+	 * @param $field
+	 *
+	 * @return mixed
+	 */
 	public function displaySectionField($field)
 	{
 		return $this->section->displayField($field);
 	}
 
+	/**
+	 * @param $field
+	 *
+	 * @return mixed
+	 */
 	public function displayCategoryField($field)
 	{
 		return $this->category->displayField($field);
 	}
 
+	/**
+	 *
+	 */
 	function displayInfoMessage()
 	{
 		$this->common->header = $this->escape($this->category->name);
@@ -290,6 +342,9 @@ class KunenaViewCategory extends KunenaView
 		echo $this->common->display('default');
 	}
 
+	/**
+	 * @param $section
+	 */
 	function displaySection($section)
 	{
 		$this->parentcategory = $this->category;
@@ -310,6 +365,9 @@ class KunenaViewCategory extends KunenaView
 		$this->category = $this->parentcategory;
 	}
 
+	/**
+	 * @param $category
+	 */
 	function displayCategory($category)
 	{
 		KUNENA_PROFILER ? $this->profiler->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -366,11 +424,20 @@ class KunenaViewCategory extends KunenaView
 		echo $contents;
 	}
 
+	/**
+	 * @param string $attributes
+	 * @param null   $id
+	 *
+	 * @return mixed
+	 */
 	function displayTopicActions($attributes = '', $id = null)
 	{
 		return JHtml::_('select.genericlist', $this->topicActions, 'task', $attributes, 'value', 'text', null, $id);
 	}
 
+	/**
+	 *
+	 */
 	function displayCategoryActions()
 	{
 		if (!$this->category->isSection())
@@ -423,6 +490,11 @@ class KunenaViewCategory extends KunenaView
 		return $contents;
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return string
+	 */
 	function fillCategoryInfo($matches)
 	{
 		switch ($matches[1])
@@ -446,6 +518,9 @@ class KunenaViewCategory extends KunenaView
 		}
 	}
 
+	/**
+	 *
+	 */
 	function displayCategories()
 	{
 		if ($this->sections)
@@ -455,6 +530,9 @@ class KunenaViewCategory extends KunenaView
 		}
 	}
 
+	/**
+	 *
+	 */
 	function displayRows()
 	{
 		$lasttopic      = null;
@@ -466,7 +544,7 @@ class KunenaViewCategory extends KunenaView
 		$params->set('kunena_view', 'category');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
@@ -540,6 +618,11 @@ class KunenaViewCategory extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return mixed|string
+	 */
 	function fillTopicInfo($matches)
 	{
 		switch ($matches[1])
@@ -557,6 +640,12 @@ class KunenaViewCategory extends KunenaView
 		}
 	}
 
+	/**
+	 * @param string $prefix
+	 * @param string $class
+	 *
+	 * @return string
+	 */
 	function getTopicClass($prefix = 'k', $class = 'topic')
 	{
 		$class = $prefix . $class;
@@ -593,6 +682,12 @@ class KunenaViewCategory extends KunenaView
 		return $txt;
 	}
 
+	/**
+	 * @param string $attributes
+	 * @param null   $id
+	 *
+	 * @return mixed
+	 */
 	function displayManageActions($attributes = '', $id = null)
 	{
 		$options   = array();
@@ -612,6 +707,11 @@ class KunenaViewCategory extends KunenaView
 		return JHtml::_('select.genericlist', $options, 'batch', $attributes, 'value', 'text', null, $id);
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return string
+	 */
 	function getPagination($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
@@ -620,6 +720,12 @@ class KunenaViewCategory extends KunenaView
 		return $pagination->getPagesLinks();
 	}
 
+	/**
+	 * @param $category_id
+	 * @param $numTopics
+	 *
+	 * @return bool
+	 */
 	public function getMarkReadButtonURL($category_id, $numTopics)
 	{
 		// Is user allowed to mark forums as read?
@@ -633,6 +739,12 @@ class KunenaViewCategory extends KunenaView
 		}
 	}
 
+	/**
+	 * @param      $catid
+	 * @param bool $xhtml
+	 *
+	 * @return bool|void
+	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{
 		if ($this->config->enablerss)
@@ -645,6 +757,9 @@ class KunenaViewCategory extends KunenaView
 		return;
 	}
 
+	/**
+	 * @param $type
+	 */
 	protected function _prepareDocument($type)
 	{
 		if ($type == 'default')

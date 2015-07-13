@@ -136,7 +136,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			$document = JFactory::getDocument();
 			$document->setTitle($e->getResponseStatus());
-			JResponse::setHeader('Status', $e->getResponseStatus(), true);
+			JFactory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
@@ -152,7 +152,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$title = '500 Internal Server Error';
 			$document = JFactory::getDocument();
 			$document->setTitle($title);
-			JResponse::setHeader('Status', $title, true);
+			JFactory::getApplication()->setHeader('Status', $title, true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());
@@ -245,20 +245,23 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		return $this;
 	}
 
-
+	/**
+	 * @param      $title
+	 * @param bool $replace
+	 */
 	protected function setTitle($title, $replace = false)
 	{
 		if (!$replace)
 		{
 			// Obey Joomla configuration.
-			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
+			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title .' - '. $title);
 
 			}
-			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
+			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
+				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->get('sitename'));
 
 			}
 			else
@@ -271,6 +274,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$this->document->setTitle($title);
 	}
 
+	/**
+	 * @param $keywords
+	 */
 	protected function setKeywords($keywords)
 	{
 		if (!empty($keywords))
@@ -279,6 +285,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		}
 	}
 
+	/**
+	 * @param $description
+	 */
 	protected function setDescription($description)
 	{
 		$this->document->setMetadata('description',  $description);

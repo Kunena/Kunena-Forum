@@ -15,6 +15,9 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaTemplateLegacy
 {
+	/**
+	 *
+	 */
 	public static function load(){}
 }
 
@@ -86,6 +89,11 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
  */
 class CKunenaTools
 {
+	/**
+	 * @param $filename
+	 *
+	 * @return JDocument
+	 */
 	public static function addStyleSheet($filename)
 	{
 		$document = JFactory::getDocument ();
@@ -108,6 +116,11 @@ class CKunenaTools
 		return $document->addStyleSheet ( $filename );
 	}
 
+	/**
+	 * @param $filename
+	 *
+	 * @return JDocument
+	 */
 	public static function addScript($filename)
 	{
 		$document = JFactory::getDocument ();

@@ -20,12 +20,18 @@ class KunenaAdminControllerSmilies extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=smilies';
 	}
 
+	/**
+	 *
+	 */
 	function add()
 	{
 		if (!JSession::checkToken('post'))
@@ -39,6 +45,9 @@ class KunenaAdminControllerSmilies extends KunenaController
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=smiley&layout=add', false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function edit()
 	{
 		if (!JSession::checkToken('post'))
@@ -49,8 +58,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
 		if (!$id)
@@ -64,6 +73,9 @@ class KunenaAdminControllerSmilies extends KunenaController
 		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=smiley&layout=edit&id={$id}", false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function save()
 	{
 		$db = JFactory::getDBO();
@@ -76,10 +88,10 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$smiley_code        = JRequest::getString('smiley_code');
-		$smiley_location    = basename(JRequest::getString('smiley_url'));
-		$smiley_emoticonbar = JRequest::getInt('smiley_emoticonbar', 0);
-		$smileyid           = JRequest::getInt('smileyid', 0);
+		$smiley_code        = JFactory::getApplication()->input->getString('smiley_code');
+		$smiley_location    = basename(JFactory::getApplication()->input->getString('smiley_url'));
+		$smiley_emoticonbar = JFactory::getApplication()->input->getInt('smiley_emoticonbar', 0);
+		$smileyid           = JFactory::getApplication()->input->getInt('smileyid', 0);
 
 		if (!$smileyid)
 		{
@@ -87,7 +99,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -101,7 +113,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
 				WHERE id = '$smileyid'");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -113,6 +125,9 @@ class KunenaAdminControllerSmilies extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function smileyupload()
 	{
 		if (!JSession::checkToken('post'))
@@ -123,8 +138,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$file   = JRequest::getVar('Filedata', null, 'files', 'array'); // File upload
-		$format = JRequest::getCmd('format', 'html');
+		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array'); // File upload
+		$format = JFactory::getApplication()->input->getCmd('format', 'html');
 
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), $format);
 		if ($upload)
@@ -138,6 +153,9 @@ class KunenaAdminControllerSmilies extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function remove()
 	{
 		jimport('joomla.utilities.arrayhelper');
@@ -151,15 +169,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);
 
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_smileys WHERE id IN ($cids)");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{

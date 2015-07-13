@@ -20,12 +20,18 @@ class KunenaAdminControllerTrash extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=trash';
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function purge()
 	{
 		if (!JSession::checkToken('post'))
@@ -36,11 +42,11 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
-		$type = JRequest::getCmd('type', 'topics', 'post');
-		$md5  = JRequest::getString('md5', null);
+		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');
+		$md5  = JFactory::getApplication()->input->getString('md5', null);
 
 		if (!empty($cid))
 		{
@@ -111,6 +117,9 @@ class KunenaAdminControllerTrash extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=purge", false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function restore()
 	{
 		if (!JSession::checkToken('post'))
@@ -121,10 +130,10 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
-		$type = JRequest::getCmd('type', 'topics', 'post');
+		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');
 
 		if (empty ($cid))
 		{

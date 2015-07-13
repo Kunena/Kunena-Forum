@@ -1212,7 +1212,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 
 		if ($this->_db->getErrorNum())
 		{
@@ -1223,7 +1223,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
 		$query = "SET @ktime:=0";
 		$this->_db->setQuery($query);
-		$this->_db->query ();
+		$this->_db->execute();
 
 		if ($this->_db->getErrorNum())
 		{
@@ -1233,7 +1233,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		$query = "UPDATE #__kunena_messages SET time=IF(time<=@ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC";
 		$this->_db->setQuery($query);
-		$this->_db->query ();
+		$this->_db->execute();
 
 		if ($this->_db->getErrorNum())
 		{
@@ -1250,7 +1250,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 			$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($target->id)} WHERE `threadid`={$this->_db->Quote($this->id)}";
 			$this->_db->setQuery ( $query );
-			$this->_db->query ();
+			$this->_db->execute();
 
 			if ($this->_db->getErrorNum () )
 			{
@@ -1402,7 +1402,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 
@@ -1453,7 +1453,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			foreach ($queries as $query)
 			{
 				$db->setQuery($query);
-				$db->query();
+				$db->execute();
 				KunenaError::checkDatabaseError ();
 			}
 
@@ -1698,7 +1698,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		$query ="UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($this->poll_id)}";
 			$this->_db->setQuery($query);
-			$this->_db->Query();
+			$this->_db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -1707,7 +1707,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 		$query ="DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($this->poll_id)}";
 			$this->_db->setQuery($query);
-			$this->_db->Query();
+			$this->_db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{

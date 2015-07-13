@@ -78,6 +78,11 @@ class KunenaLayout extends KunenaLayoutBase
 		return $output;
 	}
 
+	/**
+	 * @param KunenaView $view
+	 *
+	 * @return $this
+	 */
 	public function setLegacy(KunenaView $view = null) {
 		$this->legacy = $view;
 
@@ -216,11 +221,26 @@ class KunenaLayout extends KunenaLayoutBase
 		return parent::subLayout($path)->setLegacy($this->legacy)->setLayout($this->layout);
 	}
 
+	/**
+	 * @param      $link
+	 * @param      $name
+	 * @param      $scope
+	 * @param      $type
+	 * @param null $id
+	 *
+	 * @return string
+	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
 		return KunenaFactory::getTemplate()->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $title
+	 *
+	 * @return string
+	 */
 	public function getIcon($name, $title='')
 	{
 		return KunenaFactory::getTemplate()->getIcon($name, $title);
@@ -262,6 +282,14 @@ class KunenaLayout extends KunenaLayoutBase
 		return $output;
 	}
 
+	/**
+	 * @param KunenaForumCategory $category
+	 * @param null                $content
+	 * @param null                $title
+	 * @param null                $class
+	 *
+	 * @return mixed
+	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -283,6 +311,16 @@ class KunenaLayout extends KunenaLayoutBase
 		return $link;
 	}
 
+	/**
+	 * @param KunenaForumTopic    $topic
+	 * @param null                $action
+	 * @param null                $content
+	 * @param null                $title
+	 * @param null                $class
+	 * @param KunenaForumCategory $category
+	 *
+	 * @return mixed
+	 */
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -324,6 +362,15 @@ class KunenaLayout extends KunenaLayoutBase
 		return $link;
 	}
 
+	/**
+	 * @param      $category
+	 * @param null $content
+	 * @param null $title
+	 * @param null $class
+	 * @param int  $length
+	 *
+	 * @return mixed
+	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30)
 	{
 		$lastTopic = $category->getLastTopic();

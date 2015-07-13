@@ -16,11 +16,7 @@ defined('_JEXEC') or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-
-if (version_compare(JVERSION, '3.2', '>'))
-{
-	JHtml::_('behavior.tabstate');
-}
+JHtml::_('behavior.tabstate');
 
 $db       = JFactory::getDBO();
 $document = JFactory::getDocument();
@@ -102,7 +98,7 @@ jQuery(function($) {
 										</div>
 										<div>
 											<?php echo JText::sprintf('COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-												'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - JString::strlen($this->user->signature)) . '" />'); ?>
+												'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - \Joomla\String\String::strlen($this->user->signature)) . '" />'); ?>
 										</div>
 									</fieldset>
 								</div>

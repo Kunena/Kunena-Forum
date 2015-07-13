@@ -104,7 +104,7 @@ class KunenaConfig extends JObject
 	 * @var    string  Template; input, hidden
 	 * @since  1.0.0
 	 */
-	public $template = 'blue_eagle';
+	public $template = 'crypsis';
 
 	/**
 	 * @var    integer  Show announcement; select, boolean
@@ -906,24 +906,6 @@ class KunenaConfig extends JObject
 	public $captcha_post_limit = 0;
 
 	/**
-	 * @var    string  reCAPTCHA public key; input, text
-	 * @since  1.6.6
-	 */
-	public $recaptcha_publickey = '';
-
-	/**
-	 * @var    string  reCAPTCHA private key; input, text
-	 * @since  1.6.6
-	 */
-	public $recaptcha_privatekey = '';
-
-	/**
-	 * @var    string  reCAPTCHA; select, selection
-	 * @since  1.6.6
-	 */
-	public $recaptcha_theme = 'white'; // select, selection
-
-	/**
 	 * @var    integer  Keyword; select, boolean
 	 * @since  2.0.0
 	 */
@@ -1000,12 +982,6 @@ class KunenaConfig extends JObject
 	 * @since  2.0.0
 	 */
 	public $send_emails = 1; // select, boolean
-
-	/**
-	 * @var    string  StopForumSpam key; input, text
-	 * @since  2.0.0
-	 */
-	public $stopforumspam_key = '';
 
 	/**
 	 * @var    integer  Fallback english; select, boolean
@@ -1146,11 +1122,17 @@ class KunenaConfig extends JObject
 	 */
 	public $max_links = 6;
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		parent::__construct ();
 	}
 
+	/**
+	 * @return KunenaConfig|mixed
+	 */
 	public static function getInstance()
 	{
 		static $instance = null;
@@ -1184,6 +1166,9 @@ class KunenaConfig extends JObject
 		$this->userkeywords = 0;
 	}
 
+	/**
+	 *
+	 */
 	public function save()
 	{
 		$db = JFactory::getDBO ();
@@ -1196,13 +1181,16 @@ class KunenaConfig extends JObject
 		unset($params['id']);
 
 		$db->setQuery ( "REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-		$db->query ();
+		$db->execute();
 		KunenaError::checkDatabaseError ();
 
 		// Clear cache.
 		KunenaCacheHelper::clear();
 	}
 
+	/**
+	 *
+	 */
 	public function reset()
 	{
 		$instance = new KunenaConfig ();
@@ -1229,7 +1217,7 @@ class KunenaConfig extends JObject
 		// Perform custom validation of config data before we let anybody access it.
 		$this->check ();
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 		$plugins = array();
 		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
@@ -1282,6 +1270,6 @@ class KunenaConfig extends JObject
 	{
 		$email = $this->get('email');
 
-		return !empty($email) ? $email : JFactory::getApplication()->getCfg('mailfrom', '');
+		return !empty($email) ? $email : JFactory::getApplication()->get('mailfrom', '');
 	}
 }

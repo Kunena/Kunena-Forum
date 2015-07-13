@@ -273,11 +273,20 @@ class TableKunenaUsers extends KunenaTable
 	 **/
 	public $status_text = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_users', 'userid', $db);
 	}
 
+	/**
+	 * @param null $userid
+	 * @param bool $reset
+	 *
+	 * @return bool
+	 */
 	public function load($userid = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -332,6 +341,9 @@ class TableKunenaUsers extends KunenaTable
 		return $this->_exists;
 	}
 
+	/**
+	 *
+	 */
 	public function reset()
 	{
 		parent::reset();
@@ -343,6 +355,12 @@ class TableKunenaUsers extends KunenaTable
 		}
 	}
 
+	/**
+	 * @param mixed $data
+	 * @param array $ignore
+	 *
+	 * @return bool|void
+	 */
 	public function bind($data, $ignore = array())
 	{
 		parent::bind($data, $ignore);
@@ -354,6 +372,9 @@ class TableKunenaUsers extends KunenaTable
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		if (!$this->userid || !JFactory::getUser($this->userid))

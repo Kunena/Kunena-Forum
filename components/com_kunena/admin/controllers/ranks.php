@@ -20,12 +20,18 @@ class KunenaAdminControllerRanks extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=ranks';
 	}
 
+	/**
+	 *
+	 */
 	function add()
 	{
 		if (!JSession::checkToken('post'))
@@ -39,6 +45,9 @@ class KunenaAdminControllerRanks extends KunenaController
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=rank&layout=add', false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function edit()
 	{
 		if (!JSession::checkToken('post'))
@@ -49,8 +58,8 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
 
@@ -67,6 +76,9 @@ class KunenaAdminControllerRanks extends KunenaController
 		}
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function save()
 	{
 		$db = JFactory::getDBO();
@@ -79,11 +91,11 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$rank_title   = JRequest::getString('rank_title');
-		$rank_image   = basename(JRequest::getString('rank_image'));
-		$rank_special = JRequest::getInt('rank_special');
-		$rank_min     = JRequest::getInt('rank_min');
-		$rankid       = JRequest::getInt('rankid', 0);
+		$rank_title   = JFactory::getApplication()->input->getString('rank_title');
+		$rank_image   = basename(JFactory::getApplication()->input->getString('rank_image'));
+		$rank_special = JFactory::getApplication()->input->getInt('rank_special');
+		$rank_min     = JFactory::getApplication()->input->getInt('rank_min');
+		$rankid       = JFactory::getApplication()->input->getInt('rankid', 0);
 
 		if (!$rankid)
 		{
@@ -92,7 +104,7 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -107,7 +119,7 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}
 				WHERE rank_id={$db->quote($rankid)}");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{
@@ -119,6 +131,9 @@ class KunenaAdminControllerRanks extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function rankupload()
 	{
 		if (!JSession::checkToken('post'))
@@ -129,8 +144,8 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$file   = JRequest::getVar('Filedata', null, 'files', 'array'); // File upload
-		$format = JRequest::getCmd('format', 'html');
+		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array'); // File upload
+		$format = JFactory::getApplication()->input->getCmd('format', 'html');
 
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getRankPath(), $format);
 		if ($upload)
@@ -144,6 +159,9 @@ class KunenaAdminControllerRanks extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	function remove()
 	{
 		$db = JFactory::getDBO();
@@ -156,15 +174,15 @@ class KunenaAdminControllerRanks extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);
 
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)");
-			$db->query();
+			$db->execute();
 
 			if (KunenaError::checkDatabaseError())
 			{

@@ -162,6 +162,20 @@ class KunenaImage extends KunenaCompatImage
 		}
 	}
 
+	/**
+	 * @param $dst_image
+	 * @param $src_image
+	 * @param $dst_x
+	 * @param $dst_y
+	 * @param $src_x
+	 * @param $src_y
+	 * @param $dst_w
+	 * @param $dst_h
+	 * @param $src_w
+	 * @param $src_h
+	 *
+	 * @return bool
+	 */
 	public static function imageCopyResampledBicubic(&$dst_image, &$src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)  {
 		// We should first cut the piece we are interested in from the source
 		$src_img = ImageCreateTrueColor($src_w, $src_h);

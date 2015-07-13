@@ -42,11 +42,20 @@ class TableKunenaTopics extends KunenaTable
 	public $last_post_guest_name = null;
 	public $params = null;
 
+	/**
+	 * @param string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct ( '#__kunena_topics', 'id', $db );
 	}
 
+	/**
+	 * @param null $id
+	 * @param bool $reset
+	 *
+	 * @return bool
+	 */
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -95,6 +104,9 @@ class TableKunenaTopics extends KunenaTable
 		return $this->_exists;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function check()
 	{
 		$category = KunenaForumCategoryHelper::get($this->category_id);

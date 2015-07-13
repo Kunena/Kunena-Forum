@@ -17,6 +17,11 @@ abstract class KunenaTemplateHelper
 {
 	protected static $_instances = array ();
 
+	/**
+	 * @param $template
+	 *
+	 * @return int
+	 */
 	public static function isDefault($template)
 	{
 		$config = KunenaFactory::getConfig ();
@@ -25,6 +30,11 @@ abstract class KunenaTemplateHelper
 		return $defaultemplate == $template ? 1 : 0;
 	}
 
+	/**
+	 * @param null $templateBaseDir
+	 *
+	 * @return array
+	 */
 	public static function parseXmlFiles($templateBaseDir = null)
 	{
 		// Read the template folder to find templates
@@ -65,6 +75,12 @@ abstract class KunenaTemplateHelper
 		return $rows;
 	}
 
+	/**
+	 * @param      $templateDir
+	 * @param null $templateBaseDir
+	 *
+	 * @return bool|stdClass
+	 */
 	public static function parseXmlFile($templateDir, $templateBaseDir = null)
 	{
 		// Check if the xml file exists
@@ -91,6 +107,11 @@ abstract class KunenaTemplateHelper
 		return $data;
 	}
 
+	/**
+	 * @param $path
+	 *
+	 * @return bool|stdClass
+	 */
 	public static function parseKunenaInstallFile($path)
 	{
 		$xml = simplexml_load_file($path);

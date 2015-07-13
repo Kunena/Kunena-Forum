@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewUser extends KunenaView
 {
+	/**
+	 *
+	 */
 	public function displayEdit()
 	{
 		$this->setToolBarEdit();
@@ -46,6 +49,9 @@ class KunenaAdminViewUser extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	public function displayMove()
 	{
 		$this->setToolBarMove();
@@ -54,6 +60,9 @@ class KunenaAdminViewUser extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarEdit()
 	{
 		// Set the titlebar text
@@ -67,6 +76,9 @@ class KunenaAdminViewUser extends KunenaView
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarMove()
 	{
 		// Set the titlebar text

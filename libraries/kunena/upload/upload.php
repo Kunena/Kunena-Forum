@@ -85,13 +85,13 @@ class KunenaUpload
 		// Check if file extension matches any allowed extensions (case insensitive)
 		foreach ($this->validExtensions as $ext)
 		{
-			$extension = JString::substr($filename, -JString::strlen($ext));
+			$extension = Joomla\String\String::substr($filename, -Joomla\String\String::strlen($ext));
 
-			if (JString::strtolower($extension) == JString::strtolower($ext))
+			if (Joomla\String\String::strtolower($extension) == Joomla\String\String::strtolower($ext))
 			{
 				// File must contain one letter before extension
-				$name = JString::substr($filename, 0, -JString::strlen($ext));
-				$extension = JString::substr($extension, 1);
+				$name = Joomla\String\String::substr($filename, 0, -Joomla\String\String::strlen($ext));
+				$extension = Joomla\String\String::substr($extension, 1);
 
 				if (!$name)
 				{
@@ -514,10 +514,11 @@ class KunenaUpload
 	 *
 	 * @param   array   $fileInput    The file object returned by JInput
 	 * @param   string  $destination  The path of destination of file uploaded
+	 * @param   string  $type         The type of file uploaded: attachment or avatar
 	 *
 	 * @return object
 	 */
-	public function upload($fileInput, $destination)
+	public function upload($fileInput, $destination, $type = 'attachment')
 	{
 		$file = new stdClass;
 		$file->ext = JFile::getExt($fileInput['name']);
@@ -526,6 +527,12 @@ class KunenaUpload
 		$file->error = $fileInput['error'];
 		$file->destination = $destination . '.' . $file->ext;
 		$file->success = false;
+		$file->isAvatar = false;
+
+		if ( $type != 'attachment' )
+		{
+			$file->isAvatar = true;
+		}
 
 		if (!is_uploaded_file($file->tmp_name))
 		{
@@ -544,13 +551,13 @@ class KunenaUpload
 		// Check if file extension matches any allowed extensions (case insensitive)
 		foreach ($this->validExtensions as $ext)
 		{
-			$extension = JString::substr($file->tmp_name, -JString::strlen($ext));
+			$extension = Joomla\String\String::substr($file->tmp_name, -Joomla\String\String::strlen($ext));
 
-			if (JString::strtolower($extension) == JString::strtolower($ext))
+			if (Joomla\String\String::strtolower($extension) == Joomla\String\String::strtolower($ext))
 			{
 				// File must contain one letter before extension
-				$name = JString::substr($file->tmp_name, 0, -JString::strlen($ext));
-				$extension = JString::substr($extension, 1);
+				$name = Joomla\String\String::substr($file->tmp_name, 0, -Joomla\String\String::strlen($ext));
+				$extension = Joomla\String\String::substr($extension, 1);
 
 				if (!$name)
 				{
@@ -562,9 +569,16 @@ class KunenaUpload
 			}
 		}
 
-		if (!$this->checkFileSize($file->size, true))
+		if (!$this->checkFileSize($file->size, $file->isAvatar))
 		{
-			throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+			if ($file->isAvatar)
+			{
+				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+			}
+			else
+			{
+				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+			}
 		}
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))

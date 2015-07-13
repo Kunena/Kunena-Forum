@@ -17,6 +17,9 @@ defined('_JEXEC') or die ();
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 
+	/**
+	 * @param null $step
+	 */
 	public function __construct($step = null)
 	{
 		// Joomla 2.5 support
@@ -42,8 +45,8 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 */
 	protected function detectExtension()
 	{
-		// Install Kunena 2.0 only into Joomla 2.5
-		return version_compare(JVERSION, '2.5', '>=');
+		// Install Kunena 2.0 only into Joomla 3.4
+		return version_compare(JVERSION, '3.4', '>=');
 	}
 
 	/**
@@ -155,6 +158,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		}
 	}
 
+	/**
+	 * @param $list
+	 *
+	 * @return array
+	 */
 	protected function mapUserGroups($list)
 	{
 		if (!is_array($list))
@@ -204,7 +212,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db_new->quote($component->extension_id)} WHERE type = 'component' AND link LIKE '%option={$this->name}%'";
 		$this->db_new->setQuery($query);
-		$this->db_new->query();
+		$this->db_new->execute();
 
 		$menumap = $this->getMapList('menus');
 

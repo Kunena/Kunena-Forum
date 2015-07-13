@@ -44,7 +44,7 @@ $this->addScript('js/search.js');
 	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th class="col-md-1 center hidden-sm">
+				<th class="col-md-1 center hidden-xs">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
 						<i class="glyphicon glyphicon-arrow-down"></i>
@@ -52,13 +52,13 @@ $this->addScript('js/search.js');
 				</th>
 
 				<?php if ($config->userlist_online) : $cols++; ?>
-				<th class="col-md-1 center hidden-sm">
+				<th class="col-md-1 center hidden-xs">
 					<?php echo JText::_('COM_KUNENA_USRL_ONLINE'); ?>
 				</th>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_avatar) : $cols++; ?>
-				<th class="col-md-1 center hidden-sm">
+				<th class="col-md-1 center hidden-xs">
 					<?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?>
 				</th>
 				<?php endif; ?>
@@ -78,7 +78,7 @@ $this->addScript('js/search.js');
 				<?php endif; ?>
 
 				<?php if ($config->userlist_posts) : $cols++; ?>
-				<th class="col-md-1 center hidden-sm">
+				<th class="col-md-1 center hidden-xs">
 					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -86,7 +86,7 @@ $this->addScript('js/search.js');
 				<?php endif; ?>
 
 				<?php if ($config->userlist_email) : $cols++; ?>
-				<th class="col-md-1 hidden-sm">
+				<th class="col-md-1 hidden-xs">
 					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -94,7 +94,7 @@ $this->addScript('js/search.js');
 				<?php endif; ?>
 
 				<?php if ($config->userlist_joindate) : $cols++; ?>
-				<th class="col-md-2 hidden-sm">
+				<th class="col-md-2 hidden-xs">
 					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -102,7 +102,7 @@ $this->addScript('js/search.js');
 				<?php endif; ?>
 
 				<?php if ($config->userlist_lastvisitdate) : $cols++; ?>
-				<th class="col-md-2 hidden-sm">
+				<th class="col-md-2 hidden-xs">
 					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -110,7 +110,7 @@ $this->addScript('js/search.js');
 				<?php endif; ?>
 
 				<?php if ($config->userlist_userhits) : $cols++; ?>
-				<th class="col-md-1 center hidden-sm">
+				<th class="col-md-1 center hidden-xs">
 					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
@@ -132,13 +132,13 @@ $this->addScript('js/search.js');
 				</td>
 
 				<?php if ($config->userlist_online) : ?>
-				<td class="col-md-1 center hidden-sm">
+				<td class="col-md-1 center hidden-xs">
 					<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 				</td>
 				<?php endif; ?>
 
 				<?php if ($avatar) : ?>
-				<td class="col-md-1 center hidden-sm">
+				<td class="col-md-1 center hidden-xs">
 					<div class="post-image">
 							<?php echo $avatar; ?>
 					</div>
@@ -150,31 +150,31 @@ $this->addScript('js/search.js');
 				</td>
 
 				<?php if ($config->userlist_posts) : ?>
-				<td class="col-md-1 center hidden-sm">
+				<td class="col-md-1 center hidden-xs">
 					<?php echo (int) $user->posts; ?>
 				</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_email) : ?>
-				<td class="col-md-1 hidden-sm">
+				<td class="col-md-1 hidden-xs">
 					<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
 				</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_joindate) : ?>
-				<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>" class="col-md-2 hidden-sm">
+				<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>" class="col-md-2 hidden-xs">
 					<?php echo $user->getRegisterDate()->toKunena('datetime_today'); ?>
 				</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_lastvisitdate) : ?>
-				<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>" class="col-md-2 hidden-sm">
+				<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>" class="col-md-2 hidden-xs">
 					<?php echo $user->getLastVisitDate()->toKunena('datetime_today'); ?>
 				</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_userhits) : ?>
-				<td class="col-md-1 center hidden-sm">
+				<td class="col-md-1 center hidden-xs">
 					<?php echo (int) $user->uhits; ?>
 				</td>
 				<?php endif; ?>
@@ -182,13 +182,13 @@ $this->addScript('js/search.js');
 		<?php endforeach; ?>
 		</tbody>
 		<tfoot>
-		<td class="col-md-1 center hidden-sm">
+		<td class="col-md-1 center hidden-xs">
 			<a id="forumbottom"> </a>
 			<a href="#forumtop">
 				<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
 			</a>
 		</td>
-		<td colspan="7" class="hidden-sm">
+		<td colspan="7" class="hidden-xs">
 		</td>
 		</tfoot>
 

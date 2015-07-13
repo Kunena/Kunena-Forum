@@ -308,11 +308,14 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		return KunenaForumTopicHelper::getTopics($results, $access);
 	}
 
+	/**
+	 * @param JDatabaseQuery $query
+	 */
 	protected function build(JDatabaseQuery $query)
 	{
 		if (!empty($this->hold))
 		{
-			JArrayHelper::toInteger($this->hold, 0);
+			Joomla\Utilities\ArrayHelper::toInteger($this->hold, 0);
 			$hold = implode(',', $this->hold);
 			$query->where("a.hold IN ({$hold})");
 		}

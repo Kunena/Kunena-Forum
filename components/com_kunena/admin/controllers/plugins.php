@@ -20,6 +20,11 @@ class KunenaAdminControllerPlugins extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 *
+	 * @throws Exception
+	 */
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
@@ -48,6 +53,13 @@ class KunenaAdminControllerPlugins extends KunenaController
 		JFactory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 	}
 
+	/**
+	 * @param string $name
+	 * @param string $prefix
+	 * @param array  $config
+	 *
+	 * @return object
+	 */
 	public function getModel($name = '', $prefix = '', $config = array())
 	{
 		if (empty($name))
@@ -74,7 +86,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		$cid   = JFactory::getApplication()->input->get('cid', array(), 'array');
 		$data  = array('publish' => 1, 'unpublish' => 0, 'archive' => 2, 'trash' => -2, 'report' => -3);
 		$task  = $this->getTask();
-		$value = JArrayHelper::getValue($data, $task, 0, 'int');
+		$value = Joomla\Utilities\ArrayHelper::getValue($data, $task, 0, 'int');
 
 		if (empty($cid))
 		{
@@ -86,7 +98,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 			$model = $this->getModel();
 
 			// Make sure the item ids are integers
-			JArrayHelper::toInteger($cid);
+			Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 			// Publish the items.
 			if (!$model->publish($cid, $value))
@@ -173,8 +185,8 @@ class KunenaAdminControllerPlugins extends KunenaController
 		$order = $this->input->post->get('order', array(), 'array');
 
 		// Sanitize the input
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
+		Joomla\Utilities\ArrayHelper::toInteger($pks);
+		Joomla\Utilities\ArrayHelper::toInteger($order);
 
 		// Get the model
 		$model = $this->getModel();

@@ -8,11 +8,10 @@
 
 ## REQUIREMENTS
 
-*Kunena* 4.0 requires
+*Kunena* 4.1 requires
 
     Joomla! 3.4: version 3.4.1 or greater (>= 3.4.1 recommended)
-    Joomla! 2.5: version 2.5.28 or greater (>= 2.5.28 recommended)
-    PHP: version 5.3.1 or greater (>= 5.4.31 recommended)
+    PHP: version 5.4.35 or greater 
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
@@ -23,11 +22,10 @@ In addition we recommend the following PHP settings:
     memory_limit           >= 32M  (>= 64M recommended) - depends on other Joomla extensions used
     safe_mode               = off
     upload_max_filesize    >= 3M
-    GD, DOM, JSON support installed
+    GD, DOM, JSON support installed and OpenSSL only to embedded tweets
 
 *Kunena* requires the following Joomla settings:
 
-    * Mootools 1.4+ compatible template (Blue Eagle Template)
     * Bootstrap 2 compatible template (Crypsis Template)
     * Upgraded to latest versions all extensions that claim to integrate with Kunena 2.0 or 3.0
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard

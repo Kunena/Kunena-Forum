@@ -30,7 +30,7 @@ else {
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 ?>
 
-<small class="text-muted pull-right hidden-sm">
+<small class="text-muted pull-right hidden-xs">
 	<span class="icon glyphicon glyphicon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
@@ -91,7 +91,7 @@ if ($message->modified_time)
 	$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
 	$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
 } ?>
-<div class="alert alert-info hidden-sm" <?php echo $datehover ?>>
+<div class="alert alert-info hidden-xs" <?php echo $datehover ?>>
 	<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
 	<?php
 	if ($message->modified_reason)

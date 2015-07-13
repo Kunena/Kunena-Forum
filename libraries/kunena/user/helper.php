@@ -34,12 +34,18 @@ abstract class KunenaUserHelper
 	protected static $_topposters = null;
 	protected static $_me = null;
 
+	/**
+	 *
+	 */
 	public static function cleanup()
 	{
 		self::$_instances = array();
 		self::$_instances_name = array();
 	}
 
+	/**
+	 *
+	 */
 	public static function initialize()
 	{
 		$id = JFactory::getUser()->id;
@@ -295,7 +301,7 @@ abstract class KunenaUserHelper
 			elseif ($config->show_session_type > 0)
 			{
 				// Calculate Joomla session expiration point.
-				$time = JFactory::getDate()->toUnix() - ($app->getCfg('lifetime', 15) * 60);
+				$time = JFactory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
 				$query->where('time > ' . $time);
 			}
 
@@ -336,7 +342,7 @@ abstract class KunenaUserHelper
 			elseif ($config->show_session_type > 0)
 			{
 				// Calculate Joomla session expiration point.
-				$time = JFactory::getDate()->toUnix() - ($app->getCfg('lifetime', 15) * 60);
+				$time = JFactory::getDate()->toUnix() - ($app->get('lifetime', 15) * 60);
 				$query->where('time > ' . $time);
 			}
 
@@ -378,7 +384,7 @@ abstract class KunenaUserHelper
 			{
 				self::getOnlineUsers();
 			}
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time >  time() - JFactory::getApplication()->getCfg ( 'lifetime', 15 ) * 60) : false;
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time >  time() - JFactory::getApplication()->get( 'lifetime', 15 ) * 60) : false;
 		}
 
 		if ($yes)
@@ -409,7 +415,7 @@ abstract class KunenaUserHelper
 				self::getOnlineUsers();
 			}
 
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - JFactory::getApplication()->getCfg('lifetime', 15) * 60) : false;
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - JFactory::getApplication()->get('lifetime', 15) * 60) : false;
 		}
 
 		if (!$online || ($user->status == 3 && !$user->isMyself() && !self::getMyself()->isModerator()))
@@ -424,6 +430,9 @@ abstract class KunenaUserHelper
 		return $user->status;
 	}
 
+	/**
+	 * @return bool|int
+	 */
 	public static function recount()
 	{
 		$db = JFactory::getDBO ();
@@ -434,7 +443,7 @@ abstract class KunenaUserHelper
 			SET u.posts = 0
 			WHERE ut.user_id IS NULL";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -450,7 +459,7 @@ abstract class KunenaUserHelper
 				GROUP BY user_id
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
 		$db->setQuery ($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -467,7 +476,7 @@ abstract class KunenaUserHelper
 			) AS b ON u.userid=b.userid
 			SET u.banned=b.banned";
 		$db->setQuery ($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{

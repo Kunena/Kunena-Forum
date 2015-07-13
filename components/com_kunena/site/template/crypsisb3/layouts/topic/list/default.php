@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-$cols = !empty($this->actions) ? 6 : 5;
+$cols = !empty($this->actions) ? 5 : 6;
 $colspan = !empty($this->actions) ? 4 : 3;
 ?>
 <div class="row">
@@ -56,7 +56,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
-					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
+					<i class="glyphicon glyphicon-arrow-down hasTooltip "></i>
 				</a>
 			</td>
 			<td class="col-md-<?php echo $cols ?>">

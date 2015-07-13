@@ -14,7 +14,7 @@ $template = KunenaTemplate::getInstance();
 $direction = $template->params->get('avatarPosition');
 
 if ($direction === "left") : ?>
-	<div class="row message message-<?php echo $this->message->getState(); ?>">
+	<div class="row message">
 		<div class="col-md-2 hidden-xs">
 			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>

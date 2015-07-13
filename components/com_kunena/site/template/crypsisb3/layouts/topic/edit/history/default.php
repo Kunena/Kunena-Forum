@@ -55,7 +55,7 @@ $k = 0;
 					<?php
 					$attachments = $this->message->getAttachments();
 					if (!empty($attachments)) : ?>
-						<div class="kattach">
+						<div class="kattach col-md-12">
 							<h4><?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?></h4>
 							<ul class="thumbnails">
 								<?php foreach ($attachments as $attachment) : ?>

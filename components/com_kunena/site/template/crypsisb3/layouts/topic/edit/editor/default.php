@@ -17,21 +17,21 @@ $this->getBBcodesEnabled();
 ?>
 
 <div class="form-group">
-	<label class="col-sm-3 control-label"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
-	<div class="col-sm-9">
+	<label class="control-label col-md-4"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
+	<div class="col-md-10">
 		<textarea class="form-control" rows="12" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
 <?php if ($this->message->exists()) : ?>
 
-	<div class="control-group">
-		<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
-
-		<div class="controls">
-			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+	<div class="form-group">
+		<label class="control-label col-md-4"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+		<div class="col-md-10">
+			<textarea class="form-control" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
 		</div>
 	</div>
+	<br/>
 <?php endif; ?>
 
 <!-- Bootstrap modal to be used with bbcode editor -->

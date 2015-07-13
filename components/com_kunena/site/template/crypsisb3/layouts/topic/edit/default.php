@@ -65,7 +65,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 }
 ?>
 
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate" role="form"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
 		<input id="kurl_topicons_request" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>" />
@@ -97,11 +97,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<div class="col-md-12 column-item">
 					<fieldset>
 						<?php if (isset($this->selectcatlist)): ?>
-							<div class="control-group">
-								<!-- Username -->
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_CATEGORY') ?></label>
-
-								<div class="controls"> <?php echo $this->selectcatlist ?> </div>
+							<div class="form-group">
+								<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_CATEGORY') ?></label>
+								<div class="col-sm-10"><?php echo $this->selectcatlist ?></div>
 							</div>
 						<?php endif; ?>
 						<?php if ($this->message->userid) : ?>
@@ -117,36 +115,29 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
-						<div class="control-group" id="kanynomous-check-name"
+						<div class="form-group" id="kanynomous-check-name"
 							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
-
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
-							<div class="controls">
-								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
-							</div>
+							<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>
-							<div class="control-group">
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
-
-								<div class="controls">
-									<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xlarge" maxlength="35" tabindex="5" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
-									<br />
-									<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-								</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
+								<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="form-control" maxlength="35" tabindex="5" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
+								<br />
+								<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 							</div>
 						<?php endif; ?>
 						<div class="form-group">
-							<label class="col-sm-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
-							<div class="col-sm-9">
-								<input style="width: 100%;" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
+							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
+							<div class="col-md-10">
+								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
 							</div>
 						</div>
 						<?php if (!empty($this->topicIcons)) : ?>
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
-
 								<div id="iconset_inject" class="controls controls-select col-sm-9">
 									<div id="iconset_topic_list">
 										<?php foreach ($this->topicIcons as $id => $icon): ?>

@@ -59,9 +59,9 @@ $this->addScript('js/topic.js');
 					<div><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
 					<div class="kmoderate-topicicons">
 						<?php foreach ($this->topicIcons as $id => $icon): ?>
-							<input type="radio" id="radio<?php echo $glyphicon glyphicon->id ?>" name="topic_emoticon" value="<?php echo $glyphicon glyphicon->id ?>" <?php echo !empty($glyphicon glyphicon->checked) ? ' checked="checked" ' : '' ?> />
-							<label class="radio inline" for="radio<?php echo $glyphicon glyphicon->id ?>">
-								<img src="<?php echo $this->template->getTopicIconIndexPath($glyphicon glyphicon->id, true); ?>"
+							<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+							<label class="radio inline" for="radio<?php echo $icon->id ?>">
+								<img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true); ?>"
 									 alt="" border="0"/>
 							</label>
 						<?php endforeach; ?>

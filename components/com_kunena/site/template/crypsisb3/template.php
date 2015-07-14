@@ -129,6 +129,7 @@ EOF;
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
 		.layout#kunena .topic-item-unread .glyphicon { color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread i.fa { color: {$iconcolornew} !important;}
 EOF;
 		}
 

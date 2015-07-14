@@ -96,15 +96,20 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsisb3.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
+
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css';
 		if (file_exists($filename))
 		{
 			$this->addStyleSheet ( 'custom.css' );
 		}
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		if ($fontawesome) : ?>
+			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<?php endif;
 
 		// Load template colors settings
-		$this->ktemplate = KunenaFactory::getTemplate();
 		$styles = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
@@ -216,110 +221,4 @@ HTML;
 	{
 		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
 	}
-
-	/**
-	 * @param KunenaForumTopic $topic
-	 *
-	 * @return string
-	 */
-	public function getTopicIcon($topic, $category_iconset = '')
-	{
-		$config = KunenaFactory::getConfig();
-
-		if ($config->topicicons)
-		{
-			// TODO: use xml file instead
-
-			if ($topic->icon_id == 5 || $topic->ordering )
-			{
-				$icon = 'pushpin';
-			}
-			elseif ($topic->icon_id == 1)
-			{
-				$icon = 'exclamation-sign';
-			}
-			elseif ($topic->icon_id == 2)
-			{
-				$icon = 'question-sign';
-			}
-			elseif ($topic->icon_id == 3)
-			{
-				$icon = 'system_unapproved';
-			}
-			elseif ($topic->icon_id == 4)
-			{
-				$icon = 'heart';
-			}
-			elseif ($topic->icon_id == 8)
-			{
-				$icon = 'ok';
-			}
-			elseif ($topic->icon_id == 9)
-			{
-				$icon = 'resize-small';
-			}
-			elseif ($topic->icon_id ==  10)
-			{
-				$icon = 'bell';
-			}
-			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
-			{
-				$icon = 'pushpin';
-			}
-			else
-			{
-				$icon = 'file';
-			}
-		}
-		else
-		{
-			$icon = 'normal';
-			if ($topic->posts < 2)
-			{
-				$icon = 'unanswered';
-			}
-
-			if ($topic->ordering)
-			{
-				$icon = 'pushpin';
-			}
-
-			//if ($topic->myfavorite) $icon = 'favorite';
-			if ($topic->locked)
-			{
-				$icon = 'locked';
-			}
-
-			if ($topic->ordering && $topic->locked)
-			{
-				$icon = 'sticky_and_locked';
-			}
-
-			if ($topic->hold == 1)
-			{
-				$icon = 'unapproved';
-			}
-
-			if ($topic->hold == 2)
-			{
-				$icon = 'deleted';
-			}
-
-			if ($topic->moved_id)
-			{
-				$icon = 'moved';
-			}
-
-			if (!empty($topic->unread))
-			{
-				$icon .= '_new';
-			}
-
-		}
-		$html = '<span class="glyphicon glyphicon-' . $icon . ' glyphicon-topic" aria-hidden="true"></span>';
-
-		return $html;
-	}
-
-
 }

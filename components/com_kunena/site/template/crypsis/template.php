@@ -101,15 +101,15 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
-		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css';
-		if (file_exists($filename))
-		{
-			$this->addStyleSheet ( 'custom.css' );
-		}
+		$this->addStyleSheet('css/custom.css');
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		if ($fontawesome) : ?>
+			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<?php endif;
 
 		// Load template colors settings
-		$this->ktemplate = KunenaFactory::getTemplate();
 		$styles = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
@@ -127,7 +127,8 @@ EOF;
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
-		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important; }
+		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}
 EOF;
 		}
 

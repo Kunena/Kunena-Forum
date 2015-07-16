@@ -437,7 +437,7 @@ abstract class KunenaAttachmentHelper
 	 */
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
 	{
-		$len = strlen($filename);
+		$len = mb_strlen($filename);
 		if ($len>($front+strlen($filler)+$back))
 		{
 			$output=substr($filename,0,$front).$filler.substr($filename,$len-$back,$back);

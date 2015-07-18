@@ -80,8 +80,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<div class="control-group">
 				<div class="controls">
-					<input type="checkbox" name="subscribeMe" value="1"
-					<?php echo ($config->subscriptionschecked == 1 && $me->canSubscribe || $config->subscriptionschecked == 0 && $me->canSubscribe) ? 'checked="checked"' : ''; ?> />
+					<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe || $this->subscriptionschecked == 0 && $this->me->canSubscribe)
+					{
+						echo 'checked="checked"';
+					} ?> />
 					<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 				</div>
 			</div>

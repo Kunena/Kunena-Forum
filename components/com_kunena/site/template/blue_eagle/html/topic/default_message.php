@@ -52,7 +52,7 @@ defined ( '_JEXEC' ) or die ();
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
 		<?php if ($this->topic->authorise('subscribe') && !$this->usertopic->subscribed) : ?>
 		<?php if ( !$this->usertopic->subscribed ): ?>
-		<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1 )
+		<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->config->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->config->subscriptionschecked == 0 && $this->me->canSubscribe == 1 )
 		{
 			echo 'checked="checked"';
 		} ?> />

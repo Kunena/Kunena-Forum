@@ -81,7 +81,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<div class="clearfix"></div>
 			<div class="control-group">
 				<div class="controls">
-					<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
+					<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1)
 					{
 						echo 'checked="checked"';
 					} ?> />

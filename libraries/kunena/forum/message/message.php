@@ -1397,7 +1397,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	protected function authoriseAttachments(KunenaUser $user)
 	{
-		if (empty(KunenaFactory::getConfig()->image_upload) || empty(KunenaFactory::getConfig()->file_upload) )
+		if (empty(KunenaFactory::getConfig()->image_upload) && empty(KunenaFactory::getConfig()->file_upload) )
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
 		}

@@ -52,7 +52,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected static $_directory = 'media/kunena/attachments';
 	protected static $actions  = array(
 		'read'=>array('Read'),
-		'create'=>array(),
+		'createimage'=>array(),
+		'createfile'=>array(),
 		'delete'=>array('Exists', 'Own'),
 	);
 

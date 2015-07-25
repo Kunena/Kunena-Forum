@@ -154,7 +154,14 @@ class KunenaControllerTopic extends KunenaController
 				// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
 				if ($category->id)
 				{
-					$category->tryAuthorise('topic.post.attachment.create');
+					if ( stripos($this->filetype, 'image/') !== false )
+					{
+						$category->tryAuthorise('topic.post.attachment.createimage');
+					}
+					else
+					{
+						$category->tryAuthorise('topic.post.attachment.createfile');
+					}
 				}
 			}
 

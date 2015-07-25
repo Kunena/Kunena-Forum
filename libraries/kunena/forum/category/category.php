@@ -101,7 +101,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			'topic.post.undelete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.post.permdelete'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.post.attachment.read'=>array('Read'),
-			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
+			'topic.post.attachment.createimage'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
+			'topic.post.attachment.createfile'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
 			'topic.post.attachment.delete'=>array('NotBanned'),
 			// TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
 		);

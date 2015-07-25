@@ -15,6 +15,10 @@ $user = $this->user;
 $avatar = $user->getAvatarImage('img-thumbnail', 'post');
 $show = KunenaConfig::getInstance()->showuserstats;
 
+$activityIntegration = KunenaFactory::getActivityIntegration();
+$points = $activityIntegration->getUserPoints($user->userid);
+$medals = $activityIntegration->getUserMedals($user->userid);
+
 if ($show)
 {
 	$rankImage = $user->getRank($this->category_id, 'image');
@@ -83,15 +87,15 @@ if ($show)
 			</li>
 			<?php endif; ?>
 
-			<?php if ($show && isset($user->points)) : ?>
+			<?php if ($show && !empty($points)) : ?>
 			<li>
-				<?php echo JText::_('COM_KUNENA_AUP_POINTS') . ' ' . (int) $user->points; ?>
+				<?php echo JText::_('COM_KUNENA_AUP_POINTS') . ' '  . $points; ?>
 			</li>
 			<?php endif; ?>
 
-			<?php if ($show && !empty($user->medals)) : ?>
+			<?php if ($show && !empty($medals)) : ?>
 			<li>
-				<?php echo implode(' ', $user->medals); ?>
+				<?php echo implode(' ', $medals); ?>
 			</li>
 			<?php endif; ?>
 

@@ -72,7 +72,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 				{
 					JPluginHelper::importPlugin('captcha');
 					$dispatcher = JDispatcher::getInstance();
-					$result = $dispatcher->trigger('onInit', 'kreply' . $this->message->displayField('id') . '_form');
+					$result = $dispatcher->trigger('onInit', "dynamic_recaptcha_{$this->message->id}");
 
 					$this->captchaEnabled = $result[0];
 				}

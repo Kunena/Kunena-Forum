@@ -93,7 +93,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php if (!empty($this->captchaEnabled)) : ?>
 			<div class="control-group">
 				<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
-					<div class="controls"> <div id="kreply<?php echo $message->displayField('id'); ?>_form"> </div> </div>
+					<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
 			</div>
 		<?php endif; ?>
 		<div class="modal-footer">

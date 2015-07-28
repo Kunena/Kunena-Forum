@@ -121,11 +121,11 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 
 			<?php if ($this->topic->attachments) : ?>
-				<i class="glyphicon glyphicon-flag-2 hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
+				<i class="glyphicon glyphicon-paperclip hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
 			<?php endif; ?>
 
 			<?php if ($this->topic->poll_id) : ?>
-				<i class="glyphicon glyphicon-bars hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
+				<i class="glyphicon glyphicon-stats hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
 			<?php endif; ?>
 		</div>
 

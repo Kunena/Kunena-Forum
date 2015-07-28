@@ -17,7 +17,7 @@ $config = KunenaConfig::getInstance();
 <div class="btn-toolbar btn-marging kmessagepadding">
 	<?php if($this->quickreply): ?>
 		<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default openmodal"
-		   data-toggle="modal" data-target="kreply<?php echo $this->message->displayField('id'); ?>_form"><i class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+		   data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"><i class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 		</a>
 	<?php endif; ?>
 	<div class="btn-group">

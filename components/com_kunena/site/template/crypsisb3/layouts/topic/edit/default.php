@@ -36,6 +36,9 @@ $this->addScript('js/upload.main.js');
 $this->addStyleSheet('css/fileupload.css');
 
 $this->addScript('js/markitup.js');
+$editor = KunenaBbcodeEditor::getInstance();
+$editor->initialize();
+$this->addScript('js/markitup.editor.js');
 $this->addScript('js/markitup.set.js');
 
 $this->k = 0;
@@ -137,8 +140,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						</div>
 						<?php if (!empty($this->topicIcons)) : ?>
 							<div class="form-group">
-								<label class="col-sm-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
-								<div id="iconset_inject" class="controls controls-select col-sm-9">
+								<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
+								<div id="iconset_inject" class="controls controls-select">
 									<div id="iconset_topic_list">
 										<?php foreach ($this->topicIcons as $id => $icon): ?>
 											<span class="kiconsel">
@@ -230,10 +233,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<button type="submit" class="btn btn-success" tabindex="8">
 				<i class="glyphicon glyphicon-edit glyphicon glyphicon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
-			<button id="kbutton-preview" name="preview" type="button" class="btn btn-default" tabindex="9">
-				<i class="glyphicon glyphicon-eye-open"></i><?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>
-			</button>
-			<button type="reset" class="btn btn-default" onclick="javascript:window.history.back();" tabindex="10">
+			<button type="reset" class="btn btn-default" onclick="javascript:window.history.back();" tabindex="9">
 				<i class="glyphicon glyphicon-remove-circle"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>

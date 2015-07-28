@@ -70,10 +70,14 @@ $list = array();
 			<div class="row">
 				<div class="col-md-9">
 					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="glyphicon glyphicon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-					<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+					<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

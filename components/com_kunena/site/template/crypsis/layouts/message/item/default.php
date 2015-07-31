@@ -15,6 +15,7 @@ $message = $this->message;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
+$attachs = $message->getNbAttachments();
 $avatarname = $this->profile->getname();
 $config = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
@@ -57,7 +58,12 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php endif; ?>
+	<?php elseif(!empty($attachs)):
+		foreach($attachs as $attach)
+		{
+			echo JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG');
+		}
+	endif; ?>
 	<?php if ($signature) : ?>
 		<div class="ksig">
 			<hr>

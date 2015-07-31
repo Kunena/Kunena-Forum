@@ -2370,7 +2370,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if (JFactory::getUser()->id == 0 && $config->showimgforguest == 0)
 		{
 			// Hide between content from non registered users.
-			return (string) $layout->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
+			return;
 		}
 
 		// Obey image security settings.

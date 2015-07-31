@@ -32,7 +32,12 @@ defined ( '_JEXEC' ) or die ();
 		</ul>
 	</div>
 </div>
-<?php endif; ?>
+<?php elseif(!empty($this->attachs)):
+		foreach($this->attachs as $attach)
+		{
+			echo JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG');
+		}
+	endif; ?>
 <?php if ( $this->quickreply ) : ?>
 <div id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="postform" enctype="multipart/form-data">

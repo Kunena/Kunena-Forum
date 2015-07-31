@@ -403,6 +403,9 @@ class KunenaViewTopic extends KunenaView
 		// Get attachments
 		$this->attachments = $this->message->getAttachments();
 
+		// Get number of attachments to display error messages
+		$this->attachs = $message->getNbAttachments();
+
 		// Get poll
 		if ($this->message->parent == 0 && ((!$this->topic->poll_id && $this->topic->authorise('poll.create', null, false)) || ($this->topic->poll_id && $this->topic->authorise('poll.edit', null, false))))
 		{

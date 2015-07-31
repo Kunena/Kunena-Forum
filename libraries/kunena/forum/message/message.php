@@ -796,6 +796,28 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Get the number of attachments into a message
+	 *
+	 * @return array
+	 */
+	public function getNbAttachments()
+	{
+		$attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
+
+		$attachs = array();
+
+		foreach($attachments as $attach)
+		{
+			if ($attach->isImage())
+			{
+				$attachs[] = $attach->id;
+			}
+		}
+
+		return $attachs;
+	}
+
+	/**
 	 * @param  bool|array  $ids
 	 * @param  string      $action
 	 *

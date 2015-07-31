@@ -91,9 +91,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<input type="hidden" id="kunena_upload_files_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . JSession::getFormToken() . '=1', false) ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 
-		<h2>
+		<h3>
 			<?php echo $this->escape($this->headerText) ?>
-		</h2>
+		</h3>
 
 		<div class="well">
 			<div class="row column-row">

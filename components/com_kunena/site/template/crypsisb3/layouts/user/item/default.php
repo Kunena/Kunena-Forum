@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 $tabs = $this->getTabs();
 ?>
 
-<h2>
+<h3>
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
 
@@ -24,7 +24,7 @@ $tabs = $this->getTabs();
 	); ?>
 	<?php endif; ?>
 
-</h2>
+</h3>
 
 <?php
 echo $this->subLayout('User/Item/Summary')

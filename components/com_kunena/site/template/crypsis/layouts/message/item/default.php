@@ -58,10 +58,29 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php elseif(!empty($attachs)):
-		foreach($attachs as $attach)
+	<?php elseif($this->attachs->total > 0  && !$this->me->exists()):
+		if ( $this->attachs->image > 0 )
 		{
-			echo JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG');
+			if ( $this->attachs->image > 1 )
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
+			}
+		}
+
+		if ( $this->attachs->file > 0 )
+		{
+			if ( $this->attachs->file > 1 )
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'))->setLayout('unauthorised');
+			}
 		}
 	endif; ?>
 	<?php if ($signature) : ?>

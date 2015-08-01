@@ -403,9 +403,6 @@ class KunenaViewTopic extends KunenaView
 		// Get attachments
 		$this->attachments = $this->message->getAttachments();
 
-		// Get number of attachments to display error messages
-		$this->attachs = $message->getNbAttachments();
-
 		// Get poll
 		if ($this->message->parent == 0 && ((!$this->topic->poll_id && $this->topic->authorise('poll.create', null, false)) || ($this->topic->poll_id && $this->topic->authorise('poll.edit', null, false))))
 		{
@@ -1058,6 +1055,9 @@ class KunenaViewTopic extends KunenaView
 				$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), JText::_('COM_KUNENA_REPORT'), JText::_('COM_KUNENA_REPORT'));
 			}
 		}
+
+		// Get number of attachments to display error messages
+		$this->attachs = $this->message->getNbAttachments();
 
 		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents)

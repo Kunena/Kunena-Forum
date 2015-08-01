@@ -804,14 +804,23 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	{
 		$attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
 
-		$attachs = array();
+		$attachs = new StdClass();
+		$attachs->image = 0;
+		$attachs->file = 0;
+		$attachs->total = 0;
 
 		foreach($attachments as $attach)
 		{
 			if ($attach->isImage())
 			{
-				$attachs[] = $attach->id;
+				$attachs->image = $attachs->image+1;
 			}
+			else
+			{
+				$attachs->file = $attachs->file+1;
+			}
+
+      $attachs->total = $attachs->total+1;
 		}
 
 		return $attachs;

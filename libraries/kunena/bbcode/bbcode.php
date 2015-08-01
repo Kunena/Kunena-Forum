@@ -2146,14 +2146,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$attachments = &$bbcode->parent->attachments;
 		}
 
-		// Display tag in activity streams etc..
-		if (!isset($attachments) || !empty($bbcode->parent->forceMinimal))
-		{
-			$filename = basename(trim(strip_tags($content)));
-
-			return '[' . JText::_('COM_KUNENA_FILEATTACH') . ' ' . basename(!empty($params["name"]) ? $params["name"] : $filename) . ']';
-		}
-
 		/** @var KunenaAttachment $att */
 		/** @var KunenaAttachment $attachment */
 
@@ -2181,10 +2173,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments ))
+		if (!isset($attachments) || !empty($bbcode->parent->forceMinimal))
 		{
-			$filename = basename(trim(strip_tags($content)));
-			return $attachment->getThumbnailLink();
+			$hide = KunenaFactory::getConfig()->showimgforguest == 0 && JFactory::getUser()->id == 0;
+			if (!$hide) {
+				return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
+			}
 		}
 
 		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments ))

@@ -22,9 +22,17 @@ $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 'thumb');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
+
 if ($topic->ordering)
 {
-	$txt .= '-stickymsg';
+	if ($this->topic->getCategory()->class_sfx)
+	{
+		$txt .= '';
+	}
+	else
+	{
+		$txt .= '-stickymsg';
+	}
 }
 
 if ($topic->hold == 1 || $message->hold == 1)
@@ -38,11 +46,13 @@ else
 		$txt .= ' '  . 'deleted';
 	}
 }
+
 if ($topic->moved_id > 0)
 {
 	$txt .= ' ' . 'moved';
 }
 ?>
+
 <tr class="category<?php echo $this->escape($category->class_sfx).$txt; ?>">
 	<?php if ($topic->unread) : ?>
 	<td class="hidden-phone center topic-item-unread">

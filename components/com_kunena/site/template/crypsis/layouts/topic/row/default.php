@@ -25,17 +25,14 @@ $txt   = '';
 
 if ($this->topic->ordering)
 {
-	$txt .= '-stickymsg';
-}
-
-if ($this->topic->getCategory()->class_sfx)
-{
-
-	if ($this->topic->ordering)
+	if ($this->topic->getCategory()->class_sfx)
+	{
+		$txt .= '';
+	}
+	else
 	{
 		$txt .= '-stickymsg';
 	}
-	$txt .= $this->escape($this->topic->getCategory()->class_sfx);
 }
 
 if ($this->topic->hold == 1)
@@ -49,6 +46,7 @@ else
 		$txt .= ' '  . 'deleted';
 	}
 }
+
 if ($this->topic->moved_id > 0)
 {
 	$txt .= ' ' . 'moved';
@@ -56,11 +54,11 @@ if ($this->topic->moved_id > 0)
 
 if (!empty($this->spacing)) : ?>
 <tr>
-	<td colspan="<?php echo $cols; ?>">&nbsp;</td>
+	<td colspan="<?php echo $cols;?>">&nbsp;</td>
 </tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx).$txt; ?>">
+<tr class="category<?php echo $this->escape($category->class_sfx).$txt;?>">
 	<?php if ($topic->unread) : ?>
 	<td class="hidden-phone center topic-item-unread">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>

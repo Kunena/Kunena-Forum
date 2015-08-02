@@ -2175,9 +2175,17 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// Display tag in activity streams etc..
 		if (!isset($attachments) || !empty($bbcode->parent->forceMinimal))
 		{
-			$hide = KunenaFactory::getConfig()->showimgforguest == 0 && JFactory::getUser()->id == 0;
-			if (!$hide) {
-				return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
+			if ($attachment->isImage()) {
+				$hide = KunenaFactory::getConfig()->showimgforguest == 0 && JFactory::getUser()->id == 0;
+				if (!$hide) {
+					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
+				}
+			}
+			else {
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && JFactory::getUser()->id == 0;
+				if (!$hide) {
+					return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
+				}
 			}
 		}
 

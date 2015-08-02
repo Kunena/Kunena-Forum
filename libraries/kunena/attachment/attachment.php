@@ -232,7 +232,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 				$fileThumb = $file;
 			}
 
-			$url = JUri::root(true) .'/'. ($thumb ? $fileThumb : $file);
+			$url = ($thumb ? $fileThumb : $file);
 
 			return $escape ? htmlspecialchars($url, ENT_COMPAT, 'UTF-8') : $url;
 		}

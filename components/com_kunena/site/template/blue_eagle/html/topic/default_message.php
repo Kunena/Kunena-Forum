@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 			}
 			else
 			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
 			}
 		}
 
@@ -53,7 +53,7 @@ defined ( '_JEXEC' ) or die ();
 			}
 			else
 			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'))->setLayout('unauthorised');
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
 			}
 		}
 	endif; ?>

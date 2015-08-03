@@ -71,7 +71,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		'undelete'=>array('Read'),
 		'permdelete'=>array('Read'),
 		'attachment.read'=>array('Read'),
-		'attachment.create'=>array('Read','Attachments'),
+		'attachment.createimage'=>array('Read','AttachmentsImage'),
+		'attachment.createfile'=>array('Read','AttachmentsFile'),
 		'attachment.delete'=>array(),
 		// TODO: In the future we might want to restrict this: array('Read','EditTime'),
 	);
@@ -876,7 +877,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 
 			$attachment->mesid = $this->id;
-			$exception = $attachment->tryAuthorise('create', null, false);
+
+			if ($attachment->IsImage())
+			{
+				$exception = $attachment->tryAuthorise('createimage', null, false);
+			}
+			else
+			{
+				$exception = $attachment->tryAuthorise('createfile', null, false);
+			}
 
 			if ($exception)
 			{
@@ -1421,37 +1430,79 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * Check if user has the right to upload attachment
+	 * Check if user has the right to upload image attachment
 	 *
 	 * @param KunenaUser $user
 	 * @return KunenaExceptionAuthorise|NULL
 	 */
-	protected function authoriseAttachments(KunenaUser $user)
+	protected function authoriseAttachmentsImage(KunenaUser $user)
 	{
-		if (empty(KunenaFactory::getConfig()->image_upload) || empty(KunenaFactory::getConfig()->file_upload) )
+		if (empty(KunenaFactory::getConfig()->image_upload))
 		{
 			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
 		}
 
-		if (($user->userid || $user->isModerator()) && !$user->isAdmin())
+		if (KunenaFactory::getConfig()->image_upload=='admin'  )
 		{
-			if (KunenaFactory::getConfig()->image_upload=='admin' || KunenaFactory::getConfig()->file_upload=='admin' )
+			if (!$user->isAdmin())
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_ONLY_FOR_ADMINISTRATORS'), 403);
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_ADMINISTRATORS'), 403);
 			}
 		}
-		else if (!$user->userid )
+
+		if (KunenaFactory::getConfig()->image_upload=='registered')
 		{
-			if (KunenaFactory::getConfig()->image_upload=='registered' || KunenaFactory::getConfig()->file_upload=='registered' )
+			if (!$user->userid )
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_ONLY_FOR_REGISTERED_USERS'), 403);
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_REGISTERED_USERS'), 403);
 			}
 		}
-		else if (!$user->isModerator() && ($user->isAdmin() || $user->userid))
+
+		if (KunenaFactory::getConfig()->image_upload=='moderator')
 		{
-			if (KunenaFactory::getConfig()->image_upload=='moderator' || KunenaFactory::getConfig()->file_upload=='moderator' )
+			if (!$user->isModerator())
 			{
-				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_ONLY_FOR_MODERATORS'), 403);
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_MODERATORS'), 403);
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Check if user has the right to upload file attachment
+	 *
+	 * @param KunenaUser $user
+	 * @return KunenaExceptionAuthorise|NULL
+	 */
+	protected function authoriseAttachmentsFile(KunenaUser $user)
+	{
+		if (empty(KunenaFactory::getConfig()->file_upload) )
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
+		}
+
+		if (KunenaFactory::getConfig()->file_upload=='admin')
+		{
+			if (!$user->isAdmin())
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_ADMINISTRATORS'), 403);
+			}
+		}
+
+		if(KunenaFactory::getConfig()->file_upload=='registered' )
+		{
+			if (!$user->userid )
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_REGISTERED_USERS'), 403);
+			}
+		}
+
+		if (KunenaFactory::getConfig()->file_upload=='moderator' )
+		{
+			if (!$user->isModerator())
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_MODERATORS'), 403);
 			}
 		}
 

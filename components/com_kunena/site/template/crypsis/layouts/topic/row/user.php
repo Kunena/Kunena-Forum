@@ -24,17 +24,14 @@ $txt   = '';
 
 if ($this->topic->ordering)
 {
-	$txt .= '-stickymsg';
-}
-
-if ($this->topic->getCategory()->class_sfx)
-{
-
-	if ($this->topic->ordering)
+	if ($this->topic->getCategory()->class_sfx)
+	{
+		$txt .= '';
+	}
+	else
 	{
 		$txt .= '-stickymsg';
 	}
-	$txt .= $this->escape($this->topic->getCategory()->class_sfx);
 }
 
 if ($this->topic->hold == 1)
@@ -48,6 +45,7 @@ else
 		$txt .= ' '  . 'deleted';
 	}
 }
+
 if ($this->topic->moved_id > 0)
 {
 	$txt .= ' ' . 'moved';

@@ -13,7 +13,6 @@ defined('_JEXEC') or die;
 
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
-
 ?>
 
 <div class="row">
@@ -22,7 +21,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 			<h3>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs">
-					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
+					(<?php echo(JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
@@ -39,6 +38,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		</div>
 	</div>
 </div>
+
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 		->set('catid', 'all')
@@ -48,7 +48,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true);	?>
+		->set('display', true); ?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
@@ -102,18 +102,22 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 			</td>
 			<td colspan="<?php echo $colspan; ?>">
 				<div class="form-group">
-					<?php if (!empty($this->moreUri))
-					{
-						echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'nofollow');
-					} ?>
-					<?php if (!empty($this->actions)) : ?>
-						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
-						<?php if (isset($this->actions['move'])) :
-							$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-							echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
-						endif; ?>
-						<input type="submit" name="kcheckgo" class="btn btn-default" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-					<?php endif; ?>
+					<div class="input-group" role="group">
+						<div class="input-group-btn">
+							<?php if (!empty($this->moreUri))
+							{
+								echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'nofollow');
+							} ?>
+							<?php if (!empty($this->actions)) : ?>
+								<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+								<?php if (isset($this->actions['move'])) :
+									$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+									echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+								endif; ?>
+								<input type="submit" name="kcheckgo" class="btn btn-default" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+							<?php endif; ?>
+						</div>
+					</div>
 				</div>
 			</td>
 		</tr>
@@ -127,14 +131,15 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 				->set('position', $i)
 				->set('checkbox', !empty($this->actions));
 		?>
-		</tbody>
 		<?php endif; ?>
-
+		</tbody>
 	</table>
 </form>
 
-<div class="pagination pull-left">
-	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4))->set('display', true); ?>
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination->setDisplayedPages(4))
+		->set('display', true); ?>
 </div>
 
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
@@ -142,4 +147,3 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
 
-<div class="clearfix"></div>

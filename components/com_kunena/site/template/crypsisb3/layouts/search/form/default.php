@@ -35,12 +35,12 @@ $this->addScript('js/search.js');
 
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#search"></div>
+			<button class="btn btn-default btn-small" type="button" data-toggle="collapse" data-target="#search" aria-expanded="false" aria-controls="search"></button>
 		</div>
 	</div>
-	<h2>
+	<h3>
 		<?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
-	</h2>
+	</h3>
 
 	<div class="collapse in" id="search">
 	<div class="well">
@@ -81,7 +81,7 @@ $this->addScript('js/search.js');
 			</div>
 		</div>
 
-		<div class="btn btn-default btn-small pull-right" data-toggle="collapse" data-target="#search-options"></div>
+		<button class="btn btn-default btn-small pull-right" data-toggle="collapse" data-target="#search-options" aria-expanded="false" aria-controls="search-options"></button>
 		<h3>
 			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h3>

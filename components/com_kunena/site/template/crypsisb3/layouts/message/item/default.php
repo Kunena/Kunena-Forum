@@ -59,28 +59,28 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php elseif($this->attachs->total > 0  && !$this->me->exists()):
-		if ( $this->attachs->image > 0 )
+	<?php elseif($attachs->total > 0  && !$this->me->exists()):
+		if ( $attachs->image > 0 )
 		{
-			if ( $this->attachs->image > 1 )
+			if ( $attachs->image > 1 )
 			{
 				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
 			}
 			else
 			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG'))->setLayout('unauthorised');
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
 			}
 		}
 
-		if ( $this->attachs->file > 0 )
+		if ( $attachs->file > 0 )
 		{
-			if ( $this->attachs->file > 1 )
+			if ( $attachs->file > 1 )
 			{
 				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
 			}
 			else
 			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE'))->setLayout('unauthorised');
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
 			}
 		}
 	endif; ?>
@@ -95,10 +95,14 @@ $list = array();
 			<div class="row">
 				<div class="col-md-9">
 					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="glyphicon glyphicon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-					<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+					<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

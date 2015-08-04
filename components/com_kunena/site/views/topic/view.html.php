@@ -1056,6 +1056,9 @@ class KunenaViewTopic extends KunenaView
 			}
 		}
 
+		// Get number of attachments to display error messages
+		$this->attachs = $this->message->getNbAttachments();
+
 		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents)
 		{

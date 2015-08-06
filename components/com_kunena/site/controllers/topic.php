@@ -893,12 +893,9 @@ class KunenaControllerTopic extends KunenaController
 
 		if ( !$ignore )
 		{
-			// Check max links in message to check spam
-			$http = substr_count($text, "http");
-			$href = substr_count($text, "href");
-			$url = substr_count($text, "[url");
+			preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
 
-			$countlink = $http += $href += $url;
+			$countlink = count($matches[0]);
 
 			if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
 				return false;

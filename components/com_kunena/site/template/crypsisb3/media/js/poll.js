@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
 		jQuery('.pollbutton').hide();
 	}
 	
-	if (typeof poll_exist_edit  != 'undefined' ) {
+	if (jQuery('#poll_exist_edit') != 'undefined' ) {
 		jQuery('.pollbutton').show();
 	}
 

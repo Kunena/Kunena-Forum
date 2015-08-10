@@ -89,7 +89,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
 			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 		<?php endif; ?>
-		<?php if ($this->message->getTopic()->getPoll()->id): ?>
+		<?php if ($this->message->getTopic()->first_post_id==$this->message->id && $this->message->getTopic()->getPoll()->id): ?>
 			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>" />
 		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />

@@ -785,13 +785,17 @@ HTML;
 	}
 
 	/**
+	 * Get the th topic icon depending on template settings
+	 *
 	 * @param KunenaForumTopic $topic
+	 * @param $category_iconset
 	 *
 	 * @return string
 	 */
 	public function getTopicIcon($topic, $category_iconset = '')
 	{
 		$config = KunenaFactory::getConfig();
+
 		if ($this->isHMVC())
 		{
 			$topicicontype = $this->ktemplate->params->get('topicicontype');
@@ -801,316 +805,155 @@ HTML;
 			$topicicontype = '0';
 		}
 
-		if ($topicicontype == 'B2')
+		if ($config->topicicons)
 		{
-			if ($config->topicicons)
+			if ($topic->icon_id == 5 || $topic->ordering)
 			{
-				if ($topic->icon_id == 5 || $topic->ordering)
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
 				{
-					$icon = 'pushpin';
+				$icon = 'pushpin';
 				}
-				elseif ($topic->icon_id == 1)
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'thumb-tack';
+				}
+			}
+			elseif ($topic->icon_id == 1)
+			{
+				if ($topicicontype == 'B2')
 				{
 					$icon = 'warning-circle';
 				}
-				elseif ($topic->icon_id == 2)
-				{
-					$icon = 'question-sign';
-				}
-				elseif ($topic->icon_id == 3)
-				{
-					$icon = 'system_unapproved';
-				}
-				elseif ($topic->icon_id == 4)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 5)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 6)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 7)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 8)
-				{
-					$icon = 'ok';
-				}
-				elseif ($topic->icon_id == 9)
-				{
-					$icon = 'resize-small';
-				}
-				elseif ($topic->icon_id == 10)
-				{
-					$icon = 'lamp';
-				}
-				elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
-				{
-					$icon = 'pushpin';
-				}
-				else
-				{
-					$icon = 'file';
-				}
-			}
-			else
-			{
-				$icon = 'normal';
-				if ($topic->posts < 2)
-				{
-					$icon = 'unanswered';
-				}
-
-				if ($topic->ordering)
-				{
-					$icon = 'pushpin';
-				}
-
-				//if ($topic->myfavorite) $icon = 'favorite';
-				if ($topic->locked)
-				{
-					$icon = 'locked';
-				}
-
-				if ($topic->ordering && $topic->locked)
-				{
-					$icon = 'sticky_and_locked';
-				}
-
-				if ($topic->hold == 1)
-				{
-					$icon = 'unapproved';
-				}
-
-				if ($topic->hold == 2)
-				{
-					$icon = 'deleted';
-				}
-
-				if ($topic->moved_id)
-				{
-					$icon = 'moved';
-				}
-
-				if (!empty($topic->unread))
-				{
-					$icon .= '_new';
-				}
-			}
-			$html = '<span class="icon icon-' . $icon . ' icon-topic" aria-hidden="true"></span>';
-		}
-		if ($topicicontype == 'B3')
-		{
-			if ($config->topicicons)
-			{
-				if ($topic->icon_id == 5 || $topic->ordering)
-				{
-					$icon = 'pushpin';
-				}
-				elseif ($topic->icon_id == 1)
+				else if ($topicicontype == 'B3')
 				{
 					$icon = 'exclamation-sign';
 				}
-				elseif ($topic->icon_id == 2)
-				{
-					$icon = 'question-sign';
-				}
-				elseif ($topic->icon_id == 3)
-				{
-					$icon = 'system_unapproved';
-				}
-				elseif ($topic->icon_id == 4)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 5)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 6)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 7)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 8)
-				{
-					$icon = 'ok';
-				}
-				elseif ($topic->icon_id == 9)
-				{
-					$icon = 'resize-small';
-				}
-				elseif ($topic->icon_id == 10)
-				{
-					$icon = 'bell';
-				}
-				elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
-				{
-					$icon = 'pushpin';
-				}
-				else
-				{
-					$icon = 'file';
-				}
-			}
-			else
-			{
-				$icon = 'normal';
-				if ($topic->posts < 2)
-				{
-					$icon = 'unanswered';
-				}
-
-				if ($topic->ordering)
-				{
-					$icon = 'pushpin';
-				}
-
-				//if ($topic->myfavorite) $icon = 'favorite';
-				if ($topic->locked)
-				{
-					$icon = 'locked';
-				}
-
-				if ($topic->ordering && $topic->locked)
-				{
-					$icon = 'sticky_and_locked';
-				}
-
-				if ($topic->hold == 1)
-				{
-					$icon = 'unapproved';
-				}
-
-				if ($topic->hold == 2)
-				{
-					$icon = 'deleted';
-				}
-
-				if ($topic->moved_id)
-				{
-					$icon = 'moved';
-				}
-
-				if (!empty($topic->unread))
-				{
-					$icon .= '_new';
-				}
-			}
-			$html = '<span class="glyphicon glyphicon-' . $icon . ' glyphicon-topic" aria-hidden="true"></span>';
-		}
-		if ($topicicontype == 'fa')
-		{
-			if ($config->topicicons)
-			{
-				if ($topic->icon_id == 5 || $topic->ordering)
-				{
-					$icon = 'thumb-tack';
-				}
-				elseif ($topic->icon_id == 1)
+				else if ($topicicontype == 'fa')
 				{
 					$icon = 'exclamation-circle';
 				}
-				elseif ($topic->icon_id == 2)
+			}
+			elseif ($topic->icon_id == 2)
+			{
+				$icon = 'question-sign';
+			}
+			elseif ($topic->icon_id == 3)
+			{
+				$icon = 'system_unapproved';
+			}
+			elseif ($topic->icon_id == 4)
+			{
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 5)
+			{
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 6)
+			{
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 7)
+			{
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 8)
+			{
+				$icon = 'ok';
+			}
+			elseif ($topic->icon_id == 9)
+			{
+				$icon = 'resize-small';
+			}
+			elseif ($topic->icon_id == 10)
+			{
+				if ($topicicontype == 'B2')
 				{
-					$icon = 'question-circle';
+					$icon = 'lamp';
 				}
-				elseif ($topic->icon_id == 3)
-				{
-					$icon = 'system_unapproved';
-				}
-				elseif ($topic->icon_id == 4)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 5)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 6)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 7)
-				{
-					$icon = 'heart';
-				}
-				elseif ($topic->icon_id == 8)
-				{
-					$icon = 'check';
-				}
-				elseif ($topic->icon_id == 9)
-				{
-					$icon = 'resize-small';
-				}
-				elseif ($topic->icon_id == 10)
+				else if ($topicicontype == 'B3' || $topicicontype == 'fa')
 				{
 					$icon = 'bell';
 				}
-				elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
-				{
-					$icon = 'thumb-tack';
-				}
-				else
-				{
-					$icon = 'file';
-				}
+			}
+			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
+			{
+				$icon = 'pushpin';
 			}
 			else
 			{
-				$icon = 'normal';
-				if ($topic->posts < 2)
-				{
-					$icon = 'unanswered';
-				}
-
-				if ($topic->ordering)
-				{
-					$icon = 'pushpin';
-				}
-
-				//if ($topic->myfavorite) $icon = 'favorite';
-				if ($topic->locked)
-				{
-					$icon = 'locked';
-				}
-
-				if ($topic->ordering && $topic->locked)
-				{
-					$icon = 'sticky_and_locked';
-				}
-
-				if ($topic->hold == 1)
-				{
-					$icon = 'unapproved';
-				}
-
-				if ($topic->hold == 2)
-				{
-					$icon = 'deleted';
-				}
-
-				if ($topic->moved_id)
-				{
-					$icon = 'moved';
-				}
-
-				if (!empty($topic->unread))
-				{
-					$icon .= '_new';
-				}
+				$icon = 'file';
 			}
+
+			if ($topicicontype == '0' || !$topicicontype)
+			{
+				$iconurl = $this->getTopicIconIndexPath($icon, true);
+			}
+		}
+		else
+		{
+			$icon = 'normal';
+			if ($topic->posts < 2)
+			{
+				$icon = 'unanswered';
+			}
+
+			if ($topic->ordering)
+			{
+				$icon = 'pushpin';
+			}
+
+			//if ($topic->myfavorite) $icon = 'favorite';
+			if ($topic->locked)
+			{
+				$icon = 'locked';
+			}
+
+			if ($topic->ordering && $topic->locked)
+			{
+				$icon = 'sticky_and_locked';
+			}
+
+			if ($topic->hold == 1)
+			{
+				$icon = 'unapproved';
+			}
+
+			if ($topic->hold == 2)
+			{
+				$icon = 'deleted';
+			}
+
+			if ($topic->moved_id)
+			{
+				$icon = 'moved';
+			}
+
+			if (!empty($topic->unread))
+			{
+				$icon .= '_new';
+			}
+
+			if ($topicicontype == '0' || !$topicicontype)
+			{
+				// FIXME: hardcoded to system type...
+				$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
+			}
+		}
+
+		if ($topicicontype == 'B2')
+		{
+			$html = '<span class="icon icon-' . $icon . ' icon-topic" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			$html = '<span class="glyphicon glyphicon-' . $icon . ' glyphicon-topic" aria-hidden="true"></span>';
+		}
+		elseif ($topicicontype == 'fa')
+		{
 			$html = '<i class="fa fa-' . $icon . ' fa-2x"></i>';
 		}
-		if ($topicicontype == '0' || !$topicicontype)
+		elseif ($topicicontype == '0' || !$topicicontype)
 		{
 			if ($this->isHMVC() && !empty($category_iconset))
 			{
@@ -1124,86 +967,6 @@ HTML;
 				}
 			}
 
-			if ($config->topicicons)
-			{
-				// TODO: use xml file instead
-				if ($topic->moved_id)
-				{
-					$icon = 'system_moved';
-				}
-				elseif ($topic->hold == 2 || $topic->hold == 3)
-				{
-					$icon = 'system_deleted';
-				}
-				elseif ($topic->hold == 1)
-				{
-					$icon = 'system_unapproved';
-				}
-				elseif ($topic->ordering && $topic->locked)
-				{
-					$icon = 'system_sticky_locked';
-				}
-				elseif ($topic->ordering)
-				{
-					$icon = 'system_sticky';
-				}
-				elseif ($topic->locked)
-				{
-					$icon = 'system_locked';
-				}
-				else
-				{
-					$icon = $topic->icon_id;
-				}
-				$iconurl = $this->getTopicIconIndexPath($icon, true);
-			}
-			else
-			{
-				$icon = 'normal';
-				if ($topic->posts < 2)
-				{
-					$icon = 'unanswered';
-				}
-
-				if ($topic->ordering)
-				{
-					$icon = 'sticky';
-				}
-
-				//if ($topic->myfavorite) $icon = 'favorite';
-				if ($topic->locked)
-				{
-					$icon = 'locked';
-				}
-
-				if ($topic->ordering && $topic->locked)
-				{
-					$icon = 'sticky_and_locked';
-				}
-
-				if ($topic->hold == 1)
-				{
-					$icon = 'unapproved';
-				}
-
-				if ($topic->hold == 2)
-				{
-					$icon = 'deleted';
-				}
-
-				if ($topic->moved_id)
-				{
-					$icon = 'moved';
-				}
-
-				if (!empty($topic->unread))
-				{
-					$icon .= '_new';
-				}
-
-				// FIXME: hardcoded to system type...
-				$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
-			}
 			$html = '<img src="' . $iconurl . '" alt="emo" />';
 		}
 

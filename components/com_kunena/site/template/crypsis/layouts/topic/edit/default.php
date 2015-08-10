@@ -173,6 +173,15 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						// Show bbcode editor
 						echo $this->subLayout('Topic/Edit/Editor')->setProperties($this->getProperties());
 						?>
+						<?php if ($this->message->exists()) : ?>
+							<div class="control-group" id="modified_reason">
+								<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+
+								<div class="controls">
+									<textarea class="input-xlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+								</div>
+							</div>
+						<?php endif; ?>
 						<?php if ($this->allowedExtensions) : ?>
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>

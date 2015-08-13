@@ -173,7 +173,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						// Show bbcode editor
 						echo $this->subLayout('Topic/Edit/Editor')->setProperties($this->getProperties());
 						?>
-						<?php if ($this->message->exists()) : ?>
+						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
 							<div class="control-group" id="modified_reason">
 								<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 

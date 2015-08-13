@@ -29,17 +29,6 @@ $this->getBBcodesEnabled();
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
 
-<?php if ($this->message->exists()) : ?>
-
-	<div class="control-group">
-		<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
-
-		<div class="controls">
-			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
-		</div>
-	</div>
-<?php endif; ?>
-
 <!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">

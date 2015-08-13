@@ -244,7 +244,7 @@ HTML;
 			}
 			elseif ($topic->icon_id == 3)
 			{
-				$icon = 'system_unapproved';
+				$icon = 'lamp';
 			}
 			elseif ($topic->icon_id == 4)
 			{
@@ -260,7 +260,7 @@ HTML;
 			}
 			elseif ($topic->icon_id ==  10)
 			{
-				$icon = 'bell';
+				$icon = 'remove-circle';
 			}
 			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
 			{

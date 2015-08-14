@@ -661,6 +661,11 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories`
 				CHANGE COLUMN `icon` `icon` VARCHAR(60)</query>
 		</version>
+		<version version="4.0.4-DEV2"
+		         versiondate="2015-07-19"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE COLUMN `canSubscribe` `canSubscribe` tinyint(1) NOT NULL default '-1'</query>
+		</version>
 		<version version="@kunenaversion@"
 		         versiondate="@kunenaversiondate@"
 		         versionname="@kunenaversionname@">

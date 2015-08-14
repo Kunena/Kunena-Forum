@@ -19,22 +19,19 @@ $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_
 $author = $topic->getLastPostAuthor();
 $avatar = $author->getAvatarImage('img-rounded', 'thumb');
 $config = KunenaConfig::getInstance();
-$cols = empty($this->checkbox) ? 7 : 6;
+$cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
 
 if ($this->topic->ordering)
 {
-	$txt .= '-stickymsg';
-}
-
-if ($this->topic->getCategory()->class_sfx)
-{
-
-	if ($this->topic->ordering)
+	if ($this->topic->getCategory()->class_sfx)
+	{
+		$txt .= '';
+	}
+	else
 	{
 		$txt .= '-stickymsg';
 	}
-	$txt .= $this->escape($this->topic->getCategory()->class_sfx);
 }
 
 if ($this->topic->hold == 1)
@@ -48,15 +45,16 @@ else
 		$txt .= ' '  . 'deleted';
 	}
 }
+
 if ($this->topic->moved_id > 0)
 {
 	$txt .= ' ' . 'moved';
 }
 
 if (!empty($this->spacing)) : ?>
-	<tr class="kcontenttablespacer">
-		<td colspan="<?php echo $cols; ?>">&nbsp;</td>
-	</tr>
+<tr class="kcontenttablespacer">
+	<td colspan="<?php echo $cols; ?>">&nbsp;</td>
+</tr>
 <?php endif; ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx).$txt;?>">

@@ -15,6 +15,7 @@ $message = $this->message;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
+$attachs = $message->getNbAttachments();
 $avatarname = $this->profile->getname();
 $config = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
@@ -37,7 +38,7 @@ $list = array();
 </small>
 
 <div class="badger-left badger-info <?php if ($this->topic->icon_id == 8) : ?> badger-solved <?php endif;?> message-<?php echo $this->message->getState(); ?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
+	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
 			<?php  if (!$this->me->userid && !$isReply) :
@@ -58,7 +59,31 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php endif; ?>
+	<?php elseif($attachs->total > 0  && !$this->me->exists()):
+		if ( $attachs->image > 0 )
+		{
+			if ( $attachs->image > 1 )
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+			}
+		}
+
+		if ( $attachs->file > 0 )
+		{
+			if ( $attachs->file > 1 )
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+			}
+		}
+	endif; ?>
 	<?php if ($signature) : ?>
 		<div class="ksig">
 			<hr>
@@ -70,10 +95,14 @@ $list = array();
 			<div class="row">
 				<div class="col-md-9">
 					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="glyphicon glyphicon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-					<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+					<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

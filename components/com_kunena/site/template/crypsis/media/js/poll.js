@@ -95,6 +95,10 @@ jQuery(document).ready(function() {
 	} else {
 		jQuery('.pollbutton').hide();
 	}
+	
+	if ( jQuery('#poll_exist_edit') != 'undefined' ) {
+		jQuery('.pollbutton').show();
+	}
 
 	jQuery('#kpoll_go_results').click(function() {
 		if(jQuery('#poll-results').is(':visible')==true)

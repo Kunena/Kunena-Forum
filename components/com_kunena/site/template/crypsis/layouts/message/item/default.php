@@ -15,6 +15,7 @@ $message = $this->message;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
 $attachments = $message->getAttachments();
+$attachs = $message->getNbAttachments();
 $avatarname = $this->profile->getname();
 $config = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
@@ -36,7 +37,7 @@ $list = array();
 </small>
 
 <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
+	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
 			<?php  if (!$this->me->userid && !$isReply) :
@@ -57,7 +58,31 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php endif; ?>
+	<?php elseif($attachs->total > 0  && !$this->me->exists()):
+		if ( $attachs->image > 0 )
+		{
+			if ( $attachs->image > 1 )
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+			}
+		}
+
+		if ( $attachs->file > 0 )
+		{
+			if ( $attachs->file > 1 )
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+			}
+		}
+	endif; ?>
 	<?php if ($signature) : ?>
 		<div class="ksig">
 			<hr>

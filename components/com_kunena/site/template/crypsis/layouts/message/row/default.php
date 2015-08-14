@@ -22,9 +22,17 @@ $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 'thumb');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
+
 if ($topic->ordering)
 {
-	$txt .= '-stickymsg';
+	if ($this->topic->getCategory()->class_sfx)
+	{
+		$txt .= '';
+	}
+	else
+	{
+		$txt .= '-stickymsg';
+	}
 }
 
 if ($topic->hold == 1 || $message->hold == 1)
@@ -38,11 +46,13 @@ else
 		$txt .= ' '  . 'deleted';
 	}
 }
+
 if ($topic->moved_id > 0)
 {
 	$txt .= ' ' . 'moved';
 }
 ?>
+
 <tr class="category<?php echo $this->escape($category->class_sfx).$txt; ?>">
 	<?php if ($topic->unread) : ?>
 	<td class="hidden-phone center topic-item-unread">
@@ -94,12 +104,12 @@ if ($topic->moved_id > 0)
 				</div>
 			<?php endif; ?>
 				<div class="span9">
-				<span><?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?></span>
-				<?php if ($message->userid) : ?>
-					<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?></span>
-				<?php endif; ?>
-				<br />
-				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+					<span>
+						<?php echo $this->getTopicLink ( $topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
+					</span>
+					<br />
+					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
 			</div>
 		</div>

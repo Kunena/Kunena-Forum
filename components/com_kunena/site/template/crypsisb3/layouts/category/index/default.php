@@ -21,12 +21,11 @@ $mmm = 0;
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
 	?>
-	<div class="clearfix"></div>
 	<div class="kfrontend">
 
 			<div class="btn-toolbar pull-right">
 				<?php if (count($this->sections) > 0) : ?>
-					<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>"></div>
+					<button class="btn btn-default btn-small" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
 				<?php endif; ?>
 			</div>
 
@@ -38,7 +37,7 @@ foreach ($this->sections as $section) :
 			</h2>
 
 
-		<div class="collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
+		<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 			<table class="table table-bordered">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-xs">
@@ -160,7 +159,8 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time   = $last->getLastPostTime();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 'post') : null;
+								$this->ktemplate = KunenaFactory::getTemplate();
+								$avatar = $this->config->avataroncat ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post') : null;
 							?>
 
 								<td class="col-md-3 hidden-xs">
@@ -210,4 +210,3 @@ foreach ($this->sections as $section) :
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 	<!-- Finish: Category Module Position -->
 <?php endforeach; ?>
-<div class="clearfix"></div>

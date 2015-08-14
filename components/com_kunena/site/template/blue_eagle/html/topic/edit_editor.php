@@ -243,7 +243,7 @@ defined ( '_JEXEC' ) or die ();
 
 		<!-- Hidden preview placeholder -->
 		<div id="kbbcode-preview" style="display: none;"></div>
-		<?php if ($this->message->exists()) : ?>
+		<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
 		<div class="clr"> </div>
 		<fieldset>
 			<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>

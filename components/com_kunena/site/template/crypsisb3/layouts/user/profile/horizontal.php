@@ -13,7 +13,8 @@ defined('_JEXEC') or die;
 
 /** @var KunenaUser $user */
 $user   = $this->user;
-$avatar = $user->getAvatarImage('img-thumbnail', 'thumb');
+$this->ktemplate = KunenaFactory::getTemplate();
+$avatar = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $show   = KunenaConfig::getInstance()->showuserstats;
 
 if ($show)
@@ -25,16 +26,25 @@ if ($show)
 ?>
 
 <div class="col-md-2">
-	<ul class="profilebox center">
+	<ul class="unstyled center profilebox">
 		<li>
 			<strong><?php echo $user->getLink(null, null, 'nofollow', '', null, $this->category_id); ?></strong>
 		</li>
 		<?php if ($avatar) : ?>
 			<li>
 				<?php echo $user->getLink($avatar); ?>
+			</li>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-					<span class="topic-starter"></span>
-				<?php endif; ?>
+					<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+				<?php endif;?>
+				<?php if (!$this->topic_starter && $user->isModerator()) : ?>
+					<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
+				<?php endif;?>
+
+		<?php endif; ?>
+		<?php if ($user->exists()) : ?>
+			<li>
+				<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 			</li>
 		<?php endif; ?>
 	</ul>
@@ -42,14 +52,6 @@ if ($show)
 <div class="col-md-2">
 	<br>
 	<ul class="profilebox center">
-		<?php if ($user->exists()) : ?>
-			<li>
-						<span class="label label-<?php echo $user->isOnline('success', 'important') ?>">
-							<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-						</span>
-
-			</li>
-		<?php endif; ?>
 		<?php if (!empty($rankTitle)) : ?>
 			<li>
 				<?php echo $this->escape($rankTitle); ?>

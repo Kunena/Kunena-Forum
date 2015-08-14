@@ -32,7 +32,31 @@ defined ( '_JEXEC' ) or die ();
 		</ul>
 	</div>
 </div>
-<?php endif; ?>
+<?php elseif($this->attachs->total > 0  && !$this->me->exists()):
+		if ( $this->attachs->image > 0 )
+		{
+			if ( $this->attachs->image > 1 )
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+			}
+		}
+
+		if ( $this->attachs->file > 0 )
+		{
+			if ( $this->attachs->file > 1 )
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+			}
+		}
+	endif; ?>
 <?php if ( $this->quickreply ) : ?>
 <div id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="postform" enctype="multipart/form-data">
@@ -51,7 +75,12 @@ defined ( '_JEXEC' ) or die ();
 		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->message->subject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
 		<?php if ($this->topic->authorise('subscribe') && !$this->usertopic->subscribed) : ?>
-		<?php if ( !$this->usertopic->subscribed ): ?><input type="checkbox" name="subscribeMe" value="1" <?php if ($this->config->subscriptionschecked == 1 && $this->me->canSubscribe || $this->config->subscriptionschecked == 0 && $this->me->canSubscribe) echo 'checked="checked"' ?> /><?php endif; ?>
+		<?php if ( !$this->usertopic->subscribed ): ?>
+		<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->config->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->config->subscriptionschecked == 0 && $this->me->canSubscribe == 1 )
+		{
+			echo 'checked="checked"';
+		} ?> />
+		<?php endif; ?>
 		<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 		<br />
 		<?php endif; ?>

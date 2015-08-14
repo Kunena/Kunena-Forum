@@ -13,15 +13,15 @@ defined('_JEXEC') or die;
 $announcement = $this->announcement;
 $actions = $this->getActions();
 ?>
-<h2>
+<h3>
 	<?php echo $announcement->displayField('title'); ?>
 
-	<?php if ($this->announcement->showdate) : ?>
+	<?php if ($announcement->showdate) : ?>
 		<small title="<?php echo $announcement->displayField('created', 'ago'); ?>">
 			<?php echo $announcement->displayField('created', 'date_today'); ?>
 		</small>
 	<?php endif; ?>
-</h2>
+</h3>
 
 <?php if (!empty($actions)) : ?>
 	<div>

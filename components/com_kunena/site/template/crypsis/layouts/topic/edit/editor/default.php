@@ -29,17 +29,6 @@ $this->getBBcodesEnabled();
 	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
 </div>
 
-<?php if ($this->message->exists()) : ?>
-
-	<div class="control-group">
-		<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
-
-		<div class="controls">
-			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
-		</div>
-	</div>
-<?php endif; ?>
-
 <!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
@@ -171,7 +160,7 @@ $this->getBBcodesEnabled();
 					if($this->poll->exists()) {
 						$x = 1;
 						foreach ($this->poll->getOptions() as $poll_option) {
-							echo '<div class="polloption">Option '.$x.' <input type="text" size="100" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'")" /></div>';
+							echo '<div class="polloption"><label>Option '.$x.'</label><input type="text" size="100" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" /></div>';
 							$x++;
 						}
 					}
@@ -182,7 +171,7 @@ $this->getBBcodesEnabled();
 			</div>
 	</div>
 	<div class="modal-footer">
-		<button id="poll-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button id="poll-settings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>

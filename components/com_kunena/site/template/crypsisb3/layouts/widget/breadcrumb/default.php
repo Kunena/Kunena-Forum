@@ -18,12 +18,12 @@ if ($item) : ?>
 <ul class="breadcrumb">
 	<li class="active">
 		<span class="divider glyphicon glyphicon-location"></span>
-		<a href="<?php echo $item->link; ?>"><?php echo $item->name; ?></a>
+		<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $item->name; ?></a>
 	</li>
 
 	<?php foreach($pathway as $item) : ?>
 	<li>
-		<a href="<?php echo $item->link; ?>"><?php echo $item->name; ?></a>
+		<a href="<?php echo $item->link; ?>" rel="nofollow"><?php echo $item->name; ?></a>
 	</li>
 	<?php endforeach; ?>
 

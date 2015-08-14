@@ -348,6 +348,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['searchtime'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_ALLOW_CHANGE_SUBJECT_REPLIES_LABEL') ?></td>
+														<td><?php echo $this->lists ['allow_change_subject'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_ALLOW_CHANGE_SUBJECT_REPLIES_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>

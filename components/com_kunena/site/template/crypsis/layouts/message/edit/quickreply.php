@@ -74,6 +74,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 			<input type="text" id="subject" name="subject" size="35" class="inputbox"
 			       maxlength="<?php echo (int) $config->maxsubject; ?>"
+			       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
 			       value="<?php echo $message->displayField('subject'); ?>" />
 			<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 

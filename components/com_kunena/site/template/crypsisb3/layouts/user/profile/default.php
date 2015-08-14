@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 /** @var KunenaUser $user */
 $user = $this->user;
-$this->ktemplate->params->get('avatarType');
+$this->ktemplate = KunenaFactory::getTemplate();
 $avatar = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
 $show = KunenaConfig::getInstance()->showuserstats;
 

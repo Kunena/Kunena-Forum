@@ -887,6 +887,37 @@ HTML;
 
 			if ($topicicontype == '0' || !$topicicontype)
 			{
+				// TODO: use xml file instead
+				if ($topic->moved_id)
+				{
+					$icon = 'system_moved';
+				}
+				elseif ($topic->hold == 2 || $topic->hold == 3)
+				{
+					$icon = 'system_deleted';
+				}
+				elseif ($topic->hold == 1)
+				{
+					$icon = 'system_unapproved';
+				}
+				elseif ($topic->ordering && $topic->locked)
+				{
+					$icon = 'system_sticky_locked';
+				}
+				elseif ($topic->ordering)
+				{
+					$icon = 'system_sticky';
+				}
+				elseif ($topic->locked)
+				{
+					$icon = 'system_locked';
+				}
+				else
+				{
+					$icon = $topic->icon_id;
+				}
+				$this->category_iconset = '/default';
+
 				$iconurl = $this->getTopicIconIndexPath($icon, true);
 			}
 		}

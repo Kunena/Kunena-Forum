@@ -81,7 +81,7 @@ defined('_JEXEC') or die;
 			<div class="controls center" id="ann-publish">
 				<input name="submit" class="btn btn-primary" type="submit"
 				       value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
-				<input onclick="window.history.back();" name="cancel" class="btn" type="button"
+				<input onclick="window.history.back();" name="cancel" class="btn btn-default" type="button"
 				       value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"/>
 			</div>
 		</div>

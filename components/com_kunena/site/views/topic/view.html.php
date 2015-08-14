@@ -678,7 +678,7 @@ class KunenaViewTopic extends KunenaView
 			}
 
 			$javascript = "document.id('helpbox').set('value', '" . JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true) . "')";
-			$list       = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" onmouseover="' . $javascript . '"', 'value', 'text', '-1');
+			$list       = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton form-control" onmouseover="' . $javascript . '"', 'value', 'text', '-1');
 
 			return $list;
 		}

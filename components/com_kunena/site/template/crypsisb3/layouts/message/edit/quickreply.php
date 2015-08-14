@@ -65,7 +65,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					<input type="text" name="authorname" size="35" class="col-md-12" maxlength="35" value="<?php
 						echo $this->escape($me->getName()); ?>" />
 					<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous"
-					       value="1" class="kinputbox postinput" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
+					       value="1" class="kinputbox postinput form-control" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
 					<label for="kanonymous<?php echo intval($message->id); ?>">
 						<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
 					</label>
@@ -73,10 +73,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					<input type="hidden" name="authorname" value="<?php echo $this->escape($me->getName()); ?>" />
 					<?php endif; ?>
 
-					<input type="text" id="subject" name="subject" size="35" class="inputbox"
+					<input type="text" id="subject" name="subject" size="35" class="inputbox form-control"
 					       maxlength="<?php echo (int) $config->maxsubject; ?>"
 					       value="<?php echo $message->displayField('subject'); ?>" />
-					<textarea class="col-md-12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+					<textarea class="col-md-12 qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 
 					<?php if ($topic->isAuthorised('subscribe')) : ?>
 						<div class="clearfix"></div>
@@ -104,7 +104,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
 					       title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>" />
 					<?php //TODO: remove data on cancel. ?>
-					<input type="reset" name="reset" class="btn"
+					<input type="reset" name="reset" class="btn btn-default"
 						value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
 						title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" data-dismiss="modal" aria-hidden="true" />
 				</div>

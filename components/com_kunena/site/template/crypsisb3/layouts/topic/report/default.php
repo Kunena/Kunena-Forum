@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 ?>
 
-<h2>
+<h4>
 	<?php echo JText::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
-</h2>
+</h4>
 
 <form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" class="form-horizontal">
 	<input type="hidden" name="view" value="topic" />
@@ -33,7 +33,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_REPORT_REASON'); ?>
 			</label>
 			<div class="controls">
-				<input class="input-xxlarge" type="text" name="reason" size="30" id="kreport-reason"/>
+				<input class="input-xxlarge form-control" type="text" name="reason" size="30" id="kreport-reason"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -41,14 +41,15 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_REPORT_MESSAGE'); ?>
 			</label>
 			<div class="controls">
-				<textarea class="input-xxlarge" id="kreport-msg" name="text" cols="40" rows="10"></textarea>
+				<textarea class="input-xxlarge form-control" id="kreport-msg" name="text" cols="40" rows="10"></textarea>
 			</div>
 		</div>
+		<br>
 		<div class="control-group">
 			<div class="controls">
 				<input class="btn btn-primary" type="submit" name="Submit"
 				       value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>"/>
-				<button class="btn" data-dismiss="modal" aria-hidden="true">
+				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
 						<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>
 		</div>

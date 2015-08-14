@@ -805,13 +805,25 @@ HTML;
 			$topicicontype = '0';
 		}
 
+		if ($this->isHMVC() && !empty($category_iconset))
+		{
+			$this->category_iconset = '/' . $category_iconset;
+		}
+		else
+		{
+			if ($config->topicicons)
+			{
+				$this->category_iconset = '/default';
+			}
+		}
+
 		if ($config->topicicons)
 		{
 			if ($topic->icon_id == 5 || $topic->ordering)
 			{
 				if ($topicicontype == 'B2' || $topicicontype == 'B3')
 				{
-				$icon = 'pushpin';
+					$icon = 'pushpin';
 				}
 				else if ($topicicontype == 'fa')
 				{
@@ -835,11 +847,25 @@ HTML;
 			}
 			elseif ($topic->icon_id == 2)
 			{
-				$icon = 'question-sign';
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				{
+					$icon = 'question-sign';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'question-circle';
+				}
 			}
 			elseif ($topic->icon_id == 3)
 			{
-				$icon = 'system_unapproved';
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				{
+					$icon = 'lamp';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'fa-lightbulb-o';
+				}
 			}
 			elseif ($topic->icon_id == 4)
 			{
@@ -859,21 +885,35 @@ HTML;
 			}
 			elseif ($topic->icon_id == 8)
 			{
-				$icon = 'ok';
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				{
+					$icon = 'ok';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'check';
+				}
 			}
 			elseif ($topic->icon_id == 9)
 			{
-				$icon = 'resize-small';
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				{
+					$icon = 'resize-small';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'compress';
+				}
 			}
 			elseif ($topic->icon_id == 10)
 			{
-				if ($topicicontype == 'B2')
+				if ($topicicontype == 'B3' || $topicicontype == 'B2')
 				{
-					$icon = 'lamp';
+					$icon = 'remove';
 				}
-				else if ($topicicontype == 'B3' || $topicicontype == 'fa')
+				else if ($topicicontype == 'fa')
 				{
-					$icon = 'bell';
+					$icon = 'times';
 				}
 			}
 			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
@@ -916,7 +956,6 @@ HTML;
 				{
 					$icon = $topic->icon_id;
 				}
-				$this->category_iconset = '/default';
 
 				$iconurl = $this->getTopicIconIndexPath($icon, true);
 			}
@@ -931,7 +970,7 @@ HTML;
 
 			if ($topic->ordering)
 			{
-				$icon = 'pushpin';
+				$icon = 'sticky';
 			}
 
 			//if ($topic->myfavorite) $icon = 'favorite';
@@ -965,39 +1004,43 @@ HTML;
 				$icon .= '_new';
 			}
 
-			if ($topicicontype == '0' || !$topicicontype)
-			{
-				// FIXME: hardcoded to system type...
-				$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
-			}
+			$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
 		}
 
 		if ($topicicontype == 'B2')
 		{
-			$html = '<span class="icon icon-' . $icon . ' icon-topic" aria-hidden="true"></span>';
+			if ($config->topicicons)
+			{
+				$html = '<span class="icon icon-' . $icon . ' icon-topic" aria-hidden="true"></span>';
+			}
+			else {
+				$html = '<img src="' . $iconurl . '" alt="emo" />';
+			}
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			$html = '<span class="glyphicon glyphicon-' . $icon . ' glyphicon-topic" aria-hidden="true"></span>';
-		}
-		elseif ($topicicontype == 'fa')
-		{
-			$html = '<i class="fa fa-' . $icon . ' fa-2x"></i>';
-		}
-		elseif ($topicicontype == '0' || !$topicicontype)
-		{
-			if ($this->isHMVC() && !empty($category_iconset))
+			if ($config->topicicons)
 			{
-				$this->category_iconset = '/' . $category_iconset;
+				$html = '<span class="glyphicon glyphicon-' . $icon . ' glyphicon-topic" aria-hidden="true"></span>';
 			}
 			else
 			{
-				if ($config->topicicons)
-				{
-					$this->category_iconset = '/default';
-				}
+				$html = '<img src="' . $iconurl . '" alt="emo" />';
 			}
-
+		}
+		elseif ($topicicontype == 'fa')
+		{
+			if ($config->topicicons)
+			{
+				$html = '<i class="fa fa-' . $icon . ' fa-2x"></i>';
+			}
+			else
+			{
+				$html = '<img src="' . $iconurl . '" alt="emo" />';
+			}
+		}
+		elseif ($topicicontype == '0' || !$topicicontype)
+		{
 			$html = '<img src="' . $iconurl . '" alt="emo" />';
 		}
 
@@ -1231,3 +1274,4 @@ HTML;
 		return self::$_instances [$name];
 	}
 }
+

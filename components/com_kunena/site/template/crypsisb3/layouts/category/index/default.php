@@ -159,7 +159,8 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time   = $last->getLastPostTime();
-								$avatar = $this->config->avataroncat ? $author->getAvatarImage('img-rounded', 'post') : null;
+								$this->ktemplate = KunenaFactory::getTemplate();
+								$avatar = $this->config->avataroncat ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post') : null;
 							?>
 
 								<td class="col-md-3 hidden-xs">

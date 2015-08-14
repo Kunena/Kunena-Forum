@@ -16,7 +16,8 @@ $topic = $this->topic;
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage('img-rounded', 'post');
+$this->ktemplate = KunenaFactory::getTemplate();
+$avatar = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
 $category = $this->topic->getCategory();
 $cols = empty($this->checkbox) ? 4 : 5;
 $category = $this->topic->getCategory();
@@ -78,36 +79,38 @@ if (!empty($this->spacing)) : ?>
 			{
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
+			$labels = $this->ktemplate->params->get('labels');
+			if ($labels) {
+				if ($this->topic->locked != 0) { ?>
+					<span class="label label-default">CLOSED</span>
+				<?php }
 
-			if ($this->topic->locked != 0) { ?>
-				<span class="label label-default">CLOSED</span>
-			<?php }
+				if ($this->topic->ordering != 0)  { ?>
+					<span class="label label-info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only"></span>STICKY</span></span>
+				<?php }
 
-			if ($this->topic->ordering != 0)  { ?>
-				<span class="label label-info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				<span class="sr-only"></span>STICKY</span></span>
-			<?php }
+				if ($this->topic->icon_id == 1)  { ?>
+					<span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only"></span>IMPORTANT</span></span>
+				<?php }
 
-			if ($this->topic->icon_id == 1)  { ?>
-				<span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				<span class="sr-only"></span>IMPORTANT</span></span>
-			<?php }
+				if ($this->topic->icon_id == 2) { ?>
+					<span class="label label-primary"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+					<span class="sr-only"></span>QUESTION</span></span>
+				<?php }
 
-			if ($this->topic->icon_id == 2) { ?>
-				<span class="label label-primary"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-				<span class="sr-only"></span>QUESTION</span></span>
-			<?php }
+				$str_counts = substr_count($this->topic->subject, 'solved');
+				if ($this->topic->icon_id == 8 || $str_counts) { ?>
+				<a href="#"><span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+				   <span class="sr-only"></span>SOLVED</span></span></a>
+			   <?php }
 
-			$str_counts = substr_count($this->topic->subject, 'solved');
-			if ($this->topic->icon_id == 8 || $str_counts) { ?>
-			<a href="#"><span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-			   <span class="sr-only"></span>SOLVED</span></span></a>
-		   <?php }
-
-			if ($this->topic->icon_id == 10) { ?>
-				<span class="label label-danger"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
-				<span class="sr-only"></span>BUG</span>
-			<?php } ?>
+				if ($this->topic->icon_id == 10) { ?>
+					<span class="label label-danger"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+					<span class="sr-only"></span>BUG</span>
+				<?php }
+			}?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>

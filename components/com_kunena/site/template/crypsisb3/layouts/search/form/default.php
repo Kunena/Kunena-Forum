@@ -158,7 +158,7 @@ $this->addScript('js/search.js');
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?>
 						</legend>
-						<?php $this->displayCategoryList('categorylist', 'size="10" multiple="multiple"'); ?>
+						<?php $this->displayCategoryList('categorylist', 'size="10" multiple="multiple" class="form-control"'); ?>
 						<label>
 							<input type="checkbox" name="childforums" value="1"
 								<?php if ($this->state->get('query.childforums')) echo 'checked="checked"'; ?> />

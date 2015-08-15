@@ -64,7 +64,7 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 						<?php foreach ($this->topicIcons as $id => $icon): ?>
 						<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
 						<?php if ($this->config->topicicons && $topicicontype == 'B2') : ?>
-							<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span class="glyphicon glyphicon-<?php echo $icon->b2; ?> glyphicon-topic" aria-hidden="true"></span>
+							<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span class="icon icon-<?php echo $icon->b2; ?> icon-topic" aria-hidden="true"></span>
 						<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
 							<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 						<?php else : ?>

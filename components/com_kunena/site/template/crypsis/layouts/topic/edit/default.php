@@ -68,6 +68,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
 	$this->addScript('js/sisyphus.js');
 }
+
+$this->ktemplate = KunenaFactory::getTemplate();
+$topicicontype = $this->ktemplate->params->get('topicicontype');
 ?>
 
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"
@@ -155,15 +158,18 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php if (!empty($this->topicIcons)) : ?>
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
-
 								<div id="iconset_inject" class="controls controls-select">
 									<div id="iconset_topic_list">
 										<?php foreach ($this->topicIcons as $id => $icon): ?>
-											<span class="kiconsel">
-											<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-											<label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+										<?php if ($this->config->topicicons && $topicicontype == 'B2') : ?>
+											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span class="glyphicon glyphicon-<?php echo $icon->b2; ?> glyphicon-topic" aria-hidden="true"></span>
+										<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
+											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
+										<?php else : ?>
+											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+										<?php endif; ?>
 											</label>
-										</span>
 										<?php endforeach; ?>
 									</div>
 								</div>

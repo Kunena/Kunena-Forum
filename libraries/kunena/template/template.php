@@ -627,6 +627,9 @@ HTML;
 
 							$icon->published             = (int) $attributes->published;
 							$icon->title                 = (string) $attributes->title;
+							$icon->b2                    = (string) $attributes->b2;
+							$icon->b3                    = (string) $attributes->b3;
+							$icon->fa                    = (string) $attributes->fa;
 							$icon->filename              = (string) $attributes->src;
 							$icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
 							$icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
@@ -834,7 +837,7 @@ HTML;
 			{
 				if ($topicicontype == 'B2')
 				{
-					$icon = 'warning-circle';
+					$icon = 'notification-circle';
 				}
 				else if ($topicicontype == 'B3')
 				{
@@ -864,7 +867,7 @@ HTML;
 				}
 				else if ($topicicontype == 'fa')
 				{
-					$icon = 'fa-lightbulb-o';
+					$icon = 'lightbulb-o';
 				}
 			}
 			elseif ($topic->icon_id == 4)

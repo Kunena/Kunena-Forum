@@ -101,6 +101,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
+
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css';
 		if (file_exists($filename))
 		{
@@ -122,6 +123,7 @@ EOF;
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] i,
 		.layout#kunena .glyphicon-topic,
+		.layout#kunena h3 i,
 		.layout#kunena #kwho i.icon-users,
 		.layout#kunena#kstats i.icon-bars { color: {$iconcolor}; }
 EOF;

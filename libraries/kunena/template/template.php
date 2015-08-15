@@ -899,9 +899,13 @@ HTML;
 			}
 			elseif ($topic->icon_id == 9)
 			{
-				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				if ($topicicontype == 'B3')
 				{
 					$icon = 'resize-small';
+				}
+				else if ($topicicontype == 'B2')
+				{
+					$icon = 'contract';
 				}
 				else if ($topicicontype == 'fa')
 				{
@@ -917,6 +921,17 @@ HTML;
 				else if ($topicicontype == 'fa')
 				{
 					$icon = 'times';
+				}
+			}
+			elseif ($topic->locked)
+			{
+				if ($topicicontype == 'B2')
+				{
+					$icon = 'locked';
+				}
+				else if ($topicicontype == 'B3' || $topicicontype == 'fa')
+				{
+					$icon = 'lock';
 				}
 			}
 			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
@@ -1277,4 +1292,3 @@ HTML;
 		return self::$_instances [$name];
 	}
 }
-

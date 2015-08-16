@@ -943,7 +943,7 @@
 		<field name="canSubscribe"
 		       type="tinyint(1)"
 		       null="0"
-		       default="1"/>
+		       default="-1"/>
 		<field name="userListtime"
 		       type="int(11)"
 		       null="1"

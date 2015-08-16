@@ -80,8 +80,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<div class="control-group">
 				<div class="controls">
-					<input type="checkbox" name="subscribeMe" value="1"
-					<?php echo ($config->subscriptionschecked == 1 && $me->canSubscribe || $config->subscriptionschecked == 0 && $me->canSubscribe) ? 'checked="checked"' : ''; ?> />
+					<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1)
+					{
+						echo 'checked="checked"';
+					} ?> />
 					<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 				</div>
 			</div>
@@ -91,7 +93,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php if (!empty($this->captchaEnabled)) : ?>
 			<div class="control-group">
 				<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
-					<div class="controls"> <div id="dynamic_recaptcha_1"> </div> </div>
+					<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
 			</div>
 		<?php endif; ?>
 		<div class="modal-footer">

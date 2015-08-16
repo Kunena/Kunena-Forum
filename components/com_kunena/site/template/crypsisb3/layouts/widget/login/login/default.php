@@ -43,7 +43,7 @@ defined('_JEXEC') or die;
 							<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
 						</label>
 					</div>
-					<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+					<button class="btn btn-lg btn-primary" type="submit">Sign in</button>
 					<?php if ($this->resetPasswordUrl) : ?>
 						<a href="<?php echo $this->resetPasswordUrl; ?>" rel="nofollow">
 							<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>

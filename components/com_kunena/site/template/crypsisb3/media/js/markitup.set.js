@@ -166,7 +166,7 @@ bbcodeSettings = {
 		},
 		{name: 'Poll', className: 'pollbutton', beforeInsert:function() {
 			if ( jQuery('#modal-poll-settings').length!=0 ) {
-					jQuery('#poll-modal-submit').click(function(event) {
+					jQuery('#poll-settings-modal-submit').click(function(event) {
 						event.preventDefault();
 
 						jQuery('#modal-poll-settings').modal('hide');

@@ -64,15 +64,15 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 			{
 				$plugin = JPluginHelper::getPlugin('captcha');
 				$params = new JRegistry($plugin[0]->params);
-				
+
 				$captcha_pubkey = $params->get('public_key');
 				$catcha_privkey = $params->get('private_key');
-				
+
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					JPluginHelper::importPlugin('captcha');
 					$dispatcher = JDispatcher::getInstance();
-					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+					$result = $dispatcher->trigger('onInit', "dynamic_recaptcha_{$this->message->id}");
 
 					$this->captchaEnabled = $result[0];
 				}

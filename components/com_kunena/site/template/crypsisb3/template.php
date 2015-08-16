@@ -87,15 +87,10 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	 */
 	public function initialize()
 	{
-		// Template requires Bootstrap javascript
 		JHtml::_('bootstrap.framework');
 		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
-
-		// Template also requires jQuery framework.
 		JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.modal');
-
-		// Load JavaScript.
 		$this->addScript('main.js');
 
 		// Compile CSS from LESS files.
@@ -127,7 +122,8 @@ EOF;
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
-		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important; }
+		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread .glyphicon { color: {$iconcolornew} !important;}
 EOF;
 		}
 
@@ -220,4 +216,110 @@ HTML;
 	{
 		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';
 	}
+
+	/**
+	 * @param KunenaForumTopic $topic
+	 *
+	 * @return string
+	 */
+	public function getTopicIcon($topic, $category_iconset = '')
+	{
+		$config = KunenaFactory::getConfig();
+
+		if ($config->topicicons)
+		{
+			// TODO: use xml file instead
+
+			if ($topic->icon_id == 5 || $topic->ordering )
+			{
+				$icon = 'pushpin';
+			}
+			elseif ($topic->icon_id == 1)
+			{
+				$icon = 'exclamation-sign';
+			}
+			elseif ($topic->icon_id == 2)
+			{
+				$icon = 'question-sign';
+			}
+			elseif ($topic->icon_id == 3)
+			{
+				$icon = 'lamp';
+			}
+			elseif ($topic->icon_id == 4)
+			{
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 8)
+			{
+				$icon = 'ok';
+			}
+			elseif ($topic->icon_id == 9)
+			{
+				$icon = 'resize-small';
+			}
+			elseif ($topic->icon_id ==  10)
+			{
+				$icon = 'remove-circle';
+			}
+			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
+			{
+				$icon = 'pushpin';
+			}
+			else
+			{
+				$icon = 'file';
+			}
+		}
+		else
+		{
+			$icon = 'normal';
+			if ($topic->posts < 2)
+			{
+				$icon = 'unanswered';
+			}
+
+			if ($topic->ordering)
+			{
+				$icon = 'pushpin';
+			}
+
+			//if ($topic->myfavorite) $icon = 'favorite';
+			if ($topic->locked)
+			{
+				$icon = 'locked';
+			}
+
+			if ($topic->ordering && $topic->locked)
+			{
+				$icon = 'sticky_and_locked';
+			}
+
+			if ($topic->hold == 1)
+			{
+				$icon = 'unapproved';
+			}
+
+			if ($topic->hold == 2)
+			{
+				$icon = 'deleted';
+			}
+
+			if ($topic->moved_id)
+			{
+				$icon = 'moved';
+			}
+
+			if (!empty($topic->unread))
+			{
+				$icon .= '_new';
+			}
+
+		}
+		$html = '<span class="glyphicon glyphicon-' . $icon . ' glyphicon-topic" aria-hidden="true"></span>';
+
+		return $html;
+	}
+
+
 }

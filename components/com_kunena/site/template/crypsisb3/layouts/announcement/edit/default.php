@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 
 <div class="well well-small">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
-	      name="editform" class="form-horizontal" id="editform">
+	      name="editform" class="form-inline" id="editform">
 		<input type="hidden" name="task" value="save" />
 		<?php echo $this->displayInput('id'); ?>
 		<?php echo JHtml::_('form.token'); ?>
@@ -28,7 +28,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>
 			</label>
 			<div class="controls" id="ann-title">
-				<?php echo $this->displayInput('title', 'class="input-xxlarge" required placeholder="' . JText::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_TITLE') . '"'); ?>
+				<?php echo $this->displayInput('title', 'class="form-control input-xxlarge" required placeholder="' . JText::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_TITLE') . '"'); ?>
 			</div>
 		</div>
 
@@ -37,7 +37,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-short">
-				<?php echo $this->displayInput('sdescription', 'rows="9" class="input-xxlarge" required placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
+				<?php echo $this->displayInput('sdescription', 'rows="9" class="form-control input-xxlarge" required placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_SDESCRIPTION') . '"'); ?>
 			</div>
 		</div>
 
@@ -46,7 +46,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>
 			</label>
 			<div class="controls" id="ann-long">
-				<?php echo $this->displayInput('description', 'rows="12" class="input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
+				<?php echo $this->displayInput('description', 'rows="12" class="form-control input-xxlarge" placeholder="' . JTEXT::_('COM_KUNENA_ANN_LABEL_PLACEHOLDER_DESCRITPION') . '"'); ?>
 			</div>
 		</div>
 
@@ -64,7 +64,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE'); ?>
 			</label>
 			<div class="controls" id="ann-showdate">
-				<?php echo $this->displayInput('showdate'); ?>
+				<?php echo $this->displayInput('showdate', 'class="form-control"'); ?>
 			</div>
 		</div>
 
@@ -73,7 +73,7 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>
 			</label>
 			<div class="controls" id="ann-publish">
-				<?php echo $this->displayInput('published'); ?>
+				<?php echo $this->displayInput('published', 'class="form-control col-md-2"'); ?>
 			</div>
 		</div>
 
@@ -81,7 +81,7 @@ defined('_JEXEC') or die;
 			<div class="controls center" id="ann-publish">
 				<input name="submit" class="btn btn-primary" type="submit"
 				       value="<?php echo JText::_('COM_KUNENA_SAVE'); ?>"/>
-				<input onclick="window.history.back();" name="cancel" class="btn" type="button"
+				<input onclick="window.history.back();" name="cancel" class="btn btn-default" type="button"
 				       value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"/>
 			</div>
 		</div>

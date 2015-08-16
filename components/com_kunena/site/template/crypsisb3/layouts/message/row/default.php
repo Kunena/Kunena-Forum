@@ -18,7 +18,8 @@ $topic = $message->getTopic();
 $category = $message->getCategory();
 $isReply = $message->id != $topic->first_post_id;
 $category = $message->getCategory();
-$avatar = $topic->getLastPostAuthor()->getAvatarImage('img-thumbnail', 'posts');
+$this->ktemplate = KunenaFactory::getTemplate();
+$avatar = $topic->getLastPostAuthor()->getAvatarImage($this->ktemplate->params->get('avatarType'), 'posts');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
@@ -91,12 +92,12 @@ if ($topic->moved_id > 0)
 				</div>
 			<?php endif; ?>
 				<div class="col-md-9">
-				<span><?php echo $this->getTopicLink ( $topic, JText::_('COM_KUNENA_GEN_LAST_POST'), 'Last Post'); ?></span>
-				<?php if ($message->userid) : ?>
-					<span><?php echo JText::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?></span>
-				<?php endif; ?>
-				<br />
-				<?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?>
+					<span>
+						<?php echo $this->getTopicLink ( $topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
+					</span>
+					<br />
+					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
 		</div>
 	</td>

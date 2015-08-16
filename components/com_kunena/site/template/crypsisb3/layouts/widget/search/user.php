@@ -15,19 +15,18 @@ $state = $this->state;
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>" method="post"
-	  name="usrlform" id="usrlform" class="form-search pull-right">
+	  name="usrlform" id="usrlform" class="form-inline form-search pull-right">
 	<input type="hidden" name="view" value="user"/>
 	<?php if ($me->exists()): ?>
 		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
 	<?php echo JHtml::_('form.token'); ?>
 
-	<div class="input-group">
-		<label>
-			<input id="kusersearch" class="input-medium search-query" type="text" name="search"
+	<div class="input-group" role="group">
+		<div class="input-group-btn">
+			<input id="kusersearch" class="form-control input-medium search-query" type="text" name="search"
 				   value="<?php echo $this->escape($state); ?>" placeholder="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
-		</label>
-
-		<button type="submit" class="btn"><span class="icon glyphicon glyphicon-search"></span></button>
+		<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+			</div>
 	</div>
 </form>

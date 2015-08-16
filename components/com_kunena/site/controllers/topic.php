@@ -154,7 +154,14 @@ class KunenaControllerTopic extends KunenaController
 				// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
 				if ($category->id)
 				{
-					$category->tryAuthorise('topic.post.attachment.create');
+					if ( stripos($this->input->getString('mime'), 'image/') !== false )
+					{
+						$category->tryAuthorise('topic.post.attachment.createimage');
+					}
+					else
+					{
+						$category->tryAuthorise('topic.post.attachment.createfile');
+					}
 				}
 			}
 
@@ -886,12 +893,9 @@ class KunenaControllerTopic extends KunenaController
 
 		if ( !$ignore )
 		{
-			// Check max links in message to check spam
-			$http = substr_count($text, "http");
-			$href = substr_count($text, "href");
-			$url = substr_count($text, "[url");
+			preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
 
-			$countlink = $http += $href += $url;
+			$countlink = count($matches[0]);
 
 			if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
 				return false;

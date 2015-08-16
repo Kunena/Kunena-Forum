@@ -3,8 +3,8 @@
 <extension type="package" version="2.5" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>4.0.3</version>
-	<versionname>Possagno</versionname>
+	<version>4.0.4</version>
+	<versionname>Turnau</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>

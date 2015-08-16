@@ -69,6 +69,12 @@ h2 {
 	padding-left : 3px;
 }
 
+.kfrontend {
+	padding: 20px 0;
+	margin-bottom : 20px;
+	clear: both;
+}
+
 .kfrontend .section {
 	margin-bottom : 20px;
 }
@@ -214,10 +220,6 @@ ul li {
 	list-style : none;
 }
 
-.topictitle {
-	font-size : 110%;
-}
-
 .viewsnum,
 .repliesnum {
 	font-size : 110%;
@@ -348,9 +350,9 @@ div.kmsgtext-confidential {
 	tab-size      : 4;
 	border-radius : 3px;
 	display       : block;
-	border        : 1px dotted;
+	border        : 1px solid #e5e5e5;
 	margin        : 5px;
-	padding       : 5px;
+	padding       : 15px;
 	font-style    : italic;
 }
 
@@ -471,7 +473,6 @@ select#mode {
 
 .message-deleted {
 	background-color : rgba(0, 0, 0, 0.1);
-	padding          : 8px;
 	margin-bottom    : 15px;
 	border-radius    : 5px;
 }
@@ -718,6 +719,10 @@ select#postcatid {
 	font-size : 32px;
 }
 
+.glyphicon-topic {
+	font-size : 28px;
+}
+
 .glyphicon-super {
 	margin-top: 20px;
 	margin-left: 5px;
@@ -769,7 +774,7 @@ div#kstats .well {
 #editavatar input[type=radio],
 #poll-vote input[type=radio],
 #search input[type=radio] {
-	display : block;
+	display : inline-block;
 }
 
 ul.inline span.kicon {
@@ -800,7 +805,6 @@ div.pagination a.disabled:hover {
 	color: #999999;
 }
 
-.label,
 .badge {
 	white-space: normal;
 }
@@ -948,4 +952,49 @@ textarea {
 .category-stickymsg,
 .deleted {
 	background-color: rgba(0, 0, 0, 0.05);
+}
+
+.badger-solved {
+	border: 1px solid palegreen;
+	background-color:palegreen;
+}
+
+table .col-md-1 {
+	width: 5.6666666%;
+}
+
+.form-group .pull-right .input-group-btn {
+	width: auto;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+ul.inline > li > a > I {
+	margin-left:5px;
+	margin-right:5px;
+	font-size:16px;
+}
+
+.img-rounded {
+	border: 1px solid #ccc;
+	background-color:#fff;
+}
+
+.horizontal-message-top {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border-radius: 4px;
+	min-height: 180px;
+	border: 0;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#modified_reason {
+		margin-top: -60px;
+		padding-bottom: 50px;
+}
+
+#kbbcode-poll-options .polloption {
+	padding: 5px 0;
 }

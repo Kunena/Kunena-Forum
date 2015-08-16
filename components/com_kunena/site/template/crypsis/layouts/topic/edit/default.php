@@ -89,6 +89,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
 			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 		<?php endif; ?>
+		<?php if ($this->message->getTopic()->first_post_id==$this->message->id && $this->message->getTopic()->getPoll()->id): ?>
+			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>" />
+		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
 		<input type="hidden" id="kunena_upload_files_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . JSession::getFormToken() . '=1', false) ?>" />
 		<?php echo JHtml::_('form.token'); ?>
@@ -170,6 +173,15 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						// Show bbcode editor
 						echo $this->subLayout('Topic/Edit/Editor')->setProperties($this->getProperties());
 						?>
+						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
+							<div class="control-group" id="modified_reason">
+								<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+
+								<div class="controls">
+									<textarea class="input-xlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+								</div>
+							</div>
+						<?php endif; ?>
 						<?php if ($this->allowedExtensions) : ?>
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>
@@ -221,7 +233,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
 
 								<div class="controls">
-									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe || $this->subscriptionschecked == 0 && $this->me->canSubscribe)
+									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
 									{
 										echo 'checked="checked"';
 									} ?> />
@@ -244,9 +256,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<div class="center">
 			<button type="submit" class="btn btn-success" tabindex="8">
 				<i class="icon-edit icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
-			</button>
-			<button id="kbutton-preview" name="preview" type="button" class="btn" tabindex="9">
-				<i class="icon-eye-open"></i><?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>
 			</button>
 			<button type="reset" class="btn" onclick="javascript:window.history.back();" tabindex="10">
 				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>

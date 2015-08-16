@@ -19,21 +19,29 @@ JHtml::_('behavior.core');
 	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHtml::_('form.token'); ?>
 
-	<h2>
-		<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
-
-		<?php if (!empty($options)) : ?>
-			<div class="input-group pull-right">
-				<?php echo JHtml::_('select.genericlist', $options, 'task', '', 'value', 'text', 0, 'kchecktask'); ?>
-				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-				<a class="btn btn-primary"
-				   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
-					<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
-				</a>
-			</div>
-		<?php endif; ?>
-
-	</h2>
+	<div class="row">
+		<div class="col-md-7">
+			<h2>
+				<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
+			</h2>
+		</div>
+		<div class="col-md-5">
+			<?php if (!empty($options)) : ?>
+				<div class="form-group">
+					<div class="input-group pull-right" role="group">
+						<div class="input-group-btn">
+							<?php echo JHtml::_('select.genericlist', $options, 'task', 'class="form-control pull-left"', 'value', 'text', 0, 'kchecktask'); ?>
+							<input type="submit" name="kcheckgo" class="btn btn-default" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+							<a class="btn btn-primary"
+								href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
+								<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
+							</a>
+						</div>
+					</div>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
 
 	<table class="table table-striped table-bordered">
 		<thead>

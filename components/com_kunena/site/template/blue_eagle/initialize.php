@@ -26,6 +26,10 @@ if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 $template->addScript ( 'js/default.js' );
 
 $rtl = JFactory::getLanguage()->isRTL();
+if ($rtl) {
+	$template->addStyleSheet ( 'css/kunena.forum.rtl.css');
+}
+
 $skinner = $template->params->get('enableSkinner', 0);
 
 if (is_file(JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css")) {

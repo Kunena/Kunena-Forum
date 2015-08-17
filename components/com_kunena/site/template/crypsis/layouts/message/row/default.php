@@ -25,7 +25,7 @@ $txt   = '';
 
 if ($topic->ordering)
 {
-	if ($this->topic->getCategory()->class_sfx)
+	if ($topic->getCategory()->class_sfx)
 	{
 		$txt .= '';
 	}

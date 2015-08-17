@@ -32,10 +32,10 @@ defined ( '_JEXEC' ) or die ();
 		</ul>
 	</div>
 </div>
-<?php elseif($this->attachs->total > 0  && !$this->me->exists()):
-	if ( $this->attachs->image > 0 )
+<?php elseif ($this->attachs->total > 0  && !$this->me->exists()):
+	if ($this->attachs->image > 0  && !$this->config->showimgforguest)
 	{
-		if ( $this->attachs->image > 1 && !$this->config->showimgforguest )
+		if ( $this->attachs->image > 1 )
 		{
 			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
 		}
@@ -45,9 +45,9 @@ defined ( '_JEXEC' ) or die ();
 		}
 	}
 
-	if ( $this->attachs->file > 0 )
+	if ($this->attachs->file > 0 && !$this->config->showfileforguest)
 	{
-		if ( $this->attachs->file > 1  && !$this->config->showfileforguest)
+		if ( $this->attachs->file > 1)
 		{
 			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
 		}

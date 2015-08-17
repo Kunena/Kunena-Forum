@@ -59,10 +59,10 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php elseif ($attachs->total > 0  && !$this->me->exists() && !$this->config->showimgforguest):
+	<?php elseif($attachs->total > 0  && !$this->me->exists()):
 		if ( $attachs->image > 0 )
 		{
-			if ( $attachs->image > 1 )
+			if ( $attachs->image > 1 && !$this->config->showimgforguest )
 			{
 				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
 			}
@@ -74,7 +74,7 @@ $list = array();
 
 		if ( $attachs->file > 0 )
 		{
-			if ( $attachs->file > 1 )
+			if ( $attachs->file > 1  && !$this->config->showfileforguest)
 			{
 				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
 			}

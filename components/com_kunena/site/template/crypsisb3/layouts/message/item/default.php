@@ -59,7 +59,7 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php elseif($attachs->total > 0  && !$this->me->exists()):
+	<?php elseif ($attachs->total > 0  && !$this->me->exists() && !$this->config->showimgforguest):
 		if ( $attachs->image > 0 )
 		{
 			if ( $attachs->image > 1 )

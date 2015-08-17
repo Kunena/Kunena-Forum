@@ -32,7 +32,7 @@ defined ( '_JEXEC' ) or die ();
 		</ul>
 	</div>
 </div>
-<?php elseif($this->attachs->total > 0  && !$this->me->exists()):
+<?php elseif ($this->attachs->total > 0  && !$this->me->exists() && !$this->config->showimgforguest):
 		if ( $this->attachs->image > 0 )
 		{
 			if ( $this->attachs->image > 1 )

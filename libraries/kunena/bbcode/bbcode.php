@@ -933,7 +933,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		'ul' => array(
 			'mode' => BBCODE_MODE_LIBRARY,
 			'method' => 'DoList',
-			'default' => array( '_default' => 'circle' ),
+			'default' => array( '_default' => 'disc' ),
 			'class' => 'list',
 			'allow_in' => array('listitem', 'block', 'columns'),
 			'before_tag' => "sns",

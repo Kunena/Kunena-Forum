@@ -32,31 +32,31 @@ defined ( '_JEXEC' ) or die ();
 		</ul>
 	</div>
 </div>
-<?php elseif($this->attachs->total > 0  && !$this->me->exists()):
-		if ( $this->attachs->image > 0 )
+<?php elseif ($this->attachs->total > 0  && !$this->me->exists()):
+	if ($this->attachs->image > 0  && !$this->config->showimgforguest)
+	{
+		if ( $this->attachs->image > 1 )
 		{
-			if ( $this->attachs->image > 1 )
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
-			}
-			else
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
-			}
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
 		}
+		else
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+		}
+	}
 
-		if ( $this->attachs->file > 0 )
+	if ($this->attachs->file > 0 && !$this->config->showfileforguest)
+	{
+		if ( $this->attachs->file > 1)
 		{
-			if ( $this->attachs->file > 1 )
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
-			}
-			else
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
-			}
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
 		}
-	endif; ?>
+		else
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+		}
+	}
+endif; ?>
 <?php if ( $this->quickreply ) : ?>
 <div id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="postform" enctype="multipart/form-data">

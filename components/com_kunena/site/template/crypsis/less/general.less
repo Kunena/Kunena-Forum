@@ -209,7 +209,10 @@ hr {
 	line-height : 20px;
 }
 
-ul li {
+.unstyled,
+.inline li,
+#kstats li,
+.profilebox li {
 	list-style : none;
 }
 
@@ -384,8 +387,9 @@ form {
 	border-radius : 5px;
 }
 
-ul, ol {
+.profilebox {
 	padding : 0;
+	margin-top : -5px;
 }
 
 .dl-horizontal dt {
@@ -508,10 +512,6 @@ table .well {
 	.btn-link {
 		margin-left : -120px;
 	}
-}
-
-.profilebox {
-	margin-top : -5px;
 }
 
 .profile-horizontal-top {
@@ -872,6 +872,11 @@ form#postform div.control-group {
 }
 
 .icon-topic {
-	font-size: 24px;
-	margin-top: 10px;
+	font-size  : 24px;
+	margin-top : 10px;
+}
+
+#kmoderate-mode-selected,
+#kmoderate-mode-newer {
+	display: inline-block;
 }

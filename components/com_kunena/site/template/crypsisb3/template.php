@@ -71,7 +71,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 	public function loadLanguage()
 	{
 		$lang = JFactory::getLanguage();
-		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
+		KunenaFactory::loadLanguage('kunena_tmpl_crypsis');
 
 		foreach (array_reverse($this->default) as $template)
 		{

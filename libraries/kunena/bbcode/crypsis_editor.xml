@@ -4,55 +4,55 @@
 	<button tag="b" name="Bold" title="COM_KUNENA_EDITOR_BOLD" alt="COM_KUNENA_EDITOR_HELPLINE_BOLD">
 		<wrap-selection name="Bold"
                     key="B"
-                    class="boldbutton" 
+                    class="boldbutton"
                     start="[b]"
                end="[/b]" />
 	</button>
 	<button tag="i" name="Italic" class="italicbutton" title="COM_KUNENA_EDITOR_ITALIC" alt="COM_KUNENA_EDITOR_HELPLINE_ITALIC">
 		<wrap-selection name="Italic"
                     key="I"
-                    class="italicbutton"  
+                    class="italicbutton"
     start="[i]"
                end="[/i]" />
 	</button>
 	<button tag="u" name="Underline" class="underlinebutton" title="COM_KUNENA_EDITOR_UNDERL" alt="COM_KUNENA_EDITOR_HELPLINE_UNDERL">
 		<wrap-selection name="Underline"
                     key="U"
-                    class="underlinebutton" 
+                    class="underlinebutton"
      start="[u]"
                end="[/u]" />
 	</button>
 	<button tag="strike" name="Stroke" class="strokebutton" title="COM_KUNENA_EDITOR_STRIKE" alt="COM_KUNENA_EDITOR_HELPLINE_STRIKE">
 		<wrap-selection name="Stroke"
                     key="T"
-                    class="strokebutton" 
+                    class="strokebutton"
      start="[strike]"
                end="[/strike]" />
 	</button>
 	<button tag="sub" name="Subscript" class="subscriptbutton" title="COM_KUNENA_EDITOR_SUB" alt="COM_KUNENA_EDITOR_HELPLINE_SUB">
 		<wrap-selection name="Subscript"
                     key="T"
-                    class="subscriptbutton" 
+                    class="subscriptbutton"
      start="[sub]"
                end="[/sub]" />
 	</button>
 	<button tag="sup" name="Supscript" class="supscriptbutton" title="COM_KUNENA_EDITOR_SUP" alt="COM_KUNENA_EDITOR_HELPLINE_SUP">
 		<wrap-selection name="Supscript"
                     key="T"
-                    class="supscriptbutton" 
+                    class="supscriptbutton"
      start="[sup]"
                end="[/sup]" />
 	</button>
 	<button tag="size" name="Size" class="sizebutton" title="COM_KUNENA_EDITOR_FONTSIZE" alt="COM_KUNENA_EDITOR_HELPLINE_FONTSIZE">
 		<dropdown name="Size"
                     key="S"
-                    class="sizebutton" 
+                    class="sizebutton"
      start="[size=[![Text size]!]]"
-               end="[/size]" />              
+               end="[/size]" />
 	</button>
 	<button tag="color" name="color" class="colors" title="COM_KUNENA_EDITOR_COLOR" alt="COM_KUNENA_EDITOR_HELPLINE_COLOR">
-		<dropdown name="Colors"                    
-                    class="colors" 
+		<dropdown name="Colors"
+                    class="colors"
      start="[color=[![Color]!]]"
                end="[/color]"  />
 	</button>
@@ -79,8 +79,8 @@
 	</button>
 	<button tag="li" name="list" title="COM_KUNENA_EDITOR_LIST" alt="COM_KUNENA_EDITOR_HELPLINE_LIST">
 		<wrap-selection class="listitembutton"
-                    start="[li]\n"
-                    end="\n[/li]" />
+                    start="\n  [li]"
+                    end="[/li]" />
 	</button>
 	<button tag="hr" name="hr" title="COM_KUNENA_EDITOR_HR" alt="COM_KUNENA_EDITOR_HELPLINE_HR">
 		<wrap-selection key=""
@@ -90,20 +90,20 @@
 	<button tag="left" name="left" title="COM_KUNENA_EDITOR_LEFT" alt="COM_KUNENA_EDITOR_HELPLINE_LEFT">
 		<wrap-selection class="alignleftbutton"
                     key=""
-                    start="[left]\n"
-                    end="\n[/left]"  />
+                    start="[left]"
+                    end="[/left]"  />
 	</button>
 	<button tag="center" name="center" title="COM_KUNENA_EDITOR_CENTER" alt="COM_KUNENA_EDITOR_HELPLINE_CENTER">
 		<wrap-selection class="centerbutton"
                     key=""
-                    start="[center]\n"
-                    end="\n[center]"  />
+                    start="[center]"
+                    end="[/center]"  />
 	</button>
 	<button tag="right" name="right" title="COM_KUNENA_EDITOR_RIGHT" alt="COM_KUNENA_EDITOR_HELPLINE_RIGHT">
 		<wrap-selection class="alignrightbutton"
                     key=""
-                    start="[right]\n"
-                    end="\n[/right]"  />
+                    start="[right]"
+                    end="[/right]"  />
 	</button>
 
 	<separator name="blocks" />
@@ -122,19 +122,14 @@
                     start="[code]"
                     end="[code]" />
 	</button>
-	<button tag="code" name="code" title="COM_KUNENA_EDITOR_CODE" alt="COM_KUNENA_EDITOR_HELPLINE_CODE">   
-		<modal name="code" class="codemodalboxbutton" />		
+	<button tag="code" name="code" title="COM_KUNENA_EDITOR_CODE" alt="COM_KUNENA_EDITOR_HELPLINE_CODE">
+		<modal name="code" class="codemodalboxbutton" />
 	</button>
 	<button tag="table" name="table" title="COM_KUNENA_EDITOR_TABLE" alt="COM_KUNENA_EDITOR_HELPLINE_TABLE">
-		<wrap-selection empty_before="[table]\n  [tr]\n    [td]"
-						empty_after="[/td]\n    [td][/td]\n  [/tr]\n  [tr]\n    [td][/td]\n    [td][/td]\n  [/tr]\n[/table]"
+		<wrap-selection class="tablebutton" name="table"
 						repeat="line"
-						start="[tr]\n    [td]"
-						end="[/td]\n  [/tr]"
-						before="\n[table]\n"
-						after="\n[/table]\n"
-            class="tablebutton"
-            name="table" />
+						start="[table]\n  [tr]\n   [td][/td]\n   [td][/td]\n  [/tr]"
+						end="\n  [tr]\n   [td][/td]\n   [td][/td]\n [/tr]\n[/table] \n" />
 	</button>
 	<button tag="spoiler" name="spoiler" config="showspoilertag" title="COM_KUNENA_EDITOR_SPOILER" alt="COM_KUNENA_EDITOR_HELPLINE_SPOILER">
 		<wrap-selection class="spoilerbutton" start="[spoiler]" end="[/spoiler]" />
@@ -178,5 +173,5 @@
 
 	<button name="help" title="COM_KUNENA_EDITOR_HELP" alt="COM_KUNENA_EDITOR_HELPLINE_HELP">
 		<link url="http://docs.kunena.org/index.php/bbcode" />
-	</button>      
+	</button>
 </bbcode-editor>

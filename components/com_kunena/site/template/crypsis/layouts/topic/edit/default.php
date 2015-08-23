@@ -62,15 +62,23 @@ if ($this->config->pollenabled)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
-$this->addScript('js/edit.js');
+
+$this->ktemplate = KunenaFactory::getTemplate();
+$topicicontype = $this->ktemplate->params->get('topicicontype');
+if ($topicicontype == 'B2'){
+	$this->addScript('js/editb2.js');
+}
+elseif ($topicicontype == 'fa') {
+	$this->addScript('js/editfa.js');
+}
+else {
+	$this->addScript('js/edit.js');
+}
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
 	$this->addScript('js/sisyphus.js');
 }
-
-$this->ktemplate = KunenaFactory::getTemplate();
-$topicicontype = $this->ktemplate->params->get('topicicontype');
 ?>
 
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"

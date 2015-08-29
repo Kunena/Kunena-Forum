@@ -27,9 +27,9 @@ defined('_JEXEC') or die;
 			</tr>
 		<?php endforeach ?>
 		<tr>
-			<td class="col-md-3">Clear Cache</td>
+			<td class="col-md-3"><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></td>
 				<td>
-					<button type="button" class="btn btn-default btn-small" onClick="window.localStorage.clear()" data-loading-text="Loading...">Clear Cache</button>
+					<button type="button" class="btn btn-default btn-small" onClick="window.localStorage.clear()" data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></button>
 				</td>
 		</tr>
 	</tbody>

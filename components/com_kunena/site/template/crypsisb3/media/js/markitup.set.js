@@ -184,25 +184,22 @@ bbcodeSettings = {
 			}
 		},
 		{name:'Tweet', className: 'tweetbutton', openWith:'[tweet]', closeWith:'[/tweet]'},
-		{name:'Emoticons', className: 'emoticonsbutton', dropMenu: [
-			{name: 'Emoticons', className: 'emoticonsbutton', beforeInsert:function() {
-				jQuery('#map-modal-submit').click(function(event) {
-					event.preventDefault();
+		{name: 'Emoticons', className: 'emoticonsbutton', beforeInsert:function() {
+			jQuery('#map-modal-submit').click(function(event) {
+				event.preventDefault();
 
-					jQuery('#modal-map').modal('hide');
-				});
+				jQuery('#modal-map').modal('hide');
+			});
 
-				jQuery('#modal-emoticons').modal(
-					{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-						dialog.overlay.fadeIn('slow', function () {
-							dialog.container.slideDown('slow', function () {
-								dialog.data.fadeIn('slow');
-							});
+			jQuery('#modal-emoticons').modal(
+				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+					dialog.overlay.fadeIn('slow', function () {
+						dialog.container.slideDown('slow', function () {
+							dialog.data.fadeIn('slow');
 						});
-					}});
-			}
-			}
-		]}
+					});
+				}});
+		}}
 	]
 };
 

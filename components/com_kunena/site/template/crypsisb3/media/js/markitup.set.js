@@ -33,9 +33,9 @@ bbcodeSettings = {
 			openWith:'[color=[![Color]!]]',
 			closeWith:'[/color]',
 				dropMenu: [
-					{name:'Black',	openWith:'[color=#000000]', 	closeWith:'[/color]', className:"col1-1" },
-					{name:'Orange',	openWith:'[color=#000044]', 	closeWith:'[/color]', className:"col1-2" },
-					{name:'Red', 	openWith:'[color=#000088]', 	closeWith:'[/color]', className:"col1-3" },
+					{name:'Black',	openWith:'[color=black]', 	closeWith:'[/color]', className:"col1-1" },
+					{name:'Orange',	openWith:'[color=orange]', 	closeWith:'[/color]', className:"col1-2" },
+					{name:'Red', 	openWith:'[color=red]', 	closeWith:'[/color]', className:"col1-3" },
 
 					{name:'Blue', 	openWith:'[color=blue]', 	closeWith:'[/color]', className:"col2-1" },
 					{name:'Purple', openWith:'[color=purple]', 	closeWith:'[/color]', className:"col2-2" },
@@ -300,7 +300,7 @@ jQuery(document).ready(function (){
 		var videowidth = jQuery('#modal-video-width').val();
 		var videoheight = jQuery('#modal-video-height').val();
 		var videosize = jQuery('#modal-video-size').val();
-		var kvideoproviderlist = jQuery("#kvideoprovider-list-modal option:selected").val(); 
+		var kvideoproviderlist = jQuery("#kvideoprovider-list-modal option:selected").val();
 
 		var width = '425';
 		var height = '344';
@@ -333,7 +333,7 @@ jQuery(document).ready(function (){
 				{ openWith:'[video '+size+' '+width+' '+height+' type='+kvideoproviderlist+']'+providerid,
 				closeWith:'[/video]' }
 			);
-			return false;  
+			return false;
 		}
 	});
 

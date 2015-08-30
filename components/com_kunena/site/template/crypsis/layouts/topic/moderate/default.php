@@ -52,7 +52,7 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 					<dt> <?php echo JText::_('COM_KUNENA_CATEGORY'); ?> </dt>
 					<dd> <?php echo $this->category->displayField('name') ?> </dd>
 					<?php if (isset($this->userLink)) : ?>
-						<dt> <?php echo JText::_('User'); ?> </dt>
+						<dt> <?php echo JText::_('JGLOBAL_USERNAME'); ?> </dt>
 						<dd><strong> <?php echo $this->userLink; ?></strong></dd>
 					<?php endif; ?>
 				</dl>

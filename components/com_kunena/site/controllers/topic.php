@@ -893,7 +893,12 @@ class KunenaControllerTopic extends KunenaController
 
 		if ( !$ignore )
 		{
-			preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
+			preg_match_all('@\(((https?://)?([-\\w]+\\.[-\\w\\.]+)+\\w(:\\d+)?(/([-\\w/_\\.]*(\\?\\S+)?)?)*)\)@', $text, $matches);
+
+			if( empty($matches[0]) )
+			{
+				preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
+			}
 
 			$countlink = count($matches[0]);
 

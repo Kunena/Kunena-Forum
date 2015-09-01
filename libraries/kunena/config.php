@@ -1141,6 +1141,12 @@ class KunenaConfig extends JObject
 	public $twitter_consumer_secret = '';
 
 	/**
+	 * @var    string  Allow to define if the user can change the subject of topic on replies; select, boolean
+	 * @since  K4.0.0
+	 */
+	public $allow_change_subject = 1;
+
+	/**
 	 * @var    integer  Max Links limit; input, number
 	 * @since  K4.0.0
 	 */

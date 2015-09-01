@@ -51,6 +51,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<input type="hidden" name="task" value="post" />
 				<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
 				<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
+				<?php if (!$config->allow_change_subject): ?>
+					<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+				<?php endif; ?>
 				<?php echo JHtml::_('form.token'); ?>
 
 				<div class="modal-header">
@@ -75,6 +78,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 					<input type="text" id="subject" name="subject" size="35" class="inputbox form-control"
 					       maxlength="<?php echo (int) $config->maxsubject; ?>"
+					       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
 					       value="<?php echo $message->displayField('subject'); ?>" />
 					<textarea class="col-md-12 qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 

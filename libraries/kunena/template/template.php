@@ -1,24 +1,22 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Template
+ *
+ * @package       Kunena.Framework
+ * @subpackage    Template
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 jimport('joomla.html.parameter');
 
 /**
-
-* Kunena Users Table Class
-
-* Provides access to the #__kunena_users table
-
-*/
+ * Kunena Users Table Class
+ * Provides access to the #__kunena_users table
+ */
 class KunenaTemplate extends JObject
 {
 	// Global for every instance
@@ -629,6 +627,9 @@ HTML;
 
 							$icon->published             = (int) $attributes->published;
 							$icon->title                 = (string) $attributes->title;
+							$icon->b2                    = (string) $attributes->b2;
+							$icon->b3                    = (string) $attributes->b3;
+							$icon->fa                    = (string) $attributes->fa;
 							$icon->filename              = (string) $attributes->src;
 							$icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
 							$icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
@@ -787,13 +788,25 @@ HTML;
 	}
 
 	/**
+	 * Get the th topic icon depending on template settings
+	 *
 	 * @param KunenaForumTopic $topic
+	 * @param $category_iconset
 	 *
 	 * @return string
 	 */
 	public function getTopicIcon($topic, $category_iconset = '')
 	{
 		$config = KunenaFactory::getConfig();
+
+		if ($this->isHMVC())
+		{
+			$topicicontype = $this->ktemplate->params->get('topicicontype');
+		}
+		else
+		{
+			$topicicontype = '0';
+		}
 
 		if ($this->isHMVC() && !empty($category_iconset))
 		{
@@ -809,36 +822,161 @@ HTML;
 
 		if ($config->topicicons)
 		{
-			// TODO: use xml file instead
-			if ($topic->moved_id)
+			if ($topic->icon_id == 5 || $topic->ordering)
 			{
-				$icon = 'system_moved';
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				{
+					$icon = 'pushpin';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'thumb-tack';
+				}
 			}
-			elseif ($topic->hold == 2 || $topic->hold == 3)
+			elseif ($topic->icon_id == 1)
 			{
-				$icon = 'system_deleted';
+				if ($topicicontype == 'B2')
+				{
+					$icon = 'notification-circle';
+				}
+				else if ($topicicontype == 'B3')
+				{
+					$icon = 'exclamation-sign';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'exclamation-circle';
+				}
 			}
-			elseif ($topic->hold == 1)
+			elseif ($topic->icon_id == 2)
 			{
-				$icon = 'system_unapproved';
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				{
+					$icon = 'question-sign';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'question-circle';
+				}
 			}
-			elseif ($topic->ordering && $topic->locked)
+			elseif ($topic->icon_id == 3)
 			{
-				$icon = 'system_sticky_locked';
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				{
+					$icon = 'lamp';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'lightbulb-o';
+				}
 			}
-			elseif ($topic->ordering)
+			elseif ($topic->icon_id == 4)
 			{
-				$icon = 'system_sticky';
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 5)
+			{
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 6)
+			{
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 7)
+			{
+				$icon = 'heart';
+			}
+			elseif ($topic->icon_id == 8)
+			{
+				if ($topicicontype == 'B2' || $topicicontype == 'B3')
+				{
+					$icon = 'ok';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'check';
+				}
+			}
+			elseif ($topic->icon_id == 9)
+			{
+				if ($topicicontype == 'B3')
+				{
+					$icon = 'resize-small';
+				}
+				else if ($topicicontype == 'B2')
+				{
+					$icon = 'contract';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'compress';
+				}
+			}
+			elseif ($topic->icon_id == 10)
+			{
+				if ($topicicontype == 'B3' || $topicicontype == 'B2')
+				{
+					$icon = 'remove';
+				}
+				else if ($topicicontype == 'fa')
+				{
+					$icon = 'times';
+				}
 			}
 			elseif ($topic->locked)
 			{
-				$icon = 'system_locked';
+				if ($topicicontype == 'B2')
+				{
+					$icon = 'locked';
+				}
+				else if ($topicicontype == 'B3' || $topicicontype == 'fa')
+				{
+					$icon = 'lock';
+				}
+			}
+			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
+			{
+				$icon = 'pushpin';
 			}
 			else
 			{
-				$icon = $topic->icon_id;
+				$icon = 'file';
 			}
-			$iconurl = $this->getTopicIconIndexPath($icon, true);
+
+			if ($topicicontype == '0' || !$topicicontype)
+			{
+				// TODO: use xml file instead
+				if ($topic->moved_id)
+				{
+					$icon = 'system_moved';
+				}
+				elseif ($topic->hold == 2 || $topic->hold == 3)
+				{
+					$icon = 'system_deleted';
+				}
+				elseif ($topic->hold == 1)
+				{
+					$icon = 'system_unapproved';
+				}
+				elseif ($topic->ordering && $topic->locked)
+				{
+					$icon = 'system_sticky_locked';
+				}
+				elseif ($topic->ordering)
+				{
+					$icon = 'system_sticky';
+				}
+				elseif ($topic->locked)
+				{
+					$icon = 'system_locked';
+				}
+				else
+				{
+					$icon = $topic->icon_id;
+				}
+
+				$iconurl = $this->getTopicIconIndexPath($icon, true);
+			}
 		}
 		else
 		{
@@ -884,10 +1022,45 @@ HTML;
 				$icon .= '_new';
 			}
 
-			// FIXME: hardcoded to system type...
 			$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
 		}
-		$html = '<img src="' . $iconurl . '" alt="emo" />';
+
+		if ($topicicontype == 'B2')
+		{
+			if ($config->topicicons)
+			{
+				$html = '<span class="icon icon-' . $icon . ' icon-topic" aria-hidden="true"></span>';
+			}
+			else {
+				$html = '<img src="' . $iconurl . '" alt="emo" />';
+			}
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			if ($config->topicicons)
+			{
+				$html = '<span class="glyphicon glyphicon-' . $icon . ' glyphicon-topic" aria-hidden="true"></span>';
+			}
+			else
+			{
+				$html = '<img src="' . $iconurl . '" alt="emo" />';
+			}
+		}
+		elseif ($topicicontype == 'fa')
+		{
+			if ($config->topicicons)
+			{
+				$html = '<i class="fa fa-' . $icon . ' fa-2x"></i>';
+			}
+			else
+			{
+				$html = '<img src="' . $iconurl . '" alt="emo" />';
+			}
+		}
+		elseif ($topicicontype == '0' || !$topicicontype)
+		{
+			$html = '<img src="' . $iconurl . '" alt="emo" />';
+		}
 
 		return $html;
 	}

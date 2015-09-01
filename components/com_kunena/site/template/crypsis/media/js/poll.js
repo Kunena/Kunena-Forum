@@ -128,4 +128,8 @@ jQuery(document).ready(function() {
 			jQuery('#kpoll_go_results').hide();
 		}
 	});
+	
+	jQuery('#kpoll-moreusers').click(function() {
+		jQuery('#kpoll-moreusers-div').show();
+	});
 });

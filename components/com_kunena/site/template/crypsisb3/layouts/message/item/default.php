@@ -59,10 +59,10 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php elseif($attachs->total > 0  && !$this->me->exists()):
-		if ( $attachs->image > 0 )
+	<?php elseif ($attachs->total > 0  && !$this->me->exists()):
+		if ($attachs->image > 0 && !$this->config->showimgforguest)
 		{
-			if ( $attachs->image > 1 )
+			if ($attachs->image > 1)
 			{
 				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
 			}
@@ -72,9 +72,9 @@ $list = array();
 			}
 		}
 
-		if ( $attachs->file > 0 )
+		if ($attachs->file > 0 && !$this->config->showfileforguest)
 		{
-			if ( $attachs->file > 1 )
+			if ($attachs->file > 1)
 			{
 				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
 			}
@@ -94,7 +94,7 @@ $list = array();
 		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
 			<div class="row">
 				<div class="col-md-9">
-					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="glyphicon glyphicon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
+					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="glyphicon glyphicon-warning-sign"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
 					<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">

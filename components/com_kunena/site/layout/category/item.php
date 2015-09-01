@@ -59,8 +59,15 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 		// Is user allowed to post new topic?
 		$url = $category->getNewTopicUrl();
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$topicicontype = $this->ktemplate->params->get('topicicontype');
 
-		if ($url)
+		if ($url && $topicicontype == 'B3')
+		{
+			$actions['create'] = $this->subLayout('Widget/Button')
+				->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true, 'icon' => 'glyphicon glyphicon-edit glyphicon-white'));
+		}
+		else
 		{
 			$actions['create'] = $this->subLayout('Widget/Button')
 				->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true, 'icon' => 'icon-edit icon-white'));
@@ -71,7 +78,12 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			// Is user allowed to mark forums as read?
 			$url = $category->getMarkReadUrl();
 
-			if ($url)
+			if ($url && $topicicontype == 'B3')
+			{
+				$actions['markread'] = $this->subLayout('Widget/Button')
+					->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'glyphicon glyphicon-check'));
+			}
+			else
 			{
 				$actions['markread'] = $this->subLayout('Widget/Button')
 					->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer'));
@@ -82,17 +94,35 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			{
 				$subscribed = $category->getSubscribed($this->me->userid);
 
-				if (!$subscribed)
+				if ($url && $topicicontype == 'B3')
 				{
-					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-bookmark'));
+					if(!$subscribed)
+					{
+						$url                 ="index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+						$actions['subscribe']=$this->subLayout('Widget/Button')
+							->setProperties(array('url'=>$url,'name'=>'subscribe','scope'=>'category','type'=>'user','icon'=>'glyphicon glyphicon-bookmark'));
+					}
+					else
+					{
+						$url                   ="index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+						$actions['unsubscribe']=$this->subLayout('Widget/Button')
+							->setProperties(array('url'=>$url,'name'=>'unsubscribe','scope'=>'category','type'=>'user'));
+					}
 				}
 				else
 				{
-					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user'));
+					if(!$subscribed)
+					{
+						$url                 ="index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+						$actions['subscribe']=$this->subLayout('Widget/Button')
+							->setProperties(array('url'=>$url,'name'=>'subscribe','scope'=>'category','type'=>'user','icon'=>'icon-bookmark'));
+					}
+					else
+					{
+						$url                   ="index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+						$actions['unsubscribe']=$this->subLayout('Widget/Button')
+							->setProperties(array('url'=>$url,'name'=>'unsubscribe','scope'=>'category','type'=>'user'));
+					}
 				}
 			}
 		}

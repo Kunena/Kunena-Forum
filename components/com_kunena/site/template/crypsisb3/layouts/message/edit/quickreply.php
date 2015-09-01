@@ -51,6 +51,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				<input type="hidden" name="task" value="post" />
 				<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
 				<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
+				<?php if (!$config->allow_change_subject): ?>
+					<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+				<?php endif; ?>
 				<?php echo JHtml::_('form.token'); ?>
 
 				<div class="modal-header">

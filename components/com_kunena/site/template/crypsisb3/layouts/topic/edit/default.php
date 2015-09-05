@@ -135,8 +135,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<div class="form-group" id="kanynomous-check-name"
 							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
-							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
-							<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
+							<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
+							<input type="text" id="kauthorname" name="authorname"  placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>
 							<div class="form-group">
@@ -149,10 +149,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<div class="form-group">
 							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 							<div class="col-md-10">
-								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" <?php if (!$this->config->allow_change_subject && $this->message->parent): ?>disabled<?php endif; ?> value="<?php echo $this->escape($this->message->subject); ?>" required />
-								<?php if (!$this->config->allow_change_subject): ?>
-									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
-								<?php endif; ?>
+								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
 							</div>
 						</div>
 						<?php if (!empty($this->topicIcons)) : ?>

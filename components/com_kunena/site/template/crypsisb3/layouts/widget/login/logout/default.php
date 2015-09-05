@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 // FIXME: move announcements logic and pm logic into the template file...
 ?>
-<ul class="nav pull-right">
+<ul class="nav navbar-nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<?php if ($this->me->status == 0) : ?>

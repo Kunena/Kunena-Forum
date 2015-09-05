@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $showAll = isset($this->showAll) ? $this->showAll : false;
 ?>
-<div class="inline">
+<div class="inline pull-right">
 	<?php if (!empty($this->profile->twitter)) : ?>
 	<?php echo $this->profile->socialButton('twitter', $showAll); ?>
 	<?php endif; ?>

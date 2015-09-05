@@ -82,7 +82,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 				$params = new JRegistry($plugin[0]->params);
 				$captcha_pubkey = $params->get('public_key');
 				$catcha_privkey = $params->get('private_key');
-				
+
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					JPluginHelper::importPlugin('captcha');
@@ -109,7 +109,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		if ($this->config->pickup_category)
 		{
 			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
-			$selected = 0;
+			$selected = '';
 		}
 
 		if ($saved)
@@ -127,7 +127,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		);
 
 		$this->selectcatlist = JHtml::_('kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
-			'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
+			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->action = 'post';
 

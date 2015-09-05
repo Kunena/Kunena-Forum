@@ -345,6 +345,9 @@ table.kpostbuttonset {
 	height            : 16px;
 	text-indent       : -10000px;
 	background-repeat : no-repeat;
+	padding           : 5px;
+	margin            : 0;
+	box-sizing        : content-box;
 }
 
 .markItUpHeader ul ul a {
@@ -362,6 +365,7 @@ table.kpostbuttonset {
 
 .markItUpHeader ul {
 	margin : 0;
+	padding : 0;
 }
 
 .markItUpButton {
@@ -374,7 +378,7 @@ table.kpostbuttonset {
 }
 
 li.markItUpButton ul {
-	z-index: 1;
+	z-index : 1;
 }
 
 .dropzone .message {
@@ -423,9 +427,15 @@ li.markItUpButton ul {
 }
 
 #kbbcode-preview {
-	height: auto !important;
+	height : auto !important;
+	min-height: 240px;
 }
 
-#kshow_attach_form {
-	margin-top: -100px;
+#iconset_inject .inline:hover {
+	cursor : pointer;
+}
+
+#kauthorname {
+	width: 80.5%;
+	margin-left: 92px;
 }

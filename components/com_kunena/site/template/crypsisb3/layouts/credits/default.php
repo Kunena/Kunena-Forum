@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 ?>
 
-<h2>
+<h3>
 	<?php echo JText::_('COM_KUNENA').' - '.JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?>
-</h2>
+</h3>
 
 <div class="well well-small" id="credits">
 	<div class="container-fluid pull-left">

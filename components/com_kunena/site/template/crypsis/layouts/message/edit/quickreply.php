@@ -56,6 +56,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<input type="hidden" name="task" value="post" />
 		<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
 		<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
+		<?php if (!$config->allow_change_subject): ?>
+			 <input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+		<?php endif; ?>
 		<?php echo JHtml::_('form.token'); ?>
 
 		<div class="modal-body">
@@ -74,24 +77,27 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 			<input type="text" id="subject" name="subject" size="35" class="inputbox"
 			       maxlength="<?php echo (int) $config->maxsubject; ?>"
+			       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
 			       value="<?php echo $message->displayField('subject'); ?>" />
 			<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<div class="control-group">
 				<div class="controls">
-					<input type="checkbox" name="subscribeMe" value="1"
-					<?php echo ($config->subscriptionschecked == 1 && $me->canSubscribe || $config->subscriptionschecked == 0 && $me->canSubscribe) ? 'checked="checked"' : ''; ?> />
+					<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1)
+					{
+						echo 'checked="checked"';
+					} ?> />
 					<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 				</div>
 			</div>
 			<?php endif; ?>
-			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-small btn-link pull-right"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 		</div>
 		<?php if (!empty($this->captchaEnabled)) : ?>
 			<div class="control-group">
 				<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
-					<div class="controls"> <div id="dynamic_recaptcha_1"> </div> </div>
+					<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
 			</div>
 		<?php endif; ?>
 		<div class="modal-footer">

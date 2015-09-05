@@ -13,7 +13,8 @@ defined('_JEXEC') or die;
 /** @var KunenaUser $profile */
 $profile = $this->profile;
 $me = KunenaUserHelper::getMyself();
-$avatar = $profile->getAvatarImage('img-thumbnail', 'post');
+$this->ktemplate = KunenaFactory::getTemplate();
+$avatar = $profile->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
 $banInfo = $this->config->showbannedreason
 	? KunenaUserBan::getInstanceByUserid($profile->userid)
 	: null;
@@ -24,6 +25,9 @@ $websiteName = $profile->getWebsiteName();
 $personalText = $profile->getPersonalText();
 $signature = $profile->getSignature();
 $email = $profile->email && !$profile->hideEmail && $this->config->showemail || $me->isModerator() || $profile->userid == $me->userid;
+$activityIntegration = KunenaFactory::getActivityIntegration();
+$points = $activityIntegration->getUserPoints($profile->userid);
+$medals = $activityIntegration->getUserMedals($profile->userid);
 
 if ($this->config->showuserstats)
 {
@@ -107,10 +111,10 @@ if ($this->config->showuserstats)
 								<span> <?php echo JText::sprintf((int)$profile->thankyou); ?> </span>
 							</li>
 							<?php endif; ?>
-							<?php if (isset($profile->points)) : ?>
+							<?php if (!empty($points)) : ?>
 								<li>
-									<strong> <?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?> </strong>
-									<span> <?php echo (int)$profile->points; ?> </span>
+									<strong> <?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?></strong>
+									<span> <?php echo $points; ?></span>
 								</li>
 							<?php endif; ?>
 						</ul>
@@ -140,10 +144,10 @@ if ($this->config->showuserstats)
 								<span> <?php echo KunenaDate::getInstance($profile->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 							</li>
 							<?php endif; ?>
-							<?php if (!empty($profile->medals)) : ?>
+							<?php if (!empty($medals)) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_AUP_MEDALS'); ?> </strong>
-									<span> <?php echo implode(' ', $profile->medals); ?> </span>
+									<span> <?php echo implode(' ', $medals); ?> </span>
 								</li>
 							<?php endif; ?>
 						</ul>

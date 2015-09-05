@@ -51,7 +51,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
 			}
 
-			$list = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" ' , 'value', 'text', '-1' );
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"' , 'value', 'text', '-1' );
 
 			return $list;
 		}

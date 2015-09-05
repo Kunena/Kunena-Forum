@@ -154,11 +154,11 @@ class KunenaViewUser extends KunenaView
 		{
 			if ($this->do != 'edit')
 			{
-				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_EDIT') . ' &raquo;', JText::_('COM_KUNENA_EDIT') . ' &raquo;', 'nofollow', 'edit');
+				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_EDIT') . ' &raquo;', JText::_('COM_KUNENA_EDIT') . ' &raquo;', 'nofollow', 'edit','');
 			}
 			else
 			{
-				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow');
+				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow','','');
 			}
 		}
 
@@ -752,6 +752,7 @@ class KunenaViewUser extends KunenaView
 		$item->name       = 'cansubscribe';
 		$item->label      = JText::_('COM_KUNENA_USER_CANSUBSCRIBE');
 		$options          = array();
+		$options[]        = JHtml::_('select.option', -1, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 		$options[]        = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[]        = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field      = JHtml::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->canSubscribe), 'kcansubscribe');

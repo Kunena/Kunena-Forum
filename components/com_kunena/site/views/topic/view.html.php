@@ -277,7 +277,7 @@ class KunenaViewTopic extends KunenaView
 		if ($this->config->pickup_category)
 		{
 			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
-			$selected  = 0;
+			$selected  = '';
 		}
 
 		if ($saved)
@@ -722,7 +722,7 @@ class KunenaViewTopic extends KunenaView
 			}
 
 			$javascript = "document.id('helpbox').set('value', '" . JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true) . "')";
-			$list       = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" onmouseover="' . $javascript . '"', 'value', 'text', '-1');
+			$list       = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control" onmouseover="' . $javascript . '"', 'value', 'text', '-1');
 
 			return $list;
 		}
@@ -1125,6 +1125,9 @@ class KunenaViewTopic extends KunenaView
 				$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), JText::_('COM_KUNENA_REPORT'), JText::_('COM_KUNENA_REPORT'));
 			}
 		}
+
+		// Get number of attachments to display error messages
+		$this->attachs = $this->message->getNbAttachments();
 
 		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents)

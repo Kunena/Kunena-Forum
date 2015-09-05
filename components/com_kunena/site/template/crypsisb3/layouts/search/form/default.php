@@ -26,7 +26,7 @@ $this->addScript('js/search.js');
 
 ?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 	<input type="hidden" name="task" value="results" />
 	<?php if ($this->me->exists()): ?>
 		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
@@ -35,12 +35,12 @@ $this->addScript('js/search.js');
 
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#search"></div>
+			<button class="btn btn-default btn-small" type="button" data-toggle="collapse" data-target="#search" aria-expanded="false" aria-controls="search"></button>
 		</div>
 	</div>
-	<h2>
+	<h3>
 		<?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
-	</h2>
+	</h3>
 
 	<div class="collapse in" id="search">
 	<div class="well">
@@ -49,12 +49,17 @@ $this->addScript('js/search.js');
 					<legend>
 						<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?>
 					</legend>
-					<label>
-						<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:
-						<input type="text" name="query"
-						       value="<?php echo $this->escape($this->state->get('searchwords')); ?>" />
-					</label>
-					<?php $this->displayModeList('mode'); ?>
+					<div class="col-md-6">
+						<label>
+							<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:
+							<input type="text" name="query" class="form-control"
+							       value="<?php echo $this->escape($this->state->get('searchwords')); ?>" />
+						</label>
+					</div>
+					<div class="col-md-6">
+						<br>
+						<?php $this->displayModeList('mode'); ?>
+					</div>
 				</fieldset>
 
 				<fieldset class="col-md-6">
@@ -63,10 +68,10 @@ $this->addScript('js/search.js');
 					</legend>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
-						<input id="kusersearch" type="text" name="searchuser"
+						<input id="kusersearch" type="text" name="searchuser" class="form-control"
 						       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" />
 					</label>
-
+					</br>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>:
 						<input type="checkbox" name="exactname" value="1"
@@ -76,7 +81,7 @@ $this->addScript('js/search.js');
 			</div>
 		</div>
 
-		<div class="btn btn-default btn-small pull-right" data-toggle="collapse" data-target="#search-options"></div>
+		<button class="btn btn-default btn-small pull-right" data-toggle="collapse" data-target="#search-options" aria-expanded="false" aria-controls="search-options"></button>
 		<h3>
 			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h3>
@@ -88,16 +93,24 @@ $this->addScript('js/search.js');
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
-						<?php $this->displayDateList('date'); ?>
-						<?php $this->displayBeforeAfterList('beforeafter'); ?>
+						<div class="col-md-6">
+							<?php $this->displayDateList('date'); ?>
+						</div>
+						<div class="col-md-6">
+							<?php $this->displayBeforeAfterList('beforeafter'); ?>
+						</div>
 					</fieldset>
 
 					<fieldset class="col-md-6">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
+						<div class="col-md-6">
 						<?php $this->displaySortByList('sort'); ?>
+						</div>
+						<div class="col-md-6">
 						<?php $this->displayOrderList('order'); ?>
+						</div>
 					</fieldset>
 				</div>
 
@@ -107,9 +120,13 @@ $this->addScript('js/search.js');
 							<legend>
 								<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
 							</legend>
-							<input type="text" name="limitstart"
+							<div class="col-md-6">
+							<input type="text" name="limitstart" class="form-control"
 							       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
-							<?php $this->displayLimitlist('limit'); ?>
+							</div>
+							<div class="col-md-6">
+								<?php $this->displayLimitlist('limit'); ?>
+							</div>
 						</fieldset>
 
 						<?php if ($this->isModerator) : ?>
@@ -141,7 +158,7 @@ $this->addScript('js/search.js');
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?>
 						</legend>
-						<?php $this->displayCategoryList('categorylist', 'size="10" multiple="multiple"'); ?>
+						<?php $this->displayCategoryList('categorylist', 'class="form-control" size="10" multiple="multiple"'); ?>
 						<label>
 							<input type="checkbox" name="childforums" value="1"
 								<?php if ($this->state->get('query.childforums')) echo 'checked="checked"'; ?> />

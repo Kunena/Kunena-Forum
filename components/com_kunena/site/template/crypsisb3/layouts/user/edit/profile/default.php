@@ -23,7 +23,7 @@ defined('_JEXEC') or die;
 				</label>
 			</td>
 			<td>
-				<input id="personaltext" type="text" maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
+				<input class="form-control" id="personaltext" type="text" maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
 				       name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>" />
 			</td>
 		</tr>
@@ -35,13 +35,13 @@ defined('_JEXEC') or die;
 			</td>
 			<?php list ($birthYear, $birthMonth, $birthDay) = explode('-', $this->profile->birthdate); ?>
 			<td>
-				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE')
+				<span class="hasTip col-md-6 form-inline" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC'); ?>">
-					<input id="birthdate" class="col-md-2" type="text" size="4" maxlength="4"  name="birthdate1"
+					<input id="birthdate" class="form-control" type="text" size="4" maxlength="4"  name="birthdate1"
 					       value="<?php echo $this->escape($birthYear); ?>" />
-					<input class="col-md-1" type="text" size="2" maxlength="2" name="birthdate2"
+					<input class="form-control" type="text" size="2" maxlength="2" name="birthdate2"
 					       value="<?php echo $this->escape($birthMonth); ?>" />
-					<input class="col-md-1" type="text" size="2" maxlength="2" name="birthdate3"
+					<input class="form-control" type="text" size="2" maxlength="2" name="birthdate3"
 					       value="<?php echo $this->escape($birthDay); ?>" />
 				</span>
 			</td>
@@ -53,7 +53,7 @@ defined('_JEXEC') or die;
 				</label>
 			</td>
 			<td>
-				<input id="location" type="text" name="location"
+				<input id="location" type="text" name="location" class="form-control"
 				       value="<?php echo $this->escape($this->profile->location); ?>" />
 			</td>
 		</tr>
@@ -70,7 +70,7 @@ defined('_JEXEC') or die;
 				$gender[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
 				$gender[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 				// Build the html select list
-				echo JHtml::_('select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text',
+				echo JHtml::_('select.genericlist', $gender, 'gender', 'class="inputbox form-control" size="1"', 'value', 'text',
 					$this->escape($this->profile->gender), 'gender');
 				?>
 			</td>
@@ -84,7 +84,7 @@ defined('_JEXEC') or die;
 			<td>
 				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
-					<input id="social-site" type="text" name="websitename"
+					<input id="social-site" type="text" name="websitename" class="form-control"
 					       value="<?php echo $this->escape($this->profile->websitename); ?>" />
 				</span>
 			</td>
@@ -97,7 +97,7 @@ defined('_JEXEC') or die;
 			</td>
 			<td>
 				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>" >
-					<input id="social-url" type="text" name="websiteurl"
+					<input id="social-url" type="text" name="websiteurl" class="form-control"
 					       value="<?php echo $this->escape($this->profile->websiteurl); ?>" />
 				</span>
 			</td>
@@ -113,7 +113,7 @@ defined('_JEXEC') or die;
 			<td>
 				<span class="hasTip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$social}")
 					. '::' . JText::_("COM_KUNENA_MYPROFILE_{$social}_DESC"); ?>" >
-					<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>"
+					<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>" class="form-control"
 					       value="<?php echo $this->escape($this->profile->$social); ?>" />
 				</span>
 			</td>
@@ -129,7 +129,7 @@ defined('_JEXEC') or die;
 			<td>
 				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>" >
-					<textarea class="input-xxlarge" maxlength="<?php echo (int) $this->config->maxsig; ?>"
+					<textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxsig; ?>"
 					          name="signature" id="signature" rows="10"
 					          cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
 				</span>

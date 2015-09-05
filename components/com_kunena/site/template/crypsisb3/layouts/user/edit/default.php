@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 
 	<?php echo $this->profile->getLink(
 		'<i class="glyphicon glyphicon-arrow-left"></i> ' . JText::_('COM_KUNENA_BACK'),
-		JText::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn pull-right'
+		JText::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-default pull-right'
 	); ?>
 </h2>
 
@@ -68,7 +68,7 @@ defined('_JEXEC') or die;
 				<button class="btn btn-primary validate" type="submit">
 					<?php echo JText::_('COM_KUNENA_SAVE'); ?>
 				</button>
-				<input type="button" name="cancel" class="btn"
+				<input type="button" name="cancel" class="btn btn-default"
 				       value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
 				       onclick="window.history.back();"
 				       title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" />

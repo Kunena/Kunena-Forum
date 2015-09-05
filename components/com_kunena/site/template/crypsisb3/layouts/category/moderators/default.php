@@ -15,10 +15,14 @@ defined('_JEXEC') or die;
 	<?php
 	echo JText::_('COM_KUNENA_MODERATORS') . ": ";
 
+	$mods_lin = array();
+
 	foreach ($this->moderators as $moderator)
 	{
-		echo "{$moderator->getLink()} &nbsp;";
+		$mods_lin[] = "{$moderator->getLink()}";
 	}
+
+	echo implode(',&nbsp;', $mods_lin);
 	?>
 </div>
 <?php endif; ?>

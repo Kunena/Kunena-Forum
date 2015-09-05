@@ -1,4 +1,4 @@
-[![Kunena](http://www.kunena.org/images/logo.png)](http://www.kunena.org)
+[![Kunena](http://www.kunena.org/images/logo.png)](http://www.kunena.org) https://travis-ci.org/Kunena/Kunena-Forum.svg
 
 
 ## ABOUT
@@ -10,8 +10,7 @@
 
 *Kunena* 4.0 requires
 
-    Joomla! 3.4: version 3.4.1 or greater (>= 3.4.1 recommended)
-    Joomla! 2.5: version 2.5.28 or greater (>= 2.5.28 recommended)
+    Joomla! 3.4: version 3.4.1 or greater (>= 3.4.3 recommended)
     PHP: version 5.3.1 or greater (>= 5.4.31 recommended)
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 

@@ -62,15 +62,18 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$topicicontype = $this->ktemplate->params->get('topicicontype');
 
-		if ($url && $topicicontype == 'B3')
+		if ($category->getNewTopicCategory()->exists())
 		{
-			$actions['create'] = $this->subLayout('Widget/Button')
-				->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true, 'icon' => 'glyphicon glyphicon-edit glyphicon-white'));
-		}
-		else
-		{
-			$actions['create'] = $this->subLayout('Widget/Button')
-				->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true, 'icon' => 'icon-edit icon-white'));
+			if ($url && $topicicontype=='B3')
+			{
+				$actions['create']=$this->subLayout('Widget/Button')
+					->setProperties(array('url'=>$url,'name'=>'create','scope'=>'topic','type'=>'communication','success'=>true,'icon'=>'glyphicon glyphicon-edit glyphicon-white'));
+			}
+			else
+			{
+				$actions['create']=$this->subLayout('Widget/Button')
+					->setProperties(array('url'=>$url,'name'=>'create','scope'=>'topic','type'=>'communication','success'=>true,'icon'=>'icon-edit icon-white'));
+			}
 		}
 
 		if ($category->getTopics() > 0)
@@ -78,15 +81,17 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			// Is user allowed to mark forums as read?
 			$url = $category->getMarkReadUrl();
 
-			if ($url && $topicicontype == 'B3')
-			{
-				$actions['markread'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'glyphicon glyphicon-check'));
-			}
-			else
-			{
-				$actions['markread'] = $this->subLayout('Widget/Button')
-					->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer'));
+			if ($this->me->exists() && $this->total){
+				if ($url && $topicicontype == 'B3')
+				{
+					$actions['markread'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'glyphicon glyphicon-check'));
+				}
+				else
+				{
+					$actions['markread'] = $this->subLayout('Widget/Button')
+						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer'));
+				}
 			}
 
 			// Is user allowed to subscribe category?

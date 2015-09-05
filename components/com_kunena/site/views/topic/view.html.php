@@ -260,7 +260,7 @@ class KunenaViewTopic extends KunenaView
 		if ($this->config->pickup_category)
 		{
 			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
-			$selected  = 0;
+			$selected  = '';
 		}
 
 		if ($saved)

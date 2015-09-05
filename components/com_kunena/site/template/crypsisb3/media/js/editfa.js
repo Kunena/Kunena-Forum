@@ -147,8 +147,8 @@ jQuery(document).ready(function() {
 						var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
 						var label = jQuery('<label>', {
 							'class': 'radio inline',
-							'for'  : value.id
-						}).append(jQuery('<i>', {'class': 'fa fa-' + value.fa, 'border': '0', 'al': ''}));
+							'for'  : 'radio' + value.id
+						}).append(jQuery('<i>', {'class': 'fa glyphicon-topic fa-2x fa-' + value.fa, 'border': '0', 'al': ''}));
 						span_object.append(label);
 
 						jQuery('#iconset_topic_list').append(span_object);

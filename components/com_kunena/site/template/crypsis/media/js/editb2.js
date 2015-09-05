@@ -139,7 +139,7 @@ jQuery(document).ready(function() {
 						}
 
 						var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
-						var label = jQuery('<label>', {'class': 'radio inline', 'for': value.id}).append(jQuery('<span>', {'class': 'icon icon-'+value.b2, 'border': '0', 'al': ''}));
+						var label = jQuery('<label>', {'class': 'radio inline', 'for': 'radio' +value.id}).append(jQuery('<span>', {'class': 'icon icon-topic icon-'+value.b2, 'border': '0', 'al': ''}));
 						span_object.append(label);
 
 						jQuery('#iconset_topic_list').append(span_object);

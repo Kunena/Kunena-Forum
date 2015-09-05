@@ -121,10 +121,10 @@ $this->addScript('js/search.js');
 		<tbody>
 		<?php
 		$i = $this->pagination->limitstart;
-
+		$this->ktemplate = KunenaFactory::getTemplate();
 		/** @var KunenaUser $user */
 		foreach ($this->users as $user) :
-			$avatar = $config->userlist_avatar ? $user->getAvatarImage('img-thumbnail', 'thumb') : null;
+			$avatar = $config->userlist_avatar ? $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
 		?>
 			<tr>
 				<td class="col-md-1 center">

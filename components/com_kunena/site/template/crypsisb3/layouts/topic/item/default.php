@@ -33,8 +33,15 @@ $this->addScript('js/topic.js');
 <?php endif; ?>
 
 <h3>
-	<?php echo $topic->getIcon($topic->getCategory()->iconset); ?>
-	<?php echo $topic->displayField('subject'); ?>
+	<?php echo $topic->getIcon($topic->getCategory()->iconset);?>
+	<?php echo $topic->displayField('subject');	?>
+
+	<?php
+	$str_counts = substr_count($this->topic->subject, 'solved');
+	if ($this->topic->icon_id == 8 || $str_counts) : ?>
+		<span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		<span class="sr-only"></span>SOLVED</span></span>
+	<?php endif; ?>
 </h3>
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>

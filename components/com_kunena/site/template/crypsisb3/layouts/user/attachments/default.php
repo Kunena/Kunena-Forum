@@ -105,5 +105,5 @@ $attachments = $this->attachments;
 		</tbody>
 	</table>
 
-	<input class="btn pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>" />
+	<input class="btn btn-default pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>" />
 </form>

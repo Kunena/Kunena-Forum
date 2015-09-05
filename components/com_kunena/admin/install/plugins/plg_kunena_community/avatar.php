@@ -37,10 +37,14 @@ class KunenaAvatarCommunity extends KunenaAvatar
 
 	protected function _getURL($user, $sizex, $sizey)
 	{
-		$user = KunenaFactory::getUser($user);
+		$kuser = KunenaFactory::getUser($user);
 		// Get CUser object
-		$user = CFactory::getUser($user->userid);
-		if ($sizex <= 90)
+		$user = CFactory::getUser($kuser->userid);
+
+		if ($kuser->userid == 0) {
+			$avatar = str_replace(JUri::root(true), '', COMMUNITY_PATH_ASSETS) . "user-Male.png";
+		}
+		else if ($sizex <= 90)
 		{
 			$avatar = $user->getThumbAvatar();
 		}

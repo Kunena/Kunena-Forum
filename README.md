@@ -1,4 +1,4 @@
-[![Kunena](http://www.kunena.org/images/logo.png)](http://www.kunena.org)
+[![Kunena](http://www.kunena.org/images/logo.png)](http://www.kunena.org) [![Build Status](https://travis-ci.org/Kunena/Kunena-Forum.svg)](https://travis-ci.org/Kunena/Kunena-Forum)
 
 
 ## ABOUT
@@ -10,8 +10,8 @@
 
 *Kunena* 4.1 requires
 
-    Joomla! 3.4: version 3.4.1 or greater (>= 3.4.1 recommended)
-    PHP: version 5.4.35 or greater 
+    Joomla! 3.4: version 3.4.1 or greater (>= 3.4.3 recommended)
+    PHP: version 5.4.35 or greater
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.

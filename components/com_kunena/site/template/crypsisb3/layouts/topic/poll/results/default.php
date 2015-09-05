@@ -15,13 +15,15 @@ $this->addScript('poll.js');
 ?>
 
 <?php if ($this->show_title) : ?>
-<div class="pull-right btn btn-default btn-small" data-toggle="collapse" data-target="#poll-results">&times;</div>
+<button class="btn btn-default pull-right" type="button" data-toggle="collapse" data-target="#poll-results" aria-expanded="false" aria-controls="poll-results">
+	&times;
+</button>
 <h2>
 	<?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText($this->poll->title); ?>
 </h2>
 <?php endif; ?>
 
-<div class="collapse in" id="poll-results" <?php echo $this->show_title ? '': 'style="display:none;"'; ?>>
+<div class="collapse in" id="poll-results">
 <table class="table table-striped table-bordered table-condensed">
 
 	<?php
@@ -34,7 +36,7 @@ $this->addScript('poll.js');
 		</td>
 		<td class="col-md-8">
 			<div class="progress progress-striped">
-				<div class="bar" style="height:30px;width:<?php echo $percentage; ?>%;"></div>
+				<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100" style="height:30px;width:<?php echo $percentage; ?>%;"></div>
 			</div>
 		</td>
 		<td>
@@ -83,26 +85,30 @@ $this->addScript('poll.js');
 				<?php endif; ?>
 
 				<?php if ($this->me->isModerator($this->category)) : ?>
-				<a href="#resetVotes" role="button" class="btn" data-toggle="modal">
+				<a href="#resetVotes" role="button" class="btn btn-default" data-toggle="modal">
 					<?php echo JText::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
 				</a>
-				<div id="resetVotes" class="modal hide fade">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h3>
-							<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
-						</h3>
-					</div>
-					<div class="modal-body">
-						<p><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
-					</div>
-					<div class="modal-footer">
-						<a data-dismiss="modal" aria-hidden="true" class="btn">
-							<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
-						</a>
-						<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . JSession::getFormToken() . '=1') ?>" class="btn btn-primary">
-							<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
-						</a>
+				<div id="resetVotes" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h3>
+									<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
+								</h3>
+							</div>
+							<div class="modal-body">
+								<p><?php echo JText::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
+							</div>
+							<div class="modal-footer">
+								<a data-dismiss="modal" aria-hidden="true" class="btn btn-default">
+									<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
+								</a>
+								<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . JSession::getFormToken() . '=1') ?>" class="btn btn-primary">
+									<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
 				<?php endif; ?>
@@ -112,3 +118,4 @@ $this->addScript('poll.js');
 	</tfoot>
 </table>
 </div>
+<div class="clearfix"></div>

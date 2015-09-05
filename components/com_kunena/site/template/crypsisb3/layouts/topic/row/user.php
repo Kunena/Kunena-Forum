@@ -16,7 +16,8 @@ $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage('img-rounded', 'post');
+$this->ktemplate = KunenaFactory::getTemplate();
+$avatar = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
@@ -80,7 +81,38 @@ if (!empty($this->spacing)) : ?>
 			{
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
-			?>
+			$labels = $this->ktemplate->params->get('labels');
+			if ($labels) {
+				if ($this->topic->locked != 0) { ?>
+					<span class="label label-default">CLOSED</span>
+				<?php }
+
+				if ($this->topic->ordering != 0)  { ?>
+					<span class="label label-info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only"></span>STICKY</span></span>
+				<?php }
+
+				if ($this->topic->icon_id == 1)  { ?>
+					<span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only"></span>IMPORTANT</span></span>
+				<?php }
+
+				if ($this->topic->icon_id == 2) { ?>
+					<span class="label label-primary"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+					<span class="sr-only"></span>QUESTION</span></span>
+				<?php }
+
+				$str_counts = substr_count($this->topic->subject, 'solved');
+				if ($this->topic->icon_id == 8 || $str_counts) { ?>
+				   <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+				   <span class="sr-only"></span>SOLVED</span></span>
+			   <?php }
+
+				if ($this->topic->icon_id == 10) { ?>
+					<span class="label label-danger"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+					<span class="sr-only"></span>BUG</span>
+				<?php }
+			}?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
@@ -92,11 +124,11 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
 
 			<?php if ($this->topic->attachments) : ?>
-				<i class="glyphicon glyphicon-flag-2 hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
+				<i class="glyphicon glyphicon-paperclip hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
 			<?php endif; ?>
 
 			<?php if ($this->topic->poll_id) : ?>
-				<i class="glyphicon glyphicon-bars hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
+				<i class="glyphicon glyphicon-stats hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
 			<?php endif; ?>
 		</div>
 

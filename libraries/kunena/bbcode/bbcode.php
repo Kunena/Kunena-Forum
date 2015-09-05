@@ -933,7 +933,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		'ul' => array(
 			'mode' => BBCODE_MODE_LIBRARY,
 			'method' => 'DoList',
-			'default' => array( '_default' => 'circle' ),
+			'default' => array( '_default' => 'disc' ),
 			'class' => 'list',
 			'allow_in' => array('listitem', 'block', 'columns'),
 			'before_tag' => "sns",
@@ -2253,14 +2253,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$attachments = &$bbcode->parent->attachments;
 		}
 
-		// Display tag in activity streams etc..
-		if (!isset($attachments) || !empty($bbcode->parent->forceMinimal))
-		{
-			$filename = basename(trim(strip_tags($content)));
-
-			return '[' . JText::_('COM_KUNENA_FILEATTACH') . ' ' . basename(!empty($params["name"]) ? $params["name"] : $filename) . ']';
-		}
-
 		/** @var KunenaAttachment $att */
 		/** @var KunenaAttachment $attachment */
 
@@ -2288,10 +2280,20 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments ))
+		if (!isset($attachments) || !empty($bbcode->parent->forceMinimal))
 		{
-			$filename = basename(trim(strip_tags($content)));
-			return $attachment->getThumbnailLink();
+			if ($attachment->isImage()) {
+				$hide = KunenaFactory::getConfig()->showimgforguest == 0 && JFactory::getUser()->id == 0;
+				if (!$hide) {
+					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
+				}
+			}
+			else {
+				$hide = KunenaFactory::getConfig()->showfileforguest == 0 && JFactory::getUser()->id == 0;
+				if (!$hide) {
+					return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
+				}
+			}
 		}
 
 		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments ))

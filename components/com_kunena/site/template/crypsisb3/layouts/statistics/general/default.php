@@ -36,8 +36,8 @@ defined('_JEXEC') or die;
 						<?php echo $item->link; ?>
 					</td>
 					<td>
-						<div class="progress progress-info">
-							<div class="bar" style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
 						</div>
 					</td>
 				</tr>

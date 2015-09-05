@@ -1,4 +1,4 @@
-[![Kunena](http://www.kunena.org/images/logo.png)](http://www.kunena.org) https://travis-ci.org/Kunena/Kunena-Forum.svg
+[![Kunena](http://www.kunena.org/images/logo.png)](http://www.kunena.org) [![Build Status](https://travis-ci.org/Kunena/Kunena-Forum.svg)](https://travis-ci.org/Kunena/Kunena-Forum)
 
 
 ## ABOUT

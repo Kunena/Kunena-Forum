@@ -87,7 +87,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (!$template)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
 
 			return;
 		}
@@ -96,7 +96,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (!is_dir($tBaseDir . '/' . $template))
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND'));
 
 			return;
 		}

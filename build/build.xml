@@ -194,35 +194,22 @@
 
 		<!-- Readme -->
 		<copy file="${project_dir}/README.md" tofile="${package_dir}/README.txt" overwrite="true" filtering="true" />
-
-		<!-- Put template crypsis boostrap 3 in his own package -->
-		<copy todir="${tmp_dir}/crypsisb3" overwrite="true">
-			<fileset dir="${project_dir}/${kunena.site}/template/crypsisb3">
-				<exclude name="**/*.md"/>
-			</fileset>
-		</copy>
-
-		<copy file="${project_dir}/${kunena.site}/template/crypsisb3/README.md" tofile="${tmp_dir}/crypsisb3/README.txt" overwrite="true" filtering="true" />
-
-		<copy todir="${tmp_dir}/crypsisb3" overwrite="true" filtering="true">
-			<fileset dir="${project_dir}/${kunena.site}/template/crypsisb3">
-				<include name="**/*.xml"/>
-			</fileset>
-		</copy>
-
-		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsisb3" />
 	</target>
 
 	<target name="minify" depends="build">
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/com_kunena/site" todir="${tmp_dir}/packages/com_kunena/site">
 			<exclude name="**/*-min.js" />
+			<exclude name="**/*.min.js" />
 			<exclude name="**/*-min.css" />
+			<exclude name="**/*.min.css" />
 			<include name="**/*.js" />
 			<include name="**/*.css" />
 		</yui-compressor>
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
 			<exclude name="**/*-min.js" />
+			<exclude name="**/*.min.js" />
 			<exclude name="**/*-min.css" />
+			<exclude name="**/*.min.css" />
 			<include name="**/*.js" />
 		</yui-compressor>
 	</target>

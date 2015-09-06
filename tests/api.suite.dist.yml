@@ -1,0 +1,7 @@
+class_name: ApiTester
+modules:
+    enabled:
+      - ApiHelper
+      - REST:
+          depends: PhpBrowser
+          url: http://localhost/tests/joomla-cms3/

@@ -1,0 +1,13 @@
+{
+    "name"       : "kunena/kunena-forum",
+    "description": "Kunena forum for joomla",
+    "license"    : "GPL-3.0",
+    "require"    : {
+        "php": ">=5.3.10"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "1.*",
+        "codeception/codeception": "~2.0",
+        "joomla-projects/joomla-browser": "dev-develop"
+    }
+}

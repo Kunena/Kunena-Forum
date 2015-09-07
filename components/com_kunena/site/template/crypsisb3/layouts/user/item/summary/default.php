@@ -64,8 +64,10 @@ if ($this->config->showuserstats)
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 									<span>
-										<?php echo $this->escape($rankTitle); ?>
-										<?php echo $rankImage; ?>
+										<?php /** @var TYPE_NAME $rankTitle */
+										echo $this->escape($rankTitle); ?>
+										<?php /** @var TYPE_NAME $rankImage */
+										echo $rankImage; ?>
 									</span>
 								</li>
 							<?php endif; ?>

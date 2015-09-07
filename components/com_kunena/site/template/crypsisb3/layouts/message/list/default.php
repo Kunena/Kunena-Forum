@@ -57,70 +57,73 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 
 	<table class="table table-bordered table-condensed">
 		<thead>
-		<?php if (empty($this->messages)) : ?>
-			<tr>
-				<td colspan="<?php echo $colspan; ?>">
-					<?php echo JText::_('COM_KUNENA_NO_POSTS') ?>
+			<?php if (empty($this->messages)) : ?>
+				<tr>
+					<td colspan="<?php echo $colspan; ?>">
+						<?php echo JText::_('COM_KUNENA_NO_POSTS') ?>
+					</td>
+				</tr>
+			<?php else : ?>
+
+			<tr class="category">
+				<td class="col-md-1 center hidden-xs">
+					<a id="forumtop"> </a>
+					<a href="#forumbottom">
+						<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
+					</a>
 				</td>
+				<td class="col-md-<?php echo $cols; ?>">
+					<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
+				</td>
+				<td class="col-md-2">
+					<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
+				</td>
+				<td class="col-md-3">
+					<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+				</td>
+				<?php if (!empty($this->actions)) : ?>
+					<td class="col-md-1 center">
+						<label>
+							<input class="kcheckall" type="checkbox" name="toggle" value="" />
+						</label>
+					</td>
+				<?php endif; ?>
 			</tr>
-		<?php else : ?>
-
-		<tr class="category">
-			<td class="col-md-1 center hidden-xs">
-				<a id="forumtop"> </a>
-				<a href="#forumbottom">
-					<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>
-				</a>
-			</td>
-			<td class="col-md-<?php echo $cols; ?>">
-				<?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?> / <?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
-			</td>
-			<td class="col-md-2">
-				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
-			</td>
-			<td class="col-md-3">
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
-			</td>
-			<?php if (!empty($this->actions)) : ?>
-			<td class="col-md-1 center">
-				<label>
-					<input class="kcheckall" type="checkbox" name="toggle" value="" />
-				</label>
-			</td>
-		</tr>
-		<?php endif; ?>
-
+			<?php endif; ?>
 		</thead>
+
 		<tfoot>
-		<tr>
-			<td class="center hidden-xs">
-				<a id="forumbottom"> </a>
-				<a href="#forumtop" rel="nofollow">
-					<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
-				</a>
-				<?php // FIXME: $this->displayCategoryActions() ?>
-			</td>
-			<td colspan="<?php echo $colspan; ?>">
-				<div class="form-group">
-					<div class="input-group" role="group">
-						<div class="input-group-btn">
-							<?php if (!empty($this->moreUri))
-							{
-								echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'nofollow');
-							} ?>
-							<?php if (!empty($this->actions)) : ?>
-								<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
-								<?php if (isset($this->actions['move'])) :
-									$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
-									echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
-								endif; ?>
-								<input type="submit" name="kcheckgo" class="btn btn-default" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-							<?php endif; ?>
+			<?php if (!empty($this->messages)) : ?>
+				<tr>
+					<td class="center hidden-xs">
+						<a id="forumbottom"> </a>
+						<a href="#forumtop" rel="nofollow">
+							<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
+						</a>
+						<?php // FIXME: $this->displayCategoryActions() ?>
+					</td>
+					<td colspan="<?php echo $colspan; ?>">
+						<div class="form-group">
+							<div class="input-group" role="group">
+								<div class="input-group-btn">
+									<?php if (!empty($this->moreUri))
+									{
+										echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'nofollow');
+									} ?>
+									<?php if (!empty($this->actions)) : ?>
+										<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+										<?php if (isset($this->actions['move'])) :
+											$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+											echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+										endif; ?>
+										<input type="submit" name="kcheckgo" class="btn btn-default" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+									<?php endif; ?>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</td>
-		</tr>
+					</td>
+				</tr>
+			<?php endif; ?>
 		</tfoot>
 
 		<tbody>
@@ -131,7 +134,6 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 				->set('position', $i)
 				->set('checkbox', !empty($this->actions));
 		?>
-		<?php endif; ?>
 		</tbody>
 	</table>
 </form>

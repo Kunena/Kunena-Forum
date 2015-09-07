@@ -1017,8 +1017,9 @@ ul.inline > li > a > I {
 .solved b {
 	padding-left: 10px;
 }
-
-.nav > li > a:focus {
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
 	background-color: transparent;
 }
 
@@ -1045,4 +1046,8 @@ ul.inline > li > a > I {
 	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
 	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+tfoot .form-group {
+	margin-bottom: 0;
 }

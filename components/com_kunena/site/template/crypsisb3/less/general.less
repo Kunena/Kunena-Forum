@@ -1019,7 +1019,9 @@ ul.inline > li > a > I {
 }
 .nav .open > a,
 .nav .open > a:hover,
-.nav .open > a:focus {
+.nav .open > a:focus ,
+.nav > li > a:hover,
+.nav > li > a:focus {
 	background-color: transparent;
 }
 
@@ -1050,4 +1052,13 @@ ul.inline > li > a > I {
 
 tfoot .form-group {
 	margin-bottom: 0;
+}
+
+[id*="category"] ul.inline,
+.pagination-small {
+	padding: 0;
+}
+
+#recent-list {
+	width: 53%;
 }

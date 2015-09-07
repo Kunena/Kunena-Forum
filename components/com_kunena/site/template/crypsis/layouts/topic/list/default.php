@@ -61,7 +61,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 					<i class="icon-arrow-down hasTooltip"></i>
 				</a>
 			</td>
-			<td class="span<?php echo $cols ?>">
+			<td class="span<?php echo $cols ?>" id="recent-list">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
 			<td class="span2 hidden-phone">

@@ -39,8 +39,10 @@ $this->addScript('js/topic.js');
 	<?php
 	$str_counts = substr_count($this->topic->subject, 'solved');
 	if ($this->topic->icon_id == 8 || $str_counts) : ?>
-		<span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-		<span class="sr-only"></span>SOLVED</span></span>
+		<span class="label label-success">
+			<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+			<span class="sr-only"></span>
+		SOLVED</span>
 	<?php endif; ?>
 </h3>
 

@@ -51,28 +51,27 @@ if ($show)
 </div>
 <div class="span2">
 	<br>
-	<ul class="profilebox center">
-		<?php if (!empty($rankTitle)) : ?>
-			<li>
-				<?php echo $this->escape($rankTitle); ?>
-			</li>
-		<?php endif; ?>
+	<?php if (!empty($rankTitle)) : ?>
+		<li>
+			<?php echo $this->escape($rankTitle); ?>
+		</li>
+	<?php endif; ?>
 
-		<?php if (!empty($rankImage)) : ?>
-			<li>
-				<?php echo $rankImage; ?>
-			</li>
-		<?php endif; ?>
+	<?php if (!empty($rankImage)) : ?>
+		<li>
+			<?php echo $rankImage; ?>
+		</li>
+	<?php endif; ?>
 
-		<?php if (!empty($personalText)) : ?>
-			<li>
-				<?php echo $personalText; ?>
-			</li>
-		<?php endif; ?>
-	</ul>
+	<?php if (!empty($personalText)) : ?>
+		<li>
+			<?php echo $personalText; ?>
+		</li>
+	<?php endif; ?>
 </div>
-<br />
-<ul class="span2">
+
+<div class="span2">
+	<br>
 	<?php if ($user->posts >= 1) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
@@ -97,8 +96,9 @@ if ($show)
 			<?php echo implode(' ', $user->medals); ?>
 		</li>
 	<?php endif; ?>
-</ul>
-<ul class="span3">
+</div>
+<div class="span3">
+	<br>
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
 		<span> <?php echo $user->getGender(); ?> </span>
@@ -107,5 +107,5 @@ if ($show)
 		<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
 		<span> <?php echo KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 	</li>
-</ul>
+</div>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal'); ?>

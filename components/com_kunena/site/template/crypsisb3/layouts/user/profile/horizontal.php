@@ -71,8 +71,8 @@ if ($show)
 		<?php endif; ?>
 	</ul>
 </div>
-<br />
-<ul class="col-md-2">
+<div class="col-md-2">
+	<br>
 	<?php if ($user->posts >= 1) : ?>
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
@@ -97,8 +97,9 @@ if ($show)
 			<?php echo implode(' ', $user->medals); ?>
 		</li>
 	<?php endif; ?>
-</ul>
-<ul class="col-md-3">
+</div>
+<div class="col-md-3">
+	<br>
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
 		<span> <?php echo $user->getGender(); ?> </span>
@@ -107,5 +108,5 @@ if ($show)
 		<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
 		<span> <?php echo KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 	</li>
-</ul>
+</div>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal'); ?>

@@ -100,8 +100,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$tmp  = JPATH_ROOT . '/tmp/';
 		$tmp_kunena = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
-		$file = $this->app->input->files->get('install_package');
-
+		$file = $this->app->input->files->get('install_package', null, 'raw');
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -119,7 +118,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 		else
 		{
-			$success = KunenaFile::upload($file ['tmp_name'], $tmp . $file ['name']);
+			$success = KunenaFile::upload($file ['tmp_name'], $tmp . $file ['name'], false, true);
 
 			if ($success)
 			{

@@ -101,8 +101,7 @@ class KunenaControllerInstall extends JControllerLegacy
 			$error      = $this->model->getInstallError();
 			$this->step = $this->model->getStep();
 			$stop       = ($this->model->checkTimeout() || !isset($this->steps[$this->step + 1]));
-		}
-		while (!$stop && !$error);
+		} while (!$stop && !$error);
 
 		// Store queued messages so that they won't get lost
 		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));
@@ -170,19 +169,19 @@ class KunenaControllerInstall extends JControllerLegacy
 			$component = JComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
 
-			if ( JFolder::exists(KPATH_MEDIA) )
+			if (JFolder::exists(KPATH_MEDIA))
 			{
 				JFolder::delete(KPATH_MEDIA);
 			}
 
-			if ( JFolder::exists(JPATH_ROOT.'/plugins/kunena') )
+			if (JFolder::exists(JPATH_ROOT . '/plugins/kunena'))
 			{
-				JFolder::delete(JPATH_ROOT.'/plugins/kunena');
+				JFolder::delete(JPATH_ROOT . '/plugins/kunena');
 			}
 
-			if ( JFile::exists(JPATH_ADMINISTRATOR.'/manifests/packages/pkg_kunena.xml') )
+			if (JFile::exists(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml'))
 			{
-				JFile::delete(JPATH_ADMINISTRATOR.'/manifests/packages/pkg_kunena.xml');
+				JFile::delete(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml');
 			}
 
 			$this->setRedirect('index.php?option=com_installer');

@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage PurgeRe
+ * @package       Kunena.Administrator.Template
+ * @subpackage    PurgeRe
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /** @var KunenaAdminViewTools $this */
 ?>
@@ -16,13 +16,14 @@ defined ( '_JEXEC' ) or die ();
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/joomla30/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="purgeReStatements" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
+		      method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="purgeReStatements"/>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>
@@ -30,7 +31,7 @@ defined ( '_JEXEC' ) or die ();
 					<tr>
 						<td>
 							<p><?php echo JText::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?></p>
-							<input type="text" name="re_string" value="" />
+							<input type="text" name="re_string" value=""/>
 						</td>
 					</tr>
 				</table>

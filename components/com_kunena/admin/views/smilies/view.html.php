@@ -60,8 +60,8 @@ class KunenaAdminViewSmilies extends KunenaView
 		JToolBarHelper::deleteList();
 		//}
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Smiley_management';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Smiley_management';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	protected function getSortFields()

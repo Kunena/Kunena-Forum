@@ -35,7 +35,7 @@ class KunenaAdminViewRank extends KunenaView
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
-		$help_url  = 'http://www.kunena.org/docs/Ranks_management';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Ranks_management';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

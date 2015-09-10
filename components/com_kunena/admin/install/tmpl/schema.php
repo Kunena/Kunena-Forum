@@ -41,8 +41,11 @@ $this->document->addStyleSheet(JUri::base(true) . '/components/com_kunena/instal
 			</div>
 			<div class="n">
 				<h2>Schema Difference</h2>
+
 				<p><?php $this->displaySchemaDiff(); ?></p>
+
 				<h2>Database Schema</h2>
+
 				<p><?php $this->displaySchema(); ?></p>
 			</div>
 			<div class="c">

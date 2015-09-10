@@ -62,7 +62,7 @@ class KunenaAdminViewConfig extends KunenaView
 		}
 
 		JToolbarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Configuration';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Configuration';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

@@ -718,13 +718,13 @@ class KunenaAdminControllerTools extends KunenaController
 		// Check if the user has the super-administrator rights
 		$username = $this->app->input->getString('username');
 		$password = $this->app->input->getString('password');
-		$code = $this->app->input->getInt('secretkey');
+		$code     = $this->app->input->getInt('secretkey');
 
 		$login = KunenaLogin::getInstance();
 
-		if ( $login->isTFAEnabled() )
+		if ($login->isTFAEnabled())
 		{
-			if ( empty($code) || $code == 0 )
+			if (empty($code) || $code == 0)
 			{
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_SECRETKEY_INVALID'));
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));

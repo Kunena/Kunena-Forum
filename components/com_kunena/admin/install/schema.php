@@ -100,7 +100,7 @@ class KunenaModelSchema extends JModelLegacy
 			$this->upgradeschema = $this->createSchema();
 		}
 
-		 // $this->getSchemaFromFile($input);
+		// $this->getSchemaFromFile($input);
 		return $this->upgradeschema;
 	}
 

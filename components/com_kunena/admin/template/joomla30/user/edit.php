@@ -47,10 +47,11 @@ jQuery(function($) {
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="" />
-			<input type="hidden" name="boxchecked" value="1" />
-			<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>"
+		      method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value=""/>
+			<input type="hidden" name="boxchecked" value="1"/>
+			<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
 			<?php echo JHtml::_('form.token'); ?>
 
 			<article class="data-block">
@@ -59,7 +60,8 @@ jQuery(function($) {
 						<div class="tabbable-line">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
+									<a href="#tab1"
+									   data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
 								</li>
 								<?php /*
 								<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('User Info'); ?></a></li>
@@ -67,15 +69,18 @@ jQuery(function($) {
 								<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a>
 								</li>
 								<li>
-									<a href="#tab4" data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
+									<a href="#tab4"
+									   data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
 								</li>
 								<li>
-									<a href="#tab5" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
+									<a href="#tab5"
+									   data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
 								</li>
 								<li><a href="#tab6" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a>
 								</li>
 								<li>
-									<a href="#tab7" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
+									<a href="#tab7"
+									   data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
 								</li>
 							</ul>
 							<div class="tab-content">
@@ -85,7 +90,8 @@ jQuery(function($) {
 										<div><?php echo $this->avatar; ?></div>
 										<?php if ($this->editavatar) : ?>
 											<div>
-												<label><input type="checkbox" value="1" name="deleteAvatar" /> <?php echo JText::_('COM_KUNENA_DELAV'); ?>
+												<label><input type="checkbox" value="1"
+												              name="deleteAvatar"/> <?php echo JText::_('COM_KUNENA_DELAV'); ?>
 												</label>
 											</div>
 										<?php endif; ?>
@@ -93,11 +99,13 @@ jQuery(function($) {
 									<fieldset>
 										<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
 										<div>
-											<textarea id="user-signature" class="input-xxlarge" name="signature" cols="4" rows="6"
+											<textarea id="user-signature" class="input-xxlarge" name="signature"
+											          cols="4" rows="6"
 												><?php echo $this->escape($this->user->signature); ?></textarea>
 										</div>
 										<div>
-											<label><input type="checkbox" value="1" name="deleteSig" /> <?php echo JText::_('COM_KUNENA_DELSIG'); ?>
+											<label><input type="checkbox" value="1"
+											              name="deleteSig"/> <?php echo JText::_('COM_KUNENA_DELSIG'); ?>
 											</label>
 										</div>
 										<div>
@@ -393,7 +401,10 @@ jQuery(function($) {
 													<td width="30"><?php echo ++$i; ?></td>
 													<td width="60"><strong><?php echo $this->escape($ip); ?></strong>
 													</td>
-													<td>(<?php echo JText::sprintf('COM_KUNENA_IP_OCCURENCES', $mescnt) . (!empty($userlist) ? " " . JText::sprintf('COM_KUNENA_USERIDUSED', $this->escape($userlist)) : ''); ?>)</td>
+													<td>
+														(<?php echo JText::sprintf('COM_KUNENA_IP_OCCURENCES', $mescnt) . (!empty($userlist) ? " " . JText::sprintf('COM_KUNENA_USERIDUSED', $this->escape($userlist)) : ''); ?>
+														)
+													</td>
 												</tr>
 											<?php endforeach; ?>
 										</table>

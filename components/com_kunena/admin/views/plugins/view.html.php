@@ -68,8 +68,8 @@ class KunenaAdminViewPlugins extends KunenaView
 		JToolbarHelper::divider();
 		JToolbarHelper::checkin('checkin');
 		JToolbarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

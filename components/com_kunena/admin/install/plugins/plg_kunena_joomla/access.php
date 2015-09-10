@@ -436,6 +436,7 @@ class KunenaAccessJoomla
 
 		// Clean up any NULL values, just in case
 		JArrayHelper::toInteger($result);
+
 		return $result;
 	}
 

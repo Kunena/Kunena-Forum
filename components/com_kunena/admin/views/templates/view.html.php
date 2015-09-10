@@ -67,12 +67,12 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		if (!file_exists($file))
 		{
-			$fp = fopen($file,"w");
-			fwrite($fp,"");
+			$fp = fopen($file, "w");
+			fwrite($fp, "");
 			fclose($fp);
 		}
 
-		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/less';
+		$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/less';
 		$this->files = JFolder::files($this->dir, '\.less$', false, false);
 
 		$this->display();
@@ -85,8 +85,8 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->filename     = $this->app->getUserState('kunena.editless.filename');
 		$this->content      = $this->get('FileLessParsed');
 
-		$this->less_path     = KPATH_SITE . '/template/' . $this->templatename . '/less/' . $this->filename;
-		$this->ftp          = $this->get('FTPcredentials');
+		$this->less_path = KPATH_SITE . '/template/' . $this->templatename . '/less/' . $this->filename;
+		$this->ftp       = $this->get('FTPcredentials');
 		$this->display();
 	}
 
@@ -97,14 +97,14 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/css/custom.css';
 
-		if(!file_exists($file))
+		if (!file_exists($file))
 		{
-			$fp = fopen($file,"w");
-			fwrite($fp,"");
+			$fp = fopen($file, "w");
+			fwrite($fp, "");
 			fclose($fp);
 		}
 
-		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/css';
+		$this->dir = KPATH_SITE . '/template/' . $this->templatename . '/css';
 		jimport('joomla.filesystem.folder');
 		$this->files = JFolder::files($this->dir, '\.css$', false, false);
 		$this->display();
@@ -154,8 +154,8 @@ class KunenaAdminViewTemplates extends KunenaView
 			JToolBarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 			JToolBarHelper::divider();
 		}
-		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	protected function setToolBarAdd()
@@ -172,7 +172,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::back();
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		$help_url = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
@@ -194,8 +194,8 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	protected function setToolBarChoosecss()

@@ -18,8 +18,8 @@ class KunenaAdminViewCpanel extends KunenaView
 {
 	function displayDefault()
 	{
-		$help_url  = 'http://www.kunena.org/docs/Category:Installation';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Category:Installation';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 
 		if (version_compare(JVERSION, '3', '>'))
 		{

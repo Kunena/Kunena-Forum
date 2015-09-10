@@ -626,7 +626,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$db     = JFactory::getDBO();
+		$db  = JFactory::getDBO();
 		$cid = $this->app->input->get('cid', array(), 'array');
 
 		if (!empty($cid))
@@ -669,7 +669,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$db     = JFactory::getDBO();
+		$db  = JFactory::getDBO();
 		$cid = $this->app->input->get('cid', array(), 'array');
 
 		if (!empty($cid))

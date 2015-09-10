@@ -41,7 +41,8 @@ class KunenaAvatarCommunity extends KunenaAvatar
 		// Get CUser object
 		$user = CFactory::getUser($kuser->userid);
 
-		if ($kuser->userid == 0) {
+		if ($kuser->userid == 0)
+		{
 			$avatar = str_replace(JUri::root(true), '', COMMUNITY_PATH_ASSETS) . "user-Male.png";
 		}
 		else if ($sizex <= 90)

@@ -583,7 +583,7 @@ class KunenaModelInstall extends JModelLegacy
 	/**
 	 * Method to uninstall the Kunena media during uninstall process
 	 *
-	 * @param   string  $element  Name of the package or of the component
+	 * @param   string $element Name of the package or of the component
 	 *
 	 * @return int
 	 */

@@ -51,10 +51,10 @@ class KunenaAdminControllerAttachments extends KunenaController
 		{
 			$attachment = KunenaAttachmentHelper::get($id);
 
-			$message = $attachment->getMessage();
+			$message     = $attachment->getMessage();
 			$attachments = array($attachment->id, 1);
-			$attach = array();
-			$removeList = array_keys(array_diff_key($attachments, $attach));
+			$attach      = array();
+			$removeList  = array_keys(array_diff_key($attachments, $attach));
 			JArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
 			$message->save();
@@ -62,7 +62,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 			$topic = $message->getTopic();
 			$attachment->delete();
 
-			if ( $topic->attachments > 0 )
+			if ($topic->attachments > 0)
 			{
 				$topic->attachments = $topic->attachments - 1;
 				$topic->save(false);

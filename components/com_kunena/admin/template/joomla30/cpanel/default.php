@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage CPanel
+ * @package       Kunena.Administrator.Template
+ * @subpackage    CPanel
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -24,59 +24,79 @@ defined('_JEXEC') or die ();
 			<div class="row-fluid">
 				<div class="span7">
 					<div class="well well-small">
-						<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_WELCOME') ?></div>
+						<div
+							class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_WELCOME') ?></div>
 						<hr class="hr-condensed">
 						<div id="dashboard-icons" class="btn-group">
 							<a class="btn" href="index.php?option=com_kunena&view=categories">
-								<i class="icon-big icon-list-view" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>"></i><br/>
+								<i class="icon-big icon-list-view"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=users">
-								<i class="icon-big icon-users" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>"></i><br/>
+								<i class="icon-big icon-users"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_USERS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=attachments">
-								<i class="icon-big icon-flag-2" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>"></i><br/>
+								<i class="icon-big icon-flag-2"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_FILES') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=smilies">
-								<i class="icon-big icon-thumbs-up" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>"></i><br/>
+								<i class="icon-big icon-thumbs-up"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=ranks">
-								<i class="icon-big icon-star-2" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>"></i><br/>
+								<i class="icon-big icon-star-2"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=templates">
-								<i class="icon-big icon-color-palette" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>"></i><br/>
+								<i class="icon-big icon-color-palette"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=config">
-								<i class="icon-big icon-cogs" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>"></i><br/>
+								<i class="icon-big icon-cogs"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=plugins">
-								<i class="icon-big icon-puzzle" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>"></i><br/>
+								<i class="icon-big icon-puzzle"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=tools">
-								<i class="icon-big icon-tools" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>"></i><br/>
+								<i class="icon-big icon-tools"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?></span>
 							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=trash">
-								<i class="icon-big icon-trash" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>"></i><br/>
+								<i class="icon-big icon-trash"
+								   alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?></span>
 							</a>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 					<div class="well well-small">
-						<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
+						<div
+							class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
 						<hr class="hr-condensed">
 						<ul class="pull-left">
-							<li><i class="icon icon-question"></i> <a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
-							<li><i class="icon icon-question"></i> <a href="http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a></li>
-							<li><i class="icon icon-question"></i> <a href="http://www.kunena.org/forum" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a></li>
+							<li><i class="icon icon-question"></i> <a
+									href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide"
+									target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a>
+							</li>
+							<li><i class="icon icon-question"></i> <a
+									href="http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)"
+									target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_CATEGORIES') ?> </a>
+							</li>
+							<li><i class="icon icon-question"></i> <a href="http://www.kunena.org/forum"
+							                                          target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_SUPPORT') ?> </a>
+							</li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -110,7 +130,8 @@ defined('_JEXEC') or die ();
 							<dd>GNU General Public License</dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_MOREINFO') ?>:</dt>
-							<dd><a href="http://www.kunena.org/terms-of-use" target="_blank">http://www.kunena.org/terms-of-use</a></dd>
+							<dd><a href="http://www.kunena.org/terms-of-use" target="_blank">http://www.kunena.org/terms-of-use</a>
+							</dd>
 						</dl>
 					</div>
 				</div>

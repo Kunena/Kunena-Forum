@@ -1,22 +1,22 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Users
+ * @package       Kunena.Administrator.Template
+ * @subpackage    Users
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /** @var KunenaAdminViewUser $this */
 
-JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
-$db = JFactory::getDBO();
+JHtml::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
+$db       = JFactory::getDBO();
 $document = JFactory::getDocument();
-$document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'
-var max_count = '.(int) $this->config->maxsig.'
+$document->addScriptDeclaration(' var current_count = ' . JString::strlen($this->user->signature) . '
+var max_count = ' . (int) $this->config->maxsig . '
 
 function textCounter(field, target) {
 	if (field.value.length > max_count) {
@@ -28,16 +28,16 @@ function textCounter(field, target) {
 }');
 
 $paneOptions = array(
-		'onActive' => 'function(title, description){
+	'onActive'     => 'function(title, description){
 		description.setStyle("display", "block");
 		title.addClass("open").removeClass("closed");
 }',
-		'onBackground' => 'function(title, description){
+	'onBackground' => 'function(title, description){
 		description.setStyle("display", "none");
 		title.addClass("closed").removeClass("open");
 }',
-		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
-		'useCookie' => true, // this must not be a string. Don't use quotes.
+	'startOffset'  => 0,  // 0 starts on the first tab, 1 starts the second, etc...
+	'useCookie'    => true, // this must not be a string. Don't use quotes.
 );
 ?>
 
@@ -47,29 +47,41 @@ $paneOptions = array(
 			<div class="span12">
 				<div id="j-sidebar-container" class="span2">
 					<div id="sidebar">
-						<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla25/common/menu.php'; ?></div>
+						<div
+							class="sidebar-nav"><?php include KPATH_ADMIN . '/template/joomla25/common/menu.php'; ?></div>
 					</div>
 				</div>
 				<div id="j-main-container" class="span10">
-					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="task" value="" />
-						<input type="hidden" name="boxchecked" value="1" />
-						<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
-						<?php echo JHtml::_( 'form.token' ); ?>
+					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>"
+					      method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="task" value=""/>
+						<input type="hidden" name="boxchecked" value="1"/>
+						<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
+						<?php echo JHtml::_('form.token'); ?>
 
 						<article class="data-block">
 							<div class="data-container">
 								<div class="tabbable">
 									<ul class="nav nav-tabs">
-										<li class="active"><a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a></li>
+										<li class="active"><a href="#tab1"
+										                      data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
+										</li>
 										<?php /*
 											<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('User Info'); ?></a></li>
 					*/ ?>
-										<li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a></li>
-										<li><a href="#tab4" data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a></li>
-										<li><a href="#tab5" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a></li>
-										<li><a href="#tab6" data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a></li>
-										<li><a href="#tab7" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a></li>
+										<li><a href="#tab3"
+										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a></li>
+										<li><a href="#tab4"
+										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
+										</li>
+										<li><a href="#tab5"
+										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
+										</li>
+										<li><a href="#tab6"
+										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a></li>
+										<li><a href="#tab7"
+										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
+										</li>
 									</ul>
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab1">
@@ -78,7 +90,9 @@ $paneOptions = array(
 												<div><?php echo $this->avatar; ?></div>
 												<?php if ($this->editavatar) : ?>
 													<div>
-														<label><input type="checkbox" value="1" name="deleteAvatar" /> <?php echo JText::_('COM_KUNENA_DELAV'); ?></label>
+														<label><input type="checkbox" value="1"
+														              name="deleteAvatar"/> <?php echo JText::_('COM_KUNENA_DELAV'); ?>
+														</label>
 													</div>
 												<?php endif; ?>
 											</fieldset>
@@ -86,14 +100,16 @@ $paneOptions = array(
 												<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
 												<div>
 													<textarea class="input-xxlarge" name="signature" cols="4" rows="6"
-															  onkeyup="textCounter(this, this.form.current_count);"><?php echo $this->escape( $this->user->signature ); ?></textarea>
+													          onkeyup="textCounter(this, this.form.current_count);"><?php echo $this->escape($this->user->signature); ?></textarea>
 												</div>
 												<div>
-													<label><input type="checkbox" value="1" name="deleteSig" /> <?php echo JText::_('COM_KUNENA_DELSIG'); ?></label>
+													<label><input type="checkbox" value="1"
+													              name="deleteSig"/> <?php echo JText::_('COM_KUNENA_DELSIG'); ?>
+													</label>
 												</div>
 												<div>
 													<?php echo JText::sprintf('COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-														'<input class="span1" readonly="readonly" type="text" name="current_count" value="'.(intval($this->config->maxsig)-JString::strlen($this->user->signature)).'" />');?>
+														'<input class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - JString::strlen($this->user->signature)) . '" />'); ?>
 												</div>
 											</fieldset>
 										</div>
@@ -309,13 +325,16 @@ $paneOptions = array(
 													</tr>
 													</thead>
 													<?php
-													if (!empty($this->subscatslist)) : foreach($this->subscatslist as $cat) :
+													if (!empty($this->subscatslist)) : foreach ($this->subscatslist as $cat) :
 														?>
 														<tr>
-															<td><?php echo $this->escape($cat->name); ?> <small><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small></td>
+															<td><?php echo $this->escape($cat->name); ?>
+																<small><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small>
+															</td>
 															<td><?php echo $this->escape($cat->id); ?></td>
 														</tr>
-													<?php endforeach; else : ?>
+													<?php endforeach;
+													else : ?>
 														<tr>
 															<td><?php echo JText::_('COM_KUNENA_NOCATSUBS'); ?></td>
 														</tr>
@@ -341,13 +360,14 @@ $paneOptions = array(
 													</thead>
 
 													<?php
-													if ($this->sub) : foreach ( $this->sub as $topic ) :
+													if ($this->sub) : foreach ($this->sub as $topic) :
 														?>
 														<tr>
 															<td><?php echo $this->escape($topic->subject); ?></td>
 															<td><?php echo $this->escape($topic->id); ?></td>
 														</tr>
-													<?php endforeach; else : ?>
+													<?php endforeach;
+													else : ?>
 														<tr>
 															<td><?php echo JText::_('COM_KUNENA_NOSUBS'); ?></td>
 														</tr>
@@ -361,22 +381,29 @@ $paneOptions = array(
 												<legend><?php echo JText::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
 												<table class="table table-striped">
 													<?php
-													$i=0; foreach ($this->ipslist as $ip => $list) :
+													$i = 0;
+													foreach ($this->ipslist as $ip => $list) :
 														$userlist = array();
 														$mescnt = 0;
-														foreach ($list as $curuser) {
-															if ($curuser->userid == $this->user->userid) {
+														foreach ($list as $curuser)
+														{
+															if ($curuser->userid == $this->user->userid)
+															{
 																$mescnt += intval($curuser->mescnt);
 																continue;
 															}
-															$userlist[] = $this->escape($curuser->username).' ('.$this->escape($curuser->mescnt).')';
+															$userlist[] = $this->escape($curuser->username) . ' (' . $this->escape($curuser->mescnt) . ')';
 														}
 														$userlist = implode(', ', $userlist);
 														?>
 														<tr>
 															<td width="30"><?php echo ++$i; ?></td>
-															<td width="60"><strong><?php echo $this->escape($ip); ?></strong></td>
-															<td>(<?php echo JText::sprintf('COM_KUNENA_IP_OCCURENCES', $mescnt).(!empty($userlist)?" ".JText::sprintf('COM_KUNENA_USERIDUSED', $this->escape($userlist)):''); ?>)</td>
+															<td width="60">
+																<strong><?php echo $this->escape($ip); ?></strong></td>
+															<td>
+																(<?php echo JText::sprintf('COM_KUNENA_IP_OCCURENCES', $mescnt) . (!empty($userlist) ? " " . JText::sprintf('COM_KUNENA_USERIDUSED', $this->escape($userlist)) : ''); ?>
+																)
+															</td>
 														</tr>
 													<?php endforeach; ?>
 												</table>
@@ -404,7 +431,7 @@ $paneOptions = array(
 					</form>
 				</div>
 				<div class="pull-right small">
-					<?php echo KunenaVersion::getLongVersionHTML (); ?>
+					<?php echo KunenaVersion::getLongVersionHTML(); ?>
 				</div>
 			</div>
 		</div>

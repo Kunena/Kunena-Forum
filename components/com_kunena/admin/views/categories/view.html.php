@@ -107,8 +107,8 @@ class KunenaAdminViewCategories extends KunenaView
 
 		JToolBarHelper::cancel();
 		JToolbarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	protected function setToolBarDefault()
@@ -139,8 +139,8 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::deleteList();
 		//}
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

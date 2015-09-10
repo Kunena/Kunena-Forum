@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration
+ * @package       Kunena.Framework
+ * @subpackage    Integration
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaProfile
@@ -23,7 +23,7 @@ class KunenaProfile
 		{
 			JPluginHelper::importPlugin('kunena');
 			$dispatcher = JDispatcher::getInstance();
-			$classes = $dispatcher->trigger('onKunenaGetProfile');
+			$classes    = $dispatcher->trigger('onKunenaGetProfile');
 
 			foreach ($classes as $class)
 			{
@@ -49,7 +49,7 @@ class KunenaProfile
 	{
 		if (!$limit)
 		{
-			$limit = KunenaFactory::getConfig ()->popusercount;
+			$limit = KunenaFactory::getConfig()->popusercount;
 		}
 
 		return (array) $this->_getTopHits($limit);
@@ -58,22 +58,22 @@ class KunenaProfile
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my = JFactory::getUser();
+		$my     = JFactory::getUser();
 
 		if ($config->statslink_allowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
 
-		return KunenaRoute::_('index.php?option=com_kunena&view=statistics'.$action, $xhtml);
+		return KunenaRoute::_('index.php?option=com_kunena&view=statistics' . $action, $xhtml);
 	}
 
-	public function getUserListURL($action='', $xhtml = true)
+	public function getUserListURL($action = '', $xhtml = true)
 	{
 
 	}
 
-	public function getProfileURL($user, $task='', $xhtml = true)
+	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 
 	}
@@ -83,7 +83,7 @@ class KunenaProfile
 
 	}
 
-	protected function _getTopHits($limit=0)
+	protected function _getTopHits($limit = 0)
 	{
 		return array();
 	}

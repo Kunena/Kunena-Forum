@@ -1,15 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
+ * @package       Kunena.Framework
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
-jimport ('joomla.error.profiler');
+jimport('joomla.error.profiler');
 
 /**
  * Class KunenaProfiler
@@ -34,7 +34,7 @@ class KunenaProfiler extends JProfiler
 	{
 		if (empty(self::$_instances[$prefix]))
 		{
-			$c = __CLASS__;
+			$c                         = __CLASS__;
 			self::$_instances[$prefix] = new $c($prefix);
 		}
 
@@ -61,7 +61,7 @@ class KunenaProfiler extends JProfiler
 
 		if (!$item || $item->name != $name)
 		{
-			trigger_error(__CLASS__.'::'.__FUNCTION__."('$name') is missing start()");
+			trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
 		}
 
 		$delta = $item->stop($this->getmicrotime());
@@ -84,7 +84,7 @@ class KunenaProfiler extends JProfiler
 
 	function sort(&$array, $property = 'total')
 	{
-		return usort($array, function($a, $b) use ($property)
+		return usort($array, function ($a, $b) use ($property)
 		{
 			if ($a->$property == $b->$property)
 			{
@@ -109,14 +109,15 @@ class KunenaProfilerItem
 
 	public function __construct($name)
 	{
-		$this->name = $name;
-		$this->calls = 0;
-		$this->total = 0.0;
+		$this->name     = $name;
+		$this->calls    = 0;
+		$this->total    = 0.0;
 		$this->external = 0.0;
 	}
 
 	/**
 	 * @param string $name
+	 *
 	 * @return KunenaProfilerItem
 	 */
 	public static function getInstance($name)

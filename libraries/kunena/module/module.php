@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Module
+ * @package       Kunena.Framework
+ * @subpackage    Module
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaModule
@@ -31,13 +31,13 @@ abstract class KunenaModule
 	protected $params = null;
 
 	/**
-	 * @param stdClass $module
+	 * @param stdClass  $module
 	 * @param JRegistry $params
 	 */
 	public function __construct($module, $params)
 	{
-		$this->module = $module;
-		$this->params = $params;
+		$this->module   = $module;
+		$this->params   = $params;
 		$this->document = JFactory::getDocument();
 	}
 

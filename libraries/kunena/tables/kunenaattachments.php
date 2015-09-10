@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -32,12 +32,12 @@ class TableKunenaAttachments extends KunenaTable
 
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_attachments', 'id', $db );
+		parent::__construct('#__kunena_attachments', 'id', $db);
 	}
 
 	public function check()
 	{
-		$user = KunenaUserHelper::get($this->userid);
+		$user    = KunenaUserHelper::get($this->userid);
 		$message = KunenaForumMessageHelper::get($this->mesid);
 
 		if ($this->userid != 0 && !$user->exists())
@@ -89,6 +89,6 @@ class TableKunenaAttachments extends KunenaTable
 			}
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 }

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Upload
+ * @package         Kunena.Framework
+ * @subpackage      Upload
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -24,7 +24,7 @@ class KunenaUpload
 	/**
 	 * Get new instance of upload class.
 	 *
-	 * @param  array  $extensions  List of allowed file extensions.
+	 * @param  array $extensions List of allowed file extensions.
 	 *
 	 * @return KunenaUpload
 	 */
@@ -43,7 +43,7 @@ class KunenaUpload
 	/**
 	 * Add file extensions to allowed list.
 	 *
-	 * @param array $extensions  List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
+	 * @param array $extensions List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
 	 *
 	 * @return $this
 	 */
@@ -58,7 +58,7 @@ class KunenaUpload
 				continue;
 			}
 
-			$ext = '.' . $ext;
+			$ext                         = '.' . $ext;
 			$this->validExtensions[$ext] = $ext;
 		}
 
@@ -68,7 +68,7 @@ class KunenaUpload
 	/**
 	 * Split filename by valid extension.
 	 *
-	 * @param  string  $filename  Name of the file.
+	 * @param  string $filename Name of the file.
 	 *
 	 * @return array  File parts: list($name, $extension).
 	 * @throws RuntimeException
@@ -90,7 +90,7 @@ class KunenaUpload
 			if (JString::strtolower($extension) == JString::strtolower($ext))
 			{
 				// File must contain one letter before extension
-				$name = JString::substr($filename, 0, -JString::strlen($ext));
+				$name      = JString::substr($filename, 0, -JString::strlen($ext));
 				$extension = JString::substr($extension, 1);
 
 				if (!$name)
@@ -109,7 +109,7 @@ class KunenaUpload
 	}
 
 	/**
-	 * @param  string  $filename  Original filename.
+	 * @param  string $filename Original filename.
 	 *
 	 * @return string  Path pointing to the protected file.
 	 */
@@ -121,7 +121,7 @@ class KunenaUpload
 	}
 
 	/**
-	 * @param  string  $filename  Original filename.
+	 * @param  string $filename Original filename.
 	 *
 	 * @return string     Protected filename.
 	 */
@@ -129,9 +129,9 @@ class KunenaUpload
 	{
 		$filename = $filename ? $filename : $this->filename;
 
-		$user = JFactory::getUser();
+		$user    = JFactory::getUser();
 		$session = JFactory::getSession();
-		$token = JFactory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
+		$token   = JFactory::getConfig()->get('secret') . $user->get('id', 0) . $session->getToken();
 		list($name, $ext) = $this->splitFilename($filename);
 
 		return md5("{$name}.{$token}.{$ext}");
@@ -152,7 +152,7 @@ class KunenaUpload
 	/**
 	 * Convert value into bytes.
 	 *
-	 * @param  string  $value  Value, for example: 1G, 10M, 120k...
+	 * @param  string $value Value, for example: 1G, 10M, 120k...
 	 *
 	 * @return int  Value in bytes.
 	 */
@@ -183,11 +183,11 @@ class KunenaUpload
 			case 'g':
 			case 'gb':
 				$value *= 1024;
-				// Continue.
+			// Continue.
 			case 'm':
 			case 'mb':
 				$value *= 1024;
-				// Continue.
+			// Continue.
 			case 'k':
 			case 'kb':
 				$value *= 1024;
@@ -219,7 +219,7 @@ class KunenaUpload
 	/**
 	 * Upload a file via AJAX, supports chunks and fallback to regular file upload.
 	 *
-	 * @param  array   $options   Upload options.
+	 * @param  array $options Upload options.
 	 *
 	 * @return array  Updated options.
 	 * @throws Exception|RuntimeException
@@ -227,23 +227,23 @@ class KunenaUpload
 	public function ajaxUpload(array $options)
 	{
 		static $defaults = array(
-			'completed' => false,
-			'filename' => null,
-			'size' => 0,
-			'mime' => null,
-			'hash' => null,
+			'completed'  => false,
+			'filename'   => null,
+			'size'       => 0,
+			'mime'       => null,
+			'hash'       => null,
 			'chunkStart' => 0,
-			'chunkEnd' => 0
+			'chunkEnd'   => 0
 		);
 
 		$options += $defaults;
 
-		$config = KunenaConfig::getInstance();
+		$config    = KunenaConfig::getInstance();
 		$exception = null;
-		$in = null;
-		$out = null;
-		$size = $bytes = 0;
-		$outFile = null;
+		$in        = null;
+		$out       = null;
+		$size      = $bytes = 0;
+		$outFile   = null;
 
 		// Look for the content type header
 		if (isset($_SERVER['HTTP_CONTENT_TYPE']))
@@ -318,13 +318,15 @@ class KunenaUpload
 			// Get current size for the file.
 			$stat = fstat($out);
 
-			if (!$stat) {
+			if (!$stat)
+			{
 				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $options['filename']), 500);
 			}
 
 			$size = $stat['size'];
 
-			if ($options['chunkStart'] > $size) {
+			if ($options['chunkStart'] > $size)
+			{
 				throw new RuntimeException(JText::sprintf('Missing data chunk at location %d.', $size), 500);
 			}
 
@@ -385,13 +387,13 @@ class KunenaUpload
 		// Generate response.
 		if ((is_null($options['size']) && $size) || $size === $options['size'])
 		{
-			$options['size'] = (int) $size;
+			$options['size']      = (int) $size;
 			$options['completed'] = true;
 		}
 
 		$options['chunkStart'] = (int) $size;
-		$options['chunkEnd'] = min(
-				$size + 1024*1024,
+		$options['chunkEnd']   = min(
+				$size + 1024 * 1024,
 				$size + $this->getMaxSize(),
 				max($size, $options['size'], is_null($options['size']) ? $this->getMaxSize() : 0)
 			) - 1;
@@ -438,22 +440,22 @@ class KunenaUpload
 	public function ajaxResponse($content)
 	{
 		// TODO: Joomla 3.1+ uses JResponseJson (we just emulate it for now).
-		$response = new StdClass;
-		$response->success = true;
-		$response->message = null;
+		$response           = new StdClass;
+		$response->success  = true;
+		$response->message  = null;
 		$response->messages = null;
-		$response->data = null;
+		$response->data     = null;
 
 		if ($content instanceof Exception)
 		{
 			// Build data from exceptions.
 			$exceptions = array();
-			$e = $content;
+			$e          = $content;
 
 			do
 			{
 				$exception = array(
-					'code' => $e->getCode(),
+					'code'    => $e->getCode(),
 					'message' => $e->getMessage()
 				);
 
@@ -467,14 +469,13 @@ class KunenaUpload
 				}
 
 				$exceptions[] = $exception;
-				$e = $e->getPrevious();
-			}
-			while (JDEBUG && $e);
+				$e            = $e->getPrevious();
+			} while (JDEBUG && $e);
 
 			// Create response.
 			$response->success = false;
 			$response->message = $content->getcode() . ' ' . $content->getMessage();
-			$response->data = array('exceptions' => $exceptions);
+			$response->data    = array('exceptions' => $exceptions);
 		}
 		else
 		{
@@ -487,8 +488,8 @@ class KunenaUpload
 	/**
 	 * Check if filesize on file which on going to be uploaded doesn't exceed the limits set by Kunena configuration and Php configuration
 	 *
-	 * @param   int      $filesize  The size of file in bytes
-	 * @param   boolean  $avatar    If the file is an avatar
+	 * @param   int     $filesize The size of file in bytes
+	 * @param   boolean $avatar   If the file is an avatar
 	 *
 	 * @return boolean
 	 */
@@ -512,24 +513,24 @@ class KunenaUpload
 	/**
 	 * Upload file by passing it by HTML input
 	 *
-	 * @param   array   $fileInput    The file object returned by JInput
-	 * @param   string  $destination  The path of destination of file uploaded
-	 * @param   string  $type         The type of file uploaded: attachment or avatar
+	 * @param   array  $fileInput   The file object returned by JInput
+	 * @param   string $destination The path of destination of file uploaded
+	 * @param   string $type        The type of file uploaded: attachment or avatar
 	 *
 	 * @return object
 	 */
 	public function upload($fileInput, $destination, $type = 'attachment')
 	{
-		$file = new stdClass;
-		$file->ext = JFile::getExt($fileInput['name']);
-		$file->size = $fileInput['size'];
-		$file->tmp_name = $fileInput['tmp_name'];
-		$file->error = $fileInput['error'];
+		$file              = new stdClass;
+		$file->ext         = JFile::getExt($fileInput['name']);
+		$file->size        = $fileInput['size'];
+		$file->tmp_name    = $fileInput['tmp_name'];
+		$file->error       = $fileInput['error'];
 		$file->destination = $destination . '.' . $file->ext;
-		$file->success = false;
-		$file->isAvatar = false;
+		$file->success     = false;
+		$file->isAvatar    = false;
 
-		if ( $type != 'attachment' )
+		if ($type != 'attachment')
 		{
 			$file->isAvatar = true;
 		}
@@ -556,7 +557,7 @@ class KunenaUpload
 			if (JString::strtolower($extension) == JString::strtolower($ext))
 			{
 				// File must contain one letter before extension
-				$name = JString::substr($file->tmp_name, 0, -JString::strlen($ext));
+				$name      = JString::substr($file->tmp_name, 0, -JString::strlen($ext));
 				$extension = JString::substr($extension, 1);
 
 				if (!$name)
@@ -598,7 +599,7 @@ class KunenaUpload
 	/**
 	 * Check for upload errors.
 	 *
-	 * @param  array  $file  Entry from $_FILES array.
+	 * @param  array $file Entry from $_FILES array.
 	 *
 	 * @return RuntimeException
 	 */
@@ -651,10 +652,10 @@ class KunenaUpload
 	/**
 	 * Convert into human readable format bytes to kB, MB, GB
 	 *
-	 * @param   integer  $bytes       size in bytes
-	 * @param   string   $force_unit  a definitive unit
-	 * @param   string   $format      the return string format
-	 * @param   boolean  $si          whether to use SI prefixes or IEC
+	 * @param   integer $bytes      size in bytes
+	 * @param   string  $force_unit a definitive unit
+	 * @param   string  $format     the return string format
+	 * @param   boolean $si         whether to use SI prefixes or IEC
 	 *
 	 * @return string
 	 */

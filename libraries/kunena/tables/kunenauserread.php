@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -26,28 +26,28 @@ class TableKunenaUserRead extends KunenaTable
 
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_user_read', array('user_id', 'topic_id'), $db );
+		parent::__construct('#__kunena_user_read', array('user_id', 'topic_id'), $db);
 	}
 
 	public function check()
 	{
-		$user = KunenaUserHelper::get($this->user_id);
+		$user  = KunenaUserHelper::get($this->user_id);
 		$topic = KunenaForumTopicHelper::get($this->topic_id);
 
 		if (!$user->exists())
 		{
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_USER_INVALID', (int) $user->userid ) );
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_USER_INVALID', (int) $user->userid));
 		}
 
 		if (!$topic->exists())
 		{
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_TOPIC_INVALID', (int) $topic->id ) );
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_TOPIC_INVALID', (int) $topic->id));
 		}
 		else
 		{
 			$this->category_id = $topic->category_id;
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 }

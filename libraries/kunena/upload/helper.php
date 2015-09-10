@@ -1,28 +1,30 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Upload
+ * @package       Kunena.Framework
+ * @subpackage    Upload
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Kunena Upload Backend Helper Class
  */
 class KunenaUploadHelper
 {
-	protected static $_instances = array ();
+	protected static $_instances = array();
 
-	private function __construct() {}
+	private function __construct()
+	{
+	}
 
 	public static function upload($file, $uploadfolder, $format)
 	{
-		jimport( 'joomla.filesystem.folder' );
-		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
+		jimport('joomla.filesystem.folder');
+		require_once(JPATH_ADMINISTRATOR . '/components/com_media/helpers/media.php');
 
 		$err = null;
 
@@ -46,9 +48,9 @@ class KunenaUploadHelper
 
 		if (isset($file['name']))
 		{
-			$filepath = JPath::clean($uploadfolder.'/'.strtolower($file['name']));
+			$filepath = JPath::clean($uploadfolder . '/' . strtolower($file['name']));
 
-			if (!MediaHelper::canUpload( $file, $err ))
+			if (!MediaHelper::canUpload($file, $err))
 			{
 				if ($format == 'json')
 				{
@@ -76,8 +78,8 @@ class KunenaUploadHelper
 				}
 				else
 				{
-					$ext = JFile::getExt($file['name']);
-					$name = JFile::stripExt($file['name']);
+					$ext         = JFile::getExt($file['name']);
+					$name        = JFile::stripExt($file['name']);
 					$newFileName = '';
 
 					for ($i = 2; file_exists("{$uploadfolder}/{$newFileName}"); $i++)

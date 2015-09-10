@@ -33,7 +33,7 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	/**
 	 * Set the options
 	 *
-	 * @param   mixed  $options  Array / JRegistry object with the options to load
+	 * @param   mixed $options Array / JRegistry object with the options to load
 	 *
 	 * @return  JLayoutBase  Instance of $this to allow chaining.
 	 *
@@ -92,7 +92,7 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	/**
 	 * Method to escape output.
 	 *
-	 * @param   string  $output  The output to escape.
+	 * @param   string $output The output to escape.
 	 *
 	 * @return  string  The escaped output.
 	 *
@@ -118,7 +118,7 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	/**
 	 * Method to render the layout.
 	 *
-	 * @param   object  $displayData  Object which properties are used inside the layout file to build displayed output
+	 * @param   object $displayData Object which properties are used inside the layout file to build displayed output
 	 *
 	 * @return  string  The necessary HTML to display the layout
 	 *
@@ -144,7 +144,7 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	/**
 	 * Add a debug message to the debug messages array
 	 *
-	 * @param   string  $message  Message to save
+	 * @param   string $message Message to save
 	 *
 	 * @return  void
 	 *

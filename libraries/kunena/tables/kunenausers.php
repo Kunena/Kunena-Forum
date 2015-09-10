@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Tables
+ * @package         Kunena.Framework
+ * @subpackage      Tables
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -281,10 +281,11 @@ class TableKunenaUsers extends KunenaTable
 	public function load($userid = null, $reset = true)
 	{
 		$this->_exists = false;
-		$k = $this->_tbl_key;
+		$k             = $this->_tbl_key;
 
 		// Get the id to load.
-		if ($userid !== null) {
+		if ($userid !== null)
+		{
 			$this->$k = $userid;
 		}
 
@@ -358,17 +359,17 @@ class TableKunenaUsers extends KunenaTable
 	{
 		if (!$this->userid || !JFactory::getUser($this->userid))
 		{
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int)$this->userid));
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
 		}
 
 		if ($this->status < 0 || $this->status > 3)
 		{
-			$this->setError ( JText::_('COM_KUNENA_UNKNOWN_STATUS'));
+			$this->setError(JText::_('COM_KUNENA_UNKNOWN_STATUS'));
 		}
 
 		if (strlen($this->status) < 0 || strlen($this->status) > 255)
 		{
-			$this->setError ( JText::_('COM_KUNENA_STATUS_TOOLONG'));
+			$this->setError(JText::_('COM_KUNENA_STATUS_TOOLONG'));
 		}
 
 		return ($this->getError() == '');

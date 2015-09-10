@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Table
+ * @package       Kunena.Framework
+ * @subpackage    Table
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaTableMap
@@ -55,19 +55,19 @@ class KunenaTableMap
 	 * be overridden by child classes to explicitly set the table and key fields
 	 * for a particular database table.
 	 *
-	 * @param   string           $table   Name of the table to model.
-	 * @param   string           $key     Name of the primary key field in the table.
-	 * @param   string           $mapped  Name of the mapped key field in the table.
-	 * @param   JDatabaseDriver  $db      JDatabaseDriver object.
+	 * @param   string          $table  Name of the table to model.
+	 * @param   string          $key    Name of the primary key field in the table.
+	 * @param   string          $mapped Name of the mapped key field in the table.
+	 * @param   JDatabaseDriver $db     JDatabaseDriver object.
 	 */
 	public function __construct($table, $key, $mapped, JDatabaseDriver $db = null)
 	{
 		// Set internal variables.
-		$this->_tbl = $table;
-		$this->_tbl_key = $key;
+		$this->_tbl        = $table;
+		$this->_tbl_key    = $key;
 		$this->_tbl_mapped = $mapped;
-		$this->{$mapped} = array();
-		$this->_db = $db ? $db : JFactory::getDbo();
+		$this->{$mapped}   = array();
+		$this->_db         = $db ? $db : JFactory::getDbo();
 
 		// Initialise the table properties.
 		$fields = $this->getFields();
@@ -117,8 +117,8 @@ class KunenaTableMap
 	public function getProperties()
 	{
 		$properties = (array) $this;
-		$list = array();
-		foreach ($properties as $property=>$value)
+		$list       = array();
+		foreach ($properties as $property => $value)
 		{
 			if ($property[0] != "\0") $list[$property] = $value;
 		}
@@ -133,7 +133,7 @@ class KunenaTableMap
 		$key = md5(serialize(array($this->_tbl, $this->_tbl_mapped, $this->_tbl_key)));
 		if (!isset($instance[$key]))
 		{
-			$c = get_called_class();
+			$c              = get_called_class();
 			$instance[$key] = new $c($this->_tbl, $this->_tbl_mapped, $this->_tbl_key);
 		}
 
@@ -199,7 +199,7 @@ class KunenaTableMap
 	/**
 	 * Method to set the primary key.
 	 *
-	 * @param  int  $id  Set value for the primary key.
+	 * @param  int $id Set value for the primary key.
 	 *
 	 * @return $this
 	 */
@@ -223,7 +223,7 @@ class KunenaTableMap
 	/**
 	 * Method to set the mapped value.
 	 *
-	 * @param  array  $list  Set array of mapped objects.
+	 * @param  array $list Set array of mapped objects.
 	 */
 	public function setMapped(array $list)
 	{
@@ -234,7 +234,7 @@ class KunenaTableMap
 	/**
 	 * Method to add relation.
 	 *
-	 * @param  int  $id  Add Id.
+	 * @param  int $id Add Id.
 	 *
 	 * @return $this
 	 */
@@ -251,7 +251,7 @@ class KunenaTableMap
 	/**
 	 * Method to remove relation.
 	 *
-	 * @param  int  $id  Add Id.
+	 * @param  int $id Add Id.
 	 *
 	 * @return $this
 	 */
@@ -270,7 +270,7 @@ class KunenaTableMap
 	/**
 	 * Method to set the JDatabaseDriver object.
 	 *
-	 * @param   JDatabaseDriver  $db  A JDatabaseDriver object to be used by the table object.
+	 * @param   JDatabaseDriver $db A JDatabaseDriver object to be used by the table object.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -310,8 +310,8 @@ class KunenaTableMap
 	 * method only binds properties that are publicly accessible and optionally
 	 * takes an array of properties to ignore when binding.
 	 *
-	 * @param   mixed  $src     An associative array or object to bind to the JTable instance.
-	 * @param   mixed  $ignore  An optional array or space separated list of properties to ignore while binding.
+	 * @param   mixed $src    An associative array or object to bind to the JTable instance.
+	 * @param   mixed $ignore An optional array or space separated list of properties to ignore while binding.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -358,9 +358,9 @@ class KunenaTableMap
 	 * Method to load all mapped values from the database by primary key and bind the fields
 	 * to the JTable instance properties.
 	 *
-	 * @param   mixed    $keys   An optional primary key value to load the row by, or an array of fields to match.  If not
+	 * @param   mixed   $keys    An optional primary key value to load the row by, or an array of fields to match.  If not
 	 *                           set the instance property value is used.
-	 * @param   boolean  $reset  True to reset the default values before loading the new row.
+	 * @param   boolean $reset   True to reset the default values before loading the new row.
 	 *
 	 * @return  boolean  True if successful. False if no rows were found.
 	 *
@@ -373,7 +373,7 @@ class KunenaTableMap
 		if (empty($keys))
 		{
 			// If empty, use the value of the current key
-			$keyName = $this->_tbl_key;
+			$keyName  = $this->_tbl_key;
 			$keyValue = $this->{$keyName};
 
 			// If empty primary key there's is no need to load anything
@@ -390,7 +390,8 @@ class KunenaTableMap
 			$keys = array($this->_tbl_key => $keys);
 		}
 
-		if ($reset) {
+		if ($reset)
+		{
 			$this->reset();
 		}
 
@@ -415,7 +416,7 @@ class KunenaTableMap
 
 		$this->_db->setQuery($query);
 
-		$mapName = $this->_tbl_mapped;
+		$mapName          = $this->_tbl_mapped;
 		$this->{$mapName} = (array) $this->_db->loadColumn();
 
 		return !empty($this->{$mapName});
@@ -439,7 +440,7 @@ class KunenaTableMap
 	/**
 	 * Method to store mapped rows in the database from the JTable instance properties.
 	 *
-	 * @param   array    $filter  Touch only these filtered items.
+	 * @param   array $filter Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -456,7 +457,7 @@ class KunenaTableMap
 			throw new UnexpectedValueException(sprintf('No key specified: %s.', get_class($this)));
 		}
 
-		$id = $this->{$k};
+		$id    = $this->{$k};
 		$items = $this->{$m};
 		if (!empty($items))
 		{
@@ -465,7 +466,7 @@ class KunenaTableMap
 			$filtered = !is_null($filter) ? array_intersect($this->{$m}, $filter) : $this->{$m};
 
 			// Calculate difference (added and deleted items).
-			$added = array_diff($items, $filtered);
+			$added   = array_diff($items, $filtered);
 			$deleted = array_diff($filtered, $items);
 
 			// Create all added items.
@@ -474,7 +475,7 @@ class KunenaTableMap
 				$values = array();
 				foreach ($added as $var)
 				{
-					$values[] = (int) $id .','. (int) $var;
+					$values[] = (int) $id . ',' . (int) $var;
 				}
 
 				$query = $this->_db->getQuery(true);
@@ -486,11 +487,12 @@ class KunenaTableMap
 			}
 
 			// Remove all deleted items.
-			if ($deleted) {
+			if ($deleted)
+			{
 				$query = $this->_db->getQuery(true);
 				$query->delete($this->_db->qn($this->_tbl));
-				$query->where($this->_db->qn($this->_tbl_key).'='.(int) $id);
-				$query->where($this->_db->qn($this->_tbl_mapped).' IN ('.implode(',', $deleted).')');
+				$query->where($this->_db->qn($this->_tbl_key) . '=' . (int) $id);
+				$query->where($this->_db->qn($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
 				$this->_db->setQuery($query);
 				$this->_db->execute();
 			}
@@ -515,8 +517,8 @@ class KunenaTableMap
 	 * Method to provide a shortcut to binding, checking and storing a JTable
 	 * instance to the database table.
 	 *
-	 * @param   array   $map     An array of mapped Ids.
-	 * @param   array   $filter  Touch only these filtered items.
+	 * @param   array $map    An array of mapped Ids.
+	 * @param   array $filter Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -547,7 +549,7 @@ class KunenaTableMap
 	/**
 	 * Method to delete a row from the database table by primary key value.
 	 *
-	 * @param   int|array  $pk  An optional primary key value (or array of key=>value pairs) to delete.  If not set the instance property value is used.
+	 * @param   int|array $pk An optional primary key value (or array of key=>value pairs) to delete.  If not set the instance property value is used.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -556,7 +558,7 @@ class KunenaTableMap
 	 */
 	public function delete($pk = null)
 	{
-		$k = $this->_tbl_key;
+		$k  = $this->_tbl_key;
 		$pk = (is_null($pk)) ? $this->{$k} : $pk;
 
 		// If no primary key is given, return false.
@@ -576,7 +578,7 @@ class KunenaTableMap
 		$query->delete();
 		$query->from($this->_tbl);
 
-		foreach ($pk as $key=>$value)
+		foreach ($pk as $key => $value)
 		{
 			$query->where($key . ' = ' . $this->_db->quote($value));
 		}

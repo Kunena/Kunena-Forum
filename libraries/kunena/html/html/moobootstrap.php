@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Utility class for Bootstrap elements (written in Mootools).
@@ -27,7 +27,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap alerts
 	 *
-	 * @param   string  $selector  Common class for the alerts
+	 * @param   string $selector Common class for the alerts
 	 *
 	 * @return  void
 	 *
@@ -59,12 +59,12 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap carousels
 	 *
-	 * @param   string  $selector  Common class for the carousels.
-	 * @param   array   $params    An array of options for the modal.
-	 *                             Options for the modal can be:
-	 *                             - interval  number  The amount of time to delay between automatically cycling an item.
+	 * @param   string $selector                       Common class for the carousels.
+	 * @param   array  $params                         An array of options for the modal.
+	 *                                                 Options for the modal can be:
+	 *                                                 - interval  number  The amount of time to delay between automatically cycling an item.
 	 *                                                 If false, carousel will not automatically cycle.
-	 *                             - pause     string  Pauses the cycling of the carousel on mouseenter and resumes the cycling
+	 *                                                 - pause     string  Pauses the cycling of the carousel on mouseenter and resumes the cycling
 	 *                                                 of the carousel on mouseleave.
 	 *
 	 * @return  void
@@ -82,7 +82,7 @@ abstract class JHtmlMooBootstrap
 
 			// Setup options object
 			$opt['interval'] = (isset($params['interval']) && ($params['interval'])) ? (int) $params['interval'] : 5000;
-			$opt['pause'] = (isset($params['pause']) && ($params['pause'])) ? $params['pause'] : 'hover';
+			$opt['pause']    = (isset($params['pause']) && ($params['pause'])) ? $params['pause'] : 'hover';
 
 			$options = self::getJSObject($opt);
 
@@ -103,7 +103,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap dropdowns
 	 *
-	 * @param   string  $selector  Common class for the dropdowns
+	 * @param   string $selector Common class for the dropdowns
 	 *
 	 * @return  void
 	 *
@@ -137,7 +137,7 @@ abstract class JHtmlMooBootstrap
 	 *
 	 * If debugging mode is on an uncompressed version of Bootstrap is included for easier debugging.
 	 *
-	 * @param   mixed  $debug  Is debugging mode on? [optional]
+	 * @param   mixed $debug Is debugging mode on? [optional]
 	 *
 	 * @return  void
 	 *
@@ -161,7 +161,7 @@ abstract class JHtmlMooBootstrap
 			$debug  = (boolean) $config->get('debug');
 		}
 
-		JHtml::_('script', KPATH_MEDIA.'/kunena/js/bootstrap/moobootstrap.js' , false, true);
+		JHtml::_('script', KPATH_MEDIA . '/kunena/js/bootstrap/moobootstrap.js', false, true);
 		self::$loaded[__METHOD__] = true;
 
 		return;
@@ -170,8 +170,8 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap modals
 	 *
-	 * @param   string  $selector  The ID selector for the modal.
-	 * @param   array   $params    An array of options for the modal.
+	 * @param   string $selector   The ID selector for the modal.
+	 * @param   array  $params     An array of options for the modal.
 	 *                             Options for the modal can be:
 	 *                             - backdrop  boolean  Includes a modal-backdrop element.
 	 *                             - keyboard  boolean  Closes the modal when escape key is pressed.
@@ -216,9 +216,9 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Method to render a Bootstrap modal
 	 *
-	 * @param   string  $selector  The ID selector for the modal.
-	 * @param   array   $params    An array of options for the modal.
-	 * @param   string  $footer    Optional markup for the modal footer
+	 * @param   string $selector The ID selector for the modal.
+	 * @param   array  $params   An array of options for the modal.
+	 * @param   string $footer   Optional markup for the modal footer
 	 *
 	 * @return  string  HTML markup for a modal
 	 *
@@ -252,18 +252,18 @@ abstract class JHtmlMooBootstrap
 	 *
 	 * Use element's Title as popover content
 	 *
-	 * @param   string  $selector  Selector for the tooltip
-	 * @param   array   $params    An array of options for the tooltip.
-	 *                  Options for the tooltip can be:
-	 *                      animation  boolean          apply a css fade transition to the tooltip
-	 *                      html       boolean          Insert HTML into the tooltip. If false, jQuery's text method will be used to insert
+	 * @param   string $selector                        Selector for the tooltip
+	 * @param   array  $params                          An array of options for the tooltip.
+	 *                                                  Options for the tooltip can be:
+	 *                                                  animation  boolean          apply a css fade transition to the tooltip
+	 *                                                  html       boolean          Insert HTML into the tooltip. If false, jQuery's text method will be used to insert
 	 *                                                  content into the dom.
-	 *                      placement  string|function  how to position the tooltip - top | bottom | left | right
-	 *                      selector   string           If a selector is provided, tooltip objects will be delegated to the specified targets.
-	 *                      title      string|function  default title value if `title` tag isn't present
-	 *                      trigger    string           how tooltip is triggered - hover | focus | manual
-	 *                      content    string|function  default content value if `data-content` attribute isn't present
-	 *                      delay      number|object    delay showing and hiding the tooltip (ms) - does not apply to manual trigger type
+	 *                                                  placement  string|function  how to position the tooltip - top | bottom | left | right
+	 *                                                  selector   string           If a selector is provided, tooltip objects will be delegated to the specified targets.
+	 *                                                  title      string|function  default title value if `title` tag isn't present
+	 *                                                  trigger    string           how tooltip is triggered - hover | focus | manual
+	 *                                                  content    string|function  default content value if `data-content` attribute isn't present
+	 *                                                  delay      number|object    delay showing and hiding the tooltip (ms) - does not apply to manual trigger type
 	 *                                                  If a number is supplied, delay is applied to both hide/show
 	 *                                                  Object structure is: delay: { show: 500, hide: 100 }
 	 *
@@ -309,8 +309,8 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap ScrollSpy
 	 *
-	 * @param   string  $selector  The ID selector for the ScrollSpy element.
-	 * @param   array   $params    An array of options for the ScrollSpy.
+	 * @param   string $selector   The ID selector for the ScrollSpy element.
+	 * @param   array  $params     An array of options for the ScrollSpy.
 	 *                             Options for the modal can be:
 	 *                             - offset  number  Pixels to offset from top when calculating position of scroll.
 	 *
@@ -351,17 +351,17 @@ abstract class JHtmlMooBootstrap
 	 * Add a title attribute to any element in the form
 	 * title="title::text"
 	 *
-	 * @param   string  $selector  The ID selector for the tooltip.
-	 * @param   array   $params    An array of options for the tooltip.
-	 *                             Options for the tooltip can be:
-	 *                             - animation  boolean          Apply a CSS fade transition to the tooltip
-	 *                             - html       boolean          Insert HTML into the tooltip. If false, jQuery's text method will be used to insert
+	 * @param   string $selector                                 The ID selector for the tooltip.
+	 * @param   array  $params                                   An array of options for the tooltip.
+	 *                                                           Options for the tooltip can be:
+	 *                                                           - animation  boolean          Apply a CSS fade transition to the tooltip
+	 *                                                           - html       boolean          Insert HTML into the tooltip. If false, jQuery's text method will be used to insert
 	 *                                                           content into the dom.
-	 *                             - placement  string|function  How to position the tooltip - top | bottom | left | right
-	 *                             - selector   string           If a selector is provided, tooltip objects will be delegated to the specified targets.
-	 *                             - title      string|function  Default title value if `title` tag isn't present
-	 *                             - trigger    string           How tooltip is triggered - hover | focus | manual
-	 *                             - delay      number           Delay showing and hiding the tooltip (ms) - does not apply to manual trigger type
+	 *                                                           - placement  string|function  How to position the tooltip - top | bottom | left | right
+	 *                                                           - selector   string           If a selector is provided, tooltip objects will be delegated to the specified targets.
+	 *                                                           - title      string|function  Default title value if `title` tag isn't present
+	 *                                                           - trigger    string           How tooltip is triggered - hover | focus | manual
+	 *                                                           - delay      number           Delay showing and hiding the tooltip (ms) - does not apply to manual trigger type
 	 *                                                           If a number is supplied, delay is applied to both hide/show
 	 *                                                           Object structure is: delay: { show: 500, hide: 100 }
 	 *
@@ -405,13 +405,13 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap accordians and insert the accordian
 	 *
-	 * @param   string  $selector  The ID selector for the tooltip.
-	 * @param   array   $params    An array of options for the tooltip.
-	 *                             Options for the tooltip can be:
-	 *                             - parent  selector  If selector then all collapsible elements under the specified parent will be closed when this
+	 * @param   string $selector                       The ID selector for the tooltip.
+	 * @param   array  $params                         An array of options for the tooltip.
+	 *                                                 Options for the tooltip can be:
+	 *                                                 - parent  selector  If selector then all collapsible elements under the specified parent will be closed when this
 	 *                                                 collapsible item is shown. (similar to traditional accordion behavior)
-	 *                             - toggle  boolean   Toggles the collapsible element on invocation
-	 *                             - active  string    Sets the active slide during load
+	 *                                                 - toggle  boolean   Toggles the collapsible element on invocation
+	 *                                                 - active  string    Sets the active slide during load
 	 *
 	 * @return  string  HTML for the accordian
 	 *
@@ -441,7 +441,7 @@ abstract class JHtmlMooBootstrap
 			);
 
 			// Set static array
-			self::$loaded[__METHOD__][$sig] = true;
+			self::$loaded[__METHOD__][$sig]     = true;
 			self::$loaded[__METHOD__]['active'] = $opt['active'];
 		}
 
@@ -463,9 +463,9 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Begins the display of a new accordion slide.
 	 *
-	 * @param   string  $selector  Identifier of the accordion group.
-	 * @param   string  $text      Text to display.
-	 * @param   string  $id        Identifier of the slide.
+	 * @param   string $selector Identifier of the accordion group.
+	 * @param   string $text     Text to display.
+	 * @param   string $id       Identifier of the slide.
 	 *
 	 * @return  string  HTML to add the slide
 	 *
@@ -476,13 +476,13 @@ abstract class JHtmlMooBootstrap
 		$in = (self::$loaded['self::startAccordion']['active'] == $id) ? ' in' : '';
 
 		$html = '<div class="accordion-group">'
-				. '<div class="accordion-heading">'
-				. '<strong><a href="#' . $id . '" data-parent="#' . $selector . '" data-toggle="collapse" class="accordion-toggle">'
-				. $text
-				. '</a></strong>'
-				. '</div>'
-				. '<div class="accordion-body collapse' . $in . '" id="' . $id . '">'
-				. '<div class="accordion-inner">';
+			. '<div class="accordion-heading">'
+			. '<strong><a href="#' . $id . '" data-parent="#' . $selector . '" data-toggle="collapse" class="accordion-toggle">'
+			. $text
+			. '</a></strong>'
+			. '</div>'
+			. '<div class="accordion-body collapse' . $in . '" id="' . $id . '">'
+			. '<div class="accordion-inner">';
 
 		return $html;
 	}
@@ -502,8 +502,8 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Creates a tab pane
 	 *
-	 * @param   string  $selector  The pane identifier.
-	 * @param   array   $params    The parameters for the pane
+	 * @param   string $selector The pane identifier.
+	 * @param   array  $params   The parameters for the pane
 	 *
 	 * @return  string
 	 *
@@ -535,7 +535,7 @@ abstract class JHtmlMooBootstrap
 			);
 
 			// Set static array
-			self::$loaded[__METHOD__][$sig] = true;
+			self::$loaded[__METHOD__][$sig]                = true;
 			self::$loaded[__METHOD__][$selector]['active'] = $opt['active'];
 		}
 
@@ -557,8 +557,8 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Begins the display of a new tab content panel.
 	 *
-	 * @param   string  $selector  Identifier of the panel.
-	 * @param   string  $id        The ID of the div element
+	 * @param   string $selector Identifier of the panel.
+	 * @param   string $id       The ID of the div element
 	 *
 	 * @return  string  HTML to start a new panel
 	 *
@@ -586,9 +586,9 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Loads CSS files needed by Bootstrap
 	 *
-	 * @param   boolean  $includeMainCss  If true, main bootstrap.css files are loaded
-	 * @param   string   $direction       rtl or ltr direction. If empty, ltr is assumed
-	 * @param   array    $attribs         Optional array of attributes to be passed to JHtml::_('stylesheet')
+	 * @param   boolean $includeMainCss If true, main bootstrap.css files are loaded
+	 * @param   string  $direction      rtl or ltr direction. If empty, ltr is assumed
+	 * @param   array   $attribs        Optional array of attributes to be passed to JHtml::_('stylesheet')
 	 *
 	 * @return  void
 	 *
@@ -599,7 +599,7 @@ abstract class JHtmlMooBootstrap
 		// Load Bootstrap main CSS
 		if ($includeMainCss)
 		{
-			JHtml::_('stylesheet', KPATH_MEDIA.'/css/bootstrap-custom.css', $attribs, false);
+			JHtml::_('stylesheet', KPATH_MEDIA . '/css/bootstrap-custom.css', $attribs, false);
 		}
 
 		// Load Bootstrap RTL CSS
@@ -614,7 +614,7 @@ abstract class JHtmlMooBootstrap
 	 *
 	 * Internal method to get a JavaScript object notation string from an array
 	 *
-	 * @param   array  $array  The array to convert to JavaScript object notation
+	 * @param   array $array The array to convert to JavaScript object notation
 	 *
 	 * @return  string  JavaScript object notation representation of the array
 	 *

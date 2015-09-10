@@ -1,26 +1,26 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Topic.User
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Topic.User
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaForumTopicUser
  *
- * @property int $user_id
- * @property int $topic_id
- * @property int $category_id
- * @property int $posts
- * @property int $last_post_id
- * @property int $owner
- * @property int $favorite
- * @property int $subscribed
+ * @property int    $user_id
+ * @property int    $topic_id
+ * @property int    $category_id
+ * @property int    $posts
+ * @property int    $last_post_id
+ * @property int    $owner
+ * @property int    $favorite
+ * @property int    $subscribed
  * @property string $params
  */
 class KunenaForumTopicUser extends JObject
@@ -39,17 +39,17 @@ class KunenaForumTopicUser extends JObject
 		$topic = KunenaForumTopicHelper::get($topic);
 
 		// Always fill empty data
-		$this->_db = JFactory::getDBO ();
+		$this->_db = JFactory::getDBO();
 
 		// Create the table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
 		// Lets bind the data
-		$this->setProperties ( $table->getProperties () );
-		$this->_exists = false;
-		$this->topic_id = $topic->id;
+		$this->setProperties($table->getProperties());
+		$this->_exists     = false;
+		$this->topic_id    = $topic->id;
 		$this->category_id = $topic->category_id;
-		$this->user_id = KunenaUserHelper::get($user)->userid;
+		$this->user_id     = KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
@@ -92,8 +92,8 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 * Method to get the topics table object.
 	 *
-	 * @param string $type		Topics table name to be used.
-	 * @param string $prefix	Topics table prefix to be used.
+	 * @param string $type   Topics table name to be used.
+	 * @param string $prefix Topics table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaUserTopics
 	 */
@@ -104,12 +104,12 @@ class KunenaForumTopicUser extends JObject
 		//Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
 		{
-			$tabletype ['name'] = $type;
+			$tabletype ['name']   = $type;
 			$tabletype ['prefix'] = $prefix;
 		}
 
 		// Create the user table object
-		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
+		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
@@ -119,7 +119,7 @@ class KunenaForumTopicUser extends JObject
 	public function bind(array $data, array $ignore = array())
 	{
 		$data = array_diff_key($data, array_flip($ignore));
-		$this->setProperties ( $data );
+		$this->setProperties($data);
 	}
 
 	public function reset()
@@ -131,10 +131,10 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 * Method to load a KunenaForumTopicUser object by id.
 	 *
-	 * @param int   $topic_id	Topic id to be loaded.
+	 * @param int   $topic_id Topic id to be loaded.
 	 * @param mixed $user
 	 *
-	 * @return bool	True on success
+	 * @return bool    True on success
 	 */
 	public function load($topic_id = null, $user = null)
 	{
@@ -151,12 +151,12 @@ class KunenaForumTopicUser extends JObject
 		$user = KunenaUserHelper::get($user);
 
 		// Create the table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
 		// Load the KunenaTable object based on id
 		if ($topic_id)
 		{
-			$this->_exists = $table->load ( array('user_id'=>$user->userid, 'topic_id'=>$topic_id) );
+			$this->_exists = $table->load(array('user_id' => $user->userid, 'topic_id' => $topic_id));
 		}
 		else
 		{
@@ -164,7 +164,7 @@ class KunenaForumTopicUser extends JObject
 		}
 
 		// Assuming all is well at this point lets bind the data
-		$this->setProperties ( $table->getProperties () );
+		$this->setProperties($table->getProperties());
 
 		return $this->_exists;
 	}
@@ -172,26 +172,27 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 * Method to save the KunenaForumTopicUser object to the database.
 	 *
-	 * @param bool $updateOnly	Save the object only if not a new topic.
+	 * @param bool $updateOnly Save the object only if not a new topic.
 	 *
-	 * @return bool	True on success.
+	 * @return bool    True on success.
 	 */
 	public function save($updateOnly = false)
 	{
 		// Create the topics table object
-		$table = $this->getTable ();
-		$table->bind ( $this->getProperties () );
-		$table->exists ( $this->_exists );
+		$table = $this->getTable();
+		$table->bind($this->getProperties());
+		$table->exists($this->_exists);
 
 		// Check and store the object.
-		if (! $table->check ())
+		if (!$table->check())
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
+
 			return false;
 		}
 
 		//are we creating a new topic
-		$isnew = ! $this->_exists;
+		$isnew = !$this->_exists;
 
 		// If we aren't allowed to create new topic return
 		if ($isnew && $updateOnly)
@@ -200,14 +201,15 @@ class KunenaForumTopicUser extends JObject
 		}
 
 		//Store the topic data in the database
-		if (! $result = $table->store ())
+		if (!$result = $table->store())
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
 		}
 
 		// Fill up KunenaForumTopicUser object in case we created a new topic.
-		if ($result && $isnew) {
-			$this->load ();
+		if ($result && $isnew)
+		{
+			$this->load();
 		}
 
 		return $result;
@@ -216,7 +218,7 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 * Method to delete the KunenaForumTopicUser object from the database.
 	 *
-	 * @return bool	True on success.
+	 * @return bool    True on success.
 	 */
 	public function delete()
 	{
@@ -226,13 +228,13 @@ class KunenaForumTopicUser extends JObject
 		}
 
 		// Create the table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
-		$result = $table->delete ( array('topic_id'=>$this->topic_id, 'user_id'=>$this->user_id) );
+		$result = $table->delete(array('topic_id' => $this->topic_id, 'user_id' => $this->user_id));
 
-		if (! $result)
+		if (!$result)
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
 		}
 
 		$this->_exists = false;
@@ -263,15 +265,15 @@ class KunenaForumTopicUser extends JObject
 				$this->last_post_id = $message->id;
 			}
 		}
-		elseif (!$message || (($message->hold || $message->thread != $this->topic_id ) && $this->last_post_id == $message->id))
+		elseif (!$message || (($message->hold || $message->thread != $this->topic_id) && $this->last_post_id == $message->id))
 		{
-			$query ="SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
+			$query = "SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
 					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
 					GROUP BY userid, thread";
 			$this->_db->setQuery($query, 0, 1);
 			$info = $this->_db->loadAssocList();
 
-			if (KunenaError::checkDatabaseError ())
+			if (KunenaError::checkDatabaseError())
 			{
 				return null;
 			}

@@ -1,21 +1,21 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 require_once(__DIR__ . '/kunena.php');
 
 /**
-* Kunena User Bans
-* Provides access to the #__kunena_users_banned table
-*/
+ * Kunena User Bans
+ * Provides access to the #__kunena_users_banned table
+ */
 class TableKunenaUserBans extends JTable
 {
 	public $id = null;
@@ -43,7 +43,7 @@ class TableKunenaUserBans extends JTable
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
 		// Reset the table.
-		$k = $this->_tbl_key;
+		$k        = $this->_tbl_key;
 		$this->$k = 0;
 		$this->reset();
 
@@ -57,7 +57,7 @@ class TableKunenaUserBans extends JTable
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE userid = {$this->_db->quote($userid)}
-			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})": '') . "
+			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 		$data = $this->_db->loadAssoc();
@@ -86,12 +86,13 @@ class TableKunenaUserBans extends JTable
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
 		// Reset the table.
-		$k = $this->_tbl_key;
+		$k        = $this->_tbl_key;
 		$this->$k = 0;
 		$this->reset();
 
 		// Check for a valid id to load.
-		if ($ip === null || !is_string($ip)) {
+		if ($ip === null || !is_string($ip))
+		{
 			return false;
 		}
 
@@ -99,7 +100,7 @@ class TableKunenaUserBans extends JTable
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE ip = {$this->_db->quote($ip)}
-			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})": '') . "
+			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 		$data = $this->_db->loadAssoc();
@@ -132,14 +133,14 @@ class TableKunenaUserBans extends JTable
 			$user = KunenaUserHelper::get($this->userid);
 			if (!$user->exists())
 			{
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid ) );
+				$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
 			}
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 
-	public function bind($data, $ignore=array())
+	public function bind($data, $ignore = array())
 	{
 		if (isset($data['comments']))
 		{

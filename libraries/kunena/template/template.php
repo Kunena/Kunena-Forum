@@ -791,7 +791,7 @@ HTML;
 	 * Get the th topic icon depending on template settings
 	 *
 	 * @param KunenaForumTopic $topic
-	 * @param $category_iconset
+	 * @param                  $category_iconset
 	 *
 	 * @return string
 	 */
@@ -1031,7 +1031,8 @@ HTML;
 			{
 				$html = '<span class="icon icon-' . $icon . ' icon-topic" aria-hidden="true"></span>';
 			}
-			else {
+			else
+			{
 				$html = '<img src="' . $iconurl . '" alt="emo" />';
 			}
 		}

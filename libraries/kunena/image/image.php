@@ -1,17 +1,17 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Framework
- * @subpackage  Image
+ * @package         Kunena.Framework
+ * @subpackage      Image
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
-define('MIME_GIF','image/gif');
-define('MIME_PNG','image/png');
+define('MIME_GIF', 'image/gif');
+define('MIME_PNG', 'image/png');
 
 /**
  * Helper class for image manipulation.
@@ -21,11 +21,11 @@ class KunenaImage extends KunenaCompatImage
 	/**
 	 * Method to resize the current image.
 	 *
-	 * @param   mixed    $width        The width of the resized image in pixels or a percentage.
-	 * @param   mixed    $height       The height of the resized image in pixels or a percentage.
-	 * @param   boolean  $createNew    If true the current image will be cloned, resized and returned; else
+	 * @param   mixed   $width         The width of the resized image in pixels or a percentage.
+	 * @param   mixed   $height        The height of the resized image in pixels or a percentage.
+	 * @param   boolean $createNew     If true the current image will be cloned, resized and returned; else
 	 *                                 the current image will be resized and returned.
-	 * @param   integer  $scaleMethod  Which method to use for scaling
+	 * @param   integer $scaleMethod   Which method to use for scaling
 	 *
 	 * @return  KunenaImage
 	 *
@@ -65,7 +65,7 @@ class KunenaImage extends KunenaCompatImage
 		$dimensions = $this->prepareDimensions($width, $height, $scaleMethod);
 
 		// Instantiate offset.
-		$offset = new stdClass;
+		$offset    = new stdClass;
 		$offset->x = $offset->y = 0;
 
 		// Get truecolor handle
@@ -75,8 +75,8 @@ class KunenaImage extends KunenaCompatImage
 		if ($scaleMethod == self::SCALE_FIT)
 		{
 			// Get the offsets
-			$offset->x	= round(($width - $dimensions->width) / 2);
-			$offset->y	= round(($height - $dimensions->height) / 2);
+			$offset->x = round(($width - $dimensions->width) / 2);
+			$offset->y = round(($height - $dimensions->height) / 2);
 
 			// Make image transparent, otherwise cavas outside initial image would default to black
 			if (!$this->isTransparent())
@@ -94,8 +94,8 @@ class KunenaImage extends KunenaCompatImage
 
 			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))
 			{
-				$trnprt_color   = imagecolorsforindex($this->handle, $trnprt_indx);
-				$trnprt_indx    = imagecolorallocate($handle, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
+				$trnprt_color = imagecolorsforindex($this->handle, $trnprt_indx);
+				$trnprt_indx  = imagecolorallocate($handle, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
 				imagefill($handle, 0, 0, $trnprt_indx);
 				imagecolortransparent($handle, $trnprt_indx);
 			}
@@ -116,12 +116,14 @@ class KunenaImage extends KunenaCompatImage
 		{
 			$trnprt_indx = imagecolortransparent($this->handle);
 
-			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))  {
+			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))
+			{
 				// Get the transparent color values for the current image.
-				$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
+				$rgba  = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
 				$color = imageColorAllocateAlpha($handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
 			}
-			else {
+			else
+			{
 				$color = imageColorAllocateAlpha($handle, 255, 255, 255, 127);
 			}
 
@@ -169,7 +171,8 @@ class KunenaImage extends KunenaCompatImage
 		}
 	}
 
-	public static function imageCopyResampledBicubic(&$dst_image, &$src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)  {
+	public static function imageCopyResampledBicubic(&$dst_image, &$src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
+	{
 		// We should first cut the piece we are interested in from the source
 		$src_img = ImageCreateTrueColor($src_w, $src_h);
 		imagecopy($src_img, $src_image, 0, 0, $src_x, $src_y, $src_w, $src_h);
@@ -180,17 +183,22 @@ class KunenaImage extends KunenaCompatImage
 		ImagePaletteCopy($dst_img, $src_img);
 		$rX = $src_w / $dst_w;
 		$rY = $src_h / $dst_h;
-		$w = 0;
+		$w  = 0;
 		for ($y = 0; $y < $dst_h; $y++)
 		{
-			$ow = $w; $w = round(($y + 1) * $rY);
-			$t = 0;
+			$ow = $w;
+			$w  = round(($y + 1) * $rY);
+			$t  = 0;
 			for ($x = 0; $x < $dst_w; $x++)
 			{
-				$r = $g = $b = 0; $a = 0;
-				$ot = $t; $t = round(($x + 1) * $rX);
-				for ($u = 0; $u < ($w - $ow); $u++)  {
-					for ($p = 0; $p < ($t - $ot); $p++)  {
+				$r  = $g = $b = 0;
+				$a  = 0;
+				$ot = $t;
+				$t  = round(($x + 1) * $rX);
+				for ($u = 0; $u < ($w - $ow); $u++)
+				{
+					for ($p = 0; $p < ($t - $ot); $p++)
+					{
 						$c = ImageColorsForIndex($src_img, ImageColorAt($src_img, $ot + $p, $ow + $u));
 						$r += $c['red'];
 						$g += $c['green'];

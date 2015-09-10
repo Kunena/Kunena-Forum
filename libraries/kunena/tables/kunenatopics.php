@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -44,16 +44,17 @@ class TableKunenaTopics extends KunenaTable
 
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_topics', 'id', $db );
+		parent::__construct('#__kunena_topics', 'id', $db);
 	}
 
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
-		$k = $this->_tbl_key;
+		$k             = $this->_tbl_key;
 
 		// Get the id to load.
-		if ($id !== null) {
+		if ($id !== null)
+		{
 			$this->$k = $id;
 		}
 
@@ -81,7 +82,7 @@ class TableKunenaTopics extends KunenaTable
 			return false;
 		}
 
-		if(!$data)
+		if (!$data)
 		{
 			$this->$k = 0;
 
@@ -101,7 +102,7 @@ class TableKunenaTopics extends KunenaTable
 
 		if (!$category->exists())
 		{
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id ) );
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
 		}
 		else
 		{
@@ -111,9 +112,9 @@ class TableKunenaTopics extends KunenaTable
 		$this->subject = trim($this->subject);
 		if (!$this->subject)
 		{
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT' ) );
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 }

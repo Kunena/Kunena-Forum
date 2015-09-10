@@ -33,7 +33,7 @@ class KunenaCompatLayoutBase extends JLayoutBase
 	/**
 	 * Set the options
 	 *
-	 * @param   mixed  $options  Array / JRegistry object with the options to load
+	 * @param   mixed $options Array / JRegistry object with the options to load
 	 *
 	 * @return  JLayoutBase  Instance of $this to allow chaining.
 	 *
@@ -116,7 +116,7 @@ class KunenaCompatLayoutBase extends JLayoutBase
 	/**
 	 * Add a debug message to the debug messages array
 	 *
-	 * @param   string  $message  Message to save
+	 * @param   string $message Message to save
 	 *
 	 * @return  void
 	 *

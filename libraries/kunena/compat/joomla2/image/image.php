@@ -8,6 +8,7 @@
  */
 
 defined('JPATH_PLATFORM') or die;
+
 /**
  * Compatibility layer for JImage
  */
@@ -34,7 +35,7 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Class constructor.
 	 *
-	 * @param   mixed  $source  Either a file path for a source image or a GD resource handler for an image.
+	 * @param   mixed $source Either a file path for a source image or a GD resource handler for an image.
 	 *
 	 * @since   11.3
 	 * @throws  RuntimeException
@@ -54,10 +55,10 @@ class KunenaCompatImage extends JImage
 		// Determine which image types are supported by GD, but only once.
 		if (!isset(self::$formats[IMAGETYPE_JPEG]))
 		{
-			$info = gd_info();
+			$info                          = gd_info();
 			self::$formats[IMAGETYPE_JPEG] = ($info['JPEG Support']) ? true : false;
-			self::$formats[IMAGETYPE_PNG] = ($info['PNG Support']) ? true : false;
-			self::$formats[IMAGETYPE_GIF] = ($info['GIF Read Support']) ? true : false;
+			self::$formats[IMAGETYPE_PNG]  = ($info['PNG Support']) ? true : false;
+			self::$formats[IMAGETYPE_GIF]  = ($info['GIF Read Support']) ? true : false;
 		}
 
 		// If the source input is a resource, set it as the image handle.
@@ -77,7 +78,7 @@ class KunenaCompatImage extends JImage
 	 * result object has values for image width, height, type, attributes, mime type, bits,
 	 * and channels.
 	 *
-	 * @param   string  $path  The filesystem path to the image for which to get properties.
+	 * @param   string $path The filesystem path to the image for which to get properties.
 	 *
 	 * @return  stdClass
 	 *
@@ -106,13 +107,13 @@ class KunenaCompatImage extends JImage
 
 		// Build the response object.
 		$properties = (object) array(
-			'width' => $info[0],
-			'height' => $info[1],
-			'type' => $info[2],
+			'width'      => $info[0],
+			'height'     => $info[1],
+			'type'       => $info[2],
 			'attributes' => $info[3],
-			'bits' => isset($info['bits']) ? $info['bits'] : null,
-			'channels' => isset($info['channels']) ? $info['channels'] : null,
-			'mime' => $info['mime']
+			'bits'       => isset($info['bits']) ? $info['bits'] : null,
+			'channels'   => isset($info['channels']) ? $info['channels'] : null,
+			'mime'       => $info['mime']
 		);
 
 		return $properties;
@@ -122,8 +123,8 @@ class KunenaCompatImage extends JImage
 	 * Method to generate thumbnails from the current image. It allows
 	 * creation by resizing or cropping the original image.
 	 *
-	 * @param   mixed    $thumbSizes      String or array of strings. Example: $thumbSizes = array('150x75','250x150');
-	 * @param   integer  $creationMethod  1-3 resize $scaleMethod | 4 create croppping | 5 resize then crop
+	 * @param   mixed   $thumbSizes     String or array of strings. Example: $thumbSizes = array('150x75','250x150');
+	 * @param   integer $creationMethod 1-3 resize $scaleMethod | 4 create croppping | 5 resize then crop
 	 *
 	 * @return  array
 	 *
@@ -192,9 +193,9 @@ class KunenaCompatImage extends JImage
 	 * Method to create thumbnails from the current image and save them to disk. It allows creation by resizing
 	 * or croppping the original image.
 	 *
-	 * @param   mixed    $thumbSizes      string or array of strings. Example: $thumbSizes = array('150x75','250x150');
-	 * @param   integer  $creationMethod  1-3 resize $scaleMethod | 4 create croppping
-	 * @param   string   $thumbsFolder    destination thumbs folder. null generates a thumbs folder in the image folder
+	 * @param   mixed   $thumbSizes     string or array of strings. Example: $thumbSizes = array('150x75','250x150');
+	 * @param   integer $creationMethod 1-3 resize $scaleMethod | 4 create croppping
+	 * @param   string  $thumbsFolder   destination thumbs folder. null generates a thumbs folder in the image folder
 	 *
 	 * @return  array
 	 *
@@ -233,13 +234,13 @@ class KunenaCompatImage extends JImage
 			foreach ($thumbs as $thumb)
 			{
 				// Get thumb properties
-				$thumbWidth     = $thumb->getWidth();
-				$thumbHeight    = $thumb->getHeight();
+				$thumbWidth  = $thumb->getWidth();
+				$thumbHeight = $thumb->getHeight();
 
 				// Generate thumb name
-				$filename       = pathinfo($this->getPath(), PATHINFO_FILENAME);
-				$fileExtension  = pathinfo($this->getPath(), PATHINFO_EXTENSION);
-				$thumbFileName  = $filename . '_' . $thumbWidth . 'x' . $thumbHeight . '.' . $fileExtension;
+				$filename      = pathinfo($this->getPath(), PATHINFO_FILENAME);
+				$fileExtension = pathinfo($this->getPath(), PATHINFO_EXTENSION);
+				$thumbFileName = $filename . '_' . $thumbWidth . 'x' . $thumbHeight . '.' . $fileExtension;
 
 				// Save thumb file to disk
 				$thumbFileName = $thumbsFolder . '/' . $thumbFileName;
@@ -247,7 +248,7 @@ class KunenaCompatImage extends JImage
 				if ($thumb->toFile($thumbFileName, $imgProperties->type))
 				{
 					// Return JImage object with thumb path to ease further manipulation
-					$thumb->path = $thumbFileName;
+					$thumb->path     = $thumbFileName;
 					$thumbsCreated[] = $thumb;
 				}
 			}
@@ -259,11 +260,11 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to crop the current image.
 	 *
-	 * @param   mixed    $width      The width of the image section to crop in pixels or a percentage.
-	 * @param   mixed    $height     The height of the image section to crop in pixels or a percentage.
-	 * @param   integer  $left       The number of pixels from the left to start cropping.
-	 * @param   integer  $top        The number of pixels from the top to start cropping.
-	 * @param   boolean  $createNew  If true the current image will be cloned, cropped and returned; else
+	 * @param   mixed   $width       The width of the image section to crop in pixels or a percentage.
+	 * @param   mixed   $height      The height of the image section to crop in pixels or a percentage.
+	 * @param   integer $left        The number of pixels from the left to start cropping.
+	 * @param   integer $top         The number of pixels from the top to start cropping.
+	 * @param   boolean $createNew   If true the current image will be cloned, cropped and returned; else
 	 *                               the current image will be cropped and returned.
 	 *
 	 * @return  JImage
@@ -312,7 +313,7 @@ class KunenaCompatImage extends JImage
 		if ($this->isTransparent())
 		{
 			// Get the transparent color values for the current image.
-			$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
+			$rgba  = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
 			$color = imageColorAllocate($this->handle, $rgba['red'], $rgba['green'], $rgba['blue']);
 
 			// Set the transparent color values for the new image.
@@ -351,8 +352,8 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to apply a filter to the image by type.  Two examples are: grayscale and sketchy.
 	 *
-	 * @param   string  $type     The name of the image filter to apply.
-	 * @param   array   $options  An array of options for the filter.
+	 * @param   string $type    The name of the image filter to apply.
+	 * @param   array  $options An array of options for the filter.
 	 *
 	 * @return  JImage
 	 *
@@ -418,9 +419,9 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to return the path
 	 *
-	 * @return	string
+	 * @return    string
 	 *
-	 * @since	11.3
+	 * @since    11.3
 	 */
 	public function getPath()
 	{
@@ -467,7 +468,7 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to load a file into the JImage object as the resource.
 	 *
-	 * @param   string  $path  The filesystem path to load as an image.
+	 * @param   string $path The filesystem path to load as an image.
 	 *
 	 * @return  void
 	 *
@@ -590,11 +591,11 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to resize the current image.
 	 *
-	 * @param   mixed    $width        The width of the resized image in pixels or a percentage.
-	 * @param   mixed    $height       The height of the resized image in pixels or a percentage.
-	 * @param   boolean  $createNew    If true the current image will be cloned, resized and returned; else
+	 * @param   mixed   $width         The width of the resized image in pixels or a percentage.
+	 * @param   mixed   $height        The height of the resized image in pixels or a percentage.
+	 * @param   boolean $createNew     If true the current image will be cloned, resized and returned; else
 	 *                                 the current image will be resized and returned.
-	 * @param   integer  $scaleMethod  Which method to use for scaling
+	 * @param   integer $scaleMethod   Which method to use for scaling
 	 *
 	 * @return  JImage
 	 *
@@ -619,15 +620,15 @@ class KunenaCompatImage extends JImage
 		$dimensions = $this->prepareDimensions($width, $height, $scaleMethod);
 
 		// Instantiate offset.
-		$offset = new stdClass;
+		$offset    = new stdClass;
 		$offset->x = $offset->y = 0;
 
 		// Center image if needed and create the new truecolor image handle.
 		if ($scaleMethod == self::SCALE_FIT)
 		{
 			// Get the offsets
-			$offset->x	= round(($width - $dimensions->width) / 2);
-			$offset->y	= round(($height - $dimensions->height) / 2);
+			$offset->x = round(($width - $dimensions->width) / 2);
+			$offset->y = round(($height - $dimensions->height) / 2);
 
 			$handle = imagecreatetruecolor($width, $height);
 
@@ -650,7 +651,7 @@ class KunenaCompatImage extends JImage
 		if ($this->isTransparent())
 		{
 			// Get the transparent color values for the current image.
-			$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
+			$rgba  = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
 			$color = imageColorAllocateAlpha($this->handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
 
 			// Set the transparent color values for the new image.
@@ -690,9 +691,9 @@ class KunenaCompatImage extends JImage
 	 * Method to crop an image after resizing it to maintain
 	 * proportions without having to do all the set up work.
 	 *
-	 * @param   integer  $width      The desired width of the image in pixels or a percentage.
-	 * @param   integer  $height     The desired height of the image in pixels or a percentage.
-	 * @param   integer  $createNew  If true the current image will be cloned, resized, cropped and returned.
+	 * @param   integer $width     The desired width of the image in pixels or a percentage.
+	 * @param   integer $height    The desired height of the image in pixels or a percentage.
+	 * @param   integer $createNew If true the current image will be cloned, resized, cropped and returned.
 	 *
 	 * @return  object  JImage Object for chaining.
 	 *
@@ -700,8 +701,8 @@ class KunenaCompatImage extends JImage
 	 */
 	public function cropResize($width, $height, $createNew = true)
 	{
-		$width   = $this->sanitizeWidth($width, $height);
-		$height  = $this->sanitizeHeight($height, $width);
+		$width  = $this->sanitizeWidth($width, $height);
+		$height = $this->sanitizeHeight($height, $width);
 
 		if (($this->getWidth() / $width) < ($this->getHeight() / $height))
 		{
@@ -718,9 +719,9 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to rotate the current image.
 	 *
-	 * @param   mixed    $angle       The angle of rotation for the image
-	 * @param   integer  $background  The background color to use when areas are added due to rotation
-	 * @param   boolean  $createNew   If true the current image will be cloned, rotated and returned; else
+	 * @param   mixed   $angle        The angle of rotation for the image
+	 * @param   integer $background   The background color to use when areas are added due to rotation
+	 * @param   boolean $createNew    If true the current image will be cloned, rotated and returned; else
 	 *                                the current image will be rotated and returned.
 	 *
 	 * @return  JImage
@@ -777,9 +778,9 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to write the current image out to a file.
 	 *
-	 * @param   string   $path     The filesystem path to save the image.
-	 * @param   integer  $type     The image type to save the file as.
-	 * @param   array    $options  The image type options to use in saving the file.
+	 * @param   string  $path    The filesystem path to save the image.
+	 * @param   integer $type    The image type to save the file as.
+	 * @param   array   $options The image type options to use in saving the file.
 	 *
 	 * @return  boolean
 	 *
@@ -814,7 +815,7 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to get an image filter instance of a specified type.
 	 *
-	 * @param   string  $type  The image filter type to get.
+	 * @param   string $type The image filter type to get.
 	 *
 	 * @return  JImageFilter
 	 *
@@ -854,9 +855,9 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to get the new dimensions for a resized image.
 	 *
-	 * @param   integer  $width        The width of the resized image in pixels.
-	 * @param   integer  $height       The height of the resized image in pixels.
-	 * @param   integer  $scaleMethod  The method to use for scaling
+	 * @param   integer $width       The width of the resized image in pixels.
+	 * @param   integer $height      The height of the resized image in pixels.
+	 * @param   integer $scaleMethod The method to use for scaling
 	 *
 	 * @return  stdClass
 	 *
@@ -871,7 +872,7 @@ class KunenaCompatImage extends JImage
 		switch ($scaleMethod)
 		{
 			case self::SCALE_FILL:
-				$dimensions->width = (int) round($width);
+				$dimensions->width  = (int) round($width);
 				$dimensions->height = (int) round($height);
 				break;
 
@@ -890,7 +891,7 @@ class KunenaCompatImage extends JImage
 					$ratio = min($rx, $ry);
 				}
 
-				$dimensions->width = (int) round($this->getWidth() / $ratio);
+				$dimensions->width  = (int) round($this->getWidth() / $ratio);
 				$dimensions->height = (int) round($this->getHeight() / $ratio);
 				break;
 
@@ -905,8 +906,8 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to sanitize a height value.
 	 *
-	 * @param   mixed  $height  The input height value to sanitize.
-	 * @param   mixed  $width   The input width value for reference.
+	 * @param   mixed $height The input height value to sanitize.
+	 * @param   mixed $width  The input width value for reference.
 	 *
 	 * @return  integer
 	 *
@@ -934,7 +935,7 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to sanitize an offset value like left or top.
 	 *
-	 * @param   mixed  $offset  An offset value.
+	 * @param   mixed $offset An offset value.
 	 *
 	 * @return  integer
 	 *
@@ -948,8 +949,8 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to sanitize a width value.
 	 *
-	 * @param   mixed  $width   The input width value to sanitize.
-	 * @param   mixed  $height  The input height value for reference.
+	 * @param   mixed $width  The input width value to sanitize.
+	 * @param   mixed $height The input height value for reference.
 	 *
 	 * @return  integer
 	 *

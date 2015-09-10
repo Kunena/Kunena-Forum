@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Cache
+ * @package       Kunena.Framework
+ * @subpackage    Cache
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaCacheHelper has helper functions to clear all caches that affects Kunena.
@@ -94,7 +94,7 @@ abstract class KunenaCacheHelper
 	public static function clearCacheFiles()
 	{
 		// Delete all cached files.
-		$cacheDir = JPATH_CACHE.'/kunena';
+		$cacheDir = JPATH_CACHE . '/kunena';
 
 		if (is_dir($cacheDir))
 		{
@@ -110,7 +110,7 @@ abstract class KunenaCacheHelper
 	public static function clearTemplateFiles()
 	{
 		// Delete all cached files.
-		$cacheDir = JPATH_ROOT."/media/kunena/cache";
+		$cacheDir = JPATH_ROOT . "/media/kunena/cache";
 
 		if (is_dir($cacheDir))
 		{

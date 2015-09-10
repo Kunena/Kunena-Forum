@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Categories
+ * @package       Kunena.Administrator.Template
+ * @subpackage    Categories
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Implements Kunena Request class.
@@ -17,11 +17,11 @@ defined ( '_JEXEC' ) or die ();
  * any display controller in the component.
  *
  * <code>
- *	// Executes the controller and sets the layout for the view.
- *	echo KunenaRequest::factory('User/Login')->execute()->set('layout', 'form');
+ *    // Executes the controller and sets the layout for the view.
+ *    echo KunenaRequest::factory('User/Login')->execute()->set('layout', 'form');
  *
- *	// If there are no parameters for the view, this shorthand works also.
- *	echo KunenaRequest::factory('User/Registration');
+ *    // If there are no parameters for the view, this shorthand works also.
+ *    echo KunenaRequest::factory('User/Registration');
  * </code>
  *
  * Individual controller classes are located in /components/com_kunena/controller
@@ -34,12 +34,12 @@ class KunenaRequest
 	/**
 	 * Returns controller.
 	 *
-	 * @param   string	$path	Controller path.
-	 * @param	JInput	$input
-	 * @param	mixed	$options
+	 * @param   string  $path Controller path.
+	 * @param    JInput $input
+	 * @param    mixed  $options
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
-	 * @throws	InvalidArgumentException
+	 * @throws    InvalidArgumentException
 	 */
 	public static function factory($path, JInput $input = null, $options = null)
 	{

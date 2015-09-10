@@ -1,16 +1,17 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 require_once(__DIR__ . '/kunena.php');
+
 /**
  * Kunena Announcements
  * Provides access to the #__kunena_announcements table
@@ -29,7 +30,7 @@ class TableKunenaAnnouncements extends KunenaTable
 
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_announcement', 'id', $db );
+		parent::__construct('#__kunena_announcement', 'id', $db);
 	}
 
 	public function check()
@@ -55,17 +56,17 @@ class TableKunenaAnnouncements extends KunenaTable
 		$this->title = trim($this->title);
 		if (!$this->title)
 		{
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_TITLE' ) );
+			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_TITLE'));
 		}
 
 		$this->sdescription = trim($this->sdescription);
-		$this->description = trim($this->description);
+		$this->description  = trim($this->description);
 
 		if (!$this->sdescription)
 		{
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_DESCRIPTION' ) );
+			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_DESCRIPTION'));
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 }

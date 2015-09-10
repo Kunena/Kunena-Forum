@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage HTML
+ * @package       Kunena.Framework
+ * @subpackage    HTML
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaHtmlParser
@@ -20,7 +20,7 @@ abstract class KunenaHtmlParser
 
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
 	{
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$sql = "SELECT code, {$db->quoteName($column)} AS file FROM #__kunena_smileys";
 
@@ -29,25 +29,26 @@ abstract class KunenaHtmlParser
 			$sql .= " WHERE emoticonbar='1'";
 		}
 
-		$db->setQuery ( $sql );
-		$smilies = $db->loadObjectList ();
+		$db->setQuery($sql);
+		$smilies = $db->loadObjectList();
 		KunenaError::checkDatabaseError();
 
-		$smileyArray = array ();
-		$template = KunenaFactory::getTemplate();
+		$smileyArray = array();
+		$template    = KunenaFactory::getTemplate();
 
-		foreach ( $smilies as $smiley )
+		foreach ($smilies as $smiley)
 		{
 			// We load all smileys in array, so we can sort them
-			$smileyArray [$smiley->code] = JUri::root(true) .'/'. $template->getSmileyPath($smiley->file);
+			$smileyArray [$smiley->code] = JUri::root(true) . '/' . $template->getSmileyPath($smiley->file);
 		}
 
 		if ($emoticonbar == 0)
 		{
 			// don't sort when it's only for use in the emoticonbar
-			array_multisort ( array_keys ( $smileyArray ), SORT_DESC, $smileyArray );
-			reset ( $smileyArray );
+			array_multisort(array_keys($smileyArray), SORT_DESC, $smileyArray);
+			reset($smileyArray);
 		}
+
 		return $smileyArray;
 	}
 
@@ -72,12 +73,12 @@ abstract class KunenaHtmlParser
 
 		if ($len && JString::strlen($txt) > $len)
 		{
-			$txt = JString::substr ( $txt, 0, $len ) . ' ...';
+			$txt = JString::substr($txt, 0, $len) . ' ...';
 		}
 
-		$txt = self::escape ( $txt );
+		$txt = self::escape($txt);
 		$txt = preg_replace('/(\S{30})/u', '\1&#8203;', $txt);
-		$txt = self::prepareContent ( $txt, 'title' );
+		$txt = self::prepareContent($txt, 'title');
 
 		return $txt;
 	}
@@ -89,16 +90,16 @@ abstract class KunenaHtmlParser
 			return;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$bbcode = KunenaBbcode::getInstance(self::$relative);
+		$bbcode         = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
+		$txt = self::prepareContent($txt);
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $txt;
 	}
@@ -114,12 +115,12 @@ abstract class KunenaHtmlParser
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
+		$txt = self::prepareContent($txt);
 
 		return $txt;
 	}
 
-	public static function stripBBCode($txt, $len=0, $html = true)
+	public static function stripBBCode($txt, $len = 0, $html = true)
 	{
 		if (!$txt)
 		{
@@ -131,7 +132,7 @@ abstract class KunenaHtmlParser
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetAllowAmpersand($html);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
+		$txt = self::prepareContent($txt);
 		$txt = strip_tags($txt);
 
 		if (!$html)
@@ -143,15 +144,15 @@ abstract class KunenaHtmlParser
 	}
 
 
-	public static function &prepareContent(&$content, $target='body')
+	public static function &prepareContent(&$content, $target = 'body')
 	{
-		$config = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
-		$events			= (int) $config->get('jcontentevents', false);
-		$event_target	= (array) $config->get('jcontentevent_target', array('body'));
+		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
+		$events       = (int) $config->get('jcontentevents', false);
+		$event_target = (array) $config->get('jcontentevent_target', array('body'));
 
 		if ($events && in_array($target, $event_target))
 		{
-			$row = new stdClass();
+			$row       = new stdClass();
 			$row->text =& $content;
 			// Run events
 			$params = new JRegistry();
@@ -159,7 +160,7 @@ abstract class KunenaHtmlParser
 
 			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
-			$dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+			$dispatcher->trigger('onContentPrepare', array('text', &$row, &$params, 0));
 			$content = $row->text;
 		}
 

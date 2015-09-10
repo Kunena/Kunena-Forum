@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -42,7 +42,7 @@ class TableKunenaMessages extends KunenaTable
 
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_messages', 'id', $db );
+		parent::__construct('#__kunena_messages', 'id', $db);
 	}
 
 	public function reset()
@@ -54,7 +54,7 @@ class TableKunenaMessages extends KunenaTable
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
-		$k = $this->_tbl_key;
+		$k             = $this->_tbl_key;
 
 		// Get the id to load.
 		if ($id !== null)
@@ -89,7 +89,7 @@ class TableKunenaMessages extends KunenaTable
 			return false;
 		}
 
-		if(!$data)
+		if (!$data)
 		{
 			$this->$k = 0;
 
@@ -110,7 +110,7 @@ class TableKunenaMessages extends KunenaTable
 		if (!$category->exists())
 		{
 			// TODO: maybe we should have own error message? or not?
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid ) );
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid));
 		}
 		else
 		{
@@ -120,13 +120,13 @@ class TableKunenaMessages extends KunenaTable
 		$this->subject = trim($this->subject);
 		if (!$this->subject)
 		{
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT' ) );
+			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
 		}
 
 		$this->message = trim($this->message);
 		if (!$this->message)
 		{
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE' ) );
+			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
 		}
 
 		if (!$this->time)
@@ -136,18 +136,19 @@ class TableKunenaMessages extends KunenaTable
 
 		$this->modified_reason = trim($this->modified_reason);
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 
 	/**
 	 * @param boolean $updateNulls has no effect.
+	 *
 	 * @return bool
 	 * @see KunenaTable::store()
 	 */
 	public function store($updateNulls = false)
 	{
-		$k = $this->_tbl_key;
-		$update = $this->_exists;
+		$k       = $this->_tbl_key;
+		$update  = $this->_exists;
 		$message = $this->message;
 		unset($this->message);
 

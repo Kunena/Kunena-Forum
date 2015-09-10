@@ -1,23 +1,23 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Html
+ * @package       Kunena.Framework
+ * @subpackage    Html
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
-jimport ( 'joomla.html.pagination' );
+jimport('joomla.html.pagination');
 
 /**
  * Pagination Class.  Provides a common interface for content pagination for the
  * Joomla! Framework.
  *
- * @since		2.0
- * @deprecated	3.0
+ * @since         2.0
+ * @deprecated    3.0
  */
 class KunenaHtmlPagination extends KunenaPagination
 {

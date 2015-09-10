@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Announcement
+ * @package       Kunena.Framework
+ * @subpackage    Forum.Announcement
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaForumAnnouncementHelper
@@ -23,7 +23,7 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * Returns the global KunenaForumAnnouncement object, only creating it if it doesn't already exist.
 	 *
-	 * @param int $identifier	Announcement to load - Can be only an integer.
+	 * @param int  $identifier Announcement to load - Can be only an integer.
 	 * @param bool $reload
 	 *
 	 * @return KunenaForumAnnouncement
@@ -40,11 +40,11 @@ abstract class KunenaForumAnnouncementHelper
 			return new KunenaForumAnnouncement;
 		}
 
-		$id = intval ( $identifier );
+		$id = intval($identifier);
 
-		if (empty ( self::$_instances [$id] ))
+		if (empty (self::$_instances [$id]))
 		{
-			self::$_instances [$id] = new KunenaForumAnnouncement (array('id'=>$id));
+			self::$_instances [$id] = new KunenaForumAnnouncement (array('id' => $id));
 			self::$_instances [$id]->load();
 		}
 		elseif ($reload)
@@ -57,7 +57,7 @@ abstract class KunenaForumAnnouncementHelper
 
 	/**
 	 * @param string $layout
-	 * @param bool $xhtml
+	 * @param bool   $xhtml
 	 *
 	 * @return string
 	 */
@@ -94,16 +94,16 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
-		$db = JFactory::getDBO ();
+		$db    = JFactory::getDBO();
 		$where = $filter ? "WHERE published=1" : '';
 		$query = "SELECT * FROM #__kunena_announcement {$where} ORDER BY created DESC";
-		$db->setQuery ( $query, $start, $limit );
-		$results = (array) $db->loadAssocList ();
-		KunenaError::checkDatabaseError ();
+		$db->setQuery($query, $start, $limit);
+		$results = (array) $db->loadAssocList();
+		KunenaError::checkDatabaseError();
 
 		self::$_instances = array();
-		$list = array();
-		foreach ( $results as $announcement )
+		$list             = array();
+		foreach ($results as $announcement)
 		{
 			if (isset(self::$_instances [$announcement['id']]))
 			{
@@ -111,9 +111,9 @@ abstract class KunenaForumAnnouncementHelper
 			}
 
 			$instance = new KunenaForumAnnouncement ($announcement);
-			$instance->exists (true);
+			$instance->exists(true);
 			self::$_instances [$instance->id] = $instance;
-			$list[] = $instance;
+			$list[]                           = $instance;
 		}
 		unset ($results);
 
@@ -127,13 +127,13 @@ abstract class KunenaForumAnnouncementHelper
 	 */
 	static public function getCount($filter = true)
 	{
-		$db = JFactory::getDBO ();
+		$db    = JFactory::getDBO();
 		$where = $filter ? "WHERE published=1" : '';
 
 		$query = "SELECT COUNT(*) FROM #__kunena_announcement {$where}";
-		$db->setQuery ( $query );
-		$total = (int) $db->loadResult ();
-		KunenaError::checkDatabaseError ();
+		$db->setQuery($query);
+		$total = (int) $db->loadResult();
+		KunenaError::checkDatabaseError();
 
 		return $total;
 	}

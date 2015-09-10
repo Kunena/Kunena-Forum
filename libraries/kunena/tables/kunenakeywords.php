@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
+ * @package       Kunena.Framework
+ * @subpackage    Tables
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -25,7 +25,7 @@ class TableKunenaKeywords extends KunenaTable
 
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_keywords', 'id', $db );
+		parent::__construct('#__kunena_keywords', 'id', $db);
 	}
 
 	public function check()
@@ -36,6 +36,6 @@ class TableKunenaKeywords extends KunenaTable
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_KEYWORDS_ERROR_EMPTY'));
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 }

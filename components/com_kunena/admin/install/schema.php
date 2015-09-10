@@ -233,7 +233,7 @@ class KunenaModelSchema extends JModelLegacy
 		}
 
 		$this->db->setQuery($sql[$table]['sql']);
-		$this->db->exeute();
+		$this->db->query();
 
 		if ($this->db->getErrorNum())
 		{
@@ -264,7 +264,7 @@ class KunenaModelSchema extends JModelLegacy
 			}
 
 			$this->db->setQuery($sql['sql']);
-			$this->db->execute();
+			$this->db->query();
 
 			if ($this->db->getErrorNum())
 			{

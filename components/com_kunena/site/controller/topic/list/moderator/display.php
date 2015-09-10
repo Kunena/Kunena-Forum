@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -26,13 +26,13 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 	{
 		parent::before();
 
-		$this->me = KunenaUserHelper::getMyself();
-		$access = KunenaAccess::getInstance();
+		$this->me      = KunenaUserHelper::getMyself();
+		$access        = KunenaAccess::getInstance();
 		$this->moreUri = null;
 
 		$params = $this->app->getParams('com_kunena');
-		$start = $this->input->getInt('limitstart', 0);
-		$limit = $this->input->getInt('limit', 0);
+		$start  = $this->input->getInt('limitstart', 0);
+		$limit  = $this->input->getInt('limit', 0);
 
 		if ($limit < 1 || $limit > 100)
 		{
@@ -41,14 +41,16 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 
 		// Get configuration from menu item.
 		$categoryIds = $params->get('topics_categories', array());
-		$reverse = !$params->get('topics_catselection', 1);
+		$reverse     = !$params->get('topics_catselection', 1);
 
 		// Make sure that category list is an array.
-		if (!is_array($categoryIds)) {
-			$categoryIds = explode (',', $categoryIds);
+		if (!is_array($categoryIds))
+		{
+			$categoryIds = explode(',', $categoryIds);
 		}
 
-		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds)) {
+		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds))
+		{
 			$categoryIds = false;
 		}
 
@@ -79,7 +81,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			$this->prepareTopics();
 		}
 
-		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+		$actions       = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		$this->actions = $this->getTopicActions($this->topics, $actions);
 
 		$this->headerText = JText::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');

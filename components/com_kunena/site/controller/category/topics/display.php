@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Category
+ * @package         Kunena.Site
+ * @subpackage      Controller.Category
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -56,9 +56,9 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$this->me = KunenaUserHelper::getMyself();
 
-		$catid = $this->input->getInt('catid');
+		$catid      = $this->input->getInt('catid');
 		$limitstart = $this->input->getInt('limitstart', 0);
-		$limit = $this->input->getInt('limit', 0);
+		$limit      = $this->input->getInt('limit', 0);
 
 		if ($limit < 1 || $limit > 100)
 		{
@@ -76,10 +76,10 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$topic_ordering = $this->category->topic_ordering;
 
 		$access = KunenaAccess::getInstance();
-		$hold = $access->getAllowedHold($this->me, $catid);
-		$moved = 1;
+		$hold   = $access->getAllowedHold($this->me, $catid);
+		$moved  = 1;
 		$params = array(
-			'hold' => $hold,
+			'hold'  => $hold,
 			'moved' => $moved
 		);
 
@@ -101,14 +101,14 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		if ($this->total > 0)
 		{
 			// Collect user ids for avatar prefetch when integrated.
-			$userlist = array();
+			$userlist     = array();
 			$lastpostlist = array();
 
 			foreach ($this->topics as $topic)
 			{
 				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
-				$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
-				$lastpostlist[intval($topic->last_post_id)] = intval($topic->last_post_id);
+				$userlist[intval($topic->last_post_userid)]  = intval($topic->last_post_userid);
+				$lastpostlist[intval($topic->last_post_id)]  = intval($topic->last_post_id);
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations.
@@ -129,7 +129,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		}
 
 		$this->topicActions = $this->model->getTopicActions();
-		$this->actionMove = $this->model->getActionMove();
+		$this->actionMove   = $this->model->getActionMove();
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
@@ -142,10 +142,10 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	 */
 	protected function prepareDocument()
 	{
-		$page = $this->pagination->pagesCurrent;
-		$pages = $this->pagination->pagesTotal;
-		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
-		$parentText = $this->category->getParent()->displayField('name');
+		$page         = $this->pagination->pagesCurrent;
+		$pages        = $this->pagination->pagesTotal;
+		$pagesText    = $page > 1 ? " ({$page}/{$pages})" : '';
+		$parentText   = $this->category->getParent()->displayField('name');
 		$categoryText = $this->category->displayField('name');
 
 		$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', "{$parentText} / {$categoryText}{$pagesText}");

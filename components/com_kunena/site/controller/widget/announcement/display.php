@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Widget
+ * @package         Kunena.Site
+ * @subpackage      Controller.Widget
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -37,7 +37,7 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 			return false;
 		}
 
-		$items = KunenaForumAnnouncementHelper::getAnnouncements();
+		$items              = KunenaForumAnnouncementHelper::getAnnouncements();
 		$this->announcement = array_pop($items);
 
 		if (!$this->announcement || !$this->announcement->authorise('read'))
@@ -45,10 +45,11 @@ class ComponentKunenaControllerWidgetAnnouncementDisplay extends KunenaControlle
 			return false;
 		}
 
-		$view = $this->input->getWord('view', 'default');
+		$view   = $this->input->getWord('view', 'default');
 		$layout = $this->input->getWord('layout', 'default');
 
-		if ($view == 'topic' && $layout != 'default'  || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
+		if ($view == 'topic' && $layout != 'default' || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default')
+		{
 			return false;
 		}
 

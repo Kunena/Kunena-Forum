@@ -61,7 +61,8 @@ class KunenaViewTopic extends KunenaView
 		}
 		elseif ($this->state->get('item.id') != $this->topic->id
 			|| ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id]))
-			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid')))
+			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid'))
+		)
 		{
 			// We need to redirect: message has been moved or we have permalink
 			$mesid = $this->state->get('item.mesid');
@@ -893,9 +894,9 @@ class KunenaViewTopic extends KunenaView
 
 	function getMessageActions()
 	{
-		$catid = $this->state->get('item.catid');
-		$id    = $this->topic->id;
-		$mesid = $this->message->id;
+		$catid        = $this->state->get('item.catid');
+		$id           = $this->topic->id;
+		$mesid        = $this->message->id;
 		$targetuserid = $this->me->userid;
 
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . JSession::getFormToken() . '=1';
@@ -1010,7 +1011,7 @@ class KunenaViewTopic extends KunenaView
 					$thankyous = $message->thankyou;
 				}
 
-				if ($this->message->authorise('unthankyou') &&  $this->me->isModerator($this->message->getCategory()))
+				if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 				{
 					$canUnthankyou = true;
 				}
@@ -1028,7 +1029,7 @@ class KunenaViewTopic extends KunenaView
 
 				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
 
-				$thankyou_delete  = '';
+				$thankyou_delete = '';
 
 				foreach ($loaded_users as $userid => $user)
 				{

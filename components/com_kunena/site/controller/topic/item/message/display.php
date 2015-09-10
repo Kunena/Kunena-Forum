@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -46,19 +46,19 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		$mesid = $this->input->getInt('mesid', 0);
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->location = $this->input->getInt('location', 0);
-		$this->detail = $this->input->get('detail', false);
-		$this->message = KunenaForumMessageHelper::get($mesid);
+		$this->detail   = $this->input->get('detail', false);
+		$this->message  = KunenaForumMessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 
-		$this->topic = $this->message->getTopic();
-		$this->category = $this->topic->getCategory();
-		$this->profile = $this->message->getAuthor();
+		$this->topic     = $this->message->getTopic();
+		$this->category  = $this->topic->getCategory();
+		$this->profile   = $this->message->getAuthor();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		$this->captchaEnabled = false;
-		if ( $this->message->isAuthorised('reply') && $this->me->canDoCaptcha() )
+		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
@@ -72,7 +72,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 				{
 					JPluginHelper::importPlugin('captcha');
 					$dispatcher = JDispatcher::getInstance();
-					$result = $dispatcher->trigger('onInit', "dynamic_recaptcha_{$this->message->id}");
+					$result     = $dispatcher->trigger('onInit', "dynamic_recaptcha_{$this->message->id}");
 
 					$this->captchaEnabled = $result[0];
 				}
@@ -80,9 +80,9 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		}
 
 		// Thank you info and buttons.
-		$this->thankyou = array();
-		$this->total_thankyou = 0;
-		$this->more_thankyou = 0;
+		$this->thankyou        = array();
+		$this->total_thankyou  = 0;
+		$this->more_thankyou   = 0;
 		$this->thankyou_delete = array();
 
 		if (isset($this->message->thankyou))
@@ -102,7 +102,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 					}
 
 					$this->total_thankyou = count($this->message->thankyou);
-					$thankyous = array_slice($this->message->thankyou, 0, $this->config->thankyou_max, true);
+					$thankyous            = array_slice($this->message->thankyou, 0, $this->config->thankyou_max, true);
 				}
 				else
 				{
@@ -122,7 +122,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 				{
 					if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 					{
-						$this->thankyou_delete[$userid]  = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
+						$this->thankyou_delete[$userid] = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
 					}
 
 					$this->thankyou[$userid] = $loaded_users[$userid]->getLink();
@@ -130,8 +130,10 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 			}
 		}
 
-		if ($this->config->reportmsg && $this->me->exists()) {
-			if ($this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator()) {
+		if ($this->config->reportmsg && $this->me->exists())
+		{
+			if ($this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator())
+			{
 				$this->reportMessageLink = JHTML::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=topic&layout=report&catid='
 					. intval($this->category->id) . '&id=' . intval($this->message->thread)
@@ -144,7 +146,8 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		// Show admins the IP address of the user.
 		if ($this->category->isAuthorised('admin')
-			|| ($this->category->isAuthorised('moderate') && !$this->config->hide_ip))
+			|| ($this->category->isAuthorised('moderate') && !$this->config->hide_ip)
+		)
 		{
 			if (!empty($this->message->ip))
 			{

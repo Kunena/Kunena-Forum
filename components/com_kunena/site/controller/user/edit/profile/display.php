@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -32,9 +32,9 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 
 		if (count($bd) == 3)
 		{
-			$this->birthdate["year"] = $bd[0];
+			$this->birthdate["year"]  = $bd[0];
 			$this->birthdate["month"] = $bd[1];
-			$this->birthdate["day"] = $bd[2];
+			$this->birthdate["day"]   = $bd[2];
 		}
 
 		$this->genders[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));

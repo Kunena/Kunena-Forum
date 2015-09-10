@@ -617,7 +617,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$username = $this->user->get('username');
-		$user = new JUser($this->user->id);
+		$user     = new JUser($this->user->id);
 
 		// Bind the form fields to the user table and save.
 		if (!($user->bind($post) && $user->save(true)))
@@ -863,11 +863,11 @@ class KunenaControllerUser extends KunenaController
 
 			foreach ($cid as $id)
 			{
-				$attachment = KunenaAttachmentHelper::get($id);
-				$message = $attachment->getMessage();
+				$attachment  = KunenaAttachmentHelper::get($id);
+				$message     = $attachment->getMessage();
 				$attachments = array($attachment->id, 1);
-				$attach = array();
-				$removeList = array_keys(array_diff_key($attachments, $attach));
+				$attach      = array();
+				$removeList  = array_keys(array_diff_key($attachments, $attach));
 				JArrayHelper::toInteger($removeList);
 				$message->removeAttachments($removeList);
 
@@ -877,7 +877,7 @@ class KunenaControllerUser extends KunenaController
 				{
 					$message->save();
 
-					if ( $topic->attachments > 0 )
+					if ($topic->attachments > 0)
 					{
 						$topic->attachments = $topic->attachments - 1;
 						$topic->save(false);

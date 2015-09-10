@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Message
+ * @package         Kunena.Site
+ * @subpackage      Controller.Message
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -38,19 +38,19 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		parent::before();
 
 		$mesid = $this->input->getInt('mesid');
-		$me = KunenaUserHelper::getMyself();
+		$me    = KunenaUserHelper::getMyself();
 
 		$this->message = KunenaForumMessage::getInstance($mesid);
-		$this->topic = $this->message->getTopic();
+		$this->topic   = $this->message->getTopic();
 
-		$id = $this->message->thread;
+		$id    = $this->message->thread;
 		$catid = $this->message->catid;
 		$token = JSession::getFormToken();
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
-		$this->template = KunenaFactory::getTemplate();
+		$this->template       = KunenaFactory::getTemplate();
 		$this->messageButtons = new JObject;
 		$this->message_closed = null;
 
@@ -97,23 +97,27 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			// User is not allowed to write a post.
 			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') :
-				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED'): ' ');
+				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : ' ');
 		}
 
 		$login = KunenaLogin::getInstance();
-		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled() && !$me->userid) {
-			$logintext =  '<a class="btn-link" href="#klogin" rel="nofollow"> ' . JText::_('JLOGIN'). '</a>';
-			if ($login->getRegistrationUrl()) {
-				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="' . $login->getRegistrationUrl() . '">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
+		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled() && !$me->userid)
+		{
+			$logintext = '<a class="btn-link" href="#klogin" rel="nofollow"> ' . JText::_('JLOGIN') . '</a>';
+			if ($login->getRegistrationUrl())
+			{
+				$register = ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="' . $login->getRegistrationUrl() . '">' . JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
 			}
-			else {
+			else
+			{
 				$register = '';
 			}
-			echo '<p>'. JText::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register).'</p>';
+			echo '<p>' . JText::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register) . '</p>';
 		}
 
 		// Thank you.
-		if (isset($this->message->thankyou)) {
+		if (isset($this->message->thankyou))
+		{
 			if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
 			{
 				$this->messageButtons->set('thankyou',
@@ -126,7 +130,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('unthankyou',
-				$this->getButton(sprintf($task, 'unthankyou&userid='.$me->userid), 'unthankyou', 'message', 'user', null, false)
+				$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', null, false)
 			);
 		}
 
@@ -200,12 +204,12 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	/**
 	 * Get button.
 	 *
-	 * @param   string  $url     Target link (do not route it).
-	 * @param   string  $name    Name of the button.
-	 * @param   string  $scope   Scope of the button.
-	 * @param   string  $type    Type of the button.
-	 * @param   int     $id      Id of the button.
-	 * @param   bool    $normal  Define if the button will have the class btn or btn-small
+	 * @param   string $url    Target link (do not route it).
+	 * @param   string $name   Name of the button.
+	 * @param   string $scope  Scope of the button.
+	 * @param   string $type   Type of the button.
+	 * @param   int    $id     Id of the button.
+	 * @param   bool   $normal Define if the button will have the class btn or btn-small
 	 *
 	 * @return  string
 	 */

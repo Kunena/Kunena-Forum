@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Topic
+ * @package         Kunena.Site
+ * @subpackage      Layout.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -31,8 +31,8 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		}
 
 		$paths = array(
-			JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi',
-			JPATH_ROOT.'/plugins/content/geshi/geshi/geshi'
+			JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi',
+			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi'
 		);
 
 		foreach ($paths as $path)
@@ -42,16 +42,16 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 				continue;
 			}
 
-			$files = KunenaFolder::files($path, ".php");
-			$options = array();
+			$files     = KunenaFolder::files($path, ".php");
+			$options   = array();
 			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 
 			foreach ($files as $file)
 			{
-				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
+				$options[] = JHTML::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
 			}
 
-			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"' , 'value', 'text', '-1' );
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
 
 			return $list;
 		}

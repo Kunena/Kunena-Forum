@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -42,11 +42,11 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		$catid = $this->topic->category_id;
 		$token = JSession::getFormToken();
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&{$token}=1";
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
-		$userTopic = $this->topic->getUserTopic();
-		$this->template = KunenaFactory::getTemplate();
+		$userTopic          = $this->topic->getUserTopic();
+		$this->template     = KunenaFactory::getTemplate();
 		$this->topicButtons = new JObject;
 
 		if ($this->topic->isAuthorised('reply'))
@@ -91,7 +91,7 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		{
 			// Add moderator specific buttons.
 			$sticky = $this->topic->ordering ? 'unsticky' : 'sticky';
-			$lock = $this->topic->locked ? 'unlock' : 'lock';
+			$lock   = $this->topic->locked ? 'unlock' : 'lock';
 
 			$this->topicButtons->set('sticky',
 				$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation')
@@ -159,12 +159,12 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 	/**
 	 * Get button.
 	 *
-	 * @param   string  $url      Target link (do not route it).
-	 * @param   string  $name     Name of the button.
-	 * @param   string  $scope    Scope of the button.
-	 * @param   string  $type     Type of the button.
-	 * @param   bool    $primary  True if primary button.
-	 * @param   bool    $normal   Define if the button will have the class btn or btn-small
+	 * @param   string $url     Target link (do not route it).
+	 * @param   string $name    Name of the button.
+	 * @param   string $scope   Scope of the button.
+	 * @param   string $type    Type of the button.
+	 * @param   bool   $primary True if primary button.
+	 * @param   bool   $normal  Define if the button will have the class btn or btn-small
 	 *
 	 * @return  string
 	 */

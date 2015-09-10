@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Kunena Component
@@ -87,10 +86,10 @@ class KunenaViewTopic extends KunenaView
 
 		$catid = $this->app->input->getInt('catid', 0);
 
-		$category = KunenaForumCategoryHelper::get($catid);
+		$category         = KunenaForumCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
 
-		if ( empty($category_iconset) )
+		if (empty($category_iconset))
 		{
 			$response = array();
 
@@ -105,43 +104,43 @@ class KunenaViewTopic extends KunenaView
 
 		$template = KunenaFactory::getTemplate();
 
-		$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/'. $category_iconset .'/topicicons.xml';
+		$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/topicicons.xml';
 
 		if (is_file($xmlfile))
 		{
 			$xml = simplexml_load_file($xmlfile);
 
-			foreach($xml->icons as $icons)
+			foreach ($xml->icons as $icons)
 			{
-				$type = (string) $icons->attributes()->type;
-				$width = (int) $icons->attributes()->width;
+				$type   = (string) $icons->attributes()->type;
+				$width  = (int) $icons->attributes()->width;
 				$height = (int) $icons->attributes()->height;
 
-				foreach($icons->icon as $icon)
+				foreach ($icons->icon as $icon)
 				{
 					$attributes = $icon->attributes();
-					$icon = new stdClass();
-					$icon->id = (int) $attributes->id;
+					$icon       = new stdClass();
+					$icon->id   = (int) $attributes->id;
 					$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
 					$icon->name = (string) $attributes->name;
 
 					if ($icon->type != 'user')
 					{
-						$icon->id = $icon->type.'_'.$icon->name;
+						$icon->id = $icon->type . '_' . $icon->name;
 					}
 
-					$icon->iconset = $category_iconset;
+					$icon->iconset   = $category_iconset;
 					$icon->published = (int) $attributes->published;
-					$icon->title = (string) $attributes->title;
-					$icon->b2 = (string) $attributes->b2;
-					$icon->b3  = (string) $attributes->b3;
-					$icon->fa  = (string) $attributes->fa;
-					$icon->filename = (string) $attributes->src;
-					$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
-					$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
-					$icon->path = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
-					$icon->relpath = $template->getTopicIconPath("{$icon->filename}", false, $category_iconset);
-					$topicIcons[] = $icon;
+					$icon->title     = (string) $attributes->title;
+					$icon->b2        = (string) $attributes->b2;
+					$icon->b3        = (string) $attributes->b3;
+					$icon->fa        = (string) $attributes->fa;
+					$icon->filename  = (string) $attributes->src;
+					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
+					$icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;
+					$icon->path      = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
+					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false, $category_iconset);
+					$topicIcons[]    = $icon;
 				}
 
 			}

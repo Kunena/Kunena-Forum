@@ -64,9 +64,9 @@ class KunenaViewUser extends KunenaView
 			{
 				$user_obj = new stdClass();
 
-				$user_obj->id = $user->id;
+				$user_obj->id    = $user->id;
 				$user_obj->photo = $user->getAvatarURL();
-				$user_obj->name = $user->username;
+				$user_obj->name  = $user->username;
 
 				$response[] = $user_obj;
 			}

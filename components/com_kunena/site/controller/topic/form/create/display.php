@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -35,12 +35,12 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$catid = $this->input->getInt('catid', 0);
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
-		$categories = KunenaForumCategoryHelper::getCategories();
+		$categories        = KunenaForumCategoryHelper::getCategories();
 		$arrayanynomousbox = array();
-		$arraypollcatid = array();
+		$arraypollcatid    = array();
 
 		foreach ($categories as $category)
 		{
@@ -56,7 +56,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		}
 
 		$arrayanynomousbox = implode(',', $arrayanynomousbox);
-		$arraypollcatid = implode(',', $arraypollcatid);
+		$arraypollcatid    = implode(',', $arraypollcatid);
 
 		// FIXME: We need to proxy this...
 		$this->document = JFactory::getDocument();
@@ -74,12 +74,12 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->topic->getCategory()->iconset);
 		}
 
-		if ( $this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
+		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
-				$plugin = JPluginHelper::getPlugin('captcha');
-				$params = new JRegistry($plugin[0]->params);
+				$plugin         = JPluginHelper::getPlugin('captcha');
+				$params         = new JRegistry($plugin[0]->params);
 				$captcha_pubkey = $params->get('public_key');
 				$catcha_privkey = $params->get('private_key');
 
@@ -87,7 +87,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 				{
 					JPluginHelper::importPlugin('captcha');
 					$dispatcher = JDispatcher::getInstance();
-					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+					$result     = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 
 					$this->captchaEnabled = $result[0];
 				}
@@ -103,13 +103,13 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			throw new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 
-		$options = array();
+		$options  = array();
 		$selected = $this->topic->category_id;
 
 		if ($this->config->pickup_category)
 		{
 			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
-			$selected = '';
+			$selected  = '';
 		}
 
 		if ($saved)
@@ -117,13 +117,13 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			$selected = $saved['catid'];
 		}
 
-		$cat_params = array (
-			'ordering' => 'ordering',
-			'toplevel' => 0,
-			'sections' => 0,
-			'direction' => 1,
+		$cat_params = array(
+			'ordering'    => 'ordering',
+			'toplevel'    => 0,
+			'sections'    => 0,
+			'direction'   => 1,
 			'hide_lonely' => 1,
-			'action' => 'topic.create'
+			'action'      => 'topic.create'
 		);
 
 		$this->selectcatlist = JHtml::_('kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
@@ -138,7 +138,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -166,8 +166,9 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 */
 	protected function canSubscribe()
 	{
-		if (! $this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+		if (!$this->me->userid || !$this->config->allowsubscriptions
+			|| $this->config->topic_subscriptions == 'disabled'
+		)
 		{
 			return false;
 		}

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Topic
+ * @package         Kunena.Site
+ * @subpackage      Controller.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -29,8 +29,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
-		$this->me = KunenaUserHelper::getMyself();
+		$this->state   = $this->model->getState();
+		$this->me      = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
@@ -56,9 +56,9 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
-		$reverse = !$this->state->get('list.categories.in');
-		$authorise = 'read';
-		$order = 'last_post_time';
+		$reverse     = !$this->state->get('list.categories.in');
+		$authorise   = 'read';
+		$order       = 'last_post_time';
 
 		$finder = new KunenaForumTopicFinder;
 		$finder->filterByMoved(false);

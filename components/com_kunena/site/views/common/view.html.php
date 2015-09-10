@@ -609,23 +609,28 @@ class KunenaViewCommon extends KunenaView
 	{
 		$my = KunenaFactory::getUser();
 
-		if ($name == $this->memberCount) {
-			$link = KunenaFactory::getProfile ()->getUserListURL ( $action );
+		if ($name == $this->memberCount)
+		{
+			$link = KunenaFactory::getProfile()->getUserListURL($action);
 
 			if ($link)
 			{
 				return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
 			}
-			else {
-				return  $name;
+			else
+			{
+				return $name;
 			}
 		}
-		elseif ($my->userid == 0 && KunenaFactory::getConfig()->userlist_allowed) {
+		elseif ($my->userid == 0 && KunenaFactory::getConfig()->userlist_allowed)
+		{
 			return false;
 		}
-		else {
-			$link = KunenaFactory::getProfile ()->getUserListURL ( $action );
-			return '<a href="'. $link .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
+		else
+		{
+			$link = KunenaFactory::getProfile()->getUserListURL($action);
+
+			return '<a href="' . $link . '" rel="' . $rel . '" class="' . $class . '">' . $name . '</a>';
 		}
 	}
 }

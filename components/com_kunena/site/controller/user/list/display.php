@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -49,7 +49,7 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaConfig::getInstance();
 
 		$start = $this->state->get('list.start');
@@ -63,12 +63,13 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 			->filterByConfiguration($filter)
 			->filterByName($this->state->get('list.search'));
 
-		$this->total = $finder->count();
+		$this->total      = $finder->count();
 		$this->pagination = new KunenaPagination($this->total, $start, $limit);
 
-		$alias = 'ku';
+		$alias     = 'ku';
 		$aliasList = array('id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate');
-		if (in_array($this->state->get('list.ordering'), $aliasList)) {
+		if (in_array($this->state->get('list.ordering'), $aliasList))
+		{
 			$alias = 'a';
 		}
 
@@ -86,15 +87,15 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$page = $this->pagination->pagesCurrent;
-		$pages = $this->pagination->pagesTotal;
+		$page      = $this->pagination->pagesCurrent;
+		$pages     = $this->pagination->pagesTotal;
 		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
 
 		$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . $pagesText;
 		$this->setTitle($title);
 		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_VIEW_USER_LIST');
 		$this->setKeywords($keywords);
-		$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title ;
+		$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title;
 		$this->setDescription($description);
 	}
 }

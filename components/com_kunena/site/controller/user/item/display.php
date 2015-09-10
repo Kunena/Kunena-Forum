@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -64,8 +64,8 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->user = JFactory::getUser($userid);
+		$this->me      = KunenaUserHelper::getMyself();
+		$this->user    = JFactory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
 
@@ -88,7 +88,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	{
 		$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 		$this->setTitle($title);
-		$keywords = $this->config->board_title . ', ' .$this->profile->getName();
+		$keywords = $this->config->board_title . ', ' . $this->profile->getName();
 		$this->setKeywords($keywords);
 		$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(), $this->config->board_title, $this->profile->getName(), $this->config->board_title);
 		$this->setDescription($description);

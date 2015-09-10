@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Statistics
+ * @package         Kunena.Site
+ * @subpackage      Controller.Statistics
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -47,7 +47,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 		$this->setProperties($statistics);
 
 		$this->latestMemberLink = KunenaFactory::getUser((int) $this->lastUserId)->getLink();
-		$this->userlistUrl = KunenaFactory::getProfile()->getUserListUrl();
+		$this->userlistUrl      = KunenaFactory::getProfile()->getUserListUrl();
 	}
 
 	/**
@@ -60,7 +60,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 		$this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));
 		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_STAT_FORUMSTATS');
 		$this->setKeywords($keywords);
-		$description = JText::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title ;
+		$description = JText::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title;
 		$this->setDescription($description);
 	}
 }

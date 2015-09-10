@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Category
+ * @package         Kunena.Site
+ * @subpackage      Controller.Category
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -60,8 +60,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		list($total, $this->categories) = KunenaForumCategoryHelper::getLatestSubscriptions($me->userid);
 
 		$topicIds = array();
-		$userIds = array();
-		$postIds = array();
+		$userIds  = array();
+		$postIds  = array();
 
 		foreach ($this->categories as $category)
 		{
@@ -79,7 +79,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 		foreach ($topics as $topic)
 		{
 			$userIds[$topic->last_post_userid] = $topic->last_post_userid;
-			$postIds[$topic->id] = $topic->last_post_id;
+			$postIds[$topic->id]               = $topic->last_post_id;
 		}
 
 		KunenaUserHelper::loadUsers($userIds);
@@ -104,7 +104,7 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 */
 	public function getActions()
 	{
-		$options = array();
+		$options   = array();
 		$options[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$options[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 

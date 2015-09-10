@@ -154,7 +154,7 @@ class KunenaControllerTopic extends KunenaController
 				// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
 				if ($category->id)
 				{
-					if ( stripos($this->input->getString('mime'), 'image/') !== false )
+					if (stripos($this->input->getString('mime'), 'image/') !== false)
 					{
 						$category->tryAuthorise('topic.post.attachment.createimage');
 					}
@@ -337,15 +337,15 @@ class KunenaControllerTopic extends KunenaController
 		// set dynamic template information
 		foreach ($templates as $tmpl)
 		{
-			if(KunenaTemplateHelper::isDefault($tmpl->directory))
+			if (KunenaTemplateHelper::isDefault($tmpl->directory))
 			{
 				$template = $tmpl;
 			}
 		}
 
-		if ( $this->me->canDoCaptcha() )
+		if ($this->me->canDoCaptcha())
 		{
-			if ( $template->kversion >= 4.0)
+			if ($template->kversion >= 4.0)
 			{
 				if (JPluginHelper::isEnabled('captcha'))
 				{
@@ -362,7 +362,7 @@ class KunenaControllerTopic extends KunenaController
 
 						$captcha_response = $this->app->input->getString('g-recaptcha-response');
 
-						if ( !empty($captcha_response) )
+						if (!empty($captcha_response))
 						{
 							// For ReCaptcha API 2.0
 							$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
@@ -373,7 +373,8 @@ class KunenaControllerTopic extends KunenaController
 							$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
 						}
 
-						if (!$res[0]) {
+						if (!$res[0])
+						{
 							$this->setRedirectBack();
 
 							return;
@@ -501,9 +502,9 @@ class KunenaControllerTopic extends KunenaController
 
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
-		if (!$maxlinks )
+		if (!$maxlinks)
 		{
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -746,9 +747,9 @@ class KunenaControllerTopic extends KunenaController
 
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
-		if (!$maxlinks )
+		if (!$maxlinks)
 		{
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -875,34 +876,37 @@ class KunenaControllerTopic extends KunenaController
 		preg_match_all('/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', $text, $ebay_matches);
 
 		$ignore = false;
-		foreach($ebay_matches as $match)
+		foreach ($ebay_matches as $match)
 		{
-			if ( !empty($match) ) {
+			if (!empty($match))
+			{
 				$ignore = true;
 			}
 		}
 
 		preg_match_all('/<div id=\"kunena_twitter_widget\"(.*?)>(.*?)<\/div>/s', $text, $twitter_matches);
 
-		foreach($twitter_matches as $match)
+		foreach ($twitter_matches as $match)
 		{
-			if ( !empty($match) ) {
+			if (!empty($match))
+			{
 				$ignore = true;
 			}
 		}
 
-		if ( !$ignore )
+		if (!$ignore)
 		{
 			preg_match_all('@\(((https?://)?([-\\w]+\\.[-\\w\\.]+)+\\w(:\\d+)?(/([-\\w/_\\.]*(\\?\\S+)?)?)*)\)@', $text, $matches);
 
-			if( empty($matches[0]) )
+			if (empty($matches[0]))
 			{
 				preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
 			}
 
 			$countlink = count($matches[0]);
 
-			if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
+			if (!$topic->authorise('approve') && $countlink >= $this->config->max_links + 1)
+			{
 				return false;
 			}
 		}

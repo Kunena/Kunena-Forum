@@ -125,11 +125,11 @@ class KunenaViewUser extends KunenaView
 		{
 			if ($this->do != 'edit')
 			{
-				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_EDIT') . ' &raquo;', JText::_('COM_KUNENA_EDIT') . ' &raquo;', 'nofollow', 'edit','');
+				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_EDIT') . ' &raquo;', JText::_('COM_KUNENA_EDIT') . ' &raquo;', 'nofollow', 'edit', '');
 			}
 			else
 			{
-				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow','','');
+				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow', '', '');
 			}
 		}
 

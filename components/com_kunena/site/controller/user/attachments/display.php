@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.User
+ * @package         Kunena.Site
+ * @subpackage      Controller.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -48,9 +48,9 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		$userid = $this->input->getInt('userid');
 		$params = array('file' => '1', 'image' => '1', 'orderby' => 'desc', 'limit' => '30');
 
-		$this->template = KunenaFactory::getTemplate();
-		$this->me = KunenaUserHelper::getMyself();
-		$this->profile = KunenaUserHelper::get($userid);
+		$this->template    = KunenaFactory::getTemplate();
+		$this->me          = KunenaUserHelper::getMyself();
+		$this->profile     = KunenaUserHelper::get($userid);
 		$this->attachments = KunenaAttachmentHelper::getByUserid($this->profile, $params);
 
 		// Pre-load messages.

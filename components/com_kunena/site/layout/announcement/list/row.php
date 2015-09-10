@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Layout.Announcement.List
+ * @package         Kunena.Site
+ * @subpackage      Layout.Announcement.List
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -51,12 +51,12 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	/**
 	 * Method to display an announcement field
 	 *
-	 * @param   string  $name  The name of the field
-	 * @param   string  $mode  Define the way to display the date on the field
+	 * @param   string $name The name of the field
+	 * @param   string $mode Define the way to display the date on the field
 	 *
 	 * @return boolean
 	 */
-	public function displayField($name, $mode=null)
+	public function displayField($name, $mode = null)
 	{
 		return $this->announcement->displayField($name, $mode);
 	}

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Site
- * @subpackage  Controller.Widget
+ * @package         Kunena.Site
+ * @subpackage      Controller.Widget
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -46,7 +46,8 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 		$this->setProperties($statistics);
 
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
-		$this->statisticsUrl = KunenaFactory::getProfile()->getStatisticsURL();
+		$this->statisticsUrl    = KunenaFactory::getProfile()->getStatisticsURL();
+
 		return true;
 	}
 }

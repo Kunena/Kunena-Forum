@@ -2,20 +2,20 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.User
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 /** @var KunenaUser $user */
-$user   = $this->user;
+$user            = $this->user;
 $this->ktemplate = KunenaFactory::getTemplate();
-$avatar = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
-$show   = KunenaConfig::getInstance()->showuserstats;
+$avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
+$show            = KunenaConfig::getInstance()->showuserstats;
 
 if ($show)
 {
@@ -34,12 +34,12 @@ if ($show)
 			<li>
 				<?php echo $user->getLink($avatar); ?>
 			</li>
-				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-					<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
-				<?php endif;?>
-				<?php if (!$this->topic_starter && $user->isModerator()) : ?>
-					<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
-				<?php endif;?>
+			<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
+				<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+			<?php endif; ?>
+			<?php if (!$this->topic_starter && $user->isModerator()) : ?>
+				<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
+			<?php endif; ?>
 
 		<?php endif; ?>
 		<?php if ($user->exists()) : ?>
@@ -74,17 +74,17 @@ if ($show)
 <div class="col-md-2">
 	<br>
 	<?php if ($user->posts >= 1) : ?>
-	<li>
-		<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
-		<span> <?php echo JText::sprintf((int) $user->posts); ?> </span>
-	</li>
+		<li>
+			<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
+			<span> <?php echo JText::sprintf((int) $user->posts); ?> </span>
+		</li>
 	<?php endif; ?>
 
 	<?php if ($show && isset($user->thankyou)) : ?>
-	<li>
-		<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
-		<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>
-	</li>
+		<li>
+			<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
+			<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>
+		</li>
 	<?php endif; ?>
 	<?php if (isset($user->points)) : ?>
 		<li>

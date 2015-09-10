@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Announcement
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Announcement
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
-$row = $this->row;
+$row          = $this->row;
 $announcement = $this->announcement;
 ?>
 
@@ -27,20 +27,20 @@ $announcement = $this->announcement;
 	</td>
 
 	<?php if ($this->checkbox) : ?>
-	<td class="center">
-		<?php if ($this->canPublish()) echo JHtml::_('kunenagrid.published', $row, $announcement->published, '', true); ?>
-	</td>
-	<td class="center">
-		<?php if ($this->canEdit()) echo JHtml::_('kunenagrid.task', $row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'),
-			'edit', '', true); ?>
-	</td>
-	<td class="center">
-		<?php if ($this->canDelete()) echo JHtml::_('kunenagrid.task', $row, 'publish_x.png',
-			JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true); ?>
-	</td>
-	<td>
-		<?php echo $announcement->getAuthor()->username; ?>
-	</td>
+		<td class="center">
+			<?php if ($this->canPublish()) echo JHtml::_('kunenagrid.published', $row, $announcement->published, '', true); ?>
+		</td>
+		<td class="center">
+			<?php if ($this->canEdit()) echo JHtml::_('kunenagrid.task', $row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'),
+				'edit', '', true); ?>
+		</td>
+		<td class="center">
+			<?php if ($this->canDelete()) echo JHtml::_('kunenagrid.task', $row, 'publish_x.png',
+				JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true); ?>
+		</td>
+		<td>
+			<?php echo $announcement->getAuthor()->username; ?>
+		</td>
 	<?php endif; ?>
 
 	<td class="center hidden-xs">
@@ -48,9 +48,9 @@ $announcement = $this->announcement;
 	</td>
 
 	<?php if ($this->checkbox) : ?>
-	<td class="center">
-		<?php echo JHtml::_('kunenagrid.id', $row, $announcement->id); ?>
-	</td>
+		<td class="center">
+			<?php echo JHtml::_('kunenagrid.id', $row, $announcement->id); ?>
+		</td>
 	<?php endif; ?>
 
 </tr>

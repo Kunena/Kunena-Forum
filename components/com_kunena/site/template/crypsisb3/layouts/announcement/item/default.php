@@ -1,17 +1,17 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Announcement
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Announcement
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 $announcement = $this->announcement;
-$actions = $this->getActions();
+$actions      = $this->getActions();
 ?>
 <h3>
 	<?php echo $announcement->displayField('title'); ?>

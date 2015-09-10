@@ -1,19 +1,19 @@
-<?php
+s<?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Widget
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Widget
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 $config = KunenaFactory::getTemplate()->params;
 ?>
 
 <div id="kunena" class="layout <?php echo $this->options->get('pageclass_sfx'); ?>">
-<?php
+	<?php
 
 	if ($config->get('displayMenu'))
 	{
@@ -32,7 +32,8 @@ $config = KunenaFactory::getTemplate()->params;
 
 	if ($config->get('displayAnnouncement'))
 	{
-		echo $this->subRequest('Widget/Announcement');if ($config->get('displayMenu'));
+		echo $this->subRequest('Widget/Announcement');
+		if ($config->get('displayMenu')) ;
 	}
 
 	if ($config->get('displayModule'))
@@ -45,18 +46,18 @@ $config = KunenaFactory::getTemplate()->params;
 
 	if ($config->get('displayBreadcrumb'))
 	{
-	echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
 	}
 
 
 	if ($config->get('displayModule'))
 	{
-	echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
+		echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
 	}
 
 	if ($config->get('displayFooter'))
 	{
-	echo $this->subLayout('Widget/Footer');
+		echo $this->subLayout('Widget/Footer');
 	}
-?>
+	?>
 </div>

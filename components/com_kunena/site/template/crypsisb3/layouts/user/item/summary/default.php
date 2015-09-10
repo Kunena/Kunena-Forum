@@ -1,33 +1,33 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.User
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 /** @var KunenaUser $profile */
-$profile = $this->profile;
-$me = KunenaUserHelper::getMyself();
-$this->ktemplate = KunenaFactory::getTemplate();
-$avatar = $profile->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
-$banInfo = $this->config->showbannedreason
+$profile             = $this->profile;
+$me                  = KunenaUserHelper::getMyself();
+$this->ktemplate     = KunenaFactory::getTemplate();
+$avatar              = $profile->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
+$banInfo             = $this->config->showbannedreason
 	? KunenaUserBan::getInstanceByUserid($profile->userid)
 	: null;
-$private = $profile->getPrivateMsgURL();
-$privateLabel = $profile->getPrivateMsgLabel();
-$websiteURL = $profile->getWebsiteURL();
-$websiteName = $profile->getWebsiteName();
-$personalText = $profile->getPersonalText();
-$signature = $profile->getSignature();
-$email = $profile->email && !$profile->hideEmail && $this->config->showemail || $me->isModerator() || $profile->userid == $me->userid;
+$private             = $profile->getPrivateMsgURL();
+$privateLabel        = $profile->getPrivateMsgLabel();
+$websiteURL          = $profile->getWebsiteURL();
+$websiteName         = $profile->getWebsiteName();
+$personalText        = $profile->getPersonalText();
+$signature           = $profile->getSignature();
+$email               = $profile->email && !$profile->hideEmail && $this->config->showemail || $me->isModerator() || $profile->userid == $me->userid;
 $activityIntegration = KunenaFactory::getActivityIntegration();
-$points = $activityIntegration->getUserPoints($profile->userid);
-$medals = $activityIntegration->getUserMedals($profile->userid);
+$points              = $activityIntegration->getUserPoints($profile->userid);
+$medals              = $activityIntegration->getUserMedals($profile->userid);
 
 if ($this->config->showuserstats)
 {
@@ -39,12 +39,12 @@ if ($this->config->showuserstats)
 	<div class="row">
 		<div class="col-md-12">
 			<?php if ($avatar) : ?>
-			<div class="col-md-2">
-				<div class="center"> <?php echo $avatar; ?> </div>
-				<div class="center">
-					<strong><?php echo $this->subLayout('User/Item/Status')->set('user', $profile); ?></strong>
+				<div class="col-md-2">
+					<div class="center"> <?php echo $avatar; ?> </div>
+					<div class="center">
+						<strong><?php echo $this->subLayout('User/Item/Status')->set('user', $profile); ?></strong>
+					</div>
 				</div>
-			</div>
 			<?php endif; ?>
 			<div class="col-md-10">
 				<div class="row">
@@ -52,7 +52,8 @@ if ($this->config->showuserstats)
 						<ul class="unstyled col-md-2">
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_USERTYPE'); ?>:</strong>
-								<span class="<?php echo $profile->getType(0, true); ?>"> <?php echo JText::_($profile->getType()); ?> </span>
+								<span
+									class="<?php echo $profile->getType(0, true); ?>"> <?php echo JText::_($profile->getType()); ?> </span>
 							</li>
 							<?php if ($banInfo && $banInfo->reason_public) : ?>
 								<li>
@@ -76,13 +77,15 @@ if ($this->config->showuserstats)
 							<?php if ($this->config->userlist_joindate || $me->isModerator()) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong>
-									<span title="<?php echo $profile->getRegisterDate()->toKunena('ago'); ?>"> <?php echo $profile->getRegisterDate()->toKunena('date_today', 'utc'); ?> </span>
+									<span
+										title="<?php echo $profile->getRegisterDate()->toKunena('ago'); ?>"> <?php echo $profile->getRegisterDate()->toKunena('date_today', 'utc'); ?> </span>
 								</li>
 							<?php endif; ?>
 							<?php if ($this->config->userlist_lastvisitdate || $me->isModerator()) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LASTLOGIN'); ?>:</strong>
-									<span title="<?php echo $profile->getLastVisitDate()->toKunena('ago'); ?>"> <?php echo $profile->getLastVisitDate()->toKunena('config_post_dateformat'); ?> </span>
+									<span
+										title="<?php echo $profile->getLastVisitDate()->toKunena('ago'); ?>"> <?php echo $profile->getLastVisitDate()->toKunena('config_post_dateformat'); ?> </span>
 								</li>
 							<?php endif; ?>
 							<li>
@@ -96,22 +99,22 @@ if ($this->config->showuserstats)
 						</ul>
 						<ul class="unstyled col-md-2">
 							<?php if (!empty($profile->posts)) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
-								<span> <?php echo JText::sprintf((int)$profile->posts); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
+									<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($profile->uhits)) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
-								<span> <?php echo JText::sprintf((int)$profile->uhits); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_PROFILE_VIEWS'); ?>:</strong>
+									<span> <?php echo JText::sprintf((int) $profile->uhits); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($profile->thankyou)) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
-								<span> <?php echo JText::sprintf((int)$profile->thankyou); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
+									<span> <?php echo JText::sprintf((int) $profile->thankyou); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($points)) : ?>
 								<li>
@@ -122,8 +125,8 @@ if ($this->config->showuserstats)
 						</ul>
 						<ul class="unstyled col-md-3">
 							<?php if (!empty($profile->location)) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong>
 								<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
@@ -132,19 +135,19 @@ if ($this->config->showuserstats)
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
 								</span>
-							</li>
+								</li>
 							<?php endif; ?>
 							<?php if ($profile->getGender() >= 1) : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
-								<span> <?php echo $profile->getGender(); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong>
+									<span> <?php echo $profile->getGender(); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if ($profile->birthdate >= '1901-01-01') : ?>
-							<li>
-								<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
-								<span> <?php echo KunenaDate::getInstance($profile->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
-							</li>
+								<li>
+									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
+									<span> <?php echo KunenaDate::getInstance($profile->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
+								</li>
 							<?php endif; ?>
 							<?php if (!empty($medals)) : ?>
 								<li>
@@ -166,14 +169,18 @@ if ($this->config->showuserstats)
 								</a>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>"><i class="glyphicon glyphicon-envelope"></i></a>
+								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>"><i
+										class="glyphicon glyphicon-envelope"></i></a>
 							<?php endif; ?>
-							<?php if (!empty($websiteName) && $websiteURL!='http://') : ?>
-								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><i class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteName ?></a>
-							<?php elseif(empty($websiteName) && $websiteURL!='http://'): ?>
-								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><i class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteURL ?></a>
-							<?php elseif(!empty($websiteName) && $websiteURL=='http://'): ?>
-								<button class="btn btn-default btn-small"><i class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteName ?></button>
+							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
+								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><i
+										class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteName ?></a>
+							<?php elseif (empty($websiteName) && $websiteURL != 'http://'): ?>
+								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><i
+										class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteURL ?></a>
+							<?php elseif (!empty($websiteName) && $websiteURL == 'http://'): ?>
+								<button class="btn btn-default btn-small"><i
+										class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteName ?></button>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -182,17 +189,17 @@ if ($this->config->showuserstats)
 		</div>
 	</div>
 </div>
-<br />
+<br/>
 <div class="col-md-12">
 	<?php if ($signature) : ?>
-	<blockquote>
-		<span><?php echo $signature; ?></span>
-	</blockquote>
+		<blockquote>
+			<span><?php echo $signature; ?></span>
+		</blockquote>
 	<?php endif; ?>
 	<?php if ($personalText) : ?>
 		<blockquote>
 			<span> <?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>: </span>
-			<br />
+			<br/>
 			<span> <?php echo $personalText; ?> </span>
 		</blockquote>
 	<?php endif; ?>

@@ -36,7 +36,6 @@ $options = array(
 	'files'        => array(
 		REPO_BASE . '/plugins',
 		REPO_BASE . '/components',
-		REPO_BASE . '/modules',
 		REPO_BASE . '/libraries',
 	),
 	'standard'     => array( REPO_BASE . '/.travis/phpcs/Joomla'),

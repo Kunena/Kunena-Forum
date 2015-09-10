@@ -1,26 +1,29 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Message
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Message
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 /** @var KunenaForumMessage $message */
-$message = $this->message;
-$isReply = $this->message->id != $this->topic->first_post_id;
-$signature = $this->profile->getSignature();
-$attachments = $message->getAttachments();
-$avatarname = $this->profile->getname();
+$message      = $this->message;
+$isReply      = $this->message->id != $this->topic->first_post_id;
+$signature    = $this->profile->getSignature();
+$attachments  = $message->getAttachments();
+$avatarname   = $this->profile->getname();
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
-$config = KunenaConfig::getInstance();
-if ($config->ordering_system == 'mesid') {
-	$this->numLink = $this->location ;
-} else {
+$config       = KunenaConfig::getInstance();
+if ($config->ordering_system == 'mesid')
+{
+	$this->numLink = $this->location;
+}
+else
+{
 	$this->numLink = $message->replynum;
 }
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
@@ -29,12 +32,13 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 <small class="text-muted pull-right hidden-phone">
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
-	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
+	<a href="#<?php echo $this->message->id; ?>"
+	   id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
 </small>
 <div class="clear-fix"></div>
 <div class="horizontal-message">
 	<div class="horizontal-message-bottom"
-		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED'), ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
+	     data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED'), ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
 		<div class="kmessage">
 			<div class="horizontal-message-text">
 				<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
@@ -46,7 +50,8 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 					<ul class="thumbnails">
 						<?php foreach ($attachments as $attachment) : ?>
 							<li class="span3" style=" text-align: center;">
-								<div class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?> <?php echo $attachment->getLayout()->render('textlink'); ?> </div>
+								<div
+									class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?><?php echo $attachment->getLayout()->render('textlink'); ?> </div>
 							</li>
 						<?php endforeach; ?>
 					</ul>
@@ -61,8 +66,12 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 			<?php if (!empty($this->reportMessageLink)) : ?>
 				<div class="row">
 					<div class="span10">
-						<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-						<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+						<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report"
+						   data-toggle="modal" data-backdrop="false"><i
+								class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
+
+						<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1"
+						     role="dialog" aria-hidden="true">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 								<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
@@ -77,12 +86,13 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 		</div>
 	</div>
 	<div class="profile-horizontal-bottom">
-	<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
-</div>
+		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
+	</div>
 </div>
 <?php if ($message->modified_by && $this->config->editmarkup) :
 	$dateshown = $datehover = '';
-	if ($message->modified_time) {
+	if ($message->modified_time)
+	{
 		$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
 		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
 	} ?>

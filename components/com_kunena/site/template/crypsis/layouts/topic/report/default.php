@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Topic
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
@@ -16,13 +16,13 @@ defined('_JEXEC') or die;
 </h2>
 
 <form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" class="form-horizontal">
-	<input type="hidden" name="view" value="topic" />
-	<input type="hidden" name="task" value="report" />
-	<input type="hidden" name="catid" value="<?php echo (int) $this->category->id; ?>" />
-	<input type="hidden" name="id" value="<?php echo (int) $this->topic->id; ?>" />
+	<input type="hidden" name="view" value="topic"/>
+	<input type="hidden" name="task" value="report"/>
+	<input type="hidden" name="catid" value="<?php echo (int) $this->category->id; ?>"/>
+	<input type="hidden" name="id" value="<?php echo (int) $this->topic->id; ?>"/>
 
 	<?php if ($this->message) : ?>
-	<input type="hidden" name="mesid" value="<?php echo (int) $this->message->id; ?>" />
+		<input type="hidden" name="mesid" value="<?php echo (int) $this->message->id; ?>"/>
 	<?php endif; ?>
 
 	<?php echo JHtml::_('form.token'); ?>
@@ -32,6 +32,7 @@ defined('_JEXEC') or die;
 			<label class="control-label" for="kreport-reason">
 				<?php echo JText::_('COM_KUNENA_REPORT_REASON'); ?>
 			</label>
+
 			<div class="controls">
 				<input class="input-xxlarge" type="text" name="reason" size="30" id="kreport-reason"/>
 			</div>
@@ -40,6 +41,7 @@ defined('_JEXEC') or die;
 			<label class="control-label" for="kreport-msg">
 				<?php echo JText::_('COM_KUNENA_REPORT_MESSAGE'); ?>
 			</label>
+
 			<div class="controls">
 				<textarea class="input-xxlarge" id="kreport-msg" name="text" cols="40" rows="10"></textarea>
 			</div>
@@ -49,7 +51,7 @@ defined('_JEXEC') or die;
 				<input class="btn btn-primary" type="submit" name="Submit"
 				       value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>"/>
 				<button class="btn" data-dismiss="modal" aria-hidden="true">
-						<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
+					<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>
 		</div>
 	</div>

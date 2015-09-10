@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Search
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Search
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -22,11 +22,12 @@ $this->addScript('js/search.js');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">
-	<input type="hidden" name="task" value="results" />
+	<input type="hidden" name="task" value="results"/>
 	<?php if ($this->me->exists()): ?>
-		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
+		<input type="hidden" id="kurl_users" name="kurl_users"
+		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo JHtml::_('form.token'); ?>
 
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
@@ -38,7 +39,7 @@ $this->addScript('js/search.js');
 	</h2>
 
 	<div class="collapse in" id="search">
-	<div class="well">
+		<div class="well">
 			<div class="row-fluid">
 				<fieldset class="span6">
 					<legend>
@@ -47,7 +48,7 @@ $this->addScript('js/search.js');
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:
 						<input type="text" name="query"
-						       value="<?php echo $this->escape($this->state->get('searchwords')); ?>" />
+						       value="<?php echo $this->escape($this->state->get('searchwords')); ?>"/>
 					</label>
 					<?php $this->displayModeList('mode'); ?>
 				</fieldset>
@@ -58,8 +59,9 @@ $this->addScript('js/search.js');
 					</legend>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
-						<input id="kusersearch" data-provide="typeahead" type="text" name="searchuser" autocomplete="off"
-						       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" />
+						<input id="kusersearch" data-provide="typeahead" type="text" name="searchuser"
+						       autocomplete="off"
+						       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"/>
 					</label>
 
 					<label>
@@ -103,31 +105,31 @@ $this->addScript('js/search.js');
 								<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
 							</legend>
 							<input type="text" name="limitstart"
-							       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
+							       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
 							<?php $this->displayLimitlist('limit'); ?>
 						</fieldset>
 
 						<?php if ($this->isModerator) : ?>
-						<fieldset>
-							<legend>
-								<?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?>
-							</legend>
-							<label class="radio">
-								<input type="radio" name="show" value="0"
-									<?php if ($this->state->get('query.show') == 0) echo 'checked="checked"'; ?> />
-								<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?>
-							</label>
-							<label class="radio">
-								<input type="radio" name="show" value="1"
-									<?php if ($this->state->get('query.show') == 1) echo 'checked="checked"'; ?> />
-								<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?>
-							</label>
-							<label class="radio">
-								<input type="radio" name="show" value="2"
-									<?php if ($this->state->get('query.show') == 2) echo 'checked="checked"'; ?> />
-								<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?>
-							</label>
-						</fieldset>
+							<fieldset>
+								<legend>
+									<?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?>
+								</legend>
+								<label class="radio">
+									<input type="radio" name="show" value="0"
+										<?php if ($this->state->get('query.show') == 0) echo 'checked="checked"'; ?> />
+									<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?>
+								</label>
+								<label class="radio">
+									<input type="radio" name="show" value="1"
+										<?php if ($this->state->get('query.show') == 1) echo 'checked="checked"'; ?> />
+									<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?>
+								</label>
+								<label class="radio">
+									<input type="radio" name="show" value="2"
+										<?php if ($this->state->get('query.show') == 2) echo 'checked="checked"'; ?> />
+									<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?>
+								</label>
+							</fieldset>
 						<?php endif; ?>
 
 					</div>

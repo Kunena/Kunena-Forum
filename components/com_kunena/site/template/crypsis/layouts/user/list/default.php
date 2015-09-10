@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.User
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -34,86 +34,86 @@ $this->addScript('js/search.js');
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>"
       method="post" id="kuserlist-form" name="kuserlist-form">
-	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>" />
-	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>" />
+	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>"/>
+	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>"/>
 	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-striped">
 		<thead>
-			<tr>
-				<th class="span1 center hidden-phone">
-					<a id="forumtop"> </a>
-					<a href="#forumbottom">
-						<i class="icon-arrow-down"></i>
-					</a>
-				</th>
+		<tr>
+			<th class="span1 center hidden-phone">
+				<a id="forumtop"> </a>
+				<a href="#forumbottom">
+					<i class="icon-arrow-down"></i>
+				</a>
+			</th>
 
-				<?php if ($config->userlist_online) : $cols++; ?>
+			<?php if ($config->userlist_online) : $cols++; ?>
 				<th class="span1 center hidden-phone">
 					<?php echo JText::_('COM_KUNENA_USRL_ONLINE'); ?>
 				</th>
-				<?php endif; ?>
+			<?php endif; ?>
 
-				<?php if ($config->userlist_avatar) : $cols++; ?>
+			<?php if ($config->userlist_avatar) : $cols++; ?>
 				<th class="span1 center hidden-phone">
 					<?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?>
 				</th>
-				<?php endif; ?>
+			<?php endif; ?>
 
-				<?php if ($config->username) : $cols++; ?>
+			<?php if ($config->username) : $cols++; ?>
 				<th class="span2">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username',
+					<?php echo JHtml::_('kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
-				<?php else : $cols++; ?>
+			<?php else : $cols++; ?>
 				<th class="span3">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name',
+					<?php echo JHtml::_('kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
-				<?php endif; ?>
+			<?php endif; ?>
 
-				<?php if ($config->userlist_posts) : $cols++; ?>
+			<?php if ($config->userlist_posts) : $cols++; ?>
 				<th class="span1 center hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
+					<?php echo JHtml::_('kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
-				<?php endif; ?>
+			<?php endif; ?>
 
-				<?php if ($config->userlist_email) : $cols++; ?>
+			<?php if ($config->userlist_email) : $cols++; ?>
 				<th class="span1 hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
+					<?php echo JHtml::_('kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
-				<?php endif; ?>
+			<?php endif; ?>
 
-				<?php if ($config->userlist_joindate) : $cols++; ?>
+			<?php if ($config->userlist_joindate) : $cols++; ?>
 				<th class="span2 hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
+					<?php echo JHtml::_('kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
-				<?php endif; ?>
+			<?php endif; ?>
 
-				<?php if ($config->userlist_lastvisitdate) : $cols++; ?>
+			<?php if ($config->userlist_lastvisitdate) : $cols++; ?>
 				<th class="span2 hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
+					<?php echo JHtml::_('kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
-				<?php endif; ?>
+			<?php endif; ?>
 
-				<?php if ($config->userlist_userhits) : $cols++; ?>
+			<?php if ($config->userlist_userhits) : $cols++; ?>
 				<th class="span1 center hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
+					<?php echo JHtml::_('kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
 						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 						'kuserlist-form'); ?>
 				</th>
-				<?php endif; ?>
-			</tr>
+			<?php endif; ?>
+		</tr>
 		</thead>
 		<tbody>
 		<?php
@@ -122,24 +122,24 @@ $this->addScript('js/search.js');
 		/** @var KunenaUser $user */
 		foreach ($this->users as $user) :
 			$avatar = $config->userlist_avatar ? $user->getAvatarImage('img-polaroid', 'thumb') : null;
-		?>
+			?>
 			<tr>
 				<td class="span1 center">
 					<?php echo ++$i; ?>
 				</td>
 
 				<?php if ($config->userlist_online) : ?>
-				<td class="span1 center hidden-phone">
-					<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
-				</td>
+					<td class="span1 center hidden-phone">
+						<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
+					</td>
 				<?php endif; ?>
 
 				<?php if ($avatar) : ?>
-				<td class="span1 center hidden-phone">
-					<div class="post-image">
+					<td class="span1 center hidden-phone">
+						<div class="post-image">
 							<?php echo $avatar; ?>
-					</div>
-				</td>
+						</div>
+					</td>
 				<?php endif; ?>
 
 				<td class="span2">
@@ -147,33 +147,33 @@ $this->addScript('js/search.js');
 				</td>
 
 				<?php if ($config->userlist_posts) : ?>
-				<td class="span1 center hidden-phone">
-					<?php echo (int) $user->posts; ?>
-				</td>
+					<td class="span1 center hidden-phone">
+						<?php echo (int) $user->posts; ?>
+					</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_email) : ?>
-				<td class="span1 hidden-phone">
-					<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
-				</td>
+					<td class="span1 hidden-phone">
+						<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
+					</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_joindate) : ?>
-				<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>" class="span2 hidden-phone">
-					<?php echo $user->getRegisterDate()->toKunena('datetime_today'); ?>
-				</td>
+					<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>" class="span2 hidden-phone">
+						<?php echo $user->getRegisterDate()->toKunena('datetime_today'); ?>
+					</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_lastvisitdate) : ?>
-				<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>" class="span2 hidden-phone">
-					<?php echo $user->getLastVisitDate()->toKunena('datetime_today'); ?>
-				</td>
+					<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>" class="span2 hidden-phone">
+						<?php echo $user->getLastVisitDate()->toKunena('datetime_today'); ?>
+					</td>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_userhits) : ?>
-				<td class="span1 center hidden-phone">
-					<?php echo (int) $user->uhits; ?>
-				</td>
+					<td class="span1 center hidden-phone">
+						<?php echo (int) $user->uhits; ?>
+					</td>
 				<?php endif; ?>
 			</tr>
 		<?php endforeach; ?>

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Email
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Layout.Email
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -14,37 +14,37 @@ defined('_JEXEC') or die;
 
 $this->mail->isHtml(true);
 
-$author = $this->message->getAuthor();
-$config = KunenaConfig::getInstance();
+$author  = $this->message->getAuthor();
+$config  = KunenaConfig::getInstance();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
 
 $msg1 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : JText::_
-	('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
+('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
 $msg2 = $this->message->parent ? JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : JText::_
-	('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
+('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
 $more = ($this->once ?
-	JText::_($this->message->parent? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
-		'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE'). "\n" : '');
+	JText::_($this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
+		'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') . "\n" : '');
 
 ?>
-<h2><?php echo $msg1 . " " . $config->board_title; ?></h2>
+	<h2><?php echo $msg1 . " " . $config->board_title; ?></h2>
 
-<div><?php echo JText::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></div>
-<div><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></div>
-<div><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></div>
+	<div><?php echo JText::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></div>
+	<div><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></div>
+	<div><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></div>
 
-<p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
+	<p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
 
 <?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
-<hr />
-<div><?php echo $this->message->displayField('message'); ?></div>
-<hr />
+	<hr/>
+	<div><?php echo $this->message->displayField('message'); ?></div>
+	<hr/>
 <?php endif; ?>
-<div><?php echo $msg2; ?></div>
+	<div><?php echo $msg2; ?></div>
 <?php if ($more) : ?>
-<div><?php echo $more; ?></div>
+	<div><?php echo $more; ?></div>
 <?php endif; ?>
-<div><?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?></div>
+	<div><?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?></div>
 
 <?php
 // Email as plain text:
@@ -57,7 +57,7 @@ $full = !$config->mailfull ? '' : <<<EOS
 
 EOS;
 
-$alt = <<<EOS
+$alt                 = <<<EOS
 {$msg1} {$config->board_title}
 
 {$this->text('COM_KUNENA_MESSAGE_SUBJECT')} : {$subject}

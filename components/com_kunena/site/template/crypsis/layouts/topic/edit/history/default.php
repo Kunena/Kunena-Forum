@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  Topic
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -46,9 +46,11 @@ $k = 0;
 			</div>
 			<div class="span10">
 				<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
-					<span class="icon icon-clock"></span> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?> <?php echo $this->getNumLink($this->message->id, $this->replycount--) ?>
+					<span
+						class="icon icon-clock"></span> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?> <?php echo $this->getNumLink($this->message->id, $this->replycount--) ?>
 				</small>
-				<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->displayField('subject'); ?>">
+				<div class="badger-left badger-info khistory"
+				     data-badger="<?php echo $this->message->displayField('subject'); ?>">
 					<div class="kmessage">
 						<p class="kmsg"><?php echo KunenaHtmlParser::parseBBCode($this->message->message, $this) ?></p>
 					</div>

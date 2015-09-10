@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
- * @subpackage  BBCode
+ * @package         Kunena.Template.Crypsis
+ * @subpackage      BBCode
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -32,7 +32,7 @@ $attributesImg .= $size ? ' width="' . (int) $size . '"' : '';
 	<a href="<?php echo $this->escape($url); ?>" title=""<?php echo $attributesLink; ?>>
 		<?php endif; ?>
 
-		<img src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> alt="" />
+		<img src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> alt=""/>
 
 		<?php if ($canLink) : ?>
 	</a>

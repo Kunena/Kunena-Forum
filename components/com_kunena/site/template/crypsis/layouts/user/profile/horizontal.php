@@ -34,10 +34,10 @@ if ($show)
 				<?php echo $user->getLink($avatar); ?>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
 					<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
-				<?php endif;?>
+				<?php endif; ?>
 				<?php if (!$this->topic_starter && $user->isModerator()) : ?>
 					<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
-				<?php endif;?>
+				<?php endif; ?>
 			</li>
 		<?php endif; ?>
 		<?php if ($user->exists()) : ?>
@@ -75,20 +75,20 @@ if ($show)
 	<?php if ($user->posts >= 1) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
-			<span> <?php echo JText::sprintf((int)$user->posts); ?> </span>
+			<span> <?php echo JText::sprintf((int) $user->posts); ?> </span>
 		</li>
 	<?php endif; ?>
 
 	<?php if ($show && isset($user->thankyou)) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
-			<span> <?php echo JText::sprintf((int)$user->thankyou); ?> </span>
+			<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>
 		</li>
 	<?php endif; ?>
 	<?php if (isset($user->points)) : ?>
 		<li>
 			<strong> <?php echo JText::_('COM_KUNENA_AUP_POINTS'); ?> </strong>
-			<span> <?php echo (int)$user->points; ?> </span>
+			<span> <?php echo (int) $user->points; ?> </span>
 		</li>
 	<?php endif; ?>
 	<?php if ($show && !empty($user->medals)) : ?>

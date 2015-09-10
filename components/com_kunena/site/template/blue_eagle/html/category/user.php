@@ -1,14 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Blue_Eagle
- * @subpackage Category
+ * @package       Kunena.Template.Blue_Eagle
+ * @subpackage    Category
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 ?>
 <div class="kblock">
 	<div class="kheader">
@@ -18,19 +18,20 @@ defined ( '_JEXEC' ) or die ();
 	<div class="kcontainer">
 		<div class="kbody">
 			<table class="kblocktable" id="kflattable">
-			<?php if (!count ( $this->categories ) ) : ?>
-			<tr class="krow2">
-				<td class="kcol-first">
-					<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE') ?>
-				</td>
-			</tr>
-			<?php
-			else :
-				foreach ($this->categories as $this->category) {
-					$this->displayTemplateFile('category', 'user', 'row');
-				}
-			endif;
-			?>
+				<?php if (!count($this->categories)) : ?>
+					<tr class="krow2">
+						<td class="kcol-first">
+							<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE') ?>
+						</td>
+					</tr>
+					<?php
+				else :
+					foreach ($this->categories as $this->category)
+					{
+						$this->displayTemplateFile('category', 'user', 'row');
+					}
+				endif;
+				?>
 			</table>
 		</div>
 	</div>

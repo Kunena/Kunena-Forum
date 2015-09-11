@@ -14,13 +14,15 @@ defined('_JEXEC') or die ();
 /**
  * Kunena User Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerUser extends KunenaController
 {
 	/**
-	 * @param bool|false $cachable
-	 * @param bool|false $urlparams
+	 * @param   bool|false  $cachable
+	 * @param   bool|false  $urlparams
+	 *
+	 * @return  JControllerLegacy|void
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -61,6 +63,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$layout = JRequest::getCmd('layout', 'default');
+
 		if ($layout == 'list')
 		{
 			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
@@ -72,6 +75,9 @@ class KunenaControllerUser extends KunenaController
 		parent::display();
 	}
 
+	/**
+	 *
+	 */
 	public function search()
 	{
 		$model = $this->getModel('user');
@@ -95,6 +101,9 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirect(KunenaRoute::_($uri, false));
 	}
 
+	/**
+	 *
+	 */
 	public function change()
 	{
 		if (!JSession::checkToken('get'))
@@ -110,18 +119,24 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	public function karmaup()
 	{
 		$this->karma(1);
 	}
 
+	/**
+	 *
+	 */
 	public function karmadown()
 	{
 		$this->karma(-1);
 	}
 
 	/**
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   KunenaExceptionAuthorise
 	 *
 	 * @todo Allow moderators to save another users profile (without account info).
 	 */
@@ -201,6 +216,9 @@ class KunenaControllerUser extends KunenaController
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function ban()
 	{
 		$user = KunenaFactory::getUser(JRequest::getInt('userid', 0));
@@ -361,12 +379,18 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirect($user->getUrl(false));
 	}
 
+	/**
+	 *
+	 */
 	public function cancel()
 	{
 		$user = KunenaFactory::getUser();
 		$this->setRedirect($user->getUrl(false));
 	}
 
+	/**
+	 *
+	 */
 	public function login()
 	{
 		if (!JFactory::getUser()->guest || !JSession::checkToken('post'))
@@ -399,6 +423,9 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	public function logout()
 	{
 		if (!JSession::checkToken('request'))
@@ -433,7 +460,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Save online status for user
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	public function status()
 	{
@@ -464,7 +491,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Set online status text for user
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	public function statusText()
 	{
@@ -495,7 +522,7 @@ class KunenaControllerUser extends KunenaController
 	// Internal functions:
 
 	/**
-	 * @param $karmaDelta
+	 * @param   $karmaDelta
 	 */
 	protected function karma($karmaDelta)
 	{
@@ -578,9 +605,8 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirectBack();
 	}
 
-	// Mostly copied from Joomla 1.5
 	/**
-	 * @return bool
+	 * @return   bool
 	 */
 	protected function saveUser()
 	{
@@ -654,6 +680,9 @@ class KunenaControllerUser extends KunenaController
 		return true;
 	}
 
+	/**
+	 *
+	 */
 	protected function saveProfile()
 	{
 		if (JRequest::getVar('signature', null) === null)
@@ -696,7 +725,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Delete previoulsy uplaoded avatars from filesystem
 	 *
-	 * @return void
+	 * @return    void
 	 */
 	protected function deleteOldAvatars()
 	{
@@ -726,7 +755,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Upload and resize if needed the new avatar for user, or set one from the gallery or the default one
 	 *
-	 * @return boolean
+	 * @return    boolean
 	 */
 	protected function saveAvatar()
 	{
@@ -803,9 +832,9 @@ class KunenaControllerUser extends KunenaController
 
 	// Reports a user to stopforumspam.com
 	/**
-	 * @param $userid
+	 * @param   $userid
 	 *
-	 * @return bool
+	 * @return   bool
 	 */
 	protected function report($userid)
 	{
@@ -859,6 +888,9 @@ class KunenaControllerUser extends KunenaController
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function delfile()
 	{
 		if (!JSession::checkToken('post'))

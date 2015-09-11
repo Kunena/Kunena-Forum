@@ -10,9 +10,9 @@
  * @link        http://www.kunena.org
  *
  * Based on FireBoard Component
- * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @copyright   (C) 2006 - 2007 Best Of Joomla All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.bestofjoomla.com
+ * @link        http://www.bestofjoomla.com
  **/
 defined('_JEXEC') or die ();
 
@@ -32,11 +32,11 @@ class CKunenaLink
 	/**
 	 * @param        $link
 	 * @param        $name
-	 * @param string $title
-	 * @param string $rel
-	 * @param string $class
-	 * @param string $anker
-	 * @param string $attr
+	 * @param   string  $title
+	 * @param   string  $rel
+	 * @param   string  $class
+	 * @param   string  $anker
+	 * @param   string  $attr
 	 *
 	 * @return string
 	 */
@@ -51,11 +51,11 @@ class CKunenaLink
 	/**
 	 * @param        $link
 	 * @param        $name
-	 * @param string $title
-	 * @param string $rel
-	 * @param string $class
-	 * @param string $anker
-	 * @param string $attr
+	 * @param   string  $title
+	 * @param   string  $rel
+	 * @param   string  $class
+	 * @param   string  $anker
+	 * @param   string  $attr
 	 *
 	 * @return mixed
 	 */
@@ -78,8 +78,8 @@ class CKunenaLink
 	 * @param        $folder
 	 * @param        $filename
 	 * @param        $name
-	 * @param string $title
-	 * @param string $rel
+	 * @param   string  $title
+	 * @param   string  $rel
 	 *
 	 * @return string
 	 */
@@ -90,8 +90,8 @@ class CKunenaLink
 
 	/**
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $params
+	 * @param   string  $rel
+	 * @param   string  $params
 	 *
 	 * @return string
 	 */
@@ -101,8 +101,8 @@ class CKunenaLink
 	}
 
 	/**
-	 * @param string    $params
-	 * @param bool|true $xhtml
+	 * @param   string    $params
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool|string
 	 */
@@ -123,10 +123,10 @@ class CKunenaLink
 	 * @param        $task
 	 * @param        $catid
 	 * @param        $catname
-	 * @param string $rel
-	 * @param string $class
-	 * @param string $title
-	 * @param string $extra
+	 * @param   string  $rel
+	 * @param   string  $class
+	 * @param   string  $title
+	 * @param   string  $extra
 	 *
 	 * @return mixed
 	 */
@@ -140,8 +140,8 @@ class CKunenaLink
 	/**
 	 * @param        $catid
 	 * @param        $catname
-	 * @param string $rel
-	 * @param string $class
+	 * @param   string  $rel
+	 * @param   string  $class
 	 *
 	 * @return mixed
 	 */
@@ -153,8 +153,8 @@ class CKunenaLink
 	/**
 	 * @param        $anker
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $class
+	 * @param   string  $rel
+	 * @param   string  $class
 	 *
 	 * @return string
 	 */
@@ -167,9 +167,9 @@ class CKunenaLink
 	 * @param        $catid
 	 * @param        $id
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $class
-	 * @param string $title
+	 * @param   string  $rel
+	 * @param   string  $class
+	 * @param   string  $title
 	 *
 	 * @return mixed
 	 */
@@ -182,7 +182,7 @@ class CKunenaLink
 
 	/**
 	 * @param        $msg_ip
-	 * @param string $rel
+	 * @param   string  $rel
 	 *
 	 * @return string
 	 */
@@ -205,9 +205,9 @@ class CKunenaLink
 	/**
 	 * @param        $userid
 	 * @param null   $name
-	 * @param string $rel
-	 * @param string $task
-	 * @param string $class
+	 * @param   string  $rel
+	 * @param   string  $task
+	 * @param   string  $class
 	 *
 	 * @return string
 	 */
@@ -225,9 +225,9 @@ class CKunenaLink
 	// Returns always url to Kunena profile
 	/**
 	 * @param int       $userid
-	 * @param string    $task
-	 * @param bool|true $xhtml
-	 * @param string    $extra
+	 * @param   string    $task
+	 * @param   bool|true $xhtml
+	 * @param   string    $extra
 	 *
 	 * @return bool
 	 */
@@ -251,8 +251,8 @@ class CKunenaLink
 	}
 
 	/**
-	 * @param string    $action
-	 * @param bool|true $xhtml
+	 * @param   string    $action
+	 * @param   bool|true $xhtml
 	 */
 	static function GetUserlistURL($action = '', $xhtml = true)
 	{
@@ -264,9 +264,9 @@ class CKunenaLink
 	/**
 	 * @param        $userid
 	 * @param null   $name
-	 * @param string $title
-	 * @param string $rel
-	 * @param string $class
+	 * @param   string  $title
+	 * @param   string  $rel
+	 * @param   string  $class
 	 *
 	 * @return mixed
 	 */
@@ -278,8 +278,8 @@ class CKunenaLink
 	/**
 	 * @param        $action
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $class
+	 * @param   string  $rel
+	 * @param   string  $class
 	 *
 	 * @return string
 	 */
@@ -296,8 +296,8 @@ class CKunenaLink
 
 	/**
 	 * @param        $name
-	 * @param string $do
-	 * @param string $rel
+	 * @param   string  $do
+	 * @param   string  $rel
 	 *
 	 * @return mixed
 	 */
@@ -317,7 +317,7 @@ class CKunenaLink
 	 * @param        $pid
 	 * @param        $userid
 	 * @param        $name
-	 * @param string $rel
+	 * @param   string  $rel
 	 *
 	 * @return mixed
 	 */
@@ -330,11 +330,11 @@ class CKunenaLink
 
 	/**
 	 * @param           $view
-	 * @param string    $searchword
+	 * @param   string    $searchword
 	 * @param int       $limitstart
 	 * @param int       $limit
-	 * @param string    $params
-	 * @param bool|true $xhtml
+	 * @param   string    $params
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool
 	 */
@@ -383,8 +383,8 @@ class CKunenaLink
 
 	/**
 	 * @param        $name
-	 * @param string $class
-	 * @param string $rel
+	 * @param   string  $class
+	 * @param   string  $rel
 	 *
 	 * @return string
 	 */

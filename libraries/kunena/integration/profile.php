@@ -67,8 +67,8 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param string    $action
-	 * @param bool|true $xhtml
+	 * @param   string    $action
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool
 	 */
@@ -86,8 +86,8 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param string    $action
-	 * @param bool|true $xhtml
+	 * @param   string    $action
+	 * @param   bool|true $xhtml
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -96,8 +96,8 @@ class KunenaProfile
 
 	/**
 	 * @param           $user
-	 * @param string    $task
-	 * @param bool|true $xhtml
+	 * @param   string    $task
+	 * @param   bool|true $xhtml
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -125,7 +125,7 @@ class KunenaProfile
 
 	/**
 	 * @param           $userid
-	 * @param bool|true $xhtml
+	 * @param   bool|true $xhtml
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

@@ -84,7 +84,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 * </code>
 	 *
 	 * @param   mixed  $paths String or array of strings.
-	 * @param   string $base  Base path.
+	 * @param   string  $base  Base path.
 	 *
 	 * @return  KunenaLayout
 	 */

@@ -17,9 +17,9 @@ defined('_JEXEC') or die ();
  * @property int    $user_id
  * @property int    $category_id
  * @property int    $role
- * @property string $allreadtime
+ * @property string  $allreadtime
  * @property int    $subscribed
- * @property string $params
+ * @property string  $params
  *
  */
 class KunenaForumCategoryUser extends JObject
@@ -51,7 +51,7 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * @param null|int $id
 	 * @param mixed    $user
-	 * @param bool     $reload
+	 * @param   bool     $reload
 	 *
 	 * @return KunenaForumCategoryUser
 	 */
@@ -92,8 +92,8 @@ class KunenaForumCategoryUser extends JObject
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @param string $type   The categories table name to be used
-	 * @param string $prefix The categories table prefix to be used
+	 * @param   string  $type   The categories table name to be used
+	 * @param   string  $prefix The categories table prefix to be used
 	 *
 	 * @return JTable|TableKunenaUserCategories        The categories table object
 	 */
@@ -113,8 +113,8 @@ class KunenaForumCategoryUser extends JObject
 	}
 
 	/**
-	 * @param array $data
-	 * @param array $ignore
+	 * @param   array  $data
+	 * @param   array  $ignore
 	 */
 	public function bind($data, $ignore = array())
 	{
@@ -159,7 +159,7 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * Method to save the KunenaForumCategoryUser object to the database.
 	 *
-	 * @param bool $updateOnly Save the object only if not a new category.
+	 * @param   bool $updateOnly Save the object only if not a new category.
 	 *
 	 * @return bool    True on success
 	 */

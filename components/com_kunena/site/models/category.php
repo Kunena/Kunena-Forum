@@ -16,16 +16,20 @@ require_once KPATH_ADMIN . '/models/categories.php';
 /**
  * Category Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelCategory extends KunenaAdminModelCategories
 {
+
 	protected $topics = false;
 	protected $pending = array();
 	protected $items = false;
 	protected $topicActions = false;
 	protected $actionMove = false;
 
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$layout = $this->getCmd('layout', 'default');
@@ -74,6 +78,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		$this->setState('list.direction', $value);
 	}
 
+	/**
+	 * @return   bool
+	 */
 	public function getLastestCategories()
 	{
 		if ($this->items === false)
@@ -87,6 +94,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $this->items;
 	}
 
+	/**
+	 * @return   array|bool|KunenaForumCategory[]
+	 */
 	public function getCategories()
 	{
 		if ($this->items === false)
@@ -226,16 +236,25 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $this->items;
 	}
 
+	/**
+	 * @return   array
+	 */
 	public function getUnapprovedCount()
 	{
 		return $this->pending;
 	}
 
+	/**
+	 * @return   KunenaForumCategory
+	 */
 	public function getCategory()
 	{
 		return KunenaForumCategoryHelper::get($this->getState('item.id'));
 	}
 
+	/**
+	 * @return   bool
+	 */
 	public function getTopics()
 	{
 		if ($this->topics === false)
@@ -309,6 +328,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $this->topics;
 	}
 
+	/**
+	 * @return   bool
+	 */
 	public function getTotal()
 	{
 		if ($this->total === false)
@@ -319,6 +341,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $this->total;
 	}
 
+	/**
+	 * @return   array|null
+	 */
 	public function getTopicActions()
 	{
 		if ($this->topics === false)
@@ -391,11 +416,17 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $actionDropdown;
 	}
 
+	/**
+	 * @return  bool
+	 */
 	public function getActionMove()
 	{
 		return $this->actionMove;
 	}
 
+	/**
+	 * @return  array
+	 */
 	public function getModerators()
 	{
 		$moderators = $this->getCategory()->getModerators(false);
@@ -403,6 +434,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $moderators;
 	}
 
+	/**
+	 * @return  array|null
+	 */
 	public function getCategoryActions()
 	{
 		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));

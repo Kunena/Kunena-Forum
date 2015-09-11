@@ -52,7 +52,7 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * Overridden method to get model state variables.
 	 *
-	 * @param    string $property Optional parameter name.
+	 * @param    string  $property Optional parameter name.
 	 * @param    mixed  $default  The default value to use if no state property exists by name.
 	 *
 	 * @return    object    The property where specified, the state object where omitted.
@@ -94,7 +94,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param string $input
+	 * @param   string  $input
 	 *
 	 * @return mixed|null
 	 */
@@ -109,7 +109,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param string $input
+	 * @param   string  $input
 	 *
 	 * @return DOMDocument|null
 	 */
@@ -279,7 +279,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @param            $prefix
-	 * @param bool|false $reload
+	 * @param   bool|false $reload
 	 *
 	 * @return mixed
 	 * @throws KunenaSchemaException
@@ -325,7 +325,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @param            $filename
-	 * @param bool|false $reload
+	 * @param   bool|false $reload
 	 *
 	 * @return mixed
 	 */
@@ -348,7 +348,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param bool|false $reload
+	 * @param   bool|false $reload
 	 *
 	 * @return DOMDocument
 	 * @throws KunenaSchemaException
@@ -719,7 +719,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @param            $schema
-	 * @param bool|false $drop
+	 * @param   bool|false $drop
 	 *
 	 * @return array
 	 */
@@ -862,7 +862,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @param        $field
-	 * @param string $after
+	 * @param   string  $after
 	 *
 	 * @return string
 	 */
@@ -942,7 +942,7 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * @param        $dbschema
 	 * @param        $node
-	 * @param string $table
+	 * @param   string  $table
 	 */
 	protected function upgradeNewAction($dbschema, $node, $table = '')
 	{
@@ -1004,7 +1004,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param        $schema
 	 * @param        $type
 	 * @param        $table
-	 * @param string $field
+	 * @param   string  $field
 	 *
 	 * @return null
 	 */
@@ -1047,7 +1047,7 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * @param        $dbschema
 	 * @param        $node
-	 * @param string $table
+	 * @param   string  $table
 	 */
 	protected function upgradeAction($dbschema, $node, $table = '')
 	{

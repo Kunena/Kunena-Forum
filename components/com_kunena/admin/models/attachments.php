@@ -22,7 +22,7 @@ class KunenaAdminModelAttachments extends JModelList
 {
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -45,8 +45,8 @@ class KunenaAdminModelAttachments extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param string $ordering
-	 * @param string $direction
+	 * @param   string  $ordering
+	 * @param   string  $direction
 	 *
 	 * @return    void
 	 * @since    1.6
@@ -96,7 +96,7 @@ class KunenaAdminModelAttachments extends JModelList
 	}
 
 	/**
-	 * @param string $id
+	 * @param   string  $id
 	 *
 	 * @return mixed
 	 */

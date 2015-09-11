@@ -1258,7 +1258,7 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string  $name
 	 *
 	 * @return JRegistry
 	 *

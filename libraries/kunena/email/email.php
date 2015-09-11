@@ -18,11 +18,11 @@ abstract class KunenaEmail
 {
 	/**
 	 * @param  JMail $mail
-	 * @param  array $receivers
+	 * @param  array  $receivers
 	 *
 	 * @return boolean
 	 */
-	public static function send(JMail $mail, array $receivers)
+	public static function send(JMail $mail, array  $receivers)
 	{
 		$config = KunenaFactory::getConfig();
 

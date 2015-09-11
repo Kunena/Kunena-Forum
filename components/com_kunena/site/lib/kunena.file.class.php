@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
 /**
  * Class CKunenaPath
  *
- * @deprecated 3.0.1
+ * @deprecated  3.0.1
  */
 class CKunenaPath extends KunenaPath
 {
@@ -24,7 +24,7 @@ class CKunenaPath extends KunenaPath
 /**
  * Class CKunenaFolder
  *
- * @deprecated 3.0.1
+ * @deprecated  3.0.1
  */
 class CKunenaFolder extends KunenaFolder
 {
@@ -33,7 +33,7 @@ class CKunenaFolder extends KunenaFolder
 /**
  * Class CKunenaFile
  *
- * @deprecated 3.0.1
+ * @deprecated  3.0.1
  */
 class CKunenaFile extends KunenaFile
 {

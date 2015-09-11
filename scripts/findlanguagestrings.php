@@ -90,7 +90,7 @@ foreach ($files as $filename=>$fkeys) {
 
 /**
  * @param        $dir
- * @param string $filter
+ * @param   string  $filter
  *
  * @return array
  */

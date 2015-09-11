@@ -46,7 +46,7 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 * @param bool|false $update
+	 * @param   bool|false $update
 	 * @param null       $userid
 	 *
 	 * @return KunenaSession
@@ -76,8 +76,8 @@ class KunenaSession extends JObject
 	 *
 	 * @access    public
 	 *
-	 * @param    string $type   The session table name to be used
-	 * @param    string $prefix The session table prefix to be used
+	 * @param    string  $type   The session table name to be used
+	 * @param    string  $prefix The session table prefix to be used
 	 *
 	 * @return    object    The session table object
 	 * @since     1.5

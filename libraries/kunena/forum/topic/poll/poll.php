@@ -15,9 +15,9 @@ defined('_JEXEC') or die ();
  * Class KunenaForumTopicPoll
  *
  * @property int    $id
- * @property string $title
+ * @property string  $title
  * @property int    $threadid
- * @property string $polltimetolive
+ * @property string  $polltimetolive
  */
 class KunenaForumTopicPoll extends JObject
 {
@@ -45,7 +45,7 @@ class KunenaForumTopicPoll extends JObject
 	 * Returns KunenaForumTopicPoll object.
 	 *
 	 * @param mixed $identifier Poll to load - Can be only an integer.
-	 * @param bool  $reset
+	 * @param   bool  $reset
 	 *
 	 * @return KunenaForumTopicPoll
 	 */
@@ -74,7 +74,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Filters and sets poll options.
 	 *
-	 * @param array $options array(id=>name, id=>name)
+	 * @param   array  $options array(id=>name, id=>name)
 	 */
 	public function setOptions($options)
 	{
@@ -240,7 +240,7 @@ class KunenaForumTopicPoll extends JObject
 
 	/**
 	 * @param int   $option
-	 * @param bool  $change
+	 * @param   bool  $change
 	 * @param mixed $user
 	 *
 	 * @return bool
@@ -387,8 +387,8 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to get the polls table object.
 	 *
-	 * @param string $type   Polls table name to be used.
-	 * @param string $prefix Polls table prefix to be used.
+	 * @param   string  $type   Polls table name to be used.
+	 * @param   string  $prefix Polls table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaPolls
 	 */
@@ -408,10 +408,10 @@ class KunenaForumTopicPoll extends JObject
 	}
 
 	/**
-	 * @param array $data
-	 * @param array $allow
+	 * @param   array  $data
+	 * @param   array  $allow
 	 */
-	public function bind(array $data, array $allow = array())
+	public function bind(array  $data, array  $allow = array())
 	{
 		if (!empty($allow))
 		{
@@ -510,7 +510,7 @@ class KunenaForumTopicPoll extends JObject
 	/**
 	 * Method to save the KunenaForumTopicPoll object to the database.
 	 *
-	 * @param bool $updateOnly Save the object only if not a new poll.
+	 * @param   bool $updateOnly Save the object only if not a new poll.
 	 *
 	 * @return bool    True on success.
 	 */

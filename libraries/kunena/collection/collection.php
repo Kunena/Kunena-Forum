@@ -26,9 +26,9 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Create a new collection.
 	 *
-	 * @param  array $items Initial items to be added into the collection.
+	 * @param  array  $items Initial items to be added into the collection.
 	 */
-	public function __construct(array $items = array())
+	public function __construct(array  $items = array())
 	{
 		$this->items = $items;
 	}
@@ -168,7 +168,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Unset the item at a given offset.
 	 *
-	 * @param  string $key
+	 * @param  string  $key
 	 *
 	 * @return void
 	 */

@@ -173,7 +173,7 @@ class KunenaModelInstall extends JModelLegacy
 	/**
 	 * Overridden method to get model state variables.
 	 *
-	 * @param    string $property Optional parameter name.
+	 * @param    string  $property Optional parameter name.
 	 * @param    mixed  $default  The default value to use if no state property exists by name.
 	 *
 	 * @return    object    The property where specified, the state object where omitted.
@@ -288,8 +288,8 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * @param            $task
-	 * @param bool|false $result
-	 * @param string     $msg
+	 * @param   bool|false $result
+	 * @param   string     $msg
 	 * @param null       $id
 	 */
 	public function addStatus($task, $result = false, $msg = '', $id = null)
@@ -342,7 +342,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * @param            $path
 	 * @param            $filename
 	 * @param null       $dest
-	 * @param bool|false $silent
+	 * @param   bool|false $silent
 	 *
 	 * @return bool|null
 	 */
@@ -395,7 +395,7 @@ class KunenaModelInstall extends JModelLegacy
 	// TODO: move to migration (exists in 2.0)
 	/**
 	 * @param        $tag
-	 * @param string $name
+	 * @param   string  $name
 	 *
 	 * @return bool
 	 */
@@ -671,7 +671,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * Method to uninstall the Kunena media during uninstall process
 	 *
 	 * @param          $type
-	 * @param   string $element Name of the package or of the component
+	 * @param   string  $element Name of the package or of the component
 	 *
 	 * @return int
 	 */
@@ -690,7 +690,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array  $ignore
 	 */
 	public function deleteFiles($path, $ignore = array())
 	{
@@ -710,7 +710,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array  $ignore
 	 */
 	public function deleteFolders($path, $ignore = array())
 	{
@@ -730,7 +730,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array  $ignore
 	 */
 	public function deleteFolder($path, $ignore = array())
 	{
@@ -2021,7 +2021,7 @@ class KunenaModelInstall extends JModelLegacy
 	/**
 	 * @param            $prefix
 	 * @param            $versionlist
-	 * @param bool|false $state
+	 * @param   bool|false $state
 	 *
 	 * @return null|StdClass
 	 * @throws KunenaInstallerException
@@ -2112,7 +2112,7 @@ class KunenaModelInstall extends JModelLegacy
 	}
 
 	/**
-	 * @param string $state
+	 * @param   string  $state
 	 *
 	 * @throws KunenaInstallerException
 	 */
@@ -2141,7 +2141,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * @param        $version
-	 * @param string $type
+	 * @param   string  $type
 	 * @param null   $action
 	 *
 	 * @return string
@@ -2449,7 +2449,7 @@ class KunenaModelInstall extends JModelLegacy
 	 * @param        $version
 	 * @param        $versiondate
 	 * @param        $versionname
-	 * @param string $state
+	 * @param   string  $state
 	 *
 	 * @throws KunenaInstallerException
 	 */
@@ -2471,7 +2471,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * @param            $prefix
-	 * @param bool|false $reload
+	 * @param   bool|false $reload
 	 *
 	 * @return mixed
 	 * @throws KunenaInstallerException
@@ -2766,7 +2766,7 @@ class KunenaModelInstall extends JModelLegacy
 	}
 
 	/**
-	 * @param bool|false $stop
+	 * @param   bool|false $stop
 	 * @param int        $timeout
 	 *
 	 * @return bool

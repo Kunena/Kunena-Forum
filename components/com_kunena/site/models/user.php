@@ -14,10 +14,13 @@ defined('_JEXEC') or die ();
 /**
  * User Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelUser extends KunenaModel
 {
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$active = $this->app->getMenu()->getActive();
@@ -70,6 +73,9 @@ class KunenaModelUser extends KunenaModel
 		}
 	}
 
+	/**
+	 * @return  string
+	 */
 	public function getQueryWhere()
 	{
 		$where = '';
@@ -112,6 +118,9 @@ class KunenaModelUser extends KunenaModel
 		return $where;
 	}
 
+	/**
+	 * @return  array|string
+	 */
 	public function getQuerySearch()
 	{
 		// TODO: add strict search from the beginning of the name
@@ -141,6 +150,9 @@ class KunenaModelUser extends KunenaModel
 		return $where;
 	}
 
+	/**
+	 * @return  mixed
+	 */
 	public function getTotal()
 	{
 		static $total = false;
@@ -157,6 +169,9 @@ class KunenaModelUser extends KunenaModel
 		return $total;
 	}
 
+	/**
+	 * @return  mixed
+	 */
 	public function getCount()
 	{
 		static $total = false;
@@ -178,6 +193,9 @@ class KunenaModelUser extends KunenaModel
 		return $total;
 	}
 
+	/**
+	 * @return  array
+	 */
 	public function getItems()
 	{
 		// FIXME: use pagination object and redirect on illegal page (maybe in the view)

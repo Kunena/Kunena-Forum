@@ -35,9 +35,9 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Prepare avatar form.
 	 *
-	 * @return void
+	 * @return   void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   KunenaExceptionAuthorise
 	 */
 	protected function before()
 	{
@@ -65,7 +65,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function prepareDocument()
 	{
@@ -75,9 +75,9 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get avatar gallery directories.
 	 *
-	 * @param   string $path Absolute path for the gallery.
+	 * @param    string  $path  Absolute path for the gallery.
 	 *
-	 * @return  array|string[]  List of directories.
+	 * @return   array|string[]  List of directories.
 	 */
 	protected function getGalleries($path)
 	{
@@ -111,9 +111,9 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get files from selected gallery.
 	 *
-	 * @param   string $path Absolute path for the gallery.
+	 * @param    string  $path Absolute path for the gallery.
 	 *
-	 * @return  array
+	 * @return   array
 	 */
 	protected function getGallery($path)
 	{
@@ -123,7 +123,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get avatar galleries and make them select option list.
 	 *
-	 * @return array|string[]  List of options.
+	 * @return   array|string[]  List of options.
 	 */
 	protected function getGalleryOptions()
 	{

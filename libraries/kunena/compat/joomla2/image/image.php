@@ -78,7 +78,7 @@ class KunenaCompatImage extends JImage
 	 * result object has values for image width, height, type, attributes, mime type, bits,
 	 * and channels.
 	 *
-	 * @param   string $path The filesystem path to the image for which to get properties.
+	 * @param   string  $path The filesystem path to the image for which to get properties.
 	 *
 	 * @return  stdClass
 	 *
@@ -352,7 +352,7 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to apply a filter to the image by type.  Two examples are: grayscale and sketchy.
 	 *
-	 * @param   string $type    The name of the image filter to apply.
+	 * @param   string  $type    The name of the image filter to apply.
 	 * @param   array  $options An array of options for the filter.
 	 *
 	 * @return  JImage
@@ -361,7 +361,7 @@ class KunenaCompatImage extends JImage
 	 * @see     JImageFilter
 	 * @throws  LogicException
 	 */
-	public function filter($type, array $options = array())
+	public function filter($type, array  $options = array())
 	{
 		// Make sure the resource handle is valid.
 		if (!$this->isLoaded())
@@ -468,7 +468,7 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to load a file into the JImage object as the resource.
 	 *
-	 * @param   string $path The filesystem path to load as an image.
+	 * @param   string  $path The filesystem path to load as an image.
 	 *
 	 * @return  void
 	 *
@@ -788,7 +788,7 @@ class KunenaCompatImage extends JImage
 	 * @since   11.3
 	 * @throws  LogicException
 	 */
-	public function toFile($path, $type = IMAGETYPE_JPEG, array $options = array())
+	public function toFile($path, $type = IMAGETYPE_JPEG, array  $options = array())
 	{
 		// Make sure the resource handle is valid.
 		if (!$this->isLoaded())
@@ -815,7 +815,7 @@ class KunenaCompatImage extends JImage
 	/**
 	 * Method to get an image filter instance of a specified type.
 	 *
-	 * @param   string $type The image filter type to get.
+	 * @param   string  $type The image filter type to get.
 	 *
 	 * @return  JImageFilter
 	 *

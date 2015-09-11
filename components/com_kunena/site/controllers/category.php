@@ -16,12 +16,12 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
 /**
  * Kunena Category Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerCategory extends KunenaAdminControllerCategories
 {
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -30,6 +30,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$this->baseurl2 = 'index.php?option=com_kunena&view=category';
 	}
 
+	/**
+	 *
+	 */
 	function jump()
 	{
 		$catid = JRequest::getInt('catid', 0);
@@ -44,6 +47,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		}
 	}
 
+	/**
+	 *
+	 */
 	function markread()
 	{
 		if (!JSession::checkToken('request'))
@@ -114,6 +120,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	function subscribe()
 	{
 		if (!JSession::checkToken('get'))
@@ -147,6 +156,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	function unsubscribe()
 	{
 		if (!JSession::checkToken('request'))
@@ -160,10 +172,13 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$catid  = JRequest::getInt('catid', 0);
 		$catids = $catid
 			? array($catid)
-			: array_keys(JRequest::getVar('categories', array(), 'post', 'array')); // Array or integer keys
+			: array_keys(JRequest::getVar('categories', array(), 'post', 'array'));
+
+		// Array or integer keys
 		JArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
+
 		foreach ($categories as $category)
 		{
 			if (!$category->authorise('read'))

@@ -17,12 +17,12 @@ defined('_JEXEC') or die ();
  * @property int    $parent
  * @property int    $thread
  * @property int    $catid
- * @property string $name
+ * @property string  $name
  * @property int    $userid
- * @property string $email
- * @property string $subject
+ * @property string  $email
+ * @property string  $subject
  * @property int    $time
- * @property string $ip
+ * @property string  $ip
  * @property int    $topic_emoticon
  * @property int    $locked
  * @property int    $hold
@@ -30,10 +30,10 @@ defined('_JEXEC') or die ();
  * @property int    $hits
  * @property int    $moved
  * @property int    $modified_by
- * @property string $modified_time
- * @property string $modified_reason
- * @property string $params
- * @property string $message
+ * @property string  $modified_time
+ * @property string  $modified_reason
+ * @property string  $params
+ * @property string  $message
  */
 class KunenaForumMessage extends KunenaDatabaseObject
 {
@@ -99,7 +99,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Returns KunenaForumMessage object.
 	 *
 	 * @param int  $identifier The message to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessage
 	 */
@@ -170,7 +170,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @param null|KunenaForumCategory $category Fake category if needed. Used for aliases.
-	 * @param bool                     $xhtml
+	 * @param   bool                     $xhtml
 	 *
 	 * @return string
 	 */
@@ -196,7 +196,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * JUri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param null|KunenaForumCategory $category Fake category if needed. Used for aliases.
-	 * @param bool                     $xhtml
+	 * @param   bool                     $xhtml
 	 *
 	 * @return string
 	 */
@@ -227,9 +227,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param array      $fields
+	 * @param   array      $fields
 	 * @param mixed      $user
-	 * @param null|array $safefields
+	 * @param null|array  $safefields
 	 *
 	 * @return array
 	 */
@@ -286,7 +286,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Send email notifications from the message.
 	 *
-	 * @param null|string $url
+	 * @param null|string  $url
 	 *
 	 * @return bool|null
 	 */
@@ -545,7 +545,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string $field
+	 * @param   string  $field
 	 *
 	 * @return int|string
 	 */
@@ -569,7 +569,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
 	 *
 	 * @return bool
@@ -584,9 +584,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
-	 * @param bool       $throw
+	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws KunenaExceptionAuthorise
@@ -656,9 +656,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string $action
+	 * @param   string  $action
 	 * @param mixed  $user
-	 * @param bool   $silent
+	 * @param   bool   $silent
 	 *
 	 * @return bool
 	 */
@@ -693,7 +693,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param array $fields
+	 * @param   array  $fields
 	 * @param mixed $user
 	 */
 	public function edit($fields = array(), $user = null)
@@ -742,7 +742,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	/**
 	 * @param int    $tmpid
-	 * @param string $postvar
+	 * @param   string  $postvar
 	 * @param null   $catid
 	 *
 	 * @return bool
@@ -763,11 +763,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * If attachment is already pointing to the message, this function has no effect.
 	 * Currently only orphan attachments can be added.
 	 *
-	 * @param array $ids
+	 * @param   array  $ids
 	 *
 	 * @since  K4.0
 	 */
-	public function addAttachments(array $ids)
+	public function addAttachments(array  $ids)
 	{
 		$this->_attachments_add += $this->getAttachments($ids, 'none');
 	}
@@ -775,11 +775,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Remove listed attachments from the message.
 	 *
-	 * @param array $ids
+	 * @param   array  $ids
 	 *
 	 * @since  K4.0
 	 */
-	public function removeAttachments(array $ids)
+	public function removeAttachments(array  $ids)
 	{
 		$this->_attachments_del += $this->getAttachments($ids, 'none');
 	}
@@ -787,7 +787,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * Remove listed attachments from the message.
 	 *
-	 * @param bool|int|array $ids
+	 * @param   bool|int|array  $ids
 	 *
 	 * @deprecated K4.0
 	 */
@@ -837,7 +837,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param  bool|array $ids
+	 * @param  bool|array  $ids
 	 * @param  string     $action
 	 *
 	 * @return KunenaAttachment[]
@@ -1560,9 +1560,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	/**
 	 * @param JMail  $mail
 	 * @param int    $subscription
-	 * @param string $subject
-	 * @param string $url
-	 * @param bool   $once
+	 * @param   string  $subject
+	 * @param   string  $url
+	 * @param   bool   $once
 	 *
 	 * @return string
 	 */

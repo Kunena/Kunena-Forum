@@ -25,7 +25,7 @@ class KunenaProfiler extends JProfiler
 	protected $_heap = array();
 
 	/**
-	 * @param string $prefix
+	 * @param   string  $prefix
 	 *
 	 * @return KunenaProfiler
 	 *
@@ -101,7 +101,7 @@ class KunenaProfiler extends JProfiler
 
 	/**
 	 * @param        $array
-	 * @param string $property
+	 * @param   string  $property
 	 *
 	 * @return bool
 	 */
@@ -142,7 +142,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string  $name
 	 *
 	 * @return KunenaProfilerItem
 	 */

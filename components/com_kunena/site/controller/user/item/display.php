@@ -21,17 +21,17 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	protected $name = 'User/Item';
 
 	/**
-	 * @var KunenaUser
+	 * @var   KunenaUser
 	 */
 	public $me;
 
 	/**
-	 * @var JUser
+	 * @var   JUser
 	 */
 	public $user;
 
 	/**
-	 * @var KunenaUser
+	 * @var   KunenaUser
 	 */
 	public $profile;
 
@@ -42,9 +42,9 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Load user profile.
 	 *
-	 * @return void
+	 * @return   void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   KunenaExceptionAuthorise
 	 */
 	protected function before()
 	{
@@ -61,6 +61,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$userid = $this->input->getInt('userid');
 
 		require_once KPATH_SITE . '/models/user.php';
+
 		$this->model = new KunenaModelUser(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
@@ -83,7 +84,7 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function prepareDocument()
 	{

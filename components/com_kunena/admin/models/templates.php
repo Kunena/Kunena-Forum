@@ -22,7 +22,7 @@ jimport('joomla.html.pagination');
 class KunenaAdminModelTemplates extends JModelAdmin
 {
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -67,8 +67,8 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	/**
 	 * @see JModelForm::getForm()
 	 *
-	 * @param array $data
-	 * @param bool  $loadData
+	 * @param   array  $data
+	 * @param   bool  $loadData
 	 *
 	 * @return bool
 	 */
@@ -216,8 +216,8 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @param           $key
 	 * @param           $request
 	 * @param null      $default
-	 * @param string    $type
-	 * @param bool|true $resetPage
+	 * @param   string    $type
+	 * @param   bool|true $resetPage
 	 *
 	 * @return null
 	 */
@@ -272,7 +272,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @param string $id
+	 * @param   string  $id
 	 *
 	 * @return string
 	 */

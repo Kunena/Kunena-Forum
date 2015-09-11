@@ -93,7 +93,7 @@ abstract class KunenaTableObject
 	/**
 	 * Constructor to create the table object instance.  All objects with key set are stored into global instances.
 	 *
-	 * @param   array $keys Name of the primary key field in the table.
+	 * @param   array  $keys Name of the primary key field in the table.
 	 *
 	 * @since  K4.0
 	 */
@@ -259,7 +259,7 @@ abstract class KunenaTableObject
 	 * Note that using array of fields will always make a query to the database, but it's very useful feature if you want to search
 	 * one item by using arbitrary set of matching fields. If there are more than one matching object, first one gets returned.
 	 *
-	 * @param  int|array $keys An optional primary key value to load the object by, or an array of fields to match.
+	 * @param  int|array  $keys An optional primary key value to load the object by, or an array of fields to match.
 	 *
 	 * @return  KunenaDatabaseObject
 	 * @throw   RuntimeException
@@ -313,7 +313,7 @@ abstract class KunenaTableObject
 	/**
 	 * Removes all or selected instances from the object cache.
 	 *
-	 * @param null|int|array $ids
+	 * @param null|int|array  $ids
 	 *
 	 * @since  K4.0
 	 */
@@ -553,7 +553,7 @@ abstract class KunenaTableObject
 	 * the JTable instance for the property specified.
 	 *
 	 * @param   mixed  $src              An associative array or object to bind to the JTable instance.
-	 * @param   string $orderingFilter   Filter for the order updating
+	 * @param   string  $orderingFilter   Filter for the order updating
 	 * @param   mixed  $ignore           An optional array or space separated list of properties
 	 *                                   to ignore while binding.
 	 *
@@ -873,7 +873,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns all keys and their values as an array.
 	 *
-	 * @param array|string $fields
+	 * @param   array|string  $fields
 	 *
 	 * @return array
 	 * @since  K4.0
@@ -950,7 +950,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns all keys and their values as an array.
 	 *
-	 * @param array|string $fields
+	 * @param   array|string  $fields
 	 *
 	 * @return array
 	 * @since  K4.0

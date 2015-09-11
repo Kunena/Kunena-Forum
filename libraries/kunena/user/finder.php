@@ -50,7 +50,7 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param JDate $starting Starting date or null if older than ending date.
 	 * @param JDate $ending   Ending date or null if newer than starting date.
-	 * @param bool  $register True = registration date, False = last visit date.
+	 * @param   bool  $register True = registration date, False = last visit date.
 	 *
 	 * @return $this
 	 */
@@ -75,11 +75,11 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	}
 
 	/**
-	 * @param array $ignore
+	 * @param   array  $ignore
 	 *
 	 * @return $this
 	 */
-	public function filterByConfiguration(array $ignore = array())
+	public function filterByConfiguration(array  $ignore = array())
 	{
 		if ($this->config->userlist_count_users == '1')
 		{

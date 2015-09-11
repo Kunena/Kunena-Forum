@@ -25,7 +25,7 @@ abstract class KunenaForumTopicHelper
 	 * Returns KunenaForumTopic object.
 	 *
 	 * @param int  $identifier The topic to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumTopic
 	 */
@@ -61,7 +61,7 @@ abstract class KunenaForumTopicHelper
 
 	/**
 	 * @param mixed $ids
-	 * @param bool  $value
+	 * @param   bool  $value
 	 * @param mixed $user
 	 *
 	 * @return int
@@ -89,7 +89,7 @@ abstract class KunenaForumTopicHelper
 
 	/**
 	 * @param mixed $ids
-	 * @param bool  $value
+	 * @param   bool  $value
 	 * @param mixed $user
 	 *
 	 * @return int
@@ -118,7 +118,7 @@ abstract class KunenaForumTopicHelper
 
 	/**
 	 * @param mixed  $ids
-	 * @param string $authorise
+	 * @param   string  $authorise
 	 *
 	 * @return KunenaForumTopic[]
 	 */
@@ -191,7 +191,7 @@ abstract class KunenaForumTopicHelper
 	 * @param mixed $categories
 	 * @param int   $limitstart
 	 * @param int   $limit
-	 * @param array $params
+	 * @param   array  $params
 	 *
 	 * @return array|KunenaForumTopic[]
 	 */
@@ -368,7 +368,7 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Method to delete selected topics.
 	 *
-	 * @param array|int $ids
+	 * @param   array|int $ids
 	 *
 	 * @return int    Count of deleted topics.
 	 */
@@ -421,7 +421,7 @@ abstract class KunenaForumTopicHelper
 	/**
 	 * Method to trash topics. They will be marked as deleted, but still exist in database.
 	 *
-	 * @param array|int $ids
+	 * @param   array|int $ids
 	 *
 	 * @return int    Count of trashed topics.
 	 */
@@ -589,7 +589,7 @@ abstract class KunenaForumTopicHelper
 	 *
 	 * @return array
 	 */
-	static public function fetchNewStatus(array $topics, $user = null)
+	static public function fetchNewStatus(array  $topics, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
 
@@ -656,9 +656,9 @@ abstract class KunenaForumTopicHelper
 	// Internal functions
 
 	/**
-	 * @param array $ids
+	 * @param   array  $ids
 	 */
-	static protected function loadTopics(array $ids)
+	static protected function loadTopics(array  $ids)
 	{
 		foreach ($ids as $i => $id)
 		{

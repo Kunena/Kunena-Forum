@@ -187,7 +187,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param bool|false $params
+	 * @param   bool|false $params
 	 *
 	 * @return string
 	 */

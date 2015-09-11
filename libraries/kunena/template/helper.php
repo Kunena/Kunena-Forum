@@ -145,7 +145,7 @@ abstract class KunenaTemplateHelper
 	/**
 	 * Check if crypsis template can be used on Joomla! version used
 	 *
-	 * @param   string $templatename The name of template which needs to be checked
+	 * @param   string  $templatename The name of template which needs to be checked
 	 *
 	 * @return boolean
 	 */

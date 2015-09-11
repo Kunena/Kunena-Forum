@@ -25,7 +25,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	/**
 	 * Prepare Kunena user settings.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function before()
 	{
@@ -98,7 +98,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function prepareDocument()
 	{
@@ -108,9 +108,9 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	/**
 	 * Escape text for HTML.
 	 *
-	 * @param   string $string String to be escaped.
+	 * @param    string  $string  String to be escaped.
 	 *
-	 * @return  string
+	 * @return   string
 	 */
 	protected function escape($string)
 	{

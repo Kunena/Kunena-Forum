@@ -2473,7 +2473,7 @@ class lessc
 	 * be serialized and unserialized without a hitch.
 	 *
 	 * @param mixed $in    Input
-	 * @param bool  $force Force rebuild?
+	 * @param   bool  $force Force rebuild?
 	 *
 	 * @return array lessphp cache structure
 	 */

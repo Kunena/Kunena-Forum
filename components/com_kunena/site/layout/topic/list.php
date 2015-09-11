@@ -22,8 +22,8 @@ class KunenaLayoutTopicList extends KunenaLayout
 	/**
 	 * Method to return HTML select list for time filter
 	 *
-	 * @param int|string $id     Id of the HTML select list
-	 * @param   string   $attrib Extra attribute to apply to the list
+	 * @param   int|string  $id      Id of the HTML select list
+	 * @param   string      $attrib  Extra attribute to apply to the list
 	 *
 	 */
 	public function displayTimeFilter($id = 'filter-time', $attrib = 'class="form-control filter" onchange="this.form.submit()"')

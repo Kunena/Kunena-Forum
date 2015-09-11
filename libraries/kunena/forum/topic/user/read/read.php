@@ -52,7 +52,7 @@ class KunenaForumTopicUserRead extends JObject
 	/**
 	 * @param mixed $id
 	 * @param mixed $user
-	 * @param bool  $reload
+	 * @param   bool  $reload
 	 *
 	 * @return KunenaForumTopicUserRead
 	 */
@@ -89,8 +89,8 @@ class KunenaForumTopicUserRead extends JObject
 	/**
 	 * Method to get the topics table object.
 	 *
-	 * @param string $type   Topics table name to be used.
-	 * @param string $prefix Topics table prefix to be used.
+	 * @param   string  $type   Topics table name to be used.
+	 * @param   string  $prefix Topics table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaUserRead
 	 */
@@ -110,10 +110,10 @@ class KunenaForumTopicUserRead extends JObject
 	}
 
 	/**
-	 * @param array $data
-	 * @param array $ignore
+	 * @param   array  $data
+	 * @param   array  $ignore
 	 */
-	public function bind(array $data, array $ignore = array())
+	public function bind(array  $data, array  $ignore = array())
 	{
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties($data);
@@ -169,7 +169,7 @@ class KunenaForumTopicUserRead extends JObject
 	/**
 	 * Method to save the KunenaForumTopicUserRead object to the database.
 	 *
-	 * @param bool $updateOnly Save the object only if not a new entry.
+	 * @param   bool $updateOnly Save the object only if not a new entry.
 	 *
 	 * @return bool    True on success.
 	 */

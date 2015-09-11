@@ -24,8 +24,8 @@ class KunenaAdminTemplate30
 	}
 
 	/**
-	 * @param string     $path
-	 * @param bool|false $fullpath
+	 * @param   string     $path
+	 * @param   bool|false $fullpath
 	 *
 	 * @return array
 	 */

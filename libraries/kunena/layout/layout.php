@@ -30,7 +30,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Append HTML after the layout content.
 	 *
-	 * @param  string $content
+	 * @param  string  $content
 	 */
 	public function appendAfter($content)
 	{
@@ -185,7 +185,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Add legacy template support.
 	 *
-	 * @param   string $property The name of the property.
+	 * @param   string  $property The name of the property.
 	 * @param   mixed  $value    The value of the property to set.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.

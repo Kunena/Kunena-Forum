@@ -90,7 +90,7 @@ abstract class KunenaForum
 	 * @see KunenaForum::isCompatible()
 	 * @see KunenaForum::setup()
 	 *
-	 * @param boolean $checkAdmin True if administrator is considered as a special case.
+	 * @param   boolean $checkAdmin True if administrator is considered as a special case.
 	 *
 	 * @return boolean True if online.
 	 */
@@ -177,7 +177,7 @@ abstract class KunenaForum
 	 *
 	 * @see KunenaForum::installed()
 	 *
-	 * @param string $version Minimum required version.
+	 * @param   string  $version Minimum required version.
 	 *
 	 * @return boolean Yes, if it is safe to use Kunena Framework.
 	 */
@@ -307,10 +307,10 @@ abstract class KunenaForum
 	 *
 	 * </code>
 	 *
-	 * @param string          $viewName Name of the view.
-	 * @param string          $layout   Name of the layout.
+	 * @param   string          $viewName Name of the view.
+	 * @param   string          $layout   Name of the layout.
 	 * @param null|string     $template Name of the template file.
-	 * @param array|JRegistry $params   Extra parameters to control the model.
+	 * @param   array|JRegistry $params   Extra parameters to control the model.
 	 */
 	public static function display($viewName, $layout = 'default', $template = null, $params = array())
 	{

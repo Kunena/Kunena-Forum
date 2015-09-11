@@ -44,7 +44,7 @@ class KunenaViewStatistics extends KunenaView
 	 * @param        $action
 	 * @param        $name
 	 * @param null   $title
-	 * @param string $rel
+	 * @param   string  $rel
 	 *
 	 * @return string
 	 */

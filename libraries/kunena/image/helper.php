@@ -19,9 +19,9 @@ class KunenaImageHelper
 	/**
 	 * Create new re-sized version of the original image.
 	 *
-	 * @param  string $file      Incoming file
-	 * @param  string $folder    Folder for the new image.
-	 * @param  string $filename  Filename for the new image.
+	 * @param  string  $file      Incoming file
+	 * @param  string  $folder    Folder for the new image.
+	 * @param  string  $filename  Filename for the new image.
 	 * @param  int    $maxWidth  Maximum width for the image.
 	 * @param  int    $maxHeight Maximum height for the image.
 	 * @param  int    $quality   Quality for the file (1-100).

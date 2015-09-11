@@ -43,12 +43,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Prepare topics by pre-loading needed information.
 	 *
-	 * @param   array $userIds List of additional user Ids to be loaded.
-	 * @param   array $mesIds  List of additional message Ids to be loaded.
+	 * @param   array  $userIds List of additional user Ids to be loaded.
+	 * @param   array  $mesIds  List of additional message Ids to be loaded.
 	 *
 	 * @return  void
 	 */
-	protected function prepareTopics(array $userIds = array(), array $mesIds = array())
+	protected function prepareTopics(array  $userIds = array(), array  $mesIds = array())
 	{
 		// Collect user Ids for avatar prefetch when integrated.
 		$lastIds = array();
@@ -106,13 +106,13 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Topic Actions.
 	 *
-	 * @param array $topics
-	 * @param array $actions
+	 * @param   array  $topics
+	 * @param   array  $actions
 	 *
 	 * @return array
 	 */
 	protected function getTopicActions(
-		array $topics,
+		array  $topics,
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete')
 	)
 	{
@@ -172,12 +172,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Message Actions.
 	 *
-	 * @param array $messages
-	 * @param array $actions
+	 * @param   array  $messages
+	 * @param   array  $actions
 	 * @return array
 	 */
 	protected function getMessageActions(
-		array $messages,
+		array  $messages,
 		$actions = array('approve', 'undelete', 'delete', 'permdelete')
 	)
 	{

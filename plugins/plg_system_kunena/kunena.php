@@ -19,7 +19,7 @@ class PlgSystemKunena extends JPlugin
 
 	/**
 	 * @param object $subject
-	 * @param array  $config
+	 * @param   array  $config
 	 */
 	function __construct(&$subject, $config)
 	{
@@ -77,7 +77,7 @@ class PlgSystemKunena extends JPlugin
 	 * @since  Kunena 2.0
 	 * @todo   Make an object to array conversion, to support also single postings
 	 *
-	 * @param    string $context In which context were event called?
+	 * @param    string  $context In which context were event called?
 	 * @param    array  $items   Array of multiple KunenaForumMessage objects
 	 * @param    object $params  JRegistry object holding eventual parameters
 	 * @param    int    $page    An integer holding page number
@@ -161,7 +161,7 @@ class PlgSystemKunena extends JPlugin
 	 * @see    self::onKunenaPrepare()
 	 * @since  Kunena 2.0
 	 *
-	 * @param    string $text   String to run events on
+	 * @param    string  $text   String to run events on
 	 * @param    object $params JRegistry object holding eventual parameters
 	 * @param    int    $page   An integer holding page number
 	 *

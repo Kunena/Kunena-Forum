@@ -56,7 +56,7 @@ abstract class KunenaForumCategoryHelper
 	 * Returns the global KunenaForumCategory object, only creating it if it doesn't already exist.
 	 *
 	 * @param int  $identifier The category to load - Can be only an integer.
-	 * @param bool $reload     Reload category from the database.
+	 * @param   bool $reload     Reload category from the database.
 	 *
 	 * @return KunenaForumCategory    The Category object.
 	 *
@@ -145,8 +145,8 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param array $ids
-	 * @param bool  $value
+	 * @param   array  $ids
+	 * @param   bool  $value
 	 * @param mixed $user
 	 *
 	 * @return int
@@ -178,7 +178,7 @@ abstract class KunenaForumCategoryHelper
 	 * @param mixed $user
 	 * @param int   $limitstart
 	 * @param int   $limit
-	 * @param array $params
+	 * @param   array  $params
 	 *
 	 * @return array (total, list)
 	 *
@@ -244,7 +244,7 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param int|array $catids
+	 * @param int|array  $catids
 	 */
 	static public function getNewTopics($catids)
 	{
@@ -308,8 +308,8 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param string     $accesstype
-	 * @param bool|array $groupids
+	 * @param   string     $accesstype
+	 * @param   bool|array  $groupids
 	 *
 	 * @return KunenaForumCategory[]
 	 */
@@ -341,9 +341,9 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param bool|array $ids
-	 * @param bool       $reverse
-	 * @param string     $authorise
+	 * @param   bool|array  $ids
+	 * @param   bool       $reverse
+	 * @param   string     $authorise
 	 *
 	 * @return array|KunenaForumCategory[]
 	 */
@@ -414,7 +414,7 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param int   $id
 	 * @param int   $levels
-	 * @param array $params
+	 * @param   array  $params
 	 *
 	 * @return KunenaForumCategory[]
 	 */
@@ -463,7 +463,7 @@ abstract class KunenaForumCategoryHelper
 	/**
 	 * @param int   $parents
 	 * @param int   $levels
-	 * @param array $params
+	 * @param   array  $params
 	 *
 	 * @return array|KunenaForumCategory[]
 	 */
@@ -501,14 +501,14 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param array $parents
+	 * @param   array  $parents
 	 * @param int   $levels
-	 * @param array $params
-	 * @param bool  $optimize
+	 * @param   array  $params
+	 * @param   bool  $optimize
 	 *
 	 * @return array|KunenaForumCategory[]
 	 */
-	static protected function _getChildren(array $parents, $levels, array $params, $optimize)
+	static protected function _getChildren(array  $parents, $levels, array  $params, $optimize)
 	{
 		$list = array();
 		foreach ($parents as $parent)
@@ -618,7 +618,7 @@ abstract class KunenaForumCategoryHelper
 
 	/**
 	 * @param int   $levels
-	 * @param array $params
+	 * @param   array  $params
 	 *
 	 * @return KunenaForumCategory[]
 	 */
@@ -671,7 +671,7 @@ abstract class KunenaForumCategoryHelper
 	}
 
 	/**
-	 * @param string|array $categories
+	 * @param   string|array  $categories
 	 *
 	 * @return bool|int
 	 */

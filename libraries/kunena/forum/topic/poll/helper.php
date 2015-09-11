@@ -22,7 +22,7 @@ abstract class KunenaForumTopicPollHelper
 	 * Returns KunenaForumTopic object.
 	 *
 	 * @param int  $identifier The poll to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumTopicPoll
 	 */

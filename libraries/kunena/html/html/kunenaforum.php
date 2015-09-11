@@ -19,14 +19,14 @@ abstract class JHtmlKunenaForum
 	/**
 	 * @param            $name
 	 * @param            $parent
-	 * @param array      $options
-	 * @param array      $params
+	 * @param   array      $options
+	 * @param   array      $params
 	 * @param null       $attribs
-	 * @param string     $key
-	 * @param string     $text
-	 * @param array      $selected
-	 * @param bool|false $idtag
-	 * @param bool|false $translate
+	 * @param   string     $key
+	 * @param   string     $text
+	 * @param   array      $selected
+	 * @param   bool|false $idtag
+	 * @param   bool|false $translate
 	 *
 	 * @return string
 	 */
@@ -179,10 +179,10 @@ abstract class JHtmlKunenaForum
 	 * Creates link pointing to a Kunena page
 	 *
 	 * @param mixed  $uri        Kunena URI, either as string, JUri or array
-	 * @param string $content
-	 * @param string $class      Link class
-	 * @param string $title      Link title
-	 * @param string $rel        Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
+	 * @param   string  $content
+	 * @param   string  $class      Link class
+	 * @param   string  $title      Link title
+	 * @param   string  $rel        Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
 	 * @param mixed  $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 *
 	 * @return string
@@ -230,7 +230,7 @@ abstract class JHtmlKunenaForum
 	/**
 	 * @param       $name
 	 * @param       $options
-	 * @param array $selected
+	 * @param   array  $selected
 	 *
 	 * @return string
 	 */

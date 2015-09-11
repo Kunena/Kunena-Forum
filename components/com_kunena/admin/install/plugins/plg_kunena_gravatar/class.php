@@ -54,7 +54,7 @@ class KunenaGravatar
 	protected $extra = "";
 
 	/**
-	 * @param string $email
+	 * @param   string  $email
 	 */
 	public function __construct($email = null)
 	{
@@ -62,9 +62,9 @@ class KunenaGravatar
 	}
 
 	/**
-	 * @param string $email
+	 * @param   string  $email
 	 *
-	 * @return string $email
+	 * @return string  $email
 	 */
 	public function setEmail($email)
 	{
@@ -74,7 +74,7 @@ class KunenaGravatar
 	/**
 	 * Define extras html attributes to be added into the HTML
 	 *
-	 * @param string $extra
+	 * @param   string  $extra
 	 */
 	public function setExtra($extra)
 	{
@@ -189,7 +189,7 @@ class KunenaGravatar
 	/**
 	 * Set the maximum allowed rating for avatars.
 	 *
-	 * @param string $rating - The maximum rating to use for avatars ('g', 'pg', 'r', 'x').
+	 * @param   string  $rating - The maximum rating to use for avatars ('g', 'pg', 'r', 'x').
 	 *
 	 * @return \emberlabs\GravatarLib\Gravatar - Provides a fluent interface.
 	 *
@@ -216,7 +216,7 @@ class KunenaGravatar
 	/**
 	 * Get the email hash to use (after cleaning the string).
 	 *
-	 * @param string $email - The email to get the hash for.
+	 * @param   string  $email - The email to get the hash for.
 	 *
 	 * @return string - The hashed form of the email, post cleaning.
 	 */
@@ -248,7 +248,7 @@ class KunenaGravatar
 	/**
 	 * Build the avatar URL based on the provided email address.
 	 *
-	 * @param bool|string $hash_email - Should we hash the $email variable? (Useful if the email address has a hash stored
+	 * @param   bool|string  $hash_email - Should we hash the $email variable? (Useful if the email address has a hash stored
 	 *                                already)
 	 *
 	 * @return string - The XHTML-safe URL to the gravatar.

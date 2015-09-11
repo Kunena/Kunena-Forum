@@ -182,7 +182,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	/**
 	 * Method to set the view layout.
 	 *
-	 * @param   string $layout The layout name.
+	 * @param   string  $layout The layout name.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.
 	 */
@@ -263,7 +263,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 	/**
 	 * @param            $title
-	 * @param bool|false $replace
+	 * @param   bool|false $replace
 	 */
 	protected function setTitle($title, $replace = false)
 	{

@@ -141,7 +141,7 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	/**
-	 * @param boolean $updateNulls has no effect.
+	 * @param   boolean $updateNulls has no effect.
 	 *
 	 * @return bool
 	 * @see KunenaTable::store()

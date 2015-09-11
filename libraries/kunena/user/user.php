@@ -18,48 +18,48 @@ jimport('joomla.utilities.date');
  *
  * @property    int    $userid
  * @property    int    $status
- * @property    string $status_text
- * @property    string $name
- * @property    string $username
- * @property    string $email
+ * @property    string  $status_text
+ * @property    string  $name
+ * @property    string  $username
+ * @property    string  $email
  * @property    int    $blocked
- * @property    string $registerDate
- * @property    string $lastvisitDate
- * @property    string $signature
+ * @property    string  $registerDate
+ * @property    string  $lastvisitDate
+ * @property    string  $signature
  * @property    int    $moderator
  * @property    int    $banned
  * @property    int    $ordering
  * @property    int    $posts
- * @property    string $avatar
+ * @property    string  $avatar
  * @property    int    $karma
  * @property    int    $karma_time
  * @property    int    $uhits
- * @property    string $personalText
+ * @property    string  $personalText
  * @property    int    $gender
- * @property    string $birthdate
- * @property    string $location
- * @property    string $websitename
- * @property    string $websiteurl
+ * @property    string  $birthdate
+ * @property    string  $location
+ * @property    string  $websitename
+ * @property    string  $websiteurl
  * @property    int    $rank
  * @property    int    $view
  * @property    int    $hideEmail
  * @property    int    $showOnline
- * @property    string $icq
- * @property    string $aim
- * @property    string $yim
- * @property    string $msn
- * @property    string $skype
- * @property    string $twitter
- * @property    string $facebook
- * @property    string $gtalk
- * @property    string $myspace
- * @property    string $linkedin
- * @property    string $delicious
- * @property    string $friendfeed
- * @property    string $digg
- * @property    string $blogspot
- * @property    string $flickr
- * @property    string $bebo
+ * @property    string  $icq
+ * @property    string  $aim
+ * @property    string  $yim
+ * @property    string  $msn
+ * @property    string  $skype
+ * @property    string  $twitter
+ * @property    string  $facebook
+ * @property    string  $gtalk
+ * @property    string  $myspace
+ * @property    string  $linkedin
+ * @property    string  $delicious
+ * @property    string  $friendfeed
+ * @property    string  $digg
+ * @property    string  $blogspot
+ * @property    string  $flickr
+ * @property    string  $bebo
  * @property    int    $thankyou
  */
 class KunenaUser extends JObject
@@ -107,7 +107,7 @@ class KunenaUser extends JObject
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
 	 * @param null|int $identifier The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-	 * @param bool     $reload     Reload user from database.
+	 * @param   bool     $reload     Reload user from database.
 	 *
 	 * @return KunenaUser
 	 */
@@ -148,7 +148,7 @@ class KunenaUser extends JObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
 	 *
 	 * @return bool
@@ -163,9 +163,9 @@ class KunenaUser extends JObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
-	 * @param bool       $throw
+	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws KunenaExceptionAuthorise
@@ -227,8 +227,8 @@ class KunenaUser extends JObject
 	/**
 	 * Method to get the user table object.
 	 *
-	 * @param    string $type   The user table name to be used.
-	 * @param    string $prefix The user table prefix to be used.
+	 * @param    string  $type   The user table name to be used.
+	 * @param    string  $prefix The user table prefix to be used.
 	 *
 	 * @return    JTable|TableKunenaUsers    The user table object.
 	 */
@@ -249,9 +249,9 @@ class KunenaUser extends JObject
 
 	/**
 	 * @param mixed $data
-	 * @param array $ignore
+	 * @param   array  $ignore
 	 */
-	public function bind($data, array $ignore = array())
+	public function bind($data, array  $ignore = array())
 	{
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties($data);
@@ -362,8 +362,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param bool   $yes
-	 * @param string $no
+	 * @param   bool   $yes
+	 * @param   string  $no
 	 *
 	 * @return string
 	 */
@@ -486,8 +486,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $visitorname
-	 * @param bool   $escape
+	 * @param   string  $visitorname
+	 * @param   bool   $escape
 	 *
 	 * @return string
 	 */
@@ -511,8 +511,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string     $class
-	 * @param string|int $sizex
+	 * @param   string     $class
+	 * @param   string|int $sizex
 	 * @param int        $sizey
 	 *
 	 * @return string
@@ -525,7 +525,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string|int $sizex
+	 * @param   string|int $sizex
 	 * @param int        $sizey
 	 *
 	 * @return string
@@ -538,11 +538,11 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param null|string $name
-	 * @param null|string $title
-	 * @param string      $rel
-	 * @param string      $task
-	 * @param string      $class
+	 * @param null|string  $name
+	 * @param null|string  $title
+	 * @param   string      $rel
+	 * @param   string      $task
+	 * @param   string      $class
 	 *
 	 * @param int         $catid
 	 *
@@ -581,8 +581,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param bool   $xhtml
-	 * @param string $task
+	 * @param   bool   $xhtml
+	 * @param   string  $task
 	 *
 	 * @return mixed
 	 */
@@ -601,7 +601,7 @@ class KunenaUser extends JObject
 	 * Get users type as a string inside the specified category.
 	 *
 	 * @param int  $catid Category id or 0 for global.
-	 * @param bool $code  True if we want to return the code, otherwise return translation key.
+	 * @param   bool $code  True if we want to return the code, otherwise return translation key.
 	 *
 	 * @return string
 	 */
@@ -671,8 +671,8 @@ class KunenaUser extends JObject
 
 	/**
 	 * @param int       $catid   Category Id for the rank (user can have different rank in different categories).
-	 * @param string    $type    Possible values: 'title' | 'image' | false (for object).
-	 * @param bool|null $special True if special only, false if post count, otherwise combined.
+	 * @param   string    $type    Possible values: 'title' | 'image' | false (for object).
+	 * @param   bool|null $special True if special only, false if post count, otherwise combined.
 	 *
 	 * @return stdClass|string|null
 	 */
@@ -895,7 +895,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param null|string $layout
+	 * @param null|string  $layout
 	 *
 	 * @return string
 	 */
@@ -930,7 +930,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $layout
+	 * @param   string  $layout
 	 */
 	public function setTopicLayout($layout = 'default')
 	{
@@ -1163,7 +1163,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string  $name
 	 *
 	 * @return string
 	 */
@@ -1245,8 +1245,8 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $name
-	 * @param bool   $gray
+	 * @param   string  $name
+	 * @param   bool   $gray
 	 *
 	 * @return string
 	 */
@@ -1304,7 +1304,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $var
+	 * @param   string  $var
 	 *
 	 * @return string
 	 */
@@ -1314,7 +1314,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string  $name
 	 *
 	 * @return string
 	 */

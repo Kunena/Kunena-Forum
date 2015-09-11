@@ -25,7 +25,7 @@ abstract class KunenaForumAnnouncementHelper
 	 * Returns the global KunenaForumAnnouncement object, only creating it if it doesn't already exist.
 	 *
 	 * @param int  $identifier Announcement to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumAnnouncement
 	 */
@@ -57,8 +57,8 @@ abstract class KunenaForumAnnouncementHelper
 	}
 
 	/**
-	 * @param string $layout
-	 * @param bool   $xhtml
+	 * @param   string  $layout
+	 * @param   bool   $xhtml
 	 *
 	 * @return string
 	 */
@@ -70,7 +70,7 @@ abstract class KunenaForumAnnouncementHelper
 	}
 
 	/**
-	 * @param string $layout
+	 * @param   string  $layout
 	 *
 	 * @return JUri
 	 */
@@ -89,7 +89,7 @@ abstract class KunenaForumAnnouncementHelper
 	/**
 	 * @param int  $start
 	 * @param int  $limit
-	 * @param bool $filter
+	 * @param   bool $filter
 	 *
 	 * @return KunenaForumAnnouncement[]
 	 */
@@ -122,7 +122,7 @@ abstract class KunenaForumAnnouncementHelper
 	}
 
 	/**
-	 * @param bool $filter
+	 * @param   bool $filter
 	 *
 	 * @return int
 	 */

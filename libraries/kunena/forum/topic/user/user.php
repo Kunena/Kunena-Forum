@@ -22,7 +22,7 @@ defined('_JEXEC') or die ();
  * @property int    $owner
  * @property int    $favorite
  * @property int    $subscribed
- * @property string $params
+ * @property string  $params
  */
 class KunenaForumTopicUser extends JObject
 {
@@ -56,7 +56,7 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 * @param mixed $id
 	 * @param mixed $user
-	 * @param bool  $reload
+	 * @param   bool  $reload
 	 *
 	 * @return KunenaForumTopicUser
 	 */
@@ -93,8 +93,8 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 * Method to get the topics table object.
 	 *
-	 * @param string $type   Topics table name to be used.
-	 * @param string $prefix Topics table prefix to be used.
+	 * @param   string  $type   Topics table name to be used.
+	 * @param   string  $prefix Topics table prefix to be used.
 	 *
 	 * @return KunenaTable|TableKunenaUserTopics
 	 */
@@ -114,10 +114,10 @@ class KunenaForumTopicUser extends JObject
 	}
 
 	/**
-	 * @param array $data
-	 * @param array $ignore
+	 * @param   array  $data
+	 * @param   array  $ignore
 	 */
-	public function bind(array $data, array $ignore = array())
+	public function bind(array  $data, array  $ignore = array())
 	{
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties($data);
@@ -173,7 +173,7 @@ class KunenaForumTopicUser extends JObject
 	/**
 	 * Method to save the KunenaForumTopicUser object to the database.
 	 *
-	 * @param bool $updateOnly Save the object only if not a new topic.
+	 * @param   bool $updateOnly Save the object only if not a new topic.
 	 *
 	 * @return bool    True on success.
 	 */

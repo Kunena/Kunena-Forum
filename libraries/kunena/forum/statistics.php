@@ -81,7 +81,7 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param bool $force
+	 * @param   bool $force
 	 */
 	public function loadAll($force = false)
 	{
@@ -92,7 +92,7 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param bool $force
+	 * @param   bool $force
 	 */
 	public function loadGeneral($force = false)
 	{
@@ -108,7 +108,7 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param bool $override
+	 * @param   bool $override
 	 */
 	public function loadUserStats($override = false)
 	{
@@ -142,7 +142,7 @@ class KunenaForumStatistics
 	}
 
 	/**
-	 * @param bool $override
+	 * @param   bool $override
 	 */
 	public function loadTopicStats($override = false)
 	{

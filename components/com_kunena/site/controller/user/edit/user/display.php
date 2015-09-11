@@ -27,7 +27,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	/**
 	 * Load user form.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function before()
 	{
@@ -65,7 +65,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function prepareDocument()
 	{

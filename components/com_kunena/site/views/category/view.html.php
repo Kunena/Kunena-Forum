@@ -222,7 +222,7 @@ class KunenaViewCategory extends KunenaView
 
 	/**
 	 * @param            $category
-	 * @param bool|false $thumb
+	 * @param   bool|false $thumb
 	 *
 	 * @return string
 	 */
@@ -291,7 +291,7 @@ class KunenaViewCategory extends KunenaView
 
 	/**
 	 * @param        $filename
-	 * @param string $path
+	 * @param   string  $path
 	 *
 	 * @return bool|string
 	 */
@@ -422,7 +422,7 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 * @param null   $id
 	 *
 	 * @return mixed
@@ -629,8 +629,8 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param string $prefix
-	 * @param string $class
+	 * @param   string  $prefix
+	 * @param   string  $class
 	 *
 	 * @return string
 	 */
@@ -671,7 +671,7 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 * @param null   $id
 	 *
 	 * @return mixed
@@ -729,7 +729,7 @@ class KunenaViewCategory extends KunenaView
 
 	/**
 	 * @param           $catid
-	 * @param bool|true $xhtml
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool|void
 	 */

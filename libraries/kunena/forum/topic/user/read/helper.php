@@ -30,7 +30,7 @@ abstract class KunenaForumTopicUserReadHelper
 	 *
 	 * @param mixed $topic User topic to load.
 	 * @param mixed $user
-	 * @param bool  $reload
+	 * @param   bool  $reload
 	 *
 	 * @return KunenaForumTopicUserRead
 	 */
@@ -64,7 +64,7 @@ abstract class KunenaForumTopicUserReadHelper
 	}
 
 	/**
-	 * @param bool|array $ids
+	 * @param   bool|array  $ids
 	 * @param mixed      $user
 	 *
 	 * @return KunenaForumTopicUserRead[]
@@ -234,10 +234,10 @@ abstract class KunenaForumTopicUserReadHelper
 	// Internal functions
 
 	/**
-	 * @param array      $ids
+	 * @param   array      $ids
 	 * @param KunenaUser $user
 	 */
-	static protected function loadTopics(array $ids, KunenaUser $user)
+	static protected function loadTopics(array  $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)
 		{

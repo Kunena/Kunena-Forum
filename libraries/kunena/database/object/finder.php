@@ -95,9 +95,9 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * This function can be used more than once to chain order by.
 	 *
-	 * @param  string $by
+	 * @param  string  $by
 	 * @param  int    $direction
-	 * @param  string $alias
+	 * @param  string  $alias
 	 *
 	 * @return $this
 	 */
@@ -115,7 +115,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * @param  string       $field     Field name.
 	 * @param  string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
-	 * @param  string|array $value     Value.
+	 * @param  string|array  $value     Value.
 	 *
 	 * @return $this
 	 */

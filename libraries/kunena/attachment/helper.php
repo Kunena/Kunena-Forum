@@ -25,7 +25,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Check if mime type is image.
 	 *
-	 * @param  string $mime
+	 * @param  string  $mime
 	 *
 	 * @return  bool  True if mime is image.
 	 */
@@ -38,7 +38,7 @@ abstract class KunenaAttachmentHelper
 	 * Returns KunenaAttachment object.
 	 *
 	 * @param int  $identifier The attachment to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaAttachment
 	 */
@@ -74,8 +74,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param bool|array|int $ids
-	 * @param string         $authorise
+	 * @param   bool|array|int $ids
+	 * @param   string         $authorise
 	 *
 	 * @return KunenaAttachment[]
 	 */
@@ -116,7 +116,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Get the number of the attachments in the message
 	 *
-	 * @param bool|string $ids
+	 * @param   bool|string  $ids
 	 *
 	 * @return KunenaAttachment[]
 	 */
@@ -139,8 +139,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param bool|array|int $ids
-	 * @param string         $authorise
+	 * @param   bool|array|int $ids
+	 * @param   string         $authorise
 	 *
 	 * @return KunenaAttachment[]
 	 */
@@ -201,9 +201,9 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Find filename which isn't already taken in the filesystem.
 	 *
-	 * @param  string $folder    Relative path from JPATH_ROOT.
-	 * @param  string $basename  Filename without extension.
-	 * @param  string $extension File extension.
+	 * @param  string  $folder    Relative path from JPATH_ROOT.
+	 * @param  string  $basename  Filename without extension.
+	 * @param  string  $extension File extension.
 	 * @param  bool   $protected True to randomize the filename. If not given, uses Kunena configuration setting.
 	 *
 	 * @return string
@@ -458,10 +458,10 @@ abstract class KunenaAttachmentHelper
 	 * The first 8 characters of the filename, followed by three dots
 	 * and the last 5 character of the filename.
 	 *
-	 * @param string $filename Filename to be shortened.
+	 * @param   string  $filename Filename to be shortened.
 	 * @param int    $front
 	 * @param int    $back
-	 * @param string $filler
+	 * @param   string  $filler
 	 *
 	 * @return string
 	 */
@@ -482,11 +482,11 @@ abstract class KunenaAttachmentHelper
 
 	/**
 	 * @param mixed $user
-	 * @param array $params
+	 * @param   array  $params
 	 *
 	 * @return KunenaAttachment[]
 	 */
-	public static function getByUserid($user, array $params)
+	public static function getByUserid($user, array  $params)
 	{
 		if ($params['file'] == '1' && $params['image'] != '1')
 		{
@@ -538,9 +538,9 @@ abstract class KunenaAttachmentHelper
 	// Internal functions
 
 	/**
-	 * @param array $ids
+	 * @param   array  $ids
 	 */
-	static protected function loadById(array $ids)
+	static protected function loadById(array  $ids)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -580,9 +580,9 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param array $ids
+	 * @param   array  $ids
 	 */
-	static protected function loadByMessage(array $ids)
+	static protected function loadByMessage(array  $ids)
 	{
 		foreach ($ids as $i => $id)
 		{

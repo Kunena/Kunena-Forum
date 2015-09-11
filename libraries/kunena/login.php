@@ -58,10 +58,10 @@ class KunenaLogin
 	/**
 	 * Method to login user by leverage Kunena plugin enabled
 	 *
-	 * @param   string $username   The username of user which need to be logged
-	 * @param   string $password   The password of user which need to be logged
+	 * @param   string  $username   The username of user which need to be logged
+	 * @param   string  $password   The password of user which need to be logged
 	 * @param   int    $rememberme If the user want to be remembered the next time it want to log
-	 * @param   string $secretkey  The secret key for the TFA feature
+	 * @param   string  $secretkey  The secret key for the TFA feature
 	 *
 	 * @return boolean
 	 */

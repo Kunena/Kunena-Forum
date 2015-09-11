@@ -198,7 +198,7 @@ class KunenaViewAnnouncement extends KunenaView
 
 	/**
 	 * @param        $name
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 * @param null   $id
 	 *
 	 * @return string

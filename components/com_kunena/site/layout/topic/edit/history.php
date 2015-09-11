@@ -22,8 +22,8 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	/**
 	 * Method to get the anker link with number
 	 *
-	 * @param   int $mesid    The Id of the messsage
-	 * @param   int $replycnt The number of replies
+	 * @param   int  $mesid     The Id of the message
+	 * @param   int  $replycnt  The number of replies
 	 *
 	 * @return string
 	 */
@@ -44,10 +44,10 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	/**
 	 * Method to get anker link on the same page
 	 *
-	 * @param   int    $anker The anker number
-	 * @param   string $name  The name for the link
-	 * @param   string $rel   The rel attribute for the link
-	 * @param   string $class The class attibute for the link
+	 * @param   int     $anker  The anker number
+	 * @param   string  $name   The name for the link
+	 * @param   string  $rel    The rel attribute for the link
+	 * @param   string  $class  The class attibute for the link
 	 *
 	 * @return string
 	 */

@@ -63,7 +63,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 */
 	function displayModeList($id, $attributes = '')
 	{
@@ -75,7 +75,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 */
 	function displayDateList($id, $attributes = '')
 	{
@@ -94,7 +94,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 */
 	function displayBeforeAfterList($id, $attributes = '')
 	{
@@ -106,7 +106,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 */
 	function displaySortByList($id, $attributes = '')
 	{
@@ -123,7 +123,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 */
 	function displayOrderList($id, $attributes = '')
 	{
@@ -135,7 +135,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 */
 	function displayLimitList($id, $attributes = '')
 	{
@@ -150,7 +150,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string  $attributes
 	 */
 	function displayCategoryList($id, $attributes = '')
 	{

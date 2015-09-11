@@ -116,7 +116,7 @@ class KunenaCompatLayoutBase extends JLayoutBase
 	/**
 	 * Add a debug message to the debug messages array
 	 *
-	 * @param   string $message Message to save
+	 * @param   string  $message Message to save
 	 *
 	 * @return  void
 	 *

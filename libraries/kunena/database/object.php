@@ -67,7 +67,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public function bind(array $src = null, array $fields = null, $include = false)
+	public function bind(array  $src = null, array  $fields = null, $include = false)
 	{
 		if (empty($src))
 		{

@@ -57,7 +57,7 @@ class KunenaPath extends JPath
 	/**
 	 * Method to determine if script owns the path.
 	 *
-	 * @param   string $path Path to check ownership.
+	 * @param   string  $path Path to check ownership.
 	 *
 	 * @return  boolean  True if the php script owns the path passed.
 	 */

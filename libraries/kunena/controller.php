@@ -22,7 +22,7 @@ class KunenaController extends JControllerLegacy
 	public $config = null;
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -47,7 +47,7 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @param    string $prefix
+	 * @param    string  $prefix
 	 * @param    mixed  $config
 	 *
 	 * @return    KunenaController
@@ -131,7 +131,7 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Execute task (slightly modified from Joomla).
 	 *
-	 * @param string $task
+	 * @param   string  $task
 	 *
 	 * @return mixed
 	 * @throws Exception
@@ -182,7 +182,7 @@ class KunenaController extends JControllerLegacy
 	 * messages = [array|null]: Array of enqueue'd messages.
 	 * data = [mixed]: The response data.
 	 *
-	 * @param  string $task Task to be run.
+	 * @param  string  $task Task to be run.
 	 *
 	 * @return void
 	 * @throws Exception
@@ -417,7 +417,7 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Escapes a value for output in a view script.
 	 *
-	 * @param  string $var The output to escape.
+	 * @param  string  $var The output to escape.
 	 *
 	 * @return string The escaped value.
 	 */
@@ -456,8 +456,8 @@ class KunenaController extends JControllerLegacy
 	 * If there's no referrer or it's external, Kunena will return to the default page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param string $default
-	 * @param string $anchor
+	 * @param   string  $default
+	 * @param   string  $anchor
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

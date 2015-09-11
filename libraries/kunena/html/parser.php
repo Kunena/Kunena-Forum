@@ -20,8 +20,8 @@ abstract class KunenaHtmlParser
 	static $relative = true;
 
 	/**
-	 * @param bool|false $grayscale
-	 * @param bool|false $emoticonbar
+	 * @param   bool|false $grayscale
+	 * @param   bool|false $emoticonbar
 	 *
 	 * @return array
 	 */
@@ -149,7 +149,7 @@ abstract class KunenaHtmlParser
 	/**
 	 * @param           $txt
 	 * @param int       $len
-	 * @param bool|true $html
+	 * @param   bool|true $html
 	 *
 	 * @return mixed|string|void
 	 */
@@ -178,7 +178,7 @@ abstract class KunenaHtmlParser
 
 	/**
 	 * @param        $content
-	 * @param string $target
+	 * @param   string  $target
 	 *
 	 * @return mixed
 	 */

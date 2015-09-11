@@ -329,7 +329,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array  $ignore
 	 */
 	public function deleteFiles($path, $ignore = array())
 	{
@@ -349,7 +349,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array  $ignore
 	 */
 	public function deleteFolders($path, $ignore = array())
 	{
@@ -369,7 +369,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array  $ignore
 	 */
 	public function deleteFolder($path, $ignore = array())
 	{

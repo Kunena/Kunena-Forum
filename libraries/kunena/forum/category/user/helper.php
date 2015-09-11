@@ -24,7 +24,7 @@ abstract class KunenaForumCategoryUserHelper
 	 *
 	 * @param null|int $category The category id to load.
 	 * @param mixed    $user     The user id to load - Can be only an integer.
-	 * @param bool     $reload   Reload objects from the database.
+	 * @param   bool     $reload   Reload objects from the database.
 	 *
 	 * @return KunenaForumCategoryUser    The user category object.
 	 */
@@ -55,7 +55,7 @@ abstract class KunenaForumCategoryUserHelper
 	/**
 	 * Get categories for a specific user.
 	 *
-	 * @param bool|array|int $ids  The category ids to load.
+	 * @param   bool|array|int $ids  The category ids to load.
 	 * @param mixed          $user The user id to load.
 	 *
 	 * @return KunenaForumCategoryUser[]
@@ -98,7 +98,7 @@ abstract class KunenaForumCategoryUserHelper
 		return $list;
 	}
 
-	static public function markRead(array $ids, $user = null)
+	static public function markRead(array  $ids, $user = null)
 	{
 		$user = KunenaUserHelper::get($user);
 
@@ -151,10 +151,10 @@ abstract class KunenaForumCategoryUserHelper
 	/**
 	 * Load categories for a specific user.
 	 *
-	 * @param array      $ids The category ids to load.
+	 * @param   array      $ids The category ids to load.
 	 * @param KunenaUser $user
 	 */
-	static protected function loadCategories(array $ids, KunenaUser $user)
+	static protected function loadCategories(array  $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)
 		{

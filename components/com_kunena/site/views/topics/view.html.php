@@ -296,8 +296,8 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param string $prefix
-	 * @param string $class
+	 * @param   string  $prefix
+	 * @param   string  $class
 	 *
 	 * @return string
 	 */
@@ -343,8 +343,8 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param string $id
-	 * @param string $attrib
+	 * @param   string  $id
+	 * @param   string  $attrib
 	 */
 	function displayTimeFilter($id = 'kfilter-select-time', $attrib = 'class="kinputbox" onchange="this.form.submit()" size="1"')
 	{

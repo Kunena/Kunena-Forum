@@ -69,10 +69,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to instantiate the layout.
 	 *
-	 * @param    string $name
+	 * @param    string  $name
 	 * @param   array   $paths The paths queue.
 	 */
-	public function __construct($name, array $paths = null)
+	public function __construct($name, array  $paths = null)
 	{
 		// Setup dependencies.
 		$this->_name        = $name;
@@ -204,7 +204,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Set/override debug mode.
 	 *
-	 * @param bool $value
+	 * @param   bool $value
 	 *
 	 * @return  KunenaLayoutBase  Instance of $this to allow chaining.
 	 */
@@ -278,7 +278,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Load a template file.
 	 *
-	 * @param   string $tpl The name of the template source file.
+	 * @param   string  $tpl The name of the template source file.
 	 *
 	 * @return  string  The output of the the template file.
 	 *
@@ -318,7 +318,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * Add script declaration to the document.
 	 *
 	 * @param        $content
-	 * @param string $type
+	 * @param   string  $type
 	 *
 	 * @return mixed
 	 * @internal param $filename
@@ -343,7 +343,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to get the layout path. If layout file isn't found, fall back to default layout.
 	 *
-	 * @param   string $layout The layout name, defaulting to the current one.
+	 * @param   string  $layout The layout name, defaulting to the current one.
 	 *
 	 * @return  mixed  The layout file name if found, false otherwise.
 	 */
@@ -384,7 +384,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to set the view layout.
 	 *
-	 * @param   string $layout The layout name.
+	 * @param   string  $layout The layout name.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.
 	 */
@@ -402,7 +402,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to set the view paths.
 	 *
-	 * @param   string $path The paths queue.
+	 * @param   string  $path The paths queue.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.
 	 */
@@ -416,11 +416,11 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Method to set the view paths.
 	 *
-	 * @param   array $paths The paths queue.
+	 * @param   array  $paths The paths queue.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.
 	 */
-	public function setPaths(array $paths)
+	public function setPaths(array  $paths)
 	{
 		$this->includePaths = $paths;
 
@@ -430,7 +430,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Modifies a property of the object, creating it if it does not already exist.
 	 *
-	 * @param   string $property The name of the property.
+	 * @param   string  $property The name of the property.
 	 * @param   mixed  $value    The value of the property to set.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.
@@ -615,7 +615,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * </code>
 	 *
 	 * @param   mixed  $paths String or array of strings.
-	 * @param   string $base  Base path.
+	 * @param   string  $base  Base path.
 	 *
 	 * @return  KunenaLayout
 	 */

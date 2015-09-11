@@ -28,8 +28,8 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param string    $action
-	 * @param bool|true $xhtml
+	 * @param   string    $action
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool|string
 	 */
@@ -47,8 +47,8 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param           $userid
-	 * @param string    $task
-	 * @param bool|true $xhtml
+	 * @param   string    $task
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool|string
 	 */
@@ -93,7 +93,7 @@ class KunenaProfileCommunity extends KunenaProfile
 
 	/**
 	 * @param           $userid
-	 * @param bool|true $xhtml
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool|string|void
 	 */

@@ -21,7 +21,7 @@ class plgKunenaFinder extends JPlugin
 	 * Message is passed by reference, but after the save, so no changes will be saved.
 	 * Method is called right after the Message is saved
 	 *
-	 * @param    string $context The context of the message passed to the plugin (added in 1.6)
+	 * @param    string  $context The context of the message passed to the plugin (added in 1.6)
 	 * @param    object $table   A Table object containing the message
 	 * @param    bool   $isNew   If the message has just been created
 	 *
@@ -47,7 +47,7 @@ class plgKunenaFinder extends JPlugin
 	 * Finder before save message method
 	 * Method is called right before the content is saved
 	 *
-	 * @param    string $context The context of the content passed to the plugin (added in 1.6)
+	 * @param    string  $context The context of the content passed to the plugin (added in 1.6)
 	 * @param    object $table   A Table object containing the message
 	 * @param    bool   $isNew   If the message is just about to be created
 	 *
@@ -73,7 +73,7 @@ class plgKunenaFinder extends JPlugin
 	/**
 	 * Finder after delete message method
 	 *
-	 * @param    string $context The context of the content passed to the plugin (added in 1.6)
+	 * @param    string  $context The context of the content passed to the plugin (added in 1.6)
 	 * @param    object $table   A Table object containing the message
 	 *
 	 * @since   2.5
@@ -96,7 +96,7 @@ class plgKunenaFinder extends JPlugin
 	/**
 	 * Finder after delete message method
 	 *
-	 * @param    string $context The context of the content passed to the plugin (added in 1.6)
+	 * @param    string  $context The context of the content passed to the plugin (added in 1.6)
 	 * @param    object $table   A Table object containing the message
 	 *
 	 * @since   2.5

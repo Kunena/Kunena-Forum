@@ -176,8 +176,8 @@ abstract class KunenaRoute
 	 * If there's no referrer or it's external, Kunena will return default page.
 	 * Also referrers back to tasks are removed.
 	 *
-	 * @param string $default Default page to return into.
-	 * @param string $anchor  Anchor (location in the page).
+	 * @param   string  $default Default page to return into.
+	 * @param   string  $anchor  Anchor (location in the page).
 	 *
 	 * @return string
 	 */
@@ -227,7 +227,7 @@ abstract class KunenaRoute
 
 	/**
 	 * @param JUri $uri
-	 * @param bool $object
+	 * @param   bool $object
 	 *
 	 * @return JUri|string
 	 */
@@ -368,7 +368,7 @@ abstract class KunenaRoute
 	 * This method implements unicode slugs instead of transliteration.
 	 * It has taken from Joomla 1.7.3 with the difference that urls are not lower case.
 	 *
-	 * @param   string $string String to process
+	 * @param   string  $string String to process
 	 *
 	 * @return  string  Processed string
 	 */

@@ -25,11 +25,11 @@ class KunenaUpload
 	/**
 	 * Get new instance of upload class.
 	 *
-	 * @param  array $extensions List of allowed file extensions.
+	 * @param  array  $extensions List of allowed file extensions.
 	 *
 	 * @return KunenaUpload
 	 */
-	public static function getInstance(array $extensions = array())
+	public static function getInstance(array  $extensions = array())
 	{
 		$instance = new KunenaUpload;
 
@@ -44,11 +44,11 @@ class KunenaUpload
 	/**
 	 * Add file extensions to allowed list.
 	 *
-	 * @param array $extensions List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
+	 * @param   array  $extensions List of file extensions, supported values are like: zip, .zip, tar.gz, .tar.gz.
 	 *
 	 * @return $this
 	 */
-	public function addExtensions(array $extensions)
+	public function addExtensions(array  $extensions)
 	{
 		foreach ($extensions as $ext)
 		{
@@ -69,7 +69,7 @@ class KunenaUpload
 	/**
 	 * Split filename by valid extension.
 	 *
-	 * @param  string $filename Name of the file.
+	 * @param  string  $filename Name of the file.
 	 *
 	 * @return array  File parts: list($name, $extension).
 	 * @throws RuntimeException
@@ -110,7 +110,7 @@ class KunenaUpload
 	}
 
 	/**
-	 * @param  string $filename Original filename.
+	 * @param  string  $filename Original filename.
 	 *
 	 * @return string  Path pointing to the protected file.
 	 */
@@ -122,7 +122,7 @@ class KunenaUpload
 	}
 
 	/**
-	 * @param  string $filename Original filename.
+	 * @param  string  $filename Original filename.
 	 *
 	 * @return string     Protected filename.
 	 */
@@ -153,7 +153,7 @@ class KunenaUpload
 	/**
 	 * Convert value into bytes.
 	 *
-	 * @param  string $value Value, for example: 1G, 10M, 120k...
+	 * @param  string  $value Value, for example: 1G, 10M, 120k...
 	 *
 	 * @return int  Value in bytes.
 	 */
@@ -220,12 +220,12 @@ class KunenaUpload
 	/**
 	 * Upload a file via AJAX, supports chunks and fallback to regular file upload.
 	 *
-	 * @param  array $options Upload options.
+	 * @param  array  $options Upload options.
 	 *
 	 * @return array  Updated options.
 	 * @throws Exception|RuntimeException
 	 */
-	public function ajaxUpload(array $options)
+	public function ajaxUpload(array  $options)
 	{
 		static $defaults = array(
 			'completed'  => false,
@@ -517,8 +517,8 @@ class KunenaUpload
 	 * Upload file by passing it by HTML input
 	 *
 	 * @param   array  $fileInput   The file object returned by JInput
-	 * @param   string $destination The path of destination of file uploaded
-	 * @param   string $type        The type of file uploaded: attachment or avatar
+	 * @param   string  $destination The path of destination of file uploaded
+	 * @param   string  $type        The type of file uploaded: attachment or avatar
 	 *
 	 * @return object
 	 */
@@ -602,7 +602,7 @@ class KunenaUpload
 	/**
 	 * Check for upload errors.
 	 *
-	 * @param  array $file Entry from $_FILES array.
+	 * @param  array  $file Entry from $_FILES array.
 	 *
 	 * @return RuntimeException
 	 */

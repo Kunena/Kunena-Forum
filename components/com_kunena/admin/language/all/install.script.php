@@ -30,7 +30,7 @@ class pkg_kunena_languagesInstallerScript
 	}
 
 	/**
-	 * @param string         $type
+	 * @param   string         $type
 	 * @param JInstallerFile $parent
 	 *
 	 * @return bool

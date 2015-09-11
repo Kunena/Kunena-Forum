@@ -275,12 +275,12 @@ window.addEvent('domready', function(){
 	/**
 	 * Get group name in selected access type.
 	 *
-	 * @param string $accesstype Access type.
+	 * @param   string  $accesstype Access type.
 	 * @param mixed  $id         Group id.
 	 *
 	 * @return string|null
 	 *
-	 * @deprecated 3.0.1
+	 * @deprecated  3.0.1
 	 */
 	public function getGroupName($accesstype, $id)
 	{
@@ -305,7 +305,7 @@ window.addEvent('domready', function(){
 	 * Get category administrators.
 	 *
 	 * @param int  $catid Category Id
-	 * @param bool $all
+	 * @param   bool $all
 	 *
 	 * @return array
 	 */
@@ -325,7 +325,7 @@ window.addEvent('domready', function(){
 	 * Get category moderators.
 	 *
 	 * @param int  $catid Category Id
-	 * @param bool $all
+	 * @param   bool $all
 	 *
 	 * @return array
 	 */
@@ -459,7 +459,7 @@ window.addEvent('domready', function(){
 	 *
 	 * @param KunenaForumCategory $category
 	 * @param mixed               $user
-	 * @param bool                $status
+	 * @param   bool                $status
 	 *
 	 * @return bool
 	 *
@@ -620,7 +620,7 @@ window.addEvent('domready', function(){
 	/**
 	 * @param mixed $user
 	 * @param int   $catid
-	 * @param bool  $string
+	 * @param   bool  $string
 	 *
 	 * @return string|array
 	 */
@@ -663,8 +663,8 @@ window.addEvent('domready', function(){
 	 * @param int   $catid
 	 * @param mixed $topic
 	 * @param mixed $type
-	 * @param bool  $moderators
-	 * @param bool  $admins
+	 * @param   bool  $moderators
+	 * @param   bool  $admins
 	 * @param mixed $excludeList
 	 *
 	 * @return array
@@ -826,9 +826,9 @@ window.addEvent('domready', function(){
 	}
 
 	/**
-	 * @param array $list
+	 * @param   array  $list
 	 */
-	protected function storeRoles(array $list = null)
+	protected function storeRoles(array  $list = null)
 	{
 		if (empty($list))
 		{
@@ -860,7 +860,7 @@ window.addEvent('domready', function(){
 
 	/**
 	 * @param KunenaForumTopic $topic
-	 * @param bool             $type
+	 * @param   bool             $type
 	 *
 	 * @return array
 	 */

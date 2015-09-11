@@ -50,7 +50,7 @@ class KunenaViewUser extends KunenaView
 	/**
 	 * Method to return list of users by ajax request for userlist and search user
 	 *
-	 * @param   string $tpl The name of the template file to parse; automatically searches through the template paths.
+	 * @param   string  $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @since K4.0
 	 * @return JSon

@@ -15,11 +15,11 @@ defined('_JEXEC') or die ();
  * Class KunenaForumAnnouncement
  *
  * @property int    $id
- * @property string $title
+ * @property string  $title
  * @property int    $created_by
- * @property string $sdescription
- * @property string $description
- * @property string $created
+ * @property string  $sdescription
+ * @property string  $description
+ * @property string  $created
  * @property int    $published
  * @property int    $ordering
  * @property int    $showdate
@@ -62,7 +62,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * Returns the global KunenaForumAnnouncement object.
 	 *
 	 * @param null $identifier Announcement id to load.
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumAnnouncement
 	 */
@@ -74,8 +74,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * Return URL pointing to the Announcement layout.
 	 *
-	 * @param string $layout
-	 * @param bool   $xhtml
+	 * @param   string  $layout
+	 * @param   bool   $xhtml
 	 *
 	 * @return string
 	 */
@@ -89,7 +89,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * Return JUri object pointing to the Announcement layout.
 	 *
-	 * @param string $layout
+	 * @param   string  $layout
 	 *
 	 * @return JUri
 	 */
@@ -113,8 +113,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * Return URL pointing to the Announcement task.
 	 *
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string  $task
+	 * @param   bool   $xhtml
 	 *
 	 * @return string
 	 */
@@ -128,7 +128,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * Return JUri object pointing to the Announcement task.
 	 *
-	 * @param string $task
+	 * @param   string  $task
 	 *
 	 * @return JUri
 	 */
@@ -155,8 +155,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string $field
-	 * @param string $mode
+	 * @param   string  $field
+	 * @param   string  $mode
 	 *
 	 * @return int|string
 	 */
@@ -215,7 +215,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
 	 *
 	 * @return bool
@@ -230,9 +230,9 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
-	 * @param bool       $throw
+	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws KunenaExceptionAuthorise
@@ -295,9 +295,9 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string $action
+	 * @param   string  $action
 	 * @param mixed  $user
-	 * @param bool   $silent
+	 * @param   bool   $silent
 	 *
 	 * @return bool
 	 * @deprecated K4.0

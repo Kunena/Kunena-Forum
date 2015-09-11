@@ -30,7 +30,7 @@ abstract class KunenaForumMessageThankyouHelper
 
 	/**
 	 * @param int  $identifier The message to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
 	 */
@@ -98,7 +98,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Get users with most thank yous received / given.
 	 *
-	 * @param bool $target
+	 * @param   bool $target
 	 * @param int  $limitstart
 	 * @param int  $limit
 	 *
@@ -159,7 +159,7 @@ abstract class KunenaForumMessageThankyouHelper
 	 * Get messages where a user received / gave thank you.
 	 *
 	 * @param int  $userid
-	 * @param bool $target
+	 * @param   bool $target
 	 * @param int  $limitstart
 	 * @param int  $limit
 	 *
@@ -192,9 +192,9 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Load users who have given thank you to listed messages.
 	 *
-	 * @param array $ids
+	 * @param   array  $ids
 	 */
-	static protected function loadMessages(array $ids)
+	static protected function loadMessages(array  $ids)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -279,7 +279,7 @@ abstract class KunenaForumMessageThankyouHelper
 	/**
 	 * Return thank yous for the given messages.
 	 *
-	 * @param bool|array|int $ids
+	 * @param   bool|array|int $ids
 	 *
 	 * @return KunenaForumMessageThankyou[]
 	 */

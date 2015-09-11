@@ -150,7 +150,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 * Since Messages are getting deleted in process of deleting categories or messages, we
 	 * delete the finderresults before those objects are deleted.
 	 *
-	 * @param   string $context The context of the action being performed.
+	 * @param   string  $context The context of the action being performed.
 	 * @param   JTable $table   A JTable object containing the record to be deleted
 	 *
 	 * @return  boolean  True on success.
@@ -187,7 +187,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	/**
 	 * Method to remove the link information for items that have been deleted.
 	 *
-	 * @param   string $context The context of the action being performed.
+	 * @param   string  $context The context of the action being performed.
 	 * @param   JTable $table   A JTable object containing the record to be deleted
 	 *
 	 * @return  boolean  True on success.
@@ -481,7 +481,7 @@ class plgFinderKunena extends FinderIndexerAdapter
 	 *
 	 * @param    mixed $id        The id of the item.
 	 * @param    mixed $extension Unused.
-	 * @param   string $view      View name.
+	 * @param   string  $view      View name.
 	 *
 	 * @return    string        The URL of the item.
 	 */

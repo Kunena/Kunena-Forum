@@ -21,7 +21,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return bool
+	 * @return   bool
 	 */
 	public function exists()
 	{
@@ -31,10 +31,10 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Return AJAX for the requested layout.
 	 *
-	 * @return string  String in JSON or RAW.
+	 * @return   string  String in JSON or RAW.
 	 *
-	 * @throws RuntimeException
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   RuntimeException
+	 * @throws   KunenaExceptionAuthorise
 	 */
 	public function execute()
 	{
@@ -89,7 +89,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Prepare AJAX display.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function before()
 	{
@@ -109,9 +109,9 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Display output as RAW.
 	 *
-	 * @param   mixed $content Content to be returned.
+	 * @param    mixed $content Content to be returned.
 	 *
-	 * @return  string
+	 * @return   string
 	 */
 	public function displayRaw($content)
 	{
@@ -128,9 +128,9 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Display output as JSON.
 	 *
-	 * @param   mixed $content Content to be returned.
+	 * @param    mixed $content Content to be returned.
 	 *
-	 * @return  string
+	 * @return   string
 	 */
 	public function displayJson($content)
 	{

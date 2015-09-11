@@ -34,7 +34,7 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @param    string $name
+	 * @param    string  $name
 	 *
 	 * @return KunenaTemplate
 	 */
@@ -88,7 +88,7 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
-	 * @param array|bool $update An array containing session options
+	 * @param   array|bool $update An array containing session options
 	 *
 	 * @return KunenaSession
 	 */
@@ -155,8 +155,8 @@ abstract class KunenaFactory
 	 *
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
-	 * @param string $file
-	 * @param string $client
+	 * @param   string  $file
+	 * @param   string  $client
 	 *
 	 * @return
 	 */

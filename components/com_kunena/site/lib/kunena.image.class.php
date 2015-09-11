@@ -162,7 +162,7 @@ class CKunenaImage
 	 * @param           $height
 	 * @param           $left
 	 * @param           $top
-	 * @param bool|true $createNew
+	 * @param   bool|true $createNew
 	 * @param int       $scaleMethod
 	 *
 	 * @return bool|CKunenaImage
@@ -468,7 +468,7 @@ class CKunenaImage
 	/**
 	 * @param           $width
 	 * @param           $height
-	 * @param bool|true $createNew
+	 * @param   bool|true $createNew
 	 * @param int       $scaleMethod
 	 *
 	 * @return bool|CKunenaImage
@@ -566,7 +566,7 @@ class CKunenaImage
 	/**
 	 * @param       $path
 	 * @param null  $type
-	 * @param array $options
+	 * @param   array  $options
 	 */
 	function toFile($path, $type = null, $options = array())
 	{
@@ -671,7 +671,7 @@ class CKunenaImageFilter
 	 *
 	 * @access    public
 	 *
-	 * @param    string $path A path to search.
+	 * @param    string  $path A path to search.
 	 *
 	 * @return    array    An array with directory elements
 	 * @since     1.0

@@ -22,7 +22,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	protected $baseurl2 = null;
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{

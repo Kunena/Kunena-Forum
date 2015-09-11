@@ -70,11 +70,11 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * $messages->filterByCategories($me->getAllowedCategories())->limit(20)->find();
 	 *
-	 * @param array $categories
+	 * @param   array  $categories
 	 *
 	 * @return $this
 	 */
-	public function filterByCategories(array $categories)
+	public function filterByCategories(array  $categories)
 	{
 		$list = array();
 
@@ -131,7 +131,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * posted = User has posted the message.
 	 *
 	 * @param KunenaUser $user
-	 * @param string     $action Action or negation of the action (!action).
+	 * @param   string     $action Action or negation of the action (!action).
 	 *
 	 * @return $this
 	 */
@@ -176,11 +176,11 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
 	 *
-	 * @param array $hold List of hold states to display.
+	 * @param   array  $hold List of hold states to display.
 	 *
 	 * @return $this
 	 */
-	public function filterByHold(array $hold = array(0))
+	public function filterByHold(array  $hold = array(0))
 	{
 		$this->hold = $hold;
 
@@ -190,7 +190,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Get messages.
 	 *
-	 * @param  string $access Kunena action access control check.
+	 * @param  string  $access Kunena action access control check.
 	 *
 	 * @return array|KunenaForumMessage[]
 	 */

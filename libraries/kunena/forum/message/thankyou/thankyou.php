@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
  * @property int    $postid
  * @property int    $userid
  * @property int    $targetuserid
- * @property string $time
+ * @property string  $time
  */
 class KunenaForumMessageThankyou extends JObject
 {
@@ -39,7 +39,7 @@ class KunenaForumMessageThankyou extends JObject
 
 	/**
 	 * @param null $identifier
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
 	 */
@@ -62,7 +62,7 @@ class KunenaForumMessageThankyou extends JObject
 
 	/**
 	 * @param int    $userid
-	 * @param string $time
+	 * @param   string  $time
 	 */
 	public function _add($userid, $time)
 	{

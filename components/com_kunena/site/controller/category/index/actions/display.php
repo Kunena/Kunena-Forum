@@ -92,10 +92,10 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	/**
 	 * Get button.
 	 *
-	 * @param   string $url   Target link (do not route it).
-	 * @param   string $name  Name of the button.
-	 * @param   string $scope Scope of the button.
-	 * @param   string $type  Type of the button.
+	 * @param   string  $url   Target link (do not route it).
+	 * @param   string  $name  Name of the button.
+	 * @param   string  $scope Scope of the button.
+	 * @param   string  $type  Type of the button.
 	 * @param   bool   $id    Id of the button.
 	 *
 	 * @return  string

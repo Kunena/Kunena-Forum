@@ -227,7 +227,7 @@ class KunenaPagination
 	 * Method to set an additional URL parameter to be added to all pagination class generated
 	 * links.
 	 *
-	 * @param   string $key   The name of the URL parameter for which to set a value.
+	 * @param   string  $key   The name of the URL parameter for which to set a value.
 	 * @param   mixed  $value The value to set for the URL parameter.
 	 *
 	 * @return  mixed  The old value for the parameter.
@@ -256,7 +256,7 @@ class KunenaPagination
 	 * Method to get an additional URL parameter (if it exists) to be added to
 	 * all pagination class generated links.
 	 *
-	 * @param   string $key The name of the URL parameter for which to get the value.
+	 * @param   string  $key The name of the URL parameter for which to get the value.
 	 *
 	 * @return  mixed  The value if it exists or null if it does not.
 	 *
@@ -598,7 +598,7 @@ class KunenaPagination
 	/**
 	 * Create the HTML for a list footer
 	 *
-	 * @param   array $list Pagination list data structure.
+	 * @param   array  $list Pagination list data structure.
 	 *
 	 * @return  string  HTML for a list footer
 	 *
@@ -621,7 +621,7 @@ class KunenaPagination
 	/**
 	 * Create the html for a list footer
 	 *
-	 * @param   array $list Pagination list data structure.
+	 * @param   array  $list Pagination list data structure.
 	 *
 	 * @return  string  HTML for a list start, previous, next,end
 	 *
@@ -797,7 +797,7 @@ class KunenaPagination
 	/**
 	 * Modifies a property of the object, creating it if it does not already exist.
 	 *
-	 * @param   string $property The name of the property.
+	 * @param   string  $property The name of the property.
 	 * @param   mixed  $value    The value of the property to set.
 	 *
 	 * @return  void
@@ -822,7 +822,7 @@ class KunenaPagination
 	/**
 	 * Returns a property of the object or the default value if the property is not set.
 	 *
-	 * @param   string $property The name of the property.
+	 * @param   string  $property The name of the property.
 	 * @param   mixed  $default  The default value.
 	 *
 	 * @return  mixed    The value of the property.

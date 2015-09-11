@@ -18,7 +18,7 @@ class KunenaVersion
 	/**
 	 * Get warning for unstable releases
 	 *
-	 * @param    string $msg Message to be shown containing two %s parameters for version (2.0.0RC) and version type (GIT, RC, BETA etc)
+	 * @param    string  $msg Message to be shown containing two %s parameters for version (2.0.0RC) and version type (GIT, RC, BETA etc)
 	 *
 	 * @return    string    Warning message
 	 * @since    1.6

@@ -461,8 +461,8 @@ class KunenaAdminModelReport extends KunenaModel
 	/**
 	 * Return extension version string if installed.
 	 *
-	 * @param  string $extension
-	 * @param  string $name
+	 * @param  string  $extension
+	 * @param  string  $name
 	 *
 	 * @return    string
 	 * @since    1.6

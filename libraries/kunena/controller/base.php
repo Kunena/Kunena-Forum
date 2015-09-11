@@ -159,7 +159,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Unserialize the controller.
 	 *
-	 * @param   string $input The serialized controller.
+	 * @param   string  $input The serialized controller.
 	 *
 	 * @return  JController  Supports chaining.
 	 *

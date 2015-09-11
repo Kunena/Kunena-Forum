@@ -43,7 +43,7 @@ foreach ($languages as $language) {
 
 /**
  * @param        $dir
- * @param string $filter
+ * @param   string  $filter
  *
  * @return array
  */

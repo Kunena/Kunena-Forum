@@ -24,7 +24,7 @@ class KunenaBbcodeEditor
 	var $editor_elements = array();
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	function __construct($config = array())
 	{
@@ -32,7 +32,7 @@ class KunenaBbcodeEditor
 	}
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 *
 	 * @return KunenaBbcodeEditor
 	 */
@@ -168,7 +168,7 @@ class KunenaBbcodeEditor
 	/**
 	 * Initialize editor by calling HMVC version or legacy one
 	 *
-	 * @param   string $identifier The class to pass for legacy editor
+	 * @param   string  $identifier The class to pass for legacy editor
 	 *
 	 * @return void
 	 */
@@ -228,7 +228,7 @@ class KunenaBbcodeEditor
 	/**
 	 * Initialize legacy editor
 	 *
-	 * @param string $identifier
+	 * @param   string  $identifier
 	 *
 	 * @return void
 	 */

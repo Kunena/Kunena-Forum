@@ -226,7 +226,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 * Change ordering of the displayed messages and apply threading.
 	 *
 	 * @param   int   $parent Parent Id.
-	 * @param   array $indent Indent for the current object.
+	 * @param   array  $indent Indent for the current object.
 	 *
 	 * @return  array
 	 */

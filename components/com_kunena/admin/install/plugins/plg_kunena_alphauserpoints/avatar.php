@@ -46,7 +46,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 
 	/**
 	 * @param        $user
-	 * @param string $class
+	 * @param   string  $class
 	 * @param int    $sizex
 	 * @param int    $sizey
 	 *

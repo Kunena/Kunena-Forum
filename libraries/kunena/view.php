@@ -200,13 +200,13 @@ class KunenaView extends JViewLegacy
 	/**
 	 * Render new layout if available, otherwise continue to the old logic.
 	 *
-	 * @param string $layout
-	 * @param string $tpl
-	 * @param array  $hmvcParams
+	 * @param   string  $layout
+	 * @param   string  $tpl
+	 * @param   array  $hmvcParams
 	 *
 	 * @throws LogicException
 	 */
-	public function render($layout, $tpl, array $hmvcParams = array())
+	public function render($layout, $tpl, array  $hmvcParams = array())
 	{
 		if ($this->inLayout)
 		{
@@ -632,7 +632,7 @@ class KunenaView extends JViewLegacy
 	/**
 	 * Load a template file -- first look in the templates folder for an override
 	 *
-	 * @param   string $tpl        The name of the template source file ...
+	 * @param   string  $tpl        The name of the template source file ...
 	 *                             automatically searches the template paths and compiles as needed.
 	 * @param   array  $hmvcParams Extra parameters for HMVC.
 	 *

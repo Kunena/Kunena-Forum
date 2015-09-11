@@ -24,18 +24,18 @@ abstract class JHtmlKunenaGrid
 	 * Returns an action on a grid
 	 *
 	 * @param integer      $i         The row index
-	 * @param string       $task      The task to fire
-	 * @param string|array $prefix    An optional task prefix or an array of options
-	 * @param string       $alt
-	 * @param string       $title     An optional title
-	 * @param string       $class     An optional active HTML class
-	 * @param boolean      $bootstrap An optional setting for to know if it the link will be used in bootstrap.
-	 * @param string       $img       An optinal img HTML tag
-	 * @param string       $checkbox  An optional prefix for checkboxes.
+	 * @param   string       $task      The task to fire
+	 * @param   string|array  $prefix    An optional task prefix or an array of options
+	 * @param   string       $alt
+	 * @param   string       $title     An optional title
+	 * @param   string       $class     An optional active HTML class
+	 * @param   boolean      $bootstrap An optional setting for to know if it the link will be used in bootstrap.
+	 * @param   string       $img       An optinal img HTML tag
+	 * @param   string       $checkbox  An optional prefix for checkboxes.
 	 *
 	 * @return string The Html code
 	 *
-	 * @internal param string $text An optional text to display
+	 * @internal param string  $text An optional text to display
 	 * @since    3.0
 	 */
 	public static function action($i, $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img = '', $checkbox = 'cb')
@@ -173,7 +173,7 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * @param        $row
 	 * @param        $i
-	 * @param string $identifier
+	 * @param   string  $identifier
 	 *
 	 * @return string
 	 */
@@ -217,7 +217,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   mixed   $value  Either the scalar value, or an object (for backward compatibility, deprecated)
 	 * @param   string  $prefix An optional prefix for the task
 	 *
-	 * @param bool      $bootstrap
+	 * @param   bool      $bootstrap
 	 *
 	 * @return string
 	 */
@@ -245,7 +245,7 @@ abstract class JHtmlKunenaGrid
 	 * @param   string  $task
 	 * @param   string  $prefix An optional prefix for the task
 	 *
-	 * @param bool      $bootstrap
+	 * @param   bool      $bootstrap
 	 *
 	 * @return string
 	 */
@@ -291,8 +291,8 @@ abstract class JHtmlKunenaGrid
 
 	/**
 	 * @param        $rows
-	 * @param string $image
-	 * @param string $task
+	 * @param   string  $image
+	 * @param   string  $task
 	 *
 	 * @return string
 	 */
@@ -306,8 +306,8 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * @param           $i
 	 * @param           $task
-	 * @param bool|true $enabled
-	 * @param string    $alt
+	 * @param   bool|true $enabled
+	 * @param   string    $alt
 	 *
 	 * @return string
 	 */
@@ -330,8 +330,8 @@ abstract class JHtmlKunenaGrid
 	/**
 	 * @param           $i
 	 * @param           $task
-	 * @param bool|true $enabled
-	 * @param string    $alt
+	 * @param   bool|true $enabled
+	 * @param   string    $alt
 	 *
 	 * @return string
 	 */

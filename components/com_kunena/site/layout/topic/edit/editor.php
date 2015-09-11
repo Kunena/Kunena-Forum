@@ -68,6 +68,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	public function getBBcodesEnabled()
 	{
 		$templatesettings = KunenaFactory::getTemplate()->params;
+
 		if ($this->config->showvideotag && $templatesettings->get('video'))
 		{
 			$this->addScriptDeclaration("kunena_showvideotag=1;");

@@ -329,8 +329,8 @@ class KunenaUserBan extends JObject
 	 *
 	 * @access    public
 	 *
-	 * @param    string $type   The user table name to be used
-	 * @param    string $prefix The user table prefix to be used
+	 * @param    string  $type   The user table name to be used
+	 * @param    string  $prefix The user table prefix to be used
 	 *
 	 * @return    object    The user table object
 	 * @since     1.6
@@ -413,7 +413,7 @@ class KunenaUserBan extends JObject
 	 *
 	 * @access    public
 	 *
-	 * @param    string $ip
+	 * @param    string  $ip
 	 * @param    int    $mode KunenaUserBan::ANY or KunenaUserBan::ACTIVE
 	 *
 	 * @return    boolean            True on success
@@ -551,7 +551,7 @@ class KunenaUserBan extends JObject
 
 	/**
 	 * @param        $expiration
-	 * @param string $comment
+	 * @param   string  $comment
 	 */
 	public function setExpiration($expiration, $comment = '')
 	{
@@ -585,9 +585,9 @@ class KunenaUserBan extends JObject
 	 * @param null   $ip
 	 * @param int    $block
 	 * @param null   $expiration
-	 * @param string $reason_private
-	 * @param string $reason_public
-	 * @param string $comment
+	 * @param   string  $reason_private
+	 * @param   string  $reason_public
+	 * @param   string  $comment
 	 */
 	public function ban($userid = null, $ip = null, $block = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = '')
 	{
@@ -601,7 +601,7 @@ class KunenaUserBan extends JObject
 	}
 
 	/**
-	 * @param string $comment
+	 * @param   string  $comment
 	 */
 	public function unBan($comment = '')
 	{

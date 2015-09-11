@@ -339,7 +339,7 @@
 				 * Restore form field data from local storage
 				 *
 				 * @param Object field        jQuery form element object
-				 * @param String resque     previously stored fields data
+				 * @param   string resque     previously stored fields data
 				 *
 				 * @return void
 				 */
@@ -367,7 +367,7 @@
 				 * Bind immediate saving (on typing/checking/changing) field data to local storage when user fills it
 				 *
 				 * @param Object field        jQuery form element object
-				 * @param String prefix     prefix used as key to store data in local storage
+				 * @param   string prefix     prefix used as key to store data in local storage
 				 *
 				 * @return void
 				 */
@@ -396,9 +396,9 @@
 				/**
 				 * Save data to Local Storage and fire callback if defined
 				 *
-				 * @param String key
-				 * @param String value
-				 * @param Boolean [true] fireCallback
+				 * @param   string key
+				 * @param   string value
+				 * @param   boolean [true] fireCallback
 				 *
 				 * @return void
 				 */
@@ -476,7 +476,7 @@
 				/**
 				 * Bind release form fields data from local storage on submit/resett form
 				 *
-				 * @param String targetFormIdAndName    a form identifier consists of its id and name glued
+				 * @param   string targetFormIdAndName    a form identifier consists of its id and name glued
 				 * @param Object fieldsToProtect        jQuery object contains form fields to protect
 				 *
 				 * @return void

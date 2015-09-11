@@ -175,7 +175,7 @@ class KunenaSpamRecaptcha
 	/**
 	 * Calls an HTTP POST function to verify if the user's guess was correct.
 	 *
-	 * @param array $extra_params An array of extra variables to post to the server.
+	 * @param   array  $extra_params An array of extra variables to post to the server.
 	 *
 	 * @return bool
 	 */
@@ -269,8 +269,8 @@ class KunenaSpamRecaptcha
 	/**
 	 * Submits an HTTP POST to a reCAPTCHA server
 	 *
-	 * @param string $path
-	 * @param array  $data
+	 * @param   string  $path
+	 * @param   array  $data
 	 * @param int    $port
 	 *
 	 * @return array response

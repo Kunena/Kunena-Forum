@@ -13,7 +13,7 @@ defined('_JEXEC') or die ();
 /**
  * Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModel extends JModelLegacy
 {

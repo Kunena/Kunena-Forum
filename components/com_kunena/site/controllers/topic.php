@@ -14,12 +14,14 @@ defined('_JEXEC') or die ();
 /**
  * Kunena Topic Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerTopic extends KunenaController
 {
 	/**
-	 * @param array $config
+	 *
+	 * @param   array  $config
+	 *
 	 */
 	public function __construct($config = array())
 	{
@@ -74,7 +76,9 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) ;
+
+		while (@ob_end_clean());
+
 		echo json_encode($list);
 
 		jexit();
@@ -111,7 +115,9 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) ;
+
+		while (@ob_end_clean());
+
 		echo json_encode($success);
 
 		jexit();

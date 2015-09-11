@@ -18,7 +18,7 @@ class PlgKunenaUddeIM extends JPlugin
 {
 	/**
 	 * @param object $subject
-	 * @param array  $config
+	 * @param   array  $config
 	 */
 	public function __construct(&$subject, $config)
 	{

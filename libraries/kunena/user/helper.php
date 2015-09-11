@@ -55,7 +55,7 @@ abstract class KunenaUserHelper
 	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
 	 *
 	 * @param mixed $identifier The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-	 * @param bool  $reload     Reload user from database.
+	 * @param   bool  $reload     Reload user from database.
 	 *
 	 * @return KunenaUser
 	 */
@@ -119,7 +119,7 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @param int    $id
-	 * @param string $name
+	 * @param   string  $name
 	 *
 	 * @return KunenaUser
 	 */
@@ -158,11 +158,11 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param array $userids
+	 * @param   array  $userids
 	 *
 	 * @return array
 	 */
-	public static function loadUsers(array $userids = array())
+	public static function loadUsers(array  $userids = array())
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -377,8 +377,8 @@ abstract class KunenaUserHelper
 
 	/**
 	 * @param mixed       $user
-	 * @param bool|string $yes
-	 * @param string      $no
+	 * @param   bool|string  $yes
+	 * @param   string      $no
 	 *
 	 * @deprecated K4.0.0  Please use getsStatus instead.
 	 *

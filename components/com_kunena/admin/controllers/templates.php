@@ -24,7 +24,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	protected $locked = array('blue_eagle');
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -533,7 +533,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Method to save param.ini file on filesystem.
 	 *
-	 * @param   string $template The name of the template.
+	 * @param   string  $template The name of the template.
 	 *
 	 *
 	 * @since    3.0.0

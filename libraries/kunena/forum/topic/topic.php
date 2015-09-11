@@ -15,7 +15,7 @@ defined('_JEXEC') or die ();
  * Class KunenaForumTopic
  *
  * @property int    $category_id
- * @property string $subject
+ * @property string  $subject
  * @property int    $icon_id
  * @property int    $locked
  * @property int    $hold
@@ -28,14 +28,14 @@ defined('_JEXEC') or die ();
  * @property int    $first_post_id
  * @property int    $first_post_time
  * @property int    $first_post_userid
- * @property string $first_post_message
- * @property string $first_post_guest_name
+ * @property string  $first_post_message
+ * @property string  $first_post_guest_name
  * @property int    $last_post_id
  * @property int    $last_post_time
  * @property int    $last_post_userid
- * @property string $last_post_message
- * @property string $last_post_guest_name
- * @property string $params
+ * @property string  $last_post_message
+ * @property string  $last_post_guest_name
+ * @property string  $params
  */
 class KunenaForumTopic extends KunenaDatabaseObject
 {
@@ -117,7 +117,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * Returns KunenaForumTopic object.
 	 *
 	 * @param int  $identifier The topic to load - Can be only an integer.
-	 * @param bool $reset
+	 * @param   bool $reset
 	 *
 	 * @return KunenaForumTopic
 	 */
@@ -145,7 +145,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Subscribe / Unsubscribe user to this topic.
 	 *
-	 * @param bool  $value True for subscribe, false for unsubscribe.
+	 * @param   bool  $value True for subscribe, false for unsubscribe.
 	 * @param mixed $user
 	 *
 	 * @return bool
@@ -168,7 +168,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Favorite / unfavorite user to this topic.
 	 *
-	 * @param bool  $value True for favorite, false for unfavorite.
+	 * @param   bool  $value True for favorite, false for unfavorite.
 	 * @param mixed $user
 	 *
 	 * @return bool
@@ -214,7 +214,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @param mixed       $user
-	 * @param bool|string $glue
+	 * @param   bool|string  $glue
 	 *
 	 * @return array|string
 	 */
@@ -267,7 +267,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @param mixed       $keywords
 	 * @param mixed       $user
-	 * @param null|string $glue
+	 * @param null|string  $glue
 	 *
 	 * @return bool
 	 */
@@ -336,7 +336,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Send email notifications from the first post in the topic.
 	 *
-	 * @param null|string $url
+	 * @param null|string  $url
 	 */
 	public function sendNotification($url = null)
 	{
@@ -419,7 +419,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param int|null $limitstart Null if all pages need to be active.
 	 * @param int      $limit
 	 * @param int      $display
-	 * @param string   $prefix
+	 * @param   string   $prefix
 	 *
 	 * @return JPagination
 	 */
@@ -513,7 +513,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string $field
+	 * @param   string  $field
 	 *
 	 * @return int|string
 	 */
@@ -565,8 +565,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @param mixed       $category
-	 * @param bool        $xhtml
-	 * @param null|string $action
+	 * @param   bool        $xhtml
+	 * @param null|string  $action
 	 *
 	 * @return string
 	 */
@@ -583,8 +583,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * JUri::getInstance()->toString(array('scheme', 'host', 'port'))
 	 *
 	 * @param KunenaForumCategory $category
-	 * @param bool                $xhtml
-	 * @param string              $action
+	 * @param   bool                $xhtml
+	 * @param   string              $action
 	 *
 	 * @return string
 	 */
@@ -618,7 +618,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @param mixed  $category
-	 * @param string $action
+	 * @param   string  $action
 	 *
 	 * @return JUri|null
 	 */
@@ -699,7 +699,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @param int         $mesid
-	 * @param string|null $direction
+	 * @param   string|null $direction
 	 * @param mixed       $hold
 	 *
 	 * @return int
@@ -754,9 +754,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param array|bool $fields
+	 * @param   array|bool $fields
 	 * @param mixed      $user
-	 * @param array|null $safefields
+	 * @param   array|null $safefields
 	 *
 	 * @return KunenaForumMessage
 	 */
@@ -877,7 +877,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
 	 *
 	 * @return bool
@@ -892,9 +892,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
-	 * @param bool       $throw
+	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws KunenaExceptionAuthorise
@@ -965,9 +965,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string $action
+	 * @param   string  $action
 	 * @param mixed  $user
-	 * @param bool   $silent
+	 * @param   bool   $silent
 	 *
 	 * @return bool
 	 * @deprecated K4.0
@@ -1024,7 +1024,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param   object $target       Target KunenaForumCategory or KunenaForumTopic
 	 * @param   mixed  $ids          false, array of message Ids or JDate
 	 * @param   bool   $shadow       Leave visible shadow topic.
-	 * @param   string $subject      New subject
+	 * @param   string  $subject      New subject
 	 * @param   bool   $subjectall   Change subject from every message
 	 * @param   int    $topic_iconid Define a new topic icon
 	 *
@@ -1375,7 +1375,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Method to save the KunenaForumTopic object to the database.
 	 *
-	 * @param bool $cascade
+	 * @param   bool $cascade
 	 *
 	 * @return bool    True on success.
 	 *
@@ -1442,7 +1442,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * Method to delete the KunenaForumTopic object from the database.
 	 *
-	 * @param bool $recount
+	 * @param   bool $recount
 	 *
 	 * @return bool    True on success.
 	 */
@@ -1504,8 +1504,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param int    $id
 	 * @param int    $time
 	 * @param int    $userid
-	 * @param string $message
-	 * @param string $name
+	 * @param   string  $message
+	 * @param   string  $name
 	 */
 	public function updatePostInfo($id, $time = 0, $userid = 0, $message = '', $name = '')
 	{

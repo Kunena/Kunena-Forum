@@ -70,11 +70,11 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * $topics->filterByCategories($me->getAllowedCategories())->limit(20)->find();
 	 *
-	 * @param array $categories
+	 * @param   array  $categories
 	 *
 	 * @return $this
 	 */
-	public function filterByCategories(array $categories)
+	public function filterByCategories(array  $categories)
 	{
 		$list = array();
 		foreach ($categories as $category)
@@ -107,7 +107,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * @param JDate $starting Starting date or null if older than ending date.
 	 * @param JDate $ending   Ending date or null if newer than starting date.
-	 * @param bool  $lastPost True = last post, False = first post.
+	 * @param   bool  $lastPost True = last post, False = first post.
 	 *
 	 * @return $this
 	 */
@@ -143,7 +143,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	 * subscribed = User has subscribed to the topic.
 	 *
 	 * @param KunenaUser $user
-	 * @param string     $action Action or negation of the action (!action).
+	 * @param   string     $action Action or negation of the action (!action).
 	 *
 	 * @return $this
 	 */
@@ -210,12 +210,12 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter topics where group of people have (not) posted after the topic owner.
 	 *
-	 * @param array $users
-	 * @param bool  $negate
+	 * @param   array  $users
+	 * @param   bool  $negate
 	 *
 	 * @return $this
 	 */
-	public function filterAnsweredBy(array $users, $negate = false)
+	public function filterAnsweredBy(array  $users, $negate = false)
 	{
 		$list = array();
 		foreach ($users as $user)
@@ -272,11 +272,11 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
 	 *
-	 * @param array $hold List of hold states to display.
+	 * @param   array  $hold List of hold states to display.
 	 *
 	 * @return $this
 	 */
-	public function filterByHold(array $hold = array(0))
+	public function filterByHold(array  $hold = array(0))
 	{
 		$this->hold = $hold;
 
@@ -286,7 +286,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by moved topics.
 	 *
-	 * @param bool $value True on moved, false on not moved.
+	 * @param   bool $value True on moved, false on not moved.
 	 *
 	 * @return $this
 	 */
@@ -300,7 +300,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Get topics.
 	 *
-	 * @param  string $access Kunena action access control check.
+	 * @param  string  $access Kunena action access control check.
 	 *
 	 * @return array|KunenaForumTopic[]
 	 */

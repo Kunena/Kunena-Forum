@@ -21,7 +21,7 @@ class KunenaAdminControllerTools extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -662,7 +662,7 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
-	 * @param bool|false $stop
+	 * @param   bool|false $stop
 	 *
 	 * @return bool
 	 */

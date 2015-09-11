@@ -52,7 +52,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return int
 	 */
@@ -75,7 +75,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return array
 	 */
@@ -104,7 +104,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return bool
 	 */
@@ -125,7 +125,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return bool
 	 */
@@ -142,7 +142,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return bool
 	 */
@@ -163,7 +163,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return bool
 	 */
@@ -204,7 +204,7 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return string|null
 	 */

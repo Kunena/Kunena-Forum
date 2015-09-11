@@ -14,16 +14,17 @@ defined('_JEXEC') or die ();
 /**
  * Kunena Home Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerHome extends KunenaController
 {
 	public $home = 1;
 
 	/**
-	 * @param bool|false $cachable
-	 * @param bool|false $urlparams
+	 * @param   bool|false $cachable
+	 * @param   bool|false $urlparams
 	 *
+	 * @return JControllerLegacy|void
 	 * @throws Exception
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -95,7 +96,7 @@ class KunenaControllerHome extends KunenaController
 	/**
 	 * @param       $menu
 	 * @param       $active
-	 * @param array $visited
+	 * @param   array  $visited
 	 *
 	 * @return null
 	 */

@@ -22,7 +22,7 @@ class KunenaAdminModelRanks extends JModelList
 {
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -43,8 +43,8 @@ class KunenaAdminModelRanks extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param string $ordering
-	 * @param string $direction
+	 * @param   string  $ordering
+	 * @param   string  $direction
 	 *
 	 * @return    void
 	 */
@@ -86,7 +86,7 @@ class KunenaAdminModelRanks extends JModelList
 	}
 
 	/**
-	 * @param string $id
+	 * @param   string  $id
 	 *
 	 * @return mixed
 	 */

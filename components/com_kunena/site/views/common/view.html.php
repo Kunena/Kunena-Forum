@@ -611,8 +611,8 @@ class KunenaViewCommon extends KunenaView
 	}
 
 	/**
-	 * @param string    $action
-	 * @param bool|true $xhtml
+	 * @param   string    $action
+	 * @param   bool|true $xhtml
 	 */
 	function getUserlistURL($action = '', $xhtml = true)
 	{
@@ -625,7 +625,7 @@ class KunenaViewCommon extends KunenaView
 	 * Method to get Kunena URL RSS feed by taking config option to define the data to display
 	 *
 	 * @param   string    $params Add extras params to the URL
-	 * @param bool|string $xhtml  Replace & by & for XML compilance.
+	 * @param   bool|string  $xhtml  Replace & by & for XML compilance.
 	 *
 	 * @return string
 	 */
@@ -651,8 +651,8 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $params
+	 * @param   string  $rel
+	 * @param   string  $params
 	 *
 	 * @return string
 	 */
@@ -663,8 +663,8 @@ class KunenaViewCommon extends KunenaView
 
 	/**
 	 * @param        $name
-	 * @param string $class
-	 * @param string $rel
+	 * @param   string  $class
+	 * @param   string  $rel
 	 *
 	 * @return bool|string
 	 */
@@ -683,8 +683,8 @@ class KunenaViewCommon extends KunenaView
 	/**
 	 * @param        $action
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $class
+	 * @param   string  $rel
+	 * @param   string  $class
 	 *
 	 * @return bool|string
 	 */

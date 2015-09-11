@@ -14,9 +14,8 @@ defined('_JEXEC') or die ();
 /**
  * Misc Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelMisc extends KunenaModel
 {
-
 }

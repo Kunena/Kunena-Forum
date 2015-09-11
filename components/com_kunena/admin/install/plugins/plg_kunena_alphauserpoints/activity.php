@@ -38,7 +38,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 	/**
 	 * @param        $plugin_function
-	 * @param string $spc
+	 * @param   string  $spc
 	 *
 	 * @return mixed
 	 */

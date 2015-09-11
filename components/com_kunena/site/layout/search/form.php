@@ -22,8 +22,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display the list to choose between posts or titles
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 */
@@ -38,8 +38,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to get the date list
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 */
@@ -61,8 +61,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose into the new dates or the older dates
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 */
@@ -77,8 +77,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose how to sort the results
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 */
@@ -101,8 +101,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose the order
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 */
@@ -117,8 +117,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to choose the limit of the list
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 */
@@ -136,8 +136,8 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	/**
 	 * Method to display list of categories
 	 *
-	 * @param   int    $id         Id of the HTML select list
-	 * @param   string $attributes Extras attributes to apply to the list
+	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return void
 	 */

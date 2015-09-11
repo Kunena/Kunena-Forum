@@ -27,8 +27,8 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param string    $action
-	 * @param bool|true $xhtml
+	 * @param   string    $action
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool
 	 */
@@ -46,8 +46,8 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 
 	/**
 	 * @param           $user
-	 * @param string    $task
-	 * @param bool|true $xhtml
+	 * @param   string    $task
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool
 	 */
@@ -99,7 +99,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 
 	/**
 	 * @param           $userid
-	 * @param bool|true $xhtml
+	 * @param   bool|true $xhtml
 	 *
 	 * @return bool|void
 	 */

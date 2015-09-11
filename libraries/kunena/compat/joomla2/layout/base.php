@@ -92,7 +92,7 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	/**
 	 * Method to escape output.
 	 *
-	 * @param   string $output The output to escape.
+	 * @param   string  $output The output to escape.
 	 *
 	 * @return  string  The escaped output.
 	 *
@@ -144,7 +144,7 @@ class KunenaCompatLayoutBase implements KunenaCompatLayout
 	/**
 	 * Add a debug message to the debug messages array
 	 *
-	 * @param   string $message Message to save
+	 * @param   string  $message Message to save
 	 *
 	 * @return  void
 	 *

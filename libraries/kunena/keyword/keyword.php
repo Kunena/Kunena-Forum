@@ -114,8 +114,8 @@ class KunenaKeyword extends JObject
 	 *
 	 * @access    public
 	 *
-	 * @param    string $type   The keywords table name to be used
-	 * @param    string $prefix The keywords table prefix to be used
+	 * @param    string  $type   The keywords table name to be used
+	 * @param    string  $prefix The keywords table prefix to be used
 	 *
 	 * @return    object    The keywords table object
 	 * @since     1.6

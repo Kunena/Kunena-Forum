@@ -26,7 +26,7 @@ abstract class KunenaForumMessageHelper
 	 * Returns KunenaForumMessage object.
 	 *
 	 * @param null $identifier The message to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessage    The message object.
 	 */
@@ -61,8 +61,8 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param bool|array|int $ids
-	 * @param string         $authorise
+	 * @param   bool|array|int $ids
+	 * @param   string         $authorise
 	 *
 	 * @return KunenaForumMessage[]
 	 */
@@ -100,9 +100,9 @@ abstract class KunenaForumMessageHelper
 	 * @param mixed  $topic
 	 * @param int    $start
 	 * @param int    $limit
-	 * @param string $ordering
+	 * @param   string  $ordering
 	 * @param int    $hold
-	 * @param bool   $orderbyid
+	 * @param   bool   $orderbyid
 	 *
 	 * @return KunenaForumMessage[]
 	 */
@@ -142,10 +142,10 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param bool|array|int $categories
+	 * @param   bool|array|int $categories
 	 * @param int            $limitstart
 	 * @param int            $limit
-	 * @param array          $params
+	 * @param   array          $params
 	 *
 	 * @return array
 	 */
@@ -294,7 +294,7 @@ abstract class KunenaForumMessageHelper
 
 	/**
 	 * @param int         $mesid
-	 * @param null|string $direction
+	 * @param null|string  $direction
 	 * @param null|array  $hold
 	 *
 	 * @return int
@@ -338,7 +338,7 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param array|string $mesids
+	 * @param   array|string  $mesids
 	 */
 	public static function loadLocation($mesids)
 	{
@@ -412,7 +412,7 @@ abstract class KunenaForumMessageHelper
 	}
 
 	/**
-	 * @param bool|array|int $topicids
+	 * @param   bool|array|int $topicids
 	 *
 	 * @return bool|int
 	 */
@@ -451,9 +451,9 @@ abstract class KunenaForumMessageHelper
 	// Internal functions
 
 	/**
-	 * @param array $ids
+	 * @param   array  $ids
 	 */
-	static protected function loadMessages(array $ids)
+	static protected function loadMessages(array  $ids)
 	{
 		foreach ($ids as $i => $id)
 		{
@@ -498,9 +498,9 @@ abstract class KunenaForumMessageHelper
 	 * @param int    $topic_id
 	 * @param int    $start
 	 * @param int    $limit
-	 * @param string $ordering
+	 * @param   string  $ordering
 	 * @param int    $hold
-	 * @param bool   $orderbyid
+	 * @param   bool   $orderbyid
 	 *
 	 * @return array
 	 */

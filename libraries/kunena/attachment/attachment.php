@@ -18,13 +18,13 @@ defined('_JEXEC') or die ();
  * @property int    $userid
  * @property int    $mesid
  * @property int    $protected
- * @property string $hash
+ * @property string  $hash
  * @property int    $size
- * @property string $folder
- * @property string $filetype
- * @property string $filename
- * @property string $filename_real
- * @property string $caption
+ * @property string  $folder
+ * @property string  $filetype
+ * @property string  $filename
+ * @property string  $filename_real
+ * @property string  $caption
  *
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
@@ -60,7 +60,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @param mixed $identifier
-	 * @param bool  $reload
+	 * @param   bool  $reload
 	 *
 	 * @return KunenaAttachment
 	 *
@@ -87,7 +87,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Getter function.
 	 *
-	 * @param  string $property
+	 * @param  string  $property
 	 *
 	 * @return string
 	 * @throws InvalidArgumentException
@@ -127,7 +127,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get path for the file.
 	 *
-	 * @param bool $thumb
+	 * @param   bool $thumb
 	 *
 	 * @return string|false  Path to the file or false if file doesn't exist.
 	 *
@@ -152,7 +152,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get filename for output.
 	 *
-	 * @param bool $escape
+	 * @param   bool $escape
 	 *
 	 * @return string
 	 *
@@ -168,7 +168,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get extension of file for output.
 	 *
-	 * @param bool $escape
+	 * @param   bool $escape
 	 *
 	 * @return string
 	 *
@@ -189,8 +189,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @param int    $front
 	 * @param int    $back
-	 * @param string $filler
-	 * @param bool   $escape
+	 * @param   string  $filler
+	 * @param   bool   $escape
 	 *
 	 * @return string
 	 *
@@ -209,9 +209,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Get URL pointing to the attachment.
 	 *
-	 * @param bool $thumb
-	 * @param bool $inline
-	 * @param bool $escape
+	 * @param   bool $thumb
+	 * @param   bool $inline
+	 * @param   bool $escape
 	 *
 	 * @return string
 	 *
@@ -312,7 +312,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Returns true if user is authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
 	 *
 	 * @return bool
@@ -327,9 +327,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param string     $action
+	 * @param   string     $action
 	 * @param KunenaUser $user
-	 * @param bool       $throw
+	 * @param   bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
 	 * @throws KunenaExceptionAuthorise
@@ -384,9 +384,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string $action
+	 * @param   string  $action
 	 * @param mixed  $user
-	 * @param bool   $silent
+	 * @param   bool   $silent
 	 *
 	 * @return bool
 	 * @deprecated K4.0
@@ -418,7 +418,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param string   $key
+	 * @param   string   $key
 	 * @param null|int $catid
 	 *
 	 * @return bool
@@ -531,9 +531,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * Copies the attachment into proper location and makes sure that all the unset fields get properly assigned.
 	 *
-	 * @param  string $source    Absolute path to the upcoming attachment.
-	 * @param  string $basename  Filename without extension.
-	 * @param  string $extension File extension.
+	 * @param  string  $source    Absolute path to the upcoming attachment.
+	 * @param  string  $basename  Filename without extension.
+	 * @param  string  $extension File extension.
 	 * @param  bool   $unlink    Whether to delete the original file or not.
 	 * @param  bool   $overwrite If not allowed, throw exception if the file exists.
 	 *

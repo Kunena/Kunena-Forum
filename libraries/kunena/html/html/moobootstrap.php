@@ -27,7 +27,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap alerts
 	 *
-	 * @param   string $selector Common class for the alerts
+	 * @param   string  $selector Common class for the alerts
 	 *
 	 * @return  void
 	 *
@@ -59,7 +59,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap carousels
 	 *
-	 * @param   string $selector                       Common class for the carousels.
+	 * @param   string  $selector                       Common class for the carousels.
 	 * @param   array  $params                         An array of options for the modal.
 	 *                                                 Options for the modal can be:
 	 *                                                 - interval  number  The amount of time to delay between automatically cycling an item.
@@ -103,7 +103,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap dropdowns
 	 *
-	 * @param   string $selector Common class for the dropdowns
+	 * @param   string  $selector Common class for the dropdowns
 	 *
 	 * @return  void
 	 *
@@ -170,7 +170,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap modals
 	 *
-	 * @param   string $selector   The ID selector for the modal.
+	 * @param   string  $selector   The ID selector for the modal.
 	 * @param   array  $params     An array of options for the modal.
 	 *                             Options for the modal can be:
 	 *                             - backdrop  boolean  Includes a modal-backdrop element.
@@ -216,9 +216,9 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Method to render a Bootstrap modal
 	 *
-	 * @param   string $selector The ID selector for the modal.
+	 * @param   string  $selector The ID selector for the modal.
 	 * @param   array  $params   An array of options for the modal.
-	 * @param   string $footer   Optional markup for the modal footer
+	 * @param   string  $footer   Optional markup for the modal footer
 	 *
 	 * @return  string  HTML markup for a modal
 	 *
@@ -252,7 +252,7 @@ abstract class JHtmlMooBootstrap
 	 *
 	 * Use element's Title as popover content
 	 *
-	 * @param   string $selector                        Selector for the tooltip
+	 * @param   string  $selector                        Selector for the tooltip
 	 * @param   array  $params                          An array of options for the tooltip.
 	 *                                                  Options for the tooltip can be:
 	 *                                                  animation  boolean          apply a css fade transition to the tooltip
@@ -309,7 +309,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap ScrollSpy
 	 *
-	 * @param   string $selector   The ID selector for the ScrollSpy element.
+	 * @param   string  $selector   The ID selector for the ScrollSpy element.
 	 * @param   array  $params     An array of options for the ScrollSpy.
 	 *                             Options for the modal can be:
 	 *                             - offset  number  Pixels to offset from top when calculating position of scroll.
@@ -351,7 +351,7 @@ abstract class JHtmlMooBootstrap
 	 * Add a title attribute to any element in the form
 	 * title="title::text"
 	 *
-	 * @param   string $selector                                 The ID selector for the tooltip.
+	 * @param   string  $selector                                 The ID selector for the tooltip.
 	 * @param   array  $params                                   An array of options for the tooltip.
 	 *                                                           Options for the tooltip can be:
 	 *                                                           - animation  boolean          Apply a CSS fade transition to the tooltip
@@ -405,7 +405,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Add javascript support for Bootstrap accordians and insert the accordian
 	 *
-	 * @param   string $selector                       The ID selector for the tooltip.
+	 * @param   string  $selector                       The ID selector for the tooltip.
 	 * @param   array  $params                         An array of options for the tooltip.
 	 *                                                 Options for the tooltip can be:
 	 *                                                 - parent  selector  If selector then all collapsible elements under the specified parent will be closed when this
@@ -463,9 +463,9 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Begins the display of a new accordion slide.
 	 *
-	 * @param   string $selector Identifier of the accordion group.
-	 * @param   string $text     Text to display.
-	 * @param   string $id       Identifier of the slide.
+	 * @param   string  $selector Identifier of the accordion group.
+	 * @param   string  $text     Text to display.
+	 * @param   string  $id       Identifier of the slide.
 	 *
 	 * @return  string  HTML to add the slide
 	 *
@@ -502,7 +502,7 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Creates a tab pane
 	 *
-	 * @param   string $selector The pane identifier.
+	 * @param   string  $selector The pane identifier.
 	 * @param   array  $params   The parameters for the pane
 	 *
 	 * @return  string
@@ -557,8 +557,8 @@ abstract class JHtmlMooBootstrap
 	/**
 	 * Begins the display of a new tab content panel.
 	 *
-	 * @param   string $selector Identifier of the panel.
-	 * @param   string $id       The ID of the div element
+	 * @param   string  $selector Identifier of the panel.
+	 * @param   string  $id       The ID of the div element
 	 *
 	 * @return  string  HTML to start a new panel
 	 *
@@ -614,13 +614,13 @@ abstract class JHtmlMooBootstrap
 	 *
 	 * Internal method to get a JavaScript object notation string from an array
 	 *
-	 * @param   array $array The array to convert to JavaScript object notation
+	 * @param   array  $array The array to convert to JavaScript object notation
 	 *
 	 * @return  string  JavaScript object notation representation of the array
 	 *
 	 * @since   12.2
 	 */
-	public static function getJSObject(array $array = array())
+	public static function getJSObject(array  $array = array())
 	{
 		$object = '{';
 

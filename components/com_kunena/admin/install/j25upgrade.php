@@ -75,7 +75,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
-	 * @param string $table
+	 * @param   string  $table
 	 *
 	 * @return    boolean Ready (true/false)
 	 * @since    1.6.4

@@ -14,12 +14,12 @@ defined('_JEXEC') or die ();
 /**
  * Kunena Credits Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerCredits extends KunenaController
 {
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{

@@ -34,8 +34,8 @@ class KunenaControllerInstall extends JControllerLegacy
 	}
 
 	/**
-	 * @param bool|false $cachable
-	 * @param bool|false $urlparams
+	 * @param   bool|false $cachable
+	 * @param   bool|false $urlparams
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{

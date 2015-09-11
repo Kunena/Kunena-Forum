@@ -14,7 +14,7 @@ defined('_JEXEC') or die ();
 /**
  * Kunena Topics Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerTopics extends KunenaController
 {

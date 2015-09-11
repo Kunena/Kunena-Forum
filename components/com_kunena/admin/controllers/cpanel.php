@@ -21,7 +21,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -30,8 +30,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 	}
 
 	/**
-	 * @param bool|false $cachable
-	 * @param bool|false $urlparams
+	 * @param   bool|false  $cachable
+	 * @param   bool|false  $urlparams
+	 *
+	 * @return   JControllerLegacy|void
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{

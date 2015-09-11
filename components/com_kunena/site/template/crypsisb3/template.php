@@ -144,7 +144,7 @@ EOF;
 
 	/**
 	 * @param        $filename
-	 * @param string $group
+	 * @param   string  $group
 	 *
 	 * @return JDocument
 	 */
@@ -206,7 +206,7 @@ HTML;
 
 	/**
 	 * @param        $name
-	 * @param string $title
+	 * @param   string  $title
 	 *
 	 * @return string
 	 */
@@ -217,7 +217,7 @@ HTML;
 
 	/**
 	 * @param        $image
-	 * @param string $alt
+	 * @param   string  $alt
 	 *
 	 * @return string
 	 */

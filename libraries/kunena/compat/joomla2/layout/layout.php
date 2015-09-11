@@ -17,7 +17,7 @@ interface KunenaCompatLayout
 	/**
 	 * Method to escape output.
 	 *
-	 * @param   string $output The output to escape.
+	 * @param   string  $output The output to escape.
 	 *
 	 * @return  string  The escaped output.
 	 *

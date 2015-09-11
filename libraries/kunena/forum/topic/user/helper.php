@@ -30,7 +30,7 @@ abstract class KunenaForumTopicUserHelper
 	 *
 	 * @param KunenaForumTopic|int|null $topic
 	 * @param mixed                     $user
-	 * @param bool                      $reload
+	 * @param   bool                      $reload
 	 *
 	 * @return KunenaForumTopicUser
 	 */
@@ -59,7 +59,7 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param bool|array $ids
+	 * @param   bool|array  $ids
 	 * @param mixed      $user
 	 *
 	 * @return KunenaForumTopicUser[]
@@ -104,12 +104,12 @@ abstract class KunenaForumTopicUserHelper
 	/**
 	 * Get all user ids who have participated to the given topics.
 	 *
-	 * @param array|KunenaForumTopic[] $topics
-	 * @param string                   $value Row to pick up as value.
+	 * @param   array|KunenaForumTopic[] $topics
+	 * @param   string                   $value Row to pick up as value.
 	 *
 	 * @return array List of [topic][userid] = value.
 	 */
-	static public function getUserIds(array $topics, $value = 'user_id')
+	static public function getUserIds(array  $topics, $value = 'user_id')
 	{
 		// Convert topic objects into ids
 		$ids = array();
@@ -246,7 +246,7 @@ abstract class KunenaForumTopicUserHelper
 	}
 
 	/**
-	 * @param bool|array|int $topicids
+	 * @param   bool|array|int $topicids
 	 * @param int            $start
 	 * @param int            $end
 	 *
@@ -328,10 +328,10 @@ abstract class KunenaForumTopicUserHelper
 	// Internal functions
 
 	/**
-	 * @param array      $ids
+	 * @param   array      $ids
 	 * @param KunenaUser $user
 	 */
-	static protected function loadTopics(array $ids, KunenaUser $user)
+	static protected function loadTopics(array  $ids, KunenaUser $user)
 	{
 		foreach ($ids as $i => $id)
 		{

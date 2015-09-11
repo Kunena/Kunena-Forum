@@ -40,7 +40,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 *    Return JSON results of smilies available
 	 *
-	 * @param string $tpl
+	 * @param   string  $tpl
 	 *
 	 * @since K4.0
 	 *

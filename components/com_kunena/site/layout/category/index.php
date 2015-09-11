@@ -22,7 +22,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to return a KunenaPagination object
 	 *
-	 * @param   int $maxpages Maximum that are allowed for pagination
+	 * @param   int  $maxpages  Maximum that are allowed for pagination
 	 *
 	 * @return KunenaPagination
 	 */
@@ -37,7 +37,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve category icon
 	 *
-	 * @param   KunenaCategory $category The KunenaCategory object
+	 * @param   KunenaCategory  $category  The KunenaCategory object
 	 *
 	 * @return string
 	 */
@@ -72,7 +72,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve small category icon
 	 *
-	 * @param   KunenaSubCategory $subcategory The KunenaCategory object
+	 * @param   KunenaSubCategory  $subcategory  The KunenaCategory object
 	 *
 	 * @return string
 	 */
@@ -107,8 +107,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of mark read button
 	 *
-	 * @param   int $category_id The category Id
-	 * @param   int $numTopics   The number of topics
+	 * @param   int  $category_id  The category Id
+	 * @param   int  $numTopics    The number of topics
 	 *
 	 * @return string|null
 	 */
@@ -130,8 +130,8 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	/**
 	 * Method to retrieve the URL of category RSS feed
 	 *
-	 * @param   int    $catid The Id of category
-	 * @param   string $xhtml Replace & by & for XML compliance.
+	 * @param   int     $catid  The Id of category
+	 * @param   string  $xhtml  Replace & by & for XML compliance.
 	 *
 	 * @return string|null
 	 */

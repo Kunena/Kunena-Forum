@@ -21,7 +21,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array  $config
 	 */
 	public function __construct($config = array())
 	{
@@ -29,6 +29,9 @@ class KunenaAdminControllerAttachments extends KunenaController
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=attachments';
 	}
 
+	/**
+	 *
+	 */
 	public function delete()
 	{
 		if (!JSession::checkToken('post'))
@@ -39,7 +42,9 @@ class KunenaAdminControllerAttachments extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JRequest::getVar('cid', array(), 'post', 'array');
+
+		// Array of integers
 		JArrayHelper::toInteger($cid);
 
 		if (!$cid)

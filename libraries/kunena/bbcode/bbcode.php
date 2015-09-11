@@ -34,7 +34,7 @@ class KunenaBbcode extends NBBC_BBCode
 	/**
 	 * Use KunenaBbcode::getInstance() instead.
 	 *
-	 * @param bool $relative
+	 * @param   bool $relative
 	 *
 	 * @internal
 	 */
@@ -65,7 +65,7 @@ class KunenaBbcode extends NBBC_BBCode
 	/**
 	 * Get global instance from BBCode parser.
 	 *
-	 * @param bool $relative
+	 * @param   bool $relative
 	 *
 	 * @return mixed
 	 */
@@ -412,8 +412,8 @@ class KunenaBbcode extends NBBC_BBCode
 	 * Regular expression taken from https://gist.github.com/729294
 	 *
 	 * @param      $string
-	 * @param bool $email_too
-	 * @param bool $local_too
+	 * @param   bool $email_too
+	 * @param   bool $local_too
 	 *
 	 * @return bool
 	 */

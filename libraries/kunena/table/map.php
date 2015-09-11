@@ -227,9 +227,9 @@ class KunenaTableMap
 	/**
 	 * Method to set the mapped value.
 	 *
-	 * @param  array $list Set array of mapped objects.
+	 * @param  array  $list Set array of mapped objects.
 	 */
-	public function setMapped(array $list)
+	public function setMapped(array  $list)
 	{
 		JArrayHelper::toInteger($list);
 		$this->{$this->_tbl_mapped} = $list;
@@ -444,14 +444,14 @@ class KunenaTableMap
 	/**
 	 * Method to store mapped rows in the database from the JTable instance properties.
 	 *
-	 * @param   array $filter Touch only these filtered items.
+	 * @param   array  $filter Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
 	 * @link    http://docs.joomla.org/JTable/store
 	 * @throws  UnexpectedValueException
 	 */
-	public function store(array $filter = null)
+	public function store(array  $filter = null)
 	{
 		$k = $this->_tbl_key;
 		$m = $this->_tbl_mapped;
@@ -521,14 +521,14 @@ class KunenaTableMap
 	 * Method to provide a shortcut to binding, checking and storing a JTable
 	 * instance to the database table.
 	 *
-	 * @param   array $map    An array of mapped Ids.
-	 * @param   array $filter Touch only these filtered items.
+	 * @param   array  $map    An array of mapped Ids.
+	 * @param   array  $filter Touch only these filtered items.
 	 *
 	 * @return  boolean  True on success.
 	 *
 	 * @throws  UnexpectedValueException
 	 */
-	public function save(array $map = null, array $filter = null)
+	public function save(array  $map = null, array  $filter = null)
 	{
 		if (!is_null($map))
 		{
@@ -553,7 +553,7 @@ class KunenaTableMap
 	/**
 	 * Method to delete a row from the database table by primary key value.
 	 *
-	 * @param   int|array $pk An optional primary key value (or array of key=>value pairs) to delete.  If not set the instance property value is used.
+	 * @param   int|array  $pk An optional primary key value (or array of key=>value pairs) to delete.  If not set the instance property value is used.
 	 *
 	 * @return  boolean  True on success.
 	 *

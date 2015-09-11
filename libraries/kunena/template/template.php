@@ -437,7 +437,7 @@ HTML;
 	 * Wrapper to addScript
 	 *
 	 * @param        $content
-	 * @param string $type
+	 * @param   string  $type
 	 *
 	 * @return JDocument
 	 */

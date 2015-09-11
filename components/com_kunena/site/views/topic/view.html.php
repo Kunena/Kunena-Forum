@@ -1317,7 +1317,7 @@ class KunenaViewTopic extends KunenaView
 	 * If there's no referrer or it's external, Kunena will return to forum home page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param string $anchor
+	 * @param   string  $anchor
 	 */
 	protected function redirectBack($anchor = '')
 	{
@@ -1521,8 +1521,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param        $anker
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $class
+	 * @param   string  $rel
+	 * @param   string  $class
 	 *
 	 * @return string
 	 */

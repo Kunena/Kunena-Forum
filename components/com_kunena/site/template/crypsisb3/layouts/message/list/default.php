@@ -32,8 +32,8 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		<div class="pull-right" id="filter-time">
 			<div class="filter-sel pull-right">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect"
-				      name="timeselect"
-				      method="post" target="_self" class="form-inline hidden-xs">
+					name="timeselect"
+					method="post" target="_self" class="form-inline hidden-xs">
 					<?php $this->displayTimeFilter('sel'); ?>
 				</form>
 			</div>
@@ -54,7 +54,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
-      name="ktopicsform" id="ktopicsform">
+	name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-condensed">
@@ -87,7 +87,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 				<?php if (!empty($this->actions)) : ?>
 					<td class="col-md-1 center">
 						<label>
-							<input class="kcheckall" type="checkbox" name="toggle" value=""/>
+							<input class="kcheckall" type="checkbox" name="toggle" value="" />
 						</label>
 					</td>
 				<?php endif; ?>
@@ -120,7 +120,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 										echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 									endif; ?>
 									<input type="submit" name="kcheckgo" class="btn btn-default"
-									       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+										value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 								<?php endif; ?>
 							</div>
 						</div>
@@ -149,7 +149,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 </div>
 
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-      method="post" target="_self" class="timefilter pull-right">
+	method="post" target="_self" class="timefilter pull-right">
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
 

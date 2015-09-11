@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Plugin
+ *
  * @package       Kunena.Plugins
  * @subpackage    Comprofiler
  *

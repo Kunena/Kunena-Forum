@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Search
  *
@@ -23,16 +24,16 @@ window.addEvent('domready', function() {
 <div class="kblock kadvsearch">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler <?php echo $this->search_class; ?>"
-		                          title="<?php echo $this->search_title ?>" rel="advsearch"></a></span>
+				title="<?php echo $this->search_title ?>" rel="advsearch"></a></span>
 
 		<h2><span><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="searchform"
-			      id="searchform">
-				<input type="hidden" name="view" value="search"/>
-				<input type="hidden" name="task" value="results"/>
+				id="searchform">
+				<input type="hidden" name="view" value="search" />
+				<input type="hidden" name="task" value="results" />
 				<?php echo JHtml::_('form.token'); ?>
 
 				<table id="kforumsearch">
@@ -42,9 +43,9 @@ window.addEvent('domready', function() {
 							<fieldset class="fieldset">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
 								<label class="searchlabel"
-								       for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
+									for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
 								<input id="keywords" type="text" class="ks input" name="query" size="30"
-								       value="<?php echo $this->escape($this->state->get('searchwords')) ?>"/>
+									value="<?php echo $this->escape($this->state->get('searchwords')) ?>" />
 								<?php $this->displayModeList('mode', 'class="ks"') ?>
 							</fieldset>
 						</td>
@@ -53,7 +54,7 @@ window.addEvent('domready', function() {
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
 								<label class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
 									<input id="kusername" class="ks input" type="text" name="searchuser"
-									       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"/>
+										value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" />
 								</label>
 								<?php /*
 						<select class="ks" name="starteronly">
@@ -65,7 +66,10 @@ window.addEvent('domready', function() {
 								<label class="searchlabel">
 									<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>:
 									<input type="checkbox" name="exactname"
-									       value="1" <?php if ($this->state->get('query.exactname')) echo $this->checked; ?> />
+										value="1" <?php if ($this->state->get('query.exactname'))
+									{
+										echo $this->checked;
+									} ?> />
 								</label>
 							</fieldset>
 						</td>
@@ -74,8 +78,8 @@ window.addEvent('domready', function() {
 						<th colspan="2">
 							<div class="kheader">
 								<span class="ktoggler" id="search_opt_status"><a class="ktoggler close"
-								                                                 title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-								                                                 rel="advsearch_options"></a></span>
+										title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
+										rel="advsearch_options"></a></span>
 
 								<h2><span><?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?></span></h2>
 							</div>
@@ -122,7 +126,7 @@ window.addEvent('domready', function() {
 									<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
 								</legend>
 								<input class="ks input" type="text" name="limitstart"
-								       value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
+									value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
 								<?php $this->displayLimitlist('limit', 'class="ks"') ?>
 							</fieldset>
 						</td>
@@ -132,7 +136,10 @@ window.addEvent('domready', function() {
 								<?php $this->displayCategoryList('categorylist', 'class="inputbox" size="8" multiple="multiple"') ?>
 								<label id="childforums-lbl">
 									<input type="checkbox" name="childforums"
-									       value="1" <?php if ($this->state->get('query.childforums')) echo 'checked="checked"'; ?> />
+										value="1" <?php if ($this->state->get('query.childforums'))
+									{
+										echo 'checked="checked"';
+									} ?> />
 									<span
 										onclick="document.searchform.childforums.checked=(! document.searchform.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
 								</label>
@@ -141,16 +148,25 @@ window.addEvent('domready', function() {
 								<fieldset class="fieldset">
 									<legend><?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?></legend>
 									<input id="show0" type="radio" name="show"
-									       value="0" <?php if ($this->state->get('query.show') == 0) echo 'checked="checked"'; ?> />
+										value="0" <?php if ($this->state->get('query.show') == 0)
+									{
+										echo 'checked="checked"';
+									} ?> />
 									<label
-										for="show0"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?></label><br/>
+										for="show0"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?></label><br />
 									<input id="show1" type="radio" name="show"
-									       value="1" <?php if ($this->state->get('query.show') == 1) echo 'checked="checked"'; ?> />
+										value="1" <?php if ($this->state->get('query.show') == 1)
+									{
+										echo 'checked="checked"';
+									} ?> />
 									<label
-										for="show1"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?></label><br/>
+										for="show1"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?></label><br />
 									<input id="show2" type="radio" name="show"
-									       value="2" <?php if ($this->state->get('query.show') == 2) echo 'checked="checked"'; ?> />
-									<label for="show2"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?></label><br/>
+										value="2" <?php if ($this->state->get('query.show') == 2)
+									{
+										echo 'checked="checked"';
+									} ?> />
+									<label for="show2"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?></label><br />
 								</fieldset>
 							<?php endif; ?>
 						</td>
@@ -158,9 +174,9 @@ window.addEvent('domready', function() {
 					<tr>
 						<td colspan="2" class="kcenter">
 							<input class="kbutton ks" type="submit"
-							       value="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>"/>
+								value="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>" />
 							<input class="kbutton ks" type="reset" value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"
-							       onclick="window.location='<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>';"/>
+								onclick="window.location='<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>';" />
 						</td>
 					</tr>
 					</tbody>
@@ -174,8 +190,8 @@ window.addEvent('domready', function() {
 	<div class="kblock ksearchresult">
 		<div class="kheader">
 			<span class="ktoggler"><a class="ktoggler close"
-			                          title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-			                          rel="ksearchresult"></a></span>
+					title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
+					rel="ksearchresult"></a></span>
 
 			<h2>
 			<span>
@@ -208,9 +224,13 @@ window.addEvent('domready', function() {
 							$resStart = $this->state->get('list.start') + 1;
 							$resStop  = $this->state->get('list.start') + count($this->results);
 							if ($resStart < $resStop)
+							{
 								$resStartStop = ( string ) ($resStart) . ' - ' . ( string ) ($resStop);
+							}
 							else
+							{
 								$resStartStop = '0';
+							}
 							printf(JText::_('COM_KUNENA_FORUM_SEARCHRESULTS'), $resStartStop, intval($this->total));
 							?>
 

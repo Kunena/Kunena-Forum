@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -33,8 +34,8 @@ echo $this->subLayout('User/Item/Summary')
 ?>
 
 <div class="tabs hidden-phone">
-	<br/>
-	<br/>
+	<br />
+	<br />
 
 	<ul class="nav nav-tabs">
 

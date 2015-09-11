@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Announcement
  *
@@ -18,7 +19,9 @@ defined('_JEXEC') or die ();
 				<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
 				<?php
 				if (!empty($this->actions['add']))
+				{
 					echo ' | ' . JHtml::_('kunenaforum.link', $this->actions['add'], JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD'));
+				}
 				?>
 			</span>
 		</h2>
@@ -26,8 +29,8 @@ defined('_JEXEC') or die ();
 	<div class="kcontainer">
 		<div class="kbody">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post"
-			      id="adminForm" name="adminForm">
-				<input type="hidden" name="boxchecked" value="0"/>
+				id="adminForm" name="adminForm">
+				<input type="hidden" name="boxchecked" value="0" />
 				<?php echo JHtml::_('form.token'); ?>
 
 				<table class="kannouncement">
@@ -35,7 +38,7 @@ defined('_JEXEC') or die ();
 					<tr class="ksth">
 						<?php if ($this->actions): ?>
 							<th class="kcol-annid"><input type="checkbox" name="toggle" value=""
-							                              onclick="Joomla.checkAll(this);"/></th>
+									onclick="Joomla.checkAll(this);" /></th>
 						<?php endif; ?>
 						<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
 						<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
@@ -57,7 +60,7 @@ defined('_JEXEC') or die ();
 							<td colspan="4" class="kcol krowmoderation">
 								<?php echo JHtml::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 								<input type="submit" name="kcheckgo" onClick="Joomla.submitbutton()" class="kbutton"
-								       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+									value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 							</td>
 						<?php endif; ?>
 					</tr>

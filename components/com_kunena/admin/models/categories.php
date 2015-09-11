@@ -350,7 +350,6 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$lists['display_children'] = JHtml::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
 
-
 		$topicicons     = array();
 		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
 		foreach ($topiciconslist as $icon)
@@ -358,7 +357,6 @@ class KunenaAdminModelCategories extends KunenaModel
 			$topicicons[] = JHtml::_('select.option', $icon, $icon);
 		}
 		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $category->iconset);
-
 
 		return $lists;
 	}

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    User
  *
@@ -25,7 +26,7 @@ defined('_JEXEC') or die ();
 					</td>
 					<td class="kcol-mid">
 						<input type="text" name="username" id="username"
-						       value="<?php echo $this->escape($this->user->get('username')); ?>" <?php echo !$this->usernamechange ? 'disabled="disabled" ' : '' ?>/>
+							value="<?php echo $this->escape($this->user->get('username')); ?>" <?php echo !$this->usernamechange ? 'disabled="disabled" ' : '' ?>/>
 					</td>
 				</tr>
 				<tr class="krow1">
@@ -34,7 +35,7 @@ defined('_JEXEC') or die ();
 					</td>
 					<td class="kcol-mid">
 						<input class="inputbox required" type="text" id="name" name="name"
-						       value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
+							value="<?php echo $this->escape($this->user->get('name')); ?>" size="40" />
 					</td>
 				</tr>
 				<tr class="krow2">
@@ -43,7 +44,7 @@ defined('_JEXEC') or die ();
 					</td>
 					<td class="kcol-mid">
 						<input class="inputbox required validate-email" type="text" id="email" name="email"
-						       value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
+							value="<?php echo $this->escape($this->user->get('email')); ?>" size="40" />
 					</td>
 				</tr>
 				<?php if ($this->user->get('password')) : ?>
@@ -53,7 +54,7 @@ defined('_JEXEC') or die ();
 						</td>
 						<td class="kcol-mid">
 							<input class="inputbox validate-password" type="password" id="kpassword" name="password"
-							       value="" size="40"/>
+								value="" size="40" />
 						</td>
 					</tr>
 					<tr class="krow2">
@@ -62,7 +63,7 @@ defined('_JEXEC') or die ();
 						</td>
 						<td class="kcol-mid">
 							<input class="inputbox validate-passverify" type="password" id="kpassword2" name="password2"
-							       value="" size="40"/>
+								value="" size="40" />
 						</td>
 					</tr>
 				<?php endif; ?>

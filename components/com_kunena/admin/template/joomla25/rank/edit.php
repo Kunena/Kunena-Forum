@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Ranks
  *
@@ -30,11 +31,11 @@ $document->addScriptDeclaration("function update_rank(newimage) {
 				</div>
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
-					      method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="view" value="ranks"/>
-						<input type="hidden" name="task" value="save"/>
+						method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="view" value="ranks" />
+						<input type="hidden" name="task" value="save" />
 						<?php if ($this->state->get('item.id')): ?><input type="hidden" name="rankid"
-						                                                  value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
+							value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
 						<?php echo JHtml::_('form.token'); ?>
 
 						<fieldset>
@@ -47,7 +48,7 @@ $document->addScriptDeclaration("function update_rank(newimage) {
 									</td>
 									<td width="80%">
 										<input class="post" type="text" name="rank_title"
-										       value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : '' ?>"/>
+											value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : '' ?>" />
 									</td>
 								</tr>
 								<tr>
@@ -57,11 +58,11 @@ $document->addScriptDeclaration("function update_rank(newimage) {
 									<td>
 										<?php echo $this->listranks; ?>
 										<?php if (!$this->state->get('item.id')): ?>
-											<img name="rank_image" src="" border="0" alt=""/>
+											<img name="rank_image" src="" border="0" alt="" />
 										<?php else: ?>
 											<img name="rank_image"
-											     src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
-											     border="0" alt=""/>
+												src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
+												border="0" alt="" />
 										<?php endif; ?>
 									</td>
 								</tr>
@@ -71,7 +72,7 @@ $document->addScriptDeclaration("function update_rank(newimage) {
 									</td>
 									<td>
 										<input class="post" type="text" name="rank_min"
-										       value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_min : '1' ?>"/>
+											value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_min : '1' ?>" />
 									</td>
 								</tr>
 								<tr>
@@ -81,7 +82,7 @@ $document->addScriptDeclaration("function update_rank(newimage) {
 									<td>
 										<input
 											type="checkbox" <?php echo isset($this->rank_selected) && $this->rank_selected->rank_special ? 'checked="checked"' : '' ?>
-											name="rank_special" value="1"/>
+											name="rank_special" value="1" />
 									</td>
 								</tr>
 							</table>

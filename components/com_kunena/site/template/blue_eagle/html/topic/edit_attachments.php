@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -17,11 +18,11 @@ defined('_JEXEC') or die ();
 				<li class="kattachment-old">
 				<span>
 					<input type="hidden" name="attachments[<?php echo $attachment->id ?>]"
-					       value="<?php echo $attachment->getFilename() ?>"/>
+						value="<?php echo $attachment->getFilename() ?>" />
 					<input type="checkbox" name="attachment[<?php echo $attachment->id ?>]" checked="checked"
-					       value="<?php echo $attachment->id ?>"/>
+						value="<?php echo $attachment->id ?>" />
 					<a href="#" class="kattachment-insert"
-					   style="display: none;"><?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
+						style="display: none;"><?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
 				</span>
 					<?php echo $attachment->getThumbnailLink(); ?>
 

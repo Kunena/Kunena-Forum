@@ -43,7 +43,7 @@ $this->fieldsets = $this->form->getFieldsets('params');
 									<?php $label = !empty($fieldset->label) ? JText::_($fieldset->label) : JText::_('COM_PLUGINS_' . $fieldset->name . '_FIELDSET_LABEL'); ?>
 									<li>
 										<a href="#options-<?php echo $fieldset->name; ?>"
-										   data-toggle="tab"><?php echo $label ?></a>
+											data-toggle="tab"><?php echo $label ?></a>
 									</li>
 								<?php endforeach; ?>
 							<?php endif; ?>
@@ -144,7 +144,7 @@ $this->fieldsets = $this->form->getFieldsets('params');
 					</div>
 				</div>
 			</fieldset>
-			<input type="hidden" name="task" value=""/>
+			<input type="hidden" name="task" value="" />
 			<?php echo JHtml::_('form.token'); ?>
 		</form>
 	</div>

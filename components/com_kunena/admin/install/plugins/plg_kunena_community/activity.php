@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Plugin
+ *
  * @package       Kunena.Plugins
  * @subpackage    Community
  *
@@ -50,7 +51,10 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->like_type    = 'kunena.thread.post';
 
 		// Do not add private activities
-		if ($act->access > 20) return;
+		if ($act->access > 20)
+		{
+			return;
+		}
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 		if (is_object($table))
@@ -112,7 +116,10 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->like_type    = 'kunena.thread.reply';
 
 		// Do not add private activities
-		if ($act->access > 20) return;
+		if ($act->access > 20)
+		{
+			return;
+		}
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 		if (is_object($table))
@@ -162,7 +169,10 @@ class KunenaActivityCommunity extends KunenaActivity
 		$act->like_type    = 'kunena.message.thankyou';
 
 		// Do not add private activities
-		if ($act->access > 20) return;
+		if ($act->access > 20)
+		{
+			return;
+		}
 		CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 		if (is_object($table))

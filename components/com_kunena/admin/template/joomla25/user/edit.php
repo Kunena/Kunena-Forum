@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Users
  *
@@ -53,10 +54,10 @@ $paneOptions = array(
 				</div>
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>"
-					      method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="task" value=""/>
-						<input type="hidden" name="boxchecked" value="1"/>
-						<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
+						method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="task" value="" />
+						<input type="hidden" name="boxchecked" value="1" />
+						<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
 						<?php echo JHtml::_('form.token'); ?>
 
 						<article class="data-block">
@@ -64,23 +65,24 @@ $paneOptions = array(
 								<div class="tabbable">
 									<ul class="nav nav-tabs">
 										<li class="active"><a href="#tab1"
-										                      data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
+												data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></a>
 										</li>
 										<?php /*
 											<li><a href="#tab2" data-toggle="tab"><?php echo JText::_('User Info'); ?></a></li>
 					*/ ?>
 										<li><a href="#tab3"
-										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a></li>
+												data-toggle="tab"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></a></li>
 										<li><a href="#tab4"
-										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
+												data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></a>
 										</li>
 										<li><a href="#tab5"
-										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
+												data-toggle="tab"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></a>
 										</li>
 										<li><a href="#tab6"
-										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a></li>
+												data-toggle="tab"><?php echo JText::_('COM_KUNENA_TRASH_IP'); ?></a>
+										</li>
 										<li><a href="#tab7"
-										       data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
+												data-toggle="tab"><?php echo JText::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></a>
 										</li>
 									</ul>
 									<div class="tab-content">
@@ -91,7 +93,7 @@ $paneOptions = array(
 												<?php if ($this->editavatar) : ?>
 													<div>
 														<label><input type="checkbox" value="1"
-														              name="deleteAvatar"/> <?php echo JText::_('COM_KUNENA_DELAV'); ?>
+																name="deleteAvatar" /> <?php echo JText::_('COM_KUNENA_DELAV'); ?>
 														</label>
 													</div>
 												<?php endif; ?>
@@ -100,11 +102,11 @@ $paneOptions = array(
 												<legend><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
 												<div>
 													<textarea class="input-xxlarge" name="signature" cols="4" rows="6"
-													          onkeyup="textCounter(this, this.form.current_count);"><?php echo $this->escape($this->user->signature); ?></textarea>
+														onkeyup="textCounter(this, this.form.current_count);"><?php echo $this->escape($this->user->signature); ?></textarea>
 												</div>
 												<div>
 													<label><input type="checkbox" value="1"
-													              name="deleteSig"/> <?php echo JText::_('COM_KUNENA_DELSIG'); ?>
+															name="deleteSig" /> <?php echo JText::_('COM_KUNENA_DELSIG'); ?>
 													</label>
 												</div>
 												<div>

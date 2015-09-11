@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Crypsis
  * @subpackage    BBCode
  *
@@ -13,7 +14,10 @@ defined('_JEXEC') or die ();
 /** @var KunenaAttachment $attachment */
 $attachment = $this->attachment;
 
-if (!$attachment->isImage()) return;
+if (!$attachment->isImage())
+{
+	return;
+}
 
 $config = KunenaConfig::getInstance();
 
@@ -22,6 +26,6 @@ $attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
 
 <a href="<?php echo $attachment->getUrl(); ?>"
-   title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0, 7); ?>"<?php echo $attributesLink; ?>>
-	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt=""/>
+	title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0, 7); ?>"<?php echo $attributesLink; ?>>
+	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
 </a>

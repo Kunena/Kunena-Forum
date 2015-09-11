@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Credits
  *
@@ -17,7 +18,7 @@ defined('_JEXEC') or die;
 
 <div class="well well-small" id="credits">
 	<div class="container-fluid pull-left">
-		<img src="<?php echo $this->logo; ?>" alt="Kunena"/>
+		<img src="<?php echo $this->logo; ?>" alt="Kunena" />
 	</div>
 	<p class="intro">
 		<?php echo $this->intro; ?>
@@ -31,7 +32,7 @@ defined('_JEXEC') or die;
 			<?php foreach ($this->memberList as $member) : ?>
 				<dt>
 					<a href="<?php echo $member['url']; ?>" target="_blank"
-					   rel="follow"><?php echo $this->escape($member['name']); ?></a>
+						rel="follow"><?php echo $this->escape($member['name']); ?></a>
 				</dt>
 				<dd>
 					<?php echo $member['title']; ?>
@@ -53,9 +54,9 @@ defined('_JEXEC') or die;
 
 		<p class="center">
 			<?php echo JText::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2015 <a href="http://www.kunena.org"
-			                                                                      target="_blank">Kunena</a>,
+				target="_blank">Kunena</a>,
 			<?php echo JText::_('COM_KUNENA_LICENSE'); ?>: <a href="http://www.gnu.org/copyleft/gpl.html"
-			                                                  target="_blank">GNU GPL</a>
+				target="_blank">GNU GPL</a>
 		</p>
 	</div>
 </div>

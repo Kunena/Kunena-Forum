@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *

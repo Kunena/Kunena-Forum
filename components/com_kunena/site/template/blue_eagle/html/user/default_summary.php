@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    User
  *
@@ -60,7 +61,7 @@ defined('_JEXEC') or die ();
 		<?php if ($this->PMlink) : ?>
 			<li><?php if ($this->me->userid != $this->user->id): ?>
 					<strong><?php echo JText::_('COM_KUNENA_MYPROFILE_SEND_MESSAGE'); ?>
-					:</strong> <?php endif ?><?php echo $this->PMlink; ?></li>
+						:</strong> <?php endif ?><?php echo $this->PMlink; ?></li>
 		<?php endif ?>
 		<?php if (!empty($this->personalText))
 		{ ?>

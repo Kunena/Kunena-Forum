@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Templates
  *
@@ -14,7 +15,10 @@ defined('_JEXEC') or die ();
 
 $document = JFactory::getDocument();
 $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.css');
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+if (JFactory::getLanguage()->isRTL())
+{
+	$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+}
 ?>
 <div id="kadmin">
 	<div class="kadmin-left">
@@ -26,12 +30,12 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet(JUri::base(true) 
 		<div
 			class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_CSS_TEMPLATE'); ?></div>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
-		      id="adminForm" name="adminForm">
-			<input type="hidden" name="view" value="templates"/>
-			<input type="hidden" name="task" value=""/>
-			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
-			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
-			<input type="hidden" name="filename" value="<?php echo $this->escape($this->filename); ?>"/>
+			id="adminForm" name="adminForm">
+			<input type="hidden" name="view" value="templates" />
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>" />
+			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>" />
+			<input type="hidden" name="filename" value="<?php echo $this->escape($this->filename); ?>" />
 			<?php echo JHtml::_('form.token'); ?>
 
 			<?php if ($this->ftp): ?>
@@ -45,13 +49,13 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet(JUri::base(true) 
 						<tbody>
 						<tr>
 							<td width="120"><label for="username"><?php echo JText::_('Username'); ?>:</label></td>
-							<td><input type="text" id="username" name="username" class="input_box" size="70" value=""/>
+							<td><input type="text" id="username" name="username" class="input_box" size="70" value="" />
 							</td>
 						</tr>
 						<tr>
 							<td width="120"><label for="password"><?php echo JText::_('Password'); ?>:</label></td>
 							<td><input type="password" id="password" name="password" class="input_box" size="70"
-							           value=""/></td>
+									value="" /></td>
 						</tr>
 						</tbody>
 					</table>
@@ -65,7 +69,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet(JUri::base(true) 
 				</tr>
 				<tr>
 					<td><textarea style="width:100%;height:500px" cols="110" rows="25" name="filecontent"
-					              class="inputbox"><?php echo $this->content; ?></textarea></td>
+							class="inputbox"><?php echo $this->content; ?></textarea></td>
 				</tr>
 			</table>
 		</form>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template.Joomla30
  * @subpackage    Layouts.Attachment
  *

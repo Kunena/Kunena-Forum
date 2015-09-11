@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Common
  *
@@ -11,12 +12,12 @@
 defined('_JEXEC') or die ();
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="jumpto" name="jumpto" method="post"
-      target="_self">
-	<input type="hidden" name="view" value="category"/>
-	<input type="hidden" name="task" value="jump"/>
+	target="_self">
+	<input type="hidden" name="view" value="category" />
+	<input type="hidden" name="task" value="jump" />
 
 	<span class="kright">
 		<?php echo $this->categorylist; ?>
-		<input type="submit" name="Go" class="kbutton ks" value="<?php echo JText::_('COM_KUNENA_GO'); ?>"/>
+		<input type="submit" name="Go" class="kbutton ks" value="<?php echo JText::_('COM_KUNENA_GO'); ?>" />
 	</span>
 </form>

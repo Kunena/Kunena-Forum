@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topics
  *
@@ -36,8 +37,14 @@ $this->cache = false;
 	</td>
 
 	<td class="kcol-mid kcol-ktopictitle">
-		<?php if ($this->topic->attachments) echo $this->getIcon('ktopicattach', JText::_('COM_KUNENA_ATTACH')); ?>
-		<?php if ($this->topic->poll_id) echo $this->getIcon('ktopicpoll', JText::_('COM_KUNENA_ADMIN_POLLS')); ?>
+		<?php if ($this->topic->attachments)
+		{
+			echo $this->getIcon('ktopicattach', JText::_('COM_KUNENA_ATTACH'));
+		} ?>
+		<?php if ($this->topic->poll_id)
+		{
+			echo $this->getIcon('ktopicpoll', JText::_('COM_KUNENA_ADMIN_POLLS'));
+		} ?>
 
 		<div class="ktopic-title-cover">
 			<?php
@@ -66,7 +73,7 @@ $this->cache = false;
 		</div>
 		<div class="ktopic-details-kcategory" style="clear:both;">
 			<span class="ktopic-posted-time"
-			      title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
+				title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat'); ?>
 			</span>
 			<span
@@ -113,9 +120,9 @@ $this->cache = false;
 			?>
 			</span>
 
-			<br/>
+			<br />
 			<span class="ktopic-date"
-			      title="<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?>">
+				title="<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat'); ?>
 			</span>
 		</div>
@@ -123,13 +130,13 @@ $this->cache = false;
 
 	<?php if (!empty($this->topicActions)) : ?>
 		<td class="kcol-mid ktopicmoderation"><input class="kcheck" type="checkbox"
-		                                             name="topics[<?php echo $this->topic->id ?>]" value="1"/></td>
+				name="topics[<?php echo $this->topic->id ?>]" value="1" /></td>
 	<?php endif; ?>
 </tr>
 <!-- Module position -->
 <?php if ($this->module) : ?>
 	<tr>
 		<td class="ktopicmodule"
-		    colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
+			colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
 	</tr>
 <?php endif; ?>

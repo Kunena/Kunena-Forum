@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Prune
  *
@@ -22,8 +23,8 @@ defined('_JEXEC') or die ();
 	<div id="j-main-container" class="span10">
 
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-		      method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="uninstall"/>
+			method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="uninstall" />
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
@@ -36,7 +37,7 @@ defined('_JEXEC') or die ();
 						<td width="20%"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_LOGIN') ?></td>
 						<td>
 							<div>
-								<input class="span3" type="text" name="username" value=""/>
+								<input class="span3" type="text" name="username" value="" />
 							</div>
 						</td>
 					</tr>
@@ -44,7 +45,7 @@ defined('_JEXEC') or die ();
 						<td width="20%"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PASSWORD') ?></td>
 						<td>
 							<div>
-								<input class="span3" type="password" name="password" value=""/>
+								<input class="span3" type="password" name="password" value="" />
 							</div>
 						</td>
 					</tr>
@@ -52,7 +53,7 @@ defined('_JEXEC') or die ();
 						<td></td>
 						<td>
 							<button type="submit"
-							        class="btn btn-danger"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+								class="btn btn-danger"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 						</td>
 					</tr>
 				</table>

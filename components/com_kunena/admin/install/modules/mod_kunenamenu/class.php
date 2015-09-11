@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Menu Module
+ *
  * @package       Kunena.Modules
  * @subpackage    Menu
  *

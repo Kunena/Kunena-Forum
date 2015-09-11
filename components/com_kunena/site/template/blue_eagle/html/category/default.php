@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Category
  *
@@ -16,8 +17,8 @@ defined('_JEXEC') or die ();
 	<div class="kblock">
 		<div class="kheader">
 			<span class="ktoggler"><a class="ktoggler close"
-			                          title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-			                          rel="frontstats_tbody"></a></span>
+					title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
+					rel="frontstats_tbody"></a></span>
 
 			<h2><span><?php echo JText::_('COM_KUNENA_FORUM_HEADER'); ?></span></h2>
 		</div>
@@ -37,7 +38,7 @@ defined('_JEXEC') or die ();
 			<td class="klist-actions-goto">
 				<a id="forumtop"> </a>
 				<a class="kbuttongoto" href="#forumbottom"
-				   rel="nofollow"><?php echo $this->getIcon('kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM')) ?></a>
+					rel="nofollow"><?php echo $this->getIcon('kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM')) ?></a>
 			</td>
 			<?php $this->displayCategoryActions() ?>
 			<td class="klist-pages-all"><?php echo $this->getPagination(7); // odd number here (# - 2) ?></td>
@@ -45,14 +46,14 @@ defined('_JEXEC') or die ();
 	</table>
 
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="ktopicsform">
-		<input type="hidden" name="view" value="topics"/>
+		<input type="hidden" name="view" value="topics" />
 		<?php echo JHtml::_('form.token'); ?>
 
 		<div class="kblock kflat">
 			<div class="kheader">
 				<?php if (!empty($this->topicActions)) : ?>
 					<span class="kcheckbox select-toggle"><input class="kcheckall" type="checkbox" name="toggle"
-					                                             value=""/></span>
+							value="" /></span>
 				<?php endif; ?>
 				<h3><span><?php echo $this->escape($this->headerText); ?></span></h3>
 			</div>
@@ -72,8 +73,11 @@ defined('_JEXEC') or die ();
 								<!-- Bulk Actions -->
 								<tr class="krow1">
 									<td colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"
-									    class="kcol krowmoderation">
-										<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
+										class="kcol krowmoderation">
+										<?php if (!empty($this->moreUri))
+										{
+											echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow');
+										} ?>
 										<?php if (!empty($this->topicActions)) : ?>
 											<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 											<?php if ($this->actionMove) :
@@ -81,7 +85,7 @@ defined('_JEXEC') or die ();
 												echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 											endif; ?>
 											<input type="submit" name="kcheckgo" class="kbutton"
-											       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+												value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 										<?php endif; ?>
 									</td>
 								</tr>
@@ -99,7 +103,7 @@ defined('_JEXEC') or die ();
 			<td class="klist-actions-goto">
 				<a id="forumbottom"> </a>
 				<a class="kbuttongoto" href="#forumtop"
-				   rel="nofollow"><?php echo $this->getIcon('kforumtop', JText::_('COM_KUNENA_GEN_GOTOTOP')) ?></a>
+					rel="nofollow"><?php echo $this->getIcon('kforumtop', JText::_('COM_KUNENA_GEN_GOTOTOP')) ?></a>
 			</td>
 			<?php $this->displayCategoryActions() ?>
 			<td class="klist-pages-all"><?php echo $this->getPagination(7); // odd number here (# - 2) ?></td>

@@ -85,35 +85,35 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 ?>
 
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post"
-	      class="form-horizontal form-validate"
-	      id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
-		<input type="hidden" name="view" value="topic"/>
+		class="form-horizontal form-validate"
+		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
+		<input type="hidden" name="view" value="topic" />
 		<input id="kurl_topicons_request" type="hidden"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>"/>
-		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
+			value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>" />
+		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
 		<input id="kpreview_url" type="hidden" name="kpreview_url"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>
+			value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
 		<?php if ($this->message->exists()) : ?>
-			<input type="hidden" name="task" value="edit"/>
-			<input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>"/>
+			<input type="hidden" name="task" value="edit" />
+			<input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
 		<?php else: ?>
-			<input type="hidden" name="task" value="post"/>
-			<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>"/>
+			<input type="hidden" name="task" value="post" />
+			<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
 		<?php endif; ?>
 		<?php if (!isset($this->selectcatlist)) : ?>
-			<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>"/>
+			<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
 		<?php endif; ?>
 		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
-			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>"/>
+			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 		<?php endif; ?>
 		<?php if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id): ?>
 			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit"
-			       value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>"/>
+				value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>" />
 		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload"
-		       value="<?php echo intval($this->message->catid) ?>"/>
+			value="<?php echo intval($this->message->catid) ?>" />
 		<input type="hidden" id="kunena_upload_files_url"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . JSession::getFormToken() . '=1', false) ?>"/>
+			value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . JSession::getFormToken() . '=1', false) ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 
 		<h2>
@@ -134,13 +134,13 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php endif; ?>
 						<?php if ($this->message->userid) : ?>
 							<div class="control-group" id="kanynomous-check"
-							     <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+								<?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 								<label
 									class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 
 								<div class="controls">
 									<input type="checkbox" id="kanonymous" name="anonymous"
-									       value="1" <?php if ($this->post_anonymous)
+										value="1" <?php if ($this->post_anonymous)
 									{
 										echo 'checked="checked"';
 									} ?> />
@@ -150,16 +150,16 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 						<div class="control-group" id="kanynomous-check-name"
-						     <?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
 
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 
 							<div class="controls">
 								<input type="text" id="kauthorname" name="authorname" size="35"
-								       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>"
-								       class="input-xlarge" maxlength="35" tabindex="4"
-								       value="<?php echo $this->escape($this->message->name); ?>" required/>
+									placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>"
+									class="input-xlarge" maxlength="35" tabindex="4"
+									value="<?php echo $this->escape($this->message->name); ?>" required />
 							</div>
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>
@@ -168,11 +168,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 								<div class="controls">
 									<input type="text" id="email" name="email" size="35"
-									       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
-									       class="input-xlarge" maxlength="35" tabindex="5"
-									       value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>"
-									       required/>
-									<br/>
+										placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
+										class="input-xlarge" maxlength="35" tabindex="5"
+										value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>"
+										required />
+									<br />
 									<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 								</div>
 							</div>
@@ -182,14 +182,14 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 							<div class="controls">
 								<input class="span12" type="text"
-								       placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>"
-								       name="subject" id="subject"
-								       maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6"
-								       <?php if (!$this->config->allow_change_subject && $this->message->parent): ?>disabled<?php endif; ?>
-								       value="<?php echo $this->escape($this->message->subject); ?>" required/>
+									placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>"
+									name="subject" id="subject"
+									maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6"
+									<?php if (!$this->config->allow_change_subject && $this->message->parent): ?>disabled<?php endif; ?>
+									value="<?php echo $this->escape($this->message->subject); ?>" required />
 								<?php if (!$this->config->allow_change_subject && $this->topic->exists()): ?>
 									<input type="hidden" name="subject"
-									       value="<?php echo $this->escape($this->message->subject); ?>"/>
+										value="<?php echo $this->escape($this->message->subject); ?>" />
 								<?php endif; ?>
 							</div>
 						</div>
@@ -202,7 +202,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									<div id="iconset_topic_list">
 										<?php foreach ($this->topicIcons as $id => $icon): ?>
 										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
-										       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+											value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
 										<?php if ($this->config->topicicons && $topicicontype == 'B2') : ?>
 										<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 												class="icon icon-<?php echo $icon->b2; ?> icon-topic"
@@ -212,7 +212,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 													class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 												<?php else : ?>
 												<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-														src="<?php echo $icon->relpath; ?>" alt="" border="0"/>
+														src="<?php echo $icon->relpath; ?>" alt="" border="0" />
 													<?php endif; ?>
 												</label>
 												<?php endforeach; ?>
@@ -231,7 +231,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 								<div class="controls">
 									<textarea class="input-xlarge" name="modified_reason" size="40" maxlength="200"
-									          type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+										type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
 								</div>
 							</div>
 						<?php endif; ?>
@@ -246,11 +246,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									<div id="kattach_form" style="display: none;">
 										<span
 											class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>
-											: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br/><br/>
+											: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
 										<span
 											class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>
 											: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>
-											: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br/><br/>
+											: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
 										<!-- The fileinput-button span is used to style the file input field as button -->
 										<span class="btn btn-primary fileinput-button">
 											<i class="icon-plus"></i>
@@ -279,8 +279,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 								<div class="controls">
 									<input type="text" class="kinputbox postinput" name="tags" id="tags" size="35"
-									       maxlength="100"
-									       value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>"/>
+										maxlength="100"
+										value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" />
 								</div>
 							</div>
 						<?php endif; ?>
@@ -291,8 +291,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 								<div class="controls">
 									<input type="text" class="kinputbox postinput" name="mytags" id="mytags" size="35"
-									       maxlength="100"
-									       value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>"/>
+										maxlength="100"
+										value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>" />
 								</div>
 							</div>
 						<?php endif; ?>
@@ -303,13 +303,13 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
-									       id="subscribeMe"
-									       value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
+										id="subscribeMe"
+										value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
 									{
 										echo 'checked="checked"';
 									} ?> />
 									<label class="string optional"
-									       for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+										for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 								</div>
 							</div>
 						<?php endif; ?>

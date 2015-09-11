@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
@@ -16,13 +17,13 @@ defined('_JEXEC') or die;
 </h2>
 
 <form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" class="form-horizontal">
-	<input type="hidden" name="view" value="topic"/>
-	<input type="hidden" name="task" value="report"/>
-	<input type="hidden" name="catid" value="<?php echo (int) $this->category->id; ?>"/>
-	<input type="hidden" name="id" value="<?php echo (int) $this->topic->id; ?>"/>
+	<input type="hidden" name="view" value="topic" />
+	<input type="hidden" name="task" value="report" />
+	<input type="hidden" name="catid" value="<?php echo (int) $this->category->id; ?>" />
+	<input type="hidden" name="id" value="<?php echo (int) $this->topic->id; ?>" />
 
 	<?php if ($this->message) : ?>
-		<input type="hidden" name="mesid" value="<?php echo (int) $this->message->id; ?>"/>
+		<input type="hidden" name="mesid" value="<?php echo (int) $this->message->id; ?>" />
 	<?php endif; ?>
 
 	<?php echo JHtml::_('form.token'); ?>
@@ -34,7 +35,7 @@ defined('_JEXEC') or die;
 			</label>
 
 			<div class="controls">
-				<input class="input-xxlarge" type="text" name="reason" size="30" id="kreport-reason"/>
+				<input class="input-xxlarge" type="text" name="reason" size="30" id="kreport-reason" />
 			</div>
 		</div>
 		<div class="control-group">
@@ -49,7 +50,7 @@ defined('_JEXEC') or die;
 		<div class="control-group">
 			<div class="controls">
 				<input class="btn btn-primary" type="submit" name="Submit"
-				       value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>"/>
+					value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>" />
 				<button class="btn" data-dismiss="modal" aria-hidden="true">
 					<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>

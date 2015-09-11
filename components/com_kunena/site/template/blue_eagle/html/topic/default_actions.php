@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -12,7 +13,10 @@ defined('_JEXEC') or die ();
 
 // Goto up / down
 $locations = array('top', 'bottom');
-if (!isset($this->location)) $this->location = 0;
+if (!isset($this->location))
+{
+	$this->location = 0;
+}
 $goto = '<a name="forum' . $locations[$this->location] . '"></a>';
 $this->location ^= 1;
 $goto .= '<a class="kbuttongoto" href="#forum' . $locations[$this->location] . '" rel="nofollow">' . $this->getIcon('kforum' . $locations[$this->location], JText::_('COM_KUNENA_GEN_GOTO' . strtoupper($locations[$this->location]))) . '</a>';

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Templates
  *
@@ -28,9 +29,9 @@ JHtml::_('behavior.tooltip');
 					<form
 						action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>"
 						method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="task" value=""/>
+						<input type="hidden" name="task" value="" />
 						<input type="hidden" name="templatename"
-						       value="<?php echo $this->escape($this->templatename); ?>">
+							value="<?php echo $this->escape($this->templatename); ?>">
 						<?php echo JHtml::_('form.token'); ?>
 
 						<div class="row-fluid">
@@ -50,7 +51,7 @@ JHtml::_('behavior.tooltip');
 											if (is_file($path)) : ?>
 												<div><img
 														src="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/images/template_thumbnail.png"
-														alt=""/></div>
+														alt="" /></div>
 											<?php endif; ?>
 											<div><?php echo JText::_($this->details->description); ?></div>
 										</td>
@@ -78,7 +79,7 @@ JHtml::_('behavior.tooltip');
 													<?php foreach ($this->form->getFieldset() as $field) : if (!$field->hidden) : ?>
 														<tr>
 															<td width="40%"
-															    class="paramlist_key"><?php echo $field->label; ?></td>
+																class="paramlist_key"><?php echo $field->label; ?></td>
 															<td class="paramlist_value"><?php echo $field->input; ?></td>
 														</tr>
 													<?php endif; endforeach; ?>

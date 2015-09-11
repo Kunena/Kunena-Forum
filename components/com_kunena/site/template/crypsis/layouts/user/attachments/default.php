@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -20,9 +21,9 @@ $attachments = $this->attachments;
 </h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" id="adminForm"
-      name="adminForm">
-	<input type="hidden" name="task" value="delfile"/>
-	<input type="hidden" name="boxchecked" value="0"/>
+	name="adminForm">
+	<input type="hidden" name="task" value="delfile" />
+	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-striped table-hover">
@@ -34,7 +35,7 @@ $attachments = $this->attachments;
 			<th class="span1 center">
 				<label>
 					<input type="checkbox" name="checkall-toggle" value="cid"
-					       title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
+						title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</label>
 			</th>
 			<th class="span1 center">
@@ -73,7 +74,10 @@ $attachments = $this->attachments;
 				<tr>
 					<td class="center"><?php echo ++$i; ?></td>
 					<td class="center">
-						<?php if ($canDelete) echo JHtml::_('grid.id', $i, intval($attachment->id)); ?>
+						<?php if ($canDelete)
+						{
+							echo JHtml::_('grid.id', $i, intval($attachment->id));
+						} ?>
 					</td>
 					<td class="center">
 						<?php echo $attachment->isImage() ? '<i class="large-kicon icon-picture"></i>' : '<i class="large-kicon icon-file"></i>'; ?>
@@ -94,7 +98,7 @@ $attachments = $this->attachments;
 
 						<?php if ($canDelete) : ?>
 							<a class="center" href="javascript:void(0);"
-							   onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
+								onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
 								<i class="icon-remove hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
 							</a>
 						<?php endif; ?>
@@ -106,5 +110,5 @@ $attachments = $this->attachments;
 		</tbody>
 	</table>
 
-	<input class="btn pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>"/>
+	<input class="btn pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>" />
 </form>

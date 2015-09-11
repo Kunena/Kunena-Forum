@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Category
  *
@@ -20,8 +21,8 @@ foreach ($this->sections as $section) :
 		<div class="kheader">
 			<?php if (count($this->sections) > 0) : ?>
 				<span class="ktoggler"><a class="ktoggler close"
-				                          title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-				                          rel="catid_<?php echo intval($section->id) ?>"></a></span>
+						title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
+						rel="catid_<?php echo intval($section->id) ?>"></a></span>
 			<?php endif; ?>
 			<h1><span><?php echo $this->GetCategoryLink($section, $this->escape($section->name)); ?></span></h1>
 			<?php if (!empty($section->description)) : ?>
@@ -33,7 +34,7 @@ foreach ($this->sections as $section) :
 		<div class="kcontainer" id="catid_<?php echo intval($section->id) ?>">
 			<div class="kbody">
 				<table class="kblocktable<?php echo $htmlClassBlockTable ?>"
-				       id="kcat<?php echo intval($section->id) ?>">
+					id="kcat<?php echo intval($section->id) ?>">
 					<?php if (empty ($this->categories [$section->id]))
 					{
 						echo JText::_('COM_KUNENA_GEN_NOFORUMS');
@@ -45,7 +46,7 @@ foreach ($this->sections as $section) :
 						{
 							?>
 							<tr class="k<?php echo $tabclass [$k ^= 1], isset ($category->class_sfx) ? ' k' . $this->escape($tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
-							    id="kcat<?php echo intval($category->id) ?>">
+								id="kcat<?php echo intval($category->id) ?>">
 								<td class="kcol-first kcol-category-icon hidden-phone">
 									<?php if (!empty($category->icon)) : ?>
 										<i class="icon-big <?php echo $category->icon; ?> <?php if ($category->getNewCount()) : ?>  icon-knewchar <?php endif; ?>"></i>

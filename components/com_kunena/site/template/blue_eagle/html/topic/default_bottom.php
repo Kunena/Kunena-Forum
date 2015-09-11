@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -16,7 +17,7 @@ defined('_JEXEC') or die ();
 			<?php echo $this->displayMessageField('subject') ?>
 		</span>
 		<span class="kmsgdate kmsgdate-bottom"
-		      title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
+			title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 			<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 		</span>
 		<span class="kmsg-id-bottom">

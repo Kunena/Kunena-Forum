@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Trash
  *
@@ -33,10 +34,10 @@ $count = count($this->purgeitems);
 				</div>
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>"
-					      method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="task" value="purge"/>
-						<input type="hidden" name="boxchecked" value="1"/>
-						<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>"/>
+						method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="task" value="purge" />
+						<input type="hidden" name="boxchecked" value="1" />
+						<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>" />
 						<?php echo JHtml::_('form.token'); ?>
 						<fieldset>
 							<legend><?php echo JText::_('COM_KUNENA_ITEMS_BEING_DELETED'); ?></legend>

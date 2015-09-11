@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    User
  *
@@ -26,7 +27,7 @@ $i = 0;
 							<label for="kavatar-keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP'); ?></label>
 						</td>
 						<td class="kcol-mid">
-							<input id="kavatar-keep" type="radio" name="avatar" value="keep" checked="checked"/>
+							<input id="kavatar-keep" type="radio" name="avatar" value="keep" checked="checked" />
 						</td>
 					</tr>
 					<tr class="krow<?php echo ($i ^= 1) + 1; ?>">
@@ -35,7 +36,7 @@ $i = 0;
 								for="kavatar-delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE'); ?></label>
 						</td>
 						<td class="kcol-mid">
-							<input id="kavatar-delete" type="radio" name="avatar" value="delete"/>
+							<input id="kavatar-delete" type="radio" name="avatar" value="delete" />
 						</td>
 					</tr>
 				<?php endif; ?>
@@ -46,7 +47,7 @@ $i = 0;
 								for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD'); ?></label>
 						</td>
 						<td class="kcol-mid">
-							<div><input id="kavatar-upload" type="file" class="button" name="avatarfile"/></div>
+							<div><input id="kavatar-upload" type="file" class="button" name="avatarfile" /></div>
 						</td>
 					</tr>
 				<?php endif; ?>
@@ -68,9 +69,9 @@ $i = 0;
 											<span>
 						<label for="kavatar<?php echo $kid ?>"><img
 								src="<?php echo $this->galleryurl . '/' . ($this->gallery ? $this->gallery . '/' : '') . $avatarimg ?>"
-								alt=""/></label>
+								alt="" /></label>
 						<input id="kavatar<?php echo $kid ?>" type="radio" name="avatar"
-						       value="<?php echo 'gallery/' . ($this->gallery ? $this->gallery . '/' : '') . $avatarimg ?>"/>
+							value="<?php echo 'gallery/' . ($this->gallery ? $this->gallery . '/' : '') . $avatarimg ?>" />
 					</span>
 											<?php $kid++; endforeach; ?>
 									</td>
@@ -81,10 +82,10 @@ $i = 0;
 					<div>
 						<?php foreach ($this->galleryImagesList as $name => $gallery): ?>
 							<input type="hidden" id="Kunena_<?php echo $name ?>" name="<?php echo $name ?>"
-							       value='<?php echo $gallery ?>'/>
+								value='<?php echo $gallery ?>' />
 						<?php endforeach; ?>
 						<input type="hidden" id="Kunena_Image_Gallery_URL" name="Kunena_Image_Gallery_URL"
-						       value="<?php echo JURI::root() . 'media/kunena/avatars/gallery' ?>"/>
+							value="<?php echo JURI::root() . 'media/kunena/avatars/gallery' ?>" />
 					</div>
 				<?php endif; ?>
 			</table>

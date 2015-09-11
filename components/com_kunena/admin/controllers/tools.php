@@ -275,7 +275,6 @@ class KunenaAdminControllerTools extends KunenaController
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
 		}
 
-
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -480,8 +479,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 			$state->reload++;
 			$this->app->setUserState('com_kunena.admin.recount', $state);
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			if (!$ajax)
 			{

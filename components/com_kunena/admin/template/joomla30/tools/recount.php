@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    SyncUsers
  *
@@ -34,8 +35,8 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-		      method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="recount"/>
+			method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="recount" />
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
@@ -43,22 +44,22 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 				<table class="table table-bordered table-striped">
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_TOPICS'); ?></td>
-						<td><input type="checkbox" checked="checked" name="topics" value="1"/></td>
+						<td><input type="checkbox" checked="checked" name="topics" value="1" /></td>
 						<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_TOPICS_DESC'); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERTOPICS'); ?></td>
-						<td><input type="checkbox" checked="checked" name="usertopics" value="1"/></td>
+						<td><input type="checkbox" checked="checked" name="usertopics" value="1" /></td>
 						<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERTOPICS_DESC'); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_CATEGORIES'); ?></td>
-						<td><input type="checkbox" checked="checked" name="categories" value="1"/></td>
+						<td><input type="checkbox" checked="checked" name="categories" value="1" /></td>
 						<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_CATEGORIES_DESC'); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERS'); ?></td>
-						<td><input type="checkbox" checked="checked" name="users" value="1"/></td>
+						<td><input type="checkbox" checked="checked" name="users" value="1" /></td>
 						<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERS_DESC'); ?></td>
 					</tr>
 				</table>
@@ -73,7 +74,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 
 <!-- Modal -->
 <div id="recountModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="recountModalLabel"
-     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+	aria-hidden="true" data-backdrop="static" data-keyboard="false">
 	<div class="modal-header">
 		<button type="button" class="close recount-close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3></h3>
@@ -88,7 +89,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 	</div>
 	<div class="modal-footer">
 		<button class="btn recount-close" data-dismiss="modal"
-		        aria-hidden="true"><?php echo JText::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
+			aria-hidden="true"><?php echo JText::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
 	</div>
 </div>
 
@@ -97,14 +98,14 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 		$.fn.doRecount = function (href, data) {
 			var $this = $(this);
 			var kunenaRequest = $.ajax({
-				type: 'POST',
-				url: href,
-				data: data,
+				type    : 'POST',
+				url     : href,
+				data    : data,
 				dataType: 'json',
-				context: this,
-				cache: false,
-				timeout: 180000, // 3 minutes
-				success: function (data, status) {
+				context : this,
+				cache   : false,
+				timeout : 180000, // 3 minutes
+				success : function (data, status) {
 					var $this = $(this);
 
 					if ('header' in data) {
@@ -134,7 +135,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 					}
 					$this.find('.recount-close').removeAttr('disabled');
 				},
-				error: function (xhr, status, error) {
+				error   : function (xhr, status, error) {
 					var $this = $(this);
 					if (status == 'error' && error) {
 						$this.find('.modal-header h3').text(xhr.status + ' ' + error);

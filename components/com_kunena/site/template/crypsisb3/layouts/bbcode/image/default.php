@@ -32,7 +32,7 @@ $attributesImg .= $size ? ' width="' . (int) $size . '"' : '';
 	<a href="<?php echo $this->escape($url); ?>" title=""<?php echo $attributesLink; ?>>
 		<?php endif; ?>
 
-		<img src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> alt=""/>
+		<img src="<?php echo $this->escape($url); ?>"<?php echo $attributesImg; ?> alt="" />
 
 		<?php if ($canLink) : ?>
 	</a>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -52,7 +53,10 @@ else
 	$loadResponsiveCSS = $template->params->get('loadResponsiveCSS', 1);
 	// Load css from default template
 	$template->addStyleSheet('css/kunena.forum.css');
-	if ($loadResponsiveCSS) $template->addStyleSheet('css/kunena.responsive.css');
+	if ($loadResponsiveCSS)
+	{
+		$template->addStyleSheet('css/kunena.responsive.css');
+	}
 	if ($skinner)
 	{
 		$template->addStyleSheet('css/kunena.skinner.css');
@@ -65,7 +69,7 @@ else
 $cssurl = JUri::root(true) . '/components/com_kunena/template/blue_eagle/css';
 ?>
 	<!--[if lte IE 7]>
-	<link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css"/>
+	<link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
 	<![endif]-->
 <?php
 $mediaurl = JUri::root(true) . "/components/com_kunena/template/{$template->name}/media";

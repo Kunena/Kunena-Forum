@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -21,7 +22,7 @@ defined('_JEXEC') or die ();
 	</td>
 	<td class="kcol-mid kprofile kprofile-list"><?php echo $this->message->getAuthor()->getLink() ?></td>
 	<td class="kcol-last kmsgdate kmsgdate-list"
-	    title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
+		title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 		<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 	</td>
 </tr>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Templates
  *
@@ -26,7 +27,7 @@ defined('_JEXEC') or die ();
 					<form
 						action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
 						method="post" enctype="multipart/form-data" id="adminForm" name="adminForm">
-						<input type="hidden" name="task" value="install"/>
+						<input type="hidden" name="task" value="install" />
 						<?php echo JHtml::_('form.token'); ?>
 
 						<fieldset>
@@ -37,9 +38,9 @@ defined('_JEXEC') or die ();
 								<label
 									for="install_package"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>
 									:</label>
-								<input class="input_box" name="install_package" type="file"/>
+								<input class="input_box" name="install_package" type="file" />
 								<input class="btn" type="submit" name="submit"
-								       value="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
+									value="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>" />
 							</div>
 						</fieldset>
 					</form>

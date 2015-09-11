@@ -1181,8 +1181,7 @@ class KunenaModelInstall extends JModelLegacy
 					{
 						$success = true;
 					}
-				}
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					$success = false;
 				}

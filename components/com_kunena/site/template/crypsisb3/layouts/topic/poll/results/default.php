@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
@@ -16,7 +17,7 @@ $this->addScript('poll.js');
 
 <?php if ($this->show_title) : ?>
 	<button class="btn btn-default pull-right" type="button" data-toggle="collapse" data-target="#poll-results"
-	        aria-expanded="false" aria-controls="poll-results">
+		aria-expanded="false" aria-controls="poll-results">
 		&times;
 	</button>
 	<h2>
@@ -38,8 +39,8 @@ $this->addScript('poll.js');
 				<td class="col-md-8">
 					<div class="progress progress-striped">
 						<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $percentage; ?>"
-						     aria-valuemin="0" aria-valuemax="100"
-						     style="height:30px;width:<?php echo $percentage; ?>%;"></div>
+							aria-valuemin="0" aria-valuemax="100"
+							style="height:30px;width:<?php echo $percentage; ?>%;"></div>
 					</div>
 				</td>
 				<td>
@@ -65,7 +66,10 @@ $this->addScript('poll.js');
 			<td colspan="4">
 				<?php
 				echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
-				if (!empty($this->users_voted_list)) echo " ( " . implode(', ', $this->users_voted_list) . " ) "; ?>
+				if (!empty($this->users_voted_list))
+				{
+					echo " ( " . implode(', ', $this->users_voted_list) . " ) ";
+				} ?>
 				<?php if ($this->usercount > '5') : ?>
 					<a href="#" id="kpoll-moreusers"><?php echo JText::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
 					<div style="display: none;" id="kpoll-moreusers-div">
@@ -94,12 +98,12 @@ $this->addScript('poll.js');
 						<?php echo JText::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
 					</a>
 					<div id="resetVotes" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel"
-					     aria-hidden="true">
+						aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"
-									        aria-hidden="true">&times;</button>
+										aria-hidden="true">&times;</button>
 									<h3>
 										<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
 									</h3>
@@ -112,7 +116,7 @@ $this->addScript('poll.js');
 										<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
 									</a>
 									<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . JSession::getFormToken() . '=1') ?>"
-									   class="btn btn-primary">
+										class="btn btn-primary">
 										<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
 									</a>
 								</div>

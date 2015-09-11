@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Category
  *
@@ -11,7 +12,7 @@
 defined('_JEXEC') or die;
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
-      name="kcategoryform" id="kcategoryform">
+	name="kcategoryform" id="kcategoryform">
 	<?php echo JHtml::_('form.token'); ?>
 
 	<h3>
@@ -22,7 +23,7 @@ defined('_JEXEC') or die;
 			<div class="input-group pull-right">
 				<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
 					'kchecktask'); ?>
-				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 			</div>
 		<?php endif; ?>
 
@@ -42,7 +43,7 @@ defined('_JEXEC') or die;
 			<tr>
 				<th colspan="2"></th>
 				<th class="center">
-					<input class="kcheckall" type="checkbox" name="toggle" value=""/>
+					<input class="kcheckall" type="checkbox" name="toggle" value="" />
 				</th>
 			</tr>
 			</thead>

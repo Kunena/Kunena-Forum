@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Application
  *
@@ -76,8 +77,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 			{
 				$content = KunenaRequest::factory($display, $this->input, $this->options)
 					->setPrimary()->execute()->render();
-			}
-			catch (Exception $e)
+			} catch (Exception $e)
 			{
 				$content = $e;
 			}

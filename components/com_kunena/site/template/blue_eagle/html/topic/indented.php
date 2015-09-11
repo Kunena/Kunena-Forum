@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -18,7 +19,7 @@ var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS', true)
 
 <?php if ($this->category->headerdesc) : ?>
 	<div id="kforum-head"
-	     class="<?php echo isset ($this->category->class_sfx) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">
+		class="<?php echo isset ($this->category->class_sfx) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">
 		<?php echo KunenaHtmlParser::parseBBCode($this->category->headerdesc) ?>
 	</div>
 <?php endif ?>
@@ -43,7 +44,7 @@ var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS', true)
 	<div class="kbody">
 		<?php foreach ($this->messages as $id => $message) : ?>
 			<div class="kmsgindent"
-			     style="padding-left: <?php echo (count($message->indent) - 3) * 2 ?>%"><?php $this->displayMessage($id, $message); ?></div>
+				style="padding-left: <?php echo (count($message->indent) - 3) * 2 ?>%"><?php $this->displayMessage($id, $message); ?></div>
 		<?php endforeach; ?>
 	</div>
 </div>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Config
  *
@@ -24,35 +25,35 @@ defined('_JEXEC') or die ();
 				</div>
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
-					      method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="view" value="config"/>
-						<input type="hidden" name="task" value=""/>
+						method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="view" value="config" />
+						<input type="hidden" name="task" value="" />
 						<?php echo JHtml::_('form.token') ?>
 
 						<div class="data-container">
 							<div class="tabbable">
 								<ul class="nav nav-tabs">
 									<li class="active"><a href="#tab_basics"
-									                      data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASICS'); ?></a>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASICS'); ?></a>
 									</li>
 									<li><a href="#tab_frontend"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_FRONTEND'); ?></a></li>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_FRONTEND'); ?></a></li>
 									<li><a href="#tab_users"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_USERS'); ?></a></li>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_USERS'); ?></a></li>
 									<li><a href="#tab_security"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_SECURITY'); ?></a></li>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_SECURITY'); ?></a></li>
 									<li><a href="#tab_avatars"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_AVATARS'); ?></a></li>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_AVATARS'); ?></a></li>
 									<li><a href="#tab_uploads"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_UPLOADS'); ?></a></li>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_UPLOADS'); ?></a></li>
 									<li><a href="#tab_ranking"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKING'); ?></a></li>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKING'); ?></a></li>
 									<li><a href="#tab_bbcode"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BBCODE'); ?></a></li>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BBCODE'); ?></a></li>
 									<li><a href="#tab_rss"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_RSS'); ?></a></li>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_RSS'); ?></a></li>
 									<li><a href="#tab_extra"
-									       data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA'); ?></a>
+											data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA'); ?></a>
 									</li>
 								</ul>
 
@@ -72,14 +73,14 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE') ?></td>
 													<td><input type="text" name="cfg_board_title"
-													           value="<?php echo $this->escape($this->config->board_title) ?>"/>
+															value="<?php echo $this->escape($this->config->board_title) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_EMAIL') ?></td>
 													<td><input type="text" name="cfg_email"
-													           value="<?php echo $this->escape($this->config->email) ?>"/>
+															value="<?php echo $this->escape($this->config->email) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_EMAIL_DESC2') ?></td>
 												</tr>
@@ -97,16 +98,16 @@ defined('_JEXEC') or die ();
 													<td><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES') ?></td>
 													<td colspan="2">
 														<textarea name="cfg_offline_message" rows="3"
-														          cols="50"><?php echo $this->escape($this->config->offline_message) ?></textarea>
+															cols="50"><?php echo $this->escape($this->config->offline_message) ?></textarea>
 													</td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT') ?>
 													</td>
 													<td><input type="text"
-													           name="cfg_sessiontimeout"
-													           value="<?php echo $this->escape($this->config->sessiontimeout);
-													           ?>"/></td>
+															name="cfg_sessiontimeout"
+															value="<?php echo $this->escape($this->config->sessiontimeout);
+															?>" /></td>
 													<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
 													</td>
 												</tr>
@@ -115,7 +116,7 @@ defined('_JEXEC') or die ();
 													<td><?php echo $this->lists ['enablerss'] ?></td>
 													<td><img
 															src="<?php echo JUri::base(true) ?>/components/com_kunena/media/icons/small/livemarks.png"
-															alt=""/> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?>
+															alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?>
 													</td>
 												</tr>
 												<tr>
@@ -208,21 +209,21 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_THREADS') ?></td>
 													<td><input type="text" name="cfg_threads_per_page"
-													           value="<?php echo $this->escape($this->config->threads_per_page) ?>"/>
+															value="<?php echo $this->escape($this->config->threads_per_page) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_THREADS_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES') ?></td>
 													<td><input type="text" name="cfg_messages_per_page"
-													           value="<?php echo $this->escape($this->config->messages_per_page) ?>"/>
+															value="<?php echo $this->escape($this->config->messages_per_page) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_SEARCH') ?></td>
 													<td><input type="text" name="cfg_messages_per_page_search"
-													           value="<?php echo $this->escape($this->config->messages_per_page_search) ?>"/>
+															value="<?php echo $this->escape($this->config->messages_per_page_search) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH') ?></td>
 												</tr>
@@ -234,7 +235,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_HISTLIM') ?></td>
 													<td><input type="text" name="cfg_historylimit"
-													           value="<?php echo $this->escape($this->config->historylimit) ?>"/>
+															value="<?php echo $this->escape($this->config->historylimit) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
 												</tr>
@@ -271,7 +272,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH') ?></td>
 													<td><input type="text" name="cfg_catimagepath"
-													           value="<?php echo $this->escape($this->config->catimagepath) ?>"/>
+															value="<?php echo $this->escape($this->config->catimagepath) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_DESC') ?></td>
 												</tr>
@@ -283,14 +284,14 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_TAWIDTH') ?></td>
 													<td><input type="text" name="cfg_rtewidth"
-													           value="<?php echo $this->escape($this->config->rtewidth) ?>"/>
+															value="<?php echo $this->escape($this->config->rtewidth) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_TAWIDTH_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_TAHEIGHT') ?></td>
 													<td><input type="text" name="cfg_rteheight"
-													           value="<?php echo $this->escape($this->config->rteheight) ?>"/>
+															value="<?php echo $this->escape($this->config->rteheight) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_TAHEIGHT_DESC') ?></td>
 												</tr>
@@ -347,7 +348,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_START_TIME') ?></td>
 													<td><input type="text" name="cfg_show_session_starttime"
-													           value="<?php echo $this->escape($this->config->show_session_starttime) ?>"/>
+															value="<?php echo $this->escape($this->config->show_session_starttime) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?></td>
 												</tr>
@@ -408,21 +409,21 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH') ?></td>
 													<td><input type="text" name="cfg_maxsubject"
-													           value="<?php echo $this->escape($this->config->maxsubject) ?>"/>
+															value="<?php echo $this->escape($this->config->maxsubject) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
 													<td><input type="text" name="cfg_maxsig"
-													           value="<?php echo $this->escape($this->config->maxsig) ?>"/>
+															value="<?php echo $this->escape($this->config->maxsig) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT') ?></td>
 													<td><input type="text" name="cfg_maxpersotext"
-													           value="<?php echo $this->escape($this->config->maxpersotext) ?>"/>
+															value="<?php echo $this->escape($this->config->maxpersotext) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT_DESC') ?></td>
 												</tr>
@@ -476,7 +477,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
 													<td><input type="text" name="cfg_thankyou_max" class="ksm-field"
-													           value="<?php echo $this->escape($this->config->thankyou_max) ?>"/>
+															value="<?php echo $this->escape($this->config->thankyou_max) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
 												</tr>
@@ -488,14 +489,14 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIME') ?></td>
 													<td><input type="text" name="cfg_useredittime"
-													           value="<?php echo $this->escape($this->config->useredittime) ?>"/>
+															value="<?php echo $this->escape($this->config->useredittime) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIME_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE') ?></td>
 													<td><input type="text" name="cfg_useredittimegrace"
-													           value="<?php echo $this->escape($this->config->useredittimegrace) ?>"/>
+															value="<?php echo $this->escape($this->config->useredittimegrace) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC') ?></td>
 												</tr>
@@ -581,7 +582,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS') ?></td>
 													<td><input type="text" name="cfg_email_visible_address"
-													           value="<?php echo $this->escape($this->config->email_visible_address) ?>"/>
+															value="<?php echo $this->escape($this->config->email_visible_address) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS_DESC') ?></td>
 												</tr>
@@ -630,8 +631,8 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS') ?></td>
 													<td><input type="text" name="cfg_hold_newusers_posts"
-													           class="ksm-field"
-													           value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>"/>
+															class="ksm-field"
+															value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS_DESC') ?></td>
 												</tr>
@@ -648,7 +649,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_FLOOD') ?></td>
 													<td><input type="text" name="cfg_floodprotection"
-													           value="<?php echo $this->escape($this->config->floodprotection) ?>"/>
+															value="<?php echo $this->escape($this->config->floodprotection) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_FLOOD_DESC') ?></td>
 												</tr>
@@ -675,7 +676,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS') ?></td>
 													<td><input type="text" name="cfg_max_links"
-													           value="<?php echo $this->escape($this->config->max_links) ?>"/>
+															value="<?php echo $this->escape($this->config->max_links) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC') ?></td>
 												</tr>
@@ -706,24 +707,24 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT') ?></td>
 													<td><input type="text" name="cfg_captcha_post_limit"
-													           class="ksm-field"
-													           value="<?php echo $this->escape($this->config->captcha_post_limit) ?>"/>
+															class="ksm-field"
+															value="<?php echo $this->escape($this->config->captcha_post_limit) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PUBLICKEY') ?></td>
 													<td><input type="text" name="cfg_recaptcha_publickey"
-													           class="ksm-field-large"
-													           value="<?php echo $this->escape($this->config->recaptcha_publickey) ?>"/>
+															class="ksm-field-large"
+															value="<?php echo $this->escape($this->config->recaptcha_publickey) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PUBLICKEY_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PRIVATEKEY') ?></td>
 													<td><input type="text" name="cfg_recaptcha_privatekey"
-													           class="ksm-field-large"
-													           value="<?php echo $this->escape($this->config->recaptcha_privatekey) ?>"/>
+															class="ksm-field-large"
+															value="<?php echo $this->escape($this->config->recaptcha_privatekey) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PRIVATEKEY_DESC') ?></td>
 												</tr>
@@ -749,8 +750,8 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
 													<td><input type="text" name="cfg_stopforumspam_key"
-													           class="ksm-field-large"
-													           value="<?php echo $this->escape($this->config->stopforumspam_key) ?>"/>
+															class="ksm-field-large"
+															value="<?php echo $this->escape($this->config->stopforumspam_key) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC') ?></td>
 												</tr>
@@ -784,7 +785,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_AVSIZE') ?></td>
 													<td><input type="text" name="cfg_avatarsize" class="ksm-field"
-													           value="<?php echo $this->escape($this->config->avatarsize) ?>"/>
+															value="<?php echo $this->escape($this->config->avatarsize) ?>" />
 														kB
 													</td>
 													<td></td>
@@ -792,8 +793,8 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_AVATAR_QUALITY') ?></td>
 													<td class="nowrap"><input type="text" name="cfg_avatarquality"
-													                          class="ksm-field"
-													                          value="<?php echo $this->escape($this->config->avatarquality) ?>"/>
+															class="ksm-field"
+															value="<?php echo $this->escape($this->config->avatarquality) ?>" />
 														%
 													</td>
 													<td></td>
@@ -828,7 +829,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?></td>
 													<td><input type="text" name="cfg_attachment_limit"
-													           value="<?php echo $this->escape($this->config->attachment_limit) ?>"/>
+															value="<?php echo $this->escape($this->config->attachment_limit) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?></td>
 												</tr>
@@ -864,7 +865,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES') ?></td>
 													<td><input type="text" name="cfg_imagetypes"
-													           value="<?php echo $this->escape($this->config->imagetypes) ?>"/>
+															value="<?php echo $this->escape($this->config->imagetypes) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC') ?></td>
 												</tr>
@@ -876,14 +877,14 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES') ?></td>
 													<td><input type="text" name="cfg_imagemimetypes"
-													           value="<?php echo $this->escape($this->config->imagemimetypes) ?>"/>
+															value="<?php echo $this->escape($this->config->imagemimetypes) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGSIZE') ?></td>
 													<td><input type="text" name="cfg_imagesize" class="ksm-field"
-													           value="<?php echo $this->escape($this->config->imagesize) ?>"/>
+															value="<?php echo $this->escape($this->config->imagesize) ?>" />
 														kB
 													</td>
 													<td>
@@ -897,7 +898,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGWIDTH') ?></td>
 													<td><input type="text" name="cfg_imagewidth" class="ksm-field"
-													           value="<?php echo $this->escape($this->config->imagewidth) ?>"/>
+															value="<?php echo $this->escape($this->config->imagewidth) ?>" />
 														px
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGWIDTH_DESC') ?></td>
@@ -905,7 +906,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
 													<td><input type="text" name="cfg_imageheight" class="ksm-field"
-													           value="<?php echo $this->escape($this->config->imageheight) ?>"/>
+															value="<?php echo $this->escape($this->config->imageheight) ?>" />
 														px
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT_DESC') ?></td>
@@ -913,7 +914,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH') ?></td>
 													<td><input type="text" name="cfg_thumbwidth" class="ksm-field"
-													           value="<?php echo $this->escape($this->config->thumbwidth) ?>"/>
+															value="<?php echo $this->escape($this->config->thumbwidth) ?>" />
 														px
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH_DESC') ?></td>
@@ -921,7 +922,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT') ?></td>
 													<td><input type="text" class="ksm-field" name="cfg_thumbheight"
-													           value="<?php echo $this->escape($this->config->thumbheight) ?>"/>
+															value="<?php echo $this->escape($this->config->thumbheight) ?>" />
 														px
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT_DESC') ?></td>
@@ -929,7 +930,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGQUALITY') ?></td>
 													<td><input type="text" name="cfg_imagequality" class="ksm-field"
-													           value="<?php echo $this->escape($this->config->imagequality) ?>"/>
+															value="<?php echo $this->escape($this->config->imagequality) ?>" />
 														%
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_IMGQUALITY_DESC') ?></td>
@@ -961,14 +962,14 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES') ?></td>
 													<td><input type="text" name="cfg_filetypes"
-													           value="<?php echo $this->escape($this->config->filetypes) ?>"/>
+															value="<?php echo $this->escape($this->config->filetypes) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_FILESIZE') ?></td>
 													<td><input type="text" name="cfg_filesize" class="ksm-field"
-													           value="<?php echo $this->escape($this->config->filesize) ?>"/> <?php echo JText::_('COM_KUNENA_A_FILESIZE_KB') ?>
+															value="<?php echo $this->escape($this->config->filesize) ?>" /> <?php echo JText::_('COM_KUNENA_A_FILESIZE_KB') ?>
 													</td>
 													<td>
 														<?php
@@ -1050,14 +1051,14 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSFRONT') ?></td>
 													<td><input type="text" name="cfg_trimlongurlsfront"
-													           value="<?php echo $this->escape($this->config->trimlongurlsfront) ?>"/>
+															value="<?php echo $this->escape($this->config->trimlongurlsfront) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSFRONT_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK') ?></td>
 													<td><input type="text" name="cfg_trimlongurlsback"
-													           value="<?php echo $this->escape($this->config->trimlongurlsback) ?>"/>
+															value="<?php echo $this->escape($this->config->trimlongurlsback) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK_DESC') ?></td>
 												</tr>
@@ -1094,28 +1095,28 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID') ?></td>
 													<td><input type="text" name="cfg_ebay_affiliate_id"
-													           value="<?php echo $this->escape($this->config->ebay_affiliate_id) ?>"/>
+															value="<?php echo $this->escape($this->config->ebay_affiliate_id) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_EBAY_AFFILIATE_ID_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_LABEL') ?></td>
 													<td><input type="text" name="cfg_ebay_api_key"
-													           value="<?php echo $this->escape($this->config->ebay_api_key) ?>"/>
+															value="<?php echo $this->escape($this->config->ebay_api_key) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_LABEL') ?></td>
 													<td><input type="text" name="cfg_twitter_consumer_key"
-													           value="<?php echo $this->escape($this->config->twitter_consumer_key) ?>"/>
+															value="<?php echo $this->escape($this->config->twitter_consumer_key) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_LABEL') ?></td>
 													<td><input type="text" name="cfg_twitter_consumer_secret"
-													           value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>"/>
+															value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
 												</tr>
@@ -1167,21 +1168,21 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_LIMIT') ?></td>
 													<td><input type="text" name="cfg_rss_limit"
-													           value="<?php echo $this->escape($this->config->rss_limit) ?>"/>
+															value="<?php echo $this->escape($this->config->rss_limit) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_LIMIT_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES') ?></td>
 													<td><input type="text" name="cfg_rss_included_categories"
-													           value="<?php echo $this->escape($this->config->rss_included_categories) ?>"/>
+															value="<?php echo $this->escape($this->config->rss_included_categories) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES') ?></td>
 													<td><input type="text" name="cfg_rss_excluded_categories"
-													           value="<?php echo $this->escape($this->config->rss_excluded_categories) ?>"/>
+															value="<?php echo $this->escape($this->config->rss_excluded_categories) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC') ?></td>
 												</tr>
@@ -1218,8 +1219,8 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_FEEDBURNER_URL') ?></td>
 													<td><input type="text" class="ksm-field-large"
-													           name="cfg_rss_feedburner_url"
-													           value="<?php echo $this->escape($this->config->rss_feedburner_url) ?>"/>
+															name="cfg_rss_feedburner_url"
+															value="<?php echo $this->escape($this->config->rss_feedburner_url) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_RSS_FEEDBURNER_URL_DESC') ?></td>
 												</tr>
@@ -1243,7 +1244,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS') ?></td>
 													<td><input type="text" name="cfg_userlist_rows"
-													           value="<?php echo $this->escape($this->config->userlist_rows) ?>"/>
+															value="<?php echo $this->escape($this->config->userlist_rows) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC') ?></td>
 												</tr>
@@ -1329,7 +1330,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_USERNUM') ?></td>
 													<td><input type="text" name="cfg_popusercount"
-													           value="<?php echo $this->escape($this->config->popusercount) ?>"/>
+															value="<?php echo $this->escape($this->config->popusercount) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_USERNUM') ?></td>
 												</tr>
@@ -1341,7 +1342,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_NUMPOP') ?></td>
 													<td><input type="text" name="cfg_popsubjectcount"
-													           value="<?php echo $this->escape($this->config->popsubjectcount) ?>"/>
+															value="<?php echo $this->escape($this->config->popsubjectcount) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_NUMPOP') ?></td>
 												</tr>
@@ -1353,7 +1354,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_POLLSPOP') ?></td>
 													<td><input type="text" name="cfg_poppollscount"
-													           value="<?php echo $this->escape($this->config->poppollscount) ?>"/>
+															value="<?php echo $this->escape($this->config->poppollscount) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_POLLSPOP') ?></td>
 												</tr>
@@ -1365,7 +1366,7 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_THANKSPOP') ?></td>
 													<td><input type="text" name="cfg_popthankscount"
-													           value="<?php echo $this->escape($this->config->popthankscount) ?>"/>
+															value="<?php echo $this->escape($this->config->popthankscount) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_THANKSPOP') ?></td>
 												</tr>
@@ -1391,21 +1392,21 @@ defined('_JEXEC') or die ();
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS') ?></td>
 													<td><input type="text" name="cfg_pollnboptions"
-													           value="<?php echo $this->escape($this->config->pollnboptions) ?>"/>
+															value="<?php echo $this->escape($this->config->pollnboptions) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_TIME_VOTES') ?></td>
 													<td><input type="text" name="cfg_polltimebtvotes"
-													           value="<?php echo $this->escape($this->config->polltimebtvotes) ?>"/>
+															value="<?php echo $this->escape($this->config->polltimebtvotes) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_TIME_VOTES_DESC') ?></td>
 												</tr>
 												<tr>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_USER') ?></td>
 													<td><input type="text" name="cfg_pollnbvotesbyuser"
-													           value="<?php echo $this->escape($this->config->pollnbvotesbyuser) ?>"/>
+															value="<?php echo $this->escape($this->config->pollnbvotesbyuser) ?>" />
 													</td>
 													<td><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC') ?></td>
 												</tr>

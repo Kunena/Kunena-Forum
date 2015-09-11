@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Statistics
  *
@@ -38,7 +39,7 @@ defined('_JEXEC') or die;
 					<td>
 						<div class="progress progress-info">
 							<div class="bar"
-							     style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
+								style="width: <?php echo $item->percent; ?>%;"><?php echo $item->count; ?></div>
 						</div>
 					</td>
 				</tr>
@@ -67,7 +68,7 @@ defined('_JEXEC') or die;
 			<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
 			<b><?php echo $this->latestMemberLink ?></b>
 
-			<br/>
+			<br />
 
 			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
 			<b><?php echo (int) $this->messageCount; ?></b>
@@ -81,7 +82,7 @@ defined('_JEXEC') or die;
 			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
 			<b><?php echo (int) $this->categoryCount; ?></b>
 
-			<br/>
+			<br />
 
 			<?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
 			<b><?php echo (int) $this->todayTopicCount; ?></b>

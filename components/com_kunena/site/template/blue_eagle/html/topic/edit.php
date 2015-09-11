@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -26,17 +27,17 @@ $this->k = 0;
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="postform form-validate"
-      id="postform" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
-	<input type="hidden" name="view" value="topic"/>
+	id="postform" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
+	<input type="hidden" name="view" value="topic" />
 	<?php if ($this->message->exists()) : ?>
-		<input type="hidden" name="task" value="edit"/>
-		<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>"/>
+		<input type="hidden" name="task" value="edit" />
+		<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
 	<?php else: ?>
-		<input type="hidden" name="task" value="post"/>
-		<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>"/>
+		<input type="hidden" name="task" value="post" />
+		<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
 	<?php endif; ?>
 	<?php if (!isset($this->selectcatlist)) : ?>
-		<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>"/>
+		<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
 	<?php endif; ?>
 	<?php echo JHtml::_('form.token'); ?>
 
@@ -59,13 +60,16 @@ $this->k = 0;
 
 					<?php if ($this->message->userid) : ?>
 						<tr class="krow<?php echo 1 + $this->k ^= 1 ?>" id="kanynomous-check"
-						    <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+							<?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 							<td class="kcol-first">
 								<strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong>
 							</td>
 							<td class="kcol-mid">
 								<input type="checkbox" id="kanonymous" name="anonymous"
-								       value="1" <?php if ($this->post_anonymous) echo 'checked="checked"'; ?> />
+									value="1" <?php if ($this->post_anonymous)
+								{
+									echo 'checked="checked"';
+								} ?> />
 								<label
 									for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 							</td>
@@ -73,14 +77,14 @@ $this->k = 0;
 					<?php endif; ?>
 
 					<tr class="krow<?php echo 1 + $this->k ^= 1 ?>" id="kanynomous-check-name"
-					    <?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+						<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 						<td class="kcol-first">
 							<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 						</td>
 						<td class="kcol-mid">
 							<input type="text" id="kauthorname" name="authorname" size="35"
-							       class="kinputbox postinput required" maxlength="35"
-							       value="<?php echo $this->escape($this->message->name); ?>"/>
+								class="kinputbox postinput required" maxlength="35"
+								value="<?php echo $this->escape($this->message->name); ?>" />
 						</td>
 					</tr>
 
@@ -89,9 +93,9 @@ $this->k = 0;
 							<td class="kcol-first"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></strong></td>
 							<td class="kcol-mid">
 								<input type="text" id="email" name="email" size="35"
-								       class="kinputbox postinput required validate-email" maxlength="35"
-								       value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>"/>
-								<br/>
+									class="kinputbox postinput required validate-email" maxlength="35"
+									value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" />
+								<br />
 								<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 							</td>
 						</tr>
@@ -103,14 +107,14 @@ $this->k = 0;
 						</td>
 
 						<td class="kcol-mid"><input type="text" class="kinputbox postinput required" name="subject"
-						                            id="subject" size="35"
-						                            maxlength="<?php echo $this->escape($this->config->maxsubject); ?>"
-						                            <?php if (!$this->config->allow_change_subject && $this->message->parent): ?>disabled<?php endif; ?>
-						                            value="<?php echo $this->escape($this->message->subject); ?>"
-						                            tabindex="1"/>
+								id="subject" size="35"
+								maxlength="<?php echo $this->escape($this->config->maxsubject); ?>"
+								<?php if (!$this->config->allow_change_subject && $this->message->parent): ?>disabled<?php endif; ?>
+								value="<?php echo $this->escape($this->message->subject); ?>"
+								tabindex="1" />
 							<?php if (!$this->config->allow_change_subject && $this->topic->exists()): ?>
 								<input type="hidden" name="subject"
-								       value="<?php echo $this->escape($this->message->subject); ?>"/>
+									value="<?php echo $this->escape($this->message->subject); ?>" />
 							<?php endif; ?>
 						</td>
 					</tr>
@@ -125,8 +129,8 @@ $this->k = 0;
 								<?php foreach ($this->topicIcons as $id => $icon): ?>
 									<span class="kiconsel">
 				<input type="radio" name="topic_emoticon"
-				       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-				<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true); ?>" alt="" border="0"/>
+					value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+				<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true); ?>" alt="" border="0" />
 				</span>
 								<?php endforeach; ?>
 							</td>
@@ -147,19 +151,19 @@ $this->k = 0;
 								<div id="kattachment-id" class="kattachment">
 									<span class="kattachment-id-container"></span>
 
-									<input class="kfile-input-textbox" type="text" readonly="readonly"/>
+									<input class="kfile-input-textbox" type="text" readonly="readonly" />
 
 									<div class="kfile-hide hasTip"
-									     title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>">
+										title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>">
 										<input type="button"
-										       value="<?php echo JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>"
-										       class="kfile-input-button kbutton"/>
-										<input id="kupload" class="kfile-input" name="kattachment" type="file"/>
+											value="<?php echo JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>"
+											class="kfile-input-button kbutton" />
+										<input id="kupload" class="kfile-input" name="kattachment" type="file" />
 									</div>
 									<a href="#" class="kattachment-remove kbutton"
-									   style="display: none"><?php echo JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
+										style="display: none"><?php echo JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
 									<a href="#" class="kattachment-insert kbutton"
-									   style="display: none"><?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
+										style="display: none"><?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
 								</div>
 
 								<?php $this->displayAttachments($this->message); ?>
@@ -174,8 +178,8 @@ $this->k = 0;
 							</td>
 							<td class="kcol-mid">
 								<input type="text" class="kinputbox postinput" name="tags" id="tags" size="35"
-								       maxlength="100"
-								       value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>"/>
+									maxlength="100"
+									value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" />
 							</td>
 						</tr>
 					<?php endif; ?>
@@ -187,8 +191,8 @@ $this->k = 0;
 							</td>
 							<td class="kcol-mid">
 								<input type="text" class="kinputbox postinput" name="mytags" id="mytags" size="35"
-								       maxlength="100"
-								       value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>"/>
+									maxlength="100"
+									value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>" />
 							</td>
 						</tr>
 					<?php endif; ?>
@@ -200,8 +204,8 @@ $this->k = 0;
 							</td>
 							<td class="kcol-mid">
 								<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe"
-								       id="subscribeMe"
-								       value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
+									id="subscribeMe"
+									value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
 								{
 									echo 'checked="checked"';
 								} ?> />
@@ -223,17 +227,17 @@ $this->k = 0;
 					<tr id="kpost-buttons" class="krow1">
 						<td id="kpost-buttons" colspan="2">
 							<input type="submit" name="ksubmit" class="kbutton"
-							       value="<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>"
-							       title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>" tabindex="4"/>
+								value="<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>"
+								title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>" tabindex="4" />
 							<input type="button" name="preview" class="kbutton"
-							       onclick="kToggleOrSwapPreview('kbbcode-preview-bottom')"
-							       value="<?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>"
-							       title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW')); ?>:: "
-							       tabindex="3"/>
+								onclick="kToggleOrSwapPreview('kbbcode-preview-bottom')"
+								value="<?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>"
+								title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW')); ?>:: "
+								tabindex="3" />
 							<input type="button" name="cancel" class="kbutton"
-							       value="<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
-							       onclick="window.history.back();"
-							       title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" tabindex="5"/>
+								value="<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>"
+								onclick="window.history.back();"
+								title="<?php echo(JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL')); ?>" tabindex="5" />
 						</td>
 					</tr>
 					</tbody>
@@ -246,13 +250,16 @@ $this->k = 0;
 	{
 		echo '<script type="text/javascript">document.postform.authorname.focus();</script>';
 	}
-	else if (!$this->topic->subject)
-	{
-		echo '<script type="text/javascript">document.postform.subject.focus();</script>';
-	}
 	else
 	{
-		echo '<script type="text/javascript">document.postform.message.focus();</script>';
+		if (!$this->topic->subject)
+		{
+			echo '<script type="text/javascript">document.postform.subject.focus();</script>';
+		}
+		else
+		{
+			echo '<script type="text/javascript">document.postform.message.focus();</script>';
+		}
 	}
 	?>
 </form><?php if ($this->hasThreadHistory()) : ?>

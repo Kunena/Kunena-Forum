@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
@@ -33,7 +34,10 @@ $config = KunenaFactory::getTemplate()->params;
 	if ($config->get('displayAnnouncement'))
 	{
 		echo $this->subRequest('Widget/Announcement');
-		if ($config->get('displayMenu')) ;
+		if ($config->get('displayMenu'))
+		{
+			;
+		}
 	}
 
 	if ($config->get('displayModule'))
@@ -48,7 +52,6 @@ $config = KunenaFactory::getTemplate()->params;
 	{
 		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
 	}
-
 
 	if ($config->get('displayModule'))
 	{

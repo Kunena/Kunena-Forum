@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Smilies
  *
@@ -30,11 +31,11 @@ $document->addScriptDeclaration("function update_smiley(newimage) {
 				</div>
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
-					      method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="view" value="smilies"/>
-						<input type="hidden" name="task" value="save"/>
+						method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="view" value="smilies" />
+						<input type="hidden" name="task" value="save" />
 						<?php if ($this->state->get('item.id')): ?><input type="hidden" name="smileyid"
-						                                                  value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
+							value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
 						<?php echo JHtml::_('form.token'); ?>
 
 						<fieldset>
@@ -46,10 +47,10 @@ $document->addScriptDeclaration("function update_smiley(newimage) {
 									</td>
 									<td width="80%">
 										<input class="span2" type="text" name="smiley_code"
-										       value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>"/>
+											value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>" />
 										<img name="smiley_image"
-										     src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>"
-										     border="0" alt=""/>
+											src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>"
+											border="0" alt="" />
 									</td>
 								</tr>
 								<tr>

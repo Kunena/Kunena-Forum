@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.

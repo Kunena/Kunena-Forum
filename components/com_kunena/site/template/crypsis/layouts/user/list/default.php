@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -33,9 +34,9 @@ $this->addScript('js/search.js');
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>"
-      method="post" id="kuserlist-form" name="kuserlist-form">
-	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>"/>
-	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>"/>
+	method="post" id="kuserlist-form" name="kuserlist-form">
+	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>" />
+	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>" />
 	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-striped">

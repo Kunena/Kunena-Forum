@@ -243,9 +243,7 @@ class KunenaControllerTopic extends KunenaController
 				$response->mime     = $attachment->filetype;
 				$response->filename = $attachment->filename_real;
 			}
-		}
-
-		catch (Exception $response)
+		} catch (Exception $response)
 		{
 			$upload->cleanup();
 
@@ -1629,9 +1627,7 @@ class KunenaControllerTopic extends KunenaController
 					$body = trim($layout->render());
 					$mail->setBody($body);
 
-				}
-
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					// TODO: Deprecated in K4.0, remove in K5.0
 					$mailmessage = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})";

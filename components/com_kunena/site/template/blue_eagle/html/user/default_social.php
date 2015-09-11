@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    User
  *
@@ -10,7 +11,10 @@
  **/
 defined('_JEXEC') or die ();
 
-if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
+if (!isset($this->showUnusedSocial))
+{
+	$this->showUnusedSocial = false;
+}
 ?>
 
 <div class="kiconrow">

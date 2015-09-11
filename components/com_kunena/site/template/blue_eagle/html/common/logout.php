@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Common
  *
@@ -40,13 +41,13 @@ defined('_JEXEC') or die ();
 							<?php if ($this->logout->enabled()) : ?>
 								<li>
 									<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>"
-									      method="post" name="login">
-										<input type="hidden" name="view" value="user"/>
-										<input type="hidden" name="task" value="logout"/>
+										method="post" name="login">
+										<input type="hidden" name="view" value="user" />
+										<input type="hidden" name="task" value="logout" />
 										[K=TOKEN]
 
 										<input type="submit" name="submit" class="kbutton"
-										       value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>"/>
+											value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>" />
 									</form>
 								</li>
 							<?php endif; ?>

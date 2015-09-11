@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Plugin
+ *
  * @package    Kunena.Plugins
  * @subpackage Finder
  *
@@ -115,9 +116,15 @@ class plgFinderKunena extends FinderIndexerAdapter
 		{
 			//Access type of Category is still not the joomla access level system.
 			//We didn't show them before and we don't show them now. No reindex necessary
-			if ($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') return true;
+			if ($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level')
+			{
+				return true;
+			}
 			//Access level did not change. We do not need to reindex
-			if ($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess) return true;
+			if ($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess)
+			{
+				return true;
+			}
 
 			//Well, seems like an access level change has occured. So we need to reindex all messages within this category
 			$messages = $this->getMessagesByCategory($row->id);
@@ -352,7 +359,6 @@ class plgFinderKunena extends FinderIndexerAdapter
 
 		return $return;
 	}
-
 
 	/**
 	 * Method to get a content item to index.

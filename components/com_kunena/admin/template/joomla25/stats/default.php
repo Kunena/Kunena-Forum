@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Stats
  *
@@ -27,10 +28,10 @@ defined('_JEXEC') or die ();
 
 				<table class="kadmin-stat">
 					<caption><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></caption>
-					<col class="col1"/>
-					<col class="col2"/>
-					<col class="col1"/>
-					<col class="col2"/>
+					<col class="col1" />
+					<col class="col2" />
+					<col class="col1" />
+					<col class="col2" />
 					<thead>
 					<tr>
 						<th><?php echo JText::_('COM_KUNENA_STATISTIC'); ?></th>
@@ -82,10 +83,10 @@ defined('_JEXEC') or die ();
 				<?php foreach ($this->top as $top) : ?>
 					<h2><?php echo $top[0]->title ?></h2>
 					<table class="kadmin-stat">
-						<col class="col1" style="width:1%;"/>
-						<col class="col2"/>
-						<col class="col2" style="width:40%;"/>
-						<col class="col2" style="width:10%;"/>
+						<col class="col1" style="width:1%;" />
+						<col class="col2" />
+						<col class="col2" style="width:40%;" />
+						<col class="col2" style="width:10%;" />
 						<tbody>
 						<tr>
 							<th>#</th>
@@ -101,8 +102,8 @@ defined('_JEXEC') or die ();
 								</td>
 								<td>
 									<img class="kstats-bar"
-									     src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt=""
-									     height="15" width="<?php echo $item->percent ?>%"/>
+										src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt=""
+										height="15" width="<?php echo $item->percent ?>%" />
 								</td>
 								<td>
 									<?php echo $item->count ?>

@@ -59,29 +59,29 @@ if (version_compare(JVERSION, '3.2', '>'))
 						<form
 							action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=smilies') ?>"
 							method="post" id="adminForm" name="adminForm">
-							<input type="hidden" name="task" value=""/>
-							<input type="hidden" name="boxchecked" value="0"/>
-							<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
-							<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
+							<input type="hidden" name="task" value="" />
+							<input type="hidden" name="boxchecked" value="0" />
+							<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
+							<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>" />
 							<?php echo JHtml::_('form.token'); ?>
 
 							<div id="filter-bar" class="btn-toolbar">
 								<div class="filter-search btn-group pull-left">
 									<label for="filter_search"
-									       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+										class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 									<input type="text" name="filter_search" id="filter_search" class="filter"
-									       placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
-									       value="<?php echo $this->escape($this->state->get('list.search')); ?>"
-									       title="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>"/>
+										placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
+										value="<?php echo $this->escape($this->state->get('list.search')); ?>"
+										title="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>" />
 								</div>
 								<div class="btn-group pull-left">
 									<button class="btn tip" type="submit"
-									        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
+										title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
 										<i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 									</button>
 									<button class="btn tip" type="button"
-									        title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
-									        onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();">
+										title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+										onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();">
 										<i class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 									</button>
 								</div>
@@ -90,18 +90,18 @@ if (version_compare(JVERSION, '3.2', '>'))
 								</div>
 								<div class="btn-group pull-right hidden-phone">
 									<label for="directionTable"
-									       class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
+										class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
 									<select name="directionTable" id="directionTable" class="input-medium"
-									        onchange="Joomla.orderTable()">
+										onchange="Joomla.orderTable()">
 										<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
 										<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 									</select>
 								</div>
 								<div class="btn-group pull-right">
 									<label for="sortTable"
-									       class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
+										class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
 									<select name="sortTable" id="sortTable" class="input-medium"
-									        onchange="Joomla.orderTable()">
+										onchange="Joomla.orderTable()">
 										<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
 										<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 									</select>
@@ -112,7 +112,7 @@ if (version_compare(JVERSION, '3.2', '>'))
 								<thead>
 								<tr>
 									<th width="1%" class="center">
-										<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)"/>
+										<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" />
 									</th>
 									<th width="5%" class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
 									<th width="8%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->listDirection, $this->listOrdering); ?></th>
@@ -128,21 +128,21 @@ if (version_compare(JVERSION, '3.2', '>'))
 									</td>
 									<td class="nowrap center">
 										<label for="filter_code"
-										       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+											class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
 										<input class="input-block-level input-filter filter" type="text"
-										       name="filter_code" id="filter_code"
-										       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-										       value="<?php echo $this->filterCode; ?>"
-										       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+											name="filter_code" id="filter_code"
+											placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+											value="<?php echo $this->filterCode; ?>"
+											title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="nowrap center">
 										<label for="filter_location"
-										       class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+											class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
 										<input class="input-block-level input-filter filter" type="text"
-										       name="filter_location" id="filter_location"
-										       placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-										       value="<?php echo $this->filterLocation; ?>"
-										       title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
+											name="filter_location" id="filter_location"
+											placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+											value="<?php echo $this->filterLocation; ?>"
+											title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="hidden-phone center">
 									</td>
@@ -164,15 +164,15 @@ if (version_compare(JVERSION, '3.2', '>'))
 										<tr>
 											<td class="hidden-phone center">
 												<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
-												       value="<?php echo $this->escape($row->id); ?>"
-												       onclick="Joomla.isChecked(this.checked);"/>
+													value="<?php echo $this->escape($row->id); ?>"
+													onclick="Joomla.isChecked(this.checked);" />
 											</td>
 											<td class="hidden-phone center">
 												<a href="#edit"
-												   onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+													onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
 													<img
 														src="<?php echo $this->escape($this->ktemplate->getSmileyPath($row->location, true)); ?>"
-														alt="<?php echo $this->escape($row->location); ?>"/>
+														alt="<?php echo $this->escape($row->location); ?>" />
 												</a>
 											</td>
 											<td class="hidden-phone">
@@ -195,10 +195,10 @@ if (version_compare(JVERSION, '3.2', '>'))
 											<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */ ?>
 											<?php if ($this->filterActive) : ?>
 												<button class="btn" type="button"
-												        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+													onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 											<?php else : ?>
 												<button class="btn btn-success" type="button"
-												        onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_SMILIE'); ?></button>
+													onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_SMILIE'); ?></button>
 											<?php endif; ?>
 										</span>
 											</div>
@@ -212,15 +212,15 @@ if (version_compare(JVERSION, '3.2', '>'))
 
 					<div class="tab-pane" id="tab2">
 						<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
-						      id="uploadForm" method="post" enctype="multipart/form-data">
-							<input type="hidden" name="view" value="smilies"/>
-							<input type="hidden" name="task" value="smileyupload"/>
-							<input type="hidden" name="boxchecked" value="0"/>
+							id="uploadForm" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="view" value="smilies" />
+							<input type="hidden" name="task" value="smileyupload" />
+							<input type="hidden" name="boxchecked" value="0" />
 							<?php echo JHtml::_('form.token'); ?>
 
-							<input type="file" id="file-upload" class="btn" name="Filedata"/>
+							<input type="file" id="file-upload" class="btn" name="Filedata" />
 							<input type="submit" id="file-upload-submit" class="btn btn-primary"
-							       value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>"/>
+								value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
 						</form>
 					</div>
 				</div>

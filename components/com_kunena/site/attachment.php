@@ -190,8 +190,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 try
 {
 	$app->execute();
-}
-catch (Exception $e)
+} catch (Exception $e)
 {
 	echo $e->getMessage();
 }

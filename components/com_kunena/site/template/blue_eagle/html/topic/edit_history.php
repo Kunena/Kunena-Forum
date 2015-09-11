@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -15,7 +16,7 @@ $k = 0;
 <div class="kblock khistory">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-		                          rel="khistory"></a></span>
+				rel="khistory"></a></span>
 
 		<h2><span><?php echo JText::_('COM_KUNENA_POST_TOPIC_HISTORY') ?>
 				: <?php echo $this->escape($this->topic->subject) ?></span></h2>
@@ -32,7 +33,7 @@ $k = 0;
 					<tr class="ksth">
 						<th colspan="2">
 							<span class="kmsgdate khistory-msgdate"
-							      title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
+								title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 								<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 							</span>
 							<a id="<?php echo intval($this->message->id) ?>"></a>

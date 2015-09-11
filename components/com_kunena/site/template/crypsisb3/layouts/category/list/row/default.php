@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Category
  *
@@ -43,7 +44,10 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage('img-
 			</td>
 		<?php endif; ?>
 
-		<td<?php if (!$avatar) echo ' colspan="2"'; ?>>
+		<td<?php if (!$avatar)
+		{
+			echo ' colspan="2"';
+		} ?>>
 			<div>
 				<?php echo $this->getTopicLink($topic, 'last'); ?>
 			</div>
@@ -59,7 +63,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage('img-
 	<?php if ($this->checkbox) : ?>
 		<td class="center">
 			<label>
-				<input type="checkbox" name="categories[<?php echo (int) $this->category->id ?>]" value="1"/>
+				<input type="checkbox" name="categories[<?php echo (int) $this->category->id ?>]" value="1" />
 			</label>
 		</td>
 	<?php endif; ?>

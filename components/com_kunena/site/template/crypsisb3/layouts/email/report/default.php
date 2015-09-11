@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Email
  *
@@ -23,9 +24,9 @@ $user = $this->message->getAuthor();
 	<div><?php echo JText::_('COM_KUNENA_REPORT_POST_POSTER') . " {$user->username} ({$user->name})"; ?></div>
 	<div><?php echo JText::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $this->message->getTopic()->subject; ?></div>
 	<div><?php echo JText::_('COM_KUNENA_REPORT_POST_MESSAGE'); ?></div>
-	<hr/>
+	<hr />
 	<div><?php echo $this->message->displayField('message'); ?></div>
-	<hr/>
+	<hr />
 
 	<div>
 		<?php echo JText::_('COM_KUNENA_REPORT_POST_LINK'); ?>

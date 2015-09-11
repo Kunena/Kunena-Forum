@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Common
  *
@@ -23,51 +24,51 @@ defined('_JEXEC') or die ();
 						</div>
 						<?php if ($this->login->enabled()) : ?>
 							<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post"
-							      name="login">
-								<input type="hidden" name="view" value="user"/>
-								<input type="hidden" name="task" value="login"/>
+								name="login">
+								<input type="hidden" name="view" value="user" />
+								<input type="hidden" name="task" value="login" />
 								[K=TOKEN]
 
 								<div class="input">
 						<span>
 							<?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?>
-							<input type="text" name="username" class="inputbox ks" alt="username" size="18"/>
+							<input type="text" name="username" class="inputbox ks" alt="username" size="18" />
 						</span>
 						<span>
 							<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD'); ?>
-							<input type="password" name="password" class="inputbox ks" size="18" alt="password"/>
+							<input type="password" name="password" class="inputbox ks" size="18" alt="password" />
 						</span>
 									<?php $login = KunenaLogin::getInstance(); ?>
 									<?php if ($login->getTwoFactorMethods() > 1) : ?>
 										<span>
 							<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 											<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small"
-											       size="18"/>
+												size="18" />
 						</span>
 									<?php endif; ?>
 									<span>
 							<?php if ($this->remember) : ?>
 								<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME'); ?>
-								<input type="checkbox" name="remember" alt="" value="1"/>
+								<input type="checkbox" name="remember" alt="" value="1" />
 							<?php endif; ?>
 										<input type="submit" name="submit" class="kbutton"
-										       value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>"/>
+											value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
 						</span>
 								</div>
 								<div class="klink-block">
 						<span class="kprofilebox-pass">
 							<a href="<?php echo $this->lostPasswordUrl ?>"
-							   rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD') ?></a>
+								rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD') ?></a>
 						</span>
 						<span class="kprofilebox-user">
 							<a href="<?php echo $this->lostUsernameUrl ?>"
-							   rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME') ?></a>
+								rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME') ?></a>
 						</span>
 									<?php
 									if ($this->registerUrl) : ?>
 										<span class="kprofilebox-register">
 							<a href="<?php echo $this->registerUrl ?>"
-							   rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') ?></a>
+								rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') ?></a>
 						</span>
 									<?php endif; ?>
 								</div>

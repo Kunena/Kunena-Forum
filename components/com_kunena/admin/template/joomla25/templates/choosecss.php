@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Templates
  *
@@ -14,7 +15,10 @@ defined('_JEXEC') or die ();
 
 $document = JFactory::getDocument();
 $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.css');
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+if (JFactory::getLanguage()->isRTL())
+{
+	$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+}
 ?>
 <div id="kadmin">
 	<div class="kadmin-left">
@@ -26,12 +30,12 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet(JUri::base(true) 
 		<div
 			class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_CSS_TEMPLATE'); ?></div>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
-		      id="adminForm" name="adminForm">
-			<input type="hidden" name="view" value="templates"/>
-			<input type="hidden" name="task" value=""/>
-			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
-			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
-			<input type="hidden" name="boxchecked" value="0"/>
+			id="adminForm" name="adminForm">
+			<input type="hidden" name="view" value="templates" />
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>" />
+			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>" />
+			<input type="hidden" name="boxchecked" value="0" />
 
 			<table>
 				<tr>
@@ -52,8 +56,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet(JUri::base(true) 
 					?>
 					<tr class="<?php echo 'row' . $k; ?>">
 						<td width="5%"><input type="radio" id="cb<?php echo $id; ?>" name="filename"
-						                      value="<?php echo $this->escape($file); ?>"
-						                      onclick="isChecked(this.checked);"/></td>
+								value="<?php echo $this->escape($file); ?>"
+								onclick="isChecked(this.checked);" /></td>
 						<td width="85%"><?php echo $this->escape($file); ?></td>
 						<td width="10%"><?php echo is_writable($this->dir . '/' . $file) ? '<font color="green"> ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE') . '</font>' : '<font color="red"> ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE') . '</font>' ?></td>
 					</tr>

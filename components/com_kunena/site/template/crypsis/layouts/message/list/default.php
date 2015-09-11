@@ -33,8 +33,8 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 		<div class="filter-time pull-right">
 			<div class="filter-sel">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect"
-				      name="timeselect"
-				      method="post" target="_self" class="form-inline hidden-phone">
+					name="timeselect"
+					method="post" target="_self" class="form-inline hidden-phone">
 					<div>
 						<?php $this->displayTimeFilter('sel'); ?>
 					</div>
@@ -57,7 +57,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
-      name="ktopicsform" id="ktopicsform">
+	name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-condensed">
@@ -89,7 +89,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 				<?php if (!empty($this->actions)) : ?>
 					<td class="span1 center">
 						<label>
-							<input class="kcheckall" type="checkbox" name="toggle" value=""/>
+							<input class="kcheckall" type="checkbox" name="toggle" value="" />
 						</label>
 					</td>
 				<?php endif; ?>
@@ -119,7 +119,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 							endif; ?>
 							<input type="submit" name="kcheckgo" class="btn"
-							       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+								value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 						<?php endif; ?>
 					</div>
 				</td>
@@ -145,7 +145,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 </div>
 
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
-      method="post" target="_self" class="timefilter pull-right">
+	method="post" target="_self" class="timefilter pull-right">
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
 

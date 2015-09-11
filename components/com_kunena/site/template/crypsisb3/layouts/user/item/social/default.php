@@ -1,6 +1,7 @@
 s<?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *

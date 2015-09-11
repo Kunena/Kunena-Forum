@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Common
  *
@@ -15,5 +16,5 @@ defined('_JEXEC') or die ();
 		<div id="ktab"><?php echo $this->getMenu() ?></div>
 	</div>
 	<span class="ktoggler fltrt"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-	                                rel="kprofilebox"></a></span>
+			rel="kprofilebox"></a></span>
 </div>

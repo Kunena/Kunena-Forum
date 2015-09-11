@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -69,8 +70,10 @@ defined('_JEXEC') or die;
 				<td>
 					<?php
 					if ($banInfo->modified_by && $banInfo->modified_time)
+					{
 						echo $banInfo->getModifier()->getLink()
 							. ' ' . $banInfo->getModificationDate()->toKunena('datetime');
+					}
 					?>
 				</td>
 			</tr>
@@ -100,6 +103,7 @@ defined('_JEXEC') or die;
 
 			<?php
 			if ($this->me->isModerator() && !empty($banInfo->comments))
+			{
 				foreach ($banInfo->comments as $comment) :
 					?>
 					<tr>
@@ -118,7 +122,8 @@ defined('_JEXEC') or die;
 							<?php echo KunenaHtmlParser::parseText($comment->comment); ?>
 						</td>
 					</tr>
-				<?php endforeach; ?>
+				<?php endforeach;
+			} ?>
 
 		<?php endforeach; ?>
 

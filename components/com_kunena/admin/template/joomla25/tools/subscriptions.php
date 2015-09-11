@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    SyncUsers
  *
@@ -14,7 +15,10 @@ defined('_JEXEC') or die ();
 
 $document = JFactory::getDocument();
 $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.css');
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+if (JFactory::getLanguage()->isRTL())
+{
+	$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+}
 ?>
 	<div id="kadmin">
 		<div class="kadmin-left">

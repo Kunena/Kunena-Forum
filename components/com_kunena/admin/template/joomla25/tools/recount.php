@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    SyncUsers
  *
@@ -24,8 +25,8 @@ defined('_JEXEC') or die ();
 				</div>
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-					      method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="task" value="recount"/>
+						method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="task" value="recount" />
 						<?php echo JHtml::_('form.token'); ?>
 
 						<fieldset>
@@ -33,22 +34,22 @@ defined('_JEXEC') or die ();
 							<table class="table table-bordered table-striped">
 								<tr>
 									<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_TOPICS'); ?></td>
-									<td><input type="checkbox" checked="checked" name="topics" value="1"/></td>
+									<td><input type="checkbox" checked="checked" name="topics" value="1" /></td>
 									<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_TOPICS_DESC'); ?></td>
 								</tr>
 								<tr>
 									<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERTOPICS'); ?></td>
-									<td><input type="checkbox" checked="checked" name="usertopics" value="1"/></td>
+									<td><input type="checkbox" checked="checked" name="usertopics" value="1" /></td>
 									<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERTOPICS_DESC'); ?></td>
 								</tr>
 								<tr>
 									<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_CATEGORIES'); ?></td>
-									<td><input type="checkbox" checked="checked" name="categories" value="1"/></td>
+									<td><input type="checkbox" checked="checked" name="categories" value="1" /></td>
 									<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_CATEGORIES_DESC'); ?></td>
 								</tr>
 								<tr>
 									<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERS'); ?></td>
-									<td><input type="checkbox" checked="checked" name="users" value="1"/></td>
+									<td><input type="checkbox" checked="checked" name="users" value="1" /></td>
 									<td><?php echo JText::_('COM_KUNENA_A_RECOUNT_USERS_DESC'); ?></td>
 								</tr>
 							</table>

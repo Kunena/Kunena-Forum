@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -15,9 +16,9 @@ defined('_JEXEC') or die;
 </h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>"
-      id="kform-ban" name="kformban" method="post">
-	<input type="hidden" name="task" value="ban"/>
-	<input type="hidden" name="userid" value="<?php echo (int) $this->profile->userid; ?>"/>
+	id="kform-ban" name="kformban" method="post">
+	<input type="hidden" name="task" value="ban" />
+	<input type="hidden" name="userid" value="<?php echo (int) $this->profile->userid; ?>" />
 	<?php echo JHtml::_('form.token'); ?>
 
 	<table class="table table-bordered table-striped table-hover">
@@ -100,7 +101,7 @@ defined('_JEXEC') or die;
 					<label for="ban-remove"><?php echo JText::_('COM_KUNENA_MODERATE_REMOVE_BAN'); ?></label>
 				</td>
 				<td>
-					<input id="ban-remove" type="checkbox" id="ban-delban" name="delban" value="delban" class=""/>
+					<input id="ban-remove" type="checkbox" id="ban-delban" name="delban" value="delban" class="" />
 				</td>
 			</tr>
 		<?php endif; ?>
@@ -112,7 +113,7 @@ defined('_JEXEC') or die;
 				</label>
 			</td>
 			<td>
-				<input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class=""/>
+				<input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="" />
 			</td>
 		</tr>
 		<tr>
@@ -122,7 +123,7 @@ defined('_JEXEC') or die;
 				</label>
 			</td>
 			<td>
-				<input type="checkbox" id="ban-delavatar" name="delavatar" value="delavatar"/>
+				<input type="checkbox" id="ban-delavatar" name="delavatar" value="delavatar" />
 			</td>
 		</tr>
 		<tr>
@@ -132,7 +133,7 @@ defined('_JEXEC') or die;
 				</label>
 			</td>
 			<td>
-				<input type="checkbox" id="ban-delprofileinfo" name="delprofileinfo" value="delprofileinfo"/>
+				<input type="checkbox" id="ban-delprofileinfo" name="delprofileinfo" value="delprofileinfo" />
 			</td>
 		</tr>
 		<tr>
@@ -142,14 +143,14 @@ defined('_JEXEC') or die;
 				</label>
 			</td>
 			<td>
-				<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts"/>
+				<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" />
 			</td>
 		</tr>
 		<tr>
 			<td class="center" colspan="2">
 				<input class="btn btn-primary" type="submit" value="<?php echo $this->banInfo->id
 					? JText::_('COM_KUNENA_BAN_EDIT')
-					: JText::_('COM_KUNENA_BAN_NEW'); ?>" name="Submit"/>
+					: JText::_('COM_KUNENA_BAN_NEW'); ?>" name="Submit" />
 			</td>
 		</tr>
 		</tbody>

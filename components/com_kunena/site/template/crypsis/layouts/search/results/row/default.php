@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Search
  *
@@ -34,7 +35,7 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 				class="icon icon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
 		<?php //TODO: Find a better way for inline elements like this can displayField contain HTML which would not be valid inside the attribute. ?>
 		<div class="badger-left badger-info khistory"
-		     data-badger="<?php echo (!$isReply) ? $author->username . ' created the topic: ' : $author->username . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
+			data-badger="<?php echo (!$isReply) ? $author->username . ' created the topic: ' : $author->username . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message); ?>
 			</h3>

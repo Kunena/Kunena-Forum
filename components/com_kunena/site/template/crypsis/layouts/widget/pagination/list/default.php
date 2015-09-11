@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Pagination
  *
@@ -20,7 +21,10 @@ if ($count == 0)
 {
 	return;
 }
-elseif ($count == 1 && empty($display)) return;
+elseif ($count == 1 && empty($display))
+{
+	return;
+}
 $last = 0;
 ?>
 

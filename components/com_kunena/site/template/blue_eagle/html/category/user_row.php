@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Category
  *
@@ -72,7 +73,7 @@ $tabclass = array("row1", "row2");
 	<?php } ?>
 
 	<td class="kcol-mid ktopicmoderation">
-		<input class="kcheck" type="checkbox" name="categories[<?php echo $this->category->id ?>]" value="1"/>
+		<input class="kcheck" type="checkbox" name="categories[<?php echo $this->category->id ?>]" value="1" />
 	</td>
 
 </tr>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Announcement
  *
@@ -26,8 +27,8 @@ $this->document->addScriptDeclaration('// <![CDATA[
 		<div class="kbody">
 			<div class="kanndesc">
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>"
-				      class="form-validate" method="post" name="editform" onsubmit="return kunenaValidate(this);">
-					<input type="hidden" name="task" value="save"/>
+					class="form-validate" method="post" name="editform" onsubmit="return kunenaValidate(this);">
+					<input type="hidden" name="task" value="save" />
 					<?php echo $this->displayInput('id') ?>
 					<?php echo JHtml::_('form.token') ?>
 
@@ -62,9 +63,9 @@ $this->document->addScriptDeclaration('// <![CDATA[
 						</label>
 					</div>
 					<input name="submit" class="kbutton" type="submit"
-					       value="<?php echo JText::_('COM_KUNENA_SAVE') ?>"/>
+						value="<?php echo JText::_('COM_KUNENA_SAVE') ?>" />
 					<input onclick="window.history.back();" name="cancel" class="kbutton" type="button"
-					       value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>"/>
+						value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" />
 				</form>
 			</div>
 		</div>

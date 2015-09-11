@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
@@ -12,7 +13,10 @@ defined('_JEXEC') or die;
 
 $label = JText::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
 $title = JText::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");
-if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG") $title = '';
+if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG")
+{
+	$title = '';
+}
 $id      = isset($this->id) ? 'id="' . $this->id . '"' : '';
 $success = !empty($this->success) ? ' btn-success' : '';
 $primary = !empty($this->primary) ? ' btn-primary' : '';
@@ -21,8 +25,8 @@ $icon    = $this->icon;
 ?>
 
 <a <?php echo $id; ?> class="<?php echo $normal . $primary . $success; ?>" href="<?php echo $this->url; ?>"
-                      rel="nofollow"
-                      title="<?php echo $title; ?>" name="<?php echo $this->name; ?>">
+	rel="nofollow"
+	title="<?php echo $title; ?>" name="<?php echo $this->name; ?>">
 	<?php if (!empty($icon)) : ?>
 		<i class="<?php echo $icon; ?>"></i>
 	<?php endif; ?>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -130,7 +131,7 @@ if ($this->config->showuserstats)
 								<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
-										   target="_blank"><?php echo $this->escape($profile->location); ?></a>
+											target="_blank"><?php echo $this->escape($profile->location); ?></a>
 									<?php else : ?>
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
@@ -189,7 +190,7 @@ if ($this->config->showuserstats)
 		</div>
 	</div>
 </div>
-<br/>
+<br />
 <div class="col-md-12">
 	<?php if ($signature) : ?>
 		<blockquote>
@@ -199,7 +200,7 @@ if ($this->config->showuserstats)
 	<?php if ($personalText) : ?>
 		<blockquote>
 			<span> <?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>: </span>
-			<br/>
+			<br />
 			<span> <?php echo $personalText; ?> </span>
 		</blockquote>
 	<?php endif; ?>

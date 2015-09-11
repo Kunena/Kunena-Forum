@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Crypsis
  * @subpackage    Topic
  *
@@ -15,9 +16,9 @@ defined('_JEXEC') or die ();
 		<li class="col-md-6">
 			<div class="thumbnail">
 				<input type="hidden" name="attachments[<?php echo $attachment->id ?>]"
-				       value="<?php echo $attachment->getFilename() ?>"/>
+					value="<?php echo $attachment->getFilename() ?>" />
 				<input type="checkbox" name="attachment[<?php echo $attachment->id ?>]" checked="checked"
-				       value="<?php echo $attachment->id ?>"/>
+					value="<?php echo $attachment->id ?>" />
 				<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 				<span>
 				<?php echo $attachment->getFilename(); ?>

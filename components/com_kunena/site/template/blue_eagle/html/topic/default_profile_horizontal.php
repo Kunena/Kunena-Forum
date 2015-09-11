@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -19,7 +20,7 @@ defined('_JEXEC') or die ();
 			<?php echo $this->profile->profileIcon('website'); ?>
 			<?php echo $this->profile->profileIcon('private'); ?>
 			<?php echo $this->profile->profileIcon('email'); ?>
-			<br/>
+			<br />
 
 			<div>
 				<?php if ($this->userposts) : ?>

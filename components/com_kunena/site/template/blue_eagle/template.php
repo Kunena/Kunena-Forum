@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -59,12 +60,27 @@ var kunena_toggler_open = "' . JText::_('COM_KUNENA_TOGGLER_EXPAND', true) . '";
 
 		$text  = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
-		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") $title = '';
-		if ($id) $id = 'id="' . $id . '"';
+		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG")
+		{
+			$title = '';
+		}
+		if ($id)
+		{
+			$id = 'id="' . $id . '"';
+		}
 
-		if (isset($types[$type])) $type = $types[$type];
-		if ($name == 'quickreply') $type .= ' kqreply';
-		if (isset($names[$name])) $name = $names[$name];
+		if (isset($types[$type]))
+		{
+			$type = $types[$type];
+		}
+		if ($name == 'quickreply')
+		{
+			$type .= ' kqreply';
+		}
+		if (isset($names[$name]))
+		{
+			$name = $names[$name];
+		}
 
 		return <<<HTML
 <a $id class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">

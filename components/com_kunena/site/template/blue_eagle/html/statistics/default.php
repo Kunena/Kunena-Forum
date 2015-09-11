@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Statistics
  *
@@ -17,8 +18,8 @@ $template = KunenaTemplate::getInstance();
 	<div class="kblock kgenstats">
 		<div class="kheader">
 			<span class="ktoggler"><a class="ktoggler close"
-			                          title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-			                          rel="kgenstats_tbody"></a></span>
+					title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
+					rel="kgenstats_tbody"></a></span>
 
 			<h1>
 				<span><?php echo $this->escape($this->config->board_title); ?><?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span>
@@ -41,7 +42,7 @@ $template = KunenaTemplate::getInstance();
 							<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>
 							:<b> <?php echo $this->latestMemberLink ?></b>
 
-							<br/> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
+							<br /> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
 							<b> <?php echo intval($this->messageCount); ?></b> &nbsp;
 							<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
 							<b> <?php echo intval($this->topicCount); ?></b> &nbsp;
@@ -50,7 +51,7 @@ $template = KunenaTemplate::getInstance();
 							<?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
 							<b> <?php echo intval($this->categoryCount); ?></b>
 
-							<br/> <?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
+							<br /> <?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
 							<b> <?php echo intval($this->todayTopicCount); ?></b> &nbsp;
 							<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
 							<b> <?php echo intval($this->yesterdayTopicCount); ?></b> &nbsp;
@@ -77,8 +78,8 @@ $k        = 0;
 	<div class="kblock kpopsubjstats">
 		<div class="kheader">
 			<span class="ktoggler"><a class="ktoggler close"
-			                          title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-			                          rel="kpopsubstats-tbody"></a></span>
+					title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
+					rel="kpopsubstats-tbody"></a></span>
 
 			<h2><span><?php echo $top[0]->title ?></span></h2>
 		</div>
@@ -100,7 +101,7 @@ $k        = 0;
 							</td>
 							<td class="kcol-mid">
 								<img class="kstats-bar" src="<?php echo $template->getImagePath('bar.png') ?>" alt=""
-								     height="10" width="<?php echo $item->percent ?>%"/>
+									height="10" width="<?php echo $item->percent ?>%" />
 							</td>
 							<td class="kcol-last">
 								<?php echo $item->count ?>

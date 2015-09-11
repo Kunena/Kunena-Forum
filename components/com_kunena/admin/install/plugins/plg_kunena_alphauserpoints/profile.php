@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Plugin
+ *
  * @package       Kunena.Plugins
  * @subpackage    AlphaUserPoints
  *
@@ -23,7 +24,10 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
-		if ($config->userlist_allowed == 1 && $my->id == 0) return false;
+		if ($config->userlist_allowed == 1 && $my->id == 0)
+		{
+			return false;
+		}
 
 		return AlphaUserPointsHelper::getAupUsersURL();
 	}
@@ -31,11 +35,15 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 		if ($user == 0)
+		{
 			return false;
+		}
 		$user = KunenaFactory::getUser($user);
 		$my   = JFactory::getUser();
 		if ($user === false)
+		{
 			return false;
+		}
 		$userid     = $my->id != $user->userid ? '&userid=' . AlphaUserPointsHelper::getAnyUserReferreID($user->userid) : '';
 		$AUP_itemid = AlphaUserPointsHelper::getItemidAupProfil();
 

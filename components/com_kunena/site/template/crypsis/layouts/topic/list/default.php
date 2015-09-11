@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
@@ -30,8 +31,8 @@ $colspan = !empty($this->actions) ? 4 : 3;
 		<div class="filter-time pull-right">
 			<div class="filter-sel">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect"
-				      name="timeselect"
-				      method="post" target="_self" class="form-inline hidden-phone">
+					name="timeselect"
+					method="post" target="_self" class="form-inline hidden-phone">
 					<div>
 						<?php $this->displayTimeFilter('sel'); ?>
 					</div>
@@ -53,7 +54,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
-      id="ktopicsform">
+	id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 	<table class="table table-bordered">
 		<thead>
@@ -76,7 +77,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 			<?php if (!empty($this->actions)) : ?>
 				<td class="span1 center">
 					<label>
-						<input class="kcheckall" type="checkbox" name="toggle" value=""/>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>
 				</td>
 			<?php endif; ?>
@@ -97,7 +98,10 @@ $colspan = !empty($this->actions) ? 4 : 3;
 				<?php endif; ?>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 					<div class="input-append">
-						<?php if (!empty($this->topics) && !empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>
+						<?php if (!empty($this->topics) && !empty($this->moreUri))
+						{
+							echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow');
+						} ?>
 						<?php if (!empty($this->actions)) : ?>
 							<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="inputbox kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 							<?php if (isset($this->actions['move'])) :
@@ -105,7 +109,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 								echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 							endif; ?>
 							<input type="submit" name="kcheckgo" class="btn"
-							       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+								value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>

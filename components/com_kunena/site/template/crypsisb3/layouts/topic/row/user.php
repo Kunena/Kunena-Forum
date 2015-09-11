@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
@@ -53,7 +54,6 @@ if ($this->topic->moved_id > 0)
 {
 	$txt .= ' ' . 'moved';
 }
-
 
 if (!empty($this->spacing)) : ?>
 	<tr>
@@ -134,22 +134,22 @@ if (!empty($this->spacing)) : ?>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
 				<i class="glyphicon glyphicon-star hasTooltip"
-				   title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"></i>
+					title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"></i>
 			<?php endif; ?>
 
 			<?php if ($userTopic->posts) : ?>
 				<i class="glyphicon glyphicon-flag hasTooltip"
-				   title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"></i>
+					title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"></i>
 			<?php endif; ?>
 
 			<?php if ($this->topic->attachments) : ?>
 				<i class="glyphicon glyphicon-paperclip hasTooltip"
-				   title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
+					title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
 			<?php endif; ?>
 
 			<?php if ($this->topic->poll_id) : ?>
 				<i class="glyphicon glyphicon-stats hasTooltip"
-				   title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
+					title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
 			<?php endif; ?>
 		</div>
 
@@ -219,16 +219,18 @@ if (!empty($this->spacing)) : ?>
 		<td class="col-md-1 center">
 			<label>
 				<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]"
-				       value="1"/>
+					value="1" />
 			</label>
 		</td>
 	<?php endif; ?>
 
 	<?php
 	if (!empty($this->position))
+	{
 		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
 			->setLayout('table_row');
+	}
 	?>
 </tr>

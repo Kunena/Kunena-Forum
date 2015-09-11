@@ -45,13 +45,16 @@ class KunenaAvatarCommunity extends KunenaAvatar
 		{
 			$avatar = str_replace(JUri::root(true), '', COMMUNITY_PATH_ASSETS) . "user-Male.png";
 		}
-		else if ($sizex <= 90)
-		{
-			$avatar = $user->getThumbAvatar();
-		}
 		else
 		{
-			$avatar = $user->getAvatar();
+			if ($sizex <= 90)
+			{
+				$avatar = $user->getThumbAvatar();
+			}
+			else
+			{
+				$avatar = $user->getAvatar();
+			}
 		}
 
 		return $avatar;

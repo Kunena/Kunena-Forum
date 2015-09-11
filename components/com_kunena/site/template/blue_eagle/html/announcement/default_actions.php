@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Announcement
  *
@@ -10,7 +11,10 @@
  **/
 defined('_JEXEC') or die ();
 
-if (empty($this->buttons)) return;
+if (empty($this->buttons))
+{
+	return;
+}
 ?>
 <div class="kactions">
 	<?php echo implode(' ', $this->buttons) ?>

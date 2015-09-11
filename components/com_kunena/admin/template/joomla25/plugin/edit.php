@@ -39,12 +39,12 @@ $this->fieldsets = $this->form->getFieldsets('params');
 						<fieldset>
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#details"
-								                      data-toggle="tab"><?php echo JText::_('JDETAILS'); ?></a></li>
+										data-toggle="tab"><?php echo JText::_('JDETAILS'); ?></a></li>
 								<?php if (count($this->fieldsets)) : ?>
 									<?php foreach ($this->fieldsets as $fieldset) : ?>
 										<?php $label = !empty($fieldset->label) ? JText::_($fieldset->label) : JText::_('COM_PLUGINS_' . $fieldset->name . '_FIELDSET_LABEL'); ?>
 										<li><a href="#options-<?php echo $fieldset->name; ?>"
-										       data-toggle="tab"><?php echo $label ?></a></li>
+												data-toggle="tab"><?php echo $label ?></a></li>
 									<?php endforeach; ?>
 								<?php endif; ?>
 							</ul>
@@ -142,7 +142,7 @@ $this->fieldsets = $this->form->getFieldsets('params');
 								<?php echo $this->loadTemplate('options'); ?>
 							</div>
 						</fieldset>
-						<input type="hidden" name="task" value=""/>
+						<input type="hidden" name="task" value="" />
 						<?php echo JHtml::_('form.token'); ?>
 					</form>
 				</div>

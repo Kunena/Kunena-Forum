@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Credits
  *
@@ -18,7 +19,7 @@ defined('_JEXEC') or die ();
 		<div class="kbody">
 			<div class="kcreditsheader">
 				<img src="<?php echo $this->ktemplate->getImagePath('icons/kunena-logo-48-white.png'); ?>" alt="Kunena"
-				     class="fltlft" style="margin: 18px;"/>
+					class="fltlft" style="margin: 18px;" />
 
 				<div class="kcredits-intro"><?php echo $this->intro; ?></div>
 			</div>
@@ -27,7 +28,7 @@ defined('_JEXEC') or die ();
 					<?php foreach ($this->memberList as $member) : ?>
 						<li class="credits-teammember">
 							<a href="<?php echo $member['url'] ?>" target="_blank"
-							   rel="follow"><?php echo $this->escape($member['name']) ?></a>
+								rel="follow"><?php echo $this->escape($member['name']) ?></a>
 							- <?php echo $member['title'] ?>
 						</li>
 					<?php endforeach ?>
@@ -40,7 +41,7 @@ defined('_JEXEC') or die ();
 				<div>
 					<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?>
 					<a href="javascript:window.history.back()"
-					   title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?>"><?php echo JText::_('COM_KUNENA_USER_RETURN_B') ?></a>
+						title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?>"><?php echo JText::_('COM_KUNENA_USER_RETURN_B') ?></a>
 				</div>
 			</div>
 			<div class="kfooter"><?php echo JText::_('COM_KUNENA_COPYRIGHT'); ?> &copy; 2008 - 2015 <a

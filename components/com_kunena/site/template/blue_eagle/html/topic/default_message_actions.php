@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -28,7 +29,10 @@ if ($this->message->modified_time)
 	<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
 		<span class="kmessage-editmarkup hidden-phone" <?php echo $datehover ?>>
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
-		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($this->message->modified_reason); ?>
+		<?php if ($this->message->modified_reason)
+		{
+			echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($this->message->modified_reason);
+		} ?>
 	</span>
 	<?php endif ?>
 	<?php if (!empty($this->reportMessageLink)) : ?>
@@ -77,7 +81,10 @@ if ($this->message->modified_time)
 	<div class="kmessage-thankyou">
 		<?php
 		echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
-		if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+		if ($this->more_thankyou)
+		{
+			echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+		}
 		?>
 	</div>
 <?php endif; ?>

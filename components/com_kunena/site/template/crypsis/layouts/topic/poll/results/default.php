@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
@@ -60,7 +61,10 @@ $this->addScript('poll.js');
 			<td colspan="4">
 				<?php
 				echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
-				if (!empty($this->users_voted_list)) echo " ( " . implode(', ', $this->users_voted_list) . " ) "; ?>
+				if (!empty($this->users_voted_list))
+				{
+					echo " ( " . implode(', ', $this->users_voted_list) . " ) ";
+				} ?>
 				<?php if ($this->usercount > '5') : ?>
 					<a href="#" id="kpoll-moreusers"><?php echo JText::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
 					<div style="display: none;" id="kpoll-moreusers-div">
@@ -103,7 +107,7 @@ $this->addScript('poll.js');
 								<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
 							</a>
 							<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . JSession::getFormToken() . '=1') ?>"
-							   class="btn btn-primary">
+								class="btn btn-primary">
 								<?php echo JText::_('COM_KUNENA_TOPIC_MODAL_LABEL_CONFIRM_RESETVOTE'); ?>
 							</a>
 						</div>

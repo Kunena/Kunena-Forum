@@ -640,8 +640,7 @@ class KunenaAdminControllerUsers extends KunenaController
 				try
 				{
 					$db->execute();
-				}
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					$e->getMessage();
 				}
@@ -683,8 +682,7 @@ class KunenaAdminControllerUsers extends KunenaController
 				try
 				{
 					$db->execute();
-				}
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					$e->getMessage();
 				}

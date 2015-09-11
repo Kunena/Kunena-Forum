@@ -20,8 +20,8 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybo
 ?>
 
 <a class="btn btn-default btn-small" rel="popover" data-placement="bottom" target="_blank" data-trigger="hover"
-   data-content="Filesize: <?php echo number_format($attachment->size / 1024, 0, '', ',') . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
+	data-content="Filesize: <?php echo number_format($attachment->size / 1024, 0, '', ',') . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 " data-original-title="<?php echo $attachment->getShortName(); ?>" href="<?php echo $attachment->getUrl(); ?>"
-   title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0, 26); ?>">
+	title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), 0, 26); ?>">
 	<i class="glyphicon glyphicon-info-sign"></i>
 </a>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Prune
  *
@@ -22,8 +23,8 @@ defined('_JEXEC') or die ();
 	<div id="j-main-container" class="span10">
 
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
-		      method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="prune"/>
+			method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="prune" />
 			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
@@ -36,7 +37,7 @@ defined('_JEXEC') or die ();
 						<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
 						<td>
 							<div class="input-append">
-								<input class="span3" type="text" name="prune_days" value="30"/>
+								<input class="span3" type="text" name="prune_days" value="30" />
 								<span class="add-on"><?php echo JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></span>
 							</div>
 						</td>

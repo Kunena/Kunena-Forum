@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Installer
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -193,13 +194,17 @@ function installSampleData()
 			$db->setQuery($query[1]);
 			$db->query();
 			if ($db->getErrorNum())
+			{
 				throw new KunenaInstallerException ($db->getErrorMsg(), $db->getErrorNum());
+			}
 			if ($query[0] == 'kunena_categories')
 			{
 				$db->setQuery($aliasquery);
 				$db->query();
 				if ($db->getErrorNum())
+				{
 					throw new KunenaInstallerException ($db->getErrorMsg(), $db->getErrorNum());
+				}
 			}
 			$counter++;
 		}
@@ -212,7 +217,9 @@ function installSampleData()
 	$db->setQuery($query);
 	$db->query();
 	if ($db->getErrorNum())
+	{
 		throw new KunenaInstallerException ($db->getErrorMsg(), $db->getErrorNum());
+	}
 
 	return $counter;
 }

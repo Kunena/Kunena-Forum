@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -18,7 +19,7 @@ var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS', true)
 
 <?php if ($this->category->headerdesc) : ?>
 	<div id="kforum-head"
-	     class="<?php echo isset ($this->category->class_sfx) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">
+		class="<?php echo isset ($this->category->class_sfx) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">
 		<?php echo KunenaHtmlParser::parseBBCode($this->category->headerdesc) ?>
 	</div>
 <?php endif ?>

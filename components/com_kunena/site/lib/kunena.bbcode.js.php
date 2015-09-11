@@ -25,8 +25,8 @@ ob_start();
 function kPreviewHelper() {
 	if (_previewActive == true) {
 		previewRequest = new Request.JSON({
-			secure: false,
-			url: <?php echo json_encode(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false)); ?>,
+			secure   : false,
+			url      : <?php echo json_encode(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false)); ?>,
 			onSuccess: function (response) {
 				var __message = document.id("kbbcode-preview");
 				if (__message) {
@@ -51,7 +51,7 @@ window.addEvent('domready', function () {
 	kbbcode.addFunction('Poll', function () {
 		kToggleOrSwap("kbbcode-poll-options");
 	}, {
-		'id': 'kbbcode-poll-button',
+		'id'   : 'kbbcode-poll-button',
 		'class': 'kbbcode-poll-button',
 		<?php
 		if (empty($this->category->allow_polls))
@@ -59,7 +59,7 @@ window.addEvent('domready', function () {
 			echo '\'style\':\'display: none;\',';
 		} ?>
 		'title': '<?php echo JText::_('COM_KUNENA_EDITOR_POLL', true); ?>',
-		'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL', true); ?>'
+		'alt'  : '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL', true); ?>'
 	});
 
 	<?php

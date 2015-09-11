@@ -25,8 +25,8 @@ if ($attachment->isImage())
 {
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
-	   title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt=""/>
+		title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
+		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
 	</a>
 	<?php
 }
@@ -34,7 +34,7 @@ else
 {
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>"
-	   title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
+		title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
 		<i class="large-kicon glyphicon glyphicon-file"></i>
 	</a>
 	<?php

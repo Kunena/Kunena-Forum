@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topics
  *
@@ -82,13 +83,13 @@ $this->cache = false;
 			endif;
 			?>
 			<span class="ktopic-posted-time"
-			      title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover'); ?>">
+				title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_POSTED_AT') . ' ' . KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>
 				&nbsp;
 			</span>
 
 			<?php if ($this->message->userid) : ?>
-				<br/>
+				<br />
 				<span
 					class="ktopic-by"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id); ?></span>
 			<?php endif; ?>
@@ -97,12 +98,12 @@ $this->cache = false;
 
 	<?php if (!empty($this->postActions)) : ?>
 		<td class="kcol-mid ktopicmoderation"><input class="kcheck" type="checkbox"
-		                                             name="posts[<?php echo $this->message->id ?>]" value="1"/></td>
+				name="posts[<?php echo $this->message->id ?>]" value="1" /></td>
 	<?php endif; ?>
 </tr>
 <?php if ($this->module) : ?>
 	<tr>
 		<td class="ktopicmodule"
-		    colspan="<?php echo empty($this->postActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
+			colspan="<?php echo empty($this->postActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
 	</tr>
 <?php endif; ?>

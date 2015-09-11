@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Email
  *
@@ -31,9 +32,9 @@ $more    = ($this->once ?
 	<p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
 
 <?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
-	<hr/>
+	<hr />
 	<div><?php echo $this->message->displayField('message'); ?></div>
-	<hr/>
+	<hr />
 <?php endif; ?>
 	<div><?php echo JText::_('COM_KUNENA_POST_EMAIL_MOD2'); ?></div>
 

@@ -49,7 +49,7 @@ $cols            = empty($this->checkbox) ? 5 : 6;
 <?php endif; ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="categoryactions">
-	<input type="hidden" name="view" value="topics"/>
+	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_('form.token'); ?>
 	<div>
 		<ul class="inline">
@@ -82,7 +82,7 @@ $cols            = empty($this->checkbox) ? 5 : 6;
 			<?php if (!empty($this->topicActions)) : ?>
 				<td class="col-md-1 center">
 					<label>
-						<input class="kcheckall" type="checkbox" name="toggle" value=""/>
+						<input class="kcheckall" type="checkbox" name="toggle" value="" />
 					</label>
 				</td>
 			<?php endif; ?>
@@ -139,7 +139,7 @@ $cols            = empty($this->checkbox) ? 5 : 6;
 										);
 										?>
 										<button class="btn btn-default" name="kcheckgo"
-										        type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
+											type="submit"><?php echo JText::_('COM_KUNENA_GO') ?></button>
 									<?php endif; ?>
 								<?php endif; ?>
 							</div>

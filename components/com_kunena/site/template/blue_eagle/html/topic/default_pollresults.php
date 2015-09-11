@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Topic
  *
@@ -14,7 +15,7 @@ $row = 0;
 <div class="kblock kpollbox">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-		                          rel="kpolls_tbody"></a></span>
+				rel="kpolls_tbody"></a></span>
 
 		<h2>
 			<span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?><?php echo KunenaHtmlParser::parseText($this->poll->title); ?></span>
@@ -31,9 +32,9 @@ $row = 0;
 									<tr class="krow<?php echo (++$row) % 2 + 1; ?>">
 										<td class="kcol-option"><?php echo KunenaHtmlParser::parseText($option->text); ?></td>
 										<td class="kcol-bar"><img class="jr-forum-stat-bar"
-										                          src="<?php echo $this->ktemplate->getImagePath('bar.png') ?>"
-										                          height="10"
-										                          width="<?php echo intval(($option->votes * 300) / max($this->poll->getTotal(), 1)) + 3; ?>"/>
+												src="<?php echo $this->ktemplate->getImagePath('bar.png') ?>"
+												height="10"
+												width="<?php echo intval(($option->votes * 300) / max($this->poll->getTotal(), 1)) + 3; ?>" />
 										</td>
 										<td class="kcol-number"><?php if (isset($option->votes) && ($option->votes > 0))
 											{
@@ -50,11 +51,14 @@ $row = 0;
 									<td colspan="4">
 										<?php
 										echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
-										if (!empty($this->users_voted_list)) echo " ( " . implode(', ', $this->users_voted_list) . " ) "; ?>
+										if (!empty($this->users_voted_list))
+										{
+											echo " ( " . implode(', ', $this->users_voted_list) . " ) ";
+										} ?>
 										<?php if ($this->usercount > '5') : ?><a href="#"
-										                                         id="kpoll-moreusers"><?php echo JText::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
+											id="kpoll-moreusers"><?php echo JText::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
 											<div style="display: none;"
-											     id="kpoll-moreusers-div"><?php echo implode(', ', $this->users_voted_morelist); ?></div>
+												id="kpoll-moreusers-div"><?php echo implode(', ', $this->users_voted_morelist); ?></div>
 										<?php endif; ?>
 									</td>
 								</tr>

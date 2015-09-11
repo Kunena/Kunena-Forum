@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -22,7 +23,7 @@ defined('_JEXEC') or die;
 				<label for="kavatar-keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP'); ?></label>
 			</td>
 			<td>
-				<input id="kavatar-keep" type="radio" name="avatar" value="keep" checked="checked"/>
+				<input id="kavatar-keep" type="radio" name="avatar" value="keep" checked="checked" />
 			</td>
 		</tr>
 		<tr>
@@ -30,7 +31,7 @@ defined('_JEXEC') or die;
 				<label for="kavatar-delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE'); ?></label>
 			</td>
 			<td>
-				<input id="kavatar-delete" type="radio" name="avatar" value="delete"/>
+				<input id="kavatar-delete" type="radio" name="avatar" value="delete" />
 			</td>
 		</tr>
 	<?php endif; ?>
@@ -53,7 +54,7 @@ defined('_JEXEC') or die;
 			<td class="col-md-3">
 				<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY'); ?></label>
 				<input id="kunena_url_avatargallery" type="hidden"
-				       value="<?php echo $this->profile->getUrl(true, 'edit'); ?>"/>
+					value="<?php echo $this->profile->getUrl(true, 'edit'); ?>" />
 			</td>
 			<td>
 
@@ -72,9 +73,9 @@ defined('_JEXEC') or die;
 						<?php foreach ($this->galleryImages as $image) : ?>
 							<li class="col-md-2">
 								<input type="radio" name="avatar" id="radio<?php echo $image ?>"
-								       value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
+									value="<?php echo "gallery/{$image}"; ?>" <?php echo !empty($image->checked) ? ' checked="checked" ' : '' ?> />
 								<label class=" radio thumbnail" for="radio<?php echo $image ?>">
-									<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt=""/>
+									<img src="<?php echo "{$this->galleryUri}/{$image}"; ?>" alt="" />
 								</label>
 							</li>
 						<?php endforeach; ?>

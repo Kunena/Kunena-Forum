@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Plugin
+ *
  * @package       Kunena.Plugins
  * @subpackage    Community
  *
@@ -36,7 +37,6 @@ class KunenaAccessCommunity
 
 		return $accesstypes;
 	}
-
 
 	/**
 	 * Get group name in selected access type.
@@ -81,7 +81,10 @@ class KunenaAccessCommunity
 			$selected = 'jomsocial' == $category->accesstype && isset($this->groups[$category->access]) ? $category->access : null;
 			foreach ($this->tree as $item)
 			{
-				if (!$selected && is_numeric($item->id)) $selected = $item->id;
+				if (!$selected && is_numeric($item->id))
+				{
+					$selected = $item->id;
+				}
 				$options[] = JHtml::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
 			}
 			$html ['jomsocial']['access'] = array(
@@ -198,7 +201,10 @@ class KunenaAccessCommunity
 			$this->categories = (array) $db->loadObjectList('id');
 			KunenaError::checkDatabaseError();
 			$this->tree = new KunenaTree($this->categories);
-			if ($this->groups !== false) $this->tree->add($this->groups);
+			if ($this->groups !== false)
+			{
+				$this->tree->add($this->groups);
+			}
 		}
 	}
 
@@ -213,7 +219,10 @@ class KunenaAccessCommunity
 			$db->setQuery($query);
 			$this->groups = (array) $db->loadObjectList('id');
 			KunenaError::checkDatabaseError();
-			if ($this->categories !== false) $this->tree->add($this->groups);
+			if ($this->categories !== false)
+			{
+				$this->tree->add($this->groups);
+			}
 		}
 	}
 }

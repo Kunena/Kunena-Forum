@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Message
  *
@@ -90,7 +91,7 @@ if ($topic->moved_id > 0)
 		</div>
 		<div>
 			<?php echo $topic->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?>,
-			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br/>
+			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
 		</div>
 	</td>
@@ -113,7 +114,7 @@ if ($topic->moved_id > 0)
 						<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
 						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?>
 					</span>
-					<br/>
+					<br />
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>
 				</div>
 			</div>
@@ -122,15 +123,17 @@ if ($topic->moved_id > 0)
 
 	<?php if (!empty($this->checkbox)) : ?>
 		<td class="span1 center">
-			<input class="kcheck" type="checkbox" name="posts[<?php echo $message->id ?>]" value="1"/>
+			<input class="kcheck" type="checkbox" name="posts[<?php echo $message->id ?>]" value="1" />
 		</td>
 	<?php endif; ?>
 
 	<?php
 	if (!empty($this->position))
+	{
 		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
 			->setLayout('table_row');
+	}
 	?>
 </tr>

@@ -26,8 +26,8 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates'); ?>"
-		      method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value=""/>
+			method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 			<?php echo JHtml::_('form.token'); ?>
 
@@ -93,7 +93,7 @@ JHtml::_('dropdown.init');
 													if (is_file($path)) : ?>
 														<div><img
 																src="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/images/template_thumbnail.png"
-																alt=""/></div>
+																alt="" /></div>
 													<?php endif; ?>
 													<div><?php echo JText::_($this->details->description); ?></div>
 												</td>
@@ -106,7 +106,7 @@ JHtml::_('dropdown.init');
 												<?php foreach ($this->form->getFieldset('advanced') as $field) : if (!$field->hidden) : ?>
 													<tr>
 														<td width="40%"
-														    class="paramlist_key"><?php echo $field->label; ?></td>
+															class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
 												<?php endif; endforeach; ?>
@@ -123,7 +123,7 @@ JHtml::_('dropdown.init');
 												<?php foreach ($this->form->getFieldset('features') as $field) : if (!$field->hidden) : ?>
 													<tr>
 														<td width="40%"
-														    class="paramlist_key"><?php echo $field->label; ?></td>
+															class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
 												<?php endif; endforeach; ?>
@@ -140,7 +140,7 @@ JHtml::_('dropdown.init');
 												<?php foreach ($this->form->getFieldset('bbcode') as $field) : if (!$field->hidden) : ?>
 													<tr>
 														<td width="20%"
-														    class="paramlist_key"><?php echo $field->label; ?></td>
+															class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
 												<?php endif; endforeach; ?>
@@ -157,7 +157,7 @@ JHtml::_('dropdown.init');
 												<?php foreach ($this->form->getFieldset('colors') as $field) : if (!$field->hidden) : ?>
 													<tr>
 														<td width="40%"
-														    class="paramlist_key"><?php echo $field->label; ?></td>
+															class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
 												<?php endif; endforeach; ?>

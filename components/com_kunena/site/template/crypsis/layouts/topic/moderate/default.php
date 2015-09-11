@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
@@ -25,24 +26,24 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 		: JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?>
 </h2>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" method="post"
-      name="myform" id="myform" class="form-horizontal">
-	<input type="hidden" name="task" value="move"/>
-	<input type="hidden" name="catid" value="<?php echo $this->category->id; ?>"/>
-	<input type="hidden" name="id" value="<?php echo $this->topic->id; ?>"/>
+	name="myform" id="myform" class="form-horizontal">
+	<input type="hidden" name="task" value="move" />
+	<input type="hidden" name="catid" value="<?php echo $this->category->id; ?>" />
+	<input type="hidden" name="id" value="<?php echo $this->topic->id; ?>" />
 	<?php if (isset($this->message)) : ?>
-		<input type="hidden" name="mesid" value="<?php echo $this->message->id; ?>"/>
+		<input type="hidden" name="mesid" value="<?php echo $this->message->id; ?>" />
 	<?php endif; ?>
 	<?php echo JHtml::_('form.token'); ?>
 	<div>
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab1"
-			                      data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a>
+					data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a>
 			</li>
 			<li><a href="#tab2"
-			       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a></li>
+					data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a></li>
 			<?php if (isset($this->message)) : ?>
 				<li><a href="#tab3"
-				       data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a></li>
+						data-toggle="tab"><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a></li>
 				<!--  <li><a href="#tab4" data-toggle="tab"><?php // echo JText::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN'); ?></a></li> -->
 			<?php endif; ?>
 		</ul>
@@ -67,7 +68,7 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 					<div class="kmoderate-topicicons">
 						<?php foreach ($this->topicIcons as $id => $icon): ?>
 						<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
-						       value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+							value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
 						<?php if ($this->config->topicicons && $topicicontype == 'B2') : ?>
 						<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
 								class="icon icon-<?php echo $icon->b2; ?> icon-topic" aria-hidden="true"></span>
@@ -76,7 +77,7 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 									class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
 								<?php else : ?>
 								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-										src="<?php echo $icon->relpath; ?>" alt="" border="0"/>
+										src="<?php echo $icon->relpath; ?>" alt="" border="0" />
 									<?php endif; ?>
 								</label>
 								<?php endforeach; ?>
@@ -85,13 +86,13 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 				<?php endif; ?>
 
 				<?php if (isset($this->message)) : ?>
-					<hr/>
+					<hr />
 					<h3>
 						<div class="pull-left thumbnail">
 							<?php echo $this->message->getAuthor()->getAvatarImage('img-thumbnail', 'list'); ?>
 						</div>
 						<?php echo $this->message->displayField('subject'); ?>
-						<br/>
+						<br />
 						<small>
 							<?php echo JText::_('COM_KUNENA_POSTED_AT') ?>
 							<?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
@@ -112,13 +113,13 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 
 				<div class="control-group">
 					<label class="control-label"
-					       for="modcategorieslist"> <?php echo JText::_('COM_KUNENA_MODERATION_DEST_CATEGORY'); ?> </label>
+						for="modcategorieslist"> <?php echo JText::_('COM_KUNENA_MODERATION_DEST_CATEGORY'); ?> </label>
 
 					<div class="controls" id="modcategorieslist"> <?php echo $this->getCategoryList(); ?> </div>
 				</div>
 				<div class="control-group">
 					<label class="control-label"
-					       for="modtopicslist"> <?php echo JText::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
+						for="modtopicslist"> <?php echo JText::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
 
 					<div class="controls" id="modtopicslist"> <?php echo JHtml::_(
 							'select.genericlist', $this->getTopicOptions(), 'targettopic', '', 'value', 'text', 0, 'kmod_topics'
@@ -126,21 +127,21 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 				</div>
 				<div class="control-group" id="kmod_targetid" style="display: none">
 					<label class="control-label"
-					       for="modtopicslist"> <?php echo JText::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
+						for="modtopicslist"> <?php echo JText::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
 
 					<div class="controls">
-						<input type="text" size="7" name="targetid" value=""/>
+						<input type="text" size="7" name="targetid" value="" />
 					</div>
 				</div>
 				<div class="control-group" id="kmod_subject">
 					<label class="control-label"
-					       for="kmod_subject"> <?php echo JText::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
+						for="kmod_subject"> <?php echo JText::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
 
 					<div class="controls">
 						<input type="text" name="subject" id="ktitle_moderate_subject"
-						       value="<?php echo !isset($this->message)
-							       ? $this->topic->displayField('subject')
-							       : $this->message->displayField('subject'); ?>"/>
+							value="<?php echo !isset($this->message)
+								? $this->topic->displayField('subject')
+								: $this->message->displayField('subject'); ?>" />
 					</div>
 				</div>
 				<?php if (!empty($this->replies)) : ?>
@@ -148,10 +149,10 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 						<div class="controls">
 							<label class="checkbox">
 								<input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked"
-								       value="selected"/>
+									value="selected" />
 								<?php echo JText::_('COM_KUNENA_MODERATION_MOVE_SELECTED'); ?> </label>
 							<label class="checkbox">
-								<input id="kmoderate-mode-newer" type="radio" name="mode" value="newer"/>
+								<input id="kmoderate-mode-newer" type="radio" name="mode" value="newer" />
 								<?php echo JText::sprintf('COM_KUNENA_MODERATION_MOVE_NEWER', $this->escape($this->replies)); ?>
 							</label>
 						</div>
@@ -161,7 +162,7 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 				<div class="control-group">
 					<div class="controls">
 						<label class="checkbox">
-							<input type="checkbox" name="changesubject" value="1"/>
+							<input type="checkbox" name="changesubject" value="1" />
 							<?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES'); ?> </label>
 					</div>
 				</div>
@@ -170,8 +171,11 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 						<div class="controls">
 							<label class="checkbox">
 								<input
-									type="checkbox"<?php if ($this->config->boxghostmessage) echo ' checked="checked"'; ?>
-									name="shadow" value="1"/>
+									type="checkbox"<?php if ($this->config->boxghostmessage)
+								{
+									echo ' checked="checked"';
+								} ?>
+									name="shadow" value="1" />
 								<?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_SHADOW'); ?> </label>
 						</div>
 					</div>
@@ -187,12 +191,12 @@ $topicicontype   = $this->ktemplate->params->get('topicicontype');
 				<?php //echo $this->subLayout('User/Ban/Form')->set('profile', $this->message->getAuthor())->set('banInfo', $this->banInfo)->set('headerText', JText::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN')); ?>
 			</div>-->
 			<?php endif; ?>
-			<hr/>
-			<br/>
+			<hr />
+			<br />
 
 			<div class="control-group center">
 				<input type="submit" class="btn btn-primary"
-				       value="<?php echo JText::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>"/>
+					value="<?php echo JText::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>" />
 				<a href="javascript:window.history.back();" class="btn"> <?php echo JText::_('COM_KUNENA_BACK'); ?> </a>
 			</div>
 		</div>

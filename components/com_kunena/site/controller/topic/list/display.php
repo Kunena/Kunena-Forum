@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Topic
  *
@@ -112,7 +113,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete')
 	)
 	{
-		if (!$actions) return null;
+		if (!$actions)
+		{
+			return null;
+		}
 
 		$options                = array();
 		$options['none']        = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
@@ -154,7 +158,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			return !empty($item);
 		});
 
-		if (count($actions) == 1) return null;
+		if (count($actions) == 1)
+		{
+			return null;
+		}
 
 		return $actions;
 	}
@@ -169,7 +176,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$actions = array('approve', 'undelete', 'delete', 'permdelete')
 	)
 	{
-		if (!$actions) return null;
+		if (!$actions)
+		{
+			return null;
+		}
 
 		$options               = array();
 		$options['none']       = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
@@ -200,7 +210,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			return !empty($item);
 		});
 
-		if (count($actions) == 1) return null;
+		if (count($actions) == 1)
+		{
+			return null;
+		}
 
 		return $actions;
 	}

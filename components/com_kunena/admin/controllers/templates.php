@@ -125,8 +125,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 				try
 				{
 					JArchive::extract($tmp . $file ['name'], $tmp_kunena);
-				}
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					$this->app->enqueueMessage(
 						JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),

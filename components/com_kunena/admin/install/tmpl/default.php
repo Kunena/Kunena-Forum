@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Installer
  * @subpackage    Template
  *
@@ -23,12 +24,12 @@ defined('_JEXEC') or die ();
 	</div>
 	<div>
 		<button id="kunena-toggle" class="btn"
-		        style="float: left;"><?php echo JText::_('COM_KUNENA_INSTALL_DETAILS'); ?></button>
+			style="float: left;"><?php echo JText::_('COM_KUNENA_INSTALL_DETAILS'); ?></button>
 		<div class="pull-right">
 			<button id="kunena-component" class="btn kunena-close"
-			        disabled="disabled"><?php echo JText::_('COM_KUNENA_INSTALL_TO_KUNENA'); ?></button>
+				disabled="disabled"><?php echo JText::_('COM_KUNENA_INSTALL_TO_KUNENA'); ?></button>
 			<button id="kunena-installer" class="btn kunena-close" disabled="disabled" data-dismiss="modal"
-			        aria-hidden="true"><?php echo JText::_('COM_KUNENA_INSTALL_CLOSE'); ?></button>
+				aria-hidden="true"><?php echo JText::_('COM_KUNENA_INSTALL_CLOSE'); ?></button>
 		</div>
 		<div id="kunena-container" class="hidden">
 			<p class="clr clearfix"></p>
@@ -51,13 +52,13 @@ defined('_JEXEC') or die ();
 		var kunenaDescription = jQuery('#kunena-description');
 
 		jQuery.ajax({
-			type: 'POST',
-			dataType: 'json',
-			timeout: '180000', // 3 minutes
-			url: '<?php echo JRoute::_('index.php?option=com_kunena&view=install&task=run', false)?>',
-			data: '<?php echo JSession::getFormToken(); ?>=1',
-			cache: false,
-			error: function (xhr, ajaxOptions, thrownError) {
+			type      : 'POST',
+			dataType  : 'json',
+			timeout   : '180000', // 3 minutes
+			url       : '<?php echo JRoute::_('index.php?option=com_kunena&view=install&task=run', false)?>',
+			data      : '<?php echo JSession::getFormToken(); ?>=1',
+			cache     : false,
+			error     : function (xhr, ajaxOptions, thrownError) {
 				kunenaInstall.html('<h2><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_MESSAGE', true); ?></h2><div><?php echo JText::_('COM_KUNENA_INSTALL_ERROR_DETAILS', true); ?></div><div>' + xhr.responseText + '</div>');
 				kunenaProgress.addClass('bar-danger');
 				jQuery('#kunena-installer').show();
@@ -65,10 +66,10 @@ defined('_JEXEC') or die ();
 			beforeSend: function () {
 				kunenaProgress.css('width', '1%');
 			},
-			complete: function () {
+			complete  : function () {
 
 			},
-			success: function (json) {
+			success   : function (json) {
 				if (json.status) {
 					kunenaProgress.css('width', json.status);
 				}

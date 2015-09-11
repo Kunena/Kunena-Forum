@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    User
  *
@@ -24,7 +25,7 @@ document.addEvent('domready', function() {
 <div class="kblock">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-		                          rel="searchuser_tbody"></a></span>
+				rel="searchuser_tbody"></a></span>
 
 		<h2>
 			<span><?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), intval($this->total)); ?></span>
@@ -34,16 +35,16 @@ document.addEvent('domready', function() {
 		<div class="kbody">
 			<div class="search-user">
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>"
-				      name="usrlform" method="post">
-					<input type="hidden" name="view" value="user"/>
+					name="usrlform" method="post">
+					<input type="hidden" name="view" value="user" />
 					<?php echo JHtml::_('form.token'); ?>
 
 					<input id="kusersearch" type="text" name="search" class="inputbox"
-					       value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>"
-					       onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';"
-					       onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';"/>
+						value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>"
+						onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';"
+						onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
 					<input type="image" src="<?php echo $this->ktemplate->getImagePath('usl_search_icon.png') ?>"
-					       alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" style="border: 0px;"/>
+						alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" style="border: 0px;" />
 				</form>
 			</div>
 			<div class="userlist-jump">
@@ -55,17 +56,17 @@ document.addEvent('domready', function() {
 <div class="kblock">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
-		                          rel="userlist-tbody"></a></span>
+				rel="userlist-tbody"></a></span>
 
 		<h2><span><?php echo JText::_('COM_KUNENA_USRL_USERLIST'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="userlist-tbody">
 		<div class="kbody">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>"
-			      method="post" id="kuserlist-form" name="kuserlist-form">
-				<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>"/>
+				method="post" id="kuserlist-form" name="kuserlist-form">
+				<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>" />
 				<input type="hidden" name="filter_order_Dir"
-				       value="<?php echo $this->state->get('list.direction'); ?>"/>
+					value="<?php echo $this->state->get('list.direction'); ?>" />
 				<?php echo JHtml::_('form.token'); ?>
 
 				<table>
@@ -171,12 +172,12 @@ document.addEvent('domready', function() {
 
 							<?php if ($this->config->userlist_joindate) : ?>
 								<td class="kcol-mid"
-								    title="<?php echo KunenaDate::getInstance($user->registerDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($user->registerDate)->toKunena('datetime_today') ?></td>
+									title="<?php echo KunenaDate::getInstance($user->registerDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($user->registerDate)->toKunena('datetime_today') ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_lastvisitdate) : ?>
 								<td class="kcol-mid"
-								    title="<?php echo KunenaDate::getInstance($lastvisitDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($lastvisitDate)->toKunena('datetime_today') ?></td>
+									title="<?php echo KunenaDate::getInstance($lastvisitDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($lastvisitDate)->toKunena('datetime_today') ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_userhits) : ?>
@@ -187,7 +188,7 @@ document.addEvent('domready', function() {
 				</table>
 			</form>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>"
-			      name="usrlform" method="post" onsubmit="return false;">
+				name="usrlform" method="post" onsubmit="return false;">
 				<?php echo JHtml::_('form.token'); ?>
 
 				<table class="kblocktable" id="kuserlist-bottom">

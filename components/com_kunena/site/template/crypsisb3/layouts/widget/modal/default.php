@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
@@ -31,7 +32,7 @@ $form        = $this->form;
 				<div class="control-group">
 					<div class="controls">
 						<textarea <?php echo $name ?> style="resize: none; text-align: left" class="input-block-level"
-						                              rows="3" maxlength="255"><?php echo $data; ?></textarea>
+							rows="3" maxlength="255"><?php echo $data; ?></textarea>
 					</div>
 				</div>
 			</div>

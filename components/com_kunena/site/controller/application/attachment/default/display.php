@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Site
  * @subpackage      Controller.Application
  *
@@ -42,8 +43,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		try
 		{
 			$this->display();
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			// In case of an error we want to set HTTP error code.
 			// We want to wrap the exception to be able to display correct HTTP status code.
@@ -135,7 +135,6 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 				$this->app->close();
 			}
 		}
-
 
 		// Set file headers.
 		header('ETag: ' . $attachment->hash);

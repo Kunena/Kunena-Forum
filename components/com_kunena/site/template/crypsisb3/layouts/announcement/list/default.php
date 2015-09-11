@@ -1,6 +1,7 @@
 s<?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Announcement
  *
@@ -15,8 +16,8 @@ JHtml::_('behavior.core');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement'); ?>" method="post"
-      id="adminForm" name="adminForm">
-	<input type="hidden" name="boxchecked" value="0"/>
+	id="adminForm" name="adminForm">
+	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHtml::_('form.token'); ?>
 
 	<div class="row">
@@ -32,9 +33,9 @@ JHtml::_('behavior.core');
 						<div class="input-group-btn">
 							<?php echo JHtml::_('select.genericlist', $options, 'task', 'class="form-control pull-left"', 'value', 'text', 0, 'kchecktask'); ?>
 							<input type="submit" name="kcheckgo" class="btn btn-default"
-							       value="<?php echo JText::_('COM_KUNENA_GO') ?>"/>
+								value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 							<a class="btn btn-primary"
-							   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
+								href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create'); ?>">
 								<?php echo JText::_('COM_KUNENA_ANNOUNCEMENT_ACTIONS_LABEL_ADD'); ?>
 							</a>
 						</div>
@@ -75,7 +76,7 @@ JHtml::_('behavior.core');
 
 			<?php if ($options) : ?>
 				<th class="col-md-1 center">
-					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
+					<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
 				</th>
 			<?php endif; ?>
 

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Templates
  *
@@ -26,15 +27,15 @@ JHtml::_('behavior.tooltip');
 				</div>
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
-					      method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="view" value="templates"/>
-						<input type="hidden" name="task" value=""/>
-						<input type="hidden" name="boxchecked" value="0"/>
+						method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="view" value="templates" />
+						<input type="hidden" name="task" value="" />
+						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHtml::_('form.token'); ?>
 
 						<div class="btn-group pull-right hidden-phone">
 							<label for="limit"
-							       class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+								class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 							<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 						</div>
 
@@ -68,14 +69,14 @@ JHtml::_('behavior.tooltip');
 									<tr <?php echo 'class = "row' . $k . '"'; ?>>
 										<td>
 											<input type="radio" id="cb<?php echo $this->escape($row->directory); ?>"
-											       name="cid[]" value="<?php echo $this->escape($row->directory); ?>"
-											       onclick="isChecked(this.checked);"/>
+												name="cid[]" value="<?php echo $this->escape($row->directory); ?>"
+												onclick="isChecked(this.checked);" />
 										</td>
 										<td><?php $img_path = JUri::root(true) . '/components/com_kunena/template/' . $row->directory . '/images/template_thumbnail.png'; ?>
 											<span class="editlinktip hasTip"
-											      title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?> ">
+												title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?> ">
 											<a href="#edit"
-											   onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name); ?></a>
+												onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name); ?></a>
 										</span>
 										</td>
 										<td class="center">
@@ -83,15 +84,15 @@ JHtml::_('behavior.tooltip');
 											{ ?>
 												<img
 													src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/small/default.png"
-													alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"/>
+													alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>" />
 											<?php }
 											else
 											{ ?>
 												<a href="javascript: void(0);"
-												   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
+													onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
 													<img
 														src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/small/default_off.png"
-														alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"/>
+														alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>" />
 												</a>
 											<?php } ?>
 										</td>
@@ -109,7 +110,7 @@ JHtml::_('behavior.tooltip');
 										<td>
 										<span class="editlinktip" title="">
 											<a href="<?php echo substr($row->authorUrl, 0, 7) == 'http://' ? $this->escape($row->authorUrl) : 'http://' . $this->escape($row->authorUrl); ?>"
-											   target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
+												target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
 										</span>
 										</td>
 									</tr>

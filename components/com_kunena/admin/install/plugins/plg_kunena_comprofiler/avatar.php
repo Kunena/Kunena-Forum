@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Plugin
+ *
  * @package       Kunena.Plugins
  * @subpackage    Comprofiler
  *
@@ -45,11 +46,17 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 		}
 		if ($cbUser === null)
 		{
-			if ($sizex <= 90) return selectTemplate() . 'images/avatar/tnnophoto_n.png';
+			if ($sizex <= 90)
+			{
+				return selectTemplate() . 'images/avatar/tnnophoto_n.png';
+			}
 
 			return selectTemplate() . 'images/avatar/nophoto_n.png';
 		}
-		if ($sizex <= 90) return $cbUser->getField('avatar', null, 'csv');
+		if ($sizex <= 90)
+		{
+			return $cbUser->getField('avatar', null, 'csv');
+		}
 
 		return $cbUser->getField('avatar', null, 'csv', 'none', 'list');
 	}

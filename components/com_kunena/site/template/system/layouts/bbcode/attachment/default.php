@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Crypsis
  * @subpackage    BBCode
  *
@@ -21,7 +22,7 @@ $attachment = $this->attachment;
 	<?php echo JText::_('COM_KUNENA_FILENAME'); ?>
 	<?php echo $this->subLayout('Attachment/Item')->set('attachment', $attachment); ?>
 
-	<br/>
+	<br />
 
 	<?php echo JText::_('COM_KUNENA_FILESIZE') . number_format($attachment->size / 1024, 0, '', ',') . ' ' .
 		JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>

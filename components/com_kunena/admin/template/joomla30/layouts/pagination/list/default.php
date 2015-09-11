@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template.Joomla30
  * @subpackage    Layouts.Pagination
  *
@@ -11,7 +12,10 @@
 defined('_JEXEC') or die ();
 
 $data = $this->pagination->getData();
-if (count($data->pages) <= 1) return;
+if (count($data->pages) <= 1)
+{
+	return;
+}
 
 $template = new KunenaAdminTemplate30();
 ?>

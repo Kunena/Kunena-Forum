@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Widget
  *
@@ -18,9 +19,9 @@ defined('_JEXEC') or die;
 		</a>
 		<ul class="dropdown-menu card card-container" id="userdropdownlogin" role="menu">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post"
-			      class="form-inline form-signin">
-				<input type="hidden" name="view" value="user"/>
-				<input type="hidden" name="task" value="login"/>
+				class="form-inline form-signin">
+				<input type="hidden" name="view" value="user" />
+				<input type="hidden" name="task" value="login" />
 				<?php echo JHtml::_('form.token'); ?>
 
 				<div class="center">
@@ -29,18 +30,18 @@ defined('_JEXEC') or die;
 					</a>
 				</div>
 				<input id="login-username" type="text" name="username" class="form-control input-sm" tabindex="1"
-				       size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>"/>
+					size="18" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>" />
 				<input id="login-passwd" type="password" name="password" class="form-control input-sm" tabindex="2"
-				       size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" required/>
+					size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" required />
 				<?php $login = KunenaLogin::getInstance(); ?>
 				<?php if ($login->getTwoFactorMethods() > 1) : ?>
 					<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-large" tabindex="3"
-					       size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
+						size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
 					<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 				<?php endif; ?>
 				<div id="remember" class="checkbox">
 					<label>
-						<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes"/>
+						<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
 						<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
 					</label>
 				</div>
@@ -49,14 +50,14 @@ defined('_JEXEC') or die;
 					<a href="<?php echo $this->resetPasswordUrl; ?>" rel="nofollow">
 						<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
 					</a>
-					<br/>
+					<br />
 				<?php endif ?>
 
 				<?php if ($this->remindUsernameUrl) : ?>
 					<a href="<?php echo $this->remindUsernameUrl; ?>" rel="nofollow">
 						<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
 					</a>
-					<br/>
+					<br />
 				<?php endif ?>
 
 				<?php if ($this->registrationUrl) : ?>

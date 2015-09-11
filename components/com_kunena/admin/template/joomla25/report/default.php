@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Report
  *
@@ -37,9 +38,9 @@ JHtml::_('behavior.multiselect');
 				</div>
 				<div id="j-main-container" class="span10">
 					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
-					      method="post" id="adminForm" name="adminForm">
-						<input type="hidden" name="task" value=""/>
-						<input type="hidden" name="boxchecked" value="1"/>
+						method="post" id="adminForm" name="adminForm">
+						<input type="hidden" name="task" value="" />
+						<input type="hidden" name="boxchecked" value="1" />
 
 						<fieldset>
 							<legend><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></legend>
@@ -49,11 +50,11 @@ JHtml::_('behavior.multiselect');
 										<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?></p>
 
 										<p><a href="#"
-										      id="link_sel_all"><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
+												id="link_sel_all"><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
 										</p>
 										<textarea id="report_final" class="input-block-level" name="report_final"
-										          cols="80"
-										          rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
+											cols="80"
+											rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 									</td>
 								</tr>
 							</table>

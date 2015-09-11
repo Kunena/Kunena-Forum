@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.BBCode
  *
@@ -16,28 +17,28 @@ defined('_JEXEC') or die;
 ?>
 
 <div id="kunena_twitter_widget"
-     style="background: none repeat scroll 0 0 #fff;    border-radius: 5px;    padding: 8px 8px 0;"
-     class="root ltr twitter-tweet not-touch var-narrow" lang="en" data-scribe="page:tweet"
-     data-iframe-title="Embedded Tweet" data-dt-pm="PM" data-dt-am="AM"
-     data-dt-full="%{hours12}:%{minutes} %{amPm} - %{day} %{month} %{year}"
-     data-dt-months="Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec" dir="ltr" data-twitter-event-id="4">
+	style="background: none repeat scroll 0 0 #fff;    border-radius: 5px;    padding: 8px 8px 0;"
+	class="root ltr twitter-tweet not-touch var-narrow" lang="en" data-scribe="page:tweet"
+	data-iframe-title="Embedded Tweet" data-dt-pm="PM" data-dt-am="AM"
+	data-dt-full="%{hours12}:%{minutes} %{amPm} - %{day} %{month} %{year}"
+	data-dt-months="Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec" dir="ltr" data-twitter-event-id="4">
 	<blockquote class="tweet subject expanded h-entry" data-scribe="section:subject"
-	            cite="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>"
-	            data-tweet-id="<?php echo $this->tweetid ?>">
+		cite="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>"
+		data-tweet-id="<?php echo $this->tweetid ?>">
 		<div class="header">
 			<div class="h-card p-author with-verification" data-scribe="component:author">
 				<a class="u-url profile" data-scribe="element:user_link"
-				   aria-label="<?php echo $this->user_name ?> (screen name: <?php echo $this->user_screen_name ?>)"
-				   href="https://twitter.com/<?php echo $this->user_screen_name ?>">
+					aria-label="<?php echo $this->user_name ?> (screen name: <?php echo $this->user_screen_name ?>)"
+					href="https://twitter.com/<?php echo $this->user_screen_name ?>">
 					<img class="u-photo avatar" data-scribe="element:avatar"
-					     data-src-2x="<?php echo $this->user_profile_url_big ?>"
-					     src="<?php echo $this->user_profile_url_normal ?>" alt="">
+						data-src-2x="<?php echo $this->user_profile_url_big ?>"
+						src="<?php echo $this->user_profile_url_normal ?>" alt="">
 				<span class="full-name">
 					<span class="p-name customisable-highlight"
-					      data-scribe="element:name"><?php echo $this->user_name ?></span>
+						data-scribe="element:name"><?php echo $this->user_name ?></span>
 					<?php if ($this->verified): ?>
 						<span class="verified" data-scribe="element:verified_badge" aria-label="Verified Account"
-						      title="Verified Account">
+							title="Verified Account">
 							<b>✔</b>
 						</span>
 					<?php endif; ?>
@@ -54,12 +55,12 @@ defined('_JEXEC') or die;
 
 				<div class="dateline collapsible-container">
 					<a class="u-url customisable-highlight long-permalink" data-scribe="element:full_timestamp"
-					   data-datetime="<?php echo JFactory::getDate($this->tweet_created_at)->toISO8601(); ?>"
-					   href="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>">
+						data-datetime="<?php echo JFactory::getDate($this->tweet_created_at)->toISO8601(); ?>"
+						href="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>">
 						<time class="dt-updated"
-						      title="Time posted: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
-						      datetime="<?php echo JFactory::getDate($this->tweet_created_at)->toISO8601(); ?>"
-						      pubdate=""><?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?></time>
+							title="Time posted: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
+							datetime="<?php echo JFactory::getDate($this->tweet_created_at)->toISO8601(); ?>"
+							pubdate=""><?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?></time>
 					</a>
 				</div>
 			</div>
@@ -67,14 +68,14 @@ defined('_JEXEC') or die;
 			<span class="stats-narrow customisable-border">
 				<span class="stats" data-scribe="component:stats">
 					<a data-scribe="element:retweet_count" title="View Tweet on Twitter"
-					   href="https://twitter.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
+						href="https://twitter.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
 						<span class="stats-retweets">
 							<strong><?php echo $this->retweet_count; ?></strong>
 							Retweets
 						</span>
 					</a>
 					<a data-scribe="element:favorite_count" title="View Tweet on Twitter"
-					   href="https://twitter.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
+						href="https://twitter.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
 						<span class="stats-favorites">
 							<strong><?php echo $this->favorite_count; ?></strong>
 							favorites
@@ -85,21 +86,21 @@ defined('_JEXEC') or die;
 				<ul class="tweet-actions" data-scribe="component:actions" aria-label="Tweet actions" role="menu">
 					<li>
 						<a class="reply-action web-intent" data-scribe="element:reply" title="Reply"
-						   href="https://twitter.com/intent/tweet?in_reply_to=<?php echo $this->tweetid ?>">
+							href="https://twitter.com/intent/tweet?in_reply_to=<?php echo $this->tweetid ?>">
 							<i class="ic-reply ic-mask"></i>
 							<b>Reply</b>
 						</a>
 					</li>
 					<li>
 						<a class="retweet-action web-intent" data-scribe="element:retweet" title="Retweet"
-						   href="https://twitter.com/intent/retweet?tweet_id=<?php echo $this->tweetid ?>">
+							href="https://twitter.com/intent/retweet?tweet_id=<?php echo $this->tweetid ?>">
 							<i class="ic-retweet ic-mask"></i>
 							<b>Retweet</b>
 						</a>
 					</li>
 					<li>
 						<a class="favorite-action web-intent" data-scribe="element:favorite" title="Favorite"
-						   href="https://twitter.com/intent/favorite?tweet_id=<?php echo $this->tweetid ?>">
+							href="https://twitter.com/intent/favorite?tweet_id=<?php echo $this->tweetid ?>">
 							<i class="ic-fav ic-mask"></i>
 							<b>Favorite</b>
 						</a>

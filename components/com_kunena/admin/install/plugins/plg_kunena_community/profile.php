@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Plugin
+ *
  * @package       Kunena.Plugins
  * @subpackage    Community
  *
@@ -24,7 +25,10 @@ class KunenaProfileCommunity extends KunenaProfile
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
-		if ($config->userlist_allowed == 1 && $my->id == 0) return false;
+		if ($config->userlist_allowed == 1 && $my->id == 0)
+		{
+			return false;
+		}
 
 		return CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
 	}

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Topic
  *
@@ -131,7 +132,6 @@ if (!empty($this->spacing)) : ?>
 			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
 		</div>
 
-
 	</td>
 
 	<td class="hidden-phone">
@@ -164,16 +164,18 @@ if (!empty($this->spacing)) : ?>
 		<td class="center">
 			<label>
 				<input class="kcheck" type="checkbox" name="topics[<?php echo $topic->displayField('id'); ?>]"
-				       value="1"/>
+					value="1" />
 			</label>
 		</td>
 	<?php endif; ?>
 
 	<?php
 	if (!empty($this->position))
+	{
 		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
 			->setLayout('table_row');
+	}
 	?>
 </tr>

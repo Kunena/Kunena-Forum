@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Category
  *
@@ -48,10 +49,10 @@ $paneOptions = array(
 	<div class="kcontainer">
 		<div class="kbody">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm"
-			      name="adminForm">
-				<input type="hidden" name="view" value="category"/>
-				<input type="hidden" name="task" value="save"/>
-				<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>"/>
+				name="adminForm">
+				<input type="hidden" name="view" value="category" />
+				<input type="hidden" name="task" value="save" />
+				<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
 				<?php echo JHtml::_('form.token'); ?>
 
 				<div class="kbuttons">
@@ -68,30 +69,30 @@ $paneOptions = array(
 						<tr>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_PARENT'); ?></td>
 							<td><?php echo $this->options ['categories']; ?>
-								<br/><br/><?php echo JText::_('COM_KUNENA_PARENTDESC'); ?></td>
+								<br /><br /><?php echo JText::_('COM_KUNENA_PARENTDESC'); ?></td>
 						</tr>
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_NAMEADD'); ?></td>
 							<td><input class="inputbox" type="text" name="name" size="80"
-							           value="<?php echo $this->escape($this->category->name); ?>"/></td>
+									value="<?php echo $this->escape($this->category->name); ?>" /></td>
 						</tr>
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 							<td><input class="inputbox" type="text" name="alias" size="80"
-							           value="<?php echo $this->escape($this->category->alias); ?>"/></td>
+									value="<?php echo $this->escape($this->category->alias); ?>" /></td>
 						</tr>
 						<tr>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 							<td>
 								<textarea class="inputbox" cols="50" rows="6" name="description" id="description"
-								          style="width: 500px"><?php echo $this->escape($this->category->description); ?></textarea>
+									style="width: 500px"><?php echo $this->escape($this->category->description); ?></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_HEADERADD'); ?></td>
 							<td>
 								<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc"
-								          style="width: 500px"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
+									style="width: 500px"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
 							</td>
 						</tr>
 					</table>
@@ -103,7 +104,7 @@ $paneOptions = array(
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
 							<td><input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20"
-							           value="<?php echo $this->escape($this->category->class_sfx); ?>"/></td>
+									value="<?php echo $this->escape($this->category->class_sfx); ?>" /></td>
 							<td><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></td>
 						</tr>
 					</table>
@@ -117,7 +118,7 @@ $paneOptions = array(
 						<table class="kadmin-adminform">
 							<tr>
 								<td class="nowrap" valign="top"
-								    width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
+									width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
 								<td valign="top" width="25%"><?php echo $this->options ['accesstypes']; ?></td>
 								<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
 							</tr>
@@ -126,7 +127,7 @@ $paneOptions = array(
 								foreach ($accesslist as $accessinput) :
 									?>
 									<tr class="kaccess kaccess-<?php echo $accesstype ?>"
-									    style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
+										style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
 										<td class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
 										<td valign="top"><?php echo $accessinput['input'] ?></td>
 										<td valign="top"><?php echo $accessinput['desc'] ?></td>
@@ -153,21 +154,21 @@ $paneOptions = array(
 							</tr>
 							<tr>
 								<td class="nowrap"
-								    valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:
+									valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:
 								</td>
 								<td valign="top"><?php echo $this->options ['allow_anonymous']; ?></td>
 								<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
 							</tr>
 							<tr>
 								<td class="nowrap"
-								    valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:
+									valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:
 								</td>
 								<td valign="top"><?php echo $this->options ['post_anonymous']; ?></td>
 								<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
 							</tr>
 							<tr>
 								<td class="nowrap"
-								    valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:
+									valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:
 								</td>
 								<td valign="top"><?php echo $this->options ['allow_polls']; ?></td>
 								<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
@@ -181,7 +182,7 @@ $paneOptions = array(
 							</tr>
 							<tr>
 								<td class="nowrap"
-								    valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>:
+									valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>:
 								</td>
 								<td valign="top"><?php echo $this->options ['topic_ordering']; ?></td>
 								<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
@@ -204,7 +205,7 @@ $paneOptions = array(
 							<tr>
 								<th width="5">#</th>
 								<th width="5"><input type="checkbox" name="toggle" value=""
-								                     onclick="checkAll(<?php echo count($this->moderators); ?>);"/></th>
+										onclick="checkAll(<?php echo count($this->moderators); ?>);" /></th>
 								<th align="left"><?php echo JText::_('COM_KUNENA_REALNAME'); ?></th>
 								<th align="left"><?php echo JText::_('COM_KUNENA_USERNAME'); ?></th>
 								<th align="center"><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></th>
@@ -224,12 +225,12 @@ $paneOptions = array(
 										<td width="5"><?php echo $i + 1; ?></td>
 										<td width="5">
 											<input type="checkbox" id="cb<?php echo $i; ?>" name="cid[]"
-											       value="<?php echo intval($ml->userid); ?>"
-											       onclick="isChecked(this.checked);"/>
+												value="<?php echo intval($ml->userid); ?>"
+												onclick="isChecked(this.checked);" />
 										</td>
 										<td><?php echo $this->escape($ml->name); ?></td>
 										<td><?php echo $this->escape($ml->username); ?></td>
-										<td align="center"><img src="images/tick.png" alt=""/></td>
+										<td align="center"><img src="images/tick.png" alt="" /></td>
 									</tr>
 									<?php $i++;
 								endforeach;

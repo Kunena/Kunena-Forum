@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Crypsis
  * @subpackage    BBCode
  *
@@ -19,8 +20,8 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' rel="lightbox[
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
 ?>
 <a href="<?php echo $attachment->getUrl(); ?>"
-   title="<?php echo $attachment->getShortName(0, 7); ?>"<?php echo $attributesLink; ?>>
+	title="<?php echo $attachment->getShortName(0, 7); ?>"<?php echo $attributesLink; ?>>
 	<?php if ($attachment->isImage()) : ?>
-		<img src="<?php echo $attachment->getUrl(true); ?>"<?php echo $attributesImg; ?> alt=""/>
+		<img src="<?php echo $attachment->getUrl(true); ?>"<?php echo $attributesImg; ?> alt="" />
 	<?php endif; ?>
 </a>

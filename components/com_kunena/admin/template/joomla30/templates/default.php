@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Templates
  *
@@ -25,14 +26,14 @@ JHtml::_('dropdown.init');
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
-		      method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value=""/>
-			<input type="hidden" name="boxchecked" value="0"/>
+			method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="boxchecked" value="0" />
 			<?php echo JHtml::_('form.token'); ?>
 
 			<div class="btn-group pull-right hidden-phone">
 				<label for="limit"
-				       class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
+					class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 				<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 			</div>
 
@@ -60,26 +61,26 @@ JHtml::_('dropdown.init');
 					<tr>
 						<td>
 							<input type="radio" id="cb<?php echo $this->escape($row->directory); ?>" name="cid[]"
-							       value="<?php echo $this->escape($row->directory); ?>"
-							       onclick="Joomla.isChecked(this.checked);"/>
+								value="<?php echo $this->escape($row->directory); ?>"
+								onclick="Joomla.isChecked(this.checked);" />
 						</td>
 						<td>
 							<?php $img_path = JUri::root(true) . '/components/com_kunena/template/' . $row->directory . '/images/template_thumbnail.png'; ?>
 							<span class="editlinktip hasTip"
-							      title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
+								title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 							<a href="#edit"
-							   onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name); ?></a>
+								onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name); ?></a>
 						</span>
 						</td>
 						<td class="center">
 							<?php if ($row->published == 1) : ?>
 								<i class="icon-star"
-								   alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
+									alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
 							<?php else : ?>
 								<a href="javascript: void(0);"
-								   onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
+									onclick="return listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
 									<i class="icon-star-empty"
-									   alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
+										alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
 								</a>
 							<?php endif; ?>
 						</td>
@@ -94,7 +95,7 @@ JHtml::_('dropdown.init');
 						</td>
 						<td>
 							<a href="<?php echo substr($row->authorUrl, 0, 7) == 'http://' ? $this->escape($row->authorUrl) : 'http://' . $this->escape($row->authorUrl); ?>"
-							   target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
+								target="_blank"><?php echo $this->escape($row->authorUrl); ?></a>
 						</td>
 					</tr>
 				<?php endforeach; ?>

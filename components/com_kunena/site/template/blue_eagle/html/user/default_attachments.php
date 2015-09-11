@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    User
  *
@@ -20,10 +21,10 @@ JHtml::_('behavior.multiselect');
 	<div class="kcontainer">
 		<div class="kbody">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm"
-			      name="adminForm">
+				name="adminForm">
 				<input type="hidden" name="view" value="user">
-				<input type="hidden" name="task" value="delfile"/>
-				<input type="hidden" name="boxchecked" value="0"/>
+				<input type="hidden" name="task" value="delfile" />
+				<input type="hidden" name="boxchecked" value="0" />
 				<?php echo JHtml::_('form.token'); ?>
 
 				<table>
@@ -31,8 +32,8 @@ JHtml::_('behavior.multiselect');
 						<th class="frst"> #</th>
 						<th width="5">
 							<input type="checkbox" name="checkall-toggle" value="cid"
-							       title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>"
-							       onclick="Joomla.checkAll(this)"/>
+								title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>"
+								onclick="Joomla.checkAll(this)" />
 						</th>
 						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILENAME'); ?></th>
@@ -53,8 +54,14 @@ JHtml::_('behavior.multiselect');
 							$message = $attachment->getMessage();
 							$evenodd = $i % 2;
 
-							if ($evenodd == 0) $usrl_class = "row1";
-							else $usrl_class = "row2";
+							if ($evenodd == 0)
+							{
+								$usrl_class = "row1";
+							}
+							else
+							{
+								$usrl_class = "row2";
+							}
 							?>
 
 							<tr class="k<?php echo $usrl_class; ?>">
@@ -62,7 +69,7 @@ JHtml::_('behavior.multiselect');
 								<td class="kcol-mid"><?php if ($attachment->isAuthorised('delete')) echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
 								<td align="center" class="kcol-mid"><img
 										src="<?php echo $attachment->isImage() ? JUri::root(true) . '/media/kunena/icons/image.png' : JUri::root(true) . '/media/kunena/icons/file.png'; ?>"
-										alt="" title=""/></td>
+										alt="" title="" /></td>
 
 								<td class="kcol-mid"><?php echo $attachment->getShortName(5, 5); ?></td>
 
@@ -75,10 +82,10 @@ JHtml::_('behavior.multiselect');
 								<td align="center" class="kcol-mid">
 									<?php if ($attachment->isAuthorised('delete')) : ?>
 										<a href="javascript:void(0);"
-										   onclick="return listItemTask('cb<?php echo $i; ?>','delfile')">
+											onclick="return listItemTask('cb<?php echo $i; ?>','delfile')">
 											<img
 												src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>"
-												alt="" title=""/>
+												alt="" title="" />
 										</a>
 									<?php endif ?>
 								</td>
@@ -92,7 +99,7 @@ JHtml::_('behavior.multiselect');
 					?>
 				</table>
 				<input class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>"
-				       style="float:right;"/>
+					style="float:right;" />
 			</form>
 		</div>
 	</div>

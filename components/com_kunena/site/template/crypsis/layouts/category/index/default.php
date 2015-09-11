@@ -25,7 +25,7 @@ foreach ($this->sections as $section) :
 		<div class="btn-toolbar pull-right">
 			<?php if (count($this->sections) > 0) : ?>
 				<div class="btn btn-small" data-toggle="collapse"
-				     data-target="#section<?php echo $section->id; ?>"></div>
+					data-target="#section<?php echo $section->id; ?>"></div>
 			<?php endif; ?>
 		</div>
 
@@ -37,7 +37,7 @@ foreach ($this->sections as $section) :
 		</h2>
 
 		<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>"
-		     id="section<?php echo $section->id; ?>">
+			id="section<?php echo $section->id; ?>">
 			<table class="table table-bordered">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-phone">
@@ -71,7 +71,7 @@ foreach ($this->sections as $section) :
 					<?php
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>"
-						    id="category<?php echo $category->id; ?>">
+							id="category<?php echo $category->id; ?>">
 							<td class="span1 center hidden-phone">
 								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
 							</td>
@@ -90,16 +90,16 @@ foreach ($this->sections as $section) :
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
 													<span class="icon-lock"
-													      title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"></span>
+														title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"></span>
 												<?php endif; ?>
 												<?php if ($category->review) : ?>
 													<span class="icon-shield"
-													      title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
+														title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
 												<?php endif; ?>
 												<?php if (!empty($category->rssURL)) : ?>
 													<a href="<?php echo $category->rssURL ?>" rel="follow">
 														 <span class="icon-feed"
-														       title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>">
+															 title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>">
 														 </span>
 													</a>
 												<?php endif; ?>
@@ -161,9 +161,9 @@ foreach ($this->sections as $section) :
 								<?php if (!empty($this->pending[$category->id])) : ?>
 									<div class="alert" style="margin-top:20px;">
 										<a class="alert-link"
-										   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>"
-										   title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
-										   rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
+											href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>"
+											title="<?php echo JText::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
+											rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
 									</div>
 								<?php endif; ?>
 							</td>

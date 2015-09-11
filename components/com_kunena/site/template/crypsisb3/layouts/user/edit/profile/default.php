@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -24,8 +25,8 @@ defined('_JEXEC') or die;
 		</td>
 		<td>
 			<input class="form-control" id="personaltext" type="text"
-			       maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
-			       name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>"/>
+				maxlength="<?php echo (int) $this->config->maxpersotext; ?>"
+				name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -39,11 +40,11 @@ defined('_JEXEC') or die;
 				<span class="hasTip col-md-6 form-inline" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC'); ?>">
 					<input id="birthdate" class="form-control" type="text" size="4" maxlength="4" name="birthdate1"
-					       value="<?php echo $this->escape($birthYear); ?>"/>
+						value="<?php echo $this->escape($birthYear); ?>" />
 					<input class="form-control" type="text" size="2" maxlength="2" name="birthdate2"
-					       value="<?php echo $this->escape($birthMonth); ?>"/>
+						value="<?php echo $this->escape($birthMonth); ?>" />
 					<input class="form-control" type="text" size="2" maxlength="2" name="birthdate3"
-					       value="<?php echo $this->escape($birthDay); ?>"/>
+						value="<?php echo $this->escape($birthDay); ?>" />
 				</span>
 		</td>
 	</tr>
@@ -55,7 +56,7 @@ defined('_JEXEC') or die;
 		</td>
 		<td>
 			<input id="location" type="text" name="location" class="form-control"
-			       value="<?php echo $this->escape($this->profile->location); ?>"/>
+				value="<?php echo $this->escape($this->profile->location); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -86,7 +87,7 @@ defined('_JEXEC') or die;
 				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
 					<input id="social-site" type="text" name="websitename" class="form-control"
-					       value="<?php echo $this->escape($this->profile->websitename); ?>"/>
+						value="<?php echo $this->escape($this->profile->websitename); ?>" />
 				</span>
 		</td>
 	</tr>
@@ -98,9 +99,9 @@ defined('_JEXEC') or die;
 		</td>
 		<td>
 				<span class="hasTip"
-				      title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
+					title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
 					<input id="social-url" type="text" name="websiteurl" class="form-control"
-					       value="<?php echo $this->escape($this->profile->websiteurl); ?>"/>
+						value="<?php echo $this->escape($this->profile->websiteurl); ?>" />
 				</span>
 		</td>
 	</tr>
@@ -116,8 +117,8 @@ defined('_JEXEC') or die;
 				<span class="hasTip" title="<?php echo JText::_("COM_KUNENA_MYPROFILE_{$social}")
 					. '::' . JText::_("COM_KUNENA_MYPROFILE_{$social}_DESC"); ?>">
 					<input id="social-<?php echo $social; ?>" type="text" name="<?php echo $social ?>"
-					       class="form-control"
-					       value="<?php echo $this->escape($this->profile->$social); ?>"/>
+						class="form-control"
+						value="<?php echo $this->escape($this->profile->$social); ?>" />
 				</span>
 			</td>
 		</tr>
@@ -133,8 +134,8 @@ defined('_JEXEC') or die;
 				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE')
 					. '::' . JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
 					<textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxsig; ?>"
-					          name="signature" id="signature" rows="10"
-					          cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
+						name="signature" id="signature" rows="10"
+						cols="30"><?php echo $this->escape($this->profile->signature); ?></textarea>
 				</span>
 		</td>
 	</tr>

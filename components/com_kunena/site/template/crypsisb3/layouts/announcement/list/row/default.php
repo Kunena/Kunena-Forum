@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Announcement
  *
@@ -28,15 +29,24 @@ $announcement = $this->announcement;
 
 	<?php if ($this->checkbox) : ?>
 		<td class="center">
-			<?php if ($this->canPublish()) echo JHtml::_('kunenagrid.published', $row, $announcement->published, '', true); ?>
+			<?php if ($this->canPublish())
+			{
+				echo JHtml::_('kunenagrid.published', $row, $announcement->published, '', true);
+			} ?>
 		</td>
 		<td class="center">
-			<?php if ($this->canEdit()) echo JHtml::_('kunenagrid.task', $row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'),
-				'edit', '', true); ?>
+			<?php if ($this->canEdit())
+			{
+				echo JHtml::_('kunenagrid.task', $row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'),
+					'edit', '', true);
+			} ?>
 		</td>
 		<td class="center">
-			<?php if ($this->canDelete()) echo JHtml::_('kunenagrid.task', $row, 'publish_x.png',
-				JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true); ?>
+			<?php if ($this->canDelete())
+			{
+				echo JHtml::_('kunenagrid.task', $row, 'publish_x.png',
+					JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true);
+			} ?>
 		</td>
 		<td>
 			<?php echo $announcement->getAuthor()->username; ?>

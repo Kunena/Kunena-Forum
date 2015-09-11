@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.User
  *
@@ -22,8 +23,11 @@ defined('_JEXEC') or die;
 		</td>
 		<td>
 			<input type="text" name="username" id="username" class="form-control"
-			       value="<?php echo $this->escape($this->user->get('username')); ?>"
-				<?php if (!$this->changeUsername) echo 'disabled="disabled"'; ?> />
+				value="<?php echo $this->escape($this->user->get('username')); ?>"
+				<?php if (!$this->changeUsername)
+				{
+					echo 'disabled="disabled"';
+				} ?> />
 		</td>
 	</tr>
 	<tr>
@@ -32,7 +36,7 @@ defined('_JEXEC') or die;
 		</td>
 		<td>
 			<input class="required form-control" type="text" id="name" name="name"
-			       value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
+				value="<?php echo $this->escape($this->user->get('name')); ?>" size="40" />
 		</td>
 	</tr>
 	<tr>
@@ -41,7 +45,7 @@ defined('_JEXEC') or die;
 		</td>
 		<td>
 			<input class="required validate-email form-control" type="text" id="email" name="email"
-			       value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
+				value="<?php echo $this->escape($this->user->get('email')); ?>" size="40" />
 		</td>
 	</tr>
 	<?php if ($this->user->get('password')) : ?>
@@ -51,7 +55,7 @@ defined('_JEXEC') or die;
 			</td>
 			<td>
 				<input class="validate-password form-control" type="password" id="password" name="password"
-				       value="" size="40"/>
+					value="" size="40" />
 			</td>
 		</tr>
 		<tr>
@@ -60,7 +64,7 @@ defined('_JEXEC') or die;
 			</td>
 			<td>
 				<input class="validate-passverify form-control" type="password" id="password2" name="password2"
-				       value="" size="40"/>
+					value="" size="40" />
 			</td>
 		</tr>
 	<?php endif; ?>

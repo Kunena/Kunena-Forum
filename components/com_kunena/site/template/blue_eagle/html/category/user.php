@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Template.Blue_Eagle
  * @subpackage    Category
  *
@@ -12,7 +13,10 @@ defined('_JEXEC') or die ();
 ?>
 <div class="kblock">
 	<div class="kheader">
-		<h2><span><?php if (!empty($this->header)) echo $this->escape($this->header); ?></span></h2>
+		<h2><span><?php if (!empty($this->header))
+				{
+					echo $this->escape($this->header);
+				} ?></span></h2>
 	</div>
 
 	<div class="kcontainer">

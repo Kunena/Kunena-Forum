@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Templates
  *
@@ -20,11 +21,11 @@ defined('_JEXEC') or die ();
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
-		      method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value=""/>
-			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
-			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
-			<input type="hidden" name="boxchecked" value="0"/>
+			method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>" />
+			<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>" />
+			<input type="hidden" name="boxchecked" value="0" />
 
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_CSS_TEMPLATE'); ?></legend>
@@ -46,8 +47,8 @@ defined('_JEXEC') or die ();
 						<tr>
 							<td>
 								<input type="radio" id="cb<?php echo $id; ?>" name="filename"
-								       value="<?php echo $this->escape($file); ?>"
-								       onclick="Joomla.isChecked(this.checked);"/>
+									value="<?php echo $this->escape($file); ?>"
+									onclick="Joomla.isChecked(this.checked);" />
 							</td>
 							<td>
 								<?php echo $this->escape($file); ?>

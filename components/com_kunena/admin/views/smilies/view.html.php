@@ -16,6 +16,11 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewSmilies extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 *
+	 * @return mixed
+	 */
 	function display($tpl = null)
 	{
 		$this->setToolbar();
@@ -64,6 +69,9 @@ class KunenaAdminViewSmilies extends KunenaView
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -74,6 +82,9 @@ class KunenaAdminViewSmilies extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

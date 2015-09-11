@@ -11,10 +11,17 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class plgKunenaComprofiler
+ */
 class plgKunenaComprofiler extends JPlugin
 {
 	public $minCBVersion = '1.8.1';
 
+	/**
+	 * @param $subject
+	 * @param $config
+	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
@@ -52,6 +59,11 @@ class plgKunenaComprofiler extends JPlugin
 		}
 	}
 
+	/**
+	 * @param      $type
+	 * @param null $view
+	 * @param null $params
+	 */
 	public function onKunenaDisplay($type, $view = null, $params = null)
 	{
 		$integration = KunenaFactory::getProfile();
@@ -69,6 +81,12 @@ class plgKunenaComprofiler extends JPlugin
 		}
 	}
 
+	/**
+	 * @param     $context
+	 * @param     $item
+	 * @param     $params
+	 * @param int $page
+	 */
 	public function onKunenaPrepare($context, &$item, &$params, $page = 0)
 	{
 		if ($context == 'kunena.user')
@@ -87,6 +105,9 @@ class plgKunenaComprofiler extends JPlugin
 	 *
 	 * @return KunenaAccess
 	 */
+	/**
+	 * @return KunenaAccessComprofiler|null
+	 */
 	public function onKunenaGetAccessControl()
 	{
 		if (!$this->params->get('access', 1))
@@ -103,6 +124,9 @@ class plgKunenaComprofiler extends JPlugin
 	 * Get Kunena login integration object.
 	 *
 	 * @return KunenaLogin
+	 */
+	/**
+	 * @return KunenaLoginComprofiler|null
 	 */
 	public function onKunenaGetLogin()
 	{
@@ -121,6 +145,9 @@ class plgKunenaComprofiler extends JPlugin
 	 *
 	 * @return KunenaAvatar
 	 */
+	/**
+	 * @return KunenaAvatarComprofiler|null
+	 */
 	public function onKunenaGetAvatar()
 	{
 		if (!$this->params->get('avatar', 1))
@@ -137,6 +164,9 @@ class plgKunenaComprofiler extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfile
+	 */
+	/**
+	 * @return KunenaProfileComprofiler|null
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -155,6 +185,9 @@ class plgKunenaComprofiler extends JPlugin
 	 *
 	 * @return KunenaPrivate
 	 */
+	/**
+	 * @return KunenaPrivateComprofiler|null
+	 */
 	public function onKunenaGetPrivate()
 	{
 		if (!$this->params->get('private', 1))
@@ -171,6 +204,9 @@ class plgKunenaComprofiler extends JPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity
+	 */
+	/**
+	 * @return KunenaActivityComprofiler|null
 	 */
 	public function onKunenaGetActivity()
 	{

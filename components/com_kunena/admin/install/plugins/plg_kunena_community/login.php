@@ -11,25 +11,40 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaLoginCommunity
+ */
 class KunenaLoginCommunity
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getLoginURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=frontpage');
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getLogoutURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=frontpage');
 	}
 
+	/**
+	 * @return null|string
+	 */
 	public function getRegistrationURL()
 	{
 		$usersConfig = JComponentHelper::getParams('com_users');

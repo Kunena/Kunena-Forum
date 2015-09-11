@@ -23,6 +23,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	protected $baseurl = null;
 	protected $locked = array('blue_eagle');
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);

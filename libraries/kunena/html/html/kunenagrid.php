@@ -170,6 +170,13 @@ abstract class JHtmlKunenaGrid
 		}
 	}
 
+	/**
+	 * @param        $row
+	 * @param        $i
+	 * @param string $identifier
+	 *
+	 * @return string
+	 */
 	public static function checkedOut($row, $i, $identifier = 'id')
 	{
 		$userid = JFactory::getUser()->get('id');
@@ -282,6 +289,13 @@ abstract class JHtmlKunenaGrid
 	}
 	*/
 
+	/**
+	 * @param        $rows
+	 * @param string $image
+	 * @param string $task
+	 *
+	 * @return string
+	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
 	{
 		$href = '<a href="javascript:saveorder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveorder" title="' . JText::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
@@ -289,6 +303,14 @@ abstract class JHtmlKunenaGrid
 		return $href;
 	}
 
+	/**
+	 * @param           $i
+	 * @param           $task
+	 * @param bool|true $enabled
+	 * @param string    $alt
+	 *
+	 * @return string
+	 */
 	public static function orderUp($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_UP')
 	{
 		$alt = JText::_($alt);
@@ -305,6 +327,14 @@ abstract class JHtmlKunenaGrid
 		return $html;
 	}
 
+	/**
+	 * @param           $i
+	 * @param           $task
+	 * @param bool|true $enabled
+	 * @param string    $alt
+	 *
+	 * @return string
+	 */
 	public static function orderDown($i, $task, $enabled = true, $alt = 'COM_KUNENA_LIB_MOVE_DOWN')
 	{
 		$alt = JText::_($alt);
@@ -321,6 +351,12 @@ abstract class JHtmlKunenaGrid
 		return $html;
 	}
 
+	/**
+	 * @param     $row
+	 * @param int $overlib
+	 *
+	 * @return string
+	 */
 	protected static function _checkedOut(&$row, $overlib = 1)
 	{
 		$hover = '';

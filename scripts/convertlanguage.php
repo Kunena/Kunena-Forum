@@ -41,6 +41,12 @@ foreach ($languages as $language) {
 	}
 }
 
+/**
+ * @param        $dir
+ * @param string $filter
+ *
+ * @return array
+ */
 function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/') {
 	$checklist = array();
 	$files = scandir($dir);
@@ -56,6 +62,11 @@ function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/') {
 	return $checklist;
 }
 
+/**
+ * @param $file
+ *
+ * @return array
+ */
 function loadTranslations($file) {
 	if (!is_file($file)) return array();
 	echo "Load $file\n";
@@ -67,6 +78,10 @@ function loadTranslations($file) {
 	return $strings;
 }
 
+/**
+ * @param $infile
+ * @param $outfile
+ */
 function saveLang($infile, $outfile) {
 	$contents = file_get_contents($infile);
 	$contents = preg_replace_callback('|^(; )?([A-Z0-9_]+)="(.*)"$|mu', 'translate', $contents);
@@ -85,6 +100,11 @@ function saveLang($infile, $outfile) {
 	fclose($fp);
 }
 
+/**
+ * @param $matches
+ *
+ * @return string
+ */
 function translate($matches) {
 	global $translations;
 	$string = isset($translations[$matches[2]]) ? $translations[$matches[2]] : '';

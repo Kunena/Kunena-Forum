@@ -50,6 +50,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 */
 	protected $event_before_save = 'onExtensionBeforeSave';
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
@@ -379,6 +382,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Custom clean cache method, plugins are cached in 2 places for different clients
 	 *
 	 * @since   1.6
+	 *
+	 * @param null $group
+	 * @param int  $client_id
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{

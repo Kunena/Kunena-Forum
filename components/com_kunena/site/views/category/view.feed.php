@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewCategory extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)
@@ -62,6 +65,15 @@ class KunenaViewCategory extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $title
+	 * @param $url
+	 * @param $description
+	 * @param $category
+	 * @param $date
+	 * @param $userid
+	 * @param $username
+	 */
 	function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
 		if ($this->config->rss_author_in_title)

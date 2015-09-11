@@ -11,6 +11,11 @@
 defined('_JEXEC') or die ();
 
 // Kunena 2.0.0: Convert deprecated configuration options
+/**
+ * @param $parent
+ *
+ * @return array
+ */
 function kunena_200_2012_05_30_configuration($parent)
 {
 	$config = KunenaFactory::getConfig();

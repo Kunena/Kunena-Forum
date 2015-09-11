@@ -630,10 +630,7 @@ function kGrowShrinkMessage(change) {
 }
 
 function myValidate(f) {
-	if (document.formvalidator.isValid(f)) {
-		return true;
-	}
-	return false;
+	return !!document.formvalidator.isValid(f);
 }
 
 function cancelForm() {
@@ -728,7 +725,7 @@ function IEcompatibility() {
 //This selector can be re-used for the dropdwown list, to get the item selected easily
 Slick.definePseudo(this, function (value) {
 	return (this.selected && this.get('tag') == 'option');
-})
+});
 
 function kInsertVideo1() {
 	var videosize = document.id('kvideosize').get('value');

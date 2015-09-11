@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewUser extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayList($tpl = null)
 	{
 		$response = array();

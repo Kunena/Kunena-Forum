@@ -88,6 +88,12 @@ foreach ($files as $filename=>$fkeys) {
 	saveLang($keys, $fkeys, $translations, $filestrings, $filename, $header);
 }
 
+/**
+ * @param        $dir
+ * @param string $filter
+ *
+ * @return array
+ */
 function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/') {
 	$checklist = array();
 	$files = scandir($dir);
@@ -103,17 +109,36 @@ function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/') {
 	return $checklist;
 }
 
+/**
+ * @param $s1
+ * @param $s2
+ *
+ * @return string
+ */
 function strprefix( $s1, $s2 ) {
 	$prefix = $s1^$s2;
 	return substr($s1, 0, strlen($prefix)-strlen(ltrim($prefix,chr(0))));
 }
 
+/**
+ * @param $filename
+ *
+ * @return mixed
+ */
 function findStrings($filename) {
 	$file = file_get_contents("$filename");
 	preg_match_all('/COM_KUNENA_[\w\d_]*/u', $file, $matches);
 	return $matches[0];
 }
 
+/**
+ * @param $keys
+ * @param $fkeys
+ * @param $translations
+ * @param $filestrings
+ * @param $outfile
+ * @param $header
+ */
 function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $header) {
 	$out = $header;
 	ksort($fkeys);
@@ -167,6 +192,11 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 	fclose($fp);
 }
 
+/**
+ * @param $files
+ *
+ * @return array
+ */
 function loadTranslations($files) {
 	$translations = array();
 	$filestrings = array();

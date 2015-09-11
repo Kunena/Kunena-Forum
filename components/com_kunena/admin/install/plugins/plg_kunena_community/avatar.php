@@ -11,15 +11,24 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAvatarCommunity
+ */
 class KunenaAvatarCommunity extends KunenaAvatar
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param $userlist
+	 */
 	public function load($userlist)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -30,11 +39,21 @@ class KunenaAvatarCommunity extends KunenaAvatar
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getEditURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=profile&task=uploadAvatar');
 	}
 
+	/**
+	 * @param $user
+	 * @param $sizex
+	 * @param $sizey
+	 *
+	 * @return string
+	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		$kuser = KunenaFactory::getUser($user);

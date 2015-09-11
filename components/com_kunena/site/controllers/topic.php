@@ -18,6 +18,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaControllerTopic extends KunenaController
 {
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -867,7 +870,10 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Check in the text the max links
 	 *
-	 * @return void;
+	 * @param $text
+	 * @param $topic
+	 *
+	 * @return bool
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
@@ -924,6 +930,9 @@ class KunenaControllerTopic extends KunenaController
 		$this->setThankyou($type);
 	}
 
+	/**
+	 * @param $type
+	 */
 	protected function setThankyou($type)
 	{
 		if (!JSession::checkToken('get'))
@@ -1672,6 +1681,11 @@ class KunenaControllerTopic extends KunenaController
 		$this->setRedirect($target->getUrl($this->return, false));
 	}
 
+	/**
+	 * @param $topic
+	 * @param $globalTags
+	 * @param $userTags
+	 */
 	protected function updateTags($topic, $globalTags, $userTags)
 	{
 		$topic = KunenaForumTopicHelper::get($topic);

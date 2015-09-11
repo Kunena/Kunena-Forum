@@ -20,6 +20,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
@@ -48,6 +51,13 @@ class KunenaAdminControllerPlugins extends KunenaController
 		JFactory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 	}
 
+	/**
+	 * @param string $name
+	 * @param string $prefix
+	 * @param array  $config
+	 *
+	 * @return mixed
+	 */
 	public function getModel($name = '', $prefix = '', $config = array())
 	{
 		if (empty($name))

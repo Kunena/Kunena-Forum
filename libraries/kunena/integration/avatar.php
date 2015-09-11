@@ -21,6 +21,11 @@ class KunenaAvatar
 
 	protected static $instance = false;
 
+	/**
+	 * @param null $integration
+	 *
+	 * @return bool|KunenaAvatar
+	 */
 	static public function getInstance($integration = null)
 	{
 		if (self::$instance === false)
@@ -49,21 +54,40 @@ class KunenaAvatar
 		return self::$instance;
 	}
 
+	/**
+	 * @param $userlist
+	 */
 	public function load($userlist)
 	{
 
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getEditURL()
 	{
 		return '';
 	}
 
+	/**
+	 * @param $user
+	 * @param $sizex
+	 * @param $sizey
+	 *
+	 * @return string
+	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		return '';
 	}
 
+	/**
+	 * @param int $sizex
+	 * @param int $sizey
+	 *
+	 * @return StdClass
+	 */
 	public function getSize($sizex = 90, $sizey = 90)
 	{
 		$size    = new StdClass();
@@ -81,6 +105,13 @@ class KunenaAvatar
 		return $size;
 	}
 
+	/**
+	 * @param     $user
+	 * @param int $sizex
+	 * @param int $sizey
+	 *
+	 * @return string|void
+	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -97,6 +128,14 @@ class KunenaAvatar
 		return $result;
 	}
 
+	/**
+	 * @param        $user
+	 * @param string $class
+	 * @param int    $sizex
+	 * @param int    $sizey
+	 *
+	 * @return string|void
+	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
 	{
 		$size   = $this->getSize($sizex, $sizey);

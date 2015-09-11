@@ -16,6 +16,20 @@ defined('_JEXEC') or die ();
  */
 abstract class JHtmlKunenaForum
 {
+	/**
+	 * @param            $name
+	 * @param            $parent
+	 * @param array      $options
+	 * @param array      $params
+	 * @param null       $attribs
+	 * @param string     $key
+	 * @param string     $text
+	 * @param array      $selected
+	 * @param bool|false $idtag
+	 * @param bool|false $translate
+	 *
+	 * @return string
+	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
 	{
 		$preselect   = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
@@ -213,6 +227,13 @@ abstract class JHtmlKunenaForum
 		return "<a {$attributes}>{$content}</a>";
 	}
 
+	/**
+	 * @param       $name
+	 * @param       $options
+	 * @param array $selected
+	 *
+	 * @return string
+	 */
 	public static function checklist($name, $options, $selected = array())
 	{
 		if ($selected !== true && !is_array($selected))

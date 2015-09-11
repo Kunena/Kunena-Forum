@@ -3,7 +3,7 @@
  * Kunena System Plugin
  *
  * @package     Kunena.Plugins
- * @subpackage    System
+ * @subpackage  System
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -12,9 +12,9 @@
 defined('_JEXEC') or die ();
 
 /**
- * Class plgSystemKunena
+ * Class PlgSystemKunena
  */
-class plgSystemKunena extends JPlugin
+class PlgSystemKunena extends JPlugin
 {
 
 	/**

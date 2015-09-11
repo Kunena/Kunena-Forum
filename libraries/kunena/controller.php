@@ -21,6 +21,9 @@ class KunenaController extends JControllerLegacy
 	public $me = null;
 	public $config = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);

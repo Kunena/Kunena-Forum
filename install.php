@@ -39,22 +39,48 @@ class Pkg_KunenaInstallerScript {
 	 */
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function install($parent) {
 		return true;
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function discover_install($parent) {
 		return self::install($parent);
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function update($parent) {
 		return self::install($parent);
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function uninstall($parent) {
 		return true;
 	}
 
+	/**
+	 * @param $type
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function preflight($type, $parent) {
 		/** @var JInstallerComponent $parent */
 		$manifest = $parent->getParent()->getManifest();
@@ -71,10 +97,21 @@ class Pkg_KunenaInstallerScript {
 		return true;
 	}
 
+	/**
+	 * @param $uri
+	 *
+	 * @return mixed
+	 */
 	public function makeRoute($uri) {
 		return JRoute::_($uri, false);
 	}
 
+	/**
+	 * @param $type
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function postflight($type, $parent) {
 		$this->fixUpdateSite();
 
@@ -107,6 +144,12 @@ EOS;
 		return true;
 	}
 
+	/**
+	 * @param $group
+	 * @param $element
+	 *
+	 * @return bool
+	 */
 	function enablePlugin($group, $element) {
 		$plugin = JTable::getInstance('extension');
 		if (!$plugin->load(array('type'=>'plugin', 'folder'=>$group, 'element'=>$element))) {
@@ -116,6 +159,11 @@ EOS;
 		return $plugin->store();
 	}
 
+	/**
+	 * @param $version
+	 *
+	 * @return bool|int
+	 */
 	public function checkRequirements($version) {
 		$db = JFactory::getDbo();
 		$pass  = $this->checkVersion('PHP', phpversion());
@@ -129,6 +177,12 @@ EOS;
 
 	// Internal functions
 
+	/**
+	 * @param $name
+	 * @param $version
+	 *
+	 * @return bool
+	 */
 	protected function checkVersion($name, $version) {
 		$app = JFactory::getApplication();
 
@@ -144,6 +198,12 @@ EOS;
 		return false;
 	}
 
+	/**
+	 * @param $name
+	 * @param $types
+	 *
+	 * @return bool
+	 */
 	protected function checkDbo($name, $types) {
 		$app = JFactory::getApplication();
 
@@ -154,6 +214,11 @@ EOS;
 		return false;
 	}
 
+	/**
+	 * @param $extensions
+	 *
+	 * @return int
+	 */
 	protected function checkExtensions($extensions) {
 		$app = JFactory::getApplication();
 
@@ -167,6 +232,11 @@ EOS;
 		return $pass;
 	}
 
+	/**
+	 * @param $version
+	 *
+	 * @return bool
+	 */
 	protected function checkKunena($version) {
 		$app = JFactory::getApplication();
 		$db = JFactory::getDbo();

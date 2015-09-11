@@ -106,6 +106,9 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Topic Actions.
 	 *
+	 * @param array $topics
+	 * @param array $actions
+	 *
 	 * @return array
 	 */
 	protected function getTopicActions(
@@ -169,6 +172,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Message Actions.
 	 *
+	 * @param array $messages
+	 * @param array $actions
 	 * @return array
 	 */
 	protected function getMessageActions(

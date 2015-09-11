@@ -150,11 +150,11 @@
 }
 
 #Kunena .kprofileboxcnt .input span input[type="checkbox"] {
-	margin-top : 0px !important;
+	margin-top : 0 !important;
 }
 
 #Kunena .kprofileboxcnt .kbutton {
-	margin-top : 0px !important;
+	margin-top : 0 !important;
 }
 
 #Kunena sup.knewchar {
@@ -166,7 +166,7 @@
 }
 
 #subscribeMe {
-	margin-top : 0px;
+	margin-top : 0;
 }
 
 #Kunena .kfile-hide input {

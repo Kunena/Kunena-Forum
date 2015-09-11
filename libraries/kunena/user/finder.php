@@ -74,6 +74,11 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param array $ignore
+	 *
+	 * @return $this
+	 */
 	public function filterByConfiguration(array $ignore = array())
 	{
 		if ($this->config->userlist_count_users == '1')
@@ -98,6 +103,11 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param $search
+	 *
+	 * @return $this
+	 */
 	public function filterByName($search)
 	{
 		if ($search)

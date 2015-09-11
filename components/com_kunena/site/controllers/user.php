@@ -18,6 +18,10 @@ defined('_JEXEC') or die ();
  */
 class KunenaControllerUser extends KunenaController
 {
+	/**
+	 * @param bool|false $cachable
+	 * @param bool|false $urlparams
+	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		// Redirect profile to integrated component if profile integration is turned on
@@ -490,6 +494,9 @@ class KunenaControllerUser extends KunenaController
 
 	// Internal functions:
 
+	/**
+	 * @param $karmaDelta
+	 */
 	protected function karma($karmaDelta)
 	{
 		if (!JSession::checkToken('get'))
@@ -572,6 +579,9 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	// Mostly copied from Joomla 1.5
+	/**
+	 * @return bool
+	 */
 	protected function saveUser()
 	{
 		// we only allow users to edit few fields
@@ -792,6 +802,11 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	// Reports a user to stopforumspam.com
+	/**
+	 * @param $userid
+	 *
+	 * @return bool
+	 */
 	protected function report($userid)
 	{
 		if (!$this->config->stopforumspam_key || !$userid)

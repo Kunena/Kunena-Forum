@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaControllerDisplay
+ */
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
 	protected $name = 'Empty';
@@ -258,6 +261,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		return $this;
 	}
 
+	/**
+	 * @param            $title
+	 * @param bool|false $replace
+	 */
 	protected function setTitle($title, $replace = false)
 	{
 		if (!$replace)
@@ -283,6 +290,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$this->document->setTitle($title);
 	}
 
+	/**
+	 * @param $keywords
+	 */
 	protected function setKeywords($keywords)
 	{
 		if (!empty($keywords))
@@ -291,6 +301,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		}
 	}
 
+	/**
+	 * @param $description
+	 */
 	protected function setDescription($description)
 	{
 		$this->document->setMetadata('description', $description);

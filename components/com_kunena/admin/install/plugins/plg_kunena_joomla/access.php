@@ -440,6 +440,12 @@ class KunenaAccessJoomla
 		return $result;
 	}
 
+	/**
+	 * @param      $action
+	 * @param null $asset
+	 *
+	 * @return array
+	 */
 	protected function getAuthorisedUsers($action, $asset = null)
 	{
 		$action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));

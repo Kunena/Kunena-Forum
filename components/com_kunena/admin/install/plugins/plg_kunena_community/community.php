@@ -12,8 +12,15 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class plgKunenaCommunity
+ */
 class plgKunenaCommunity extends JPlugin
 {
+	/**
+	 * @param $subject
+	 * @param $config
+	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
@@ -40,6 +47,9 @@ class plgKunenaCommunity extends JPlugin
 	 *
 	 * @return KunenaAccess
 	 * @todo Should we remove category ACL integration?
+	 */
+	/**
+	 * @return KunenaAccessCommunity|null
 	 */
 	public function onKunenaGetAccessControl()
 	{

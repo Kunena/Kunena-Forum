@@ -12,15 +12,27 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaProfileCommunity
+ */
 class KunenaProfileCommunity extends KunenaProfile
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param string    $action
+	 * @param bool|true $xhtml
+	 *
+	 * @return bool|string
+	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -33,6 +45,13 @@ class KunenaProfileCommunity extends KunenaProfile
 		return CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
 	}
 
+	/**
+	 * @param           $userid
+	 * @param string    $task
+	 * @param bool|true $xhtml
+	 *
+	 * @return bool|string
+	 */
 	public function getProfileURL($userid, $task = '', $xhtml = true)
 	{
 		// Make sure that user profile exist.
@@ -44,6 +63,11 @@ class KunenaProfileCommunity extends KunenaProfile
 		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
@@ -59,10 +83,20 @@ class KunenaProfileCommunity extends KunenaProfile
 		return $top;
 	}
 
+	/**
+	 * @param $view
+	 * @param $params
+	 */
 	public function showProfile($view, &$params)
 	{
 	}
 
+	/**
+	 * @param           $userid
+	 * @param bool|true $xhtml
+	 *
+	 * @return bool|string|void
+	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);

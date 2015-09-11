@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaProfileKunena
+ */
 class KunenaProfileKunena extends KunenaProfile
 {
 	protected $params = null;

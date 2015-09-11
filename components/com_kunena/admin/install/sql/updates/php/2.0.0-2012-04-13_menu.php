@@ -11,6 +11,11 @@
 defined('_JEXEC') or die ();
 
 // Kunena 2.0.0: Update menu items
+/**
+ * @param $parent
+ *
+ * @return array|null
+ */
 function kunena_200_2012_04_13_menu($parent)
 {
 	$app    = JFactory::getApplication();

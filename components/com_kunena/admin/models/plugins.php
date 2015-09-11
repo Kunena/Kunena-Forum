@@ -11,6 +11,9 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
 
+/**
+ * Class KunenaAdminModelPlugins
+ */
 class KunenaAdminModelPlugins extends JModelList
 {
 	/**

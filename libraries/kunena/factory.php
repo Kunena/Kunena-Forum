@@ -155,6 +155,10 @@ abstract class KunenaFactory
 	 *
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
+	 * @param string $file
+	 * @param string $client
+	 *
+	 * @return
 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
@@ -195,6 +199,12 @@ abstract class KunenaFactory
 		return $loaded[$file];
 	}
 
+	/**
+	 * @param $lang
+	 * @param $filename
+	 *
+	 * @return bool
+	 */
 	protected static function parseLanguage($lang, $filename)
 	{
 		if (!is_file($filename))

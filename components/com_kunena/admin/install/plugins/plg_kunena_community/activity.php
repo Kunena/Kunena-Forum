@@ -14,15 +14,24 @@ defined('_JEXEC') or die ();
 
 jimport('joomla.utilities.string');
 
+/**
+ * Class KunenaActivityCommunity
+ */
 class KunenaActivityCommunity extends KunenaActivity
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param $message
+	 */
 	public function onAfterPost($message)
 	{
 		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0))
@@ -64,6 +73,9 @@ class KunenaActivityCommunity extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param $message
+	 */
 	public function onAfterReply($message)
 	{
 		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0))
@@ -129,6 +141,11 @@ class KunenaActivityCommunity extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param int $actor
+	 * @param int $target
+	 * @param int $message
+	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
 		CFactory::load('libraries', 'userpoints');
@@ -182,6 +199,9 @@ class KunenaActivityCommunity extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param $target
+	 */
 	public function onAfterDeleteTopic($target)
 	{
 		CFactory::load('libraries', 'activities');
@@ -191,6 +211,11 @@ class KunenaActivityCommunity extends KunenaActivity
 		CActivityStream::remove('kunena.thread.replied', $target->id);
 	}
 
+	/**
+	 * @param $category
+	 *
+	 * @return int
+	 */
 	protected function getAccess($category)
 	{
 		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
@@ -224,6 +249,11 @@ class KunenaActivityCommunity extends KunenaActivity
 		return $access;
 	}
 
+	/**
+	 * @param $message
+	 *
+	 * @return mixed|string|void
+	 */
 	private function buildContent($message)
 	{
 

@@ -416,6 +416,9 @@ class KunenaAdminModelTrash extends KunenaModel
 		return md5(serialize($ids));
 	}
 
+	/**
+	 * @return JPagination
+	 */
 	public function getNavigation()
 	{
 		jimport('joomla.html.pagination');

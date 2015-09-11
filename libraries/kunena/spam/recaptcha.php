@@ -56,6 +56,9 @@ class KunenaSpamRecaptcha
 	protected $privatekey = null;
 	protected $host = null;
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		$this->config     = KunenaFactory::getConfig();
@@ -64,6 +67,9 @@ class KunenaSpamRecaptcha
 		$this->host       = JRequest::getString('REMOTE_ADDR', null, 'server');
 	}
 
+	/**
+	 * @return KunenaSpamRecaptcha
+	 */
 	public static function getInstance()
 	{
 		static $instance = null;
@@ -76,6 +82,9 @@ class KunenaSpamRecaptcha
 		return $instance;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function enabled()
 	{
 		$me     = KunenaUserHelper::getMyself();
@@ -226,6 +235,9 @@ class KunenaSpamRecaptcha
 		return $this->error;
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function _isSSLConnection()
 	{
 		return ((isset($_SERVER['HTTPS']) &&

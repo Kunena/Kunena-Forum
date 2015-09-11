@@ -13,6 +13,9 @@ defined('_JEXEC') or die ();
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
+/**
+ * Class Com_KunenaInstallerScript
+ */
 class Com_KunenaInstallerScript
 {
 	protected $versions = array(
@@ -33,6 +36,11 @@ class Com_KunenaInstallerScript
 	);
 	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function install($parent)
 	{
 		// Delete all cached files.
@@ -46,16 +54,31 @@ class Com_KunenaInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function discover_install($parent)
 	{
 		return self::install($parent);
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function update($parent)
 	{
 		return self::install($parent);
 	}
 
+	/**
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function uninstall($parent)
 	{
 		$adminpath = $parent->getParent()->getPath('extension_administrator');
@@ -70,6 +93,12 @@ class Com_KunenaInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param $type
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function preflight($type, $parent)
 	{
 		$parent   = $parent->getParent();
@@ -113,11 +142,22 @@ class Com_KunenaInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param $type
+	 * @param $parent
+	 *
+	 * @return bool
+	 */
 	public function postflight($type, $parent)
 	{
 		return true;
 	}
 
+	/**
+	 * @param $version
+	 *
+	 * @return bool|int
+	 */
 	public function checkRequirements($version)
 	{
 		$db   = JFactory::getDbo();
@@ -133,6 +173,12 @@ class Com_KunenaInstallerScript
 
 	// Internal functions
 
+	/**
+	 * @param $name
+	 * @param $version
+	 *
+	 * @return bool
+	 */
 	protected function checkVersion($name, $version)
 	{
 		$app = JFactory::getApplication();
@@ -162,6 +208,12 @@ class Com_KunenaInstallerScript
 		return false;
 	}
 
+	/**
+	 * @param $name
+	 * @param $types
+	 *
+	 * @return bool
+	 */
 	protected function checkDbo($name, $types)
 	{
 		$app = JFactory::getApplication();
@@ -176,6 +228,11 @@ class Com_KunenaInstallerScript
 		return false;
 	}
 
+	/**
+	 * @param $extensions
+	 *
+	 * @return int
+	 */
 	protected function checkExtensions($extensions)
 	{
 		$app = JFactory::getApplication();
@@ -193,6 +250,11 @@ class Com_KunenaInstallerScript
 		return $pass;
 	}
 
+	/**
+	 * @param $version
+	 *
+	 * @return bool
+	 */
 	protected function checkKunena($version)
 	{
 		$app = JFactory::getApplication();
@@ -265,6 +327,10 @@ class Com_KunenaInstallerScript
 		return false;
 	}
 
+	/**
+	 * @param       $path
+	 * @param array $ignore
+	 */
 	public function deleteFiles($path, $ignore = array())
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
@@ -281,6 +347,10 @@ class Com_KunenaInstallerScript
 		}
 	}
 
+	/**
+	 * @param       $path
+	 * @param array $ignore
+	 */
 	public function deleteFolders($path, $ignore = array())
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
@@ -297,6 +367,10 @@ class Com_KunenaInstallerScript
 		}
 	}
 
+	/**
+	 * @param       $path
+	 * @param array $ignore
+	 */
 	public function deleteFolder($path, $ignore = array())
 	{
 		$this->deleteFiles($path, $ignore);

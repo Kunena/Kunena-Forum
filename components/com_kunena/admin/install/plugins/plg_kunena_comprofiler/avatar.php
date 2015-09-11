@@ -11,25 +11,44 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAvatarComprofiler
+ */
 class KunenaAvatarComprofiler extends KunenaAvatar
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param $userlist
+	 */
 	public function load($userlist)
 	{
 		CBuser::advanceNoticeOfUsersNeeded($userlist);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getEditURL()
 	{
 		return cbSef('index.php?option=com_comprofiler&task=userAvatar' . getCBprofileItemid());
 	}
 
+	/**
+	 * @param $user
+	 * @param $sizex
+	 * @param $sizey
+	 *
+	 * @return string
+	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		global $_CB_framework;

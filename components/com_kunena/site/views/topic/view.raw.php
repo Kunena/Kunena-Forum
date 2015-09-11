@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewTopic extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayEdit($tpl = null)
 	{
 		$body     = JRequest::getVar('body', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input

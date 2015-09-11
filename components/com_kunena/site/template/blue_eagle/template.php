@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class KunenaTemplateBlue_Eagle
+ */
 class KunenaTemplateBlue_Eagle extends KunenaTemplate
 {
 	// Try to find missing files from the following parent templates:
@@ -50,6 +53,15 @@ var kunena_toggler_open = "' . JText::_('COM_KUNENA_TOGGLER_EXPAND', true) . '";
 
 	}
 
+	/**
+	 * @param      $link
+	 * @param      $name
+	 * @param      $scope
+	 * @param      $type
+	 * @param null $id
+	 *
+	 * @return string
+	 */
 	public function getButton($link, $name, $scope, $type, $id = null)
 	{
 		$types = array('communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod');
@@ -89,11 +101,23 @@ var kunena_toggler_open = "' . JText::_('COM_KUNENA_TOGGLER_EXPAND', true) . '";
 HTML;
 	}
 
+	/**
+	 * @param        $name
+	 * @param string $title
+	 *
+	 * @return string
+	 */
 	public function getIcon($name, $title = '')
 	{
 		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
 	}
 
+	/**
+	 * @param        $image
+	 * @param string $alt
+	 *
+	 * @return string
+	 */
 	public function getImage($image, $alt = '')
 	{
 		return '<img src="' . $this->getImagePath($image) . '" alt="' . $alt . '" />';

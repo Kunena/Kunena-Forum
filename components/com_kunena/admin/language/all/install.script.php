@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * Class pkg_kunena_languagesInstallerScript
+ */
 class pkg_kunena_languagesInstallerScript
 {
 
@@ -94,6 +97,10 @@ class pkg_kunena_languagesInstallerScript
 		return true;
 	}
 
+	/**
+	 * @param $tag
+	 * @param $name
+	 */
 	public function uninstallLanguage($tag, $name)
 	{
 		$table = JTable::getInstance('extension');

@@ -21,6 +21,9 @@ class KunenaSession extends JObject
 
 	private static $_instance;
 
+	/**
+	 * @param $identifier
+	 */
 	public function __construct($identifier)
 	{
 		$this->load($identifier);
@@ -42,6 +45,12 @@ class KunenaSession extends JObject
 		}
 	}
 
+	/**
+	 * @param bool|false $update
+	 * @param null       $userid
+	 *
+	 * @return KunenaSession
+	 */
 	public static function getInstance($update = false, $userid = null)
 	{
 		if (!self::$_instance)
@@ -200,11 +209,17 @@ class KunenaSession extends JObject
 		return $result;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isNewUser()
 	{
 		return !$this->_exists;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isNewSession()
 	{
 		// perform session timeout check
@@ -214,6 +229,9 @@ class KunenaSession extends JObject
 		return $this->_sessiontimeout;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getAllReadTime()
 	{
 		// For existing users new indication expires after 3 months

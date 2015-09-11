@@ -49,10 +49,10 @@
 	border-radius         : 10px;
 	filter                : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=180, Color='#000000'); /* For IE 5.5 - 7 */
 	-ms-filter            : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=180, Color='#000000')"; /* For IE 8 */
-	-webkit-box-shadow    : 0px 5px 20px rgba(0, 0, 0, 0.50);
-	-khtml-box-shadow     : 0px 5px 20px rgba(0, 0, 0, 0.50);
-	-moz-box-shadow       : 0px 5px 20px rgba(0, 0, 0, 0.50);
-	box-shadow            : 0px 5px 20px rgba(0, 0, 0, 0.50);
+	-webkit-box-shadow    : 0 5px 20px rgba(0, 0, 0, 0.50);
+	-khtml-box-shadow     : 0 5px 20px rgba(0, 0, 0, 0.50);
+	-moz-box-shadow       : 0 5px 20px rgba(0, 0, 0, 0.50);
+	box-shadow            : 0 5px 20px rgba(0, 0, 0, 0.50);
 }
 
 #mbCenter.mbLoading {

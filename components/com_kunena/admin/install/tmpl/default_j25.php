@@ -121,7 +121,7 @@ JHtml::_('behavior.framework', true);
 		<div>
 			<div id="kunena-description"><?php echo JText::_('COM_KUNENA_INSTALL_PREPARING'); ?></div>
 			<div class="progress progress-striped active">
-				<div id="kunena-progress" class="bar" style="width: 0%;"></div>
+				<div id="kunena-progress" class="bar" style="width: 0;"></div>
 			</div>
 		</div>
 	</div>
@@ -209,7 +209,7 @@ JHtml::_('behavior.framework', true);
 			}
 		});
 		kunenaRequest.post('<?php echo JSession::getFormToken(); ?>=1');
-	}
+	};
 	window.addEvent('domready', function () {
 		document.id('kunena-toggle').addEvent('click', function (e) {
 			document.id('kunena-container').toggleClass('hidden');

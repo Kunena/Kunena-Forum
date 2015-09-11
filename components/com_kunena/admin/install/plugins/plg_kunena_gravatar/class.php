@@ -248,8 +248,8 @@ class KunenaGravatar
 	/**
 	 * Build the avatar URL based on the provided email address.
 	 *
-	 * @param string $hash_email - Should we hash the $email variable? (Useful if the email address has a hash stored
-	 *                           already)
+	 * @param bool|string $hash_email - Should we hash the $email variable? (Useful if the email address has a hash stored
+	 *                                already)
 	 *
 	 * @return string - The XHTML-safe URL to the gravatar.
 	 */
@@ -309,6 +309,8 @@ class KunenaGravatar
 
 	/**
 	 * Provide HTML with gravatar URL, and extras HTML attibutes if provided
+	 *
+	 * @param $hash_email
 	 *
 	 * @return IMG HTML attribute
 	 */

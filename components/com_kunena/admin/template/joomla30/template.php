@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAdminTemplate30
+ */
 class KunenaAdminTemplate30
 {
 
@@ -20,6 +23,12 @@ class KunenaAdminTemplate30
 		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/joomla30/styles.css');
 	}
 
+	/**
+	 * @param string     $path
+	 * @param bool|false $fullpath
+	 *
+	 * @return array
+	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
 		if ($path)

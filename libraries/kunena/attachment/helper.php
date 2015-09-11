@@ -116,7 +116,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Get the number of the attachments in the message
 	 *
-	 * @param string $ids
+	 * @param bool|string $ids
 	 *
 	 * @return KunenaAttachment[]
 	 */

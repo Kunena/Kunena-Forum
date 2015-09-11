@@ -544,6 +544,8 @@ class KunenaUser extends JObject
 	 * @param string      $task
 	 * @param string      $class
 	 *
+	 * @param int         $catid
+	 *
 	 * @return string
 	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0)

@@ -16,6 +16,11 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewAttachments extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 *
+	 * @return mixed
+	 */
 	function display($tpl = null)
 	{
 		$this->setToolbar();
@@ -69,6 +74,9 @@ class KunenaAdminViewAttachments extends KunenaView
 		JToolBarHelper::spacer();
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -82,6 +90,9 @@ class KunenaAdminViewAttachments extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

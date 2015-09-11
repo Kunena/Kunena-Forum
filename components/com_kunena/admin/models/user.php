@@ -43,6 +43,9 @@ class KunenaAdminModelUser extends KunenaModel
 		$this->setState($this->getName() . '.id', $value);
 	}
 
+	/**
+	 * @return KunenaUser
+	 */
 	public function getUser()
 	{
 		$userid = $this->getState($this->getName() . '.id');
@@ -52,6 +55,9 @@ class KunenaAdminModelUser extends KunenaModel
 		return $user;
 	}
 
+	/**
+	 * @return array|KunenaForumTopic[]
+	 */
 	public function getSubscriptions()
 	{
 		$db     = JFactory::getDBO();
@@ -80,6 +86,9 @@ class KunenaAdminModelUser extends KunenaModel
 		return $topic_list;
 	}
 
+	/**
+	 * @return KunenaForumCategory[]
+	 */
 	public function getCatsubcriptions()
 	{
 		$db     = JFactory::getDBO();
@@ -90,6 +99,9 @@ class KunenaAdminModelUser extends KunenaModel
 		return $subscatslist;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getIPlist()
 	{
 		$db     = JFactory::getDBO();
@@ -127,6 +139,9 @@ class KunenaAdminModelUser extends KunenaModel
 		return $useripslist;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getListmodcats()
 	{
 		$user = $this->getUser();
@@ -152,6 +167,9 @@ class KunenaAdminModelUser extends KunenaModel
 		return $modCats;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getListuserranks()
 	{
 		$db   = JFactory::getDBO();
@@ -178,11 +196,17 @@ class KunenaAdminModelUser extends KunenaModel
 		return $selectRank;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getMovecatslist()
 	{
 		return JHtml::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
 	}
 
+	/**
+	 * @return array|string
+	 */
 	public function getMoveuser()
 	{
 		$db = JFactory::getDBO();

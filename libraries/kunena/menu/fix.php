@@ -89,6 +89,9 @@ abstract class KunenaMenuFix
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getLegacy()
 	{
 		$items = array();
@@ -100,6 +103,9 @@ abstract class KunenaMenuFix
 		return $items;
 	}
 
+	/**
+	 * @return array|null
+	 */
 	public static function fixLegacy()
 	{
 		$errors = array();
@@ -124,6 +130,11 @@ abstract class KunenaMenuFix
 		return !empty($errors) ? $errors : null;
 	}
 
+	/**
+	 * @param $itemid
+	 *
+	 * @return bool
+	 */
 	public static function delete($itemid)
 	{
 		// Only delete Kunena menu items
@@ -139,6 +150,9 @@ abstract class KunenaMenuFix
 		return $result;
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getAll()
 	{
 		$items = array();
@@ -153,6 +167,9 @@ abstract class KunenaMenuFix
 		return $items;
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getAliases()
 	{
 		$items = array();
@@ -164,6 +181,9 @@ abstract class KunenaMenuFix
 		return $items;
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getInvalid()
 	{
 		$items = array();

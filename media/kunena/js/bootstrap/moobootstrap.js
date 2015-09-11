@@ -290,11 +290,7 @@ Element.implement({
     },
 
     isShown: function () {
-        if (this.dropdown_menu.isVisible() || this.element.hasClass('open')) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!(this.dropdown_menu.isVisible() || this.element.hasClass('open'));
     }
  });
 
@@ -1348,7 +1344,7 @@ Tab = new Class({
             element.addClass('active');
 
             if (transition) {
-                element[0].offsetWidth // reflow for transition
+                element[0].offsetWidth; // reflow for transition
                 element.addClass('in');
             } else {
                 element.removeClass('fade');
@@ -1550,11 +1546,7 @@ window.addEvent('domready', function() {
 
         this.enabled = true;
 
-        if (this.checkbox.checked) {
-            this.state = true;
-        } else {
-            this.state = false;
-        }
+        this.state = !!this.checkbox.checked;
 
         this.displayButtons();
 
@@ -1911,7 +1903,7 @@ var Transition = function () {
             'OTransition'      : 'oTransitionEnd',
             'msTransition'     : 'MSTransitionEnd',
             'transition'       : 'transitionend'
-        }
+        };
         var name;
 
         for (name in transEndEventNames){
@@ -1926,7 +1918,7 @@ var Transition = function () {
         end: transitionEnd
     }
 
-}
+};
 /* =============================================================
  * bootstrap-typeahead.js v2.2.2
  * http://twitter.github.com/bootstrap/javascript.html#typeahead

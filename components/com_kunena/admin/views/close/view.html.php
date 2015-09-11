@@ -18,6 +18,8 @@ class KunenaAdminViewClose extends KunenaView
 {
 	/**
 	 * Display the view
+	 *
+	 * @param null $tpl
 	 */
 	public function displayDefault($tpl = null)
 	{

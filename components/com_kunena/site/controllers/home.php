@@ -20,6 +20,12 @@ class KunenaControllerHome extends KunenaController
 {
 	public $home = 1;
 
+	/**
+	 * @param bool|false $cachable
+	 * @param bool|false $urlparams
+	 *
+	 * @throws Exception
+	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		$menu = $this->app->getMenu();
@@ -86,6 +92,13 @@ class KunenaControllerHome extends KunenaController
 		$this->setRedirect($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
 	}
 
+	/**
+	 * @param       $menu
+	 * @param       $active
+	 * @param array $visited
+	 *
+	 * @return null
+	 */
 	protected function _getDefaultMenuItem($menu, $active, $visited = array())
 	{
 

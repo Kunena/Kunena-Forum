@@ -133,21 +133,40 @@ class CKunenaImage
 		}
 	}
 
+	/**
+	 * @param $errormsg
+	 */
 	function setError($errormsg)
 	{
 		$this->_error = $errormsg;
 	}
 
+	/**
+	 * @return array
+	 */
 	function getError()
 	{
 		return $this->_error;
 	}
 
+	/**
+	 * @return int|string
+	 */
 	function getType()
 	{
 		return $this->_type;
 	}
 
+	/**
+	 * @param           $width
+	 * @param           $height
+	 * @param           $left
+	 * @param           $top
+	 * @param bool|true $createNew
+	 * @param int       $scaleMethod
+	 *
+	 * @return bool|CKunenaImage
+	 */
 	function crop($width, $height, $left, $top, $createNew = true, $scaleMethod = CKunenaImage::SCALE_INSIDE)
 	{
 		// Make sure the file handle is valid.
@@ -247,6 +266,11 @@ class CKunenaImage
 		}
 	}
 
+	/**
+	 * @param $type
+	 *
+	 * @return bool
+	 */
 	function filter($type)
 	{
 		// Initialize variables.
@@ -305,16 +329,25 @@ class CKunenaImage
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	function getHeight()
 	{
 		return imagesy($this->_handle);
 	}
 
+	/**
+	 * @return int
+	 */
 	function getWidth()
 	{
 		return imagesx($this->_handle);
 	}
 
+	/**
+	 * @return bool
+	 */
 	function isTransparent()
 	{
 		// Make sure the file handle is valid.
@@ -328,6 +361,11 @@ class CKunenaImage
 		return (imagecolortransparent($this->_handle) >= 0);
 	}
 
+	/**
+	 * @param $path
+	 *
+	 * @return bool
+	 */
 	function loadFromFile($path)
 	{
 		// Make sure the file exists.
@@ -427,6 +465,14 @@ class CKunenaImage
 		return true;
 	}
 
+	/**
+	 * @param           $width
+	 * @param           $height
+	 * @param bool|true $createNew
+	 * @param int       $scaleMethod
+	 *
+	 * @return bool|CKunenaImage
+	 */
 	function resize($width, $height, $createNew = true, $scaleMethod = CKunenaImage::SCALE_INSIDE)
 	{
 		// Make sure the file handle is valid.
@@ -517,6 +563,11 @@ class CKunenaImage
 		}
 	}
 
+	/**
+	 * @param       $path
+	 * @param null  $type
+	 * @param array $options
+	 */
 	function toFile($path, $type = null, $options = array())
 	{
 		if (!$type)
@@ -540,6 +591,13 @@ class CKunenaImage
 		}
 	}
 
+	/**
+	 * @param $width
+	 * @param $height
+	 * @param $scaleMethod
+	 *
+	 * @return array|bool
+	 */
 	function _prepareDimensions($width, $height, $scaleMethod)
 	{
 		// Sanitize width.
@@ -602,6 +660,9 @@ class CKunenaImage
 	}
 }
 
+/**
+ * Class CKunenaImageFilter
+ */
 class CKunenaImageFilter
 {
 	/**
@@ -639,6 +700,9 @@ class CKunenaImageFilter
 		return $paths;
 	}
 
+	/**
+	 * @return bool
+	 */
 	function execute()
 	{
 		$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_METHOD_NOT_IMPLEMENTED'));
@@ -647,8 +711,16 @@ class CKunenaImageFilter
 	}
 }
 
+/**
+ * Class CKunenaImageHelper
+ */
 class CKunenaImageHelper
 {
+	/**
+	 * @param $path
+	 *
+	 * @return bool|JObject
+	 */
 	public static function getProperties($path)
 	{
 		// Initialize the path variable.
@@ -687,6 +759,17 @@ class CKunenaImageHelper
 		return $result;
 	}
 
+	/**
+	 * @param     $file
+	 * @param     $newpath
+	 * @param     $newfile
+	 * @param int $maxwidth
+	 * @param int $maxheight
+	 * @param int $quality
+	 * @param int $scale
+	 *
+	 * @return bool
+	 */
 	public static function version($file, $newpath, $newfile, $maxwidth = 800, $maxheight = 800, $quality = 70, $scale = CKunenaImage::SCALE_INSIDE)
 	{
 		require_once(KPATH_SITE . '/lib/kunena.file.class.php');
@@ -742,6 +825,9 @@ class CKunenaImageHelper
 		return true;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public static function test()
 	{
 		return (function_exists('gd_info') && function_exists('imagecreatetruecolor'));

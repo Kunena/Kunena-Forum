@@ -19,6 +19,12 @@ abstract class KunenaHtmlParser
 	static $emoticons = null;
 	static $relative = true;
 
+	/**
+	 * @param bool|false $grayscale
+	 * @param bool|false $emoticonbar
+	 *
+	 * @return array
+	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
 	{
 		$db = JFactory::getDBO();
@@ -65,6 +71,12 @@ abstract class KunenaHtmlParser
 		return JText::_($txt, true);
 	}
 
+	/**
+	 * @param     $txt
+	 * @param int $len
+	 *
+	 * @return mixed|string|void
+	 */
 	public static function parseText($txt, $len = 0)
 	{
 		if (!$txt)
@@ -84,6 +96,13 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
+	/**
+	 * @param      $txt
+	 * @param null $parent
+	 * @param int  $len
+	 *
+	 * @return mixed|void
+	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0)
 	{
 		if (!$txt)
@@ -105,6 +124,12 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
+	/**
+	 * @param     $txt
+	 * @param int $len
+	 *
+	 * @return mixed|void
+	 */
 	public static function plainBBCode($txt, $len = 0)
 	{
 		if (!$txt)
@@ -121,6 +146,13 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
+	/**
+	 * @param           $txt
+	 * @param int       $len
+	 * @param bool|true $html
+	 *
+	 * @return mixed|string|void
+	 */
 	public static function stripBBCode($txt, $len = 0, $html = true)
 	{
 		if (!$txt)
@@ -144,6 +176,12 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
+	/**
+	 * @param        $content
+	 * @param string $target
+	 *
+	 * @return mixed
+	 */
 	public static function &prepareContent(&$content, $target = 'body')
 	{
 		$config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
@@ -167,6 +205,11 @@ abstract class KunenaHtmlParser
 		return $content;
 	}
 
+	/**
+	 * @param $string
+	 *
+	 * @return string
+	 */
 	public static function escape($string)
 	{
 		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');

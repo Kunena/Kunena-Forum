@@ -21,6 +21,9 @@ class KunenaAdminControllerCategories extends KunenaController
 	protected $baseurl = null;
 	protected $baseurl2 = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -534,6 +537,10 @@ class KunenaAdminControllerCategories extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @param $id
+	 * @param $direction
+	 */
 	protected function orderUpDown($id, $direction)
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
@@ -576,6 +583,11 @@ class KunenaAdminControllerCategories extends KunenaController
 		$row->move($direction, $where);
 	}
 
+	/**
+	 * @param $cid
+	 * @param $variable
+	 * @param $value
+	 */
 	protected function setVariable($cid, $variable, $value)
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');

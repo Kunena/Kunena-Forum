@@ -20,6 +20,9 @@ jimport('joomla.application.component.model');
  */
 class KunenaAdminModelConfig extends KunenaModel
 {
+	/**
+	 * @return array
+	 */
 	function getConfiglists()
 	{
 		$lists = array();

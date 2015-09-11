@@ -428,6 +428,11 @@ class plgFinderKunena extends FinderIndexerAdapter
 		return $items;
 	}
 
+	/**
+	 * @param $message
+	 *
+	 * @return FinderIndexerResult
+	 */
 	protected function createIndexerResult($message)
 	{
 		// Convert the item to a result object.
@@ -513,6 +518,11 @@ class plgFinderKunena extends FinderIndexerAdapter
 		return intval($item == 1);
 	}
 
+	/**
+	 * @param $cat_id
+	 *
+	 * @return mixed
+	 */
 	protected function getMessagesByCategory($cat_id)
 	{
 		static $messages = array();
@@ -532,6 +542,11 @@ class plgFinderKunena extends FinderIndexerAdapter
 		return $messages[$cat_id];
 	}
 
+	/**
+	 * @param $topic_id
+	 *
+	 * @return mixed
+	 */
 	protected function getMessagesByTopic($topic_id)
 	{
 		static $messages = array();
@@ -556,6 +571,11 @@ class plgFinderKunena extends FinderIndexerAdapter
 		return $messages[$topic_id];
 	}
 
+	/**
+	 * @param $item
+	 *
+	 * @return int
+	 */
 	protected function getAccessLevel($item)
 	{
 		if (($item instanceof KunenaForumMessage) || ($item instanceof FinderIndexerResult) || ($item instanceof TableKunenaMessages))

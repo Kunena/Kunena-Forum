@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaPrivateUddeIM
+ */
 class KunenaPrivateUddeIM extends KunenaPrivate
 {
 	protected $uddeim = null;

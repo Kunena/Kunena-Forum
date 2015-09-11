@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewSmiley extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	public function display($tpl = null)
 	{
 		$this->setLayout('edit');

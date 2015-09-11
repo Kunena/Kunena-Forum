@@ -44,7 +44,7 @@ document.addEvent('domready', function() {
 						onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';"
 						onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
 					<input type="image" src="<?php echo $this->ktemplate->getImagePath('usl_search_icon.png') ?>"
-						alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" style="border: 0px;" />
+						alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" style="border: 0;" />
 				</form>
 			</div>
 			<div class="userlist-jump">

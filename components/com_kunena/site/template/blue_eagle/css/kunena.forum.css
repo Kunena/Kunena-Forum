@@ -59,7 +59,6 @@ PX		EM			PCT			PT
 #Kunena ul li,
 #Kunena ul li a {
 	font-size   : 1em;
-	line-height : auto;
 }
 
 #Kunena sup {
@@ -280,8 +279,7 @@ PX		EM			PCT			PT
 	display     : block;
 	line-height : 1.9em;
 	font-size   : 1.333em;
-	text-indent : 0px;
-	padding-top : 2px;
+	text-indent : 0;
 	margin      : 0 10px;
 	padding     : 2px 0;
 	width       : auto;
@@ -319,7 +317,7 @@ PX		EM			PCT			PT
 
 #Kunena div.kblock div.kbody {
 	border-style : solid;
-	border-width : 0px 1px;
+	border-width : 0 1px;
 	overflow     : hidden;
 	word-wrap    : break-word;
 }
@@ -477,7 +475,7 @@ PX		EM			PCT			PT
 #Kunena .klist-avatar {
 	height : auto;
 	width  : 36px;
-	border : 0px
+	border : 0
 }
 
 #Kunena .klatest-post-info {
@@ -677,7 +675,7 @@ PX		EM			PCT			PT
 	/* background: none repeat scroll 0 0; */
 	/*font-size: .917em;*/
 	border  : 1px solid;
-	padding : 0px;
+	padding : 0;
 }
 
 #Kunena td.td-1 {
@@ -699,7 +697,7 @@ PX		EM			PCT			PT
 #Kunena option {
 	background : none repeat scroll 0 0;
 	font-size  : .917em;
-	padding    : 0px 10px 0px 2px;
+	padding    : 0 10px 0 2px;
 }
 
 #Kunena .button,
@@ -707,7 +705,7 @@ PX		EM			PCT			PT
 	background   : none repeat scroll 0 0;
 	font-size    : .917em;
 	border       : 1px solid;
-	padding      : 0px 4px;
+	padding      : 0 4px;
 	margin-right : 10px;
 }
 
@@ -748,7 +746,7 @@ PX		EM			PCT			PT
 	background : none repeat scroll 0 0;
 	font-size  : .917em;
 	border     : 1px solid;
-	padding    : 0px 4px;
+	padding    : 0 4px;
 }
 
 #Kunena .klist-actions {
@@ -805,7 +803,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena .klist-pages-link {
-	padding : 0pt 5px;
+	padding : 0 5px;
 }
 
 #Kunena .klist-actions-info-all {
@@ -818,7 +816,7 @@ PX		EM			PCT			PT
 
 #Kunena .klist-actions-goto {
 	height         : 28px;
-	padding        : 0px 2px 0px 2px;
+	padding        : 0 2px 0 2px;
 	width          : 1%;
 	vertical-align : middle;
 }
@@ -869,15 +867,15 @@ PX		EM			PCT			PT
 
 #Kunena .klist-times-all .inputboxusl {
 	/*font-size: .833em;*/
-	margin  : 0pt;
-	padding : 0pt;
+	margin  : 0;
+	padding : 0;
 	width   : 100px;
 }
 
 #Kunena .klist-jump-all form .inputbox {
 	/*font-size: .833em;*/
-	margin  : 0pt;
-	padding : 0pt;
+	margin  : 0;
+	padding : 0;
 	width   : 150px;
 }
 
@@ -894,7 +892,7 @@ PX		EM			PCT			PT
 #Kunena .klist-top {
 	background : none;
 	border     : 1px solid;
-	margin     : -1px 0px 0px;
+	margin     : -1px 0 0;
 	width      : 100%;
 }
 
@@ -913,7 +911,7 @@ PX		EM			PCT			PT
 
 #Kunena .klist-markallcatsread {
 	min-height : 27px;
-	padding    : 0px;
+	padding    : 0;
 	overflow   : hidden;
 	border     : 1px solid;
 }
@@ -981,7 +979,7 @@ PX		EM			PCT			PT
 
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited {
-	padding         : 0px 5px;
+	padding         : 0 5px;
 	margin          : 2px;
 	text-decoration : none;
 }
@@ -1307,7 +1305,7 @@ PX		EM			PCT			PT
 
 #Kunena table.kblocktable {
 	border-style : solid;
-	border-width : 0px 0px 0px 0px;
+	border-width : 0 0 0 0;
 	text-align   : left;
 }
 
@@ -1320,8 +1318,8 @@ PX		EM			PCT			PT
 	font-size      : 1.333em;
 	padding-top    : 2px;
 	min-height     : 1.6em;
-	margin-top     : 0px;
-	margin-bottom  : 0px;
+	margin-top     : 0;
+	margin-bottom  : 0;
 	font-weight    : bold;
 	text-transform : none;
 }
@@ -1432,7 +1430,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena table.kcc-table tr td {
-	border : 0px solid;
+	border : 0 solid;
 }
 
 #Kunena div.kcc-childcat-title {
@@ -1492,8 +1490,8 @@ PX		EM			PCT			PT
 }
 
 #Kunena .kcontenttablespacer {
-	border-left   : 0px;
-	border-right  : 0px;
+	border-left   : 0;
+	border-right  : 0;
 	border-bottom : 1px solid;
 	line-height   : 0.5em;
 }
@@ -1776,8 +1774,7 @@ PX		EM			PCT			PT
 	text-align  : left;
 	height      : 15px;
 	line-height : 15px;
-	margin      : 3px 0px;
-	line-height : 14px;
+	margin      : 3px 0;
 	white-space : nowrap;
 	font-size   : .917em;
 }
@@ -1794,7 +1791,7 @@ PX		EM			PCT			PT
 
 #Kunena .kreply-form .inputbox {
 	border : 1px solid;
-	margin : 2px 0px;
+	margin : 2px 0;
 }
 
 #Kunena div.kmsgtext-article,
@@ -1803,7 +1800,7 @@ PX		EM			PCT			PT
 #Kunena div.kmsgtext-confidential {
 	display    : block;
 	border     : 1px dotted;
-	margin     : 5px 0pt;
+	margin     : 5px 0;
 	padding    : 5px;
 	font-style : italic;
 }
@@ -1851,7 +1848,7 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-right {
 	width          : 100%;
 	overflow       : hidden;
-	padding        : 10px 10px 0px 10px;
+	padding        : 10px 10px 0 10px;
 	vertical-align : top;
 }
 
@@ -1878,7 +1875,7 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-left {
 	overflow       : hidden;
 	width          : 100%;
-	padding        : 10px 10px 0px 10px;
+	padding        : 10px 10px 0 10px;
 	vertical-align : top !important;
 }
 
@@ -1908,7 +1905,7 @@ PX		EM			PCT			PT
 /* Left and right layouts */
 
 #Kunena ul.kpost-profile li {
-	padding : 0px;
+	padding : 0;
 }
 
 #Kunena ul.kpost-profile {
@@ -1959,7 +1956,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-minus {
-	background : url("../media/iconsets/profile/default/default.png") no-repeat 0px -294px;
+	background : url("../media/iconsets/profile/default/default.png") no-repeat 0 -294px;
 	height     : 14px;
 	width      : 14px;
 	display    : inline-block;
@@ -1967,7 +1964,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-plus {
-	background : url("../media/iconsets/profile/default/default.png") no-repeat 0px -313px;
+	background : url("../media/iconsets/profile/default/default.png") no-repeat 0 -313px;
 	height     : 14px;
 	width      : 14px;
 	display    : inline-block;
@@ -1975,11 +1972,11 @@ PX		EM			PCT			PT
 }
 
 #Kunena li.kpost-userposts {
-	margin : 0px;
+	margin : 0;
 }
 
 #Kunena ul.kpost-profile li.kpost-smallicons {
-	margin : 0px auto;
+	margin : 0 auto;
 	width  : 90%;
 }
 
@@ -2072,7 +2069,7 @@ PX		EM			PCT			PT
 
 #Kunena td.kmessage-top {
 	width   : 100%;
-	padding : 10px 10px 0px 10px;
+	padding : 10px 10px 0 10px;
 }
 
 #Kunena td.kbuttonbar-top {
@@ -2087,7 +2084,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.kprofile-mid {
-	padding        : 0px 5px;
+	padding        : 0 5px;
 	display        : inline;
 	text-align     : left;
 	vertical-align : middle;
@@ -2103,7 +2100,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.kpersonal {
-	padding        : 0px 20px;
+	padding        : 0 20px;
 	display        : inline;
 	text-align     : left;
 	vertical-align : middle;
@@ -2123,7 +2120,7 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-bottom {
 	width    : 100%;
 	overflow : hidden;
-	padding  : 10px 10px 0px 10px;
+	padding  : 10px 10px 0 10px;
 }
 
 #Kunena td.kbuttonbar-bottom {
@@ -2145,7 +2142,7 @@ PX		EM			PCT			PT
 	list-style-type : none;
 	display         : block;
 	margin-left     : 0;
-	padding         : 1px 0px 1px 0;
+	padding         : 1px 0 1px 0;
 	background      : none;
 	line-height     : 1.333em;
 }
@@ -2186,7 +2183,7 @@ POST PAGE
 }
 
 #Kunena table#kpostmessage .kposthint .kinputbox {
-	border : 0px solid;
+	border : 0 solid;
 	width  : 99%;
 }
 
@@ -2394,7 +2391,7 @@ POST PAGE
 }
 
 #Kunena .kbuttononline-yes span.online-yes {
-	background-position : 0 0px;
+	background-position : 0 0;
 }
 
 #Kunena .kbuttononline-no span.online-no {
@@ -2560,14 +2557,14 @@ BBCODE BUTTONS
 	cursor       : pointer;
 	margin-top   : 4px;
 	margin-right : 1px;
-	padding      : 0px;
+	padding      : 0;
 }
 
 #Kunena img.kbbcode:hover {
 	cursor       : pointer;
 	margin-top   : 4px;
 	margin-right : 1px;
-	padding      : 0px;
+	padding      : 0;
 }
 
 #Kunena .kbbcode-colortable {
@@ -2589,7 +2586,7 @@ BBCODE BUTTONS
 
 #Kunena div#kbbcode-size-options span:hover {
 	cursor  : pointer;
-	padding : 0px;
+	padding : 0;
 }
 
 #Kunena table.kpostbuttonset tr td.kpostbuttons select.kslcbox {
@@ -2598,8 +2595,7 @@ BBCODE BUTTONS
 }
 
 #Kunena #kbbcode-toolbar {
-	list-style-position : inside;
-	list-style-type     : none;
+	list-style          : none inside;
 	height              : 18px;
 	margin              : 2px 0 2px;
 	padding             : 0;
@@ -2624,7 +2620,7 @@ BBCODE BUTTONS
 
 #Kunena #kbbcode-toolbar li a:hover {
 	cursor  : pointer;
-	padding : 0px;
+	padding : 0;
 }
 
 #Kunena #kbbcode-toolbar li span {
@@ -2839,7 +2835,7 @@ Multi file upload for bbcode editor
 #Kunena .kfile-input-button,
 #Kunena .kfile-input-button:hover,
 #Kunena .kfile-input-button:focus {
-	top        : 0px;
+	top        : 0;
 	background : none;
 	font-size  : .833em !important;
 	border     : 1px solid;
@@ -2874,7 +2870,7 @@ Multi file upload for bbcode editor
 #Kunena .kfile-input {
 	font-size : 23px;
 	position  : absolute;
-	right     : 0px;
+	right     : 0;
 	top       : -10px;
 	/* CSS3 standard */
 	opacity   : 0;
@@ -2937,7 +2933,7 @@ label.kpoll-term-lbl {
 
 #kpoll-text-help {
 	font-weight : bold;
-	padding     : 0px 10px;
+	padding     : 0 10px;
 	margin      : 3px;
 }
 
@@ -3227,12 +3223,6 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	height     : 32px;
 }
 
-#Kunena khidden-ktitle {
-}
-
-#Kunena kwho-total {
-}
-
 #Kunena .kwholegend {
 	border-top  : 1px dotted;
 	width       : 100%;
@@ -3317,7 +3307,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 }
 
 #Kunena table#kforumsearch th {
-	padding : 0px;
+	padding : 0;
 }
 
 #Kunena td.krowmoderation {
@@ -3769,7 +3759,7 @@ div#kprofile-stats ul li span.krank-admin {
 
 #Kunena #kprofile-tabs {
 	width      : 100%;
-	margin-top : 0px;
+	margin-top : 0;
 }
 
 #Kunena dl.tabs {
@@ -3837,7 +3827,7 @@ div#kprofile-stats ul li span.krank-admin {
 }
 
 #Kunena form#jumpto input.kbutton {
-	margin : 0px;
+	margin : 0;
 }
 
 #Kunena table.klist-top td.klist-markallcatsread input.kbutton {

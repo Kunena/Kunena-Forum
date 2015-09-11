@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class plgKunenaJoomla
+ */
 class plgKunenaJoomla extends JPlugin
 {
 	/**

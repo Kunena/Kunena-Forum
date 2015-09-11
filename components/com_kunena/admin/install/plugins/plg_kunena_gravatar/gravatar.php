@@ -11,8 +11,15 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class plgKunenaGravatar
+ */
 class plgKunenaGravatar extends JPlugin
 {
+	/**
+	 * @param $subject
+	 * @param $config
+	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
@@ -28,6 +35,9 @@ class plgKunenaGravatar extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
+	 */
+	/**
+	 * @return KunenaAvatarGravatar|null
 	 */
 	public function onKunenaGetAvatar()
 	{

@@ -51,7 +51,7 @@
 	}
 
 	#Kunena .klist-actions {
-		padding : 0px !important;
+		padding : 0 !important;
 	}
 
 	#Kunena table:before {
@@ -354,7 +354,7 @@
 	}
 
 	#Kunena td.kcol-mid {
-		border : 0px !important;
+		border : 0 !important;
 	}
 
 	#Kunena .ktopicattach {
@@ -370,7 +370,7 @@
 	}
 
 	#Kunena div.klatest-subject, #Kunena div.klatest-subject-by {
-		margin-left : 0px;
+		margin-left : 0;
 	}
 
 	#Kunena table.kblocktable {
@@ -416,7 +416,7 @@
 
 	#Kunena div.kpost-thankyou {
 		margin-bottom : 5px;
-		margin-top    : 0px;
+		margin-top    : 0;
 	}
 
 	#Kunena .krow2-stickymsg,

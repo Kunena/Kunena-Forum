@@ -87,6 +87,9 @@ class KunenaAdminViewTrash extends KunenaView
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields = array();
@@ -113,6 +116,9 @@ class KunenaAdminViewTrash extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

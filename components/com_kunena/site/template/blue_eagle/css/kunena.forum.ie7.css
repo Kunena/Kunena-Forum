@@ -81,12 +81,12 @@
 }
 
 #Kunena div.kpathway {
-	margin-top : 0px;
+	margin-top : 0;
 }
 
 #Kunena span.kicon-profile-website,
 #Kunena span.kicon-profile-pm {
-	margin-top : 0px;
+	margin-top : 0;
 }
 
 #Kunena div.kmsg-header-top span.kmsgdate-top,

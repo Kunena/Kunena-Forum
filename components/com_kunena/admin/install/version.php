@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaVersion
+ */
 class KunenaVersion
 {
 	/**
@@ -68,6 +71,9 @@ class KunenaVersion
 		return '';
 	}
 
+	/**
+	 * @return bool
+	 */
 	function checkVersion()
 	{
 		$version = $this->getDBVersion();
@@ -156,6 +162,9 @@ class KunenaVersion
 
 }
 
+/**
+ * Class KunenaVersionException
+ */
 class KunenaVersionException extends Exception
 {
 }

@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaMigratorFireboard
+ */
 class KunenaMigratorFireboard
 {
 	protected $versions = array(
@@ -20,6 +23,9 @@ class KunenaMigratorFireboard
 		array('version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_messages', 'column' => 'id'),
 	);
 
+	/**
+	 * @return KunenaMigratorFireboard
+	 */
 	public static function getInstance()
 	{
 		static $instance = null;

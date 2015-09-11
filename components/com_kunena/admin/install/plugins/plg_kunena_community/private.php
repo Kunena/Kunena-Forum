@@ -11,17 +11,28 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaPrivateCommunity
+ */
 class KunenaPrivateCommunity extends KunenaPrivate
 {
 	protected $loaded = false;
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 		CFactory::load('libraries', 'messaging');
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
 	protected function getOnClick($userid)
 	{
 		if (!$this->loaded)
@@ -37,11 +48,21 @@ class KunenaPrivateCommunity extends KunenaPrivate
 		return ' onclick="' . CMessaging::getPopup($userid) . '"';
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
 	protected function getURL($userid)
 	{
 		return "javascript:void(0)";
 	}
 
+	/**
+	 * @param $text
+	 *
+	 * @return string
+	 */
 	public function getInboxLink($text)
 	{
 		if (!$text)
@@ -52,6 +73,9 @@ class KunenaPrivateCommunity extends KunenaPrivate
 		return '<a href="' . CRoute::_('index.php?option=com_community&view=inbox') . '" rel="follow">' . $text . '</a>';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getInboxURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=inbox');

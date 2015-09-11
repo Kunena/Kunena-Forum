@@ -10,8 +10,14 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaMigratorKunena
+ */
 class KunenaMigratorKunena
 {
+	/**
+	 * @return KunenaMigratorKunena
+	 */
 	public static function getInstance()
 	{
 		static $instance = null;

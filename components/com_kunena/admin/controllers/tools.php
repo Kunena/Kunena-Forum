@@ -20,6 +20,9 @@ class KunenaAdminControllerTools extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -658,6 +661,11 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 	}
 
+	/**
+	 * @param bool|false $stop
+	 *
+	 * @return bool
+	 */
 	protected function checkTimeout($stop = false)
 	{
 		static $start = null;

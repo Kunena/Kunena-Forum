@@ -10,6 +10,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAdminTemplate25
+ */
 class KunenaAdminTemplate25
 {
 
@@ -30,6 +33,10 @@ class KunenaAdminTemplate25
 		$document->addScript(JUri::root(true) . '/media/kunena/js/bootstrap/moobootstrap.js');
 	}
 
+	/**
+	 * @param $inputFile
+	 * @param $outputFile
+	 */
 	public function compileLess($inputFile, $outputFile)
 	{
 		if (!class_exists('lessc'))
@@ -71,6 +78,12 @@ class KunenaAdminTemplate25
 		}
 	}
 
+	/**
+	 * @param string     $path
+	 * @param bool|false $fullpath
+	 *
+	 * @return array
+	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
 		if ($path)

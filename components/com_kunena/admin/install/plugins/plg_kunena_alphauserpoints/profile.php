@@ -11,15 +11,27 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaProfileAlphaUserPoints
+ */
 class KunenaProfileAlphaUserPoints extends KunenaProfile
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param string    $action
+	 * @param bool|true $xhtml
+	 *
+	 * @return bool
+	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -32,6 +44,13 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		return AlphaUserPointsHelper::getAupUsersURL();
 	}
 
+	/**
+	 * @param           $user
+	 * @param string    $task
+	 * @param bool|true $xhtml
+	 *
+	 * @return bool
+	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 		if ($user == 0)
@@ -50,6 +69,11 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		return JRoute::_('index.php?option=com_alphauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml);
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
@@ -65,10 +89,20 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		return $top;
 	}
 
+	/**
+	 * @param $view
+	 * @param $params
+	 */
 	public function showProfile($view, &$params)
 	{
 	}
 
+	/**
+	 * @param           $userid
+	 * @param bool|true $xhtml
+	 *
+	 * @return bool|void
+	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, '', $xhtml);

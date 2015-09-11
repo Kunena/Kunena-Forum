@@ -21,6 +21,9 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelAttachments extends JModelList
 {
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields']))
@@ -92,6 +95,11 @@ class KunenaAdminModelAttachments extends JModelList
 		parent::populateState('filename', 'asc');
 	}
 
+	/**
+	 * @param string $id
+	 *
+	 * @return mixed
+	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
@@ -105,6 +113,13 @@ class KunenaAdminModelAttachments extends JModelList
 		return parent::getStoreId($id);
 	}
 
+	/**
+	 * @param     $query
+	 * @param int $limitstart
+	 * @param int $limit
+	 *
+	 * @return KunenaAttachment[]
+	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
 		$this->_db->setQuery($query, $limitstart, $limit);

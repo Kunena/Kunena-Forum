@@ -118,6 +118,9 @@ class KunenaAdminModelCategories extends KunenaModel
 		$this->setState('item.parent_id', $parent_id);
 	}
 
+	/**
+	 * @return array|KunenaForumCategory[]
+	 */
 	public function getAdminCategories()
 	{
 		if ($this->_admincategories === false)
@@ -222,6 +225,9 @@ class KunenaAdminModelCategories extends KunenaModel
 		return $this->_admincategories;
 	}
 
+	/**
+	 * @return JPagination
+	 */
 	public function getAdminNavigation()
 	{
 		$navigation = new JPagination ($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
@@ -229,6 +235,9 @@ class KunenaAdminModelCategories extends KunenaModel
 		return $navigation;
 	}
 
+	/**
+	 * @return bool|KunenaForumCategory
+	 */
 	public function getAdminCategory()
 	{
 		$category = KunenaForumCategoryHelper::get($this->getState('item.id'));
@@ -271,6 +280,9 @@ class KunenaAdminModelCategories extends KunenaModel
 		return $this->_admincategory;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAdminOptions()
 	{
 		$category = $this->getAdminCategory();
@@ -361,6 +373,9 @@ class KunenaAdminModelCategories extends KunenaModel
 		return $lists;
 	}
 
+	/**
+	 * @return array|bool
+	 */
 	function getAdminModerators()
 	{
 		$category = $this->getAdminCategory();
@@ -375,6 +390,11 @@ class KunenaAdminModelCategories extends KunenaModel
 		return $moderators;
 	}
 
+	/**
+	 * @param $table
+	 *
+	 * @return array
+	 */
 	protected function getReorderConditions($table)
 	{
 		$condition   = array();
@@ -383,6 +403,12 @@ class KunenaAdminModelCategories extends KunenaModel
 		return $condition;
 	}
 
+	/**
+	 * @param null $pks
+	 * @param null $order
+	 *
+	 * @return bool
+	 */
 	public function saveorder($pks = null, $order = null)
 	{
 		$table      = JTable::getInstance('KunenaCategories', 'Table');

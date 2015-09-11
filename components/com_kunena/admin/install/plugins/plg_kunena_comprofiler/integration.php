@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaIntegrationComprofiler
+ */
 class KunenaIntegrationComprofiler
 {
 	protected static $open = false;
@@ -41,7 +44,10 @@ class KunenaIntegrationComprofiler
 	 * Triggers CB events
 	 *
 	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
-	 **/
+	 *
+	 * @param $event
+	 * @param $params
+	 */
 	public static function trigger($event, &$params)
 	{
 		global $_PLUGINS;

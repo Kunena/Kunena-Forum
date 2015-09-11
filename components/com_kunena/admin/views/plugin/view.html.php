@@ -26,6 +26,8 @@ class KunenaAdminViewPlugin extends KunenaView
 
 	/**
 	 * Display the view
+	 *
+	 * @param null $tpl
 	 */
 	public function displayEdit($tpl = null)
 	{

@@ -18,6 +18,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaControllerMisc extends KunenaController
 {
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);

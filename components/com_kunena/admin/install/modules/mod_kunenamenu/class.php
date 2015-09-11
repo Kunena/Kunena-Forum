@@ -11,8 +11,14 @@
  **/
 defined('_JEXEC') or die;
 
+/**
+ * Class modKunenaMenu
+ */
 class modKunenaMenu
 {
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->parameters = $params;

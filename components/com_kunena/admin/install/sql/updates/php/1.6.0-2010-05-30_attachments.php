@@ -11,6 +11,12 @@
 defined('_JEXEC') or die ();
 
 // Kunena 1.6.0: Convert attachments table to support new multi file attachments
+/**
+ * @param $parent
+ *
+ * @return array
+ * @throws KunenaInstallerException
+ */
 function kunena_160_2010_05_30_attachments($parent)
 {
 	$db = JFactory::getDbo();

@@ -13,10 +13,16 @@ defined('_JEXEC') or die ();
 
 require_once dirname(__FILE__) . '/integration.php';
 
+/**
+ * Class KunenaProfileComprofiler
+ */
 class KunenaProfileComprofiler extends KunenaProfile
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -32,6 +38,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 		KunenaIntegrationComprofiler::close();
 	}
 
+	/**
+	 * @param string    $action
+	 * @param bool|true $xhtml
+	 *
+	 * @return bool|string
+	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -44,6 +56,13 @@ class KunenaProfileComprofiler extends KunenaProfile
 		return cbSef('index.php?option=com_comprofiler&amp;task=usersList', $xhtml);
 	}
 
+	/**
+	 * @param           $user
+	 * @param string    $task
+	 * @param bool|true $xhtml
+	 *
+	 * @return bool|string
+	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 		$user = KunenaFactory::getUser($user);
@@ -61,6 +80,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 		return cbSef('index.php?option=com_comprofiler&task=userProfile&user=' . $user->userid . getCBprofileItemid(), $xhtml);
 	}
 
+	/**
+	 * @param $view
+	 * @param $params
+	 *
+	 * @return string
+	 */
 	public function showProfile($view, &$params)
 	{
 		global $_PLUGINS;
@@ -71,11 +96,20 @@ class KunenaProfileComprofiler extends KunenaProfile
 			array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params))));
 	}
 
+	/**
+	 * @param $event
+	 * @param $params
+	 */
 	public static function trigger($event, &$params)
 	{
 		KunenaIntegrationComprofiler::trigger($event, $params);
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 */
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
@@ -91,6 +125,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 		return $top;
 	}
 
+	/**
+	 * @param           $userid
+	 * @param bool|true $xhtml
+	 *
+	 * @return string
+	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return cbSef('index.php?option=com_comprofiler&task=userDetails' . getCBprofileItemid(), $xhtml);

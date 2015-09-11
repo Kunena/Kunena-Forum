@@ -11,19 +11,33 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaPrivateComprofiler
+ */
 class KunenaPrivateComprofiler extends KunenaPrivate
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param $userid
+	 */
 	protected function getURL($userid)
 	{
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
 	public function showIcon($userid)
 	{
 		global $_CB_framework, $_CB_PMS;
@@ -54,6 +68,11 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		return $html;
 	}
 
+	/**
+	 * @param $text
+	 *
+	 * @return null|string
+	 */
 	public function getInboxLink($text)
 	{
 		if (!$text)
@@ -72,6 +91,9 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		return '<a href="' . cbSef('index.php?option=com_comprofiler&task=userProfile&user=' . $userid . $itemid) . '" rel="follow">' . $text . '</a>';
 	}
 
+	/**
+	 * @return null
+	 */
 	protected function getCBUserid()
 	{
 		global $_CB_framework;
@@ -97,6 +119,9 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		return $userid;
 	}
 
+	/**
+	 * @return null|string
+	 */
 	public function getInboxURL()
 	{
 		$userid = $this->getCBUserid();

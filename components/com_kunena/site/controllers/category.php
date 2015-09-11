@@ -20,6 +20,9 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
  */
 class KunenaControllerCategory extends KunenaAdminControllerCategories
 {
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);

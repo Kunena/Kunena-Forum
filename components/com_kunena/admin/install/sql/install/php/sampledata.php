@@ -12,14 +12,26 @@ defined('_JEXEC') or die ();
 
 // This file contains initial sample data for the forum
 
+/**
+ * Class KText
+ */
 class KText
 {
+	/**
+	 * @param $string
+	 *
+	 * @return mixed
+	 */
 	public static function _($string)
 	{
 		return str_replace('\n', "\n", html_entity_decode(JText::_($string), ENT_COMPAT, 'UTF-8'));
 	}
 }
 
+/**
+ * @return int
+ * @throws KunenaInstallerException
+ */
 function installSampleData()
 {
 	$lang  = JFactory::getLanguage();

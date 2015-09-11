@@ -17,6 +17,9 @@ defined('_JEXEC') or die ();
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 
+	/**
+	 * @param null $step
+	 */
 	public function __construct($step = null)
 	{
 		// Joomla 2.5 support
@@ -155,6 +158,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		}
 	}
 
+	/**
+	 * @param $list
+	 *
+	 * @return array
+	 */
 	protected function mapUserGroups($list)
 	{
 		if (!is_array($list))

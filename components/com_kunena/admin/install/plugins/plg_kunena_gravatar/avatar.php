@@ -11,10 +11,16 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAvatarGravatar
+ */
 class KunenaAvatarGravatar extends KunenaAvatar
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -29,6 +35,13 @@ class KunenaAvatarGravatar extends KunenaAvatar
 		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
 	}
 
+	/**
+	 * @param $user
+	 * @param $sizex
+	 * @param $sizey
+	 *
+	 * @return string
+	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		$user     = KunenaFactory::getUser($user);

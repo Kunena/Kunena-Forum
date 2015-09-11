@@ -11,25 +11,47 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAvatarAlphaUserPoints
+ */
 class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getEditURL()
 	{
 		return JRoute::_('index.php?option=com_alphauserpoints&view=account');
 	}
 
+	/**
+	 * @param $user
+	 * @param $sizex
+	 * @param $sizey
+	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
 		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');
 	}
 
+	/**
+	 * @param        $user
+	 * @param string $class
+	 * @param int    $sizex
+	 * @param int    $sizey
+	 *
+	 * @return string
+	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
 	{
 		$user = KunenaFactory::getUser($user);

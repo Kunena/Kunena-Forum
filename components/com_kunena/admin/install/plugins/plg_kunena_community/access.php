@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAccessCommunity
+ */
 class KunenaAccessCommunity
 {
 	protected $categories = false;
@@ -18,6 +21,9 @@ class KunenaAccessCommunity
 	protected $tree = array();
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;

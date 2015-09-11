@@ -188,6 +188,9 @@ class KunenaAdminViewCategories extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function allowpollsOptions()
 	{
 		// Build the active state filter options.
@@ -213,6 +216,9 @@ class KunenaAdminViewCategories extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -229,6 +235,9 @@ class KunenaAdminViewCategories extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

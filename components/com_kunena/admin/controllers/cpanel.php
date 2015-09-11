@@ -20,12 +20,19 @@ class KunenaAdminControllerCpanel extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->baseurl = 'index.php?option=com_kunena';
 	}
 
+	/**
+	 * @param bool|false $cachable
+	 * @param bool|false $urlparams
+	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		$db = JFactory::getDbo();

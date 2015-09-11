@@ -23,6 +23,9 @@ class KunenaAccessComprofiler
 	protected $tree = array();
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;

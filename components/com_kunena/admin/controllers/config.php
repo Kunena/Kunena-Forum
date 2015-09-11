@@ -20,6 +20,9 @@ class KunenaAdminControllerConfig extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -32,6 +35,9 @@ class KunenaAdminControllerConfig extends KunenaController
 		$this->save($this->baseurl);
 	}
 
+	/**
+	 * @param null $url
+	 */
 	function save($url = null)
 	{
 		if (!JSession::checkToken('post'))

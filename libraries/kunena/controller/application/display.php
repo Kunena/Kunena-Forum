@@ -11,6 +11,9 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaControllerApplicationDisplay
+ */
 class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
 	/**
@@ -42,6 +45,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 */
 	protected $document;
 
+	/**
+	 * @return bool
+	 */
 	public function exists()
 	{
 		if ($this->input->getWord('format', 'html') != 'html')
@@ -56,6 +62,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		return (bool) $this->page->getPath();
 	}
 
+	/**
+	 * @return KunenaLayout
+	 */
 	protected function display()
 	{
 		// Display layout with given parameters.
@@ -67,6 +76,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		return $this->page;
 	}
 
+	/**
+	 * @return JLayoutBase
+	 */
 	public function execute()
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
@@ -243,6 +255,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 	}
 
+	/**
+	 * @param int $code
+	 */
 	public function setResponseStatus($code = 404)
 	{
 		switch ((int) $code)
@@ -271,6 +286,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	final public function poweredBy()
 	{
 		$templateText = (string) $this->template->params->get('templatebyText');

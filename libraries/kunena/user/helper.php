@@ -447,6 +447,9 @@ abstract class KunenaUserHelper
 		return $user->status;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public static function recount()
 	{
 		$db = JFactory::getDBO();

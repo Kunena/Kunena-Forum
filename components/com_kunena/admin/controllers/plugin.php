@@ -20,6 +20,9 @@ jimport('joomla.application.component.controllerform');
  */
 class KunenaAdminControllerPlugin extends KunenaController
 {
+	/**
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
 		$this->option      = 'com_kunena';

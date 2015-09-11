@@ -43,6 +43,9 @@ class KunenaAdminModelSmiley extends KunenaModel
 		$this->setState('item.id', $value);
 	}
 
+	/**
+	 * @return null
+	 */
 	public function getSmiley()
 	{
 		$db = JFactory::getDBO();
@@ -65,6 +68,9 @@ class KunenaAdminModelSmiley extends KunenaModel
 		return null;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getSmileyspaths()
 	{
 		$template = KunenaFactory::getTemplate();

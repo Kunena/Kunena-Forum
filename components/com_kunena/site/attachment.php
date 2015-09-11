@@ -58,12 +58,20 @@ require_once JPATH_LIBRARIES . '/cms.php';
 
 require_once JPATH_BASE . '/includes/framework.php';
 
+/**
+ * Class KunenaApplication
+ */
 class KunenaApplication extends JApplicationWeb
 {
 	protected $_name = 'site';
 	protected $_clientId = 0;
 	protected $userstate = array();
 
+	/**
+	 * @param JInput|null                $input
+	 * @param JRegistry|null             $config
+	 * @param JApplicationWebClient|null $client
+	 */
 	public function __construct(JInput $input = null, JRegistry $config = null, JApplicationWebClient $client = null)
 	{
 		parent::__construct($input, $config, $client);
@@ -96,6 +104,11 @@ class KunenaApplication extends JApplicationWeb
 		}
 	}
 
+	/**
+	 * @param JSession|null $session
+	 *
+	 * @return $this
+	 */
 	public function loadSession(JSession $session = null)
 	{
 		if ($session !== null)
@@ -157,26 +170,47 @@ class KunenaApplication extends JApplicationWeb
 		echo $controller->execute();
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isSite()
 	{
 		return true;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isAdmin()
 	{
 		return false;
 	}
 
+	/**
+	 * @param bool|false $params
+	 *
+	 * @return string
+	 */
 	public function getTemplate($params = false)
 	{
 		return 'system';
 	}
 
+	/**
+	 * @param $name
+	 * @param $value
+	 */
 	public function setUserState($name, $value)
 	{
 		$this->userstate[$name] = $value;
 	}
 
+	/**
+	 * @param      $name
+	 * @param null $default
+	 *
+	 * @return null
+	 */
 	public function getUserState($name, $default = null)
 	{
 		return isset($this->userstate[$name]) ? $this->userstate[$name] : $default;

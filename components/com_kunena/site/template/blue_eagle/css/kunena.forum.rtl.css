@@ -114,7 +114,7 @@
 /* Using a Joomla menu module */
 
 #Kunena option {
-	padding : 0px 2px 0px 10px;
+	padding : 0 2px 0 10px;
 }
 
 #Kunena .button,
@@ -644,9 +644,6 @@
 
 /* FORUM ICON BUTTONS */
 
-*
-
-/
 #Kunena .kicon-button span span {
 	padding : 0 20px 0 7px;
 }
@@ -721,7 +718,7 @@
 }
 
 #Kunena .kfile-input {
-	left : 0px;
+	left : 0;
 }
 
 #Kunena #kbbcode-filelist .file-invalid {
@@ -848,7 +845,6 @@ label.kpoll-term-lbl {
 
 #Kunena td.krowmoderation input.kbutton {
 	margin : 0 5px;
-	0 0;
 }
 
 #Kunena td.krowmoderation {
@@ -1041,6 +1037,7 @@ ul.autocompleter-choices {
 
 #Kunena span.kforummoderated {
 	background-position : right center;
+}
 
 #Kunena span.kreadforum,
 #Kunena span.knotloginforum {

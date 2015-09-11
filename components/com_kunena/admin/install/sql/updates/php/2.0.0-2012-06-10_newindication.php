@@ -11,6 +11,12 @@
 defined('_JEXEC') or die ();
 
 // Kunena 2.0.0: Convert new indication into new format
+/**
+ * @param $parent
+ *
+ * @return array
+ * @throws KunenaInstallerException
+ */
 function kunena_200_2012_06_10_newindication($parent)
 {
 	$db  = JFactory::getDbo();

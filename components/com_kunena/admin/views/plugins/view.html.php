@@ -21,6 +21,10 @@ class KunenaAdminViewPlugins extends KunenaView
 
 	/**
 	 * Display the view
+	 *
+	 * @param null $tpl
+	 *
+	 * @return
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -106,6 +110,9 @@ class KunenaAdminViewPlugins extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

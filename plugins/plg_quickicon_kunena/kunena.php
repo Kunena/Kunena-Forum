@@ -3,7 +3,7 @@
  * Kunena QuickIcon Plugin
  *
  * @package     Kunena.Plugins
- * @subpackage    QuickIcon
+ * @subpackage  QuickIcon
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL

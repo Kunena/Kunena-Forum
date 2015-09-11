@@ -2,8 +2,8 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Blue_Eagle
- * @subpackage    Topic
+ * @package     Kunena.Template.Blue_Eagle
+ * @subpackage  Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -12,13 +12,16 @@
 defined('_JEXEC') or die ();
 $row = 0;
 ?>
+
 <div class="kblock kpollbox">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"
 				rel="kpolls_tbody"></a></span>
 
 		<h2>
-			<span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?><?php echo KunenaHtmlParser::parseText($this->poll->title); ?></span>
+			<span>
+				<?php echo JText::_('COM_KUNENA_POLL_NAME') . KunenaHtmlParser::parseText($this->poll->title); ?>
+			</span>
 		</h2>
 	</div>
 	<div class="kcontainer" id="kpolls_tbody">
@@ -47,14 +50,17 @@ $row = 0;
 										<td class="kcol-percent"><?php echo round(($option->votes * 100) / max($this->poll->getTotal(), 1), 1) . "%"; ?></td>
 									</tr>
 								<?php endforeach; ?>
+
 								<tr class="krow<?php echo (++$row) % 2 + 1; ?>">
 									<td colspan="4">
 										<?php
 										echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
+
 										if (!empty($this->users_voted_list))
 										{
 											echo " ( " . implode(', ', $this->users_voted_list) . " ) ";
 										} ?>
+
 										<?php if ($this->usercount > '5') : ?><a href="#"
 											id="kpoll-moreusers"><?php echo JText::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
 											<div style="display: none;"
@@ -64,6 +70,7 @@ $row = 0;
 								</tr>
 								<tr class="krow<?php echo $row % 2 + 1; ?>">
 									<td colspan="4" class="kpoll-info">
+
 										<?php if (!$this->me->exists()) : ?>
 											<?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
 										<?php elseif ($this->voted && !$this->config->pollallowvoteone) : ?>
@@ -71,6 +78,7 @@ $row = 0;
 												<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 											</a>
 										<?php endif; ?>
+
 										<?php if ($this->me->isModerator($this->topic->getCategory())) : ?>
 											<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&id={$this->topic->id}&catid={$this->category->id}&pollid={$this->poll->id}&task=resetvotes&" . JSession::getFormToken() . '=1') ?>"><?php echo JText::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?></a>
 										<?php endif; ?>

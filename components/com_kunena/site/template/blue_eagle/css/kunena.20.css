@@ -12,8 +12,7 @@
 /* Layout */
 
 #Kunena .kpagination span {
-	border-style : solid;
-	border-width : 1px;
+	border       : 1px solid;
 	font-weight  : bold;
 	padding      : 1px 5px;
 	margin       : 2px;

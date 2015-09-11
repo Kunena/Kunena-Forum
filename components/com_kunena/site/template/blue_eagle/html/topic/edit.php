@@ -2,8 +2,8 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Blue_Eagle
- * @subpackage    Topic
+ * @package     Kunena.Template.Blue_Eagle
+ * @subpackage  Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -29,6 +29,7 @@ $this->k = 0;
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="postform form-validate"
 	id="postform" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
 	<input type="hidden" name="view" value="topic" />
+
 	<?php if ($this->message->exists()) : ?>
 		<input type="hidden" name="task" value="edit" />
 		<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
@@ -36,9 +37,11 @@ $this->k = 0;
 		<input type="hidden" name="task" value="post" />
 		<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
 	<?php endif; ?>
+
 	<?php if (!isset($this->selectcatlist)) : ?>
 		<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
 	<?php endif; ?>
+
 	<?php echo JHtml::_('form.token'); ?>
 
 	<div class="kblock">
@@ -51,6 +54,7 @@ $this->k = 0;
 					class="kblocktable<?php echo !empty ($this->category->class_sfx) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '' ?>"
 					id="kpostmessage">
 					<tbody id="kpost-message">
+
 					<?php if (isset($this->selectcatlist)): ?>
 						<tr id="kpost-category" class="krow<?php echo 1 + $this->k ^= 1 ?>">
 							<td class="kcol-first"><strong><?php echo JText::_('COM_KUNENA_CATEGORY') ?></strong></td>
@@ -128,10 +132,10 @@ $this->k = 0;
 							<td class="kcol-mid">
 								<?php foreach ($this->topicIcons as $id => $icon): ?>
 									<span class="kiconsel">
-				<input type="radio" name="topic_emoticon"
-					value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-				<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true); ?>" alt="" border="0" />
-				</span>
+										<input type="radio" name="topic_emoticon"
+											value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+										<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true); ?>" alt="" border="0" />
+									</span>
 								<?php endforeach; ?>
 							</td>
 						</tr>
@@ -214,6 +218,7 @@ $this->k = 0;
 							</td>
 						</tr>
 					<?php endif; ?>
+
 					<?php if (!empty($this->captchaHtml)) : ?>
 						<tr id="kpost-captcha" class="krow<?php echo 1 + $this->k ^= 1; ?>">
 							<td class="kcol-first">
@@ -224,6 +229,7 @@ $this->k = 0;
 							</td>
 						</tr>
 					<?php endif; ?>
+
 					<tr id="kpost-buttons" class="krow1">
 						<td id="kpost-buttons" colspan="2">
 							<input type="submit" name="ksubmit" class="kbutton"
@@ -245,6 +251,7 @@ $this->k = 0;
 			</div>
 		</div>
 	</div>
+
 	<?php
 	if (!$this->message->name)
 	{
@@ -262,6 +269,8 @@ $this->k = 0;
 		}
 	}
 	?>
-</form><?php if ($this->hasThreadHistory()) : ?>
+</form>
+
+<?php if ($this->hasThreadHistory()) : ?>
 	<?php $this->displayThreadHistory(); ?>
 <?php endif; ?>

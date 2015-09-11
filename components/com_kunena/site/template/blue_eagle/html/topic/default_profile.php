@@ -2,8 +2,8 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Blue_Eagle
- * @subpackage    Topic
+ * @package     Kunena.Template.Blue_Eagle
+ * @subpackage  Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL

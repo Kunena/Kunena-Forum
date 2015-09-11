@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Blue_Eagle
+ * @package     Kunena.Template.Blue_Eagle
  * @subpackage    User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.

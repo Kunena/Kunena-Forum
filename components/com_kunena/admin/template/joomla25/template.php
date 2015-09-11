@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Joomla25
+ * @package     Kunena.Template.Joomla25
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL

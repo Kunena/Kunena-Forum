@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Framework
+ * @package     Kunena.Framework
  * @subpackage    Activity
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.

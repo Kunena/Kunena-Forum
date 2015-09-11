@@ -2,8 +2,8 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Blue_Eagle
- * @subpackage    Common
+ * @package     Kunena.Template.Blue_Eagle
+ * @subpackage  Common
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.

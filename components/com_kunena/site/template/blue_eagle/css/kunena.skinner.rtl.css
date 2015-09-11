@@ -30,7 +30,7 @@
 	border-right : 1px solid rgba(0, 0, 0, 0.2);
 }
 
-#Kunena .klist-times
+#Kunena .klist-times,
 #Kunena .klist-actions-forum {
 	border-right : 1px solid rgba(0, 0, 0, 0.2);
 }

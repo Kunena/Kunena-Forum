@@ -2,8 +2,8 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator.Template.Joomla30
- * @subpackage    Common
+ * @package     Kunena.Administrator.Template.Joomla30
+ * @subpackage  Common
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL

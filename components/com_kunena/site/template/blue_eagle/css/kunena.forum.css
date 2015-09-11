@@ -569,11 +569,8 @@ PX		EM			PCT			PT
 
 #Kunena #ktop {
 	margin              : 0;
-	border-style        : solid;
-	border-top-width    : 0;
-	border-right-width  : 0;
+	border              : 0 solid;
 	border-bottom-width : 3px;
-	border-left-width   : 0;
 	vertical-align      : bottom;
 	line-height         : 0;
 }
@@ -1304,8 +1301,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena table.kblocktable {
-	border-style : solid;
-	border-width : 0 0 0 0;
+	border       : 0 solid;
 	text-align   : left;
 }
 
@@ -1351,10 +1347,7 @@ PX		EM			PCT			PT
 	font-size      : 11px !important;
 	line-height    : 23px;
 	border         : 1px solid;
-	padding-top    : 1px;
-	padding-bottom : 3px;
-	padding-left   : 3px;
-	padding-right  : 3px;
+	padding        : 1px 3px 3px;
 }
 
 #Kunena h2 span.kheadbtn:hover a {
@@ -1556,7 +1549,6 @@ PX		EM			PCT			PT
 #Kunena span.kmsgusertype {
 	font-weight     : normal;
 	text-decoration : none;
-	text-decoration : none;
 	font-style      : italic;
 }
 
@@ -1708,10 +1700,8 @@ PX		EM			PCT			PT
 
 #Kunena div.kmsgtext pre,
 #Kunena div.kmsgtext code {
-	border-left   : 5px solid;
-	border-right  : 1px solid;
-	border-top    : 1px solid;
-	border-bottom : 1px solid;
+	border            : 1px solid;
+	border-left-width : 5px;
 	font-weight   : normal;
 	line-height   : 1.5;
 	margin        : 3px 0 10px 0;
@@ -2605,7 +2595,6 @@ BBCODE BUTTONS
 #Kunena #kbbcode-toolbar li {
 	float            : left;
 	list-style-image : none !important;
-	list-style-type  : none !important;
 	margin           : 0;
 	padding          : 0;
 }
@@ -2957,9 +2946,8 @@ label.kpoll-term-lbl {
 }
 
 #kpoll-form-vote ul li {
-	list-style-type : none;
 	line-height     : 30px;
-	list-style      : none !important;
+	list-style      : none none !important;
 }
 
 #kpoll-btns {
@@ -3336,13 +3324,12 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 -------------------------------------------------------------------- */
 
 #Kunena .kicon-profile {
-	background-repeat : no-repeat;
 	width             : 16px;
 	height            : 16px;
 	display           : inline-block;
 	vertical-align    : text-top;
 	margin-right      : 3px;
-	background-image  : url("../media/iconsets/profile/default/default.png");
+	background        : url("../media/iconsets/profile/default/default.png") no-repeat;
 }
 
 #Kunena span.kicon-profile-website,
@@ -3798,9 +3785,8 @@ div#kprofile-stats ul li span.krank-admin {
 }
 
 #Kunena dd.kprofile-modtools ul {
-	margin      : 0;
 	padding     : 0;
-	margin-left : 5px;
+	margin      : 0 0 0 5px;
 }
 
 #Kunena dd.kprofile-modtools ul li {

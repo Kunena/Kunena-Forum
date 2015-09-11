@@ -2,8 +2,8 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Framework
- * @subpackage    Forum.Topic.User.Read
+ * @package     Kunena.Framework
+ * @subpackage  Forum.Topic.User.Read
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL

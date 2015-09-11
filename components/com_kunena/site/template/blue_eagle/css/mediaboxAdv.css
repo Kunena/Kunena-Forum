@@ -79,8 +79,7 @@
 	font-size           : 12px;
 	color               : #fff;
 	text-align          : left;
-	background-position : center center;
-	background-repeat   : no-repeat;
+	background          : no-repeat center center;
 }
 
 /*	Title, Caption and Button styling	*/

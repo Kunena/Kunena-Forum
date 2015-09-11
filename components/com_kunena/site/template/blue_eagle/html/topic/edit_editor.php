@@ -2,8 +2,8 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Blue_Eagle
- * @subpackage    Topic
+ * @package     Kunena.Template.Blue_Eagle
+ * @subpackage  Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -33,36 +33,36 @@ defined('_JEXEC') or die ();
 			<tr>
 				<td class="kpostbuttons">
 					<div id="kbbcode-size-options" style="display: none;">
-			<span class="kmsgtext-xs" title='[size=1]'
-				onmouseover="document.id('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XS', true); ?>')">&nbsp;<?php
-				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span>
-			<span class="kmsgtext-s" title='[size=2]'
-				onmouseover="document.id('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_S', true); ?>')">&nbsp;<?php
-				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span>
-			<span class="kmsgtext-m" title='[size=3]'
-				onmouseover="document.id('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_M', true); ?>')">&nbsp;<?php
-				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span>
-			<span class="kmsgtext-l" title='[size=4]'
-				onmouseover="document.id('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_L', true); ?>')">&nbsp;<?php
-				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span>
-			<span class="kmsgtext-xl" title='[size=5]'
-				onmouseover="document.id('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XL', true); ?>')">&nbsp;<?php
-				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span>
-			<span class="kmsgtext-xxl" title='[size=6]'
-				onmouseover="document.id('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XXL', true); ?>')">&nbsp;<?php
-				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span>
+						<span class="kmsgtext-xs" title='[size=1]'
+							onmouseover="document.id('helpbox').set('value', '<?php
+							echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XS', true); ?>')">&nbsp;<?php
+							echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
+							?>&nbsp;</span>
+						<span class="kmsgtext-s" title='[size=2]'
+							onmouseover="document.id('helpbox').set('value', '<?php
+							echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_S', true); ?>')">&nbsp;<?php
+							echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
+							?>&nbsp;</span>
+						<span class="kmsgtext-m" title='[size=3]'
+							onmouseover="document.id('helpbox').set('value', '<?php
+							echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_M', true); ?>')">&nbsp;<?php
+							echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
+							?>&nbsp;</span>
+						<span class="kmsgtext-l" title='[size=4]'
+							onmouseover="document.id('helpbox').set('value', '<?php
+							echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_L', true); ?>')">&nbsp;<?php
+							echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
+							?>&nbsp;</span>
+						<span class="kmsgtext-xl" title='[size=5]'
+							onmouseover="document.id('helpbox').set('value', '<?php
+							echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XL', true); ?>')">&nbsp;<?php
+							echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
+							?>&nbsp;</span>
+						<span class="kmsgtext-xxl" title='[size=6]'
+							onmouseover="document.id('helpbox').set('value', '<?php
+							echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XXL', true); ?>')">&nbsp;<?php
+							echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
+							?>&nbsp;</span>
 					</div>
 					<div id="kbbcode-color-options" style="display: none;">
 						<script type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
@@ -116,10 +116,12 @@ defined('_JEXEC') or die ();
 							<label class="kpoll-term-lbl"
 								for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 							<?php echo JHtml::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d', array('onmouseover' => 'document.id(\'helpbox\').set(\'value\', \'' . JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN', true) . '\')')); ?>
+
 							<?php
 							if ($this->poll->exists())
 							{
 								$x = 1;
+
 								foreach ($this->poll->getOptions() as $poll_option)
 								{
 									echo '<div class="polloption">Option ' . $x . ' <input type="text" size="100" id="field_option' . $x . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '" onmouseover="document.id(\'helpbox\').set(\'value\', \'' . JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION', true) . '\')" /></div>';
@@ -219,11 +221,13 @@ defined('_JEXEC') or die ();
 			</tr>
 			<?php
 			}
+
 			if (!$this->config->disemoticons) : ?>
 				<tr>
 					<td class="kpostbuttons">
 						<div id="smilie"><?php
 							$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
+
 							foreach ($emoticons as $emo_code => $emo_url)
 							{
 								echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' ' . $emo_code . ' \', \'after\', false);" style="cursor:pointer"/> ';
@@ -234,6 +238,7 @@ defined('_JEXEC') or die ();
 					</td>
 				</tr>
 			<?php endif; ?>
+
 			<!-- end of extendable secondary toolbar -->
 			<tr>
 				<td class="kposthint"><input type="text" name="helpbox" id="helpbox" size="45" class="kinputbox"
@@ -245,10 +250,9 @@ defined('_JEXEC') or die ();
 </tr>
 
 <tr id="kpost-message" class="krow<?php echo 1 + $this->k ^= 1; ?>">
-	<td class="kcol-first kcol-editor-label"><strong><?php
-			echo(JText::_('COM_KUNENA_MESSAGE'));
-			// TODO: Replace Enlarge and Shrink with icons
-			?></strong><br />
+	<td class="kcol-first kcol-editor-label">
+		<strong><?php echo(JText::_('COM_KUNENA_MESSAGE')); ?></strong>
+		<br />
 	<span class="ks" onclick="kGrowShrinkMessage(100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span
 			class="ks" onclick="kGrowShrinkMessage(-100);"
@@ -260,6 +264,7 @@ defined('_JEXEC') or die ();
 
 		<!-- Hidden preview placeholder -->
 		<div id="kbbcode-preview" style="display: none;"></div>
+
 		<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
 			<div class="clr"></div>
 			<fieldset>

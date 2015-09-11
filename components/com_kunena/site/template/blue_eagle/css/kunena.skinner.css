@@ -209,7 +209,7 @@
 	font-family       : inherit;
 }
 
-#Kunena .klist-times
+#Kunena .klist-times,
 #Kunena .klist-actions-forum {
 	border-left-color : rgba(0, 0, 0, 0.2);
 }
@@ -382,7 +382,7 @@
 #Kunena div.kmsgattach,
 #Kunena div.kmsgtext pre,
 #Kunena div.kmsgtext code,
-#Kunena span.kmessage-editmarkup
+#Kunena span.kmessage-editmarkup,
 #Kunena .kreply-form,
 #Kunena span.kmessage-informmarkup,
 #Kunena div.kmsgtext-article,

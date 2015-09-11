@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package     Kunena.Installer
  * @subpackage    Template
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.

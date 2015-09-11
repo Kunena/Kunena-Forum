@@ -205,7 +205,6 @@
 
 #Kunena input.kbutton {
 	filter : chroma(color=#000000);
-	border : none;
 	color  : #111111 !important;
 	border : 1px solid #999999;
 }
@@ -230,7 +229,7 @@
 	top : 7px;
 }
 
-#Kunena spn.kmsgtitle {
+#Kunena span.kmsgtitle {
 	float : left;
 }
 

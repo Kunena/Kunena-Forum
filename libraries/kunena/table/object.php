@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Table
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -83,6 +84,7 @@ abstract class KunenaTableObject
 
 	/**
 	 * Serialized key for the object.
+	 *
 	 * @var string
 	 * @since  K4.0
 	 */
@@ -239,6 +241,7 @@ abstract class KunenaTableObject
 	 * Create almost identical copy of the object, but clean up the key fields.
 	 *
 	 * New object will also return false on $new->exists() until it gets saved.
+	 *
 	 * @since  K4.0
 	 */
 	public function __clone()
@@ -299,6 +302,7 @@ abstract class KunenaTableObject
 
 	/**
 	 * For internal use only.
+	 *
 	 * @return array
 	 */
 	static public function &getInstances()
@@ -351,7 +355,6 @@ abstract class KunenaTableObject
 
 		return $return;
 	}
-
 
 	/**
 	 * Method to reset class properties to the defaults set in the class
@@ -449,8 +452,7 @@ abstract class KunenaTableObject
 		try
 		{
 			$keys = $this->getKeyValues($keys);
-		}
-		catch (UnexpectedValueException $e)
+		} catch (UnexpectedValueException $e)
 		{
 			if ($e->getCode() == 0)
 			{
@@ -498,7 +500,6 @@ abstract class KunenaTableObject
 		// Bind the object with the row and return.
 		return $this->_exists = $this->bind($row);
 	}
-
 
 	/**
 	 * Method to perform sanity checks on the JTableObject instance properties to ensure
@@ -618,8 +619,7 @@ abstract class KunenaTableObject
 		try
 		{
 			$keys = $this->getKeyValues($keys);
-		}
-		catch (UnexpectedValueException $e)
+		} catch (UnexpectedValueException $e)
 		{
 			throw $e;
 		}

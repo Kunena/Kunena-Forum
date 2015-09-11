@@ -5,13 +5,13 @@
  * @package       Kunena.Site
  * @subpackage    Lib
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  *
  * Based on FireBoard Component
  * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.bestofjoomla.com
  **/
 defined('_JEXEC') or die ();

@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Tables
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -59,7 +60,10 @@ class TableKunenaTopics extends KunenaTable
 		}
 
 		// Reset the table.
-		if ($reset) $this->reset();
+		if ($reset)
+		{
+			$this->reset();
+		}
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1)

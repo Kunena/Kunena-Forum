@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Tables
  *
@@ -23,6 +24,7 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * User ID
+	 *
 	 * @var int
 	 **/
 	public $userid = null;
@@ -39,42 +41,49 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Signature
+	 *
 	 * @var string
 	 **/
 	public $signature = null;
 
 	/**
 	 * Is moderator?
+	 *
 	 * @var int
 	 **/
 	public $moderator = null;
 
 	/**
 	 * Banned until timestamp
+	 *
 	 * @var int
 	 **/
 	public $banned = null;
 
 	/**
 	 * Ordering of posts
+	 *
 	 * @var int
 	 **/
 	public $ordering = null;
 
 	/**
 	 * User post count
+	 *
 	 * @var int
 	 **/
 	public $posts = null;
 
 	/**
 	 * Avatar image file
+	 *
 	 * @var string
 	 **/
 	public $avatar = null;
 
 	/**
 	 * User karma
+	 *
 	 * @var int
 	 **/
 	public $karma = null;
@@ -83,192 +92,224 @@ class TableKunenaUsers extends KunenaTable
 
 	/**
 	 * Kunena Group ID
+	 *
 	 * @var int
 	 **/
 	public $group_id = null;
 
 	/**
 	 * Kunena Profile hits
+	 *
 	 * @var int
 	 **/
 	public $uhits = null;
 
 	/**
 	 * Personal text
+	 *
 	 * @var string
 	 **/
 	public $personalText = null;
 
 	/**
 	 * Gender
+	 *
 	 * @var int
 	 **/
 	public $gender = null;
 
 	/**
 	 * Birthdate
+	 *
 	 * @var string
 	 **/
 	public $birthdate = null;
 
 	/**
 	 * User Location
+	 *
 	 * @var string
 	 **/
 	public $location = null;
 
 	/**
 	 * Name of web site
+	 *
 	 * @var string
 	 **/
 	public $websitename = null;
 
 	/**
 	 * URL to web site
+	 *
 	 * @var string
 	 **/
 	public $websiteurl = null;
 
 	/**
 	 * User rank
+	 *
 	 * @var int
 	 **/
 	public $rank = null;
 
 	/**
 	 * Hide Email address
+	 *
 	 * @var int
 	 **/
 	public $hideEmail = null;
 
 	/**
 	 * Show online
+	 *
 	 * @var int
 	 **/
 	public $showOnline = null;
 
 	/**
 	 * ICQ ID
+	 *
 	 * @var string
 	 **/
 	public $icq = null;
 
 	/**
 	 * AIM ID
+	 *
 	 * @var string
 	 **/
 	public $aim = null;
 
 	/**
 	 * YIM ID
+	 *
 	 * @var string
 	 **/
 	public $yim = null;
 
 	/**
 	 * MSN ID
+	 *
 	 * @var string
 	 **/
 	public $msn = null;
 
 	/**
 	 * SKYPE ID
+	 *
 	 * @var string
 	 **/
 	public $skype = null;
 
 	/**
 	 * TWITTER ID
+	 *
 	 * @var string
 	 **/
 	public $twitter = null;
 
 	/**
 	 * FACEBOOK ID
+	 *
 	 * @var string
 	 **/
 	public $facebook = null;
 
 	/**
 	 * GTALK ID
+	 *
 	 * @var string
 	 **/
 	public $gtalk = null;
 
 	/**
 	 * MYSPACE ID
+	 *
 	 * @var string
 	 **/
 	public $myspace = null;
 
 	/**
 	 * LINKEDIN ID
+	 *
 	 * @var string
 	 **/
 	public $linkedin = null;
 
 	/**
 	 * DELICIOUS ID
+	 *
 	 * @var string
 	 **/
 	public $delicious = null;
 
 	/**
 	 * FRIENDFEED ID
+	 *
 	 * @var string
 	 **/
 	public $friendfeed = null;
 
 	/**
 	 * $DIGG ID
+	 *
 	 * @var string
 	 **/
 	public $digg = null;
 
 	/**
 	 * BLOGSPOT ID
+	 *
 	 * @var string
 	 **/
 	public $blogspot = null;
 
 	/**
 	 * FLICKR ID
+	 *
 	 * @var string
 	 **/
 	public $flickr = null;
 
 	/**
 	 * BEBO ID
+	 *
 	 * @var string
 	 **/
 	public $bebo = null;
 
 	/**
 	 * Thankyou count
+	 *
 	 * @var int
 	 **/
 	public $thankyou = null;
 
 	/**
 	 * canSubscribe
+	 *
 	 * @var int
 	 **/
 	public $canSubscribe = null;
 
 	/**
 	 * userListtime
+	 *
 	 * @var int
 	 **/
 	public $userListtime = null;
 
 	/**
 	 * Status
+	 *
 	 * @var int
 	 **/
 	public $status = null;
 
 	/**
 	 * Status Text
+	 *
 	 * @var string
 	 **/
 	public $status_text = null;
@@ -290,7 +331,10 @@ class TableKunenaUsers extends KunenaTable
 		}
 
 		// Reset the table.
-		if ($reset) $this->reset();
+		if ($reset)
+		{
+			$this->reset();
+		}
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1)
@@ -325,7 +369,10 @@ class TableKunenaUsers extends KunenaTable
 			return false;
 		}
 
-		if ($data['posts'] !== null) $this->_exists = true;
+		if ($data['posts'] !== null)
+		{
+			$this->_exists = true;
+		}
 
 		// Bind the data to the table.
 		$this->bind($data);
@@ -351,7 +398,10 @@ class TableKunenaUsers extends KunenaTable
 
 		foreach ($fields as $field)
 		{
-			if (isset($data[$field]) && !in_array($field, $ignore)) $this->$field = $data[$field];
+			if (isset($data[$field]) && !in_array($field, $ignore))
+			{
+				$this->$field = $data[$field];
+			}
 		}
 	}
 

@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Controller
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -42,8 +43,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			// Run after executing action.
 			$this->after();
-		}
-		catch (KunenaExceptionAuthorise $e)
+		} catch (KunenaExceptionAuthorise $e)
 		{
 			if ($this->primary)
 			{
@@ -105,7 +105,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function after()
 	{
-		if ($this->primary) $this->prepareDocument();
+		if ($this->primary)
+		{
+			$this->prepareDocument();
+		}
 	}
 
 	/**
@@ -127,8 +130,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		{
 			$output = $this->execute();
 
-		}
-		catch (KunenaExceptionAuthorise $e)
+		} catch (KunenaExceptionAuthorise $e)
 		{
 			if (!$this->primary)
 			{
@@ -142,8 +144,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
 
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			// TODO: error message?
 			if (!$this->primary)
@@ -184,7 +185,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function setLayout($layout)
 	{
-		if (!$layout) $layout = 'default';
+		if (!$layout)
+		{
+			$layout = 'default';
+		}
 		$this->layout = $layout;
 
 		return $this;
@@ -201,7 +205,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$list       = array();
 		foreach ($properties as $property => $value)
 		{
-			if ($property[0] != "\0") $list[$property] = $value;
+			if ($property[0] != "\0")
+			{
+				$list[$property] = $value;
+			}
 		}
 
 		return $list;
@@ -250,7 +257,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 		return $this;
 	}
-
 
 	protected function setTitle($title, $replace = false)
 	{

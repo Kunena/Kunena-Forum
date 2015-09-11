@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Route
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -256,7 +257,10 @@ abstract class KunenaRouteLegacy
 
 				break;
 			case 'moderateuser' :
-				if ($uri->getVar('view') == 'moderateuser') $uri->setVar('layout', 'moderate');
+				if ($uri->getVar('view') == 'moderateuser')
+				{
+					$uri->setVar('layout', 'moderate');
+				}
 			// Continue to user profile
 			case 'myprofile' :
 			case 'userprofile' :

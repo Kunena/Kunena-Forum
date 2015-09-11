@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Route
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -598,7 +599,10 @@ abstract class KunenaRoute
 		switch ($uri->getVar('view', 'home'))
 		{
 			case 'announcement':
-				if ($legacy_urls) KunenaRouteLegacy::convert($uri);
+				if ($legacy_urls)
+				{
+					KunenaRouteLegacy::convert($uri);
+				}
 				break;
 
 			case 'attachment':

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Upload
  *
@@ -359,8 +360,7 @@ class KunenaUpload
 					throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($size)), 400);
 				}
 			}
-		}
-		catch (Exception $exception)
+		} catch (Exception $exception)
 		{
 		}
 
@@ -502,9 +502,12 @@ class KunenaUpload
 				return false;
 			}
 		}
-		else if ($avatar && $filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024)
+		else
 		{
-			return false;
+			if ($avatar && $filesize > intval(KunenaConfig::getInstance()->avatarsize) * 1024)
+			{
+				return false;
+			}
 		}
 
 		return true;

@@ -90,7 +90,10 @@ class BBCodeLexer
 		$regex_beginmarkers = Array('[' => '\[', '<' => '<', '{' => '\{', '(' => '\(');
 		$regex_endmarkers   = Array('[' => '\]', '<' => '>', '{' => '\}', '(' => '\)');
 		$endmarkers         = Array('[' => ']', '<' => '>', '{' => '}', '(' => ')');
-		if (!isset($regex_endmarkers[$tagmarker])) $tagmarker = '[';
+		if (!isset($regex_endmarkers[$tagmarker]))
+		{
+			$tagmarker = '[';
+		}
 		$e                   = $regex_endmarkers[$tagmarker];
 		$b                   = $regex_beginmarkers[$tagmarker];
 		$this->tagmarker     = $tagmarker;
@@ -209,72 +212,81 @@ class BBCodeLexer
 					}
 				}
 				if (strlen($this->text) > 0)
+				{
 					return $this->token = $token_type;
-			}
-			else if ($this->state == BBCODE_LEXSTATE_TEXT)
-			{
-				$this->state = BBCODE_LEXSTATE_TAG;
-				$this->tag   = false;
-				if (strlen($this->text) > 0)
-					return $this->token = BBCODE_TEXT;
+				}
 			}
 			else
 			{
-				switch (ord(substr($this->text, 0, 1)))
+				if ($this->state == BBCODE_LEXSTATE_TEXT)
 				{
-					case 10:
-					case 13:
-						$this->tag   = false;
-						$this->state = BBCODE_LEXSTATE_TEXT;
-
-						return $this->token = BBCODE_NL;
-					case 45:
-						if (preg_match("/^-----/", $this->text))
-						{
-							$this->tag   = Array('_name' => 'rule', '_endtag' => false, '_default' => '');
-							$this->state = BBCODE_LEXSTATE_TEXT;
-
-							return $this->token = BBCODE_TAG;
-						}
-						else
-						{
+					$this->state = BBCODE_LEXSTATE_TAG;
+					$this->tag   = false;
+					if (strlen($this->text) > 0)
+					{
+						return $this->token = BBCODE_TEXT;
+					}
+				}
+				else
+				{
+					switch (ord(substr($this->text, 0, 1)))
+					{
+						case 10:
+						case 13:
 							$this->tag   = false;
 							$this->state = BBCODE_LEXSTATE_TEXT;
-							if (strlen($this->text) > 0)
-								return $this->token = BBCODE_TEXT;
-							continue;
-						}
-					default:
-						$this->tag   = false;
-						$this->state = BBCODE_LEXSTATE_TEXT;
 
-						return $this->token = BBCODE_WS;
-					case 40:
-					case 60:
-					case 91:
-					case 123:
-						if (preg_match($this->pat_comment, $this->text))
-						{
-							$this->state = BBCODE_LEXSTATE_TEXT;
-							continue;
-						}
-						if (preg_match($this->pat_comment2, $this->text))
-						{
-							$this->state = BBCODE_LEXSTATE_TEXT;
-							continue;
-						}
-						if (preg_match($this->pat_wiki, $this->text, $matches))
-						{
-							$this->tag   = Array('_name'    => 'wiki', '_endtag' => false,
-							                     '_default' => @$matches[1], 'title' => @$matches[2]);
+							return $this->token = BBCODE_NL;
+						case 45:
+							if (preg_match("/^-----/", $this->text))
+							{
+								$this->tag   = Array('_name' => 'rule', '_endtag' => false, '_default' => '');
+								$this->state = BBCODE_LEXSTATE_TEXT;
+
+								return $this->token = BBCODE_TAG;
+							}
+							else
+							{
+								$this->tag   = false;
+								$this->state = BBCODE_LEXSTATE_TEXT;
+								if (strlen($this->text) > 0)
+								{
+									return $this->token = BBCODE_TEXT;
+								}
+								continue;
+							}
+						default:
+							$this->tag   = false;
 							$this->state = BBCODE_LEXSTATE_TEXT;
 
-							return $this->token = BBCODE_TAG;
-						}
-						$this->tag   = $this->Internal_DecodeTag($this->text);
-						$this->state = BBCODE_LEXSTATE_TEXT;
+							return $this->token = BBCODE_WS;
+						case 40:
+						case 60:
+						case 91:
+						case 123:
+							if (preg_match($this->pat_comment, $this->text))
+							{
+								$this->state = BBCODE_LEXSTATE_TEXT;
+								continue;
+							}
+							if (preg_match($this->pat_comment2, $this->text))
+							{
+								$this->state = BBCODE_LEXSTATE_TEXT;
+								continue;
+							}
+							if (preg_match($this->pat_wiki, $this->text, $matches))
+							{
+								$this->tag   = Array('_name'    => 'wiki', '_endtag' => false,
+								                     '_default' => @$matches[1], 'title' => @$matches[2]);
+								$this->state = BBCODE_LEXSTATE_TEXT;
 
-						return $this->token = ($this->tag['_end'] ? BBCODE_ENDTAG : BBCODE_TAG);
+								return $this->token = BBCODE_TAG;
+							}
+							$this->tag   = $this->Internal_DecodeTag($this->text);
+							$this->state = BBCODE_LEXSTATE_TEXT;
+
+							return $this->token = ($this->tag['_end'] ? BBCODE_ENDTAG : BBCODE_TAG);
+					}
 				}
 			}
 		}
@@ -283,14 +295,18 @@ class BBCodeLexer
 	function UngetToken()
 	{
 		if ($this->token !== BBCODE_EOI)
+		{
 			$this->unget = true;
+		}
 	}
 
 	function PeekToken()
 	{
 		$result = $this->NextToken();
 		if ($this->token !== BBCODE_EOI)
+		{
 			$this->unget = true;
+		}
 
 		return $result;
 	}
@@ -311,7 +327,10 @@ class BBCodeLexer
 
 	function RestoreState($state)
 	{
-		if (!is_array($state)) return;
+		if (!is_array($state))
+		{
+			return;
+		}
 		$this->token    = @$state['token'];
 		$this->text     = @$state['text'];
 		$this->tag      = @$state['tag'];
@@ -325,20 +344,51 @@ class BBCodeLexer
 	function Internal_StripQuotes($string)
 	{
 		if (preg_match("/^\\\"(.*)\\\"$/", $string, $matches))
+		{
 			return $matches[1];
-		else if (preg_match("/^\\'(.*)\\'$/", $string, $matches))
-			return $matches[1];
-		else return $string;
+		}
+		else
+		{
+			if (preg_match("/^\\'(.*)\\'$/", $string, $matches))
+			{
+				return $matches[1];
+			}
+			else
+			{
+				return $string;
+			}
+		}
 	}
 
 	function Internal_ClassifyPiece($ptr, $pieces)
 	{
-		if ($ptr >= count($pieces)) return -1;
+		if ($ptr >= count($pieces))
+		{
+			return -1;
+		}
 		$piece = $pieces[$ptr];
-		if ($piece == '=') return '=';
-		else if (preg_match("/^[\\'\\\"]/", $piece)) return '"';
-		else if (preg_match("/^[\\x00-\\x20]+$/", $piece)) return ' ';
-		else return 'A';
+		if ($piece == '=')
+		{
+			return '=';
+		}
+		else
+		{
+			if (preg_match("/^[\\'\\\"]/", $piece))
+			{
+				return '"';
+			}
+			else
+			{
+				if (preg_match("/^[\\x00-\\x20]+$/", $piece))
+				{
+					return ' ';
+				}
+				else
+				{
+					return 'A';
+				}
+			}
+		}
 	}
 
 	function Internal_DecodeTag($tag)
@@ -347,11 +397,17 @@ class BBCodeLexer
 		                '_hasend' => false, '_end' => false, '_default' => false);
 		$tag    = substr($tag, 1, strlen($tag) - 2);
 		$ch     = ord(substr($tag, 0, 1));
-		if ($ch >= 0 && $ch <= 32) return $result;
+		if ($ch >= 0 && $ch <= 32)
+		{
+			return $result;
+		}
 		$pieces = preg_split("/(\\\"[^\\\"]+\\\"|\\'[^\\']+\\'|=|[\\x00-\\x20]+)/",
 			$tag, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 		$ptr    = 0;
-		if (count($pieces) < 1) return $result;
+		if (count($pieces) < 1)
+		{
+			return $result;
+		}
 		if (@substr($pieces[$ptr], 0, 1) == '/')
 		{
 			$result['_name'] = strtolower(substr($pieces[$ptr++], 1));
@@ -376,18 +432,29 @@ class BBCodeLexer
 			while (($type = $this->Internal_ClassifyPiece($ptr, $pieces)) == ' ')
 				$ptr++;
 			if ($type == "\"")
+			{
 				$value = $this->Internal_StripQuotes($pieces[$ptr++]);
+			}
 			else
 			{
 				$after_space = false;
 				$start       = $ptr;
 				while (($type = $this->Internal_ClassifyPiece($ptr, $pieces)) != -1)
 				{
-					if ($type == ' ') $after_space = true;
-					if ($type == '=' && $after_space) break;
+					if ($type == ' ')
+					{
+						$after_space = true;
+					}
+					if ($type == '=' && $after_space)
+					{
+						break;
+					}
 					$ptr++;
 				}
-				if ($type == -1) $ptr--;
+				if ($type == -1)
+				{
+					$ptr--;
+				}
 				if ($type == '=')
 				{
 					$ptr--;
@@ -400,8 +467,13 @@ class BBCodeLexer
 				for (; $start <= $ptr; $start++)
 				{
 					if ($this->Internal_ClassifyPiece($start, $pieces) == ' ')
+					{
 						$value .= " ";
-					else $value .= $this->Internal_StripQuotes($pieces[$start]);
+					}
+					else
+					{
+						$value .= $this->Internal_StripQuotes($pieces[$start]);
+					}
 				}
 				$value = trim($value);
 				$ptr++;
@@ -417,17 +489,30 @@ class BBCodeLexer
 				$type = $this->Internal_ClassifyPiece($ptr, $pieces);
 			}
 			if ($type == 'A' || $type == '"')
-				$key = strtolower($this->Internal_StripQuotes(@$pieces[$ptr++]));
-			else if ($type == '=')
 			{
-				$ptr++;
-				continue;
+				$key = strtolower($this->Internal_StripQuotes(@$pieces[$ptr++]));
 			}
-			else if ($type == -1) break;
+			else
+			{
+				if ($type == '=')
+				{
+					$ptr++;
+					continue;
+				}
+				else
+				{
+					if ($type == -1)
+					{
+						break;
+					}
+				}
+			}
 			while (($type = $this->Internal_ClassifyPiece($ptr, $pieces)) == ' ')
 				$ptr++;
 			if ($type != '=')
+			{
 				$value = $this->Internal_StripQuotes($key);
+			}
 			else
 			{
 				$ptr++;
@@ -437,17 +522,25 @@ class BBCodeLexer
 				{
 					$value = $this->Internal_StripQuotes($pieces[$ptr++]);
 				}
-				else if ($type != -1)
+				else
 				{
-					$value = $pieces[$ptr++];
-					while (($type = $this->Internal_ClassifyPiece($ptr, $pieces)) != -1
-						&& $type != ' ')
-						$value .= $pieces[$ptr++];
+					if ($type != -1)
+					{
+						$value = $pieces[$ptr++];
+						while (($type = $this->Internal_ClassifyPiece($ptr, $pieces)) != -1
+							&& $type != ' ')
+							$value .= $pieces[$ptr++];
+					}
+					else
+					{
+						$value = "";
+					}
 				}
-				else $value = "";
 			}
 			if (substr($key, 0, 1) != '_')
+			{
 				$result[$key] = $value;
+			}
 			$params[] = Array('key' => $key, 'value' => $value);
 		}
 		$result['_params'] = $params;
@@ -785,31 +878,56 @@ class BBCodeLibrary
 
 	function DoURL($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK) return true;
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
 		$url = is_string($default) ? $default : $bbcode->UnHTMLEncode(strip_tags($content));
 		if ($bbcode->IsValidURL($url))
 		{
 			if ($bbcode->debug)
+			{
 				print "ISVALIDURL<br />";
+			}
 			if ($bbcode->url_targetable !== false && isset($params['target']))
+			{
 				$target = " target=\"" . htmlspecialchars($params['target']) . "\"";
-			else $target = "";
+			}
+			else
+			{
+				$target = "";
+			}
 			if ($bbcode->url_target !== false)
+			{
 				if (!($bbcode->url_targetable == 'override' && isset($params['target'])))
+				{
 					$target = " target=\"" . htmlspecialchars($bbcode->url_target) . "\"";
+				}
+			}
 
 			return '<a href="' . htmlspecialchars($url) . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
 		}
-		else return htmlspecialchars($params['_tag']) . $content . htmlspecialchars($params['_endtag']);
+		else
+		{
+			return htmlspecialchars($params['_tag']) . $content . htmlspecialchars($params['_endtag']);
+		}
 	}
 
 	function DoEmail($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK) return true;
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
 		$email = is_string($default) ? $default : $bbcode->UnHTMLEncode(strip_tags($content));
 		if ($bbcode->IsValidEmail($email))
+		{
 			return '<a href="mailto:' . htmlspecialchars($email) . '" class="bbcode_email">' . $content . '</a>';
-		else return htmlspecialchars($params['_tag']) . $content . htmlspecialchars($params['_endtag']);
+		}
+		else
+		{
+			return htmlspecialchars($params['_tag']) . $content . htmlspecialchars($params['_endtag']);
+		}
 	}
 
 	function DoSize($bbcode, $action, $name, $default, $params, $content)
@@ -866,13 +984,22 @@ class BBCodeLibrary
 			$font = trim($font);
 			if (isset($special_fonts[$font]))
 			{
-				if (strlen($result) > 0) $result .= ",";
+				if (strlen($result) > 0)
+				{
+					$result .= ",";
+				}
 				$result .= $special_fonts[$font];
 			}
-			else if (strlen($font) > 0)
+			else
 			{
-				if (strlen($result) > 0) $result .= ",";
-				$result .= "'$font'";
+				if (strlen($font) > 0)
+				{
+					if (strlen($result) > 0)
+					{
+						$result .= ",";
+					}
+					$result .= "'$font'";
+				}
 			}
 		}
 
@@ -883,9 +1010,14 @@ class BBCodeLibrary
 	{
 		$name = $bbcode->Wikify($default);
 		if ($action == BBCODE_CHECK)
+		{
 			return strlen($name) > 0;
+		}
 		$title = trim(@$params['title']);
-		if (strlen($title) <= 0) $title = trim($default);
+		if (strlen($title) <= 0)
+		{
+			$title = trim($default);
+		}
 
 		return "<a href=\"{$bbcode->wiki_url}$name\" class=\"bbcode_wiki\">"
 		. htmlspecialchars($title) . "</a>";
@@ -893,7 +1025,10 @@ class BBCodeLibrary
 
 	function DoImage($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK) return true;
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
 		$content = trim($bbcode->UnHTMLEncode(strip_tags($content)));
 		if (preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/", $content))
 		{
@@ -912,10 +1047,13 @@ class BBCodeLibrary
 					}
 				}
 			}
-			else if ($bbcode->IsValidURL($content, false))
+			else
 			{
-				return "<img src=\"" . htmlspecialchars($content) . "\" alt=\""
-				. htmlspecialchars(basename($content)) . "\" class=\"bbcode_img\" />";
+				if ($bbcode->IsValidURL($content, false))
+				{
+					return "<img src=\"" . htmlspecialchars($content) . "\" alt=\""
+					. htmlspecialchars(basename($content)) . "\" class=\"bbcode_img\" />";
+				}
 			}
 		}
 
@@ -924,29 +1062,50 @@ class BBCodeLibrary
 
 	function DoRule($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK) return true;
-		else return $bbcode->rule_html;
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
+		else
+		{
+			return $bbcode->rule_html;
+		}
 	}
 
 	function DoQuote($bbcode, $action, $name, $default, $params, $content)
 	{
-		if ($action == BBCODE_CHECK) return true;
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
 		if (isset($params['name']))
 		{
 			$title = htmlspecialchars(trim($params['name'])) . " wrote";
 			if (isset($params['date']))
+			{
 				$title .= " on " . htmlspecialchars(trim($params['date']));
+			}
 			$title .= ":";
 			if (isset($params['url']))
 			{
 				$url = trim($params['url']);
 				if ($bbcode->IsValidURL($url))
+				{
 					$title = "<a href=\"" . htmlspecialchars($params['url']) . "\">" . $title . "</a>";
+				}
 			}
 		}
-		else if (!is_string($default))
-			$title = "Quote:";
-		else $title = htmlspecialchars(trim($default)) . " wrote:";
+		else
+		{
+			if (!is_string($default))
+			{
+				$title = "Quote:";
+			}
+			else
+			{
+				$title = htmlspecialchars(trim($default)) . " wrote:";
+			}
+		}
 
 		return "\n<div class=\"bbcode_quote\">\n<div class=\"bbcode_quote_head\">"
 		. $title . "</div>\n<div class=\"bbcode_quote_body\">"
@@ -979,43 +1138,75 @@ class BBCodeLibrary
 		$default        = trim($default);
 		if ($action == BBCODE_CHECK)
 		{
-			if (!is_string($default) || strlen($default) == "") return true;
-			else if (isset($list_styles[$default])) return true;
-			else if (isset($ci_list_styles[strtolower($default)])) return true;
-			else return false;
+			if (!is_string($default) || strlen($default) == "")
+			{
+				return true;
+			}
+			else
+			{
+				if (isset($list_styles[$default]))
+				{
+					return true;
+				}
+				else
+				{
+					if (isset($ci_list_styles[strtolower($default)]))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
 		}
 		if (!is_string($default) || strlen($default) == "")
 		{
 			$elem = 'ul';
 			$type = '';
 		}
-		else if ($default == '1')
-		{
-			$elem = 'ol';
-			$type = '';
-		}
-		else if (isset($list_styles[$default]))
-		{
-			$elem = 'ol';
-			$type = $list_styles[$default];
-		}
 		else
 		{
-			$default = strtolower($default);
-			if (isset($ul_types[$default]))
-			{
-				$elem = 'ul';
-				$type = $ul_types[$default];
-			}
-			else if (isset($ci_list_styles[$default]))
+			if ($default == '1')
 			{
 				$elem = 'ol';
-				$type = $ci_list_styles[$default];
+				$type = '';
+			}
+			else
+			{
+				if (isset($list_styles[$default]))
+				{
+					$elem = 'ol';
+					$type = $list_styles[$default];
+				}
+				else
+				{
+					$default = strtolower($default);
+					if (isset($ul_types[$default]))
+					{
+						$elem = 'ul';
+						$type = $ul_types[$default];
+					}
+					else
+					{
+						if (isset($ci_list_styles[$default]))
+						{
+							$elem = 'ol';
+							$type = $ci_list_styles[$default];
+						}
+					}
+				}
 			}
 		}
 		if (strlen($type))
+		{
 			return "\n<$elem class=\"bbcode_list\" style=\"list-style-type:$type\">\n$content</$elem>\n";
-		else return "\n<$elem class=\"bbcode_list\">\n$content</$elem>\n";
+		}
+		else
+		{
+			return "\n<$elem class=\"bbcode_list\">\n$content</$elem>\n";
+		}
 	}
 }
 
@@ -1398,8 +1589,13 @@ class NBBC_BBCode
 	function SetDefaultRule($name)
 	{
 		if (isset($this->defaults->default_tag_rules[$name]))
+		{
 			$this->AddRule($name, $this->defaults->default_tag_rules[$name]);
-		else $this->RemoveRule($name);
+		}
+		else
+		{
+			$this->RemoveRule($name);
+		}
 	}
 
 	function GetDefaultRules()
@@ -1567,7 +1763,9 @@ class NBBC_BBCode
 	function UnHTMLEncode($string)
 	{
 		if (function_exists("html_entity_decode"))
+		{
 			return html_entity_decode($string);
+		}
 		$string    = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
 		$string    = preg_replace('~&#([0-9]+);~e', 'chr("\\1")', $string);
 		$trans_tbl = get_html_translation_table(HTML_ENTITIES);
@@ -1602,12 +1800,21 @@ class NBBC_BBCode
 )
 (?::[0-9]{1,5})?
 (?:[\\/\\?\\#][^\\n\\r]*)?
-$/Dx", $string)) return true;
-		if (preg_match("/^[^:]+([\\/\\\\?#][^\\r\\n]*)?$/D", $string))
+$/Dx", $string))
+		{
 			return true;
+		}
+		if (preg_match("/^[^:]+([\\/\\\\?#][^\\r\\n]*)?$/D", $string))
+		{
+			return true;
+		}
 		if ($email_too)
+		{
 			if (substr($string, 0, 7) == "mailto:")
+			{
 				return $this->IsValidEmail(substr($string, 7));
+			}
+		}
 
 		return false;
 	}
@@ -1648,9 +1855,14 @@ $/Dx", $string)) return true;
 	function HTMLEncode($string)
 	{
 		if (!$this->allow_ampersand)
+		{
 			return htmlspecialchars($string);
-		else return str_replace(Array('<', '>', '"'),
-			Array('&lt;', '&gt;', '&quot;'), $string);
+		}
+		else
+		{
+			return str_replace(Array('<', '>', '"'),
+				Array('&lt;', '&gt;', '&quot;'), $string);
+		}
 	}
 
 	function FixupOutput($string)
@@ -1741,7 +1953,10 @@ $/Dx", $string)) return true;
 		$first = true;
 		foreach ($this->smileys as $code => $filename)
 		{
-			if (!$first) $regex[] = "|";
+			if (!$first)
+			{
+				$regex[] = "|";
+			}
 			$regex[] = preg_quote("$code", '/');
 			$first   = false;
 		}
@@ -1810,14 +2025,17 @@ $/Dx", $string)) return true;
 					{
 						$url = "mailto:" . $token;
 					}
-					else if (preg_match("/^(https?:|ftp:)\\/*([^\\/&?#]+)\\/*(.*)\$/", $token, $matches))
-					{
-						$url = $matches[1] . '/' . '/' . $matches[2] . "/" . $matches[3];
-					}
 					else
 					{
-						preg_match("/^([^\\/&?#]+)\\/*(.*)\$/", $token, $matches);
-						$url = "http:/" . "/" . $matches[1] . "/" . $matches[2];
+						if (preg_match("/^(https?:|ftp:)\\/*([^\\/&?#]+)\\/*(.*)\$/", $token, $matches))
+						{
+							$url = $matches[1] . '/' . '/' . $matches[2] . "/" . $matches[3];
+						}
+						else
+						{
+							preg_match("/^([^\\/&?#]+)\\/*(.*)\$/", $token, $matches);
+							$url = "http:/" . "/" . $matches[1] . "/" . $matches[2];
+						}
 					}
 					$params = @parse_url($url);
 					/*HACK >*/
@@ -1845,12 +2063,17 @@ $/Dx", $string)) return true;
 	function FillTemplate($template, $insert_array, $default_array = Array())
 	{
 		/*HACK >*/
-		if (is_array($template)) return call_user_func($template, $insert_array);
+		if (is_array($template))
+		{
+			return call_user_func($template, $insert_array);
+		}
 		/*< HACK*/
 		$pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template,
 			-1, PREG_SPLIT_DELIM_CAPTURE);
 		if (count($pieces) <= 1)
+		{
 			return $template;
+		}
 		$result       = Array();
 		$is_an_insert = false;
 		foreach ($pieces as $piece)
@@ -1859,62 +2082,115 @@ $/Dx", $string)) return true;
 			{
 				$result[] = $piece;
 			}
-			else if (!preg_match('/\{\$([a-zA-Z0-9_:-]+)((?:\\.[a-zA-Z0-9_:-]+)*)(?:\/([a-zA-Z0-9_:-]+))?\}/', $piece, $matches))
-			{
-				$result[] = $piece;
-			}
 			else
 			{
-				if (isset($insert_array[$matches[1]]))
-					$value = @$insert_array[$matches[1]];
-				else $value = @$default_array[$matches[1]];
-				if (strlen(@$matches[2]))
+				if (!preg_match('/\{\$([a-zA-Z0-9_:-]+)((?:\\.[a-zA-Z0-9_:-]+)*)(?:\/([a-zA-Z0-9_:-]+))?\}/', $piece, $matches))
 				{
-					foreach (split(".", substr($matches[2], 1)) as $index)
+					$result[] = $piece;
+				}
+				else
+				{
+					if (isset($insert_array[$matches[1]]))
 					{
-						if (is_array($value))
-							$value = @$value[$index];
-						else if (is_object($value))
-						{
-							$value = (array) $value;
-							$value = @$value[$index];
-						}
-						else $value = "";
+						$value = @$insert_array[$matches[1]];
 					}
+					else
+					{
+						$value = @$default_array[$matches[1]];
+					}
+					if (strlen(@$matches[2]))
+					{
+						foreach (split(".", substr($matches[2], 1)) as $index)
+						{
+							if (is_array($value))
+							{
+								$value = @$value[$index];
+							}
+							else
+							{
+								if (is_object($value))
+								{
+									$value = (array) $value;
+									$value = @$value[$index];
+								}
+								else
+								{
+									$value = "";
+								}
+							}
+						}
+					}
+					switch (gettype($value))
+					{
+						case 'boolean':
+							$value = $value ? "true" : "false";
+							break;
+						case 'integer':
+							$value = (string) $value;
+							break;
+						case 'double':
+							$value = (string) $value;
+							break;
+						case 'string':
+							break;
+						default:
+							$value = "";
+							break;
+					}
+					if (strlen(@$matches[3]))
+					{
+						$flags = array_flip(str_split($matches[3]));
+					}
+					else
+					{
+						$flags = Array();
+					}
+					if (!isset($flags['v']))
+					{
+						if (isset($flags['w']))
+						{
+							$value = preg_replace("/[\\x00-\\x09\\x0B-\x0C\x0E-\\x20]+/", " ", $value);
+						}
+						if (isset($flags['t']))
+						{
+							$value = trim($value);
+						}
+						if (isset($flags['b']))
+						{
+							$value = basename($value);
+						}
+						if (isset($flags['e']))
+						{
+							$value = $this->HTMLEncode($value);
+						}
+						else
+						{
+							if (isset($flags['k']))
+							{
+								$value = $this->Wikify($value);
+							}
+							else
+							{
+								if (isset($flags['h']))
+								{
+									$value = htmlspecialchars($value);
+								}
+								else
+								{
+									if (isset($flags['u']))
+									{
+										$value = urlencode($value);
+									}
+								}
+							}
+						}
+						if (isset($flags['n']))
+						{
+							$value = $this->nl2br($value);
+						}
+					}
+					$result[] = $value;
 				}
-				switch (gettype($value))
-				{
-					case 'boolean':
-						$value = $value ? "true" : "false";
-						break;
-					case 'integer':
-						$value = (string) $value;
-						break;
-					case 'double':
-						$value = (string) $value;
-						break;
-					case 'string':
-						break;
-					default:
-						$value = "";
-						break;
-				}
-				if (strlen(@$matches[3]))
-					$flags = array_flip(str_split($matches[3]));
-				else $flags = Array();
-				if (!isset($flags['v']))
-				{
-					if (isset($flags['w']))
-						$value = preg_replace("/[\\x00-\\x09\\x0B-\x0C\x0E-\\x20]+/", " ", $value);
-					if (isset($flags['t'])) $value = trim($value);
-					if (isset($flags['b'])) $value = basename($value);
-					if (isset($flags['e'])) $value = $this->HTMLEncode($value);
-					else if (isset($flags['k'])) $value = $this->Wikify($value);
-					else if (isset($flags['h'])) $value = htmlspecialchars($value);
-					else if (isset($flags['u'])) $value = urlencode($value);
-					if (isset($flags['n'])) $value = $this->nl2br($value);
-				}
-				$result[] = $value;
 			}
 			$is_an_insert = !$is_an_insert;
 		}
@@ -1959,8 +2235,14 @@ $/Dx", $string)) return true;
 				$name    = @$token[BBCODE_STACK_TAG]['_name'];
 				$rule    = @$this->tag_rules[$name];
 				$end_tag = @$rule['end_tag'];
-				if (!isset($rule['end_tag'])) $end_tag = BBCODE_REQUIRED;
-				else $end_tag = $rule['end_tag'];
+				if (!isset($rule['end_tag']))
+				{
+					$end_tag = BBCODE_REQUIRED;
+				}
+				else
+				{
+					$end_tag = $rule['end_tag'];
+				}
 				array_pop($this->start_tags[$name]);
 				if ($end_tag == BBCODE_PROHIBIT)
 				{
@@ -1974,7 +2256,9 @@ $/Dx", $string)) return true;
 				else
 				{
 					if ($end_tag == BBCODE_REQUIRED)
+					{
 						@$this->lost_start_tags[$name] += 1;
+					}
 					$end = $this->Internal_CleanupWSByIteratingPointer(@$rule['before_endtag'], 0, $output);
 					$this->Internal_CleanupWSByPoppingStack(@$rule['after_tag'], $output);
 					$tag_body = $this->Internal_CollectTextReverse($output, count($output) - 1, $end);
@@ -2004,7 +2288,9 @@ $/Dx", $string)) return true;
 		if ($pos < 0)
 		{
 			if (!in_array($this->root_class, $class_list))
+			{
 				return false;
+			}
 		}
 		$output = $this->Internal_GenerateOutput($pos + 1);
 		while (count($output))
@@ -2020,13 +2306,23 @@ $/Dx", $string)) return true;
 	function Internal_FinishTag($tag_name)
 	{
 		if (strlen($tag_name) <= 0)
+		{
 			return false;
+		}
 		if (isset($this->start_tags[$tag_name])
 			&& count($this->start_tags[$tag_name])
 		)
+		{
 			$pos = array_pop($this->start_tags[$tag_name]);
-		else $pos = -1;
-		if ($pos < 0) return false;
+		}
+		else
+		{
+			$pos = -1;
+		}
+		if ($pos < 0)
+		{
+			return false;
+		}
 		$newpos = $this->Internal_CleanupWSByIteratingPointer(@$this->tag_rules[$tag_name]['after_tag'],
 			$pos + 1, $this->stack);
 		$delta  = $newpos - ($pos + 1);
@@ -2044,16 +2340,29 @@ $/Dx", $string)) return true;
 	function Internal_ComputeCurrentClass()
 	{
 		if (count($this->stack) > 0)
+		{
 			$this->current_class = $this->stack[count($this->stack) - 1][BBCODE_STACK_CLASS];
-		else $this->current_class = $this->root_class;
+		}
+		else
+		{
+			$this->current_class = $this->root_class;
+		}
 	}
 
 	function Internal_DumpStack($array = false, $raw = false)
 	{
-		if (!$raw) $string = "<span style='color: #00C;'>";
-		else $string = "";
+		if (!$raw)
+		{
+			$string = "<span style='color: #00C;'>";
+		}
+		else
+		{
+			$string = "";
+		}
 		if ($array === false)
+		{
 			$array = $this->stack;
+		}
 		foreach ($array as $item)
 		{
 			switch (@$item[BBCODE_STACK_TOKEN])
@@ -2075,14 +2384,20 @@ $/Dx", $string)) return true;
 					break;
 			}
 		}
-		if (!$raw) $string .= "</span>";
+		if (!$raw)
+		{
+			$string .= "</span>";
+		}
 
 		return $string;
 	}
 
 	function Internal_CleanupWSByPoppingStack($pattern, &$array)
 	{
-		if (strlen($pattern) <= 0) return;
+		if (strlen($pattern) <= 0)
+		{
+			return;
+		}
 		$oldlen = count($array);
 		foreach (str_split($pattern) as $char)
 		{
@@ -2094,7 +2409,9 @@ $/Dx", $string)) return true;
 					break;
 				case 'n':
 					if (count($array) > 0 && $array[count($array) - 1][BBCODE_STACK_TOKEN] == BBCODE_NL)
+					{
 						array_pop($array);
+					}
 					break;
 				case 'a':
 					while (count($array) > 0
@@ -2112,7 +2429,10 @@ $/Dx", $string)) return true;
 
 	function Internal_CleanupWSByEatingInput($pattern)
 	{
-		if (strlen($pattern) <= 0) return;
+		if (strlen($pattern) <= 0)
+		{
+			return;
+		}
 		foreach (str_split($pattern) as $char)
 		{
 			switch ($char)
@@ -2128,7 +2448,9 @@ $/Dx", $string)) return true;
 				case 'n':
 					$token_type = $this->lexer->NextToken();
 					if ($token_type != BBCODE_NL)
+					{
 						$this->lexer->UngetToken();
+					}
 					break;
 				case 'a':
 					$token_type = $this->lexer->NextToken();
@@ -2144,7 +2466,10 @@ $/Dx", $string)) return true;
 
 	function Internal_CleanupWSByIteratingPointer($pattern, $pos, $array)
 	{
-		if (strlen($pattern) <= 0) return $pos;
+		if (strlen($pattern) <= 0)
+		{
+			return $pos;
+		}
 		foreach (str_split($pattern) as $char)
 		{
 			switch ($char)
@@ -2155,7 +2480,9 @@ $/Dx", $string)) return true;
 					break;
 				case 'n':
 					if ($pos < count($array) && $array[$pos][BBCODE_STACK_TOKEN] == BBCODE_NL)
+					{
 						$pos++;
+					}
 					break;
 				case 'a':
 					while ($pos < count($array)
@@ -2175,7 +2502,9 @@ $/Dx", $string)) return true;
 		foreach ($chunks as $chunk)
 		{
 			if (strlen($output) + strlen($chunk) > $limit)
+			{
 				break;
+			}
 			$output .= $chunk;
 		}
 		$output = rtrim($output);
@@ -2208,18 +2537,34 @@ $/Dx", $string)) return true;
 				{
 					foreach ($tag_rule['allow'] as $param => $pattern)
 					{
-						if ($param == '_content') $value = $contents;
-						else if ($param == '_defaultcontent')
+						if ($param == '_content')
 						{
-							if (strlen($default_value))
-								$value = $default_value;
-							else $value = $contents;
+							$value = $contents;
 						}
 						else
 						{
-							if (isset($params[$param]))
-								$value = $params[$param];
-							else $value = @$tag_rule['default'][$param];
+							if ($param == '_defaultcontent')
+							{
+								if (strlen($default_value))
+								{
+									$value = $default_value;
+								}
+								else
+								{
+									$value = $contents;
+								}
+							}
+							else
+							{
+								if (isset($params[$param]))
+								{
+									$value = $params[$param];
+								}
+								else
+								{
+									$value = @$tag_rule['default'][$param];
+								}
+							}
 						}
 						if (!preg_match($pattern, $value))
 						{
@@ -2257,8 +2602,13 @@ $/Dx", $string)) return true;
 				if ($this->plain_mode)
 				{
 					if (!isset($tag_rule['plain_content']))
+					{
 						$plain_content = Array('_content');
-					else $plain_content = $tag_rule['plain_content'];
+					}
+					else
+					{
+						$plain_content = $tag_rule['plain_content'];
+					}
 					$result = $possible_content = "";
 					foreach ($plain_content as $possible_content)
 					{
@@ -2300,7 +2650,10 @@ $/Dx", $string)) return true;
 							}
 						}
 						$params = @parse_url($link);
-						if (!is_array($params)) $params = Array();
+						if (!is_array($params))
+						{
+							$params = Array();
+						}
 						$params['link'] = $link;
 						$params['url']  = $link;
 						$start          = $this->FillTemplate($start, $params);
@@ -2409,7 +2762,10 @@ $/Dx", $string)) return true;
 				break;
 			}
 // START FIX
-			if ($this->was_limited) continue;
+			if ($this->was_limited)
+			{
+				continue;
+			}
 // END FIX
 			if ($this->output_limit > 0
 				&& $this->text_length + strlen($this->lexer->text) >= $this->output_limit
@@ -2529,8 +2885,13 @@ $/Dx", $string)) return true;
 			return;
 		}
 		if (isset($tag_rule['class']))
+		{
 			$newclass = $tag_rule['class'];
-		else $newclass = $this->root_class;
+		}
+		else
+		{
+			$newclass = $this->root_class;
+		}
 		$this->stack[] = Array(
 			BBCODE_STACK_TOKEN => $this->lexer->token,
 			BBCODE_STACK_TEXT  => $this->FixupOutput($this->lexer->text),
@@ -2538,8 +2899,13 @@ $/Dx", $string)) return true;
 			BBCODE_STACK_CLASS => ($this->current_class = $newclass),
 		);
 		if (!isset($this->start_tags[$tag_name]))
+		{
 			$this->start_tags[$tag_name] = Array(count($this->stack) - 1);
-		else $this->start_tags[$tag_name][] = count($this->stack) - 1;
+		}
+		else
+		{
+			$this->start_tags[$tag_name][] = count($this->stack) - 1;
+		}
 	}
 
 	function Internal_ParseEndTagToken()
@@ -2608,7 +2974,9 @@ $/Dx", $string)) return true;
 		$this->text_length     = 0;
 		$this->was_limited     = false;
 		if (strlen($this->pre_trim) > 0)
+		{
 			$this->Internal_CleanupWSByEatingInput($this->pre_trim);
+		}
 		$newline = $this->plain_mode ? "\n" : "<br />\n";
 		while (true)
 		{
@@ -2711,7 +3079,9 @@ $/Dx", $string)) return true;
 			}
 		}
 		if (strlen($this->post_trim) > 0)
+		{
 			$this->Internal_CleanupWSByPoppingStack($this->post_trim, $this->stack);
+		}
 		$result             = $this->Internal_GenerateOutput(0);
 		$result             = $this->Internal_CollectTextReverse($result, count($result) - 1);
 		$this->output_limit = $old_output_limit;

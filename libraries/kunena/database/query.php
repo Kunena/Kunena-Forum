@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package        Kunena.Framework
  *
  * @copyright (C)  2008 - 2015 Kunena Team. All rights reserved.
@@ -242,7 +243,6 @@ class KunenaDatabaseQuery
 
 		return $this;
 	}
-
 
 	/**
 	 * @param    mixed $columns A string or an array of field names.

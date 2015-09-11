@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Category
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -160,7 +161,10 @@ abstract class KunenaForumCategoryHelper
 
 		foreach ($usercategories as $usercategory)
 		{
-			if ($usercategory->subscribed != (int) $value) $count++;
+			if ($usercategory->subscribed != (int) $value)
+			{
+				$count++;
+			}
 			$usercategory->subscribed = (int) $value;
 			$usercategory->save();
 		}
@@ -600,7 +604,10 @@ abstract class KunenaForumCategoryHelper
 
 				if (!empty ($clist) || !$params['search'] || intval($params['search']) == $id || JString::stristr($instance->name, ( string ) $params['search']))
 				{
-					if (!$filtered && (empty ($clist) || $params['parents'])) $list [$id] = $instance;
+					if (!$filtered && (empty ($clist) || $params['parents']))
+					{
+						$list [$id] = $instance;
+					}
 					$list += $clist;
 				}
 			}

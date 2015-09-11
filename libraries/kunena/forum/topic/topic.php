@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -651,7 +652,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			}
 			elseif ((string) $action === (string) (int) $action)
 			{
-				if ($action > 0) $uri->setVar('limitstart', $action * $limit);
+				if ($action > 0)
+				{
+					$uri->setVar('limitstart', $action * $limit);
+				}
 			}
 			else
 			{
@@ -1125,7 +1129,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 				return false;
 			}
 
-			if ($subjectall) $subject = $target->subject;
+			if ($subjectall)
+			{
+				$subject = $target->subject;
+			}
 
 		}
 		elseif ($target instanceof KunenaForumCategory)
@@ -1147,7 +1154,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			{
 				// Move shadow topic and we are done
 				$this->category_id = $categoryTarget->id;
-				if ($subject) $this->subject = $subject;
+				if ($subject)
+				{
+					$this->subject = $subject;
+				}
 				$this->save(false);
 
 				return $target;

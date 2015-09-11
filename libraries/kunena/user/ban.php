@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    User
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -196,7 +197,6 @@ class KunenaUserBan extends JObject
 
 		return $create || !empty(self::$_instancesByUserid[$identifier]->id) ? self::$_instancesByUserid[$identifier] : null;
 	}
-
 
 	/**
 	 * Returns the global KunenaUserBan object, only creating it if it doesn't already exist.
@@ -543,7 +543,10 @@ class KunenaUserBan extends JObject
 	public function unBan($comment = '')
 	{
 		// Cannot change expiration if ban is not enabled
-		if (!$this->isEnabled()) return;
+		if (!$this->isEnabled())
+		{
+			return;
+		}
 
 		$this->expiration    = self::$_now->toSql();
 		$this->modified_time = self::$_now->toSql();

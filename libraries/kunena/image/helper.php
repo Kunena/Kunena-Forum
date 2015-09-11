@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      Image
  *
@@ -99,8 +100,7 @@ class KunenaImageHelper
 					return false;
 				}
 			}
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			return false;
 		}

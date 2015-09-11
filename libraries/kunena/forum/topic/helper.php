@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -244,11 +245,26 @@ abstract class KunenaForumTopicHelper
 		$catlist = implode(',', array_keys($catlist));
 
 		$whereuser = array();
-		if (!empty($params['started'])) $whereuser[] = 'ut.owner=1';
-		if (!empty($params['replied'])) $whereuser[] = '(ut.owner=0 AND ut.posts>0)';
-		if (!empty($params['posted'])) $whereuser[] = 'ut.posts>0';
-		if (!empty($params['favorited'])) $whereuser[] = 'ut.favorite=1';
-		if (!empty($params['subscribed'])) $whereuser[] = 'ut.subscribed=1';
+		if (!empty($params['started']))
+		{
+			$whereuser[] = 'ut.owner=1';
+		}
+		if (!empty($params['replied']))
+		{
+			$whereuser[] = '(ut.owner=0 AND ut.posts>0)';
+		}
+		if (!empty($params['posted']))
+		{
+			$whereuser[] = 'ut.posts>0';
+		}
+		if (!empty($params['favorited']))
+		{
+			$whereuser[] = 'ut.favorite=1';
+		}
+		if (!empty($params['subscribed']))
+		{
+			$whereuser[] = 'ut.subscribed=1';
+		}
 
 		if ($config->keywords || $config->userkeywords)
 		{
@@ -473,7 +489,10 @@ abstract class KunenaForumTopicHelper
 
 		if ($end)
 		{
-			if ($start < 1) $start = 1;
+			if ($start < 1)
+			{
+				$start = 1;
+			}
 			$topics = " AND (tt.id BETWEEN {$start} AND {$end})";
 		}
 		else

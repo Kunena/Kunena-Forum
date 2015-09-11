@@ -1,11 +1,12 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -215,8 +216,7 @@ class KunenaController extends JControllerLegacy
 
 			// Execute the task.
 			$content = static::executeTask($task);
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			$content = $e;
 		}

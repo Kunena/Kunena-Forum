@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Message
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -723,12 +724,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			$this->modified_time   = 0;
 			$this->modified_reason = '';
 		}
-		else if ($user->userid == $this->userid)
+		else
 		{
-			// I am the author, but somebody else has modified the message => leave modification information intact
-			$this->modified_by     = null;
-			$this->modified_time   = null;
-			$this->modified_reason = null;
+			if ($user->userid == $this->userid)
+			{
+				// I am the author, but somebody else has modified the message => leave modification information intact
+				$this->modified_by     = null;
+				$this->modified_time   = null;
+				$this->modified_reason = null;
+			}
 		}
 
 		// Remove userid, email and ip address
@@ -1131,11 +1135,14 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				return false;
 			}
 		}
-		else if (!KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askemail)
+		else
 		{
-			$this->setError(JText::_('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY'));
+			if (!KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askemail)
+			{
+				$this->setError(JText::_('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY'));
 
-			return false;
+				return false;
+			}
 		}
 
 		// Do not allow no posting date or dates from the future
@@ -1572,8 +1579,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		{
 			$msg = trim($layout->render($subscription ? 'default' : 'moderator'));
 
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			// TODO: Deprecated in K4.0, remove in K5.0
 			// Clean up the message for review.

@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Topic.User
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -79,7 +80,10 @@ abstract class KunenaForumTopicUserHelper
 		// Convert topic objects into ids
 		foreach ($ids as $i => $id)
 		{
-			if ($id instanceof KunenaForumTopic) $ids[$i] = $id->id;
+			if ($id instanceof KunenaForumTopic)
+			{
+				$ids[$i] = $id->id;
+			}
 		}
 
 		$ids = array_unique($ids);
@@ -112,8 +116,14 @@ abstract class KunenaForumTopicUserHelper
 
 		foreach ($topics as $id)
 		{
-			if ($id instanceof KunenaForumTopic) $ids[(int) $id->id] = (int) $id->id;
-			else $ids[(int) $id] = (int) $id;
+			if ($id instanceof KunenaForumTopic)
+			{
+				$ids[(int) $id->id] = (int) $id->id;
+			}
+			else
+			{
+				$ids[(int) $id] = (int) $id;
+			}
 		}
 
 		$idlist = implode(',', $ids);

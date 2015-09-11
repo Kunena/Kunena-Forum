@@ -162,7 +162,7 @@
 
 	#Kunena td.kcol-mid.kcol-ktopiclastpost > div {
 		float : left;
-		clear: both;
+		clear : both;
 	}
 
 	#Kunena .ktopic-details-kcategory,
@@ -431,6 +431,6 @@
 	#Kunena span.kreadforum-sm,
 	#Kunena span.knotloginforum-sm,
 	#Kunena span.kunreadforum-sm {
-		display:none
+		display : none
 	}
 }

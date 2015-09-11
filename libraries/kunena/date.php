@@ -1,11 +1,12 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -137,16 +138,21 @@ class KunenaDate extends JDate
 		{
 			$app = JFactory::getApplication();
 			$my  = JFactory::getUser();
-			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg('offset', 'utc'));
-			else $offset = $app->getCfg('offset', 'utc');
+			if ($my->id)
+			{
+				$offset = $my->getParam('timezone', $app->getCfg('offset', 'utc'));
+			}
+			else
+			{
+				$offset = $app->getCfg('offset', 'utc');
+			}
 		}
 
 		try
 		{
 			$offset = new DateTimeZone($offset);
 			$this->setTimezone($offset);
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			trigger_error('Kunena: Timezone issue!');
 		}

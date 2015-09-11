@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Categories
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -67,8 +68,7 @@ class KunenaLayout extends KunenaLayoutBase
 			{
 				$output .= (string) $content;
 			}
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 			throw $e;
@@ -156,8 +156,7 @@ class KunenaLayout extends KunenaLayoutBase
 		try
 		{
 			return parent::__call($name, $arguments);
-		}
-		catch (InvalidArgumentException $e)
+		} catch (InvalidArgumentException $e)
 		{
 			$callable = array($this->legacy, $name);
 

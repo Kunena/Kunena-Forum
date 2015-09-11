@@ -5,9 +5,9 @@
  * @package       Kunena.Framework
  * @subpackage    Template
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -828,9 +828,12 @@ HTML;
 				{
 					$icon = 'pushpin';
 				}
-				else if ($topicicontype == 'fa')
+				else
 				{
-					$icon = 'thumb-tack';
+					if ($topicicontype == 'fa')
+					{
+						$icon = 'thumb-tack';
+					}
 				}
 			}
 			elseif ($topic->icon_id == 1)
@@ -839,13 +842,19 @@ HTML;
 				{
 					$icon = 'notification-circle';
 				}
-				else if ($topicicontype == 'B3')
+				else
 				{
-					$icon = 'exclamation-sign';
-				}
-				else if ($topicicontype == 'fa')
-				{
-					$icon = 'exclamation-circle';
+					if ($topicicontype == 'B3')
+					{
+						$icon = 'exclamation-sign';
+					}
+					else
+					{
+						if ($topicicontype == 'fa')
+						{
+							$icon = 'exclamation-circle';
+						}
+					}
 				}
 			}
 			elseif ($topic->icon_id == 2)
@@ -854,9 +863,12 @@ HTML;
 				{
 					$icon = 'question-sign';
 				}
-				else if ($topicicontype == 'fa')
+				else
 				{
-					$icon = 'question-circle';
+					if ($topicicontype == 'fa')
+					{
+						$icon = 'question-circle';
+					}
 				}
 			}
 			elseif ($topic->icon_id == 3)
@@ -865,9 +877,12 @@ HTML;
 				{
 					$icon = 'lamp';
 				}
-				else if ($topicicontype == 'fa')
+				else
 				{
-					$icon = 'lightbulb-o';
+					if ($topicicontype == 'fa')
+					{
+						$icon = 'lightbulb-o';
+					}
 				}
 			}
 			elseif ($topic->icon_id == 4)
@@ -892,9 +907,12 @@ HTML;
 				{
 					$icon = 'ok';
 				}
-				else if ($topicicontype == 'fa')
+				else
 				{
-					$icon = 'check';
+					if ($topicicontype == 'fa')
+					{
+						$icon = 'check';
+					}
 				}
 			}
 			elseif ($topic->icon_id == 9)
@@ -903,13 +921,19 @@ HTML;
 				{
 					$icon = 'resize-small';
 				}
-				else if ($topicicontype == 'B2')
+				else
 				{
-					$icon = 'contract';
-				}
-				else if ($topicicontype == 'fa')
-				{
-					$icon = 'compress';
+					if ($topicicontype == 'B2')
+					{
+						$icon = 'contract';
+					}
+					else
+					{
+						if ($topicicontype == 'fa')
+						{
+							$icon = 'compress';
+						}
+					}
 				}
 			}
 			elseif ($topic->icon_id == 10)
@@ -918,9 +942,12 @@ HTML;
 				{
 					$icon = 'remove';
 				}
-				else if ($topicicontype == 'fa')
+				else
 				{
-					$icon = 'times';
+					if ($topicicontype == 'fa')
+					{
+						$icon = 'times';
+					}
 				}
 			}
 			elseif ($topic->locked)
@@ -929,9 +956,12 @@ HTML;
 				{
 					$icon = 'locked';
 				}
-				else if ($topicicontype == 'B3' || $topicicontype == 'fa')
+				else
 				{
-					$icon = 'lock';
+					if ($topicicontype == 'B3' || $topicicontype == 'fa')
+					{
+						$icon = 'lock';
+					}
 				}
 			}
 			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      User
  *
@@ -853,8 +854,7 @@ class KunenaUser extends JObject
 			{
 				$offset = new DateTimeZone($timezone);
 				$this->_time->setTimezone($offset);
-			}
-			catch (Exception $e)
+			} catch (Exception $e)
 			{
 				// TODO: log error?
 			}

@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Controller
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -115,8 +116,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$content       = $this->display()->set('breadcrumb', $this->breadcrumb);
 				$this->content = $content->render();
 
-			}
-			catch (KunenaExceptionAuthorise $e)
+			} catch (KunenaExceptionAuthorise $e)
 			{
 				$this->setResponseStatus($e->getResponseCode());
 				$this->output->setLayout('unauthorized');
@@ -126,8 +126,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					->set('header', $e->getResponseStatus())
 					->set('body', $e->getMessage());
 
-			}
-			catch (Exception $e)
+			} catch (Exception $e)
 			{
 				if (!($e instanceof KunenaExceptionAuthorise))
 				{

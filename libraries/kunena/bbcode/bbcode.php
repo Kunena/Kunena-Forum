@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    BBCode
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -420,10 +421,22 @@ class KunenaBbcode extends NBBC_BBCode
 	{
 		static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
 
-		if (empty($string)) return false;
-		if ($local_too && $string[0] == '/') $string = 'http://www.domain.com' . $string;
-		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
-		if (preg_match($re, $string)) return true;
+		if (empty($string))
+		{
+			return false;
+		}
+		if ($local_too && $string[0] == '/')
+		{
+			$string = 'http://www.domain.com' . $string;
+		}
+		if ($email_too && substr($string, 0, 7) == "mailto:")
+		{
+			return $this->IsValidEmail(substr($string, 7));
+		}
+		if (preg_match($re, $string))
+		{
+			return true;
+		}
 
 		return false;
 	}
@@ -1240,17 +1253,23 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			{
 				return true;
 			}
-			else if (isset ($list_styles [$default]))
-			{
-				return true;
-			}
-			else if (isset ($ci_list_styles [strtolower($default)]))
-			{
-				return true;
-			}
 			else
 			{
-				return false;
+				if (isset ($list_styles [$default]))
+				{
+					return true;
+				}
+				else
+				{
+					if (isset ($ci_list_styles [strtolower($default)]))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
 			}
 		}
 
@@ -1262,28 +1281,37 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 		{
 			$elem = 'ul';
 		}
-		else if ($default == '1')
-		{
-			$elem = 'ol';
-		}
-		else if (isset ($list_styles [$default]))
-		{
-			$elem = 'ol';
-			$type = $list_styles [$default];
-		}
 		else
 		{
-			$default = strtolower($default);
-
-			if (isset ($ul_types [$default]))
-			{
-				$elem = 'ul';
-				$type = $ul_types [$default];
-			}
-			else if (isset ($ci_list_styles [$default]))
+			if ($default == '1')
 			{
 				$elem = 'ol';
-				$type = $ci_list_styles [$default];
+			}
+			else
+			{
+				if (isset ($list_styles [$default]))
+				{
+					$elem = 'ol';
+					$type = $list_styles [$default];
+				}
+				else
+				{
+					$default = strtolower($default);
+
+					if (isset ($ul_types [$default]))
+					{
+						$elem = 'ul';
+						$type = $ul_types [$default];
+					}
+					else
+					{
+						if (isset ($ci_list_styles [$default]))
+						{
+							$elem = 'ol';
+							$type = $ci_list_styles [$default];
+						}
+					}
+				}
 			}
 		}
 
@@ -2393,7 +2421,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 			->set('size', isset($params['size']) ? $params['size'] : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
-
 		if (JFactory::getUser()->id == 0 && $config->showimgforguest == 0)
 		{
 			// Hide between content from non registered users.
@@ -2759,7 +2786,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary
 
 		return '';
 	}
-
 
 	/**
 	 * Load eBay object item from cache

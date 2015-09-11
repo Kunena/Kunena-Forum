@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -122,7 +123,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 	{
 		return (stripos($this->filetype, 'image/') !== false);
 	}
-
 
 	/**
 	 * Get path for the file.
@@ -367,7 +367,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 			{
 				$authFunction = 'authorise' . $function;
 				$exception    = $this->$authFunction($user);
-				if ($exception) break;
+				if ($exception)
+				{
+					break;
+				}
 			}
 		}
 
@@ -499,8 +502,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 						$image = $image->resize($config->imagewidth, $config->imagewidth, false);
 						$image->toFile($uploadBasePath . $fileNameWithExt, $imageInfo->type, $options);
 						unset($image);
-					}
-					catch (Exception $e)
+					} catch (Exception $e)
 					{
 						// TODO: better error message.
 						echo $e->getMessage();

@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Announcement
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -174,7 +175,10 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			case 'created_by':
 				return $this->getAuthor()->getLink();
 			case 'created':
-				if (!$mode) $mode = 'date_today';
+				if (!$mode)
+				{
+					$mode = 'date_today';
+				}
 
 				return $this->getCreationDate()->toKunena($mode);
 		}

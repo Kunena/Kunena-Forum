@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Administrator.Template
  * @subpackage    Categories
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -38,6 +39,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 {
 	/**
 	 * Layout name.
+	 *
 	 * @var string
 	 */
 	protected $_name = '';
@@ -88,8 +90,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		try
 		{
 			return (string) $this->render();
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			return $this->renderError($e);
 		}
@@ -184,8 +185,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			// And get the contents.
 			$output = ob_get_clean();
 
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			// Flush the contents and re-throw the exception.
 			ob_end_clean();
@@ -390,7 +390,10 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function setLayout($layout)
 	{
-		if (!$layout) $layout = 'default';
+		if (!$layout)
+		{
+			$layout = 'default';
+		}
 		$this->layout = $layout;
 
 		return $this;

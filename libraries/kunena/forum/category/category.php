@@ -1,12 +1,13 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  * @subpackage    Forum.Category
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -622,11 +623,14 @@ class KunenaForumCategory extends KunenaDatabaseObject
 
 		$categories = KunenaForumCategoryHelper::getChildren(intval($this->id), -1, array('action' => 'topic.create'));
 
-		if ($categories) foreach ($categories as $category)
+		if ($categories)
 		{
-			if ($category->authorise('topic.create', null, true))
+			foreach ($categories as $category)
 			{
-				return $category;
+				if ($category->authorise('topic.create', null, true))
+				{
+					return $category;
+				}
 			}
 		}
 

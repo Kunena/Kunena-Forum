@@ -1,11 +1,12 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package       Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -104,6 +105,7 @@ class KunenaSpamRecaptcha
 	 * Gets the challenge HTML (javascript and non-javascript version).
 	 * This is called from the browser, and the resulting reCAPTCHA HTML widget
 	 * is embedded within the HTML form it was called from.
+	 *
 	 * @return string - The HTML to be embedded in the user's form.
 	 */
 	public function getHtml()
@@ -216,6 +218,7 @@ class KunenaSpamRecaptcha
 
 	/**
 	 * Get error string
+	 *
 	 * @return string Error code
 	 */
 	public function getError()

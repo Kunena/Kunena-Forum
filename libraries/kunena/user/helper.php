@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package         Kunena.Framework
  * @subpackage      User
  *
@@ -99,13 +100,16 @@ abstract class KunenaUserHelper
 
 			return new KunenaUser ($id);
 		}
-		else if ($reload || empty (self::$_instances [$id]))
+		else
 		{
-			self::$_instances [$id] = new KunenaUser ($id);
+			if ($reload || empty (self::$_instances [$id]))
+			{
+				self::$_instances [$id] = new KunenaUser ($id);
 
-			// Preload avatar if configured.
-			$avatars = KunenaFactory::getAvatarIntegration();
-			$avatars->load(array($id));
+				// Preload avatar if configured.
+				$avatars = KunenaFactory::getAvatarIntegration();
+				$avatars->load(array($id));
+			}
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -203,7 +207,10 @@ abstract class KunenaUserHelper
 
 		foreach ($userids as $userid)
 		{
-			if (isset(self::$_instances [$userid])) $list [$userid] = self::$_instances [$userid];
+			if (isset(self::$_instances [$userid]))
+			{
+				$list [$userid] = self::$_instances [$userid];
+			}
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -233,10 +240,22 @@ abstract class KunenaUserHelper
 		{
 			$db     = JFactory::getDBO();
 			$config = KunenaFactory::getConfig();
-			if ($config->userlist_count_users == '1') $where = '(block=0 OR activation="")';
-			elseif ($config->userlist_count_users == '2') $where = '(block=0 AND activation="")';
-			elseif ($config->userlist_count_users == '3') $where = 'block=0';
-			else $where = '1';
+			if ($config->userlist_count_users == '1')
+			{
+				$where = '(block=0 OR activation="")';
+			}
+			elseif ($config->userlist_count_users == '2')
+			{
+				$where = '(block=0 AND activation="")';
+			}
+			elseif ($config->userlist_count_users == '3')
+			{
+				$where = 'block=0';
+			}
+			else
+			{
+				$where = '1';
+			}
 			$db->setQuery("SELECT COUNT(*), MAX(id) FROM #__users WHERE {$where}");
 			list (self::$_total, self::$_lastid) = $db->loadRow();
 			KunenaError::checkDatabaseError();

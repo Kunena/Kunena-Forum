@@ -45,6 +45,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	{
 		$this->ktemplate     = KunenaFactory::getTemplate();
 		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
+
 		if ($category->getNewCount())
 		{
 			if (!empty($category->icon))
@@ -80,6 +81,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	{
 		$this->ktemplate     = KunenaFactory::getTemplate();
 		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
+
 		if ($subcategory->getNewCount())
 		{
 			if (!empty($subcategory->icon))

@@ -19,8 +19,9 @@ defined('_JEXEC') or die ();
 class KunenaControllerUser extends KunenaController
 {
 	/**
-	 * @param   bool|false  $cachable
-	 * @param   bool|false  $urlparams
+	 * @param   bool|false  $cachable  comment
+	 *
+	 * @param   bool|false  $urlparams  comment
 	 *
 	 * @return  JControllerLegacy|void
 	 */
@@ -75,9 +76,7 @@ class KunenaControllerUser extends KunenaController
 		parent::display();
 	}
 
-	/**
-	 *
-	 */
+
 	public function search()
 	{
 		$model = $this->getModel('user');
@@ -101,9 +100,6 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirect(KunenaRoute::_($uri, false));
 	}
 
-	/**
-	 *
-	 */
 	public function change()
 	{
 		if (!JSession::checkToken('get'))
@@ -119,17 +115,11 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirectBack();
 	}
 
-	/**
-	 *
-	 */
 	public function karmaup()
 	{
 		$this->karma(1);
 	}
 
-	/**
-	 *
-	 */
 	public function karmadown()
 	{
 		$this->karma(-1);
@@ -138,7 +128,9 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws   KunenaExceptionAuthorise
 	 *
-	 * @todo Allow moderators to save another users profile (without account info).
+	 * @return  void
+	 *
+	 * @todo  Allow moderators to save another users profile (without account info).
 	 */
 	public function save()
 	{
@@ -216,9 +208,6 @@ class KunenaControllerUser extends KunenaController
 		}
 	}
 
-	/**
-	 *
-	 */
 	public function ban()
 	{
 		$user = KunenaFactory::getUser(JRequest::getInt('userid', 0));

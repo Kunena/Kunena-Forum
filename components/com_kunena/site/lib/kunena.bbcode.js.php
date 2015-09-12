@@ -16,11 +16,10 @@ $kunena_config = KunenaFactory::getConfig();
 
 ob_start();
 
-//
-// function kPreviewHelper (elementId)
-//
-// Helper function for to perform JSON request for preview
-//
+/*
+ function kPreviewHelper (elementId)
+ Helper function for to perform JSON request for preview
+*/
 ?>
 function kPreviewHelper() {
 	if (_previewActive == true) {
@@ -47,7 +46,6 @@ window.addEvent('domready', function () {
 
 	<?php if ($this->poll)
 	{ ?>
-
 	kbbcode.addFunction('Poll', function () {
 		kToggleOrSwap("kbbcode-poll-options");
 	}, {
@@ -72,6 +70,4 @@ window.addEvent('domready', function () {
 $script = ob_get_contents();
 ob_end_clean();
 
-JFactory::getDocument()->addScriptDeclaration("// <![CDATA[
-{$script}
-// ]]>");
+JFactory::getDocument()->addScriptDeclaration("// <![CDATA[{$script}// ]]>");

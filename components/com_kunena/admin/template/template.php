@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Joomla30
+ * @package       Kunena.Template
  *
  * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die ();
 
-class KunenaAdminTemplate30
+class KunenaAdminTemplate
 {
 
 	public function initialize()

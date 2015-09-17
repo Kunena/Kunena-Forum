@@ -213,11 +213,6 @@ class KunenaLogin
 	 */
 	public function isTFAEnabled($userId = null)
 	{
-		if (!version_compare(JVERSION, '3.2', '>='))
-		{
-			return false;
-		}
-
 		// Include the necessary user model and helper
 		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
 		require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
@@ -250,11 +245,6 @@ class KunenaLogin
 	 */
 	public static function getTwoFactorMethods()
 	{
-		if (!version_compare(JVERSION, '3.2', '>='))
-		{
-			return null;
-		}
-
 		require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
 
 		return count(UsersHelper::getTwoFactorMethods());

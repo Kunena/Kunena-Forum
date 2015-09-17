@@ -56,18 +56,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		if ($this->message->isAuthorised('reply'))
 		{
-			if (version_compare(JVERSION, '3.4', '<') && $me->canDoCaptcha())
-			{
-				$this->quickreply = false;
-			}
-			elseif (version_compare(JVERSION, '3.4', '>') && $me->canDoCaptcha())
-			{
-				$this->quickreply = true;
-			}
-			else
-			{
-				$this->quickreply = true;
-			}
+			$this->quickreply = true;
 		}
 		else
 		{

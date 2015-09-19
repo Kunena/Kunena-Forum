@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.BBCode
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -34,13 +35,16 @@ if (!isset($id))
 	$id = 0;
 }
 
-$mapid = 'kgooglemap' . $this->mapid;
-$map_type = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
+$mapid      = 'kgooglemap' . $this->mapid;
+$map_type   = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 $map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
-if (!in_array($map_type, $map_typeId)) $map_type = 'ROADMAP';
-$map_zoom = isset($params['zoom']) ? (int) $params['zoom'] : 10;
-$map_control = isset($params['control']) ? (int) $params['control'] : 0;
-$content = json_encode(addslashes($this->content));
+if (!in_array($map_type, $map_typeId))
+{
+	$map_type = 'ROADMAP';
+}
+$map_zoom      = isset($params['zoom']) ? (int) $params['zoom'] : 10;
+$map_control   = isset($params['control']) ? (int) $params['control'] : 0;
+$content       = json_encode(addslashes($this->content));
 $contentString = JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
 
 $this->addScriptDeclaration("

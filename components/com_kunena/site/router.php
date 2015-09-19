@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
+ * @package    Kunena.Site
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright  (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -26,9 +26,9 @@ jimport('joomla.error.profiler');
  *
  * NOTE! Only major variables are using SEF segments
  *
- * @param $query
+ * @param   $query
  *
- * @return array Segments
+ * @return   array  Segments
  */
 function KunenaBuildRoute(&$query)
 {
@@ -44,13 +44,16 @@ function KunenaBuildRoute(&$query)
 
 	// Get menu item
 	$menuitem = null;
+
 	if (isset ($query ['Itemid']))
 	{
 		static $menuitems = array();
 		$Itemid = $query ['Itemid'] = (int) $query ['Itemid'];
+
 		if (!isset($menuitems[$Itemid]))
 		{
 			$menuitems[$Itemid] = JFactory::getApplication()->getMenu()->getItem($Itemid);
+
 			if (!$menuitems[$Itemid])
 			{
 				// Itemid doesn't exist or is invalid
@@ -76,6 +79,7 @@ function KunenaBuildRoute(&$query)
 	{
 		$defaults = KunenaRoute::$views[$view];
 	}
+
 	// Check all URI variables and remove those which aren't needed
 	foreach ($query as $var => $value)
 	{
@@ -100,6 +104,7 @@ function KunenaBuildRoute(&$query)
 	{
 		// TODO: ensure that we have view=category/topic
 		$catid = ( int ) $query ['catid'];
+
 		if ($catid)
 		{
 			$numeric = true;
@@ -107,6 +112,7 @@ function KunenaBuildRoute(&$query)
 			$alias = KunenaForumCategoryHelper::get($catid)->alias;
 			// If category alias is empty, use category id; otherwise use alias
 			$segments [] = empty ($alias) ? $catid : $alias;
+
 			// This segment fully defines category view so the variable is no longer needed
 			if ($view == 'category')
 			{
@@ -117,6 +123,7 @@ function KunenaBuildRoute(&$query)
 		{
 			$numeric    = true;
 			$segments[] = '%' . ++$pos . '$s';
+
 			if ($view == 'category')
 			{
 				unset($query['view']);
@@ -129,9 +136,11 @@ function KunenaBuildRoute(&$query)
 	if (!empty ($query ['id']) && $numeric)
 	{
 		$id = (int) $query ['id'];
+
 		if ($id)
 		{
 			$subject = KunenaRoute::stringURLSafe(KunenaForumTopicHelper::get($id)->subject);
+
 			if (empty ($subject))
 			{
 				$segments [] = $id;
@@ -212,6 +221,7 @@ function KunenaBuildRoute(&$query)
 		{
 			$segments[] = (int) $query['mesid'];
 		}
+
 		unset($query['mesid']);
 	}
 
@@ -226,6 +236,7 @@ function KunenaBuildRoute(&$query)
 		{
 			$segments[] = (int) $query['userid'] . '-' . KunenaRoute::stringURLSafe(KunenaUserHelper::get((int) $query['userid'])->getName());
 		}
+
 		unset($query['userid']);
 	}
 
@@ -251,6 +262,11 @@ function KunenaBuildRoute(&$query)
 	return $segments;
 }
 
+/**
+ * @param $segments
+ *
+ * @return array
+ */
 function KunenaParseRoute($segments)
 {
 	// If Kunena Forum isn't installed do nothing
@@ -266,6 +282,7 @@ function KunenaParseRoute($segments)
 	// Get current menu item and get query variables from it
 	$active = JFactory::getApplication()->getMenu()->getActive();
 	$vars   = isset ($active->query) ? $active->query : array('view' => 'home');
+
 	if (empty($vars['view']) || $vars['view'] == 'home' || $vars['view'] == 'entrypage')
 	{
 		$vars['view'] = '';
@@ -288,6 +305,7 @@ function KunenaParseRoute($segments)
 			// Find out if we have SEF alias (category, view or layout)
 			$alias     = strtr($segment, ':', '-');
 			$variables = KunenaRoute::resolveAlias($alias);
+
 			if ($variables)
 			{
 				$sefcats = false;
@@ -313,6 +331,7 @@ function KunenaParseRoute($segments)
 		{
 			// Handle variables starting by number
 			$value = (int) $var;
+
 			if ($vars['view'] == 'user')
 			{
 				// Special case: User view
@@ -348,6 +367,7 @@ function KunenaParseRoute($segments)
 		{
 			// Simple variable without value is always either view or layout
 			$value = $var;
+
 			if (empty($vars ['view']) || ($value == 'topic' && $vars ['view'] == 'category'))
 			{
 				// View
@@ -380,18 +400,22 @@ function KunenaParseRoute($segments)
 			$segment    = array_shift($segments);
 			$vars['id'] = (int) $segment;
 			$segment    = array_shift($segments);
+
 			if ($segment)
 			{
 				$vars[$segment] = 1;
 			}
+
 			$vars['format'] = 'raw';
 		}
 
 	}
+
 	if (empty($vars ['layout']))
 	{
 		$vars ['layout'] = 'default';
 	}
+
 	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
 
 	foreach ($vars as $var => $value)

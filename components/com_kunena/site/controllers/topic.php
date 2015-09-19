@@ -2,22 +2,27 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 /**
  * Kunena Topic Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerTopic extends KunenaController
 {
+	/**
+	 *
+	 * @param   array  $config
+	 *
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -71,7 +76,9 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) ;
+
+		while (@ob_end_clean());
+
 		echo json_encode($list);
 
 		jexit();
@@ -108,7 +115,9 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) ;
+
+		while (@ob_end_clean());
+
 		echo json_encode($success);
 
 		jexit();
@@ -154,7 +163,7 @@ class KunenaControllerTopic extends KunenaController
 				// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
 				if ($category->id)
 				{
-					if ( stripos($this->input->getString('mime'), 'image/') !== false )
+					if (stripos($this->input->getString('mime'), 'image/') !== false)
 					{
 						$category->tryAuthorise('topic.post.attachment.createimage');
 					}
@@ -243,9 +252,7 @@ class KunenaControllerTopic extends KunenaController
 				$response->mime     = $attachment->filetype;
 				$response->filename = $attachment->filename_real;
 			}
-		}
-
-		catch (Exception $response)
+		} catch (Exception $response)
 		{
 			$upload->cleanup();
 
@@ -337,15 +344,15 @@ class KunenaControllerTopic extends KunenaController
 		// set dynamic template information
 		foreach ($templates as $tmpl)
 		{
-			if(KunenaTemplateHelper::isDefault($tmpl->directory))
+			if (KunenaTemplateHelper::isDefault($tmpl->directory))
 			{
 				$template = $tmpl;
 			}
 		}
 
-		if ( $this->me->canDoCaptcha() )
+		if ($this->me->canDoCaptcha())
 		{
-			if ( $template->kversion >= 4.0)
+			if ($template->kversion >= 4.0)
 			{
 				if (JPluginHelper::isEnabled('captcha'))
 				{
@@ -362,7 +369,7 @@ class KunenaControllerTopic extends KunenaController
 
 						$captcha_response = $this->app->input->getString('g-recaptcha-response');
 
-						if ( !empty($captcha_response) )
+						if (!empty($captcha_response))
 						{
 							// For ReCaptcha API 2.0
 							$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
@@ -373,7 +380,8 @@ class KunenaControllerTopic extends KunenaController
 							$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
 						}
 
-						if (!$res[0]) {
+						if (!$res[0])
+						{
 							$this->setRedirectBack();
 
 							return;
@@ -501,9 +509,9 @@ class KunenaControllerTopic extends KunenaController
 
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
-		if (!$maxlinks )
+		if (!$maxlinks)
 		{
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -746,9 +754,9 @@ class KunenaControllerTopic extends KunenaController
 
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
-		if (!$maxlinks )
+		if (!$maxlinks)
 		{
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -868,41 +876,47 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Check in the text the max links
 	 *
-	 * @return void;
+	 * @param $text
+	 * @param $topic
+	 *
+	 * @return bool
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
 		preg_match_all('/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', $text, $ebay_matches);
 
 		$ignore = false;
-		foreach($ebay_matches as $match)
+		foreach ($ebay_matches as $match)
 		{
-			if ( !empty($match) ) {
+			if (!empty($match))
+			{
 				$ignore = true;
 			}
 		}
 
 		preg_match_all('/<div id=\"kunena_twitter_widget\"(.*?)>(.*?)<\/div>/s', $text, $twitter_matches);
 
-		foreach($twitter_matches as $match)
+		foreach ($twitter_matches as $match)
 		{
-			if ( !empty($match) ) {
+			if (!empty($match))
+			{
 				$ignore = true;
 			}
 		}
 
-		if ( !$ignore )
+		if (!$ignore)
 		{
 			preg_match_all('@\(((https?://)?([-\\w]+\\.[-\\w\\.]+)+\\w(:\\d+)?(/([-\\w/_\\.]*(\\?\\S+)?)?)*)\)@', $text, $matches);
 
-			if( empty($matches[0]) )
+			if (empty($matches[0]))
 			{
 				preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
 			}
 
 			$countlink = count($matches[0]);
 
-			if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
+			if (!$topic->authorise('approve') && $countlink >= $this->config->max_links + 1)
+			{
 				return false;
 			}
 		}
@@ -922,6 +936,9 @@ class KunenaControllerTopic extends KunenaController
 		$this->setThankyou($type);
 	}
 
+	/**
+	 * @param $type
+	 */
 	protected function setThankyou($type)
 	{
 		if (!JSession::checkToken('get'))
@@ -1625,9 +1642,7 @@ class KunenaControllerTopic extends KunenaController
 					$body = trim($layout->render());
 					$mail->setBody($body);
 
-				}
-
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					// TODO: Deprecated in K4.0, remove in K5.0
 					$mailmessage = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})";
@@ -1672,6 +1687,11 @@ class KunenaControllerTopic extends KunenaController
 		$this->setRedirect($target->getUrl($this->return, false));
 	}
 
+	/**
+	 * @param $topic
+	 * @param $globalTags
+	 * @param $userTags
+	 */
 	protected function updateTags($topic, $globalTags, $userTags)
 	{
 		$topic = KunenaForumTopicHelper::get($topic);

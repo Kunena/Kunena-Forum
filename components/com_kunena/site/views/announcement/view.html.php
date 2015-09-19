@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -18,6 +18,9 @@ jimport('joomla.cache.handler.output');
  */
 class KunenaViewAnnouncement extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->announcement = $this->get('Announcement');
@@ -43,6 +46,9 @@ class KunenaViewAnnouncement extends KunenaView
 		$this->render('Announcement/Item', $tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayCreate($tpl = null)
 	{
 		$this->announcement = $this->get('NewAnnouncement');
@@ -68,6 +74,9 @@ class KunenaViewAnnouncement extends KunenaView
 		$this->render('Announcement/Edit', $tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayEdit($tpl = null)
 	{
 		$this->announcement = $this->get('Announcement');
@@ -93,6 +102,9 @@ class KunenaViewAnnouncement extends KunenaView
 		$this->render('Announcement/Edit', $tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayList($tpl = null)
 	{
 		$this->announcements = $this->get('Announcements');
@@ -146,6 +158,9 @@ class KunenaViewAnnouncement extends KunenaView
 		$this->row++;
 	}
 
+	/**
+	 * @return string
+	 */
 	function displayActions()
 	{
 		$this->buttons = array();
@@ -170,11 +185,24 @@ class KunenaViewAnnouncement extends KunenaView
 		return $contents;
 	}
 
+	/**
+	 * @param      $name
+	 * @param null $mode
+	 *
+	 * @return mixed
+	 */
 	function displayField($name, $mode = null)
 	{
 		return $this->announcement->displayField($name, $mode);
 	}
 
+	/**
+	 * @param        $name
+	 * @param   string  $attributes
+	 * @param null   $id
+	 *
+	 * @return string
+	 */
 	function displayInput($name, $attributes = '', $id = null)
 	{
 		switch ($name)
@@ -204,21 +232,35 @@ class KunenaViewAnnouncement extends KunenaView
 		}
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function canPublish()
 	{
 		return $this->announcement->authorise('edit');
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function canEdit()
 	{
 		return $this->announcement->authorise('edit');
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function canDelete()
 	{
 		return $this->announcement->authorise('delete');
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return KunenaPagination
+	 */
 	function getPaginationObject($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
@@ -227,6 +269,11 @@ class KunenaViewAnnouncement extends KunenaView
 		return $pagination;
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return string
+	 */
 	function getPagination($maxpages)
 	{
 		return $this->getPaginationObject($maxpages)->getPagesLinks();

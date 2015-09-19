@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Widget
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -21,7 +22,8 @@ if ($config->lightbox == 1)
 	{
 		$this->addStyleSheet('css/fancybox-white.css');
 	}
-	else  {
+	else
+	{
 		$this->addStyleSheet('css/fancybox-black.css');
 	}
 

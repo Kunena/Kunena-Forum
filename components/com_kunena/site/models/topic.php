@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Models
+ * @package     Kunena.Site
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 /**
  * Topic Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelTopic extends KunenaModel
 {
@@ -23,6 +23,9 @@ class KunenaModelTopic extends KunenaModel
 	protected $items = false;
 	protected $topic = false;
 
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$active = $this->app->getMenu()->getActive();
@@ -93,11 +96,17 @@ class KunenaModelTopic extends KunenaModel
 		$this->setState('list.direction', $value);
 	}
 
+	/**
+	 * @return   KunenaForumCategory
+	 */
 	public function getCategory()
 	{
 		return KunenaForumCategoryHelper::get($this->getState('item.catid'));
 	}
 
+	/**
+	 * @return   bool|KunenaForumTopic
+	 */
 	public function getTopic()
 	{
 		if ($this->topic === false)
@@ -142,6 +151,9 @@ class KunenaModelTopic extends KunenaModel
 		return $this->topic;
 	}
 
+	/**
+	 * @return   array|bool|KunenaForumMessage[]
+	 */
 	public function getMessages()
 	{
 		if ($this->messages === false)
@@ -215,6 +227,12 @@ class KunenaModelTopic extends KunenaModel
 		return $this->messages;
 	}
 
+	/**
+	 * @param   int    $parent
+	 * @param   array  $indent
+	 *
+	 * @return   array
+	 */
 	protected function getThreadedOrdering($parent = 0, $indent = array())
 	{
 		$list = array();
@@ -296,16 +314,25 @@ class KunenaModelTopic extends KunenaModel
 		return $list;
 	}
 
+	/**
+	 * @return   int
+	 */
 	public function getTotal()
 	{
 		return $this->getTopic()->getTotal();
 	}
 
+	/**
+	 * @return   int
+	 */
 	public function getMyVotes()
 	{
 		return $this->getPoll()->getMyVotes();
 	}
 
+	/**
+	 * @return   array
+	 */
 	public function getModerators()
 	{
 		$moderators = $this->getCategory()->getModerators(false);
@@ -313,16 +340,25 @@ class KunenaModelTopic extends KunenaModel
 		return $moderators;
 	}
 
+	/**
+	 * @return   KunenaForumTopicPoll
+	 */
 	public function getPoll()
 	{
 		return $this->getTopic()->getPoll();
 	}
 
+	/**
+	 * @return   int
+	 */
 	public function getPollUserCount()
 	{
 		return $this->getPoll()->getUserCount();
 	}
 
+	/**
+	 * @return   array
+	 */
 	public function getPollUsers()
 	{
 		return $this->getPoll()->getUsers();

@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Categories
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Categories
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Implements Kunena specific functions for all layouts.
@@ -38,6 +39,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 	/**
 	 * @param $key
+	 *
 	 * @return string
 	 */
 	public function text($key)
@@ -66,8 +68,7 @@ class KunenaLayout extends KunenaLayoutBase
 			{
 				$output .= (string) $content;
 			}
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 			throw $e;
@@ -78,7 +79,8 @@ class KunenaLayout extends KunenaLayoutBase
 		return $output;
 	}
 
-	public function setLegacy(KunenaView $view = null) {
+	public function setLegacy(KunenaView $view = null)
+	{
 		$this->legacy = $view;
 
 		return $this;
@@ -87,9 +89,10 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Add legacy template support.
 	 *
-	 * @param $view
-	 * @param $layout
+	 * @param      $view
+	 * @param      $layout
 	 * @param null $template
+	 *
 	 * @deprecated K4.0
 	 */
 	public function displayTemplateFile($view, $layout, $template = null)
@@ -102,6 +105,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Add legacy template support. Overrides the parent class.
 	 *
 	 * @param $property
+	 *
 	 * @return mixed
 	 * @throws InvalidArgumentException
 	 * @deprecated K4.0
@@ -142,6 +146,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @param $name
 	 * @param $arguments
+	 *
 	 * @return mixed
 	 * @throws InvalidArgumentException
 	 * @deprecated K4.0
@@ -151,8 +156,7 @@ class KunenaLayout extends KunenaLayoutBase
 		try
 		{
 			return parent::__call($name, $arguments);
-		}
-		catch (InvalidArgumentException $e)
+		} catch (InvalidArgumentException $e)
 		{
 			$callable = array($this->legacy, $name);
 
@@ -169,6 +173,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Add legacy template support.
 	 *
 	 * @param $property
+	 *
 	 * @return bool
 	 * @deprecated K4.0
 	 */
@@ -180,8 +185,8 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Add legacy template support.
 	 *
-	 * @param   string  $property  The name of the property.
-	 * @param   mixed   $value     The value of the property to set.
+	 * @param   string  $property The name of the property.
+	 * @param   mixed  $value    The value of the property to set.
 	 *
 	 * @return  KunenaLayout  Method supports chaining.
 	 */
@@ -209,6 +214,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Add legacy template support.
 	 *
 	 * @param   $path
+	 *
 	 * @return  KunenaLayout
 	 */
 	public function subLayout($path)
@@ -221,7 +227,7 @@ class KunenaLayout extends KunenaLayoutBase
 		return KunenaFactory::getTemplate()->getButton(KunenaRoute::_($link), $name, $scope, $type, $id);
 	}
 
-	public function getIcon($name, $title='')
+	public function getIcon($name, $title = '')
 	{
 		return KunenaFactory::getTemplate()->getIcon($name, $title);
 	}
@@ -233,8 +239,9 @@ class KunenaLayout extends KunenaLayoutBase
 	 * in the language file. The significant digits are used to limit the
 	 * number of digits displayed when in 10k or 1m mode.
 	 *
-	 * @param int $number 		Number to be formated
-	 * @param int $precision	Significant digits for output
+	 * @param int $number    Number to be formated
+	 * @param int $precision Significant digits for output
+	 *
 	 * @return string
 	 */
 	public function formatLargeNumber($number, $precision = 3)
@@ -243,7 +250,7 @@ class KunenaLayout extends KunenaLayoutBase
 		if ($number >= 10000)
 		{
 			// Round the number to n significant digits
-			$number = round ($number, -1*(log10($number)+1) + $precision);
+			$number = round($number, -1 * (log10($number) + 1) + $precision);
 		}
 
 		if ($number < 10000)
@@ -264,7 +271,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (!$content)
 		{
@@ -278,14 +285,14 @@ class KunenaLayout extends KunenaLayoutBase
 
 		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $link;
 	}
 
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$url = $topic->getUrl($category ? $category : (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
 
@@ -302,7 +309,8 @@ class KunenaLayout extends KunenaLayoutBase
 			}
 			else
 			{
-				switch ($action) {
+				switch ($action)
+				{
 					case 'first':
 						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
 						break;
@@ -319,7 +327,7 @@ class KunenaLayout extends KunenaLayoutBase
 		}
 		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $link;
 	}
@@ -327,7 +335,7 @@ class KunenaLayout extends KunenaLayoutBase
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30)
 	{
 		$lastTopic = $category->getLastTopic();
-		$channels = $category->getChannels();
+		$channels  = $category->getChannels();
 
 		if (!isset($channels[$lastTopic->category_id]))
 		{
@@ -338,7 +346,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if (!$content)
 		{
-			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE').' ' : '';
+			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE') . ' ' : '';
 			$content .= KunenaHtmlParser::parseText($lastTopic->subject, $length);
 		}
 

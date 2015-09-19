@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -81,8 +81,8 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -145,6 +145,9 @@ class KunenaAdminViewUsers extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -161,6 +164,9 @@ class KunenaAdminViewUsers extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

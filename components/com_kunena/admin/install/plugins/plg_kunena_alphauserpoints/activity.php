@@ -2,36 +2,56 @@
 /**
  * Kunena Plugin
  *
- * @package       Kunena.Plugins
- * @subpackage    AlphaUserPoints
+ * @package     Kunena.Plugins
+ * @subpackage  AlphaUserPoints
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 jimport('joomla.utilities.string');
 
+/**
+ * Class KunenaActivityAlphaUserPoints
+ */
 class KunenaActivityAlphaUserPoints extends KunenaActivity
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	protected function _getAUPversion()
 	{
 		return AlphaUserPointsHelper::getAupVersion();
 	}
 
+	/**
+	 * @param        $plugin_function
+	 * @param   string  $spc
+	 *
+	 * @return mixed
+	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
 	{
 		return AlphaUserPointsHelper::buildKeyreference($plugin_function, $spc);
 	}
 
+	/**
+	 * @param $message
+	 *
+	 * @return bool
+	 */
 	public function onAfterPost($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -52,6 +72,9 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return true;
 	}
 
+	/**
+	 * @param $message
+	 */
 	public function onAfterReply($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -70,6 +93,9 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param $message
+	 */
 	public function onAfterDelete($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -86,6 +112,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param int $actor
+	 * @param int $target
+	 * @param int $message
+	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
 		$infoTargetUser = JText::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
@@ -115,11 +146,21 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param $var
+	 *
+	 * @return string
+	 */
 	function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return array|bool
+	 */
 	public function getUserMedals($userid)
 	{
 		if ($userid == 0)
@@ -129,7 +170,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 		if (!defined("_AUP_MEDALS_LIVE_PATH"))
 		{
-			define ('_AUP_MEDALS_LIVE_PATH', JUri::root(true) . '/components/com_alphauserpoints/assets/images/awards/icons/');
+			define('_AUP_MEDALS_LIVE_PATH', JUri::root(true) . '/components/com_alphauserpoints/assets/images/awards/icons/');
 		}
 
 		$aupmedals = AlphaUserPointsHelper::getUserMedals('', $userid);
@@ -142,6 +183,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return $medals;
 	}
 
+	/**
+	 * @param int $userid
+	 *
+	 * @return bool
+	 */
 	public function getUserPoints($userid)
 	{
 		if ($userid == 0)
@@ -157,6 +203,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return $userpoints;
 	}
 
+	/**
+	 * @param $message
+	 *
+	 * @return bool
+	 */
 	private function _checkPermissions($message)
 	{
 		$category   = $message->getCategory();
@@ -183,6 +234,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return false;
 	}
 
+	/**
+	 * @param $ruleName
+	 *
+	 * @return bool
+	 */
 	private function _checkRuleEnabled($ruleName)
 	{
 		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);
@@ -190,6 +246,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return !empty($ruleEnabled[0]->published);
 	}
 
+	/**
+	 * @param $ruleName
+	 *
+	 * @return null
+	 */
 	private function _getPointsOnThankyou($ruleName)
 	{
 		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);

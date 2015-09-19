@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Integration
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaIntegrationActivity
@@ -21,11 +22,14 @@ class KunenaIntegrationActivity
 
 	protected static $instance;
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher = JDispatcher::getInstance();
-		$classes = $dispatcher->trigger('onKunenaGetActivity');
+		$classes    = $dispatcher->trigger('onKunenaGetActivity');
 
 		foreach ($classes as $class)
 		{
@@ -38,6 +42,9 @@ class KunenaIntegrationActivity
 		}
 	}
 
+	/**
+	 * @return static
+	 */
 	static public function getInstance()
 	{
 		if (!self::$instance)
@@ -51,8 +58,8 @@ class KunenaIntegrationActivity
 	/**
 	 * Method magical to call the right method in plugin integration
 	 *
-	 * @param   string  $method     Name of method to call
-	 * @param   string  $arguments  Arguments need to be passed to the method
+	 * @param   string  $method    Name of method to call
+	 * @param   string  $arguments Arguments need to be passed to the method
 	 *
 	 * @return mixed
 	 */
@@ -65,7 +72,7 @@ class KunenaIntegrationActivity
 			{
 				$r = call_user_func_array(array($instance, $method), $arguments);
 
-				if($r !== null & $ret === null)
+				if ($r !== null & $ret === null)
 				{
 					$ret = $r;
 				}

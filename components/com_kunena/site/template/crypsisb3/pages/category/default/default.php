@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Pages.Category
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -13,7 +14,7 @@ defined('_JEXEC') or die;
 $content = $this->execute('Category/Topics');
 
 // Display breadcrumb path to the current category.
-$parents = KunenaForumCategoryHelper::getParents($content->category->id);
+$parents   = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 /** @var KunenaForumCategory $parent */

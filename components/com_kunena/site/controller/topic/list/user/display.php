@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
@@ -29,8 +30,8 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 		require_once KPATH_SITE . '/models/topics.php';
 		$this->model = new KunenaModelTopics(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state = $this->model->getState();
-		$this->me = KunenaUserHelper::getMyself();
+		$this->state   = $this->model->getState();
+		$this->me      = KunenaUserHelper::getMyself();
 		$this->moreUri = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
@@ -64,9 +65,9 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 
 		// Get categories for the filter.
 		$categoryIds = $this->state->get('list.categories');
-		$reverse = !$this->state->get('list.categories.in');
-		$authorise = 'read';
-		$order = 'last_post_time';
+		$reverse     = !$this->state->get('list.categories.in');
+		$authorise   = 'read';
+		$order       = 'last_post_time';
 
 		$finder = new KunenaForumTopicFinder;
 		$finder
@@ -134,11 +135,11 @@ class ComponentKunenaControllerTopicListUserDisplay extends ComponentKunenaContr
 				break;
 			case 'favorites' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
-				$actions = array('unfavorite');
+				$actions          = array('unfavorite');
 				break;
 			case 'subscriptions' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
-				$actions = array('unsubscribe');
+				$actions          = array('unsubscribe');
 				break;
 			case 'plugin' :
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));

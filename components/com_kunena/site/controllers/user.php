@@ -2,22 +2,29 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 /**
  * Kunena User Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerUser extends KunenaController
 {
+	/**
+	 * @param   bool|false  $cachable  comment
+	 *
+	 * @param   bool|false  $urlparams  comment
+	 *
+	 * @return  JControllerLegacy|void
+	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		// Redirect profile to integrated component if profile integration is turned on
@@ -57,6 +64,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$layout = JRequest::getCmd('layout', 'default');
+
 		if ($layout == 'list')
 		{
 			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
@@ -67,6 +75,7 @@ class KunenaControllerUser extends KunenaController
 
 		parent::display();
 	}
+
 
 	public function search()
 	{
@@ -117,9 +126,11 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	/**
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   KunenaExceptionAuthorise
 	 *
-	 * @todo Allow moderators to save another users profile (without account info).
+	 * @return  void
+	 *
+	 * @todo  Allow moderators to save another users profile (without account info).
 	 */
 	public function save()
 	{
@@ -357,12 +368,18 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirect($user->getUrl(false));
 	}
 
+	/**
+	 *
+	 */
 	public function cancel()
 	{
 		$user = KunenaFactory::getUser();
 		$this->setRedirect($user->getUrl(false));
 	}
 
+	/**
+	 *
+	 */
 	public function login()
 	{
 		if (!JFactory::getUser()->guest || !JSession::checkToken('post'))
@@ -395,6 +412,9 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	public function logout()
 	{
 		if (!JSession::checkToken('request'))
@@ -429,7 +449,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Save online status for user
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	public function status()
 	{
@@ -460,7 +480,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Set online status text for user
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	public function statusText()
 	{
@@ -490,6 +510,9 @@ class KunenaControllerUser extends KunenaController
 
 	// Internal functions:
 
+	/**
+	 * @param   $karmaDelta
+	 */
 	protected function karma($karmaDelta)
 	{
 		if (!JSession::checkToken('get'))
@@ -571,7 +594,9 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirectBack();
 	}
 
-	// Mostly copied from Joomla 1.5
+	/**
+	 * @return   bool
+	 */
 	protected function saveUser()
 	{
 		// we only allow users to edit few fields
@@ -617,7 +642,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$username = $this->user->get('username');
-		$user = new JUser($this->user->id);
+		$user     = new JUser($this->user->id);
 
 		// Bind the form fields to the user table and save.
 		if (!($user->bind($post) && $user->save(true)))
@@ -644,6 +669,9 @@ class KunenaControllerUser extends KunenaController
 		return true;
 	}
 
+	/**
+	 *
+	 */
 	protected function saveProfile()
 	{
 		if (JRequest::getVar('signature', null) === null)
@@ -686,7 +714,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Delete previoulsy uplaoded avatars from filesystem
 	 *
-	 * @return void
+	 * @return    void
 	 */
 	protected function deleteOldAvatars()
 	{
@@ -716,7 +744,7 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * Upload and resize if needed the new avatar for user, or set one from the gallery or the default one
 	 *
-	 * @return boolean
+	 * @return    boolean
 	 */
 	protected function saveAvatar()
 	{
@@ -792,6 +820,11 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	// Reports a user to stopforumspam.com
+	/**
+	 * @param   $userid
+	 *
+	 * @return   bool
+	 */
 	protected function report($userid)
 	{
 		if (!$this->config->stopforumspam_key || !$userid)
@@ -844,6 +877,9 @@ class KunenaControllerUser extends KunenaController
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function delfile()
 	{
 		if (!JSession::checkToken('post'))
@@ -863,11 +899,11 @@ class KunenaControllerUser extends KunenaController
 
 			foreach ($cid as $id)
 			{
-				$attachment = KunenaAttachmentHelper::get($id);
-				$message = $attachment->getMessage();
+				$attachment  = KunenaAttachmentHelper::get($id);
+				$message     = $attachment->getMessage();
 				$attachments = array($attachment->id, 1);
-				$attach = array();
-				$removeList = array_keys(array_diff_key($attachments, $attach));
+				$attach      = array();
+				$removeList  = array_keys(array_diff_key($attachments, $attach));
 				JArrayHelper::toInteger($removeList);
 				$message->removeAttachments($removeList);
 
@@ -877,7 +913,7 @@ class KunenaControllerUser extends KunenaController
 				{
 					$message->save();
 
-					if ( $topic->attachments > 0 )
+					if ($topic->attachments > 0)
 					{
 						$topic->attachments = $topic->attachments - 1;
 						$topic->save(false);

@@ -1,15 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Controller
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Controller
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaControllerApplicationDisplay
+ */
 class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 {
 	/**
@@ -41,6 +45,9 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 	 */
 	protected $document;
 
+	/**
+	 * @return bool
+	 */
 	public function exists()
 	{
 		if ($this->input->getWord('format', 'html') != 'html')
@@ -49,12 +56,15 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			return false;
 		}
 
-		$name = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
+		$name       = "{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}";
 		$this->page = KunenaLayoutPage::factory($name);
 
 		return (bool) $this->page->getPath();
 	}
 
+	/**
+	 * @return KunenaLayout
+	 */
 	protected function display()
 	{
 		// Display layout with given parameters.
@@ -66,16 +76,19 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		return $this->page;
 	}
 
+	/**
+	 * @return JLayoutBase
+	 */
 	public function execute()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		// Run before executing action.
 		$result = $this->before();
 
 		if ($result === false)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
@@ -84,7 +97,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			->set('me', $this->me)
 			->setOptions($this->getOptions());
 
-		if ($this->config->board_offline && !$this->me->isAdmin ())
+		if ($this->config->board_offline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
 			$this->setResponseStatus(503);
@@ -112,11 +125,10 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			try
 			{
 				// Split into two lines for exception handling.
-				$content = $this->display()->set('breadcrumb', $this->breadcrumb);
+				$content       = $this->display()->set('breadcrumb', $this->breadcrumb);
 				$this->content = $content->render();
 
-			}
-			catch (KunenaExceptionAuthorise $e)
+			} catch (KunenaExceptionAuthorise $e)
 			{
 				$this->setResponseStatus($e->getResponseCode());
 				$this->output->setLayout('unauthorized');
@@ -126,18 +138,17 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 					->set('header', $e->getResponseStatus())
 					->set('body', $e->getMessage());
 
-			}
-			catch (Exception $e)
+			} catch (Exception $e)
 			{
 				if (!($e instanceof KunenaExceptionAuthorise))
 				{
-					$header = 'Error while rendering layout';
+					$header  = 'Error while rendering layout';
 					$content = isset($content) ? $content->renderError($e) : $this->content->renderError($e);
-					$e = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
+					$e       = new KunenaExceptionAuthorise($e->getMessage(), $e->getCode(), $e);
 				}
 				else
 				{
-					$header = $e->getResponseStatus();
+					$header  = $e->getResponseStatus();
 					$content = $e->getMessage();
 				}
 
@@ -159,18 +170,18 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		// Run after executing action.
 		$this->after();
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		return $this->output;
 	}
 
 	protected function before()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		if (!$this->exists())
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 			throw new RuntimeException("Layout '{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}' does not exist!", 404);
 		}
 
@@ -180,13 +191,13 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		KunenaFactory::loadLanguage('com_kunena.models');
 		KunenaFactory::loadLanguage('com_kunena.views');
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->config   = KunenaConfig::getInstance();
 		$this->document = JFactory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
 
-		if ($this->me->isAdmin ())
+		if ($this->me->isAdmin())
 		{
 			// Display warnings to the administrator if forum is either offline or debug has been turned on.
 			if ($this->config->board_offline)
@@ -212,39 +223,43 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$this->app->enqueueMessage(JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'notice');
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'notice');
 			}
 		}
 
 		// Remove base and add canonical link.
 		$this->document->setBase('');
-		$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
+		$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel', '');
 
 		// Initialize breadcrumb.
 		$this->breadcrumb = $this->app->getPathway();
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	protected function after()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		// Use our own browser side cache settings.
 		JResponse::allowCache(false);
-		JResponse::setHeader( 'Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true );
-		JResponse::setHeader( 'Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true );
-		JResponse::setHeader( 'Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true );
+		JResponse::setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+		JResponse::setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
+		JResponse::setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
 
 		if ($this->config->get('credits', 1))
 		{
 			$this->output->appendAfter($this->poweredBy());
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 	}
 
-	public function setResponseStatus($code = 404) {
+	/**
+	 * @param int $code
+	 */
+	public function setResponseStatus($code = 404)
+	{
 		switch ((int) $code)
 		{
 			case 400:
@@ -271,21 +286,25 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	final public function poweredBy()
 	{
 		$templateText = (string) $this->template->params->get('templatebyText');
 		$templateName = (string) $this->template->params->get('templatebyName');
 		$templateLink = (string) $this->template->params->get('templatebyLink');
-		$credits = '<div style="text-align:center">';
+		$credits      = '<div style="text-align:center">';
 		$credits .= JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow',
-			array('style'=>'display: inline; visibility: visible; text-decoration: none;'));
+			array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
 		$credits .= ' <a href="http://www.kunena.org" rel="follow"
 			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
-			. JText::_('COM_KUNENA').'</a>';
-		if (trim($templateText)) {
-			$credits .= ' :: <a href ="'. $templateLink. '" rel="follow" target="_blank" style="text-decoration: none;">'
-				. $templateText .' '. $templateName .'</a>';
+			. JText::_('COM_KUNENA') . '</a>';
+		if (trim($templateText))
+		{
+			$credits .= ' :: <a href ="' . $templateLink . '" rel="follow" target="_blank" style="text-decoration: none;">'
+				. $templateText . ' ' . $templateName . '</a>';
 		}
 		$credits .= '</div>';
 

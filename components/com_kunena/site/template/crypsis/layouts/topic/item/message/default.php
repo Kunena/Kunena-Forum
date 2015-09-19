@@ -1,8 +1,9 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Topic
+ * @subpackage      Layout.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,8 +11,8 @@
  **/
 defined('_JEXEC') or die;
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
-$template = KunenaTemplate::getInstance();
-$direction = $template->params->get('avatarPosition');
+$template     = KunenaTemplate::getInstance();
+$direction    = $template->params->get('avatarPosition');
 
 if ($direction === "left") : ?>
 	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">

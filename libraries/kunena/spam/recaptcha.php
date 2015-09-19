@@ -1,13 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /*
  * This class is based on a PHP library that handles calling reCAPTCHA.
@@ -55,14 +56,20 @@ class KunenaSpamRecaptcha
 	protected $privatekey = null;
 	protected $host = null;
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
-		$this->config = KunenaFactory::getConfig();
-		$this->publickey = $this->config->recaptcha_publickey;
+		$this->config     = KunenaFactory::getConfig();
+		$this->publickey  = $this->config->recaptcha_publickey;
 		$this->privatekey = $this->config->recaptcha_privatekey;
-		$this->host = JRequest::getString('REMOTE_ADDR', null, 'server');
+		$this->host       = JRequest::getString('REMOTE_ADDR', null, 'server');
 	}
 
+	/**
+	 * @return KunenaSpamRecaptcha
+	 */
 	public static function getInstance()
 	{
 		static $instance = null;
@@ -75,9 +82,12 @@ class KunenaSpamRecaptcha
 		return $instance;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function enabled()
 	{
-		$me = KunenaUserHelper::getMyself();
+		$me     = KunenaUserHelper::getMyself();
 		$config = KunenaFactory::getConfig();
 
 		// Enabled if guest captcha is enabled and user is not logged in
@@ -90,7 +100,7 @@ class KunenaSpamRecaptcha
 		// FIXME: we need a better logic for trusted users
 		if ($me->exists() && !$me->isModerator() && $me->posts < $config->captcha_post_limit)
 		{
-			if ( !empty($this->publickey) &&   !empty($this->privatekey))
+			if (!empty($this->publickey) && !empty($this->privatekey))
 			{
 				return true;
 			}
@@ -101,23 +111,24 @@ class KunenaSpamRecaptcha
 	}
 
 	/**
-	* Gets the challenge HTML (javascript and non-javascript version).
-	* This is called from the browser, and the resulting reCAPTCHA HTML widget
-	* is embedded within the HTML form it was called from.
-	* @return string - The HTML to be embedded in the user's form.
-	*/
+	 * Gets the challenge HTML (javascript and non-javascript version).
+	 * This is called from the browser, and the resulting reCAPTCHA HTML widget
+	 * is embedded within the HTML form it was called from.
+	 *
+	 * @return string - The HTML to be embedded in the user's form.
+	 */
 	public function getHtml()
 	{
 		if (empty($this->publickey))
 		{
-			$this->error = JText::sprintf ( 'COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION', JText::_ ( 'COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION_NO_PUBLIC_KEY' ) );
+			$this->error = JText::sprintf('COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION', JText::_('COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION_NO_PUBLIC_KEY'));
 
 			return false;
 		}
 
 		if (empty($this->privatekey))
 		{
-			$this->error = JText::sprintf ( 'COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION', JText::_ ( 'COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION_NO_PRIVATE_KEY' ) );
+			$this->error = JText::sprintf('COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION', JText::_('COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION_NO_PRIVATE_KEY'));
 
 			return false;
 		}
@@ -126,23 +137,23 @@ class KunenaSpamRecaptcha
 		<!--
 			var RecaptchaOptions = {
 				custom_translations : {
-				instructions_visual : "'.JText::_('COM_KUNENA_RECAPTCHA_JS_INSTRUCTIONS_VISUAL').'",
-				instructions_audio : "'.JText::_('COM_KUNENA_RECAPTCHA_JS_INSTRUCTIONS_AUDIO').'",
-				play_again : "'.JText::_('COM_KUNENA_RECAPTCHA_JS_PLAY_AGAIN').'",
-				cant_hear_this : "'.JText::_('COM_KUNENA_RECAPTCHA_JS_CANT_HEAR_THIS').'",
-				visual_challenge : "'.JText::_('COM_KUNENA_RECAPTCHA_JS_VISUAL_CHALLENGE').'",
-				audio_challenge : "'.JText::_('COM_KUNENA_RECAPTCHA_JS_AUDIO_CHALLENGE').'",
-				refresh_btn : "'.JText::_('COM_KUNENA_RECAPTCHA_JS_REFRESH_CODE').'",
-				help_btn : "'.JText::_('COM_KUNENA_RECAPTCHA_JS_HELP_BTN').'",
-				incorrect_try_again : "'.JText::_('COM_KUNENA_RECAPTCHA_ERROR_INCORRECT_CAPTCHA_SOL').'",
+				instructions_visual : "' . JText::_('COM_KUNENA_RECAPTCHA_JS_INSTRUCTIONS_VISUAL') . '",
+				instructions_audio : "' . JText::_('COM_KUNENA_RECAPTCHA_JS_INSTRUCTIONS_AUDIO') . '",
+				play_again : "' . JText::_('COM_KUNENA_RECAPTCHA_JS_PLAY_AGAIN') . '",
+				cant_hear_this : "' . JText::_('COM_KUNENA_RECAPTCHA_JS_CANT_HEAR_THIS') . '",
+				visual_challenge : "' . JText::_('COM_KUNENA_RECAPTCHA_JS_VISUAL_CHALLENGE') . '",
+				audio_challenge : "' . JText::_('COM_KUNENA_RECAPTCHA_JS_AUDIO_CHALLENGE') . '",
+				refresh_btn : "' . JText::_('COM_KUNENA_RECAPTCHA_JS_REFRESH_CODE') . '",
+				help_btn : "' . JText::_('COM_KUNENA_RECAPTCHA_JS_HELP_BTN') . '",
+				incorrect_try_again : "' . JText::_('COM_KUNENA_RECAPTCHA_ERROR_INCORRECT_CAPTCHA_SOL') . '",
 			},
-			theme : "'.$this->config->recaptcha_theme.'"
+			theme : "' . $this->config->recaptcha_theme . '"
 			};
 		//-->
 		</script>
 		');
 
-		$server = 'http'.($this->_isSSLConnection() ? 's' : '').'://www.google.com/recaptcha/api';
+		$server = 'http' . ($this->_isSSLConnection() ? 's' : '') . '://www.google.com/recaptcha/api';
 
 		$errorpart = '';
 
@@ -153,47 +164,47 @@ class KunenaSpamRecaptcha
 
 		// TODO: see http://karlsheen.com/mootools/recaptcha-using-mootools-request
 		// TODO: see http://code.google.com/intl/fi-FI/apis/recaptcha/docs/display.html (json)
-		return '<script type="text/javascript" src="'. $server . '/challenge?k=' . $this->publickey . $errorpart . '"></script>
+		return '<script type="text/javascript" src="' . $server . '/challenge?k=' . $this->publickey . $errorpart . '"></script>
 		<noscript>
-			<iframe src="'. $server . '/noscript?k=' . $this->publickey . $errorpart . '" height="300" width="500" frameborder="0"></iframe><br />
+			<iframe src="' . $server . '/noscript?k=' . $this->publickey . $errorpart . '" height="300" width="500" frameborder="0"></iframe><br />
 			<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
 			<input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
 		</noscript>';
 	}
 
 	/**
-	* Calls an HTTP POST function to verify if the user's guess was correct.
+	 * Calls an HTTP POST function to verify if the user's guess was correct.
 	 *
-	* @param array $extra_params An array of extra variables to post to the server.
+	 * @param   array  $extra_params An array of extra variables to post to the server.
 	 *
-	* @return bool
-	*/
+	 * @return bool
+	 */
 	public function verify($extra_params = array())
 	{
 		if (empty($this->privatekey))
 		{
-			$this->error =  JText::sprintf ( 'COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION', JText::_ ( 'COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION_NO_PRIVATE_KEY' ) );
+			$this->error = JText::sprintf('COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION', JText::_('COM_KUNENA_RECAPTCHA_ERROR_INVALID_CONFIGURATION_NO_PRIVATE_KEY'));
 
 			return false;
 		}
 
-		$challenge	= JRequest::getString('recaptcha_challenge_field');
-		$response	= JRequest::getString('recaptcha_response_field');
+		$challenge = JRequest::getString('recaptcha_challenge_field');
+		$response  = JRequest::getString('recaptcha_response_field');
 
 		// Discard spam
 		if ($challenge == null || strlen($challenge) == 0 || $response == null || strlen($response) == 0)
 		{
-			$this->error = JText::_ ( 'COM_KUNENA_RECAPTCHA_ERROR_INCORRECT_CAPTCHA_SOL' );
+			$this->error = JText::_('COM_KUNENA_RECAPTCHA_ERROR_INCORRECT_CAPTCHA_SOL');
 
 			return false;
 		}
 
-		$response = $this->_query ("/recaptcha/api/verify",
-			array (
-			'privatekey' => $this->privatekey,
-			'remoteip' => $this->host,
-			'challenge' => $challenge,
-			'response' => $response
+		$response = $this->_query("/recaptcha/api/verify",
+			array(
+				'privatekey' => $this->privatekey,
+				'remoteip'   => $this->host,
+				'challenge'  => $challenge,
+				'response'   => $response
 			) + $extra_params
 		);
 
@@ -204,9 +215,9 @@ class KunenaSpamRecaptcha
 
 		$answers = preg_split('/[\s,]+/', $response[1]);
 
-		if (empty($answers[0]) || trim ($answers [0]) != 'true')
+		if (empty($answers[0]) || trim($answers [0]) != 'true')
 		{
-			$this->error = JText::_ ('COM_KUNENA_RECAPTCHA_ERROR_' . preg_replace('/[^\w\d]+/', '_', strtoupper($answers[1])));
+			$this->error = JText::_('COM_KUNENA_RECAPTCHA_ERROR_' . preg_replace('/[^\w\d]+/', '_', strtoupper($answers[1])));
 
 			return false;
 		}
@@ -216,6 +227,7 @@ class KunenaSpamRecaptcha
 
 	/**
 	 * Get error string
+	 *
 	 * @return string Error code
 	 */
 	public function getError()
@@ -223,48 +235,55 @@ class KunenaSpamRecaptcha
 		return $this->error;
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function _isSSLConnection()
 	{
 		return ((isset($_SERVER['HTTPS']) &&
-			($_SERVER['HTTPS'] == 'on')) ||
+				($_SERVER['HTTPS'] == 'on')) ||
 			getenv('SSL_PROTOCOL_VERSION'));
 	}
 
 	/**
-	* Encodes the given data into a query string format
-	* @param $data - array of string elements to be encoded
-	* @return string - encoded request
-	*/
-	private function _encode ($data)
+	 * Encodes the given data into a query string format
+	 *
+	 * @param $data - array of string elements to be encoded
+	 *
+	 * @return string - encoded request
+	 */
+	private function _encode($data)
 	{
 		$req = '';
-		foreach ( $data as $key => $value )
+		foreach ($data as $key => $value)
 		{
-			$req .= $key . '=' . urlencode( $value ) . '&';
+			$req .= $key . '=' . urlencode($value) . '&';
 		}
 
 		// Cut the last '&'
-		$req=substr($req,0,strlen($req)-1);
+		$req = substr($req, 0, strlen($req) - 1);
 
 		return $req;
 	}
 
 	/**
-	* Submits an HTTP POST to a reCAPTCHA server
-	* @param string $path
-	* @param array $data
-	* @param int $port
-	* @return array response
-	*/
+	 * Submits an HTTP POST to a reCAPTCHA server
+	 *
+	 * @param   string  $path
+	 * @param   array  $data
+	 * @param int    $port
+	 *
+	 * @return array response
+	 */
 	private function _query($path, $data, $port = 80)
 	{
-		$req = $this->_encode ($data);
-		$host = 'www.google.com';
-		$http_request  = "POST $path HTTP/1.0\r\n";
+		$req          = $this->_encode($data);
+		$host         = 'www.google.com';
+		$http_request = "POST $path HTTP/1.0\r\n";
 		$http_request .= "Host: $host\r\n";
 		$http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
 		$http_request .= "Content-Length: " . strlen($req) . "\r\n";
-		$http_request .= "User-Agent: Kunena Forum/".KunenaForum::version()."\r\n";
+		$http_request .= "User-Agent: Kunena Forum/" . KunenaForum::version() . "\r\n";
 		$http_request .= "\r\n";
 		$http_request .= $req;
 
@@ -281,7 +300,7 @@ class KunenaSpamRecaptcha
 			$response .= fgets($fs, 1160);
 		}
 
-		 // One TCP-IP packet
+		// One TCP-IP packet
 		fclose($fs);
 		$response = explode("\r\n\r\n", $response, 2);
 

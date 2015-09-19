@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Tables
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Tables
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 abstract class KunenaTable extends JTable
 {
@@ -80,7 +81,7 @@ abstract class KunenaTable extends JTable
 		}
 
 		// Initialise the query.
-		$query = $this->_db->getQuery(true)
+		$query  = $this->_db->getQuery(true)
 			->select('*')
 			->from($this->_tbl);
 		$fields = array_keys($this->getProperties());
@@ -222,7 +223,7 @@ abstract class KunenaTable extends JTable
 
 		if (count($tbl_keys) == 1 && $id)
 		{
-			$key = reset($tbl_keys);
+			$key        = reset($tbl_keys);
 			$this->$key = $id;
 		}
 
@@ -232,7 +233,7 @@ abstract class KunenaTable extends JTable
 	/**
 	 * Updates a row in a table based on an object's properties.
 	 *
-	 * @param   boolean  $nulls    True to update null fields or false to ignore them.
+	 * @param   boolean $nulls True to update null fields or false to ignore them.
 	 *
 	 * @return  boolean  True on success.
 	 *
@@ -241,7 +242,7 @@ abstract class KunenaTable extends JTable
 	public function updateObject($nulls = false)
 	{
 		$fields = array();
-		$where = array();
+		$where  = array();
 
 		// Workaround Joomla 3.2 change.
 		// TODO: remove check when we're only supporting J!3.5+.
@@ -312,14 +313,15 @@ abstract class KunenaTable extends JTable
 		{
 			$pk = array();
 
-			foreach ($tbl_keys AS $key) {
+			foreach ($tbl_keys AS $key)
+			{
 				$pk[$key] = $this->$key;
 			}
 		}
 		elseif (!is_array($pk))
 		{
 			$key = reset($tbl_keys);
-			$pk = array($key => $pk);
+			$pk  = array($key => $pk);
 		}
 
 		foreach ($tbl_keys AS $key)
@@ -345,7 +347,7 @@ abstract class KunenaTable extends JTable
 		$query = $this->_db->getQuery(true)
 			->delete($this->_tbl);
 
-		foreach ($pk as $key=>$value)
+		foreach ($pk as $key => $value)
 		{
 			$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 		}

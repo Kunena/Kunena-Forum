@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Framework
  * @subpackage  File
  *
@@ -19,6 +20,11 @@ jimport('joomla.filesystem.file');
  */
 class KunenaFile extends JFile
 {
+	/**
+	 * @param $file
+	 *
+	 * @return bool|mixed|string
+	 */
 	public static function getMime($file)
 	{
 		// Check if file is an image.

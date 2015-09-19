@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -20,6 +20,9 @@ class KunenaAdminControllerTools extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param   array  $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -275,7 +278,6 @@ class KunenaAdminControllerTools extends KunenaController
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
 		}
 
-
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -480,8 +482,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 			$state->reload++;
 			$this->app->setUserState('com_kunena.admin.recount', $state);
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			if (!$ajax)
 			{
@@ -660,6 +661,11 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 	}
 
+	/**
+	 * @param   bool|false $stop
+	 *
+	 * @return bool
+	 */
 	protected function checkTimeout($stop = false)
 	{
 		static $start = null;
@@ -718,13 +724,13 @@ class KunenaAdminControllerTools extends KunenaController
 		// Check if the user has the super-administrator rights
 		$username = $this->app->input->getString('username');
 		$password = $this->app->input->getString('password');
-		$code = $this->app->input->getInt('secretkey');
+		$code     = $this->app->input->getInt('secretkey');
 
 		$login = KunenaLogin::getInstance();
 
-		if ( $login->isTFAEnabled() )
+		if ($login->isTFAEnabled())
 		{
-			if ( empty($code) || $code == 0 )
+			if (empty($code) || $code == 0)
 			{
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_SECRETKEY_INVALID'));
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));

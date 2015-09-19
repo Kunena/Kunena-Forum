@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Layout.Topic
  *
@@ -21,7 +22,7 @@ class KunenaLayoutTopicEditHistory extends KunenaLayout
 	/**
 	 * Method to get the anker link with number
 	 *
-	 * @param   int  $mesid     The Id of the messsage
+	 * @param   int  $mesid     The Id of the message
 	 * @param   int  $replycnt  The number of replies
 	 *
 	 * @return string

@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -16,21 +17,22 @@ defined('_JEXEC') or die;
 
 <table class="table table-bordered table-striped table-hover">
 	<tbody>
-		<?php foreach ($this->settings as $field) : ?>
-			<tr>
-				<td class="col-md-3">
-					<?php echo $field->label; ?>
-				</td>
-				<td>
-					<?php echo $field->field; ?>
-				</td>
-			</tr>
-		<?php endforeach ?>
+	<?php foreach ($this->settings as $field) : ?>
 		<tr>
-			<td class="col-md-3"><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></td>
-				<td>
-					<button type="button" class="btn btn-default btn-small" onClick="window.localStorage.clear()" data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR');?></button>
-				</td>
+			<td class="col-md-3">
+				<?php echo $field->label; ?>
+			</td>
+			<td>
+				<?php echo $field->field; ?>
+			</td>
 		</tr>
+	<?php endforeach ?>
+	<tr>
+		<td class="col-md-3"><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></td>
+		<td>
+			<button type="button" class="btn btn-default btn-small" onClick="window.localStorage.clear()"
+				data-loading-text="Loading..."><?php echo JText::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></button>
+		</td>
+	</tr>
 	</tbody>
 </table>

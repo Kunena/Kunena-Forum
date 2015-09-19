@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
@@ -50,7 +51,7 @@ class ComponentKunenaControllerUserEditDisplay extends KunenaControllerDisplay
 
 		$userid = $this->input->getInt('userid');
 
-		$this->user = JFactory::getUser($userid);
+		$this->user    = JFactory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('edit');
 

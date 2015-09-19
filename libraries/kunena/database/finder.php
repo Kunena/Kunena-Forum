@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Database
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Database
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaDatabaseFinder
@@ -53,7 +54,7 @@ abstract class KunenaDatabaseFinder
 			throw new DomainException('Table name missing from ' . get_class($this));
 		}
 
-		$this->db = JFactory::getDbo();
+		$this->db    = JFactory::getDbo();
 		$this->query = $this->db->getQuery(true);
 		$this->query->from($this->table . ' AS a');
 	}
@@ -96,16 +97,16 @@ abstract class KunenaDatabaseFinder
 	 *
 	 * This function can be used more than once to chain order by.
 	 *
-	 * @param  string $by
-	 * @param  int $direction
-	 * @param  string $alias
+	 * @param  string  $by
+	 * @param  int    $direction
+	 * @param  string  $alias
 	 *
 	 * @return $this
 	 */
 	public function order($by, $direction = 1, $alias = 'a')
 	{
 		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = $alias . '.' . $this->db->quoteName($by);
+		$by        = $alias . '.' . $this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 
 		return $this;
@@ -114,9 +115,9 @@ abstract class KunenaDatabaseFinder
 	/**
 	 * Filter by field.
 	 *
-	 * @param  string        $field       Field name.
-	 * @param  string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
-	 * @param  string|array  $value       Value.
+	 * @param  string       $field     Field name.
+	 * @param  string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
+	 * @param  string|array  $value     Value.
 	 *
 	 * @return $this
 	 */
@@ -199,7 +200,7 @@ abstract class KunenaDatabaseFinder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param  JDatabaseQuery  $query
+	 * @param  JDatabaseQuery $query
 	 *
 	 * @return void
 	 */

@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -10,7 +11,7 @@
  **/
 defined('_JEXEC') or die;
 
-$cols = !empty($this->actions) ? 6 : 7;
+$cols    = !empty($this->actions) ? 6 : 7;
 $colspan = !empty($this->actions) ? 4 : 3;
 ?>
 <div class="row">
@@ -19,7 +20,8 @@ $colspan = !empty($this->actions) ? 4 : 3;
 			<h3>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs">
-					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
+					(<?php echo(JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>
+					)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
@@ -28,9 +30,10 @@ $colspan = !empty($this->actions) ? 4 : 3;
 
 		<div class="pull-right" id="filter-time">
 			<div class="filter-sel pull-right">
-				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
+				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect"
+					name="timeselect"
 					method="post" target="_self" class="form-inline hidden-xs">
-						<?php $this->displayTimeFilter('sel'); ?>
+					<?php $this->displayTimeFilter('sel'); ?>
 				</form>
 			</div>
 		</div>
@@ -45,10 +48,11 @@ $colspan = !empty($this->actions) ? 4 : 3;
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true);	?>
+		->set('display', true); ?>
 </div>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform"
+	id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
 	<table class="table table-bordered">
 		<thead>
@@ -63,7 +67,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
 			<td class="col-md-2 hidden-xs">
-				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
+				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
 			<td class="col-md-2 hidden-xs">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
@@ -87,27 +91,31 @@ $colspan = !empty($this->actions) ? 4 : 3;
 			</td>
 			<?php if (empty($this->actions)) : ?>
 			<td colspan="<?php echo $colspan; ?>" class="hidden-xs">
-			<?php else : ?>
+				<?php else : ?>
 			<td colspan="<?php echo $colspan; ?>">
-			<?php endif; ?>
+				<?php endif; ?>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
-				<div class="form-group">
-					<div class="input-group" role="group">
-						<div class="input-group-btn">
-							<label>
-							<?php if (!empty($this->topics) && !empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'follow'); ?>
-							<?php if (!empty($this->actions)) : ?>
-								<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
-								<?php if (isset($this->actions['move'])) :
-									$options = array (JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
-									echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
-								endif;?>
-								<button type="submit" name="kcheckgo" class="btn btn-default"><?php echo JText::_('COM_KUNENA_GO') ?></button>
-							<?php endif; ?>
-							</label>
+					<div class="form-group">
+						<div class="input-group" role="group">
+							<div class="input-group-btn">
+								<label>
+									<?php if (!empty($this->topics) && !empty($this->moreUri))
+									{
+										echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'follow');
+									} ?>
+									<?php if (!empty($this->actions)) : ?>
+										<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+										<?php if (isset($this->actions['move'])) :
+											$options = array(JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
+											echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+										endif; ?>
+										<button type="submit" name="kcheckgo"
+											class="btn btn-default"><?php echo JText::_('COM_KUNENA_GO') ?></button>
+									<?php endif; ?>
+								</label>
+							</div>
 						</div>
 					</div>
-				</div>
 				<?php endif; ?>
 			</td>
 		</tr>

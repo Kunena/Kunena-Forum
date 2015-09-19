@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Announcement
  *
@@ -11,7 +12,7 @@
 defined('_JEXEC') or die;
 
 $announcement = $this->announcement;
-$actions = $this->getActions();
+$actions      = $this->getActions();
 ?>
 <h2>
 	<?php echo $announcement->displayField('title'); ?>

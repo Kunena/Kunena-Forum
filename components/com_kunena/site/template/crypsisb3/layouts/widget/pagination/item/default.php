@@ -1,8 +1,9 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Pagination
+ *
+ * @package     Kunena.Template.Crypsisb3
+ * @subpackage      Layout.Pagination
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL

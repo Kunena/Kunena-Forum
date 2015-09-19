@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Template.Crypsis
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  BBCode
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -27,6 +27,7 @@ $attributesLink = $config->lightbox ? ' class="fancybox-button" rel="fancybox-bu
 $attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
 
-<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0, 7); ?>"<?php echo $attributesLink; ?>>
+<a href="<?php echo $attachment->getUrl(); ?>"
+	title="<?php echo $attachment->getShortName(0, 7); ?>"<?php echo $attributesLink; ?>>
 	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
 </a>

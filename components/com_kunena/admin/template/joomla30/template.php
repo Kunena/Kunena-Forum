@@ -2,14 +2,17 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Joomla30
+ * @package     Kunena.Template.Joomla30
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAdminTemplate30
+ */
 class KunenaAdminTemplate30
 {
 
@@ -20,6 +23,12 @@ class KunenaAdminTemplate30
 		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/joomla30/styles.css');
 	}
 
+	/**
+	 * @param   string     $path
+	 * @param   bool|false $fullpath
+	 *
+	 * @return array
+	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
 		if ($path)

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Search
  *
@@ -41,7 +42,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		$this->me = KunenaUserHelper::getMyself();
 
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$this->error = $this->model->getError();
+		$this->error       = $this->model->getError();
 	}
 
 	/**
@@ -54,7 +55,7 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH');
 		$this->setKeywords($keywords);
-		$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title ;
+		$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
 		$this->setDescription($description);
 	}
 }

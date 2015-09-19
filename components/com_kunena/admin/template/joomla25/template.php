@@ -2,14 +2,17 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template.Joomla25
+ * @package     Kunena.Template.Joomla25
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAdminTemplate25
+ */
 class KunenaAdminTemplate25
 {
 
@@ -30,6 +33,10 @@ class KunenaAdminTemplate25
 		$document->addScript(JUri::root(true) . '/media/kunena/js/bootstrap/moobootstrap.js');
 	}
 
+	/**
+	 * @param $inputFile
+	 * @param $outputFile
+	 */
 	public function compileLess($inputFile, $outputFile)
 	{
 		if (!class_exists('lessc'))
@@ -71,6 +78,12 @@ class KunenaAdminTemplate25
 		}
 	}
 
+	/**
+	 * @param   string     $path
+	 * @param   bool|false $fullpath
+	 *
+	 * @return array
+	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
 		if ($path)

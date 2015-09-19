@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Widget
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -10,15 +11,15 @@
  **/
 defined('_JEXEC') or die;
 
-$id = ' id="' . $this->id . '"';
-$class = 'class="modal fade"';
-$name = ' name="' . $this->name . '"';
-$label  = $this->label;
-$description  = $this->description;
-$data = $this->data;
-$form = $this->form;
+$id          = ' id="' . $this->id . '"';
+$class       = 'class="modal fade"';
+$name        = ' name="' . $this->name . '"';
+$label       = $this->label;
+$description = $this->description;
+$data        = $this->data;
+$form        = $this->form;
 ?>
-<div <?php echo $class . $id?> tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div <?php echo $class . $id ?> tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -27,9 +28,11 @@ $form = $this->form;
 			</div>
 			<div class="modal-body">
 				<p><?php echo $description ?></p>
+
 				<div class="control-group">
 					<div class="controls">
-						<textarea <?php echo $name ?> style="resize: none; text-align: left" class="input-block-level" rows="3" maxlength="255"><?php echo $data; ?></textarea>
+						<textarea <?php echo $name ?> style="resize: none; text-align: left" class="input-block-level"
+							rows="3" maxlength="255"><?php echo $data; ?></textarea>
 					</div>
 				</div>
 			</div>

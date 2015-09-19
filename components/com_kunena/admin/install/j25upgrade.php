@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package     Kunena.Installer
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -17,6 +17,9 @@ defined('_JEXEC') or die ();
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 
+	/**
+	 * @param null $step
+	 */
 	public function __construct($step = null)
 	{
 		// Joomla 2.5 support
@@ -72,7 +75,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
-	 * @param string $table
+	 * @param   string  $table
 	 *
 	 * @return    boolean Ready (true/false)
 	 * @since    1.6.4
@@ -155,6 +158,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		}
 	}
 
+	/**
+	 * @param $list
+	 *
+	 * @return array
+	 */
 	protected function mapUserGroups($list)
 	{
 		if (!is_array($list))

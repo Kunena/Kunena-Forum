@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Models
+ * @package     Kunena.Site
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 /**
  * Topics Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelTopics extends KunenaModel
 {
@@ -24,6 +24,9 @@ class KunenaModelTopics extends KunenaModel
 	protected $topicActions = false;
 	protected $actionMove = false;
 
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$params = $this->getParameters();
@@ -130,13 +133,15 @@ class KunenaModelTopics extends KunenaModel
 		if (JFactory::getDocument()->getType() != 'feed')
 		{
 			// Selection time from user state / menu item / url parameter / configuration.
-			if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2) {
-				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
-				$this->setState ( 'list.time', (int) $value );
+			if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2)
+			{
+				$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int');
+				$this->setState('list.time', (int) $value);
 			}
-			if ($this->me->exists() && $this->me->userListtime != -2) {
-				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $this->me->userListtime, 'int' );
-				$this->setState ('list.time', (int) $value);
+			if ($this->me->exists() && $this->me->userListtime != -2)
+			{
+				$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $this->me->userListtime, 'int');
+				$this->setState('list.time', (int) $value);
 			}
 		}
 		else
@@ -156,11 +161,11 @@ class KunenaModelTopics extends KunenaModel
 
 		$this->setState('list.limit', $value);
 
-		//$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
-		//$this->setState ( 'list.ordering', $value );
+		// $value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
+		// $this->setState ( 'list.ordering', $value );
 
 		$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_start", 'limitstart', 0, 'int');
-		//$value = $this->getInt ( 'limitstart', 0 );
+		// $value = $this->getInt ( 'limitstart', 0 );
 		$this->setState('list.start', $value);
 
 		$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_direction", 'filter_order_Dir', 'desc', 'word');
@@ -173,6 +178,9 @@ class KunenaModelTopics extends KunenaModel
 		$this->setState('list.direction', $value);
 	}
 
+	/**
+	 * @return   bool
+	 */
 	public function getTopics()
 	{
 		if ($this->topics === false)
@@ -218,6 +226,9 @@ class KunenaModelTopics extends KunenaModel
 		return $this->topics;
 	}
 
+	/**
+	 *
+	 */
 	protected function getRecentTopics()
 	{
 		$catid      = $this->getState('item.id');
@@ -304,6 +315,9 @@ class KunenaModelTopics extends KunenaModel
 		$this->_common();
 	}
 
+	/**
+	 *
+	 */
 	protected function getUserTopics()
 	{
 		$catid      = $this->getState('item.id');
@@ -358,6 +372,9 @@ class KunenaModelTopics extends KunenaModel
 		$this->_common();
 	}
 
+	/**
+	 *
+	 */
 	protected function getPosts()
 	{
 		$this->topics = array();
@@ -405,7 +422,11 @@ class KunenaModelTopics extends KunenaModel
 		$this->_common($userlist, $postlist);
 	}
 
-	protected function _common(array $userlist = array(), array $postlist = array())
+	/**
+	 * @param   array  $userlist
+	 * @param   array  $postlist
+	 */
+	protected function _common(array  $userlist = array(), array  $postlist = array())
 	{
 		if ($this->total > 0)
 		{
@@ -437,6 +458,9 @@ class KunenaModelTopics extends KunenaModel
 		}
 	}
 
+	/**
+	 * @return   bool
+	 */
 	public function getMessages()
 	{
 		if ($this->topics === false)
@@ -447,6 +471,9 @@ class KunenaModelTopics extends KunenaModel
 		return $this->messages;
 	}
 
+	/**
+	 * @return   int
+	 */
 	public function getTotal()
 	{
 		if ($this->topics === false)
@@ -457,6 +484,9 @@ class KunenaModelTopics extends KunenaModel
 		return $this->total;
 	}
 
+	/**
+	 * @return   array|null
+	 */
 	public function getTopicActions()
 	{
 		if ($this->topics === false)
@@ -539,6 +569,9 @@ class KunenaModelTopics extends KunenaModel
 		return $actionDropdown;
 	}
 
+	/**
+	 * @return   array|null
+	 */
 	public function getPostActions()
 	{
 		if ($this->messages === false)
@@ -601,6 +634,9 @@ class KunenaModelTopics extends KunenaModel
 		return $actionDropdown;
 	}
 
+	/**
+	 * @return   bool
+	 */
 	public function getActionMove()
 	{
 		return $this->actionMove;

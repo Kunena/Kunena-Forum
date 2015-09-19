@@ -1,8 +1,9 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
- * @subpackage  Controller.Statistics
+ * @subpackage      Controller.Statistics
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -39,7 +40,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		$me = KunenaUserHelper::getMyself();
+		$me        = KunenaUserHelper::getMyself();
 		$moderator = intval($me->isModerator()) + intval($me->isAdmin());
 
 		$users = KunenaUserHelper::getOnlineUsers();
@@ -95,7 +96,7 @@ class ComponentKunenaControllerWidgetWhoisonlineDisplay extends KunenaController
 		ksort($this->onlineList);
 		ksort($this->hiddenList);
 
-		$profile = KunenaFactory::getProfile();
+		$profile        = KunenaFactory::getProfile();
 		$this->usersUrl = $profile->getUserListURL();
 	}
 

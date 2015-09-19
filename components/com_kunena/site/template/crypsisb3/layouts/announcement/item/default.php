@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Announcement
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -11,7 +12,7 @@
 defined('_JEXEC') or die;
 
 $announcement = $this->announcement;
-$actions = $this->getActions();
+$actions      = $this->getActions();
 ?>
 <h3>
 	<?php echo $announcement->displayField('title'); ?>

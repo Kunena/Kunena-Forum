@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Application
  *
@@ -37,7 +38,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 	protected function before()
 	{
 		$catid = $this->input->getInt('catid', 0);
-		$id = $this->input->getInt('id', 0);
+		$id    = $this->input->getInt('id', 0);
 
 		$category = KunenaForumCategoryHelper::get($catid);
 		$category->tryAuthorise();
@@ -49,7 +50,7 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 		$message = KunenaForumMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
 		$message->tryAuthorise();
 
-		while (@ob_end_clean());
+		while (@ob_end_clean()) ;
 
 		$this->app->redirect($topic->getUrl($category, false, $message));
 	}

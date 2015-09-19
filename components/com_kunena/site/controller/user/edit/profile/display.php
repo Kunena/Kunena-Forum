@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
@@ -32,9 +33,9 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 
 		if (count($bd) == 3)
 		{
-			$this->birthdate["year"] = $bd[0];
+			$this->birthdate["year"]  = $bd[0];
 			$this->birthdate["month"] = $bd[1];
-			$this->birthdate["day"] = $bd[2];
+			$this->birthdate["day"]   = $bd[2];
 		}
 
 		$this->genders[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));

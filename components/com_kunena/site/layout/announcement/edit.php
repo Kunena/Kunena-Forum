@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Site
- * @subpackage      Layout.Announcement.Edit
+ * @package     Kunena.Site
+ * @subpackage  Layout.Announcement.Edit
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            http://www.kunena.org
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -22,11 +22,11 @@ class KunenaLayoutAnnouncementEdit extends KunenaLayout
 	/**
 	 * Method to create an input in fonction of name given
 	 *
-	 * @param   string $name       Name of input to create
-	 * @param   string $attributes Attibutes to be added to input
-	 * @param   int    $id         Id to be added to the input
+	 * @param   string  $name        Name of input to create
+	 * @param   string  $attributes  Attibutes to be added to input
+	 * @param   int     $id          Id to be added to the input
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public function displayInput($name, $attributes = '', $id = null)
 	{

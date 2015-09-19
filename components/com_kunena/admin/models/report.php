@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -461,8 +461,8 @@ class KunenaAdminModelReport extends KunenaModel
 	/**
 	 * Return extension version string if installed.
 	 *
-	 * @param  string $extension
-	 * @param  string $name
+	 * @param  string  $extension
+	 * @param  string  $name
 	 *
 	 * @return    string
 	 * @since    1.6
@@ -531,6 +531,9 @@ class KunenaAdminModelReport extends KunenaModel
 		return $version;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getIntegrationSettings()
 	{
 		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');

@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage User
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  User
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaUserFinder
@@ -25,8 +26,8 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	{
 		parent::__construct();
 
-		$this->config =  KunenaConfig::getInstance();
-		$this->limit = $this->config->userlist_rows;
+		$this->config = KunenaConfig::getInstance();
+		$this->limit  = $this->config->userlist_rows;
 
 		$this->query->leftJoin('#__kunena_users AS ku ON ku.userid=a.id');
 	}
@@ -47,9 +48,9 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time, either on registration or last visit date.
 	 *
-	 * @param JDate $starting  Starting date or null if older than ending date.
-	 * @param JDate $ending    Ending date or null if newer than starting date.
-	 * @param bool  $register  True = registration date, False = last visit date.
+	 * @param JDate $starting Starting date or null if older than ending date.
+	 * @param JDate $ending   Ending date or null if newer than starting date.
+	 * @param   bool  $register True = registration date, False = last visit date.
 	 *
 	 * @return $this
 	 */
@@ -73,17 +74,22 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
-	public function filterByConfiguration(array $ignore = array())
+	/**
+	 * @param   array  $ignore
+	 *
+	 * @return $this
+	 */
+	public function filterByConfiguration(array  $ignore = array())
 	{
-		if ($this->config->userlist_count_users == '1' )
+		if ($this->config->userlist_count_users == '1')
 		{
 			$this->query->where('(a.block=0 OR a.activation="")');
 		}
-		elseif ($this->config->userlist_count_users == '2' )
+		elseif ($this->config->userlist_count_users == '2')
 		{
 			$this->query->where('(a.block=0 AND a.activation="")');
 		}
-		elseif ($this->config->userlist_count_users == '3' )
+		elseif ($this->config->userlist_count_users == '3')
 		{
 			$this->query->where('a.block=0');
 		}
@@ -97,6 +103,11 @@ class KunenaUserFinder extends KunenaDatabaseObjectFinder
 		return $this;
 	}
 
+	/**
+	 * @param $search
+	 *
+	 * @return $this
+	 */
 	public function filterByName($search)
 	{
 		if ($search)

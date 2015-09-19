@@ -1,13 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaFactory
@@ -33,7 +34,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
 	 *
-	 * @param	string	$name
+	 * @param    string  $name
+	 *
 	 * @return KunenaTemplate
 	 */
 	public static function getTemplate($name = null)
@@ -53,13 +55,13 @@ abstract class KunenaFactory
 		if (version_compare(JVERSION, '3.0', '>'))
 		{
 			// Joomla 3.0+ template:
-			require_once KPATH_ADMIN.'/template/joomla30/template.php';
+			require_once KPATH_ADMIN . '/template/joomla30/template.php';
 			$template = new KunenaAdminTemplate30;
 		}
 		else
 		{
 			// Joomla 2.5 template:
-			require_once KPATH_ADMIN.'/template/joomla25/template.php';
+			require_once KPATH_ADMIN . '/template/joomla25/template.php';
 			$template = new KunenaAdminTemplate25;
 		}
 
@@ -71,8 +73,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.
 	 *
-	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to Id automatically.
-	 * @param	bool	$reload
+	 * @param    int  $id The user to load - Can be an integer or string - If string, it is converted to Id automatically.
+	 * @param    bool $reload
 	 *
 	 * @return KunenaUser
 	 */
@@ -86,7 +88,8 @@ abstract class KunenaFactory
 	 *
 	 * Returns the global {@link KunenaSession} object, only creating it if it doesn't already exist.
 	 *
-	 * @param array|bool $update	An array containing session options
+	 * @param   array|bool $update An array containing session options
+	 *
 	 * @return KunenaSession
 	 */
 	public static function getSession($update = false)
@@ -152,11 +155,15 @@ abstract class KunenaFactory
 	 *
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
+	 * @param   string  $file
+	 * @param   string  $client
+	 *
+	 * @return
 	 */
-	public static function loadLanguage( $file = 'com_kunena', $client = 'site' )
+	public static function loadLanguage($file = 'com_kunena', $client = 'site')
 	{
 		static $loaded = array();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($client == 'site')
 		{
@@ -165,7 +172,7 @@ abstract class KunenaFactory
 		}
 		else
 		{
-			$client = 'admin';
+			$client  = 'admin';
 			$lookup1 = JPATH_ADMINISTRATOR;
 			$lookup2 = KPATH_ADMIN;
 		}
@@ -177,7 +184,8 @@ abstract class KunenaFactory
 			$english = false;
 
 			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
-					&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english'))
+				&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')
+			)
 			{
 				$lang->load($file, $lookup2, 'en-GB', true, false);
 				$english = true;
@@ -186,11 +194,17 @@ abstract class KunenaFactory
 			$loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
 				|| $lang->load($file, $lookup2, null, $english, false);
 		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $loaded[$file];
-}
+	}
 
+	/**
+	 * @param $lang
+	 * @param $filename
+	 *
+	 * @return bool
+	 */
 	protected static function parseLanguage($lang, $filename)
 	{
 		if (!is_file($filename))
@@ -209,7 +223,7 @@ abstract class KunenaFactory
 		{
 			$contents = file_get_contents($filename);
 			$contents = str_replace('_QQ_', '"\""', $contents);
-			$strings = @parse_ini_string($contents);
+			$strings  = @parse_ini_string($contents);
 		}
 		else
 		{

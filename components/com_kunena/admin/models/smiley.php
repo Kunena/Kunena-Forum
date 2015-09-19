@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -43,6 +43,9 @@ class KunenaAdminModelSmiley extends KunenaModel
 		$this->setState('item.id', $value);
 	}
 
+	/**
+	 * @return null
+	 */
 	public function getSmiley()
 	{
 		$db = JFactory::getDBO();
@@ -65,6 +68,9 @@ class KunenaAdminModelSmiley extends KunenaModel
 		return null;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getSmileyspaths()
 	{
 		$template = KunenaFactory::getTemplate();

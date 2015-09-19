@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Models
+ * @package     Kunena.Site
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 /**
  * Home Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelHome extends KunenaModel
 {

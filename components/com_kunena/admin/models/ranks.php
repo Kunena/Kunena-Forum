@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -21,6 +21,9 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelRanks extends JModelList
 {
 
+	/**
+	 * @param   array  $config
+	 */
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields']))
@@ -40,8 +43,8 @@ class KunenaAdminModelRanks extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param string $ordering
-	 * @param string $direction
+	 * @param   string  $ordering
+	 * @param   string  $direction
 	 *
 	 * @return    void
 	 */
@@ -82,6 +85,11 @@ class KunenaAdminModelRanks extends JModelList
 		parent::populateState('id', 'asc');
 	}
 
+	/**
+	 * @param   string  $id
+	 *
+	 * @return mixed
+	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
@@ -92,6 +100,9 @@ class KunenaAdminModelRanks extends JModelList
 		return parent::getStoreId($id);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	protected function getListQuery()
 	{
 		$db    = $this->getDbo();

@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
-* @package Kunena.Template.Crypsis
-* @subpackage BBCode
-*
-* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
-**/
-defined ( '_JEXEC' ) or die ();
+ *
+ * @package     Kunena.Template
+ * @subpackage  BBCode
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
+ **/
+defined('_JEXEC') or die ();
 
 /** @var KunenaAttachment $attachment */
 $attachment = $this->attachment;
@@ -17,7 +18,10 @@ $user = isset($this->user) ? $this->user : null;
 
 // Get authorisation message.
 $exception = $attachment->tryAuthorise('read', $user, false);
-if (!$exception) $exception = new KunenaExceptionAuthorise('Bad Request.', 400);
+if (!$exception)
+{
+	$exception = new KunenaExceptionAuthorise('Bad Request.', 400);
+}
 ?>
 <div class="kmsgattach">
 	<?php echo $exception->getMessage(); ?>

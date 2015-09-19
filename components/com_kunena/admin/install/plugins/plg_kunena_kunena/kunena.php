@@ -5,18 +5,21 @@
  * @package    Kunena.Plugins
  * @subpackage Kunena
  *
- * @Copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class PlgKunenaKunena
+ */
 class PlgKunenaKunena extends JPlugin
 {
 	/**
 	 * @param object &$subject
 	 *
-	 * @param array  $config
+	 * @param   array  $config
 	 */
 	public function __construct(&$subject, $config)
 	{

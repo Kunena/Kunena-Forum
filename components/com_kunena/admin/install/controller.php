@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package     Kunena.Installer
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -21,6 +21,9 @@ class KunenaControllerInstall extends JControllerLegacy
 	protected $steps = null;
 	protected $model = null;
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -30,6 +33,10 @@ class KunenaControllerInstall extends JControllerLegacy
 		$this->steps = $this->model->getSteps();
 	}
 
+	/**
+	 * @param   bool|false $cachable
+	 * @param   bool|false $urlparams
+	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		require_once __DIR__ . '/view.php';
@@ -101,8 +108,7 @@ class KunenaControllerInstall extends JControllerLegacy
 			$error      = $this->model->getInstallError();
 			$this->step = $this->model->getStep();
 			$stop       = ($this->model->checkTimeout() || !isset($this->steps[$this->step + 1]));
-		}
-		while (!$stop && !$error);
+		} while (!$stop && !$error);
 
 		// Store queued messages so that they won't get lost
 		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));
@@ -170,19 +176,19 @@ class KunenaControllerInstall extends JControllerLegacy
 			$component = JComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
 
-			if ( JFolder::exists(KPATH_MEDIA) )
+			if (JFolder::exists(KPATH_MEDIA))
 			{
 				JFolder::delete(KPATH_MEDIA);
 			}
 
-			if ( JFolder::exists(JPATH_ROOT.'/plugins/kunena') )
+			if (JFolder::exists(JPATH_ROOT . '/plugins/kunena'))
 			{
-				JFolder::delete(JPATH_ROOT.'/plugins/kunena');
+				JFolder::delete(JPATH_ROOT . '/plugins/kunena');
 			}
 
-			if ( JFile::exists(JPATH_ADMINISTRATOR.'/manifests/packages/pkg_kunena.xml') )
+			if (JFile::exists(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml'))
 			{
-				JFile::delete(JPATH_ADMINISTRATOR.'/manifests/packages/pkg_kunena.xml');
+				JFile::delete(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml');
 			}
 
 			$this->setRedirect('index.php?option=com_installer');
@@ -193,6 +199,9 @@ class KunenaControllerInstall extends JControllerLegacy
 		}
 	}
 
+	/**
+	 * @return mixed|null
+	 */
 	function runStep()
 	{
 		if (empty($this->steps[$this->step]['step']))
@@ -203,6 +212,10 @@ class KunenaControllerInstall extends JControllerLegacy
 		return call_user_func(array($this->model, "step" . $this->steps[$this->step]['step']));
 	}
 
+	/**
+	 * @param $type
+	 * @param $errstr
+	 */
 	static public function error($type, $errstr)
 	{
 		$model = JModelLegacy::getInstance('Install', 'KunenaModel');
@@ -210,6 +223,11 @@ class KunenaControllerInstall extends JControllerLegacy
 		echo json_encode(array('success' => false, 'html' => $errstr));
 	}
 
+	/**
+	 * @param $exception
+	 *
+	 * @return bool
+	 */
 	static public function exceptionHandler($exception)
 	{
 		self::error('', 'Uncaught Exception: ' . $exception->getMessage());
@@ -217,6 +235,14 @@ class KunenaControllerInstall extends JControllerLegacy
 		return true;
 	}
 
+	/**
+	 * @param $errno
+	 * @param $errstr
+	 * @param $errfile
+	 * @param $errline
+	 *
+	 * @return bool
+	 */
 	static public function errorHandler($errno, $errstr, $errfile, $errline)
 	{
 		//self::error('', "Fatal Error: $errstr in $errfile on line $errline");

@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewTopics extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)
@@ -71,6 +74,9 @@ class KunenaViewTopics extends KunenaView
 		$this->displayTopicRows();
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayUser($tpl = null)
 	{
 		if (!$this->config->enablerss)
@@ -109,6 +115,9 @@ class KunenaViewTopics extends KunenaView
 		$this->displayTopicRows();
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayPosts($tpl = null)
 	{
 		if (!$this->config->enablerss)
@@ -223,6 +232,15 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $title
+	 * @param $url
+	 * @param $description
+	 * @param $category
+	 * @param $date
+	 * @param $userid
+	 * @param $username
+	 */
 	function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
 		if ($this->config->rss_author_in_title)

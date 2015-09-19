@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -21,6 +21,9 @@ require_once __DIR__ . '/cpanel.php';
  */
 class KunenaAdminModelTools extends KunenaAdminModelCpanel
 {
+	/**
+	 * @return mixed
+	 */
 	function getPruneCategories()
 	{
 		$cat_params                = array();
@@ -36,6 +39,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		return $forum;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function getPruneListtrashdelete()
 	{
 		$trashdelete    = array();
@@ -45,6 +51,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		return JHtml::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox" size="1"', 'value', 'text', 0);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function getPruneControlOptions()
 	{
 		$contoloptions    = array();
@@ -60,6 +69,9 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 		return JHtml::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 'normal');
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function getPruneKeepSticky()
 	{
 		$optionsticky    = array();

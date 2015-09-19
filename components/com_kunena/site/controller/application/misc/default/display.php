@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Application
  *
@@ -45,10 +46,10 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 	{
 		parent::before();
 
-		$params = $this->app->getParams('com_kunena');
+		$params       = $this->app->getParams('com_kunena');
 		$this->header = $params->get('page_title');
 
-		$body = $params->get('body');
+		$body   = $params->get('body');
 		$format = $params->get('body_format');
 
 		$this->header = htmlspecialchars($this->header, ENT_COMPAT, 'UTF-8');
@@ -72,7 +73,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 				$cache = JFactory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 
-				return $cache->call(array('KunenaHtmlParser','parseBBCode'), $body);
+				return $cache->call(array('KunenaHtmlParser', 'parseBBCode'), $body);
 			};
 		}
 	}

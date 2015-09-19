@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Email
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Email
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaEmail
@@ -16,12 +17,12 @@ defined ( '_JEXEC' ) or die ();
 abstract class KunenaEmail
 {
 	/**
-	 * @param  JMail  $mail
+	 * @param  JMail $mail
 	 * @param  array  $receivers
 	 *
 	 * @return boolean
 	 */
-	public static function send(JMail $mail, array $receivers)
+	public static function send(JMail $mail, array  $receivers)
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -39,7 +40,8 @@ abstract class KunenaEmail
 		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
 		if ($email_recipient_count > 1
 			&& $email_recipient_privacy == 'bcc'
-			&& JMailHelper::isEmailAddress($config->get('email_visible_address')))
+			&& JMailHelper::isEmailAddress($config->get('email_visible_address'))
+		)
 		{
 			$mail->AddAddress($config->email_visible_address, JMailHelper::cleanAddress($config->board_title));
 
@@ -77,8 +79,7 @@ abstract class KunenaEmail
 			try
 			{
 				$mail->Send();
-			}
-			catch (Exception $e)
+			} catch (Exception $e)
 			{
 				$success = false;
 				JLog::add($e->getMessage(), JLog::ERROR, 'kunena');

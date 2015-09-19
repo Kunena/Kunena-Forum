@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Prune
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Prune
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /** @var KunenaAdminViewTools $this */
 ?>
@@ -22,15 +23,16 @@ defined ( '_JEXEC' ) or die ();
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/joomla30/common/menu.php'; ?></div>
 		</div>
 	</div>
 
 	<div id="j-main-container" class="span10">
 
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"
+			method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="task" value="uninstall" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></legend>
@@ -55,21 +57,23 @@ defined ( '_JEXEC' ) or die ();
 						</td>
 					</tr>
 					<?php if ($this->isTFAEnabled): ?>
-					<tr>
-						<td width="20%"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_SECRETKEY') ?></td>
-						<td>
-							<div>
-								<input class="span3" type="text" name="secretkey" value="" />
-							</div>
-						</td>
-					</tr>
+						<tr>
+							<td width="20%"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_SECRETKEY') ?></td>
+							<td>
+								<div>
+									<input class="span3" type="text" name="secretkey" value="" />
+								</div>
+							</td>
+						</tr>
 					<?php endif; ?>
 					<tr>
 						<td></td>
 						<td>
-							<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
+								aria-labelledby="myModalLabel" aria-hidden="true">
 								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+									</button>
 									<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h3>
 								</div>
 								<div class="modal-body">
@@ -77,11 +81,13 @@ defined ( '_JEXEC' ) or die ();
 								</div>
 								<div class="modal-footer">
 									<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-									<button type="submit" class="btn btn-danger"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+									<button type="submit"
+										class="btn btn-danger"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 								</div>
 							</div>
 
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+							<button type="button" class="btn btn-danger" data-toggle="modal"
+								data-target="#myModal"><?php echo JText::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 						</td>
 					</tr>
 				</table>

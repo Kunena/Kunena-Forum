@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
@@ -49,7 +50,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 		parent::before();
 
 		$catid = $this->input->getInt('catid');
-		$id = $this->input->getInt('id');
+		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 
 		if (!$mesid)
@@ -66,7 +67,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 		$this->category = $this->topic->getCategory();
 
-		$this->uri = "index.php?option=com_kunena&view=topic&layout=moderate"
+		$this->uri   = "index.php?option=com_kunena&view=topic&layout=moderate"
 			. "&catid={$this->category->id}&id={$this->topic->id}"
 			. ($this->message ? "&mesid={$this->message->id}" : '');
 		$this->title = !$this->message ?
@@ -88,7 +89,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 
 			if ($user->exists())
 			{
-				$username = $user->getName();
+				$username       = $user->getName();
 				$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=user&layout=moderate&userid=' . $this->message->userid,
 					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')')
@@ -103,7 +104,7 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			$this->me = KunenaFactory::getUser();
 
 			// Get thread and reply count from current message:
-			$db = JFactory::getDbo();
+			$db    = JFactory::getDbo();
 			$query = "SELECT COUNT(mm.id) AS replies FROM #__kunena_messages AS m
 				INNER JOIN #__kunena_messages AS t ON m.thread=t.id
 				LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.time > m.time

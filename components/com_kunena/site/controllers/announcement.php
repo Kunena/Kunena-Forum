@@ -2,29 +2,35 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 /**
  * Kunena Announcements Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerAnnouncement extends KunenaController
 {
 
+	/**
+	 *
+	 */
 	public function none()
 	{
 		// FIXME: This is workaround for task=none on edit.
 		$this->edit();
 	}
 
+	/**
+	 *
+	 */
 	public function publish()
 	{
 		if (!JSession::checkToken('post'))
@@ -35,17 +41,22 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JRequest::getVar('cid', array(), 'post', 'array');
+
+		 // Array of integers
 		JArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
+
 			if ($announcement->published == 1)
 			{
 				continue;
 			}
+
 			$announcement->published = 1;
+
 			if (!$announcement->authorise('edit') || !$announcement->save())
 			{
 				$this->app->enqueueMessage($announcement->getError(), 'error');
@@ -59,6 +70,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	public function unpublish()
 	{
 		if (!JSession::checkToken('post'))
@@ -96,6 +110,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	public function edit()
 	{
 		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
@@ -106,6 +123,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		$this->setRedirect($announcement->getUrl('edit', false));
 	}
 
+	/**
+	 *
+	 */
 	public function delete()
 	{
 		if (!JSession::checkToken('request'))
@@ -136,6 +156,9 @@ class KunenaControllerAnnouncement extends KunenaController
 		$this->setRedirect(KunenaForumAnnouncementHelper::getUrl('list', false));
 	}
 
+	/**
+	 *
+	 */
 	public function save()
 	{
 		if (!JSession::checkToken('post'))

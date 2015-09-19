@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator.Template
- * @subpackage    Ranks
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Ranks
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -56,7 +56,9 @@ if (version_compare(JVERSION, '3.2', '>'))
 
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab1">
-						<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=ranks') ?>" method="post" id="adminForm" name="adminForm">
+						<form
+							action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=ranks') ?>"
+							method="post" id="adminForm" name="adminForm">
 							<input type="hidden" name="task" value="" />
 							<input type="hidden" name="boxchecked" value="0" />
 							<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
@@ -65,14 +67,21 @@ if (version_compare(JVERSION, '3.2', '>'))
 
 							<div id="filter-bar" class="btn-toolbar">
 								<div class="filter-search btn-group pull-left">
-									<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-									<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_KUNENA_RANKS_FIELD_INPUT_SEARCHRANKS'); ?>" />
+									<label for="filter_search"
+										class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+									<input type="text" name="filter_search" id="filter_search" class="filter"
+										placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>"
+										value="<?php echo $this->escape($this->state->get('list.search')); ?>"
+										title="<?php echo JText::_('COM_KUNENA_RANKS_FIELD_INPUT_SEARCHRANKS'); ?>" />
 								</div>
 								<div class="btn-group pull-left">
-									<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
+									<button class="btn tip" type="submit"
+										title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>">
 										<i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
 									</button>
-									<button class="btn tip" type="button" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();">
+									<button class="btn tip" type="button"
+										title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
+										onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();">
 										<i class="icon-remove"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 									</button>
 								</div>
@@ -80,15 +89,19 @@ if (version_compare(JVERSION, '3.2', '>'))
 									<?php echo KunenaLayout::factory('pagination/limitbox')->set('pagination', $this->pagination); ?>
 								</div>
 								<div class="btn-group pull-right hidden-phone">
-									<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
-									<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+									<label for="directionTable"
+										class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></label>
+									<select name="directionTable" id="directionTable" class="input-medium"
+										onchange="Joomla.orderTable()">
 										<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC'); ?></option>
 										<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
 									</select>
 								</div>
 								<div class="btn-group pull-right">
-									<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
-									<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+									<label for="sortTable"
+										class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY'); ?></label>
+									<select name="sortTable" id="sortTable" class="input-medium"
+										onchange="Joomla.orderTable()">
 										<option value=""><?php echo JText::_('JGLOBAL_SORT_BY'); ?></option>
 										<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
 									</select>
@@ -124,19 +137,32 @@ if (version_compare(JVERSION, '3.2', '>'))
 									<td class="hidden-phone">
 									</td>
 									<td class="nowrap">
-										<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-										<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+										<label for="filter_title"
+											class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
+										<input class="input-block-level input-filter filter" type="text"
+											name="filter_title" id="filter_title"
+											placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+											value="<?php echo $this->filterTitle; ?>"
+											title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="nowrap center">
-										<label for="filter_special" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
-										<select name="filter_special" id="filter_special" class="select-filter filter" onchange="Joomla.orderTable()">
-											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
+										<label for="filter_special"
+											class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
+										<select name="filter_special" id="filter_special" class="select-filter filter"
+											onchange="Joomla.orderTable()">
+											<option
+												value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
 											<?php echo JHtml::_('select.options', $this->specialOptions(), 'value', 'text', $this->filterSpecial); ?>
 										</select>
 									</td>
 									<td class="nowrap center">
-										<label for="filter_min" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-										<input class="input-block-level input-filter filter" type="text" name="filter_min" id="filter_min" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterMinPostCount; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
+										<label for="filter_min"
+											class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+										<input class="input-block-level input-filter filter" type="text"
+											name="filter_min" id="filter_min"
+											placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
+											value="<?php echo $this->filterMinPostCount; ?>"
+											title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 									</td>
 									<td class="hidden-phone">
 									</td>
@@ -157,15 +183,21 @@ if (version_compare(JVERSION, '3.2', '>'))
 										?>
 										<tr>
 											<td>
-												<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->rank_id); ?>" onclick="Joomla.isChecked(this.checked);" />
+												<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
+													value="<?php echo $this->escape($row->rank_id); ?>"
+													onclick="Joomla.isChecked(this.checked);" />
 											</td>
 											<td>
-												<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
-													<img src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>" alt="<?php echo $this->escape($row->rank_image); ?>" />
+												<a href="#edit"
+													onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+													<img
+														src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true)) ?>"
+														alt="<?php echo $this->escape($row->rank_image); ?>" />
 												</a>
 											</td>
 											<td class="nowrap">
-												<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
+												<a href="#edit"
+													onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
 													<?php echo $this->escape($row->rank_title); ?>
 												</a>
 											</td>
@@ -179,7 +211,7 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<?php echo $this->escape($row->rank_id); ?>
 											</td>
 										</tr>
-									<?php
+										<?php
 									endforeach;
 								else : ?>
 									<tr>
@@ -188,9 +220,11 @@ if (version_compare(JVERSION, '3.2', '>'))
 									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
 										<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */ ?>
 										<?php if ($this->filterActive) : ?>
-											<button class="btn" type="button" onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+											<button class="btn" type="button"
+												onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 										<?php else : ?>
-											<button class="btn btn-success" type="button" onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></button>
+											<button class="btn btn-success" type="button"
+												onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></button>
 										<?php endif; ?>
 									</span>
 											</div>
@@ -203,14 +237,16 @@ if (version_compare(JVERSION, '3.2', '>'))
 					</div>
 
 					<div class="tab-pane" id="tab2">
-						<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data">
+						<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
+							id="uploadForm" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="view" value="ranks" />
 							<input type="hidden" name="task" value="rankupload" />
 							<input type="hidden" name="boxchecked" value="0" />
 							<?php echo JHtml::_('form.token'); ?>
 
 							<input type="file" id="file-upload" class="btn" name="Filedata" />
-							<input type="submit" id="file-upload-submit" class="btn btn-primary" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
+							<input type="submit" id="file-upload-submit" class="btn btn-primary"
+								value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
 						</form>
 					</div>
 				</div>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Category
  *
@@ -18,7 +19,6 @@ defined('_JEXEC') or die;
 class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControllerDisplay
 {
 	protected $name = 'Category/Description';
-
 
 	/**
 	 * Prepare category display.

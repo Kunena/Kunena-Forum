@@ -4,7 +4,7 @@
  * @package Kunena.UnitTest
  * @subpackage Utilities
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -102,8 +102,12 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Move topics to another category
+	 *
 	 * @dataProvider providerMovingTopicsToCategory
-	 * @depends testPosting
+	 * @depends      testPosting
+	 *
+	 * @param $topic_id
+	 * @param $target_id
 	 */
 	public function testMovingTopicsToCategory($topic_id, $target_id) {
 		$topic = self::$topic[$topic_id];
@@ -117,6 +121,9 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$this->checkCategory($target);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function providerMovingTopicsToCategory() {
 		return array (
 			array (1,2),
@@ -128,8 +135,10 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Move topics to another category
 	 * @dataProvider providerMovingTopicsToTopic
-	 * @depends testMovingTopicsToCategory
-	 */
+	 * @depends      testMovingTopicsToCategory
+	 * @param $topic_id
+	 * @param $target_id
+*/
 	public function testMovingTopicsToTopic($topic_id, $target_id) {
 		$topic = self::$topic[$topic_id];
 		$target = self::$topic[$target_id];
@@ -148,6 +157,9 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$this->checkUser(42);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function providerMovingTopicsToTopic() {
 		return array (
 			array (2,8),
@@ -155,6 +167,10 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 			array (4,6),
 		);
 	}
+
+	/**
+	 * @param $category
+	 */
 	protected function checkCategory($category) {
 		$db = JFactory::getDBO ();
 		// Count topics and posts
@@ -170,6 +186,10 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($last_topic ? $last_topic->last_post_id : 0, $category->last_post_id, 'Check that last post is right');
 	}
 
+	/**
+	 * @param $topic
+	 * @param $user
+	 */
 	protected function checkTopic($topic, $user) {
 		if ($topic->moved_id) return;
 
@@ -194,6 +214,9 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(intval($count->userposts), $topic->getUserInfo($user->userid)->posts, 'Check that user topic post count is right');
 	}
 
+	/**
+	 * @param $user
+	 */
 	protected function checkUser($user) {
 		$user = KunenaFactory::getUser($user);
 		if (!$user->exists()) return;

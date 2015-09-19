@@ -50,6 +50,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 */
 	protected $event_before_save = 'onExtensionBeforeSave';
 
+	/**
+	 * @param   array  $config
+	 */
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
@@ -134,7 +137,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Method to allow derived classes to preprocess the data.
 	 *
-	 * @param   string $context The context identifier.
+	 * @param   string  $context The context identifier.
 	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
 	 *
 	 * @return  void
@@ -215,8 +218,8 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
-	 * @param   string $type   The table type to instantiate
-	 * @param   string $prefix A prefix for the table class name. Optional.
+	 * @param   string  $type   The table type to instantiate
+	 * @param   string  $prefix A prefix for the table class name. Optional.
 	 * @param   array  $config Configuration array for model. Optional.
 	 *
 	 * @return  JTable    A database object
@@ -251,7 +254,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * @param   JForm  $form  A form object.
 	 * @param   mixed  $data  The data expected for the form.
-	 * @param   string $group Form group.
+	 * @param   string  $group Form group.
 	 *
 	 * @return  mixed  True if successful.
 	 * @throws    Exception if there is an error in the form event.
@@ -348,7 +351,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Override method to save the form data.
 	 *
-	 * @param   array $data The form data.
+	 * @param   array  $data The form data.
 	 *
 	 * @return  boolean  True on success.
 	 * @since   1.6
@@ -379,6 +382,9 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Custom clean cache method, plugins are cached in 2 places for different clients
 	 *
 	 * @since   1.6
+	 *
+	 * @param null $group
+	 * @param int  $client_id
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{

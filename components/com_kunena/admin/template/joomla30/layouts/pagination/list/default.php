@@ -1,17 +1,21 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template.Joomla30
- * @subpackage Layouts.Pagination
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Administrator.Template.Joomla30
+ * @subpackage  Layouts.Pagination
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 $data = $this->pagination->getData();
-if (count($data->pages) <= 1) return;
+if (count($data->pages) <= 1)
+{
+	return;
+}
 
 $template = new KunenaAdminTemplate30();
 ?>

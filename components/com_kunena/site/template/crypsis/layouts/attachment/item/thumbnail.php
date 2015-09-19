@@ -3,7 +3,7 @@
  * Kunena Component
  *
  * @package     Kunena.Template.Crypsis
- * @subpackage  BBCode
+ * @subpackage      BBCode
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -24,16 +24,18 @@ $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
 if ($attachment->isImage())
 {
 	?>
-	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt=""  />
+	<a href="<?php echo $attachment->getUrl(); ?>"
+		title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
+		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
 	</a>
-<?php
+	<?php
 }
 else
 {
 	?>
-	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
+	<a href="<?php echo $attachment->getUrl(); ?>"
+		title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
 		<i class="large-kicon icon-file"></i>
 	</a>
-<?php
+	<?php
 }

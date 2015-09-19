@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -20,6 +20,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param   array  $config
+	 */
 	public function __construct($config = array())
 	{
 		$this->option = 'com_kunena';
@@ -48,6 +51,13 @@ class KunenaAdminControllerPlugins extends KunenaController
 		JFactory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 	}
 
+	/**
+	 * @param   string  $name
+	 * @param   string  $prefix
+	 * @param   array  $config
+	 *
+	 * @return mixed
+	 */
 	public function getModel($name = '', $prefix = '', $config = array())
 	{
 		if (empty($name))

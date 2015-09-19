@@ -1,18 +1,17 @@
 /**
-* Kunena Component
-* @package Kunena.Template.Crypsis
-*
-* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
-**/
+ * Kunena Component
+ * @package Kunena.Template.Crypsis
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
 	/**
 	 * Get the number of field options inserted in form
 	 */
-	function getOptionsNumber()
-	{
+	function getOptionsNumber() {
 		var myoptions = jQuery('#kbbcode-poll-options').children('div.polloption');
 
 		return myoptions.length;
@@ -22,29 +21,29 @@ jQuery(document).ready(function() {
 	 * This function will insert directly in DOM the new field for poll with attibutes
 	 */
 	function createNewOptionField() {
-		var	options = getOptionsNumber();
+		var options = getOptionsNumber();
 		options++;
 
-		var polldiv = jQuery('<div></div>').attr('class','polloption').appendTo('#kbbcode-poll-options');
+		var polldiv = jQuery('<div></div>').attr('class', 'polloption').appendTo('#kbbcode-poll-options');
 
-		var label = jQuery('<label>').text(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+' '+options+' ');
+		var label = jQuery('<label>').text(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME') + ' ' + options + ' ');
 		polldiv.append(label);
 
 		newInput = document.createElement('input');
-		newInput.setAttribute('name', 'polloptionsID[new'+options+']');
-		newInput.setAttribute('id', 'field_option'+options);
+		newInput.setAttribute('name', 'polloptionsID[new' + options + ']');
+		newInput.setAttribute('id', 'field_option' + options);
 		newInput.setAttribute('class', 'inputbox form-control');
 		newInput.setAttribute('maxlength', '100');
 		newInput.setAttribute('type', 'text');
 		polldiv.append(newInput);
 	}
 
-	if( jQuery('#kbutton-poll-add') != undefined ) {
-		jQuery('#kbutton-poll-add').click(function() {
+	if (jQuery('#kbutton-poll-add') != undefined) {
+		jQuery('#kbutton-poll-add').click(function () {
 			var nboptionsmax = jQuery('#nb_options_allowed').val();
 			var koptions = getOptionsNumber();
 
-			if(!nboptionsmax || (koptions < nboptionsmax && koptions >= 2) ){
+			if (!nboptionsmax || (koptions < nboptionsmax && koptions >= 2)) {
 				createNewOptionField();
 			} else if (!nboptionsmax || koptions < 2) {
 				createNewOptionField();
@@ -57,13 +56,13 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-	if( jQuery('#kbutton-poll-rem') != undefined ) {
-		jQuery('#kbutton-poll-rem').click(function() {
-			var koption = jQuery ('div.polloption:last');
-			if(koption) {
+	if (jQuery('#kbutton-poll-rem') != undefined) {
+		jQuery('#kbutton-poll-rem').click(function () {
+			var koption = jQuery('div.polloption:last');
+			if (koption) {
 				var isvisible = jQuery('#kpoll-alert-error').is(":visible");
 
-				if (isvisible){
+				if (isvisible) {
 					jQuery('#kpoll-alert-error').hide();
 
 					jQuery('#kbutton-poll-add').show();
@@ -73,10 +72,10 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	if( jQuery('#postcatid') != undefined ) {
-		jQuery('#postcatid').change(function() {
+	if (jQuery('#postcatid') != undefined) {
+		jQuery('#postcatid').change(function () {
 			var catid = jQuery('select#postcatid option').filter(':selected').val();
-			if ( pollcategoriesid[catid] !== undefined ) {
+			if (pollcategoriesid[catid] !== undefined) {
 				jQuery('.pollbutton').show();
 			} else {
 				jQuery('.pollbutton').hide();
@@ -84,10 +83,10 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	if ( typeof pollcategoriesid != 'undefined' ) {
+	if (typeof pollcategoriesid != 'undefined') {
 		var catid = jQuery('#kcategory_poll').val();
 
-		if ( pollcategoriesid[catid] !== undefined ) {
+		if (pollcategoriesid[catid] !== undefined) {
 			jQuery('.pollbutton').show();
 		} else {
 			jQuery('.pollbutton').hide();
@@ -96,33 +95,29 @@ jQuery(document).ready(function() {
 		jQuery('.pollbutton').hide();
 	}
 
-	if (jQuery('#poll_exist_edit') != 'undefined' ) {
+	if (jQuery('#poll_exist_edit') != 'undefined') {
 		jQuery('.pollbutton').show();
 	}
 
-	jQuery('#kpoll_go_results').click(function() {
-		if(jQuery('#poll-results').is(':visible')==true)
-		{
+	jQuery('#kpoll_go_results').click(function () {
+		if (jQuery('#poll-results').is(':visible') == true) {
 			jQuery('#poll-results').hide();
 			jQuery('#kpoll_hide_results').hide();
 		}
-		else
-		{
+		else {
 			jQuery('#poll-results').show();
 			jQuery('#kpoll_hide_results').show();
 			jQuery('#kpoll_go_results').hide();
 		}
 	});
 
-	jQuery('#kpoll_hide_results').click(function() {
-		if(jQuery('#poll-results').is(':visible')==true)
-		{
+	jQuery('#kpoll_hide_results').click(function () {
+		if (jQuery('#poll-results').is(':visible') == true) {
 			jQuery('#poll-results').hide();
-      jQuery('#kpoll_go_results').show();
+			jQuery('#kpoll_go_results').show();
 			jQuery('#kpoll_hide_results').hide();
 		}
-		else
-		{
+		else {
 			jQuery('#poll-results').show();
 			jQuery('#kpoll_hide_results').show();
 			jQuery('#kpoll_go_results').hide();

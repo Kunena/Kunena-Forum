@@ -1,16 +1,17 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Pagination
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package     Kunena.Framework
+ * @subpackage  Pagination
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
- * @link http://www.kunena.org
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Pagination Class. Provides a common interface for content pagination for the Joomla! CMS.
@@ -107,10 +108,10 @@ class KunenaPagination
 	/**
 	 * Constructor.
 	 *
-	 * @param   integer  $total       The total number of items.
-	 * @param   integer  $limitstart  The offset of the item to start at.
-	 * @param   integer  $limit       The number of items to display per page.
-	 * @param   string   $prefix      The prefix used for request variables.
+	 * @param   integer $total      The total number of items.
+	 * @param   integer $limitstart The offset of the item to start at.
+	 * @param   integer $limit      The number of items to display per page.
+	 * @param   string  $prefix     The prefix used for request variables.
 	 *
 	 * @since   1.5
 	 */
@@ -121,10 +122,10 @@ class KunenaPagination
 		class_exists('JPagination');
 
 		// Value/type checking.
-		$this->total = (int) $total;
+		$this->total      = (int) $total;
 		$this->limitstart = (int) max($limitstart, 0);
-		$this->limit = (int) max($limit, 0);
-		$this->prefix = $prefix;
+		$this->limit      = (int) max($limit, 0);
+		$this->prefix     = $prefix;
 
 		if ($this->limit > $this->total)
 		{
@@ -133,7 +134,7 @@ class KunenaPagination
 
 		if (!$this->limit)
 		{
-			$this->limit = $total;
+			$this->limit      = $total;
 			$this->limitstart = 0;
 		}
 
@@ -149,7 +150,7 @@ class KunenaPagination
 		// Set the total pages and current page values.
 		if ($this->limit > 0)
 		{
-			$this->pagesTotal = ceil($this->total / $this->limit);
+			$this->pagesTotal   = ceil($this->total / $this->limit);
 			$this->pagesCurrent = ceil(($this->limitstart + 1) / $this->limit);
 		}
 
@@ -165,7 +166,7 @@ class KunenaPagination
 	/**
 	 * Set URI for pagination.
 	 *
-	 * @param  Juri  $uri  JUri object.
+	 * @param  Juri $uri JUri object.
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
 	 */
@@ -179,16 +180,16 @@ class KunenaPagination
 	/**
 	 * Set number of displayed pages.
 	 *
-	 * @param  int  $displayed  Number of displayed pages.
-	 * @param  int  $start  How many items to display from the beginning (1 2 ...)
-	 * @param  int  $end  How many items to display from the end (... 49 50)
+	 * @param  int $displayed Number of displayed pages.
+	 * @param  int $start     How many items to display from the beginning (1 2 ...)
+	 * @param  int $end       How many items to display from the end (... 49 50)
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
 	 */
 	public function setDisplayedPages($displayed = 10, $start = 0, $end = 0)
 	{
 		$this->stickyStart = $start;
-		$this->stickyStop = $end;
+		$this->stickyStop  = $end;
 
 		// Set the pagination iteration loop values.
 		$this->pagesStart = $this->pagesCurrent - (int) ($displayed / 2);
@@ -216,7 +217,7 @@ class KunenaPagination
 			$this->pagesStop = $this->pagesStart + $displayed - 1 - $end;
 		}
 
-		$this->pagesStop = max(1, $this->pagesStop);
+		$this->pagesStop  = max(1, $this->pagesStop);
 		$this->pagesTotal = max(1, $this->pagesTotal);
 
 		return $this;
@@ -226,8 +227,8 @@ class KunenaPagination
 	 * Method to set an additional URL parameter to be added to all pagination class generated
 	 * links.
 	 *
-	 * @param   string  $key    The name of the URL parameter for which to set a value.
-	 * @param   mixed   $value  The value to set for the URL parameter.
+	 * @param   string  $key   The name of the URL parameter for which to set a value.
+	 * @param   mixed  $value The value to set for the URL parameter.
 	 *
 	 * @return  mixed  The old value for the parameter.
 	 *
@@ -255,7 +256,7 @@ class KunenaPagination
 	 * Method to get an additional URL parameter (if it exists) to be added to
 	 * all pagination class generated links.
 	 *
-	 * @param   string  $key  The name of the URL parameter for which to get the value.
+	 * @param   string  $key The name of the URL parameter for which to get the value.
 	 *
 	 * @return  mixed  The value if it exists or null if it does not.
 	 *
@@ -271,7 +272,7 @@ class KunenaPagination
 	/**
 	 * Return the rationalised offset for a row with a given index.
 	 *
-	 * @param   integer  $index  The row index
+	 * @param   integer $index The row index
 	 *
 	 * @return  integer  Rationalised offset for a row with a given index.
 	 *
@@ -293,16 +294,17 @@ class KunenaPagination
 	{
 		// Do not have static cache here (if needed, keep it in object context).
 		$data = $this->_buildDataObject();
+
 		return $data;
 	}
 
 	protected function setChrome()
 	{
-		$template = KunenaFactory::getTemplate();
-		$this->itemActiveChrome = array($template, 'getPaginationItemActive');
+		$template                 = KunenaFactory::getTemplate();
+		$this->itemActiveChrome   = array($template, 'getPaginationItemActive');
 		$this->itemInactiveChrome = array($template, 'getPaginationItemInactive');
-		$this->listChrome = array($template, 'getPaginationListRender');
-		$this->footerChrome = array($template, 'getPaginationListFooter');
+		$this->listChrome         = array($template, 'getPaginationListRender');
+		$this->footerChrome       = array($template, 'getPaginationListFooter');
 	}
 
 	/**
@@ -333,7 +335,7 @@ class KunenaPagination
 	 */
 	public function getResultsCounter()
 	{
-		$html = null;
+		$html       = null;
 		$fromResult = $this->limitstart + 1;
 
 		// If the limit is reached before the end of the list.
@@ -377,7 +379,7 @@ class KunenaPagination
 		// Build the page navigation list.
 		$data = $this->_buildDataObject();
 
-		$list = array();
+		$list           = array();
 		$list['prefix'] = $this->prefix;
 
 		$this->setChrome();
@@ -386,34 +388,34 @@ class KunenaPagination
 		if ($data->all->base !== null)
 		{
 			$list['all']['active'] = true;
-			$list['all']['data'] = call_user_func($this->itemActiveChrome, $data->all);
+			$list['all']['data']   = call_user_func($this->itemActiveChrome, $data->all);
 		}
 		else
 		{
 			$list['all']['active'] = false;
-			$list['all']['data'] = call_user_func($this->itemInactiveChrome, $data->all);
+			$list['all']['data']   = call_user_func($this->itemInactiveChrome, $data->all);
 		}
 
 		if ($data->start->base !== null)
 		{
 			$list['start']['active'] = true;
-			$list['start']['data'] = call_user_func($this->itemActiveChrome, $data->start);
+			$list['start']['data']   = call_user_func($this->itemActiveChrome, $data->start);
 		}
 		else
 		{
 			$list['start']['active'] = false;
-			$list['start']['data'] = call_user_func($this->itemInactiveChrome, $data->start);
+			$list['start']['data']   = call_user_func($this->itemInactiveChrome, $data->start);
 		}
 
 		if ($data->previous->base !== null)
 		{
 			$list['previous']['active'] = true;
-			$list['previous']['data'] = call_user_func($this->itemActiveChrome, $data->previous);
+			$list['previous']['data']   = call_user_func($this->itemActiveChrome, $data->previous);
 		}
 		else
 		{
 			$list['previous']['active'] = false;
-			$list['previous']['data'] = call_user_func($this->itemInactiveChrome, $data->previous);
+			$list['previous']['data']   = call_user_func($this->itemInactiveChrome, $data->previous);
 		}
 
 		// Make sure it exists
@@ -424,35 +426,35 @@ class KunenaPagination
 			if ($page->base !== null)
 			{
 				$list['pages'][$i]['active'] = true;
-				$list['pages'][$i]['data'] = call_user_func($this->itemActiveChrome, $page);
+				$list['pages'][$i]['data']   = call_user_func($this->itemActiveChrome, $page);
 			}
 			else
 			{
 				$list['pages'][$i]['active'] = false;
-				$list['pages'][$i]['data'] = call_user_func($this->itemInactiveChrome, $page);
+				$list['pages'][$i]['data']   = call_user_func($this->itemInactiveChrome, $page);
 			}
 		}
 
 		if ($data->next->base !== null)
 		{
 			$list['next']['active'] = true;
-			$list['next']['data'] = call_user_func($this->itemActiveChrome, $data->next);
+			$list['next']['data']   = call_user_func($this->itemActiveChrome, $data->next);
 		}
 		else
 		{
 			$list['next']['active'] = false;
-			$list['next']['data'] = call_user_func($this->itemInactiveChrome, $data->next);
+			$list['next']['data']   = call_user_func($this->itemInactiveChrome, $data->next);
 		}
 
 		if ($data->end->base !== null)
 		{
 			$list['end']['active'] = true;
-			$list['end']['data'] = call_user_func($this->itemActiveChrome, $data->end);
+			$list['end']['data']   = call_user_func($this->itemActiveChrome, $data->end);
 		}
 		else
 		{
 			$list['end']['active'] = false;
-			$list['end']['data'] = call_user_func($this->itemInactiveChrome, $data->end);
+			$list['end']['data']   = call_user_func($this->itemInactiveChrome, $data->end);
 		}
 
 		return call_user_func($this->listChrome, $list);
@@ -467,14 +469,14 @@ class KunenaPagination
 	 */
 	public function getListFooter()
 	{
-		$list = array();
-		$list['prefix'] = $this->prefix;
-		$list['limit'] = $this->limit;
-		$list['limitstart'] = $this->limitstart;
-		$list['total'] = $this->total;
-		$list['limitfield'] = $this->getLimitBox();
+		$list                 = array();
+		$list['prefix']       = $this->prefix;
+		$list['limit']        = $this->limit;
+		$list['limitstart']   = $this->limitstart;
+		$list['total']        = $this->total;
+		$list['limitfield']   = $this->getLimitBox();
 		$list['pagescounter'] = $this->getPagesCounter();
-		$list['pageslinks'] = $this->getPagesLinks();
+		$list['pageslinks']   = $this->getPagesLinks();
 
 		$this->setChrome();
 
@@ -484,7 +486,7 @@ class KunenaPagination
 	/**
 	 * Creates a dropdown box for selecting how many records to show per page.
 	 *
-	 * @param   bool    $all  True if you want to display option for all.
+	 * @param   bool $all True if you want to display option for all.
 	 *
 	 * @return  string  The HTML for the limit # input box.
 	 *
@@ -492,7 +494,7 @@ class KunenaPagination
 	 */
 	public function getLimitBox($all = false)
 	{
-		$app = JFactory::getApplication();
+		$app    = JFactory::getApplication();
 		$limits = array();
 
 		// Make the option list.
@@ -543,12 +545,12 @@ class KunenaPagination
 	/**
 	 * Return the icon to move an item UP.
 	 *
-	 * @param   integer  $i          The row index.
-	 * @param   boolean  $condition  True to show the icon.
-	 * @param   string   $task       The task to fire.
-	 * @param   string   $alt        The image alternative text string.
-	 * @param   boolean  $enabled    An optional setting for access control on the action.
-	 * @param   string   $checkbox   An optional prefix for checkboxes.
+	 * @param   integer $i         The row index.
+	 * @param   boolean $condition True to show the icon.
+	 * @param   string  $task      The task to fire.
+	 * @param   string  $alt       The image alternative text string.
+	 * @param   boolean $enabled   An optional setting for access control on the action.
+	 * @param   string  $checkbox  An optional prefix for checkboxes.
 	 *
 	 * @return  string   Either the icon to move an item up or a space.
 	 *
@@ -569,13 +571,13 @@ class KunenaPagination
 	/**
 	 * Return the icon to move an item DOWN.
 	 *
-	 * @param   integer  $i          The row index.
-	 * @param   integer  $n          The number of items in the list.
-	 * @param   boolean  $condition  True to show the icon.
-	 * @param   string   $task       The task to fire.
-	 * @param   string   $alt        The image alternative text string.
-	 * @param   boolean  $enabled    An optional setting for access control on the action.
-	 * @param   string   $checkbox   An optional prefix for checkboxes.
+	 * @param   integer $i         The row index.
+	 * @param   integer $n         The number of items in the list.
+	 * @param   boolean $condition True to show the icon.
+	 * @param   string  $task      The task to fire.
+	 * @param   string  $alt       The image alternative text string.
+	 * @param   boolean $enabled   An optional setting for access control on the action.
+	 * @param   string  $checkbox  An optional prefix for checkboxes.
 	 *
 	 * @return  string   Either the icon to move an item down or a space.
 	 *
@@ -596,7 +598,7 @@ class KunenaPagination
 	/**
 	 * Create the HTML for a list footer
 	 *
-	 * @param   array  $list  Pagination list data structure.
+	 * @param   array  $list Pagination list data structure.
 	 *
 	 * @return  string  HTML for a list footer
 	 *
@@ -619,7 +621,7 @@ class KunenaPagination
 	/**
 	 * Create the html for a list footer
 	 *
-	 * @param   array  $list  Pagination list data structure.
+	 * @param   array  $list Pagination list data structure.
 	 *
 	 * @return  string  HTML for a list start, previous, next,end
 	 *
@@ -647,7 +649,7 @@ class KunenaPagination
 	/**
 	 * Method to create an active pagination link to the item
 	 *
-	 * @param   JPaginationObject  $item  The object with which to make an active link.
+	 * @param   JPaginationObject $item The object with which to make an active link.
 	 *
 	 * @return  string  HTML link
 	 *
@@ -661,12 +663,12 @@ class KunenaPagination
 			if ($item->base > 0)
 			{
 				return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=" . $item->base
-					. "; Joomla.submitform();return false;\">" . $item->text . "</a>";
+				. "; Joomla.submitform();return false;\">" . $item->text . "</a>";
 			}
 			else
 			{
 				return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix
-					. "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
+				. "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
 			}
 		}
 		else
@@ -678,7 +680,7 @@ class KunenaPagination
 	/**
 	 * Method to create an inactive pagination string
 	 *
-	 * @param   JPaginationObject  $item  The item to be processed
+	 * @param   JPaginationObject $item The item to be processed
 	 *
 	 * @return  string
 	 *
@@ -730,7 +732,7 @@ class KunenaPagination
 		}
 
 		// Set the start and previous data objects.
-		$data->start = new JPaginationObject(JText::_('JLIB_HTML_START'), $this->prefix);
+		$data->start    = new JPaginationObject(JText::_('JLIB_HTML_START'), $this->prefix);
 		$data->previous = new JPaginationObject(JText::_('JPREV'), $this->prefix);
 
 		if ($this->pagesCurrent > 1)
@@ -748,12 +750,12 @@ class KunenaPagination
 
 		// Set the next and end data objects.
 		$data->next = new JPaginationObject(JText::_('JNEXT'), $this->prefix);
-		$data->end = new JPaginationObject(JText::_('JLIB_HTML_END'), $this->prefix);
+		$data->end  = new JPaginationObject(JText::_('JLIB_HTML_END'), $this->prefix);
 
 		if ($this->pagesCurrent < $this->pagesTotal)
 		{
 			$next = $this->pagesCurrent * $this->limit;
-			$end = ($this->pagesTotal - 1) * $this->limit;
+			$end  = ($this->pagesTotal - 1) * $this->limit;
 
 			$this->uri->setVar($limitstartKey, $next);
 			$data->next->base = $next;
@@ -765,7 +767,7 @@ class KunenaPagination
 		}
 
 		$data->pages = array();
-		$range = range($this->pagesStart, $this->pagesStop);
+		$range       = range($this->pagesStart, $this->pagesStop);
 
 		$range[] = 1;
 		$range[] = $this->pagesTotal;
@@ -795,12 +797,12 @@ class KunenaPagination
 	/**
 	 * Modifies a property of the object, creating it if it does not already exist.
 	 *
-	 * @param   string  $property  The name of the property.
-	 * @param   mixed   $value     The value of the property to set.
+	 * @param   string  $property The name of the property.
+	 * @param   mixed  $value    The value of the property to set.
 	 *
 	 * @return  void
 	 *
-	 * @since   3.0
+	 * @since       3.0
 	 * @deprecated  4.0  Access the properties directly.
 	 */
 	public function set($property, $value = null)
@@ -809,8 +811,8 @@ class KunenaPagination
 
 		if (strpos($property, '.'))
 		{
-			$prop = explode('.', $property);
-			$prop[1] = ucfirst($prop[1]);
+			$prop     = explode('.', $property);
+			$prop[1]  = ucfirst($prop[1]);
 			$property = implode($prop);
 		}
 
@@ -820,12 +822,12 @@ class KunenaPagination
 	/**
 	 * Returns a property of the object or the default value if the property is not set.
 	 *
-	 * @param   string  $property  The name of the property.
-	 * @param   mixed   $default   The default value.
+	 * @param   string  $property The name of the property.
+	 * @param   mixed  $default  The default value.
 	 *
 	 * @return  mixed    The value of the property.
 	 *
-	 * @since   3.0
+	 * @since       3.0
 	 * @deprecated  4.0  Access the properties directly.
 	 */
 	public function get($property, $default = null)
@@ -834,8 +836,8 @@ class KunenaPagination
 
 		if (strpos($property, '.'))
 		{
-			$prop = explode('.', $property);
-			$prop[1] = ucfirst($prop[1]);
+			$prop     = explode('.', $property);
+			$prop[1]  = ucfirst($prop[1]);
 			$property = implode($prop);
 		}
 

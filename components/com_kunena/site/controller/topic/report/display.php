@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
@@ -42,7 +43,7 @@ class ComponentKunenaControllerTopicReportDisplay extends KunenaControllerDispla
 	{
 		parent::before();
 
-		$id = $this->input->getInt('id');
+		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 
 		$me = KunenaUserHelper::getMyself();

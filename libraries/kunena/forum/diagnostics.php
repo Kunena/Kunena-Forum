@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Forum
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaForumDiagnostics
@@ -51,13 +52,13 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return int
 	 */
 	public static function count($function)
 	{
-		$function = 'query_'.$function;
+		$function = 'query_' . $function;
 
 		if (method_exists(__CLASS__, $function))
 		{
@@ -74,18 +75,18 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return array
 	 */
 	public static function getItems($function)
 	{
-		$queryFunction = 'query_'.$function;
+		$queryFunction = 'query_' . $function;
 
 		if (method_exists(__CLASS__, $queryFunction))
 		{
-			$query = self::$queryFunction();
-			$fieldsFunction = 'fields_'.$function;
+			$query          = self::$queryFunction();
+			$fieldsFunction = 'fields_' . $function;
 
 			if (!method_exists(__CLASS__, $fieldsFunction))
 			{
@@ -103,18 +104,18 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return bool
 	 */
 	public static function fix($function)
 	{
-		$queryFunction = 'fix_'.$function;
+		$queryFunction = 'fix_' . $function;
 
 		if (method_exists(__CLASS__, $queryFunction))
 		{
 			$query = self::$queryFunction();
-			$db = JFactory::getDbo();
+			$db    = JFactory::getDbo();
 			$db->setQuery($query);
 
 			return (bool) $db->query();
@@ -124,13 +125,13 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return bool
 	 */
 	public static function canFix($function)
 	{
-		$queryFunction = 'fix_'.$function;
+		$queryFunction = 'fix_' . $function;
 
 		if (method_exists(__CLASS__, $queryFunction))
 		{
@@ -141,18 +142,18 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return bool
 	 */
 	public static function delete($function)
 	{
-		$queryFunction = 'delete_'.$function;
+		$queryFunction = 'delete_' . $function;
 
 		if (method_exists(__CLASS__, $queryFunction))
 		{
 			$query = self::$queryFunction();
-			$db = JFactory::getDbo();
+			$db    = JFactory::getDbo();
 			$db->setQuery($query);
 
 			return (bool) $db->query();
@@ -162,13 +163,13 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return bool
 	 */
 	public static function canDelete($function)
 	{
-		$queryFunction = 'delete_'.$function;
+		$queryFunction = 'delete_' . $function;
 
 		if (method_exists(__CLASS__, $queryFunction))
 		{
@@ -189,7 +190,7 @@ abstract class KunenaForumDiagnostics
 
 		if (!isset($fields[$function]))
 		{
-			$fieldsFunction = 'fields_'.$function;
+			$fieldsFunction = 'fields_' . $function;
 
 			if (!method_exists(__CLASS__, $fieldsFunction))
 			{
@@ -203,19 +204,20 @@ abstract class KunenaForumDiagnostics
 	}
 
 	/**
-	 * @param string $function
+	 * @param   string  $function
 	 *
 	 * @return string|null
 	 */
 	public static function getQuery($function)
 	{
-		$function = 'query_'.$function;
+		$function = 'query_' . $function;
 
 		if (method_exists(__CLASS__, $function))
 		{
 			$query = self::$function();
 			/** @var KunenaDatabaseQuery $query */
 			$query->select("COUNT(*)");
+
 			return (string) $query;
 		}
 
@@ -261,7 +263,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
 		}
 
-		return array('name'=>'link', 'parent_id'=>'invalid', '_link'=>'&view=categories&layout=edit&catid={$id}');
+		return array('name' => 'link', 'parent_id' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}');
 	}
 
 	/**
@@ -288,7 +290,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
 		}
 
-		return array('name'=>'link', 'alias'=>'invalid', '_link'=>'&view=categories&layout=edit&catid={$id}');
+		return array('name' => 'link', 'alias' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}');
 	}
 
 	/**
@@ -315,7 +317,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.parent_id, a.name, a.alias, a.description');
 		}
 
-		return array('name'=>'link', 'alias'=>'invalid', '_link'=>'&view=categories&layout=edit&catid={$id}');
+		return array('name' => 'link', 'alias' => 'invalid', '_link' => '&view=categories&layout=edit&catid={$id}');
 	}
 
 	/**
@@ -352,7 +354,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('item'=>'invalid');
+		return array('item' => 'invalid');
 	}
 
 	/**
@@ -389,7 +391,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('mesid'=>'invalid');
+		return array('mesid' => 'invalid');
 	}
 
 	/**
@@ -426,7 +428,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.parent, a.thread, a.catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, 'MISSING' AS message");
 		}
 
-		return array('message'=>'invalid');
+		return array('message' => 'invalid');
 	}
 
 	/**
@@ -453,7 +455,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.category_id, a.hold, a.subject');
 		}
 
-		return array('category_id'=>'invalid');
+		return array('category_id' => 'invalid');
 	}
 
 	/**
@@ -480,7 +482,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.category_id, a.hold, a.subject');
 		}
 
-		return array('category_id'=>'invalid');
+		return array('category_id' => 'invalid');
 	}
 
 	/**
@@ -517,7 +519,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.category_id, a.hold, a.subject, 'MISSING' AS messages");
 		}
 
-		return array('messages'=>'invalid');
+		return array('messages' => 'invalid');
 	}
 
 	/**
@@ -544,7 +546,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.category_id, a.hold, a.subject, poll_id");
 		}
 
-		return array('poll_id'=>'invalid');
+		return array('poll_id' => 'invalid');
 	}
 
 	/**
@@ -571,7 +573,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.category_id, a.hold, a.subject, p.title AS poll_title, CONCAT(a.poll_id, ' != ', p.threadid) AS poll_id, t.subject AS real_topic_subject");
 		}
 
-		return array('poll_id'=>'invalid');
+		return array('poll_id' => 'invalid');
 	}
 
 	/**
@@ -608,7 +610,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.category_id, a.hold, a.subject, a.moved_id');
 		}
 
-		return array('moved_id'=>'invalid');
+		return array('moved_id' => 'invalid');
 	}
 
 	/**
@@ -635,7 +637,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.category_id, a.hold, a.subject, m.id AS mesid, m.subject AS message_subject, t.message');
 		}
 
-		return array('mesid'=>'invalid');
+		return array('mesid' => 'invalid');
 	}
 
 	/**
@@ -649,6 +651,7 @@ abstract class KunenaForumDiagnostics
 
 		return $query;
 	}
+
 	/**
 	 * @return KunenaDatabaseQuery
 	 */
@@ -671,7 +674,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.parent, a.thread, CONCAT(a.catid, ' != ', t.category_id) AS catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
 		}
 
-		return array('catid'=>'invalid');
+		return array('catid' => 'invalid');
 	}
 
 	/**
@@ -708,7 +711,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.parent, a.thread, a.catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
 		}
 
-		return array('thread'=>'invalid');
+		return array('thread' => 'invalid');
 	}
 
 	/**
@@ -735,7 +738,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.id, a.mesid, a.userid, a.folder, a.filename');
 		}
 
-		return array('mesid'=>'invalid');
+		return array('mesid' => 'invalid');
 	}
 
 	/**
@@ -772,7 +775,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('threadid'=>'invalid');
+		return array('threadid' => 'invalid');
 	}
 
 	/**
@@ -799,7 +802,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.id, a.title, CONCAT(a.threadid, ' != ', IF(tt.id,tt.id,'0')) AS threadid, t.subject AS topic1_subject, tt.subject AS topic2_subject");
 		}
 
-		return array('threadid'=>'invalid');
+		return array('threadid' => 'invalid');
 	}
 
 	/**
@@ -836,7 +839,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('pollid'=>'invalid');
+		return array('pollid' => 'invalid');
 	}
 
 	/**
@@ -873,7 +876,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('pollid'=>'invalid');
+		return array('pollid' => 'invalid');
 	}
 
 	/**
@@ -910,7 +913,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('postid'=>'invalid');
+		return array('postid' => 'invalid');
 	}
 
 	/**
@@ -947,7 +950,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('category_id'=>'invalid');
+		return array('category_id' => 'invalid');
 	}
 
 	/**
@@ -984,7 +987,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.*');
 		}
 
-		return array('topic_id'=>'invalid');
+		return array('topic_id' => 'invalid');
 	}
 
 	/**
@@ -1021,7 +1024,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.user_id, a.topic_id, CONCAT(a.category_id, ' != ', t.category_id) AS category_id, a.message_id, FROM_UNIXTIME(a.time) AS time");
 		}
 
-		return array('category_id'=>'invalid');
+		return array('category_id' => 'invalid');
 	}
 
 	/**
@@ -1058,7 +1061,7 @@ abstract class KunenaForumDiagnostics
 			$query->select('a.user_id, a.topic_id, a.category_id, a.posts, a.last_post_id, a.owner, a.favorite, a.subscribed');
 		}
 
-		return array('topic_id'=>'invalid');
+		return array('topic_id' => 'invalid');
 	}
 
 	/**
@@ -1095,7 +1098,7 @@ abstract class KunenaForumDiagnostics
 			$query->select("a.user_id, a.topic_id, CONCAT(a.category_id, ' != ', t.category_id) AS category_id, a.posts, a.last_post_id, a.owner, a.favorite, a.subscribed");
 		}
 
-		return array('category_id'=>'invalid');
+		return array('category_id' => 'invalid');
 	}
 
 }

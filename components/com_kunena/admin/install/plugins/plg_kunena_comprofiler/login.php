@@ -2,24 +2,37 @@
 /**
  * Kunena Plugin
  *
- * @package       Kunena.Plugins
+ * @package     Kunena.Plugins
  * @subpackage    Comprofiler
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaLoginComprofiler
+ */
 class KunenaLoginComprofiler
 {
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param $username
+	 * @param $password
+	 * @param $rememberme
+	 *
+	 * @return null
+	 */
 	public function loginUser($username, $password, $rememberme)
 	{
 		cbimport('cb.authentication');
@@ -37,6 +50,9 @@ class KunenaLoginComprofiler
 		return $resultError ? $resultError : null;
 	}
 
+	/**
+	 * @return null
+	 */
 	public function logoutUser()
 	{
 		cbimport('cb.authentication');
@@ -60,16 +76,25 @@ class KunenaLoginComprofiler
 		return $params->get('remember_enabled', 1);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getLoginURL()
 	{
 		return cbSef('index.php?option=com_comprofiler&task=login');
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getLogoutURL()
 	{
 		return cbSef('index.php?option=com_comprofiler&task=logout');
 	}
 
+	/**
+	 * @return null|string
+	 */
 	public function getRegistrationURL()
 	{
 		global $ueConfig;
@@ -85,11 +110,17 @@ class KunenaLoginComprofiler
 		return null;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getResetURL()
 	{
 		return cbSef('index.php?option=com_comprofiler&task=lostPassword');
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getRemindURL()
 	{
 		return cbSef('index.php?option=com_comprofiler&task=lostPassword');

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Template.Crypsis
  * @subpackage  Pages.Topic
  *
@@ -15,7 +16,7 @@ $content = $this->request('Topic/Poll')
 	->execute();
 
 // Display breadcrumb path to the current category / topic / message / report.
-$parents = KunenaForumCategoryHelper::getParents($content->category->id);
+$parents   = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 /** @var KunenaForumCategory $parent */

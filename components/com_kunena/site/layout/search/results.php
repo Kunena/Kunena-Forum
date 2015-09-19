@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Site
- * @subpackage      Layout.Search
+ * @package     Kunena.Site
+ * @subpackage  Layout.Search
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            http://www.kunena.org
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -58,7 +58,8 @@ class KunenaLayoutSearchResults extends KunenaLayout
 				$ressubject = preg_replace("/" . preg_quote($searchword, '/') . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
 
 				// FIXME: enable highlighting, but only after we can be sure that we do not break html
-				// $resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+				// $resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu",
+				//       '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
 
 			$this->author      = $this->message->getAuthor();

@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package       Kunena.Plugins
+ * @package     Kunena.Plugins
  * @subpackage    Comprofiler
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -23,6 +23,9 @@ class KunenaAccessComprofiler
 	protected $tree = array();
 	protected $params = null;
 
+	/**
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
@@ -45,7 +48,7 @@ class KunenaAccessComprofiler
 	/**
 	 * Get group name in selected access type.
 	 *
-	 * @param string $accesstype Access type.
+	 * @param   string  $accesstype Access type.
 	 * @param int    $id         Group id.
 	 *
 	 * @return string|null
@@ -69,7 +72,7 @@ class KunenaAccessComprofiler
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param string $accesstype Access type.
+	 * @param   string  $accesstype Access type.
 	 * @param int    $category   Group id.
 	 *
 	 * @return array
@@ -115,11 +118,11 @@ class KunenaAccessComprofiler
 	 *
 	 * Results may be cached.
 	 *
-	 * @param array $categories List of categories, null = all.
+	 * @param   array  $categories List of categories, null = all.
 	 *
 	 * @return array(array('user_id'=>u, 'category_id'=>c, 'role'=>r))
 	 */
-	public function loadCategoryRoles(array $categories = null)
+	public function loadCategoryRoles(array  $categories = null)
 	{
 		$roles  = array();
 		$params = array('categories' => $categories, 'roles' => &$roles);
@@ -137,7 +140,7 @@ class KunenaAccessComprofiler
 	 * Results for the current user are saved into session.
 	 *
 	 * @param int   $userid     User who needs the authorisation (null=current user, 0=visitor).
-	 * @param array $categories List of categories in access type.
+	 * @param   array  $categories List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
 	 */
@@ -161,7 +164,7 @@ class KunenaAccessComprofiler
 	 * Authorise list of userids to topic or category.
 	 *
 	 * @param    mixed $topic   Category or topic.
-	 * @param    array $userids list(allow, deny).
+	 * @param    array  $userids list(allow, deny).
 	 *
 	 * @return array
 	 */

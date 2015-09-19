@@ -1,8 +1,9 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.User
+ * @subpackage      Layout.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,10 +11,10 @@
  **/
 defined('_JEXEC') or die;
 
-$user = isset($this->user) ? $this->user : KunenaUserHelper::getMyself();
-$status = $user->getStatus();
+$user        = isset($this->user) ? $this->user : KunenaUserHelper::getMyself();
+$status      = $user->getStatus();
 $status_text = $user->getStatusText();
-$link = $user->getURL();
+$link        = $user->getURL();
 
 switch ($status)
 {

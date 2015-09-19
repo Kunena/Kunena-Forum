@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Site
- * @subpackage      Layout.Topic
+ * @package     Kunena.Site
+ * @subpackage  Layout.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            http://www.kunena.org
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -66,7 +66,8 @@ class KunenaLayoutTopicModerate extends KunenaLayout
 		$params  = array('sections' => 0, 'catid' => 0);
 
 		return JHtml::_(
-			'kunenaforum.categorylist', 'targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"', 'value', 'text', $this->category->id, 'kmod_categories'
+			'kunenaforum.categorylist', 'targetcategory', 0, $options, $params,
+				'class="inputbox kmove_selectbox form-control"', 'value', 'text', $this->category->id, 'kmod_categories'
 		);
 	}
 }

@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Administrator.Joomla30
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -145,7 +145,7 @@ dt {
 /* Default mode */
 .tabbable-line > .nav-tabs {
 	border: none;
-	margin: 0px;
+	margin: 0;
 }
 .tabbable-line > .nav-tabs > li {
 	margin-right: 2px;
@@ -170,7 +170,7 @@ dt {
 	color: #a6a6a6;
 }
 .tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
-	margin-top: 0px;
+	margin-top: 0;
 }
 .tabbable-line > .nav-tabs > li.active {
 	border-bottom: 4px solid #f3565d;

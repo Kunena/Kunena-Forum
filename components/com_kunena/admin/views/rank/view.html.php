@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaAdminViewRank extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	public function display($tpl = null)
 	{
 		$this->setLayout('edit');
@@ -35,7 +38,7 @@ class KunenaAdminViewRank extends KunenaView
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
-		$help_url  = 'http://www.kunena.org/docs/Ranks_management';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Ranks_management';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 }

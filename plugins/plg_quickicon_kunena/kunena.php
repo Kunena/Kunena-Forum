@@ -2,12 +2,12 @@
 /**
  * Kunena QuickIcon Plugin
  *
- * @package       Kunena.Plugins
- * @subpackage    QuickIcon
+ * @package     Kunena.Plugins
+ * @subpackage  QuickIcon
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -17,6 +17,10 @@ defined('_JEXEC') or die ();
 class plgQuickiconKunena extends JPlugin
 {
 
+	/**
+	 * @param $subject
+	 * @param $config
+	 */
 	public function __construct(& $subject, $config)
 	{
 		// Do not load if Kunena version is not supported or KunenaForum isn't detected
@@ -34,7 +38,7 @@ class plgQuickiconKunena extends JPlugin
 	/**
 	 * Display Kunena backend icon in Joomla 2.5+
 	 *
-	 * @param string $context
+	 * @param   string  $context
 	 *
 	 * @return array|null
 	 */

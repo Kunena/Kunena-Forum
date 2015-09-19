@@ -37,6 +37,5 @@ window.onload=function(){
 	// MooTools domready event not fired
 	if (kmt_domready != true) {
 		alert('Kunena: MooTools domready event was never fired!');
-		return;
 	}
 };

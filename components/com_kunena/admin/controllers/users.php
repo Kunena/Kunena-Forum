@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -20,6 +20,9 @@ class KunenaAdminControllerUsers extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param   array  $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -626,7 +629,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$db     = JFactory::getDBO();
+		$db  = JFactory::getDBO();
 		$cid = $this->app->input->get('cid', array(), 'array');
 
 		if (!empty($cid))
@@ -640,8 +643,7 @@ class KunenaAdminControllerUsers extends KunenaController
 				try
 				{
 					$db->execute();
-				}
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					$e->getMessage();
 				}
@@ -669,7 +671,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$db     = JFactory::getDBO();
+		$db  = JFactory::getDBO();
 		$cid = $this->app->input->get('cid', array(), 'array');
 
 		if (!empty($cid))
@@ -683,8 +685,7 @@ class KunenaAdminControllerUsers extends KunenaController
 				try
 				{
 					$db->execute();
-				}
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					$e->getMessage();
 				}

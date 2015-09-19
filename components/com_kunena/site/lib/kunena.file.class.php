@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Lib
+ * @package     Kunena.Site
+ * @subpackage  Lib
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 
 defined('_JEXEC') or die();
@@ -15,7 +15,9 @@ defined('_JEXEC') or die();
 /**
  * Class CKunenaPath
  *
- * @deprecated 3.0.1
+ * @since  1.0
+ *
+ * @deprecated  3.0.1
  */
 class CKunenaPath extends KunenaPath
 {
@@ -24,7 +26,9 @@ class CKunenaPath extends KunenaPath
 /**
  * Class CKunenaFolder
  *
- * @deprecated 3.0.1
+ * @since  1.0
+ *
+ * @deprecated  3.0.1
  */
 class CKunenaFolder extends KunenaFolder
 {
@@ -33,7 +37,9 @@ class CKunenaFolder extends KunenaFolder
 /**
  * Class CKunenaFile
  *
- * @deprecated 3.0.1
+ * @since  1.0
+ *
+ * @deprecated  3.0.1
  */
 class CKunenaFile extends KunenaFile
 {

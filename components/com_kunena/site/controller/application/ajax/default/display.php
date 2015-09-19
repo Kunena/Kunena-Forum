@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Application
  *
@@ -20,7 +21,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return bool
+	 * @return   bool
 	 */
 	public function exists()
 	{
@@ -30,14 +31,14 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Return AJAX for the requested layout.
 	 *
-	 * @return string  String in JSON or RAW.
+	 * @return   string  String in JSON or RAW.
 	 *
-	 * @throws RuntimeException
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   RuntimeException
+	 * @throws   KunenaExceptionAuthorise
 	 */
 	public function execute()
 	{
-		$format = $this->input->getWord('format', 'html');
+		$format   = $this->input->getWord('format', 'html');
 		$function = 'display' . ucfirst($format);
 
 		if (!method_exists($this, $function))
@@ -76,8 +77,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 			{
 				$content = KunenaRequest::factory($display, $this->input, $this->options)
 					->setPrimary()->execute()->render();
-			}
-			catch (Exception $e)
+			} catch (Exception $e)
 			{
 				$content = $e;
 			}
@@ -89,7 +89,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Prepare AJAX display.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function before()
 	{
@@ -99,8 +99,8 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 		KunenaFactory::loadLanguage('com_kunena.models');
 		KunenaFactory::loadLanguage('com_kunena.views');
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaConfig::getInstance();
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->config   = KunenaConfig::getInstance();
 		$this->document = JFactory::getDocument();
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
@@ -109,9 +109,9 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Display output as RAW.
 	 *
-	 * @param   mixed  $content  Content to be returned.
+	 * @param    mixed $content Content to be returned.
 	 *
-	 * @return  string
+	 * @return   string
 	 */
 	public function displayRaw($content)
 	{
@@ -128,9 +128,9 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Display output as JSON.
 	 *
-	 * @param   mixed  $content  Content to be returned.
+	 * @param    mixed $content Content to be returned.
 	 *
-	 * @return  string
+	 * @return   string
 	 */
 	public function displayJson($content)
 	{

@@ -2,15 +2,20 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package     Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
+/**
+ * @param $parent
+ *
+ * @return array
+ */
 function kunena_200_2011_12_14_aliases($parent)
 {
 	$config = KunenaFactory::getConfig();
@@ -89,6 +94,14 @@ function kunena_200_2011_12_14_aliases($parent)
 	return array('action' => '', 'name' => JText::_('COM_KUNENA_INSTALL_200_ALIASES'), 'success' => true);
 }
 
+/**
+ * @param     $type
+ * @param     $item
+ * @param     $alias
+ * @param int $state
+ *
+ * @return bool
+ */
 function kCreateAlias($type, $item, $alias, $state = 0)
 {
 	$state = (int) $state;
@@ -107,6 +120,13 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 	return $success;
 }
 
+/**
+ * @param     $category
+ * @param     $alias
+ * @param int $state
+ *
+ * @return bool
+ */
 function kCreateCategoryAlias($category, $alias, $state = 0)
 {
 	$state = (int) $state;
@@ -125,6 +145,11 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
 	return $success;
 }
 
+/**
+ * @param $str
+ *
+ * @return mixed
+ */
 function kStringURLSafe($str)
 {
 	return JString::trim(preg_replace(array('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u'), array('-', ''), $str));

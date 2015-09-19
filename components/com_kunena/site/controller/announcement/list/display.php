@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Announcement
  *
@@ -46,8 +47,8 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 			$limitstart = 0;
 		}
 
-		$moderator = KunenaUserHelper::getMyself()->isModerator();
-		$this->pagination = new KunenaPagination(KunenaForumAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
+		$moderator           = KunenaUserHelper::getMyself()->isModerator();
+		$this->pagination    = new KunenaPagination(KunenaForumAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
 		$this->announcements = KunenaForumAnnouncementHelper::getAnnouncements(
 			$this->pagination->limitstart,
 			$this->pagination->limit,

@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Category
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -10,7 +11,8 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post" name="kcategoryform" id="kcategoryform">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post"
+	name="kcategoryform" id="kcategoryform">
 	<?php echo JHtml::_('form.token'); ?>
 
 	<h3>
@@ -26,11 +28,11 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 
 		<?php if (!empty($this->embedded)) : ?>
-		<div class="pull-right">
-			<?php echo $this->subLayout('Widget/Pagination/List')
-				->set('pagination', $this->pagination)
-				->set('display', true); ?>
-		</div>
+			<div class="pull-right">
+				<?php echo $this->subLayout('Widget/Pagination/List')
+					->set('pagination', $this->pagination)
+					->set('display', true); ?>
+			</div>
 		<?php endif; ?>
 	</h3>
 
@@ -38,44 +40,44 @@ defined('_JEXEC') or die;
 
 		<?php if (!empty($this->actions)) : ?>
 			<thead>
-				<tr>
-					<th colspan="2"></th>
-					<th class="center">
-						<input class="kcheckall" type="checkbox" name="toggle" value="" />
-					</th>
-				</tr>
+			<tr>
+				<th colspan="2"></th>
+				<th class="center">
+					<input class="kcheckall" type="checkbox" name="toggle" value="" />
+				</th>
+			</tr>
 			</thead>
 		<?php endif; ?>
 
 		<?php if (!empty($this->actions)) : ?>
 			<tfoot>
-				<tr>
-					<td colspan="<?php echo empty($this->actions) ? 3 : 4 ?>">
-						<?php // FIXME: Add category actions (unsubscribe selected) ?>
-					</td>
-				</tr>
+			<tr>
+				<td colspan="<?php echo empty($this->actions) ? 3 : 4 ?>">
+					<?php // FIXME: Add category actions (unsubscribe selected) ?>
+				</td>
+			</tr>
 			</tfoot>
 		<?php endif; ?>
 
 		<?php if (empty($this->categories)) : ?>
 			<tbody>
-				<tr>
-					<td>
-						<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE') ?>
-					</td>
-				</tr>
+			<tr>
+				<td>
+					<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE') ?>
+				</td>
+			</tr>
 			</tbody>
 		<?php else : ?>
 			<tbody>
-				<?php
-				foreach ($this->categories as $this->category)
-				{
-					echo $this->subLayout('Category/List/Row')
-						->set('category', $this->category)
-						->set('config', $this->config)
-						->set('checkbox', !empty($this->actions));
-				}
-				?>
+			<?php
+			foreach ($this->categories as $this->category)
+			{
+				echo $this->subLayout('Category/List/Row')
+					->set('category', $this->category)
+					->set('config', $this->config)
+					->set('checkbox', !empty($this->actions));
+			}
+			?>
 			</tbody>
 		<?php endif; ?>
 

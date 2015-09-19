@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -18,8 +18,8 @@ class KunenaAdminViewCpanel extends KunenaView
 {
 	function displayDefault()
 	{
-		$help_url  = 'http://www.kunena.org/docs/Category:Installation';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/Category:Installation';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 
 		if (version_compare(JVERSION, '3', '>'))
 		{

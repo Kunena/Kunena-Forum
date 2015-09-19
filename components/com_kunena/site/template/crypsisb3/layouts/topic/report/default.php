@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -22,7 +23,7 @@ defined('_JEXEC') or die;
 	<input type="hidden" name="id" value="<?php echo (int) $this->topic->id; ?>" />
 
 	<?php if ($this->message) : ?>
-	<input type="hidden" name="mesid" value="<?php echo (int) $this->message->id; ?>" />
+		<input type="hidden" name="mesid" value="<?php echo (int) $this->message->id; ?>" />
 	<?php endif; ?>
 
 	<?php echo JHtml::_('form.token'); ?>
@@ -32,25 +33,29 @@ defined('_JEXEC') or die;
 			<label class="control-label" for="kreport-reason">
 				<?php echo JText::_('COM_KUNENA_REPORT_REASON'); ?>
 			</label>
+
 			<div class="controls">
-				<input class="input-xxlarge form-control" type="text" name="reason" size="30" id="kreport-reason"/>
+				<input class="input-xxlarge form-control" type="text" name="reason" size="30" id="kreport-reason" />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="kreport-msg">
 				<?php echo JText::_('COM_KUNENA_REPORT_MESSAGE'); ?>
 			</label>
+
 			<div class="controls">
-				<textarea class="input-xxlarge form-control" id="kreport-msg" name="text" cols="40" rows="10"></textarea>
+				<textarea class="input-xxlarge form-control" id="kreport-msg" name="text" cols="40"
+					rows="10"></textarea>
 			</div>
 		</div>
 		<br>
+
 		<div class="control-group">
 			<div class="controls">
 				<input class="btn btn-primary" type="submit" name="Submit"
-				       value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>"/>
+					value="<?php echo JText::_('COM_KUNENA_REPORT_SEND'); ?>" />
 				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
-						<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
+					<?php echo JText::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
 			</div>
 		</div>
 	</div>

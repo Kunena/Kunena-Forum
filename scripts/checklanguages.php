@@ -1,4 +1,9 @@
 <?php
+/**
+ * @param $path
+ *
+ * @return array
+ */
 function getTranslations($path) {
 	$languages = array();
 	$dirs = scandir($path);

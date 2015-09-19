@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.BBCode
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -16,4 +17,5 @@ defined('_JEXEC') or die;
 
 $colortext = isset($this->params['colortext']) ? $this->params['colortext'] : '#ffffff';
 ?>
-<pre style="font-family:monospace;background-color:#444444;color:<?php echo $colortext; ?>"><?php echo $this->content; ?></pre>
+<pre
+	style="font-family:monospace;background-color:#444444;color:<?php echo $colortext; ?>"><?php echo $this->content; ?></pre>

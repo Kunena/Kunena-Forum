@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Forum.Message
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaForumMessageFinder
@@ -55,7 +56,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	public function filterByUserAccess(KunenaUser $user)
 	{
 		$categories = $user->getAllowedCategories();
-		$list = implode(',', $categories);
+		$list       = implode(',', $categories);
 		$this->query->where("a.catid IN ({$list})");
 
 		return $this;
@@ -69,15 +70,15 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 *
 	 * $messages->filterByCategories($me->getAllowedCategories())->limit(20)->find();
 	 *
-	 * @param array $categories
+	 * @param   array  $categories
 	 *
 	 * @return $this
 	 */
-	public function filterByCategories(array $categories)
+	public function filterByCategories(array  $categories)
 	{
 		$list = array();
 
-		if ( !empty($categories) )
+		if (!empty($categories))
 		{
 			foreach ($categories as $category)
 			{
@@ -101,8 +102,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by time.
 	 *
-	 * @param JDate $starting  Starting date or null if older than ending date.
-	 * @param JDate $ending    Ending date or null if newer than starting date.
+	 * @param JDate $starting Starting date or null if older than ending date.
+	 * @param JDate $ending   Ending date or null if newer than starting date.
 	 *
 	 * @return $this
 	 */
@@ -130,7 +131,7 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	 * posted = User has posted the message.
 	 *
 	 * @param KunenaUser $user
-	 * @param string     $action Action or negation of the action (!action).
+	 * @param   string     $action Action or negation of the action (!action).
 	 *
 	 * @return $this
 	 */
@@ -144,28 +145,28 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 		switch ($action)
 		{
 			case 'author':
-				$this->query->where('a.userid='. (int) $user->userid);
+				$this->query->where('a.userid=' . (int) $user->userid);
 				break;
 			case '!author':
-				$this->query->where('a.userid!='. (int) $user->userid);
+				$this->query->where('a.userid!=' . (int) $user->userid);
 				break;
 			case 'editor':
-				$this->query->where('a.modified_by='. (int) $user->userid);
+				$this->query->where('a.modified_by=' . (int) $user->userid);
 				break;
 			case '!editor':
-				$this->query->where('a.modified_by!='. (int) $user->userid);
+				$this->query->where('a.modified_by!=' . (int) $user->userid);
 				break;
 			case 'thanker':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.userid='. (int) $user->userid);
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.userid=' . (int) $user->userid);
 				break;
 			case '!thanker':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.userid!='. (int) $user->userid);
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.userid!=' . (int) $user->userid);
 				break;
 			case 'thankee':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.targetuserid='. (int) $user->userid);
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.targetuserid=' . (int) $user->userid);
 				break;
 			case '!thankee':
-				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.targetuserid!='. (int) $user->userid);
+				$this->query->innerJoin('#__kunena_thankyou AS th ON th.postid=a.id AND th.targetuserid!=' . (int) $user->userid);
 				break;
 		}
 
@@ -175,11 +176,11 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Filter by hold (0=published, 1=unapproved, 2=deleted, 3=topic deleted).
 	 *
-	 * @param array $hold  List of hold states to display.
+	 * @param   array  $hold List of hold states to display.
 	 *
 	 * @return $this
 	 */
-	public function filterByHold(array $hold = array(0))
+	public function filterByHold(array  $hold = array(0))
 	{
 		$this->hold = $hold;
 
@@ -189,7 +190,8 @@ class KunenaForumMessageFinder extends KunenaDatabaseObjectFinder
 	/**
 	 * Get messages.
 	 *
-	 * @param  string  $access  Kunena action access control check.
+	 * @param  string  $access Kunena action access control check.
+	 *
 	 * @return array|KunenaForumMessage[]
 	 */
 	public function find($access = 'read')

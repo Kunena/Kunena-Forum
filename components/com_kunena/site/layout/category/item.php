@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Site
- * @subpackage      Layout.Category.Item
+ * @package     Kunena.Site
+ * @subpackage  Layout.Category.Item
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            http://www.kunena.org
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -58,21 +58,23 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 		$actions  = array();
 
 		// Is user allowed to post new topic?
-		$url = $category->getNewTopicUrl();
+		$url             = $category->getNewTopicUrl();
 		$this->ktemplate = KunenaFactory::getTemplate();
-		$topicicontype = $this->ktemplate->params->get('topicicontype');
+		$topicicontype   = $this->ktemplate->params->get('topicicontype');
 
 		if ($category->getNewTopicCategory()->exists())
 		{
-			if ($url && $topicicontype=='B3')
+			if ($url && $topicicontype == 'B3')
 			{
-				$actions['create']=$this->subLayout('Widget/Button')
-					->setProperties(array('url'=>$url,'name'=>'create','scope'=>'topic','type'=>'communication','success'=>true,'icon'=>'glyphicon glyphicon-edit glyphicon-white'));
+				$actions['create'] = $this->subLayout('Widget/Button')
+					->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication',
+						'success' => true, 'icon' => 'glyphicon glyphicon-edit glyphicon-white'));
 			}
 			else
 			{
-				$actions['create']=$this->subLayout('Widget/Button')
-					->setProperties(array('url'=>$url,'name'=>'create','scope'=>'topic','type'=>'communication','success'=>true,'icon'=>'icon-edit icon-white'));
+				$actions['create'] = $this->subLayout('Widget/Button')
+					->setProperties(array('url' => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication',
+						'success' => true, 'icon' => 'icon-edit icon-white'));
 			}
 		}
 
@@ -81,16 +83,19 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 			// Is user allowed to mark forums as read?
 			$url = $category->getMarkReadUrl();
 
-			if ($this->me->exists() && $this->total){
+			if ($this->me->exists() && $this->total)
+			{
 				if ($url && $topicicontype == 'B3')
 				{
 					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'glyphicon glyphicon-check'));
+						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
+							'icon' => 'glyphicon glyphicon-check'));
 				}
 				else
 				{
 					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer'));
+						->setProperties(array('url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
+							'icon' => 'icon-drawer'));
 				}
 			}
 
@@ -101,32 +106,33 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 
 				if ($url && $topicicontype == 'B3')
 				{
-					if(!$subscribed)
+					if (!$subscribed)
 					{
-						$url                 ="index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-						$actions['subscribe']=$this->subLayout('Widget/Button')
-							->setProperties(array('url'=>$url,'name'=>'subscribe','scope'=>'category','type'=>'user','icon'=>'glyphicon glyphicon-bookmark'));
+						$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+						$actions['subscribe'] = $this->subLayout('Widget/Button')
+							->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category',
+								'type' => 'user', 'icon' => 'glyphicon glyphicon-bookmark'));
 					}
 					else
 					{
-						$url                   ="index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-						$actions['unsubscribe']=$this->subLayout('Widget/Button')
-							->setProperties(array('url'=>$url,'name'=>'unsubscribe','scope'=>'category','type'=>'user'));
+						$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+						$actions['unsubscribe'] = $this->subLayout('Widget/Button')
+							->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user'));
 					}
 				}
 				else
 				{
-					if(!$subscribed)
+					if (!$subscribed)
 					{
-						$url                 ="index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-						$actions['subscribe']=$this->subLayout('Widget/Button')
-							->setProperties(array('url'=>$url,'name'=>'subscribe','scope'=>'category','type'=>'user','icon'=>'icon-bookmark'));
+						$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+						$actions['subscribe'] = $this->subLayout('Widget/Button')
+							->setProperties(array('url' => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-bookmark'));
 					}
 					else
 					{
-						$url                   ="index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-						$actions['unsubscribe']=$this->subLayout('Widget/Button')
-							->setProperties(array('url'=>$url,'name'=>'unsubscribe','scope'=>'category','type'=>'user'));
+						$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+						$actions['unsubscribe'] = $this->subLayout('Widget/Button')
+							->setProperties(array('url' => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user'));
 					}
 				}
 			}
@@ -138,14 +144,16 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Method to get the last post link
 	 *
-	 * @param   KunenaForumCategory $category The KunenaCategory object
-	 * @param   string              $content  The content of last topic subject
-	 * @param   string              $title    The title of the link
-	 * @param   string              $class    The class attribute of the link
+	 * @param   KunenaForumCategory  $category  The KunenaCategory object
+	 * @param   string               $content   The content of last topic subject
+	 * @param   string               $title     The title of the link
+	 * @param   string               $class     The class attribute of the link
+	 * @param   int                  $length
 	 *
-	 * @see KunenaLayout::getLastPostLink()
+	 * @return  string
 	 *
-	 * @return string
+	 * @see  KunenaLayout::getLastPostLink()
+	 *
 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 20)
 	{
@@ -175,9 +183,10 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	/**
 	 * Return the links of pagination item
 	 *
-	 * @param   int $maxpages The maximum number of pages
+	 * @param   int  $maxpages  The maximum number of pages
 	 *
 	 * @return string
+	 *
 	 */
 	public function getPagination($maxpages)
 	{

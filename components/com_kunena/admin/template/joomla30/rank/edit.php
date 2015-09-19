@@ -1,18 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Ranks
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Ranks
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /** @var KunenaAdminViewRank $this */
 
-$iconPath = json_encode(JUri::root(true).'/');
+$iconPath = json_encode(JUri::root(true) . '/');
 $this->document->addScriptDeclaration("function update_rank(newimage) {
 	document.rank_image.src = {$iconPath} + newimage;
 }");
@@ -24,18 +25,20 @@ JHtml::_('behavior.multiselect');
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/joomla30/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post"
+			id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="ranks" />
 			<input type="hidden" name="task" value="save" />
-			<?php if ( $this->state->get('item.id') ): ?><input type="hidden" name="rankid" value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
-			<?php echo JHtml::_( 'form.token' ); ?>
+			<?php if ($this->state->get('item.id')): ?><input type="hidden" name="rankid"
+				value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
-				<legend><?php echo !$this->state->get('item.id') ? JText::_('COM_KUNENA_NEW_RANK'): JText::_('COM_KUNENA_RANKS_EDIT'); ?></legend>
+				<legend><?php echo !$this->state->get('item.id') ? JText::_('COM_KUNENA_NEW_RANK') : JText::_('COM_KUNENA_RANKS_EDIT'); ?></legend>
 				<table class="table table-bordered table-striped">
 
 					<tr>
@@ -43,7 +46,8 @@ JHtml::_('behavior.multiselect');
 							<?php echo JText::_('COM_KUNENA_RANKS'); ?>
 						</td>
 						<td width="80%">
-							<input class="post" type="text" name="rank_title" value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : '' ?>" />
+							<input class="post" type="text" name="rank_title"
+								value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_title : '' ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -52,10 +56,12 @@ JHtml::_('behavior.multiselect');
 						</td>
 						<td>
 							<?php echo $this->listranks; ?>
-							<?php if ( !$this->state->get('item.id') ): ?>
-							<img name="rank_image" src="" border="0" alt="" />
+							<?php if (!$this->state->get('item.id')): ?>
+								<img name="rank_image" src="" border="0" alt="" />
 							<?php else: ?>
-							<img name="rank_image" src="<?php echo $this->escape($this->ktemplate->getRankPath( $this->rank_selected->rank_image, true)); ?>" border="0" alt="" />
+								<img name="rank_image"
+									src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rank_image, true)); ?>"
+									border="0" alt="" />
 							<?php endif; ?>
 						</td>
 					</tr>
@@ -64,7 +70,8 @@ JHtml::_('behavior.multiselect');
 							<?php echo JText::_('COM_KUNENA_RANKSMIN'); ?>
 						</td>
 						<td>
-							<input class="post" type="text" name="rank_min" value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_min : '1' ?>" />
+							<input class="post" type="text" name="rank_min"
+								value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rank_min : '1' ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -72,7 +79,9 @@ JHtml::_('behavior.multiselect');
 							<?php echo JText::_('COM_KUNENA_RANKS_SPECIAL'); ?>
 						</td>
 						<td>
-							<input type="checkbox" <?php echo isset($this->rank_selected) && $this->rank_selected->rank_special ? 'checked="checked"' : '' ?> name="rank_special" value="1" />
+							<input
+								type="checkbox" <?php echo isset($this->rank_selected) && $this->rank_selected->rank_special ? 'checked="checked"' : '' ?>
+								name="rank_special" value="1" />
 						</td>
 					</tr>
 				</table>

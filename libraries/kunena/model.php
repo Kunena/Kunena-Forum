@@ -1,18 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Model for Kunena
  *
- * @since		2.0
+ * @since  2.0
  */
 class KunenaModel extends JModelLegacy
 {
@@ -61,10 +62,10 @@ class KunenaModel extends JModelLegacy
 		$this->option = 'com_kunena';
 		parent::__construct($config);
 
-		$this->app = JFactory::getApplication();
-		$this->me = KunenaUserHelper::getMyself();
+		$this->app    = JFactory::getApplication();
+		$this->me     = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
-		$this->input = $input ? $input : $this->app->input;
+		$this->input  = $input ? $input : $this->app->input;
 	}
 
 	public function initialize($params = array(), $embedded = true)
@@ -103,6 +104,7 @@ class KunenaModel extends JModelLegacy
 	 * Escapes a value for output in a view script.
 	 *
 	 * @param  mixed $var The output to escape.
+	 *
 	 * @return mixed The escaped value.
 	 */
 	public function escape($var)

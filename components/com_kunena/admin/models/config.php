@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -20,6 +20,9 @@ jimport('joomla.application.component.model');
  */
 class KunenaAdminModelConfig extends KunenaModel
 {
+	/**
+	 * @return array
+	 */
 	function getConfiglists()
 	{
 		$lists = array();
@@ -165,13 +168,13 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['userlist_userhits']      = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_userhits);
 		$lists ['reportmsg']              = JHtml::_('select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $this->config->reportmsg);
 
-		$captcha = array();
+		$captcha   = array();
 		$captcha[] = JHtml::_('select.option', '-1', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_NOBODY'));
 		$captcha[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_REGISTERED_USERS'));
 		$captcha[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_GUESTS_REGISTERED_USERS'));
 
-		$lists ['captcha']                = JHtml::_('select.genericlist', $captcha, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $this->config->captcha);
-		$lists ['mailfull']               = JHtml::_('select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailfull);
+		$lists ['captcha']  = JHtml::_('select.genericlist', $captcha, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $this->config->captcha);
+		$lists ['mailfull'] = JHtml::_('select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailfull);
 		// New for 1.0.5
 		$lists ['showspoilertag']   = JHtml::_('select.genericlist', $yesno, 'cfg_showspoilertag', 'class="inputbox" size="1"', 'value', 'text', $this->config->showspoilertag);
 		$lists ['showvideotag']     = JHtml::_('select.genericlist', $yesno, 'cfg_showvideotag', 'class="inputbox" size="1"', 'value', 'text', $this->config->showvideotag);
@@ -452,10 +455,10 @@ class KunenaAdminModelConfig extends KunenaModel
 
 		$lists['ebay_language'] = JHtml::_('select.genericlist', $ebay_language, 'cfg_ebay_language', 'class="inputbox" size="1"', 'value', 'text', $this->config->ebay_language);
 
-		$useredit = array();
-		$useredit[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
-		$useredit[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
-		$useredit[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
+		$useredit          = array();
+		$useredit[]        = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
+		$useredit[]        = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
+		$useredit[]        = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
 		$lists['useredit'] = JHtml::_('select.genericlist', $useredit, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->useredit);
 
 		$lists ['allow_change_subject'] = JHtml::_('select.genericlist', $yesno, 'cfg_allow_change_subject', 'class="inputbox" size="1"', 'value', 'text', $this->config->allow_change_subject);

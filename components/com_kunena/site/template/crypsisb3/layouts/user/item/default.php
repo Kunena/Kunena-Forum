@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.User
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -18,10 +19,10 @@ $tabs = $this->getTabs();
 	<?php echo $this->escape($this->profile->getName()); ?>
 
 	<?php if ($this->profile->isAuthorised('edit')) : ?>
-	<?php echo $this->profile->getLink(
-		'<i class="glyphicon glyphicon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
-		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn btn-default pull-right'
-	); ?>
+		<?php echo $this->profile->getLink(
+			'<i class="glyphicon glyphicon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
+			JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn btn-default pull-right'
+		); ?>
 	<?php endif; ?>
 
 </h3>
@@ -33,26 +34,26 @@ echo $this->subLayout('User/Item/Summary')
 ?>
 
 <div class="tabs hidden-xs">
-<br />
-<br />
+	<br />
+	<br />
 
 	<ul class="nav nav-tabs">
 
 		<?php foreach ($tabs as $name => $tab) : ?>
-		<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
-			<a href="#<?php echo $name; ?>" data-toggle="tab"><?php echo $tab->title; ?></a>
-		</li>
+			<li<?php echo $tab->active ? ' class="active"' : ''; ?>>
+				<a href="#<?php echo $name; ?>" data-toggle="tab"><?php echo $tab->title; ?></a>
+			</li>
 		<?php endforeach; ?>
 
 	</ul>
 	<div class="tab-content">
 
 		<?php foreach ($tabs as $name => $tab) : ?>
-		<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="<?php echo $name; ?>">
-			<div>
-				<?php echo $tab->content; ?>
+			<div class="tab-pane fade<?php echo $tab->active ? ' in active' : ''; ?>" id="<?php echo $name; ?>">
+				<div>
+					<?php echo $tab->content; ?>
+				</div>
 			</div>
-		</div>
 		<?php endforeach; ?>
 
 	</div>

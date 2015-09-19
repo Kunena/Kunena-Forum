@@ -36,13 +36,13 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 * @var array
 	 */
 	protected $pathTypes = array(
-		'emoticons' => 'media/emoticons',
-		'ranks' => 'media/ranks',
-		'icons' => 'media/icons',
+		'emoticons'     => 'media/emoticons',
+		'ranks'         => 'media/ranks',
+		'icons'         => 'media/icons',
 		'categoryicons' => 'media/category_icons',
-		'images' => 'media/images',
-		'js' => 'media/js',
-		'css' => 'media/css'
+		'images'        => 'media/images',
+		'js'            => 'media/js',
+		'css'           => 'media/css'
 	);
 
 	/**
@@ -52,13 +52,13 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	 */
 	protected $userClasses = array(
 		'kwho-',
-		'admin' => 'kwho-admin',
+		'admin'     => 'kwho-admin',
 		'globalmod' => 'kwho-globalmoderator',
 		'moderator' => 'kwho-moderator',
-		'user' => 'kwho-user',
-		'guest' => 'kwho-guest',
-		'banned' => 'kwho-banned',
-		'blocked' => 'kwho-blocked'
+		'user'      => 'kwho-user',
+		'guest'     => 'kwho-guest',
+		'banned'    => 'kwho-banned',
+		'blocked'   => 'kwho-blocked'
 	);
 
 	/**
@@ -105,21 +105,22 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css';
 		if (file_exists($filename))
 		{
-			$this->addStyleSheet ( 'custom.css' );
+			$this->addStyleSheet('custom.css');
 		}
 
 		$this->ktemplate = KunenaFactory::getTemplate();
-		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		$fontawesome     = $this->ktemplate->params->get('fontawesome');
 		if ($fontawesome) : ?>
 			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		<?php endif;
 
 		// Load template colors settings
-		$styles = <<<EOF
+		$styles    = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
 		$iconcolor = $this->ktemplate->params->get('IconColor');
-		if ($iconcolor) {
+		if ($iconcolor)
+		{
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] i,
 		.layout#kunena .glyphicon-topic,
@@ -130,7 +131,8 @@ EOF;
 		}
 
 		$iconcolornew = $this->ktemplate->params->get('IconColorNew');
-		if ($iconcolornew) {
+		if ($iconcolornew)
+		{
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
@@ -148,7 +150,7 @@ EOF;
 
 	/**
 	 * @param        $filename
-	 * @param string $group
+	 * @param   string  $group
 	 *
 	 * @return JDocument
 	 */
@@ -210,7 +212,7 @@ HTML;
 
 	/**
 	 * @param        $name
-	 * @param string $title
+	 * @param   string  $title
 	 *
 	 * @return string
 	 */
@@ -221,7 +223,7 @@ HTML;
 
 	/**
 	 * @param        $image
-	 * @param string $alt
+	 * @param   string  $alt
 	 *
 	 * @return string
 	 */

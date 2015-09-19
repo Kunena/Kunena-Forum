@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package     Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -20,7 +20,7 @@ class KunenaViewInstall extends JViewLegacy
 	/**
 	 * Method to display the view.
 	 *
-	 * @param    string $tpl A template file to load.
+	 * @param    string  $tpl A template file to load.
 	 *
 	 * @return    mixed    JError object on failure, void on success.
 	 * @throws    object    JError

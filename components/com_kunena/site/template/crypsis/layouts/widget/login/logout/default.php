@@ -3,7 +3,7 @@
  * Kunena Component
  *
  * @package     Kunena.Template.Crypsis
- * @subpackage  Layout.Widget
+ * @subpackage      Layout.Widget
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -36,17 +36,20 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<a href="<?php echo $this->me->getURL(); ?>">
 					<?php echo $this->me->getAvatarImage('img-polaroid', 128, 128); ?>
 				</a>
+
 				<p>
 					<i class="icon-clock"></i>
 					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 				</p>
 			</div>
 			<div class="divider"></div>
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form" class="form-inline">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="status-form"
+				class="form-inline">
 				<div>
 					<input id="status-online" class="hide" type="radio" value="0" name="status" />
 					<label for="status-online" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . JSession::getFormToken() . '=1'); ?>" class="btn btn-link">
+						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . JSession::getFormToken() . '=1'); ?>"
+							class="btn btn-link">
 							<i class="icon-plus green"></i>
 							<?php echo JText::_('COM_KUNENA_ONLINE') ?>
 						</a>
@@ -56,7 +59,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<div>
 					<input id="status-away" class="hide" type="radio" value="1" name="status" />
 					<label for="status-away" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . JSession::getFormToken() . '=1'); ?>" class="btn btn-link">
+						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . JSession::getFormToken() . '=1'); ?>"
+							class="btn btn-link">
 							<i class="icon-plus yellow"></i>
 							<?php echo JText::_('COM_KUNENA_AWAY') ?>
 						</a>
@@ -65,7 +69,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<div>
 					<input id="status-busy" class="hide" type="radio" value="2" name="status" />
 					<label for="status-busy" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . JSession::getFormToken() . '=1');; ?>" class="btn btn-link">
+						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . JSession::getFormToken() . '=1');; ?>"
+							class="btn btn-link">
 							<i class="icon-minus red"></i>
 							<?php echo JText::_('COM_KUNENA_BUSY') ?>
 						</a>
@@ -74,7 +79,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<div>
 					<input id="status-invisible" class="hide" type="radio" value="3" name="status" />
 					<label for="status-invisible" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . JSession::getFormToken() . '=1'); ?>" class="btn btn-link">
+						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . JSession::getFormToken() . '=1'); ?>"
+							class="btn btn-link">
 							<i class="icon-minus grey"></i>
 							<?php echo JText::_('COM_KUNENA_INVISIBLE') ?>
 						</a>
@@ -132,7 +138,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 
 			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
 
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form"
+				class="form-inline">
 				<div>
 					<button class="btn btn-link" name="submit" type="submit">
 						<i class="icon-out"></i>
@@ -150,7 +157,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 /* Note these have to be outsize the dropdown as z-index stack context is different
 from the parent forcing the dropsown to take over z-index calculation */
 ?>
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="statusText-form" class="form-inline">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="statusText-form"
+	class="form-inline">
 	<?php echo $this->subLayout('Widget/Modal')
 		->set('id', 'statusTextModal')
 		->set('name', 'status_text')

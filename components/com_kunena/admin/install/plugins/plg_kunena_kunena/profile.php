@@ -2,15 +2,18 @@
 /**
  * Kunena Plugin
  *
- * @package       Kunena.Plugins
+ * @package     Kunena.Plugins
  * @subpackage    Kunena
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaProfileKunena
+ */
 class KunenaProfileKunena extends KunenaProfile
 {
 	protected $params = null;
@@ -24,8 +27,8 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string  $action
+	 * @param   bool   $xhtml
 	 *
 	 * @return bool
 	 */
@@ -44,8 +47,8 @@ class KunenaProfileKunena extends KunenaProfile
 
 	/**
 	 * @param        $user
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string  $task
+	 * @param   bool   $xhtml
 	 *
 	 * @return bool
 	 */
@@ -120,7 +123,7 @@ class KunenaProfileKunena extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
 	 * @return bool
 	 */

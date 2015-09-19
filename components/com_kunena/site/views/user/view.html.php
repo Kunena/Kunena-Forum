@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -18,11 +18,17 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewUser extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->displayCommon($tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayModerate($tpl = null)
 	{
 		$this->layout = 'default';
@@ -30,6 +36,9 @@ class KunenaViewUser extends KunenaView
 		$this->displayCommon($tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayEdit($tpl = null)
 	{
 		$userid               = JRequest::getInt('userid');
@@ -46,6 +55,9 @@ class KunenaViewUser extends KunenaView
 		$this->displayCommon($tpl);
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	function displayList($tpl = null)
 	{
 		if ($this->config->userlist_allowed && JFactory::getUser()->guest)
@@ -64,6 +76,11 @@ class KunenaViewUser extends KunenaView
 		$this->render('User/List', $tpl);
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return KunenaPagination
+	 */
 	function getPaginationObject($maxpages)
 	{
 		$pagination = new KunenaPagination($this->count, $this->state->get('list.start'), $this->state->get('list.limit'));
@@ -72,11 +89,19 @@ class KunenaViewUser extends KunenaView
 		return $pagination;
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return string
+	 */
 	function getPagination($maxpages)
 	{
 		return $this->getPaginationObject($maxpages)->getPagesLinks();
 	}
 
+	/**
+	 * @param null $tpl
+	 */
 	protected function displayCommon($tpl = null)
 	{
 		$userid = JRequest::getInt('userid');
@@ -125,11 +150,11 @@ class KunenaViewUser extends KunenaView
 		{
 			if ($this->do != 'edit')
 			{
-				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_EDIT') . ' &raquo;', JText::_('COM_KUNENA_EDIT') . ' &raquo;', 'nofollow', 'edit','');
+				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_EDIT') . ' &raquo;', JText::_('COM_KUNENA_EDIT') . ' &raquo;', 'nofollow', 'edit', '');
 			}
 			else
 			{
-				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow','','');
+				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow', '', '');
 			}
 		}
 
@@ -169,8 +194,7 @@ class KunenaViewUser extends KunenaView
 		try
 		{
 			$offset = new DateTimeZone($this->user->getParam('timezone', $this->app->getCfg('offset', null)));
-		}
-		catch (Exception $e)
+		} catch (Exception $e)
 		{
 			$offset = null;
 		}
@@ -457,6 +481,9 @@ class KunenaViewUser extends KunenaView
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	function displayKarma()
 	{
 		$userkarma = '';
@@ -475,6 +502,11 @@ class KunenaViewUser extends KunenaView
 		return $userkarma;
 	}
 
+	/**
+	 * @param $path
+	 *
+	 * @return mixed
+	 */
 	function getAvatarGallery($path)
 	{
 		$files = KunenaFolder::files($path, '(\.gif|\.png|\.jpg|\.jpeg)$');
@@ -484,6 +516,12 @@ class KunenaViewUser extends KunenaView
 
 	// This function was modified from the one posted to PHP.net by rockinmusicgv
 	// It is available under the readdir() entry in the PHP online manual
+	/**
+	 * @param $path
+	 * @param $select_name
+	 *
+	 * @return null
+	 */
 	function getAvatarGalleries($path, $select_name)
 	{
 		jimport('joomla.utilities.string');
@@ -588,6 +626,9 @@ class KunenaViewUser extends KunenaView
 		echo $this->loadTemplateFile('avatar');
 	}
 
+	/**
+	 * @return array
+	 */
 	function getAllImagesInGallery()
 	{
 		$path              = JPATH_ROOT . '/media/kunena/avatars/gallery';
@@ -692,6 +733,9 @@ class KunenaViewUser extends KunenaView
 		echo $this->loadTemplateFile('list');
 	}
 
+	/**
+	 * @param $user
+	 */
 	function displayUserRow($user)
 	{
 		$this->user  = KunenaFactory::getUser($user->id);
@@ -707,6 +751,11 @@ class KunenaViewUser extends KunenaView
 		echo $this->loadTemplateFile('row');
 	}
 
+	/**
+	 * @param $date
+	 *
+	 * @return mixed
+	 */
 	function getLastvisitdate($date)
 	{
 		$lastvisit = JHtml::_('date', $date, 'Y-m-d\TH:i:sP ');
@@ -714,6 +763,9 @@ class KunenaViewUser extends KunenaView
 		return $lastvisit;
 	}
 
+	/**
+	 * @return bool
+	 */
 	function canManageAttachments()
 	{
 		if ($this->config->show_imgfiles_manage_profile)
@@ -772,6 +824,9 @@ class KunenaViewUser extends KunenaView
 		echo $this->loadTemplateFile('attachments');
 	}
 
+	/**
+	 * @param $type
+	 */
 	protected function _prepareDocument($type)
 	{
 		if ($type == 'list')

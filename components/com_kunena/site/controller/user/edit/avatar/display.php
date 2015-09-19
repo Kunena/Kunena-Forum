@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
@@ -34,9 +35,9 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Prepare avatar form.
 	 *
-	 * @return void
+	 * @return   void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   KunenaExceptionAuthorise
 	 */
 	protected function before()
 	{
@@ -49,14 +50,14 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
 		}
 
-		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
-		$this->gallery = $this->input->getString('gallery', '');
-		$this->galleries = $this->getGalleries($path);
+		$path                 = JPATH_ROOT . '/media/kunena/avatars/gallery';
+		$this->gallery        = $this->input->getString('gallery', '');
+		$this->galleries      = $this->getGalleries($path);
 		$this->galleryOptions = $this->getGalleryOptions($path);
-		$this->galleryImages = isset($this->galleries[$this->gallery])
+		$this->galleryImages  = isset($this->galleries[$this->gallery])
 			? $this->galleries[$this->gallery]
 			: reset($this->galleries);
-		$this->galleryUri = JUri::root(true) . '/media/kunena/avatars/gallery';
+		$this->galleryUri     = JUri::root(true) . '/media/kunena/avatars/gallery';
 
 		$this->headerText = JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
 	}
@@ -64,7 +65,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function prepareDocument()
 	{
@@ -74,13 +75,13 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get avatar gallery directories.
 	 *
-	 * @param   string  $path  Absolute path for the gallery.
+	 * @param    string  $path  Absolute path for the gallery.
 	 *
-	 * @return  array|string[]  List of directories.
+	 * @return   array|string[]  List of directories.
 	 */
 	protected function getGalleries($path)
 	{
-		$files = array();
+		$files  = array();
 		$images = $this->getGallery($path);
 
 		if ($images)
@@ -110,9 +111,9 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get files from selected gallery.
 	 *
-	 * @param   string  $path  Absolute path for the gallery.
+	 * @param    string  $path Absolute path for the gallery.
 	 *
-	 * @return  array
+	 * @return   array
 	 */
 	protected function getGallery($path)
 	{
@@ -122,7 +123,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 	/**
 	 * Get avatar galleries and make them select option list.
 	 *
-	 * @return array|string[]  List of options.
+	 * @return   array|string[]  List of options.
 	 */
 	protected function getGalleryOptions()
 	{
@@ -130,7 +131,7 @@ class ComponentKunenaControllerUserEditAvatarDisplay extends ComponentKunenaCont
 
 		foreach ($this->galleries as $gallery => $files)
 		{
-			$text = $gallery ? JString::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
+			$text      = $gallery ? JString::ucwords(str_replace('/', ' / ', $gallery)) : JText::_('COM_KUNENA_DEFAULT_GALLERY');
 			$options[] = JHtml::_('select.option', $gallery, $text);
 		}
 

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Layout.Announcement.List
  *
@@ -21,7 +22,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	/**
 	 * Method to check if the user can publish an announcement
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	public function canPublish()
 	{
@@ -31,7 +32,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	/**
 	 * Method to check if the user can edit an announcement
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	public function canEdit()
 	{
@@ -41,7 +42,7 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	/**
 	 * Method to check if the user can delete an announcement
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	public function canDelete()
 	{
@@ -54,9 +55,9 @@ class KunenaLayoutAnnouncementListRow extends KunenaLayout
 	 * @param   string  $name  The name of the field
 	 * @param   string  $mode  Define the way to display the date on the field
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
-	public function displayField($name, $mode=null)
+	public function displayField($name, $mode = null)
 	{
 		return $this->announcement->displayField($name, $mode);
 	}

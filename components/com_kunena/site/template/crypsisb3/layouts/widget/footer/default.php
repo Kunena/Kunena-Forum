@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Widget
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -15,12 +16,12 @@ defined('_JEXEC') or die;
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom'); ?>
 
 <?php if (($rss = $this->getRSS()) !== null) : ?>
-<div class="pull-right large-kicon"><?php echo $this->getRSS(); ?></div>
-<div class="clearfix"></div>
+	<div class="pull-right large-kicon"><?php echo $this->getRSS(); ?></div>
+	<div class="clearfix"></div>
 <?php endif; ?>
 
 <?php if (($time = $this->getTime()) !== null) : ?>
-<div class="center">
-	<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
-</div>
+	<div class="center">
+		<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
+	</div>
 <?php endif; ?>

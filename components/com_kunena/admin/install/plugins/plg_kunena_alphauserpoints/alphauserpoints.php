@@ -5,14 +5,21 @@
  * @package    Kunena.Plugins
  * @subpackage AlphaUserPoints
  *
- * @Copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * Class plgKunenaAlphaUserPoints
+ */
 class plgKunenaAlphaUserPoints extends JPlugin
 {
+	/**
+	 * @param $subject
+	 * @param $config
+	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
@@ -38,6 +45,9 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 *
 	 * @return KunenaAvatar
 	 */
+	/**
+	 * @return KunenaAvatarAlphaUserPoints|null
+	 */
 	public function onKunenaGetAvatar()
 	{
 		if (!$this->params->get('avatar', 1))
@@ -55,6 +65,9 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 *
 	 * @return KunenaProfile
 	 */
+	/**
+	 * @return KunenaProfileAlphaUserPoints|null
+	 */
 	public function onKunenaGetProfile()
 	{
 		if (!$this->params->get('profile', 1))
@@ -71,6 +84,9 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity
+	 */
+	/**
+	 * @return KunenaActivityAlphaUserPoints|null
 	 */
 	public function onKunenaGetActivity()
 	{

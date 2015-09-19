@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Search
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -19,14 +20,14 @@ if (empty($this->results))
 <h2>
 	<?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?>
 	<small>
-		(<?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords'))); ?>)
+		(<?php echo JText::sprintf('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords'))); ?>)
 	</small>
 </h2>
 
 <?php if ($this->error) : ?>
-<div class="alert alert-error">
-	<?php echo $this->error; ?>
-</div>
+	<div class="alert alert-error">
+		<?php echo $this->error; ?>
+	</div>
 <?php endif; ?>
 
 <?php
@@ -39,7 +40,7 @@ foreach ($this->results as $message)
 
 <?php
 $start = $this->pagination->limitstart + 1;
-$stop = $this->pagination->limitstart + count($this->results);
+$stop  = $this->pagination->limitstart + count($this->results);
 $range = $start . ' - ' . $stop;
 echo JText::sprintf('COM_KUNENA_FORUM_SEARCHRESULTS', $range, $this->pagination->total);
 ?>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
@@ -34,43 +35,43 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		parent::before();
 
 		$catid = $this->input->getInt('catid');
-		$id = $this->input->getInt('id');
+		$id    = $this->input->getInt('id');
 		$mesid = $this->input->getInt('mesid');
 		$quote = $this->input->getBool('quote', false);
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me       = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
 		if (!$mesid)
 		{
 			$this->topic = KunenaForumTopicHelper::get($id);
-			$parent = KunenaForumMessageHelper::get($this->topic->first_post_id);
+			$parent      = KunenaForumMessageHelper::get($this->topic->first_post_id);
 		}
 		else
 		{
-			$parent = KunenaForumMessageHelper::get($mesid);
+			$parent      = KunenaForumMessageHelper::get($mesid);
 			$this->topic = $parent->getTopic();
 		}
 
 		$this->category = $this->topic->getCategory();
 
-		if ( $parent->isAuthorised('reply') && $this->me->canDoCaptcha() )
+		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
 				$plugin = JPluginHelper::getPlugin('captcha');
 				$params = new JRegistry($plugin[0]->params);
-				
+
 				$captcha_pubkey = $params->get('public_key');
 				$catcha_privkey = $params->get('private_key');
-				
+
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					JPluginHelper::importPlugin('captcha');
 					$dispatcher = JDispatcher::getInstance();
-					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+					$result     = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 
 					$this->captchaEnabled = $result[0];
 				}
@@ -92,7 +93,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
 		// Can user edit topic icons?
 		if ($this->config->topicicons && $this->topic->isAuthorised('edit'))
@@ -105,12 +106,12 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->canSubscribe = $this->canSubscribe();
-		$this->headerText = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ' ' . $this->topic->subject;
+		$this->headerText   = JText::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ' ' . $this->topic->subject;
 	}
 
 	/**
@@ -131,7 +132,8 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	protected function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+			|| $this->config->topic_subscriptions == 'disabled'
+		)
 		{
 			return false;
 		}

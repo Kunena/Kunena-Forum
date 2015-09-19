@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -16,10 +16,13 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
 /**
  * Kunena Category Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerCategory extends KunenaAdminControllerCategories
 {
+	/**
+	 * @param   array  $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -27,6 +30,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$this->baseurl2 = 'index.php?option=com_kunena&view=category';
 	}
 
+	/**
+	 *
+	 */
 	function jump()
 	{
 		$catid = JRequest::getInt('catid', 0);
@@ -41,6 +47,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		}
 	}
 
+	/**
+	 *
+	 */
 	function markread()
 	{
 		if (!JSession::checkToken('request'))
@@ -111,6 +120,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	function subscribe()
 	{
 		if (!JSession::checkToken('get'))
@@ -144,6 +156,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	function unsubscribe()
 	{
 		if (!JSession::checkToken('request'))
@@ -157,10 +172,13 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$catid  = JRequest::getInt('catid', 0);
 		$catids = $catid
 			? array($catid)
-			: array_keys(JRequest::getVar('categories', array(), 'post', 'array')); // Array or integer keys
+			: array_keys(JRequest::getVar('categories', array(), 'post', 'array'));
+
+		// Array or integer keys
 		JArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
+
 		foreach ($categories as $category)
 		{
 			if (!$category->authorise('read'))

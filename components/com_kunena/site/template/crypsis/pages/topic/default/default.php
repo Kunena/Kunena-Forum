@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Template.Crypsis
  * @subpackage  Pages.Topic
  *
@@ -14,7 +15,7 @@ $content = $this->execute('Topic/Item')
 	->setLayout(KunenaUserHelper::getMyself()->getTopicLayout());
 
 // Display breadcrumb path to the current category / topic / message / moderate.
-$parents = KunenaForumCategoryHelper::getParents($content->category->id);
+$parents   = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 /** @var KunenaForumCategory $parent */

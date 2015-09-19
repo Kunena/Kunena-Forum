@@ -1,20 +1,21 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  *
  * Based on FireBoard Component
  * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.bestofjoomla.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link          http://www.bestofjoomla.com
  **/
 
 // Do not allow direct linking
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaConfig
@@ -59,7 +60,7 @@ class KunenaConfig extends JObject
 	public $enablerss = 1;
 
 	/**
-	 * @var    integer	Threads per page; input, number
+	 * @var    integer    Threads per page; input, number
 	 * @since  1.0.0
 	 */
 	public $threads_per_page = 20;
@@ -810,7 +811,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @var    integer  List category show moderators; select, boolean
-	 * @since  1.6.0
+	 * @since      1.6.0
 	 * @deprecated K4.0 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
@@ -1154,7 +1155,7 @@ class KunenaConfig extends JObject
 
 	public function __construct()
 	{
-		parent::__construct ();
+		parent::__construct();
 	}
 
 	public static function getInstance()
@@ -1164,7 +1165,7 @@ class KunenaConfig extends JObject
 		if (!$instance)
 		{
 			/** @var JCache|JCacheController $cache */
-			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache    = JFactory::getCache('com_kunena', 'output');
 			$instance = $cache->get('configuration', 'com_kunena');
 
 			if (!$instance)
@@ -1175,6 +1176,7 @@ class KunenaConfig extends JObject
 
 			$cache->store($instance, 'configuration', 'com_kunena');
 		}
+
 		return $instance;
 	}
 
@@ -1186,24 +1188,24 @@ class KunenaConfig extends JObject
 		$this->setProperties($properties);
 
 		// Disable some experimental features
-		$this->keywords = 0;
+		$this->keywords     = 0;
 		$this->userkeywords = 0;
 	}
 
 	public function save()
 	{
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 
 		// Perform custom validation of config data before we write it.
-		$this->check ();
+		$this->check();
 
 		// Get current configuration
 		$params = $this->getProperties();
 		unset($params['id']);
 
-		$db->setQuery ( "REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
-		$db->query ();
-		KunenaError::checkDatabaseError ();
+		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
+		$db->query();
+		KunenaError::checkDatabaseError();
 
 		// Clear cache.
 		KunenaCacheHelper::clear();
@@ -1217,23 +1219,24 @@ class KunenaConfig extends JObject
 
 	/**
 	 * Load config settings from database table.
+	 *
 	 * @param null $userinfo Not used.
 	 */
 	public function load($userinfo = null)
 	{
-		$db = JFactory::getDBO ();
-		$db->setQuery ( "SELECT * FROM #__kunena_configuration WHERE id=1" );
-		$config = $db->loadAssoc ();
-		KunenaError::checkDatabaseError ();
+		$db = JFactory::getDBO();
+		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
+		$config = $db->loadAssoc();
+		KunenaError::checkDatabaseError();
 
 		if ($config)
 		{
 			$params = json_decode($config['params']);
-			$this->bind ($params);
+			$this->bind($params);
 		}
 
 		// Perform custom validation of config data before we let anybody access it.
-		$this->check ();
+		$this->check();
 
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
@@ -1255,7 +1258,7 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string  $name
 	 *
 	 * @return JRegistry
 	 *
@@ -1274,9 +1277,9 @@ class KunenaConfig extends JObject
 		// Add anything that requires validation
 
 		// Need to have at least two per page of these
-		$this->messages_per_page = max ( $this->messages_per_page, 2 );
-		$this->messages_per_page_search = max ( $this->messages_per_page_search, 2 );
-		$this->threads_per_page = max ( $this->threads_per_page, 2 );
+		$this->messages_per_page        = max($this->messages_per_page, 2);
+		$this->messages_per_page_search = max($this->messages_per_page_search, 2);
+		$this->threads_per_page         = max($this->threads_per_page, 2);
 	}
 
 	/**

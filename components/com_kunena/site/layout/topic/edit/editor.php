@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Layout.Topic
  *
@@ -31,8 +32,8 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		}
 
 		$paths = array(
-			JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi',
-			JPATH_ROOT.'/plugins/content/geshi/geshi/geshi'
+			JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi',
+			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi'
 		);
 
 		foreach ($paths as $path)
@@ -42,16 +43,16 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 				continue;
 			}
 
-			$files = KunenaFolder::files($path, ".php");
-			$options = array();
+			$files     = KunenaFolder::files($path, ".php");
+			$options   = array();
 			$options[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_EDITOR_CODE_TYPE'));
 
 			foreach ($files as $file)
 			{
-				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
+				$options[] = JHTML::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
 			}
 
-			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"' , 'value', 'text', '-1' );
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
 
 			return $list;
 		}
@@ -67,6 +68,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	public function getBBcodesEnabled()
 	{
 		$templatesettings = KunenaFactory::getTemplate()->params;
+
 		if ($this->config->showvideotag && $templatesettings->get('video'))
 		{
 			$this->addScriptDeclaration("kunena_showvideotag=1;");

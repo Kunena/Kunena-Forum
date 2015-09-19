@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Template.Crypsis
  * @subpackage  Pages.Topic
  *
@@ -13,7 +14,7 @@ defined('_JEXEC') or die;
 $content = $this->execute('Topic/Form/Reply');
 
 // Display breadcrumb path to the current category / topic / message / moderate.
-$parents = KunenaForumCategoryHelper::getParents($content->category->id);
+$parents   = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 /** @var KunenaForumCategory $parent */

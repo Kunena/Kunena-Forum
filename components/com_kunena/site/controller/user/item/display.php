@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
@@ -20,17 +21,17 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	protected $name = 'User/Item';
 
 	/**
-	 * @var KunenaUser
+	 * @var   KunenaUser
 	 */
 	public $me;
 
 	/**
-	 * @var JUser
+	 * @var   JUser
 	 */
 	public $user;
 
 	/**
-	 * @var KunenaUser
+	 * @var   KunenaUser
 	 */
 	public $profile;
 
@@ -41,9 +42,9 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Load user profile.
 	 *
-	 * @return void
+	 * @return   void
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   KunenaExceptionAuthorise
 	 */
 	protected function before()
 	{
@@ -60,12 +61,13 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 		$userid = $this->input->getInt('userid');
 
 		require_once KPATH_SITE . '/models/user.php';
+
 		$this->model = new KunenaModelUser(array(), $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
-		$this->user = JFactory::getUser($userid);
+		$this->me      = KunenaUserHelper::getMyself();
+		$this->user    = JFactory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
 
@@ -82,13 +84,13 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function prepareDocument()
 	{
 		$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
 		$this->setTitle($title);
-		$keywords = $this->config->board_title . ', ' .$this->profile->getName();
+		$keywords = $this->config->board_title . ', ' . $this->profile->getName();
 		$this->setKeywords($keywords);
 		$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(), $this->config->board_title, $this->profile->getName(), $this->config->board_title);
 		$this->setDescription($description);

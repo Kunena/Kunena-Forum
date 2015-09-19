@@ -1,7 +1,7 @@
 <?php
 /**
  * @version   $Id$
- * @author	RocketTheme http://www.rockettheme.com
+ * @author    RocketTheme http://www.rockettheme.com
  * @copyright Copyright (C) 2007 - ${copyright_year} RocketTheme, LLC
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 only
  */
@@ -52,7 +52,7 @@ abstract class KunenaDatabaseObjectFinder
 			throw new DomainException('Table name missing from ' . get_class($this));
 		}
 
-		$this->db = JFactory::getDbo();
+		$this->db    = JFactory::getDbo();
 		$this->query = $this->db->getQuery(true);
 		$this->query->from($this->table . ' AS a');
 	}
@@ -95,16 +95,16 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * This function can be used more than once to chain order by.
 	 *
-	 * @param  string $by
-	 * @param  int $direction
-	 * @param  string $alias
+	 * @param  string  $by
+	 * @param  int    $direction
+	 * @param  string  $alias
 	 *
 	 * @return $this
 	 */
 	public function order($by, $direction = 1, $alias = 'a')
 	{
 		$direction = $direction > 0 ? 'ASC' : 'DESC';
-		$by = $alias . '.' . $this->db->quoteName($by);
+		$by        = $alias . '.' . $this->db->quoteName($by);
 		$this->query->order("{$by} {$direction}");
 
 		return $this;
@@ -113,9 +113,9 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Filter by field.
 	 *
-	 * @param  string        $field       Field name.
-	 * @param  string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
-	 * @param  string|array  $value       Value.
+	 * @param  string       $field     Field name.
+	 * @param  string       $operation Operation (>|>=|<|<=|=|IN|NOT IN)
+	 * @param  string|array  $value     Value.
 	 *
 	 * @return $this
 	 */
@@ -146,7 +146,10 @@ abstract class KunenaDatabaseObjectFinder
 				else
 				{
 					$db = $this->db;
-					array_walk($value, function (&$item) use ($db) { $item = $db->quote($item); });
+					array_walk($value, function (&$item) use ($db)
+					{
+						$item = $db->quote($item);
+					});
 					$list = implode(',', $value);
 					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}
@@ -200,7 +203,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param  JDatabaseQuery  $query
+	 * @param  JDatabaseQuery $query
 	 *
 	 * @return void
 	 */

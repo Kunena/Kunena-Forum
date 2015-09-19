@@ -1,17 +1,24 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Installer
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 // Kunena 2.0.0: Convert deprecated configuration options
-function kunena_200_2012_05_30_configuration($parent) {
-	$config = KunenaFactory::getConfig ();
+/**
+ * @param $parent
+ *
+ * @return array
+ */
+function kunena_200_2012_05_30_configuration($parent)
+{
+	$config = KunenaFactory::getConfig();
 
 	// Unset deprecated configuration options which have been migrated earlier
 	unset($config->board_ofset);
@@ -24,42 +31,52 @@ function kunena_200_2012_05_30_configuration($parent) {
 	unset($config->rules_cid);
 	unset($config->help_cid);
 
-	if (isset($config->allowimageupload)) {
+	if (isset($config->allowimageupload))
+	{
 		$config->set('image_upload', 'nobody');
-		if ($config->get('allowimageregupload') == 1) {
+		if ($config->get('allowimageregupload') == 1)
+		{
 			$config->set('image_upload', 'registered');
 		}
-		if ($config->get('allowimageupload') == 1) {
+		if ($config->get('allowimageupload') == 1)
+		{
 			$config->set('image_upload', 'everybody');
 		}
 		unset($config->allowimageupload, $config->allowimageregupload);
 	}
 
-	if (isset($config->allowfileupload)) {
+	if (isset($config->allowfileupload))
+	{
 		$config->set('file_upload', 'nobody');
-		if ($config->get('allowfileregupload') == 1) {
+		if ($config->get('allowfileregupload') == 1)
+		{
 			$config->set('file_upload', 'registered');
 		}
-		if ($config->get('allowfileupload') == 1) {
+		if ($config->get('allowfileupload') == 1)
+		{
 			$config->set('file_upload', 'everybody');
 		}
 		unset($config->allowfileupload, $config->allowfileregupload);
 	}
 
-	if (isset($config->fbsessiontimeout)) {
+	if (isset($config->fbsessiontimeout))
+	{
 		$config->set('sessiontimeout', $config->get('fbsessiontimeout', 1800));
 		unset($config->fbsessiontimeout);
 	}
-	if (isset($config->fbdefaultpage)) {
+	if (isset($config->fbdefaultpage))
+	{
 		$config->set('defaultpage', $config->get('fbdefaultpage', 'recent'));
 		unset($config->fbdefaultpage);
 	}
 
 	// Move integration settings into plugins
-	if (isset($config->integration_access)) {
+	if (isset($config->integration_access))
+	{
 		// Load configuration options
-		$types = array('access'=>'', 'login'=>'', 'avatar'=>'', 'profile'=>'', 'private'=>'', 'activity'=>'');
-		foreach ($types as $type=>&$value) {
+		$types = array('access' => '', 'login' => '', 'avatar' => '', 'profile' => '', 'private' => '', 'activity' => '');
+		foreach ($types as $type => &$value)
+		{
 			$field = "integration_{$type}";
 			$value = $config->get($field, 'auto');
 			unset($config->$field);
@@ -67,43 +84,57 @@ function kunena_200_2012_05_30_configuration($parent) {
 		$integration = array('alphauserpoints' => 'alphauserpoints', 'jomsocial' => 'community', 'communitybuilder' => 'comprofiler', 'uddeim' => 'uddeim');
 
 		$plugins = array();
-		foreach ($integration as $cfgname => $pluginname) {
+		foreach ($integration as $cfgname => $pluginname)
+		{
 			$plugin = $parent->loadPlugin('kunena', $pluginname);
-			if ($plugin) {
-				$params = new JRegistry($plugin->params);
-				$plugin->params = $params;
+			if ($plugin)
+			{
+				$params            = new JRegistry($plugin->params);
+				$plugin->params    = $params;
 				$plugins[$cfgname] = $plugin;
 			}
 		}
 
-		foreach ($types as $type=>$value) {
-			foreach ($plugins as $name => $plugin) {
-				if ($plugin->params->get($type, null) === null) continue;
-				if ($value == 'auto' || $value == $name) {
+		foreach ($types as $type => $value)
+		{
+			foreach ($plugins as $name => $plugin)
+			{
+				if ($plugin->params->get($type, null) === null)
+				{
+					continue;
+				}
+				if ($value == 'auto' || $value == $name)
+				{
 					$plugin->enabled = 1;
 					$plugin->params->set($type, 1);
-				} else {
+				}
+				else
+				{
 					$plugin->params->set($type, 0);
 				}
 			}
 		}
-		if (isset($plugins['alphauserpoints'])) {
+		if (isset($plugins['alphauserpoints']))
+		{
 			$plugins['alphauserpoints']->params->set('activity_points_limit', $config->get('alphauserpointsnumchars', 0));
 		}
-		if (isset($plugins['jomsocial'])) {
+		if (isset($plugins['jomsocial']))
+		{
 			$plugins['jomsocial']->params->set('activity_stream_limit', $config->get('activity_limit', 0));
 		}
 		unset($config->activity_limit, $config->alphauserpointsnumchars);
-		foreach ($plugins as $plugin) {
+		foreach ($plugins as $plugin)
+		{
 			$plugin->params = $plugin->params->toString();
-			if (!empty($plugin->enabled)) {
+			if (!empty($plugin->enabled))
+			{
 				$plugin->store();
 			}
 		}
 	}
 
 	// Save configuration
-	$config->save ();
+	$config->save();
 
-	return array ('action' => '', 'name' => JText::_ ( 'COM_KUNENA_INSTALL_200_CONFIGURATION' ), 'success' => true );
+	return array('action' => '', 'name' => JText::_('COM_KUNENA_INSTALL_200_CONFIGURATION'), 'success' => true);
 }

@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Template.Crypsis
+ * @package     Kunena.Template.Crypsis
  * @subpackage      Layout.Statistics
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            http://www.kunena.org
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
@@ -36,34 +36,34 @@ defined('_JEXEC') or die;
 				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 			</span>
 				<?php if (!empty($this->onlineList)) : ?>
-				<div>
-					<?php
-					foreach ($this->onlineList as $user)
-					{
-						$onlinelist[] = $user->getLink();
-					}
-					?>
-					<?php echo implode(', ', $onlinelist); ?>
-				</div>
+					<div>
+						<?php
+						foreach ($this->onlineList as $user)
+						{
+							$onlinelist[] = $user->getLink();
+						}
+						?>
+						<?php echo implode(', ', $onlinelist); ?>
+					</div>
 				<?php endif; ?>
 
 				<?php if (!empty($this->hiddenList)) : ?>
-				<div>
-					<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
+					<div>
+						<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
 
-					<?php
-					foreach ($this->hiddenList as $user)
-					{
-						$hiddenlist[] = $user->getLink();
-					}
-					?>
-					<?php echo implode(', ', $hiddenlist); ?>
-				</div>
+						<?php
+						foreach ($this->hiddenList as $user)
+						{
+							$hiddenlist[] = $user->getLink();
+						}
+						?>
+						<?php echo implode(', ', $hiddenlist); ?>
+					</div>
 				<?php endif; ?>
 
 				<?php if (!empty($this->onlineList)) : ?>
-				<div>
-					<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
+					<div>
+						<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>
 					<span class="kwho-admin">
 						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
 					</span>
@@ -82,7 +82,7 @@ defined('_JEXEC') or die;
 					<span class="kwho-guest">
 						<i class="icon icon-user"></i><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>
 					</span>
-				</div>
+					</div>
 				<?php endif; ?>
 			</ul>
 		</div>

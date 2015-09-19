@@ -36,9 +36,12 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test load()
 	 *
-	 * @depends testNew
+	 * @depends      testNew
 	 * @dataProvider providerLoad
-	 * @depends PostingTest::testCreateCategories
+	 * @depends      PostingTest::testCreateCategories
+	 *
+	 * @param $catid
+	 * @param $exists
 	 */
 	public function testLoad($catid, $exists) {
 		$category = new KunenaForumCategory();
@@ -50,6 +53,9 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($catid, $category->id, 'Check that category id is correct');
 	}
 
+	/**
+	 * @return array
+	 */
 	public function providerLoad() {
 		return array (
 			array (null, false ),
@@ -85,6 +91,7 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	 *
 	 * @depends testCreate
 	 * @depends PostingTest::testCreateCategories
+	 * @param KunenaForumCategory $category
 	 */
 	public function testGetUserInfo(KunenaForumCategory $category) {
 		$catuser = $category->getUserInfo(42);
@@ -110,13 +117,19 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	 * Test getChildren()
 	 *
 	 * @dataProvider providerGetChildren
-	 * @depends PostingTest::testCreateCategories
+	 * @depends      PostingTest::testCreateCategories
+	 * @param $id
+	 * @param $level
+	 * @param $expected
 	 */
 	public function testGetChildren($id, $level, $expected) {
 		$category = KunenaForumCategory::getInstance($id);
 		$this->assertThat(array_keys($category->getChildren($level)), $this->equalTo($expected), 'Check category children');
 	}
 
+	/**
+	 * @return array
+	 */
 	public function providerGetChildren() {
 		return array (
 			array (null, 0, array() ),

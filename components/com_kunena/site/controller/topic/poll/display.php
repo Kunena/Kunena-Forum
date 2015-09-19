@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
@@ -41,18 +42,18 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->topic = KunenaForumTopicHelper::get($this->input->getInt('id'));
+		$this->topic    = KunenaForumTopicHelper::get($this->input->getInt('id'));
 		$this->category = $this->topic->getCategory();
-		$this->config = KunenaFactory::getConfig();
-		$this->me = KunenaUserHelper::getMyself();
+		$this->config   = KunenaFactory::getConfig();
+		$this->me       = KunenaUserHelper::getMyself();
 
 		// Need to check if poll is allowed in this category.
 		$this->topic->tryAuthorise('poll.read');
 
-		$this->poll = $this->topic->getPoll();
-		$this->usercount = $this->poll->getUserCount();
+		$this->poll       = $this->topic->getPoll();
+		$this->usercount  = $this->poll->getUserCount();
 		$this->usersvoted = $this->poll->getUsers();
-		$this->voted = $this->poll->getMyVotes();
+		$this->voted      = $this->poll->getMyVotes();
 
 		if (!empty($this->alwaysVote))
 		{
@@ -70,7 +71,7 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 
 			$this->show_title = true;
 
-			$this->users_voted_list = array();
+			$this->users_voted_list     = array();
 			$this->users_voted_morelist = array();
 
 			if ($this->config->pollresultsuserslist && !empty($this->usersvoted))

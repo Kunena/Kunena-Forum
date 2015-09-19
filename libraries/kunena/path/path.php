@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Path
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Path
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 jimport('joomla.filesystem.path');
 
@@ -56,7 +57,7 @@ class KunenaPath extends JPath
 	/**
 	 * Method to determine if script owns the path.
 	 *
-	 * @param   string  $path  Path to check ownership.
+	 * @param   string  $path Path to check ownership.
 	 *
 	 * @return  boolean  True if the php script owns the path passed.
 	 */
@@ -65,7 +66,7 @@ class KunenaPath extends JPath
 		if (!self::$owner)
 		{
 			$dir = JFactory::getConfig()->get('tmp_path');
-			$tmp = 'jj'.md5(mt_rand());
+			$tmp = 'jj' . md5(mt_rand());
 
 			$test = $dir . '/' . $tmp;
 
@@ -92,6 +93,7 @@ class KunenaPath extends JPath
 	 * Checks if path is writeable either by the server or by FTP.
 	 *
 	 * @param $path
+	 *
 	 * @return bool
 	 */
 	public static function isWritable($path)

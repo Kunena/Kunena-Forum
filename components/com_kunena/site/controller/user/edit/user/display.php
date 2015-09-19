@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
@@ -26,7 +27,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	/**
 	 * Load user form.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function before()
 	{
@@ -47,11 +48,11 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 
 			JPluginHelper::importPlugin('user');
 
-			$registry = new JRegistry($this->user->params);
-			$form = JForm::getInstance('com_users.profile', 'frontend');
-			$data = new StdClass;
+			$registry     = new JRegistry($this->user->params);
+			$form         = JForm::getInstance('com_users.profile', 'frontend');
+			$data         = new StdClass;
 			$data->params = $registry->toArray();
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher   = JDispatcher::getInstance();
 			$dispatcher->trigger('onContentPrepareForm', array($form, $data));
 
 			$form->bind($data);
@@ -64,7 +65,7 @@ class ComponentKunenaControllerUserEditUserDisplay extends ComponentKunenaContro
 	/**
 	 * Prepare document.
 	 *
-	 * @return void
+	 * @return   void
 	 */
 	protected function prepareDocument()
 	{

@@ -21,6 +21,10 @@ class KunenaAdminViewPlugins extends KunenaView
 
 	/**
 	 * Display the view
+	 *
+	 * @param null $tpl
+	 *
+	 * @return
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -68,8 +72,8 @@ class KunenaAdminViewPlugins extends KunenaView
 		JToolbarHelper::divider();
 		JToolbarHelper::checkin('checkin');
 		JToolbarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		$help_url = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -106,6 +110,9 @@ class KunenaAdminViewPlugins extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

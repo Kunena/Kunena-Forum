@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -16,6 +16,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaViewUser extends KunenaView
 {
+	/**
+	 * @param null $tpl
+	 */
 	function displayList($tpl = null)
 	{
 		$response = array();
@@ -47,7 +50,7 @@ class KunenaViewUser extends KunenaView
 	/**
 	 * Method to return list of users by ajax request for userlist and search user
 	 *
-	 * @param   string $tpl The name of the template file to parse; automatically searches through the template paths.
+	 * @param   string  $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @since K4.0
 	 * @return JSon
@@ -64,9 +67,9 @@ class KunenaViewUser extends KunenaView
 			{
 				$user_obj = new stdClass();
 
-				$user_obj->id = $user->id;
+				$user_obj->id    = $user->id;
 				$user_obj->photo = $user->getAvatarURL();
-				$user_obj->name = $user->username;
+				$user_obj->name  = $user->username;
 
 				$response[] = $user_obj;
 			}

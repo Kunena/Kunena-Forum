@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Layout.Search
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -18,17 +19,18 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 	<input type="hidden" name="task" value="results" />
 
 	<?php if (isset($this->catid)) : ?>
-	<input type="hidden" name="catids[]" value="<?php echo $this->catid; ?>" />
+		<input type="hidden" name="catids[]" value="<?php echo $this->catid; ?>" />
 	<?php endif; ?>
 
 	<?php if (isset($this->id)) : ?>
-	<input type="hidden" name="ids[]" value="<?php echo $this->id; ?>" />
+		<input type="hidden" name="ids[]" value="<?php echo $this->id; ?>" />
 	<?php endif; ?>
 
 	<input type="hidden" name="childforums" value="<?php echo $childforums; ?>" />
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo JHtml::_('form.token'); ?>
 	<div class="search">
-		<input type="text" class="form-control input-sm" maxlength="64" name="query" value="" placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>" />
+		<input type="text" class="form-control input-sm" maxlength="64" name="query" value=""
+			placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>" />
 		<button class="btn btn-default" type="submit">
 			<i class="glyphicon glyphicon-search"></i>
 		</button>

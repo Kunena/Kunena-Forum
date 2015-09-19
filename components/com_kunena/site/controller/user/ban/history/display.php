@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
@@ -49,7 +50,7 @@ class ComponentKunenaControllerUserBanHistoryDisplay extends KunenaControllerDis
 
 		$userid = $this->input->getInt('userid');
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me      = KunenaUserHelper::getMyself();
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('ban');
 

@@ -1,7 +1,8 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Template.Crypsis
+ *
+ * @package     Kunena.Template.Crypsisb3
  * @subpackage  Pages.Topic
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
@@ -15,7 +16,7 @@ $content = $this->request('Topic/Poll')
 	->execute();
 
 // Display breadcrumb path to the current category / topic / message / report.
-$parents = KunenaForumCategoryHelper::getParents($content->category->id);
+$parents   = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 /** @var KunenaForumCategory $parent */

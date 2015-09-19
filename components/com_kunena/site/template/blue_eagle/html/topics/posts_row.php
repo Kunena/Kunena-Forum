@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Blue_Eagle
- * @subpackage Topics
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Template.Blue_Eagle
+ * @subpackage  Topics
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 // Disable caching
 $this->cache = false;
@@ -18,21 +19,22 @@ $this->cache = false;
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
 	<td class="kcol-mid kcol-ktopicicon hidden-phone">
 		<?php if ($this->topic->unread) : ?>
-			<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
-		<?php else :  ?>
-			<?php echo $this->getTopicLink ( $this->topic, null , $this->topic->getIcon() ) ?>
-		<?php endif;?>
+			<?php echo $this->getTopicLink($this->topic, 'unread', $this->topic->getIcon()) ?>
+		<?php else : ?>
+			<?php echo $this->getTopicLink($this->topic, null, $this->topic->getIcon()) ?>
+		<?php endif; ?>
 	</td>
 
 	<td class="kcol-mid ktopictittle">
 		<div class="ktopic-title-cover">
 			<?php
-			if ($this->topic->unread) {
-				echo $this->getTopicLink ( $this->topic, 'unread', KunenaHtmlParser::parseText ($this->message->subject, 30), null, 'ktopic-title km' );
+			if ($this->topic->unread)
+			{
+				echo $this->getTopicLink($this->topic, 'unread', KunenaHtmlParser::parseText($this->message->subject, 30), null, 'ktopic-title km');
 			}
 			else
 			{
-				echo $this->getTopicLink ( $this->topic, $this->message, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message, 500), 'ktopic-title km' );
+				echo $this->getTopicLink($this->topic, $this->message, KunenaHtmlParser::parseText($this->message->subject, 30), KunenaHtmlParser::stripBBCode($this->message->message, 500), 'ktopic-title km');
 			}
 			?>
 		</div>
@@ -41,24 +43,27 @@ $this->cache = false;
 	<td class="kcol-mid ktopictittle">
 		<div class="ktopic-title-cover">
 			<?php
-			if ($this->topic->unread) {
-				echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->subject . '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'ktopic-title km' );
+			if ($this->topic->unread)
+			{
+				echo $this->getTopicLink($this->topic, 'unread', $this->topic->subject . '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'ktopic-title km');
 			}
 			else
 			{
-				echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
+				echo $this->getTopicLink($this->topic, null, null, KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 500), 'ktopic-title km');
 			}
-			if ($this->topic->getUserTopic()->favorite) {
-				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
+			if ($this->topic->getUserTopic()->favorite)
+			{
+				echo $this->getIcon('kfavoritestar', JText::_('COM_KUNENA_FAVORITE'));
 			}
-			if ($this->topic->locked != 0) {
-				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC') );
+			if ($this->topic->locked != 0)
+			{
+				echo $this->getIcon('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
 			}
 			?>
 		</div>
 		<div class="ks">
 			<span class="ktopic-category">
-				<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?>
+				<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory())) ?>
 			</span>
 		</div>
 	</td>
@@ -66,34 +71,39 @@ $this->cache = false;
 		<div class="klatest-post-info">
 			<?php
 			if ($this->config->avataroncat > 0) :
-				$profile = KunenaFactory::getUser((int)$this->message->userid);
+				$profile    = KunenaFactory::getUser((int) $this->message->userid);
 				$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 				if ($useravatar) :
-			?>
-			<span class="ktopic-latest-post-avatar">
-			<?php echo $this->message->getAuthor()->getLink( $useravatar, null, 'nofollow', '', null, $this->topic->getCategory()->id ) ?>
+					?>
+					<span class="ktopic-latest-post-avatar">
+			<?php echo $this->message->getAuthor()->getLink($useravatar, null, 'nofollow', '', null, $this->topic->getCategory()->id) ?>
 			</span>
-			<?php
+					<?php
 				endif;
 			endif;
 			?>
-			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover'); ?>">
-				<?php echo JText::_('COM_KUNENA_POSTED_AT') . ' ' . KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>&nbsp;
+			<span class="ktopic-posted-time"
+				title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover'); ?>">
+				<?php echo JText::_('COM_KUNENA_POSTED_AT') . ' ' . KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>
+				&nbsp;
 			</span>
 
 			<?php if ($this->message->userid) : ?>
-			<br />
-			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id); ?></span>
+				<br />
+				<span
+					class="ktopic-by"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id); ?></span>
 			<?php endif; ?>
 		</div>
 	</td>
 
-<?php if (!empty($this->postActions)) : ?>
-	<td class="kcol-mid ktopicmoderation"><input class ="kcheck" type="checkbox" name="posts[<?php echo $this->message->id?>]" value="1" /></td>
-<?php endif; ?>
+	<?php if (!empty($this->postActions)) : ?>
+		<td class="kcol-mid ktopicmoderation"><input class="kcheck" type="checkbox"
+				name="posts[<?php echo $this->message->id ?>]" value="1" /></td>
+	<?php endif; ?>
 </tr>
 <?php if ($this->module) : ?>
-<tr>
-	<td class="ktopicmodule" colspan="<?php echo empty($this->postActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
-</tr>
+	<tr>
+		<td class="ktopicmodule"
+			colspan="<?php echo empty($this->postActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
+	</tr>
 <?php endif; ?>

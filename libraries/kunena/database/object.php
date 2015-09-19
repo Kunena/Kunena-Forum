@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Object
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @package     Kunena.Framework
+ * @subpackage  Object
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
 /**
  * Class KunenaDatabaseObject
@@ -25,8 +26,8 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Returns the global object.
 	 *
-	 * @param  int      $identifier  Object identifier to load.
-	 * @param  boolean  $reload      Force object reload from the database.
+	 * @param  int     $identifier Object identifier to load.
+	 * @param  boolean $reload     Force object reload from the database.
 	 *
 	 * @return  KunenaDatabaseObject
 	 * @throws  Exception
@@ -39,7 +40,8 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Returns true if the object exists in the database.
 	 *
-	 * @param   boolean  $exists  Internal parameter to change state.
+	 * @param   boolean $exists Internal parameter to change state.
+	 *
 	 * @return  boolean  True if object exists in database.
 	 */
 	public function exists($exists = null)
@@ -59,13 +61,13 @@ abstract class KunenaDatabaseObject extends JObject
 	 *
 	 * This method optionally takes an array of properties to ignore or allow when binding.
 	 *
-	 * @param   array    $src     An associative array or object to bind to the JTable instance.
-	 * @param   array    $fields  An optional array list of properties to ignore / include only while binding.
-	 * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
+	 * @param   array   $src     An associative array or object to bind to the JTable instance.
+	 * @param   array   $fields  An optional array list of properties to ignore / include only while binding.
+	 * @param   boolean $include True to include only listed fields, false to ignore listed fields.
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public function bind(array $src = null, array $fields = null, $include = false)
+	public function bind(array  $src = null, array  $fields = null, $include = false)
 	{
 		if (empty($src))
 		{
@@ -77,7 +79,7 @@ abstract class KunenaDatabaseObject extends JObject
 			$src = $include ? array_intersect_key($src, array_flip($fields)) : array_diff_key($src, array_flip($fields));
 		}
 
-		$this->setProperties ( $src );
+		$this->setProperties($src);
 
 		return true;
 	}
@@ -85,7 +87,7 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Method to load object from the database.
 	 *
-	 * @param   mixed    $id  Id to be loaded.
+	 * @param   mixed $id Id to be loaded.
 	 *
 	 * @return  boolean  True on success.
 	 */
@@ -97,19 +99,19 @@ abstract class KunenaDatabaseObject extends JObject
 		}
 
 		// Create the table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
 		// Load the object based on id
 		if ($this->id)
 		{
-			$this->_exists = $table->load ( $this->id );
+			$this->_exists = $table->load($this->id);
 		}
 
 		// Always set id
 		$table->id = $this->id;
 
 		// Assuming all is well at this point lets bind the data
-		$this->setProperties ( $table->getProperties () );
+		$this->setProperties($table->getProperties());
 
 		return $this->_exists;
 	}
@@ -127,21 +129,22 @@ abstract class KunenaDatabaseObject extends JObject
 		$this->_saving = true;
 
 		// Check the object.
-		if (! $this->check ())
+		if (!$this->check())
 		{
 			return $this->_saving = false;
 		}
 
 		// Initialize table object.
-		$table = $this->getTable ();
-		$table->bind ( $this->getProperties () );
-		$table->exists ( $this->_exists );
-		$isNew = ! $this->_exists;
+		$table = $this->getTable();
+		$table->bind($this->getProperties());
+		$table->exists($this->_exists);
+		$isNew = !$this->_exists;
 
 		// Check the table object.
-		if (! $table->check ())
+		if (!$table->check())
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
+
 			return $this->_saving = false;
 		}
 
@@ -155,6 +158,7 @@ abstract class KunenaDatabaseObject extends JObject
 		if (in_array(false, $result, true))
 		{
 			$this->setError($table->getError());
+
 			return $this->_saving = false;
 		}
 
@@ -162,13 +166,14 @@ abstract class KunenaDatabaseObject extends JObject
 		if (!$table->store())
 		{
 			$this->setError($table->getError());
+
 			return $this->_saving = false;
 		}
 
 		// If item was created, load the object.
 		if ($isNew)
 		{
-			$this->load ( $table->id );
+			$this->load($table->id);
 		}
 
 		$this->saveInternal();
@@ -177,13 +182,14 @@ abstract class KunenaDatabaseObject extends JObject
 		$dispatcher->trigger('onKunenaAfterSave', array("com_kunena.{$this->_name}", &$table, $isNew));
 
 		$this->_saving = false;
+
 		return true;
 	}
 
 	/**
 	 * Method to delete the object from the database.
 	 *
-	 * @return	boolean	True on success.
+	 * @return    boolean    True on success.
 	 */
 	public function delete()
 	{
@@ -194,9 +200,9 @@ abstract class KunenaDatabaseObject extends JObject
 		}
 
 		// Initialize table object.
-		$table = $this->getTable ();
-		$table->bind ( $this->getProperties () );
-		$table->exists ( $this->_exists );
+		$table = $this->getTable();
+		$table->bind($this->getProperties());
+		$table->exists($this->_exists);
 
 		// Include the Kunena plugins for the on save events.
 		$dispatcher = JDispatcher::getInstance();
@@ -207,11 +213,14 @@ abstract class KunenaDatabaseObject extends JObject
 		if (in_array(false, $result, true))
 		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 
-		if (!$table->delete()) {
+		if (!$table->delete())
+		{
 			$this->setError($table->getError());
+
 			return false;
 		}
 
@@ -242,7 +251,7 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Class constructor, overridden in descendant classes.
 	 *
-	 * @param   mixed  $properties  Associative array to set the initial properties of the object.
+	 * @param   mixed $properties   Associative array to set the initial properties of the object.
 	 *                              If not profided, default values will be used.
 	 *
 	 * @return  KunenaDatabaseObject
@@ -279,7 +288,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 */
 	protected function getTable()
 	{
-		return JTable::getInstance ( $this->_table, 'Table' );
+		return JTable::getInstance($this->_table, 'Table');
 	}
 
 	/**

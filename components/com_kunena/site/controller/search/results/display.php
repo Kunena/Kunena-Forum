@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Search
  *
@@ -45,14 +46,14 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me               = KunenaUserHelper::getMyself();
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->searchwords = $this->model->getSearchWords();
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
 		$this->results = array();
-		$this->total = $this->model->getTotal();
+		$this->total   = $this->model->getTotal();
 		$this->results = $this->model->getResults();
 
 		$this->pagination = new KunenaPagination(
@@ -72,9 +73,9 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	protected function prepareDocument()
 	{
 		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
-		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ', '. $this->searchwords;
+		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ', ' . $this->searchwords;
 		$this->setKeywords($keywords);
-		$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title ;
+		$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
 		$this->setDescription($description);
 	}
 }

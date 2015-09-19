@@ -1,8 +1,9 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
- * @subpackage  Controller.Message
+ * @subpackage      Controller.Message
  *
  * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -25,6 +26,7 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	public $category;
 
 	public $categoryButtons;
+
 	/**
 	 * Prepare message actions display.
 	 *
@@ -35,41 +37,47 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 		parent::before();
 
 		$catid = $this->input->getInt('id');
-		$me = KunenaUserHelper::getMyself();
+		$me    = KunenaUserHelper::getMyself();
 
 		$this->category = KunenaForumCategory::getInstance($catid);
 
 		$token = JSession::getFormToken();
 
-		$task = "index.php?option=com_kunena&view=category&task=%s&catid={$catid}&{$token}=1";
+		$task   = "index.php?option=com_kunena&view=category&task=%s&catid={$catid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}";
 
-		$this->template = KunenaFactory::getTemplate();
+		$this->template        = KunenaFactory::getTemplate();
 		$this->categoryButtons = new JObject;
 
 		// Is user allowed to post new topic?
-		if ($this->category->getNewTopicCategory()->exists()) {
+		if ($this->category->getNewTopicCategory()->exists())
+		{
 			$this->categoryButtons->set('create',
 				$this->getButton(sprintf($layout, 'create'), 'create', 'topic', 'communication', true)
 			);
 		}
 
 		// Is user allowed to mark forums as read?
-		if ($me->exists()) {
+		if ($me->exists())
+		{
 			$this->categoryButtons->set('markread',
 				$this->getButton(sprintf($task, 'markread'), 'markread', 'category', 'user', true)
 			);
 		}
 
 		// Is user allowed to subscribe category?
-		if ($this->category->isAuthorised( 'subscribe' )) {
+		if ($this->category->isAuthorised('subscribe'))
+		{
 			$subscribed = $this->category->getSubscribed($me->userid);
 
-			if (!$subscribed) {
+			if (!$subscribed)
+			{
 				$this->categoryButtons->set('subscribe',
 					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'category', 'user', true)
 				);
-			} else {
+			}
+			else
+			{
 				$this->categoryButtons->set('unsubscribe',
 					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'category', 'user', true)
 				);
@@ -84,11 +92,11 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 	/**
 	 * Get button.
 	 *
-	 * @param   string       $url    Target link (do not route it).
-	 * @param   string       $name   Name of the button.
-	 * @param   string       $scope  Scope of the button.
-	 * @param   string       $type   Type of the button.
-	 * @param   bool         $id     Id of the button.
+	 * @param   string  $url   Target link (do not route it).
+	 * @param   string  $name  Name of the button.
+	 * @param   string  $scope Scope of the button.
+	 * @param   string  $type  Type of the button.
+	 * @param   bool   $id    Id of the button.
 	 *
 	 * @return  string
 	 */

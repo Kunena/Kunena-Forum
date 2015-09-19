@@ -1,6 +1,7 @@
 <?php
 /**
  * Kunena Component
+ *
  * @package     Kunena.Site
  * @subpackage  Controller.Application
  *
@@ -20,7 +21,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return bool
+	 * @return   bool
 	 */
 	public function exists()
 	{
@@ -30,9 +31,9 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Redirect to home page.
 	 *
-	 * @return KunenaLayout
+	 * @return   KunenaLayout
 	 *
-	 * @throws KunenaExceptionAuthorise
+	 * @throws   KunenaExceptionAuthorise
 	 */
 	public function execute()
 	{
@@ -65,7 +66,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 						$default = clone $home;
 					}
 
-					$default->query['view'] = 'category';
+					$default->query['view']   = 'category';
 					$default->query['layout'] = 'list';
 				}
 			}
@@ -115,7 +116,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	 * @param   object     $active   Active menu item.
 	 * @param   array      $visited  Already visited menu items.
 	 *
-	 * @return object|null
+	 * @return   object|null
 	 */
 	protected function getDefaultMenuItem(JMenuSite $menu, $active, $visited = array())
 	{
@@ -152,7 +153,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 		{
 			// Menu item is pointing to another Home Page, try to find default menu item from there.
 			$visited[$item->id] = 1;
-			$item = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
+			$item               = $this->getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
 		}
 
 		return $item;

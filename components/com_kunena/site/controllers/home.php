@@ -2,24 +2,31 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 /**
  * Kunena Home Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerHome extends KunenaController
 {
 	public $home = 1;
 
+	/**
+	 * @param   bool|false $cachable
+	 * @param   bool|false $urlparams
+	 *
+	 * @return JControllerLegacy|void
+	 * @throws Exception
+	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		$menu = $this->app->getMenu();
@@ -86,6 +93,13 @@ class KunenaControllerHome extends KunenaController
 		$this->setRedirect($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
 	}
 
+	/**
+	 * @param       $menu
+	 * @param       $active
+	 * @param   array  $visited
+	 *
+	 * @return null
+	 */
 	protected function _getDefaultMenuItem($menu, $active, $visited = array())
 	{
 

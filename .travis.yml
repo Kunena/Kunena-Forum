@@ -28,9 +28,11 @@ before_script:
 - fluxbox &
 - sleep 3 # give fluxbox some time to start
 - composer install --prefer-dist
+- composer update
 
 script:
 - php .travis/phppec.php components/ libraries/ plugins/
+- php .travis/phpcs.php
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 - mv tests/api.suite.dist.yml tests/api.suite.yml
 

@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena 2.0 jUpgrade migration class from Joomla! 1.5 to Joomla! 2.5
@@ -18,7 +18,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 
 	/**
-	 * @param null $step
+	 * @param   null $step
 	 */
 	public function __construct($step = null)
 	{
@@ -75,7 +75,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
-	 * @param string $table
+	 * @param   string $table
 	 *
 	 * @return    boolean Ready (true/false)
 	 * @since    1.6.4
@@ -131,6 +131,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 				$row['access']++;
 			}
 		}
+
 		$this->setDestinationData($rows);
 
 		return true;
@@ -139,7 +140,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	/**
 	 * A hook to be able to modify params prior as they are converted to JSON.
 	 *
-	 * @param    object $object A reference to the parameters as an object.
+	 * @param   object $object A reference to the parameters as an object.
 	 *
 	 * @return    void
 	 * @since    0.4.
@@ -266,6 +267,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 					}
 					break;
 			}
+
 			if ($update)
 			{
 				// Update menuitem link

@@ -28,7 +28,7 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 	/**
 	 * Prepare statistics box display.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function before()
 	{

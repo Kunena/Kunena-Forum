@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Attachments view for Kunena backend
@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaAdminViewAttachments extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
 	 * @return mixed
 	 */
@@ -52,7 +52,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	protected function setToolbar()
 	{
 		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('delete', 'trash.png', 'trash_f2.png', 'COM_KUNENA_GEN_DELETE');

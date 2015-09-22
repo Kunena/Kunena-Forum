@@ -39,7 +39,8 @@ defined('_JEXEC') or die;
 		if ($this->userBans) :
 			$i = 0;
 
-			/** @var KunenaUserBan $banInfo */
+			// @var KunenaUserBan $banInfo
+
 			foreach ($this->userBans as $banInfo) :
 				$bantext = $banInfo->blocked
 					? JText::_('COM_KUNENA_BAN_UNBLOCK_USER')

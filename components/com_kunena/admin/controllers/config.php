@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Backend Config Controller
@@ -21,7 +21,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -39,7 +39,7 @@ class KunenaAdminControllerConfig extends KunenaController
 	}
 
 	/**
-	 * @param null $url
+	 * @param   null $url
 	 */
 	function save($url = null)
 	{
@@ -61,6 +61,7 @@ class KunenaAdminControllerConfig extends KunenaController
 				{
 					$postvalue = implode(',', $postvalue);
 				}
+
 				$postname = \Joomla\String\String::strtolower(\Joomla\String\String::substr($postsetting, 4));
 
 				// No matter what got posted, we only store config parameters defined

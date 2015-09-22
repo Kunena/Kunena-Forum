@@ -103,9 +103,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			if ($this->message->thread != $this->topic->id
 				|| ($this->topic->category_id != $this->category->id && !isset($channels[$this->topic->category_id]))
-				|| ($mesid && $this->layout != 'threaded'))
+				|| ($mesid && $this->layout != 'threaded')
+)
 			{
-				while (@ob_end_clean());
+				while (@ob_end_clean()) {}
 
 				$this->app->redirect($this->message->getUrl(null, false));
 			}

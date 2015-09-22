@@ -10,7 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaLayout $this */
+// @var KunenaLayout $this
+
 ?>
 <div id="kunena" class="layout">
 	<?php

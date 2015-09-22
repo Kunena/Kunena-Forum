@@ -10,9 +10,11 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaLayout $this */
+// @var KunenaLayout $this
 
-/** @var KunenaForumMessage  $message  Message to reply to. */
+
+// @var KunenaForumMessage  $message  Message to reply to.
+
 $message = $this->message;
 
 if (!$message->isAuthorised('reply'))
@@ -20,15 +22,20 @@ if (!$message->isAuthorised('reply'))
 	return;
 }
 
-/** @var KunenaUser  $author  Author of the message. */
+// @var KunenaUser  $author  Author of the message.
+
 $author = isset($this->author) ? $this->author : $message->getAuthor();
-/** @var KunenaForumTopic  $topic Topic of the message. */
+// @var KunenaForumTopic  $topic Topic of the message.
+
 $topic = isset($this->topic) ? $this->topic : $message->getTopic();
-/** @var KunenaForumCategory  $category  Category of the message. */
+// @var KunenaForumCategory  $category  Category of the message.
+
 $category = isset($this->category) ? $this->category : $message->getCategory();
-/** @var KunenaConfig  $config  Kunena configuration. */
+// @var KunenaConfig  $config  Kunena configuration.
+
 $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
-/** @var KunenaUser  $me  Current user. */
+// @var KunenaUser  $me  Current user.
+
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
@@ -56,7 +63,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<input type="hidden" name="task" value="post" />
 		<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
 		<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
-		<?php if (!$config->allow_change_subject): ?>
+		<?php if (!$config->allow_change_subject) : ?>
 			 <input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 		<?php endif; ?>
 		<?php echo JHtml::_('form.token'); ?>
@@ -67,7 +74,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<input type="text" name="authorname" size="35" class="span12" maxlength="35" value="<?php
 				echo $this->escape($me->getName()); ?>" />
 			<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous"
-			       value="1" class="kinputbox postinput" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
+			       value="1" class="kinputbox postinput" <?php if ($category->post_anonymous) { echo 'checked="checked"'; } ?> />
 			<label for="kanonymous<?php echo intval($message->id); ?>">
 				<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
 			</label>
@@ -77,7 +84,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 			<input type="text" id="subject" name="subject" size="35" class="inputbox"
 			       maxlength="<?php echo (int) $config->maxsubject; ?>"
-			       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+			       <?php if (!$config->allow_change_subject) : ?>disabled<?php endif; ?>
 			       value="<?php echo $message->displayField('subject'); ?>" />
 			<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 

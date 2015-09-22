@@ -8,12 +8,14 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewSmiley $this */
+// @var KunenaAdminViewSmiley $this
+
 
 $iconPath = json_encode(JUri::root(true) . '/');
-$this->document->addScriptDeclaration("function update_smiley(newimage) {
+$this->document->addScriptDeclaration(
+	"function update_smiley(newimage) {
 	document.smiley_image.src = {$iconPath} + newimage;
 }");
 
@@ -24,18 +26,18 @@ JHtml::_('behavior.multiselect');
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="smilies" />
 			<input type="hidden" name="task" value="save" />
-			<?php if ( $this->state->get('item.id') ): ?><input type="hidden" name="smileyid" value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
-			<?php echo JHtml::_( 'form.token' ); ?>
+			<?php if ($this->state->get('item.id')) : ?><input type="hidden" name="smileyid" value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
-				<legend><?php echo !$this->state->get('item.id') ? JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY'): JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?></legend>
+				<legend><?php echo !$this->state->get('item.id') ? JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY') : JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?></legend>
 				<table class="table table-bordered table-striped">
 					<tr>
 						<td width="20%">

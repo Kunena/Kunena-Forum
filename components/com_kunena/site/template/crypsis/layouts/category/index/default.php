@@ -30,8 +30,9 @@ foreach ($this->sections as $section) :
 
 		<h2>
 			<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
-			<small class="hidden-phone nowrap">(<?php echo JText::plural('COM_KUNENA_X_TOPICS',
-					$this->formatLargeNumber($section->getTopics())); ?>)
+			<small class="hidden-phone nowrap">(<?php echo JText::plural(
+    'COM_KUNENA_X_TOPICS',
+	$this->formatLargeNumber($section->getTopics())); ?>)
 			</small>
 		</h2>
 
@@ -140,6 +141,7 @@ foreach ($this->sections as $section) :
 										{
 											$modslist[] = KunenaFactory::getUser($moderator)->getLink();
 										}
+
 										echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
 										?>
 									</div>
@@ -206,4 +208,4 @@ foreach ($this->sections as $section) :
 	<!-- Begin: Category Module Position -->
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 	<!-- Finish: Category Module Position -->
-<?php endforeach; ?>
+<?php endforeach;

@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Misc Controller
@@ -19,7 +19,7 @@ defined('_JEXEC') or die ();
 class KunenaControllerMisc extends KunenaController
 {
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -41,6 +41,7 @@ class KunenaControllerMisc extends KunenaController
 			{
 				$name = 'blue_eagle';
 			}
+
 			setcookie('kunena_template', $name, 0, JUri::root(true) . '/');
 		}
 		else

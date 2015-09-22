@@ -13,5 +13,3 @@ defined('_JEXEC') or die;
 // [ebay]computer[/ebay]
 
 // Display ebay search.
-?>
-

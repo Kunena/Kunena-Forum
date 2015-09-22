@@ -50,7 +50,7 @@ class KunenaLayoutSearchResults extends KunenaLayout
 
 			foreach ($this->searchwords as $searchword)
 			{
-				if (empty ($searchword))
+				if (empty($searchword))
 				{
 					continue;
 				}

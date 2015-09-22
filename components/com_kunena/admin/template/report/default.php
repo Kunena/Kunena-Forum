@@ -8,12 +8,14 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewReport $this */
+// @var KunenaAdminViewReport $this
+
 
 $document = JFactory::getDocument();
-$document->addScriptDeclaration("
+$document->addScriptDeclaration(
+	"
 window.addEvent('domready', function(){
 	$('link_sel_all').addEvent('click', function(e){
 		$('report_final').select();
@@ -28,7 +30,7 @@ JHtml::_('behavior.multiselect');
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">

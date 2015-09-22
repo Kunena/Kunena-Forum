@@ -9,13 +9,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class PlgKunenaUddeIM extends JPlugin
 {
 	/**
-	 * @param object $subject
-	 * @param array  $config
+	 * @param   object $subject
+	 * @param   array  $config
 	 */
 	public function __construct(&$subject, $config)
 	{

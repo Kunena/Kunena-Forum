@@ -9,9 +9,10 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaViewInstall $this */
+// @var KunenaViewInstall $this
+
 
 $this->document->addStyleSheet(JUri::base(true) . '/components/com_kunena/install/media/install.css');
 ?>

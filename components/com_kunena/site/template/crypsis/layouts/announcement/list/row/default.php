@@ -21,22 +21,25 @@ $announcement = $this->announcement;
 
 	<td class="nowrap">
 		<div class="overflow">
-			<?php echo JHtml::_('kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
-				null, 'follow'); ?>
+			<?php echo JHtml::_(
+	'kunenaforum.link', $announcement->getUri(), $announcement->displayField('title'),
+null, 'follow'); ?>
 		</div>
 	</td>
 
 	<?php if ($this->checkbox) : ?>
 	<td class="center">
-		<?php if ($this->canPublish()) echo JHtml::_('kunenagrid.published', $row, $announcement->published, '', true); ?>
+		<?php if ($this->canPublish()) { echo JHtml::_('kunenagrid.published', $row, $announcement->published, '', true); } ?>
 	</td>
 	<td class="center">
-		<?php if ($this->canEdit()) echo JHtml::_('kunenagrid.task', $row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'),
-			'edit', '', true); ?>
+		<?php if ($this->canEdit()) { echo JHtml::_(
+	'kunenagrid.task', $row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'),
+'edit', '', true); } ?>
 	</td>
 	<td class="center">
-		<?php if ($this->canDelete()) echo JHtml::_('kunenagrid.task', $row, 'publish_x.png',
-			JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true); ?>
+		<?php if ($this->canDelete()) { echo JHtml::_(
+	'kunenagrid.task', $row, 'publish_x.png',
+JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true); } ?>
 	</td>
 	<td>
 		<?php echo $announcement->getAuthor()->username; ?>

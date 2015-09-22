@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -31,15 +31,15 @@ class TableKunenaAttachments extends KunenaTable
 	public $comment = null;
 
 	/**
-	 * @param string $db
+	 * @param   string $db
 	 */
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_attachments', 'id', $db );
+		parent::__construct('#__kunena_attachments', 'id', $db);
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function check()
 	{
@@ -95,6 +95,6 @@ class TableKunenaAttachments extends KunenaTable
 			}
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 }

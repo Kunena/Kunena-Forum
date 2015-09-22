@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * The Kunena Installer Controller
@@ -34,8 +34,8 @@ class KunenaControllerInstall extends JControllerLegacy
 	}
 
 	/**
-	 * @param bool $cachable
-	 * @param bool $urlparams
+	 * @param   bool $cachable
+	 * @param   bool $urlparams
 	 *
 	 * @return JControllerLegacy|void
 	 * @throws Exception
@@ -108,6 +108,7 @@ class KunenaControllerInstall extends JControllerLegacy
 			$session->set('kunena.newqueue', null);
 			$this->model->setStep(++$this->step);
 		}
+
 		do
 		{
 			$this->runStep();
@@ -186,19 +187,19 @@ class KunenaControllerInstall extends JControllerLegacy
 			$component = JComponentHelper::getComponent('com_kunena');
 			$installer->uninstall('component', $component->id);
 
-			if ( JFolder::exists(KPATH_MEDIA) )
+			if (JFolder::exists(KPATH_MEDIA))
 			{
 				JFolder::delete(KPATH_MEDIA);
 			}
 
-			if ( JFolder::exists(JPATH_ROOT.'/plugins/kunena') )
+			if (JFolder::exists(JPATH_ROOT . '/plugins/kunena'))
 			{
-				JFolder::delete(JPATH_ROOT.'/plugins/kunena');
+				JFolder::delete(JPATH_ROOT . '/plugins/kunena');
 			}
 
-			if ( JFile::exists(JPATH_ADMINISTRATOR.'/manifests/packages/pkg_kunena.xml') )
+			if (JFile::exists(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml'))
 			{
-				JFile::delete(JPATH_ADMINISTRATOR.'/manifests/packages/pkg_kunena.xml');
+				JFile::delete(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml');
 			}
 
 			$this->setRedirect('index.php?option=com_installer');
@@ -236,7 +237,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	/**
 	 * @param $exception
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	static public function exceptionHandler($exception)
 	{
@@ -251,7 +252,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @param $errfile
 	 * @param $errline
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	static public function errorHandler($errno, $errstr, $errfile, $errline)
 	{

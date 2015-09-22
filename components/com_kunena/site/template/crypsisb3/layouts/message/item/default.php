@@ -10,7 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaForumMessage $message */
+// @var KunenaForumMessage $message
+
 $message = $this->message;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
@@ -22,7 +23,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 $str_counts = substr_count($this->topic->subject, 'solved');
 if ($config->ordering_system == 'mesid')
 {
-	$this->numLink = $this->location ;
+	$this->numLink = $this->location;
 } else {
 	$this->numLink = $message->replynum;
 }
@@ -38,7 +39,7 @@ $list = array();
 </small>
 
 <div class="badger-left badger-info <?php if ($this->topic->icon_id == 8) : ?> badger-solved <?php endif;?> message-<?php echo $this->message->getState(); ?>"
-	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
+	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
 			<?php  if (!$this->me->userid && !$isReply) :
@@ -59,7 +60,7 @@ $list = array();
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php elseif ($attachs->total > 0  && !$this->me->exists()):
+	<?php elseif ($attachs->total > 0  && !$this->me->exists()) :
 		if ($attachs->image > 0 && !$this->config->showimgforguest)
 		{
 			if ($attachs->image > 1)
@@ -91,7 +92,7 @@ $list = array();
 		</div>
 	<?php endif ?>
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
-		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid)  : ?>
+		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid) : ?>
 			<div class="row">
 				<div class="col-md-9">
 					<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="glyphicon glyphicon-warning-sign"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
@@ -122,16 +123,16 @@ if ($message->modified_time) {
 } ?>
 <div class="alert alert-info hidden-xs" <?php echo $datehover ?>>
 	<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
-	<?php if ($message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); ?>
+	<?php if ($message->modified_reason) { echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); } ?>
 </div>
 <?php endif; ?>
 
-<?php if (!empty($this->thankyou)): ?>
+<?php if (!empty($this->thankyou)) : ?>
 <div class="kmessage-thankyou">
 	<?php
 	foreach($this->thankyou as $userid => $thank)
 	{
-		if ( !empty($this->thankyou_delete[$userid]) )
+		if (!empty($this->thankyou_delete[$userid]))
 		{
 			$list[] = $thank . ' <a title="' . JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
 						. $this->thankyou_delete[$userid] . '"><i class="glyphicon glyphicon-remove"></i></a>';
@@ -142,8 +143,8 @@ if ($message->modified_time) {
 		}
 	}
 
-	echo '<i class="glyphicon glyphicon-thumbs-up"></i>'.JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $list) . ' ';
-	if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+	echo '<i class="glyphicon glyphicon-thumbs-up"></i>' . JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $list) . ' ';
+	if ($this->more_thankyou) { echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou); }
 	?>
 </div>
-<?php endif; ?>
+<?php endif;

@@ -18,7 +18,8 @@ $content = $this->request('Topic/Poll')
 $parents = KunenaForumCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-/** @var KunenaForumCategory $parent */
+// @var KunenaForumCategory $parent
+
 foreach ($parents as $parent)
 {
 	$this->addBreadcrumb(

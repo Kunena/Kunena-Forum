@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -54,18 +54,18 @@ class TableKunenaCategories extends KunenaTable
 	public $params = null;
 
 	/**
-	 * @param string $db
+	 * @param   string $db
 	 */
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_categories', 'id', $db );
+		parent::__construct('#__kunena_categories', 'id', $db);
 	}
 
 	/**
-	 * @param mixed  $array
-	 * @param string $ignore
+	 * @param   mixed  $array
+	 * @param   string $ignore
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function bind($array, $ignore = '')
 	{
@@ -89,6 +89,7 @@ class TableKunenaCategories extends KunenaTable
 			{
 				$registry = new JRegistry;
 			}
+
 			// TODO: convert to J!2.5: (string) $registry
 			$array['params'] = $registry->toString();
 		}
@@ -97,10 +98,10 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param null $id
-	 * @param bool $reset
+	 * @param   null $id
+	 * @param   bool $reset
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -143,6 +144,7 @@ class TableKunenaCategories extends KunenaTable
 			$this->$k = 0;
 			return false;
 		}
+
 		$this->_exists = true;
 
 		// Bind the data to the table.
@@ -153,7 +155,7 @@ class TableKunenaCategories extends KunenaTable
 
 	// check for potential problems
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function check()
 	{
@@ -161,41 +163,42 @@ class TableKunenaCategories extends KunenaTable
 		{
 			if ($this->id == $this->parent_id)
 			{
-				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_SAME_ERR' ) );
+				$this->setError(JText::_('COM_KUNENA_FORUM_SAME_ERR'));
 			}
-			elseif ($this->isChild ( $this->parent_id ))
+			elseif ($this->isChild($this->parent_id))
 			{
-				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_OWNCHILD_ERR' ) );
+				$this->setError(JText::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
 			}
 		}
 
 		$this->name = trim($this->name);
 		if (!$this->name) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME' ) );
+			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));
 		}
 
 		if ($this->params instanceof JRegistry) {
 			$this->params = $this->params->toString();
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 
 	// check if given forum is one of its own childs
 	/**
 	 * @param $id
 	 *
-	 * @return int|void
+	 * @return integer|void
 	 */
-	public function isChild($id) {
+	public function isChild($id)
+	{
 		// FIXME: when we have category cache, replace this code
 		if ($id > 0)
 		{
 			$query = "SELECT id, parent_id FROM #__kunena_categories";
-			$this->_db->setQuery ( $query );
-			$list = $this->_db->loadObjectList ( 'id' );
+			$this->_db->setQuery($query);
+			$list = $this->_db->loadObjectList('id');
 
-			if (KunenaError::checkDatabaseError ())
+			if (KunenaError::checkDatabaseError())
 			{
 				return;
 			}
@@ -203,30 +206,31 @@ class TableKunenaCategories extends KunenaTable
 			$recurse = array ();
 			while ($id)
 			{
-				if (in_array ($id, $recurse))
+				if (in_array($id, $recurse))
 				{
-					$this->setError ( get_class ( $this ) . JText::_ ( 'COM_KUNENA_RECURSION' ) );
+					$this->setError(get_class($this) . JText::_('COM_KUNENA_RECURSION'));
 					return 0;
 				}
 
 				$recurse [] = $id;
-				if (!isset ( $list [$id])) {
-					$this->setError ( get_class ( $this ) . JText::_ ( 'COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID' ) );
+				if (!isset($list [$id])) {
+					$this->setError(get_class($this) . JText::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
 					return 0;
 				}
 
 				$id = $list [$id]->parent_id;
-				if ($id != 0 and $id == $this->id)
-					return 1;
+				if ($id != 0 && $id == $this->id) {
+					return 1; }
 			}
 		}
+
 		return 0;
 	}
 
 	/**
-	 * @param string $where
+	 * @param   string $where
 	 *
-	 * @return bool|mixed
+	 * @return boolean|mixed
 	 */
 	public function reorder($where='')
 	{
@@ -251,13 +255,13 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	/**
-	 * @param bool $updateNulls
+	 * @param   bool $updateNulls
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function store($updateNulls = false)
 	{
-		$ret = parent::store ( $updateNulls );
+		$ret = parent::store($updateNulls);
 
 		return $ret;
 	}

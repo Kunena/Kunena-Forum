@@ -8,22 +8,23 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewTools $this */
+// @var KunenaAdminViewTools $this
+
 ?>
 
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
 
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="task" value="cleanupip" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_LEGEND_CLEANUP_IP'); ?></legend>

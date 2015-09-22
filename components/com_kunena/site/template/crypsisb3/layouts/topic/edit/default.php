@@ -9,7 +9,7 @@
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 JHtml::_('behavior.tooltip');
 JHTML::_('behavior.formvalidator');
@@ -63,7 +63,7 @@ $this->addStyleSheet('css/atwho.css');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
-if ($topicicontype == 'B3'){
+if ($topicicontype == 'B3') {
 	$this->addScript('js/editb3.js');
 }
 elseif ($topicicontype == 'fa') {
@@ -98,7 +98,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
 			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 		<?php endif; ?>
-		<?php if ($this->message->getTopic()->getPoll()->id): ?>
+		<?php if ($this->message->getTopic()->getPoll()->id) : ?>
 			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>" />
 		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
@@ -113,14 +113,14 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<div class="row column-row">
 				<div class="col-md-12 column-item">
 					<fieldset>
-						<?php if (isset($this->selectcatlist)): ?>
+						<?php if (isset($this->selectcatlist)) : ?>
 							<div class="form-group">
 								<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_CATEGORY') ?></label>
 								<div class="col-sm-10"><?php echo $this->selectcatlist ?></div>
 							</div>
 						<?php endif; ?>
 						<?php if ($this->message->userid) : ?>
-							<div class="control-group" id="kanynomous-check" <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+							<div class="control-group" id="kanynomous-check" <?php if (!$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 
 								<div class="controls">
@@ -133,7 +133,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 						<div class="form-group" id="kanynomous-check-name"
-							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+							<?php if ($this->me->userid && !$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
 							<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<input type="text" id="kauthorname" name="authorname"  placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />

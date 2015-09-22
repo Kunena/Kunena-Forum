@@ -126,8 +126,8 @@ dt {
 	background-color: #f9f9f9;
 }
 .icon-big {
-	font-size  : 32px;
-	margin-top : 20px;
+	font-size: 32px;
+	margin-top: 20px;
 	padding-right: 10px;
 	padding-bottom: 20px;
 	color: rgba(85, 85, 85, 1);
@@ -138,7 +138,7 @@ dt {
 
 /* Tabs panel */
 .tabbable-panel {
-	border:1px solid #eee;
+	border: 1px solid #eee;
 	padding: 10px;
 }
 

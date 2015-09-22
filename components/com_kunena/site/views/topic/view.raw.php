@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Kunena Component
@@ -10,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topic View
@@ -18,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaViewTopic extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
 	 * @throws Exception
 	 */
@@ -43,7 +42,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 *    Return JSON results of smilies available
 	 *
-	 * @param string $tpl
+	 * @param   string $tpl
 	 *
 	 * @since K4.0
 	 *
@@ -95,7 +94,7 @@ class KunenaViewTopic extends KunenaView
 		$category = KunenaForumCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
 
-		if ( empty($category_iconset) )
+		if (empty($category_iconset))
 		{
 			$response = array();
 
@@ -110,7 +109,7 @@ class KunenaViewTopic extends KunenaView
 
 		$template = KunenaFactory::getTemplate();
 
-		$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/'. $category_iconset .'/topicicons.xml';
+		$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/topicicons.xml';
 
 		if (is_file($xmlfile))
 		{
@@ -132,7 +131,7 @@ class KunenaViewTopic extends KunenaView
 
 					if ($icon->type != 'user')
 					{
-						$icon->id = $icon->type.'_'.$icon->name;
+						$icon->id = $icon->type . '_' . $icon->name;
 					}
 
 					$icon->iconset = $category_iconset;

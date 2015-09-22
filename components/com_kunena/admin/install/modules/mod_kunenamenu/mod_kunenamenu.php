@@ -18,6 +18,7 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !Kunena
 // Include the class only once
 require_once __DIR__ . '/class.php';
 
-/** @var object $params */
+// @var object $params
+
 $menu = new modKunenaMenu($params);
 $menu->display();

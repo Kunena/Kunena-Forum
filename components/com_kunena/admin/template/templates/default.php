@@ -8,9 +8,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewTemplates $this */
+// @var KunenaAdminViewTemplates $this
+
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -20,14 +21,14 @@ JHtml::_('dropdown.init');
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<div class="btn-group pull-right hidden-phone">
 				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
@@ -54,23 +55,23 @@ JHtml::_('dropdown.init');
 				</tr>
 			</tfoot>
 			<tbody>
-				<?php foreach ( $this->templates as $id => $row) : ?>
+				<?php foreach ($this->templates as $id => $row) : ?>
 				<tr>
 					<td>
 						<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);" />
 					</td>
 					<td>
-						<?php $img_path = JUri::root(true).'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
-						<span class="editlinktip hasTip" title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW' ) . '" width="200" height="145" />'); ?>">
+						<?php $img_path = JUri::root(true) . '/components/com_kunena/template/' . $row->directory . '/images/template_thumbnail.png'; ?>
+						<span class="editlinktip hasTip" title="<?php echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
 							<a href="#edit" onclick="return listItemTask('cb<?php echo $this->escape($row->directory); ?>','edit')"><?php echo $this->escape($row->name);?></a>
 						</span>
 					</td>
 					<td class="center">
 						<?php if ($row->published == 1) : ?>
-							<i class="icon-star" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>"></i>
+							<i class="icon-star" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?>"></i>
 						<?php else : ?>
 							<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo urlencode($row->directory);?>','publish')">
-								<i class="icon-star-empty" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>"></i>
+								<i class="icon-star-empty" alt="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></i>
 							</a>
 						<?php endif; ?>
 					</td>

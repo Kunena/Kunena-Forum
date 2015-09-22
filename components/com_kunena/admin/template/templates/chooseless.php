@@ -8,14 +8,15 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewTemplates $this */
+// @var KunenaAdminViewTemplates $this
+
 ?>
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
@@ -36,7 +37,7 @@ defined ( '_JEXEC' ) or die ();
 								<?php echo $this->escape($this->dir); ?>
 							</th>
 							<th>
-								<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_LESS_FILE_PERMISSION' ); ?>
+								<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_LESS_FILE_PERMISSION'); ?>
 							</th>
 						</tr>
 					</thead>
@@ -49,7 +50,7 @@ defined ( '_JEXEC' ) or die ();
 							<?php echo $this->escape($file); ?>
 						</td>
 						<td>
-							<?php echo is_writable($this->dir.'/'.$file) ? '<font color="green"> '. JText::sprintf( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($file) ) .'</font>' : '<font color="red"> '. JText::sprintf( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($file) ) .'</font>' ?>
+							<?php echo is_writable($this->dir . '/' . $file) ? '<font color="green"> ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($file)) . '</font>' : '<font color="red"> ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($file)) . '</font>' ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

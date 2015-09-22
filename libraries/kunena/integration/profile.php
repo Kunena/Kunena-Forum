@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaProfile
@@ -18,9 +18,9 @@ class KunenaProfile
 	protected static $instance = false;
 
 	/**
-	 * @param null $integration
+	 * @param   null $integration
 	 *
-	 * @return bool|KunenaProfile
+	 * @return boolean|KunenaProfile
 	 */
 	static public function getInstance($integration = null)
 	{
@@ -51,7 +51,7 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array
 	 */
@@ -59,17 +59,17 @@ class KunenaProfile
 	{
 		if (!$limit)
 		{
-			$limit = KunenaFactory::getConfig ()->popusercount;
+			$limit = KunenaFactory::getConfig()->popusercount;
 		}
 
 		return (array) $this->_getTopHits($limit);
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
@@ -81,12 +81,12 @@ class KunenaProfile
 			return false;
 		}
 
-		return KunenaRoute::_('index.php?option=com_kunena&view=statistics'.$action, $xhtml);
+		return KunenaRoute::_('index.php?option=com_kunena&view=statistics' . $action, $xhtml);
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 */
 	public function getUserListURL($action='', $xhtml = true)
 	{
@@ -95,8 +95,8 @@ class KunenaProfile
 
 	/**
 	 * @param        $user
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 */
 	public function getProfileURL($user, $task='', $xhtml = true)
 	{
@@ -113,7 +113,7 @@ class KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array
 	 */
@@ -124,7 +124,7 @@ class KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

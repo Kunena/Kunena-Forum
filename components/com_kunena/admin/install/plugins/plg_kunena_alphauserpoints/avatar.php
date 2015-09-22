@@ -8,12 +8,14 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-class KunenaAvatarAlphaUserPoints extends KunenaAvatar {
+class KunenaAvatarAlphaUserPoints extends KunenaAvatar
+{
 	protected $params = null;
 
-	public function __construct($params) {
+	public function __construct($params)
+	{
 		$this->params = $params;
 	}
 
@@ -24,7 +26,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar {
 
 	public function _getURL($user, $sizex, $sizey)
 	{
-		trigger_error(__CLASS__.'::'.__FUNCTION__.'() not implemented');
+		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');
 	}
 
 	public function getLink($user, $class='', $sizex=90, $sizey=90)
@@ -32,13 +34,15 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar {
 		$user = KunenaFactory::getUser($user);
 		$size = $this->getSize($sizex, $sizey);
 		if ($size->y > 100) {
-			$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, 100*(float)$size->x/(float)$size->y, '100'  );
+			$avatar = AlphaUserPointsHelper::getAupAvatar($user->userid, 0, 100 * (float) $size->x / (float) $size->y, '100');
 		} else {
-			$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $size->x, $size->y  );
+			$avatar = AlphaUserPointsHelper::getAupAvatar($user->userid, 0, $size->x, $size->y);
 		}
+
 		if (!$avatar) {
-			$avatar = '<img border="0" width="100" height="100" alt="" src="'.JUri::root().'components/com_alphauserpoints/assets/images/avatars/generic_gravatar_grey.png">';
+			$avatar = '<img border="0" width="100" height="100" alt="" src="' . JUri::root() . 'components/com_alphauserpoints/assets/images/avatars/generic_gravatar_grey.png">';
 		}
+
 		return $avatar;
 	}
 }

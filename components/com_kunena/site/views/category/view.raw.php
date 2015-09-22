@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Category View
@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaViewCategory extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
 	 * @throws Exception
 	 */

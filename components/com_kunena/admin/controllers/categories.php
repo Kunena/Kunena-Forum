@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Categories Controller
@@ -22,7 +22,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	protected $baseurl2 = null;
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -287,13 +287,11 @@ class KunenaAdminControllerCategories extends KunenaController
 		{
 			// Category exists and user is not admin in category
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
-
 		}
 		elseif (!$category->exists() && !$this->me->isAdmin($parent))
 		{
 			// Category doesn't exist and user is not admin in parent, parent_id=0 needs global admin rights
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($parent->name)), 'notice');
-
 		}
 		elseif (!$category->isCheckedOut($this->me->userid))
 		{
@@ -305,6 +303,7 @@ class KunenaAdminControllerCategories extends KunenaController
 				$ignore             = array_merge($ignore, array('parent_id', 'ordering'));
 				$post ['parent_id'] = $category->parent_id;
 			}
+
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
 			if (!$this->me->isAdmin())
 			{
@@ -314,6 +313,7 @@ class KunenaAdminControllerCategories extends KunenaController
 					// If category didn't exist or is moved, copy access and class_sfx from parent
 					$category->bind($parent->getProperties(), $access, true);
 				}
+
 				$ignore = array_merge($ignore, $access);
 			}
 
@@ -330,7 +330,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			if ($aliases)
 			{
 				$aliases = array_diff($aliases, JFactory::getApplication()->input->get('aliases', array(), 'post', 'array'));
-				foreach ($aliases as $alias) $category->deleteAlias($alias);
+				foreach ($aliases as $alias) { $category->deleteAlias($alias); }
 			}
 
 			// Update read access
@@ -344,7 +344,6 @@ class KunenaAdminControllerCategories extends KunenaController
 			}
 
 			$category->checkin();
-
 		}
 		else
 		{
@@ -391,7 +390,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
-		if (empty ($cid))
+		if (empty($cid))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
 			$this->setRedirectBack();
@@ -431,6 +430,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_DELETED', $this->escape($name)));
 		}
+
 		if ($count > 1)
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORIES_DELETED', $count));
@@ -493,7 +493,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$order = JFactory::getApplication()->input->get('order', array(), 'post', 'array'); // Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($order);
 
-		if (empty ($cid))
+		if (empty($cid))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
 			$this->setRedirectBack();
@@ -506,7 +506,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$categories = KunenaForumCategoryHelper::getCategories($cid);
 		foreach ($categories as $category)
 		{
-			if (!isset ($order [$category->id]) || $category->get('ordering') == $order [$category->id])
+			if (!isset($order [$category->id]) || $category->get('ordering') == $order [$category->id])
 			{
 				continue;
 			}
@@ -634,7 +634,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		}
 
 		$db  = JFactory::getDBO();
-		$row = new TableKunenaCategories ($db);
+		$row = new TableKunenaCategories($db);
 		$row->load($id);
 
 		// Ensure that we have the right ordering
@@ -659,7 +659,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		if (empty ($cid))
+		if (empty($cid))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
 
@@ -705,6 +705,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($name)));
 		}
+
 		if ($count > 1)
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count));

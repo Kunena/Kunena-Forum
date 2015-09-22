@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.cache.handler.output');
 
@@ -19,7 +19,7 @@ jimport('joomla.cache.handler.output');
 class KunenaViewAnnouncement extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -47,7 +47,7 @@ class KunenaViewAnnouncement extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayCreate($tpl = null)
 	{
@@ -75,7 +75,7 @@ class KunenaViewAnnouncement extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayEdit($tpl = null)
 	{
@@ -103,7 +103,7 @@ class KunenaViewAnnouncement extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayList($tpl = null)
 	{
@@ -193,7 +193,7 @@ class KunenaViewAnnouncement extends KunenaView
 
 	/**
 	 * @param      $name
-	 * @param null $mode
+	 * @param   null $mode
 	 *
 	 * @return mixed
 	 */
@@ -204,8 +204,8 @@ class KunenaViewAnnouncement extends KunenaView
 
 	/**
 	 * @param        $name
-	 * @param string $attributes
-	 * @param null   $id
+	 * @param   string $attributes
+	 * @param   null   $id
 	 *
 	 * @return mixed|string
 	 */

@@ -14,7 +14,7 @@
 }*/
 
 #kunena.admin.override #dashboard-icons .btn {
-    background-image: none;
-    border-color: transparent;
-    box-shadow: none;
+	background-image: none;
+	border-color: transparent;
+	box-shadow: none;
 }

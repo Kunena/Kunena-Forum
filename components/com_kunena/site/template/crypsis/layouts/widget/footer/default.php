@@ -23,4 +23,4 @@ defined('_JEXEC') or die;
 <div class="center">
 	<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
 </div>
-<?php endif; ?>
+<?php endif;

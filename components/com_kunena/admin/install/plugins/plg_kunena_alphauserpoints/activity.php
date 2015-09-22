@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.utilities.string');
 
@@ -106,6 +106,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 				{
 					AlphaUserPointsHelper::newpoints($ruleName, $auptarget, '', $infoTargetUser, $usertargetpoints);
 				}
+
 				// for who has gived the thank you
 				if ($aupactor)
 				{
@@ -129,7 +130,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 		if (!defined("_AUP_MEDALS_LIVE_PATH"))
 		{
-			define ('_AUP_MEDALS_LIVE_PATH', JUri::root(true) . '/components/com_alphauserpoints/assets/images/awards/icons/');
+			define('_AUP_MEDALS_LIVE_PATH', JUri::root(true) . '/components/com_alphauserpoints/assets/images/awards/icons/');
 		}
 
 		$aupmedals = AlphaUserPointsHelper::getUserMedals('', $userid);
@@ -148,9 +149,10 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		{
 			return false;
 		}
+
 		$_db = JFactory::getDBO();
 
-		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . ( int ) $userid . "'");
+		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
 		$userpoints = $_db->loadResult();
 		KunenaError::checkDatabaseError();
 

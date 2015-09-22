@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.modellist');
 
@@ -24,7 +24,7 @@ class KunenaAdminModelUsers extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param    array $config An optional associative array of configuration settings.
+	 * @param   array $config An optional associative array of configuration settings.
 	 *
 	 * @see        JController
 	 */
@@ -107,7 +107,7 @@ class KunenaAdminModelUsers extends JModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param    string $id A prefix for the store id.
+	 * @param   string $id A prefix for the store id.
 	 *
 	 * @return    string        A store id.
 	 */
@@ -220,7 +220,7 @@ class KunenaAdminModelUsers extends JModelList
 
 		if ($filter !== '')
 		{
-			$now = new JDate ();
+			$now = new JDate();
 
 			if ($filter)
 			{

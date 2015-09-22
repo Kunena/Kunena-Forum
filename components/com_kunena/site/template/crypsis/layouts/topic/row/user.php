@@ -10,8 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaLayout $this */
-/** @var KunenaForumTopic $topic */
+/*
+  @var KunenaLayout $this */
+// @var KunenaForumTopic $topic
+
 $topic = $this->topic;
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
@@ -36,13 +38,13 @@ if ($this->topic->ordering)
 
 if ($this->topic->hold == 1)
 {
-	$txt .= ' '. 'unapproved';
+	$txt .= ' ' . 'unapproved';
 }
 else
 {
 	if ($this->topic->hold)
 	{
-		$txt .= ' '  . 'deleted';
+		$txt .= ' ' . 'deleted';
 	}
 }
 
@@ -57,7 +59,7 @@ if (!empty($this->spacing)) : ?>
 </tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx).$txt;?>">
+<tr class="category<?php echo $this->escape($category->class_sfx) . $txt;?>">
 	<?php if ($topic->unread) : ?>
 	<td class="hidden-phone center topic-item-unread">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
@@ -71,8 +73,9 @@ if (!empty($this->spacing)) : ?>
 			<?php
 			if ($topic->unread)
 			{
-				echo $this->getTopicLink($topic,  'unread',
-					$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
+				echo $this->getTopicLink(
+     $topic,  'unread',
+	$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
 			}
 			else
 			{
@@ -99,7 +102,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="hidden-phone">
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?>,
+			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory())) ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
@@ -150,7 +153,7 @@ if (!empty($this->spacing)) : ?>
 					</div>
 				<?php endif; ?>
 				<div class="span9">
-					<span><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
+					<span><?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
 						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
 					</span>
 					<br>
@@ -169,10 +172,10 @@ if (!empty($this->spacing)) : ?>
 	<?php endif; ?>
 
 	<?php
-	if (!empty($this->position))
+	if (!empty($this->position)) {
 		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
-			->setLayout('table_row');
+			->setLayout('table_row'); }
 	?>
 </tr>

@@ -8,17 +8,18 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewStats $this */
+// @var KunenaAdminViewStats $this
+
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.css');
+if (JFactory::getLanguage()->isRTL()) { $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css'); }
 ?>
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
@@ -96,14 +97,14 @@ $k = 0;
 			<th>&nbsp;</th>
 			<th><?php echo $top[0]->titleCount ?></th>
 		</tr>
-		<?php foreach ($top as $id=>$item) : ?>
+		<?php foreach ($top as $id => $item) : ?>
 		<tr>
-			<td><?php echo $id+1 ?></td>
+			<td><?php echo $id + 1 ?></td>
 			<td>
 				<?php echo $item->link ?>
 			</td>
 			<td>
-				<img class="kstats-bar" src="<?php echo JUri::root(true).'/media/kunena/images/bar.png' ?>" alt="" height="15" width="<?php echo $item->percent ?>%" />
+				<img class="kstats-bar" src="<?php echo JUri::root(true) . '/media/kunena/images/bar.png' ?>" alt="" height="15" width="<?php echo $item->percent ?>%" />
 			</td>
 			<td>
 				<?php echo $item->count ?>

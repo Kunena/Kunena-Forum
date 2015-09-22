@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.error.profiler');
 
@@ -44,7 +44,7 @@ function KunenaBuildRoute(&$query)
 
 	// Get menu item
 	$menuitem = null;
-	if (isset ($query ['Itemid']))
+	if (isset($query ['Itemid']))
 	{
 		static $menuitems = array();
 		$Itemid = $query ['Itemid'] = (int) $query ['Itemid'];
@@ -54,9 +54,10 @@ function KunenaBuildRoute(&$query)
 			if (!$menuitems[$Itemid])
 			{
 				// Itemid doesn't exist or is invalid
-				unset ($query ['Itemid']);
+				unset($query ['Itemid']);
 			}
 		}
+
 		$menuitem = $menuitems[$Itemid];
 	}
 
@@ -69,48 +70,49 @@ function KunenaBuildRoute(&$query)
 	}
 
 	// Get view for later use (query wins menu item)
-	$view = isset ($query ['view']) ? (string) preg_replace('/[^a-z]/', '', $query ['view']) : $menuitem->query ['view'];
+	$view = isset($query ['view']) ? (string) preg_replace('/[^a-z]/', '', $query ['view']) : $menuitem->query ['view'];
 
 	// Get default values for URI variables
 	if (isset(KunenaRoute::$views[$view]))
 	{
 		$defaults = KunenaRoute::$views[$view];
 	}
+
 	// Check all URI variables and remove those which aren't needed
 	foreach ($query as $var => $value)
 	{
-		if (isset ($defaults [$var]) && !isset ($menuitem->query [$var]) && $value == $defaults [$var])
+		if (isset($defaults [$var]) && !isset($menuitem->query [$var]) && $value == $defaults [$var])
 		{
 			// Remove URI variable which has default value
-			unset ($query [$var]);
+			unset($query [$var]);
 		}
-		elseif (isset ($menuitem->query [$var]) && $value == $menuitem->query [$var] && $var != 'Itemid' && $var != 'option')
+		elseif (isset($menuitem->query [$var]) && $value == $menuitem->query [$var] && $var != 'Itemid' && $var != 'option')
 		{
 			// Remove URI variable which has the same value as menu item
-			unset ($query [$var]);
+			unset($query [$var]);
 		}
 	}
 
 	// We may have catid also in the menu item (it will not be in URI)
-	$numeric = !empty ($menuitem->query ['catid']);
+	$numeric = !empty($menuitem->query ['catid']);
 	$pos     = 0;
 
 	// Support URIs like: /forum/category
-	if (!empty ($query ['catid']) && ($view == 'category' || $view == 'topic' || $view == 'home'))
+	if (!empty($query ['catid']) && ($view == 'category' || $view == 'topic' || $view == 'home'))
 	{
 		// TODO: ensure that we have view=category/topic
-		$catid = ( int ) $query ['catid'];
+		$catid = (int) $query ['catid'];
 		if ($catid)
 		{
 			$numeric = true;
 
 			$alias = KunenaForumCategoryHelper::get($catid)->alias;
 			// If category alias is empty, use category id; otherwise use alias
-			$segments [] = empty ($alias) ? $catid : $alias;
+			$segments [] = empty($alias) ? $catid : $alias;
 			// This segment fully defines category view so the variable is no longer needed
 			if ($view == 'category')
 			{
-				unset ($query ['view']);
+				unset($query ['view']);
 			}
 		}
 		elseif ($query['catid'] == '@')
@@ -122,17 +124,18 @@ function KunenaBuildRoute(&$query)
 				unset($query['view']);
 			}
 		}
-		unset ($query ['catid']);
+
+		unset($query ['catid']);
 	}
 
 	// Support URIs like: /forum/category/123-topic
-	if (!empty ($query ['id']) && $numeric)
+	if (!empty($query ['id']) && $numeric)
 	{
 		$id = (int) $query ['id'];
 		if ($id)
 		{
 			$subject = KunenaRoute::stringURLSafe(KunenaForumTopicHelper::get($id)->subject);
-			if (empty ($subject))
+			if (empty($subject))
 			{
 				$segments [] = $id;
 			}
@@ -140,10 +143,11 @@ function KunenaBuildRoute(&$query)
 			{
 				$segments [] = "{$id}-{$subject}";
 			}
+
 			// This segment fully defines topic view so the variable is no longer needed
 			if ($view == 'topic')
 			{
-				unset ($query ['view']);
+				unset($query ['view']);
 			}
 		}
 		elseif ($query['id'] == '@')
@@ -155,6 +159,7 @@ function KunenaBuildRoute(&$query)
 				unset($query['view']);
 			}
 		}
+
 		unset($query['id']);
 	}
 	else
@@ -164,7 +169,7 @@ function KunenaBuildRoute(&$query)
 	}
 
 	// View gets added only when we do not use short URI for category/topic
-	if (!empty ($query ['view']))
+	if (!empty($query ['view']))
 	{
 		// Use filtered value
 		$segments [] = $view;
@@ -178,12 +183,14 @@ function KunenaBuildRoute(&$query)
 				$segments [] = (int) $query['id'];
 				unset($query['id']);
 			}
+
 			if (!empty($query['thumb']))
 			{
 				// Use filtered value
 				$segments [] = 'thumb';
 				unset($query['thumb']);
 			}
+
 			unset($query['format']);
 
 			if (!empty($query['filename']))
@@ -195,14 +202,14 @@ function KunenaBuildRoute(&$query)
 	}
 
 	// Support URIs like: /forum/category/123-topic/reply
-	if (!empty ($query ['layout']))
+	if (!empty($query ['layout']))
 	{
 		// Use filtered value
 		$segments [] = (string) preg_replace('/[^a-z]/', '', $query ['layout']);
 	}
 
 	// Support URIs like: /forum/category/123-topic/reply/124
-	if (isset ($query ['mesid']) && $numeric)
+	if (isset($query ['mesid']) && $numeric)
 	{
 		if ($query['mesid'] == '@')
 		{
@@ -212,6 +219,7 @@ function KunenaBuildRoute(&$query)
 		{
 			$segments[] = (int) $query['mesid'];
 		}
+
 		unset($query['mesid']);
 	}
 
@@ -226,18 +234,19 @@ function KunenaBuildRoute(&$query)
 		{
 			$segments[] = (int) $query['userid'] . '-' . KunenaRoute::stringURLSafe(KunenaUserHelper::get((int) $query['userid'])->getName());
 		}
+
 		unset($query['userid']);
 	}
 
-	unset ($query ['view'], $query ['layout']);
+	unset($query ['view'], $query ['layout']);
 
 	// Rest of the known parameters are in var-value form
 	foreach (KunenaRoute::$parsevars as $var => $dummy)
 	{
-		if (isset ($query [$var]))
+		if (isset($query [$var]))
 		{
 			$segments [] = "{$var}-{$query[$var]}";
-			unset ($query [$var]);
+			unset($query [$var]);
 		}
 	}
 
@@ -271,7 +280,7 @@ function KunenaParseRoute($segments)
 
 	// Get current menu item and get query variables from it
 	$active = JFactory::getApplication()->getMenu()->getActive();
-	$vars   = isset ($active->query) ? $active->query : array('view' => 'home');
+	$vars   = isset($active->query) ? $active->query : array('view' => 'home');
 	if (empty($vars['view']) || $vars['view'] == 'home' || $vars['view'] == 'entrypage')
 	{
 		$vars['view'] = '';
@@ -309,7 +318,7 @@ function KunenaParseRoute($segments)
 		$var   = array_shift($seg);
 		$value = array_shift($seg);
 
-		if (empty ($var) && empty ($value))
+		if (empty($var) && empty($value))
 		{
 			// Skip /-/
 			continue;
@@ -323,7 +332,6 @@ function KunenaParseRoute($segments)
 			{
 				// Special case: User view
 				$var = 'userid';
-
 			}
 			elseif (empty($vars ['catid']))
 			{
@@ -378,6 +386,7 @@ function KunenaParseRoute($segments)
 				$var = 'view';
 			}
 		}
+
 		$vars [$var] = $value;
 
 		// Handle attachment ID
@@ -390,14 +399,16 @@ function KunenaParseRoute($segments)
 			{
 				$vars[$segment] = 1;
 			}
+
 			$vars['format'] = 'raw';
 		}
-
 	}
+
 	if (empty($vars ['layout']))
 	{
 		$vars ['layout'] = 'default';
 	}
+
 	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
 
 	foreach ($vars as $var => $value)

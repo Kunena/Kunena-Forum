@@ -14,7 +14,7 @@
  **/
 
 // Do not allow direct linking
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaConfig
@@ -1133,7 +1133,7 @@ class KunenaConfig extends JObject
 	 */
 	public function __construct()
 	{
-		parent::__construct ();
+		parent::__construct();
 	}
 
 	/**
@@ -1145,7 +1145,8 @@ class KunenaConfig extends JObject
 
 		if (!$instance)
 		{
-			/** @var JCache|JCacheController $cache */
+			// @var JCache|JCacheController $cache
+
 			$cache = JFactory::getCache('com_kunena', 'output');
 			$instance = $cache->get('configuration', 'com_kunena');
 
@@ -1157,11 +1158,12 @@ class KunenaConfig extends JObject
 
 			$cache->store($instance, 'configuration', 'com_kunena');
 		}
+
 		return $instance;
 	}
 
 	/**
-	 * @param mixed $properties
+	 * @param   mixed $properties
 	 */
 	public function bind($properties)
 	{
@@ -1177,18 +1179,18 @@ class KunenaConfig extends JObject
 	 */
 	public function save()
 	{
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 
 		// Perform custom validation of config data before we write it.
-		$this->check ();
+		$this->check();
 
 		// Get current configuration
 		$params = $this->getProperties();
 		unset($params['id']);
 
-		$db->setQuery ( "REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
+		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
 		$db->execute();
-		KunenaError::checkDatabaseError ();
+		KunenaError::checkDatabaseError();
 
 		// Clear cache.
 		KunenaCacheHelper::clear();
@@ -1199,29 +1201,29 @@ class KunenaConfig extends JObject
 	 */
 	public function reset()
 	{
-		$instance = new KunenaConfig ();
+		$instance = new KunenaConfig();
 		$this->bind($instance->getProperties());
 	}
 
 	/**
 	 * Load config settings from database table.
-	 * @param null $userinfo Not used.
+	 * @param   null $userinfo Not used.
 	 */
 	public function load($userinfo = null)
 	{
-		$db = JFactory::getDBO ();
-		$db->setQuery ( "SELECT * FROM #__kunena_configuration WHERE id=1" );
-		$config = $db->loadAssoc ();
-		KunenaError::checkDatabaseError ();
+		$db = JFactory::getDBO();
+		$db->setQuery("SELECT * FROM #__kunena_configuration WHERE id=1");
+		$config = $db->loadAssoc();
+		KunenaError::checkDatabaseError();
 
 		if ($config)
 		{
 			$params = json_decode($config['params']);
-			$this->bind ($params);
+			$this->bind($params);
 		}
 
 		// Perform custom validation of config data before we let anybody access it.
-		$this->check ();
+		$this->check();
 
 		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
@@ -1243,7 +1245,7 @@ class KunenaConfig extends JObject
 	}
 
 	/**
-	 * @param string $name
+	 * @param   string $name
 	 *
 	 * @return JRegistry
 	 *
@@ -1262,9 +1264,9 @@ class KunenaConfig extends JObject
 		// Add anything that requires validation
 
 		// Need to have at least two per page of these
-		$this->messages_per_page = max ( $this->messages_per_page, 2 );
-		$this->messages_per_page_search = max ( $this->messages_per_page_search, 2 );
-		$this->threads_per_page = max ( $this->threads_per_page, 2 );
+		$this->messages_per_page = max($this->messages_per_page, 2);
+		$this->messages_per_page_search = max($this->messages_per_page_search, 2);
+		$this->threads_per_page = max($this->threads_per_page, 2);
 	}
 
 	/**

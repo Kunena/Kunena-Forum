@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Announcements Controller
@@ -51,6 +51,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			{
 				continue;
 			}
+
 			$announcement->published = 1;
 			if (!$announcement->authorise('edit') || !$announcement->save())
 			{

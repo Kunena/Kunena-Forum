@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topics View
@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaViewTopics extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -51,7 +51,7 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayUser($tpl = null)
 	{
@@ -82,7 +82,7 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayPosts($tpl = null)
 	{
@@ -196,6 +196,7 @@ class KunenaViewTopics extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
 				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
@@ -290,6 +291,7 @@ class KunenaViewTopics extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
 				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
@@ -305,8 +307,8 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param string $prefix
-	 * @param string $class
+	 * @param   string $prefix
+	 * @param   string $class
 	 *
 	 * @return string
 	 */
@@ -343,6 +345,7 @@ class KunenaViewTopics extends KunenaView
 				$txt .= ' ' . $prefix . 'deleted';
 			}
 		}
+
 		if ($this->topic->moved_id > 0)
 		{
 			$txt .= ' ' . $prefix . 'moved';
@@ -352,8 +355,8 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param string $id
-	 * @param string $attrib
+	 * @param   string $id
+	 * @param   string $attrib
 	 */
 	function displayTimeFilter($id = 'kfilter-select-time', $attrib = 'class="kinputbox" onchange="this.form.submit()" size="1"')
 	{
@@ -396,7 +399,6 @@ class KunenaViewTopics extends KunenaView
 
 		if ($type == 'default')
 		{
-
 			switch ($this->state->get('list.mode'))
 			{
 				case 'topics' :
@@ -431,11 +433,9 @@ class KunenaViewTopics extends KunenaView
 
 			$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
 			$this->setDescription($description);
-
 		}
 		elseif ($type == 'user')
 		{
-
 			switch ($this->state->get('list.mode'))
 			{
 				case 'posted' :
@@ -466,11 +466,9 @@ class KunenaViewTopics extends KunenaView
 
 			$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
 			$this->setDescription($description);
-
 		}
 		elseif ($type == 'posts')
 		{
-
 			switch ($this->state->get('list.mode'))
 			{
 				case 'unapproved':

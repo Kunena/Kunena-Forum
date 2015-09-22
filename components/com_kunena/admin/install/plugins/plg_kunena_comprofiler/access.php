@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 require_once dirname(__FILE__) . '/integration.php';
 
@@ -45,8 +45,8 @@ class KunenaAccessComprofiler
 	/**
 	 * Get group name in selected access type.
 	 *
-	 * @param string $accesstype Access type.
-	 * @param int    $id         Group id.
+	 * @param   string $accesstype Access type.
+	 * @param   int    $id         Group id.
 	 *
 	 * @return string|null
 	 */
@@ -69,8 +69,8 @@ class KunenaAccessComprofiler
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param string $accesstype Access type.
-	 * @param int    $category   Group id.
+	 * @param   string $accesstype Access type.
+	 * @param   int    $category   Group id.
 	 *
 	 * @return array
 	 */
@@ -89,8 +89,10 @@ class KunenaAccessComprofiler
 				{
 					$selected = $item->id;
 				}
+
 				$options[] = JHtml::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
 			}
+
 			if (!$options)
 			{
 				$selected  = 0;
@@ -115,9 +117,9 @@ class KunenaAccessComprofiler
 	 *
 	 * Results may be cached.
 	 *
-	 * @param array $categories List of categories, null = all.
+	 * @param   array $categories List of categories, null = all.
 	 *
-	 * @return array(array('user_id'=>u, 'category_id'=>c, 'role'=>r))
+	 * @return array(array => u, 'category_id'=>c, 'role'=>r))
 	 */
 	public function loadCategoryRoles(array $categories = null)
 	{
@@ -136,8 +138,8 @@ class KunenaAccessComprofiler
 	 *
 	 * Results for the current user are saved into session.
 	 *
-	 * @param int   $userid     User who needs the authorisation (null=current user, 0=visitor).
-	 * @param array $categories List of categories in access type.
+	 * @param   int   $userid     User who needs the authorisation (null=current user, 0=visitor).
+	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array, where category ids are in the keys.
 	 */
@@ -151,8 +153,9 @@ class KunenaAccessComprofiler
 		{
 			$allowed = explode(',', $allowed);
 		}
+
 		$allowed = (array) array_flip($allowed);
-		foreach ($allowed as $id => &$value) $value = $id;
+		foreach ($allowed as $id => &$value) { $value = $id; }
 
 		return $allowed;
 	}
@@ -160,8 +163,8 @@ class KunenaAccessComprofiler
 	/**
 	 * Authorise list of userids to topic or category.
 	 *
-	 * @param    mixed $topic   Category or topic.
-	 * @param    array $userids list(allow, deny).
+	 * @param   mixed $topic   Category or topic.
+	 * @param   array $userids list(allow, deny).
 	 *
 	 * @return array
 	 */
@@ -173,6 +176,7 @@ class KunenaAccessComprofiler
 		{
 			return array($allow, $deny);
 		}
+
 		$category = $topic->getCategory();
 
 		if ($category->accesstype == 'communitybuilder')

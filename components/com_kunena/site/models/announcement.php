@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Announcement Model for Kunena
@@ -34,6 +34,7 @@ class KunenaModelAnnouncement extends KunenaModel
 		{
 			$value = 20;
 		}
+
 		$this->setState('list.limit', $value);
 
 		$value = $this->getInt('limitstart', 0);
@@ -63,7 +64,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	}
 
 	/**
-	 * @return bool|null
+	 * @return boolean|null
 	 */
 	public function getTotal()
 	{

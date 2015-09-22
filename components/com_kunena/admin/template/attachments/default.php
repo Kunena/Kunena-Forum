@@ -8,9 +8,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewAttachments $this */
+// @var KunenaAdminViewAttachments $this
+
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -35,7 +36,7 @@ JHtml::_('dropdown.init');
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
@@ -44,7 +45,7 @@ JHtml::_('dropdown.init');
 			<input type="hidden" name="boxchecked" value="0" />
 			<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<div id="filter-bar" class="btn-toolbar">
 				<div class="filter-search btn-group pull-left">
@@ -80,13 +81,13 @@ JHtml::_('dropdown.init');
 				<thead>
 					<tr>
 						<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->listDirection, $this->listOrdering ); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->listDirection, $this->listOrdering ); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $this->listDirection, $this->listOrdering ); ?>
+						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $this->listDirection, $this->listOrdering); ?>
 						<th><?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS'); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $this->listDirection, $this->listOrdering ); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $this->listDirection, $this->listOrdering ); ?></th>
-						<th><?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering ); ?></th>
+						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $this->listDirection, $this->listOrdering); ?></th>
+						<th><?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?></th>
 					</tr>
 					<tr>
 						<td class="hidden-phone">
@@ -96,11 +97,13 @@ JHtml::_('dropdown.init');
 							<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 						</td>
 						<td class="nowrap">
-							<label for="filter_type" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');;?></label>
+							<label for="filter_type" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');
+;?></label>
 							<input class="input-block-level input-filter filter" type="text" name="filter_type" id="filter_type" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterType; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 						</td>
 						<td class="nowrap">
-							<label for="filter_size" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');;?></label>
+							<label for="filter_size" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');
+;?></label>
 							<input class="input-block-level input-filter filter" type="text" name="filter_size" id="filter_size" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterSize; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 						</td>
 						<td class="nowrap">
@@ -110,11 +113,13 @@ JHtml::_('dropdown.init');
 						*/ ?>
 						</td>
 						<td class="nowrap">
-							<label for="filter_username" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');;?></label>
+							<label for="filter_username" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');
+;?></label>
 							<input class="input-block-level input-filter filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterUsername; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 						</td>
 						<td class="nowrap">
-							<label for="filter_post" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');;?></label>
+							<label for="filter_post" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');
+;?></label>
 							<input class="input-block-level input-filter filter" type="text" name="filter_post" id="filter_post" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterPost; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 						</td>
 						<td class="nowrap center hidden-phone">
@@ -132,15 +137,15 @@ JHtml::_('dropdown.init');
 				<?php
 				$i = 0;
 				if($this->pagination->total > 0) :
-				foreach($this->items as $id=>$attachment) :
+				foreach($this->items as $id => $attachment) :
 				$message = $attachment->getMessage();
 				?>
 					<tr>
 						<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
 						<td><?php echo $attachment->getLayout()->render('thumbnail') . '<br />' . $attachment->getShortName(5, 5) ?></td>
 						<td><?php echo $this->escape($attachment->filetype); ?></td>
-						<td><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' ' . JText::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
-						<td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height  : '' ?></td>
+						<td><?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
+						<td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height : '' ?></td>
 						<td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
 						<td><?php echo $this->escape($message->subject); ?></td>
 						<td><?php echo intval($attachment->id); ?></td>
@@ -153,7 +158,8 @@ JHtml::_('dropdown.init');
 						<td colspan="10">
 							<div class="well center filter-state">
 								<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-									<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+									<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
+?>
 									<?php if($this->filterActive || $this->pagination->total > 0) : ?>
 									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 									<?php else : ?>

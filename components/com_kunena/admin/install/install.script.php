@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
@@ -35,7 +35,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param $parent
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function install($parent)
 	{
@@ -45,6 +45,7 @@ class Com_KunenaInstallerScript
 		{
 			JFolder::delete($cacheDir);
 		}
+
 		JFolder::create($cacheDir);
 
 		return true;
@@ -53,7 +54,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param $parent
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function discover_install($parent)
 	{
@@ -63,7 +64,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param $parent
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function update($parent)
 	{
@@ -73,7 +74,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param $parent
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function uninstall($parent)
 	{
@@ -93,7 +94,7 @@ class Com_KunenaInstallerScript
 	 * @param $type
 	 * @param $parent
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function preflight($type, $parent)
 	{
@@ -119,6 +120,7 @@ class Com_KunenaInstallerScript
 				$ignoreAdmin[] = 'install.script.php';
 				$ignoreAdmin[] = 'admin.kunena.php';
 			}
+
 			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
 			$this->deleteFolder($adminPath, $ignoreAdmin);
 			$this->deleteFolder($sitePath, $ignoreSite);
@@ -143,7 +145,7 @@ class Com_KunenaInstallerScript
 	 * @param $type
 	 * @param $parent
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function postflight($type, $parent)
 	{
@@ -153,7 +155,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param $version
 	 *
-	 * @return bool|int
+	 * @return boolean|integer
 	 */
 	public function checkRequirements($version)
 	{
@@ -174,7 +176,7 @@ class Com_KunenaInstallerScript
 	 * @param $name
 	 * @param $version
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 */
 	protected function checkVersion($name, $version)
@@ -196,10 +198,12 @@ class Com_KunenaInstallerScript
 
 			break;
 		}
+
 		if (!$major)
 		{
 			$minor = reset($this->versions[$name]);
 		}
+
 		$recommended = end($this->versions[$name]);
 		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is higly recommended to use %s %s or later.", $name, $version, $name, $minor, $name, $recommended), 'notice');
 
@@ -210,7 +214,7 @@ class Com_KunenaInstallerScript
 	 * @param $name
 	 * @param $types
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 */
 	protected function checkDbo($name, $types)
@@ -230,7 +234,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param $extensions
 	 *
-	 * @return int
+	 * @return integer
 	 * @throws Exception
 	 */
 	protected function checkExtensions($extensions)
@@ -253,7 +257,7 @@ class Com_KunenaInstallerScript
 	/**
 	 * @param $version
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 */
 	protected function checkKunena($version)
@@ -270,7 +274,8 @@ class Com_KunenaInstallerScript
 
 		// Do not install over Git repository (K1.6+).
 		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
-			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev()))
+			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())
+)
 		{
 			$app->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
 
@@ -329,7 +334,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array $ignore
 	 */
 	public function deleteFiles($path, $ignore = array())
 	{
@@ -349,7 +354,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array $ignore
 	 */
 	public function deleteFolders($path, $ignore = array())
 	{
@@ -369,7 +374,7 @@ class Com_KunenaInstallerScript
 
 	/**
 	 * @param       $path
-	 * @param array $ignore
+	 * @param   array $ignore
 	 */
 	public function deleteFolder($path, $ignore = array())
 	{

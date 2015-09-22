@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Search Model for Kunena
@@ -78,7 +78,7 @@ class KunenaModelSearch extends KunenaModel
 		$value = JFactory::getApplication()->input->getInt('topic_id', 0);
 		$this->setState('query.topic_id', $value);
 
-		if (isset ($_POST ['query']) || isset ($_POST ['searchword']))
+		if (isset($_POST ['query']) || isset($_POST ['searchword']))
 		{
 			$value = JFactory::getApplication()->input->get('catids', array(0), 'post', 'array'); // Array of integers
 			Joomla\Utilities\ArrayHelper::toInteger($value);
@@ -93,7 +93,7 @@ class KunenaModelSearch extends KunenaModel
 		$this->setState('query.catids', $value);
 
 		// FIXME: support search topic
-		if (isset ($_POST ['q']) || isset ($_POST ['searchword']))
+		if (isset($_POST ['q']) || isset($_POST ['searchword']))
 		{
 			$value = JFactory::getApplication()->input->get('ids', array(0), 'post', 'array');
 			Joomla\Utilities\ArrayHelper::toInteger($value);
@@ -141,7 +141,7 @@ class KunenaModelSearch extends KunenaModel
 		{
 			$searchword = $db->escape(Joomla\String\String::trim($searchword));
 
-			if (empty ($searchword))
+			if (empty($searchword))
 			{
 				continue;
 			}
@@ -237,6 +237,7 @@ class KunenaModelSearch extends KunenaModel
 		{
 			$order1 = 'ASC';
 		}
+
 		switch ($this->getState('query.sortby'))
 		{
 			case 'title' :
@@ -257,7 +258,7 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return bool|int
+	 * @return boolean|integer
 	 */
 	public function getTotal()
 	{
@@ -275,7 +276,8 @@ class KunenaModelSearch extends KunenaModel
 			$this->getResults();
 		}
 
-		/* if there are no forums to search in, set error and return */
+		// if there are no forums to search in, set error and return
+
 		if ($this->total == 0)
 		{
 			$this->setError(JText::_('COM_KUNENA_SEARCH_ERR_NOPOSTS'));
@@ -309,7 +311,7 @@ class KunenaModelSearch extends KunenaModel
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getResults()
 	{
@@ -327,7 +329,8 @@ class KunenaModelSearch extends KunenaModel
 			return array();
 		}
 
-		/* get results */
+		// get results
+
 		$hold = $this->getState('query.show');
 
 		if ($hold == 1)
@@ -428,13 +431,13 @@ class KunenaModelSearch extends KunenaModel
 
 	/**
 	 * @param        $view
-	 * @param string $searchword
-	 * @param int    $limitstart
-	 * @param int    $limit
-	 * @param string $params
-	 * @param bool   $xhtml
+	 * @param   string $searchword
+	 * @param   int    $limitstart
+	 * @param   int    $limit
+	 * @param   string $params
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getSearchURL($view, $searchword = '', $limitstart = 0, $limit = 0, $params = '', $xhtml = true)
 	{

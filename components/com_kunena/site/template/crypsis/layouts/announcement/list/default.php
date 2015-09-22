@@ -73,7 +73,7 @@ JHtml::_('behavior.core');
 			</tr>
 		</thead>
 
-		<?php if ( $this->pagination->pagesTotal > 1 ) : ?>
+		<?php if ($this->pagination->pagesTotal > 1) : ?>
 			<tfoot>
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">
@@ -86,11 +86,11 @@ JHtml::_('behavior.core');
 		<?php endif; ?>
 
 		<tbody>
-			<?php foreach ($this->announcements as $row => $announcement)
+			<?php foreach ($this->announcements as $row => $announcement) {
 				echo $this->subLayout('Announcement/List/Row')
 					->set('announcement', $announcement)
 					->set('row', $row)
-					->set('checkbox', !empty($options));
+					->set('checkbox', !empty($options)); }
 			?>
 		</tbody>
 	</table>

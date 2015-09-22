@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 $label = $this->label;
 $link = ' href="' . $this->link . '"';
 $tooltip = ' data-toggle="tooltip"';
-$description = isset($this->description) ? $tooltip . ' title="' . $this->description . '"': '';
+$description = isset($this->description) ? $tooltip . ' title="' . $this->description . '"' : '';
 $class = ' class="label label-' . $this->state . ' ' . '"';
 ?>
 <a <?php echo $link . $description . $class; ?> >

@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.modellist');
 
@@ -22,7 +22,7 @@ class KunenaAdminModelAttachments extends JModelList
 {
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -45,8 +45,8 @@ class KunenaAdminModelAttachments extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param string $ordering
-	 * @param string $direction
+	 * @param   string $ordering
+	 * @param   string $direction
 	 *
 	 * @return    void
 	 * @since    1.6
@@ -96,7 +96,7 @@ class KunenaAdminModelAttachments extends JModelList
 	}
 
 	/**
-	 * @param string $id
+	 * @param   string $id
 	 *
 	 * @return string
 	 */
@@ -114,9 +114,9 @@ class KunenaAdminModelAttachments extends JModelList
 	}
 
 	/**
-	 * @param string $query
-	 * @param int    $limitstart
-	 * @param int    $limit
+	 * @param   string $query
+	 * @param   int    $limitstart
+	 * @param   int    $limit
 	 *
 	 * @return KunenaAttachment[]
 	 */

@@ -19,9 +19,9 @@ $tabs = $this->getTabs();
 
 	<?php if ($this->profile->isAuthorised('edit')) : ?>
 	<?php echo $this->profile->getLink(
-		'<i class="icon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
-		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn pull-right'
-	); ?>
+	'<i class="icon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
+	JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn pull-right'
+); ?>
 	<?php endif; ?>
 
 </h2>

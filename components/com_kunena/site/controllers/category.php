@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 require_once KPATH_ADMIN . '/controllers/categories.php';
 
@@ -21,7 +21,7 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
 class KunenaControllerCategory extends KunenaAdminControllerCategories
 {
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{

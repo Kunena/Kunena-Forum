@@ -20,7 +20,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function exists()
 	{
@@ -43,7 +43,7 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 		{
 			$this->input->set('view', 'category');
 			$this->input->set('layout', 'list');
-			/* throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 500); */
+			// throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 500);
 		}
 		else
 		{

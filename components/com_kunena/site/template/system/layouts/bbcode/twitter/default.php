@@ -1,13 +1,13 @@
 <?php
 /**
  * Kunena Component
-* @package     Kunena.Template.Crypsis
-* @subpackage  Layout.BBCode
-*
-* @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
-* @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link        http://www.kunena.org
-**/
+ * @package     Kunena.Template.Crypsis
+ * @subpackage  Layout.BBCode
+ *
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
+ **/
 defined('_JEXEC') or die;
 
 // [tweet]112233445566[/tweet]
@@ -23,7 +23,7 @@ defined('_JEXEC') or die;
 				<img class="u-photo avatar" data-scribe="element:avatar" data-src-2x="<?php echo $this->user_profile_url_big ?>" src="<?php echo $this->user_profile_url_normal ?>" alt="">
 				<span class="full-name">
 					<span class="p-name customisable-highlight" data-scribe="element:name"><?php echo $this->user_name ?></span>
-					<?php if ($this->verified): ?>
+					<?php if ($this->verified) : ?>
 						<span class="verified" data-scribe="element:verified_badge" aria-label="Verified Account" title="Verified Account">
 							<b>✔</b>
 						</span>

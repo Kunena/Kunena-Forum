@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Topic Controller
@@ -19,7 +19,7 @@ defined('_JEXEC') or die ();
 class KunenaControllerTopic extends KunenaController
 {
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 *
 	 * @throws Exception
 	 */
@@ -76,7 +76,8 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) ;
+		while (@ob_end_clean()) {}
+
 		echo json_encode($list);
 
 		jexit();
@@ -113,7 +114,8 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) ;
+		while (@ob_end_clean()) {}
+
 		echo json_encode($success);
 
 		jexit();
@@ -159,7 +161,7 @@ class KunenaControllerTopic extends KunenaController
 				// TODO: Some room for improvements in here... (maybe ask user to pick up category first)
 				if ($category->id)
 				{
-					if ( stripos($this->input->getString('mime'), 'image/') !== false )
+					if (stripos($this->input->getString('mime'), 'image/') !== false)
 					{
 						$category->tryAuthorise('topic.post.attachment.createimage');
 					}
@@ -264,7 +266,7 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 
-		while (@ob_end_clean()) ;
+		while (@ob_end_clean()) {}
 
 		echo $upload->ajaxResponse($response);
 
@@ -351,7 +353,7 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
-		if ( $this->me->canDoCaptcha() )
+		if ($this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
@@ -368,7 +370,7 @@ class KunenaControllerTopic extends KunenaController
 
 					$captcha_response = $this->app->input->getString('g-recaptcha-response');
 
-					if ( !empty($captcha_response) )
+					if (!empty($captcha_response))
 					{
 						// For ReCaptcha API 2.0
 						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('g-recaptcha-response'));
@@ -489,9 +491,9 @@ class KunenaControllerTopic extends KunenaController
 
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
-		if (!$maxlinks )
+		if (!$maxlinks)
 		{
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -536,7 +538,7 @@ class KunenaControllerTopic extends KunenaController
 		$poll_title   = $fields['poll_title'];
 		$poll_options = $fields['poll_options'];
 
-		if (!empty ($poll_options) && !empty ($poll_title))
+		if (!empty($poll_options) && !empty($poll_title))
 		{
 			if ($topic->authorise('poll.create', null, false))
 			{
@@ -737,9 +739,9 @@ class KunenaControllerTopic extends KunenaController
 
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
-		if (!$maxlinks )
+		if (!$maxlinks)
 		{
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION') , 'error' );
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_SPAM_LINK_PROTECTION'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -775,7 +777,7 @@ class KunenaControllerTopic extends KunenaController
 			$poll_options = $fields['poll_options'];
 			$poll         = $topic->getPoll();
 
-			if (!empty ($poll_options) && !empty ($poll_title))
+			if (!empty($poll_options) && !empty($poll_title))
 			{
 				$poll->title          = $poll_title;
 				$poll->polltimetolive = $fields['poll_time_to_live'];
@@ -868,7 +870,7 @@ class KunenaControllerTopic extends KunenaController
 		$ignore = false;
 		foreach($ebay_matches as $match)
 		{
-			if ( !empty($match) ) {
+			if (!empty($match)) {
 				$ignore = true;
 			}
 		}
@@ -877,23 +879,23 @@ class KunenaControllerTopic extends KunenaController
 
 		foreach($twitter_matches as $match)
 		{
-			if ( !empty($match) ) {
+			if (!empty($match)) {
 				$ignore = true;
 			}
 		}
 
-		if ( !$ignore )
+		if (!$ignore)
 		{
 			preg_match_all('@\(((https?://)?([-\\w]+\\.[-\\w\\.]+)+\\w(:\\d+)?(/([-\\w/_\\.]*(\\?\\S+)?)?)*)\)@', $text, $matches);
 
-			if( empty($matches[0]) )
+			if(empty($matches[0]))
 			{
 				preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
 			}
 
 			$countlink = count($matches[0]);
 
-			if (!$topic->authorise('approve') && $countlink >=$this->config->max_links +1)  {
+			if (!$topic->authorise('approve') && $countlink >= $this->config->max_links + 1) {
 				return false;
 			}
 		}
@@ -1621,7 +1623,7 @@ class KunenaControllerTopic extends KunenaController
 		// Load language file from the template.
 		KunenaFactory::getTemplate()->loadLanguage();
 
-		if (empty ($reason) && empty ($text))
+		if (empty($reason) && empty($text))
 		{
 			// Do nothing: empty subject or reason is empty
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_REPORT_FORG0T_SUB_MES'));
@@ -1634,7 +1636,7 @@ class KunenaControllerTopic extends KunenaController
 			$acl         = KunenaAccess::getInstance();
 			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false);
 
-			if (!empty ($emailToList))
+			if (!empty($emailToList))
 			{
 				$mailsender  = JMailHelper::cleanAddress($this->config->board_title . ' ' . JText::_('COM_KUNENA_FORUM') . ': ' . $this->me->getName());
 				$mailsubject = "[" . $this->config->board_title . " " . JText::_('COM_KUNENA_FORUM') . "] " . JText::_('COM_KUNENA_REPORT_MSG') . ": ";
@@ -1668,7 +1670,6 @@ class KunenaControllerTopic extends KunenaController
 				{
 					$body = trim($layout->render());
 					$mail->setBody($body);
-
 				}
 
 				catch (Exception $e)

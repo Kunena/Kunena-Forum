@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Users Controller
@@ -21,7 +21,7 @@ class KunenaAdminControllerUsers extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -96,6 +96,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			{
 				$user->signature = $signature;
 			}
+
 			$user->view     = $newview;
 			$user->ordering = $neworder;
 			$user->rank     = $newrank;
@@ -103,6 +104,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			{
 				$user->avatar = '';
 			}
+
 			if (!$user->save())
 			{
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_PROFILE_SAVED_FAILED'), 'error');
@@ -240,7 +242,6 @@ class KunenaAdminControllerUsers extends KunenaController
 					}
 				}
 			}
-
 		}
 		else
 		{

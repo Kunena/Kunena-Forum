@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaCacheHelper has helper functions to clear all caches that affects Kunena.
@@ -47,7 +47,8 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearKunena()
 	{
-		/** @var JCache|JCacheController $cache */
+		// @var JCache|JCacheController $cache
+
 		$cache = JFactory::getCache();
 		$cache->clean('com_kunena');
 	}
@@ -57,7 +58,8 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearCategories()
 	{
-		/** @var JCache|JCacheController $cache */
+		// @var JCache|JCacheController $cache
+
 		$cache = JFactory::getCache();
 		$cache->remove('categories', 'com_kunena');
 	}
@@ -67,7 +69,8 @@ abstract class KunenaCacheHelper
 	 */
 	public static function clearSystem()
 	{
-		/** @var JCache|JCacheController $cache */
+		// @var JCache|JCacheController $cache
+
 		$cache = JFactory::getCache();
 		$cache->clean('_system');
 	}
@@ -94,7 +97,7 @@ abstract class KunenaCacheHelper
 	public static function clearCacheFiles()
 	{
 		// Delete all cached files.
-		$cacheDir = JPATH_CACHE.'/kunena';
+		$cacheDir = JPATH_CACHE . '/kunena';
 
 		if (is_dir($cacheDir))
 		{
@@ -110,7 +113,7 @@ abstract class KunenaCacheHelper
 	public static function clearTemplateFiles()
 	{
 		// Delete all cached files.
-		$cacheDir = JPATH_ROOT."/media/kunena/cache";
+		$cacheDir = JPATH_ROOT . "/media/kunena/cache";
 
 		if (is_dir($cacheDir))
 		{

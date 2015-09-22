@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaPrivate
@@ -18,9 +18,9 @@ class KunenaPrivate
 	protected static $instance = false;
 
 	/**
-	 * @param null $integration
+	 * @param   null $integration
 	 *
-	 * @return bool|KunenaPrivate
+	 * @return boolean|KunenaPrivate
 	 */
 	static public function getInstance($integration = null)
 	{
@@ -96,7 +96,7 @@ class KunenaPrivate
 		}
 
 		// We should offer the user a PM link
-		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="kicon-profile kicon-profile-pm" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '"></span></a>';
+		return '<a href="' . $url . '"' . $onclick . ' title="' . JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 	}
 
 	/**
@@ -120,7 +120,7 @@ class KunenaPrivate
 	/**
 	 * @param $userid
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getUnreadCount($userid)
 	{

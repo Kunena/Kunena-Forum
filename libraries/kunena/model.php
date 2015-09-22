@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Model for Kunena
@@ -57,8 +57,8 @@ class KunenaModel extends JModelLegacy
 	protected $embedded = false;
 
 	/**
-	 * @param array  $config
-	 * @param JInput $input
+	 * @param   array  $config
+	 * @param   JInput $input
 	 *
 	 * @throws Exception
 	 */
@@ -74,8 +74,8 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @param array $params
-	 * @param bool  $embedded
+	 * @param   array $params
+	 * @param   bool  $embedded
 	 */
 	public function initialize($params = array(), $embedded = true)
 	{
@@ -97,7 +97,7 @@ class KunenaModel extends JModelLegacy
 	}
 
 	/**
-	 * @return int
+	 * @return integer
 	 */
 	public function getItemid()
 	{
@@ -115,7 +115,7 @@ class KunenaModel extends JModelLegacy
 	/**
 	 * Escapes a value for output in a view script.
 	 *
-	 * @param  mixed $var The output to escape.
+	 * @param   mixed $var The output to escape.
 	 * @return mixed The escaped value.
 	 */
 	public function escape($var)
@@ -139,8 +139,8 @@ class KunenaModel extends JModelLegacy
 	/**
 	 * @param        $key
 	 * @param        $request
-	 * @param null   $default
-	 * @param string $type
+	 * @param   null   $default
+	 * @param   string $type
 	 *
 	 * @return mixed|object
 	 */
@@ -158,9 +158,9 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @param        $name
-	 * @param null   $default
-	 * @param string $hash
-	 * @param string $type
+	 * @param   null   $default
+	 * @param   string $hash
+	 * @param   string $type
 	 *
 	 * @return mixed
 	 */
@@ -184,8 +184,8 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @param        $name
-	 * @param bool   $default
-	 * @param string $hash
+	 * @param   bool   $default
+	 * @param   string $hash
 	 *
 	 * @return mixed
 	 */
@@ -196,8 +196,8 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @param        $name
-	 * @param string $default
-	 * @param string $hash
+	 * @param   string $default
+	 * @param   string $hash
 	 *
 	 * @return mixed
 	 */
@@ -208,8 +208,8 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @param        $name
-	 * @param float  $default
-	 * @param string $hash
+	 * @param   float  $default
+	 * @param   string $hash
 	 *
 	 * @return mixed
 	 */
@@ -220,8 +220,8 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @param        $name
-	 * @param int    $default
-	 * @param string $hash
+	 * @param   int    $default
+	 * @param   string $hash
 	 *
 	 * @return mixed
 	 */
@@ -232,8 +232,8 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @param        $name
-	 * @param string $default
-	 * @param string $hash
+	 * @param   string $default
+	 * @param   string $hash
 	 *
 	 * @return mixed
 	 */
@@ -244,8 +244,8 @@ class KunenaModel extends JModelLegacy
 
 	/**
 	 * @param        $name
-	 * @param string $default
-	 * @param string $hash
+	 * @param   string $default
+	 * @param   string $hash
 	 *
 	 * @return mixed
 	 */

@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-/**
+/*
  * @var KunenaForumTopic $topic
  */
 $topic = $this->category->getLastTopic();
@@ -42,7 +42,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage('img-
 	</td>
 	<?php endif; ?>
 
-	<td<?php if (!$avatar) echo ' colspan="2"'; ?>>
+	<td<?php if (!$avatar) { echo ' colspan="2"'; } ?>>
 		<div>
 			<?php echo $this->getTopicLink($topic, 'last'); ?>
 		</div>

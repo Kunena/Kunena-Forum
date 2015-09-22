@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Category View
@@ -19,7 +19,7 @@ class KunenaViewCategory extends KunenaView
 	public $pagination = null;
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -59,7 +59,7 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayList($tpl = null)
 	{
@@ -80,7 +80,8 @@ class KunenaViewCategory extends KunenaView
 		if ($this->category->isSection())
 		{
 		// TODO: turn this on:
-			/*			if ($this->me->isAdmin($this->category)) {
+			/*
+ 			if ($this->me->isAdmin($this->category)) {
 							$url = "index.php?option=com_kunena&view=category&layout=manage&catid={$this->category->id}";
 							$this->category_manage = $this->getButton($url, 'manage', 'category', 'moderation');
 						}*/
@@ -106,7 +107,7 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayUser($tpl = null)
 	{
@@ -153,7 +154,7 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayCreate($tpl = null)
 	{
@@ -161,7 +162,7 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayEdit($tpl = null)
 	{
@@ -188,10 +189,10 @@ class KunenaViewCategory extends KunenaView
 
 	/**
 	 * @param      $category
-	 * @param null $content
-	 * @param null $title
-	 * @param null $class
-	 * @param int  $length
+	 * @param   null $content
+	 * @param   null $title
+	 * @param   null $class
+	 * @param   int  $length
 	 *
 	 * @return mixed
 	 */
@@ -222,7 +223,7 @@ class KunenaViewCategory extends KunenaView
 
 	/**
 	 * @param      $category
-	 * @param bool $thumb
+	 * @param   bool $thumb
 	 *
 	 * @return string
 	 */
@@ -291,9 +292,9 @@ class KunenaViewCategory extends KunenaView
 
 	/**
 	 * @param        $filename
-	 * @param string $path
+	 * @param   string $path
 	 *
-	 * @return bool|string
+	 * @return boolean|string
 	 */
 	private function getCategoryIconFile($filename, $path = '')
 	{
@@ -409,6 +410,7 @@ class KunenaViewCategory extends KunenaView
 			{
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
 			}
+
 			// FIXME: enable caching after fixing the issues
 			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		}
@@ -425,8 +427,8 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param string $attributes
-	 * @param null   $id
+	 * @param   string $attributes
+	 * @param   null   $id
 	 *
 	 * @return mixed
 	 */
@@ -573,6 +575,7 @@ class KunenaViewCategory extends KunenaView
 				{
 					$this->categoryLink = null;
 				}
+
 				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime    = $this->topic->first_post_time;
 				$this->firstUserName    = $this->topic->first_post_guest_name;
@@ -604,6 +607,7 @@ class KunenaViewCategory extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
 				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
@@ -641,8 +645,8 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param string $prefix
-	 * @param string $class
+	 * @param   string $prefix
+	 * @param   string $class
 	 *
 	 * @return string
 	 */
@@ -664,6 +668,7 @@ class KunenaViewCategory extends KunenaView
 			{
 				$txt .= '-stickymsg';
 			}
+
 			$txt .= $this->escape($this->topic->getCategory()->class_sfx);
 		}
 
@@ -683,8 +688,8 @@ class KunenaViewCategory extends KunenaView
 	}
 
 	/**
-	 * @param string $attributes
-	 * @param null   $id
+	 * @param   string $attributes
+	 * @param   null   $id
 	 *
 	 * @return mixed
 	 */
@@ -724,7 +729,7 @@ class KunenaViewCategory extends KunenaView
 	 * @param $category_id
 	 * @param $numTopics
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getMarkReadButtonURL($category_id, $numTopics)
 	{
@@ -741,9 +746,9 @@ class KunenaViewCategory extends KunenaView
 
 	/**
 	 * @param      $catid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
-	 * @return bool|void
+	 * @return boolean|void
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{
@@ -777,11 +782,9 @@ class KunenaViewCategory extends KunenaView
 
 			$description = $this->escape("{$this->parentCategory->name} - {$this->category->name} ({$page}/{$pages}) - {$this->config->board_title}");
 			$this->setDescription($description);
-
 		}
 		elseif ($type == 'list')
 		{
-
 			$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
 			$this->setTitle($title);
 
@@ -790,11 +793,9 @@ class KunenaViewCategory extends KunenaView
 
 			$description = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title);
 			$this->setDescription($description);
-
 		}
 		elseif ($type == 'user')
 		{
-
 			$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 
 			$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
@@ -805,7 +806,6 @@ class KunenaViewCategory extends KunenaView
 
 			$description = (JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title);
 			$this->setDescription($description);
-
 		}
 	}
 }

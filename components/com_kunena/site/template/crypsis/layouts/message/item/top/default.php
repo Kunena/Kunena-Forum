@@ -10,7 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaForumMessage $message */
+// @var KunenaForumMessage $message
+
 $message = $this->message;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
@@ -21,7 +22,7 @@ $config = KunenaConfig::getInstance();
 
 if ($config->ordering_system == 'mesid')
 {
-	$this->numLink = $this->location ;
+	$this->numLink = $this->location;
 }
 else {
 	$this->numLink = $message->replynum;
@@ -41,7 +42,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 	</div>
 	<div class="horizontal-message-top badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
-		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
+		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
 		<div class="kmessage">
 			<div class="horizontal-message-text">
 				<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
@@ -101,7 +102,7 @@ if ($message->modified_time)
 </div>
 <?php endif; ?>
 
-<?php if (!empty($this->thankyou)): ?>
+<?php if (!empty($this->thankyou)) : ?>
 <div class="kmessage-thankyou">
 	<?php
 	echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
@@ -112,4 +113,4 @@ if ($message->modified_time)
 	}
 	?>
 </div>
-<?php endif; ?>
+<?php endif;

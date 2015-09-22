@@ -60,9 +60,9 @@ defined('_JEXEC') or die;
 			<?php if ($this->galleryOptions) : ?>
 			<div>
 				<?php echo JHtml::_(
-					'select.genericlist', $this->galleryOptions, 'gallery', '', 'value', 'text',
-					$this->gallery, 'avatar_category_select'
-				); ?>
+	'select.genericlist', $this->galleryOptions, 'gallery', '', 'value', 'text',
+	$this->gallery, 'avatar_category_select'
+); ?>
 			</div>
 			<?php endif; ?>
 

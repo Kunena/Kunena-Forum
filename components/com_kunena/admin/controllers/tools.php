@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Cpanel Controller
@@ -21,7 +21,7 @@ class KunenaAdminControllerTools extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -200,7 +200,8 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($useradd)
 		{
-			$db->setQuery("INSERT INTO #__kunena_users (userid, showOnline)
+			$db->setQuery(
+    "INSERT INTO #__kunena_users (userid, showOnline)
 					SELECT a.id AS userid, 1 AS showOnline
 					FROM #__users AS a
 					LEFT JOIN #__kunena_users AS b ON b.userid=a.id
@@ -217,7 +218,8 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdel)
 		{
-			$db->setQuery("DELETE a
+			$db->setQuery(
+    "DELETE a
 					FROM #__kunena_users AS a
 					LEFT JOIN #__users AS b ON a.userid=b.id
 					WHERE b.username IS NULL");
@@ -233,13 +235,15 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($userdellife)
 		{
-			$db->setQuery("DELETE a
+			$db->setQuery(
+    "DELETE a
 			FROM #__kunena_users AS a
 			LEFT JOIN #__users AS b ON a.userid=b.id
 			WHERE banned='0000-00-00 00:00:00'");
 			$db->execute();
 
-			$db->setQuery("DELETE a
+			$db->setQuery(
+    "DELETE a
 			FROM #__users AS a
 			WHERE block='1'");
 			$db->execute();
@@ -286,7 +290,6 @@ class KunenaAdminControllerTools extends KunenaController
 
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
 		}
-
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -415,7 +418,6 @@ class KunenaAdminControllerTools extends KunenaController
 								round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
 							);
 						}
-
 						break;
 					case 1:
 						if ($state->usertopics)
@@ -428,7 +430,6 @@ class KunenaAdminControllerTools extends KunenaController
 								round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
 							);
 						}
-
 						break;
 					case 2:
 						if ($state->categories)
@@ -438,7 +439,6 @@ class KunenaAdminControllerTools extends KunenaController
 							KunenaForumCategoryHelper::fixAliases();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORIES_X', '100%');
 						}
-
 						break;
 					case 3:
 						if ($state->users)
@@ -447,7 +447,6 @@ class KunenaAdminControllerTools extends KunenaController
 							KunenaUserHelper::recount();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERS_X', '100%');
 						}
-
 						break;
 					case 4:
 						if ($state->polls)
@@ -456,7 +455,6 @@ class KunenaAdminControllerTools extends KunenaController
 							KunenaForumTopicPollHelper::recount();
 							$msg = JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_POLLS_X', '100%');
 						}
-
 						break;
 					default:
 						$header = JText::_('COM_KUNENA_RECOUNTFORUMS_DONE');
@@ -549,7 +547,8 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 		else
 		{
-			while (@ob_end_clean()) ;
+			while (@ob_end_clean()) {}
+
 			header('Content-type: application/json');
 			echo json_encode($response);
 			flush();
@@ -685,9 +684,9 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
-	 * @param bool $stop
+	 * @param   bool $stop
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function checkTimeout($stop = false)
 	{
@@ -751,9 +750,9 @@ class KunenaAdminControllerTools extends KunenaController
 
 		$login = KunenaLogin::getInstance();
 
-		if ( $login->isTFAEnabled() )
+		if ($login->isTFAEnabled())
 		{
-			if ( empty($code) || $code == 0 )
+			if (empty($code) || $code == 0)
 			{
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_SECRETKEY_INVALID'));
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));

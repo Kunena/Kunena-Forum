@@ -8,11 +8,13 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
-/**************************/
-/* KUNENA FORUM INSTALLER */
-/**************************/
+/*
+ ************************/
+/*
+  KUNENA FORUM INSTALLER */
+
 
 $app  = JFactory::getApplication();
 $view = $app->input->getCmd('view');

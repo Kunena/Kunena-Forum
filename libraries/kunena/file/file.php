@@ -22,7 +22,7 @@ class KunenaFile extends JFile
 	/**
 	 * @param $file
 	 *
-	 * @return bool|mixed|string
+	 * @return boolean|mixed|string
 	 */
 	public static function getMime($file)
 	{

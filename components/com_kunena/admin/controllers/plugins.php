@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Plugins Controller
@@ -21,7 +21,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 *
 	 * @throws Exception
 	 */
@@ -54,9 +54,9 @@ class KunenaAdminControllerPlugins extends KunenaController
 	}
 
 	/**
-	 * @param string $name
-	 * @param string $prefix
-	 * @param array  $config
+	 * @param   string $name
+	 * @param   string $prefix
+	 * @param   array  $config
 	 *
 	 * @return object
 	 */
@@ -127,6 +127,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 				$this->setMessage(JText::plural($ntext, count($cid)));
 			}
 		}
+
 		$extension    = $this->input->get('extension');
 		$extensionURL = ($extension) ? '&extension=' . $extension : '';
 		$this->setRedirect(JRoute::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
@@ -145,7 +146,7 @@ class KunenaAdminControllerPlugins extends KunenaController
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		$ids = JFactory::getApplication()->input->post->get('cid', array(), 'array');
-		$inc = ($this->getTask() == 'orderup') ? -1 : +1;
+		$inc = ($this->getTask() == 'orderup') ? -1 : + 1;
 
 		$model  = $this->getModel();
 		$return = $model->reorder($ids, $inc);

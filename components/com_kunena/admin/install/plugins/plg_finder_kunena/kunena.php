@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ( '' );
+defined('_JEXEC') or die('');
 
 jimport('joomla.application.component.helper');
 
@@ -18,7 +18,8 @@ require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapt
 /**
  * Finder adapter for com_kunena.
  */
-class plgFinderKunena extends FinderIndexerAdapter {
+class plgFinderKunena extends FinderIndexerAdapter
+{
 	/**
 	 * The plugin identifier.
 	 *
@@ -81,9 +82,10 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @since   2.5
 	 * @throws  Exception on database error.
 	 */
-	public function onFinderBeforeSave($context, $row, $isNew) {
+	public function onFinderBeforeSave($context, $row, $isNew)
+	{
 		// If a category will be change, we want to see, if the accesstype and access level has changed
-		if(($row instanceof TableKunenaCategories) && !$isNew){
+		if(($row instanceof TableKunenaCategories) && !$isNew) {
 			$old_table = clone($row);
 			$old_table->load();
 			$this->old_cataccess = $old_table->access;
@@ -105,22 +107,26 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @since   2.5
 	 * @throws  Exception on database error.
 	 */
-	public function onFinderAfterSave($context, $row, $isNew) {
+	public function onFinderAfterSave($context, $row, $isNew)
+	{
 		//If a category has been changed, we want to check if the access has been changed
-		if(($row instanceof TableKunenaCategories) && !$isNew){
+		if(($row instanceof TableKunenaCategories) && !$isNew) {
 			//Access type of Category is still not the joomla access level system.
 			//We didn't show them before and we don't show them now. No reindex necessary
-			if($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') return true;
+			if($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') { return true; }
+
 			//Access level did not change. We do not need to reindex
-			if($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess) return true;
+			if($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess) { return true; }
 
 			//Well, seems like an access level change has occured. So we need to reindex all messages within this category
 			$messages = $this->getMessagesByCategory($row->id);
 			foreach($messages as $message){
 				$this->reindex($message->id);
 			}
+
 			return true;
 		}
+
 		// We only want to handle Kunena messages in here
 		if ($row instanceof TableKunenaMessages) {
 			// Reindex the item.
@@ -145,19 +151,22 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 */
 	public function onFinderBeforeDelete($context, $table)
 	{
-		if($table instanceof TableKunenaCategories){
+		if($table instanceof TableKunenaCategories) {
 			$messages = $this->getMessagesByCategory($table->id);
 			foreach($messages as $message){
 				$this->remove($message->id);
 			}
+
 			return true;
-		}elseif($table instanceof TableKunenaTopics){
+		}elseif($table instanceof TableKunenaTopics) {
 			$messages = $this->getMessagesByTopic($table->id);
 			foreach($messages as $message){
 				$this->remove($message->id);
 			}
+
 			return true;
 		}
+
 		return true;
 	}
 
@@ -174,11 +183,12 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 */
 	public function onFinderAfterDelete($context, $table)
 	{
-		if($context == 'com_finder.index'){
+		if($context == 'com_finder.index') {
 			return $this->remove($table->link_id);
-		}elseif($table instanceof TableKunenaMessages){
+		}elseif($table instanceof TableKunenaMessages) {
 			return $this->remove($table->id);
 		}
+
 		return true;
 	}
 
@@ -216,7 +226,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 
 		// Iterate through the items and index them.
 		$item = null;
-		foreach ($items as $item) $this->index($item);
+		foreach ($items as $item) { $this->index($item); }
 
 		if ($item) {
 			// Adjust the offsets.
@@ -242,7 +252,8 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 *
 	 * @throws  Exception on database error.
 	 */
-	protected function index(FinderIndexerResult $item) {
+	protected function index(FinderIndexerResult $item)
+	{
 		// Check if the extension is enabled
 		if (JComponentHelper::isEnabled($this->extension) == false) {
 			return;
@@ -279,7 +290,8 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 *
 	 * @since   2.5
 	 */
-	protected function setup() {
+	protected function setup()
+	{
 		// Initialize CLI
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 		if (is_file($api)) {
@@ -287,9 +299,10 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		}
 
 		// Check if Kunena has been installed.
-		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('4.0') || ! KunenaForum::installed()) {
+		if (! class_exists('KunenaForum') || ! KunenaForum::isCompatible('4.0') || ! KunenaForum::installed()) {
 			return false;
 		}
+
 		KunenaForum::setup();
 		return true;
 	}
@@ -302,7 +315,8 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @since   2.5
 	 * @throws  Exception on database error.
 	 */
-	protected function getContentCount() {
+	protected function getContentCount()
+	{
 		JLog::add('FinderIndexerAdapter::getContentCount', JLog::INFO);
 
 		// Get the list query.
@@ -367,7 +381,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 
 		// Get the list query.
 		$sql = $this->db->getQuery(true);
-		$sql->select('id')->from('#__kunena_messages')->where('id>'.$this->db->quote($offset));
+		$sql->select('id')->from('#__kunena_messages')->where('id>' . $this->db->quote($offset));
 
 		// Get the content items to index.
 		$this->db->setQuery($sql, 0, $limit);
@@ -386,13 +400,15 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		{
 			$items[] = $this->createIndexerResult($message);
 		}
+
 		KunenaForumMessageHelper::cleanup();
 		KunenaRoute::cleanup();
 
 		return $items;
 	}
 
-	protected function createIndexerResult($message) {
+	protected function createIndexerResult($message)
+	{
 		// Convert the item to a result object.
 		$item = new FinderIndexerResult;
 		$item->id = $message->id;
@@ -403,7 +419,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 
 		// Build the necessary url, route, path and alias information.
 		$item->url = $this->getUrl($message->id, $this->extension, $this->layout);
-		$item->route = $item->url.'&Itemid='.KunenaRoute::getItemId($item->url);
+		$item->route = $item->url . '&Itemid=' . KunenaRoute::getItemId($item->url);
 		$item->path = FinderIndexerHelper::getContentPath($item->url);//route);
 		$item->alias = KunenaRoute::stringURLSafe($message->subject);
 
@@ -419,7 +435,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		$item->language = '*';
 
 		// TODO: add access control
-		$item->access =  $this->getAccessLevel($item);
+		$item->access = $this->getAccessLevel($item);
 
 		// Set the item type.
 		$item->type_id = $this->type_id;
@@ -437,12 +453,13 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * Method to get the URL for the item. The URL is how we look up the link
 	 * in the Finder index.
 	 *
-	 * @param	mixed		$id	The id of the item.
-	 * @param	mixed		$extension Unused.
+	 * @param   mixed		$id	The id of the item.
+	 * @param   mixed		$extension Unused.
 	 * @param   string		$view View name.
 	 * @return	string		The URL of the item.
 	 */
-	protected function getUrl($id, $extension, $view) {
+	protected function getUrl($id, $extension, $view)
+	{
 		$item = KunenaForumMessageHelper::get($id);
 		return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
 	}
@@ -472,59 +489,69 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		// Translate the state
 		return intval($item == 1);
 	}
-	protected function getMessagesByCategory($cat_id){
+	protected function getMessagesByCategory($cat_id)
+	{
 		static $messages = array();
-		if(!$messages[$cat_id]){
+		if(!$messages[$cat_id]) {
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('m.id');
 			$query->from('#__kunena_messages as m');
 			$query->join('INNER', '#__kunena_categories as c on m.catid = c.id');
-			$query->where('c.id = '.$db->quote($cat_id));
+			$query->where('c.id = ' . $db->quote($cat_id));
 			$db->setQuery($query);
 			$ids = $db->loadColumn();
 			$messages[$cat_id] = KunenaForumMessageHelper::getMessages($ids);
 		}
+
 		return $messages[$cat_id];
 	}
-	protected function getMessagesByTopic($topic_id){
+	protected function getMessagesByTopic($topic_id)
+	{
 		static $messages = array();
-		if(!$messages[$topic_id]){
+		if(!$messages[$topic_id]) {
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('m.*, t.message');
 			$query->from('#__kunena_messages AS m');
 			$query->join('INNER', '#__kunena_messages_text as t ON m.id = t.mesid');
-			$query->where('m.thread = '.$db->quote($topic_id));
+			$query->where('m.thread = ' . $db->quote($topic_id));
 			$db->setQuery($query);
 			$results = $db->loadAssocList();
 			$list = array();
 			foreach($results as $result){
 				$list[] = new KunenaForumMessage($result);
 			}
+
 			$messages[$topic_id] = $list;
 		}
+
 		return $messages[$topic_id];
 	}
-	protected function getAccessLevel($item){
-		if(($item instanceof KunenaForumMessage) || ($item instanceof FinderIndexerResult) || ($item instanceof TableKunenaMessages)){
-			if(!$item->catid){
+	protected function getAccessLevel($item)
+	{
+		if(($item instanceof KunenaForumMessage) || ($item instanceof FinderIndexerResult) || ($item instanceof TableKunenaMessages)) {
+			if(!$item->catid) {
 				return 0;
 			}
+
 			$category = KunenaForumCategoryHelper::get($item->catid);
 			//@TODO We can't quite handle access restrictions by joomla group or other plugins yet. So we set the access level to 0
 			//This is a todo
-			if($category->accesstype != 'joomla.level'){
+			if($category->accesstype != 'joomla.level') {
 				return 0;
 			}
+
 			return $category->access;
-		}elseif(($item instanceof TableKunenaCategories) || ($item instanceof KunenaForumCategory)){
+		}elseif(($item instanceof TableKunenaCategories) || ($item instanceof KunenaForumCategory)) {
 			$category = KunenaForumCategoryHelper::get($item->id);
-			if($category->accesstype != 'joomla.level'){
+			if($category->accesstype != 'joomla.level') {
 				return 0;
 			}
+
 			return $category->access;
 		}
+
 		return 0;
 	}
 }

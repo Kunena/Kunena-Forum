@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.form.formfield');
 
@@ -21,7 +21,7 @@ class JFormFieldKunenaCategoryList extends JFormField
 
 	/**
 	* @return string
-	*/
+  */
 	protected function getInput()
 	{
 		if (!class_exists('KunenaForum') || !KunenaForum::installed())
@@ -74,7 +74,6 @@ class JFormFieldKunenaCategoryList extends JFormField
 
 		foreach ($this->element->children() as $option)
 		{
-
 			// Only add <option /> elements.
 			if ($option->getName() != 'option')
 			{
@@ -82,7 +81,7 @@ class JFormFieldKunenaCategoryList extends JFormField
 			}
 
 			// Create a new option object based on the <option /> element.
-			$tmp = JHtml::_('select.option', (string) $option['value'], JText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string) $option['disabled']=='true'));
+			$tmp = JHtml::_('select.option', (string) $option['value'], JText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string) $option['disabled'] == 'true'));
 
 			// Set some option attributes.
 			$tmp->class = (string) $option['class'];

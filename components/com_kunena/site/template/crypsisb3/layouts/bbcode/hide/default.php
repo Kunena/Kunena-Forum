@@ -20,4 +20,4 @@ defined('_JEXEC') or die;
 <?php else : ?>
 	<strong><?php JText::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE'); ?></strong>
 	<div class="kmsgtext-hide"><?php echo $this->content; ?></div>
-<?php endif; ?>
+<?php endif;

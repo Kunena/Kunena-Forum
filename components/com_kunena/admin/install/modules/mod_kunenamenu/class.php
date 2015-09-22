@@ -10,18 +10,21 @@
  **/
 defined('_JEXEC') or die;
 
-class modKunenaMenu {
+class modKunenaMenu
+{
 	/**
 	 * @param $params
 	 */
-	public function __construct($params) {
+	public function __construct($params)
+	{
 		$this->parameters = $params;
 	}
 
 	/**
 	 * @throws Exception
 	 */
-	function display() {
+	function display()
+	{
 		$this->list = KunenaMenuHelper::getList($this->parameters);
 		$this->app = JFactory::getApplication();
 		$this->menu = $this->app->getMenu();

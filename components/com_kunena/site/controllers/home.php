@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Home Controller
@@ -21,8 +21,8 @@ class KunenaControllerHome extends KunenaController
 	public $home = 1;
 
 	/**
-	 * @param bool $cachable
-	 * @param bool $urlparams
+	 * @param   bool $cachable
+	 * @param   bool $urlparams
 	 *
 	 * @return JControllerLegacy|void
 	 * @throws Exception
@@ -37,7 +37,6 @@ class KunenaControllerHome extends KunenaController
 			JFactory::getApplication()->input->get('view', 'category');
 			JFactory::getApplication()->input->get('layout', 'list');
 			//JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-
 		}
 		else
 		{
@@ -96,14 +95,14 @@ class KunenaControllerHome extends KunenaController
 	/**
 	 * @param       $menu
 	 * @param       $active
-	 * @param array $visited
+	 * @param   array $visited
 	 *
 	 * @return null
 	 */
 	protected function _getDefaultMenuItem($menu, $active, $visited = array())
 	{
 
-		if (empty ($active->query ['defaultmenu']) || $active->id == $active->query ['defaultmenu'])
+		if (empty($active->query ['defaultmenu']) || $active->id == $active->query ['defaultmenu'])
 		{
 			// There is no highlighted menu item
 			return null;
@@ -117,7 +116,6 @@ class KunenaControllerHome extends KunenaController
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
 
 			return null;
-
 		}
 		elseif (isset($visited[$item->id]))
 		{
@@ -125,22 +123,19 @@ class KunenaControllerHome extends KunenaController
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_LOOP'), 'menu');
 
 			return null;
-
 		}
-		elseif (empty ($item->component) || $item->component != 'com_kunena' || !isset($item->query ['view']))
+		elseif (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query ['view']))
 		{
 			// Menu item doesn't point to Kunena, abort
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
 
 			return null;
-
 		}
 		elseif ($item->query ['view'] == 'home')
 		{
 			// Menu item is pointing to another Home Page, try to find default menu item from there
 			$visited[$item->id] = 1;
 			$item               = $this->_getDefaultMenuItem($menu, $item->query ['defaultmenu'], $visited);
-
 		}
 
 		return $item;

@@ -9,9 +9,10 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewRanks $this */
+// @var KunenaAdminViewRanks $this
+
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -181,7 +182,8 @@ JHtml::_('behavior.tabstate');
 										<td colspan="10">
 											<div class="well center filter-state">
 									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-										<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */ ?>
+										<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
+ ?>
 										<?php if ($this->filterActive) : ?>
 											<button class="btn" type="button" onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 										<?php else : ?>

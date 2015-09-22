@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Trash Controller
@@ -21,7 +21,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -52,7 +52,6 @@ class KunenaAdminControllerTrash extends KunenaController
 		{
 			$this->app->setUserState('com_kunena.purge', $cid);
 			$this->app->setUserState('com_kunena.type', $type);
-
 		}
 		elseif ($md5)
 		{
@@ -72,6 +71,7 @@ class KunenaAdminControllerTrash extends KunenaController
 							$this->app->enqueueMessage($topic->getError());
 						}
 					}
+
 					$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
 				}
 				elseif ($type == 'messages')
@@ -85,6 +85,7 @@ class KunenaAdminControllerTrash extends KunenaController
 							$this->app->enqueueMessage($message->getError());
 						}
 					}
+
 					$this->app->enqueueMessage(JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
 				}
 			}
@@ -92,6 +93,7 @@ class KunenaAdminControllerTrash extends KunenaController
 			{
 				// Error...
 			}
+
 			$this->app->setUserState('com_kunena.purge', null);
 			$this->app->setUserState('com_kunena.type', null);
 			if ($type == 'messages')
@@ -104,7 +106,6 @@ class KunenaAdminControllerTrash extends KunenaController
 			}
 
 			return;
-
 		}
 		else
 		{
@@ -135,7 +136,7 @@ class KunenaAdminControllerTrash extends KunenaController
 
 		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');
 
-		if (empty ($cid))
+		if (empty($cid))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

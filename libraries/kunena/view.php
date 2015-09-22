@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena View Class
@@ -27,7 +27,7 @@ class KunenaView extends JViewLegacy
 	protected $_row = 0;
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 *
 	 * @throws Exception
 	 */
@@ -37,7 +37,7 @@ class KunenaView extends JViewLegacy
 		$this->document = JFactory::getDocument();
 		$this->document->setBase('');
 		$this->profiler = KunenaProfiler::instance('Kunena');
-		$this->app = JFactory::getApplication ();
+		$this->app = JFactory::getApplication();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
@@ -67,9 +67,9 @@ class KunenaView extends JViewLegacy
 
 		// Use our own browser side cache settings.
 		JFactory::getApplication()->allowCache(false);
-		JFactory::getApplication()->setHeader( 'Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true );
-		JFactory::getApplication()->setHeader( 'Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true );
-		JFactory::getApplication()->setHeader( 'Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true );
+		JFactory::getApplication()->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+		JFactory::getApplication()->setHeader('Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true);
+		JFactory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
 	}
 
 	/**
@@ -86,29 +86,30 @@ class KunenaView extends JViewLegacy
 		{
 			if ($this->config->board_offline)
 			{
-				$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
 			}
 
 			if ($this->config->debug)
 			{
-				$this->app->enqueueMessage ( JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
 			}
 		}
+
 		if ($this->me->isBanned())
 		{
 			$banned = KunenaUserBan::getInstanceByUserid($this->me->userid, true);
 
 			if (!$banned->isLifetime())
 			{
-				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena('date_today')), 'notice');
+				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena('date_today')), 'notice');
 			}
 			else
 			{
-				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ), 'notice');
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'notice');
 			}
 		}
 
-		$this->state = $this->get ( 'State' );
+		$this->state = $this->get('State');
 		$this->ktemplate->initialize();
 
 		if (JFactory::getApplication()->isAdmin())
@@ -117,8 +118,8 @@ class KunenaView extends JViewLegacy
 		}
 		else
 		{
-			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
-			include JPATH_SITE .'/'. $this->ktemplate->getFile('html/display.php');
+			$this->document->addHeadLink(KunenaRoute::_(), 'canonical', 'rel', '');
+			include JPATH_SITE . '/' . $this->ktemplate->getFile('html/display.php');
 
 			if ($this->config->get('credits', 1))
 			{
@@ -128,8 +129,8 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param null $layout
-	 * @param null $tpl
+	 * @param   null $layout
+	 * @param   null $tpl
 	 *
 	 * @return mixed|void
 	 * @throws Exception
@@ -143,7 +144,7 @@ class KunenaView extends JViewLegacy
 
 		if ($layout)
 		{
-			$this->setLayout ($layout);
+			$this->setLayout($layout);
 		}
 
 		$view = $this->getName();
@@ -156,7 +157,6 @@ class KunenaView extends JViewLegacy
 
 		if (!$this->embedded && isset($this->common))
 		{
-
 			if ($this->config->board_offline && !$this->me->isAdmin())
 			{
 				// Forum is offline
@@ -180,7 +180,7 @@ class KunenaView extends JViewLegacy
 
 				return;
 			}
-			elseif (!method_exists($this, $layoutFunction) && !is_file(KPATH_SITE."/views/{$view}/{$layout}.php"))
+			elseif (!method_exists($this, $layoutFunction) && !is_file(KPATH_SITE . "/views/{$view}/{$layout}.php"))
 			{
 				// Layout was not found (don't allow Joomla to raise an error)
 				$this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
@@ -206,6 +206,7 @@ class KunenaView extends JViewLegacy
 			// TODO: should raise error instead..
 			$contents = $this->display($tpl ? $tpl : null);
 		}
+
 		KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 
 		return $contents;
@@ -214,9 +215,9 @@ class KunenaView extends JViewLegacy
 	/**
 	 * Render new layout if available, otherwise continue to the old logic.
 	 *
-	 * @param string $layout
-	 * @param string $tpl
-	 * @param array  $hmvcParams
+	 * @param   string $layout
+	 * @param   string $tpl
+	 * @param   array  $hmvcParams
 	 * @throws LogicException
 	 */
 	public function render($layout, $tpl, array $hmvcParams = array())
@@ -237,7 +238,7 @@ class KunenaView extends JViewLegacy
 			$file = isset($tpl) ? $this->getLayout() . '_' . $tpl : $this->getLayout();
 			foreach ($this->_path['template'] as $path)
 			{
-				$found = !strstr($path, '/com_kunena/') && is_file($path.$file.'.php');
+				$found = !strstr($path, '/com_kunena/') && is_file($path . $file . '.php');
 
 				if ($found)
 				{
@@ -279,13 +280,13 @@ class KunenaView extends JViewLegacy
 	/**
 	 * @param $position
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function isModulePosition($position)
 	{
 		$document = JFactory::getDocument();
 
-		return method_exists($document, 'countModules') ? $document->countModules ( $position ) : 0;
+		return method_exists($document, 'countModules') ? $document->countModules($position) : 0;
 	}
 
 	/**
@@ -298,12 +299,12 @@ class KunenaView extends JViewLegacy
 		$html = '';
 		$document = JFactory::getDocument();
 
-		if (method_exists($document, 'countModules') && $document->countModules ( $position ))
+		if (method_exists($document, 'countModules') && $document->countModules($position))
 		{
-			$renderer = $document->loadRenderer ( 'modules' );
+			$renderer = $document->loadRenderer('modules');
 			$options = array ('style' => 'xhtml' );
-			$html .= '<div class="'.$position.'">';
-			$html .= $renderer->render ( $position, $options, null );
+			$html .= '<div class="' . $position . '">';
+			$html .= $renderer->render($position, $options, null);
 			$html .= '</div>';
 		}
 
@@ -312,7 +313,7 @@ class KunenaView extends JViewLegacy
 
 	/**
 	 * @param     $text
-	 * @param int $len
+	 * @param   int $len
 	 * @param     $parent
 	 *
 	 * @return mixed|void
@@ -336,7 +337,7 @@ class KunenaView extends JViewLegacy
 	 * @param      $name
 	 * @param      $scope
 	 * @param      $type
-	 * @param null $id
+	 * @param   null $id
 	 *
 	 * @return string
 	 */
@@ -347,7 +348,7 @@ class KunenaView extends JViewLegacy
 
 	/**
 	 * @param        $name
-	 * @param string $title
+	 * @param   string $title
 	 *
 	 * @return string
 	 */
@@ -358,7 +359,7 @@ class KunenaView extends JViewLegacy
 
 	/**
 	 * @param        $image
-	 * @param string $alt
+	 * @param   string $alt
 	 *
 	 * @return string
 	 */
@@ -369,7 +370,7 @@ class KunenaView extends JViewLegacy
 
 	/**
 	 * @param        $class
-	 * @param string $class_sfx
+	 * @param   string $class_sfx
 	 *
 	 * @return string
 	 */
@@ -379,8 +380,8 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param string $property
-	 * @param null   $default
+	 * @param   string $property
+	 * @param   null   $default
 	 *
 	 * @return mixed
 	 */
@@ -415,8 +416,8 @@ class KunenaView extends JViewLegacy
 	 * in the language file. The significant digits are used to limit the
 	 * number of digits displayed when in 10k or 1m mode.
 	 *
-	 * @param int $number 		Number to be formated
-	 * @param int $precision	Significant digits for output
+	 * @param   int $number 		Number to be formated
+	 * @param   int $precision	Significant digits for output
 	 * @return string
 	 */
 	public function formatLargeNumber($number, $precision = 3)
@@ -425,7 +426,7 @@ class KunenaView extends JViewLegacy
 		if ($number >= 10000)
 		{
 			// Round the number to n significant digits
-			$number = round ($number, -1*(log10($number)+1) + $precision);
+			$number = round($number, -1 * (log10($number) + 1) + $precision);
 		}
 
 		if ($number < 10000)
@@ -445,10 +446,10 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param KunenaForumCategory $category
-	 * @param null                $content
-	 * @param null                $title
-	 * @param null                $class
+	 * @param   KunenaForumCategory $category
+	 * @param   null                $content
+	 * @param   null                $title
+	 * @param   null                $class
 	 *
 	 * @return mixed
 	 */
@@ -468,16 +469,16 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param KunenaForumTopic    $topic
-	 * @param null                $action
-	 * @param null                $content
-	 * @param null                $title
-	 * @param null                $class
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumTopic    $topic
+	 * @param   null                $action
+	 * @param   null                $content
+	 * @param   null                $title
+	 * @param   null                $class
+	 * @param   KunenaForumCategory $category
 	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
 	{
 		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
 
@@ -525,7 +526,7 @@ class KunenaView extends JViewLegacy
 	 */
 	public function addStyleSheet($filename)
 	{
-		return KunenaFactory::getTemplate()->addStyleSheet ( $filename );
+		return KunenaFactory::getTemplate()->addStyleSheet($filename);
 	}
 
 	/**
@@ -535,12 +536,12 @@ class KunenaView extends JViewLegacy
 	 */
 	public function addScript($filename)
 	{
-		return KunenaFactory::getTemplate()->addScript ( $filename );
+		return KunenaFactory::getTemplate()->addScript($filename);
 	}
 
 	/**
-	 * @param array $messages
-	 * @param int   $code
+	 * @param   array $messages
+	 * @param   int   $code
 	 *
 	 * @throws Exception
 	 */
@@ -596,7 +597,7 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param array $errors
+	 * @param   array $errors
 	 */
 	public function displayNoAccess($errors = array())
 	{
@@ -655,7 +656,7 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	public function displayWhoIsOnline($tpl = null)
 	{
@@ -703,7 +704,7 @@ class KunenaView extends JViewLegacy
 	}
 
 	/**
-	 * @param bool $start
+	 * @param   bool $start
 	 *
 	 * @return string
 	 */
@@ -720,7 +721,7 @@ class KunenaView extends JViewLegacy
 	/**
 	 * @param      $view
 	 * @param      $layout
-	 * @param null $template
+	 * @param   null $template
 	 *
 	 * @return $this
 	 */
@@ -736,11 +737,11 @@ class KunenaView extends JViewLegacy
 		}
 
 		// Old code.
-		if (!isset($this->_path['template_'.$view]))
+		if (!isset($this->_path['template_' . $view]))
 		{
-			$this->_path['template_'.$view] = $this->_path['template'];
+			$this->_path['template_' . $view] = $this->_path['template'];
 
-			foreach ($this->_path['template_'.$view] as &$dir)
+			foreach ($this->_path['template_' . $view] as &$dir)
 			{
 				$dir = preg_replace("#/{$this->_name}/$#", "/{$view}/", $dir);
 			}
@@ -748,11 +749,11 @@ class KunenaView extends JViewLegacy
 
 		if ($template)
 		{
-			$template = '_'.$template;
+			$template = '_' . $template;
 		}
 
 		$file = "{$layout}{$template}.php";
-		$file = KunenaPath::find($this->_path['template_'.$view], $file);
+		$file = KunenaPath::find($this->_path['template_' . $view], $file);
 
 		if (!is_file($file))
 		{
@@ -783,7 +784,7 @@ class KunenaView extends JViewLegacy
 	 */
 	public function loadTemplateFile($tpl = null, $hmvcParams = null)
 	{
-		KUNENA_PROFILER ? $this->profiler->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? $this->profiler->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		// HMVC legacy support.
 		$view = $this->getName();
@@ -798,19 +799,19 @@ class KunenaView extends JViewLegacy
 				$hmvc->setProperties($hmvcParams);
 			}
 
-			KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return $hmvc->setLegacy($this);
 		}
 
 		// Create the template file name based on the layout
-		$file = isset($tpl) ? $layout.'_'.$tpl : $layout;
+		$file = isset($tpl) ? $layout . '_' . $tpl : $layout;
 
 		if (!isset($this->templatefiles[$file]))
 		{
 			// Clean the file name
 			$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
-			$tpl  = isset($tpl)? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
+			$tpl  = isset($tpl) ? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
 
 			// Load the template script
 			$filetofind	= $this->_createFileName('template', array('name' => $file));
@@ -821,7 +822,7 @@ class KunenaView extends JViewLegacy
 
 		if ($this->_template != false)
 		{
-			$templatefile = preg_replace('%'.KunenaPath::clean(JPATH_ROOT,'/').'/%', '', KunenaPath::clean($this->_template, '/'));
+			$templatefile = preg_replace('%' . KunenaPath::clean(JPATH_ROOT, '/') . '/%', '', KunenaPath::clean($this->_template, '/'));
 
 			// Unset so as not to introduce into template scope
 			unset($tpl);
@@ -852,10 +853,10 @@ class KunenaView extends JViewLegacy
 		}
 		else
 		{
-			$output = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName().'/'.$file));
+			$output = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file));
 		}
 
-		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $output;
 	}
@@ -871,12 +872,12 @@ class KunenaView extends JViewLegacy
 		}
 
 		$credits = '<div style="text-align:center">';
-		$credits .= JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits', JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow', array('style'=>'display: inline; visibility: visible; text-decoration: none;'));
-		$credits .= ' <a href="http://www.kunena.org" rel="follow" target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'.JText::_('COM_KUNENA').'</a>';
+		$credits .= JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits', JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow', array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
+		$credits .= ' <a href="http://www.kunena.org" rel="follow" target="_blank" style="display: inline; visibility: visible; text-decoration: none;">' . JText::_('COM_KUNENA') . '</a>';
 
 		if ($this->ktemplate->params->get('templatebyText'))
 		{
-			$credits .= ' :: <a href ="'. $this->ktemplate->params->get('templatebyLink').'" rel="follow" target="_blank" style="text-decoration: none;">' . $this->ktemplate->params->get('templatebyText') .' '. $this->ktemplate->params->get('templatebyName') .'</a>';
+			$credits .= ' :: <a href ="' . $this->ktemplate->params->get('templatebyLink') . '" rel="follow" target="_blank" style="text-decoration: none;">' . $this->ktemplate->params->get('templatebyText') . ' ' . $this->ktemplate->params->get('templatebyName') . '</a>';
 		}
 
 		$credits .= '</div>';
@@ -890,7 +891,7 @@ class KunenaView extends JViewLegacy
 	 */
 	public function getTemplateMD5()
 	{
-		return md5(serialize($this->_path['template']).'-'.$this->ktemplate->name);
+		return md5(serialize($this->_path['template']) . '-' . $this->ktemplate->name);
 	}
 
 	/**
@@ -909,17 +910,18 @@ class KunenaView extends JViewLegacy
 			$title = strip_tags($title);
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title .' - '. $title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title . ' - ' . $title);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->get('sitename'));
+				$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
 			}
 			else
 			{
 				// TODO: allow translations/overrides (also above)
-				$title = KunenaFactory::getConfig()->board_title .': '. $title;
+				$title = KunenaFactory::getConfig()->board_title . ': ' . $title;
 			}
+
 			$this->document->setTitle($title);
 		}
 	}
@@ -938,7 +940,7 @@ class KunenaView extends JViewLegacy
 		{
 			if (!empty($keywords))
 			{
-				$this->document->setMetadata ( 'keywords', $keywords );
+				$this->document->setMetadata('keywords', $keywords);
 			}
 		}
 	}

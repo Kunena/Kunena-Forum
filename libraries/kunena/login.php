@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaLogin
@@ -42,7 +42,7 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function enabled()
 	{
@@ -51,9 +51,9 @@ class KunenaLogin
 	}
 
 	/**
-	 * @param null $integration
+	 * @param   null $integration
 	 *
-	 * @return bool|KunenaLogin
+	 * @return boolean|KunenaLogin
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -89,9 +89,9 @@ class KunenaLogin
 	}
 
 	/**
-	 * @param null $return
+	 * @param   null $return
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function logoutUser($return=null)
 	{
@@ -107,7 +107,7 @@ class KunenaLogin
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getRememberMe()
 	{
@@ -241,7 +241,7 @@ class KunenaLogin
 	/**
 	 * Method to check if TFA is enabled when user ins't logged
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public static function getTwoFactorMethods()
 	{

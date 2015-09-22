@@ -56,16 +56,16 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$this->category = $this->topic->getCategory();
 
-		if ( $parent->isAuthorised('reply') && $this->me->canDoCaptcha() )
+		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
 				$plugin = JPluginHelper::getPlugin('captcha');
 				$params = new JRegistry($plugin[0]->params);
-				
+
 				$captcha_pubkey = $params->get('public_key');
 				$catcha_privkey = $params->get('private_key');
-				
+
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					JPluginHelper::importPlugin('captcha');
@@ -105,7 +105,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -126,12 +126,13 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	/**
 	 * Can user subscribe to the topic?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+			|| $this->config->topic_subscriptions == 'disabled'
+)
 		{
 			return false;
 		}

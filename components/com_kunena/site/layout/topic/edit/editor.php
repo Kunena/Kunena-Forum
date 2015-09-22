@@ -31,8 +31,8 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		}
 
 		$paths = array(
-			JPATH_ROOT.'/plugins/content/geshiall/geshi/geshi',
-			JPATH_ROOT.'/plugins/content/geshi/geshi/geshi'
+			JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi',
+			JPATH_ROOT . '/plugins/content/geshi/geshi/geshi'
 		);
 
 		foreach ($paths as $path)
@@ -48,10 +48,10 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 
 			foreach ($files as $file)
 			{
-				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
+				$options[] = JHTML::_('select.option', substr($file, 0, -4), substr($file, 0, -4));
 			}
 
-			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"' , 'value', 'text', '-1' );
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"', 'value', 'text', '-1');
 
 			return $list;
 		}

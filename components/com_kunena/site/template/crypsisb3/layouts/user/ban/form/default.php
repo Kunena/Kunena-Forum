@@ -48,8 +48,9 @@ defined('_JEXEC') or die;
 					$block[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
 					$block[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
 					// Build the html select list
-					echo JHtml::_('select.genericlist', $block, 'block', '', 'value', 'text',
-						$this->escape($this->banInfo->blocked), 'ban-level');
+					echo JHtml::_(
+      'select.genericlist', $block, 'block', '', 'value', 'text',
+	 $this->escape($this->banInfo->blocked), 'ban-level');
 					?>
 				</td>
 			</tr>
@@ -59,9 +60,10 @@ defined('_JEXEC') or die;
 					<small><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></small>
 				</td>
 				<td>
-					<?php echo JHtml::_('calendar', $this->escape($this->banInfo->expiration), 'expiration',
-						'ban-expiration', '%Y-%m-%d'
-					); ?>
+					<?php echo JHtml::_(
+	'calendar', $this->escape($this->banInfo->expiration), 'expiration',
+	'ban-expiration', '%Y-%m-%d'
+); ?>
 				</td>
 			</tr>
 			<tr>

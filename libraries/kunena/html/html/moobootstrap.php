@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Utility class for Bootstrap elements (written in Mootools).
@@ -161,7 +161,7 @@ abstract class JHtmlMooBootstrap
 			$debug  = (boolean) $config->get('debug');
 		}
 
-		JHtml::_('script', KPATH_MEDIA.'/kunena/js/bootstrap/moobootstrap.js' , false, true);
+		JHtml::_('script', KPATH_MEDIA . '/kunena/js/bootstrap/moobootstrap.js', false, true);
 		self::$loaded[__METHOD__] = true;
 
 		return;
@@ -599,11 +599,12 @@ abstract class JHtmlMooBootstrap
 		// Load Bootstrap main CSS
 		if ($includeMainCss)
 		{
-			JHtml::_('stylesheet', KPATH_MEDIA.'/css/bootstrap-custom.css', $attribs, false);
+			JHtml::_('stylesheet', KPATH_MEDIA . '/css/bootstrap-custom.css', $attribs, false);
 		}
 
 		// Load Bootstrap RTL CSS
-		/*if ($direction === 'rtl')
+		/*
+ if ($direction === 'rtl')
 		{
 			JHtml::_('stylesheet', 'media/jui/css/bootstrap-rtl.css', $attribs, false);
 		}*/

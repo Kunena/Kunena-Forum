@@ -18,14 +18,14 @@ class KunenaImageHelper
 	/**
 	 * Create new re-sized version of the original image.
 	 *
-	 * @param  string  $file        Incoming file
-	 * @param  string  $folder      Folder for the new image.
-	 * @param  string  $filename    Filename for the new image.
-	 * @param  int     $maxWidth    Maximum width for the image.
-	 * @param  int     $maxHeight   Maximum height for the image.
-	 * @param  int     $quality     Quality for the file (1-100).
-	 * @param  int     $scale       See available KunenaImage constants.
-	 * @param  int     $crop        Define if you want crop the image.
+	 * @param   string  $file        Incoming file
+	 * @param   string  $folder      Folder for the new image.
+	 * @param   string  $filename    Filename for the new image.
+	 * @param   int     $maxWidth    Maximum width for the image.
+	 * @param   int     $maxHeight   Maximum height for the image.
+	 * @param   int     $quality     Quality for the file (1-100).
+	 * @param   int     $scale       See available KunenaImage constants.
+	 * @param   int     $crop        Define if you want crop the image.
 	 *
 	 * @return bool    True on success.
 	 */
@@ -46,7 +46,6 @@ class KunenaImageHelper
 
 			if ($info->width > $maxWidth || $info->height > $maxHeight)
 			{
-
 				// Make sure that quality is in allowed range.
 				if ($quality < 1 || $quality > 100)
 				{
@@ -56,7 +55,7 @@ class KunenaImageHelper
 				// Calculate quality for PNG.
 				if ($info->type == IMAGETYPE_PNG)
 				{
-					$quality = intval(($quality-1)/10);
+					$quality = intval(($quality - 1) / 10);
 				}
 
 				$options = array('quality' => $quality);
@@ -66,7 +65,7 @@ class KunenaImageHelper
 
 				if ($crop && $info->width > $info->height)
 				{
-					$image = $image->resize($info->width * $maxHeight / $info->height, $maxHeight , false, $scale);
+					$image = $image->resize($info->width * $maxHeight / $info->height, $maxHeight, false, $scale);
 					$image = $image->crop($maxWidth, $maxHeight);
 				}
 				elseif ($crop && $info->width < $info->height)

@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 $app = JFactory::getApplication();
 $limits = array();
@@ -17,6 +17,7 @@ $limits = array();
 for ($i = 5; $i <= 30; $i += 5) {
 	$limits[] = JHtml::_('select.option', "$i");
 }
+
 $limits[] = JHtml::_('select.option', '50', JText::_('J50'));
 $limits[] = JHtml::_('select.option', '100', JText::_('J100'));
 $limits[] = JHtml::_('select.option', '0', JText::_('JALL'));

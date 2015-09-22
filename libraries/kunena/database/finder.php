@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaDatabaseFinder
@@ -61,7 +61,7 @@ abstract class KunenaDatabaseFinder
 	/**
 	 * Set limitstart for the query.
 	 *
-	 * @param int $limitstart
+	 * @param   int $limitstart
 	 *
 	 * @return $this
 	 */
@@ -77,7 +77,7 @@ abstract class KunenaDatabaseFinder
 	 *
 	 * If this function isn't used, Kunena will use threads per page configuration setting.
 	 *
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return $this
 	 */
@@ -96,9 +96,9 @@ abstract class KunenaDatabaseFinder
 	 *
 	 * This function can be used more than once to chain order by.
 	 *
-	 * @param  string $by
-	 * @param  int $direction
-	 * @param  string $alias
+	 * @param   string $by
+	 * @param   int $direction
+	 * @param   string $alias
 	 *
 	 * @return $this
 	 */
@@ -114,9 +114,9 @@ abstract class KunenaDatabaseFinder
 	/**
 	 * Filter by field.
 	 *
-	 * @param  string        $field       Field name.
-	 * @param  string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
-	 * @param  string|array  $value       Value.
+	 * @param   string        $field       Field name.
+	 * @param   string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
+	 * @param   string|array  $value       Value.
 	 *
 	 * @return $this
 	 */
@@ -182,7 +182,7 @@ abstract class KunenaDatabaseFinder
 	/**
 	 * Count items.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function count()
 	{
@@ -199,7 +199,7 @@ abstract class KunenaDatabaseFinder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param  JDatabaseQuery  $query
+	 * @param   JDatabaseQuery  $query
 	 *
 	 * @return void
 	 */

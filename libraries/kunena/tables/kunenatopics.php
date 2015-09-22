@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -43,18 +43,18 @@ class TableKunenaTopics extends KunenaTable
 	public $params = null;
 
 	/**
-	 * @param string $db
+	 * @param   string $db
 	 */
 	public function __construct($db)
 	{
-		parent::__construct ( '#__kunena_topics', 'id', $db );
+		parent::__construct('#__kunena_topics', 'id', $db);
 	}
 
 	/**
-	 * @param null $id
-	 * @param bool $reset
+	 * @param   null $id
+	 * @param   bool $reset
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function load($id = null, $reset = true)
 	{
@@ -67,7 +67,7 @@ class TableKunenaTopics extends KunenaTable
 		}
 
 		// Reset the table.
-		if ($reset) $this->reset();
+		if ($reset) { $this->reset(); }
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1)
@@ -96,6 +96,7 @@ class TableKunenaTopics extends KunenaTable
 
 			return false;
 		}
+
 		$this->_exists = true;
 
 		// Bind the data to the table.
@@ -105,7 +106,7 @@ class TableKunenaTopics extends KunenaTable
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function check()
 	{
@@ -113,7 +114,7 @@ class TableKunenaTopics extends KunenaTable
 
 		if (!$category->exists())
 		{
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id ) );
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id));
 		}
 		else
 		{
@@ -123,9 +124,9 @@ class TableKunenaTopics extends KunenaTable
 		$this->subject = trim($this->subject);
 		if (!$this->subject)
 		{
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT' ) );
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT'));
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 }

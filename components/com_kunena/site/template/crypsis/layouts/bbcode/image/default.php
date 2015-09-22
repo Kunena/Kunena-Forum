@@ -9,13 +9,14 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 $title    = $this->title;
 $url      = $this->url;
 $filename = $this->filename;
 $size     = $this->size;
-/** @var  bool $canLink False if image is inside a link: [url=http://www.domain.com][img]image.jpg[/img][/url] */
+// @var  bool $canLink False if image is inside a link: [url=http://www.domain.com][img]image.jpg[/img][/url]
+
 $canLink = isset($this->canLink) ? $this->canLink : true;
 
 echo $this->subLayout('Widget/Lightbox');

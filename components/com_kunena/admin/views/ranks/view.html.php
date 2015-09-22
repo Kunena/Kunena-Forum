@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * About view for Kunena ranks backend
@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaAdminViewRanks extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
 	 * @return mixed
 	 */
@@ -63,7 +63,7 @@ class KunenaAdminViewRanks extends KunenaView
 		//}
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Ranks_management';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

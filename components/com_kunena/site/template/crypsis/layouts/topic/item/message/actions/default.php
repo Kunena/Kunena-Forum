@@ -10,7 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaForumMessage $message */
+// @var KunenaForumMessage $message
+
 $message = $this->message;
 
 $dateText = $dateHover = '';
@@ -27,17 +28,17 @@ if ($this->config->editmarkup && $this->message->modified_time)
 	<span class="alert" <?php echo $dateTitle; ?>>
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateText . JText::_('COM_KUNENA_BY')
 			. ' ' . $this->message->getModifier()->getLink() . '.'; ?>
-		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON')
-			. ': ' . $this->escape($this->message->modified_reason); ?>
+		<?php if ($this->message->modified_reason) { echo JText::_('COM_KUNENA_REASON')
+			. ': ' . $this->escape($this->message->modified_reason); } ?>
 	</span>
 	<br />
 	<?php endif ?>
 
-	<?php if(!empty($this->thankyou)): ?>
+	<?php if(!empty($this->thankyou)) : ?>
 	<div>
 		<?php
-		echo JText::_('COM_KUNENA_THANKYOU').': '.implode(', ', $this->thankyou).' ';
-		if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS',$this->more_thankyou);
+		echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
+		if ($this->more_thankyou) { echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou); }
 		?>
 	</div>
 	<?php endif; ?>
@@ -46,4 +47,4 @@ if ($this->config->editmarkup && $this->message->modified_time)
 </div>
 
 
-<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply'); ?>
+<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->setLayout('quickreply');

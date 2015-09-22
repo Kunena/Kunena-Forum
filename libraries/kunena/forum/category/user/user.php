@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumCategoryUser
@@ -27,30 +27,30 @@ class KunenaForumCategoryUser extends JObject
 	protected $_db = null;
 
 	/**
-	 * @param int  $category
-	 * @param mixed $user
+	 * @param   int  $category
+	 * @param   mixed $user
 	 *
 	 * @internal
 	 */
 	public function __construct($category = 0, $user = null)
 	{
 		// Always fill empty data
-		$this->_db = JFactory::getDBO ();
+		$this->_db = JFactory::getDBO();
 
 		// Create the table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
 		// Lets bind the data
-		$this->setProperties ( $table->getProperties () );
+		$this->setProperties($table->getProperties());
 		$this->_exists = false;
 		$this->category_id = $category;
 		$this->user_id = KunenaUserHelper::get($user)->userid;
 	}
 
 	/**
-	 * @param null|int $id
-	 * @param mixed $user
-	 * @param bool $reload
+	 * @param   null|int $id
+	 * @param   mixed $user
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumCategoryUser
 	 */
@@ -68,9 +68,9 @@ class KunenaForumCategoryUser extends JObject
 	}
 
 	/**
-	 * @param null|bool $exists		True/false will change the state of the object.
+	 * @param   null|bool $exists		True/false will change the state of the object.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	function exists($exists = null)
 	{
@@ -91,8 +91,8 @@ class KunenaForumCategoryUser extends JObject
 	 * it instantiates. You can call this function statically to set the table name if
 	 * needed.
 	 *
-	 * @param string $type		The categories table name to be used
-	 * @param string $prefix	The categories table prefix to be used
+	 * @param   string $type		The categories table name to be used
+	 * @param   string $prefix	The categories table prefix to be used
 	 *
 	 * @return JTable|TableKunenaUserCategories		The categories table object
 	 */
@@ -108,26 +108,26 @@ class KunenaForumCategoryUser extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
+		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
 	}
 
 	/**
-	 * @param array $data
-	 * @param array $ignore
+	 * @param   array $data
+	 * @param   array $ignore
 	 */
 	public function bind($data, $ignore = array())
 	{
 		$data = array_diff_key($data, array_flip($ignore));
-		$this->setProperties ( $data );
+		$this->setProperties($data);
 	}
 
 	/**
 	 * Method to load a KunenaForumCategoryUser object by id.
 	 *
-	 * @param null|int	$category_id		The category id to be loaded.
-	 * @param mixed		$user				The user to be loaded.
+	 * @param   null|int	$category_id		The category id to be loaded.
+	 * @param   mixed		$user				The user to be loaded.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function load($category_id = null, $user = null)
 	{
@@ -144,13 +144,13 @@ class KunenaForumCategoryUser extends JObject
 		$user = KunenaUserHelper::get($user);
 
 		// Create the table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
 		// Load the KunenaTable object based on id
-		$this->_exists = $table->load ( array('user_id'=>$user->userid, 'category_id'=>$category_id) );
+		$this->_exists = $table->load(array('user_id' => $user->userid, 'category_id' => $category_id));
 
 		// Assuming all is well at this point lets bind the data
-		$this->setProperties ( $table->getProperties () );
+		$this->setProperties($table->getProperties());
 
 		return $this->_exists;
 	}
@@ -158,21 +158,21 @@ class KunenaForumCategoryUser extends JObject
 	/**
 	 * Method to save the KunenaForumCategoryUser object to the database.
 	 *
-	 * @param bool $updateOnly	Save the object only if not a new category.
+	 * @param   bool $updateOnly	Save the object only if not a new category.
 	 *
 	 * @return bool	True on success
 	 */
 	public function save($updateOnly = false)
 	{
 		// Create the categories table object
-		$table = $this->getTable ();
-		$table->bind ( $this->getProperties () );
-		$table->exists ( $this->_exists );
+		$table = $this->getTable();
+		$table->bind($this->getProperties());
+		$table->exists($this->_exists);
 
 		// Check and store the object.
-		if (! $table->check ())
+		if (! $table->check())
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
 			return false;
 		}
 
@@ -186,15 +186,15 @@ class KunenaForumCategoryUser extends JObject
 		}
 
 		//Store the category data in the database
-		if (! $result = $table->store ())
+		if (! $result = $table->store())
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
 		}
 
 		// Fill up KunenaForumCategoryUser object in case we created a new category.
 		if ($result && $isnew)
 		{
-			$this->load ();
+			$this->load();
 		}
 
 		return $result;
@@ -213,12 +213,12 @@ class KunenaForumCategoryUser extends JObject
 		}
 
 		// Create the table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
-		$result = $table->delete ( array('category_id'=>$this->category_id, 'user_id'=>$this->user_id) );
+		$result = $table->delete(array('category_id' => $this->category_id, 'user_id' => $this->user_id));
 		if (! $result)
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
 		}
 
 		$this->_exists = false;

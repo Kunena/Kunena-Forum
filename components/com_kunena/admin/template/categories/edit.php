@@ -8,9 +8,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewCategories $this */
+// @var KunenaAdminViewCategories $this
+
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -22,14 +23,14 @@ JHtml::_('behavior.tabstate');
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="task" value="save" />
 			<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<article class="data-block">
 				<div class="data-container">
@@ -80,13 +81,13 @@ JHtml::_('behavior.tabstate');
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_NAMEADD'); ?></td>
 												<td>
-													<input class="inputbox" type="text" name="name" size="80" value="<?php echo $this->escape ( $this->category->name ); ?>" />
+													<input class="inputbox" type="text" name="name" size="80" value="<?php echo $this->escape($this->category->name); ?>" />
 												</td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 												<td>
-													<input class="inputbox" type="text" name="alias" size="80" value="<?php echo $this->escape ( $this->category->alias ); ?>" />
+													<input class="inputbox" type="text" name="alias" size="80" value="<?php echo $this->escape($this->category->alias); ?>" />
 													<?php if ($this->options ['aliases']) : ?>
 													<div>
 														<?php echo $this->options ['aliases']; ?>
@@ -101,27 +102,27 @@ JHtml::_('behavior.tabstate');
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_ICON'); ?></td>
 												<td>
-													<input class="inputbox" type="text" name="icon" size="80" value="<?php echo $this->escape ( $this->category->icon ); ?>" />
+													<input class="inputbox" type="text" name="icon" size="80" value="<?php echo $this->escape($this->category->icon); ?>" />
 													<p><?php echo JText::_('COM_KUNENA_ICON_DESC'); ?></p>
 												</td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
 												<td>
-													<input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" />
+													<input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape($this->category->class_sfx); ?>" />
 													<p><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></p>
 												</td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 												<td>
-													<textarea class="inputbox" cols="50" rows="6" name="description" id="description" style="width: 500px"><?php echo $this->escape ( $this->category->description ); ?></textarea>
+													<textarea class="inputbox" cols="50" rows="6" name="description" id="description" style="width: 500px"><?php echo $this->escape($this->category->description); ?></textarea>
 												</td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_HEADERADD'); ?></td>
 												<td>
-													<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo $this->escape ( $this->category->headerdesc ); ?></textarea>
+													<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
 												</td>
 											</tr>
 										</table>
@@ -138,13 +139,14 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
 											</tr>
 											</thead>
-											<?php foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) foreach ($accesslist as $accessinput) : ?>
+											<?php foreach ($this->options ['accesslists'] as $accesstype => $accesslist) { foreach ($accesslist as $accessinput) : ?>
 												<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
 													<td><?php echo $accessinput['title'] ?></td>
 													<td><?php echo $accessinput['input'] ?></td>
 													<td><?php echo $accessinput['desc'] ?></td>
 												</tr>
-											<?php endforeach; ?>
+											<?php endforeach;
+}; ?>
 										</table>
 									</fieldset>
 								</div>
@@ -229,17 +231,18 @@ JHtml::_('behavior.tabstate');
 											</thead>
 
 											<tbody>
-											<?php $i=0; if (empty($this->moderators)) : ?>
+											<?php $i = 0; if (empty($this->moderators)) : ?>
 												<tr>
 													<td colspan="5" align="center"><?php echo JText::_('COM_KUNENA_NOMODS') ?></td>
 												</tr>
-											<?php else : foreach ( $this->moderators as $ml ) : ?>
+											<?php else : foreach ($this->moderators as $ml) : ?>
 												<tr>
 													<td><?php echo $this->escape($ml->username); ?></td>
 													<td><?php echo $this->escape($ml->name); ?></td>
 													<td><?php echo $this->escape($ml->userid); ?></td>
 												</tr>
-											<?php endforeach; endif; ?>
+											<?php endforeach;
+endif; ?>
 											</tbody>
 										</table>
 									</fieldset>

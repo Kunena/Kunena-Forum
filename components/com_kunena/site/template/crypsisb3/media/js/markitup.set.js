@@ -56,7 +56,8 @@ bbcodeSettings = {
 		{separator:'|' },
 		{name:'Quote', className: 'quotebutton', openWith:'[quote]', closeWith:'[/quote]'},
 		{name: 'Code', className: 'codemodalboxbutton', beforeInsert:function() {
-			jQuery('#code-modal-submit').click(function(event) {
+			jQuery('#code-modal-submit').click(
+    function(event) {
 				event.preventDefault();
 
 				jQuery('#modal-code').modal('hide');
@@ -64,8 +65,10 @@ bbcodeSettings = {
 
 			jQuery('#modal-code').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
+					dialog.overlay.fadeIn(
+    'slow', function () {
+						dialog.container.slideDown(
+    'slow', function () {
 							dialog.data.fadeIn('slow');
 						});
 					});
@@ -78,7 +81,8 @@ bbcodeSettings = {
 		{name:'Hidden text', className: 'hiddentextbutton',  openWith:'[hide]', closeWith:'[/hide]'},
 		{separator:'|' },
 		{name: 'Picture', className: 'picturebutton', beforeInsert:function() {
-			jQuery('#picture-modal-submit').click(function(event) {
+			jQuery('#picture-modal-submit').click(
+	function(event) {
 				event.preventDefault();
 
 				jQuery('#modal-picture').modal('hide');
@@ -86,8 +90,10 @@ bbcodeSettings = {
 
 			jQuery('#modal-picture').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
+					dialog.overlay.fadeIn(
+	'slow', function () {
+						dialog.container.slideDown(
+	'slow', function () {
 							dialog.data.fadeIn('slow');
 						});
 					});
@@ -95,7 +101,8 @@ bbcodeSettings = {
 			}
 		},
 		{name:'Link',  className: 'linkbutton', beforeInsert:function() {
-			jQuery('#link-modal-submit').click(function(event) {
+			jQuery('#link-modal-submit').click(
+	function(event) {
 				event.preventDefault();
 
 				jQuery('#modal-link').modal('hide');
@@ -103,8 +110,10 @@ bbcodeSettings = {
 
 			jQuery('#modal-link').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
+					dialog.overlay.fadeIn(
+	'slow', function () {
+						dialog.container.slideDown(
+	'slow', function () {
 							dialog.data.fadeIn('slow');
 						});
 					});
@@ -115,7 +124,8 @@ bbcodeSettings = {
 		{name:'Ebay', className:'ebaybutton', key:'E', openWith:'[ebay]', closeWith:'[/ebay]'},
 		{name:'Video', className: 'videodropdownbutton', dropMenu: [
 		{name: 'Video Settings', className: 'videosettingsbutton', beforeInsert:function() {
-			jQuery('#videosettings-modal-submit').click(function(event) {
+			jQuery('#videosettings-modal-submit').click(
+	function(event) {
 				event.preventDefault();
 
 				jQuery('#modal-video-settings').modal('hide');
@@ -123,15 +133,18 @@ bbcodeSettings = {
 
 			jQuery('#modal-video-settings').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
+					dialog.overlay.fadeIn(
+	'slow', function () {
+						dialog.container.slideDown(
+	'slow', function () {
 							dialog.data.fadeIn('slow');
 						});
 					});
 				}});
 			} },
 		{name: 'Video Provider URL', className: 'videoURLbutton', beforeInsert:function() {
-			jQuery('#videourlprovider-modal-submit').click(function(event) {
+			jQuery('#videourlprovider-modal-submit').click(
+	function(event) {
 				event.preventDefault();
 
 				jQuery('#modal-video-urlprovider').modal('hide');
@@ -139,8 +152,10 @@ bbcodeSettings = {
 
 			jQuery('#modal-video-urlprovider').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
+					dialog.overlay.fadeIn(
+	'slow', function () {
+						dialog.container.slideDown(
+	'slow', function () {
 							dialog.data.fadeIn('slow');
 						});
 					});
@@ -148,7 +163,8 @@ bbcodeSettings = {
 			} }
 		]},
 		{name: 'Map', className: 'mapbutton', beforeInsert:function() {
-			jQuery('#map-modal-submit').click(function(event) {
+			jQuery('#map-modal-submit').click(
+	function(event) {
 				event.preventDefault();
 
 				jQuery('#modal-map').modal('hide');
@@ -156,8 +172,10 @@ bbcodeSettings = {
 
 			jQuery('#modal-map').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
+					dialog.overlay.fadeIn(
+	'slow', function () {
+						dialog.container.slideDown(
+	'slow', function () {
 							dialog.data.fadeIn('slow');
 						});
 					});
@@ -165,17 +183,20 @@ bbcodeSettings = {
 			}
 		},
 		{name: 'Poll', className: 'pollbutton', beforeInsert:function() {
-			if ( jQuery('#modal-poll-settings').length!=0 ) {
-					jQuery('#poll-settings-modal-submit').click(function(event) {
+			if (jQuery('#modal-poll-settings').length != 0) {
+					jQuery('#poll-settings-modal-submit').click(
+	  function(event) {
 						event.preventDefault();
 
 						jQuery('#modal-poll-settings').modal('hide');
 					});
 
 					jQuery('#modal-poll-settings').modal(
-					{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-						dialog.overlay.fadeIn('slow', function () {
-							dialog.container.slideDown('slow', function () {
+	  {overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
+						dialog.overlay.fadeIn(
+	  'slow', function () {
+							dialog.container.slideDown(
+	  'slow', function () {
 								dialog.data.fadeIn('slow');
 							});
 						});
@@ -185,7 +206,8 @@ bbcodeSettings = {
 		},
 		{name:'Tweet', className: 'tweetbutton', openWith:'[tweet]', closeWith:'[/tweet]'},
 		{name: 'Emoticons', className: 'emoticonsbutton', beforeInsert:function() {
-			jQuery('#map-modal-submit').click(function(event) {
+			jQuery('#map-modal-submit').click(
+	function(event) {
 				event.preventDefault();
 
 				jQuery('#modal-map').modal('hide');
@@ -193,8 +215,10 @@ bbcodeSettings = {
 
 			jQuery('#modal-emoticons').modal(
 				{overlayClose:true, autoResize:true, minHeight:500, minWidth:800, onOpen: function (dialog) {
-					dialog.overlay.fadeIn('slow', function () {
-						dialog.container.slideDown('slow', function () {
+					dialog.overlay.fadeIn(
+	'slow', function () {
+						dialog.container.slideDown(
+	'slow', function () {
 							dialog.data.fadeIn('slow');
 						});
 					});
@@ -203,7 +227,8 @@ bbcodeSettings = {
 	]
 };
 
-jQuery(document).ready(function (){
+jQuery(document).ready(
+	function (){
 	jQuery('#kbbcode-message').markItUp(bbcodeSettings);
 
 	if (jQuery('#modal-code').length == 0) {
@@ -213,54 +238,57 @@ jQuery(document).ready(function (){
 	}
 
 	// For code
-	jQuery('#code-modal-submit').click(function() {
+	jQuery('#code-modal-submit').click(
+	function() {
 		var codetype = jQuery("#kcodetype option:selected").val();
 
 		jQuery.markItUp(
-			{ openWith:'[code type="'+codetype+'"]',
+			{ openWith:'[code type="' + codetype + '"]',
 			  closeWith:'[/code]' }
 		);
 		return false;
 	});
 
 	// For map
-	jQuery('#map-modal-submit').click(function() {
+	jQuery('#map-modal-submit').click(
+	function() {
 		var modalcity = jQuery('#modal-map-city').val();
 		var modaltype = jQuery('#modal-map-type').val();
 		var modalzoom = jQuery('#modal-map-zoomlevel').val();
 		var type = '';
 		var zoom = '';
 
-		if (modaltype!=undefined)
+		if (modaltype != undefined)
 		{
-			type = 'type='+modaltype;
+			type = 'type=' + modaltype;
 		}
 
-		if (modalzoom!=undefined)
+		if (modalzoom != undefined)
 		{
-			zoom = 'zoom='+modalzoom;
+			zoom = 'zoom=' + modalzoom;
 		}
 
 		jQuery.markItUp(
-		{ openWith:'[map '+type+' '+zoom+']'+modalcity,
+	{ openWith:'[map ' + type + ' ' + zoom + ']' + modalcity,
 		  closeWith:'[/map]' }
 		);
 		return false;
 	});
 
 	// For picture settings
-	jQuery('#picture-modal-submit').click(function() {
+	jQuery('#picture-modal-submit').click(
+	function() {
 		var modalpictureurl = jQuery('#modal-picture-url').val();
 		var modalpicturesize = jQuery('#modal-picture-size').val();
 
 		var size = '';
-		if ( modalpicturesize.length > 0 ) {
-			size = 'size='+modalpicturesize;
+		if (modalpicturesize.length > 0) {
+			size = 'size=' + modalpicturesize;
 		}
 
-		if ( modalpictureurl.length > 0 ) {
+		if (modalpictureurl.length > 0) {
 			jQuery.markItUp(
-				{ openWith:'[img '+size+']'+modalpictureurl,
+				{ openWith:'[img ' + size + ']' + modalpictureurl,
 				closeWith:'[/img]' }
 			);
 		return false;
@@ -268,21 +296,22 @@ jQuery(document).ready(function (){
 	});
 
 	//For link settings
-	jQuery('#link-modal-submit').click(function() {
+	jQuery('#link-modal-submit').click(
+	function() {
 		var modallinkurl = jQuery('#modal-link-url').val();
 		var modallinktext = jQuery('#modal-link-text').val();
 
 		var text = '';
-		if ( modallinktext.length > 0 ) {
+		if (modallinktext.length > 0) {
 			text = modallinktext;
 		}
 		else {
 			text = modallinkurl;
 		}
 
-		if ( modallinkurl.length > 0 ) {
+		if (modallinkurl.length > 0) {
 			jQuery.markItUp(
-			{ openWith:'[url='+modallinkurl+']'+text,
+	{ openWith:'[url=' + modallinkurl + ']' + text,
 				closeWith:'[/url]' }
 			);
 
@@ -291,7 +320,8 @@ jQuery(document).ready(function (){
 	});
 
 	// For video settings
-	jQuery('#videosettings-modal-submit').click(function() {
+	jQuery('#videosettings-modal-submit').click(
+	function() {
 		var kvideoprovider = jQuery('#kvideoprovider-modal').val();
 		var providerid = jQuery('#modal-video-id').val();
 		var videowidth = jQuery('#modal-video-width').val();
@@ -301,24 +331,24 @@ jQuery(document).ready(function (){
 
 		var width = '425';
 		var height = '344';
-		if ( videowidth.length > 0 && videoheight.length > 0 ) {
-			width = 'width='+videowidth;
-			height = 'height='+videoheight;
+		if (videowidth.length > 0 && videoheight.length > 0) {
+			width = 'width=' + videowidth;
+			height = 'height=' + videoheight;
 		} else {
-			width = 'width='+width;
-			height = 'height='+height;
+			width = 'width=' + width;
+			height = 'height=' + height;
 		}
 
 		var size = '';
 		if (videosize.length > 0) {
-			size = 'size='+videosize;
+			size = 'size=' + videosize;
 		}
 
 		if (jQuery('#kvideoprovider-modal').length > 0)
 		{
-			if ( kvideoprovider.lentgth > 0 && providerid.length > 0 ) {
+			if (kvideoprovider.lentgth > 0 && providerid.length > 0) {
 				jQuery.markItUp(
-					{ openWith:'[video '+size+' '+width+' '+height+' type='+kvideoprovider+']'+providerid,
+					{ openWith:'[video ' + size + ' ' + width + ' ' + height + ' type=' + kvideoprovider + ']' + providerid,
 					closeWith:'[/video]' }
 				);
 				return false;
@@ -327,7 +357,7 @@ jQuery(document).ready(function (){
 		else
 		{
 			jQuery.markItUp(
-				{ openWith:'[video '+size+' '+width+' '+height+' type='+kvideoproviderlist+']'+providerid,
+				{ openWith:'[video ' + size + ' ' + width + ' ' + height + ' type=' + kvideoproviderlist + ']' + providerid,
 				closeWith:'[/video]' }
 			);
 			return false;
@@ -335,22 +365,24 @@ jQuery(document).ready(function (){
 	});
 
 	// For video provider URL
-	jQuery('#videourlprovider-modal-submit').click(function() {
+	jQuery('#videourlprovider-modal-submit').click(
+	function() {
 		var providerurl = jQuery('#modal-video-urlprovider-input').val();
 
 		jQuery.markItUp(
-			{ openWith:'[video]'+providerurl,
+			{ openWith:'[video]' + providerurl,
 			closeWith:'[/video]' }
 		);
 		return false;
 	});
 
 	// For smileys
-	jQuery('.smileyimage').click(function() {
+	jQuery('.smileyimage').click(
+	function() {
 		var smiley = jQuery(this).attr('alt');
 
 		jQuery.markItUp(
-			 { openWith:smiley,
+	{ openWith:smiley,
 			closeWith:'' }
 		);
 		return false;

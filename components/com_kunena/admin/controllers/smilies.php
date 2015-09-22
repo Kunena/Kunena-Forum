@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Smileys Controller
@@ -21,7 +21,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -95,7 +95,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 
 		if (!$smileyid)
 		{
-			$db->setQuery("INSERT INTO #__kunena_smileys SET
+			$db->setQuery(
+    "INSERT INTO #__kunena_smileys SET
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}");
@@ -108,7 +109,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 		}
 		else
 		{
-			$db->setQuery("UPDATE #__kunena_smileys SET
+			$db->setQuery(
+    "UPDATE #__kunena_smileys SET
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
@@ -150,6 +152,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'), 'error');
 		}
+
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

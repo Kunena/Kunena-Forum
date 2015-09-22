@@ -9,9 +9,10 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewUser $this */
+// @var KunenaAdminViewUser $this
+
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -20,7 +21,8 @@ JHtml::_('behavior.tabstate');
 
 $db       = JFactory::getDBO();
 $document = JFactory::getDocument();
-$document->addScriptDeclaration(' var max_count = ' . (int) $this->config->maxsig . '
+$document->addScriptDeclaration(
+	' var max_count = ' . (int) $this->config->maxsig . '
 jQuery(function($) {
 	jQuery(\'#user-signature\').keypress(function (e) {
 		var len = jQuery(this).val().length;
@@ -97,8 +99,9 @@ jQuery(function($) {
 											</label>
 										</div>
 										<div>
-											<?php echo JText::sprintf('COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-												'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - \Joomla\String\String::strlen($this->user->signature)) . '" />'); ?>
+											<?php echo JText::sprintf(
+	'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
+'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - \Joomla\String\String::strlen($this->user->signature)) . '" />'); ?>
 										</div>
 									</fieldset>
 								</div>
@@ -381,8 +384,10 @@ jQuery(function($) {
 														$mescnt += intval($curuser->mescnt);
 														continue;
 													}
+
 													$userlist[] = $this->escape($curuser->username) . ' (' . $this->escape($curuser->mescnt) . ')';
 												}
+
 												$userlist = implode(', ', $userlist);
 												?>
 												<tr>

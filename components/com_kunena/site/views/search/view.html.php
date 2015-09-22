@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Search View
@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaViewSearch extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -66,7 +66,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string $attributes
 	 */
 	function displayModeList($id, $attributes = '')
 	{
@@ -78,7 +78,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string $attributes
 	 */
 	function displayDateList($id, $attributes = '')
 	{
@@ -97,7 +97,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string $attributes
 	 */
 	function displayBeforeAfterList($id, $attributes = '')
 	{
@@ -109,7 +109,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string $attributes
 	 */
 	function displaySortByList($id, $attributes = '')
 	{
@@ -126,7 +126,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string $attributes
 	 */
 	function displayOrderList($id, $attributes = '')
 	{
@@ -138,7 +138,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string $attributes
 	 */
 	function displayLimitList($id, $attributes = '')
 	{
@@ -153,7 +153,7 @@ class KunenaViewSearch extends KunenaView
 
 	/**
 	 * @param        $id
-	 * @param string $attributes
+	 * @param   string $attributes
 	 */
 	function displayCategoryList($id, $attributes = '')
 	{
@@ -196,7 +196,7 @@ class KunenaViewSearch extends KunenaView
 
 			foreach ($this->searchwords as $searchword)
 			{
-				if (empty ($searchword))
+				if (empty($searchword))
 				{
 					continue;
 				}

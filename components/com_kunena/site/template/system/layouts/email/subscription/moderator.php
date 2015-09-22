@@ -18,8 +18,9 @@ $config = KunenaConfig::getInstance();
 $subject = $this->message->subject ? $this->message->subject : $this->message->getTopic()->subject;
 $author = $this->message->getAuthor();
 $more = ($this->once ?
-	JText::_($this->message->parent? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
-		'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE'). "\n" : '');
+	JText::_(
+  $this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
+	'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') . "\n" : '');
 ?>
 
 <h2><?php echo JText::_('COM_KUNENA_POST_EMAIL_MOD1') . " " . $config->board_title; ?></h2>

@@ -1,26 +1,27 @@
 <?php
 /**
  * Kunena Component
-* @package Kunena.Template.Crypsis
-* @subpackage BBCode
-*
-* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
-**/
-defined ( '_JEXEC' ) or die ();
+ * @package Kunena.Template.Crypsis
+ * @subpackage BBCode
+ *
+ * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined('_JEXEC') or die();
 
 $title = $this->title;
 $url = $this->url;
 $filename = $this->filename;
 $size = $this->size;
-/** @var  bool  $canLink  False if image is inside a link: [url=http://www.domain.com][img]image.jpg[/img][/url] */
+// @var  bool  $canLink  False if image is inside a link: [url=http://www.domain.com][img]image.jpg[/img][/url]
+
 $canLink = isset($this->canLink) ? $this->canLink : true;
 
 $config = KunenaConfig::getInstance();
 
 $attributesLink = $config->lightbox ? ' rel="lightbox[gallery]"' : '';
-$attributesImg = ' style="max-height: '. (int) $config->imageheight . 'px;"';
+$attributesImg = ' style="max-height: ' . (int) $config->imageheight . 'px;"';
 $attributesImg .= $size ? ' width="' . (int) $size . '"' : '';
 ?>
 

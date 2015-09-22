@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.modeladmin');
 jimport('joomla.html.pagination');
@@ -22,7 +22,7 @@ jimport('joomla.html.pagination');
 class KunenaAdminModelTemplates extends JModelAdmin
 {
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 *
 	 * @throws Exception
 	 */
@@ -141,7 +141,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @return bool|stdClass
+	 * @return boolean|stdClass
 	 */
 	function getTemplatedetails()
 	{
@@ -209,9 +209,9 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	/**
 	 * @param        $key
 	 * @param        $request
-	 * @param null   $default
-	 * @param string $type
-	 * @param bool   $resetPage
+	 * @param   null   $default
+	 * @param   string $type
+	 * @param   bool   $resetPage
 	 *
 	 * @return mixed|null
 	 * @throws Exception
@@ -267,7 +267,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	}
 
 	/**
-	 * @param string $id
+	 * @param   string $id
 	 *
 	 * @return string
 	 */

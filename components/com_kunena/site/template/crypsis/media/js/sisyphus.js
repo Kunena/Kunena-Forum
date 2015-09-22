@@ -8,12 +8,13 @@
 ( function( $ ) {
 
 	$.fn.sisyphus = function( options ) {
-		var identifier = $.map( this, function( obj, i ) {
-			return $( obj ).attr( "id" ) + $( obj ).attr( "name" )
+		var identifier = $.map(
+   this, function( obj, i ) {
+			return $(obj).attr("id") + $(obj).attr("name")
 		}).join();
 
-		var sisyphus = Sisyphus.getInstance( identifier );
-		sisyphus.protect( this, options );
+		var sisyphus = Sisyphus.getInstance(identifier);
+		sisyphus.protect(this, options);
 		return sisyphus;
 	};
 
@@ -25,12 +26,13 @@
 	 * @return Boolean
 	 */
 	browserStorage.isAvailable = function() {
-		if ( typeof $.jStorage === "object" ) {
+		if (typeof $.jStorage === "object") {
 			return true;
 		}
+
 		try {
 			return localStorage.getItem;
-		} catch ( e ) {
+		} catch (e) {
 			return false;
 		}
 	};
@@ -44,12 +46,12 @@
 	 * @return Boolean
 	 */
 	browserStorage.set = function( key, value ) {
-		if ( typeof $.jStorage === "object" ) {
-			$.jStorage.set( key, value + "" );
+		if (typeof $.jStorage === "object") {
+			$.jStorage.set(key, value + "");
 		} else {
 			try {
-				localStorage.setItem( key, value + "" );
-			} catch ( e ) {
+				localStorage.setItem(key, value + "");
+			} catch (e) {
 				//QUOTA_EXCEEDED_ERR
 			}
 		}
@@ -63,11 +65,11 @@
 	 * @return string
 	 */
 	browserStorage.get = function( key ) {
-		if ( typeof $.jStorage === "object" ) {
-			var result = $.jStorage.get( key );
+		if (typeof $.jStorage === "object") {
+			var result = $.jStorage.get(key);
 			return result ? result.toString() : result;
 		} else {
-			return localStorage.getItem( key );
+			return localStorage.getItem(key);
 		}
 	};
 
@@ -79,10 +81,10 @@
 	 * @return void
 	 */
 	browserStorage.remove = function( key ) {
-		if ( typeof $.jStorage === "object" ) {
-			$.jStorage.deleteKey( key );
+		if (typeof $.jStorage === "object") {
+			$.jStorage.deleteKey(key);
 		} else {
-			localStorage.removeItem( key );
+			localStorage.removeItem(key);
 		}
 	};
 
@@ -122,7 +124,7 @@
 						onRestore: function() {},
 						onRelease: function() {}
 					};
-					this.options = this.options || $.extend( defaults, options );
+					this.options = this.options || $.extend(defaults, options);
 					this.browserStorage = browserStorage;
 				},
 
@@ -134,8 +136,8 @@
 				 * @return void
 				 */
 				setOptions: function ( options ) {
-					this.options = this.options || this.setInitialOptions( options );
-					this.options = $.extend( this.options, options );
+					this.options = this.options || this.setInitialOptions(options);
+					this.options = $.extend(this.options, options);
 				},
 
 				/**
@@ -147,34 +149,36 @@
 				 * @return void
 				 */
 				protect: function( targets, options ) {
-					this.setOptions( options );
+					this.setOptions(options);
 					targets = targets || {};
 					var self = this;
 					this.targets = this.targets || [];
-					if ( self.options.name ) {
+					if (self.options.name) {
 						this.href = self.options.name
 					} else {
 						this.href = location.hostname + location.pathname + location.search + location.hash;
 					}
-					this.targets = $.merge( this.targets, targets );
-					this.targets = $.unique( this.targets );
-					this.targets = $( this.targets );
-					if ( ! this.browserStorage.isAvailable() ) {
+
+					this.targets = $.merge(this.targets, targets);
+					this.targets = $.unique(this.targets);
+					this.targets = $(this.targets);
+					if (! this.browserStorage.isAvailable()) {
 						return false;
 					}
 
-					var callback_result = self.options.onBeforeRestore.call( self );
-					if ( callback_result === undefined || callback_result ) {
+					var callback_result = self.options.onBeforeRestore.call(self);
+					if (callback_result === undefined || callback_result) {
 						self.restoreAllData();
 					}
 
-					if ( this.options.autoRelease ) {
+					if (this.options.autoRelease) {
 						self.bindReleaseData();
 					}
 
-					if ( ! params.started[ this.getInstanceIdentifier() ] ) {
-						if ( self.isCKEditorPresent() ) {
-							var intervalId = setInterval( function() {
+					if (! params.started[ this.getInstanceIdentifier() ]) {
+						if (self.isCKEditorPresent()) {
+							var intervalId = setInterval(
+        function() {
 								if (CKEDITOR.isLoaded) {
 									clearInterval(intervalId);
 									self.bindSaveData();
@@ -189,9 +193,10 @@
 				},
 
 				isCKEditorPresent: function() {
-					if ( this.isCKEditorExists() ) {
+					if (this.isCKEditorExists()) {
 						CKEDITOR.isLoaded = false;
-						CKEDITOR.on('instanceReady', function() {
+						CKEDITOR.on(
+	   'instanceReady', function() {
 							CKEDITOR.isLoaded = true;
 						} );
 						return true;
@@ -205,7 +210,7 @@
 				},
 
 				findFieldsToProtect: function( target ) {
-					return target.find( ":input" ).not( ":submit" ).not( ":reset" ).not( ":button" ).not( ":file" ).not( ":password" ).not( ":disabled" ).not( "[readonly]" );
+					return target.find(":input").not(":submit").not(":reset").not(":button").not(":file").not(":password").not(":disabled").not("[readonly]");
 				},
 
 				/**
@@ -216,25 +221,29 @@
 				bindSaveData: function() {
 					var self = this;
 
-					if ( self.options.timeout ) {
+					if (self.options.timeout) {
 						self.saveDataByTimeout();
 					}
 
-					self.targets.each( function() {
-						var targetFormIdAndName = $( this ).attr( "id" ) + $( this ).attr( "name" );
-						self.findFieldsToProtect( $( this ) ).each( function() {
-							if ( $.inArray( this, self.options.excludeFields ) !== -1 ) {
+					self.targets.each(
+	  function() {
+						var targetFormIdAndName = $(this).attr("id") + $(this).attr("name");
+						self.findFieldsToProtect($(this)).each(
+	  function() {
+							if ($.inArray(this, self.options.excludeFields) !== -1) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
-							var field = $( this );
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr( "name" ) + self.options.customKeySuffix;
-							if ( field.is( ":text" ) || field.is( "textarea" ) ) {
-								if ( ! self.options.timeout ) {
-									self.bindSaveDataImmediately( field, prefix );
+
+							var field = $(this);
+							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr("name") + self.options.customKeySuffix;
+							if (field.is(":text") || field.is("textarea")) {
+								if (! self.options.timeout) {
+									self.bindSaveDataImmediately(field, prefix);
 								}
 							}
-							self.bindSaveDataOnChange( field );
+
+							self.bindSaveDataOnChange(field);
 						} );
 					} );
 				},
@@ -248,54 +257,60 @@
 				 */
 				saveAllData: function() {
 					var self = this;
-					self.targets.each( function() {
-						var targetFormIdAndName = $( this ).attr( "id" ) + $( this ).attr( "name" );
+					self.targets.each(
+	  function() {
+						var targetFormIdAndName = $(this).attr("id") + $(this).attr("name");
 						var multiCheckboxCache = {};
 
-						self.findFieldsToProtect( $( this) ).each( function() {
-							var field = $( this );
-							if ( $.inArray( this, self.options.excludeFields ) !== -1 || field.attr( "name" ) === undefined ) {
+						self.findFieldsToProtect($(this)).each(
+	  function() {
+							var field = $(this);
+							if ($.inArray(this, self.options.excludeFields) !== -1 || field.attr("name") === undefined) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr( "name" ) + self.options.customKeySuffix;
+
+							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr("name") + self.options.customKeySuffix;
 							var value = field.val();
 
-							if ( field.is(":checkbox") ) {
-								if ( field.attr( "name" ).indexOf( "[" ) !== -1 ) {
-									if ( multiCheckboxCache[ field.attr( "name" ) ] === true ) {
+							if (field.is(":checkbox")) {
+								if (field.attr("name").indexOf("[") !== -1) {
+									if (multiCheckboxCache[ field.attr("name") ] === true) {
 										return;
 									}
+
 									value = [];
-									$( "[name='" + field.attr( "name" ) +"']:checked" ).each( function() {
-										value.push( $( this ).val() );
+									$("[name='" + field.attr("name") + "']:checked").each(
+	  function() {
+										value.push($(this).val());
 									} );
-									multiCheckboxCache[ field.attr( "name" ) ] = true;
+									multiCheckboxCache[ field.attr("name") ] = true;
 								} else {
-									value = field.is( ":checked" );
+									value = field.is(":checked");
 								}
-								self.saveToBrowserStorage( prefix, value, false );
-							} else if ( field.is( ":radio" ) ) {
-								if ( field.is( ":checked" ) ) {
+
+								self.saveToBrowserStorage(prefix, value, false);
+							} else if (field.is(":radio")) {
+								if (field.is(":checked")) {
 									value = field.val();
-									self.saveToBrowserStorage( prefix, value, false );
+									self.saveToBrowserStorage(prefix, value, false);
 								}
 							} else {
-								if ( self.isCKEditorExists() ) {
+								if (self.isCKEditorExists()) {
 									var editor;
-									if ( editor = CKEDITOR.instances[ field.attr("name") ] || CKEDITOR.instances[ field.attr("id") ] ) {
+									if (editor = CKEDITOR.instances[ field.attr("name") ] || CKEDITOR.instances[ field.attr("id") ]) {
 										editor.updateElement();
-										self.saveToBrowserStorage( prefix, field.val(), false);
+										self.saveToBrowserStorage(prefix, field.val(), false);
 									} else {
-										self.saveToBrowserStorage( prefix, value, false );
+										self.saveToBrowserStorage(prefix, value, false);
 									}
 								} else {
-									self.saveToBrowserStorage( prefix, value, false );
+									self.saveToBrowserStorage(prefix, value, false);
 								}
 							}
 						} );
 					} );
-					self.options.onSave.call( self );
+					self.options.onSave.call(self);
 				},
 
 				/**
@@ -307,27 +322,30 @@
 					var self = this;
 					var restored = false;
 
-					self.targets.each( function() {
-						var target = $( this );
-						var targetFormIdAndName = $( this ).attr( "id" ) + $( this ).attr( "name" );
+					self.targets.each(
+	  function() {
+						var target = $(this);
+						var targetFormIdAndName = $(this).attr("id") + $(this).attr("name");
 
-						self.findFieldsToProtect( target ).each( function() {
-							if ( $.inArray( this, self.options.excludeFields ) !== -1 ) {
+						self.findFieldsToProtect(target).each(
+	  function() {
+							if ($.inArray(this, self.options.excludeFields) !== -1) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
-							var field = $( this );
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr( "name" ) + self.options.customKeySuffix;
-							var resque = self.browserStorage.get( prefix );
-							if ( resque !== null ) {
-								self.restoreFieldsData( field, resque );
+
+							var field = $(this);
+							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr("name") + self.options.customKeySuffix;
+							var resque = self.browserStorage.get(prefix);
+							if (resque !== null) {
+								self.restoreFieldsData(field, resque);
 								restored = true;
 							}
 						} );
 					} );
 
-					if ( restored ) {
-						self.options.onRestore.call( self );
+					if (restored) {
+						self.options.onRestore.call(self);
 					}
 				},
 
@@ -340,22 +358,23 @@
 				 * @return void
 				 */
 				restoreFieldsData: function( field, resque ) {
-					if ( field.attr( "name" ) === undefined ) {
+					if (field.attr("name") === undefined) {
 						return false;
 					}
-					if ( field.is( ":checkbox" ) && resque !== "false" && field.attr( "name" ).indexOf( "[" ) === -1 ) {
-						field.attr( "checked", "checked" );
-					} else if( field.is( ":checkbox" ) && resque === "false" && field.attr( "name" ).indexOf( "[" ) === -1 ) {
-						field.removeAttr( "checked" );
-					} else if ( field.is( ":radio" ) ) {
-						if ( field.val() === resque ) {
-							field.attr( "checked", "checked" );
+
+					if (field.is(":checkbox") && resque !== "false" && field.attr("name").indexOf("[") === -1) {
+						field.attr("checked", "checked");
+					} else if(field.is(":checkbox") && resque === "false" && field.attr("name").indexOf("[") === -1) {
+						field.removeAttr("checked");
+					} else if (field.is(":radio")) {
+						if (field.val() === resque) {
+							field.attr("checked", "checked");
 						}
-					} else if ( field.attr( "name" ).indexOf( "[" ) === -1 ) {
-						field.val( resque );
+					} else if (field.attr("name").indexOf("[") === -1) {
+						field.val(resque);
 					} else {
-						resque = resque.split( "," );
-						field.val( resque );
+						resque = resque.split(",");
+						field.val(resque);
 					}
 				},
 
@@ -369,21 +388,23 @@
 				 */
 				bindSaveDataImmediately: function( field, prefix ) {
 					var self = this;
-					if ( 'onpropertychange' in field ) {
+					if ('onpropertychange' in field) {
 						field.get(0).onpropertychange = function() {
-							self.saveToBrowserStorage( prefix, field.val() );
+							self.saveToBrowserStorage(prefix, field.val());
 						};
 					} else {
 						field.get(0).oninput = function() {
-							self.saveToBrowserStorage( prefix, field.val() );
+							self.saveToBrowserStorage(prefix, field.val());
 						};
 					}
-					if ( this.isCKEditorExists() ) {
+
+					if (this.isCKEditorExists()) {
 						var editor;
-						if ( editor = CKEDITOR.instances[ field.attr("name") ] || CKEDITOR.instances[ field.attr("id") ] ) {
-							editor.document.on( 'keyup', function() {
+						if (editor = CKEDITOR.instances[ field.attr("name") ] || CKEDITOR.instances[ field.attr("id") ]) {
+							editor.document.on(
+		'keyup', function() {
 								editor.updateElement();
-								self.saveToBrowserStorage( prefix, field.val() );
+								self.saveToBrowserStorage(prefix, field.val());
 							} );
 						}
 					}
@@ -401,9 +422,9 @@
 				saveToBrowserStorage: function( key, value, fireCallback ) {
 					// if fireCallback is undefined it should be true
 					fireCallback = fireCallback === undefined ? true : fireCallback;
-					this.browserStorage.set( key, value );
-					if ( fireCallback && value !== "" ) {
-						this.options.onSave.call( this );
+					this.browserStorage.set(key, value);
+					if (fireCallback && value !== "") {
+						this.options.onSave.call(this);
 					}
 				},
 
@@ -416,7 +437,8 @@
 				 */
 				bindSaveDataOnChange: function( field ) {
 					var self = this;
-					field.change( function() {
+					field.change(
+	  function() {
 						self.saveAllData();
 					} );
 				},
@@ -429,10 +451,11 @@
 				saveDataByTimeout: function() {
 					var self = this;
 					var targetForms = self.targets;
-					setTimeout( ( function() {
+					setTimeout(
+	  ( function() {
 						function timeout() {
 							self.saveAllData();
-							setTimeout( timeout, self.options.timeout * 1000 );
+							setTimeout(timeout, self.options.timeout * 1000);
 						}
 						return timeout;
 					} )( targetForms ), self.options.timeout * 1000 );
@@ -445,11 +468,13 @@
 				 */
 				bindReleaseData: function() {
 					var self = this;
-					self.targets.each( function() {
-						var target = $( this );
-						var formIdAndName = target.attr( "id" ) + target.attr( "name" );
-						$( this ).bind( "submit reset", function() {
-							self.releaseData( formIdAndName, self.findFieldsToProtect( target ) );
+					self.targets.each(
+	  function() {
+						var target = $(this);
+						var formIdAndName = target.attr("id") + target.attr("name");
+						$(this).bind(
+	  "submit reset", function() {
+							self.releaseData(formIdAndName, self.findFieldsToProtect(target));
 						} );
 					} );
 				},
@@ -461,10 +486,11 @@
 				 */
 				manuallyReleaseData: function() {
 					var self = this;
-					self.targets.each( function() {
-						var target = $( this );
-						var formIdAndName = target.attr( "id" ) + target.attr( "name" );
-						self.releaseData( formIdAndName, self.findFieldsToProtect( target ) );
+					self.targets.each(
+	  function() {
+						var target = $(this);
+						var formIdAndName = target.attr("id") + target.attr("name");
+						self.releaseData(formIdAndName, self.findFieldsToProtect(target));
 					} );
 				},
 
@@ -483,19 +509,21 @@
 					// Released form, are not started anymore. Fix for ajax loaded forms.
 					params.started[ self.getInstanceIdentifier() ] = false;
 
-					fieldsToProtect.each( function() {
-						if ( $.inArray( this, self.options.excludeFields ) !== -1 ) {
+					fieldsToProtect.each(
+	  function() {
+						if ($.inArray(this, self.options.excludeFields) !== -1) {
 							// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 							return true;
 						}
-						var field = $( this );
-						var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr( "name" ) + self.options.customKeySuffix;
-						self.browserStorage.remove( prefix );
+
+						var field = $(this);
+						var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr("name") + self.options.customKeySuffix;
+						self.browserStorage.remove(prefix);
 						released = true;
 					} );
 
-					if ( released ) {
-						self.options.onRelease.call( self );
+					if (released) {
+						self.options.onRelease.call(self);
 					}
 				}
 
@@ -504,14 +532,16 @@
 
 		return {
 			getInstance: function( identifier ) {
-				if ( ! params.instantiated[ identifier ] ) {
+				if (! params.instantiated[ identifier ]) {
 					params.instantiated[ identifier ] = init();
-					params.instantiated[ identifier ].setInstanceIdentifier( identifier );
+					params.instantiated[ identifier ].setInstanceIdentifier(identifier);
 					params.instantiated[ identifier ].setInitialOptions();
 				}
-				if ( identifier ) {
+
+				if (identifier) {
 					return params.instantiated[ identifier ];
 				}
+
 				return params.instantiated[ identifier ];
 			},
 

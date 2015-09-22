@@ -51,4 +51,4 @@ $this->addScript('poll.js');
 	</div>
 </form>
 </div>
-<?php echo $this->subLayout('Topic/Poll/Results')->set('poll', $this->poll)->set('usercount', $this->usercount)->set('me', $this->me)->set('topic', $this->topic)->set('category', $this->category)->set('show_title', false)
+<?php echo $this->subLayout('Topic/Poll/Results')->set('poll', $this->poll)->set('usercount', $this->usercount)->set('me', $this->me)->set('topic', $this->topic)->set('category', $this->category)->set('show_title', false); ?>

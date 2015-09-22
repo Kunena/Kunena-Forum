@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaHtmlParser
@@ -19,14 +19,14 @@ abstract class KunenaHtmlParser
 	static $relative = true;
 
 	/**
-	 * @param bool $grayscale
-	 * @param bool $emoticonbar
+	 * @param   bool $grayscale
+	 * @param   bool $emoticonbar
 	 *
 	 * @return array
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false)
 	{
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$sql = "SELECT code, {$db->quoteName($column)} AS file FROM #__kunena_smileys";
 
@@ -35,25 +35,26 @@ abstract class KunenaHtmlParser
 			$sql .= " WHERE emoticonbar='1'";
 		}
 
-		$db->setQuery ( $sql );
-		$smilies = $db->loadObjectList ();
+		$db->setQuery($sql);
+		$smilies = $db->loadObjectList();
 		KunenaError::checkDatabaseError();
 
 		$smileyArray = array ();
 		$template = KunenaFactory::getTemplate();
 
-		foreach ( $smilies as $smiley )
+		foreach ($smilies as $smiley)
 		{
 			// We load all smileys in array, so we can sort them
-			$smileyArray [$smiley->code] = JUri::root(true) .'/'. $template->getSmileyPath($smiley->file);
+			$smileyArray [$smiley->code] = JUri::root(true) . '/' . $template->getSmileyPath($smiley->file);
 		}
 
 		if ($emoticonbar == 0)
 		{
 			// don't sort when it's only for use in the emoticonbar
-			array_multisort ( array_keys ( $smileyArray ), SORT_DESC, $smileyArray );
-			reset ( $smileyArray );
+			array_multisort(array_keys($smileyArray), SORT_DESC, $smileyArray);
+			reset($smileyArray);
 		}
+
 		return $smileyArray;
 	}
 
@@ -71,7 +72,7 @@ abstract class KunenaHtmlParser
 
 	/**
 	 * @param     $txt
-	 * @param int $len
+	 * @param   int $len
 	 *
 	 * @return mixed|string|void
 	 */
@@ -84,20 +85,20 @@ abstract class KunenaHtmlParser
 
 		if ($len && Joomla\String\String::strlen($txt) > $len)
 		{
-			$txt = Joomla\String\String::substr ( $txt, 0, $len ) . ' ...';
+			$txt = Joomla\String\String::substr($txt, 0, $len) . ' ...';
 		}
 
-		$txt = self::escape ( $txt );
+		$txt = self::escape($txt);
 		$txt = preg_replace('/(\S{30})/u', '\1&#8203;', $txt);
-		$txt = self::prepareContent ( $txt, 'title' );
+		$txt = self::prepareContent($txt, 'title');
 
 		return $txt;
 	}
 
 	/**
 	 * @param      $txt
-	 * @param null $parent
-	 * @param int  $len
+	 * @param   null $parent
+	 * @param   int  $len
 	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0)
 	{
@@ -106,23 +107,23 @@ abstract class KunenaHtmlParser
 			return;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
+		$txt = self::prepareContent($txt);
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $txt;
 	}
 
 	/**
 	 * @param     $txt
-	 * @param int $len
+	 * @param   int $len
 	 */
 	public static function plainBBCode($txt, $len = 0)
 	{
@@ -135,15 +136,15 @@ abstract class KunenaHtmlParser
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
+		$txt = self::prepareContent($txt);
 
 		return $txt;
 	}
 
 	/**
 	 * @param      $txt
-	 * @param int  $len
-	 * @param bool $html
+	 * @param   int  $len
+	 * @param   bool $html
 	 *
 	 * @return string|void
 	 */
@@ -159,7 +160,7 @@ abstract class KunenaHtmlParser
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetAllowAmpersand($html);
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
+		$txt = self::prepareContent($txt);
 		$txt = strip_tags($txt);
 
 		if (!$html)
@@ -172,7 +173,7 @@ abstract class KunenaHtmlParser
 
 	/**
 	 * @param        $content
-	 * @param string $target
+	 * @param   string $target
 	 *
 	 * @return mixed
 	 */

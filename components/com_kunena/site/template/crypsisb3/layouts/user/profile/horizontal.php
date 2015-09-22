@@ -11,7 +11,8 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaUser $user */
+// @var KunenaUser $user
+
 $user   = $this->user;
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
@@ -108,4 +109,4 @@ if ($show)
 		<span> <?php echo KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc'); ?> </span>
 	</li>
 </ul>
-<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal'); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal');

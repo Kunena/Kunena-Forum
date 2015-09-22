@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaSession
@@ -21,7 +21,7 @@ class KunenaSession extends JObject
 	private static $_instance;
 
 	/**
-	 * @param mixed|null $identifier
+	 * @param   mixed|null $identifier
 	 */
 	public function __construct($identifier)
 	{
@@ -31,7 +31,7 @@ class KunenaSession extends JObject
 		{
 			// For new users new indication displays 14 days
 			$now = JFactory::getDate()->toUnix();
-			$this->lasttime = $now - 14*24*60*60; // 14 days ago
+			$this->lasttime = $now - 14 * 24 * 60 * 60; // 14 days ago
 			$this->allreadtime = $this->lasttime;
 			$this->currvisit = $now;
 			$this->readtopics = 0;
@@ -45,8 +45,8 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 * @param bool $update
-	 * @param null $userid
+	 * @param   bool $update
+	 * @param   null $userid
 	 *
 	 * @return KunenaSession
 	 */
@@ -74,8 +74,8 @@ class KunenaSession extends JObject
 	 * needed.
 	 *
 	 * @access	public
-	 * @param	string	$type	The session table name to be used
-	 * @param	string	$prefix	The session table prefix to be used
+	 * @param   string	$type	The session table name to be used
+	 * @param   string	$prefix	The session table prefix to be used
 	 * @return	object	The session table object
 	 * @since	1.5
 	 */
@@ -98,7 +98,7 @@ class KunenaSession extends JObject
 	 * Method to load a KunenaSession object by userid
 	 *
 	 * @access	public
-	 * @param	int	$userid The user id of the user to load
+	 * @param   int	$userid The user id of the user to load
 	 * @return	boolean			True on success
 	 * @since 1.5
 	 */
@@ -124,7 +124,7 @@ class KunenaSession extends JObject
 	 * Method to save the KunenaSession object to the database
 	 *
 	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new session
+	 * @param   boolean $updateOnly Save the object only if not a new session
 	 * @return	boolean True on success
 	 * @since 1.5
 	 */
@@ -202,7 +202,7 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isNewUser()
 	{
@@ -210,24 +210,24 @@ class KunenaSession extends JObject
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isNewSession()
 	{
 		// perform session timeout check
-		$lifetime = max(intval(JFactory::getConfig()->get( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->sessiontimeout));
+		$lifetime = max(intval(JFactory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout));
 		$this->_sessiontimeout = ($this->currvisit + $lifetime < JFactory::getDate()->toUnix());
 
 		return $this->_sessiontimeout;
 	}
 
 	/**
-	 * @return int|string
+	 * @return integer|string
 	 */
 	public function getAllReadTime()
 	{
 		// For existing users new indication expires after 3 months
-		$monthsAgo = JFactory::getDate()->toUnix() - 91*24*60*60;
+		$monthsAgo = JFactory::getDate()->toUnix() - 91 * 24 * 60 * 60;
 		$allreadtime = ($this->allreadtime > $monthsAgo ? $this->allreadtime : $monthsAgo);
 
 		return $allreadtime;

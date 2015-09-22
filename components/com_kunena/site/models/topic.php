@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topic Model for Kunena
@@ -105,7 +105,7 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return bool|KunenaForumTopic
+	 * @return boolean|KunenaForumTopic
 	 */
 	public function getTopic()
 	{
@@ -133,11 +133,14 @@ class KunenaModelTopic extends KunenaModel
 						// Break on loops
 						return false;
 					}
+
 					$ids[$topic->moved_id] = 1;
 					$topic                 = KunenaForumTopicHelper::get($topic->moved_id);
 				}
+
 				// If topic doesn't exist, check if there's a message with the same id
-				/*if (! $topic->exists()) {
+				/*
+ if (! $topic->exists()) {
 					$message = KunenaForumMessageHelper::get($this->getState ( 'item.id'));
 					if ($message->exists()) {
 						$topic = KunenaForumTopicHelper::get($message->thread);
@@ -152,7 +155,7 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return array|bool|KunenaForumMessage[]
+	 * @return array|boolean|KunenaForumMessage[]
 	 */
 	public function getMessages()
 	{
@@ -160,8 +163,9 @@ class KunenaModelTopic extends KunenaModel
 		{
 			$layout         = $this->getState('layout');
 			$threaded       = ($layout == 'indented' || $layout == 'threaded');
-			$this->messages = KunenaForumMessageHelper::getMessagesByTopic($this->getState('item.id'),
-				$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded);
+			$this->messages = KunenaForumMessageHelper::getMessagesByTopic(
+    $this->getState('item.id'),
+	$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded);
 
 			// Get thankyous for all messages in the page
 			$thankyous = KunenaForumMessageThankyouHelper::getByMessage($this->messages);
@@ -228,8 +232,8 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @param int   $parent
-	 * @param array $indent
+	 * @param   int   $parent
+	 * @param   array $indent
 	 *
 	 * @return array
 	 */
@@ -295,6 +299,7 @@ class KunenaModelTopic extends KunenaModel
 				{
 					$indent[$key] = 'empty';
 				}
+
 				if ($skip)
 				{
 					$indent[$key + 1] = 'empty';
@@ -315,7 +320,7 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return int
+	 * @return integer
 	 */
 	public function getTotal()
 	{
@@ -323,7 +328,7 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return int
+	 * @return integer
 	 */
 	public function getMyVotes()
 	{
@@ -349,7 +354,7 @@ class KunenaModelTopic extends KunenaModel
 	}
 
 	/**
-	 * @return int
+	 * @return integer
 	 */
 	public function getPollUserCount()
 	{

@@ -60,7 +60,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Set limitstart for the query.
 	 *
-	 * @param int $limitstart
+	 * @param   int $limitstart
 	 *
 	 * @return $this
 	 */
@@ -76,7 +76,7 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * If this function isn't used, RokClub will use threads per page configuration setting.
 	 *
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return $this
 	 */
@@ -95,9 +95,9 @@ abstract class KunenaDatabaseObjectFinder
 	 *
 	 * This function can be used more than once to chain order by.
 	 *
-	 * @param  string $by
-	 * @param  int $direction
-	 * @param  string $alias
+	 * @param   string $by
+	 * @param   int $direction
+	 * @param   string $alias
 	 *
 	 * @return $this
 	 */
@@ -113,9 +113,9 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Filter by field.
 	 *
-	 * @param  string        $field       Field name.
-	 * @param  string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
-	 * @param  string|array  $value       Value.
+	 * @param   string        $field       Field name.
+	 * @param   string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
+	 * @param   string|array  $value       Value.
 	 *
 	 * @return $this
 	 */
@@ -146,7 +146,10 @@ abstract class KunenaDatabaseObjectFinder
 				else
 				{
 					$db = $this->db;
-					array_walk($value, function (&$item) use ($db) { $item = $db->quote($item); });
+					array_walk(
+      $value, function (&$item) use ($db) {
+	  $item = $db->quote($item);
+	 });
 					$list = implode(',', $value);
 					$this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
 				}
@@ -183,7 +186,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Count items.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function count()
 	{
@@ -200,7 +203,7 @@ abstract class KunenaDatabaseObjectFinder
 	/**
 	 * Override to include your own static filters.
 	 *
-	 * @param  JDatabaseQuery  $query
+	 * @param   JDatabaseQuery  $query
 	 *
 	 * @return void
 	 */

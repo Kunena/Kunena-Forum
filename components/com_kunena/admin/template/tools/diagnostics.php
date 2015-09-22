@@ -8,21 +8,22 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewTools $this */
+// @var KunenaAdminViewTools $this
+
 ?>
 
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
 
 		<?php
-		if ( !empty($task) ) :
+		if (!empty($task)) :
 			$rows = KunenaForumDiagnostics::getItems($task);
 			$info = KunenaForumDiagnostics::getFieldInfo($task);
 			$fields = array_keys((array) reset($rows));
@@ -42,9 +43,9 @@ defined ( '_JEXEC' ) or die ();
 			</tr>
 			<?php foreach (KunenaForumDiagnostics::getItems($task) as $row) : ?>
 			<tr>
-				<?php foreach ($row as $field=>$value) : ?>
+				<?php foreach ($row as $field => $value) : ?>
 				<?php $special = isset($info[$field]) ? $info[$field] : '' ?>
-				<td<?php echo $special && $special[0] != '_' ? ' class="'.$special.'"' : '' ?>><?php
+				<td<?php echo $special && $special[0] != '_' ? ' class="' . $special . '"' : '' ?>><?php
 					if ($special &&  $special[0] == '_') {
 						echo $info[$special] . $this->escape($value);
 					} else {
@@ -75,8 +76,8 @@ defined ( '_JEXEC' ) or die ();
 				<td style="color:red"><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_FAILED') ?></td>
 				<td><a href="<?php echo KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&layout=diagnostics&test={$item}"); ?>"><?php echo JText::sprintf('COM_KUNENA_DIAGNOSTICS_LABEL_NUMBER_OF_ISSUES', "<b>{$count}</b>") ?></a></td>
 				<td>
-					<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&".JSession::getFormToken().'=1').'">'.JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_FIX_ISSUES').'</a>' : '' ?>
-					<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&".JSession::getFormToken().'=1').'">'.JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DELETE_BROKEN_ITEMS').'</a>' : '' ?></td>
+					<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="' . KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&" . JSession::getFormToken() . '=1') . '">' . JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_FIX_ISSUES') . '</a>' : '' ?>
+					<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="' . KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&" . JSession::getFormToken() . '=1') . '">' . JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DELETE_BROKEN_ITEMS') . '</a>' : '' ?></td>
 				<?php else : ?>
 				<td style="color:green"><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_PASSED') ?></td>
 				<td><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_NO_ISSUES_FOUND') ?></td>

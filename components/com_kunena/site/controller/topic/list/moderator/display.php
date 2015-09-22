@@ -45,7 +45,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 
 		// Make sure that category list is an array.
 		if (!is_array($categoryIds)) {
-			$categoryIds = explode (',', $categoryIds);
+			$categoryIds = explode(',', $categoryIds);
 		}
 
 		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds)) {

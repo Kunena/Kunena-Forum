@@ -34,7 +34,7 @@ $this->addScript('poll.js');
 					<input class="kpoll-boxvote" type="radio" name="kpollradio"
 					       id="radio_name<?php echo (int) $key; ?>"
 					       value="<?php echo (int) $poll_option->id; ?>"
-					<?php if ($this->voted && $this->voted->lastvote == $poll_option->id) echo 'checked="checked"'; ?> />
+					<?php if ($this->voted && $this->voted->lastvote == $poll_option->id) { echo 'checked="checked"'; } ?> />
 					<?php echo KunenaHtmlParser::parseText($poll_option->text); ?>
 				</label>
 			</li>
@@ -51,4 +51,4 @@ $this->addScript('poll.js');
 	</div>
 </form>
 </div>
-<?php echo $this->subLayout('Topic/Poll/Results')->set('poll', $this->poll)->set('usercount', $this->usercount)->set('me', $this->me)->set('topic', $this->topic)->set('category', $this->category)->set('show_title', false) ?>
+<?php echo $this->subLayout('Topic/Poll/Results')->set('poll', $this->poll)->set('usercount', $this->usercount)->set('me', $this->me)->set('topic', $this->topic)->set('category', $this->category)->set('show_title', false)

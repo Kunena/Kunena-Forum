@@ -65,7 +65,8 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<div>
 					<input id="status-busy" class="hide" type="radio" value="2" name="status" />
 					<label for="status-busy" class="btn btn-link">
-						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . JSession::getFormToken() . '=1');; ?>" class="btn btn-link">
+						<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . JSession::getFormToken() . '=1');
+; ?>" class="btn btn-link">
 							<i class="icon-minus red"></i>
 							<?php echo JText::_('COM_KUNENA_BUSY') ?>
 						</a>
@@ -147,17 +148,18 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 	</li>
 </ul>
 <?php
-/* Note these have to be outsize the dropdown as z-index stack context is different
+/*
+  Note these have to be outsize the dropdown as z-index stack context is different
 from the parent forcing the dropsown to take over z-index calculation */
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="statusText-form" class="form-inline">
 	<?php echo $this->subLayout('Widget/Modal')
-		->set('id', 'statusTextModal')
-		->set('name', 'status_text')
-		->set('label', JText::_('COM_KUNENA_STATUS_MESSAGE'))
-		->set('description', JText::_('COM_KUNENA_STATUS_TYP'))
-		->set('data', $this->me->status_text)
-		->set('form', 'statusText-form'); ?>
+	->set('id', 'statusTextModal')
+	->set('name', 'status_text')
+	->set('label', JText::_('COM_KUNENA_STATUS_MESSAGE'))
+	->set('description', JText::_('COM_KUNENA_STATUS_TYP'))
+	->set('data', $this->me->status_text)
+	->set('form', 'statusText-form'); ?>
 	<input type="hidden" name="view" value="user" />
 	<input type="hidden" name="task" value="statustext" />
 	<?php echo JHtml::_('form.token'); ?>

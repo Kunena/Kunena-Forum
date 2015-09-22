@@ -10,7 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaForumMessage $message */
+// @var KunenaForumMessage $message
+
 $message = $this->message;
 $isReply = $this->message->id != $this->topic->first_post_id;
 $signature = $this->profile->getSignature();
@@ -19,10 +20,11 @@ $avatarname = $this->profile->getname();
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $config = KunenaConfig::getInstance();
 if ($config->ordering_system == 'mesid') {
-	$this->numLink = $this->location ;
+	$this->numLink = $this->location;
 } else {
 	$this->numLink = $message->replynum;
 }
+
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 ?>
 
@@ -34,7 +36,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 <div class="clear-fix"></div>
 <div class="horizontal-message">
 	<div class="horizontal-message-bottom badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
-		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' '. JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
+		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
 		<div class="kmessage">
 			<div class="horizontal-message-text">
 				<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
@@ -88,15 +90,15 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 	} ?>
 	<div class="alert alert-info hidden-xs" <?php echo $datehover ?>>
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
-		<?php if ($message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); ?>
+		<?php if ($message->modified_reason) { echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); } ?>
 	</div>
 <?php endif; ?>
 
-<?php if (!empty($this->thankyou)): ?>
+<?php if (!empty($this->thankyou)) : ?>
 	<div class="kmessage-thankyou">
 		<?php
 		echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
-		if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou);
+		if ($this->more_thankyou) { echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou); }
 		?>
 	</div>
-<?php endif; ?>
+<?php endif;

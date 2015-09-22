@@ -9,7 +9,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 KunenaMenuFix::initialize();
 
@@ -115,18 +115,19 @@ abstract class KunenaMenuFix
 		{
 			$item = self::$items[$itemid];
 			KunenaRouteLegacy::convertMenuItem($item);
-			$table = JTable::getInstance ( 'menu' );
+			$table = JTable::getInstance('menu');
 			$table->load($item->id);
 			$data = array (
 				'link' => $item->link,
 				'params' => $item->params,
 			);
 
-			if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ())
+			if (! $table->bind($data) || ! $table->check() || ! $table->store())
 			{
 				$errors[] = "{$item->route} (#{$item->id}): {$table->getError()}";
 			}
 		}
+
 		KunenaMenuHelper::cleanCache();
 
 		return !empty($errors) ? $errors : null;
@@ -135,7 +136,7 @@ abstract class KunenaMenuFix
 	/**
 	 * @param $itemid
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function delete($itemid)
 	{
@@ -145,7 +146,7 @@ abstract class KunenaMenuFix
 			return false;
 		}
 
-		$table = JTable::getInstance ( 'menu' );
+		$table = JTable::getInstance('menu');
 		$result = $table->delete($itemid);
 		KunenaMenuHelper::cleanCache();
 
@@ -158,7 +159,7 @@ abstract class KunenaMenuFix
 	public static function getAll()
 	{
 		$items = array();
-		foreach (self::$filtered as $itemid=>$targetid)
+		foreach (self::$filtered as $itemid => $targetid)
 		{
 			if ($targetid)
 			{
@@ -175,7 +176,7 @@ abstract class KunenaMenuFix
 	public static function getAliases()
 	{
 		$items = array();
-		foreach (self::$aliases as $itemid=>$targetid)
+		foreach (self::$aliases as $itemid => $targetid)
 		{
 			$items[$itemid] = self::$items[$itemid];
 		}
@@ -189,7 +190,7 @@ abstract class KunenaMenuFix
 	public static function getInvalid()
 	{
 		$items = array();
-		foreach (self::$invalid as $itemid=>$targetid)
+		foreach (self::$invalid as $itemid => $targetid)
 		{
 			$items[$itemid] = self::$items[$itemid];
 		}
@@ -214,9 +215,9 @@ abstract class KunenaMenuFix
 		{
 			self::$structure = array();
 
-			foreach ( self::$items as $item )
+			foreach (self::$items as $item)
 			{
-				if (! is_object ( $item ))
+				if (! is_object($item))
 				{
 					continue;
 				}
@@ -228,7 +229,7 @@ abstract class KunenaMenuFix
 				{
 					$realitem = empty(self::$items[$item->query['Itemid']]) ? null : self::$items[$item->query['Itemid']];
 
-					if (is_object ($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
+					if (is_object($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
 					{
 						$itemid = $item->query['Itemid'];
 						self::$aliases[$item->id] = $itemid;
@@ -238,8 +239,8 @@ abstract class KunenaMenuFix
 						$itemid = 0;
 						self::$invalid[$item->id] = $itemid;
 					}
-					$view = 'alias';
 
+					$view = 'alias';
 				}
 				elseif ($item->type == 'component' && $item->component == 'com_kunena')
 				{
@@ -265,7 +266,7 @@ abstract class KunenaMenuFix
 	}
 
 	/**
-	 * @param StdClass $item
+	 * @param   StdClass $item
 	 *
 	 * @return object
 	 */

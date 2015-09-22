@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Keyword Helper Class
@@ -25,13 +25,14 @@ class KunenaKeywordHelper
 	/**
 	 *
 	 */
-	private function __construct() {}
+	private function __construct()
+{}
 
 	/**
 	 * Returns KunenaKeyword object
 	 *
-	 * @param	mixed	$identifier		The keywords to load - by Id
-	 * @param	bool	$reload
+	 * @param   mixed	$identifier		The keywords to load - by Id
+	 * @param   bool	$reload
 	 * @return	KunenaKeyword		The keyword object.
 	 * @since	1.7
 	 */
@@ -49,7 +50,7 @@ class KunenaKeywordHelper
 			return false;
 		}
 
-		if ($reload || empty ( self::$_instances [$keyword] ))
+		if ($reload || empty(self::$_instances [$keyword]))
 		{
 			self::loadKeywords(array($keyword), true);
 		}
@@ -76,7 +77,7 @@ class KunenaKeywordHelper
 
 	/**
 	 * @param      $keywords
-	 * @param null $glue
+	 * @param   null $glue
 	 *
 	 * @return array
 	 */
@@ -92,7 +93,7 @@ class KunenaKeywordHelper
 
 			if ($glue)
 			{
-				$keywords = preg_split('/'.$glue.'/u', $keywords, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+				$keywords = preg_split('/' . $glue . '/u', $keywords, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 			}
 			else
 			{
@@ -102,7 +103,7 @@ class KunenaKeywordHelper
 
 		if (is_array($keywords))
 		{
-			foreach ($keywords as $id=>&$keyword)
+			foreach ($keywords as $id => &$keyword)
 			{
 				$keyword = self::cleanKeyword($keyword);
 				if (empty($keyword))
@@ -122,7 +123,7 @@ class KunenaKeywordHelper
 
 	/**
 	 * @param      $keywords
-	 * @param null $glue
+	 * @param   null $glue
 	 *
 	 * @return array
 	 */
@@ -138,7 +139,7 @@ class KunenaKeywordHelper
 		self::loadKeywords($keywords);
 
 		$list = array ();
-		foreach ( $keywords as $keyword )
+		foreach ($keywords as $keyword)
 		{
 			if (!empty(self::$_instances [$keyword]))
 			{
@@ -150,8 +151,8 @@ class KunenaKeywordHelper
 	}
 
 	/**
-	 * @param bool $ids
-	 * @param int  $userid
+	 * @param   bool $ids
+	 * @param   int  $userid
 	 *
 	 * @return array
 	 */
@@ -163,7 +164,7 @@ class KunenaKeywordHelper
 		{
 			$ids = array_keys(KunenaForumTopicHelper::getTopics());
 		}
-		elseif (is_array ($ids))
+		elseif (is_array($ids))
 		{
 			$ids = array_unique($ids);
 		}
@@ -183,7 +184,7 @@ class KunenaKeywordHelper
 		}
 		else
 		{
-			foreach ( $ids as $id )
+			foreach ($ids as $id)
 			{
 				if (!empty(self::$_users [$userid][$id]))
 				{
@@ -199,7 +200,7 @@ class KunenaKeywordHelper
 	 * @param      $keywords
 	 * @param      $topicid
 	 * @param      $userid
-	 * @param null $glue
+	 * @param   null $glue
 	 *
 	 * @return array
 	 */
@@ -218,8 +219,8 @@ class KunenaKeywordHelper
 		self::loadKeywords($keywords);
 
 		$keywords = array_flip($keywords);
-		$dellist = array_diff_key ( $oldkeywords, $keywords );
-		$addlist = array_diff_key ( $keywords, $oldkeywords );
+		$dellist = array_diff_key($oldkeywords, $keywords);
+		$addlist = array_diff_key($keywords, $oldkeywords);
 
 		foreach ($dellist as $keyword => $i)
 		{
@@ -227,7 +228,7 @@ class KunenaKeywordHelper
 			$instance->delTopic($topicid, $userid);
 		}
 
-		foreach ($addlist as $keyword=>$i)
+		foreach ($addlist as $keyword => $i)
 		{
 			$instance = self::$_instances [$keyword];
 			$instance->addTopic($topicid, $userid);
@@ -237,7 +238,7 @@ class KunenaKeywordHelper
 	}
 
 	/**
-	 * @param bool $ids
+	 * @param   bool $ids
 	 */
 	static function recount($ids=false)
 	{
@@ -248,16 +249,16 @@ class KunenaKeywordHelper
 
 	/**
 	 * @param      $keywords
-	 * @param bool $reload
+	 * @param   bool $reload
 	 */
 	static protected function loadKeywords($keywords, $reload = false)
 	{
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		foreach ($keywords as $keyword)
 		{
 			if ($reload || !isset(self::$_instances [$keyword]))
 			{
-				self::$_instances [$keyword] = new KunenaKeyword ($keyword);
+				self::$_instances [$keyword] = new KunenaKeyword($keyword);
 				$list[] = $db->quote($keyword);
 			}
 		}
@@ -269,27 +270,27 @@ class KunenaKeywordHelper
 
 		$list = implode(',', $list);
 		$query = "SELECT * FROM #__kunena_keywords WHERE name IN ({$list})";
-		$db->setQuery ( $query );
-		$results = (array) $db->loadAssocList ();
-		KunenaError::checkDatabaseError ();
+		$db->setQuery($query);
+		$results = (array) $db->loadAssocList();
+		KunenaError::checkDatabaseError();
 
-		foreach ( $results as $result )
+		foreach ($results as $result)
 		{
-			self::$_instances [$result['name']]->bind ( $result );
+			self::$_instances [$result['name']]->bind($result);
 			self::$_instances [$result['name']]->exists(true);
 		}
 
-		unset ($results);
+		unset($results);
 	}
 
 	/**
 	 * @param      $ids
 	 * @param      $userid
-	 * @param bool $reload
+	 * @param   bool $reload
 	 */
 	static protected function loadTopics($ids, $userid, $reload = false)
 	{
-		foreach ($ids as $i=>$id)
+		foreach ($ids as $i => $id)
 		{
 			if (!$id || (!$reload && isset(self::$_topics [$id][$userid])))
 			{
@@ -307,18 +308,18 @@ class KunenaKeywordHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_keywords_map AS m INNER JOIN #__kunena_keywords AS k ON m.keyword_id=k.id WHERE m.topic_id IN ({$idlist}) AND m.user_id IN (0,{$userid})";
-		$db->setQuery ( $query );
-		$results = (array) $db->loadAssocList ();
-		KunenaError::checkDatabaseError ();
+		$db->setQuery($query);
+		$results = (array) $db->loadAssocList();
+		KunenaError::checkDatabaseError();
 
-		foreach ( $results as $result )
+		foreach ($results as $result)
 		{
 			if (!isset(self::$_instances [$result['name']]))
 			{
-				self::$_instances [$result['name']] = new KunenaKeyword ($result['name']);
-				self::$_instances [$result['name']]->bind ( $result );
+				self::$_instances [$result['name']] = new KunenaKeyword($result['name']);
+				self::$_instances [$result['name']]->bind($result);
 				self::$_instances [$result['name']]->exists(true);
 			}
 
@@ -326,6 +327,6 @@ class KunenaKeywordHelper
 			self::$_users [$result['user_id']][$result['topic_id']][$result['name']] = 1;
 		}
 
-		unset ($results);
+		unset($results);
 	}
 }

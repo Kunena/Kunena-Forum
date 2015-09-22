@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.model');
 jimport('joomla.html.pagination');
@@ -172,7 +172,8 @@ class KunenaAdminModelCategories extends KunenaModel
 			$admin = 0;
 			$acl   = KunenaAccess::getInstance();
 
-			/** @var KunenaForumCategory $category */
+			// @var KunenaForumCategory $category
+
 			foreach ($this->_admincategories as $category)
 			{
 				// TODO: Following is needed for J!2.5 only:
@@ -230,13 +231,13 @@ class KunenaAdminModelCategories extends KunenaModel
 	 */
 	public function getAdminNavigation()
 	{
-		$navigation = new JPagination ($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
+		$navigation = new JPagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 
 		return $navigation;
 	}
 
 	/**
-	 * @return bool|KunenaForumCategory
+	 * @return boolean|KunenaForumCategory
 	 */
 	public function getAdminCategory()
 	{
@@ -272,8 +273,8 @@ class KunenaAdminModelCategories extends KunenaModel
 				$category->access        = 1;
 				$category->pub_access    = 1;
 				$category->admin_access  = 8;
-
 			}
+
 			$this->_admincategory = $category;
 		}
 
@@ -362,20 +363,19 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$lists['display_children'] = JHtml::_('select.genericlist', $options, 'params[display][index][children]', 'class="inputbox" size="1"', 'value', 'text', $category->params->get('display.index.children', '3'));
 
-
 		$topicicons = array ();
-		$topiciconslist = KunenaFolder::folders(JPATH_ROOT.'/media/kunena/topic_icons');
-		foreach( $topiciconslist as $icon ) {
-			$topicicons[] = JHtml::_ ( 'select.option', $icon, $icon );
+		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
+		foreach($topiciconslist as $icon) {
+			$topicicons[] = JHtml::_('select.option', $icon, $icon);
 		}
-		$lists ['category_iconset'] = JHtml::_ ( 'select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $category->iconset );
 
+		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $category->iconset);
 
 		return $lists;
 	}
 
 	/**
-	 * @return array|bool
+	 * @return array|boolean
 	 */
 	function getAdminModerators()
 	{
@@ -405,10 +405,10 @@ class KunenaAdminModelCategories extends KunenaModel
 	}
 
 	/**
-	 * @param null $pks
-	 * @param null $order
+	 * @param   null $pks
+	 * @param   null $order
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function saveorder($pks = null, $order = null)
 	{

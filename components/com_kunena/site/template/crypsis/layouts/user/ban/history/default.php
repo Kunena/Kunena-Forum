@@ -43,7 +43,8 @@ defined('_JEXEC') or die;
 		if (!empty($this->banHistory)) :
 			$i = count($this->banHistory);
 
-			/** @var KunenaUserBan $banInfo */
+			// @var KunenaUserBan $banInfo
+
 			foreach ($this->banHistory as $banInfo) :
 		?>
 		<tr>
@@ -68,9 +69,9 @@ defined('_JEXEC') or die;
 			</td>
 			<td>
 				<?php
-				if ($banInfo->modified_by && $banInfo->modified_time)
+				if ($banInfo->modified_by && $banInfo->modified_time) {
 					echo $banInfo->getModifier()->getLink()
-						. ' ' . $banInfo->getModificationDate()->toKunena('datetime');
+						. ' ' . $banInfo->getModificationDate()->toKunena('datetime'); }
 				?>
 			</td>
 		</tr>
@@ -99,7 +100,7 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 
 		<?php
-			if ($this->me->isModerator() && !empty($banInfo->comments))
+			if ($this->me->isModerator() && !empty($banInfo->comments)) {
 				foreach ($banInfo->comments as $comment) :
 		?>
 		<tr>
@@ -107,7 +108,7 @@ defined('_JEXEC') or die;
 			<td>
 				<strong>
 					<?php echo JText::sprintf(
-						'COM_KUNENA_BAN_COMMENT_BY', KunenaFactory::getUser((int) $comment->userid)->getLink());
+'COM_KUNENA_BAN_COMMENT_BY', KunenaFactory::getUser((int) $comment->userid)->getLink());
 					?>
 				</strong>
 			</td>
@@ -118,7 +119,8 @@ defined('_JEXEC') or die;
 				<?php echo KunenaHtmlParser::parseText($comment->comment); ?>
 			</td>
 		</tr>
-		<?php endforeach; ?>
+		<?php endforeach;
+}; ?>
 
 		<?php endforeach; ?>
 

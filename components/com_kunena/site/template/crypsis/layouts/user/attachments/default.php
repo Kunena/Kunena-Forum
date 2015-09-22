@@ -12,7 +12,8 @@ defined('_JEXEC') or die;
 
 JHtml::_('behavior.core');
 
-/** @var array|KunenaAttachment[] $attachments */
+// @var array|KunenaAttachment[] $attachments
+
 $attachments = $this->attachments;
 ?>
 <h3>
@@ -65,7 +66,7 @@ $attachments = $this->attachments;
 					</td>
 				</tr>
 			<?php else :
-				$i=0;
+				$i = 0;
 				foreach ($attachments as $attachment) :
 					$message = $attachment->getMessage();
 					$canDelete = $attachment->isAuthorised('delete');
@@ -73,7 +74,7 @@ $attachments = $this->attachments;
 					<tr>
 						<td class="center"><?php echo ++$i; ?></td>
 						<td class="center">
-							<?php if ($canDelete) echo JHtml::_('grid.id', $i, intval($attachment->id)); ?>
+							<?php if ($canDelete) { echo JHtml::_('grid.id', $i, intval($attachment->id)); } ?>
 						</td>
 						<td class="center">
 							<?php echo $attachment->isImage()	? '<i class="large-kicon icon-picture"></i>' : '<i class="large-kicon icon-file"></i>'; ?>
@@ -88,7 +89,7 @@ $attachments = $this->attachments;
 							<?php echo $this->getTopicLink($message->getTopic(), $message); ?>
 						</td>
 						<td class="center">
-							<?php echo $attachment->getLayout()->render('thumbnail') ; ?>
+							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 						</td>
 						<td class="center">
 

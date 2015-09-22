@@ -9,7 +9,7 @@
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 JHtml::_('behavior.tooltip');
 JHTML::_('behavior.formvalidator');
@@ -65,7 +65,7 @@ $this->addStyleSheet('css/atwho.css');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
-if ($topicicontype == 'B2'){
+if ($topicicontype == 'B2') {
 	$this->addScript('js/editb2.js');
 }
 elseif ($topicicontype == 'fa') {
@@ -100,7 +100,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
 			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 		<?php endif; ?>
-		<?php if ($this->message->getTopic()->first_post_id==$this->message->id && $this->message->getTopic()->getPoll()->id): ?>
+		<?php if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id) : ?>
 			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>" />
 		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
@@ -115,7 +115,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<div class="row-fluid column-row">
 				<div class="span12 column-item">
 					<fieldset>
-						<?php if (isset($this->selectcatlist)): ?>
+						<?php if (isset($this->selectcatlist)) : ?>
 							<div class="control-group">
 								<!-- Username -->
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_CATEGORY') ?></label>
@@ -124,7 +124,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 						<?php if ($this->message->userid) : ?>
-							<div class="control-group" id="kanynomous-check" <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+							<div class="control-group" id="kanynomous-check" <?php if (!$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 
 								<div class="controls">
@@ -137,7 +137,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 						<div class="control-group" id="kanynomous-check-name"
-							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+							<?php if ($this->me->userid && !$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
 
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
@@ -160,8 +160,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 
 							<div class="controls">
-								<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" <?php if (!$this->config->allow_change_subject && $this->message->parent): ?>disabled<?php endif; ?> value="<?php echo $this->escape($this->message->subject); ?>" required />
-								<?php if (!$this->config->allow_change_subject): ?>
+								<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" <?php if (!$this->config->allow_change_subject && $this->message->parent) : ?>disabled<?php endif; ?> value="<?php echo $this->escape($this->message->subject); ?>" required />
+								<?php if (!$this->config->allow_change_subject) : ?>
 									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 								<?php endif; ?>
 							</div>

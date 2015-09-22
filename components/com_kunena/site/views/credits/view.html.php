@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Credits View
@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaViewCredits extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -54,9 +54,10 @@ class KunenaViewCredits extends KunenaView
 				'url' => 'http://www.kunena.org/forum/user/64-fxstein',
 				'title' => JText::_('COM_KUNENA_CREDITS_FOUNDER')),
 		);
-		$this->thanks     = JText::sprintf('COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
+		$this->thanks     = JText::sprintf(
+   'COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'http://www.kunena.org',
-			'https://github.com/Kunena/Kunena-Forum/graphs/contributors');
+	'https://github.com/Kunena/Kunena-Forum/graphs/contributors');
 
 		$this->_prepareDocument();
 

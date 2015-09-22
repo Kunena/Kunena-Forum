@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class KunenaLoginComprofiler
 {
@@ -25,7 +25,7 @@ class KunenaLoginComprofiler
 		cbimport('cb.authentication');
 		global $ueConfig;
 
-		$cbAuthenticate = new CBAuthentication ();
+		$cbAuthenticate = new CBAuthentication();
 
 		$messagesToUser = array();
 		$alertmessages  = array();
@@ -41,7 +41,7 @@ class KunenaLoginComprofiler
 	{
 		cbimport('cb.authentication');
 
-		$cbAuthenticate = new CBAuthentication ();
+		$cbAuthenticate = new CBAuthentication();
 
 		$redirect_url = KunenaRoute::current();
 		$resultError  = $cbAuthenticate->logout($redirect_url);

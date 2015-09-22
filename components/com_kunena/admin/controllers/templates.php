@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.filesystem.archive');
 
@@ -24,7 +24,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	protected $locked = array('crypsis');
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -173,10 +173,13 @@ class KunenaAdminControllerTemplates extends KunenaController
 								{
 									KunenaFile::delete($tmp_kunena . $template->sourcedir . '/params.ini');
 								}
+
 								KunenaFile::move($dest . $template->directory . '/params.ini', $tmp_kunena . $template->sourcedir . '/params.ini');
 							}
+
 							KunenaFolder::delete($dest . $template->directory);
 						}
+
 						$success = KunenaFolder::move($tmp_kunena . $template->sourcedir, $dest . $template->directory);
 
 						if ($success !== true)
@@ -200,7 +203,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'),'error');
+					$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'), 'error');
 				}
 			}
 			else
@@ -404,7 +407,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		if ($return)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $templatename , false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $templatename, false));
 		}
 		else
 		{
@@ -426,7 +429,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		if (KunenaFile::getExt($filename) !== 'css')
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename , false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename, false));
 		}
 
 		$this->app->setUserState('kunena.editcss.tmpl', $templatename);

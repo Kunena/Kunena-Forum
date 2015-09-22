@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topics Model for Kunena
@@ -97,7 +97,6 @@ class KunenaModelTopics extends KunenaModel
 				{
 					$latestcategory_in = $this->config->latestcategory_in;
 				}
-
 			}
 			else
 			{
@@ -112,7 +111,6 @@ class KunenaModelTopics extends KunenaModel
 					$latestcategory    = $this->config->rss_included_categories;
 					$latestcategory_in = 1;
 				}
-
 			}
 
 			if (!is_array($latestcategory))
@@ -134,12 +132,13 @@ class KunenaModelTopics extends KunenaModel
 		{
 			// Selection time from user state / menu item / url parameter / configuration.
 			if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2) {
-				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
-				$this->setState ( 'list.time', (int) $value );
+				$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int');
+				$this->setState('list.time', (int) $value);
 			}
+
 			if ($this->me->exists() && $this->me->userListtime != -2) {
-				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $this->me->userListtime, 'int' );
-				$this->setState ('list.time', (int) $value);
+				$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time", 'sel', $this->me->userListtime, 'int');
+				$this->setState('list.time', (int) $value);
 			}
 		}
 		else
@@ -177,7 +176,7 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getTopics()
 	{
@@ -407,6 +406,7 @@ class KunenaModelTopics extends KunenaModel
 				$authorise = 'undelete';
 				break;
 		}
+
 		$this->topics = KunenaForumTopicHelper::getTopics($topicids, $authorise);
 
 		$userlist = $postlist = array();
@@ -421,8 +421,8 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @param array $userlist
-	 * @param array $postlist
+	 * @param   array $userlist
+	 * @param   array $postlist
 	 */
 	protected function _common(array $userlist = array(), array $postlist = array())
 	{
@@ -457,7 +457,7 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getMessages()
 	{
@@ -470,7 +470,7 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return int
+	 * @return integer
 	 */
 	public function getTotal()
 	{
@@ -633,7 +633,7 @@ class KunenaModelTopics extends KunenaModel
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getActionMove()
 	{

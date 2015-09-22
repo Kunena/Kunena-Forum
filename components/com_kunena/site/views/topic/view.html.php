@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topic View
@@ -26,7 +26,7 @@ class KunenaViewTopic extends KunenaView
 	var $cache = true;
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -48,23 +48,21 @@ class KunenaViewTopic extends KunenaView
 		{
 			// User is not allowed to see the category
 			$this->setError($this->category->getError());
-
 		}
 		elseif (!$this->topic)
 		{
 			// Moved topic loop detected (1 -> 2 -> 3 -> 2)
 			$this->setError(JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP'));
-
 		}
 		elseif (!$this->topic->authorise('read'))
 		{
 			// User is not allowed to see the topic
 			$this->setError($this->topic->getError());
-
 		}
 		elseif ($this->state->get('item.id') != $this->topic->id
 			|| ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id]))
-			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid')))
+			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid'))
+)
 		{
 			// We need to redirect: message has been moved or we have permalink
 			$mesid = $this->state->get('item.mesid');
@@ -79,7 +77,8 @@ class KunenaViewTopic extends KunenaView
 			// Redirect to correct location (no redirect in embedded mode).
 			if (empty($this->embedded) && $message->exists())
 			{
-				while (@ob_end_clean()) ;
+				while (@ob_end_clean()) {}
+
 				$this->app->redirect($message->getUrl(null, false));
 			}
 		}
@@ -106,7 +105,8 @@ class KunenaViewTopic extends KunenaView
 		// If page does not exist, redirect to the last page (no redirect in embedded mode).
 		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start'))
 		{
-			while (@ob_end_clean()) ;
+			while (@ob_end_clean()) {}
+
 			$this->app->redirect($this->topic->getUrl(null, false, (int) (($this->total - 1) / $this->state->get('list.limit'))));
 		}
 
@@ -153,7 +153,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	public function displayUnread($tpl = null)
 	{
@@ -164,12 +164,13 @@ class KunenaViewTopic extends KunenaView
 
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
-		while (@ob_end_clean()) ;
+		while (@ob_end_clean()) {}
+
 		$this->app->redirect($topic->getUrl($category, false, $message));
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	public function displayFlat($tpl = null)
 	{
@@ -179,7 +180,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	public function displayThreaded($tpl = null)
 	{
@@ -189,7 +190,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	public function displayIndented($tpl = null)
 	{
@@ -199,7 +200,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	protected function DisplayCreate($tpl = null)
 	{
@@ -298,7 +299,7 @@ class KunenaViewTopic extends KunenaView
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -306,7 +307,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
 	 * @throws Exception
 	 */
@@ -377,7 +378,7 @@ class KunenaViewTopic extends KunenaView
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -385,9 +386,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function displayEdit($tpl = null)
 	{
@@ -444,7 +445,7 @@ class KunenaViewTopic extends KunenaView
 			$this->message->edit($saved);
 		}
 
-		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->modified_reason      = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
@@ -453,7 +454,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayVote($tpl = null)
 	{
@@ -485,7 +486,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	protected function displayReport($tpl = null)
 	{
@@ -522,6 +523,7 @@ class KunenaViewTopic extends KunenaView
 
 				return;
 			}
+
 			$this->topic = $this->message->getTopic();
 		}
 
@@ -529,7 +531,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 *
 	 * @throws Exception
 	 */
@@ -628,7 +630,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	function displayPoll()
 	{
@@ -747,7 +749,7 @@ class KunenaViewTopic extends KunenaView
 
 		$key = $this->profile->userid . '.' . $this->profile->username;
 
-		if (!isset ($profiles [$key]))
+		if (!isset($profiles [$key]))
 		{
 			// Run events
 			$params = new JRegistry();
@@ -919,7 +921,6 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->config->enable_threaded_layouts)
 		{
-
 			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JSession::getFormToken() . '=1';
 
 			if ($this->layout != 'default')
@@ -975,7 +976,6 @@ class KunenaViewTopic extends KunenaView
 			$this->quickreply ? $this->messageButtons->set('quickreply', $this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")) : null;
 			$this->messageButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
 			$this->messageButtons->set('quote', $this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
-
 		}
 		elseif (!$this->me->isModerator($this->topic->getCategory()))
 		{
@@ -1030,7 +1030,7 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param      $id
 	 * @param      $message
-	 * @param null $template
+	 * @param   null $template
 	 */
 	function displayMessage($id, $message, $template = null)
 	{
@@ -1137,7 +1137,7 @@ class KunenaViewTopic extends KunenaView
 			{
 				if ($this->message->ip)
 				{
-					if (!empty ($this->message->ip))
+					if (!empty($this->message->ip))
 					{
 						$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank"> IP: ' . $this->message->ip . '</a>';
 					}
@@ -1195,6 +1195,7 @@ class KunenaViewTopic extends KunenaView
 			{
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
 			}
+
 			// FIXME: enable caching after fixing the issues
 			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		}
@@ -1233,7 +1234,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $template
+	 * @param   null $template
 	 */
 	function displayMessages($template = null)
 	{
@@ -1277,7 +1278,7 @@ class KunenaViewTopic extends KunenaView
 	// Helper functions
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	function hasThreadHistory()
 	{
@@ -1332,7 +1333,7 @@ class KunenaViewTopic extends KunenaView
 	 * If there's no referrer or it's external, Kunena will return to forum home page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param string $anchor
+	 * @param   string $anchor
 	 */
 	protected function redirectBack($anchor = '')
 	{
@@ -1386,7 +1387,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param null $message
+	 * @param   null $message
 	 */
 	function displayAttachments($message = null)
 	{
@@ -1447,7 +1448,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	function canSubscribe()
 	{
@@ -1488,41 +1489,35 @@ class KunenaViewTopic extends KunenaView
 			{
 				$description .= " ({$page}/{$pages})";  //avoid the "duplicate meta description" error in google webmaster tools
 			}
-			$this->setDescription($description);
 
+			$this->setDescription($description);
 		}
 		elseif ($type == 'create')
 		{
-
 			$this->title = JText::_('COM_KUNENA_POST_NEW_TOPIC');
 			$this->setTitle($this->title);
 			// TODO: set keywords and description
-
 		}
 		elseif ($type == 'reply')
 		{
-
 			$this->title = JText::_('COM_KUNENA_POST_REPLY_TOPIC') . ' ' . $this->topic->subject;
 			$this->setTitle($this->title);
 			// TODO: set keywords and description
-
 		}
 		elseif ($type == 'edit')
 		{
-
 			$this->title = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 			$this->setTitle($this->title);
 			// TODO: set keywords and description
-
 		}
 	}
 
 	/**
 	 * @param      $do
-	 * @param null $id
+	 * @param   null $id
 	 * @param      $catid
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getPollURL($do, $id = null, $catid)
 	{
@@ -1531,6 +1526,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			$idstring .= "&id=$id";
 		}
+
 		$catidstr = "&catid=$catid";
 
 		return KunenaRoute::_("index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}");
@@ -1539,8 +1535,8 @@ class KunenaViewTopic extends KunenaView
 	/**
 	 * @param        $anker
 	 * @param        $name
-	 * @param string $rel
-	 * @param string $class
+	 * @param   string $rel
+	 * @param   string $class
 	 *
 	 * @return string
 	 */

@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Abstract Table Object class
@@ -226,7 +226,7 @@ abstract class KunenaTableObject
 	 *
 	 * Can be used for example if the database fields need to be converted to array or JRegistry.
 	 *
-	 * @param  bool  $sqlFetch  True only if properties were assigned before constructor was called.
+	 * @param   bool  $sqlFetch  True only if properties were assigned before constructor was called.
 	 * @since  K4.0
 	 */
 	protected function initialise($sqlFetch = false)
@@ -246,6 +246,7 @@ abstract class KunenaTableObject
 		{
 			$this->$keyName = null;
 		}
+
 		$this->_exists = false;
 	}
 
@@ -255,7 +256,7 @@ abstract class KunenaTableObject
 	 * Note that using array of fields will always make a query to the database, but it's very useful feature if you want to search
 	 * one item by using arbitrary set of matching fields. If there are more than one matching object, first one gets returned.
 	 *
-	 * @param  int|array  $keys        An optional primary key value to load the object by, or an array of fields to match.
+	 * @param   int|array  $keys        An optional primary key value to load the object by, or an array of fields to match.
 	 *
 	 * @return  KunenaDatabaseObject
 	 * @throw   RuntimeException
@@ -272,7 +273,7 @@ abstract class KunenaTableObject
 		if (!isset(static::$instances[$k])) {
 			$c = get_called_class();
 			$instance = new $c($keys);
-			/** @var KunenaTableObject $instance */
+			// @var KunenaTableObject $instance
 
 			if (!$instance->exists())
 			{
@@ -307,7 +308,7 @@ abstract class KunenaTableObject
 	/**
 	 * Removes all or selected instances from the object cache.
 	 *
-	 * @param null|int|array  $ids
+	 * @param   null|int|array  $ids
 	 * @since  K4.0
 	 */
 	static public function freeInstances($ids = null)
@@ -321,6 +322,7 @@ abstract class KunenaTableObject
 		{
 			$ids = array_keys(static::$instances);
 		}
+
 		$ids = (array) $ids;
 
 		foreach ($ids as $id)
@@ -385,8 +387,8 @@ abstract class KunenaTableObject
 	{
 		// Use closure to return public variables only.
 		$self = $this;
-		return function() use ($self)
-		{
+		return function () use ($self) {
+
 			return get_object_vars($self);
 		};
 	}
@@ -441,10 +443,10 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * @param null $keys
-	 * @param bool $reset
+	 * @param   null $keys
+	 * @param   bool $reset
 	 *
-	 * @return bool|KunenaTableObject
+	 * @return boolean|KunenaTableObject
 	 */
 	protected function load($keys = null, $reset = true)
 	{
@@ -465,6 +467,7 @@ abstract class KunenaTableObject
 
 				return false;
 			}
+
 			// Error, throw it forward.
 			throw $e;
 		}
@@ -483,7 +486,7 @@ abstract class KunenaTableObject
 			$this->$field = $value;
 
 			// Add the search tuple to the query.
-			$query->where(static::$db->quoteName($field).' = '.static::$db->quote($value));
+			$query->where(static::$db->quoteName($field) . ' = ' . static::$db->quote($value));
 		}
 
 		static::$db->setQuery($query, 0, 1);
@@ -517,9 +520,9 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * @param bool $updateNulls
+	 * @param   bool $updateNulls
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function store($updateNulls = false)
 	{
@@ -566,7 +569,8 @@ abstract class KunenaTableObject
 	 *
 	 * @since  K4.0
 	 */
-/*	public function save($src, $orderingFilter = '', $ignore = '')
+/*
+ 	public function save($src, $orderingFilter = '', $ignore = '')
 	{
 		// Attempt to bind the source to the instance.
 		if (!$this->bind($src, $ignore))
@@ -632,9 +636,10 @@ abstract class KunenaTableObject
 
 		// Delete the row by given keys/fields.
 		$query = static::$db->getQuery(true)->delete()->from(static::$tbl);
-		foreach ($keys as $key=>$value) {
+		foreach ($keys as $key => $value) {
 			$query->where(static::$db->quoteName($key) . ' = ' . static::$db->quote($value));
 		}
+
 		static::$db->setQuery($query, 0, 1);
 		static::$db->execute();
 
@@ -757,7 +762,7 @@ abstract class KunenaTableObject
 			return true;
 		}
 
-		$k= static::$tbl_keys;
+		$k = static::$tbl_keys;
 		$pk = (is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.
@@ -853,7 +858,7 @@ abstract class KunenaTableObject
 	static public function getQuery()
 	{
 		$db = static::$db;
-		$query = $db->getQuery(true)->select('a.*')->from(static::$tbl.' AS a');
+		$query = $db->getQuery(true)->select('a.*')->from(static::$tbl . ' AS a');
 
 		return $query;
 	}
@@ -878,7 +883,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns all keys and their values as an array.
 	 *
-	 * @param array|string $fields
+	 * @param   array|string $fields
 	 * @return array
 	 * @since  K4.0
 	 * @throws UnexpectedValueException
@@ -932,6 +937,7 @@ abstract class KunenaTableObject
 					// Find out key name in given numeric location and use it.
 					$keyName = $tableKeys[$keyName];
 				}
+
 				$keys[$keyName] = $keyValue;
 
 				// Verify that the used key exists in the table.
@@ -954,7 +960,7 @@ abstract class KunenaTableObject
 	/**
 	 * Returns all keys and their values as an array.
 	 *
-	 * @param array|string $fields
+	 * @param   array|string $fields
 	 * @return array
 	 * @since  K4.0
 	 * @throws UnexpectedValueException
@@ -987,6 +993,7 @@ abstract class KunenaTableObject
 				// Find out key name in given numeric location and use it.
 				$keyName = static::$tbl_keys[$keyName];
 			}
+
 			$keys[$keyName] = $keyValue;
 
 			// Verify that the used key exists in the table.

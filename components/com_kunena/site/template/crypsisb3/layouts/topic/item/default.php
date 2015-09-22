@@ -10,12 +10,14 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaForumTopic $topic */
+// @var KunenaForumTopic $topic
+
 $topic = $this->topic;
 $me = KunenaUserHelper::getMyself();
 
-$this->addScriptDeclaration('// <![CDATA[
-var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
+$this->addScriptDeclaration(
+	'// <![CDATA[
+var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS') . '";
 // ]]>');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
@@ -48,14 +50,14 @@ $this->addScript('js/topic.js');
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination)
-		->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 </div>
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('id', $topic->id)
-		->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
-		->setLayout('topic'); ?>
+	->set('id', $topic->id)
+	->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
+	->setLayout('topic'); ?>
 </div>
 
 <div class="clearfix"></div>
@@ -75,14 +77,14 @@ foreach ($this->messages as $id => $message)
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination)
-		->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 </div>
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('id', $topic->id)
-		->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
-		->setLayout('topic'); ?>
+	->set('id', $topic->id)
+	->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
+	->setLayout('topic'); ?>
 </div>
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>

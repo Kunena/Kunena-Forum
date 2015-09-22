@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Templates view for Kunena backend
@@ -79,8 +79,8 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		if (!file_exists($file))
 		{
-			$fp = fopen($file,"w");
-			fwrite($fp,"");
+			$fp = fopen($file, "w");
+			fwrite($fp, "");
 			fclose($fp);
 		}
 
@@ -117,8 +117,8 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		if(!file_exists($file))
 		{
-			$fp = fopen($file,"w");
-			fwrite($fp,"");
+			$fp = fopen($file, "w");
+			fwrite($fp, "");
 			fclose($fp);
 		}
 
@@ -161,7 +161,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 		JToolBarHelper::divider();
 		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -191,7 +191,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

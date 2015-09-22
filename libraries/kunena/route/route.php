@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.environment.uri');
 jimport('joomla.html.parameter');
@@ -23,26 +23,26 @@ abstract class KunenaRoute
 {
 	// List of views: array of default variable=>value pairs, which can be removed from URI
 	static $views = array(
-		'attachment'=>array('layout'=>'default', 'thumb'=>0, 'download'=>0),
-		'announcement'=>array('layout'=>'default'),
-		'category'=>array('layout'=>'default', 'catid'=>'0'),
-		'common'=>array('layout'=>'default'),
-		'credits'=>array('layout'=>'default'),
-		'home'=>array(),
-		'misc'=>array('layout'=>'default'),
-		'search'=>array('layout'=>'default'),
-		'statistics'=>array('layout'=>'default'),
-		'topic'=>array('layout'=>'default'),
-		'topics'=>array('layout'=>'default'),
-		'user'=>array('layout'=>'default', 'userid'=>'0'),
+		'attachment' => array('layout' => 'default', 'thumb' => 0, 'download' => 0),
+		'announcement' => array('layout' => 'default'),
+		'category' => array('layout' => 'default', 'catid' => '0'),
+		'common' => array('layout' => 'default'),
+		'credits' => array('layout' => 'default'),
+		'home' => array(),
+		'misc' => array('layout' => 'default'),
+		'search' => array('layout' => 'default'),
+		'statistics' => array('layout' => 'default'),
+		'topic' => array('layout' => 'default'),
+		'topics' => array('layout' => 'default'),
+		'user' => array('layout' => 'default', 'userid' => '0'),
 	);
 
 	// Reserved layout names for category view
-	static $layouts = array ('create'=>1, 'default'=>1, 'edit'=>1, 'manage'=>1, 'moderate'=>1, 'user'=>1);
+	static $layouts = array ('create' => 1, 'default' => 1, 'edit' => 1, 'manage' => 1, 'moderate' => 1, 'user' => 1);
 
 	// Use category name only in these views
-	static $sefviews = array (''=>1, 'home'=>1, 'category'=>1, 'topic'=>1);
-	static $parsevars = array ('do'=>1, 'task'=>1, 'mode'=>1, 'catid'=>1, 'id'=>1, 'mesid'=>1, 'userid'=>1, 'page'=>1, 'sel'=>1 );
+	static $sefviews = array ('' => 1, 'home' => 1, 'category' => 1, 'topic' => 1);
+	static $parsevars = array ('do' => 1, 'task' => 1, 'mode' => 1, 'catid' => 1, 'id' => 1, 'mesid' => 1, 'userid' => 1, 'page' => 1, 'sel' => 1 );
 
 	static $time = 0;
 	static $adminApp = false;
@@ -64,13 +64,13 @@ abstract class KunenaRoute
 	static protected $filtered = array();
 
 	/**
-	 * @param bool $object
+	 * @param   bool $object
 	 *
-	 * @return bool|JUri|null|string
+	 * @return boolean|JUri|null|string
 	 */
 	public static function current($object = false)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$uri = self::prepare();
 
 		if (!$uri)
@@ -83,16 +83,16 @@ abstract class KunenaRoute
 			return $uri;
 		}
 
-		$result = $uri->getQuery ();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		$result = $uri->getQuery();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $result;
 	}
 
 	/**
-	 * @param null $uri
+	 * @param   null $uri
 	 *
-	 * @return array|bool|int
+	 * @return array|boolean|integer
 	 */
 	public static function getItemID($uri = null)
 	{
@@ -102,7 +102,7 @@ abstract class KunenaRoute
 			return 0;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$uri = self::prepare($uri);
 
 		if (!$uri)
@@ -112,20 +112,20 @@ abstract class KunenaRoute
 
 		if (!$uri->getVar('Itemid'))
 		{
-			self::setItemID ( $uri );
+			self::setItemID($uri);
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $uri->getVar('Itemid');
 	}
 
 	/**
-	 * @param null $uri
-	 * @param bool $xhtml
-	 * @param int  $ssl
+	 * @param   null $uri
+	 * @param   bool $xhtml
+	 * @param   int  $ssl
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function _($uri = null, $xhtml = true, $ssl=0)
 	{
@@ -133,7 +133,7 @@ abstract class KunenaRoute
 		{
 			if ($uri instanceof JUri)
 			{
-				$uri = $uri->toString ();
+				$uri = $uri->toString();
 			}
 
 			if (substr($uri, 0, 14) == 'administrator/')
@@ -143,29 +143,29 @@ abstract class KunenaRoute
 			}
 			else
 			{
-				return JUri::root(true)."/{$uri}";
+				return JUri::root(true) . "/{$uri}";
 			}
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$key = (self::$home ? self::$home->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JUri ? $uri->toString () : (string) $uri);
+		$key = (self::$home ? self::$home->id : 0) . '-' . (int) $xhtml . (int) $ssl . ($uri instanceof JUri ? $uri->toString() : (string) $uri);
 
-		if (!$uri || (is_string($uri) && $uri[0]=='&'))
+		if (!$uri || (is_string($uri) && $uri[0] == '&'))
 		{
-			$key = 'a'.(self::$active ? self::$active->id : '') . '-' . $key;
+			$key = 'a' . (self::$active ? self::$active->id : '') . '-' . $key;
 		}
 
 		if (isset(self::$uris[$key]))
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 			return self::$uris[$key];
 		}
 
 		$uri = self::prepare($uri);
 		if (!$uri)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 			return false;
 		}
 
@@ -175,11 +175,11 @@ abstract class KunenaRoute
 		}
 
 		$fragment = $uri->getFragment();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'(t)') : null;
-		self::$uris[$key] = JRoute::_ ( 'index.php?' . $uri->getQuery (), $xhtml, $ssl ) . ($fragment ? '#'.$fragment : '');
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'(t)') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '(t)') : null;
+		self::$uris[$key] = JRoute::_('index.php?' . $uri->getQuery(), $xhtml, $ssl) . ($fragment ? '#' . $fragment : '');
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '(t)') : null;
 		self::$urisSave = true;
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return self::$uris[$key];
 	}
@@ -190,8 +190,8 @@ abstract class KunenaRoute
 	 * If there's no referrer or it's external, Kunena will return default page.
 	 * Also referrers back to tasks are removed.
 	 *
-	 * @param string $default  Default page to return into.
-	 * @param string $anchor   Anchor (location in the page).
+	 * @param   string $default  Default page to return into.
+	 * @param   string $anchor   Anchor (location in the page).
 	 *
 	 * @return string
 	 */
@@ -240,8 +240,8 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param JUri $uri
-	 * @param bool $object
+	 * @param   JUri $uri
+	 * @param   bool $object
 	 *
 	 * @return JUri|string
 	 */
@@ -250,10 +250,10 @@ abstract class KunenaRoute
 		if (self::$adminApp)
 		{
 			// Use default routing in administration
-			return $object ? $uri : 'index.php?' . $uri->getQuery ();
+			return $object ? $uri : 'index.php?' . $uri->getQuery();
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$uri = self::prepare($uri);
 
@@ -264,17 +264,17 @@ abstract class KunenaRoute
 
 		if (!$uri->getVar('Itemid'))
 		{
-			self::setItemID ( $uri );
+			self::setItemID($uri);
 		}
 
-		$result = $object ? $uri : 'index.php?' . $uri->getQuery ();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		$result = $object ? $uri : 'index.php?' . $uri->getQuery();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $result;
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function getMenu()
 	{
@@ -293,7 +293,7 @@ abstract class KunenaRoute
 			return null;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$id = $item->id;
 
 		if (!isset(self::$parent[$id]))
@@ -309,7 +309,8 @@ abstract class KunenaRoute
 				self::$parent[$id] = self::getHome($parent);
 			}
 		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return self::$parent[$id];
 	}
@@ -325,7 +326,7 @@ abstract class KunenaRoute
 			return;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$user = KunenaUserHelper::getMyself();
 		$cache = self::getCache();
 
@@ -337,7 +338,7 @@ abstract class KunenaRoute
 			list(self::$subtree, self::$uris) = unserialize($data);
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
@@ -356,14 +357,14 @@ abstract class KunenaRoute
 			return;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$user = KunenaUserHelper::getMyself();
 		$data = array(self::$subtree, self::$uris);
 		$cache = self::getCache();
 
 		// TODO: can use viewlevels instead of userid
 		$cache->store(serialize($data), $user->userid, 'com_kunena.route.v1');
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
@@ -376,13 +377,13 @@ abstract class KunenaRoute
 
 	/**
 	 * @param      $string
-	 * @param null $default
+	 * @param   null $default
 	 *
 	 * @return mixed
 	 */
 	public static function stringURLSafe($string, $default = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (!isset(self::$filtered[$string]))
 		{
@@ -396,7 +397,8 @@ abstract class KunenaRoute
 				self::$filtered[$string] = $default;
 			}
 		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return self::$filtered[$string];
 	}
@@ -441,10 +443,10 @@ abstract class KunenaRoute
 	 */
 	public static function resolveAlias($alias)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$db = JFactory::getDbo();
 		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias.'%')}";
-		$db->setQuery ($query);
+		$db->setQuery($query);
 		$aliases = $db->loadObjectList();
 
 		$vars = array();
@@ -463,7 +465,8 @@ abstract class KunenaRoute
 				break;
 			}
 		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $vars;
 	}
@@ -473,19 +476,19 @@ abstract class KunenaRoute
 	 */
 	public static function initialize()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		self::$config = KunenaFactory::getConfig ();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+		self::$config = KunenaFactory::getConfig();
 
 		if (JFactory::getApplication()->isAdmin())
 		{
 			self::$adminApp = true;
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return;
 		}
 
-		self::$menus = JFactory::getApplication()->getMenu ();
-		self::$menu = self::$menus->getMenu ();
+		self::$menus = JFactory::getApplication()->getMenu();
+		self::$menu = self::$menus->getMenu();
 		self::$default = self::$menus->getDefault();
 		$active = self::$menus->getActive();
 
@@ -533,12 +536,12 @@ abstract class KunenaRoute
 				// Allow all values
 			}
 			// TODO: we need to find a way to here deal with arrays: &foo[]=bar
-			elseif (gettype($value)=='string')
+			elseif (gettype($value) == 'string')
 			{
 				if(preg_match('/[^a-zA-Z0-9_ ]/i', $value))
 				{
 				// Illegal value
-  				continue;
+					continue;
 				}
 			}
 
@@ -553,7 +556,7 @@ abstract class KunenaRoute
 
 		self::$home = self::getHome(self::$active);
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
@@ -566,24 +569,24 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param null $uri
+	 * @param   null $uri
 	 *
-	 * @return bool|JUri|null
+	 * @return boolean|JUri|null
 	 */
 	protected static function prepare($uri = null)
 	{
 		static $current = array();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (!$uri || (is_string($uri) && $uri[0] == '&'))
 		{
 			if (!isset($current[$uri]))
 			{
 				$get = self::$current->getQuery(true);
-				$uri = $current[$uri] = JUri::getInstance('index.php?'.http_build_query($get).$uri);
+				$uri = $current[$uri] = JUri::getInstance('index.php?' . http_build_query($get) . $uri);
 				self::setItemID($uri);
-				$uri->delVar ( 'defaultmenu' );
-				$uri->delVar ( 'language' );
+				$uri->delVar('defaultmenu');
+				$uri->delVar('language');
 			}
 			else
 			{
@@ -594,13 +597,13 @@ abstract class KunenaRoute
 		{
 			if (!isset(self::$menu[intval($uri)]))
 			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 				return false;
 			}
 
 			$item = self::$menu[intval($uri)];
-			$uri = JUri::getInstance ( "{$item->link}&Itemid={$item->id}" );
+			$uri = JUri::getInstance("{$item->link}&Itemid={$item->id}");
 		}
 		elseif ($uri instanceof JUri)
 		{
@@ -615,19 +618,19 @@ abstract class KunenaRoute
 
 		if (!$option && !$Itemid)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return false;
 		}
 		elseif ($option && $option != 'com_kunena')
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return false;
 		}
 		elseif ($Itemid && (!isset(self::$menu[$Itemid]) || self::$menu[$Itemid]->component != 'com_kunena'))
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return false;
 		}
@@ -638,7 +641,7 @@ abstract class KunenaRoute
 		if ($legacy_urls && $uri->getVar('func'))
 		{
 			$result = KunenaRouteLegacy::convert($uri);
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			if (!$result)
 			{
@@ -651,7 +654,7 @@ abstract class KunenaRoute
 		// Check URI
 		switch ($uri->getVar('view', 'home')) {
 			case 'announcement':
-				if ($legacy_urls) KunenaRouteLegacy::convert($uri);
+				if ($legacy_urls) { KunenaRouteLegacy::convert($uri); }
 				break;
 
 			case 'attachment':
@@ -671,11 +674,12 @@ abstract class KunenaRoute
 			default:
 				if (!$legacy_urls || !KunenaRouteLegacy::convert($uri))
 				{
-					KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+					KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 					return false;
 				}
 		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $uri;
 	}
@@ -685,7 +689,7 @@ abstract class KunenaRoute
 	 */
 	protected static function build()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (self::$search === false)
 		{
@@ -707,7 +711,8 @@ abstract class KunenaRoute
 				{
 					// Skip menu items that aren't pointing to Kunena or are using wrong language.
 					if (($item->component != 'com_kunena' && $item->type != 'alias')
-						|| ($item->language  != '*' && strtolower($item->language) != $language))
+						|| ($item->language != '*' && strtolower($item->language) != $language)
+)
 					{
 						continue;
 					}
@@ -721,7 +726,7 @@ abstract class KunenaRoute
 						}
 
 						$item = self::$menu[$item->query['Itemid']];
-						if ($item->component != 'com_kunena' || ($item->language  != '*' && strtolower($item->language) != $language))
+						if ($item->component != 'com_kunena' || ($item->language != '*' && strtolower($item->language) != $language))
 						{
 							continue;
 						}
@@ -744,37 +749,38 @@ abstract class KunenaRoute
 				}
 			}
 		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
-	 * @param KunenaForumCategory $category
-	 * @param bool                $xhtml
+	 * @param   KunenaForumCategory $category
+	 * @param   bool                $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function getCategoryUrl(KunenaForumCategory $category, $xhtml = true)
 	{
-		return KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
+		return self::_("index.php?option=com_kunena&view=category&catid={$category->id}", $xhtml);
 	}
 
 	/**
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumCategory $category
 	 *
-	 * @return array|bool|int
+	 * @return array|boolean|integer
 	 */
 	public static function getCategoryItemid(KunenaForumCategory $category)
 	{
-		return KunenaRoute::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
+		return self::getItemID("index.php?option=com_kunena&view=category&catid={$category->id}");
 	}
 
 	/**
-	 * @param KunenaForumTopic    $topic
-	 * @param bool                $xhtml
-	 * @param null                $action
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumTopic    $topic
+	 * @param   bool                $xhtml
+	 * @param   null                $action
+	 * @param   KunenaForumCategory $category
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function getTopicUrl(KunenaForumTopic $topic, $xhtml = true, $action = null, KunenaForumCategory $category = null)
 	{
@@ -783,16 +789,16 @@ abstract class KunenaRoute
 			$category = $topic->getCategory();
 		}
 
-		return KunenaRoute::_($topic->getUri($category, $action), $xhtml);
+		return self::_($topic->getUri($category, $action), $xhtml);
 	}
 
 	/**
-	 * @param KunenaForumMessage  $message
-	 * @param bool                $xhtml
-	 * @param KunenaForumTopic    $topic
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumMessage  $message
+	 * @param   bool                $xhtml
+	 * @param   KunenaForumTopic    $topic
+	 * @param   KunenaForumCategory $category
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function getMessageUrl(KunenaForumMessage $message, $xhtml = true, KunenaForumTopic $topic = null, KunenaForumCategory $category = null)
 	{
@@ -801,39 +807,40 @@ abstract class KunenaRoute
 		{
 			$category = $message->getCategory();
 		}
+
 		if (!$topic)
 		{
 			$topic = $message->getTopic();
 		}
 
-		return KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}", $xhtml);
+		return self::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$topic->id}", $xhtml);
 	}
 
 	/**
-	 * @param KunenaUser $user
-	 * @param bool       $xhtml
+	 * @param   KunenaUser $user
+	 * @param   bool       $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{
-		return KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$user->userid}", $xhtml);
+		return self::_("index.php?option=com_kunena&view=user&userid={$user->userid}", $xhtml);
 	}
 
 	/**
-	 * @param JUri $uri
+	 * @param   JUri $uri
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	protected static function setItemID(JUri $uri)
 	{
 		static $candidates = array();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$view = $uri->getVar('view');
 		$catid = (int) $uri->getVar('catid');
 		$Itemid = (int) $uri->getVar('Itemid');
-		$key = $view.$catid;
+		$key = $view . $catid;
 
 		if (!isset($candidates[$key]))
 		{
@@ -860,7 +867,7 @@ abstract class KunenaRoute
 
 			// Find all potential candidates
 			$candidates[$key] = array();
-			foreach ($search as $id=>$dummy)
+			foreach ($search as $id => $dummy)
 			{
 				$follow = !empty(self::$menu[$id]) ? self::$menu[$id] : null;
 
@@ -903,17 +910,18 @@ abstract class KunenaRoute
 				$bestcount = $matchcount;
 			}
 		}
+
 		$uri->setVar('Itemid', $bestid);
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $bestid;
 	}
 
 	/**
 	 * @param      $item
-	 * @param JUri $uri
+	 * @param   JUri $uri
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	protected static function checkItem($item, JUri $uri)
 	{
@@ -953,7 +961,7 @@ abstract class KunenaRoute
 	 * @param $item
 	 * @param $catid
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	protected static function checkHome($item, $catid)
 	{
@@ -988,9 +996,9 @@ abstract class KunenaRoute
 
 	/**
 	 * @param      $item
-	 * @param JUri $uri
+	 * @param   JUri $uri
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	protected static function checkCategory($item, JUri $uri)
 	{
@@ -1019,9 +1027,9 @@ abstract class KunenaRoute
 
 	/**
 	 * @param      $item
-	 * @param JUri $uri
+	 * @param   JUri $uri
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	protected static function check($item, JUri $uri)
 	{

@@ -24,7 +24,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	/**
 	 * Prepare topic creation form.
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @throws RuntimeException
 	 */
@@ -74,7 +74,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->topic->getCategory()->iconset);
 		}
 
-		if ( $this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
+		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
@@ -126,8 +126,9 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			'action' => 'topic.create'
 		);
 
-		$this->selectcatlist = JHtml::_('kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
-			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
+		$this->selectcatlist = JHtml::_(
+   'kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
+	'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->action = 'post';
 
@@ -138,7 +139,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -162,12 +163,13 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	/**
 	 * Can user subscribe to the topic?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function canSubscribe()
 	{
 		if (! $this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+			|| $this->config->topic_subscriptions == 'disabled'
+)
 		{
 			return false;
 		}

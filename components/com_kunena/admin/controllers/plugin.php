@@ -21,7 +21,7 @@ jimport('joomla.application.component.controllerform');
 class KunenaAdminControllerPlugin extends KunenaController
 {
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 *
 	 * @throws Exception
 	 */
@@ -68,7 +68,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 *
 	 * Extended classes can override this if necessary.
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @internal param array $data An array of input data.
 	 *
 	 * @since    12.2

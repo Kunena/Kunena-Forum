@@ -25,4 +25,4 @@ defined('_JEXEC') or die;
 	echo implode(',&nbsp;', $mods_lin);
 	?>
 </div>
-<?php endif; ?>
+<?php endif;

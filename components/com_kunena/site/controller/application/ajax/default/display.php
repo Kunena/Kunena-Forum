@@ -20,7 +20,7 @@ class ComponentKunenaControllerApplicationAjaxDefaultDisplay extends KunenaContr
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function exists()
 	{

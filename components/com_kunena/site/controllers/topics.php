@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Topics Controller
@@ -465,6 +465,7 @@ class KunenaControllerTopics extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_UNDELETE'));
 		}
+
 		$this->setRedirectBack();
 	}
 

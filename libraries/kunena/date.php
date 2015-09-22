@@ -7,9 +7,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-jimport ( 'joomla.utilities.date' );
+jimport('joomla.utilities.date');
 
 /**
  * Class KunenaDate
@@ -17,8 +17,8 @@ jimport ( 'joomla.utilities.date' );
 class KunenaDate extends JDate
 {
 	/**
-	 * @param string $date
-	 * @param null   $tz
+	 * @param   string $date
+	 * @param   null   $tz
 	 *
 	 * @return KunenaDate
 	 */
@@ -32,7 +32,7 @@ class KunenaDate extends JDate
 	 */
 	public function toTimeAgo()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$chunks = array (
 			'y' => array (JText::_('COM_KUNENA_DATE_YEAR'), JText::_('COM_KUNENA_DATE_YEARS') ),
 			'm' => array (JText::_('COM_KUNENA_DATE_MONTH'), JText::_('COM_KUNENA_DATE_MONTHS') ),
@@ -46,7 +46,7 @@ class KunenaDate extends JDate
 		$output = '';
 		$diff = $this->diff(new JDate);
 
-		foreach ($diff as $name=>$count)
+		foreach ($diff as $name => $count)
 		{
 			if ($name == 'd')
 			{
@@ -87,7 +87,7 @@ class KunenaDate extends JDate
 			$output = JText::sprintf('COM_KUNENA_LIB_TIME_AGO', trim($output));
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $output;
 	}
@@ -99,44 +99,44 @@ class KunenaDate extends JDate
 	{
 		$timezone = $this->getOffsetFromGMT(true);
 
-		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
+		return sprintf('%+d:%02d', $timezone, ($timezone * 60) % 60);
 	}
 
 	/**
-	 * @param string $mode
-	 * @param string $title
-	 * @param bool   $offset
-	 * @param string $class
+	 * @param   string $mode
+	 * @param   string $title
+	 * @param   bool   $offset
+	 * @param   string $class
 	 *
 	 * @return string
 	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class='')
 	{
-		return '<span class="kdate '.$class.'" title="'.$this->toKunena($title, $offset).'">'.$this->toKunena($mode, $offset).'</span>';
+		return '<span class="kdate ' . $class . '" title="' . $this->toKunena($title, $offset) . '">' . $this->toKunena($mode, $offset) . '</span>';
 	}
 
 	/**
-	 * @param string $mode
-	 * @param bool   $offset
+	 * @param   string $mode
+	 * @param   bool   $offset
 	 *
 	 * @return string
 	 * @throws Exception
 	 */
 	public function toKunena($mode = 'datetime_today', $offset = false)
 	{
-		if ($this->format('Y')<1902)
+		if ($this->format('Y') < 1902)
 		{
 			return JText::_('COM_KUNENA_LIB_DATETIME_UNKNOWN');
 		}
 
-		if (preg_match ( '/^config_/', $mode ) == 1)
+		if (preg_match('/^config_/', $mode) == 1)
 		{
-			$option = substr ( $mode, 7 );
-			$mode = KunenaFactory::getConfig ()->$option;
+			$option = substr($mode, 7);
+			$mode = KunenaFactory::getConfig()->$option;
 		}
 
-		$modearr = explode ( '_', $mode );
-		$dateformat = strtolower ($modearr[0]);
+		$modearr = explode('_', $mode);
+		$dateformat = strtolower($modearr[0]);
 		$time = false;
 
 		switch ($dateformat)
@@ -162,10 +162,10 @@ class KunenaDate extends JDate
 
 		if (!$offset)
 		{
-			$app = JFactory::getApplication ();
+			$app = JFactory::getApplication();
 			$my = JFactory::getUser();
-			if ($my->id) $offset = $my->getParam('timezone', $app->get( 'offset', 'utc' ));
-			else $offset = $app->get( 'offset', 'utc' );
+			if ($my->id) { $offset = $my->getParam('timezone', $app->get('offset', 'utc')); }
+			else { $offset = $app->get('offset', 'utc'); }
 		}
 
 		try
@@ -188,19 +188,21 @@ class KunenaDate extends JDate
 				$now->setTimezone($offset);
 			}
 
-			$now = @getdate ( $now->toUnix(true) );
-			$then = @getdate ( $this->toUnix(true) );
+			$now = @getdate($now->toUnix(true));
+			$then = @getdate($this->toUnix(true));
 
 			// Same day of the year, same year.... Today!
-			if ($then ['yday'] == $now ['yday'] &&
-				$then ['year'] == $now ['year'])
+			if ($then ['yday'] == $now ['yday']
+				&& $then ['year'] == $now ['year']
+)
 			{
 				return trim(JText::sprintf('COM_KUNENA_LIB_DATE_TODAY', $time ? $this->format(JText::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
 			}
 
 			// Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
-			if (($then ['yday'] == $now ['yday'] - 1 && $then ['year'] == $now ['year']) ||
-				($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31)
+			if (($then ['yday'] == $now ['yday'] - 1 && $then ['year'] == $now ['year'])
+				|| ($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31
+)
 			{
 				return trim(JText::sprintf('COM_KUNENA_LIB_DATE_YESTERDAY', $time ? $this->format(JText::_('COM_KUNENA_LIB_TIME_FMT'), true) : ''));
 			}

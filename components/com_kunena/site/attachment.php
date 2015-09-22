@@ -18,7 +18,7 @@ if (version_compare(PHP_VERSION, '5.3.1', '<'))
 	die('Your host needs to use PHP 5.3.1 or higher to run this version of Joomla!');
 }
 
-/**
+/*
  * Constant that is checked in included files to prevent direct access.
  */
 define('_JEXEC', 1);
@@ -65,9 +65,9 @@ class KunenaApplication extends JApplicationWeb
 	protected $userstate = array();
 
 	/**
-	 * @param JInput                $input
-	 * @param JRegistry             $config
-	 * @param JApplicationWebClient $client
+	 * @param   JInput                $input
+	 * @param   JRegistry             $config
+	 * @param   JApplicationWebClient $client
 	 */
 	public function __construct(JInput $input = null, JRegistry $config = null, JApplicationWebClient $client = null)
 	{
@@ -102,7 +102,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param JSession $session
+	 * @param   JSession $session
 	 *
 	 * @return $this
 	 */
@@ -164,6 +164,7 @@ class KunenaApplication extends JApplicationWeb
 		{
 			$this->input->set('thumb', 1);
 		}
+
 		$this->input->set('format', 'raw');
 
 		$controller = new ComponentKunenaControllerApplicationAttachmentDefaultDisplay();
@@ -171,7 +172,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isSite()
 	{
@@ -179,7 +180,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isAdmin()
 	{
@@ -187,7 +188,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param bool $params
+	 * @param   bool $params
 	 *
 	 * @return string
 	 */
@@ -207,7 +208,7 @@ class KunenaApplication extends JApplicationWeb
 
 	/**
 	 * @param      $name
-	 * @param null $default
+	 * @param   null $default
 	 *
 	 * @return null
 	 */

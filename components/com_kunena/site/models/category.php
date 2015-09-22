@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 require_once KPATH_ADMIN . '/models/categories.php';
 
@@ -78,7 +78,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getLastestCategories()
 	{
@@ -94,7 +94,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return array|bool|KunenaForumCategory[]
+	 * @return array|boolean|KunenaForumCategory[]
 	 */
 	public function getCategories()
 	{
@@ -133,7 +133,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($categories [0]), 1);
 			}
 
-			if (empty ($allsubcats))
+			if (empty($allsubcats))
 			{
 				return array();
 			}
@@ -147,9 +147,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 			foreach ($allsubcats as $subcat)
 			{
-				if ($flat || isset ($categories [0] [$subcat->parent_id]))
+				if ($flat || isset($categories [0] [$subcat->parent_id]))
 				{
-
 					$last = $subcat->getLastCategory();
 
 					if ($last->last_topic_id)
@@ -170,8 +169,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 						$modcats [] = $subcat->id;
 					}
 				}
+
 				$categories [$subcat->parent_id] [] = $subcat;
 			}
+
 			// Prefetch topics
 			$topics = KunenaForumTopicHelper::getTopics($topiclist);
 
@@ -197,7 +198,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			{
 				$catlist = implode(',', $modcats);
 				$db      = JFactory::getDBO();
-				$db->setQuery("SELECT catid, COUNT(*) AS count
+				$db->setQuery(
+     "SELECT catid, COUNT(*) AS count
 				FROM #__kunena_messages
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid");
@@ -252,7 +254,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getTopics()
 	{
@@ -320,7 +322,6 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				{
 					KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
-
 			}
 		}
 
@@ -328,7 +329,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getTotal()
 	{
@@ -416,7 +417,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getActionMove()
 	{

@@ -10,7 +10,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 // Basic logic has been taken from Joomla! 2.5 (mod_menu)
 // Note. It is important to remove spaces between elements.

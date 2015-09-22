@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * The HTML Kunena configuration view.
@@ -20,7 +20,7 @@ class KunenaViewInstall extends JViewLegacy
 	/**
 	 * Method to display the view.
 	 *
-	 * @param    string $tpl A template file to load.
+	 * @param   string $tpl A template file to load.
 	 *
 	 * @return    mixed    JError object on failure, void on success.
 	 * @throws    object    JError
@@ -70,7 +70,7 @@ class KunenaViewInstall extends JViewLegacy
 	function displaySchema()
 	{
 		require_once KPATH_ADMIN . '/install/schema.php';
-		$schema = new KunenaModelSchema ();
+		$schema = new KunenaModelSchema();
 		$create = $schema->getCreateSQL();
 		echo '<textarea cols="80" rows="50">';
 		echo $this->escape($schema->getSchema()->saveXML());
@@ -95,7 +95,7 @@ class KunenaViewInstall extends JViewLegacy
 	function displaySchemaDiff()
 	{
 		require_once KPATH_ADMIN . '/install/schema.php';
-		$schema = new KunenaModelSchema ();
+		$schema = new KunenaModelSchema();
 		$diff   = $schema->getDiffSchema();
 		$sql    = $schema->getSchemaSQL($diff);
 		echo '<textarea cols="80" rows="20">';

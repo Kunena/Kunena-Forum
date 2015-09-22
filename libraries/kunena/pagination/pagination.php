@@ -10,7 +10,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Pagination Class. Provides a common interface for content pagination for the Joomla! CMS.
@@ -165,7 +165,7 @@ class KunenaPagination
 	/**
 	 * Set URI for pagination.
 	 *
-	 * @param  Juri  $uri  JUri object.
+	 * @param   Juri  $uri  JUri object.
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
 	 */
@@ -179,9 +179,9 @@ class KunenaPagination
 	/**
 	 * Set number of displayed pages.
 	 *
-	 * @param  int  $displayed  Number of displayed pages.
-	 * @param  int  $start  How many items to display from the beginning (1 2 ...)
-	 * @param  int  $end  How many items to display from the end (... 49 50)
+	 * @param   int  $displayed  Number of displayed pages.
+	 * @param   int  $start  How many items to display from the beginning (1 2 ...)
+	 * @param   int  $end  How many items to display from the end (... 49 50)
 	 *
 	 * @return  KunenaPagination  Method supports chaining.
 	 */
@@ -722,6 +722,7 @@ class KunenaPagination
 		{
 			$this->uri->setVar($key, $value);
 		}
+
 		$limitstartKey = $this->prefix . 'limitstart';
 
 		$data->all = new JPaginationObject(JText::_('JLIB_HTML_VIEW_ALL'), $this->prefix);

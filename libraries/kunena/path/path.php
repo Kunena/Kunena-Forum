@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.filesystem.path');
 
@@ -65,7 +65,7 @@ class KunenaPath extends JPath
 		if (!self::$owner)
 		{
 			$dir = JFactory::getConfig()->get('tmp_path');
-			$tmp = 'jj'.md5(mt_rand());
+			$tmp = 'jj' . md5(mt_rand());
 
 			$test = $dir . '/' . $tmp;
 
@@ -92,7 +92,7 @@ class KunenaPath extends JPath
 	 * Checks if path is writeable either by the server or by FTP.
 	 *
 	 * @param $path
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function isWritable($path)
 	{

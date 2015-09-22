@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 		<div class="close" data-toggle="collapse" data-target="#announcement<?php echo $this->announcement->id; ?>">&times;</div>
 		<h5>
 			<a class="btn-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=list'); ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST')?>" rel="follow">
-				<?php echo $this->announcement->displayField('title') ;?>
+				<?php echo $this->announcement->displayField('title');?>
 			</a>
 
 			<?php if ($this->announcement->showdate) : ?>
@@ -31,7 +31,7 @@ defined('_JEXEC') or die;
 			<?php if (!empty($this->announcement->description)) : ?>
 				<p>
 					<a class="btn-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>" title="<?php echo  $this->announcement->displayField('title')?>" rel="follow">
-						<?php echo JText::_('COM_KUNENA_ANN_READMORE') ;?>
+						<?php echo JText::_('COM_KUNENA_ANN_READMORE');?>
 					</a>
 				</p>
 			<?php endif; ?>

@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Attachment Helper Class
@@ -24,7 +24,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Check if mime type is image.
 	 *
-	 * @param  string  $mime
+	 * @param   string  $mime
 	 *
 	 * @return  bool  True if mime is image.
 	 */
@@ -36,8 +36,8 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Returns KunenaAttachment object.
 	 *
-	 * @param int $identifier	The attachment to load - Can be only an integer.
-	 * @param bool $reload
+	 * @param   int $identifier	The attachment to load - Can be only an integer.
+	 * @param   bool $reload
 	 *
 	 * @return KunenaAttachment
 	 */
@@ -73,8 +73,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param bool|array|int   $ids
-	 * @param string $authorise
+	 * @param   bool|array|int   $ids
+	 * @param   string $authorise
 	 *
 	 * @return KunenaAttachment[]
 	 */
@@ -84,7 +84,7 @@ abstract class KunenaAttachmentHelper
 		{
 			return self::$_instances;
 		}
-		elseif (is_array ($ids))
+		elseif (is_array($ids))
 		{
 			$ids = array_unique($ids);
 		}
@@ -101,7 +101,7 @@ abstract class KunenaAttachmentHelper
 		self::loadById($ids);
 
 		$list = array ();
-		foreach ( $ids as $id )
+		foreach ($ids as $id)
 		{
 			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise))
 			{
@@ -115,7 +115,7 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Get the number of the attachments in the message
 	 *
-	 * @param string $ids
+	 * @param   string $ids
 	 * @return KunenaAttachment[]
 	 */
 	static public function getNumberAttachments($ids = false)
@@ -125,19 +125,20 @@ abstract class KunenaAttachmentHelper
 		self::loadByMessage($ids);
 
 		$list = array ();
-		foreach ( $ids as $id )
+		foreach ($ids as $id)
 		{
 			if (!empty(self::$_messages [$id]))
 			{
 				$list = self::$_messages [$id];
 			}
 		}
+
 		return $list;
 	}
 
 	/**
-	 * @param bool|array|int   $ids
-	 * @param string $authorise
+	 * @param   bool|array|int   $ids
+	 * @param   string $authorise
 	 *
 	 * @return KunenaAttachment[]
 	 */
@@ -147,7 +148,7 @@ abstract class KunenaAttachmentHelper
 		{
 			return self::$_instances;
 		}
-		elseif (is_array ($ids))
+		elseif (is_array($ids))
 		{
 			$ids2 = array();
 
@@ -158,7 +159,7 @@ abstract class KunenaAttachmentHelper
 					$id = $id->id;
 				}
 
-				$ids2[(int)$id] = (int)$id;
+				$ids2[(int) $id] = (int) $id;
 			}
 
 			$ids = $ids2;
@@ -176,14 +177,14 @@ abstract class KunenaAttachmentHelper
 		self::loadByMessage($ids);
 
 		$list = array ();
-		foreach ( $ids as $id )
+		foreach ($ids as $id)
 		{
-
 			if (!empty(self::$_messages [$id]))
 			{
 				foreach (self::$_messages [$id] as $instance)
 				{
-					/** @var KunenaAttachment $instance */
+					// @var KunenaAttachment $instance
+
 					if ($instance->isAuthorised($authorise))
 					{
 						$list [$instance->id] = $instance;
@@ -191,16 +192,17 @@ abstract class KunenaAttachmentHelper
 				}
 			}
 		}
+
 		return $list;
 	}
 
 	/**
 	 * Find filename which isn't already taken in the filesystem.
 	 *
-	 * @param  string  $folder      Relative path from JPATH_ROOT.
-	 * @param  string  $basename    Filename without extension.
-	 * @param  string  $extension   File extension.
-	 * @param  bool    $protected   True to randomize the filename. If not given, uses Kunena configuration setting.
+	 * @param   string  $folder      Relative path from JPATH_ROOT.
+	 * @param   string  $basename    Filename without extension.
+	 * @param   string  $extension   File extension.
+	 * @param   bool    $protected   True to randomize the filename. If not given, uses Kunena configuration setting.
 	 *
 	 * @return string
 	 *
@@ -230,7 +232,7 @@ abstract class KunenaAttachmentHelper
 
 		if (empty($basename))
 		{
-			$basename = 'file_'.substr(md5(rand()), 2, 7);
+			$basename = 'file_' . substr(md5(rand()), 2, 7);
 		}
 
 		$newName = "{$basename}.{$extension}";
@@ -241,7 +243,7 @@ abstract class KunenaAttachmentHelper
 		{
 			$newName = "{$basename}_{$date}.{$extension}";
 
-			for ($i=2; file_exists(JPATH_ROOT . "/{$folder}/{$newName}"); $i++)
+			for ($i = 2; file_exists(JPATH_ROOT . "/{$folder}/{$newName}"); $i++)
 			{
 				$newName = "{$basename}_{$date}-{$i}.{$extension}";
 			}
@@ -251,8 +253,8 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param mixed $category
-	 * @param null $user
+	 * @param   mixed $category
+	 * @param   null $user
 	 *
 	 * @return array
 	 */
@@ -266,14 +268,14 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		return (array) array_merge((array)$imagetypes, (array)$filetypes);
+		return (array) array_merge((array) $imagetypes, (array) $filetypes);
 	}
 
 	/**
-	 * @param mixed $category
-	 * @param mixed $user
+	 * @param   mixed $category
+	 * @param   mixed $user
 	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 */
 	static public function getImageExtensions($category = null, $user = null)
 	{
@@ -292,7 +294,7 @@ abstract class KunenaAttachmentHelper
 
 			if (empty($type))
 			{
-				unset ($type);
+				unset($type);
 			}
 		}
 
@@ -335,7 +337,7 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		if ( $config->image_upload == 'admin')
+		if ($config->image_upload == 'admin')
 		{
 			return $types;
 		}
@@ -344,10 +346,10 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @param mixed $category
-	 * @param mixed $user
+	 * @param   mixed $category
+	 * @param   mixed $user
 	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 */
 	static public function getFileExtensions($category = null, $user = null)
 	{
@@ -362,7 +364,7 @@ abstract class KunenaAttachmentHelper
 
 			if (empty($type))
 			{
-				unset ($type);
+				unset($type);
 			}
 		}
 
@@ -378,7 +380,7 @@ abstract class KunenaAttachmentHelper
 		}
 
 		// For now on we only allow registered users
-		if (!$user->exists()) return false;
+		if (!$user->exists()) { return false; }
 
 		if ($config->file_upload == 'registered')
 		{
@@ -402,7 +404,7 @@ abstract class KunenaAttachmentHelper
 			return false;
 		}
 
-		if ( $config->file_upload == 'admin')
+		if ($config->file_upload == 'admin')
 		{
 			return $types;
 		}
@@ -411,11 +413,11 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	static public function cleanup()
 	{
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		// Find up to 50 orphan attachments and delete them
 		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 		$db->setQuery($query, 0, 50);
@@ -451,45 +453,45 @@ abstract class KunenaAttachmentHelper
 	 * The first 8 characters of the filename, followed by three dots
 	 * and the last 5 character of the filename.
 	 *
-	 * @param string $filename	Filename to be shortened.
-	 * @param int    $front
-	 * @param int    $back
-	 * @param string $filler
+	 * @param   string $filename	Filename to be shortened.
+	 * @param   int    $front
+	 * @param   int    $back
+	 * @param   string $filler
 	 *
 	 * @return string
 	 */
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
 	{
 		$len = mb_strlen($filename);
-		if ($len>($front+strlen($filler)+$back))
+		if ($len > ($front + strlen($filler) + $back))
 		{
-			$output=substr($filename,0,$front).$filler.substr($filename,$len-$back,$back);
+			$output = substr($filename, 0, $front) . $filler . substr($filename, $len - $back, $back);
 		}
 		else
 		{
-			$output=$filename;
+			$output = $filename;
 		}
 
 		return $output;
 	}
 
 	/**
-	 * @param mixed $user
-	 * @param array $params
+	 * @param   mixed $user
+	 * @param   array $params
 	 *
 	 * @return KunenaAttachment[]
 	 */
 	public static function getByUserid($user, array $params)
 	{
-		if ( $params['file'] == '1' && $params['image'] != '1'  )
+		if ($params['file'] == '1' && $params['image'] != '1')
 		{
 			$filetype = " AND filetype=''";
 		}
-		elseif ( $params['image'] == '1' && $params['file'] != '1'  )
+		elseif ($params['image'] == '1' && $params['file'] != '1')
 		{
 			$filetype = " AND filetype!=''";
 		}
-		elseif ( $params['file'] == '1' && $params['image'] == '1' )
+		elseif ($params['file'] == '1' && $params['image'] == '1')
 		{
 			$filetype = '';
 		}
@@ -507,11 +509,11 @@ abstract class KunenaAttachmentHelper
 			$orderby = ' ORDER BY id ASC';
 		}
 
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='{$user->userid}' $filetype $orderby";
-		$db->setQuery ( $query, 0, $params['limit'] );
+		$db->setQuery($query, 0, $params['limit']);
 		$results = $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError ();
+		KunenaError::checkDatabaseError();
 
 		$list = array();
 		foreach ($results as $instance)
@@ -531,11 +533,11 @@ abstract class KunenaAttachmentHelper
 	// Internal functions
 
 	/**
-	 * @param array $ids
+	 * @param   array $ids
 	 */
 	static protected function loadById(array $ids)
 	{
-		foreach ($ids as $i=>$id)
+		foreach ($ids as $i => $id)
 		{
 			if (isset(self::$_instances [$id]))
 			{
@@ -549,11 +551,11 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
-		$db->setQuery ( $query );
+		$db->setQuery($query);
 		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError ();
+		KunenaError::checkDatabaseError();
 
 		foreach ($ids as $id)
 		{
@@ -569,11 +571,11 @@ abstract class KunenaAttachmentHelper
 			}
 		}
 
-		unset ($results);
+		unset($results);
 	}
 
 	/**
-	 * @param array $ids
+	 * @param   array $ids
 	 */
 	static protected function loadByMessage(array $ids)
 	{
@@ -593,11 +595,11 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
-		$db->setQuery ( $query );
+		$db->setQuery($query);
 		$results = (array) $db->loadObjectList('id', 'KunenaAttachment');
-		KunenaError::checkDatabaseError ();
+		KunenaError::checkDatabaseError();
 
 		foreach ($ids as $mesid)
 		{
@@ -607,12 +609,12 @@ abstract class KunenaAttachmentHelper
 			}
 		}
 
-		foreach ($results as $id=>$instance)
+		foreach ($results as $id => $instance)
 		{
 			self::$_instances [$id] = $instance;
 			self::$_messages [$instance->mesid][$id] = $instance;
 		}
 
-		unset ($results);
+		unset($results);
 	}
 }

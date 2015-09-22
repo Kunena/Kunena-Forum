@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Implements Kunena specific functions for all layouts.
@@ -29,7 +29,7 @@ class KunenaLayout extends KunenaLayoutBase
 	/**
 	 * Append HTML after the layout content.
 	 *
-	 * @param  string  $content
+	 * @param   string  $content
 	 */
 	public function appendAfter($content)
 	{
@@ -79,11 +79,12 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param KunenaView $view
+	 * @param   KunenaView $view
 	 *
 	 * @return $this
 	 */
-	public function setLegacy(KunenaView $view = null) {
+	public function setLegacy(KunenaView $view = null)
+	{
 		$this->legacy = $view;
 
 		return $this;
@@ -94,7 +95,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @param $view
 	 * @param $layout
-	 * @param null $template
+	 * @param   null $template
 	 * @deprecated K4.0
 	 */
 	public function displayTemplateFile($view, $layout, $template = null)
@@ -129,6 +130,7 @@ class KunenaLayout extends KunenaLayoutBase
 					return $this->legacy->{$property};
 				}
 			}
+
 			if (JDEBUG)
 			{
 				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
@@ -174,7 +176,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * Add legacy template support.
 	 *
 	 * @param $property
-	 * @return bool
+	 * @return boolean
 	 * @deprecated K4.0
 	 */
 	public function __isset($property)
@@ -226,7 +228,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @param      $name
 	 * @param      $scope
 	 * @param      $type
-	 * @param null $id
+	 * @param   null $id
 	 *
 	 * @return string
 	 */
@@ -237,7 +239,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 	/**
 	 * @param        $name
-	 * @param string $title
+	 * @param   string $title
 	 *
 	 * @return string
 	 */
@@ -253,8 +255,8 @@ class KunenaLayout extends KunenaLayoutBase
 	 * in the language file. The significant digits are used to limit the
 	 * number of digits displayed when in 10k or 1m mode.
 	 *
-	 * @param int $number 		Number to be formated
-	 * @param int $precision	Significant digits for output
+	 * @param   int $number 		Number to be formated
+	 * @param   int $precision	Significant digits for output
 	 * @return string
 	 */
 	public function formatLargeNumber($number, $precision = 3)
@@ -263,7 +265,7 @@ class KunenaLayout extends KunenaLayoutBase
 		if ($number >= 10000)
 		{
 			// Round the number to n significant digits
-			$number = round ($number, -1*(log10($number)+1) + $precision);
+			$number = round($number, -1 * (log10($number) + 1) + $precision);
 		}
 
 		if ($number < 10000)
@@ -283,16 +285,16 @@ class KunenaLayout extends KunenaLayoutBase
 	}
 
 	/**
-	 * @param KunenaForumCategory $category
-	 * @param null                $content
-	 * @param null                $title
-	 * @param null                $class
+	 * @param   KunenaForumCategory $category
+	 * @param   null                $content
+	 * @param   null                $title
+	 * @param   null                $class
 	 *
 	 * @return mixed
 	 */
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if (!$content)
 		{
@@ -306,24 +308,24 @@ class KunenaLayout extends KunenaLayoutBase
 
 		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $link;
 	}
 
 	/**
-	 * @param KunenaForumTopic    $topic
-	 * @param null                $action
-	 * @param null                $content
-	 * @param null                $title
-	 * @param null                $class
-	 * @param KunenaForumCategory $category
+	 * @param   KunenaForumTopic    $topic
+	 * @param   null                $action
+	 * @param   null                $content
+	 * @param   null                $title
+	 * @param   null                $class
+	 * @param   KunenaForumCategory $category
 	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$url = $topic->getUrl($category ? $category : (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
 
@@ -355,19 +357,20 @@ class KunenaLayout extends KunenaLayoutBase
 				}
 			}
 		}
+
 		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $link;
 	}
 
 	/**
 	 * @param      $category
-	 * @param null $content
-	 * @param null $title
-	 * @param null $class
-	 * @param int  $length
+	 * @param   null $content
+	 * @param   null $title
+	 * @param   null $class
+	 * @param   int  $length
 	 *
 	 * @return mixed
 	 */
@@ -385,7 +388,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if (!$content)
 		{
-			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE').' ' : '';
+			$content = $lastTopic->first_post_id != $lastTopic->last_post_id ? JText::_('COM_KUNENA_RE') . ' ' : '';
 			$content .= KunenaHtmlParser::parseText($lastTopic->subject, $length);
 		}
 

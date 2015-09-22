@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.filesystem.folder');
 
@@ -27,10 +27,10 @@ class KunenaFolder extends JFolder
 	static function createIndex($folder)
 	{
 		// Make sure we have an index.html file in the current folder
-		if (!KunenaFile::exists($folder.'/index.html'))
+		if (!KunenaFile::exists($folder . '/index.html'))
 		{
 			$contents = '<html><body></body></html>';
-			KunenaFile::write($folder.'/index.html', $contents);
+			KunenaFile::write($folder . '/index.html', $contents);
 		}
 	}
 }

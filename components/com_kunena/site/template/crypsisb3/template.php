@@ -100,7 +100,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css';
 		if (file_exists($filename))
 		{
-			$this->addStyleSheet ( 'custom.css' );
+			$this->addStyleSheet('custom.css');
 		}
 
 		$this->ktemplate = KunenaFactory::getTemplate();
@@ -142,7 +142,7 @@ EOF;
 
 	/**
 	 * @param        $filename
-	 * @param string $group
+	 * @param   string $group
 	 *
 	 * @return JDocument
 	 */
@@ -158,7 +158,7 @@ EOF;
 	 * @param      $name
 	 * @param      $scope
 	 * @param      $type
-	 * @param null $id
+	 * @param   null $id
 	 *
 	 * @return string
 	 */
@@ -204,7 +204,7 @@ HTML;
 
 	/**
 	 * @param        $name
-	 * @param string $title
+	 * @param   string $title
 	 *
 	 * @return string
 	 */
@@ -215,7 +215,7 @@ HTML;
 
 	/**
 	 * @param        $image
-	 * @param string $alt
+	 * @param   string $alt
 	 *
 	 * @return string
 	 */

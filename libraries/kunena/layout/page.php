@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Implements Kunena specific functions for page layouts.
@@ -28,7 +28,7 @@ class KunenaLayoutPage extends KunenaLayout
 	 */
 	public function request($path, Jinput $input = null, $options = null)
 	{
-		return KunenaRequest::factory($path.'/Display', $input, $options ? $options : $this->getOptions())
+		return KunenaRequest::factory($path . '/Display', $input, $options ? $options : $this->getOptions())
 			->setPrimary()->set('layout', $this->getLayout());
 	}
 

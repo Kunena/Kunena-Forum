@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena User Controller
@@ -19,8 +19,8 @@ defined('_JEXEC') or die ();
 class KunenaControllerUser extends KunenaController
 {
 	/**
-	 * @param bool $cachable
-	 * @param bool $urlparams
+	 * @param   bool $cachable
+	 * @param   bool $urlparams
 	 *
 	 * @return JControllerLegacy|void
 	 */
@@ -306,7 +306,7 @@ class KunenaControllerUser extends KunenaController
 			$this->app->enqueueMessage($message);
 		}
 
-		if (!empty ($DelAvatar) || !empty ($DelProfileInfo))
+		if (!empty($DelAvatar) || !empty($DelProfileInfo))
 		{
 			$avatar_deleted = '';
 			// Delete avatar from file system
@@ -315,12 +315,13 @@ class KunenaControllerUser extends KunenaController
 				KunenaFile::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
 				$avatar_deleted = JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
 			}
+
 			$user->avatar = '';
 			$user->save();
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
 		}
 
-		if (!empty ($DelProfileInfo))
+		if (!empty($DelProfileInfo))
 		{
 			$user->personalText = '';
 			$user->birthdate    = '0000-00-00';
@@ -348,14 +349,14 @@ class KunenaControllerUser extends KunenaController
 			$user->save();
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'));
 		}
-		elseif (!empty ($DelSignature))
+		elseif (!empty($DelSignature))
 		{
 			$user->signature = '';
 			$user->save();
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE'));
 		}
 
-		if (!empty ($banDelPosts))
+		if (!empty($banDelPosts))
 		{
 			$params = array('starttime' => '-1', 'user' => $user->userid, 'mode' => 'unapproved');
 
@@ -371,6 +372,7 @@ class KunenaControllerUser extends KunenaController
 			{
 				$mes->publish(KunenaForum::DELETED);
 			}
+
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
 		}
 
@@ -533,6 +535,7 @@ class KunenaControllerUser extends KunenaController
 
 			return;
 		}
+
 		$karma_delay = '14400'; // 14400 seconds = 6 hours
 		$userid      = JFactory::getApplication()->input->getInt('userid', 0);
 
@@ -599,6 +602,7 @@ class KunenaControllerUser extends KunenaController
 
 			return;
 		}
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterKarma($target->userid, $this->me->userid, $karmaDelta);
@@ -607,7 +611,7 @@ class KunenaControllerUser extends KunenaController
 
 	// Mostly copied from Joomla 1.5
 	/**
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 */
 	protected function saveUser()
@@ -862,7 +866,7 @@ class KunenaControllerUser extends KunenaController
 				{
 					$message->save();
 
-					if ( $topic->attachments > 0 )
+					if ($topic->attachments > 0)
 					{
 						$topic->attachments = $topic->attachments - 1;
 						$topic->save(false);

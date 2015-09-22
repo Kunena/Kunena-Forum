@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Search Controller
@@ -19,7 +19,7 @@ defined('_JEXEC') or die ();
 class KunenaControllerSearch extends KunenaController
 {
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{
@@ -32,7 +32,9 @@ class KunenaControllerSearch extends KunenaController
 	public function results()
 	{
 		$model = $this->getModel('Search');
-		$this->setRedirect($model->getSearchURL('search', $model->getState('searchwords'),
-			$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false));
+		$this->setRedirect(
+   $model->getSearchURL(
+	'search', $model->getState('searchwords'),
+	$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false));
 	}
 }

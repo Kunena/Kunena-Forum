@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.model');
 
@@ -95,7 +95,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get all deleted messages or topics in function of user selection.
 	 *
-	 * @return    Array
+	 * @return    array
 	 * @since    1.6
 	 */
 	public function getTrashItems()
@@ -113,7 +113,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get all deleted messages.
 	 *
-	 * @return    Array
+	 * @return    array
 	 * @since    1.6
 	 */
 	protected function _getMessages()
@@ -250,7 +250,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get all deleted topics.
 	 *
-	 * @return    Array
+	 * @return    array
 	 * @since    1.6
 	 */
 	protected function _getTopics()
@@ -366,7 +366,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get select options to choose between topics and messages.
 	 *
-	 * @return    Array
+	 * @return    array
 	 * @since    1.6
 	 */
 	public function getViewOptions()
@@ -381,7 +381,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	/**
 	 * Method to get details on selected items.
 	 *
-	 * @return    Array
+	 * @return    array
 	 * @since    1.6
 	 */
 	public function getPurgeItems()
@@ -419,7 +419,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	public function getNavigation()
 	{
 		jimport('joomla.html.pagination');
-		$navigation = new JPagination ($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
+		$navigation = new JPagination($this->getState('list.total'), $this->getState('list.start'), $this->getState('list.limit'));
 
 		return $navigation;
 	}

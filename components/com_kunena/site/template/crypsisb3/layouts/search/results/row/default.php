@@ -10,7 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaForumMessage $message */
+// @var KunenaForumMessage $message
+
 $message = $this->message;
 $topic = $message->getTopic();
 $category = $topic->getCategory();
@@ -30,7 +31,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 	<div class="col-md-10">
 		<small class="text-muted pull-right hidden-xs" style="margin-top:-5px;"> <span class="icon glyphicon glyphicon-clock"></span> <?php echo $message->getTime()->toSpan(); ?></small>
 		<?php //TODO: Find a better way for inline elements like this can displayField contain HTML which would not be valid inside the attribute. ?>
-		<div class="badger-left badger-info khistory" data-badger="<?php echo (!$isReply) ? $author->username . ' created the topic: ' : $author->username. ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
+		<div class="badger-left badger-info khistory" data-badger="<?php echo (!$isReply) ? $author->username . ' created the topic: ' : $author->username . ' replied the topic: '; ?><?php echo $message->displayField('subject'); ?>">
 			<h3>
 				<?php echo $this->getTopicLink($topic, $message); ?>
 			</h3>
@@ -42,9 +43,9 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 			<div class="kmessage">
 				<?php  if (!$isReply) :
 					echo $message->displayField('message');
- 				else :
+					else :
 					echo (!$me->userid && $config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
- 			endif;?>
+				endif;?>
 			</div>
 		</div>
 	</div>

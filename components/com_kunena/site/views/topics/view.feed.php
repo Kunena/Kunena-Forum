@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topics View
@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaViewTopics extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -75,7 +75,7 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayUser($tpl = null)
 	{
@@ -116,7 +116,7 @@ class KunenaViewTopics extends KunenaView
 	}
 
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayPosts($tpl = null)
 	{

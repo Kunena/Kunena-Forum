@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Users view for Kunena backend
@@ -67,7 +67,6 @@ class KunenaAdminViewUsers extends KunenaView
 						$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'batch');
 
-
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
 		JToolBarHelper::deleteList();
@@ -77,7 +76,7 @@ class KunenaAdminViewUsers extends KunenaView
 		JToolBarHelper::custom('removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

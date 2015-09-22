@@ -51,7 +51,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	protected $event_before_save = 'onExtensionBeforeSave';
 
 	/**
-	 * @param array $config
+	 * @param   array $config
 	 */
 	public function __construct($config = array())
 	{

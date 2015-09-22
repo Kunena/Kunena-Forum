@@ -23,7 +23,7 @@ defined('_JEXEC') or die;
 			<td>
 				<input type="text" name="username" id="username"
 				       value="<?php echo $this->escape($this->user->get('username'));?>"
-				       <?php if (!$this->changeUsername) echo 'disabled="disabled"'; ?> />
+				       <?php if (!$this->changeUsername) { echo 'disabled="disabled"'; } ?> />
 			</td>
 		</tr>
 		<tr>
@@ -88,4 +88,4 @@ defined('_JEXEC') or die;
 
 	</tbody>
 </table>
-<?php endif; ?>
+<?php endif;

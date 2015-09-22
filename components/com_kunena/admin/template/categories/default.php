@@ -8,9 +8,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewCategories $this */
+// @var KunenaAdminViewCategories $this
+
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -41,7 +42,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
@@ -213,7 +214,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						for ($i2 = 0; $i2 < $item->level; $i2++) {
 							foreach ($this->ordering as $k => $v) {
 							$v = implode("-", $v);
-							$v = "-".$v."-";
+							$v = "-" . $v . "-";
 								if (strpos($v, "-" . $_currentParentId . "-") !== false) {
 									$parentsStr .= " " . $k;
 									$_currentParentId = $k;
@@ -249,7 +250,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 							<?php echo JHtml::_('grid.id', $i, (int) $item->id); ?>
 						</td>
 						<td class="center">
-							<?php echo JHtml::_('jgrid.published', $item->published, $i, '','cb'); ?>
+							<?php echo JHtml::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
 						</td>
 						<td class="center">
 							<?php if (!$filterItem || ($filterItem != $item->id && $item->parent_id)) : ?>
@@ -271,7 +272,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 									echo JHtml::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 								}
 							?>
-							<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=categories&layout=edit&catid='.(int) $item->id);?>">
+							<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=categories&layout=edit&catid=' . (int) $item->id);?>">
 								<?php echo $this->escape($item->name); ?>
 							</a>
 							<small>
@@ -281,11 +282,11 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<td class="center hidden-phone">
 							<span><?php echo $item->accessname; ?></span>
 							<small>
-								<?php echo JText::sprintf('(Access: %s)', $this->escape( $item->accesstype ));?>
+								<?php echo JText::sprintf('(Access: %s)', $this->escape($item->accesstype));?>
 							</small>
 						</td>
 						<td class="center hidden-phone">
-							<a class ="btn btn-micro <?php echo ($item->locked ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un':'').'lock'; ?>')">
+							<a class ="btn btn-micro <?php echo ($item->locked ? 'active' : ''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un' : '') . 'lock'; ?>')">
 								<?php echo ($item->locked == 1 ? $img_yes : $img_no); ?>
 							</a>
 						</td>
@@ -295,17 +296,17 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						</td>
 						<?php else : ?>
 						<td class="center hidden-phone">
-							<a class ="btn btn-micro <?php echo ($item->review ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un':'').'review'; ?>')">
+							<a class ="btn btn-micro <?php echo ($item->review ? 'active' : ''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un' : '') . 'review'; ?>')">
 								<?php echo ($item->review == 1 ? $img_yes : $img_no); ?>
 							</a>
 						</td>
 						<td class="center hidden-phone">
-							<a class ="btn btn-micro <?php echo ($item->allow_polls ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny':'allow').'_polls'; ?>')">
+							<a class ="btn btn-micro <?php echo ($item->allow_polls ? 'active' : ''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny' : 'allow') . '_polls'; ?>')">
 								<?php echo ($item->allow_polls == 1 ? $img_yes : $img_no); ?>
 							</a>
 						</td>
 						<td class="center hidden-phone">
-							<a class ="btn btn-micro <?php echo ($item->allow_anonymous ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_anonymous ? 'deny':'allow').'_anonymous'; ?>')">
+							<a class ="btn btn-micro <?php echo ($item->allow_anonymous ? 'active' : ''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_anonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
 								<?php echo ($item->allow_anonymous == 1 ? $img_yes : $img_no); ?>
 							</a>
 						</td>
@@ -323,7 +324,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<td colspan="10">
 							<div class="well center filter-state">
 								<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-								<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+								<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
+?>
 								<?php if($this->filterActive) : ?>
 									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 									<?php else : ?>

@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * About view for Kunena backend
@@ -110,7 +110,7 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::cancel();
 		JToolbarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -136,7 +136,7 @@ class KunenaAdminViewCategories extends KunenaView
 		//}
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**

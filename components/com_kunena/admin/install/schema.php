@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 DEFINE('KUNENA_SCHEMA_FILE', KPATH_ADMIN . '/install/install.xml');
 DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN . '/install/upgrade/upgrade.xml');
@@ -52,8 +52,8 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * Overridden method to get model state variables.
 	 *
-	 * @param    string $property Optional parameter name.
-	 * @param    mixed  $default  The default value to use if no state property exists by name.
+	 * @param   string $property Optional parameter name.
+	 * @param   mixed  $default  The default value to use if no state property exists by name.
 	 *
 	 * @return    object    The property where specified, the state object where omitted.
 	 * @since    1.6
@@ -94,7 +94,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param string $input
+	 * @param   string $input
 	 *
 	 * @return null
 	 */
@@ -109,7 +109,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param string $input
+	 * @param   string $input
 	 *
 	 * @return DOMDocument|null
 	 */
@@ -125,9 +125,9 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param null $from
-	 * @param null $to
-	 * @param null $using
+	 * @param   null $from
+	 * @param   null $to
+	 * @param   null $using
 	 *
 	 * @return DOMDocument|null
 	 */
@@ -193,7 +193,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param null $prefix
+	 * @param   null $prefix
 	 *
 	 * @return array
 	 */
@@ -279,7 +279,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @param      $prefix
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return mixed
 	 * @throws KunenaSchemaException
@@ -325,7 +325,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @param      $filename
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return mixed
 	 */
@@ -348,7 +348,7 @@ class KunenaModelSchema extends JModelLegacy
 	}
 
 	/**
-	 * @param bool $reload
+	 * @param   bool $reload
 	 *
 	 * @return DOMDocument
 	 * @throws KunenaSchemaException
@@ -435,6 +435,7 @@ class KunenaModelSchema extends JModelLegacy
 					{
 						$keyNode->setAttribute("unique", (bool) !$row->Non_unique);
 					}
+
 					//if ($row->Comment != '') $keyNode->setAttribute("comment", $row->Comment);
 				}
 
@@ -500,7 +501,7 @@ class KunenaModelSchema extends JModelLegacy
 	protected function listAllNodes($nodeLists)
 	{
 		$list = array();
-		foreach ($nodeLists as $k => $nl) foreach ($nl as $n)
+		foreach ($nodeLists as $k => $nl) { foreach ($nl as $n)
 		{
 			if ($n instanceof DOMAttr)
 			{
@@ -514,6 +515,7 @@ class KunenaModelSchema extends JModelLegacy
 				}
 			}
 		}
+	}
 
 		return $list;
 	}
@@ -641,7 +643,7 @@ class KunenaModelSchema extends JModelLegacy
 		if (count($childNodes) || $action)
 		{
 			$node = $schema->importNode($loc['new'], false);
-			foreach ($loc['new']->attributes as $attribute) $node->setAttribute($attribute->name, $attribute->value);
+			foreach ($loc['new']->attributes as $attribute) { $node->setAttribute($attribute->name, $attribute->value); }
 
 			if ($loc['old']->hasAttribute('from'))
 			{
@@ -719,7 +721,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @param      $schema
-	 * @param bool $drop
+	 * @param   bool $drop
 	 *
 	 * @return array
 	 */
@@ -787,6 +789,7 @@ class KunenaModelSchema extends JModelLegacy
 									$fields[] = '	DROP ' . $this->getSchemaSQLField($field);
 									break;
 								}
+
 							case 'rename':
 								if ($field->tagName == 'key')
 								{
@@ -818,6 +821,7 @@ class KunenaModelSchema extends JModelLegacy
 								echo("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
 						}
 					}
+
 					if (count($fields))
 					{
 						$str .= implode(",\n", $fields) . ';';
@@ -840,11 +844,13 @@ class KunenaModelSchema extends JModelLegacy
 							$fields[] = '	' . $sqlpart;
 						}
 					}
+
 					$collation = $this->db->getCollation();
 					if (!strstr($collation, 'utf8'))
 					{
 						$collation = 'utf8_general_ci';
 					}
+
 					$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
 					break;
 				default:
@@ -862,7 +868,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @param        $field
-	 * @param string $after
+	 * @param   string $after
 	 *
 	 * @return string
 	 */
@@ -942,7 +948,7 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * @param        $dbschema
 	 * @param        $node
-	 * @param string $table
+	 * @param   string $table
 	 */
 	protected function upgradeNewAction($dbschema, $node, $table = '')
 	{
@@ -968,6 +974,7 @@ class KunenaModelSchema extends JModelLegacy
 					{
 						break;
 					}
+
 					$version = $action->getAttribute('version');
 					$date    = $action->getAttribute('date');
 					$this->upgradeNewAction($dbschema, $action, $table);
@@ -1004,7 +1011,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param        $schema
 	 * @param        $type
 	 * @param        $table
-	 * @param string $field
+	 * @param   string $field
 	 *
 	 * @return null
 	 */
@@ -1047,7 +1054,7 @@ class KunenaModelSchema extends JModelLegacy
 	/**
 	 * @param        $dbschema
 	 * @param        $node
-	 * @param string $table
+	 * @param   string $table
 	 */
 	protected function upgradeAction($dbschema, $node, $table = '')
 	{
@@ -1088,6 +1095,7 @@ class KunenaModelSchema extends JModelLegacy
 			$action = $node->getAttribute('action');
 			$name   = $node->getAttribute('name');
 		}
+
 		$to = $node->getAttribute('to');
 
 		$dbnode = $this->findNode($dbschema, $tag, $table, $name);

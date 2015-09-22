@@ -8,9 +8,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewTrash $this */
+// @var KunenaAdminViewTrash $this
+
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -36,21 +37,21 @@ JHtml::_('dropdown.init');
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="type" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
-			<input type="hidden" name="layout" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
-			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
-			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
+			<input type="hidden" name="type" value="<?php echo $this->escape($this->state->get('layout')) ?>" />
+			<input type="hidden" name="layout" value="<?php echo $this->escape($this->state->get('layout')) ?>" />
+			<input type="hidden" name="filter_order" value="<?php echo intval($this->state->get('list.ordering')) ?>" />
+			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+			<?php echo JHtml::_('form.token'); ?>
 
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_TRASH_VIEW').' '.JText::_('COM_KUNENA_TRASH_TOPICS') ?> <span class="pull-right"><?php echo $this->view_options_list;?></span></legend>
+				<legend><?php echo JText::_('COM_KUNENA_TRASH_VIEW') . ' ' . JText::_('COM_KUNENA_TRASH_TOPICS') ?> <span class="pull-right"><?php echo $this->view_options_list;?></span></legend>
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="filter-search btn-group pull-left">
@@ -89,19 +90,19 @@ JHtml::_('dropdown.init');
 								<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" />
 							</th>
 							<th>
-								<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
 							<th>
-								<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
 							<th width="10%" class="nowrap">
-								<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
 							<th width="10%" class="nowrap">
-								<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
 							<th width="1%" class="nowrap">
-								<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+								<?php echo JHtml::_('grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 							</th>
 						</tr>
 						<tr>
@@ -139,13 +140,13 @@ JHtml::_('dropdown.init');
 					<?php
 					$i = 0;
 					if($this->pagination->total > 0) :
-					foreach ( $this->trash_items as $id => $row ) : ?>
+					foreach ($this->trash_items as $id => $row) : ?>
 						<tr>
 							<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
 							<td><?php echo $this->escape($row->subject); ?></td>
 							<td><?php echo $this->escape($row->getCategory()->name); ?></td>
 							<td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
-							<td><?php echo strftime('%Y-%m-%d %H:%M:%S',$row->last_post_time); ?></td>
+							<td><?php echo strftime('%Y-%m-%d %H:%M:%S', $row->last_post_time); ?></td>
 							<td><?php echo intval($row->id); ?></td>
 						</tr>
 					<?php
@@ -155,7 +156,8 @@ JHtml::_('dropdown.init');
 							<td colspan="10">
 								<div class="well center filter-state">
 									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-										<?php /*<a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a> */?>
+										<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
+?>
 										<?php if($this->filterActive || $this->pagination->total > 0) : ?>
 										<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 										<?php else : ?>

@@ -10,7 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaUser $user */
+// @var KunenaUser $user
+
 $user = $this->user;
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
@@ -90,7 +91,7 @@ if ($show)
 
 			<?php if ($show && !empty($points)) : ?>
 			<li>
-				<?php echo JText::_('COM_KUNENA_AUP_POINTS') . ' '  . $points; ?>
+				<?php echo JText::_('COM_KUNENA_AUP_POINTS') . ' ' . $points; ?>
 			</li>
 			<?php endif; ?>
 
@@ -112,4 +113,4 @@ if ($show)
 		</ul>
 	</div>
 </div>
-<?php endif; ?>
+<?php endif;

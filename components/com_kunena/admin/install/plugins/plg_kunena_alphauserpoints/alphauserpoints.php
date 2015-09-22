@@ -9,7 +9,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class plgKunenaAlphaUserPoints extends JPlugin
 {
@@ -26,6 +26,7 @@ class plgKunenaAlphaUserPoints extends JPlugin
 		{
 			return;
 		}
+
 		require_once($aup);
 
 		parent::__construct($subject, $config);

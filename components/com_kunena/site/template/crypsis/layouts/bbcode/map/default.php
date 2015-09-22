@@ -37,13 +37,15 @@ if (!isset($id))
 $mapid = 'kgooglemap' . $this->mapid;
 $map_type = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 $map_typeId = array('HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN');
-if (!in_array($map_type, $map_typeId)) $map_type = 'ROADMAP';
+if (!in_array($map_type, $map_typeId)) { $map_type = 'ROADMAP'; }
+
 $map_zoom = isset($params['zoom']) ? (int) $params['zoom'] : 10;
 $map_control = isset($params['control']) ? (int) $params['control'] : 0;
 $content = json_encode(addslashes($this->content));
 $contentString = JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
 
-$this->addScriptDeclaration("
+$this->addScriptDeclaration(
+	"
 // <![CDATA[
 	var geocoder;
 	var {$mapid};

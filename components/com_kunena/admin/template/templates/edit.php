@@ -9,9 +9,10 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
-/** @var KunenaAdminViewTemplates $this */
+// @var KunenaAdminViewTemplates $this
+
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -60,7 +61,8 @@ JHtml::_('dropdown.init');
 									</li>
 									<!--<li>
 										<a href="#tab_avatars" data-toggle="tab">
-											<?php /*echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AVATARS'); */?> </a>
+											<?php // echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_AVATARS');
+?> </a>
 									</li>-->
 									<?php endif; ?>
 								</ul>
@@ -98,7 +100,8 @@ JHtml::_('dropdown.init');
 														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
-												<?php endif; endforeach; ?>
+												<?php endif;
+endforeach; ?>
 											</table>
 										<?php
 										else :
@@ -114,7 +117,8 @@ JHtml::_('dropdown.init');
 														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
-												<?php endif; endforeach; ?>
+												<?php endif;
+endforeach; ?>
 											</table>
 										<?php
 										else :
@@ -130,7 +134,8 @@ JHtml::_('dropdown.init');
 														<td width="20%" class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
-												<?php endif; endforeach; ?>
+												<?php endif;
+endforeach; ?>
 											</table>
 										<?php
 										else :
@@ -146,7 +151,8 @@ JHtml::_('dropdown.init');
 														<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
 														<td class="paramlist_value"><?php echo $field->input; ?></td>
 													</tr>
-												<?php endif; endforeach; ?>
+												<?php endif;
+endforeach; ?>
 											</table>
 										<?php
 										else :

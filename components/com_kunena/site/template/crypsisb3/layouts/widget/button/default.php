@@ -12,7 +12,8 @@ defined('_JEXEC') or die;
 
 $label = JText::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
 $title = JText::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");
-if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG") $title = '';
+if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG") { $title = ''; }
+
 $id = isset($this->id) ? 'id="' . $this->id . '"' : '';
 $success = !empty($this->success) ? ' btn-success' : '';
 $primary = !empty($this->primary) ? ' btn-primary' : '';

@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class KunenaProfileKunena extends KunenaProfile
 {
@@ -24,10 +24,10 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param string $action
-	 * @param bool   $xhtml
+	 * @param   string $action
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -44,10 +44,10 @@ class KunenaProfileKunena extends KunenaProfile
 
 	/**
 	 * @param        $user
-	 * @param string $task
-	 * @param bool   $xhtml
+	 * @param   string $task
+	 * @param   bool   $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -91,7 +91,7 @@ class KunenaProfileKunena extends KunenaProfile
 	}
 
 	/**
-	 * @param int $limit
+	 * @param   int $limit
 	 *
 	 * @return array
 	 */
@@ -120,9 +120,9 @@ class KunenaProfileKunena extends KunenaProfile
 
 	/**
 	 * @param      $userid
-	 * @param bool $xhtml
+	 * @param   bool $xhtml
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

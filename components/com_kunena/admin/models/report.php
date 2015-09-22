@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.model');
 
@@ -146,7 +146,7 @@ class KunenaAdminModelReport extends KunenaModel
 		{
 			if (empty($item))
 			{
-				unset ($plg[$id]);
+				unset($plg[$id]);
 			}
 		}
 
@@ -169,7 +169,7 @@ class KunenaAdminModelReport extends KunenaModel
 		{
 			if (empty($item))
 			{
-				unset ($mod[$id]);
+				unset($mod[$id]);
 			}
 		}
 
@@ -192,7 +192,7 @@ class KunenaAdminModelReport extends KunenaModel
 		{
 			if (empty($item))
 			{
-				unset ($thirdparty[$id]);
+				unset($thirdparty[$id]);
 			}
 		}
 
@@ -214,7 +214,7 @@ class KunenaAdminModelReport extends KunenaModel
 		{
 			if (empty($item))
 			{
-				unset ($sef[$id]);
+				unset($sef[$id]);
 			}
 		}
 
@@ -283,7 +283,6 @@ class KunenaAdminModelReport extends KunenaModel
 
 			foreach ($params as $key => $value)
 			{
-
 				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
 					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_address'
 					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' && $key != 'ebay_api_key'
@@ -461,8 +460,8 @@ class KunenaAdminModelReport extends KunenaModel
 	/**
 	 * Return extension version string if installed.
 	 *
-	 * @param  string $extension
-	 * @param  string $name
+	 * @param   string $extension
+	 * @param   string $name
 	 *
 	 * @return    string
 	 * @since    1.6
@@ -491,7 +490,7 @@ class KunenaAdminModelReport extends KunenaModel
 	/**
 	 * Tries to find the extension manifest file and returns version
 	 *
-	 * @param  $path $path    Path to extension directory
+	 * @param   $path $path    Path to extension directory
 	 *
 	 * @return  string  Version number
 	 */
@@ -552,13 +551,13 @@ class KunenaAdminModelReport extends KunenaModel
 				{
 					$plugin_final[] = "{$param}={$value} ";
 				}
+
 				$plugin_final[] = "\n";
 			}
 			else
 			{
 				$plugin_final[] = "[b]{$desc}[/b] Disabled\n";
 			}
-
 		}
 
 		return $plugin_final;

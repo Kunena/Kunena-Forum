@@ -14,9 +14,9 @@ defined('_JEXEC') or die;
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
 
 	<?php echo $this->profile->getLink(
-		'<i class="icon-arrow-left"></i> ' . JText::_('COM_KUNENA_BACK'),
-		JText::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn pull-right'
-	); ?>
+	'<i class="icon-arrow-left"></i> ' . JText::_('COM_KUNENA_BACK'),
+	JText::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn pull-right'
+); ?>
 </h2>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" enctype="multipart/form-data" name="kuserform" class="form-validate" id="kuserform">

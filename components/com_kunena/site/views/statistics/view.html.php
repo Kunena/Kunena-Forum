@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Statistics View
@@ -17,7 +17,7 @@ defined('_JEXEC') or die ();
 class KunenaViewStatistics extends KunenaView
 {
 	/**
-	 * @param null $tpl
+	 * @param   null $tpl
 	 */
 	function displayDefault($tpl = null)
 	{
@@ -41,8 +41,8 @@ class KunenaViewStatistics extends KunenaView
 	/**
 	 * @param        $action
 	 * @param        $name
-	 * @param null   $title
-	 * @param string $rel
+	 * @param   null   $title
+	 * @param   string $rel
 	 *
 	 * @return string
 	 */

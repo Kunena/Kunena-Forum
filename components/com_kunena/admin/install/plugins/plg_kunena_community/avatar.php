@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class KunenaAvatarCommunity extends KunenaAvatar
 {
@@ -27,6 +27,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 		{
 			CFactory::loadUsers($userlist);
 		}
+
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 	}
 
@@ -44,7 +45,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
 		if ($kuser->userid == 0) {
 			$avatar = str_replace(JUri::root(true), '', COMMUNITY_PATH_ASSETS) . "user-Male.png";
 		}
-		else if ($sizex <= 90)
+		elseif ($sizex <= 90)
 		{
 			$avatar = $user->getThumbAvatar();
 		}

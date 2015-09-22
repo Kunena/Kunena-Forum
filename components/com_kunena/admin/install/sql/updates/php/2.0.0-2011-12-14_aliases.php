@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
 function kunena_200_2011_12_14_aliases($parent)
@@ -20,17 +20,20 @@ function kunena_200_2011_12_14_aliases($parent)
 	{
 		kCreateAlias('view', $view, $view, 1);
 	}
+
 	// Create layouts
 	foreach (KunenaRoute::$layouts as $layout => $dummy)
 	{
 		kCreateAlias('layout', "category.{$layout}", "category/{$layout}", 1);
 		kCreateAlias('layout', "category.{$layout}", $layout, 0);
 	}
+
 	// Create legacy functions
 	foreach (KunenaRouteLegacy::$functions as $func => $dummy)
 	{
 		kCreateAlias('legacy', $func, $func, 1);
 	}
+
 	$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 	$aliasLit   = $aliasUtf = array();
 	// Create SEF: id
@@ -41,6 +44,7 @@ function kunena_200_2011_12_14_aliases($parent)
 		$aliasUtf[$category->id] = kStringURLSafe($category->name);
 		$aliasLit[$category->id] = JFilterOutput::stringURLSafe($category->name);
 	}
+
 	// Sort aliases by category id (oldest ID accepts also sefcat format..
 	ksort($categories);
 
@@ -56,12 +60,14 @@ function kunena_200_2011_12_14_aliases($parent)
 				$created = kCreateCategoryAlias($category, "{$id}-{$name}", 1);
 			}
 		}
+
 		$name = $aliasLit[$category->id];
 		if (!empty($name))
 		{
 			kCreateCategoryAlias($category, "{$id}-{$name}", !$created);
 		}
 	}
+
 	// Create SEF: name and Name (UTF8)
 	if ($config->get('sefcats'))
 	{
@@ -77,6 +83,7 @@ function kunena_200_2011_12_14_aliases($parent)
 					$created = kCreateCategoryAlias($category, $name, count($keys) == 1);
 				}
 			}
+
 			$name = $aliasLit[$category->id];
 			$keys = array_keys($aliasLit, $name);
 			if (!empty($name))

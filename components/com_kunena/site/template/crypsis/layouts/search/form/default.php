@@ -23,10 +23,10 @@ $this->addScript('js/search.js');
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">
 	<input type="hidden" name="task" value="results" />
-	<?php if ($this->me->exists()): ?>
+	<?php if ($this->me->exists()) : ?>
 		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>" />
 	<?php endif; ?>
-	<?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo JHtml::_('form.token'); ?>
 
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
@@ -65,7 +65,7 @@ $this->addScript('js/search.js');
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>:
 						<input type="checkbox" name="exactname" value="1"
-							<?php if ($this->state->get('query.exactname')) echo $this->checked; ?> />
+							<?php if ($this->state->get('query.exactname')) { echo $this->checked; } ?> />
 					</label>
 				</fieldset>
 			</div>
@@ -114,17 +114,17 @@ $this->addScript('js/search.js');
 							</legend>
 							<label class="radio">
 								<input type="radio" name="show" value="0"
-									<?php if ($this->state->get('query.show') == 0) echo 'checked="checked"'; ?> />
+									<?php if ($this->state->get('query.show') == 0) { echo 'checked="checked"'; } ?> />
 								<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?>
 							</label>
 							<label class="radio">
 								<input type="radio" name="show" value="1"
-									<?php if ($this->state->get('query.show') == 1) echo 'checked="checked"'; ?> />
+									<?php if ($this->state->get('query.show') == 1) { echo 'checked="checked"'; } ?> />
 								<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?>
 							</label>
 							<label class="radio">
 								<input type="radio" name="show" value="2"
-									<?php if ($this->state->get('query.show') == 2) echo 'checked="checked"'; ?> />
+									<?php if ($this->state->get('query.show') == 2) { echo 'checked="checked"'; } ?> />
 								<?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?>
 							</label>
 						</fieldset>
@@ -139,7 +139,7 @@ $this->addScript('js/search.js');
 						<?php $this->displayCategoryList('categorylist', 'size="10" multiple="multiple"'); ?>
 						<label>
 							<input type="checkbox" name="childforums" value="1"
-								<?php if ($this->state->get('query.childforums')) echo 'checked="checked"'; ?> />
+								<?php if ($this->state->get('query.childforums')) { echo 'checked="checked"'; } ?> />
 							<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?>
 						</label>
 					</fieldset>

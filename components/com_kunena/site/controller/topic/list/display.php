@@ -67,7 +67,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 		$topicIds = array_keys($this->topics);
 		KunenaForumTopicHelper::getUserTopics($topicIds);
-		/* KunenaForumTopicHelper::getKeywords($topicIds); */
+		// KunenaForumTopicHelper::getKeywords($topicIds);
+
 		$mesIds += KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
 		// Fetch also last post positions when user can see unapproved or deleted posts.
@@ -98,7 +99,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$this->setTitle($headerText);
 		$keywords = $this->config->board_title;
 		$this->setKeywords($keywords);
-		$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title ;
+		$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title;
 		$this->setDescription($description);
 	}
 
@@ -108,11 +109,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @return array
 	 */
 	protected function getTopicActions(
-		array $topics,
-		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete')
-	)
-	{
-		if (!$actions) return null;
+	 array $topics,
+	 $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete')
+	) {
+		if (!$actions) { return null; }
 
 		$options = array();
 		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
@@ -148,9 +148,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			}
 		}
 
-		$actions = array_filter($actions, function($item) { return !empty($item); });
+		$actions = array_filter(
+   $actions, function ($item) {
+	return !empty($item);
+  });
 
-		if (count($actions) == 1) return null;
+		if (count($actions) == 1) { return null; }
 
 		return $actions;
 	}
@@ -161,11 +164,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 * @return array
 	 */
 	protected function getMessageActions(
-		array $messages,
-		$actions = array('approve', 'undelete', 'delete', 'permdelete')
-	)
-	{
-		if (!$actions) return null;
+	 array $messages,
+	 $actions = array('approve', 'undelete', 'delete', 'permdelete')
+	) {
+		if (!$actions) { return null; }
 
 		$options = array();
 		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
@@ -191,9 +193,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			}
 		}
 
-		$actions = array_filter($actions, function($item) { return !empty($item); });
+		$actions = array_filter(
+   $actions, function ($item) {
+	return !empty($item);
+  });
 
-		if (count($actions) == 1) return null;
+		if (count($actions) == 1) { return null; }
 
 		return $actions;
 	}

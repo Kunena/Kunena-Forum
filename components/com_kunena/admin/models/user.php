@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.model');
 
@@ -162,6 +162,7 @@ class KunenaAdminModelUser extends KunenaModel
 		{
 			$categoryList[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
 		}
+
 		$params  = array(
 			'sections' => false,
 			'action'   => 'read');

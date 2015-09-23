@@ -19,6 +19,7 @@
 #Kunena span {
 	font-family: Tahoma, Helvetica, sans-serif;
 }
+
 #Kunena .knewchar {
 	font-family: Tahoma, Helvetica, sans-serif;
 }
@@ -28,10 +29,12 @@
 #Kunena tr.ksth {
 	font-family: Tahoma, Helvetica, sans-serif;
 }
+
 #Kunena td.kcol-mid {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
 }
+
 #Kunena td.kcol-last {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
@@ -42,32 +45,39 @@
 #Kunena #ktab a span {
 	font-family: Tahoma, Helvetica, sans-serif;
 }
+
 #Kunena .klist-pages {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
 	font-family: Tahoma, Helvetica, sans-serif;
 }
+
 #Kunena .klist-times {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
 }
+
 #Kunena .klist-actions-forum {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
 }
+
 #Kunena .klist-pages-all {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
 	font-family: Tahoma, Helvetica, sans-serif;
 }
+
 #Kunena .klist-times-all {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
 }
+
 #Kunena .klist-jump-all {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
 }
+
 #Kunena .klist-categories {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
@@ -79,6 +89,7 @@
 	/* TODO: override right rule? */
 	border-left-color: #BFC3C6;
 }
+
 #Kunena .kprofilebox-right {
 	/* TODO: override left rule? */
 	border-right-color: #BFC3C6;
@@ -89,6 +100,7 @@
 #Kunena .ktitle a {
 	font-family: Tahoma, Helvetica, sans-serif;
 }
+
 #Kunena div.kthead-title a {
 	font-family: Tahoma, Lucida, Arial, Helvetica, sans-serif;
 }
@@ -98,15 +110,18 @@
 #Kunena span.kmsgdate {
 	font-family: Tahoma, Helvetica, sans-serif;
 }
+
 #Kunena div.kmsgtext pre,
 #Kunena div.kmsgtext code {
 	border-right-color: #F4A94F;
 	border-left-color: #BFC3C6;
 	font-family: Tahoma, Courier, monospace;
 }
+
 #Kunena span.kmessage-editmarkup {
 	background-position: right center;
 }
+
 #Kunena div.kmsgtext-article,
 #Kunena div.kmsgtext-quote,
 #Kunena div.kmsgtext-hide,

@@ -569,7 +569,7 @@ class KunenaUpload
 			}
 		}
 
-		if (!$this->checkFileSize($file->size, $file->isAvatar))
+		if (!$this->checkFileSize($file->size, true))
 		{
 			if ($file->isAvatar)
 			{

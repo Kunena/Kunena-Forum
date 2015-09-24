@@ -427,7 +427,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 		jimport( 'joomla.filesystem.folder' );
 		$config = KunenaFactory::getConfig();
 		$input = JFactory::getApplication()->input;
-		$fileInput = $input->files->get($key);
+		$fileInput = $input->files->get($key, null, 'raw');
 
 		$upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));
 

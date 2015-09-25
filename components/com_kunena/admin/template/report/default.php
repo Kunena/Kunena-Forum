@@ -19,8 +19,18 @@ $document->addScriptDeclaration(
 window.addEvent('domready', function(){
 	$('link_sel_all').addEvent('click', function(e){
 		$('report_final').select();
+		try {
+	var successful = document.execCommand('copy');
+	var msg = successful ? 'successful' : 'unsuccessful';
+	console.log('Copying text command was ' + msg);
+	}
+	catch (err)
+	{
+	console.log('Oops, unable to copy');
+	}
 	});
-});"
+});
+"
 );
 
 JHtml::_('behavior.tooltip');
@@ -37,14 +47,15 @@ JHtml::_('behavior.multiselect');
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="1" />
-
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></legend>
+				<legend><i class="icon icon-support"></i> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></legend>
 				<table class="table table-bordered table-striped">
 					<tr>
 						<td>
 							<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?></p>
-							<p><a href="#" id="link_sel_all" ><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a></p>
+							<p>
+								<a href="#" id="link_sel_all" name="link_sel_all" type="button" class="btn btn-small btn-primary"><i class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
+							</p>
 							<textarea id="report_final" class="input-block-level" name="report_final" cols="80" rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 						</td>
 					</tr>

@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 $data = $this->pagination->getData();
 if (count($data->pages) <= 1) { return; }
 
-$template = new KunenaAdminTemplate30();
+$template = new KunenaAdminTemplate();
 ?>
 <ul class="pagination-list">
 	<?php echo $template->paginationItem($data->start); ?>

@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Implements Kunena Request class.
@@ -35,8 +35,8 @@ class KunenaRequest
 	 * Returns controller.
 	 *
 	 * @param   string	$path	Controller path.
-	 * @param	JInput	$input
-	 * @param	mixed	$options
+	 * @param   JInput	$input
+	 * @param   mixed	$options
 	 *
 	 * @return  KunenaControllerBase|KunenaControllerDisplay
 	 * @throws	InvalidArgumentException

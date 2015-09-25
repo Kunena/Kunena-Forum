@@ -8,12 +8,17 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 abstract class KunenaTable extends JTable
 {
 	protected $_exists = false;
 
+	/**
+	 * @param   null $exists
+	 *
+	 * @return boolean
+	 */
 	public function exists($exists = null)
 	{
 		$return = $this->_exists;
@@ -25,6 +30,12 @@ abstract class KunenaTable extends JTable
 		return $return;
 	}
 
+	/**
+	 * @param   null $keys
+	 * @param   bool $reset
+	 *
+	 * @return boolean
+	 */
 	public function load($keys = null, $reset = true)
 	{
 		// Implement JObservableInterface: Pre-processing by observers
@@ -55,7 +66,6 @@ abstract class KunenaTable extends JTable
 			{
 				return false;
 			}
-
 		}
 		elseif (!is_array($keys))
 		{
@@ -92,6 +102,7 @@ abstract class KunenaTable extends JTable
 			{
 				throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', get_class($this), $field));
 			}
+
 			// Add the search tuple to the query.
 			$query->where($this->_db->quoteName($field) . ' = ' . $this->_db->quote($value));
 		}
@@ -127,6 +138,11 @@ abstract class KunenaTable extends JTable
 		return $result;
 	}
 
+	/**
+	 * @param   bool $updateNulls
+	 *
+	 * @return boolean
+	 */
 	public function store($updateNulls = false)
 	{
 		// Workaround Joomla 3.2 change.
@@ -155,6 +171,7 @@ abstract class KunenaTable extends JTable
 
 			return false;
 		}
+
 		$this->_exists = true;
 
 		// Implement JObservableInterface: Post-processing by observers
@@ -345,7 +362,7 @@ abstract class KunenaTable extends JTable
 		$query = $this->_db->getQuery(true)
 			->delete($this->_tbl);
 
-		foreach ($pk as $key=>$value)
+		foreach ($pk as $key => $value)
 		{
 			$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 		}

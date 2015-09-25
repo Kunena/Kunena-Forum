@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Report Controller
@@ -20,12 +20,18 @@ class KunenaAdminControllerReport extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param   array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=report';
 	}
 
+	/**
+	 *
+	 */
 	function systemreport()
 	{
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));

@@ -45,7 +45,7 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 
 		// Make sure that category list is an array.
 		if (!is_array($categoryIds)) {
-			$categoryIds = explode (',', $categoryIds);
+			$categoryIds = explode(',', $categoryIds);
 		}
 
 		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds)) {
@@ -82,7 +82,6 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		$this->actions = $this->getTopicActions($this->topics, $actions);
 
-		// TODO <-
-		$this->headerText = JText::_('Topics Needing Attention');
+		$this->headerText = JText::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
 	}
 }

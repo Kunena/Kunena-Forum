@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaAvatar
@@ -20,12 +20,17 @@ class KunenaAvatar
 
 	protected static $instance = false;
 
+	/**
+	 * @param   null $integration
+	 *
+	 * @return boolean|KunenaAvatar
+	 */
 	static public function getInstance($integration = null)
 	{
 		if (self::$instance === false)
 		{
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$classes = $dispatcher->trigger('onKunenaGetAvatar');
 
 			foreach ($classes as $class)
@@ -48,21 +53,40 @@ class KunenaAvatar
 		return self::$instance;
 	}
 
+	/**
+	 * @param $userlist
+	 */
 	public function load($userlist)
 	{
 
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getEditURL()
 	{
 		return '';
 	}
 
+	/**
+	 * @param $user
+	 * @param $sizex
+	 * @param $sizey
+	 *
+	 * @return string
+	 */
 	protected function _getURL($user, $sizex, $sizey)
 	{
 		return '';
 	}
 
+	/**
+	 * @param   int $sizex
+	 * @param   int $sizey
+	 *
+	 * @return StdClass
+	 */
 	public function getSize($sizex = 90, $sizey = 90)
 	{
 		$size = new StdClass();
@@ -73,16 +97,23 @@ class KunenaAvatar
 		{
 			$template = KunenaFactory::getTemplate();
 			$name = ucfirst(strtolower($sizex));
-			$size->x = intval($template->params->get('avatarSizeX'.$name, 90));
-			$size->y = intval($template->params->get('avatarSizeY'.$name, 90));
+			$size->x = intval($template->params->get('avatarSizeX' . $name, 90));
+			$size->y = intval($template->params->get('avatarSizeY' . $name, 90));
 		}
 
 		return $size;
 	}
 
+	/**
+	 * @param     $user
+	 * @param   int $sizex
+	 * @param   int $sizey
+	 *
+	 * @return string|void
+	 */
 	public function getURL($user, $sizex = 90, $sizey = 90)
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$size = $this->getSize($sizex, $sizey);
 
 		if (!$size->x || !$size->y)
@@ -91,11 +122,19 @@ class KunenaAvatar
 		}
 
 		$result = $this->_getURL($user, $size->x, $size->y);
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $result;
 	}
 
+	/**
+	 * @param        $user
+	 * @param   string $class
+	 * @param   int    $sizex
+	 * @param   int    $sizey
+	 *
+	 * @return string|void
+	 */
 	public function getLink($user, $class='', $sizex = 90, $sizey = 90)
 	{
 		$size = $this->getSize($sizex, $sizey);
@@ -108,17 +147,17 @@ class KunenaAvatar
 
 		if ($class)
 		{
-			$class=' class="'.$class.'"';
+			$class = ' class="' . $class . '"';
 		}
 
 		// Style is needed to resize avatar for JomSocial and other integration that do not have automatic resizing
 		if (!$this->resize)
 		{
-			$style = 'style="max-width: '.$size->x.'px; max-height: '.$size->y.'px"';
+			$style = 'style="max-width: ' . $size->x . 'px; max-height: ' . $size->y . 'px"';
 		}
-		else $style = '';
+		else { $style = ''; }
 
-		$link = '<img'.$class.' src="'.$avatar.'" alt="'.JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()).'" '.$style.' />';
+		$link = '<img' . $class . ' src="' . $avatar . '" alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" ' . $style . ' />';
 
 		return $link;
 	}

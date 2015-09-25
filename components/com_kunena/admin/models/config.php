@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.model');
 
@@ -20,6 +20,9 @@ jimport('joomla.application.component.model');
  */
 class KunenaAdminModelConfig extends KunenaModel
 {
+	/**
+	 * @return array
+	 */
 	function getConfiglists()
 	{
 		$lists = array();
@@ -308,13 +311,6 @@ class KunenaAdminModelConfig extends KunenaModel
 		$email_recipient_privacy[]         = JHtml::_('select.option', 'bcc', JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_BCC'));
 		$lists ['email_recipient_privacy'] = JHtml::_('select.genericlist', $email_recipient_privacy, 'cfg_email_recipient_privacy', 'class="inputbox" size="1"', 'value', 'text', $this->config->email_recipient_privacy);
 
-		$recaptcha_theme           = array();
-		$recaptcha_theme[]         = JHtml::_('select.option', 'red', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_RED'));
-		$recaptcha_theme[]         = JHtml::_('select.option', 'white', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_WHITE'));
-		$recaptcha_theme[]         = JHtml::_('select.option', 'blackglass', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_BLACK'));
-		$recaptcha_theme[]         = JHtml::_('select.option', 'clean', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_CLEAN'));
-		$lists ['recaptcha_theme'] = JHtml::_('select.genericlist', $recaptcha_theme, 'cfg_recaptcha_theme', 'class="inputbox" size="1"', 'value', 'text', $this->config->recaptcha_theme);
-
 		// Added new options into Kunena 2.0.0
 		$lists ['keywords']     = JHtml::_('select.genericlist', $yesno, 'cfg_keywords', 'class="inputbox" size="1"', 'value', 'text', $this->config->keywords);
 		$lists ['userkeywords'] = JHtml::_('select.genericlist', $yesno, 'cfg_userkeywords', 'class="inputbox" size="1"', 'value', 'text', $this->config->userkeywords);
@@ -357,8 +353,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['fallback_english'] = JHtml::_('select.genericlist', $yesno, 'cfg_fallback_english', 'class="inputbox" size="1"', 'value', 'text', $this->config->fallback_english);
 
 		$cache       = array();
-		$cachetime[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CFG_OPTION_USE_GLOBAL'));
-		$cachetime[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CFG_OPTION_NO_CACHING'));
+		$cache[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CFG_OPTION_USE_GLOBAL'));
+		$cache[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CFG_OPTION_NO_CACHING'));
 
 		$cachetime            = array();
 		$cachetime[]          = JHtml::_('select.option', '60', JText::_('COM_KUNENA_CFG_OPTION_1_MINUTE'));
@@ -457,6 +453,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$useredit[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
 		$useredit[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
 		$lists['useredit'] = JHtml::_('select.genericlist', $useredit, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->useredit);
+
+		$lists ['allow_change_subject'] = JHtml::_('select.genericlist', $yesno, 'cfg_allow_change_subject', 'class="inputbox" size="1"', 'value', 'text', $this->config->allow_change_subject);
 
 		return $lists;
 	}

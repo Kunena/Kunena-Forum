@@ -9,13 +9,16 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Category View
  */
 class KunenaViewCategory extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		if (!$this->config->enablerss)
@@ -62,6 +65,15 @@ class KunenaViewCategory extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $title
+	 * @param $url
+	 * @param $description
+	 * @param $category
+	 * @param $date
+	 * @param $userid
+	 * @param $username
+	 */
 	function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
 		if ($this->config->rss_author_in_title)

@@ -22,14 +22,14 @@ $this->addScript('js/search.js');
 
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('state', $this->state->get('list.search'))
-		->setLayout('user'); ?>
+	->set('state', $this->state->get('list.search'))
+	->setLayout('user'); ?>
 </div>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination)
-		->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>"
@@ -62,55 +62,62 @@ $this->addScript('js/search.js');
 
 				<?php if ($config->username) : $cols++; ?>
 				<th class="span2">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
 				</th>
 				<?php else : $cols++; ?>
 				<th class="span3">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
 				</th>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_posts) : $cols++; ?>
 				<th class="span1 center hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
 				</th>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_email) : $cols++; ?>
 				<th class="span1 hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
 				</th>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_joindate) : $cols++; ?>
 				<th class="span2 hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
 				</th>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_lastvisitdate) : $cols++; ?>
 				<th class="span2 hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
 				</th>
 				<?php endif; ?>
 
 				<?php if ($config->userlist_userhits) : $cols++; ?>
 				<th class="span1 center hidden-phone">
-					<?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
-						$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
-						'kuserlist-form'); ?>
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
 				</th>
 				<?php endif; ?>
 			</tr>
@@ -119,7 +126,8 @@ $this->addScript('js/search.js');
 		<?php
 		$i = $this->pagination->limitstart;
 
-		/** @var KunenaUser $user */
+		// @var KunenaUser $user
+
 		foreach ($this->users as $user) :
 			$avatar = $config->userlist_avatar ? $user->getAvatarImage('img-polaroid', 'thumb') : null;
 		?>
@@ -193,8 +201,8 @@ $this->addScript('js/search.js');
 
 	<div class="pull-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination)
-			->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 	</div>
 </form>
 <div class="clearfix"></div>

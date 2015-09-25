@@ -9,13 +9,16 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topics View
  */
 class KunenaViewTopics extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		$this->layout           = 'default';
@@ -47,6 +50,9 @@ class KunenaViewTopics extends KunenaView
 		$this->render('Topic/List', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	function displayUser($tpl = null)
 	{
 		$this->layout           = 'user';
@@ -75,6 +81,9 @@ class KunenaViewTopics extends KunenaView
 		$this->render('Topic/List', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	function displayPosts($tpl = null)
 	{
 		$this->layout           = 'posts';
@@ -104,6 +113,9 @@ class KunenaViewTopics extends KunenaView
 		$this->render('Message/List', $tpl);
 	}
 
+	/**
+	 *
+	 */
 	function displayRows()
 	{
 		if ($this->layout == 'posts')
@@ -116,6 +128,9 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 *
+	 */
 	function displayTopicRows()
 	{
 		$lasttopic      = null;
@@ -127,7 +142,7 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topics', &$this->topics, &$params, 0));
@@ -181,6 +196,7 @@ class KunenaViewTopics extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
 				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
@@ -195,6 +211,11 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $matches
+	 *
+	 * @return mixed|string
+	 */
 	function fillTopicInfo($matches)
 	{
 		switch ($matches[1])
@@ -212,6 +233,9 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 *
+	 */
 	function displayPostRows()
 	{
 		$lasttopic      = null;
@@ -223,7 +247,7 @@ class KunenaViewTopics extends KunenaView
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->messages, &$params, 0));
@@ -267,6 +291,7 @@ class KunenaViewTopics extends KunenaView
 				{
 					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				}
+
 				// FIXME: enable caching after fixing the issues
 				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
@@ -281,6 +306,12 @@ class KunenaViewTopics extends KunenaView
 		}
 	}
 
+	/**
+	 * @param   string $prefix
+	 * @param   string $class
+	 *
+	 * @return string
+	 */
 	function getTopicClass($prefix = 'k', $class = 'topic')
 	{
 		$class = $prefix . $class;
@@ -314,6 +345,7 @@ class KunenaViewTopics extends KunenaView
 				$txt .= ' ' . $prefix . 'deleted';
 			}
 		}
+
 		if ($this->topic->moved_id > 0)
 		{
 			$txt .= ' ' . $prefix . 'moved';
@@ -322,6 +354,10 @@ class KunenaViewTopics extends KunenaView
 		return $txt;
 	}
 
+	/**
+	 * @param   string $id
+	 * @param   string $attrib
+	 */
 	function displayTimeFilter($id = 'kfilter-select-time', $attrib = 'class="kinputbox" onchange="this.form.submit()" size="1"')
 	{
 		// make the select list for time selection
@@ -338,6 +374,11 @@ class KunenaViewTopics extends KunenaView
 		echo JHtml::_('select.genericlist', $timesel, 'sel', $attrib, 'value', 'text', $this->state->get('list.time'), $id);
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return string
+	 */
 	function getPagination($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
@@ -346,6 +387,9 @@ class KunenaViewTopics extends KunenaView
 		return $pagination->getPagesLinks();
 	}
 
+	/**
+	 * @param $type
+	 */
 	protected function _prepareDocument($type)
 	{
 		$limit    = $this->state->get('list.limit');
@@ -355,7 +399,6 @@ class KunenaViewTopics extends KunenaView
 
 		if ($type == 'default')
 		{
-
 			switch ($this->state->get('list.mode'))
 			{
 				case 'topics' :
@@ -390,11 +433,9 @@ class KunenaViewTopics extends KunenaView
 
 			$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
 			$this->setDescription($description);
-
 		}
 		elseif ($type == 'user')
 		{
-
 			switch ($this->state->get('list.mode'))
 			{
 				case 'posted' :
@@ -425,11 +466,9 @@ class KunenaViewTopics extends KunenaView
 
 			$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
 			$this->setDescription($description);
-
 		}
 		elseif ($type == 'posts')
 		{
-
 			switch ($this->state->get('list.mode'))
 			{
 				case 'unapproved':

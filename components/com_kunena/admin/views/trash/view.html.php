@@ -9,13 +9,16 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Trash view for Kunena backend
  */
 class KunenaAdminViewTrash extends KunenaView
 {
+	/**
+	 *
+	 */
 	function displayDefault()
 	{
 		$this->setLayout($this->state->get('layout'));
@@ -41,6 +44,9 @@ class KunenaAdminViewTrash extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayPurge()
 	{
 		$this->purgeitems    = $this->get('PurgeItems');
@@ -50,29 +56,26 @@ class KunenaAdminViewTrash extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarDefault()
 	{
 		// Set the titlebar text
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
 		JToolBarHelper::spacer();
-
-		if (version_compare(JVERSION, '3', '>'))
-		{
-			JToolBarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
-		}
-		else
-		{
-			JToolBarHelper::custom('restore', 'restore.png', 'restore_f2.png', 'COM_KUNENA_TRASH_RESTORE');
-		}
-
+		JToolBarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
 		JToolBarHelper::divider();
 		JToolBarHelper::custom('purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		JToolBarHelper::spacer();
 
 		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarPurge()
 	{
 		// Set the titlebar text
@@ -84,9 +87,12 @@ class KunenaAdminViewTrash extends KunenaView
 		JToolBarHelper::spacer();
 
 		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields = array();
@@ -113,14 +119,14 @@ class KunenaAdminViewTrash extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();
-//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-		// TODO: remove it when J2.5 support is dropped
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}

@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaDatabaseObject
@@ -25,8 +25,8 @@ abstract class KunenaDatabaseObject extends JObject
 	/**
 	 * Returns the global object.
 	 *
-	 * @param  int      $identifier  Object identifier to load.
-	 * @param  boolean  $reload      Force object reload from the database.
+	 * @param   int      $identifier  Object identifier to load.
+	 * @param   boolean  $reload      Force object reload from the database.
 	 *
 	 * @return  KunenaDatabaseObject
 	 * @throws  Exception
@@ -77,7 +77,7 @@ abstract class KunenaDatabaseObject extends JObject
 			$src = $include ? array_intersect_key($src, array_flip($fields)) : array_diff_key($src, array_flip($fields));
 		}
 
-		$this->setProperties ( $src );
+		$this->setProperties($src);
 
 		return true;
 	}
@@ -97,19 +97,19 @@ abstract class KunenaDatabaseObject extends JObject
 		}
 
 		// Create the table object
-		$table = $this->getTable ();
+		$table = $this->getTable();
 
 		// Load the object based on id
 		if ($this->id)
 		{
-			$this->_exists = $table->load ( $this->id );
+			$this->_exists = $table->load($this->id);
 		}
 
 		// Always set id
 		$table->id = $this->id;
 
 		// Assuming all is well at this point lets bind the data
-		$this->setProperties ( $table->getProperties () );
+		$this->setProperties($table->getProperties());
 
 		return $this->_exists;
 	}
@@ -127,26 +127,26 @@ abstract class KunenaDatabaseObject extends JObject
 		$this->_saving = true;
 
 		// Check the object.
-		if (! $this->check ())
+		if (! $this->check())
 		{
 			return $this->_saving = false;
 		}
 
 		// Initialize table object.
-		$table = $this->getTable ();
-		$table->bind ( $this->getProperties () );
-		$table->exists ( $this->_exists );
+		$table = $this->getTable();
+		$table->bind($this->getProperties());
+		$table->exists($this->_exists);
 		$isNew = ! $this->_exists;
 
 		// Check the table object.
-		if (! $table->check ())
+		if (! $table->check())
 		{
-			$this->setError ( $table->getError () );
+			$this->setError($table->getError());
 			return $this->_saving = false;
 		}
 
 		// Include the Kunena plugins for the on save events.
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeSave event.
@@ -168,7 +168,7 @@ abstract class KunenaDatabaseObject extends JObject
 		// If item was created, load the object.
 		if ($isNew)
 		{
-			$this->load ( $table->id );
+			$this->load($table->id);
 		}
 
 		$this->saveInternal();
@@ -194,12 +194,12 @@ abstract class KunenaDatabaseObject extends JObject
 		}
 
 		// Initialize table object.
-		$table = $this->getTable ();
-		$table->bind ( $this->getProperties () );
-		$table->exists ( $this->_exists );
+		$table = $this->getTable();
+		$table->bind($this->getProperties());
+		$table->exists($this->_exists);
 
 		// Include the Kunena plugins for the on save events.
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		// Trigger the onKunenaBeforeDelete event.
@@ -279,7 +279,7 @@ abstract class KunenaDatabaseObject extends JObject
 	 */
 	protected function getTable()
 	{
-		return JTable::getInstance ( $this->_table, 'Table' );
+		return JTable::getInstance($this->_table, 'Table');
 	}
 
 	/**

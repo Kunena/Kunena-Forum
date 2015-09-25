@@ -9,13 +9,16 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Misc View
  */
 class KunenaViewMisc extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		$params       = $this->app->getParams('com_kunena');
@@ -43,6 +46,9 @@ class KunenaViewMisc extends KunenaView
 		$this->render('Widget/Custom', $tpl);
 	}
 
+	/**
+	 *
+	 */
 	protected function _prepareDocument()
 	{
 		$this->setTitle($this->header);

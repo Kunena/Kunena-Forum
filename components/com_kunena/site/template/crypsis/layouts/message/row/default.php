@@ -10,8 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
-/** @var KunenaLayout $this */
-/** @var KunenaForumMessage $message */
+/*
+  @var KunenaLayout $this */
+// @var KunenaForumMessage $message
+
 $message = $this->message;
 $author = $message->getAuthor();
 $topic = $message->getTopic();
@@ -37,13 +39,13 @@ if ($topic->ordering)
 
 if ($topic->hold == 1 || $message->hold == 1)
 {
-	$txt .= ' '. 'unapproved';
+	$txt .= ' ' . 'unapproved';
 }
 else
 {
 	if ($topic->hold)
 	{
-		$txt .= ' '  . 'deleted';
+		$txt .= ' ' . 'deleted';
 	}
 }
 
@@ -53,7 +55,7 @@ if ($topic->moved_id > 0)
 }
 ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx).$txt; ?>">
+<tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
 	<?php if ($topic->unread) : ?>
 	<td class="hidden-phone center topic-item-unread">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
@@ -66,22 +68,23 @@ if ($topic->moved_id > 0)
 		<div>
 			<?php
 			if ($topic->unread) {
-				echo $this->getTopicLink($topic, 'unread', ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject') . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
-					. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+				echo $this->getTopicLink(
+     $topic, 'unread', ($isReply ? JText::_('COM_KUNENA_RE') . ' ' : '') . $message->displayField('subject') . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
+	. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
 			}
 			else
 			{
 				echo $this->getTopicLink(
-					$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE').' ' : '') . $message->displayField('subject')
+					$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE') . ' ' : '') . $message->displayField('subject')
 				);
 			}
 
 			if ($topic->getUserTopic()->favorite) {
-				echo $this->getIcon ('kfavoritestar', JText::_('COM_KUNENA_FAVORITE'));
+				echo $this->getIcon('kfavoritestar', JText::_('COM_KUNENA_FAVORITE'));
 			}
 
 			if ($topic->locked != 0) {
-				echo $this->getIcon ('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
+				echo $this->getIcon('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
 			}
 			?>
 		</div>
@@ -105,7 +108,7 @@ if ($topic->moved_id > 0)
 			<?php endif; ?>
 				<div class="span9">
 					<span>
-						<?php echo $this->getTopicLink ( $topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
+						<?php echo $this->getTopicLink($topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
 						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
 					</span>
 					<br />
@@ -122,10 +125,10 @@ if ($topic->moved_id > 0)
 	<?php endif; ?>
 
 	<?php
-	if (!empty($this->position))
+	if (!empty($this->position)) {
 		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
-			->setLayout('table_row');
+			->setLayout('table_row'); }
 	?>
 </tr>

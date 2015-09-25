@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 // Kunena 1.6.0: Convert deprecated configuration options
 function kunena_160_2010_05_30_configuration($parent)
@@ -29,7 +29,7 @@ function kunena_160_2010_05_30_configuration($parent)
 	{
 		if ($config->get('avatar_src'))
 		{
-			if (isset ($integration [$config->get('avatar_src')]))
+			if (isset($integration [$config->get('avatar_src')]))
 			{
 				$config->set('integration_avatar', $integration [$config->get('avatar_src')]);
 			}
@@ -37,12 +37,14 @@ function kunena_160_2010_05_30_configuration($parent)
 			{
 				$config->set('integration_avatar', 'kunena');
 			}
+
 			unset($config->avatar_src);
 		}
 	}
+
 	if ($config->get('fb_profile'))
 	{
-		if (isset ($integration [$config->get('fb_profile')]))
+		if (isset($integration [$config->get('fb_profile')]))
 		{
 			$profile = $integration [$config->get('fb_profile')];
 			$config->set('integration_access', $profile);
@@ -57,8 +59,10 @@ function kunena_160_2010_05_30_configuration($parent)
 			$config->set('integration_profile', 'kunena');
 			$config->set('integration_activity', 'none');
 		}
+
 		unset($config->fb_profile);
 	}
+
 	if ($config->get('js_actstr_integration'))
 	{
 		$config->set('integration_activity', 'jomsocial');
@@ -71,9 +75,10 @@ function kunena_160_2010_05_30_configuration($parent)
 			$config->set('integration_activity', 'none');
 		}
 	}
+
 	if ($config->get('pm_component'))
 	{
-		if (isset ($integration [$config->get('pm_component')]))
+		if (isset($integration [$config->get('pm_component')]))
 		{
 			$config->set('integration_private', $integration [$config->get('pm_component')]);
 		}
@@ -81,6 +86,7 @@ function kunena_160_2010_05_30_configuration($parent)
 		{
 			$config->set('integration_private', 'none');
 		}
+
 		unset($config->pm_component);
 	}
 

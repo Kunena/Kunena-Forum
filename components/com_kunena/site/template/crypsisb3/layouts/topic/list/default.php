@@ -38,14 +38,14 @@ $colspan = !empty($this->actions) ? 4 : 3;
 </div>
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('catid', 'all')
-		->setLayout('topic'); ?>
+	->set('catid', 'all')
+	->setLayout('topic'); ?>
 </div>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true);	?>
+	->set('pagination', $this->pagination->setDisplayedPages(4))
+	->set('display', true);	?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
@@ -95,11 +95,11 @@ $colspan = !empty($this->actions) ? 4 : 3;
 					<div class="input-group" role="group">
 						<div class="input-group-btn">
 							<label>
-							<?php if (!empty($this->topics) && !empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'follow'); ?>
+							<?php if (!empty($this->topics) && !empty($this->moreUri)) { echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary pull-left', 'follow'); } ?>
 							<?php if (!empty($this->actions)) : ?>
 								<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
 								<?php if (isset($this->actions['move'])) :
-									$options = array (JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
+									$options = array (JHtml::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION')));
 									echo JHtml::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 								endif;?>
 								<button type="submit" name="kcheckgo" class="btn btn-default"><?php echo JText::_('COM_KUNENA_GO') ?></button>
@@ -132,8 +132,8 @@ $colspan = !empty($this->actions) ? 4 : 3;
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true); ?>
+	->set('pagination', $this->pagination->setDisplayedPages(4))
+	->set('display', true); ?>
 </div>
 
 <div class="clearfix"></div>

@@ -55,7 +55,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -67,7 +67,8 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		// Get poll.
 		if ($this->message->parent == 0
-			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit'))
+			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit')
+)
 		{
 			$this->poll = $this->topic->getPoll();
 		}
@@ -103,12 +104,13 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	/**
 	 * Can user subscribe to the topic?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+			|| $this->config->topic_subscriptions == 'disabled'
+)
 		{
 			return false;
 		}

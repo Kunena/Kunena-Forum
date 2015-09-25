@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * User Model for Kunena
@@ -18,6 +18,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaModelUser extends KunenaModel
 {
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$active = $this->app->getMenu()->getActive();
@@ -70,6 +73,9 @@ class KunenaModelUser extends KunenaModel
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getQueryWhere()
 	{
 		$where = '';
@@ -112,6 +118,9 @@ class KunenaModelUser extends KunenaModel
 		return $where;
 	}
 
+	/**
+	 * @return array|string
+	 */
 	public function getQuerySearch()
 	{
 		// TODO: add strict search from the beginning of the name
@@ -141,6 +150,9 @@ class KunenaModelUser extends KunenaModel
 		return $where;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getTotal()
 	{
 		static $total = false;
@@ -157,6 +169,9 @@ class KunenaModelUser extends KunenaModel
 		return $total;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getCount()
 	{
 		static $total = false;
@@ -178,6 +193,9 @@ class KunenaModelUser extends KunenaModel
 		return $total;
 	}
 
+	/**
+	 * @return array|mixed
+	 */
 	public function getItems()
 	{
 		// FIXME: use pagination object and redirect on illegal page (maybe in the view)

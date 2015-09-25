@@ -56,18 +56,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		if ($this->message->isAuthorised('reply'))
 		{
-			if (version_compare(JVERSION, '3.4', '<') && $me->canDoCaptcha())
-			{
-				$this->quickreply = false;
-			}
-			elseif (version_compare(JVERSION, '3.4', '>') && $me->canDoCaptcha())
-			{
-				$this->quickreply = true;
-			}
-			else
-			{
-				$this->quickreply = true;
-			}
+			$this->quickreply = true;
 		}
 		else
 		{
@@ -82,7 +71,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', null, true)
 			);
 
-			if ($me->exists() && !KunenaSpamRecaptcha::getInstance()->enabled())
+			if ($me->exists())
 			{
 				$this->messageButtons->set('quickreply',
 					$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")
@@ -102,7 +91,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		$login = KunenaLogin::getInstance();
 		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled() && !$me->userid) {
-			$logintext =  '<a class="btn-link" href="#klogin"> ' . JText::_('JLOGIN'). '</a>';
+			$logintext =  '<a class="btn-link" href="#klogin" rel="nofollow"> ' . JText::_('JLOGIN'). '</a>';
 			if ($login->getRegistrationUrl()) {
 				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="' . $login->getRegistrationUrl() . '">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
 			}
@@ -193,7 +182,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 	}
 

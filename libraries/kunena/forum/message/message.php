@@ -1076,7 +1076,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 
@@ -1223,6 +1223,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 	// Internal functions
 
+	/**
+	 * @param bool $newTopic
+	 */
 	protected function update($newTopic = false)
 	{
 		// If post was published and then moved, we need to update old topic
@@ -1253,7 +1256,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 
 		// Activity integration
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 		$activity = KunenaFactory::getActivityIntegration();
 

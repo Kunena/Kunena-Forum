@@ -22,7 +22,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function exists()
 	{
@@ -119,7 +119,7 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		}
 
 		// Close all output buffers, just in case.
-		while(@ob_end_clean());
+		while(@ob_end_clean()) {}
 
 		// Handle 304 Not Modified
 		if (isset($_SERVER['HTTP_IF_NONE_MATCH']))
@@ -135,7 +135,6 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 				$this->app->close();
 			}
 		}
-
 
 		// Set file headers.
 		header('ETag: ' . $attachment->hash);

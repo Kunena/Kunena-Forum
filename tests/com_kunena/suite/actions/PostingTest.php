@@ -41,7 +41,7 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$db = JFactory::getDBO ();
 		foreach ($queries as $query) {
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 		KunenaFactory::loadLanguage();

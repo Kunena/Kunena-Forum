@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena User Controller
@@ -18,6 +18,12 @@ defined('_JEXEC') or die ();
  */
 class KunenaControllerUser extends KunenaController
 {
+	/**
+	 * @param   bool $cachable
+	 * @param   bool $urlparams
+	 *
+	 * @return JControllerLegacy|void
+	 */
 	public function display($cachable = false, $urlparams = false)
 	{
 		// Redirect profile to integrated component if profile integration is turned on
@@ -30,10 +36,10 @@ class KunenaControllerUser extends KunenaController
 			$redirect = $params->get('integration', 1);
 		}
 
-		if ($redirect && JRequest::getCmd('format', 'html') == 'html')
+		if ($redirect && JFactory::getApplication()->input->getCmd('format', 'html') == 'html')
 		{
 			$profileIntegration = KunenaFactory::getProfile();
-			$layout             = JRequest::getCmd('layout', 'default');
+			$layout             = JFactory::getApplication()->input->getCmd('layout', 'default');
 
 			if ($profileIntegration instanceof KunenaProfileKunena)
 			{
@@ -56,7 +62,7 @@ class KunenaControllerUser extends KunenaController
 			}
 		}
 
-		$layout = JRequest::getCmd('layout', 'default');
+		$layout = JFactory::getApplication()->input->getCmd('layout', 'default');
 		if ($layout == 'list')
 		{
 			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
@@ -68,6 +74,9 @@ class KunenaControllerUser extends KunenaController
 		parent::display();
 	}
 
+	/**
+	 *
+	 */
 	public function search()
 	{
 		$model = $this->getModel('user');
@@ -91,6 +100,9 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirect(KunenaRoute::_($uri, false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function change()
 	{
 		if (!JSession::checkToken('get'))
@@ -101,16 +113,22 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$layout = JRequest::getString('topic_layout', 'default');
+		$layout = JFactory::getApplication()->input->getString('topic_layout', 'default');
 		$this->me->setTopicLayout($layout);
 		$this->setRedirectBack();
 	}
 
+	/**
+	 *
+	 */
 	public function karmaup()
 	{
 		$this->karma(1);
 	}
 
+	/**
+	 *
+	 */
 	public function karmadown()
 	{
 		$this->karma(-1);
@@ -180,8 +198,8 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		JPluginHelper::importPlugin('system');
-		// TODO: Rename into JEventDispatcher when dropping Joomla! 2.5 support
-		$dispatcher = JDispatcher::getInstance();
+
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('OnAfterKunenaProfileUpdate', array($this->me, $success));
 
 		if ($errors)
@@ -197,9 +215,12 @@ class KunenaControllerUser extends KunenaController
 		}
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function ban()
 	{
-		$user = KunenaFactory::getUser(JRequest::getInt('userid', 0));
+		$user = KunenaFactory::getUser(JFactory::getApplication()->input->getInt('userid', 0));
 
 		if (!$user->exists() || !JSession::checkToken('post'))
 		{
@@ -217,25 +238,24 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$ip             = JRequest::getString('ip', '');
-		$block          = JRequest::getInt('block', 0);
-		$expiration     = JRequest::getString('expiration', '');
-		$reason_private = JRequest::getString('reason_private', '');
-		$reason_public  = JRequest::getString('reason_public', '');
-		$comment        = JRequest::getString('comment', '');
+		$ip             = JFactory::getApplication()->input->getString('ip', '');
+		$block          = JFactory::getApplication()->input->getInt('block', 0);
+		$expiration     = JFactory::getApplication()->input->getString('expiration', '');
+		$reason_private = JFactory::getApplication()->input->getString('reason_private', '');
+		$reason_public  = JFactory::getApplication()->input->getString('reason_public', '');
+		$comment        = JFactory::getApplication()->input->getString('comment', '');
 
-		$banDelPosts    = JRequest::getString('bandelposts', '');
-		$DelAvatar      = JRequest::getString('delavatar', '');
-		$DelSignature   = JRequest::getString('delsignature', '');
-		$DelProfileInfo = JRequest::getString('delprofileinfo', '');
+		$banDelPosts    = JFactory::getApplication()->input->getString('bandelposts', '');
+		$DelAvatar      = JFactory::getApplication()->input->getString('delavatar', '');
+		$DelSignature   = JFactory::getApplication()->input->getString('delsignature', '');
+		$DelProfileInfo = JFactory::getApplication()->input->getString('delprofileinfo', '');
 
-		$delban = JRequest::getString('delban', '');
+		$delban = JFactory::getApplication()->input->getString('delban', '');
 
 		if (!$ban->id)
 		{
 			$ban->ban($user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
 			$success = $ban->save();
-			$this->report($user->userid);
 		}
 		else
 		{
@@ -286,7 +306,7 @@ class KunenaControllerUser extends KunenaController
 			$this->app->enqueueMessage($message);
 		}
 
-		if (!empty ($DelAvatar) || !empty ($DelProfileInfo))
+		if (!empty($DelAvatar) || !empty($DelProfileInfo))
 		{
 			$avatar_deleted = '';
 			// Delete avatar from file system
@@ -295,12 +315,13 @@ class KunenaControllerUser extends KunenaController
 				KunenaFile::delete(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar);
 				$avatar_deleted = JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM');
 			}
+
 			$user->avatar = '';
 			$user->save();
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
 		}
 
-		if (!empty ($DelProfileInfo))
+		if (!empty($DelProfileInfo))
 		{
 			$user->personalText = '';
 			$user->birthdate    = '0000-00-00';
@@ -328,14 +349,14 @@ class KunenaControllerUser extends KunenaController
 			$user->save();
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'));
 		}
-		elseif (!empty ($DelSignature))
+		elseif (!empty($DelSignature))
 		{
 			$user->signature = '';
 			$user->save();
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE'));
 		}
 
-		if (!empty ($banDelPosts))
+		if (!empty($banDelPosts))
 		{
 			$params = array('starttime' => '-1', 'user' => $user->userid, 'mode' => 'unapproved');
 
@@ -351,18 +372,25 @@ class KunenaControllerUser extends KunenaController
 			{
 				$mes->publish(KunenaForum::DELETED);
 			}
+
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
 		}
 
 		$this->setRedirect($user->getUrl(false));
 	}
 
+	/**
+	 *
+	 */
 	public function cancel()
 	{
 		$user = KunenaFactory::getUser();
 		$this->setRedirect($user->getUrl(false));
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function login()
 	{
 		if (!JFactory::getUser()->guest || !JSession::checkToken('post'))
@@ -373,16 +401,16 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$username  = JRequest::getString('username', '', 'POST');
-		$password  = JRequest::getString('password', '', 'POST', JREQUEST_ALLOWRAW);
-		$remember  = JRequest::getBool('remember', false, 'POST');
-		$secretkey = JRequest::getString('secretkey', null, 'POST');
+		$username  = JFactory::getApplication()->input->getString('username', '', 'POST');
+		$password  = JFactory::getApplication()->input->getString('password', '', 'POST', 'raw');
+		$remember  = JFactory::getApplication()->input->getBool('remember', false, 'POST');
+		$secretkey = JFactory::getApplication()->input->getString('secretkey', null, 'POST');
 
 		$login = KunenaLogin::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64')); // Internal URI
+		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64')); // Internal URI
 
 		if (!$error && $return && JURI::isInternal($return))
 		{
@@ -395,6 +423,9 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirectBack();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function logout()
 	{
 		if (!JSession::checkToken('request'))
@@ -413,7 +444,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JRequest::getVar('return', '', 'method', 'base64')); // Internal URI
+		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64')); // Internal URI
 
 		if ($return && JURI::isInternal($return))
 		{
@@ -490,6 +521,11 @@ class KunenaControllerUser extends KunenaController
 
 	// Internal functions:
 
+	/**
+	 * @param $karmaDelta
+	 *
+	 * @throws Exception
+	 */
 	protected function karma($karmaDelta)
 	{
 		if (!JSession::checkToken('get'))
@@ -499,8 +535,9 @@ class KunenaControllerUser extends KunenaController
 
 			return;
 		}
+
 		$karma_delay = '14400'; // 14400 seconds = 6 hours
-		$userid      = JRequest::getInt('userid', 0);
+		$userid      = JFactory::getApplication()->input->getInt('userid', 0);
 
 		$target = KunenaFactory::getUser($userid);
 
@@ -565,6 +602,7 @@ class KunenaControllerUser extends KunenaController
 
 			return;
 		}
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterKarma($target->userid, $this->me->userid, $karmaDelta);
@@ -572,6 +610,10 @@ class KunenaControllerUser extends KunenaController
 	}
 
 	// Mostly copied from Joomla 1.5
+	/**
+	 * @return boolean
+	 * @throws Exception
+	 */
 	protected function saveUser()
 	{
 		// we only allow users to edit few fields
@@ -583,9 +625,9 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		//clean request
-		$post              = JRequest::get('post');
-		$post['password']  = JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
-		$post['password2'] = JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
+		$post              = JFactory::getApplication()->input->get('post');
+		$post['password']  = JFactory::getApplication()->input->get('password', '', 'post', 'string', 'raw'); // RAW input
+		$post['password2'] = JFactory::getApplication()->input->get('password2', '', 'post', 'string', 'raw'); // RAW input
 
 		if (empty($post['password']) || empty($post['password2']))
 		{
@@ -646,41 +688,41 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveProfile()
 	{
-		if (JRequest::getVar('signature', null) === null)
+		if (JFactory::getApplication()->input->get('signature', null) === null)
 		{
 			return;
 		}
 
-		$this->me->personalText = JRequest::getString('personaltext', '');
-		$birthdate              = JRequest::getString('birthdate');
+		$this->me->personalText = JFactory::getApplication()->input->getString('personaltext', '');
+		$birthdate              = JFactory::getApplication()->input->getString('birthdate');
 
 		if (!$birthdate)
 		{
-			$birthdate = JRequest::getInt('birthdate1', '0000') . '-' . JRequest::getInt('birthdate2', '00') . '-' . JRequest::getInt('birthdate3', '00');
+			$birthdate = JFactory::getApplication()->input->getInt('birthdate1', '0000') . '-' . JFactory::getApplication()->input->getInt('birthdate2', '00') . '-' . JFactory::getApplication()->input->getInt('birthdate3', '00');
 		}
 
 		$this->me->birthdate   = $birthdate;
-		$this->me->location    = trim(JRequest::getString('location', ''));
-		$this->me->gender      = JRequest::getInt('gender', '');
-		$this->me->icq         = trim(JRequest::getString('icq', ''));
-		$this->me->aim         = trim(JRequest::getString('aim', ''));
-		$this->me->yim         = trim(JRequest::getString('yim', ''));
-		$this->me->msn         = trim(JRequest::getString('msn', ''));
-		$this->me->skype       = trim(JRequest::getString('skype', ''));
-		$this->me->gtalk       = trim(JRequest::getString('gtalk', ''));
-		$this->me->twitter     = trim(JRequest::getString('twitter', ''));
-		$this->me->facebook    = trim(JRequest::getString('facebook', ''));
-		$this->me->myspace     = trim(JRequest::getString('myspace', ''));
-		$this->me->linkedin    = trim(JRequest::getString('linkedin', ''));
-		$this->me->delicious   = trim(JRequest::getString('delicious', ''));
-		$this->me->friendfeed  = trim(JRequest::getString('friendfeed', ''));
-		$this->me->digg        = trim(JRequest::getString('digg', ''));
-		$this->me->blogspot    = trim(JRequest::getString('blogspot', ''));
-		$this->me->flickr      = trim(JRequest::getString('flickr', ''));
-		$this->me->bebo        = trim(JRequest::getString('bebo', ''));
-		$this->me->websitename = JRequest::getString('websitename', '');
-		$this->me->websiteurl  = JRequest::getString('websiteurl', '');
-		$this->me->signature   = JRequest::getVar('signature', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
+		$this->me->location    = trim(JFactory::getApplication()->input->getString('location', ''));
+		$this->me->gender      = JFactory::getApplication()->input->getInt('gender', '');
+		$this->me->icq         = trim(JFactory::getApplication()->input->getString('icq', ''));
+		$this->me->aim         = trim(JFactory::getApplication()->input->getString('aim', ''));
+		$this->me->yim         = trim(JFactory::getApplication()->input->getString('yim', ''));
+		$this->me->msn         = trim(JFactory::getApplication()->input->getString('msn', ''));
+		$this->me->skype       = trim(JFactory::getApplication()->input->getString('skype', ''));
+		$this->me->gtalk       = trim(JFactory::getApplication()->input->getString('gtalk', ''));
+		$this->me->twitter     = trim(JFactory::getApplication()->input->getString('twitter', ''));
+		$this->me->facebook    = trim(JFactory::getApplication()->input->getString('facebook', ''));
+		$this->me->myspace     = trim(JFactory::getApplication()->input->getString('myspace', ''));
+		$this->me->linkedin    = trim(JFactory::getApplication()->input->getString('linkedin', ''));
+		$this->me->delicious   = trim(JFactory::getApplication()->input->getString('delicious', ''));
+		$this->me->friendfeed  = trim(JFactory::getApplication()->input->getString('friendfeed', ''));
+		$this->me->digg        = trim(JFactory::getApplication()->input->getString('digg', ''));
+		$this->me->blogspot    = trim(JFactory::getApplication()->input->getString('blogspot', ''));
+		$this->me->flickr      = trim(JFactory::getApplication()->input->getString('flickr', ''));
+		$this->me->bebo        = trim(JFactory::getApplication()->input->getString('bebo', ''));
+		$this->me->websitename = JFactory::getApplication()->input->getString('websitename', '');
+		$this->me->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
+		$this->me->signature   = JFactory::getApplication()->input->get('signature', '', 'post', 'string', 'raw'); // RAW input
 	}
 
 	/**
@@ -720,7 +762,7 @@ class KunenaControllerUser extends KunenaController
 	 */
 	protected function saveAvatar()
 	{
-		$action         = JRequest::getString('avatar', 'keep');
+		$action         = JFactory::getApplication()->input->getString('avatar', 'keep');
 		$current_avatar = $this->me->avatar;
 
 		$avatarFile = $this->app->input->files->get('avatarfile');
@@ -791,59 +833,6 @@ class KunenaControllerUser extends KunenaController
 		$this->me->userListtime = $this->app->input->getInt('userlisttime', '');
 	}
 
-	// Reports a user to stopforumspam.com
-	protected function report($userid)
-	{
-		if (!$this->config->stopforumspam_key || !$userid)
-		{
-			return false;
-		}
-
-		$spammer = JFactory::getUser($userid);
-
-		$db = JFactory::getDBO();
-		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
-		$ip = $db->loadResult();
-
-		// TODO: replace this code by using JHttpTransport class
-		$data = "username=" . $spammer->username . "&ip_addr=" . $ip . "&email=" . $spammer->email . "&api_key=" . $this->config->stopforumspam_key;
-		$fp   = fsockopen("www.stopforumspam.com", 80);
-		fputs($fp, "POST /add.php HTTP/1.1\n");
-		fputs($fp, "Host: www.stopforumspam.com\n");
-		fputs($fp, "Content-type: application/x-www-form-urlencoded\n");
-		fputs($fp, "Content-length: " . strlen($data) . "\n");
-		fputs($fp, "Connection: close\n\n");
-		fputs($fp, $data);
-		// Create a buffer which holds the response
-		$response = '';
-
-		// Read the response
-		while (!feof($fp))
-		{
-			$response .= fread($fp, 1024);
-		}
-		// The file pointer is no longer needed. Close it
-		fclose($fp);
-
-		if (strpos($response, 'HTTP/1.1 200 OK') === 0)
-		{
-			// Report accepted. There is no need to display the reason
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
-
-			return true;
-		}
-		else
-		{
-			// Report failed or refused
-			$reasons = array();
-			preg_match('/<p>.*<\/p>/', $response, $reasons);
-			// stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
-
-			return false;
-		}
-	}
-
 	public function delfile()
 	{
 		if (!JSession::checkToken('post'))
@@ -854,8 +843,8 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (!empty($cid))
 		{
@@ -868,7 +857,7 @@ class KunenaControllerUser extends KunenaController
 				$attachments = array($attachment->id, 1);
 				$attach = array();
 				$removeList = array_keys(array_diff_key($attachments, $attach));
-				JArrayHelper::toInteger($removeList);
+				Joomla\Utilities\ArrayHelper::toInteger($removeList);
 				$message->removeAttachments($removeList);
 
 				$topic = $message->getTopic();
@@ -877,7 +866,7 @@ class KunenaControllerUser extends KunenaController
 				{
 					$message->save();
 
-					if ( $topic->attachments > 0 )
+					if ($topic->attachments > 0)
 					{
 						$topic->attachments = $topic->attachments - 1;
 						$topic->save(false);

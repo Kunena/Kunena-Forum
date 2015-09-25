@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * class KunenaForum
@@ -82,14 +82,14 @@ abstract class KunenaForum
 	 *		// Initialize the framework (new in 2.0.0)
 	 *		KunenaForum::setup();
 	 *		// It's now safe to display something or to save Kunena objects
-	 *}
+	 * }
 	 * </code>
 	 *
 	 * @see KunenaForum::installed()
 	 * @see KunenaForum::isCompatible()
 	 * @see KunenaForum::setup()
 	 *
-	 * @param boolean $checkAdmin True if administrator is considered as a special case.
+	 * @param   boolean $checkAdmin True if administrator is considered as a special case.
 	 * @return boolean True if online.
 	 */
 	public static function enabled($checkAdmin = true)
@@ -150,7 +150,7 @@ abstract class KunenaForum
 
 		// Setup error logging.
 		jimport('joomla.error.log');
-		$options = array('logger'=>'w3c', 'text_file'=>'kunena.php');
+		$options = array('logger' => 'w3c', 'text_file' => 'kunena.php');
 		$categories = array('kunena');
 		$levels = JDEBUG || $config->debug ? JLog::ALL :
 			JLog::EMERGENCY | JLog::ALERT | JLog::CRITICAL | JLog::ERROR;
@@ -175,7 +175,7 @@ abstract class KunenaForum
 	 *
 	 * @see KunenaForum::installed()
 	 *
-	 * @param string $version Minimum required version.
+	 * @param   string $version Minimum required version.
 	 *
 	 * @return boolean Yes, if it is safe to use Kunena Framework.
 	 */
@@ -304,17 +304,17 @@ abstract class KunenaForum
 	 *
 	 * </code>
 	 *
-	 * @param string $viewName Name of the view.
-	 * @param string $layout Name of the layout.
-	 * @param null|string $template Name of the template file.
-	 * @param array|JRegistry $params Extra parameters to control the model.
+	 * @param   string $viewName Name of the view.
+	 * @param   string $layout Name of the layout.
+	 * @param   null|string $template Name of the template file.
+	 * @param   array|JRegistry $params Extra parameters to control the model.
 	 */
 	public static function display($viewName, $layout='default', $template=null, $params = array())
 	{
 		// Filter input
-		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
-		$layout = preg_replace( '/[^A-Z0-9_]/i', '', $layout );
-		$template = preg_replace( '/[^A-Z0-9_]/i', '', $template );
+		$viewName = preg_replace('/[^A-Z0-9_]/i', '', $viewName);
+		$layout = preg_replace('/[^A-Z0-9_]/i', '', $layout);
+		$template = preg_replace('/[^A-Z0-9_]/i', '', $template);
 		$template = $template ? $template : null;
 
 		$view = "KunenaView{$viewName}";
@@ -328,9 +328,9 @@ abstract class KunenaForum
 		require_once KPATH_SITE . '/views/common/view.html.php';
 		require_once KPATH_SITE . '/models/common.php';
 
-		if ( !class_exists( $view ) )
+		if (!class_exists($view))
 		{
-			$vpath = KPATH_SITE . '/views/'.$viewName.'/view.html.php';
+			$vpath = KPATH_SITE . '/views/' . $viewName . '/view.html.php';
 
 			if (!is_file($vpath))
 			{
@@ -340,9 +340,9 @@ abstract class KunenaForum
 			require_once $vpath;
 		}
 
-		if ( $viewName != 'common' && !class_exists( $model ) )
+		if ($viewName != 'common' && !class_exists($model))
 		{
-			$mpath = KPATH_SITE . '/models/'.$viewName.'.php';
+			$mpath = KPATH_SITE . '/models/' . $viewName . '.php';
 
 			if (!is_file($mpath))
 			{
@@ -353,7 +353,7 @@ abstract class KunenaForum
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
-		/** @var KunenaView $view */
+		// @var KunenaView $view
 
 		if ($params instanceof JRegistry)
 		{
@@ -368,9 +368,10 @@ abstract class KunenaForum
 
 		// Push the model into the view (as default).
 		$model = new $model();
-		/** @var KunenaModel $model */
+		// @var KunenaModel $model
+
 		$model->initialize($params);
-		$view->setModel ( $model, true );
+		$view->setModel($model, true);
 
 		// Add template path
 		if ($params->get('templatepath'))
@@ -380,7 +381,7 @@ abstract class KunenaForum
 
 		if ($viewName != 'common')
 		{
-			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
+			$view->common = new KunenaViewCommon(array ('base_path' => KPATH_SITE ));
 			$view->common->embedded = true;
 		}
 
@@ -388,10 +389,10 @@ abstract class KunenaForum
 		$view->embedded = true;
 
 		// Flag view as being teaser
-		$view->teaser = $params->get('teaser',0);
+		$view->teaser = $params->get('teaser', 0);
 
 		// Render the view.
-		$view->displayLayout ($layout, $template);
+		$view->displayLayout($layout, $template);
 	}
 
 	// Internal functions
@@ -406,7 +407,7 @@ abstract class KunenaForum
 		}
 		else
 		{
-			self::$version = strtoupper ( '@kunenaversion@' );
+			self::$version = strtoupper('@kunenaversion@');
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);

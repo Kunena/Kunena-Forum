@@ -11,7 +11,7 @@
  * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Query Element Class.
@@ -39,9 +39,9 @@ class KunenaDatabaseQueryElement
 	/**
 	 * Constructor.
 	 *
-	 * @param	string	$name		The name of the element.
-	 * @param	mixed	$elements	String or array.
-	 * @param	string	$glue		The glue for elements.
+	 * @param   string	$name		The name of the element.
+	 * @param   mixed	$elements	String or array.
+	 * @param   string	$glue		The glue for elements.
 	 *
 	 * @return	KunenaDatabaseQueryElement
 	 * @since	1.6
@@ -63,7 +63,7 @@ class KunenaDatabaseQueryElement
 	 */
 	public function __toString()
 	{
-		return PHP_EOL.$this->_name.' '.implode($this->_glue, $this->_elements);
+		return PHP_EOL . $this->_name . ' ' . implode($this->_glue, $this->_elements);
 	}
 
 	/**
@@ -167,7 +167,7 @@ class KunenaDatabaseQuery
 	/**
 	 * Clear data from the query or a specific clause of the query.
 	 *
-	 * @param	string	$clause	Optionally, the name of the clause to clear, or nothing to clear the whole query.
+	 * @param   string	$clause	Optionally, the name of the clause to clear, or nothing to clear the whole query.
 	 *
 	 * @return	void
 	 * @since	1.6
@@ -245,7 +245,7 @@ class KunenaDatabaseQuery
 
 
 	/**
-	 * @param	mixed	$columns	A string or an array of field names.
+	 * @param   mixed	$columns	A string or an array of field names.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -267,7 +267,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	string	$tables	The name of the table to delete from.
+	 * @param   string	$tables	The name of the table to delete from.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -281,7 +281,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	$tables	A string or array of table names.
+	 * @param   mixed	$tables	A string or array of table names.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -295,7 +295,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	$tables	A string or array of table names.
+	 * @param   mixed	$tables	A string or array of table names.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -309,7 +309,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	$tables	A string or array of table names.
+	 * @param   mixed	$tables	A string or array of table names.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -329,8 +329,8 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	string	$type
-	 * @param	string	$conditions
+	 * @param   string	$type
+	 * @param   string	$conditions
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -348,7 +348,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	string	$conditions
+	 * @param   string	$conditions
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -361,7 +361,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	string	$conditions
+	 * @param   string	$conditions
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -374,7 +374,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	string	$conditions
+	 * @param   string	$conditions
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -387,7 +387,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	string	$conditions
+	 * @param   string	$conditions
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -400,8 +400,8 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	$conditions	A string or array of conditions.
-	 * @param	string	$glue
+	 * @param   mixed	$conditions	A string or array of conditions.
+	 * @param   string	$glue
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -422,8 +422,8 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	$conditions	A string or array of where conditions.
-	 * @param	string	$glue
+	 * @param   mixed	$conditions	A string or array of where conditions.
+	 * @param   string	$glue
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -444,7 +444,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	$columns	A string or array of ordering columns.
+	 * @param   mixed	$columns	A string or array of ordering columns.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -464,8 +464,8 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	$conditions	A string or array of columns.
-	 * @param	string	$glue
+	 * @param   mixed	$conditions	A string or array of columns.
+	 * @param   string	$glue
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -487,7 +487,7 @@ class KunenaDatabaseQuery
 	}
 
 	/**
-	 * @param	mixed	$columns	A string or array of ordering columns.
+	 * @param   mixed	$columns	A string or array of ordering columns.
 	 *
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
@@ -560,7 +560,6 @@ class KunenaDatabaseQuery
 				{
 					$query .= (string) $this->_order;
 				}
-
 				break;
 
 			case 'delete':
@@ -580,7 +579,6 @@ class KunenaDatabaseQuery
 				{
 					$query .= (string) $this->_where;
 				}
-
 				break;
 
 			case 'update':
@@ -601,7 +599,6 @@ class KunenaDatabaseQuery
 				{
 					$query .= (string) $this->_where;
 				}
-
 				break;
 
 			case 'insert':
@@ -612,7 +609,6 @@ class KunenaDatabaseQuery
 				{
 					$query .= (string) $this->_where;
 				}
-
 				break;
 		}
 

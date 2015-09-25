@@ -17,13 +17,11 @@
 			<folder>avatars</folder>
 			<folder>category_images</folder>
 			<folder>emoticons</folder>
-			<folder>icons</folder>
 			<folder>images</folder>
 			<folder>js</folder>
 			<folder>less</folder>
 			<folder>ranks</folder>
 			<folder>topic_icons</folder>
-			<folder>category_icons</folder>
 		</files>
 	</fileset>
 </extension>

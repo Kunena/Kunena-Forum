@@ -59,16 +59,17 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 		}
 		elseif ($format == 'text')
 		{
-			$this->body = function () use ($body)
-			{
+			$this->body = function () use ($body) {
+
 				return htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
 			};
 		}
 		else
 		{
-			$this->body = function () use ($body)
-			{
-				/** @var JCache|JCacheControllerCallback $cache */
+			$this->body = function () use ($body) {
+
+				// @var JCache|JCacheControllerCallback $cache
+
 				$cache = JFactory::getCache('com_kunena', 'callback');
 				$cache->setLifeTime(180);
 

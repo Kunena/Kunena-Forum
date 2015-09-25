@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Attachments Controller
@@ -20,12 +20,18 @@ class KunenaAdminControllerAttachments extends KunenaController
 {
 	protected $baseurl = null;
 
+	/**
+	 * @param   array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=attachments';
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function delete()
 	{
 		if (!JSession::checkToken('post'))
@@ -36,8 +42,8 @@ class KunenaAdminControllerAttachments extends KunenaController
 			return;
 		}
 
-		$cid = JRequest::getVar('cid', array(), 'post', 'array'); // Array of integers
-		JArrayHelper::toInteger($cid);
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (!$cid)
 		{
@@ -55,14 +61,14 @@ class KunenaAdminControllerAttachments extends KunenaController
 			$attachments = array($attachment->id, 1);
 			$attach = array();
 			$removeList = array_keys(array_diff_key($attachments, $attach));
-			JArrayHelper::toInteger($removeList);
+			Joomla\Utilities\ArrayHelper::toInteger($removeList);
 			$message->removeAttachments($removeList);
 			$message->save();
 
 			$topic = $message->getTopic();
 			$attachment->delete();
 
-			if ( $topic->attachments > 0 )
+			if ($topic->attachments > 0)
 			{
 				$topic->attachments = $topic->attachments - 1;
 				$topic->save(false);

@@ -9,7 +9,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Access Control for Joomla 2.5+
@@ -46,7 +46,7 @@ class KunenaAccessJoomla
 	/**
 	 * Get access groups for the selected category.
 	 *
-	 * @param KunenaForumCategory $category Category
+	 * @param   KunenaForumCategory $category Category
 	 *
 	 * @return array
 	 */
@@ -84,8 +84,8 @@ class KunenaAccessJoomla
 	/**
 	 * Get group name in selected access type.
 	 *
-	 * @param string $accesstype Access type.
-	 * @param int    $id         Group id.
+	 * @param   string $accesstype Access type.
+	 * @param   int    $id         Group id.
 	 *
 	 * @return string|null
 	 */
@@ -129,8 +129,8 @@ class KunenaAccessJoomla
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param string $accesstype Access type.
-	 * @param int    $category   Group id.
+	 * @param   string $accesstype Access type.
+	 * @param   int    $category   Group id.
 	 *
 	 * @return array
 	 */
@@ -217,7 +217,7 @@ class KunenaAccessJoomla
 	 *
 	 * Results may be cached.
 	 *
-	 * @param array $categories List of categories, null = all.
+	 * @param   array $categories List of categories, null = all.
 	 *
 	 * @return array of (catid=>userid)
 	 */
@@ -245,8 +245,8 @@ class KunenaAccessJoomla
 	 *
 	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
-	 * @param KunenaForumCategory $category
-	 * @param int                 $userid
+	 * @param   KunenaForumCategory $category
+	 * @param   int                 $userid
 	 *
 	 * @return array
 	 */
@@ -267,8 +267,8 @@ class KunenaAccessJoomla
 	 *
 	 * Results for the current user are saved into session.
 	 *
-	 * @param int   $userid     User who needs the authorisation (null=current user, 0=visitor).
-	 * @param array $categories List of categories in access type.
+	 * @param   int   $userid     User who needs the authorisation (null=current user, 0=visitor).
+	 * @param   array $categories List of categories in access type.
 	 *
 	 * @return array where category ids are in the keys.
 	 */
@@ -316,8 +316,8 @@ class KunenaAccessJoomla
 	/**
 	 * Authorise list of userids to topic or category.
 	 *
-	 * @param    mixed $topic   Category or topic.
-	 * @param    array $userids list(allow, deny).
+	 * @param   mixed $topic   Category or topic.
+	 * @param   array $userids list(allow, deny).
 	 *
 	 * @return array
 	 */
@@ -359,7 +359,7 @@ class KunenaAccessJoomla
 	/**
 	 * Method to return a list of groups which have view level (derived from Joomla 1.6)
 	 *
-	 * @param    integer $viewlevel
+	 * @param   integer $viewlevel
 	 *
 	 * @return    array    List of view levels for which the user is authorised.
 	 */
@@ -392,9 +392,9 @@ class KunenaAccessJoomla
 	/**
 	 * Method to return a list of user Ids contained in a Group (derived from Joomla 1.6)
 	 *
-	 * @param    int     $groupId   The group Id
-	 * @param    boolean $recursive Recursively include all child groups (optional)
-	 * @param    array   $inUsers   Only list selected users.
+	 * @param   int     $groupId   The group Id
+	 * @param   boolean $recursive Recursively include all child groups (optional)
+	 * @param   array   $inUsers   Only list selected users.
 	 *
 	 * @return    array
 	 */
@@ -435,7 +435,7 @@ class KunenaAccessJoomla
 		$result = (array) $db->loadColumn();
 
 		// Clean up any NULL values, just in case
-		JArrayHelper::toInteger($result);
+		Joomla\Utilities\ArrayHelper::toInteger($result);
 		return $result;
 	}
 
@@ -484,6 +484,7 @@ class KunenaAccessJoomla
 			// These users can do the action
 			$allow = $this->getUsersByGroup($allow, true);
 		}
+
 		if ($deny)
 		{
 			// But these users have explicit deny for the action

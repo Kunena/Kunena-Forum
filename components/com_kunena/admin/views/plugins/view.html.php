@@ -51,15 +51,7 @@ class KunenaAdminViewPlugins extends KunenaView
 	 */
 	protected function setToolbar()
 	{
-		if (version_compare(JVERSION, '3', '>'))
-		{
-			JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
-		}
-		else
-		{
-			JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'pluginsmanager');
-		}
-
+		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
 		JToolbarHelper::spacer();
 		JToolbarHelper::editList('plugin.edit');
 		JToolbarHelper::divider();
@@ -69,7 +61,7 @@ class KunenaAdminViewPlugins extends KunenaView
 		JToolbarHelper::checkin('checkin');
 		JToolbarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -109,11 +101,8 @@ class KunenaAdminViewPlugins extends KunenaView
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();
-//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-		// TODO: remove it when J2.5 support is dropped
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}

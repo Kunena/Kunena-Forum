@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaForumMessageThankyou
@@ -27,7 +27,7 @@ class KunenaForumMessageThankyou extends JObject
 	protected $users = array();
 
 	/**
-	 * @param int $id
+	 * @param   int $id
 	 *
 	 * @internal
 	 */
@@ -37,8 +37,8 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * @param null $identifier
-	 * @param bool $reload
+	 * @param   null $identifier
+	 * @param   bool $reload
 	 *
 	 * @return KunenaForumMessageThankyou
 	 */
@@ -50,9 +50,9 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * Check if the user has already said thank you.
 	 *
-	 * @param int $userid
+	 * @param   int $userid
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function exists($userid)
 	{
@@ -60,19 +60,20 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * @param int $userid
-	 * @param string $time
+	 * @param   int $userid
+	 * @param   string $time
 	 */
-	public function _add($userid, $time) {
+	public function _add($userid, $time)
+	{
 		$this->users[$userid] = $time;
 	}
 
 	/**
 	 * Save thank you.
 	 *
-	 * @param mixed $user
+	 * @param   mixed $user
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function save($user)
 	{
@@ -81,28 +82,28 @@ class KunenaForumMessageThankyou extends JObject
 
 		if (!$user->exists())
 		{
-			$this->setError( JText::_('COM_KUNENA_THANKYOU_LOGIN') );
+			$this->setError(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
 			return false;
 		}
 
 		if ($user->userid == $message->userid)
 		{
-			$this->setError( JText::_ ( 'COM_KUNENA_THANKYOU_NOT_YOURSELF' ) );
+			$this->setError(JText::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
 			return false;
 		}
 
-		if ($this->exists ( $user->userid ))
+		if ($this->exists($user->userid))
 		{
-			$this->setError( JText::_ ( 'COM_KUNENA_THANKYOU_ALLREADY' ) );
+			$this->setError(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
 			return false;
 		}
 
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$time = JFactory::getDate();
 		$query = "INSERT INTO #__kunena_thankyou
 			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toSql())}";
-		$db->setQuery ( $query );
-		$db->query ();
+		$db->setQuery($query);
+		$db->execute();
 
 		// Check for an error message.
 		if ($db->getErrorNum())
@@ -117,22 +118,22 @@ class KunenaForumMessageThankyou extends JObject
 	}
 
 	/**
-	 * @param KunenaForumMessage $message
+	 * @param   KunenaForumMessage $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function _savethankyou(KunenaForumMessage $message)
 	{
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$query = "UPDATE #__kunena_users
 				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
-		$db->setQuery ( $query );
-		$db->query ();
+		$db->setQuery($query);
+		$db->execute();
 
 		// Check for an error message.
 		if ($db->getErrorNum())
 		{
-			$this->setError ( $db->getErrorMsg() );
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 
@@ -151,9 +152,9 @@ class KunenaForumMessageThankyou extends JObject
 	/**
 	 * Detele thank you from the database.
 	 *
-	 * @param mixed $user
+	 * @param   mixed $user
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function delete($user)
 	{
@@ -162,29 +163,29 @@ class KunenaForumMessageThankyou extends JObject
 
 		if (!$user->exists())
 		{
-			$this->setError( JText::_('COM_KUNENA_THANKYOU_LOGIN') );
+			$this->setError(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
 			return false;
 		}
 
-		if (!$this->exists ( $user->userid ))
+		if (!$this->exists($user->userid))
 		{
-			$this->setError( JText::_ ( 'COM_KUNENA_THANKYOU_NOT_PRESENT' ) );
+			$this->setError(JText::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
 			return false;
 		}
 
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO();
 		$query = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)} AND userid={$db->quote($user->userid)}";
-		$db->setQuery ( $query );
-		$db->query ();
+		$db->setQuery($query);
+		$db->execute();
 
 		$query = "UPDATE #__kunena_users SET thankyou=thankyou-1 WHERE userid={$db->quote($message->userid)}";
-		$db->setQuery ( $query );
-		$db->query ();
+		$db->setQuery($query);
+		$db->execute();
 
 		// Check for an error message.
-		if ($db->getErrorNum ())
+		if ($db->getErrorNum())
 		{
-			$this->setError ( $db->getErrorMsg () );
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 

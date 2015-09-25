@@ -9,16 +9,20 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaMenuHelper
  */
 abstract class KunenaMenuHelper
 {
+	/**
+	 *
+	 */
 	public static function cleanCache()
 	{
-		/** @var JCache|JCacheController $cache */
+		// @var JCache|JCacheController $cache
+
 		$cache = JFactory::getCache();
 		$cache->clean('mod_menu');
 	}
@@ -27,7 +31,7 @@ abstract class KunenaMenuHelper
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 * This only method need to be used only in frontend part
 	 *
-	 * @param	JRegistry	$params	The module options.
+	 * @param   JRegistry	$params	The module options.
 	 *
 	 * @return	array
 	 * @see		modules/mod_menu/helper.php
@@ -47,7 +51,7 @@ abstract class KunenaMenuHelper
 		{
 			$levels = JFactory::getUser()->getAuthorisedViewLevels();
 			asort($levels);
-			$key = 'menu_items'.$params.implode(',', $levels).'.'.$active->id;
+			$key = 'menu_items' . $params . implode(',', $levels) . '.' . $active->id;
 
 			$cache = JFactory::getCache('com_kunena.menu', '');
 			$items = $cache->get($key);
@@ -69,7 +73,8 @@ abstract class KunenaMenuHelper
 					if (($start && $start > $item->level)
 						|| ($end && $item->level > $end)
 						|| (!$showAll && $item->level > 1 && !in_array($item->parent_id, $path))
-						|| ($start > 1 && !in_array($item->tree[$start-2], $path)))
+						|| ($start > 1 && !in_array($item->tree[$start - 2], $path))
+)
 					{
 						unset($items[$i]);
 						continue;
@@ -102,13 +107,12 @@ abstract class KunenaMenuHelper
 							if ((strpos($item->link, 'index.php?') === 0) && (strpos($item->link, 'Itemid=') === false))
 							{
 								// If this is an internal Joomla link, ensure the Itemid is set.
-								$item->flink = $item->link.'&Itemid='.$item->id;
+								$item->flink = $item->link . '&Itemid=' . $item->id;
 							}
-
 							break;
 						case 'alias':
 							// If this is an alias use the item id stored in the parameters to make the link.
-							$item->flink = 'index.php?Itemid='.$item->params->get('aliasoptions');
+							$item->flink = 'index.php?Itemid=' . $item->params->get('aliasoptions');
 
 							break;
 						default:
@@ -116,13 +120,12 @@ abstract class KunenaMenuHelper
 
 							if ($router->getMode() == JROUTER_MODE_SEF)
 							{
-								$item->flink = 'index.php?Itemid='.$item->id;
+								$item->flink = 'index.php?Itemid=' . $item->id;
 							}
 							else
 							{
-								$item->flink .= '&Itemid='.$item->id;
+								$item->flink .= '&Itemid=' . $item->id;
 							}
-
 							break;
 					}
 
@@ -143,9 +146,9 @@ abstract class KunenaMenuHelper
 
 				if (isset($lastitem))
 				{
-					$lastitem->deeper		= (($start?$start:1) > $lastitem->level);
-					$lastitem->shallower	= (($start?$start:1) < $lastitem->level);
-					$lastitem->level_diff	= ($lastitem->level - ($start?$start:1));
+					$lastitem->deeper		= (($start ? $start : 1) > $lastitem->level);
+					$lastitem->shallower	= (($start ? $start : 1) < $lastitem->level);
+					$lastitem->level_diff	= ($lastitem->level - ($start ? $start : 1));
 				}
 			}
 

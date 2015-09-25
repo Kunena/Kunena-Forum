@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 require_once KPATH_ADMIN . '/models/categories.php';
 
@@ -26,6 +26,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 	protected $topicActions = false;
 	protected $actionMove = false;
 
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$layout = $this->getCmd('layout', 'default');
@@ -74,6 +77,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		$this->setState('list.direction', $value);
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function getLastestCategories()
 	{
 		if ($this->items === false)
@@ -87,6 +93,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $this->items;
 	}
 
+	/**
+	 * @return array|boolean|KunenaForumCategory[]
+	 */
 	public function getCategories()
 	{
 		if ($this->items === false)
@@ -124,7 +133,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($categories [0]), 1);
 			}
 
-			if (empty ($allsubcats))
+			if (empty($allsubcats))
 			{
 				return array();
 			}
@@ -138,9 +147,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 			foreach ($allsubcats as $subcat)
 			{
-				if ($flat || isset ($categories [0] [$subcat->parent_id]))
+				if ($flat || isset($categories [0] [$subcat->parent_id]))
 				{
-
 					$last = $subcat->getLastCategory();
 
 					if ($last->last_topic_id)
@@ -161,8 +169,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 						$modcats [] = $subcat->id;
 					}
 				}
+
 				$categories [$subcat->parent_id] [] = $subcat;
 			}
+
 			// Prefetch topics
 			$topics = KunenaForumTopicHelper::getTopics($topiclist);
 
@@ -188,7 +198,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 			{
 				$catlist = implode(',', $modcats);
 				$db      = JFactory::getDBO();
-				$db->setQuery("SELECT catid, COUNT(*) AS count
+				$db->setQuery(
+     "SELECT catid, COUNT(*) AS count
 				FROM #__kunena_messages
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid");
@@ -226,16 +237,25 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $this->items;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getUnapprovedCount()
 	{
 		return $this->pending;
 	}
 
+	/**
+	 * @return KunenaForumCategory
+	 */
 	public function getCategory()
 	{
 		return KunenaForumCategoryHelper::get($this->getState('item.id'));
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function getTopics()
 	{
 		if ($this->topics === false)
@@ -302,13 +322,15 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				{
 					KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
-
 			}
 		}
 
 		return $this->topics;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function getTotal()
 	{
 		if ($this->total === false)
@@ -319,6 +341,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $this->total;
 	}
 
+	/**
+	 * @return array|null
+	 */
 	public function getTopicActions()
 	{
 		if ($this->topics === false)
@@ -391,11 +416,17 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $actionDropdown;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function getActionMove()
 	{
 		return $this->actionMove;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getModerators()
 	{
 		$moderators = $this->getCategory()->getModerators(false);
@@ -403,6 +434,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 		return $moderators;
 	}
 
+	/**
+	 * @return array|null
+	 */
 	public function getCategoryActions()
 	{
 		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));

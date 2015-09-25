@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.modeladmin');
 jimport('joomla.html.pagination');
@@ -21,6 +21,11 @@ jimport('joomla.html.pagination');
  */
 class KunenaAdminModelTemplates extends JModelAdmin
 {
+	/**
+	 * @param   array $config
+	 *
+	 * @throws Exception
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
@@ -51,7 +56,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		$this->setState('template', $value);
 
 		// List state information
-		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->getCfg('list_limit'), 'int');
+		$value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
 		$this->setState('list.limit', $value);
 
 		$value = $this->getUserStateFromRequest($this->context . '.list.ordering', 'filter_order', 'ordering', 'cmd');
@@ -119,16 +124,25 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $rows;
 	}
 
+	/**
+	 * @return object
+	 */
 	function getTotal()
 	{
 		return $this->getState('list.total');
 	}
 
+	/**
+	 * @return object
+	 */
 	function getStart()
 	{
 		return $this->getState('list.start');
 	}
 
+	/**
+	 * @return boolean|stdClass
+	 */
 	function getTemplatedetails()
 	{
 		$template = $this->app->getUserState('kunena.edit.template');
@@ -143,6 +157,9 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $details;
 	}
 
+	/**
+	 * @return null|string
+	 */
 	function getFileLessParsed()
 	{
 		$template = $this->app->getUserState('kunena.templatename');
@@ -159,6 +176,9 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $content;
 	}
 
+	/**
+	 * @return null|string
+	 */
 	function getFileContentParsed()
 	{
 		$template = $this->app->getUserState('kunena.templatename');
@@ -175,6 +195,9 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $content;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function getFTPcredentials()
 	{
 		// Set FTP credentials, if given
@@ -183,6 +206,16 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $ftp;
 	}
 
+	/**
+	 * @param        $key
+	 * @param        $request
+	 * @param   null   $default
+	 * @param   string $type
+	 * @param   bool   $resetPage
+	 *
+	 * @return mixed|null
+	 * @throws Exception
+	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
 		$app       = JFactory::getApplication();
@@ -209,6 +242,9 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $new_state;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getPagination()
 	{
 		// Get a storage key.
@@ -230,6 +266,11 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $this->cache[$store];
 	}
 
+	/**
+	 * @param   string $id
+	 *
+	 * @return string
+	 */
 	protected function getStoreId($id = '')
 	{
 		// Add the list state to the store id.

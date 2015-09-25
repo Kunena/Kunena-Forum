@@ -9,13 +9,16 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Statistics View
  */
 class KunenaViewStatistics extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 */
 	function displayDefault($tpl = null)
 	{
 		$kunena_stats = KunenaForumStatistics::getInstance();
@@ -35,6 +38,14 @@ class KunenaViewStatistics extends KunenaView
 		$this->render('Statistics/General', $tpl);
 	}
 
+	/**
+	 * @param        $action
+	 * @param        $name
+	 * @param   null   $title
+	 * @param   string $rel
+	 *
+	 * @return string
+	 */
 	protected function _getUserListLink($action, $name, $title = null, $rel = 'nofollow')
 	{
 		$profile = KunenaFactory::getProfile();
@@ -43,6 +54,9 @@ class KunenaViewStatistics extends KunenaView
 		return "<a href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
 	}
 
+	/**
+	 *
+	 */
 	protected function _prepareDocument()
 	{
 		$this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));

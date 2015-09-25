@@ -390,7 +390,7 @@ abstract class KunenaForumTopicHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 
@@ -427,7 +427,7 @@ abstract class KunenaForumTopicHelper
 		foreach ($queries as $query)
 		{
 			$db->setQuery($query);
-			$db->query();
+			$db->execute();
 			KunenaError::checkDatabaseError ();
 		}
 
@@ -491,7 +491,7 @@ abstract class KunenaForumTopicHelper
 				tt.last_post_guest_name = ''
 			WHERE tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL {$topics} {$threads}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -508,7 +508,7 @@ abstract class KunenaForumTopicHelper
 			SET tt.hold = c.hold
 			WHERE tt.moved_id=0 {$topics}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{
@@ -544,7 +544,7 @@ abstract class KunenaForumTopicHelper
 				tt.last_post_guest_name = mmax.name
 			WHERE moved_id=0 {$topics}";
 		$db->setQuery($query);
-		$db->query ();
+		$db->execute();
 
 		if (KunenaError::checkDatabaseError ())
 		{

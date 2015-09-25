@@ -7,9 +7,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-jimport ( 'joomla.application.component.helper' );
+jimport('joomla.application.component.helper');
 
 /**
  * Class KunenaController
@@ -20,9 +20,14 @@ class KunenaController extends JControllerLegacy
 	public $me = null;
 	public $config = null;
 
+	/**
+	 * @param   array $config
+	 *
+	 * @throws Exception
+	 */
 	public function __construct($config = array())
 	{
-		parent::__construct ($config);
+		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication();
 		$this->config = KunenaFactory::getConfig();
@@ -43,8 +48,8 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @param	string	$prefix
-	 * @param	mixed	$config
+	 * @param   string	$prefix
+	 * @param   mixed	$config
 	 * @return	KunenaController
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = array())
@@ -78,7 +83,7 @@ class KunenaController extends JControllerLegacy
 		else
 		{
 			// Base controller.
-			$view = strtolower ( JRequest::getWord ( 'view', $app->isAdmin() ? 'cpanel' : 'home' ) );
+			$view = strtolower(JFactory::getApplication()->input->getWord('view', $app->isAdmin() ? 'cpanel' : 'home'));
 		}
 
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
@@ -90,22 +95,21 @@ class KunenaController extends JControllerLegacy
 		}
 		else
 		{
-			JError::raiseError ( 404, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER', ucfirst ( $view ) ) );
+			JError::raiseError(404, JText::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)));
 		}
 
 		// Set the name for the controller and instantiate it.
 		if ($app->isAdmin())
 		{
-			$class = $prefix . 'AdminController' . ucfirst ( $view );
+			$class = $prefix . 'AdminController' . ucfirst($view);
 			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 			KunenaFactory::loadLanguage('com_kunena', 'site');
-
 		}
 		else
 		{
-			$class = $prefix . 'Controller' . ucfirst ( $view );
+			$class = $prefix . 'Controller' . ucfirst($view);
 			KunenaFactory::loadLanguage('com_kunena.controllers');
 			KunenaFactory::loadLanguage('com_kunena.models');
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
@@ -117,7 +121,7 @@ class KunenaController extends JControllerLegacy
 		}
 		else
 		{
-			JError::raiseError ( 404, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER_CLASS', $class ) );
+			JError::raiseError(404, JText::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class));
 		}
 
 		return $instance;
@@ -126,7 +130,7 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Execute task (slightly modified from Joomla).
 	 *
-	 * @param string $task
+	 * @param   string $task
 	 * @return mixed
 	 * @throws Exception
 	 *
@@ -176,7 +180,7 @@ class KunenaController extends JControllerLegacy
 	 * messages = [array|null]: Array of enqueue'd messages.
 	 * data = [mixed]: The response data.
 	 *
-	 * @param  string  $task  Task to be run.
+	 * @param   string  $task  Task to be run.
 	 *
 	 * @return void
 	 * @throws Exception
@@ -299,15 +303,15 @@ class KunenaController extends JControllerLegacy
 	public function display($cachable = false, $urlparams = false)
 	{
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		// Get the document object.
-		$document = JFactory::getDocument ();
+		$document = JFactory::getDocument();
 
 		// Set the default view name and format from the Request.
-		$vName = JRequest::getWord ( 'view', $this->app->isAdmin() ? 'cpanel' : 'home' );
-		$lName = JRequest::getWord ( 'layout', 'default' );
-		$vFormat = $document->getType ();
+		$vName = JFactory::getApplication()->input->getWord('view', $this->app->isAdmin() ? 'cpanel' : 'home');
+		$lName = JFactory::getApplication()->input->getWord('layout', 'default');
+		$vFormat = $document->getType();
 
 		if ($this->app->isAdmin())
 		{
@@ -335,24 +339,25 @@ class KunenaController extends JControllerLegacy
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena');
 
-			$menu = $this->app->getMenu ();
-			$active = $menu->getActive ();
+			$menu = $this->app->getMenu();
+			$active = $menu->getActive();
 
 			// Check if menu item was correctly routed
-			$routed = $menu->getItem ( KunenaRoute::getItemID() );
+			$routed = $menu->getItem(KunenaRoute::getItemID());
 
-			if ($vFormat=='html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id))
+			if ($vFormat == 'html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id))
 			{
 				// Routing has been changed, redirect
 				// FIXME: check possible redirect loops!
 				$route = KunenaRoute::_(null, false);
 				$activeId = !empty($active->id) ? $active->id : 0;
-				JLog::add("Redirect from ".JUri::getInstance()->toString(array('path', 'query'))." ({$activeId}) to {$route} ($routed->id)", JLog::DEBUG, 'kunena');
-				$this->app->redirect ($route);
+				JLog::add("Redirect from " . JUri::getInstance()->toString(array('path', 'query')) . " ({$activeId}) to {$route} ($routed->id)", JLog::DEBUG, 'kunena');
+				$this->app->redirect($route);
 			}
 
 			// Joomla 2.5+ multi-language support
-			/* // FIXME:
+			/*
+  // FIXME:
 			if (isset($active->language) && $active->language != '*') {
 				$language = JFactory::getDocument()->getLanguage();
 				if (strtolower($active->language) != strtolower($language)) {
@@ -364,15 +369,15 @@ class KunenaController extends JControllerLegacy
 			*/
 		}
 
-		$view = $this->getView ( $vName, $vFormat );
+		$view = $this->getView($vName, $vFormat);
 
 		if ($view)
 		{
-			if ($this->app->isSite() && $vFormat=='html')
+			if ($this->app->isSite() && $vFormat == 'html')
 			{
-				$common = $this->getView ( 'common', $vFormat );
-				$model = $this->getModel ( 'common' );
-				$common->setModel ( $model, true );
+				$common = $this->getView('common', $vFormat);
+				$model = $this->getModel('common');
+				$common->setModel($model, true);
 				$view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
 				$view->common = $common;
 			}
@@ -390,21 +395,21 @@ class KunenaController extends JControllerLegacy
 			$view->document = $document;
 
 			// Render the view.
-			if ($vFormat=='html')
+			if ($vFormat == 'html')
 			{
 				JPluginHelper::importPlugin('kunena');
-				$dispatcher = JDispatcher::getInstance();
+				$dispatcher = JEventDispatcher::getInstance();
 				$dispatcher->trigger('onKunenaDisplay', array('start', $view));
-				$view->displayAll ();
+				$view->displayAll();
 				$dispatcher->trigger('onKunenaDisplay', array('end', $view));
 			}
 			else
 			{
-				$view->displayLayout ();
+				$view->displayLayout();
 			}
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $this;
 	}
@@ -412,7 +417,7 @@ class KunenaController extends JControllerLegacy
 	/**
 	 * Escapes a value for output in a view script.
 	 *
-	 * @param  string $var The output to escape.
+	 * @param   string $var The output to escape.
 	 *
 	 * @return string The escaped value.
 	 */
@@ -451,8 +456,8 @@ class KunenaController extends JControllerLegacy
 	 * If there's no referrer or it's external, Kunena will return to the default page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param string $default
-	 * @param string $anchor
+	 * @param   string $default
+	 * @param   string $anchor
 	 */
 	protected function setRedirectBack($default = null, $anchor = null)
 	{

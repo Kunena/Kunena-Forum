@@ -8,14 +8,14 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class KunenaVersion
 {
 	/**
 	 * Get warning for unstable releases
 	 *
-	 * @param    string $msg Message to be shown containing two %s parameters for version (2.0.0RC) and version type (GIT, RC, BETA etc)
+	 * @param   string $msg Message to be shown containing two %s parameters for version (2.0.0RC) and version type (GIT, RC, BETA etc)
 	 *
 	 * @return    string    Warning message
 	 * @since    1.6
@@ -68,6 +68,9 @@ class KunenaVersion
 		return '';
 	}
 
+	/**
+	 * @return boolean
+	 */
 	function checkVersion()
 	{
 		$version = $this->getDBVersion();

@@ -9,13 +9,18 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * About view for Kunena ranks backend
  */
 class KunenaAdminViewRanks extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 *
+	 * @return mixed
+	 */
 	function display($tpl = null)
 	{
 		$this->setToolbar();
@@ -37,19 +42,15 @@ class KunenaAdminViewRanks extends KunenaView
 		return parent::display($tpl);
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolbar()
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('Pagination');
 
-		if (version_compare(JVERSION, '3', '>'))
-		{
-			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
-		}
-		else
-		{
-			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
-		}
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
 
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
@@ -62,7 +63,7 @@ class KunenaAdminViewRanks extends KunenaView
 		//}
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Ranks_management';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -80,6 +81,9 @@ class KunenaAdminViewRanks extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -91,14 +95,14 @@ class KunenaAdminViewRanks extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();
-		//$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		//$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-		// TODO: remove it when J2.5 support is dropped
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}

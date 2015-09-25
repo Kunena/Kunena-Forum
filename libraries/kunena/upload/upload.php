@@ -85,13 +85,13 @@ class KunenaUpload
 		// Check if file extension matches any allowed extensions (case insensitive)
 		foreach ($this->validExtensions as $ext)
 		{
-			$extension = JString::substr($filename, -JString::strlen($ext));
+			$extension = Joomla\String\String::substr($filename, -Joomla\String\String::strlen($ext));
 
-			if (JString::strtolower($extension) == JString::strtolower($ext))
+			if (Joomla\String\String::strtolower($extension) == Joomla\String\String::strtolower($ext))
 			{
 				// File must contain one letter before extension
-				$name = JString::substr($filename, 0, -JString::strlen($ext));
-				$extension = JString::substr($extension, 1);
+				$name = Joomla\String\String::substr($filename, 0, -Joomla\String\String::strlen($ext));
+				$extension = Joomla\String\String::substr($extension, 1);
 
 				if (!$name)
 				{
@@ -551,13 +551,13 @@ class KunenaUpload
 		// Check if file extension matches any allowed extensions (case insensitive)
 		foreach ($this->validExtensions as $ext)
 		{
-			$extension = JString::substr($file->tmp_name, -JString::strlen($ext));
+			$extension = Joomla\String\String::substr($file->tmp_name, -Joomla\String\String::strlen($ext));
 
-			if (JString::strtolower($extension) == JString::strtolower($ext))
+			if (Joomla\String\String::strtolower($extension) == Joomla\String\String::strtolower($ext))
 			{
 				// File must contain one letter before extension
-				$name = JString::substr($file->tmp_name, 0, -JString::strlen($ext));
-				$extension = JString::substr($extension, 1);
+				$name = Joomla\String\String::substr($file->tmp_name, 0, -Joomla\String\String::strlen($ext));
+				$extension = Joomla\String\String::substr($extension, 1);
 
 				if (!$name)
 				{

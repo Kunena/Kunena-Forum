@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Announcement Model for Kunena
@@ -20,6 +20,9 @@ class KunenaModelAnnouncement extends KunenaModel
 {
 	protected $total = false;
 
+	/**
+	 *
+	 */
 	protected function populateState()
 	{
 		$id = $this->getInt('id', 0);
@@ -31,6 +34,7 @@ class KunenaModelAnnouncement extends KunenaModel
 		{
 			$value = 20;
 		}
+
 		$this->setState('list.limit', $value);
 
 		$value = $this->getInt('limitstart', 0);
@@ -43,16 +47,25 @@ class KunenaModelAnnouncement extends KunenaModel
 		$this->setState('list.start', $value);
 	}
 
+	/**
+	 * @return KunenaForumAnnouncement
+	 */
 	function getNewAnnouncement()
 	{
 		return new KunenaForumAnnouncement;
 	}
 
+	/**
+	 * @return KunenaForumAnnouncement
+	 */
 	function getAnnouncement()
 	{
 		return KunenaForumAnnouncementHelper::get($this->getState('item.id'));
 	}
 
+	/**
+	 * @return boolean|null
+	 */
 	public function getTotal()
 	{
 		if ($this->total === false)
@@ -63,6 +76,9 @@ class KunenaModelAnnouncement extends KunenaModel
 		return $this->total;
 	}
 
+	/**
+	 * @return KunenaForumAnnouncement[]
+	 */
 	function getAnnouncements()
 	{
 		$start = $this->getState('list.start');
@@ -86,6 +102,9 @@ class KunenaModelAnnouncement extends KunenaModel
 		return $announces;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getannouncementActions()
 	{
 		$actions = array();

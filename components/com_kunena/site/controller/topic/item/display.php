@@ -103,9 +103,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			if ($this->message->thread != $this->topic->id
 				|| ($this->topic->category_id != $this->category->id && !isset($channels[$this->topic->category_id]))
-				|| ($mesid && $this->layout != 'threaded'))
+				|| ($mesid && $this->layout != 'threaded')
+)
 			{
-				while (@ob_end_clean());
+				while (@ob_end_clean()) {}
 
 				$this->app->redirect($this->message->getUrl(null, false));
 			}
@@ -135,7 +136,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -143,8 +144,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		// Get user data, captcha & quick reply.
 		$this->userTopic = $this->topic->getUserTopic();
-		$this->captcha = KunenaSpamRecaptcha::getInstance();
-		$this->quickReply = ($this->topic->isAuthorised('reply') && $this->me->exists() && !$this->captcha->enabled());
+		$this->quickReply = ($this->topic->isAuthorised('reply') && $this->me->exists());
 
 		$this->headerText = JText::_('COM_KUNENA_TOPIC') . ' ' . html_entity_decode($this->topic->displayField('subject'));
 	}

@@ -836,7 +836,7 @@ class KunenaUser extends JObject
 	{
 		if (!isset($this->_time))
 		{
-			$timezone = JFactory::getApplication()->getCfg('offset', null);
+			$timezone = JFactory::getApplication()->get('offset', null);
 
 			if ($this->userid)
 			{

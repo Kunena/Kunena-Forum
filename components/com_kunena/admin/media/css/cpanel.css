@@ -20,8 +20,8 @@
 	margin-bottom: 25px;
 }
 .kadmin-welcome h3 {
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 }
 table.thisform {
 	width: 100%;
@@ -53,8 +53,8 @@ table.thisform td {
 	text-align: left;
 }
 div.icon a {
-	text-decoration:none;
+	text-decoration: none;
 }
 div.icon-container {
-	float:left;
+	float: left;
 }

@@ -8,13 +8,27 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class JHtmlKunenaForum
  */
 abstract class JHtmlKunenaForum
 {
+	/**
+	 * @param        $name
+	 * @param        $parent
+	 * @param   array  $options
+	 * @param   array  $params
+	 * @param   null   $attribs
+	 * @param   string $key
+	 * @param   string $text
+	 * @param   array  $selected
+	 * @param   bool   $idtag
+	 * @param   bool   $translate
+	 *
+	 * @return string
+	 */
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false)
 	{
 		$preselect = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
@@ -44,6 +58,7 @@ abstract class JHtmlKunenaForum
 				$categories = KunenaForumCategoryHelper::getParents($catid, $levels, $params);
 			}
 		}
+
 		$channels = array();
 
 		if (!isset($categories))
@@ -60,18 +75,18 @@ abstract class JHtmlKunenaForum
 					$category = KunenaForumCategoryHelper::get();
 				}
 
-				foreach ($channels as $id=>$channel)
+				foreach ($channels as $id => $channel)
 				{
-					if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise ($action))
+					if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise($action))
 					{
-						unset ($channels[$id]);
+						unset($channels[$id]);
 					}
 				}
 			}
 
-			$categories = $category->id > 0 ? array($category->id=>$category)+$children : $children;
+			$categories = $category->id > 0 ? array($category->id => $category) + $children : $children;
 
-			if ($hide_lonely && count($categories)+count($channels) <= 1)
+			if ($hide_lonely && count($categories) + count($channels) <= 1)
 			{
 				return;
 			}
@@ -95,7 +110,7 @@ abstract class JHtmlKunenaForum
 		{
 			$me = KunenaUserHelper::getMyself();
 			$disabled = ($action == 'admin' && !$me->isAdmin());
-			$options [] = JHtml::_ ( 'select.option', '0', JText::_ ( $topleveltxt ), 'value', 'text', $disabled );
+			$options [] = JHtml::_('select.option', '0', JText::_($topleveltxt), 'value', 'text', $disabled);
 
 			if ($preselect && empty($selected) && !$disabled)
 			{
@@ -111,15 +126,16 @@ abstract class JHtmlKunenaForum
 
 		foreach ($categories as $category)
 		{
-			$disabled = !$category->authorise ($action) || (! $sections && $category->isSection());
+			$disabled = !$category->authorise($action) || (! $sections && $category->isSection());
 
 			if ($preselect && empty($selected) && !$disabled)
 			{
 				$selected[] = $category->id;
 			}
 
-			$options [] = JHtml::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $disabled );
+			$options [] = JHtml::_('select.option', $category->id, str_repeat('- ', $category->level + $toplevel) . ' ' . $category->name, 'value', 'text', $disabled);
 		}
+
 		$disabled = false;
 		foreach ($channels as $category)
 		{
@@ -128,14 +144,14 @@ abstract class JHtmlKunenaForum
 				$selected[] = $category->id;
 			}
 
-			$options [] = JHtml::_ ( 'select.option', $category->id, '+ '. $category->getParent()->name.' / '.$category->name, 'value', 'text', $disabled );
+			$options [] = JHtml::_('select.option', $category->id, '+ ' . $category->getParent()->name . ' / ' . $category->name, 'value', 'text', $disabled);
 		}
 
-		reset ($options);
+		reset($options);
 
-		if (is_array ($attribs))
+		if (is_array($attribs))
 		{
-			$attribs = JArrayHelper::toString ($attribs);
+			$attribs = Joomla\Utilities\ArrayHelper::toString($attribs);
 		}
 
 		$id = $name;
@@ -145,14 +161,14 @@ abstract class JHtmlKunenaForum
 			$id = $idtag;
 		}
 
-		$id = str_replace ( '[', '', $id );
-		$id = str_replace ( ']', '', $id );
+		$id = str_replace('[', '', $id);
+		$id = str_replace(']', '', $id);
 
 		$html = '';
 		if (!empty($options))
 		{
 			$html .= '<select name="' . $name . '" id="' . $id . '" ' . $attribs . '>';
-			$html .= JHtml::_ ( 'select.options', $options, $key, $text, $selected, $translate );
+			$html .= JHtml::_('select.options', $options, $key, $text, $selected, $translate);
 			$html .= '</select>';
 		}
 
@@ -163,18 +179,18 @@ abstract class JHtmlKunenaForum
 	 *
 	 * Creates link pointing to a Kunena page
 	 *
-	 * @param mixed $uri Kunena URI, either as string, JUri or array
-	 * @param string $content
-	 * @param string $class Link class
-	 * @param string $title Link title
-	 * @param string $rel Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
-	 * @param mixed $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
+	 * @param   mixed $uri Kunena URI, either as string, JUri or array
+	 * @param   string $content
+	 * @param   string $class Link class
+	 * @param   string $title Link title
+	 * @param   string $rel Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
+	 * @param   mixed $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 *
 	 * @return string
 	 */
 	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '')
 	{
-		$list['href'] = (is_string($uri) && $uri[0]=='/') ? $uri : KunenaRoute::_($uri);
+		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);
 		if ($title)
 		{
 			$list['title'] = $title;
@@ -197,7 +213,7 @@ abstract class JHtmlKunenaForum
 
 		// Parse attributes
 		$attr = array();
-		foreach ($list as $key=>$value)
+		foreach ($list as $key => $value)
 		{
 			$attr[] = "{$key}=\"{$value}\"";
 		}
@@ -207,7 +223,7 @@ abstract class JHtmlKunenaForum
 			$attr[] = (string) $attributes;
 		}
 
-		$attributes = implode (' ', $attr);
+		$attributes = implode(' ', $attr);
 
 		return "<a {$attributes}>{$content}</a>";
 	}

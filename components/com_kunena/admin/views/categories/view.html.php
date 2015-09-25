@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * About view for Kunena backend
@@ -21,11 +21,17 @@ class KunenaAdminViewCategories extends KunenaView
 	 */
 	public $categories = array();
 
+	/**
+	 *
+	 */
 	function displayCreate()
 	{
 		$this->displayEdit();
 	}
 
+	/**
+	 *
+	 */
 	function displayEdit()
 	{
 		$this->category = $this->get('AdminCategory');
@@ -43,6 +49,9 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	function displayDefault()
 	{
 		$this->categories = $this->get('AdminCategories');
@@ -81,19 +90,12 @@ class KunenaAdminViewCategories extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarEdit()
 	{
-		// Set the titlebar text
-
-		if (version_compare(JVERSION, '3', '>'))
-		{
-			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-		}
-		else
-		{
-			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
-		}
-
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		JToolbarHelper::spacer();
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::save('save');
@@ -108,24 +110,18 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::cancel();
 		JToolbarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarDefault()
 	{
 		$this->filterActive = $this->escape($this->state->get('filter.active'));
 		$this->pagination   = $this->get('AdminNavigation');
 
-		if (version_compare(JVERSION, '3', '>'))
-		{
-			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-		}
-		else
-		{
-			JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
-		}
-
-		//TODO STRING
+		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
 
@@ -140,7 +136,7 @@ class KunenaAdminViewCategories extends KunenaView
 		//}
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
 	/**
@@ -188,6 +184,9 @@ class KunenaAdminViewCategories extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function allowpollsOptions()
 	{
 		// Build the active state filter options.
@@ -213,6 +212,9 @@ class KunenaAdminViewCategories extends KunenaView
 		return $options;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
@@ -229,15 +231,15 @@ class KunenaAdminViewCategories extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();
 
-		//$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-		//$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-		// TODO: remove it when J2.5 support is dropped
-		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
 	}

@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 class KunenaAvatarKunena extends KunenaAvatar
 {
@@ -25,7 +25,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getEditURL()
 	{
@@ -65,6 +65,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 			$origPath = JPATH_SITE . '/' . $template->getAvatarPath($avatar);
 			$avatar   = $template->name . '/' . $avatar;
 		}
+
 		$dir  = dirname($avatar);
 		$file = basename($avatar);
 

@@ -9,13 +9,16 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * User view for Kunena backend
  */
 class KunenaAdminViewUser extends KunenaView
 {
+	/**
+	 *
+	 */
 	public function displayEdit()
 	{
 		$this->setToolBarEdit();
@@ -46,6 +49,9 @@ class KunenaAdminViewUser extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	public function displayMove()
 	{
 		$this->setToolBarMove();
@@ -54,6 +60,9 @@ class KunenaAdminViewUser extends KunenaView
 		$this->display();
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarEdit()
 	{
 		// Set the titlebar text
@@ -64,9 +73,12 @@ class KunenaAdminViewUser extends KunenaView
 		JToolBarHelper::cancel('cancel', 'COM_KUNENA_CANCEL');
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/';
-		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
+	/**
+	 *
+	 */
 	protected function setToolBarMove()
 	{
 		// Set the titlebar text

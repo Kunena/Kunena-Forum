@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.model');
 
@@ -31,16 +31,16 @@ class KunenaAdminModelReport extends KunenaModel
 	{
 		$kunena_db = JFactory::getDBO();
 
-		if (!$this->app->getCfg('smtpuser'))
+		if (!$this->app->get('smtpuser'))
 		{
 			$jconfig_smtpuser = 'Empty';
 		}
 		else
 		{
-			$jconfig_smtpuser = $this->app->getCfg('smtpuser');
+			$jconfig_smtpuser = $this->app->get('smtpuser');
 		}
 
-		if ($this->app->getCfg('ftp_enable'))
+		if ($this->app->get('ftp_enable'))
 		{
 			$jconfig_ftp = 'Enabled';
 		}
@@ -49,7 +49,7 @@ class KunenaAdminModelReport extends KunenaModel
 			$jconfig_ftp = 'Disabled';
 		}
 
-		if ($this->app->getCfg('sef'))
+		if ($this->app->get('sef'))
 		{
 			$jconfig_sef = 'Enabled';
 		}
@@ -58,7 +58,7 @@ class KunenaAdminModelReport extends KunenaModel
 			$jconfig_sef = 'Disabled';
 		}
 
-		if ($this->app->getCfg('sef_rewrite'))
+		if ($this->app->get('sef_rewrite'))
 		{
 			$jconfig_sef_rewrite = 'Enabled';
 		}
@@ -146,7 +146,7 @@ class KunenaAdminModelReport extends KunenaModel
 		{
 			if (empty($item))
 			{
-				unset ($plg[$id]);
+				unset($plg[$id]);
 			}
 		}
 
@@ -169,7 +169,7 @@ class KunenaAdminModelReport extends KunenaModel
 		{
 			if (empty($item))
 			{
-				unset ($mod[$id]);
+				unset($mod[$id]);
 			}
 		}
 
@@ -192,7 +192,7 @@ class KunenaAdminModelReport extends KunenaModel
 		{
 			if (empty($item))
 			{
-				unset ($thirdparty[$id]);
+				unset($thirdparty[$id]);
 			}
 		}
 
@@ -214,7 +214,7 @@ class KunenaAdminModelReport extends KunenaModel
 		{
 			if (empty($item))
 			{
-				unset ($sef[$id]);
+				unset($sef[$id]);
 			}
 		}
 
@@ -235,7 +235,7 @@ class KunenaAdminModelReport extends KunenaModel
 			. ' | ' . $gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . JUri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $collation . '
 		[/quote][quote][b]Joomla! SEF:[/b] ' . $jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
 			. $jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $jconfig_ftp . ' |
-	    [confidential][b]Mailer:[/b] ' . $this->app->getCfg('mailer') . ' | [b]Mail from:[/b] ' . $this->app->getCfg('mailfrom') . ' | [b]From name:[/b] ' . $this->app->getCfg('fromname') . ' | [b]SMTP Secure:[/b] ' . $this->app->getCfg('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->getCfg('smtpport') . ' | [b]SMTP User:[/b] ' . $jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->getCfg('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $htaccess
+	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]Mail from:[/b] ' . $this->app->get('mailfrom') . ' | [b]From name:[/b] ' . $this->app->get('fromname') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $htaccess
 			. ' | [b]PHP environment:[/b] [u]Max execution time:[/u] ' . $maxExecTime . ' seconds | [u]Max execution memory:[/u] '
 			. $maxExecMem . ' | [u]Max file upload:[/u] ' . $fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $jtemplatedetails->name . ' | [u]author:[/u] ' . $jtemplatedetails->author . ' | [u]version:[/u] ' . $jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $ktemplatedetails->name . ' | [u]author:[/u] ' . $ktemplatedetails->author . ' | [u]version:[/u] ' . $ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $ktemplatedetails->creationDate . ' [/quote][quote] [b]Kunena version detailed:[/b] ' . $kunenaVersionInfo . '
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $joomlalanguages . '[/spoiler][/quote]' . $thirdpartytext . ' ' . $seftext . ' ' . $plgtext . ' ' . $modtext;
@@ -283,7 +283,6 @@ class KunenaAdminModelReport extends KunenaModel
 
 			foreach ($params as $key => $value)
 			{
-
 				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
 					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_address'
 					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' && $key != 'ebay_api_key'
@@ -461,8 +460,8 @@ class KunenaAdminModelReport extends KunenaModel
 	/**
 	 * Return extension version string if installed.
 	 *
-	 * @param  string $extension
-	 * @param  string $name
+	 * @param   string $extension
+	 * @param   string $name
 	 *
 	 * @return    string
 	 * @since    1.6
@@ -491,7 +490,7 @@ class KunenaAdminModelReport extends KunenaModel
 	/**
 	 * Tries to find the extension manifest file and returns version
 	 *
-	 * @param  $path $path    Path to extension directory
+	 * @param   $path $path    Path to extension directory
 	 *
 	 * @return  string  Version number
 	 */
@@ -531,6 +530,9 @@ class KunenaAdminModelReport extends KunenaModel
 		return $version;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getIntegrationSettings()
 	{
 		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
@@ -549,13 +551,13 @@ class KunenaAdminModelReport extends KunenaModel
 				{
 					$plugin_final[] = "{$param}={$value} ";
 				}
+
 				$plugin_final[] = "\n";
 			}
 			else
 			{
 				$plugin_final[] = "[b]{$desc}[/b] Disabled\n";
 			}
-
 		}
 
 		return $plugin_final;

@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.modellist');
 
@@ -43,6 +43,10 @@ class KunenaAdminModelSmiley extends KunenaModel
 		$this->setState('item.id', $value);
 	}
 
+	/**
+	 * @return mixed|null
+	 * @throws Exception
+	 */
 	public function getSmiley()
 	{
 		$db = JFactory::getDBO();
@@ -65,6 +69,9 @@ class KunenaAdminModelSmiley extends KunenaModel
 		return null;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getSmileyspaths()
 	{
 		$template = KunenaFactory::getTemplate();

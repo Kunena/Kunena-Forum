@@ -69,30 +69,30 @@ defined('_JEXEC') or die;
 			<br/>
 
 			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
-			<b><?php echo (int)$this->messageCount; ?></b>
+			<b><?php echo (int) $this->messageCount; ?></b>
 
 			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
-			<b><?php echo (int)$this->topicCount; ?></b>
+			<b><?php echo (int) $this->topicCount; ?></b>
 
 			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
-			<b><?php echo (int)$this->sectionCount; ?></b>
+			<b><?php echo (int) $this->sectionCount; ?></b>
 
 			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
-			<b><?php echo (int)$this->categoryCount; ?></b>
+			<b><?php echo (int) $this->categoryCount; ?></b>
 
 			<br/>
 
 			<?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
-			<b><?php echo (int)$this->todayTopicCount; ?></b>
+			<b><?php echo (int) $this->todayTopicCount; ?></b>
 
 			<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
-			<b><?php echo (int)$this->yesterdayTopicCount; ?></b>
+			<b><?php echo (int) $this->yesterdayTopicCount; ?></b>
 
 			<?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
-			<b><?php echo (int)$this->todayReplyCount; ?></b>
+			<b><?php echo (int) $this->todayReplyCount; ?></b>
 
 			<?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
-			<b><?php echo (int)$this->yesterdayReplyCount; ?></b>
+			<b><?php echo (int) $this->yesterdayReplyCount; ?></b>
 		</div>
 	<?php endif; ?>
 

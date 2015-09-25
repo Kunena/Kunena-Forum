@@ -17,7 +17,7 @@ $state = $this->state;
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list'); ?>" method="post"
 	  name="usrlform" id="usrlform" class="form-inline form-search pull-right">
 	<input type="hidden" name="view" value="user"/>
-	<?php if ($me->exists()): ?>
+	<?php if ($me->exists()) : ?>
 		<input type="hidden" id="kurl_users" name="kurl_users" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 	<?php endif; ?>
 	<?php echo JHtml::_('form.token'); ?>

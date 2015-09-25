@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class plgSystemKunena
@@ -17,21 +17,21 @@ class plgSystemKunena extends JPlugin
 {
 
 	/**
-	 * @param object $subject
-	 * @param array  $config
+	 * @param   object $subject
+	 * @param   array  $config
 	 */
 	function __construct(&$subject, $config)
 	{
 		// Check if Kunena API exists
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (!is_file ($api))
+		if (!is_file($api))
 		{
 			return;
 		}
 
-		jimport ( 'joomla.application.component.helper' );
+		jimport('joomla.application.component.helper');
 		// Check if Kunena component is installed/enabled
-		if (!JComponentHelper::isEnabled ( 'com_kunena', true ))
+		if (!JComponentHelper::isEnabled('com_kunena', true))
 		{
 			return;
 		}
@@ -45,7 +45,7 @@ class plgSystemKunena extends JPlugin
 			return;
 		}
 
-		parent::__construct ( $subject, $config );
+		parent::__construct($subject, $config);
 
 		// ! Always load language after parent::construct else the name of plugin isn't yet set
 		$this->loadLanguage('plg_system_kunena.sys');
@@ -160,15 +160,15 @@ class plgSystemKunena extends JPlugin
 	 * @see self::onKunenaPrepare()
 	 * @since Kunena 2.0
 	 *
-	 * @param	string	$text		String to run events on
-	 * @param	object	$params		JRegistry object holding eventual parameters
-	 * @param	int		$page		An integer holding page number
+	 * @param   string	$text		String to run events on
+	 * @param   object	$params		JRegistry object holding eventual parameters
+	 * @param   int		$page		An integer holding page number
 	 *
 	 * @return object KunenaForumMessage
 	 */
 	protected function runJoomlaContentEvent( &$text, &$params, $page = 0 )
 	{
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
 		$row = new stdClass();
@@ -235,7 +235,7 @@ class plgSystemKunena extends JPlugin
 	 * @param $manifest
 	 * @param $eid
 	 *
-	 * @return bool|null
+	 * @return boolean|null
 	 */
 	public function onExtensionBeforeInstall($method, $type, $manifest, $eid)
 	{
@@ -254,7 +254,7 @@ class plgSystemKunena extends JPlugin
 	 * @param $type
 	 * @param $manifest
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 */
 	public function onExtensionBeforeUpdate($type, $manifest)
@@ -289,7 +289,7 @@ class plgSystemKunena extends JPlugin
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', KunenaForum::version(), $manifest->version), 'warning');
 		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
-		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($type))));
+		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_' . strtoupper($type))));
 		$app->redirect('index.php?option=com_installer');
 
 		return true;

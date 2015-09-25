@@ -35,20 +35,20 @@ $cols = empty($this->checkbox) ? 5 : 6;
 
 		<div class="pull-right">
 			<?php echo $this->subLayout('Widget/Search')
-				->set('catid', $this->category->id)
-				->setLayout('topic'); ?>
+	->set('catid', $this->category->id)
+	->setLayout('topic'); ?>
 		</div>
 
 		<div class="pull-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')
-				->set('pagination', $this->pagination)
-				->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 		</div>
 	</div>
 </div>
 <?php endif; ?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="categoryactions">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_('form.token'); ?>
 	<div>
@@ -121,13 +121,15 @@ $cols = empty($this->checkbox) ? 5 : 6;
 						<div class="input-group-btn">
 							<?php if (!empty($this->moreUri))
 							{
-								echo JHtml::_('kunenaforum.link', $this->moreUri,
-									JText::_('COM_KUNENA_MORE'), null, null, 'follow');
+								echo JHtml::_(
+         'kunenaforum.link', $this->moreUri,
+		JText::_('COM_KUNENA_MORE'), null, null, 'follow');
 							} ?>
 
 							<?php if (!empty($this->topicActions)) : ?>
-								<?php echo JHtml::_('select.genericlist', $this->topicActions, 'task',
-									'class="form-control kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
+								<?php echo JHtml::_(
+	'select.genericlist', $this->topicActions, 'task',
+'class="form-control kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
 
 								<?php if ($this->actionMove) : ?>
 									<?php
@@ -155,8 +157,8 @@ $cols = empty($this->checkbox) ? 5 : 6;
 <?php if ($this->topics) : ?>
 	<div class="pull-left">
 		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination)
-			->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 	</div>
 <?php endif; ?>
 

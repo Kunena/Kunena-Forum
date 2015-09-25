@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 abstract class KunenaControllerDisplay extends KunenaControllerBase
 {
@@ -24,7 +24,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function execute()
 	{
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 		try
 		{
 			// Run before executing action.
@@ -32,7 +32,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			if ($result === false)
 			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
 			}
 
@@ -46,7 +46,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		{
 			if ($this->primary)
 			{
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 				throw $e;
 			}
 			else
@@ -55,7 +55,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.get_class($this).'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		return $this->output;
 	}
@@ -104,7 +104,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function after()
 	{
-		if ($this->primary) $this->prepareDocument();
+		if ($this->primary) { $this->prepareDocument(); }
 	}
 
 	/**
@@ -125,7 +125,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		try
 		{
 			$output = $this->execute();
-
 		}
 		catch (KunenaExceptionAuthorise $e)
 		{
@@ -136,11 +135,10 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			$document = JFactory::getDocument();
 			$document->setTitle($e->getResponseStatus());
-			JResponse::setHeader('Status', $e->getResponseStatus(), true);
+			JFactory::getApplication()->setHeader('Status', $e->getResponseStatus(), true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $e->getResponseStatus())
 				->set('body', $e->getMessage());
-
 		}
 		catch (Exception $e)
 		{
@@ -152,7 +150,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			$title = '500 Internal Server Error';
 			$document = JFactory::getDocument();
 			$document->setTitle($title);
-			JResponse::setHeader('Status', $title, true);
+			JFactory::getApplication()->setHeader('Status', $title, true);
 			$output = KunenaLayout::factory('Misc/Default', 'pages')
 				->set('header', $title)
 				->set('body', $e->getMessage());
@@ -181,7 +179,8 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function setLayout($layout)
 	{
-		if (!$layout) $layout = 'default';
+		if (!$layout) { $layout = 'default'; }
+
 		$this->layout = $layout;
 
 		return $this;
@@ -196,9 +195,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	{
 		$properties = (array) $this;
 		$list = array();
-		foreach ($properties as $property=>$value)
+		foreach ($properties as $property => $value)
 		{
-			if ($property[0] != "\0") $list[$property] = $value;
+			if ($property[0] != "\0") { $list[$property] = $value; }
 		}
 
 		return $list;
@@ -245,25 +244,26 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		return $this;
 	}
 
-
+	/**
+	 * @param      $title
+	 * @param   bool $replace
+	 */
 	protected function setTitle($title, $replace = false)
 	{
 		if (!$replace)
 		{
 			// Obey Joomla configuration.
-			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
+			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
-
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title . ' - ' . $title);
 			}
-			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
+			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
-
+				$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
 			}
 			else
 			{
-				$title = KunenaFactory::getConfig()->board_title .' - '. $title;
+				$title = KunenaFactory::getConfig()->board_title . ' - ' . $title;
 			}
 		}
 
@@ -271,6 +271,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		$this->document->setTitle($title);
 	}
 
+	/**
+	 * @param $keywords
+	 */
 	protected function setKeywords($keywords)
 	{
 		if (!empty($keywords))
@@ -279,6 +282,9 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		}
 	}
 
+	/**
+	 * @param $description
+	 */
 	protected function setDescription($description)
 	{
 		$this->document->setMetadata('description',  $description);

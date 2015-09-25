@@ -8,7 +8,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena 2.0 jUpgrade migration class from Joomla! 1.5 to Joomla! 2.5
@@ -17,6 +17,9 @@ defined('_JEXEC') or die ();
 class jUpgradeComponentKunena extends jUpgradeExtensions
 {
 
+	/**
+	 * @param   null $step
+	 */
 	public function __construct($step = null)
 	{
 		// Joomla 2.5 support
@@ -42,8 +45,8 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 */
 	protected function detectExtension()
 	{
-		// Install Kunena 2.0 only into Joomla 2.5
-		return version_compare(JVERSION, '2.5', '>=');
+		// Install Kunena 2.0 only into Joomla 3.4
+		return version_compare(JVERSION, '3.4', '>=');
 	}
 
 	/**
@@ -72,7 +75,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * Returning false will force jUpgrade to call this function again,
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
-	 * @param string $table
+	 * @param   string $table
 	 *
 	 * @return    boolean Ready (true/false)
 	 * @since    1.6.4
@@ -128,6 +131,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 				$row['access']++;
 			}
 		}
+
 		$this->setDestinationData($rows);
 
 		return true;
@@ -136,7 +140,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	/**
 	 * A hook to be able to modify params prior as they are converted to JSON.
 	 *
-	 * @param    object $object A reference to the parameters as an object.
+	 * @param   object $object A reference to the parameters as an object.
 	 *
 	 * @return    void
 	 * @since    0.4.
@@ -155,6 +159,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		}
 	}
 
+	/**
+	 * @param $list
+	 *
+	 * @return array
+	 */
 	protected function mapUserGroups($list)
 	{
 		if (!is_array($list))
@@ -204,7 +213,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		// First fix all broken menu items
 		$query = "UPDATE #__menu SET component_id={$this->db_new->quote($component->extension_id)} WHERE type = 'component' AND link LIKE '%option={$this->name}%'";
 		$this->db_new->setQuery($query);
-		$this->db_new->query();
+		$this->db_new->execute();
 
 		$menumap = $this->getMapList('menus');
 
@@ -258,6 +267,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 					}
 					break;
 			}
+
 			if ($update)
 			{
 				// Update menuitem link

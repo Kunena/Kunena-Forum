@@ -7,13 +7,104 @@ jQuery(function($) {
 
 		jQuery('#kbbcode-message').val(value+' [attachment='+attachid+']'+filename+'[/attachment]');
 		
-		button.removeClass('btn-primary');
-		button.addClass('btn-success');
-		button.html('<i class="icon-upload"></i> '+Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+		if (button!=undefined)
+		{
+			button.removeClass('btn-primary');
+			button.addClass('btn-success');
+			button.html('<i class="icon-upload"></i> '+Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+		}
 	}
 
 	var fileCount = null;
+	var filesedit = null;
+	
+	jQuery('#remove-all').on('click', function (e) {
+		e.preventDefault();
+		
+		// Removing items in edit if they are present
+		if($.isEmptyObject(filesedit)==false) {
+			$( filesedit ).each(function( index, file ) {
+				if ( jQuery('#kattachs-'+file.id).length == 0 ) {
+					jQuery('#kattach-list').append('<input id="kattachs-'+file.id+'" type="hidden" name="attachments['+file.id+']" value="1" />');
+				}
 
+				if ( jQuery('#kattach-'+file.id).length > 0 ) {
+					jQuery('#kattach-'+file.id).remove();
+				}
+	
+				jQuery.ajax({
+					url: kunena_upload_files_rem+'&fil_id='+file.id,
+					type: 'DELETE',
+					success: function(result) {
+						$('#files').empty();
+					}
+				}); 
+			});
+	
+			filesedit = null;
+		}
+		
+		var child = jQuery('#kattach-list').find('input');
+		
+		child.each(function( i, el ) {
+			var elem = $( el );
+			
+			if ( !elem.attr('id').match("[a-z]{8}"))
+			{
+				var fileid = elem.attr('id').match("[0-9]{2}");
+				
+				if ( jQuery('#kattachs-'+fileid).length == 0 ) {
+					jQuery('#kattach-list').append('<input id="kattachs-'+fileid+'" type="hidden" name="attachments['+fileid+']" value="1" />');
+				}
+
+				if ( jQuery('#kattach-'+fileid).length > 0 ) {
+					jQuery('#kattach-'+fileid).remove();
+				}
+				
+				jQuery.ajax({
+					url: kunena_upload_files_rem+'&fil_id='+fileid,
+					type: 'DELETE',
+					success: function(result) {
+						$('#files').empty();
+					}
+				});
+			}
+		}); 
+		
+		fileCount = 0;
+	});
+	
+	jQuery('#insert-all').on('click', function (e) {
+		e.preventDefault();
+		
+		// Inserting items from edit if they are present
+		if($.isEmptyObject(filesedit)==false) {
+			$( filesedit ).each(function( index, file ) {
+				insertInMessage(file.id, file.mane);
+			});
+			
+			filesedit = null;
+		}
+		
+		var child = jQuery('#kattach-list').find('input');
+		
+		child.each(function( i, el ) {
+			var elem = $( el );
+			
+			if ( !elem.attr('id').match("[a-z]{8}"))
+			{
+				var attachid = elem.attr('id').match("[0-9]{2}");
+				var filemane = elem.attr('placeholder');
+
+				insertInMessage(attachid, filemane);
+
+				jQuery('#insert-all').removeClass('btn-primary');
+				jQuery('#insert-all').addClass('btn-success');
+				jQuery('#insert-all').html('<i class="icon-upload"></i> '+Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));			
+			}
+		}); 
+	});
+	
 	var insertButton = $('<button>')
 		.addClass("btn btn-primary")
 		.html('<i class="icon-upload"></i> '+Joomla.JText._('COM_KUNENA_EDITOR_INSERT'))
@@ -173,7 +264,7 @@ jQuery(function($) {
 		if (data.result.success==true) {
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
 			jQuery('#kattach-list').append('<input id="kattachs-'+data.result.data.id+'" type="hidden" name="attachments['+data.result.data.id+']" value="1" />');
-			jQuery('#kattach-list').append('<input id="kattach-'+data.result.data.id+'" type="hidden" name="attachment['+data.result.data.id+']" value="1" />');
+			jQuery('#kattach-list').append('<input id="kattach-'+data.result.data.id+'" placeholder="'+data.result.data.filename+'" type="hidden" name="attachment['+data.result.data.id+']" value="1" />');
 
 			data.uploaded=true;
 
@@ -217,13 +308,16 @@ jQuery(function($) {
 			success: function(data){
 				if($.isEmptyObject(data.files)==false) {
 					fileCount = Object.keys(data.files).length;
+					
+					filesedit = data.files;
+					
 					$( data.files ).each(function( index, file ) {
 						var image = '';
 						if (file.image===true) {
 							image = '<img src="'+file.path+'" width="100" height="100" /><br />';
 						} else {
-              image = '<i class="icon-flag-2 icon-big"></i><br />';
-            }
+							image = '<i class="icon-flag-2 icon-big"></i><br />';
+						}
 						
 						var object = $( '<div><p>'+image+'<span>'+file.name+'</span><br /></p></div>' );
 						data.uploaded = true;

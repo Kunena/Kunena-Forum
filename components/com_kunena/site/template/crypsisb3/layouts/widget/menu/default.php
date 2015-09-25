@@ -28,7 +28,7 @@ foreach ($this->list as $i => $item)
 	{
 		$aliasToId = $item->params->get('aliasoptions');
 
-		if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path)-1])
+		if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1])
 		{
 			$class .= ' active';
 		}
@@ -45,7 +45,7 @@ foreach ($this->list as $i => $item)
 
 	echo '<li' . $id . $class . '>';
 
-	$flink = ' href="'.htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8') . '" ';
+	$flink = ' href="' . htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8') . '" ';
 	$class = $item->anchor_css ? ' class="' . $item->anchor_css . '" ' : '';
 	$title = $item->anchor_title ? ' title="' . $item->anchor_title . '" ' : '';
 

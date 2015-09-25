@@ -21,20 +21,20 @@ class plgKunenaFinder extends JPlugin
 	 * Message is passed by reference, but after the save, so no changes will be saved.
 	 * Method is called right after the Message is saved
 	 *
-	 * @param	string		$context	The context of the message passed to the plugin (added in 1.6)
-	 * @param	object		$table		A Table object containing the message
-	 * @param	bool		$isNew		If the message has just been created
+	 * @param   string		$context	The context of the message passed to the plugin (added in 1.6)
+	 * @param   object		$table		A Table object containing the message
+	 * @param   bool		$isNew		If the message has just been created
 	 * @since	2.5
 	 */
 	public function onKunenaAfterSave($context, $table, $isNew)
 	{
-		JLog::add('onKunenaAfterSave context: '.$context, JLog::INFO);
+		JLog::add('onKunenaAfterSave context: ' . $context, JLog::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		JLog::add('onKunenaAfterSave table: '.$table_content, JLog::INFO);
-		JLog::add('onKunenaAfterSave isNew: '.($isNew)?'Yes':'No', JLog::INFO);
-		$dispatcher	= JDispatcher::getInstance();
+		JLog::add('onKunenaAfterSave table: ' . $table_content, JLog::INFO);
+		JLog::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', JLog::INFO);
+		$dispatcher	= JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterSave event.
@@ -45,21 +45,21 @@ class plgKunenaFinder extends JPlugin
 	 * Finder before save message method
 	 * Method is called right before the content is saved
 	 *
-	 * @param	string		$context	The context of the content passed to the plugin (added in 1.6)
-	 * @param	object		$table		A Table object containing the message
-	 * @param	bool		$isNew		If the message is just about to be created
+	 * @param   string		$context	The context of the content passed to the plugin (added in 1.6)
+	 * @param   object		$table		A Table object containing the message
+	 * @param   bool		$isNew		If the message is just about to be created
 	 * @since   2.5
 	 */
 	public function onKunenaBeforeSave($context, $table, $isNew)
 	{
-		JLog::add('onKunenaBeforeSave context: '.$context, JLog::INFO);
+		JLog::add('onKunenaBeforeSave context: ' . $context, JLog::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		JLog::add('onKunenaBeforeSave table: '.$table_content, JLog::INFO);
-		JLog::add('onKunenaBeforeSave isNew: '.($isNew)?'Yes':'No', JLog::INFO);
+		JLog::add('onKunenaBeforeSave table: ' . $table_content, JLog::INFO);
+		JLog::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', JLog::INFO);
 
-		$dispatcher	= JDispatcher::getInstance();
+		$dispatcher	= JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderBeforeSave event.
@@ -69,19 +69,19 @@ class plgKunenaFinder extends JPlugin
 	/**
 	 * Finder after delete message method
 	 *
-	 * @param	string		$context	The context of the content passed to the plugin (added in 1.6)
-	 * @param	object		$table		A Table object containing the message
+	 * @param   string		$context	The context of the content passed to the plugin (added in 1.6)
+	 * @param   object		$table		A Table object containing the message
 	 * @since   2.5
 	 */
 	public function onKunenaAfterDelete($context, $table)
 	{
-		JLog::add('onKunenaAfterDelete context: '.$context, JLog::INFO);
+		JLog::add('onKunenaAfterDelete context: ' . $context, JLog::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		JLog::add('onKunenaAfterDelete table: '.$table_content, JLog::INFO);
+		JLog::add('onKunenaAfterDelete table: ' . $table_content, JLog::INFO);
 
-		$dispatcher	= JDispatcher::getInstance();
+		$dispatcher	= JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
 		// Trigger the onFinderAfterDelete event.
@@ -90,21 +90,21 @@ class plgKunenaFinder extends JPlugin
 	/**
 	 * Finder after delete message method
 	 *
-	 * @param	string		$context	The context of the content passed to the plugin (added in 1.6)
-	 * @param	object		$table		A Table object containing the message
+	 * @param   string		$context	The context of the content passed to the plugin (added in 1.6)
+	 * @param   object		$table		A Table object containing the message
 	 * @since   2.5
 	 */
 	public function onKunenaBeforeDelete($context, $table)
 	{
-		JLog::add('onKunenaBeforeDelete context: '.$context, JLog::INFO);
+		JLog::add('onKunenaBeforeDelete context: ' . $context, JLog::INFO);
 		ob_start();
 		$table_content = ob_get_contents();
 		ob_end_clean();
-		JLog::add('onKunenaBeforeDelete table: '.$table_content, JLog::INFO);
-	
-		$dispatcher	= JDispatcher::getInstance();
+		JLog::add('onKunenaBeforeDelete table: ' . $table_content, JLog::INFO);
+
+		$dispatcher	= JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
-	
+
 		// Trigger the onFinderAfterDelete event.
 		$dispatcher->trigger('onFinderBeforeDelete', array($context, $table));
 	}

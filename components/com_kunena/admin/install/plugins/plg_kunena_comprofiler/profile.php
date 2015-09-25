@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 require_once dirname(__FILE__) . '/integration.php';
 
@@ -51,6 +51,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 		{
 			return false;
 		}
+
 		// Get CUser object
 		$cbUser = CBuser::getInstance($user->userid);
 		if ($cbUser === null)
@@ -67,7 +68,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 		$_PLUGINS->loadPluginGroup('user');
 
-		return implode(' ', $_PLUGINS->trigger('forumSideProfile', array('kunena', $view, $view->profile->userid,
+		return implode(
+   ' ', $_PLUGINS->trigger(
+	'forumSideProfile', array('kunena', $view, $view->profile->userid,
 			array('config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params))));
 	}
 

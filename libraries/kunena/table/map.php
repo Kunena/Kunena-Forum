@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaTableMap
@@ -118,14 +118,17 @@ class KunenaTableMap
 	{
 		$properties = (array) $this;
 		$list = array();
-		foreach ($properties as $property=>$value)
+		foreach ($properties as $property => $value)
 		{
-			if ($property[0] != "\0") $list[$property] = $value;
+			if ($property[0] != "\0") { $list[$property] = $value; }
 		}
 
 		return $list;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getMirrorInstance()
 	{
 		static $instance = array();
@@ -199,7 +202,7 @@ class KunenaTableMap
 	/**
 	 * Method to set the primary key.
 	 *
-	 * @param  int  $id  Set value for the primary key.
+	 * @param   int  $id  Set value for the primary key.
 	 *
 	 * @return $this
 	 */
@@ -223,18 +226,18 @@ class KunenaTableMap
 	/**
 	 * Method to set the mapped value.
 	 *
-	 * @param  array  $list  Set array of mapped objects.
+	 * @param   array  $list  Set array of mapped objects.
 	 */
 	public function setMapped(array $list)
 	{
-		JArrayHelper::toInteger($list);
+		Joomla\Utilities\ArrayHelper::toInteger($list);
 		$this->{$this->_tbl_mapped} = $list;
 	}
 
 	/**
 	 * Method to add relation.
 	 *
-	 * @param  int  $id  Add Id.
+	 * @param   int  $id  Add Id.
 	 *
 	 * @return $this
 	 */
@@ -251,7 +254,7 @@ class KunenaTableMap
 	/**
 	 * Method to remove relation.
 	 *
-	 * @param  int  $id  Add Id.
+	 * @param   int  $id  Add Id.
 	 *
 	 * @return $this
 	 */
@@ -474,7 +477,7 @@ class KunenaTableMap
 				$values = array();
 				foreach ($added as $var)
 				{
-					$values[] = (int) $id .','. (int) $var;
+					$values[] = (int) $id . ',' . (int) $var;
 				}
 
 				$query = $this->_db->getQuery(true);
@@ -489,12 +492,11 @@ class KunenaTableMap
 			if ($deleted) {
 				$query = $this->_db->getQuery(true);
 				$query->delete($this->_db->qn($this->_tbl));
-				$query->where($this->_db->qn($this->_tbl_key).'='.(int) $id);
-				$query->where($this->_db->qn($this->_tbl_mapped).' IN ('.implode(',', $deleted).')');
+				$query->where($this->_db->qn($this->_tbl_key) . '=' . (int) $id);
+				$query->where($this->_db->qn($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
 				$this->_db->setQuery($query);
 				$this->_db->execute();
 			}
-
 		}
 		else
 		{
@@ -576,7 +578,7 @@ class KunenaTableMap
 		$query->delete();
 		$query->from($this->_tbl);
 
-		foreach ($pk as $key=>$value)
+		foreach ($pk as $key => $value)
 		{
 			$query->where($key . ' = ' . $this->_db->quote($value));
 		}

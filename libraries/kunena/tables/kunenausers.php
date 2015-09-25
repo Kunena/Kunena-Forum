@@ -8,7 +8,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 require_once(__DIR__ . '/kunena.php');
 
@@ -273,11 +273,20 @@ class TableKunenaUsers extends KunenaTable
 	 **/
 	public $status_text = null;
 
+	/**
+	 * @param   string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_users', 'userid', $db);
 	}
 
+	/**
+	 * @param   null $userid
+	 * @param   bool $reset
+	 *
+	 * @return boolean
+	 */
 	public function load($userid = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -289,7 +298,7 @@ class TableKunenaUsers extends KunenaTable
 		}
 
 		// Reset the table.
-		if ($reset) $this->reset();
+		if ($reset) { $this->reset(); }
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1)
@@ -324,7 +333,7 @@ class TableKunenaUsers extends KunenaTable
 			return false;
 		}
 
-		if ($data['posts'] !== null) $this->_exists = true;
+		if ($data['posts'] !== null) { $this->_exists = true; }
 
 		// Bind the data to the table.
 		$this->bind($data);
@@ -332,6 +341,9 @@ class TableKunenaUsers extends KunenaTable
 		return $this->_exists;
 	}
 
+	/**
+	 *
+	 */
 	public function reset()
 	{
 		parent::reset();
@@ -343,6 +355,12 @@ class TableKunenaUsers extends KunenaTable
 		}
 	}
 
+	/**
+	 * @param   mixed $data
+	 * @param   array $ignore
+	 *
+	 * @return boolean|void
+	 */
 	public function bind($data, $ignore = array())
 	{
 		parent::bind($data, $ignore);
@@ -350,25 +368,28 @@ class TableKunenaUsers extends KunenaTable
 
 		foreach ($fields as $field)
 		{
-			if (isset($data[$field]) && !in_array($field, $ignore)) $this->$field = $data[$field];
+			if (isset($data[$field]) && !in_array($field, $ignore)) { $this->$field = $data[$field]; }
 		}
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function check()
 	{
 		if (!$this->userid || !JFactory::getUser($this->userid))
 		{
-			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int)$this->userid));
+			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));
 		}
 
 		if ($this->status < 0 || $this->status > 3)
 		{
-			$this->setError ( JText::_('COM_KUNENA_UNKNOWN_STATUS'));
+			$this->setError(JText::_('COM_KUNENA_UNKNOWN_STATUS'));
 		}
 
 		if (strlen($this->status) < 0 || strlen($this->status) > 255)
 		{
-			$this->setError ( JText::_('COM_KUNENA_STATUS_TOOLONG'));
+			$this->setError(JText::_('COM_KUNENA_STATUS_TOOLONG'));
 		}
 
 		return ($this->getError() == '');

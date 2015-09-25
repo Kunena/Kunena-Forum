@@ -8,9 +8,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
-jimport ( 'joomla.html.pagination' );
+jimport('joomla.html.pagination');
 
 /**
  * Pagination Class.  Provides a common interface for content pagination for the
@@ -21,6 +21,10 @@ jimport ( 'joomla.html.pagination' );
  */
 class KunenaHtmlPagination extends KunenaPagination
 {
+	/**
+	 * @param   int  $displayedPages
+	 * @param   null $uri
+	 */
 	public function setDisplay($displayedPages = 7, $uri = null)
 	{
 		$this->setDisplayedPages($displayedPages);

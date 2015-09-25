@@ -43,14 +43,14 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 </div>
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
-		->set('catid', 'all')
-		->setLayout('topic'); ?>
+	->set('catid', 'all')
+	->setLayout('topic'); ?>
 </div>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
-		->set('pagination', $this->pagination->setDisplayedPages(4))
-		->set('display', true);	?>
+	->set('pagination', $this->pagination->setDisplayedPages(4))
+	->set('display', true);	?>
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
@@ -123,11 +123,11 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 
 		<tbody>
 		<?php
-		foreach ($this->messages as $i => $message)
+		foreach ($this->messages as $i => $message) {
 			echo $this->subLayout('Message/Row')
 				->set('message', $message)
 				->set('position', $i)
-				->set('checkbox', !empty($this->actions));
+				->set('checkbox', !empty($this->actions)); }
 		?>
 		</tbody>
 		<?php endif; ?>

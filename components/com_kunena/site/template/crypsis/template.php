@@ -101,15 +101,20 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		// Compile CSS from LESS files.
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
+
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css';
 		if (file_exists($filename))
 		{
-			$this->addStyleSheet ( 'custom.css' );
+			$this->addStyleSheet('custom.css');
 		}
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		if ($fontawesome) : ?>
+			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<?php endif;
 
 		// Load template colors settings
-		$this->ktemplate = KunenaFactory::getTemplate();
 		$styles = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
@@ -117,6 +122,8 @@ EOF;
 		if ($iconcolor) {
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] i,
+		.layout#kunena .glyphicon-topic,
+		.layout#kunena h3 i,
 		.layout#kunena #kwho i.icon-users,
 		.layout#kunena#kstats i.icon-bars { color: {$iconcolor}; }
 EOF;
@@ -127,7 +134,9 @@ EOF;
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
-		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important; }
+		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread i.fa { color: {$iconcolornew} !important;}
 EOF;
 		}
 
@@ -139,7 +148,7 @@ EOF;
 
 	/**
 	 * @param        $filename
-	 * @param string $group
+	 * @param   string $group
 	 *
 	 * @return JDocument
 	 */
@@ -155,7 +164,7 @@ EOF;
 	 * @param      $name
 	 * @param      $scope
 	 * @param      $type
-	 * @param null $id
+	 * @param   null $id
 	 *
 	 * @return string
 	 */
@@ -201,7 +210,7 @@ HTML;
 
 	/**
 	 * @param        $name
-	 * @param string $title
+	 * @param   string $title
 	 *
 	 * @return string
 	 */
@@ -212,7 +221,7 @@ HTML;
 
 	/**
 	 * @param        $image
-	 * @param string $alt
+	 * @param   string $alt
 	 *
 	 * @return string
 	 */

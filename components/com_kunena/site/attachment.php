@@ -18,7 +18,7 @@ if (version_compare(PHP_VERSION, '5.3.1', '<'))
 	die('Your host needs to use PHP 5.3.1 or higher to run this version of Joomla!');
 }
 
-/**
+/*
  * Constant that is checked in included files to prevent direct access.
  */
 define('_JEXEC', 1);
@@ -64,6 +64,11 @@ class KunenaApplication extends JApplicationWeb
 	protected $_clientId = 0;
 	protected $userstate = array();
 
+	/**
+	 * @param   JInput                $input
+	 * @param   JRegistry             $config
+	 * @param   JApplicationWebClient $client
+	 */
 	public function __construct(JInput $input = null, JRegistry $config = null, JApplicationWebClient $client = null)
 	{
 		parent::__construct($input, $config, $client);
@@ -96,6 +101,11 @@ class KunenaApplication extends JApplicationWeb
 		}
 	}
 
+	/**
+	 * @param   JSession $session
+	 *
+	 * @return $this
+	 */
 	public function loadSession(JSession $session = null)
 	{
 		if ($session !== null)
@@ -138,6 +148,9 @@ class KunenaApplication extends JApplicationWeb
 		return $this;
 	}
 
+	/**
+	 *
+	 */
 	protected function doExecute()
 	{
 		// Handle SEF.
@@ -151,32 +164,54 @@ class KunenaApplication extends JApplicationWeb
 		{
 			$this->input->set('thumb', 1);
 		}
+
 		$this->input->set('format', 'raw');
 
 		$controller = new ComponentKunenaControllerApplicationAttachmentDefaultDisplay();
 		echo $controller->execute();
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function isSite()
 	{
 		return true;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function isAdmin()
 	{
 		return false;
 	}
 
+	/**
+	 * @param   bool $params
+	 *
+	 * @return string
+	 */
 	public function getTemplate($params = false)
 	{
 		return 'system';
 	}
 
+	/**
+	 * @param $name
+	 * @param $value
+	 */
 	public function setUserState($name, $value)
 	{
 		$this->userstate[$name] = $value;
 	}
 
+	/**
+	 * @param      $name
+	 * @param   null $default
+	 *
+	 * @return null
+	 */
 	public function getUserState($name, $default = null)
 	{
 		return isset($this->userstate[$name]) ? $this->userstate[$name] : $default;

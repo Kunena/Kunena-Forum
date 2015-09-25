@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Item Collection.
@@ -25,7 +25,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Create a new collection.
 	 *
-	 * @param  array  $items  Initial items to be added into the collection.
+	 * @param   array  $items  Initial items to be added into the collection.
 	 */
 	public function __construct(array $items = array())
 	{
@@ -54,9 +54,9 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 
 	/**
 	* Get the last item from the collection.
-	*
-	* @return mixed|null
-	*/
+  *
+  * @return mixed|null
+  */
 	public function last()
 	{
 		return !empty($this->items) ? end($this->items) : null;
@@ -65,7 +65,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Run a filter over each of the items.
 	 *
-	 * @param  Closure  $callback
+	 * @param   Closure  $callback
 	 *
 	 * @return KunenaCollection
 	 */
@@ -77,7 +77,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Execute a callback over each item.
 	 *
-	 * @param Closure $callback
+	 * @param   Closure $callback
 	 *
 	 * @return KunenaCollection
 	 */
@@ -91,7 +91,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Run a map over each of the items.
 	 *
-	 * @param  Closure  $callback
+	 * @param   Closure  $callback
 	 *
 	 * @return KunenaCollection
 	 */
@@ -113,7 +113,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Count the number of items in the collection.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function count()
 	{
@@ -123,8 +123,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Determine if an item exists at an offset.
 	 *
-	 * @param  mixed  $key
-	 * @return bool
+	 * @param   mixed  $key
+	 * @return boolean
 	 */
 	public function offsetExists($key)
 	{
@@ -134,7 +134,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Get an item at a given offset.
 	 *
-	 * @param  mixed  $key
+	 * @param   mixed  $key
 	 * @return mixed
 	 */
 	public function offsetGet($key)
@@ -145,8 +145,8 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Set the item at a given offset.
 	 *
-	 * @param  mixed  $key
-	 * @param  mixed  $value
+	 * @param   mixed  $key
+	 * @param   mixed  $value
 	 * @return void
 	 */
 	public function offsetSet($key, $value)
@@ -164,7 +164,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	/**
 	 * Unset the item at a given offset.
 	 *
-	 * @param  string  $key
+	 * @param   string  $key
 	 * @return void
 	 */
 	public function offsetUnset($key)

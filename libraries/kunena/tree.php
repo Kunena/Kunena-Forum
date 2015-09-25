@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Tree Class
@@ -24,6 +24,12 @@ class KunenaTree implements Iterator
 	protected $heap = null;
 	//	protected $_count = null;
 
+	/**
+	 * @param        $items
+	 * @param   string $id
+	 * @param   string $parent
+	 * @param   string $level
+	 */
 	public function __construct(&$items, $id = 'id', $parent = 'parent_id', $level = 'level')
 	{
 		$this->_tree[0] = array();
@@ -34,6 +40,9 @@ class KunenaTree implements Iterator
 		$this->rewind();
 	}
 
+	/**
+	 *
+	 */
 	public function rewind()
 	{
 		$this->heap = array(0);
@@ -44,6 +53,9 @@ class KunenaTree implements Iterator
 		}
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function current()
 	{
 		$id = reset($this->heap);
@@ -51,11 +63,17 @@ class KunenaTree implements Iterator
 		return $this->_instances[$id];
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function key()
 	{
 		return reset($this->heap);
 	}
 
+	/**
+	 *
+	 */
 	public function next()
 	{
 		$id = array_shift($this->heap);
@@ -76,15 +94,21 @@ class KunenaTree implements Iterator
 		}
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function valid()
 	{
 		return !empty($this->heap);
 	}
 
+	/**
+	 * @param $items
+	 */
 	public function add(&$items)
 	{
 		// Prepare tree
-		foreach ( $items as $item )
+		foreach ($items as $item)
 		{
 			$itemid = $item->{$this->_id};
 			$itemparent = $item->{$this->_parent};
@@ -99,12 +123,12 @@ class KunenaTree implements Iterator
 			}
 			else
 			{
-				$item->{$this->_level} = isset($this->_levels [$itemparent]) ? $this->_levels [$itemparent]+1 : 0;
+				$item->{$this->_level} = isset($this->_levels [$itemparent]) ? $this->_levels [$itemparent] + 1 : 0;
 			}
 		}
 
 		// Build tree (take ordering from the original array)
-		foreach ( $items as $item )
+		foreach ($items as $item)
 		{
 			$itemid = $item->{$this->_id};
 			$itemparent = $item->{$this->_parent};
@@ -127,11 +151,11 @@ class KunenaTree implements Iterator
 			{
 				$heap = array_merge($heap, array_keys($this->_tree[$parent]));
 
-				foreach ($this->_tree [$parent] as $id=>$children)
+				foreach ($this->_tree [$parent] as $id => $children)
 				{
 					if (isset($this->_instances [$id]))
 					{
-						$level = isset($this->_levels [$parent]) ? $this->_levels [$parent]+1 : 0;
+						$level = isset($this->_levels [$parent]) ? $this->_levels [$parent] + 1 : 0;
 						$this->_levels [$id] = $this->_instances[$id]->{$this->_level} = $level;
 					}
 				}
@@ -139,11 +163,21 @@ class KunenaTree implements Iterator
 		}
 	}
 
+	/**
+	 * @param $id
+	 *
+	 * @return boolean
+	 */
 	public function getLevel($id)
 	{
 		return isset($this->_levels [$id]) ? $this->_levels [$id] : false;
 	}
 
+	/**
+	 * @param   int $parent
+	 *
+	 * @return array
+	 */
 	public function getTree($parent = 0)
 	{
 		if ($parent === false)
@@ -154,6 +188,13 @@ class KunenaTree implements Iterator
 		return isset($this->_tree[$parent]) ? $this->_tree[$parent] : array();
 	}
 
+	/**
+	 * @param   int   $parent_id
+	 * @param   array $itemIndent
+	 * @param   bool  $gap
+	 *
+	 * @return array
+	 */
 	public function &getIndentation($parent_id = 0, $itemIndent = array(), $gap = false)
 	{
 		$parent_tree = &$this->_tree[$parent_id];
@@ -161,7 +202,7 @@ class KunenaTree implements Iterator
 		$last_id = key($parent_tree);
 
 		$list = array();
-		foreach ($parent_tree as $id=>$tree)
+		foreach ($parent_tree as $id => $tree)
 		{
 			$indent = $itemIndent;
 
@@ -190,7 +231,6 @@ class KunenaTree implements Iterator
 					$indent[] = $id != $last_id ? 'edge' : 'empty';
 					$gap = false;
 				}
-
 			}
 			elseif ($this->_parents[$id] > 0)
 			{

@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 require_once KPATH_SITE . '/router.php';
 
@@ -19,55 +19,60 @@ abstract class KunenaRouteLegacy
 {
 	// List of legacy views from previous releases
 	static $functions = array (
-		'entrypage'=>1,
-		'listcat'=>1,
-		'showcat'=>1,
-		'latest'=>1,
-		'mylatest'=>1,
-		'noreplies'=>1,
-		'subscriptions'=>1,
-		'favorites'=>1,
-		'userposts'=>1,
-		'unapproved'=>1,
-		'deleted'=>1,
-		'view'=>1,
-		'profile'=>1,
-		'myprofile'=>1,
-		'userprofile'=>1,
-		'fbprofile'=>1,
-		'moderateuser'=>1,
-		'userlist'=>1,
-		'rss'=>1,
-		'post'=>1,
-		'report'=>1,
-		'template'=>1,
-		'announcement'=>1,
-		'article'=>1,
-		'who'=>1,
-		'poll'=>1,
-		'polls'=>1,
-		'stats'=>1,
-		'help'=>1,
-		'review'=>1,
-		'rules'=>1,
+		'entrypage' => 1,
+		'listcat' => 1,
+		'showcat' => 1,
+		'latest' => 1,
+		'mylatest' => 1,
+		'noreplies' => 1,
+		'subscriptions' => 1,
+		'favorites' => 1,
+		'userposts' => 1,
+		'unapproved' => 1,
+		'deleted' => 1,
+		'view' => 1,
+		'profile' => 1,
+		'myprofile' => 1,
+		'userprofile' => 1,
+		'fbprofile' => 1,
+		'moderateuser' => 1,
+		'userlist' => 1,
+		'rss' => 1,
+		'post' => 1,
+		'report' => 1,
+		'template' => 1,
+		'announcement' => 1,
+		'article' => 1,
+		'who' => 1,
+		'poll' => 1,
+		'polls' => 1,
+		'stats' => 1,
+		'help' => 1,
+		'review' => 1,
+		'rules' => 1,
 //		'search'=>1,
-		'advsearch'=>1,
-		'markallcatsread'=>1,
-		'markthisread'=>1,
-		'subscribecat'=>1,
-		'unsubscribecat'=>1,
-		'karma'=>1,
-		'bulkactions'=>1,
-		'templatechooser'=>1,
-		'json'=>1,
-		'pdf'=>1,
-		'thankyou'=>1,
-		'fb_pdf'=>1,
+		'advsearch' => 1,
+		'markallcatsread' => 1,
+		'markthisread' => 1,
+		'subscribecat' => 1,
+		'unsubscribecat' => 1,
+		'karma' => 1,
+		'bulkactions' => 1,
+		'templatechooser' => 1,
+		'json' => 1,
+		'pdf' => 1,
+		'thankyou' => 1,
+		'fb_pdf' => 1,
 	);
 
+	/**
+	 * @param $view
+	 *
+	 * @return boolean
+	 */
 	public static function isLegacy($view)
 	{
-		if (!$view || $view=='legacy')
+		if (!$view || $view == 'legacy')
 		{
 			return true;
 		}
@@ -75,6 +80,13 @@ abstract class KunenaRouteLegacy
 		return isset(self::$functions[$view]);
 	}
 
+	/**
+	 * @param     $uri
+	 * @param   int $showstart
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public static function convert($uri, $showstart = 1)
 	{
 		// Make sure that input is JUri to legacy Kunena func=xxx
@@ -88,7 +100,7 @@ abstract class KunenaRouteLegacy
 			return;
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		if ($uri->getVar('func'))
 		{
@@ -98,7 +110,7 @@ abstract class KunenaRouteLegacy
 
 		if (!isset(self::$functions[$uri->getVar('view')]))
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 			return;
 		}
@@ -113,7 +125,7 @@ abstract class KunenaRouteLegacy
 		}
 
 		$app = JFactory::getApplication();
-		$config = KunenaFactory::getConfig ();
+		$config = KunenaFactory::getConfig();
 		$changed = false;
 
 		switch ($uri->getVar('view'))
@@ -130,15 +142,15 @@ abstract class KunenaRouteLegacy
 			case 'showcat' :
 				$changed = true;
 				$uri->setVar('view', 'category');
-				$page = (int) $uri->getVar ( 'page', $showstart );
+				$page = (int) $uri->getVar('page', $showstart);
 
 				if ($page > 0)
 				{
-					$uri->setVar ( 'limitstart', (int) $config->messages_per_page * ($page - 1) );
-					$uri->setVar ( 'limit', (int) $config->messages_per_page );
+					$uri->setVar('limitstart', (int) $config->messages_per_page * ($page - 1));
+					$uri->setVar('limit', (int) $config->messages_per_page);
 				}
 
-				$uri->delVar ( 'page' );
+				$uri->delVar('page');
 				break;
 			case 'latest' :
 			case 'mylatest' :
@@ -192,7 +204,7 @@ abstract class KunenaRouteLegacy
 						$uri->setVar('mode', 'started');
 						break;
 					case 'userposts' :
-						$uri->setVar ( 'userid', '0' );
+						$uri->setVar('userid', '0');
 						// Continue in latestposts
 					case 'latestposts' :
 						$uri->setVar('layout', 'posts');
@@ -215,26 +227,26 @@ abstract class KunenaRouteLegacy
 						$uri->setVar('mode', 'replies');
 				}
 
-				$page = (int) $uri->getVar ( 'page', $showstart );
+				$page = (int) $uri->getVar('page', $showstart);
 
 				if ($page > 0)
 				{
-					$uri->setVar ( 'limitstart', (int) $config->threads_per_page * ($page - 1) );
-					$uri->setVar ( 'limit', (int) $config->threads_per_page );
+					$uri->setVar('limitstart', (int) $config->threads_per_page * ($page - 1));
+					$uri->setVar('limit', (int) $config->threads_per_page);
 				}
 
-				$uri->delVar ( 'page' );
+				$uri->delVar('page');
 				break;
 			case 'view' :
 				$changed = true;
 				$uri->setVar('view', 'topic');
 
 				// Convert URI to have both id and mesid
-				$id = $uri->getVar ( 'id' );
-				$message = KunenaForumMessageHelper::get ( $id );
-				$mesid = $uri->getVar ( 'mesid' );
+				$id = $uri->getVar('id');
+				$message = KunenaForumMessageHelper::get($id);
+				$mesid = $uri->getVar('mesid');
 
-				if ($message->exists ())
+				if ($message->exists())
 				{
 					$id = $message->thread;
 
@@ -246,17 +258,17 @@ abstract class KunenaRouteLegacy
 
 				if ($id)
 				{
-					$uri->setVar ( 'id', $id );
+					$uri->setVar('id', $id);
 				}
 
 				if ($mesid)
 				{
-					$uri->setVar ( 'mesid', $mesid );
+					$uri->setVar('mesid', $mesid);
 				}
-
 				break;
 			case 'moderateuser' :
-				if ($uri->getVar('view') == 'moderateuser') $uri->setVar('layout', 'moderate');
+				if ($uri->getVar('view') == 'moderateuser') { $uri->setVar('layout', 'moderate'); }
+
 				// Continue to user profile
 			case 'myprofile' :
 			case 'userprofile' :
@@ -267,8 +279,8 @@ abstract class KunenaRouteLegacy
 
 				if ($uri->getVar('task'))
 				{
-					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
-					$uri->delVar ( 'task' );
+					$app->enqueueMessage(JText::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
+					$uri->delVar('task');
 				}
 
 				// Handle &do=xxx
@@ -284,7 +296,6 @@ abstract class KunenaRouteLegacy
 						$uri->delVar('layout');
 						break;
 				}
-
 				break;
 			case 'report' :
 				$changed = true;
@@ -308,14 +319,13 @@ abstract class KunenaRouteLegacy
 
 				if ($id)
 				{
-					$uri->setVar ( 'id', $id );
+					$uri->setVar('id', $id);
 				}
 
 				if ($mesid)
 				{
-					$uri->setVar ( 'mesid', $mesid );
+					$uri->setVar('mesid', $mesid);
 				}
-
 				break;
 
 			case 'userlist' :
@@ -348,19 +358,19 @@ abstract class KunenaRouteLegacy
 				switch ($config->rss_timelimit)
 				{
 					case 'week' :
-						$uri->setVar ( 'sel', 168);
+						$uri->setVar('sel', 168);
 						break;
 					case 'year' :
-						$uri->setVar ( 'sel', 8760);
+						$uri->setVar('sel', 8760);
 						break;
 					case 'month' :
 					default :
-						$uri->setVar ( 'sel', 720);
+						$uri->setVar('sel', 720);
 						break;
 				}
 
-				$uri->setVar ( 'type', 'rss' );
-				$uri->setVar ( 'format', 'feed' );
+				$uri->setVar('type', 'rss');
+				$uri->setVar('format', 'feed');
 				break;
 			case 'post' :
 				$changed = true;
@@ -385,7 +395,7 @@ abstract class KunenaRouteLegacy
 				$message = KunenaForumMessageHelper::get($id);
 				$mesid = null;
 
-				if ($message->exists ())
+				if ($message->exists())
 				{
 					$id = $message->thread;
 
@@ -407,26 +417,25 @@ abstract class KunenaRouteLegacy
 
 				if ($uri->getVar('action'))
 				{
-					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
+					$app->enqueueMessage(JText::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
 					$uri->delVar('action');
 				}
 				else
 				{
 					// Handle &do=xxx
-					$layout = $uri->getVar ('layout');
-					$uri->delVar ('layout');
+					$layout = $uri->getVar('layout');
+					$uri->delVar('layout');
 					switch ($layout)
 					{
-
 						// Create, reply, quote and edit:
 						case 'new' :
 							$uri->setVar('layout', 'create');
-							$uri->delVar ( 'id' );
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('id');
+							$uri->delVar('mesid');
 							break;
 						case 'quote' :
 							$uri->setVar('layout', 'reply');
-							$uri->setVar ('quote', 1);
+							$uri->setVar('quote', 1);
 							break;
 						case 'reply' :
 							$uri->setVar('layout', 'reply');
@@ -436,9 +445,8 @@ abstract class KunenaRouteLegacy
 							// Always add &mesid=x
 							if (!$mesid)
 							{
-								$uri->setVar ( 'mesid', $id );
+								$uri->setVar('mesid', $id);
 							}
-
 							break;
 
 						// Topic moderation:
@@ -469,7 +477,7 @@ abstract class KunenaRouteLegacy
 							$uri->setVar('task', 'lock');
 
 							// Always remove &mesid=x
-							$uri->delVar ( 'mesid' );
+							$uri->delVar('mesid');
 							break;
 						case 'unlock' :
 							$uri->setVar('task', 'unlock');
@@ -485,9 +493,8 @@ abstract class KunenaRouteLegacy
 							// Always add &mesid=x
 							if (!$mesid)
 							{
-								$uri->setVar ( 'mesid', $id );
+								$uri->setVar('mesid', $id);
 							}
-
 							break;
 						case 'approve' :
 							$uri->setVar('task', 'approve');
@@ -497,7 +504,6 @@ abstract class KunenaRouteLegacy
 							{
 								$uri->setVar('mesid', $id);
 							}
-
 							break;
 						case 'delete' :
 							$uri->setVar('task', 'delete');
@@ -507,7 +513,6 @@ abstract class KunenaRouteLegacy
 							{
 								$uri->setVar('mesid', $id);
 							}
-
 							break;
 						case 'undelete' :
 							$uri->setVar('task', 'undelete');
@@ -517,7 +522,6 @@ abstract class KunenaRouteLegacy
 							{
 								$uri->setVar('mesid', $id);
 							}
-
 							break;
 						case 'permdelete' :
 							$uri->setVar('task', 'permdelete');
@@ -527,7 +531,6 @@ abstract class KunenaRouteLegacy
 							{
 								$uri->setVar('mesid', $id);
 							}
-
 							break;
 
 						// Topic user actions:
@@ -557,7 +560,7 @@ abstract class KunenaRouteLegacy
 							break;
 
 						default :
-							$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
+							$app->enqueueMessage(JText::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
 					}
 				}
 				break;
@@ -639,7 +642,7 @@ abstract class KunenaRouteLegacy
 						$uri->setVar('mesid', $message->id);
 					}
 
-					$uri->setVar ( 'id', $id );
+					$uri->setVar('id', $id);
 				}
 				break;
 			case 'karma':
@@ -677,11 +680,14 @@ abstract class KunenaRouteLegacy
 			JLog::add("Legacy URI {$legacy->toString(array('path', 'query'))} was converted to {$uri->toString(array('path', 'query'))}", JLog::DEBUG, 'kunena');
 		}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $changed;
 	}
 
+	/**
+	 * @param $item
+	 */
 	public static function convertMenuItem($item)
 	{
 		$uri = JUri::getInstance($item->link);
@@ -691,7 +697,6 @@ abstract class KunenaRouteLegacy
 
 		if (self::convert($uri, 0))
 		{
-
 			switch ($view)
 			{
 				case 'latest' :
@@ -709,17 +714,18 @@ abstract class KunenaRouteLegacy
 					$params->set('do', null);
 					break;
 				case 'rules' :
-					$params->set('body', '[article=full]'.KunenaFactory::getConfig()->get('rules_cid', 1).'[/article]');
+					$params->set('body', '[article=full]' . KunenaFactory::getConfig()->get('rules_cid', 1) . '[/article]');
 					$params->set('body_format', 'bbcode');
 					$params->set('do', null);
 					break;
 				case 'help' :
-					$params->set('body', '[article=full]'.KunenaFactory::getConfig()->get('help_cid', 1).'[/article]');
+					$params->set('body', '[article=full]' . KunenaFactory::getConfig()->get('help_cid', 1) . '[/article]');
 					$params->set('body_format', 'bbcode');
 					$params->set('do', null);
 					break;
 			}
 		}
+
 		$item->link = $uri->toString();
 		$item->query = $uri->getQuery(true);
 		$item->params = $params->toString();

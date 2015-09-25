@@ -13,5 +13,3 @@ defined('_JEXEC') or die;
 // [ebay]sellerid[/ebay]
 
 // Display ebay seller.
-?>
-

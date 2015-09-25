@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Credits Controller
@@ -18,6 +18,9 @@ defined('_JEXEC') or die ();
  */
 class KunenaControllerCredits extends KunenaController
 {
+	/**
+	 * @param   array $config
+	 */
 	public function __construct($config = array())
 	{
 		parent::__construct($config);

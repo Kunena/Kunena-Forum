@@ -19,8 +19,9 @@ defined('_JEXEC') or die;
 
 		<?php if (!empty($this->actions)) : ?>
 			<div class="input-group pull-right">
-				<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
-					'kchecktask'); ?>
+				<?php echo JHtml::_(
+	'select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
+'kchecktask'); ?>
 				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 			</div>
 		<?php endif; ?>
@@ -28,8 +29,8 @@ defined('_JEXEC') or die;
 		<?php if (!empty($this->embedded)) : ?>
 		<div class="pull-right">
 			<?php echo $this->subLayout('Widget/Pagination/List')
-				->set('pagination', $this->pagination)
-				->set('display', true); ?>
+	->set('pagination', $this->pagination)
+	->set('display', true); ?>
 		</div>
 		<?php endif; ?>
 	</h3>

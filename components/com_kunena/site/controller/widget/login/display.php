@@ -42,7 +42,7 @@ class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDispla
 	/**
 	 * Prepare login display.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function before()
 	{

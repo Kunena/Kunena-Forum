@@ -20,7 +20,7 @@ class ComponentKunenaControllerApplicationTopicThreadedDisplay extends KunenaCon
 	/**
 	 * Return true if layout exists.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function exists()
 	{

@@ -56,20 +56,20 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$this->category = $this->topic->getCategory();
 
-		if ( $parent->isAuthorised('reply') && $this->me->canDoCaptcha() )
+		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
 				$plugin = JPluginHelper::getPlugin('captcha');
 				$params = new JRegistry($plugin[0]->params);
-				
+
 				$captcha_pubkey = $params->get('public_key');
 				$catcha_privkey = $params->get('private_key');
-				
+
 				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
 				{
 					JPluginHelper::importPlugin('captcha');
-					$dispatcher = JDispatcher::getInstance();
+					$dispatcher = JEventDispatcher::getInstance();
 					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 
 					$this->captchaEnabled = $result[0];
@@ -89,7 +89,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
@@ -105,7 +105,7 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
@@ -126,12 +126,13 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	/**
 	 * Can user subscribe to the topic?
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled')
+			|| $this->config->topic_subscriptions == 'disabled'
+)
 		{
 			return false;
 		}

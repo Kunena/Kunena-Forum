@@ -467,10 +467,6 @@ div.navbar > div > div.visible-sm.hidden-md > ul {
 	margin : 0
 }
 
-select#mode {
-	margin-left : 69px;
-}
-
 .table th, .table td {
 	line-height : 20px;
 }
@@ -715,6 +711,7 @@ small.text-muted {
 
 select#postcatid {
 	width : 100%;
+	margin-left: -10px;
 }
 
 .glyphicon-big {
@@ -925,16 +922,6 @@ i {
 	margin : 0;
 }
 
-.mobile-user a,
-.mobile-user a:hover,
-.mobile-user a:focus
-.open,
-.open a,
-.open a:hover,
-.open a:focus {
-	background-color : transparent;
-}
-
 .legend i {
 	padding-right : 5px;
 }
@@ -1007,4 +994,55 @@ ul.inline > li > a > I {
 #kmoderate-mode-selected,
 #kmoderate-mode-newer {
 	display: inline-block;
+}
+
+#categoryactions ul {
+	padding: 0;
+}
+
+.thumbnails li,
+.profile-expand li{
+	list-style: none;
+}
+
+.profile-expand ul {
+	padding: 0;
+}
+
+.solved {
+	font-size: 100%;
+	text-transform: uppercase;
+}
+
+.solved b {
+	padding-left: 10px;
+}
+
+.nav > li > a:focus {
+	background-color: transparent;
+}
+
+#editprofile #birthdate {
+	margin-left: -15px;
+}
+
+#params_language,
+#params_timezone,
+#params_editor {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.4285;
+	color: #555555;
+	background-color: #ffffff;
+	background-image: none;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }

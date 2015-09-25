@@ -8,14 +8,14 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 require_once(__DIR__ . '/kunena.php');
 
 /**
-* Kunena User Bans
-* Provides access to the #__kunena_users_banned table
-*/
+ * Kunena User Bans
+ * Provides access to the #__kunena_users_banned table
+ */
 class TableKunenaUserBans extends JTable
 {
 	public $id = null;
@@ -35,11 +35,20 @@ class TableKunenaUserBans extends JTable
 	const ANY = 0;
 	const ACTIVE = 1;
 
+	/**
+	 * @param   string $db
+	 */
 	public function __construct($db)
 	{
 		parent::__construct('#__kunena_users_banned', 'id', $db);
 	}
 
+	/**
+	 * @param     $userid
+	 * @param   int $mode
+	 *
+	 * @return boolean
+	 */
 	public function loadByUserid($userid, $mode = self::ACTIVE)
 	{
 		// Reset the table.
@@ -57,7 +66,7 @@ class TableKunenaUserBans extends JTable
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE userid = {$this->_db->quote($userid)}
-			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})": '') . "
+			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 		$data = $this->_db->loadAssoc();
@@ -83,6 +92,12 @@ class TableKunenaUserBans extends JTable
 		return true;
 	}
 
+	/**
+	 * @param     $ip
+	 * @param   int $mode
+	 *
+	 * @return boolean
+	 */
 	public function loadByIP($ip, $mode = self::ACTIVE)
 	{
 		// Reset the table.
@@ -99,7 +114,7 @@ class TableKunenaUserBans extends JTable
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE ip = {$this->_db->quote($ip)}
-			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})": '') . "
+			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toSql())})" : '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 		$data = $this->_db->loadAssoc();
@@ -125,6 +140,9 @@ class TableKunenaUserBans extends JTable
 		return true;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function check()
 	{
 		if (!$this->ip)
@@ -132,13 +150,19 @@ class TableKunenaUserBans extends JTable
 			$user = KunenaUserHelper::get($this->userid);
 			if (!$user->exists())
 			{
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid ) );
+				$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid));
 			}
 		}
 
-		return ($this->getError () == '');
+		return ($this->getError() == '');
 	}
 
+	/**
+	 * @param   mixed $data
+	 * @param   array $ignore
+	 *
+	 * @return boolean|void
+	 */
 	public function bind($data, $ignore=array())
 	{
 		if (isset($data['comments']))

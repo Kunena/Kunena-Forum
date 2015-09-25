@@ -11,5 +11,5 @@
 defined('_JEXEC') or die;
 ?>
 <div class="center">
-	<?php if (($avatar = $this->user->getAvatarImage('img-circle', 'post'))) echo $this->user->getLink($avatar); ?>
+	<?php if (($avatar = $this->user->getAvatarImage('img-circle', 'post'))) { echo $this->user->getLink($avatar); } ?>
 </div>

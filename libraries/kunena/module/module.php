@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die();
 
 /**
  * Class KunenaModule
@@ -31,8 +31,8 @@ abstract class KunenaModule
 	protected $params = null;
 
 	/**
-	 * @param stdClass $module
-	 * @param JRegistry $params
+	 * @param   stdClass $module
+	 * @param   JRegistry $params
 	 */
 	public function __construct($module, $params)
 	{
@@ -61,7 +61,8 @@ abstract class KunenaModule
 		// Use caching also for registered users if enabled.
 		if ($this->params->get('owncache', 0))
 		{
-			/** @var $cache JCacheControllerOutput */
+			// @var $cache JCacheControllerOutput
+
 			$cache = JFactory::getCache('com_kunena', 'output');
 
 			$me = KunenaFactory::getUser();

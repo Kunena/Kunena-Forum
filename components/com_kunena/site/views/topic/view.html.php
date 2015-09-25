@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Topic View
@@ -25,6 +25,9 @@ class KunenaViewTopic extends KunenaView
 	var $k = 0;
 	var $cache = true;
 
+	/**
+	 * @param   null $tpl
+	 */
 	public function displayDefault($tpl = null)
 	{
 		$this->layout = $this->state->get('layout');
@@ -45,23 +48,21 @@ class KunenaViewTopic extends KunenaView
 		{
 			// User is not allowed to see the category
 			$this->setError($this->category->getError());
-
 		}
 		elseif (!$this->topic)
 		{
 			// Moved topic loop detected (1 -> 2 -> 3 -> 2)
 			$this->setError(JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP'));
-
 		}
 		elseif (!$this->topic->authorise('read'))
 		{
 			// User is not allowed to see the topic
 			$this->setError($this->topic->getError());
-
 		}
 		elseif ($this->state->get('item.id') != $this->topic->id
 			|| ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id]))
-			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid')))
+			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid'))
+)
 		{
 			// We need to redirect: message has been moved or we have permalink
 			$mesid = $this->state->get('item.mesid');
@@ -76,7 +77,8 @@ class KunenaViewTopic extends KunenaView
 			// Redirect to correct location (no redirect in embedded mode).
 			if (empty($this->embedded) && $message->exists())
 			{
-				while (@ob_end_clean()) ;
+				while (@ob_end_clean()) {}
+
 				$this->app->redirect($message->getUrl(null, false));
 			}
 		}
@@ -103,7 +105,8 @@ class KunenaViewTopic extends KunenaView
 		// If page does not exist, redirect to the last page (no redirect in embedded mode).
 		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start'))
 		{
-			while (@ob_end_clean()) ;
+			while (@ob_end_clean()) {}
+
 			$this->app->redirect($this->topic->getUrl(null, false, (int) (($this->total - 1) / $this->state->get('list.limit'))));
 		}
 
@@ -113,7 +116,7 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
@@ -140,8 +143,7 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		// Get keywords, captcha & quick reply
-		$this->captcha    = KunenaSpamRecaptcha::getInstance();
-		$this->quickreply = ($this->topic->authorise('reply', null, false) && $this->me->exists() && !$this->captcha->enabled());
+		$this->quickreply = ($this->topic->authorise('reply', null, false) && $this->me->exists());
 		$this->keywords   = $this->topic->getKeywords(false, ', ');
 
 		$this->_prepareDocument('default');
@@ -150,6 +152,9 @@ class KunenaViewTopic extends KunenaView
 		$this->topic->markRead();
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	public function displayUnread($tpl = null)
 	{
 		// Redirect unread layout to the page that contains the first unread message
@@ -159,10 +164,14 @@ class KunenaViewTopic extends KunenaView
 
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
-		while (@ob_end_clean()) ;
+		while (@ob_end_clean()) {}
+
 		$this->app->redirect($topic->getUrl($category, false, $message));
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	public function displayFlat($tpl = null)
 	{
 		$this->state->set('layout', 'default');
@@ -170,6 +179,9 @@ class KunenaViewTopic extends KunenaView
 		$this->displayDefault($tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	public function displayThreaded($tpl = null)
 	{
 		$this->state->set('layout', 'threaded');
@@ -177,6 +189,9 @@ class KunenaViewTopic extends KunenaView
 		$this->displayDefault($tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	public function displayIndented($tpl = null)
 	{
 		$this->state->set('layout', 'indented');
@@ -184,6 +199,9 @@ class KunenaViewTopic extends KunenaView
 		$this->displayDefault($tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	protected function DisplayCreate($tpl = null)
 	{
 		$this->setLayout('edit');
@@ -260,7 +278,7 @@ class KunenaViewTopic extends KunenaView
 		if ($this->config->pickup_category)
 		{
 			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
-			$selected  = 0;
+			$selected  = '';
 		}
 
 		if ($saved)
@@ -281,13 +299,18 @@ class KunenaViewTopic extends KunenaView
 			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->render('Topic/Edit', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @throws Exception
+	 */
 	protected function DisplayReply($tpl = null)
 	{
 		$this->setLayout('edit');
@@ -336,12 +359,12 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
-		$quote          = (bool) JRequest::getBool('quote', false);
+		$quote          = (bool) JFactory::getApplication()->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
 
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false))
@@ -355,13 +378,18 @@ class KunenaViewTopic extends KunenaView
 
 		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = $saved ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->render('Topic/Edit', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @return boolean
+	 */
 	protected function displayEdit($tpl = null)
 	{
 		$this->catid = $this->state->get('item.catid');
@@ -392,7 +420,7 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
@@ -417,7 +445,7 @@ class KunenaViewTopic extends KunenaView
 			$this->message->edit($saved);
 		}
 
-		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty ($this->category->post_anonymous);
+		$this->post_anonymous       = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->post_anonymous);
 		$this->subscriptionschecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
 		$this->modified_reason      = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
@@ -425,6 +453,9 @@ class KunenaViewTopic extends KunenaView
 		$this->render('Topic/Edit', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	function displayVote($tpl = null)
 	{
 		// TODO: need to check if poll is allowed in this category
@@ -454,6 +485,9 @@ class KunenaViewTopic extends KunenaView
 		$this->render('Topic/Vote', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 */
 	protected function displayReport($tpl = null)
 	{
 		$this->catid = $this->state->get('item.catid');
@@ -489,15 +523,21 @@ class KunenaViewTopic extends KunenaView
 
 				return;
 			}
+
 			$this->topic = $this->message->getTopic();
 		}
 
 		$this->render('Topic/Report', $tpl);
 	}
 
+	/**
+	 * @param   null $tpl
+	 *
+	 * @throws Exception
+	 */
 	protected function displayModerate($tpl = null)
 	{
-		$this->mesid = JRequest::getInt('mesid', 0);
+		$this->mesid = JFactory::getApplication()->input->getInt('mesid', 0);
 		$this->id    = $this->state->get('item.id');
 		$this->catid = $this->state->get('item.catid');
 
@@ -589,6 +629,9 @@ class KunenaViewTopic extends KunenaView
 		$this->render('Topic/Moderate', $tpl);
 	}
 
+	/**
+	 * @return boolean
+	 */
 	function displayPoll()
 	{
 		// need to check if poll is allowed in this category
@@ -649,6 +692,9 @@ class KunenaViewTopic extends KunenaView
 		}
 	}
 
+	/**
+	 * @return mixed|null
+	 */
 	function getCodeTypes()
 	{
 		if (!$this->config->highlightcode)
@@ -678,7 +724,7 @@ class KunenaViewTopic extends KunenaView
 			}
 
 			$javascript = "document.id('helpbox').set('value', '" . JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE', true) . "')";
-			$list       = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton form-control" onmouseover="' . $javascript . '"', 'value', 'text', '-1');
+			$list       = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control" onmouseover="' . $javascript . '"', 'value', 'text', '-1');
 
 			return $list;
 		}
@@ -686,18 +732,24 @@ class KunenaViewTopic extends KunenaView
 		return null;
 	}
 
+	/**
+	 *
+	 */
 	function displayMessageProfile()
 	{
 		echo $this->getMessageProfileBox();
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function getMessageProfileBox()
 	{
 		static $profiles = array();
 
 		$key = $this->profile->userid . '.' . $this->profile->username;
 
-		if (!isset ($profiles [$key]))
+		if (!isset($profiles [$key]))
 		{
 			// Run events
 			$params = new JRegistry();
@@ -707,7 +759,7 @@ class KunenaViewTopic extends KunenaView
 			$params->set('kunena_layout', $this->state->get('layout'));
 
 			JPluginHelper::importPlugin('kunena');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = JEventDispatcher::getInstance();
 			$dispatcher->trigger('onKunenaPrepare', array('kunena.user', &$this->profile, &$params, 0));
 
 			//karma points and buttons
@@ -787,16 +839,25 @@ class KunenaViewTopic extends KunenaView
 		return $profiles [$key];
 	}
 
+	/**
+	 *
+	 */
 	function displayMessageContents()
 	{
 		echo $this->loadTemplateFile('message');
 	}
 
+	/**
+	 *
+	 */
 	function displayTopicActions()
 	{
 		echo $this->getTopicActions();
 	}
 
+	/**
+	 * @return string
+	 */
 	function getTopicActions()
 	{
 		$catid = $this->state->get('item.catid');
@@ -860,7 +921,6 @@ class KunenaViewTopic extends KunenaView
 
 		if ($this->config->enable_threaded_layouts)
 		{
-
 			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JSession::getFormToken() . '=1';
 
 			if ($this->layout != 'default')
@@ -880,17 +940,23 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
 
 		return (string) $this->loadTemplateFile('actions');
 	}
 
+	/**
+	 *
+	 */
 	function displayMessageActions()
 	{
 		echo $this->getMessageActions();
 	}
 
+	/**
+	 * @return string
+	 */
 	function getMessageActions()
 	{
 		$catid = $this->state->get('item.catid');
@@ -910,7 +976,6 @@ class KunenaViewTopic extends KunenaView
 			$this->quickreply ? $this->messageButtons->set('quickreply', $this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")) : null;
 			$this->messageButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
 			$this->messageButtons->set('quote', $this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
-
 		}
 		elseif (!$this->me->isModerator($this->topic->getCategory()))
 		{
@@ -956,12 +1021,17 @@ class KunenaViewTopic extends KunenaView
 		}
 
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
 		return (string) $this->loadTemplateFile("message_actions");
 	}
 
+	/**
+	 * @param      $id
+	 * @param      $message
+	 * @param   null $template
+	 */
 	function displayMessage($id, $message, $template = null)
 	{
 		$layout = $this->getLayout();
@@ -1067,7 +1137,7 @@ class KunenaViewTopic extends KunenaView
 			{
 				if ($this->message->ip)
 				{
-					if (!empty ($this->message->ip))
+					if (!empty($this->message->ip))
 					{
 						$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank"> IP: ' . $this->message->ip . '</a>';
 					}
@@ -1125,6 +1195,7 @@ class KunenaViewTopic extends KunenaView
 			{
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
 			}
+
 			// FIXME: enable caching after fixing the issues
 			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		}
@@ -1162,6 +1233,9 @@ class KunenaViewTopic extends KunenaView
 		}
 	}
 
+	/**
+	 * @param   null $template
+	 */
 	function displayMessages($template = null)
 	{
 		foreach ($this->messages as $id => $message)
@@ -1170,6 +1244,11 @@ class KunenaViewTopic extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return KunenaPagination
+	 */
 	function getPaginationObject($maxpages)
 	{
 		$pagination = new KunenaPagination($this->total, $this->state->get('list.start'), $this->state->get('list.limit'));
@@ -1186,6 +1265,11 @@ class KunenaViewTopic extends KunenaView
 		return $pagination;
 	}
 
+	/**
+	 * @param $maxpages
+	 *
+	 * @return string
+	 */
 	function getPagination($maxpages)
 	{
 		return $this->getPaginationObject($maxpages)->getPagesLinks();
@@ -1193,6 +1277,9 @@ class KunenaViewTopic extends KunenaView
 
 	// Helper functions
 
+	/**
+	 * @return boolean
+	 */
 	function hasThreadHistory()
 	{
 		if (!$this->config->showhistory || !$this->topic->exists())
@@ -1203,6 +1290,9 @@ class KunenaViewTopic extends KunenaView
 		return true;
 	}
 
+	/**
+	 *
+	 */
 	function displayThreadHistory()
 	{
 		if (!$this->hasThreadHistory())
@@ -1229,7 +1319,7 @@ class KunenaViewTopic extends KunenaView
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = JEventDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.messages', &$this->history, &$params, 0));
@@ -1243,7 +1333,7 @@ class KunenaViewTopic extends KunenaView
 	 * If there's no referrer or it's external, Kunena will return to forum home page.
 	 * Also redirects back to tasks are prevented.
 	 *
-	 * @param string $anchor
+	 * @param   string $anchor
 	 */
 	protected function redirectBack($anchor = '')
 	{
@@ -1276,6 +1366,12 @@ class KunenaViewTopic extends KunenaView
 		$this->app->redirect(JRoute::_($uri->toString()));
 	}
 
+	/**
+	 * @param $mesid
+	 * @param $replycnt
+	 *
+	 * @return string
+	 */
 	public function getNumLink($mesid, $replycnt)
 	{
 		if ($this->config->ordering_system == 'replyid')
@@ -1290,6 +1386,9 @@ class KunenaViewTopic extends KunenaView
 		return $this->numLink;
 	}
 
+	/**
+	 * @param   null $message
+	 */
 	function displayAttachments($message = null)
 	{
 		if ($message instanceof KunenaForumMessage)
@@ -1307,21 +1406,39 @@ class KunenaViewTopic extends KunenaView
 		}
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
 	function displayMessageField($name)
 	{
 		return $this->message->displayField($name);
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
 	function displayTopicField($name)
 	{
 		return $this->topic->displayField($name);
 	}
 
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
 	function displayCategoryField($name)
 	{
 		return $this->category->displayField($name);
 	}
 
+	/**
+	 *
+	 */
 	function displayQuickReply()
 	{
 		if ($this->quickreply)
@@ -1330,6 +1447,9 @@ class KunenaViewTopic extends KunenaView
 		}
 	}
 
+	/**
+	 * @return boolean
+	 */
 	function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions || $this->config->topic_subscriptions == 'disabled')
@@ -1340,6 +1460,9 @@ class KunenaViewTopic extends KunenaView
 		return !$this->topic->getUserTopic()->subscribed;
 	}
 
+	/**
+	 * @param $type
+	 */
 	protected function _prepareDocument($type)
 	{
 		if ($type == 'default')
@@ -1366,35 +1489,36 @@ class KunenaViewTopic extends KunenaView
 			{
 				$description .= " ({$page}/{$pages})";  //avoid the "duplicate meta description" error in google webmaster tools
 			}
-			$this->setDescription($description);
 
+			$this->setDescription($description);
 		}
 		elseif ($type == 'create')
 		{
-
 			$this->title = JText::_('COM_KUNENA_POST_NEW_TOPIC');
 			$this->setTitle($this->title);
 			// TODO: set keywords and description
-
 		}
 		elseif ($type == 'reply')
 		{
-
 			$this->title = JText::_('COM_KUNENA_POST_REPLY_TOPIC') . ' ' . $this->topic->subject;
 			$this->setTitle($this->title);
 			// TODO: set keywords and description
-
 		}
 		elseif ($type == 'edit')
 		{
-
 			$this->title = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 			$this->setTitle($this->title);
 			// TODO: set keywords and description
-
 		}
 	}
 
+	/**
+	 * @param      $do
+	 * @param   null $id
+	 * @param      $catid
+	 *
+	 * @return boolean
+	 */
 	public function getPollURL($do, $id = null, $catid)
 	{
 		$idstring = '';
@@ -1402,11 +1526,20 @@ class KunenaViewTopic extends KunenaView
 		{
 			$idstring .= "&id=$id";
 		}
+
 		$catidstr = "&catid=$catid";
 
 		return KunenaRoute::_("index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}");
 	}
 
+	/**
+	 * @param        $anker
+	 * @param        $name
+	 * @param   string $rel
+	 * @param   string $class
+	 *
+	 * @return string
+	 */
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
 	{
 		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';

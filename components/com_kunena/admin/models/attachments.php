@@ -9,7 +9,7 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 jimport('joomla.application.component.modellist');
 
@@ -21,6 +21,9 @@ jimport('joomla.application.component.modellist');
 class KunenaAdminModelAttachments extends JModelList
 {
 
+	/**
+	 * @param   array $config
+	 */
 	public function __construct($config = array())
 	{
 		if (empty($config['filter_fields']))
@@ -42,8 +45,8 @@ class KunenaAdminModelAttachments extends JModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param string $ordering
-	 * @param string $direction
+	 * @param   string $ordering
+	 * @param   string $direction
 	 *
 	 * @return    void
 	 * @since    1.6
@@ -92,6 +95,11 @@ class KunenaAdminModelAttachments extends JModelList
 		parent::populateState('filename', 'asc');
 	}
 
+	/**
+	 * @param   string $id
+	 *
+	 * @return string
+	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
@@ -105,6 +113,13 @@ class KunenaAdminModelAttachments extends JModelList
 		return parent::getStoreId($id);
 	}
 
+	/**
+	 * @param   string $query
+	 * @param   int    $limitstart
+	 * @param   int    $limit
+	 *
+	 * @return KunenaAttachment[]
+	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
 		$this->_db->setQuery($query, $limitstart, $limit);
@@ -125,6 +140,9 @@ class KunenaAdminModelAttachments extends JModelList
 		return $results;
 	}
 
+	/**
+	 * @return JDatabaseQuery
+	 */
 	protected function getListQuery()
 	{
 		$db    = $this->getDbo();

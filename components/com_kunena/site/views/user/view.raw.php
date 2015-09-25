@@ -9,13 +9,18 @@
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Users View
  */
 class KunenaViewUser extends KunenaView
 {
+	/**
+	 * @param   null $tpl
+	 *
+	 * @throws Exception
+	 */
 	function displayList($tpl = null)
 	{
 		$response = array();
@@ -39,7 +44,7 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($response);
 	}
@@ -74,7 +79,7 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($response);
 	}

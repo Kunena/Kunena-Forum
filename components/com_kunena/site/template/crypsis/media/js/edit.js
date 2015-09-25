@@ -151,7 +151,7 @@ jQuery(document).ready(function() {
 	
 	// Load datepicker for poll
 	jQuery('.input-append.date').datepicker({
-		orientation: "bottom auto"
+		orientation: "top auto"
 	});
 });
 

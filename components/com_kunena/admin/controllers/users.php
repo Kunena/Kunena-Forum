@@ -135,6 +135,76 @@ class KunenaAdminControllerUsers extends KunenaController
 	/**
 	 * @throws Exception
 	 */
+	public function apply()
+	{
+		if (!JSession::checkToken('post'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+			return;
+		}
+
+		$newview      = JFactory::getApplication()->input->getString('newview');
+		$newrank      = JFactory::getApplication()->input->getString('newrank');
+		$signature    = JFactory::getApplication()->input->getString('signature', '', 'POST', JREQUEST_ALLOWRAW);
+		$deleteSig    = JFactory::getApplication()->input->getInt('deleteSig');
+		$moderator    = JFactory::getApplication()->input->getInt('moderator');
+		$uid          = JFactory::getApplication()->input->getInt('uid');
+		$deleteAvatar = JFactory::getApplication()->input->getInt('deleteAvatar');
+		$neworder     = JFactory::getApplication()->input->getInt('neworder');
+		$modCatids    = $moderator ? JFactory::getApplication()->input->get('catid', array(), 'post', 'array') : array(); // Array of integers
+		Joomla\Utilities\ArrayHelper::toInteger($modCatids);
+
+		if ($uid)
+		{
+			$user = KunenaFactory::getUser($uid);
+
+			// Prepare variables
+			if ($deleteSig == 1)
+			{
+				$user->signature = '';
+			}
+			else
+			{
+				$user->signature = $signature;
+			}
+
+			$user->view     = $newview;
+			$user->ordering = $neworder;
+			$user->rank     = $newrank;
+			if ($deleteAvatar == 1)
+			{
+				$user->avatar = '';
+			}
+
+			if (!$user->save())
+			{
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_PROFILE_SAVED_FAILED'), 'error');
+			}
+			else
+			{
+				$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'));
+			}
+
+			// Update moderator rights
+			$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+
+			foreach ($categories as $category)
+			{
+				$category->setModerator($user, in_array($category->id, $modCatids));
+			}
+
+			// Global moderator is a special case
+			if ($this->me->isAdmin())
+			{
+				KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
+			}
+		}
+	}
+
+	/**
+	 * @throws Exception
+	 */
 	public function trashusermessages()
 	{
 		if (!JSession::checkToken('post'))

@@ -55,13 +55,17 @@ defined('_JEXEC') or die();
 					<i class="icon-big icon-location" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?>"></i><br />
 					<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?></span>
 				</a>
+				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=diagnostics">
+					<i class="icon-big icon-health" alt="<?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?>"></i><br />
+					<span><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?></span>
+				</a>
 				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=uninstall">
 					<i class="icon-big icon-remove" alt="<?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?>"></i><br />
 					<span><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?></span>
 				</a>
 				<?php if (KunenaForum::isDev()) : ?>
 					<a class="btn" href="index.php?option=com_kunena&view=install">
-						<img src="components/com_kunena/media/icons/large/install.png" alt="<?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?>" /><br />
+						<i class="icon-big icon-tree-2" alt="<?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?>"></i><br />
 						<span><?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?></span>
 					</a>
 				<?php endif; ?>

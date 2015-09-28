@@ -20,13 +20,17 @@ $this->addScriptDeclaration(
 var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS') . '";
 // ]]>');
 
+$this->addStyleSheet('css/atwho.css');
+
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
-$this->addStyleSheet('css/atwho.css');
-
 $this->addScript('js/topic.js');
+
+$this->ktemplate = KunenaFactory::getTemplate();
+$social = $this->ktemplate->params->get('socialshare');
 ?>
+
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">
 	<a class="close" data-dismiss="alert" href="#">&times;</a>
@@ -52,8 +56,11 @@ $this->addScript('js/topic.js');
 	->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
 	->setLayout('topic'); ?>
 </div>
-
 <div class="clearfix"></div>
+
+<?php if ($social) : ?>
+	<div><?php echo $this->subLayout('Widget/Social'); ?></div>
+<?php endif; ?>
 
 <?php
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');

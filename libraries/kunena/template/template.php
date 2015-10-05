@@ -798,6 +798,7 @@ HTML;
 	public function getTopicIcon($topic, $category_iconset = '')
 	{
 		$config = KunenaFactory::getConfig();
+		$this->ktemplate = KunenaFactory::getTemplate();
 
 		if ($this->isHMVC())
 		{

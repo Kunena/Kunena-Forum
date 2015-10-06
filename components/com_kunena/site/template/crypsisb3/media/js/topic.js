@@ -41,5 +41,10 @@ jQuery(document).ready(function() {
 		}
 	});
 
+	jQuery("#share").jsSocials({
+		showCount: true,
+		showLabel: true,
+		shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest"]
+	});
 });
 

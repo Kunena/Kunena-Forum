@@ -140,7 +140,6 @@ $this->getBBcodesEnabled();
 	</div>
 	<div class="modal-body">
 			<div id="kbbcode-poll-options">
-				<?php JHtml::_('behavior.calendar'); ?>
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 						maxlength="100" size="40"
@@ -151,7 +150,9 @@ $this->getBBcodesEnabled();
 				<i id="kbutton-poll-rem" class="icon-minus btn btn-small"
 					alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-				<?php echo JHtml::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d'); ?>
+				<div class="input-append date">
+					<input type="text" class="span12" name="poll_time_to_live" data-date-format="mm/dd/yyyy"><span class="add-on"><i class="icon-grid-view-2 "></i></span>
+				</div>
 				<div id="kpoll-alert-error" class="alert" style="display:none;">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>

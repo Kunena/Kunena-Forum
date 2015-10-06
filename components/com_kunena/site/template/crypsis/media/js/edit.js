@@ -160,4 +160,9 @@ jQuery(document).ready(
 			}
 		});
 	});
+	
+	// Load datepicker for poll
+	jQuery('.input-append.date').datepicker({
+		orientation: "top auto"
+	});
 });

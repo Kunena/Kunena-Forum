@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-JHtml::_('behavior.tooltip');
 JHTML::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
@@ -57,6 +56,9 @@ if ($this->config->pollenabled)
 	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
 	$this->addScript('poll.js');
 }
+
+$this->addStyleSheet('css/bootstrap-datepicker.css');
+$this->addScript('bootstrap-datepicker.js ');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('js/caret.js');

@@ -89,4 +89,8 @@ foreach ($this->messages as $id => $message)
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
+<?php if ($this->ktemplate->params->get('writeaccess')) : ?>
+<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
+<?php endif; ?>
+
 <div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>

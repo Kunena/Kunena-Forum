@@ -162,6 +162,8 @@ $cols = empty($this->checkbox) ? 5 : 6;
 	</div>
 <?php endif; ?>
 
+<div class="clearfix"></div>
+
 <?php if (!empty($this->moderators))
 {
 	echo $this->subLayout('Category/Moderators')
@@ -169,4 +171,6 @@ $cols = empty($this->checkbox) ? 5 : 6;
 }
 ?>
 
-<div class="clearfix"></div>
+<?php if ($this->ktemplate->params->get('writeaccess')) : ?>
+<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $this->category->id); ?></div>
+<?php endif; ?>

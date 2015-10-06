@@ -10,8 +10,10 @@
  **/
 defined('_JEXEC') or die;
 
+$this->ktemplate = KunenaFactory::getTemplate();
+$socialtheme = $this->ktemplate->params->get('socialtheme');
 $this->addStyleSheet('css/jssocials.css');
-$this->addStyleSheet('css/jssocials-theme-classic.css');
+$this->addStyleSheet('css/jssocials-theme-'.$socialtheme.'.css');
 $this->addScript('js/jssocials.js');
 ?>
 

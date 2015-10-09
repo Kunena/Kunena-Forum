@@ -114,6 +114,8 @@ $list = array();
 	<?php endif; ?>
 </div>
 
+<div class="clearfix"></div>
+
 <?php if ($message->modified_by && $this->config->editmarkup) :
 $dateshown = $datehover = '';
 if ($message->modified_time) {

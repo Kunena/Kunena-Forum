@@ -119,42 +119,37 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<div class="col-sm-10"><?php echo $this->selectcatlist ?></div>
 							</div>
 						<?php endif; ?>
-						<?php if ($this->message->userid) : ?>
-							<div class="control-group" id="kanynomous-check" <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 
-								<div class="controls">
-									<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->post_anonymous)
-									{
-										echo 'checked="checked"';
-									} ?> />
-									<label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
-								</div>
-							</div>
-						<?php endif; ?>
 						<div class="form-group" id="kanynomous-check-name"
 							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
 							<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
-							<input type="text" id="kauthorname" name="authorname"  placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
+							<div class="col-md-10">
+								<input type="text" id="kauthorname" name="authorname"  placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="form-control" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
+							</div>
 						</div>
+
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>
 							<div class="form-group">
 								<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
-								<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="form-control" maxlength="35" tabindex="5" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
-								<br />
-								<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+								<div class="col-md-10">
+									<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="form-control" maxlength="35" tabindex="5" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
+									<br />
+									<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+								</div>
 							</div>
 						<?php endif; ?>
+
 						<div class="form-group">
 							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 							<div class="col-md-10">
 								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
 								<?php if (!$this->config->allow_change_subject  && $this->topic->exists()): ?>
-+									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
-+								<?php endif; ?>
+									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+								<?php endif; ?>
 							</div>
 						</div>
+
 						<?php if (!empty($this->topicIcons)) : ?>
 							<div class="form-group">
 								<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
@@ -179,16 +174,17 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						// Show bbcode editor
 						echo $this->subLayout('Topic/Edit/Editor')->setProperties($this->getProperties());
 						?>
+
 						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
+						<div class="control-group">
+							<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 
-							<div class="control-group">
-								<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
-
-								<div class="controls">
-									<input class="input-xxlarge form-control" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"/>
-								</div>
+							<div class="controls">
+								<input class="input-xxlarge form-control" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"/>
 							</div>
+						</div>
 						<?php endif; ?>
+
 						<?php if ($this->allowedExtensions) : ?>
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>
@@ -197,6 +193,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									<div id="kattach_form" style="display: none;">
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
+
 										<!-- The fileinput-button span is used to style the file input field as button -->
 										<span class="btn btn-primary fileinput-button">
 											<i class="glyphicon glyphicon-plus"></i>
@@ -204,6 +201,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 											<!-- The file input field used as target for the file upload widget -->
 											<input id="fileupload" type="file" name="file" multiple>
 										</span>
+
 										<!-- The container for the uploaded files -->
 										<div id="files" class="files"></div>
 										<div id="dropzone">
@@ -217,28 +215,29 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
+
 						<?php if ($this->config->keywords && $this->me->isModerator($this->topic->getCategory())) : ?>
-							<div class="control-group">
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?></label>
+						<div class="control-group">
+							<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?></label>
 
-								<div class="controls">
-									<input type="text" class="kinputbox postinput" name="tags" id="tags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" />
-								</div>
+							<div class="controls">
+								<input type="text" class="kinputbox postinput" name="tags" id="tags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" />
 							</div>
+						</div>
 						<?php endif; ?>
+
 						<?php if ($this->config->userkeywords && $this->me->userid) : ?>
-							<div class="control-group">
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?></label>
-
-								<div class="controls">
-									<input type="text" class="kinputbox postinput" name="mytags" id="mytags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>" />
-								</div>
+						<div class="control-group">
+							<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?></label>
+							<div class="controls">
+								<input type="text" class="kinputbox postinput" name="mytags" id="mytags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>" />
 							</div>
+						</div>
 						<?php endif; ?>
+
 						<?php if ($this->canSubscribe) : ?>
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
-
 								<div class="controls">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
 									{
@@ -248,12 +247,27 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php if (!empty($this->captchaEnabled)) : ?>
-							<div class="control-group">
-								<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
 
-								<div class="controls"> <div id="dynamic_recaptcha_1"> </div> </div>
+						<?php if ($this->message->userid) : ?>
+						<div class="control-group" id="kanynomous-check" <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+							<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
+							<div class="controls"">
+								<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->post_anonymous)
+								{
+									echo 'checked="checked"';
+								} ?> />
+								<label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 							</div>
+						</div>
+						<div class="clearfix"></div>
+						<?php endif; ?>
+
+						<?php if (!empty($this->captchaEnabled)) : ?>
+						<div class="control-group">
+							<div class="controls">
+								<div id="dynamic_recaptcha_1"> </div>
+							</div>
+						</div>
 						<?php endif; ?>
 
 					</fieldset>

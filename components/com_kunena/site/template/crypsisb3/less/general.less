@@ -1017,7 +1017,10 @@ ul.inline > li > a > I {
 .solved b {
 	padding-left: 10px;
 }
-
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus ,
+.nav > li > a:hover,
 .nav > li > a:focus {
 	background-color: transparent;
 }
@@ -1045,4 +1048,37 @@ ul.inline > li > a > I {
 	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
 	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+tfoot .form-group {
+	margin-bottom: 0;
+}
+
+[id*="category"] ul.inline,
+.pagination-small {
+	padding: 0;
+}
+
+#recent-list {
+	width: 53%;
+}
+
+.profile-horizontal-bottom li,
+.profile-horizontal-top li,
+.thumbnails li,
+.profile-expand li{
+	list-style: none;
+}
+
+.profile-expand ul {
+	padding: 0;
+}
+
+#categoryactions ul.inline i {
+	margin:0;
+	padding:0;
+}
+
+div.kmsgtext-article > p > img {
+	max-width:100px;
 }

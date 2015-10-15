@@ -774,6 +774,17 @@ class KunenaModelInstall extends JModelLegacy
 
 		$this->setVersion($version);
 
+		// Always enable the System - Kunena plugin
+		$query = $this->db->getQuery(true);
+		$query->clear()
+			->update($this->db->quoteName('#__extensions'))
+			->set($this->db->quoteName('enabled') . ' = 1')
+			->where($this->db->quoteName('type') . ' = ' . $this->db->quote('plugin'))
+			->where($this->db->quoteName('folder') . ' = ' . $this->db->quote('system'))
+			->where($this->db->quoteName('element') . ' = ' . $this->db->quote('kunena'));
+		$this->db->setQuery($query);
+		$this->db->execute();
+
 		require_once KUNENA_INSTALLER_PATH . '/schema.php';
 		$schema    = new KunenaModelSchema();
 		$results[] = $schema->updateSchemaTable('kunena_version');

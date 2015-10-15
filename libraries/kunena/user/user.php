@@ -590,6 +590,13 @@ class KunenaUser extends JObject
 			return;
 		}
 
+		$config = KunenaConfig::getInstance();
+		$me = KunenaUserHelper::getMyself();
+		if (!$config->pubprofile && !$me->exists())
+		{
+			return false;
+		}
+
 		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, $task, $xhtml );
 	}
 

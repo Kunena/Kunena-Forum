@@ -21,6 +21,7 @@ $avatarname = $this->profile->getname();
 $config = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 $str_counts = substr_count($this->topic->subject, 'solved');
+
 if ($config->ordering_system == 'mesid')
 {
 	$this->numLink = $this->location;
@@ -49,6 +50,7 @@ $list = array();
 			endif;?>
 		</p>
 	</div>
+
 	<?php if (!empty($attachments)) : ?>
 		<div class="kattach col-md-12">
 			<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
@@ -61,6 +63,7 @@ $list = array();
 			</ul>
 		</div>
 	<?php elseif ($attachs->total > 0  && !$this->me->exists()) :
+
 		if ($attachs->image > 0 && !$this->config->showimgforguest)
 		{
 			if ($attachs->image > 1)
@@ -116,11 +119,14 @@ $list = array();
 </div>
 
 <?php if ($message->modified_by && $this->config->editmarkup) :
-$dateshown = $datehover = '';
-if ($message->modified_time) {
-	$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
-	$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
-} ?>
+	$dateshown = $datehover = '';
+
+	if ($message->modified_time)
+	{
+		$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat_hover') . '"';
+		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_post_dateformat') . ' ';
+	}
+	?>
 <div class="alert alert-info hidden-xs" <?php echo $datehover ?>>
 	<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
 	<?php if ($message->modified_reason) { echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); } ?>

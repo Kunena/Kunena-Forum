@@ -71,26 +71,27 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				</div>
 
 				<div class="modal-body">
-					<?php if ($me->exists() && $category->allow_anonymous) : ?>
-					<input type="text" name="authorname" size="35" class="col-md-12" maxlength="35" value="<?php
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
+						<input type="text" name="authorname" size="35" class="inputbox form-control col-md-12" maxlength="35" value="<?php
 						echo $this->escape($me->getName()); ?>" />
-					<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous"
-					       value="1" class="kinputbox postinput form-control" <?php if ($category->post_anonymous) { echo 'checked="checked"'; } ?> />
-					<label for="kanonymous<?php echo intval($message->id); ?>">
-						<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
-					</label>
-					<?php else: ?>
-					<input type="hidden" name="authorname" value="<?php echo $this->escape($me->getName()); ?>" />
-					<?php endif; ?>
+					</div>
 
-					<input type="text" id="subject" name="subject" size="35" class="inputbox form-control"
-					       maxlength="<?php echo (int) $config->maxsubject; ?>"
-					       <?php if (!$config->allow_change_subject) : ?>disabled<?php endif; ?>
-					       value="<?php echo $message->displayField('subject'); ?>" />
-					<textarea class="col-md-12 qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
+						<input type="text" id="subject" name="subject" size="35" class="inputbox form-control col-md-12"
+						       maxlength="<?php echo (int) $config->maxsubject; ?>"
+						       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+						       value="<?php echo $message->displayField('subject'); ?>" />
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?></label>
+						<textarea class="col-md-12 qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+					</div>
 
 					<?php if ($topic->isAuthorised('subscribe')) : ?>
-						<div class="clearfix"></div>
+					<div class="clearfix"></div>
 					<div class="control-group">
 						<div class="controls">
 							<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1)
@@ -100,6 +101,13 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 						</div>
 					</div>
+					<?php endif; ?>
+					<?php if ($me->exists() && $category->allow_anonymous) : ?>
+						<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous"
+							value="1" class="kinputbox postinput form-control" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
+						<label for="kanonymous<?php echo intval($message->id); ?>">
+							<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
+						</label>
 					<?php endif; ?>
 					<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-default btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 				</div>

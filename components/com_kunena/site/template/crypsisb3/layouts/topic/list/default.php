@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die;
 
-$cols = !empty($this->actions) ? 5 : 6;
+$cols = !empty($this->actions) ? 6 : 7;
 $colspan = !empty($this->actions) ? 4 : 3;
 ?>
 <div class="row">
@@ -59,13 +59,13 @@ $colspan = !empty($this->actions) ? 4 : 3;
 					<i class="glyphicon glyphicon-arrow-down hasTooltip "></i>
 				</a>
 			</td>
-			<td class="col-md-<?php echo $cols ?>">
+			<td class="col-md-<?php echo $cols ?>" id="recent-list">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
 			<td class="col-md-2 hidden-xs">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS');?>
 			</td>
-			<td class="col-md-3 hidden-xs">
+			<td class="col-md-2 hidden-xs">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->actions)) : ?>

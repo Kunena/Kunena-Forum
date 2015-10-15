@@ -19,6 +19,7 @@ $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $config = KunenaConfig::getInstance();
+
 if ($config->ordering_system == 'mesid') {
 	$this->numLink = $this->location;
 } else {
@@ -54,12 +55,14 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 					</ul>
 				</div>
 			<?php endif; ?>
+
 			<?php if ($signature) : ?>
 				<div class="ksig">
 					<hr>
 					<span class="ksignature"><?php echo $signature; ?></span>
 				</div>
 			<?php endif ?>
+
 			<?php if (!empty($this->reportMessageLink)) : ?>
 				<div class="row">
 					<div class="span10">
@@ -82,6 +85,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 	<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 </div>
 </div>
+
 <?php if ($message->modified_by && $this->config->editmarkup) :
 	$dateshown = $datehover = '';
 	if ($message->modified_time) {
@@ -90,6 +94,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 	} ?>
 	<div class="alert alert-info hidden-phone" <?php echo $datehover ?>>
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
+
 		<?php if ($message->modified_reason) { echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason); } ?>
 	</div>
 <?php endif; ?>
@@ -98,6 +103,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 	<div class="kmessage-thankyou">
 		<?php
 		echo JText::_('COM_KUNENA_THANKYOU') . ': ' . implode(', ', $this->thankyou) . ' ';
+
 		if ($this->more_thankyou) { echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS', $this->more_thankyou); }
 		?>
 	</div>

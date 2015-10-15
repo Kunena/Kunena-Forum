@@ -47,6 +47,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 			<div class="horizontal-message-text">
 				<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
 			</div>
+
 			<?php if (!empty($attachments)) : ?>
 				<div class="kattach">
 					<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
@@ -59,12 +60,14 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 					</ul>
 				</div>
 			<?php endif; ?>
+
 			<?php if ($signature) : ?>
 				<div class="ksig">
 					<hr>
 					<span class="ksignature"><?php echo $signature; ?></span>
 				</div>
 			<?php endif ?>
+
 			<?php if (!empty($this->reportMessageLink)) : ?>
 				<div class="row">
 					<div class="span10">
@@ -84,6 +87,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 		</div>
 	</div>
 </div>
+
 <?php if ($message->modified_by && $this->config->editmarkup) :
 $dateshown = $datehover = '';
 
@@ -95,6 +99,7 @@ if ($message->modified_time)
 <div class="alert alert-info hidden-phone" <?php echo $datehover ?>>
 	<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $message->getModifier()->getLink() . '.'; ?>
 	<?php
+
 	if ($message->modified_reason)
 	{
 		echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape($message->modified_reason);

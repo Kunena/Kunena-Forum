@@ -40,11 +40,11 @@ foreach ($this->sections as $section) :
 			<table class="table table-bordered">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-phone">
-					<tr>
-						<td colspan="3">
-							<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
-						</td>
-					</tr>
+						<tr>
+							<td colspan="3">
+								<div class="header-desc"><?php echo $section->displayField('description'); ?></div>
+							</td>
+						</tr>
 					</thead>
 				<?php endif; ?>
 
@@ -58,12 +58,14 @@ foreach ($this->sections as $section) :
 					</tr>
 				<?php else : ?>
 					<?php if (!empty($this->categories[$section->id])) : ?>
-						<td colspan="2" class="hidden-phone">
-							<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
-						</td>
-						<td colspan="1" class="hidden-phone post-info">
-							<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
-						</td>
+						<tr>
+							<td colspan="2" class="hidden-phone">
+								<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+							</td>
+							<td colspan="1" class="hidden-phone post-info">
+								<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+							</td>
+						</tr>
 					<?php endif; ?>
 					<?php
 					foreach ($this->categories[$section->id] as $category) : ?>

@@ -60,18 +60,20 @@ foreach ($this->sections as $section) :
 					</tr>
 				<?php else : ?>
 					<?php if (!empty($this->categories[$section->id])) : ?>
-						<td colspan="2" class="hidden-xs">
-							<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
-						</td>
-						<td colspan="1" class="hidden-xs post-info">
-							<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
-						</td>
+						<tr>
+							<td colspan="2" class="hidden-xs">
+								<div class="header-desc"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
+							</td>
+							<td colspan="1" class="hidden-xs post-info">
+								<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
+							</td>
+						</tr>
 					<?php endif; ?>
 					<?php
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
 							<td class="col-md-1 center hidden-xs">
-								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
+								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category)); ?>
 							</td>
 							<td class="col-md-8">
 								<div>

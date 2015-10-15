@@ -17,7 +17,7 @@ $attachment = $this->attachment;
 <a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
 	<?php if ($attachment->isImage())
 	{
-		echo '<img src="' . $attachment->getUrl(true) . ' " height="40" width="40" />';
+		echo '<img src="' . JUri::root() . $attachment->getUrl(true) . ' " height="40" width="40" />';
 	}
 	else
 	{

@@ -71,7 +71,7 @@ $this->addScript('js/search.js');
 						<input id="kusersearch" type="text" name="searchuser" class="form-control"
 						       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" />
 					</label>
-					</br>
+					<br>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>:
 						<input type="checkbox" name="exactname" value="1"

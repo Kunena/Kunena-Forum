@@ -333,7 +333,7 @@ class KunenaAdminModelReport extends KunenaModel
 		$data               = new stdClass();
 		$data->name         = (string) $xml->name;
 		$data->type         = (string) $xml->attributes()->type;
-		$data->creationdate = (string) $xml->creationdate;
+		$data->creationdate = (string) $xml->creationDate;
 		$data->author       = (string) $xml->author;
 		$data->copyright    = (string) $xml->copyright;
 		$data->authorEmail  = (string) $xml->authorEmail;
@@ -344,7 +344,12 @@ class KunenaAdminModelReport extends KunenaModel
 
 		if (!$data->creationdate)
 		{
-			$data->creationdate = JText::_('Unknown');
+			$data->creationdate = (string) $xml->creationdate;
+
+			if (!$data->creationdate)
+			{
+				$data->creationdate = JText::_('Unknown');
+			}
 		}
 
 		if (!$data->author)

@@ -26,14 +26,7 @@ $txt   = '';
 
 if ($this->topic->ordering)
 {
-	if ($this->topic->getCategory()->class_sfx)
-	{
-		$txt .= '';
-	}
-	else
-	{
-		$txt .= '-stickymsg';
-	}
+	$txt = $this->topic->getCategory()->class_sfx ? $txt . '' : $txt . '-stickymsg';
 }
 
 if ($this->topic->hold == 1)

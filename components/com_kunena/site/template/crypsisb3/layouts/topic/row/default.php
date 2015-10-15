@@ -28,14 +28,7 @@ $txt   = '';
 
 if ($this->topic->ordering)
 {
-	if ($this->topic->getCategory()->class_sfx)
-	{
-		$txt .= '';
-	}
-	else
-	{
-		$txt .= '-stickymsg';
-	}
+	$txt = $this->topic->getCategory()->class_sfx ? $txt . '' : $txt . '-stickymsg';
 }
 
 if ($this->topic->hold == 1)
@@ -92,23 +85,23 @@ if (!empty($this->spacing)) : ?>
 
 				if ($this->topic->ordering != 0) { ?>
 					<span class="label label-info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-					<span class="sr-only"></span>STICKY</span></span>
+					<span class="sr-only"></span>STICKY</span>
 				<?php }
 
 				if ($this->topic->icon_id == 1) { ?>
 					<span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-					<span class="sr-only"></span>IMPORTANT</span></span>
+					<span class="sr-only"></span>IMPORTANT</span>
 				<?php }
 
 				if ($this->topic->icon_id == 2) { ?>
 					<span class="label label-primary"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-					<span class="sr-only"></span>QUESTION</span></span>
+					<span class="sr-only"></span>QUESTION</span>
 				<?php }
 
 				$str_counts = substr_count($this->topic->subject, 'solved');
 				if ($this->topic->icon_id == 8 || $str_counts) { ?>
 				<a href="#"><span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-				   <span class="sr-only"></span>SOLVED</span></span></a>
+				   <span class="sr-only"></span>SOLVED</span></a>
 			   <?php }
 
 				if ($this->topic->icon_id == 10) { ?>

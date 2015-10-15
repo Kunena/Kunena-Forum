@@ -67,6 +67,7 @@ $this->addStyleSheet('css/atwho.css');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
+
 if ($topicicontype == 'B2') {
 	$this->addScript('js/editb2.js');
 }
@@ -163,7 +164,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 							<div class="controls">
 								<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" <?php if (!$this->config->allow_change_subject && $this->message->parent) : ?>disabled<?php endif; ?> value="<?php echo $this->escape($this->message->subject); ?>" required />
-								<?php if (!$this->config->allow_change_subject) : ?>
+								<?php if (!$this->config->allow_change_subject && $this->topic->exists()): ?>
 									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 								<?php endif; ?>
 							</div>

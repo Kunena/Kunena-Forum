@@ -18,7 +18,7 @@ define('REPO_BASE', dirname(__DIR__));
 // Welcome message
 fwrite(STDOUT, "\033[32;1mInitializing PHPMD checks.\033[0m\n");
 
-$messDetectorWarnings = shell_exec(REPO_BASE . '/vendor/bin/phpmd ' . REPO_BASE . '/component/ text codesize,unusedcode,controversial');
+$messDetectorWarnings = shell_exec(REPO_BASE . '/vendor/bin/phpmd ' . REPO_BASE . '/components/ text codesize,unusedcode,controversial');
 fwrite(STDOUT, $messDetectorWarnings);
 
 exit(0);

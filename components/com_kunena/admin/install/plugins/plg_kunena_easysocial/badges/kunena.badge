@@ -1,0 +1,33 @@
+
+[
+	{
+		"title" 		: "Questioner",
+		"alias"			: "questioner",
+		"description"	: "Loves to post on the forums.",
+		"howto" 		: "To unlock this badge, you need to create up to 100 new topics.",
+		"command"		: "thread.new",
+		"extension"		: "com_kunena",
+		"avatar"		: "media/com_easysocial/apps/user/kunena/assets/badges/questioner.png",
+		"frequency"		: 100
+	},
+	{
+		"title" 		: "Forum Junkie",
+		"alias"			: "forum-junkie",
+		"description"	: "Loves to reply on the forums.",
+		"howto" 		: "To unlock this badge, you need to reply up to 150 topics.",
+		"command"		: "thread.reply",
+		"extension"		: "com_kunena",
+		"avatar"		: "media/com_easysocial/apps/user/kunena/assets/badges/forum-junkie.png",
+		"frequency"		: 150
+	},
+	{
+		"title" 		: "People Lover",
+		"alias"			: "people-lover",
+		"description"	: "Famous amongst forumers and receives lots of Thank You notes.",
+		"howto" 		: "To unlock this badge, you need to get thanked up to 100 times.",
+		"command"		: "thread.thanks",
+		"extension"		: "com_kunena",
+		"avatar"		: "media/com_easysocial/apps/user/kunena/assets/badges/people-lover.png",
+		"frequency"		: 100
+	}
+]

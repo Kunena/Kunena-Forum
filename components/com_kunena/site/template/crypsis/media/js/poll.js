@@ -84,19 +84,21 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	if ( typeof pollcategoriesid != 'undefined' ) {
+	if (typeof pollcategoriesid != 'undefined')
+	{
 		var catid = jQuery('#kcategory_poll').val();
 
-		if ( pollcategoriesid[catid] !== undefined ) {
+		if (pollcategoriesid[catid] !== undefined)
+		{
 			jQuery('.pollbutton').show();
-		} else {
+		}
+		else
+		{
 			jQuery('.pollbutton').hide();
 		}
-	} else {
-		jQuery('.pollbutton').hide();
 	}
-	
-	if ( jQuery('#poll_exist_edit') != 'undefined' ) {
+
+	if ( jQuery('#poll_exist_edit') != 'undefined' && pollcategoriesid[catid] !== undefined ) {
 		jQuery('.pollbutton').show();
 	}
 
@@ -128,7 +130,7 @@ jQuery(document).ready(function() {
 			jQuery('#kpoll_go_results').hide();
 		}
 	});
-	
+
 	jQuery('#kpoll-moreusers').click(function() {
 		jQuery('#kpoll-moreusers-div').show();
 	});

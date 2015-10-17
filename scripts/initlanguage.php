@@ -20,6 +20,7 @@ $files = array(
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_alphauserpoints.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_community.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_comprofiler.sys.ini',
+	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_easysocial.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_gravatar.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_joomla.sys.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_kunena.sys.ini',

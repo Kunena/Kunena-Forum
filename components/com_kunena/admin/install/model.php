@@ -127,6 +127,7 @@ class KunenaModelInstall extends JModelLegacy
 		$this->uninstallPlugin('kunena', 'alphauserpoints');
 		$this->uninstallPlugin('kunena', 'community');
 		$this->uninstallPlugin('kunena', 'comprofiler');
+		$this->uninstallPlugin('kunena', 'easysocial');
 		$this->uninstallPlugin('kunena', 'gravatar');
 		$this->uninstallPlugin('kunena', 'joomla');
 		$this->uninstallPlugin('kunena', 'kunena');
@@ -897,10 +898,11 @@ class KunenaModelInstall extends JModelLegacy
 		$this->installPlugin('plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
 		$this->installPlugin('plugins/plg_kunena_community', 'kunena', 'community', false, 2);
 		$this->installPlugin('plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 3);
-		$this->installPlugin('plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 4);
-		$this->installPlugin('plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 5);
-		$this->installPlugin('plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 6);
-		$this->installPlugin('plugins/plg_kunena_joomla', 'kunena', 'joomla', true, 7);
+		$this->installPlugin('plugins/plg_kunena_easysocial', 'kunena', 'easysocial', false, 4);
+		$this->installPlugin('plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 5);
+		$this->installPlugin('plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 6);
+		$this->installPlugin('plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 7);
+		$this->installPlugin('plugins/plg_kunena_joomla', 'kunena', 'joomla', true, 8);
 
 		// TODO: install also menu module
 		//$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');

@@ -1,0 +1,29 @@
+[
+	{
+		"title" 		: "New Forum Post",
+		"alias"			: "new-forum-post",
+		"description"	: "Earn points when you create a new post in the forum.",
+		"command"		: "thread.new",
+		"extension"		: "com_kunena",
+		"state"			: true,
+		"points"		: 5
+	},
+	{
+		"title" 		: "Reply Forum Post",
+		"alias"			: "reply-forum-post",
+		"description"	: "Earn points when you reply to a post in the forum.",
+		"command"		: "thread.reply",
+		"extension"		: "com_kunena",
+		"state"			: true,
+		"points"		: 3
+	},
+	{
+		"title" 		: "Thanked From A Post",
+		"alias"			: "thanked-from-post",
+		"description"	: "Earn points when another user thanked you in a forum post.",
+		"command"		: "thread.thanks",
+		"extension"		: "com_kunena",
+		"state"			: true,
+		"points"		: 5
+	}
+]

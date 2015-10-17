@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="kunena" method="upgrade">
-	<name>EasySocial for Kunena</name>
-	<version>1.0.4</version>
-	<creationDate>15th October 2015</creationDate>
+	<name>plg_kunena_easysocial</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
 	<author>StackIdeas</author>
 	<authorEmail>support@stackideas.com</authorEmail>
 	<authorUrl>http://stackideas.com</authorUrl>
@@ -13,7 +13,6 @@
 	<files>
 		<folder>alerts</folder>
 		<folder>badges</folder>
-		<folder>language</folder>
 		<folder>points</folder>
 		<filename>activity.php</filename>
 		<filename>avatar.php</filename>
@@ -23,6 +22,7 @@
 		<filename>login.php</filename>
 		<filename>private.php</filename>
 		<filename>profile.php</filename>
+		<folder>language</folder>
 	</files>
 	<config>
 		<fields name="params">

@@ -22,6 +22,7 @@
 		<filename>login.php</filename>
 		<filename>private.php</filename>
 		<filename>profile.php</filename>
+		<folder>language</folder>
 	</files>
 	<config>
 		<fields name="params">

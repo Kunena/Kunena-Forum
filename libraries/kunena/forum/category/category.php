@@ -80,7 +80,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			'topic.approve'=>array('Read','NotBanned', 'Moderate'),
 			'topic.delete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.undelete'=>array('Read', 'NotBanned', 'Moderate'),
-			'topic.permdelete'=>array('Read', 'NotBanned', 'Moderate'),
+			'topic.permdelete'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.favorite'=>array('Read','NotBanned', 'Favorite'),
 			'topic.subscribe'=>array('Read','NotBanned', 'Subscribe'),
 			'topic.sticky'=>array('Read','NotBanned', 'Moderate'),

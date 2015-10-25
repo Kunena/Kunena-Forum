@@ -62,7 +62,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$topicicontype = $this->ktemplate->params->get('topicicontype');
 
-		if ($category->getNewTopicCategory()->exists())
+		if ($category->isAuthorised('topic.create'))
 		{
 			if ($url && $topicicontype=='B3')
 			{

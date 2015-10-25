@@ -1975,40 +1975,6 @@ PX		EM			PCT			PT
 	font-style: italic;
 }
 
-#Kunena span.kpost-online-status-yes {
-	display: inline-block;
-	background: url("../images/icons/online.gif") no-repeat;
-	height: 15px;
-	width: 74px;
-	vertical-align: text-top;
-}
-
-#Kunena span.kpost-online-status-no {
-	display: inline-block;
-	background: url("../images/icons/offline.gif") no-repeat;
-	height: 15px;
-	width: 74px;
-	vertical-align: text-top;
-}
-
-#Kunena li.kpost-online-status-top-yes {
-	display: block;
-	float: left;
-	padding-right: 5px;
-	background: url("../images/icons/online.gif") no-repeat;
-	height: 15px;
-	width: 74px;
-}
-
-#Kunena li.kpost-online-status-top-no {
-	display: block;
-	float: left;
-	padding-right: 5px;
-	background: url("../images/icons/offline.gif") no-repeat;
-	height: 15px;
-	width: 74px;
-}
-
 /* Top and bottom layouts */
 #Kunena ul#kpost-profiletop {
 	margin: 0;
@@ -3565,35 +3531,11 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	white-space: normal;
 }
 
-#Kunena div#kprofile-stats ul li span.konline-status-yes {
-	display: block;
-	background: url("../images/icons/online.gif") no-repeat;
-	height: 16px;
-	width: 70px;
-}
-
-#Kunena div#kprofile-stats ul li span.konline-status-no {
-	display: block;
-	background: url("../images/icons/offline.gif") no-repeat;
-	height: 16px;
-	width: 70px;
-}
-
 div#kprofile-stats ul li span.krankname {
 	display: block;
 	margin-right: 5px;
 	font-weight: bold;
 	float: left;
-}
-
-div#kprofile-stats ul li span.krank-admin {
-	display: block;
-	background: url("../images/ranks/rankadmin.gif") no-repeat;
-	height: 16px;
-	width: 70px;
-	margin-right: 5px;
-	float: right;
-	margin-top: 0;
 }
 
 #Kunena div#kprofile-rightcol {
@@ -3701,15 +3643,6 @@ div#kprofile-stats ul li span.krank-admin {
 #Kunena div.kprofile-rightcol2 ul li {
 	list-style-type: none !important;
 	padding-bottom: 8px;
-}
-
-#Kunena div.kprofile-rightcol2 ul li span.email {
-	float: left;
-	display: block;
-	background: url("../images/icons/email.png") no-repeat;
-	height: 16px;
-	width: 16px;
-	margin-right: 5px;
 }
 
 #Kunena div.kprofile-rightcol2 ul li span.website {

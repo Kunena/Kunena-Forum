@@ -558,15 +558,15 @@ HTML;
 		{
 			if ($this->isHMVC())
 			{
-				$category_iconset = $this->category_iconset;
+				$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
 			}
 			else
 			{
-				$category_iconset = '/default';
+				$category_iconset = 'media/kunena/topicicons/default';
 			}
 		}
 
-		return $this->getFile($filename, $url, $this->pathTypes['topicicons'], 'media/kunena/topic_icons' . $category_iconset);
+		return $this->getFile($filename, $url, $this->pathTypes['topicicons'], $category_iconset);
 	}
 
 	public function getCategoryIconPath($filename = '', $url = true, $category_iconset)

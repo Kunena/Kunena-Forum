@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 		<?php echo $this->escape($this->headerText); ?>
 		<span class="badge badge-info"><?php echo (int) $this->pagination->total; ?></span>
 
-		<?php if (!empty($this->actions)) : ?>
+		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 			<div class="input-group pull-right">
 				<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
 					'kchecktask'); ?>
@@ -36,25 +36,15 @@ defined('_JEXEC') or die;
 
 	<table class="table table-striped table-bordered">
 
-		<?php if (!empty($this->actions)) : ?>
+		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 			<thead>
 				<tr>
-					<th colspan="2"></th>
+					<th colspan="3"></th>
 					<th class="center">
-						<input class="kcheckall" type="checkbox" name="toggle" value="" />
+						<input class="kcatcheckall" type="checkbox" name="categories[<?php echo (int) $this->category->id?>]" value="" />
 					</th>
 				</tr>
 			</thead>
-		<?php endif; ?>
-
-		<?php if (!empty($this->actions)) : ?>
-			<tfoot>
-				<tr>
-					<td colspan="<?php echo empty($this->actions) ? 3 : 4 ?>">
-						<?php // FIXME: Add category actions (unsubscribe selected) ?>
-					</td>
-				</tr>
-			</tfoot>
 		<?php endif; ?>
 
 		<?php if (empty($this->categories)) : ?>

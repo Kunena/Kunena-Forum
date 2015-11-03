@@ -92,6 +92,8 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 			KunenaForumCategoryHelper::getNewTopics(array_keys($this->categories));
 		}
 
+		$this->actions = $this->getActions();
+
 		$this->pagination = new JPagination($total, $limitstart, $limit);
 
 		$this->headerText = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');

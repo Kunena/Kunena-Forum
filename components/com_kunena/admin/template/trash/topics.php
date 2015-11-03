@@ -22,9 +22,9 @@ JHtml::_('dropdown.init');
 
 <script type="text/javascript">
 	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
@@ -156,12 +156,8 @@ JHtml::_('dropdown.init');
 							<td colspan="10">
 								<div class="well center filter-state">
 									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-										<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
-?>
-										<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+										<?php if ($this->filterActive || $this->pagination->total > 0) : ?>
 										<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-										<?php else : ?>
-											<?php //Currently no default state, might change later. ?>
 										<?php endif; ?>
 									</span>
 								</div>

@@ -20,8 +20,8 @@ defined('_JEXEC') or die();
 			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
-	<div id="j-main-container" class="span10">
 
+	<div id="j-main-container" class="span10">
 		<div class="kadmin-functitle icon-config"><?php echo JText::_('Subscriptions'); ?></div>
 			<table class="adminform">
 				<tr>

@@ -7,12 +7,6 @@
  * @link http://www.kunena.org
  **/
 
-@CHARSET "UTF-8";
-
-/*.well {
-	background-color: white !important;
-}*/
-
 #kunena.admin.override #dashboard-icons .btn {
 	background-image: none;
 	border-color: transparent;

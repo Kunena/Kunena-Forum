@@ -269,7 +269,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 			$this->setRedirectBack();
 
-			return;
+			return true;
 		}
 
 		$post       = JRequest::get('post', JREQUEST_ALLOWRAW);

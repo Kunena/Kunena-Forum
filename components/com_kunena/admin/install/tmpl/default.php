@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 		<div>
 			<div id="kunena-description"><?php echo JText::_('COM_KUNENA_INSTALL_PREPARING'); ?></div>
 			<div class="progress progress-striped active">
-				<div id="kunena-progress" class="bar" style="width: 0%;"></div>
+				<div id="kunena-progress" class="bar" style="width: 0;"></div>
 			</div>
 		</div>
 	</div>
@@ -87,9 +87,8 @@ window.kunenainstall = function() {
 			}
 		}
 	});
+};
 
-
-}
 jQuery( document ).ready(function() {
 	jQuery('#kunena-toggle').click(function(e) {
 		jQuery('#kunena-container').toggleClass('hidden');

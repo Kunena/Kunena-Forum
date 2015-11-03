@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 		<?php echo $this->escape($this->headerText); ?>
 		<span class="badge badge-info"><?php echo (int) $this->pagination->total; ?></span>
 
-		<?php if (!empty($this->actions && $this->categories)) : ?>
+		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 			<div class="input-group pull-right">
 				<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
 					'kchecktask'); ?>
@@ -36,7 +36,7 @@ defined('_JEXEC') or die;
 
 	<table class="table table-striped table-bordered">
 
-		<?php if (!empty($this->actions && $this->categories)) : ?>
+		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 			<thead>
 				<tr>
 					<th colspan="3"></th>

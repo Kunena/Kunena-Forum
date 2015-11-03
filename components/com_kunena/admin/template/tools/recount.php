@@ -156,7 +156,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 					$this.find('.recount-close').removeAttr('disabled');
 				}
 			});
-		}
+		};
 
 		$(document).on('click.bs.ajaxmodal.data-api', '[data-toggle="ajaxmodal"]', function (e) {
 			// Reset modal.
@@ -179,7 +179,6 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 				.one('hide', function () {
 					$this.is(':visible') && $this.focus()
 				});
-
 
 			data.format ='json';
 			$target.doRecount(href, data);

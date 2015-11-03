@@ -45,7 +45,7 @@ class KunenaViewInstall extends JViewLegacy
 		$this->model->setAction(strtolower($version->action));
 		$this->model->setStep(0);
 
-		JRequest::setVar('hidemainmenu', 1);
+		JFactory::getApplication()->input->post->get('hidemainmenu', 1);
 
 		parent::display($tpl);
 	}

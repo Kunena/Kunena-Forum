@@ -6,6 +6,9 @@
  */
 defined('_JEXEC') or die ();
 
+/**
+ * Class KunenaAvatarEasyprofile
+ */
 class KunenaAvatarEasyprofile extends KunenaAvatar
 {
 	protected $params = null;

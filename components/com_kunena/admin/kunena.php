@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 // Access check.
 if (!JFactory::getUser()->authorise('core.manage', 'com_kunena'))
 {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 }
 
 // Check if installation hasn't been completed.

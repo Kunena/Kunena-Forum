@@ -39,12 +39,12 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 	public function onAfterPost($message)
 	{
-		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+		if (Joomla\String\String::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
 			$this->assignPoints( 'thread.new' );
 		}
 
-		if(JString::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
+		if(Joomla\String\String::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
 		{
 			$this->assignBadge( 'thread.new' , JText::_( 'PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE' ) );
 		}
@@ -67,7 +67,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @since	1.3
 	 * @access	public
 	 * @param	string
-	 * @return	
+	 * @return
 	 */
 	public function onAfterReply($message)
 	{
@@ -102,8 +102,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 		$permalink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
 
-		$options = array( 
-			'uid' => $message->id, 
+		$options = array(
+			'uid' => $message->id,
 			'actor_id' => $message->userid,
 			'title' => '',
 			'type' => 'post',
@@ -121,7 +121,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @since	5.0
 	 * @access	public
 	 * @param	string
-	 * @return	
+	 * @return
 	 */
 	public function getSubscribers($message)
 	{

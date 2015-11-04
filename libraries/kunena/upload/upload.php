@@ -197,26 +197,6 @@ class KunenaUpload
 	}
 
 	/**
-	 * Get maximum limit for file uploads.
-	 *
-	 * @return int  Size limit in bytes.
-	 */
-	public function getMaxSize()
-	{
-		$config = KunenaConfig::getInstance();
-
-		return (int) max(
-				0,
-				min(
-						$this->toBytes(ini_get('upload_max_filesize')) - 1024,
-						$this->toBytes(ini_get('post_max_size')) - 1024,
-						$this->toBytes(ini_get('memory_limit')) - 1024 * 1024,
-						max($config->imagesize, $config->filesize) * 1024
-				)
-		);
-	}
-
-	/**
 	 * Upload a file via AJAX, supports chunks and fallback to regular file upload.
 	 *
 	 * @param  array $options Upload options.
@@ -238,12 +218,12 @@ class KunenaUpload
 
 		$options += $defaults;
 
-		$config = KunenaConfig::getInstance();
 		$exception = null;
 		$in = null;
 		$out = null;
 		$size = $bytes = 0;
 		$outFile = null;
+		$type = $options['mime'];
 
 		// Look for the content type header
 		if (isset($_SERVER['HTTP_CONTENT_TYPE']))
@@ -279,10 +259,7 @@ class KunenaUpload
 			{
 				throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_EXTRA_CHUNK'), 400);
 			}
-			if ($options['size'] > max($config->filesize, $config->imagesize) * 1024)
-			{
-				throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($options['size'])), 400);
-			}
+
 
 			if (strpos($contentType, 'multipart') !== false)
 			{
@@ -352,9 +329,20 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if ($size > max($config->filesize, $config->imagesize) * 1024)
+				if (stripos($type, 'image/') !== true)
 				{
-					throw new RuntimeException(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_SIZE_X', $this->bytes($size)), 400);
+					if (!$this->checkFileSizeFileAttachment($size))
+					{
+						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+					}
+				}
+
+				if (stripos($type, 'image/') !== false)
+				{
+					if (!$this->checkFileSizeImageAttachment($size))
+					{
+						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+					}
 				}
 			}
 		}
@@ -390,11 +378,6 @@ class KunenaUpload
 		}
 
 		$options['chunkStart'] = (int) $size;
-		$options['chunkEnd'] = min(
-				$size + 1024*1024,
-				$size + $this->getMaxSize(),
-				max($size, $options['size'], is_null($options['size']) ? $this->getMaxSize() : 0)
-			) - 1;
 
 		if ($options['completed'])
 		{
@@ -656,6 +639,7 @@ class KunenaUpload
 				}
 			}
 		}
+
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))
 		{

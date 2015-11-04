@@ -63,7 +63,7 @@ if (!empty($this->spacing)) : ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx).$txt;?>">
 	<?php if ($topic->unread) : ?>
-	<td class="hidden-phone center topic-item-unread">
+	<td class="hidden-xs center topic-item-unread">
 		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
 	<?php else :  ?>
 	<td class="col-md-1 hidden-xs center">

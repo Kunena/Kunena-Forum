@@ -48,8 +48,8 @@ $last = 0;
 	</ul>
 </nav>
 
-<nav class="pagination test visible-sm">
-	<ul>
+<nav class="visible-xs-block">
+	<ul class="pagination">
 		<?php
 		foreach ($data->pages as $k => $item)
 		{

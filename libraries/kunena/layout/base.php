@@ -213,9 +213,9 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 */
 	public function debug($data = array())
 	{
-		$output = $this->render($data);
+		$this->debug = (bool) $data;
 
-		return $output;
+		return $this;
 	}
 
 	public function renderError(Exception $e)

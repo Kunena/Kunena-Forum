@@ -563,6 +563,11 @@ HTML;
 			else
 			{
 				$category_iconset = 'media/kunena/topicicons/default';
+
+				if (!file_exists($category_iconset))
+				{
+					$category_iconset = 'media/kunena/topic_icons/default';
+				}
 			}
 		}
 

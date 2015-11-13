@@ -64,26 +64,19 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				</div>
 
 				<div class="modal-body">
-					<?php if ($me->exists() && $category->allow_anonymous) : ?>
+					<?php if (!$me->exists()) : ?>
 						<div class="form-group">
 							<label class="col-md-12 control-label">
 								<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
 							</label>
-							<input type="text" name="authorname" class="form-control" maxlength="35" value="<?php
-							echo $this->escape($me->getName()); ?>" disabled />
+							<input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
 						</div>
-					<?php else: ?>
+					<?php endif; ?>
+
+					<?php if ($config->askemail): ?>
 						<div class="form-group">
-							<label class="col-md-12 control-label">
-								<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
-							</label>
-							<input type="text" name="authorname" class="form-control" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" />
-						</div>
-						<div class="form-group">
-							<?php if ($config->askemail && !KunenaFactory::getUser()->id): ?>
-								<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-								<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="35" value="" required />
-							<?php endif; ?>
+							<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+							<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="35" value="" required />
 						</div>
 					<?php endif; ?>
 

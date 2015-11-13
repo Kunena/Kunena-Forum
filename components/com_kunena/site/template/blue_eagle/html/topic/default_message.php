@@ -72,6 +72,10 @@ endif; ?>
 		<?php else: ?>
 		<input type="hidden" name="authorname" value="<?php echo $this->escape($this->profile->getName()) ?>" />
 		<?php endif; ?>
+		<?php if ($this->config->askemail && !KunenaFactory::getUser()->id): ?>
+			<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox" maxlength="35" value="" required />
+			<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+		<?php endif; ?>
 		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->message->subject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
 		<?php if ($this->topic->authorise('subscribe') && !$this->usertopic->subscribed) : ?>

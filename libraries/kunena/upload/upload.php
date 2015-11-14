@@ -526,7 +526,7 @@ class KunenaUpload
 	 */
 	protected function checkFileSizeImageAttachment($filesize)
 	{
-		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize) * 1024;
+		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize * 1024);
 
 		if ($image)
 		{
@@ -620,22 +620,20 @@ class KunenaUpload
 					throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 				}
 			}
-			else
-			{
-				if (stripos($type, 'image/') !== true)
-				{
-					if (!$this->checkFileSizeFileAttachment($file->size))
-					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
-					}
-				}
 
-				if (stripos($type, 'image/') !== false)
+			if (exif_imagetype($file->tmp_name))
+			{
+				if (!$this->checkFileSizeImageAttachment($file->size))
 				{
-					if (!$this->checkFileSizeImageAttachment($file->size))
-					{
-						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
-					}
+					throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
+				}
+			}
+
+			if (!exif_imagetype($file->tmp_name))
+			{
+				if (!$this->checkFileSizeFileAttachment($file->size))
+				{
+					throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 				}
 			}
 		}

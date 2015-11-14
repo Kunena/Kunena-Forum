@@ -40,8 +40,8 @@ jQuery(document).ready(function() {
 			content.next(".content").slideToggle(500);
 		}
 	});
-  
-  /* On moderate page display subject or field to enter manually the topic ID */
+	
+	/* On moderate page display subject or field to enter manually the topic ID */
 	jQuery('#kmod_topics').change(function() {
 		var id_item_selected = jQuery(this).val();
 
@@ -56,6 +56,25 @@ jQuery(document).ready(function() {
 		} else {
 			jQuery('#kmod_targetid').hide();
 		}
+	});
+
+	jQuery('#kmod_categories').change(function() {
+		jQuery.getJSON(
+			kunena_url_ajax, { catid: jQuery(this).val() }
+		).done(function( json ) {
+			var first_item = jQuery('#kmod_topics option:nth(0)').clone();
+			var second_item = jQuery('#kmod_topics option:nth(1)').clone();
+
+			jQuery('#kmod_topics').empty();
+			first_item.appendTo('#kmod_topics');
+			second_item.appendTo('#kmod_topics');
+
+			jQuery.each(json,function(index, object) {
+				jQuery.each(object, function(key, element) {
+					jQuery('#kmod_topics').append('<option value="'+element['id']+'">'+element['subject']+'</option>');
+				});
+			});
+		});
 	});
 });
 

@@ -57,10 +57,40 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	 */
 	protected function prepareDocument()
 	{
-		$this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));
-		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_STAT_FORUMSTATS');
-		$this->setKeywords($keywords);
-		$description = JText::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title ;
-		$this->setDescription($description);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+
+		if (!empty($params->get('page_title')))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS'));
+		}
+
+		if (!empty($params->get('menu-meta_keywords')))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_STAT_FORUMSTATS');
+			$this->setKeywords($keywords);
+		}
+
+		if (!empty($params->get('menu-meta_description')))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$description = JText::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title ;
+			$this->setDescription($description);
+		}
 	}
 }

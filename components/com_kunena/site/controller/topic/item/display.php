@@ -344,6 +344,38 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
 
-		$this->setTitle($headerText);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+
+		if (!empty($params->get('page_title')))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->setTitle($headerText);
+		}
+
+		if (!empty($params->get('menu-meta_keywords')))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$this->setKeywords($headerText);
+		}
+
+		if (!empty($params->get('menu-meta_description')))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$this->setDescription($headerText);
+		}
 	}
 }

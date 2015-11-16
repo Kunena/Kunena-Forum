@@ -82,43 +82,15 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
+		$this->setTitle($title, true);
 
-		if (!empty($params->get('page_title')))
-		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
-			$this->setTitle($title);
-		}
+		$keywords = 'kunena forum, kunena, forum, joomla, joomla extension, joomla component';
+		$this->setKeywords($keywords);
 
-		if (!empty($params->get('menu-meta_keywords')))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$keywords = 'kunena forum, kunena, forum, joomla, joomla extension, joomla component';
-			$this->setKeywords($keywords);
-		}
-
-		if (!empty($params->get('menu-meta_description')))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			// TODO: translate at some point...
-			$description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. "
+		// TODO: translate at some point...
+		$description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. "
 			. "For more information, please visit www.kunena.org.';
-			$this->setDescription($description);
-		}
+		$this->setDescription($description);
 	}
 }

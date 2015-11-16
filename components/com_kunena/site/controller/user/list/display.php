@@ -90,41 +90,11 @@ class ComponentKunenaControllerUserListDisplay extends KunenaControllerDisplay
 		$pages = $this->pagination->pagesTotal;
 		$pagesText = $page > 1 ? " ({$page}/{$pages})" : '';
 
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
-
-		if (!empty($params->get('page_title')))
-		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . $pagesText;
-			$this->setTitle($title);
-		}
-
-		if (!empty($params->get('menu-meta_keywords')))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_VIEW_USER_LIST');
-			$this->setKeywords($keywords);
-		}
-
-		if (!empty($params->get('menu-meta_description')))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title ;
-			$this->setDescription($description);
-		}
+		$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . $pagesText;
+		$this->setTitle($title);
+		$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_VIEW_USER_LIST');
+		$this->setKeywords($keywords);
+		$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title ;
+		$this->setDescription($description);
 	}
 }

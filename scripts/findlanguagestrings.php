@@ -67,6 +67,8 @@ foreach ($keys as $key => $location) {
 	} elseif (preg_match('#^components/com_kunena/template/#', $location)) {
 		if (preg_match('#/blue_eagle/#', $location))
 			$files['site/en-GB.com_kunena.tpl_blue_eagle.ini'][$location][$key] = $location;
+		elseif (preg_match('#/crypsis/#', $location))
+			$files['site/en-GB.kunena_tmpl_crypsis.ini'][$location][$key] = $location;
 		else
 			$files['site/en-GB.com_kunena.templates.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^components/com_kunena/lib#', $location)) {

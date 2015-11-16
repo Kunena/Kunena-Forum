@@ -621,7 +621,7 @@ class KunenaUpload
 				}
 			}
 
-			if (exif_imagetype($file->tmp_name))
+			if (!$file->isAvatar && stripos($type, 'image/') !== false)
 			{
 				if (!$this->checkFileSizeImageAttachment($file->size))
 				{
@@ -629,7 +629,7 @@ class KunenaUpload
 				}
 			}
 
-			if (!exif_imagetype($file->tmp_name))
+			if (!$file->isAvatar && stripos($type, 'image/') !== true)
 			{
 				if (!$this->checkFileSizeFileAttachment($file->size))
 				{

@@ -156,39 +156,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
-
-		if (!empty($params->get('page_title')))
-		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$this->setTitle($this->headerText);
-		}
-
-		if (!empty($params->get('menu-meta_keywords')))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$this->setKeywords($this->headerText);
-		}
-
-		if (!empty($params->get('menu-meta_description')))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			$this->setDescription($this->headerText);
-		}
+		$this->setTitle($this->headerText);
 	}
 
 	/**

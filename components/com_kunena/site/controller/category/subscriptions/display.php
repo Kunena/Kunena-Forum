@@ -120,41 +120,13 @@ class ComponentKunenaControllerCategorySubscriptionsDisplay extends KunenaContro
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
+		$this->setTitle($title);
 
-		if (!empty($params->get('page_title')))
-		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
-			$this->setTitle($title);
-		}
+		$keywords = JText::_('COM_KUNENA_CATEGORIES');
+		$this->setKeywords($keywords);
 
-		if (!empty($params->get('menu-meta_keywords')))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$keywords = JText::_('COM_KUNENA_CATEGORIES');
-			$this->setKeywords($keywords);
-		}
-
-		if (!empty($params->get('menu-meta_description')))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			$description = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
-			$this->setDescription($description);
-		}
+		$description = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
+		$this->setDescription($description);
 	}
 }

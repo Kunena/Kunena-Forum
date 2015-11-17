@@ -355,7 +355,10 @@ class KunenaViewTopics extends KunenaView
 
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$params = $menu_item->params;
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
 
 		if ($type == 'default')
 		{
@@ -385,7 +388,7 @@ class KunenaViewTopics extends KunenaView
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
 			}
 
-			if (!empty($params->get('page_title')))
+			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
 				$this->setTitle($title);
@@ -397,7 +400,7 @@ class KunenaViewTopics extends KunenaView
 				$this->setTitle($title);
 			}
 
-			if (!empty($params->get('menu-meta_keywords')))
+			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
@@ -408,7 +411,7 @@ class KunenaViewTopics extends KunenaView
 				$this->setKeywords($keywords);
 			}
 
-			if (!empty($params->get('menu-meta_description')))
+			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
 				$this->setDescription($description);
@@ -443,7 +446,7 @@ class KunenaViewTopics extends KunenaView
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 			}
 
-			if (!empty($params->get('page_title')))
+			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
 				$this->setTitle($title);
@@ -455,7 +458,7 @@ class KunenaViewTopics extends KunenaView
 				$this->setTitle($title);
 			}
 
-			if (!empty($params->get('menu-meta_keywords')))
+			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
@@ -466,7 +469,7 @@ class KunenaViewTopics extends KunenaView
 				$this->setKeywords($keywords);
 			}
 
-			if (!empty($params->get('menu-meta_description')))
+			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
 				$this->setDescription($description);
@@ -499,7 +502,7 @@ class KunenaViewTopics extends KunenaView
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 			}
 
-			if (!empty($params->get('page_title')))
+			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
 				$this->setTitle($title);
@@ -511,7 +514,7 @@ class KunenaViewTopics extends KunenaView
 				$this->setTitle($title);
 			}
 
-			if (!empty($params->get('menu-meta_keywords')))
+			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
@@ -522,7 +525,7 @@ class KunenaViewTopics extends KunenaView
 				$this->setKeywords($keywords);
 			}
 
-			if (!empty($params->get('menu-meta_description')))
+			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
 				$this->setDescription($description);

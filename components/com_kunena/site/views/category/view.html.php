@@ -650,6 +650,9 @@ class KunenaViewCategory extends KunenaView
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive(); // get the active item
 		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
 
 		if ($type == 'default')
 		{
@@ -658,7 +661,7 @@ class KunenaViewCategory extends KunenaView
 
 			$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
 
-			if (!empty($params->get('page_title')))
+			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
 				$this->setTitle($title);
@@ -669,7 +672,7 @@ class KunenaViewCategory extends KunenaView
 				$this->setTitle($title);
 			}
 
-			if (!empty($params->get('menu-meta_keywords')))
+			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
@@ -680,7 +683,7 @@ class KunenaViewCategory extends KunenaView
 				$this->setKeywords($keywords);
 			}
 
-			if (!empty($params->get('menu-meta_description')))
+			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
 				$this->setDescription($description);
@@ -694,7 +697,7 @@ class KunenaViewCategory extends KunenaView
 		elseif ($type == 'list')
 		{
 
-			if (!empty($params->get('page_title')))
+			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
 				$this->setTitle($title);
@@ -705,7 +708,7 @@ class KunenaViewCategory extends KunenaView
 				$this->setTitle($title);
 			}
 
-			if (!empty($params->get('menu-meta_keywords')))
+			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
@@ -716,7 +719,7 @@ class KunenaViewCategory extends KunenaView
 				$this->setKeywords($keywords);
 			}
 
-			if (!empty($params->get('menu-meta_description')))
+			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
 				$this->setDescription($description);
@@ -732,7 +735,7 @@ class KunenaViewCategory extends KunenaView
 
 			$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 
-			if (!empty($params->get('page_title')))
+			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');
 				$this->setTitle($title);
@@ -743,7 +746,7 @@ class KunenaViewCategory extends KunenaView
 				$this->setTitle($title);
 			}
 
-			if (!empty($params->get('menu-meta_keywords')))
+			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
@@ -754,7 +757,7 @@ class KunenaViewCategory extends KunenaView
 				$this->setKeywords($keywords);
 			}
 
-			if (!empty($params->get('menu-meta_description')))
+			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
 				$this->setDescription($description);

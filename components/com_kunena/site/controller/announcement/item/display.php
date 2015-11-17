@@ -46,8 +46,11 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive(); // get the active item
 		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
 
-		if (!empty($params->get('page_title')))
+		if (!empty($params_title))
 		{
 			$title = $params->get('page_title');
 			$this->setTitle($title);
@@ -57,7 +60,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 			$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 		}
 
-		if (!empty($params->get('menu-meta_keywords')))
+		if (!empty($params_keywords))
 		{
 			$keywords = $params->get('menu-meta_keywords');
 			$this->setKeywords($keywords);
@@ -67,7 +70,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 			$this->setKeywords(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
 		}
 
-		if (!empty($params->get('menu-meta_description')))
+		if (!empty($params_description))
 		{
 			$description = $params->get('menu-meta_description');
 			$this->setDescription($description);

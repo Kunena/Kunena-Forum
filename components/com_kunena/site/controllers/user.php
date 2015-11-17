@@ -61,7 +61,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
 			{
-				$this->redirectBack();
+				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 

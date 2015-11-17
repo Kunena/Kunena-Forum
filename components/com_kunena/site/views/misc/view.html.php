@@ -82,5 +82,4 @@ class KunenaViewMisc extends KunenaView
 			$this->setDescription($this->header);
 		}
 	}
-
 }

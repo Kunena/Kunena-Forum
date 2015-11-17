@@ -696,7 +696,6 @@ class KunenaViewCategory extends KunenaView
 		}
 		elseif ($type == 'list')
 		{
-
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');

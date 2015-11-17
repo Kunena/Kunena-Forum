@@ -1400,7 +1400,6 @@ class KunenaViewTopic extends KunenaView
 		}
 		elseif ($type == 'create')
 		{
-
 			if (!empty($params_title))
 			{
 				$title = $params->get('page_title');

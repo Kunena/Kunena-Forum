@@ -52,7 +52,6 @@ class KunenaViewStatistics extends KunenaView
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
 
-
 		if (!empty($params_title))
 		{
 			$title = $params->get('page_title');

@@ -61,7 +61,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
 			{
-				$this->redirectBack();
+				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 
@@ -727,7 +727,10 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($avatarFile['tmp_name']))
 		{
-			$this->deleteOldAvatars();
+			if ($avatarFile['size'] < intval(KunenaConfig::getInstance()->avatarsize) * 1024)
+			{
+				$this->deleteOldAvatars();
+			}
 
 			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
 
@@ -758,7 +761,6 @@ class KunenaControllerUser extends KunenaController
 			else
 			{
 				$this->me->avatar = $current_avatar;
-
 				return false;
 			}
 		}

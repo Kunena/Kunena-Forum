@@ -62,11 +62,11 @@ class KunenaViewCredits extends KunenaView
 
 	protected function _prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
+		$app                = JFactory::getApplication();
+		$menu_item          = $app->getMenu()->getActive(); // get the active item
+		$params             = $menu_item->params; // get the params
+		$params_title       = $params->get('page_title');
+		$params_keywords    = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
 
 		if (!empty($params_title))

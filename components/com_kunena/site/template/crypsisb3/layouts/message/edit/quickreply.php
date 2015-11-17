@@ -73,7 +73,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						</div>
 					<?php endif; ?>
 
-					<?php if ($config->askemail): ?>
+					<?php if ($config->askemail && !$me->exists()): ?>
 						<div class="form-group">
 							<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 							<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="35" value="" required />

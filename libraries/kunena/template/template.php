@@ -550,23 +550,51 @@ HTML;
 
 	public function getTopicIconPath($filename = '', $url = true)
 	{
-		$category_iconset = '';
-
 		$config = KunenaFactory::getConfig();
 
 		if ($config->topicicons)
 		{
 			if ($this->isHMVC())
 			{
-				$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
+				$category_iconset = 'images/topic_icons/';
+				if (!file_exists($category_iconset))
+				{
+					$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
+				}
 			}
 			else
 			{
-				$category_iconset = 'media/kunena/topicicons/default';
-
+				$category_iconset = 'images/topicicons/';
 				if (!file_exists($category_iconset))
 				{
-					$category_iconset = 'media/kunena/topic_icons/default';
+					$category_iconset = 'media/kunena/topicicons/default';
+					if (!file_exists($category_iconset))
+					{
+						$category_iconset = 'media/kunena/topic_icons/default';
+					}
+				}
+			}
+		}
+		else
+		{
+			if ($this->isHMVC())
+			{
+				$category_iconset = 'images/topic_icons';
+				if (!file_exists($category_iconset))
+				{
+					$category_iconset = 'media/kunena/topic_icons';
+				}
+			}
+			else
+			{
+				$category_iconset = 'images/topicicons';
+				if (!file_exists($category_iconset))
+				{
+					$category_iconset = 'media/kunena/topicicons';
+					if (!file_exists($category_iconset))
+					{
+						$category_iconset = 'media/kunena/topic_icons';
+					}
 				}
 			}
 		}

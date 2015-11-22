@@ -157,11 +157,11 @@ class KunenaBbcode extends NBBC_BBCode
 
 				if ($uri->isSSL())
 				{
-					return '<iframe width="425" height="344" src="https://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="https://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
 				}
 				else
 				{
-					return '<iframe width="425" height="344" src="http://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="http://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
 				}
 			}
 		}
@@ -339,7 +339,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// We have a full, complete, and properly-formatted URL, with protocol.
 				// Now we need to apply the $this->url_pattern template to turn it into HTML.
-				$params = Joomla\String\String::parse_url($url);
+				$params = JString::parse_url($url);
 
 				if (!$invalid && substr($url, 0, 7) == 'mailto:')
 				{
@@ -2199,7 +2199,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 		}
 
-		$tag_new = '<object';
+		$tag_new = '<div class="embed-responsive embed-responsive-16by9"> <object';
 
 		foreach ( $vid_object as $vid_data )
 		{
@@ -2220,7 +2220,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$tag_new .= $vid_data;
 		}
 
-		$tag_new .= ' /></object>';
+		$tag_new .= ' /></object></div>';
 
 		return $tag_new;
 	}

@@ -97,15 +97,22 @@ class KunenaModelSearch extends KunenaModel
 		{
 			$value = JFactory::getApplication()->input->get('ids', array(0), 'post', 'array');
 			Joomla\Utilities\ArrayHelper::toInteger($value);
+			if ($value[0] > 0)
+			{
+				$this->setState('query.ids', $value);
+			}
 		}
 		else
 		{
 			$value = JFactory::getApplication()->input->getString('ids', '0', 'get');
 			$value = explode(' ', $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
+			if ($value[0] > 0)
+			{
+				$this->setState('query.ids', $value);
+			}
 		}
 
-		$this->setState('query.ids', $value);
 
 		$value = JFactory::getApplication()->input->getInt('show', 0);
 		$this->setState('query.show', $value);

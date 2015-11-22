@@ -27,15 +27,14 @@ defined('_JEXEC') or die;
 
 		<div>
 			<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
-
-			<?php if (!empty($this->announcement->description)) : ?>
-				<p>
-					<a class="btn-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>" title="<?php echo  $this->announcement->displayField('title')?>" rel="follow">
-						<?php echo JText::_('COM_KUNENA_ANN_READMORE');?>
-					</a>
-				</p>
-			<?php endif; ?>
 		</div>
+		<?php if (!empty($this->announcement->description)) : ?>
+			<div>
+				<a class="btn-link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>" title="<?php echo  $this->announcement->displayField('title')?>" rel="follow">
+						<?php echo JText::_('COM_KUNENA_ANN_READMORE');?>
+				</a>
+			</div>
+		<?php endif; ?>
 	</div>
 </div>
 

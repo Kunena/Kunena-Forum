@@ -457,7 +457,7 @@ class KunenaViewCategory extends KunenaView
 		$this->categoryButtons = array();
 
 		// Is user allowed to post new topic?
-		if ($this->category->getNewTopicCategory()->exists())
+		if ($this->category->isAuthorised('topic.create'))
 		{
 			$url                             = "index.php?option=com_kunena&view=topic&layout=create&catid={$this->category->id}";
 			$this->categoryButtons['create'] = $this->getButton($url, 'create', 'topic', 'communication');

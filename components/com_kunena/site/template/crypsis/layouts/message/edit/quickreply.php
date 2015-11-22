@@ -70,23 +70,37 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 
 		<div class="modal-body">
 
-			<?php if ($me->exists() && $category->allow_anonymous) : ?>
-			<input type="text" name="authorname" size="35" class="span12" maxlength="35" value="<?php
-				echo $this->escape($me->getName()); ?>" />
-			<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous"
-			       value="1" class="kinputbox postinput" <?php if ($category->post_anonymous) { echo 'checked="checked"'; } ?> />
-			<label for="kanonymous<?php echo intval($message->id); ?>">
-				<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
-			</label>
-			<?php else: ?>
-			<input type="hidden" name="authorname" value="<?php echo $this->escape($me->getName()); ?>" />
+			<?php if (!$me->exists()) : ?>
+				<div class="controls">
+					<label>
+						<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
+					</label>
+					<input type="text" name="authorname" class="span12" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
+				</div>
 			<?php endif; ?>
 
-			<input type="text" id="subject" name="subject" size="35" class="inputbox"
-			       maxlength="<?php echo (int) $config->maxsubject; ?>"
-			       <?php if (!$config->allow_change_subject) : ?>disabled<?php endif; ?>
-			       value="<?php echo $message->displayField('subject'); ?>" />
-			<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+			<?php if ($config->askemail): ?>
+				<div class="controls">
+					<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+					<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox span12" maxlength="35" value="" required />
+				</div>
+			<?php endif; ?>
+
+			<div class="controls">
+				<label for="kanonymous<?php echo intval($message->id); ?>">
+					<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
+				</label>
+				<input type="text" id="subject" name="subject" class="inputbox span12"
+				       maxlength="<?php echo (int) $config->maxsubject; ?>"
+				       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+				       value="<?php echo $message->displayField('subject'); ?>" />
+			</div>
+			<div class="controls">
+				<label>
+					<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
+				</label>
+				<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+			</div>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>
 			<div class="control-group">
@@ -97,14 +111,22 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					} ?> />
 					<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 				</div>
+				<?php if ($me->exists() && $category->allow_anonymous) : ?>
+				<div class="controls">
+					<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous"
+							value="1" class="kinputbox postinput" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
+					<label for="kanonymous<?php echo intval($message->id); ?>">
+						<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
+					</label>
+				</div>
+				<?php endif; ?>
 			</div>
 			<?php endif; ?>
 			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 		</div>
 		<?php if (!empty($this->captchaEnabled)) : ?>
 			<div class="control-group">
-				<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
-					<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
+				<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
 			</div>
 		<?php endif; ?>
 		<div class="modal-footer">

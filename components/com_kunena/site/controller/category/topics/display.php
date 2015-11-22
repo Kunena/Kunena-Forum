@@ -148,13 +148,44 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$parentText = $this->category->getParent()->displayField('name');
 		$categoryText = $this->category->displayField('name');
 
-		$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', "{$parentText} / {$categoryText}{$pagesText}");
-		$this->setTitle($title);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
 
-		$keywords = JText::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
-		$this->setKeywords($keywords);
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', "{$parentText} / {$categoryText}{$pagesText}");
+			$this->setTitle($title);
+		}
 
-		$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
-		$this->setDescription($description);
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$keywords = JText::_('COM_KUNENA_CATEGORIES') . ", {$parentText}, {$categoryText}, {$this->config->board_title}";
+			$this->setKeywords($keywords);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
+			$this->setDescription($description);
+		}
 	}
 }

@@ -111,10 +111,18 @@ class KunenaView extends JViewLegacy
 
 		$this->state = $this->get('State');
 		$this->ktemplate->initialize();
+		$menu = $this->app->getMenu();
+		$home = $menu->getItems('type', 'alias');
+		$juricurrent = JURI::current();
 
 		if (JFactory::getApplication()->isAdmin())
 		{
 			$this->displayLayout();
+		}
+		elseif ($home)
+		{
+			$this->document->addHeadLink( $juricurrent, 'canonical', 'rel', '' );
+			include JPATH_SITE .'/'. $this->ktemplate->getFile('html/display.php');
 		}
 		else
 		{

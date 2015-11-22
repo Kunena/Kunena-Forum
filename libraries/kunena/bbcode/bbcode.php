@@ -2017,7 +2017,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			'metacafe' => array ('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
-			'myspace' => array ('flash', 430, 346, 0, 0, 'http://lads.myspace.com/videos/vplayer.swf', 'VideoID=(\d*)', array (array (6, 'flashvars', 'm=%vcode%&v=2&type=video' ) ) ),
+			'myspace' => array ('iframe', 430, 346, 0, 0, 'http://media.myspace.com/play/video/%vcode%', '', array (array (6, 'wmode', 'transparent' ) ) ),
 
 			'rutube' => array ('flash', 400, 353, 0, 0, 'http://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)' ),
 

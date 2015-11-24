@@ -607,12 +607,6 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			return null;
 		}
 
-		// Special case to ignore authorisation.
-		if ($action == 'reply')
-		{
-			return null;
-		}
-
 		// Load user if not given.
 		if ($user === null)
 		{

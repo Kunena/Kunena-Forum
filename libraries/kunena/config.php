@@ -1129,6 +1129,12 @@ class KunenaConfig extends JObject
 	public $max_links = 6;
 
 	/**
+	 * @var    integer  Read Only State; select, boolean
+	 * @since  K5.0.0
+	 */
+	public $read_only = 0;
+
+	/**
 	 *
 	 */
 	public function __construct()

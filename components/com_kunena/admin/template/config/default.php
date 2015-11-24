@@ -115,6 +115,11 @@ JHtml::_('behavior.tabstate');
 												</td>
 											</tr>
 											<tr>
+												<td><?php echo JText::_('COM_KUNENA_A_BOARD_READONLY') ?></td>
+												<td><?php echo $this->lists ['read_only'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_A_BOARD_READONLY_DESC') ?></td>
+											</tr>
+											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT') ?>
 												</td>
 												<td><input type="text"

@@ -208,6 +208,11 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 			}
 		}
 
+		if ($this->config->read_only)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_WARNING_READONLY'), 'notice');
+		}
+
 		if ($this->me->isBanned())
 		{
 			// Display warnings to the banned users.

@@ -574,6 +574,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
+		if (KunenaFactory::getConfig()->read_only)
+		{
+			// Special case to ignore authorisation.
+			if ($action != 'read')
+			{
+				return null;
+			}
+		}
+
 		return !$this->tryAuthorise($action, $user, false);
 	}
 

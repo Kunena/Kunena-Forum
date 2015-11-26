@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template.Joomla30
- * @subpackage Layouts.Pagination
+ * @package     Kunena.Administrator.Template.Joomla30
+ * @subpackage  Layouts.Pagination
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -14,7 +14,8 @@ $app = JFactory::getApplication();
 $limits = array();
 
 // Make the option list.
-for ($i = 5; $i <= 30; $i += 5) {
+for ($i = 5; $i <= 30; $i += 5)
+{
 	$limits[] = JHtml::_('select.option', "$i");
 }
 

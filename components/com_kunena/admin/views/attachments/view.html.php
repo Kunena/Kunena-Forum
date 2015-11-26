@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
 class KunenaAdminViewAttachments extends KunenaView
 {
 	/**
+	 *
 	 * @param   null $tpl
 	 *
 	 * @return mixed
@@ -61,7 +62,9 @@ class KunenaAdminViewAttachments extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * Returns an array of review filter options.
+	 *
+	 * @return    array
 	 */
 	protected function getSortFields()
 	{
@@ -77,7 +80,9 @@ class KunenaAdminViewAttachments extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * Returns an array of review filter options.
+	 *
+	 * @return    array
 	 */
 	protected function getSortDirectionFields()
 	{

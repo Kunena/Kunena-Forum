@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package    Kunena.Installer
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -20,7 +20,7 @@ jimport('joomla.application.component.model');
 /**
  * Install Model for Kunena
  *
- * @since        1.6
+ * @since   1.6
  */
 class KunenaModelSchema extends JModelLegacy
 {
@@ -33,11 +33,17 @@ class KunenaModelSchema extends JModelLegacy
 	protected $__state_set = false;
 
 	protected $schema = null;
+
 	protected $xmlschema = null;
+
 	protected $upgradeschema = null;
+
 	protected $diffschema = null;
+
 	protected $db = null;
+
 	protected $sql = null;
+
 	protected $version = null;
 
 	/**
@@ -56,6 +62,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   mixed  $default  The default value to use if no state property exists by name.
 	 *
 	 * @return    object    The property where specified, the state object where omitted.
+	 *
 	 * @since    1.6
 	 */
 	public function getState($property = null, $default = null)
@@ -97,6 +104,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   string $input
 	 *
 	 * @return null
+	 *
 	 */
 	public function getXmlSchema($input = KUNENA_SCHEMA_FILE)
 	{
@@ -112,6 +120,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   string $input
 	 *
 	 * @return DOMDocument|null
+	 *
 	 */
 	public function getUpgradeSchema($input = KUNENA_UPGRADE_SCHEMA_FILE)
 	{
@@ -130,6 +139,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   null $using
 	 *
 	 * @return DOMDocument|null
+	 *
 	 */
 	public function getDiffSchema($from = null, $to = null, $using = null)
 	{
@@ -165,6 +175,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @return array|null
+	 *
 	 */
 	protected function getSQL()
 	{
@@ -179,6 +190,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @return array|null
+	 *
 	 */
 	public function getCreateSQL()
 	{
@@ -196,6 +208,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   null $prefix
 	 *
 	 * @return array
+	 *
 	 */
 	public function getSchemaTables($prefix = null)
 	{
@@ -216,11 +229,11 @@ class KunenaModelSchema extends JModelLegacy
 		return $tables;
 	}
 
-	// helper function to update table schema
 	/**
 	 * @param $table
 	 *
 	 * @return null
+	 *
 	 * @throws KunenaSchemaException
 	 */
 	public function updateSchemaTable($table)
@@ -246,9 +259,9 @@ class KunenaModelSchema extends JModelLegacy
 		return $result;
 	}
 
-	// helper function to update schema
 	/**
 	 * @return array
+	 *
 	 * @throws KunenaSchemaException
 	 */
 	public function updateSchema()
@@ -282,6 +295,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   bool $reload
 	 *
 	 * @return mixed
+	 *
 	 * @throws KunenaSchemaException
 	 */
 	protected function listTables($prefix, $reload = false)
@@ -312,6 +326,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	/**
 	 * @return DOMDocument
+	 *
 	 */
 	public function createSchema()
 	{
@@ -328,6 +343,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   bool $reload
 	 *
 	 * @return mixed
+	 *
 	 */
 	public function getSchemaFromFile($filename, $reload = false)
 	{
@@ -459,6 +475,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param $new
 	 *
 	 * @return DOMDocument|null
+	 *
 	 */
 	public function getSchemaDiff($old, $new)
 	{
@@ -497,6 +514,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param $nodeLists
 	 *
 	 * @return array
+	 *
 	 */
 	protected function listAllNodes($nodeLists)
 	{
@@ -527,11 +545,12 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param $loc
 	 *
 	 * @return null
+	 *
 	 */
 	public function getSchemaNodeDiff($schema, $tag, $name, $loc)
 	{
 		$node = null;
-		// Add
+
 		if (!isset($loc['old']))
 		{
 			$node   = $schema->importNode($loc['new'], true);
@@ -677,6 +696,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param $input
 	 *
 	 * @return DOMDocument|DOMNode|mixed|null
+	 *
 	 * @throws KunenaSchemaException
 	 */
 	protected function getDOMDocument($input)
@@ -724,6 +744,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   bool $drop
 	 *
 	 * @return array
+	 *
 	 */
 	public function getSchemaSQL($schema, $drop = false)
 	{
@@ -737,13 +758,7 @@ class KunenaModelSchema extends JModelLegacy
 			switch ($action = $table->getAttribute('action'))
 			{
 				case 'unknown':
-
-					if (!$drop)
-					{
-						break;
-					}
-
-				// Otherwise go on...
+					break;
 				case 'drop':
 					$str .= 'DROP TABLE ' . $this->db->quoteName($tablename) . ';';
 					break;
@@ -866,6 +881,7 @@ class KunenaModelSchema extends JModelLegacy
 	 * @param   string $after
 	 *
 	 * @return string
+	 *
 	 */
 	protected function getSchemaSQLField($field, $after = '')
 	{
@@ -1115,7 +1131,6 @@ class KunenaModelSchema extends JModelLegacy
 			$dbnode->setAttribute('name', $to);
 		}
 	}
-
 }
 
 class KunenaSchemaException extends Exception

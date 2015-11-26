@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -125,15 +125,13 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_CATEGORY');
 
-		//TODO: Implement flag to hide options, personal preference option.
-		//if($this->filterActive || $this->pagination->total > 0) {
+
 		JToolBarHelper::editList();
 		JToolBarHelper::divider();
 		JToolBarHelper::publish();
 		JToolBarHelper::unpublish();
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
-		//}
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
@@ -185,7 +183,9 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * Returns an array of review filter options.
+	 *
+	 * @return    array
 	 */
 	public function allowpollsOptions()
 	{
@@ -213,7 +213,9 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * Returns an array of review filter options.
+	 *
+	 * @return    array
 	 */
 	protected function getSortFields()
 	{
@@ -232,7 +234,9 @@ class KunenaAdminViewCategories extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * Returns an array of review filter options.
+	 *
+	 * @return    array
 	 */
 	protected function getSortDirectionFields()
 	{

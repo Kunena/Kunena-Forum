@@ -1,17 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Users
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Users
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewUsers $this
-
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -20,13 +19,18 @@ JHtml::_('dropdown.init');
 ?>
 
 <script type="text/javascript">
-	Joomla.orderTable = function() {
+	Joomla.orderTable = function()
+	{
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $this->listOrdering; ?>') {
+
+		if (order != '<?php echo $this->listOrdering; ?>')
+		{
 			var dirn = 'asc';
-		} else {
+		}
+		else
+		{
 			var dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
@@ -154,8 +158,9 @@ JHtml::_('dropdown.init');
 				$i = 0;
 				$img_no = '<i class="icon-cancel"></i>';
 				$img_yes = '<i class="icon-checkmark"></i>';
-				if($this->pagination->total > 0) :
-				foreach($this->users as $user) :
+
+				if ($this->pagination->total > 0) :
+				foreach ($this->users as $user) :
 				$userBlockTask = $user->isBlocked() ? 'unblock' : 'block';
 				$userBannedTask = $user->isBanned() ? 'unban' : 'ban';
 				?>

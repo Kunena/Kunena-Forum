@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright  (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -36,11 +36,13 @@ class Com_KunenaInstallerScript
 	 * @param $parent
 	 *
 	 * @return boolean
+	 *
 	 */
 	public function install($parent)
 	{
 		// Delete all cached files.
 		$cacheDir = JPATH_CACHE . '/kunena';
+
 		if (is_dir($cacheDir))
 		{
 			JFolder::delete($cacheDir);
@@ -80,10 +82,11 @@ class Com_KunenaInstallerScript
 	{
 		$adminpath = $parent->getParent()->getPath('extension_administrator');
 		$model     = "{$adminpath}/install/model.php";
+
 		if (file_exists($model))
 		{
 			require_once($model);
-			$installer = new KunenaModelInstall();
+			$installer = new KunenaModelInstall;
 			$installer->uninstall();
 		}
 
@@ -114,6 +117,7 @@ class Com_KunenaInstallerScript
 		{
 			// Kunena 2.0 or older release found, clean up the directories.
 			static $ignoreAdmin = array('index.html', 'kunena.xml', 'archive');
+
 			if (is_file($adminPath . '/install.script.php'))
 			{
 				// Kunena 1.7 or older release..
@@ -131,10 +135,11 @@ class Com_KunenaInstallerScript
 
 		// Prepare installation.
 		$model = "{$adminPath}/install/model.php";
+
 		if (file_exists($model))
 		{
 			require_once($model);
-			$installer = new KunenaModelInstall();
+			$installer = new KunenaModelInstall;
 			$installer->install();
 		}
 
@@ -177,6 +182,7 @@ class Com_KunenaInstallerScript
 	 * @param $version
 	 *
 	 * @return boolean
+	 *
 	 * @throws Exception
 	 */
 	protected function checkVersion($name, $version)
@@ -184,6 +190,7 @@ class Com_KunenaInstallerScript
 		$app = JFactory::getApplication();
 
 		$major = $minor = 0;
+
 		foreach ($this->versions[$name] as $major => $minor)
 		{
 			if (!$major || version_compare($version, $major, '<'))
@@ -215,6 +222,7 @@ class Com_KunenaInstallerScript
 	 * @param $types
 	 *
 	 * @return boolean
+	 *
 	 * @throws Exception
 	 */
 	protected function checkDbo($name, $types)
@@ -235,6 +243,7 @@ class Com_KunenaInstallerScript
 	 * @param $extensions
 	 *
 	 * @return integer
+	 *
 	 * @throws Exception
 	 */
 	protected function checkExtensions($extensions)
@@ -242,6 +251,7 @@ class Com_KunenaInstallerScript
 		$app = JFactory::getApplication();
 
 		$pass = 1;
+
 		foreach ($extensions as $name)
 		{
 			if (!extension_loaded($name))
@@ -258,6 +268,7 @@ class Com_KunenaInstallerScript
 	 * @param $version
 	 *
 	 * @return boolean
+	 *
 	 * @throws Exception
 	 */
 	protected function checkKunena($version)

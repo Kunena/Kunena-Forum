@@ -2,23 +2,25 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright  (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * The Kunena Installer Controller
  *
- * @since        1.6
+ * @since  1.6
  */
 class KunenaControllerInstall extends JControllerLegacy
 {
 	protected $step = null;
+
 	protected $steps = null;
+
 	protected $model = null;
 
 	/**
@@ -38,6 +40,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @param   bool $urlparams
 	 *
 	 * @return JControllerLegacy|void
+	 *
 	 * @throws Exception
 	 */
 	public function display($cachable = false, $urlparams = false)
@@ -143,6 +146,7 @@ class KunenaControllerInstall extends JControllerLegacy
 		JFactory::getApplication()->setHeader('Content-Disposition', 'attachment;filename="kunena-install.json"');
 
 		$percent = intval(99 * $this->step / count($this->steps));
+
 		if ($error)
 		{
 			echo json_encode(array('success' => false, 'status' => "{$percent}%", 'error' => $error, 'log' => $log));
@@ -212,6 +216,7 @@ class KunenaControllerInstall extends JControllerLegacy
 
 	/**
 	 * @return mixed|null
+	 *
 	 */
 	function runStep()
 	{
@@ -238,6 +243,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @param $exception
 	 *
 	 * @return boolean
+	 *
 	 */
 	static public function exceptionHandler($exception)
 	{
@@ -253,6 +259,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	 * @param $errline
 	 *
 	 * @return boolean
+	 *
 	 */
 	static public function errorHandler($errno, $errstr, $errfile, $errline)
 	{

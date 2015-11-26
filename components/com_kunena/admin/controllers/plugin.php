@@ -69,6 +69,7 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 * Extended classes can override this if necessary.
 	 *
 	 * @return boolean
+	 *
 	 * @internal param array $data An array of input data.
 	 *
 	 * @since    12.2

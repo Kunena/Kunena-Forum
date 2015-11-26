@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  *
  * @package     Joomla.Administrator
  * @subpackage  com_plugins
- * @since       1.5
+ * @since       K1.5
  */
 class KunenaAdminViewPlugin extends KunenaView
 {
@@ -27,9 +27,10 @@ class KunenaAdminViewPlugin extends KunenaView
 	/**
 	 * Display the view
 	 *
-	 * @param null $tpl
+	 * @param   null  $tpl
 	 *
 	 * @return bool
+	 *
 	 * @throws Exception
 	 */
 	public function displayEdit($tpl = null)
@@ -53,23 +54,17 @@ class KunenaAdminViewPlugin extends KunenaView
 	/**
 	 * Add the page title and toolbar.
 	 *
+	 * @return bool
+	 *
 	 * @since   1.6
 	 */
 	protected function addToolbar()
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
-
-		//$canDo = PluginsHelper::getActions();
-
 		JToolbarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_PLUGIN_MANAGER'), 'pluginsmanager');
 		JToolbarHelper::spacer();
-
-		// If not checked out, can save the item.
-		//if ($canDo->get('core.edit'))
-		//{
 		JToolbarHelper::apply('apply');
 		JToolbarHelper::save('save');
-		//}
 		JToolbarHelper::cancel('cancel', 'JTOOLBAR_CLOSE');
 		JToolbarHelper::spacer();
 

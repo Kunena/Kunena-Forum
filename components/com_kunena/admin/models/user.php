@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,11 +16,10 @@ jimport('joomla.application.component.model');
 /**
  * User Model for Kunena
  *
- * @since 3.0
+ * @since  3.0
  */
 class KunenaAdminModelUser extends KunenaModel
 {
-
 	/**
 	 * Method to auto-populate the model state.
 	 */
@@ -45,6 +44,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return KunenaUser
+	 *
 	 * @throws Exception
 	 */
 	public function getUser()
@@ -58,6 +58,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|KunenaForumTopic[]
+	 *
 	 * @throws Exception
 	 */
 	public function getSubscriptions()
@@ -90,6 +91,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return KunenaForumCategory[]
+	 *
 	 * @throws Exception
 	 */
 	public function getCatsubcriptions()
@@ -103,6 +105,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array
+	 *
 	 * @throws Exception
 	 */
 	public function getIPlist()
@@ -144,6 +147,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return mixed
+	 *
 	 */
 	public function getListmodcats()
 	{
@@ -173,6 +177,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|mixed
+	 *
 	 */
 	public function getListuserranks()
 	{
@@ -202,6 +207,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return mixed
+	 *
 	 */
 	public function getMovecatslist()
 	{
@@ -210,6 +216,7 @@ class KunenaAdminModelUser extends KunenaModel
 
 	/**
 	 * @return array|string
+	 *
 	 */
 	public function getMoveuser()
 	{

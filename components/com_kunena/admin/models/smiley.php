@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -20,7 +20,6 @@ jimport('joomla.application.component.modellist');
  */
 class KunenaAdminModelSmiley extends KunenaModel
 {
-
 	/**
 	 * Method to auto-populate the model state.
 	 */
@@ -44,7 +43,8 @@ class KunenaAdminModelSmiley extends KunenaModel
 	}
 
 	/**
-	 * @return mixed|null
+	 * @return  mixed|null
+	 *
 	 * @throws Exception
 	 */
 	public function getSmiley()
@@ -70,7 +70,8 @@ class KunenaAdminModelSmiley extends KunenaModel
 	}
 
 	/**
-	 * @return mixed
+	 * @return  mixed
+	 *
 	 */
 	public function getSmileyspaths()
 	{

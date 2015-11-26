@@ -1,17 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Trash
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Trash
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewTrash $this
-
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -54,7 +53,9 @@ $count = count($this->purgeitems);
             </fieldset>
           </form>
         </div>
-        <div class="pull-right small"> <?php echo KunenaVersion::getLongVersionHTML(); ?> </div>
+        <div class="pull-right small">
+          <?php echo KunenaVersion::getLongVersionHTML(); ?>
+        </div>
       </div>
     </div>
   </div>

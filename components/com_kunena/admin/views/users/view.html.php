@@ -2,21 +2,24 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Users view for Kunena backend
+ *
+ * @since  K1.X
  */
 class KunenaAdminViewUsers extends KunenaView
 {
 	/**
+	 * DisplayDefault
 	 *
 	 */
 	public function displayDefault()
@@ -45,7 +48,9 @@ class KunenaAdminViewUsers extends KunenaView
 	}
 
 	/**
+	 * setToolbar
 	 *
+	 * @return    string
 	 */
 	protected function setToolbar()
 	{
@@ -140,13 +145,14 @@ class KunenaAdminViewUsers extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * Returns an array of type filter options.
+	 *
+	 * @return     array
 	 */
 	protected function getSortFields()
 	{
 		$sortFields   = array();
 		$sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
-		//$sortFields[] = JHtml::_('select.option', 'name', JText::_('COM_KUNENA_USRL_REALNAME'));
 		$sortFields[] = JHtml::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
 		$sortFields[] = JHtml::_('select.option', 'rank', JText::_('COM_KUNENA_A_RANKS'));
 		$sortFields[] = JHtml::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
@@ -159,7 +165,9 @@ class KunenaAdminViewUsers extends KunenaView
 	}
 
 	/**
-	 * @return array
+	 * Returns an array of type filter options.
+	 *
+	 * @return     array
 	 */
 	protected function getSortDirectionFields()
 	{

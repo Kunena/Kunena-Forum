@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Trash Controller
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminControllerTrash extends KunenaController
 {
@@ -42,7 +42,8 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');
@@ -131,7 +132,8 @@ class KunenaAdminControllerTrash extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');
@@ -145,9 +147,11 @@ class KunenaAdminControllerTrash extends KunenaController
 		}
 
 		$nb_items = 0;
+
 		if ($type == 'messages')
 		{
 			$messages = KunenaForumMessageHelper::getMessages($cid, 'none');
+
 			foreach ($messages as $target)
 			{
 				if ($target->publish(KunenaForum::PUBLISHED))
@@ -163,6 +167,7 @@ class KunenaAdminControllerTrash extends KunenaController
 		elseif ($type == 'topics')
 		{
 			$topics = KunenaForumTopicHelper::getTopics($cid, 'none');
+
 			foreach ($topics as $target)
 			{
 				if ($target->publish(KunenaForum::PUBLISHED))
@@ -196,6 +201,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * Method to redirect user on cancel on purge page
 	 *
 	 * @return void
+	 *
 	 */
 	public function cancel()
 	{

@@ -140,7 +140,7 @@ $user = JFactory::getUser();
 					<?php
 					$i = 0;
 					$k = 0;
-					if($this->pagination->total > 0) :
+					if ($this->pagination->total > 0) :
 					foreach ($this->items as $i => $item) :
 					$canEdit = $user->authorise('core.edit', 'com_plugins');
 					$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;

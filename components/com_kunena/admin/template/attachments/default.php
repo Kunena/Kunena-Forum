@@ -1,22 +1,20 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Attachments
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Attachments
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewAttachments $this
 
-
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-//JHtml::_('formbehavior.chosen', 'select');
 ?>
 
 <script type="text/javascript">
@@ -136,23 +134,24 @@ JHtml::_('dropdown.init');
 				<tbody>
 				<?php
 				$i = 0;
-				if($this->pagination->total > 0) :
-				foreach($this->items as $id => $attachment) :
-				$message = $attachment->getMessage();
-				?>
-					<tr>
-						<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
-						<td><?php echo $attachment->getLayout()->render('thumbnail') . '<br />' . $attachment->getShortName(5, 5) ?></td>
-						<td><?php echo $this->escape($attachment->filetype); ?></td>
-						<td><?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
-						<td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height : '' ?></td>
-						<td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
-						<td><?php echo $this->escape($message->subject); ?></td>
-						<td><?php echo intval($attachment->id); ?></td>
-					</tr>
-				<?php
-				$i++;
-				endforeach;
+
+				if ($this->pagination->total > 0) :
+					foreach($this->items as $id => $attachment) :
+						$message = $attachment->getMessage();
+						?>
+							<tr>
+								<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
+								<td><?php echo $attachment->getLayout()->render('thumbnail') . '<br />' . $attachment->getShortName(5, 5) ?></td>
+								<td><?php echo $this->escape($attachment->filetype); ?></td>
+								<td><?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
+								<td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height : '' ?></td>
+								<td><?php echo $this->escape($message->getAuthor()->getName()); ?></td>
+								<td><?php echo $this->escape($message->subject); ?></td>
+								<td><?php echo intval($attachment->id); ?></td>
+							</tr>
+						<?php
+						$i++;
+					endforeach;
 				else : ?>
 					<tr>
 						<td colspan="10">
@@ -161,8 +160,6 @@ JHtml::_('dropdown.init');
 									<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR');</a> ?>
 									<?php if($this->filterActive || $this->pagination->total > 0) : ?>
 									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-									<?php else : ?>
-										<?php // Currently no default state, might change later. ?>
 									<?php endif; ?>
 								</span>
 							</div>

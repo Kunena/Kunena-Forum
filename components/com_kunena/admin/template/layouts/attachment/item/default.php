@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template.Joomla30
- * @subpackage Layouts.Attachment
+ * @package     Kunena.Administrator.Template.Joomla30
+ * @subpackage  Layouts.Attachment
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 $attachment = $this->attachment;
 ?>
 <a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
+
 	<?php if ($attachment->isImage())
 	{
 		echo '<img src="' . JUri::root() . $attachment->getUrl(true) . ' " height="40" width="40" />';

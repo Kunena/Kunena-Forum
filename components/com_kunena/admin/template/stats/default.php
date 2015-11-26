@@ -1,21 +1,24 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Stats
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Stats
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewStats $this
 
-
 $document = JFactory::getDocument();
 $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.css');
-if (JFactory::getLanguage()->isRTL()) { $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css'); }
+
+if (JFactory::getLanguage()->isRTL())
+{
+	$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+}
 ?>
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">

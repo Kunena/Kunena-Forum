@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,11 +16,10 @@ jimport('joomla.application.component.modellist');
 /**
  * Users Model for Kunena
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminModelUsers extends JModelList
 {
-
 	/**
 	 * Constructor.
 	 *
@@ -135,6 +134,7 @@ class KunenaAdminModelUsers extends JModelList
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return    JDatabaseQuery
+	 *
 	 */
 	protected function getListQuery()
 	{
@@ -225,7 +225,7 @@ class KunenaAdminModelUsers extends JModelList
 
 		if ($filter !== '')
 		{
-			$now = new JDate();
+			$now = new JDate;
 
 			if ($filter)
 			{
@@ -279,7 +279,6 @@ class KunenaAdminModelUsers extends JModelList
 				$query->order('a.username ' . $direction);
 		}
 
-		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
 
@@ -332,9 +331,9 @@ class KunenaAdminModelUsers extends JModelList
 	 * Method to get html list of Kunena categories
 	 *
 	 * @return  string
+	 *
 	 * @since  3.0
 	 */
-	//TODO: Move this to view.
 	public function getModcatslist()
 	{
 		$options = array();

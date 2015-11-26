@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage CPanel
+ * @package     Kunena.Administrator.Template
+ * @subpackage  CPanel
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -24,7 +24,6 @@ defined('_JEXEC') or die();
 		<div class="well well-small">
 			<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_FORUM_TOOLS') ?></div>
 			<hr class="hr-condensed">
-			<?php //TODO: Need to change all alt text eventually to appropriate descriptions when we redo languages. ?>
 			<div id="dashboard-icons" class="btn-group">
 				<?php //TODO: Move report to tools, using old view. ?>
 				<a class="btn" href="index.php?option=com_kunena&view=report">
@@ -63,6 +62,7 @@ defined('_JEXEC') or die();
 					<i class="icon-big icon-remove" alt="<?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?>"></i><br />
 					<span><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?></span>
 				</a>
+
 				<?php if (KunenaForum::isDev()) : ?>
 					<a class="btn" href="index.php?option=com_kunena&view=install">
 						<i class="icon-big icon-tree-2" alt="<?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?>"></i><br />

@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,11 +16,12 @@ jimport('joomla.filesystem.archive');
 /**
  * Kunena Backend Templates Controller
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminControllerTemplates extends KunenaController
 {
 	protected $baseurl = null;
+
 	protected $locked = array('crypsis');
 
 	/**
@@ -598,7 +599,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (count($params))
 		{
-			$registry = new JRegistry();
+			$registry = new JRegistry;
 			$registry->loadArray($params);
 			$txt    = $registry->toString('INI');
 			$return = KunenaFile::write($file, $txt);

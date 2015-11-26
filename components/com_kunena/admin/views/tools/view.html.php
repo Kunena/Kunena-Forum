@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -105,6 +105,15 @@ class KunenaAdminViewTools extends KunenaView
 	function displayCleanupIP()
 	{
 		$this->setToolCleanupIP();
+		$this->display();
+	}
+
+	/**
+	 *
+	 */
+	function displayDiagnostics()
+	{
+		$this->setToolBarDiagnostics();
 		$this->display();
 	}
 
@@ -231,6 +240,19 @@ class KunenaAdminViewTools extends KunenaView
 	 *
 	 */
 	protected function setToolBarUninstall()
+	{
+		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
+		$help_url  = 'http://www.kunena.org/docs/';
+		JToolBarHelper::help('COM_KUNENA', false, $help_url);
+	}
+
+	/**
+	 *
+	 */
+	protected function setToolBarDiagnostics()
 	{
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
 		JToolBarHelper::spacer();

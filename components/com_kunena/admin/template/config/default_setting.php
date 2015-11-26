@@ -1,15 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Users
- * @subpackage Categories
+ * @package     Kunena.Administrator.Users
+ * @subpackage  Categories
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 
-// no direct access
 defined('_JEXEC') or die;
 ?>
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post" name="settingFormModal" id="settingFormModal">

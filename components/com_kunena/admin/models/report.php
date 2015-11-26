@@ -2,21 +2,21 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 jimport('joomla.application.component.model');
 
 /**
- * Reportconfiguration Model for Kunena
+ * Report configuration Model for Kunena
  *
- * @since 2.0
+ * @since  2.0
  **/
 class KunenaAdminModelReport extends KunenaModel
 {
@@ -247,6 +247,7 @@ class KunenaAdminModelReport extends KunenaModel
 	 * Method to get all languages installed into Joomla! and the default one
 	 *
 	 * @return    string
+	 *
 	 * @since    2.0
 	 */
 	protected function _getJoomlaLanguagesInstalled()
@@ -306,6 +307,7 @@ class KunenaAdminModelReport extends KunenaModel
 	 * Method to get the default joomla template.
 	 *
 	 * @return    string
+	 *
 	 * @since    1.6
 	 */
 	protected function _getJoomlaTemplate()
@@ -330,7 +332,7 @@ class KunenaAdminModelReport extends KunenaModel
 			return false;
 		}
 
-		$data               = new stdClass();
+		$data               = new stdClass;
 		$data->name         = (string) $xml->name;
 		$data->type         = (string) $xml->attributes()->type;
 		$data->creationdate = (string) $xml->creationDate;
@@ -364,6 +366,7 @@ class KunenaAdminModelReport extends KunenaModel
 	 * Method to get all joomla menu details about kunena.
 	 *
 	 * @return    string
+	 *
 	 * @since    1.6
 	 */
 	protected function _getJoomlaMenuDetails()
@@ -402,6 +405,7 @@ class KunenaAdminModelReport extends KunenaModel
 	 * Method to check the tables collation.
 	 *
 	 * @return    string
+	 *
 	 * @since    1.6
 	 */
 	protected function _getTablesCollation()
@@ -469,6 +473,7 @@ class KunenaAdminModelReport extends KunenaModel
 	 * @param   string $name
 	 *
 	 * @return    string
+	 *
 	 * @since    1.6
 	 */
 	protected function getExtensionVersion($extension, $name)
@@ -495,7 +500,7 @@ class KunenaAdminModelReport extends KunenaModel
 	/**
 	 * Tries to find the extension manifest file and returns version
 	 *
-	 * @param   $path $path    Path to extension directory
+	 * @param   $path  $path    Path to extension directory
 	 *
 	 * @return  string  Version number
 	 */
@@ -537,6 +542,7 @@ class KunenaAdminModelReport extends KunenaModel
 
 	/**
 	 * @return array
+	 *
 	 */
 	public function getIntegrationSettings()
 	{
@@ -552,6 +558,7 @@ class KunenaAdminModelReport extends KunenaModel
 				$pluginParams   = new JRegistry($plugin->params);
 				$params         = $pluginParams->toArray();
 				$plugin_final[] = '[b]' . $desc . '[/b] Enabled: ';
+
 				foreach ($params as $param => $value)
 				{
 					$plugin_final[] = "{$param}={$value} ";

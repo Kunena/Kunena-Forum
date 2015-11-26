@@ -14,15 +14,15 @@ defined('_JEXEC') or die;
  *
  * @package     Joomla.Administrator
  * @subpackage  com_plugins
- * @since       1.5
+ *
+ * @since       K1.5
  */
 class KunenaAdminViewPlugins extends KunenaView
 {
-
 	/**
 	 * Display the view
 	 *
-	 * @param null $tpl
+	 * @param   null  $tpl
 	 *
 	 * @return mixed
 	 */
@@ -51,7 +51,9 @@ class KunenaAdminViewPlugins extends KunenaView
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @since   1.6
+	 * @since   K1.6
+	 *
+	 * @return    string    The HTML code for the select tag
 	 */
 	protected function setToolbar()
 	{
@@ -102,6 +104,13 @@ class KunenaAdminViewPlugins extends KunenaView
 		return $sortFields;
 	}
 
+	/**
+	 * Returns an array of fields the table can be sorted by
+	 *
+	 * @return  array  Array containing the field name to sort by as the key and display text as value
+	 *
+	 * @since   3.0
+	 */
 	protected function getSortDirectionFields()
 	{
 		$sortDirection = array();

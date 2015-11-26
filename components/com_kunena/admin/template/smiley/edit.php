@@ -1,23 +1,23 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Smilies
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Smilies
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewSmiley $this
 
-
 $iconPath = json_encode(JUri::root(true) . '/');
 $this->document->addScriptDeclaration(
 	"function update_smiley(newimage) {
 	document.smiley_image.src = {$iconPath} + newimage;
-}");
+}"
+);
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');

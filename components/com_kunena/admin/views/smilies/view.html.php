@@ -2,21 +2,24 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * About view for Kunena smilies backend
+ *
+ * @since  K1.X
  */
 class KunenaAdminViewSmilies extends KunenaView
 {
 	/**
+	 *
 	 * @param   null $tpl
 	 *
 	 * @return mixed
@@ -52,13 +55,9 @@ class KunenaAdminViewSmilies extends KunenaView
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
-
-		//TODO: Implement flag to hide options, personal preference option.
-		//if($this->filterActive || $this->pagination->total > 0) {
 		JToolBarHelper::editList();
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
-		//}
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Smiley_management';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);

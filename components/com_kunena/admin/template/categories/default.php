@@ -1,24 +1,23 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template.Joomla30
- * @subpackage Categories
+ * @package     Kunena.Administrator.Template.Joomla30
+ * @subpackage  Categories
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewCategories $this
 
-
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-//JHtml::_('formbehavior.chosen', '');
 
-if ($this->saveOrder) {
+if ($this->saveOrder)
+{
 	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', $this->listDirection, $this->saveOrderingUrl, false, true);
 }
 
@@ -198,7 +197,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				$img_no = '<i class="icon-cancel"></i>';
 				$img_yes = '<i class="icon-checkmark"></i>';
 				$i = 0;
-				if($this->pagination->total > 0) :
+
+				if ($this->pagination->total > 0) :
 				foreach($this->categories as $item) :
 				$orderkey   = array_search($item->id, $this->ordering[$item->parent_id]);
 				$canEdit    = $this->me->isAdmin($item);
@@ -207,15 +207,20 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				$canChange  = $canEdit && $canCheckin;
 
 					// Get the parents of item for sorting
-					if ($item->level > 0) {
+					if ($item->level > 0)
+					{
 						$parentsStr = "";
 						$_currentParentId = $item->parent_id;
 						$parentsStr = " " . $_currentParentId;
-						for ($i2 = 0; $i2 < $item->level; $i2++) {
-							foreach ($this->ordering as $k => $v) {
-							$v = implode("-", $v);
-							$v = "-" . $v . "-";
-								if (strpos($v, "-" . $_currentParentId . "-") !== false) {
+						for ($i2 = 0; $i2 < $item->level; $i2++)
+						{
+							foreach ($this->ordering as $k => $v)
+							{
+								$v = implode("-", $v);
+								$v = "-" . $v . "-";
+
+								if (strpos($v, "-" . $_currentParentId . "-") !== false)
+								{
 									$parentsStr .= " " . $k;
 									$_currentParentId = $k;
 									break;

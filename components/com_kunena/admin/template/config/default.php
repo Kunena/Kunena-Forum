@@ -2,23 +2,21 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator.Template
- * @subpackage    Config
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Config
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewConfig $this
 
-
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('behavior.tabstate');
-
 ?>
 
 <div id="kunena" class="admin override">
@@ -801,10 +799,9 @@ JHtml::_('behavior.tabstate');
 												</td>
 												<td>
 													<?php
-													echo JText::sprintf(
-              'COM_KUNENA_A_IMGSIZE_DESC',
+													echo JText::sprintf('COM_KUNENA_A_IMGSIZE_DESC',
 														ini_get('post_max_size'), ini_get('upload_max_filesize'),
-			 function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
+														 function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
 													?>
 												</td>
 											</tr>
@@ -881,10 +878,9 @@ JHtml::_('behavior.tabstate');
 												</td>
 												<td>
 													<?php
-													echo JText::sprintf(
-			  'COM_KUNENA_A_FILESIZE_DESC',
+													echo JText::sprintf('COM_KUNENA_A_FILESIZE_DESC',
 														ini_get('post_max_size'), ini_get('upload_max_filesize'),
-			 function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
+															function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
 													?>
 												</td>
 											</tr>

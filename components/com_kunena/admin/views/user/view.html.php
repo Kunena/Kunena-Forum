@@ -2,17 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * User view for Kunena backend
+ *
+ * @since  K1.0
  */
 class KunenaAdminViewUser extends KunenaView
 {
@@ -31,18 +33,18 @@ class KunenaAdminViewUser extends KunenaView
 		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) ? true : false;
 		$this->avatar     = $avatarint->getLink($this->user, '', 'users');
 
-		// make the select list for the moderator flag
+		// Make the select list for the moderator flag
 		$yesnoMod [] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
 		$yesnoMod [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));
 
-		// build the html select list
+		// Build the html select list
 		$this->selectMod = JHtml::_('select.genericlist', $yesnoMod, 'moderator', 'class="inputbox" size="2"', 'value', 'text', $this->user->moderator);
 
-		// make the select list for the moderator flag
+		// Make the select list for the moderator flag
 		$yesnoOrder [] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_USER_ORDER_ASC'));
 		$yesnoOrder [] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_USER_ORDER_DESC'));
 
-		// build the html select list
+		// Build the html select list
 		$this->selectOrder = JHtml::_('select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->user->ordering);
 		$this->modCats     = $this->get('listmodcats');
 		$this->selectRank  = $this->get('listuserranks');

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Users
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Users
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -51,7 +51,8 @@ defined('_JEXEC') or die();
 								<strong><?php echo JText::_('COM_KUNENA_MOVEUSERMESSAGES_USERS_CURRENT'); ?></strong>
 								<ol>
 								<?php
-								foreach($this->users as $user) {
+								foreach($this->users as $user)
+								{
 									echo '<li>' . $this->escape($user->username) . ' (' . JText::_('COM_KUNENA_TRASH_AUTHOR_USERID') . ' ' . $this->escape($user->id) . ')</li> ';
 								}
 								?>

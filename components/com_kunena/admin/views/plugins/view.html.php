@@ -21,6 +21,10 @@ class KunenaAdminViewPlugins extends KunenaView
 
 	/**
 	 * Display the view
+	 *
+	 * @param null $tpl
+	 *
+	 * @return mixed
 	 */
 	function displayDefault($tpl = null)
 	{

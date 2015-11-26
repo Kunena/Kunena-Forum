@@ -211,8 +211,6 @@ JHtml::_('dropdown.init');
 						<td colspan="10">
 							<div class="well center filter-state">
 								<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-									<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
-?>
 									<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
 								</span>
 							</div>

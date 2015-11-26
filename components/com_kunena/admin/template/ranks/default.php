@@ -181,15 +181,13 @@ JHtml::_('behavior.tabstate');
 									<tr>
 										<td colspan="10">
 											<div class="well center filter-state">
-									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-										<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
- ?>
-										<?php if ($this->filterActive) : ?>
-											<button class="btn" type="button" onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-										<?php else : ?>
-											<button class="btn btn-success" type="button" onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></button>
-										<?php endif; ?>
-									</span>
+												<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
+													<?php if ($this->filterActive) : ?>
+														<button class="btn" type="button" onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
+													<?php else : ?>
+														<button class="btn btn-success" type="button" onclick="Joomla.submitbutton('add');"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></button>
+													<?php endif; ?>
+												</span>
 											</div>
 										</td>
 									</tr>

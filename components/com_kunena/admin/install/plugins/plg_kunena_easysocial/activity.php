@@ -64,10 +64,12 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * After a person replies a topic
 	 *
-	 * @since	1.3
-	 * @access	public
-	 * @param	string
-	 * @return
+	 * @since     1.3
+	 * @access    public
+	 *
+	 * @param $message
+	 *
+	 * @internal  param $string
 	 */
 	public function onAfterReply($message)
 	{
@@ -118,10 +120,13 @@ class KunenaActivityEasySocial extends KunenaActivity
 	/**
 	 * Get a list of subscribers for a thread
 	 *
-	 * @since	5.0
-	 * @access	public
-	 * @param	string
-	 * @return
+	 * @since     5.0
+	 * @access    public
+	 *
+	 * @param $message
+	 *
+	 * @return array|bool
+	 * @internal  param $string
 	 */
 	public function getSubscribers($message)
 	{

@@ -68,6 +68,11 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @see JModelForm::getForm()
+	 *
+	 * @param array $data
+	 * @param bool  $loadData
+	 *
+	 * @return bool|mixed
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{

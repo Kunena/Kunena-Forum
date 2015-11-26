@@ -65,7 +65,6 @@ defined('_JEXEC') or die();
 				<?php endforeach ?>
 			</table>
 		</div>
-	</div>
 
 	<div class="pull-right small">
 		<?php echo KunenaVersion::getLongVersionHTML(); ?>

@@ -70,7 +70,7 @@
 				</field>
 				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
 				<field name="cachemode" type="hidden" default="itemid">
-					<option value="itemid"></option>
+					<option value="itemid">itemid</option>
 				</field>
 			</fieldset>
 		</fields>

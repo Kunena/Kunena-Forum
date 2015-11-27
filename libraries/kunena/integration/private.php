@@ -82,24 +82,22 @@ class KunenaPrivate
 	public function shownewIcon($userid, $class='btn btn-small', $icon='icon icon-comments-2')
 	{
 		$my = JFactory::getUser();
+		$url = $this->getURL($userid);
+		$onclick = $this->getOnClick($userid);
+
+		// No PMS enabled or PM not allowed
+		if (empty($url) || $my->id == 0 || $userid == 0)
+		{
+			return '';
+		}
 
 		// Don't send messages from/to anonymous and to yourself
-		if ($my->id == 0 || $userid == 0 || $userid == $my->id)
+		if ($userid == $my->id)
 		{
 			$this->pmCount = $this->getUnreadCount($my->id);
 			$text = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
 			$url = $this->getInboxURL();
 			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
-		}
-
-		$url = $this->getURL($userid);
-
-		$onclick = $this->getOnClick($userid);
-
-		// No PMS enabled or PM not allowed
-		if (empty($url))
-		{
-			return '';
 		}
 
 		// We should offer the user a PM link

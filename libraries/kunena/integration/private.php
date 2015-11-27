@@ -86,7 +86,10 @@ class KunenaPrivate
 		// Don't send messages from/to anonymous and to yourself
 		if ($my->id == 0 || $userid == 0 || $userid == $my->id)
 		{
-			return '';
+			$this->pmCount = $this->getUnreadCount($my->id);
+			$text = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
+			$url = $this->getInboxURL();
+			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
 		}
 
 		$url = $this->getURL($userid);

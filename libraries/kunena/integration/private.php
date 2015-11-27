@@ -79,6 +79,30 @@ class KunenaPrivate
 		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="kicon-profile kicon-profile-pm" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '"></span></a>';
 	}
 
+	public function shownewIcon($userid, $class='btn btn-small', $icon='icon icon-comments-2')
+	{
+		$my = JFactory::getUser();
+
+		// Don't send messages from/to anonymous and to yourself
+		if ($my->id == 0 || $userid == 0 || $userid == $my->id)
+		{
+			return '';
+		}
+
+		$url = $this->getURL($userid);
+
+		$onclick = $this->getOnClick($userid);
+
+		// No PMS enabled or PM not allowed
+		if (empty($url))
+		{
+			return '';
+		}
+
+		// We should offer the user a PM link
+		return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
+	}
+
 	public function getInboxLink($text)
 	{
 		return '';

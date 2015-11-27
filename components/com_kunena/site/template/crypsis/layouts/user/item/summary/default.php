@@ -158,29 +158,8 @@ if ($this->config->showuserstats)
 							<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile); ?>
 						</div>
 						<div class="span3 pull-right">
-							<?php
-							if ($profile->userid == $me->userid)
-							{
-								$this->pmCount = $private->getUnreadCount($me->userid);
-								$this->pmLink  = $private->getInboxLink($this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX'));
-							}
-							else
-							{
-								$this->pmLink = $private->shownewIcon($profile->userid);
-							}
-							?>
 							<?php if ($private) : ?>
-
-								<?php
-									if ($profile->userid == $me->userid)
-									{
-										echo '<button class="btn btn-small>' . $this->pmLink . '</button>';
-									}
-									else
-									{
-										echo $this->pmLink;
-									}
-								?>
+								<?php echo $private->shownewIcon($profile->userid); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
 								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="icon-mail"></i></a>

@@ -59,6 +59,13 @@
 	min-width: 72px;
 	overflow: hidden;
 	background-color: transparent;
+	border: 1px solid #e5e5e5 ;
+	outline: 0 !important;
+}
+#kunena.admin.override #dashboard-icons .btn:focus,
+#kunena.admin.override #dashboard-icons .btn:hover,
+#kunena.admin.override #dashboard-icons .btn:active {
+	outline: 0 !important;
 }
 
 #kunena.admin.override #dashboard-icons .btn:hover {
@@ -78,7 +85,7 @@
 	padding: 0 6px;
 	vertical-align: inherit;
 	font-size: inherit;
-	line-height: 150%
+	line-height: 150%;
 }
 
 /* Fix span1 width isis */

@@ -69,16 +69,45 @@ class KunenaViewCredits extends KunenaView
 	 */
 	protected function _prepareDocument()
 	{
-		$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
-		$this->setTitle($title, true);
+		$app                = JFactory::getApplication();
+		$menu_item          = $app->getMenu()->getActive(); // get the active item
+		$params             = $menu_item->params; // get the params
+		$params_title       = $params->get('page_title');
+		$params_keywords    = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
 
-		$keywords = 'kunena forum, kunena, forum, joomla, joomla extension, joomla component';
-		$this->setKeywords($keywords);
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
+			$this->setTitle($title, true);
+		}
 
-		// TODO: translate at some point...
-		$description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. "
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$keywords = 'kunena forum, kunena, forum, joomla, joomla extension, joomla component';
+			$this->setKeywords($keywords);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. "
 			. "For more information, please visit www.kunena.org.';
-		$this->setDescription($description);
+			$this->setDescription($description);
+		}
 	}
-
 }

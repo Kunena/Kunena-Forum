@@ -1025,19 +1025,6 @@ JHtml::_('behavior.tabstate');
 												</td>
 												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
 											</tr>
-											<?php /*
-										// TODO: If you uncomment this feature, please remove forced disable from the KunenaConfig class.
-										<tr>
-											<td><?php echo JText::_('COM_KUNENA_A_KEYWORDS') ?></td>
-											<td><?php echo $this->lists ['keywords'] ?></td>
-											<td><?php echo JText::_('COM_KUNENA_A_KEYWORDS_DESC') ?></td>
-										</tr>
-										<tr>
-											<td><?php echo JText::_('COM_KUNENA_A_USER_KEYWORDS') ?></td>
-											<td><?php echo $this->lists ['userkeywords'] ?></td>
-											<td><?php echo JText::_('COM_KUNENA_A_USER_KEYWORDS_DESC') ?></td>
-										</tr>
-										*/ ?>
 											</tbody>
 										</table>
 									</fieldset>

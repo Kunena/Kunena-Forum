@@ -906,18 +906,6 @@ class KunenaConfig extends JObject
 	public $captcha_post_limit = 0;
 
 	/**
-	 * @var    integer  Keyword; select, boolean
-	 * @since  2.0.0
-	 */
-	public $keywords = 1;
-
-	/**
-	 * @var    integer  User keywords; select, boolean
-	 * @since  2.0.0
-	 */
-	public $userkeywords = 0;
-
-	/**
 	 * @var    string  Image upload; select, selection
 	 * @since  2.0.0
 	 */
@@ -1174,10 +1162,6 @@ class KunenaConfig extends JObject
 	public function bind($properties)
 	{
 		$this->setProperties($properties);
-
-		// Disable some experimental features
-		$this->keywords = 0;
-		$this->userkeywords = 0;
 	}
 
 	/**

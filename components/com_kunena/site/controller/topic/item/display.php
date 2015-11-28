@@ -103,11 +103,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			if ($this->message->thread != $this->topic->id
 				|| ($this->topic->category_id != $this->category->id && !isset($channels[$this->topic->category_id]))
-				|| ($mesid && $this->layout != 'threaded')
-)
+				|| ($mesid && $this->layout != 'threaded'))
 			{
-				while (@ob_end_clean()) {}
-
 				$this->app->redirect($this->message->getUrl(null, false));
 			}
 		}
@@ -123,7 +120,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		$this->messages = $finder
-			->order('time', $this->me->getMessageOrdering() == 'asc' ? 1 : -1)
+			->order('time', $this->me->getMessageOrdering() == 'asc' ? 1 : - 1)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();

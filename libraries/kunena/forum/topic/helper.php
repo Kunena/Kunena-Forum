@@ -169,22 +169,6 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param mixed $ids
-	 * @param mixed $user
-	 *
-	 * @return array
-	 */
-	static public function getKeywords($ids = false, $user = false)
-	{
-		if ($ids === false)
-		{
-			$ids = array_keys(self::$_instances);
-		}
-
-		return KunenaKeywordHelper::getByTopics($ids, $user);
-	}
-
-	/**
 	 * @param mixed $categories
 	 * @param int   $limitstart
 	 * @param int   $limit

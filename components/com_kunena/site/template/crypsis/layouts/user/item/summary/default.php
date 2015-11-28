@@ -18,8 +18,7 @@ $avatar = $profile->getAvatarImage('img-polaroid', 'post');
 $banInfo = $this->config->showbannedreason
 	? KunenaUserBan::getInstanceByUserid($profile->userid)
 	: null;
-$private = $profile->getPrivateMsgURL();
-$privateLabel = $profile->getPrivateMsgLabel();
+$private = KunenaFactory::getPrivateMessaging();
 $websiteURL = $profile->getWebsiteURL();
 $websiteName = $profile->getWebsiteName();
 $personalText = $profile->getPersonalText();
@@ -159,11 +158,8 @@ if ($this->config->showuserstats)
 							<?php echo $this->subLayout('User/Item/Social')->set('profile', $profile); ?>
 						</div>
 						<div class="span3 pull-right">
-							<?php if (!empty($private)) : ?>
-								<a class="btn btn-small" href="<?php echo $private; ?>">
-									<i class="icon-comments-2"></i>
-									<?php echo $privateLabel ?>
-								</a>
+							<?php if ($private) : ?>
+								<?php echo $private->shownewIcon($profile->userid); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
 								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="icon-mail"></i></a>

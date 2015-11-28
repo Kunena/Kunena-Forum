@@ -564,9 +564,6 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
-		// Update Tags
-		$this->updateTags($message->thread, $fields['tags'], $fields['mytags']);
-
 		$message->sendNotification();
 
 		//now try adding any new subscriptions if asked for by the poster
@@ -1715,26 +1712,6 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$this->setRedirect($target->getUrl($this->return, false));
-	}
-
-	/**
-	 * @param $topic
-	 * @param $globalTags
-	 * @param $userTags
-	 */
-	protected function updateTags($topic, $globalTags, $userTags)
-	{
-		$topic = KunenaForumTopicHelper::get($topic);
-
-		if ($userTags !== null)
-		{
-			$topic->setKeywords($userTags, $this->me->userid);
-		}
-
-		if ($globalTags !== null)
-		{
-			$topic->setKeywords($globalTags, false);
-		}
 	}
 
 	/**

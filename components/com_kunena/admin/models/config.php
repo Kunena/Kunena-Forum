@@ -309,10 +309,6 @@ class KunenaAdminModelConfig extends KunenaModel
 		$email_recipient_privacy[]         = JHtml::_('select.option', 'bcc', JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_BCC'));
 		$lists ['email_recipient_privacy'] = JHtml::_('select.genericlist', $email_recipient_privacy, 'cfg_email_recipient_privacy', 'class="inputbox" size="1"', 'value', 'text', $this->config->email_recipient_privacy);
 
-		// Added new options into Kunena 2.0.0
-		$lists ['keywords']     = JHtml::_('select.genericlist', $yesno, 'cfg_keywords', 'class="inputbox" size="1"', 'value', 'text', $this->config->keywords);
-		$lists ['userkeywords'] = JHtml::_('select.genericlist', $yesno, 'cfg_userkeywords', 'class="inputbox" size="1"', 'value', 'text', $this->config->userkeywords);
-
 		$uploads                = array();
 		$uploads[]              = JHtml::_('select.option', 'everybody', JText::_('COM_KUNENA_EVERYBODY'));
 		$uploads[]              = JHtml::_('select.option', 'registered', JText::_('COM_KUNENA_REGISTERED_USERS'));

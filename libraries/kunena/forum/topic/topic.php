@@ -53,7 +53,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	protected $_hold = 1;
 	protected $_posts = 0;
 	protected $_pagination = null;
-	protected $_keywords = null;
 	protected static $actions  = array(
 			'none' => array(),
 			'read' => array('Read'),
@@ -259,47 +258,6 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		return $this->_keywords[$user];
-	}
-
-	/**
-	 * @param   mixed $keywords
-	 * @param   mixed $user
-	 * @param   null|string $glue
-	 *
-	 * @return boolean
-	 */
-	public function setKeywords($keywords, $user = null, $glue = null)
-	{
-		$config = KunenaFactory::getConfig();
-
-		if ($user !== false)
-		{
-			$user = KunenaUserHelper::get($user);
-
-			// Guests or non-existing cannot have personal keywords
-			if (!$config->userkeywords || !$user->exists())
-			{
-				return false;
-			}
-
-			$user = $user->userid;
-		}
-		elseif (!$config->keywords)
-		{
-			return false;
-		}
-
-		$user = (int) $user;
-		$keywords = KunenaKeywordHelper::setTopicKeywords($keywords, $this->id, $user);
-
-		if ($keywords === false)
-		{
-			return false;
-		}
-
-		$this->_keywords[$user] = $keywords;
-
-		return true;
 	}
 
 	/**

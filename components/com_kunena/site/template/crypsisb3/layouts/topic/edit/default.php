@@ -217,25 +217,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 
-						<?php if ($this->config->keywords && $this->me->isModerator($this->topic->getCategory())) : ?>
-						<div class="control-group">
-							<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?></label>
-
-							<div class="controls">
-								<input type="text" class="kinputbox postinput" name="tags" id="tags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" />
-							</div>
-						</div>
-						<?php endif; ?>
-
-						<?php if ($this->config->userkeywords && $this->me->userid) : ?>
-						<div class="control-group">
-							<label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?></label>
-							<div class="controls">
-								<input type="text" class="kinputbox postinput" name="mytags" id="mytags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>" />
-							</div>
-						</div>
-						<?php endif; ?>
-
 						<?php if ($this->canSubscribe) : ?>
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>

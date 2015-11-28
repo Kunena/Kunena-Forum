@@ -26,6 +26,8 @@ class KunenaAdminViewCpanel extends KunenaView
 		$help_url  = 'http://www.kunena.org/docs/Category:Installation';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'dashboard');
+		JToolBarHelper::modal('kunena_changelog', 'icon icon-info', JText::_('Changelog'));
+		JToolBarHelper::link('http://www.kunena.org/forum', JText::_('Get Support'));
 
 		if (JFactory::getUser()->authorise('core.admin', 'com_kunena'))
 		{

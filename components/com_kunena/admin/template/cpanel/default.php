@@ -10,7 +10,6 @@
  **/
 defined('_JEXEC') or die();
 ?>
-
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
@@ -113,6 +112,18 @@ defined('_JEXEC') or die();
 					</div>
 				</div>
 		</section>
+		<div tabindex="-1" class="modal hide fade" id="kunena_changelog" role="dialog">
+			<div class="modal-header">
+				<button class="close" type="button" data-dismiss="modal">×</button>
+				<h3>Changelog</h3>
+			</div>
+			<div class="modal-body">
+				<iframe src="http://www.jellekoksolutions.nl/docs2/en/basics/changelog" width="100%" height="400px" frameborder="0"></iframe>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal">Close</button>
+			</div>
+		</div>
 		<div class="pull-right small">
 			<?php echo KunenaVersion::getLongVersionHTML(); ?>
 		</div>

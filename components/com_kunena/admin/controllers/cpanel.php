@@ -57,4 +57,83 @@ class KunenaAdminControllerCpanel extends KunenaController
 
 		parent::display($cachable, $urlparams);
 	}
+
+	/**
+	 * Display Kunena updates on dashboard
+	 *
+	 *
+	 * @return array|null
+	 */
+	public static function onGetIcons()
+	{
+		$updateInfo = null;
+
+		if (KunenaForum::installed() && JFactory::getUser()->authorise('core.manage', 'com_installer'))
+		{
+			$updateSite = 'http://update.kunena.org/%';
+			$db         = JFactory::getDbo();
+
+			$query = $db->getQuery(true)
+					->select('*')
+					->from($db->qn('#__updates'))
+					->where($db->qn('extension_id') . ' > 0')
+					->where($db->qn('detailsurl') . ' LIKE ' . $db->q($updateSite));
+			$db->setQuery($query);
+			$list = (array) $db->loadObjectList();
+
+			if ($list)
+			{
+				$updateInfo          = new stdClass;
+				$updateInfo->addons  = 0;
+				$updateInfo->version = 0;
+
+				foreach ($list as $item)
+				{
+					if ($item->element == 'pkg_kunena')
+					{
+						$updateInfo->version = $item->version;
+					}
+					else
+					{
+						$updateInfo->addons++;
+					}
+				}
+			}
+			else
+			{
+				$query = $db->getQuery(true)
+						->select('update_site_id')
+						->from($db->qn('#__update_sites'))
+						->where($db->qn('enabled') . ' = 0')
+						->where($db->qn('location') . ' LIKE ' . $db->q($updateSite));
+				$db->setQuery($query);
+				$updateInfo = !$db->loadResult();
+			}
+		}
+		
+		if (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<'))
+		{
+			// Has updates
+			JFactory::getApplication()->enqueueMessage(JText::_('Kunena Update Found.  <a class="btn btn-small btn-info" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');
+			$icon = 'media/kunena/images/icons/icon-48-kupdate-update-white.png';
+			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
+		}
+		elseif (!empty($updateInfo->addons))
+		{
+			// Has updated add-ons
+			JFactory::getApplication()->enqueueMessage(JText::_('Kunena Update Found.  <a class="btn btn-small btn-info" href="index.php?option=com_installer&view=update&filter_search=kunena"> Update Now</a><br/> Please backup before updating.'), 'Notice');
+			$icon = 'media/kunena/images/icons/icon-48-kupdate-update-white.png';
+			$link = 'index.php?option=com_installer&view=update&filter_search=kunena';
+		}
+		else
+		{
+			// Already in the latest release
+			$icon = 'media/kunena/images/icons/icon-48-kupdate-good-white.png';
+			$link = '#';
+
+		}
+
+		return '<a href="' . $link . '"><img src="' . JUri::root() . $icon . '"/></a>';
+
+	}
 }

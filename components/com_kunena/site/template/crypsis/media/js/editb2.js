@@ -135,42 +135,40 @@ jQuery(document).ready(function () {
 
 				jQuery('#iconset_inject').append(div_object);
 
-				jQuery.each(
-					data, function (index, value) {
-						if (value.type != 'system') {
-							if (value.id == 0) {
-								var input = jQuery('<input>', {
-									type   : 'radio',
-									id  : 'radio' + value.id,
-									checked: 'checked',
-									name   : 'topic_emoticon',
-									value  : value.id
-								});
-							}
-							else {
-								var input = jQuery('<input>', {
-									type : 'radio',
-									id  : 'radio' + value.id,
-									name: 'topic_emoticon',
-									value: value.id
-								});
-							}
-
-							var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
-							var label = jQuery('<label>', {
-								'class': 'radio inline',
-								'for'  : 'radio' + value.id
-							}).append(jQuery('<span>', {
-								'class' : 'icon icon-topic icon-' + value.b2,
-								'border': '0',
-								'al'    : ''
-							}));
-							span_object.append(label);
-
-							jQuery('#iconset_topic_list').append(span_object);
+				jQuery.each(data, function (index, value) {
+					if (value.type != 'system') {
+						if (value.id == 0) {
+							var input = jQuery('<input>', {
+								type   : 'radio',
+								id     : 'radio' + value.id,
+								checked: 'checked',
+								name   : 'topic_emoticon',
+								value  : value.id
+							});
 						}
+						else {
+							var input = jQuery('<input>', {
+								type : 'radio',
+								id   : 'radio' + value.id,
+								name : 'topic_emoticon',
+								value: value.id
+							});
+						}
+
+						var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
+						var label = jQuery('<label>', {
+							'class': 'radio inline',
+							'for'  : 'radio' + value.id
+						}).append(jQuery('<span>', {
+							'class' : 'icon icon-topic icon-' + value.b2,
+							'border': '0',
+							'al'    : ''
+						}));
+						span_object.append(label);
+
+						jQuery('#iconset_topic_list').append(span_object);
 					}
-				);
+				});
 			}
 		});
 	});

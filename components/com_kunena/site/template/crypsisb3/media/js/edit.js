@@ -169,8 +169,10 @@ jQuery(document).ready(function () {
 		});
 	});
 
-	// Load datepicker for poll
-	jQuery('.input-append.date').datepicker({
-		orientation: "top auto"
-	});
+	if (jQuery.fn.datepicker != undefined) {
+		// Load datepicker for poll
+		jQuery('.input-append.date').datepicker({
+			orientation: "top auto"
+		});
+	}
 });

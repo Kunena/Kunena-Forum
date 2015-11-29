@@ -110,7 +110,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 				$updateInfo = !$db->loadResult();
 			}
 		}
-		
+
 		if (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<'))
 		{
 			// Has updates

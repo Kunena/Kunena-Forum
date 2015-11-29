@@ -287,6 +287,24 @@
 						start="[tweet]"
 						end="[/tweet]"/>
 	</button>
+	<button tag="soundcloud"
+	        name="soundcloud"
+	        title="COM_KUNENA_LIB_BBCODE_SOUNDCLOUD"
+	        alt="COM_KUNENA_LIB_BBCODE_SOUNDCLOUD_ALT">
+		<wrap-selection class="soundcloudbutton"
+		                name="soundcloud"
+		                start="[soundcloud]"
+		                end="[/soundcloud]"/>
+	</button>
+	<button tag="instagram"
+	        name="instagram"
+	        title="COM_KUNENA_LIB_BBCODE_INSTAGRAM"
+	        alt="COM_KUNENA_LIB_BBCODE_INSTAGRAM_ALT">
+		<wrap-selection class="instagrambutton"
+		                name="instagram"
+		                start="[instagram]"
+		                end="[/instagram]"/>
+	</button>
 	<separator name="external"/>
 	<button tag="emoticons"
 			name="emoticons"

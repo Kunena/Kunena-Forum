@@ -1009,6 +1009,24 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			'content' => BBCODE_REQUIRED,
 			'plain_content' => array(),
 		),
+
+		'soundcloud' => array(
+			'mode'     => BBCODE_MODE_LIBRARY,
+			'method'   => 'DoSoundcloud',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'class'    => 'block',
+			'allow'    => array('colortext' => '/^[\w\d.-_]*$/'),
+			'content'  => BBCODE_PROHIBIT,
+		),
+
+		'instagram' => array(
+			'mode'     => BBCODE_MODE_LIBRARY,
+			'method'   => 'DoInstagram',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'class'    => 'block',
+			'allow'    => array('colortext' => '/^[\w\d.-_]*$/'),
+			'content'  => BBCODE_PROHIBIT,
+		),
 	);
 
 	/**
@@ -2328,17 +2346,21 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$layout = KunenaLayout::factory('BBCode/Attachment')
 			->set('attachment', $attachment)
 			->set('canLink', $bbcode->autolink_disable == 0);
+		$config = KunenaConfig::getInstance();
+		$bbcode->parent->inline_attachments[$attachment->id] = $attachment;
 
 		if (!$attachment->exists() || !$attachment->getPath())
 		{
 			return (string) $layout->setLayout('deleted');
 		}
+		elseif (!$attachment->isAuthorised() && !$config->showimgforguest && $attachment->id != '0')
+		{
+			return null;
+		}
 		elseif (!$attachment->isAuthorised())
 		{
 			return (string) $layout->setLayout('unauthorised');
 		}
-
-		$bbcode->parent->inline_attachments[$attachment->id] = $attachment;
 
 		if ($displayImage && $attachment->isImage())
 		{
@@ -2874,6 +2896,46 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
 
 		return $ebay_item;
+	}
+
+	/**
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
+	public function DoSoundcloud($bbcode, $action, $name, $default, $params, $content)
+	{
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
+
+		$config = KunenaFactory::getConfig();
+
+
+		$content = strip_tags($content);
+
+		return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+	}
+
+	/**
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
+	public function DoInstagram($bbcode, $action, $name, $default, $params, $content)
+	{
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
+
+		$config = KunenaFactory::getConfig();
+
+		$content = strip_tags($content);
+
+
+		return '<iframe src="//instagram.com/p/'. $content .'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
 	}
 }
 

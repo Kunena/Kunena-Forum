@@ -439,4 +439,12 @@ jQuery(document).ready(
 	if (!kunena_showdividertag) {
 		jQuery('.markItUpSeparator').remove();
 	}
+
+	if (!kunena_showinstagramtag) {
+		jQuery('.instagrambutton').remove();
+	}
+
+	if (!kunena_showsoundcloudtag) {
+		jQuery('.soundcloudbutton').remove();
+	}
 });

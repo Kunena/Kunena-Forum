@@ -183,5 +183,23 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 		{
 			$this->addScriptDeclaration("kunena_showdividertag=0;");
 		}
+
+		if ($templatesettings->get('instagram'))
+		{
+			$this->addScriptDeclaration("kunena_showinstagramtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showinstagramtag=0;");
+		}
+
+		if ($templatesettings->get('soundcloud'))
+		{
+			$this->addScriptDeclaration("kunena_showsoundcloudtag=1;");
+		}
+		else
+		{
+			$this->addScriptDeclaration("kunena_showsoundcloudtag=0;");
+		}
 	}
 }

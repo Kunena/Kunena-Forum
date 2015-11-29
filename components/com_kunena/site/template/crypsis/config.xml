@@ -137,6 +137,14 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="instagram" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_INSTAGRAM" description="COM_KUNENA_TEMPLATE_DISPLAY_INSTAGRAM_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
+		<field name="soundcloud" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SOUNDCLOUD" description="COM_KUNENA_TEMPLATE_DISPLAY_SOUNDCLOUD_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="avatar">

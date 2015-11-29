@@ -20,17 +20,17 @@ function kPreviewHelper(previewActive) {
 			async   : false,
 			dataType: 'json',
 			data    : {body: jQuery('#kbbcode-message').val()},
-			success : function(data) {
+			success : function (data) {
 				jQuery('#kbbcode-preview').html(data.preview);
 			}
 		});
 	}
 }
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
 	jQuery('#tabs_kunena_editor a:first').tab('show');
 
-	jQuery('#tabs_kunena_editor a:last').click(function(e) {
+	jQuery('#tabs_kunena_editor a:last').click(function (e) {
 		e.preventDefault();
 
 		var preview = jQuery("#kbbcode-preview");
@@ -47,13 +47,13 @@ jQuery(document).ready(function() {
 		preview.css('height', message.css('height'));
 	});
 
-	jQuery('#tabs_kunena_editor a:not(:last)').click(function(e) {
+	jQuery('#tabs_kunena_editor a:not(:last)').click(function (e) {
 		jQuery('#kbbcode-preview').hide();
 		jQuery('#kbbcode-message').css('display', 'inline-block');
 		jQuery('#markItUpKbbcode-message').css('display', 'inline-block');
 	});
 
-	jQuery('#tabs_kunena_editor a:last').click(function(e) {
+	jQuery('#tabs_kunena_editor a:last').click(function (e) {
 		jQuery('#kbbcode-message').hide();
 		jQuery('#markItUpKbbcode-message').hide();
 	});
@@ -72,14 +72,14 @@ jQuery(document).ready(function() {
 				at       : ":",
 				tpl      : "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
 				callbacks: {
-					remote_filter: function(query, callback) {
+					remote_filter: function (query, callback) {
 						if (query.length > 0) {
 							jQuery.ajax({
 								url    : jQuery("#kurl_emojis").val(),
 								data   : {
 									search: query
 								},
-								success: function(data) {
+								success: function (data) {
 									callback(data.emojis);
 								}
 							});
@@ -98,7 +98,7 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	jQuery('#kshow_attach_form').click(function() {
+	jQuery('#kshow_attach_form').click(function () {
 		if (jQuery('#kattach_form').is(":visible")) {
 			jQuery('#kattach_form').hide();
 		}
@@ -108,58 +108,74 @@ jQuery(document).ready(function() {
 	});
 
 	// Load topic icons by ajax request
-	jQuery('#postcatid').change(function() {
+	jQuery('#postcatid').change(function () {
+		var catid = jQuery('select#postcatid option').filter(':selected').val();
 		var kurl_topicons_request = jQuery('#kurl_topicons_request').val();
+
+		if (jQuery('#kanynomous-check').length > 0) {
+			if (arrayanynomousbox[catid] !== undefined) {
+				jQuery('#kanynomous-check').show();
+				jQuery('#kanonymous').prop('checked', true);
+			} else {
+				jQuery('#kanynomous-check').hide();
+				jQuery('#kanonymous').prop('checked', false);
+			}
+		}
 
 		jQuery.ajax({
 			type    : 'POST',
 			url     : kurl_topicons_request,
 			async   : false,
 			dataType: 'json',
-			data    : {catid: jQuery('select#postcatid option').filter(':selected').val()},
-			success : function(data) {
+			data    : {catid: catid},
+			success : function (data) {
 				jQuery('#iconset_topic_list').remove();
 
 				var div_object = jQuery('<div>', {'id': 'iconset_topic_list'});
 
 				jQuery('#iconset_inject').append(div_object);
 
-				jQuery.each(data, function(index, value) {
-					if (value.type != 'system') {
-						if (value.id == 0) {
-							var input = jQuery('<input>', {
-								type   : 'radio',
-								id     : 'radio' + value.id,
-								checked: 'checked',
-								name   : 'topic_emoticon',
-								value  : value.id
-							});
-						}
-						else {
-							var input = jQuery('<input>', {
-								type : 'radio',
-								id   : 'radio' + value.id,
-								name : 'topic_emoticon',
-								value: value.id
-							});
-						}
+				jQuery.each(
+					data, function (index, value) {
+						if (value.type != 'system') {
+							if (value.id == 0) {
+								var input = jQuery(
+									'<input>', {
+										type   : 'radio',
+										id  : 'radio' + value.id,
+										checked: 'checked',
+										name   : 'topic_emoticon',
+										value  : value.id
+									});
+							}
+							else {
+								var input = jQuery(
+									'<input>', {
+										type : 'radio',
+										id  : 'radio' + value.id,
+										name: 'topic_emoticon',
+										value: value.id
+									});
+							}
 
-						var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
-						var label = jQuery('<label>', {
-							'class': 'radio inline',
-							'for'  : 'radio' + value.id
-						}).append(jQuery('<span>', {
-							'class' : 'glyphicon glyphicon-topic glyphicon-' + value.b3,
-							'border': '0',
-							'al'    : ''
-						}));
-						span_object.append(label);
+							var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
+							var label = jQuery(
+								'<label>', {
+									'class': 'radio inline',
+									'for'  : 'radio' + value.id
+								}).append(
+								jQuery(
+									'<span>', {
+										'class': 'glyphicon glyphicon-topic glyphicon-' + value.b3,
+										'border': '0',
+										'al': ''
+									}));
+							span_object.append(label);
 
-						jQuery('#iconset_topic_list').append(span_object);
-					}
-				});
+							jQuery('#iconset_topic_list').append(span_object);
+						}
+					});
 			}
 		});
 	});
 });
-

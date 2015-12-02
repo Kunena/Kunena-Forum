@@ -834,9 +834,6 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
-		// Update Tags
-		$this->updateTags($message->thread, $fields['tags'], $fields['mytags']);
-
 		$activity->onAfterEdit($message);
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_EDIT'));

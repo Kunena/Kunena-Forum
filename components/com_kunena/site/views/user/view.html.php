@@ -643,7 +643,8 @@ class KunenaViewUser extends KunenaView
 		$this->genders[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
-			'friendfeed', 'digg', 'yim', 'aim', 'gtalk', 'icq', 'msn', 'blogspot', 'flickr', 'bebo');
+				'friendfeed', 'digg', 'yim', 'aim', 'google', 'icq', 'microsoft', 'blogspot', 'flickr',
+				'bebo', 'instagram', 'qq', 'qzone', 'weibo', 'wechat', 'apple', 'vk', 'telegram');
 
 		echo $this->loadTemplateFile('profile');
 	}

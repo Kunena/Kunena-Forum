@@ -39,7 +39,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		{
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
 			$referreid     = AlphaUserPointsHelper::getReferreid($message->userid);
-			if (\Joomla\String\String::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+			if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 			{
 				if ($this->_checkRuleEnabled('plgaup_kunena_topic_create'))
 				{
@@ -59,7 +59,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		{
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
 			$referreid     = AlphaUserPointsHelper::getReferreid($message->userid);
-			if (\Joomla\String\String::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+			if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 			{
 				if ($this->_checkRuleEnabled('plgaup_kunena_topic_reply'))
 				{

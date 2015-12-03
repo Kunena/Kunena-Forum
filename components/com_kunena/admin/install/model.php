@@ -1496,7 +1496,7 @@ class KunenaModelInstall extends JModelLegacy
 
 				if ($match)
 				{
-					$ext = \Joomla\String\String::strtolower($matches[1]);
+					$ext = Joomla\String\StringHelper::strtolower($matches[1]);
 					// Use new format: users/avatar62.jpg
 					$newfile  = "users/avatar{$userid}.{$ext}";
 					$destpath = (KUNENA_INSTALLER_MEDIAPATH . "/avatars/{$newfile}");

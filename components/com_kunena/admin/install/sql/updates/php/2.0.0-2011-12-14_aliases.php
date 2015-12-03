@@ -134,5 +134,5 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
 
 function kStringURLSafe($str)
 {
-	return \Joomla\String\String::trim(preg_replace(array('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u'), array('-', ''), $str));
+	return Joomla\String\StringHelper::trim(preg_replace(array('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u'), array('-', ''), $str));
 }

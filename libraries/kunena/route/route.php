@@ -452,7 +452,7 @@ abstract class KunenaRoute
 		$vars = array();
 		foreach ($aliases as $object)
 		{
-			if (Joomla\String\String::strtolower($alias) == Joomla\String\String::strtolower($object->alias))
+			if (Joomla\String\StringHelper::strtolower($alias) == Joomla\String\StringHelper::strtolower($object->alias))
 			{
 				$var = $object->type != 'legacy' ? $object->type : 'view';
 				$vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);

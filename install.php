@@ -19,7 +19,9 @@ class Pkg_KunenaInstallerScript {
 	 */
 	protected $versions = array(
 		'PHP' => array (
-			'5.4' => '5.4.35',
+			'7.0' => '7.0.0',
+			'5.6' => '5.6.8',
+			'5.5' => '5.5.13',
 			'0' => '5.4.35' // Preferred version
 		),
 		'MySQL' => array (
@@ -27,8 +29,8 @@ class Pkg_KunenaInstallerScript {
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.4' => '3.4.1',
-			'0' => '3.4.1' // Preferred version
+			'3.5' => '3.5.0-beta',
+			'0' => '3.5.0' // Preferred version
 		)
 	);
 	/**
@@ -92,14 +94,9 @@ class Pkg_KunenaInstallerScript {
 		$this->enablePlugin('quickicon', 'kunena');
 
 		$app = JFactory::getApplication();
-		if (version_compare(JVERSION, '3.0', '>')) {
-			$modal = <<<EOS
-<div id="kunena-modal" class="modal hide fade" style="width:34%;margin-left:-20%;top:25%;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
+		$modal = <<<EOS
+			<div id="kunena-modal" class="modal hide fade" style="width:34%;margin-left:-20%;top:25%;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;
-
-		} else {
-			$modal = "<script>window.addEvent('domready',function(){SqueezeBox.open('{$this->makeRoute('index.php?option=com_kunena&view=install&tmpl=component')}',{size:{x:530,y:140},sizeLoading:{x:530,y:140},closable:false,handler:'iframe'});});</script>";
-		}
 		$app->enqueueMessage('Installing Kunena... '.$modal);
 
 		return true;

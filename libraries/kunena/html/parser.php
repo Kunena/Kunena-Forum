@@ -83,9 +83,9 @@ abstract class KunenaHtmlParser
 			return;
 		}
 
-		if ($len && Joomla\String\String::strlen($txt) > $len)
+		if ($len && Joomla\String\StringHelper::strlen($txt) > $len)
 		{
-			$txt = Joomla\String\String::substr($txt, 0, $len) . ' ...';
+			$txt = Joomla\String\StringHelper::substr($txt, 0, $len) . ' ...';
 		}
 
 		$txt = self::escape($txt);

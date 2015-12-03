@@ -28,11 +28,11 @@ class KunenaModelSearch extends KunenaModel
 	protected function populateState()
 	{
 		// Get search word list
-		$value = Joomla\String\String::trim($this->app->input->get('query', '', 'string'));
+		$value = Joomla\String\StringHelper::trim($this->app->input->get('query', '', 'string'));
 
 		if (empty($value))
 		{
-			$value = Joomla\String\String::trim($this->app->input->get('q', '', 'string'));
+			$value = Joomla\String\StringHelper::trim($this->app->input->get('q', '', 'string'));
 		}
 
 		if ($value == JText::_('COM_KUNENA_GEN_SEARCH_BOX'))
@@ -146,7 +146,7 @@ class KunenaModelSearch extends KunenaModel
 
 		foreach ($this->getSearchWords() as $searchword)
 		{
-			$searchword = $db->escape(Joomla\String\String::trim($searchword));
+			$searchword = $db->escape(Joomla\String\StringHelper::trim($searchword));
 
 			if (empty($searchword))
 			{
@@ -160,7 +160,7 @@ class KunenaModelSearch extends KunenaModel
 			{
 				$not        = 'NOT';
 				$operator   = 'AND';
-				$searchword = Joomla\String\String::substr($searchword, 1);
+				$searchword = Joomla\String\StringHelper::substr($searchword, 1);
 			}
 
 			if (!$this->getState('query.titleonly'))
@@ -308,7 +308,7 @@ class KunenaModelSearch extends KunenaModel
 		foreach ($searchwords as $word)
 		{
 			// Do not accept one letter strings
-			if (Joomla\String\String::strlen($word) > 1)
+			if (Joomla\String\StringHelper::strlen($word) > 1)
 			{
 				$result [] = $word;
 			}

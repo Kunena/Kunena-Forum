@@ -56,7 +56,7 @@ class KunenaAdminControllerConfig extends KunenaController
 		//Todo: fix depricated value
 		foreach (JRequest::get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue)
 		{
-			if (\Joomla\String\String::strpos($postsetting, 'cfg_') === 0)
+			if (Joomla\String\StringHelper::strpos($postsetting, 'cfg_') === 0)
 			{
 				//remove cfg_ and force lower case
 				if (is_array($postvalue))
@@ -64,7 +64,7 @@ class KunenaAdminControllerConfig extends KunenaController
 					$postvalue = implode(',', $postvalue);
 				}
 
-				$postname = \Joomla\String\String::strtolower(\Joomla\String\String::substr($postsetting, 4));
+				$postname = Joomla\String\StringHelper::strtolower(Joomla\String\StringHelper::substr($postsetting, 4));
 
 				// No matter what got posted, we only store config parameters defined
 				// in the config class. Anything else posted gets ignored.

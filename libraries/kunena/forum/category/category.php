@@ -466,7 +466,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	public function deleteAlias($alias)
 	{
 		// Do not delete valid alias.
-		if (Joomla\String\String::strtolower($this->alias) == Joomla\String\String::strtolower($alias))
+		if (Joomla\String\StringHelper::strtolower($this->alias) == Joomla\String\StringHelper::strtolower($alias))
 		{
 			return false;
 		}

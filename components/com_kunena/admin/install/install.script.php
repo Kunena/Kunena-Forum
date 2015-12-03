@@ -17,7 +17,9 @@ class Com_KunenaInstallerScript
 {
 	protected $versions = array(
 		'PHP' => array (
-			'5.4' => '5.4.35',
+			'7.0' => '7.0.0',
+			'5.6' => '5.6.8',
+			'5.5' => '5.5.13',
 			'0' => '5.4.35' // Preferred version
 		),
 		'MySQL' => array (
@@ -25,8 +27,8 @@ class Com_KunenaInstallerScript
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.4' => '3.4.1',
-			'0' => '3.4.1' // Preferred version
+			'3.5' => '3.5.0-beta',
+			'0' => '3.5.0' // Preferred version
 		)
 	);
 

@@ -744,8 +744,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		while (KunenaForumCategoryHelper::getAlias($category_id, $alias))
 		{
-			$name  = \Joomla\String\String::increment($name);
-			$alias = \Joomla\String\String::increment($alias, 'dash');
+			$name  =  Joomla\String\StringHelper::increment($name);
+			$alias =  Joomla\String\StringHelper::increment($alias, 'dash');
 		}
 
 		return array($name, $alias);

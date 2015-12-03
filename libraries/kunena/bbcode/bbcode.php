@@ -343,7 +343,7 @@ class KunenaBbcode extends NBBC_BBCode
 
 				if (!$invalid && substr($url, 0, 7) == 'mailto:')
 				{
-					$email = Joomla\String\String::substr($url, 7);
+					$email = Joomla\String\StringHelper::substr($url, 7);
 
 					if ( $this->canCloakEmail($params) )
 					{
@@ -1985,7 +1985,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$vid_maxheight = 720; // max. display size
 		$vid_sizemax = 100; // max. display zoom in percent
 
-		$vid ["type"] = (isset ( $params ["type"] )) ? Joomla\String\String::strtolower ( $params ["type"] ) : '';
+		$vid ["type"] = (isset ( $params ["type"] )) ? Joomla\String\StringHelper::strtolower ( $params ["type"] ) : '';
 		$vid ["param"] = (isset ( $params ["param"] )) ? $params ["param"] : '';
 
 		if (! $vid ["type"])
@@ -2012,7 +2012,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			if ($vid_auto)
 			{
-				$vid ["type"] = Joomla\String\String::strtolower ( $vid_regs [1] );
+				$vid ["type"] = Joomla\String\StringHelper::strtolower ( $vid_regs [1] );
 
 				switch ($vid ["type"])
 				{
@@ -2189,7 +2189,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$vid_par3 = array ();
 		foreach ( $params as $vid_key => $vid_value )
 		{
-			if (in_array ( Joomla\String\String::strtolower ( $vid_key ), $vid_allowpar ))
+			if (in_array ( Joomla\String\StringHelper::strtolower ( $vid_key ), $vid_allowpar ))
 			{
 				array_push ( $vid_par3, array (6, $vid_key, $bbcode->HTMLEncode ( $vid_value ) ) );
 			}

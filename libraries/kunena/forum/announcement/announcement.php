@@ -301,6 +301,13 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
+		$date = JFactory::getDate();
+
+		if ($date < $this->created)
+		{
+			$this->published = '0';
+		}
+
 		if ($user === null)
 		{
 			$user = KunenaUserHelper::getMyself();

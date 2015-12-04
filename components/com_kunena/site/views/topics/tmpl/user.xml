@@ -12,6 +12,7 @@
 			       default="default"
 			       label="COM_KUNENA_MENU_SELECTEDVIEW">
 				<option value="default">COM_KUNENA_TOPICS_MODE_OPTION_MYLATEST</option>
+				<option value="unread">COM_KUNENA_TOPICS_MODE_OPTION_UNREAD</option>
 				<option value="posted">COM_KUNENA_TOPICS_MODE_OPTION_POSTED</option>
 				<option value="started">COM_KUNENA_TOPICS_MODE_OPTION_STARTED</option>
 				<option value="subscriptions">COM_KUNENA_TOPICS_MODE_OPTION_MYSUBSCRIPTIONS</option>

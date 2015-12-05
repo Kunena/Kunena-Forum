@@ -136,14 +136,15 @@ foreach ($this->sections as $section) :
 									</ul>
 								<?php endif; ?>
 
-								<?php if (!empty($category->moderators)) : ?>
-									<div class="kthead-moderators ks">
+								<?php if ($category->getmoderators() && $config->listcat_show_moderators) : ?>
+									<br />
+									<div class="moderators">
 										<?php
 										// get the Moderator list for display
 										$modslist = array();
-										foreach ($category->moderators as $moderator)
+										foreach ($category->getmoderators() as $moderator)
 										{
-											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, 'nofollow', '', null, $category->id);
+											$modslist[] = KunenaFactory::getUser($moderator)->getLink();
 										}
 
 										echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);

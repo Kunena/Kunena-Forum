@@ -811,7 +811,6 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
-	 * @deprecated K4.0 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 

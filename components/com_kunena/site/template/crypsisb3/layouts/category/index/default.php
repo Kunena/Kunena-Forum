@@ -136,7 +136,7 @@ foreach ($this->sections as $section) :
 									</ul>
 								<?php endif; ?>
 
-								<?php if ($category->getmoderators() && $config->listcat_show_moderators) : ?>
+								<?php if ($category->getmoderators() && KunenaConfig::getInstance()->listcat_show_moderators) : ?>
 									<br />
 									<div class="moderators">
 										<?php

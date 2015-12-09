@@ -917,6 +917,10 @@
 		       type="int(11)"
 		       null="1"
 		       default="0"/>
+		<field name="ip"
+		       type="varchar(13)"
+		       null="0"
+		       default=""/>
 		<key name="PRIMARY"
 		     unique="1"
 		     columns="userid"/>

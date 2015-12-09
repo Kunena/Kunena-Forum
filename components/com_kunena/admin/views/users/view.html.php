@@ -43,6 +43,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$this->filterActive    = $this->escape($this->state->get('filter.active'));
 		$this->listOrdering    = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection   = $this->escape($this->state->get('list.direction'));
+		$this->filterIp        = $this->escape($this->state->get('filter.ip'));
 
 		$this->display();
 	}
@@ -160,6 +161,7 @@ class KunenaAdminViewUsers extends KunenaView
 		$sortFields[] = JHtml::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));
 		$sortFields[] = JHtml::_('select.option', 'moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
 		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = JHtml::_('select.option', 'ip', JText::_('COM_KUNENA_GEN_IP'));
 
 		return $sortFields;
 	}
@@ -176,5 +178,20 @@ class KunenaAdminViewUsers extends KunenaView
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 		return $sortDirection;
+	}
+
+	/**
+	 * Returns an array ranks filter options.
+	 *
+	 * @return    string    The HTML code for the select tag
+	 */
+	public function ranksOptions()
+	{
+		// Build the active state filter options.
+		$options   = array();
+		$options[] = JHtml::_('select.option', 'Administrator', JText::_('Administrator'));
+		$options[] = JHtml::_('select.option', 'New Member', JText::_('New Member'));
+
+		return $options;
 	}
 }

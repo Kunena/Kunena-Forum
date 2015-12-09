@@ -37,6 +37,7 @@ class KunenaAdminModelUsers extends JModelList
 				'name',
 				'rank',
 				'email',
+				'ip',
 				'signature',
 				'enabled',
 				'banned',
@@ -83,6 +84,9 @@ class KunenaAdminModelUsers extends JModelList
 		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.email', 'filter_email', '', 'string');
 		$this->setState('filter.email', $value);
 
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
+		$this->setState('filter.ip', $value);
+
 		$filter_active .= $value = $this->getUserStateFromRequest($this->context . '.filter.rank', 'filter_rank', '', 'string');
 		$this->setState('filter.rank', $value);
 
@@ -121,6 +125,7 @@ class KunenaAdminModelUsers extends JModelList
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.username');
 		$id .= ':' . $this->getState('filter.email');
+		$id .= ':' . $this->getState('filter.ip');
 		$id .= ':' . $this->getState('filter.rank');
 		$id .= ':' . $this->getState('filter.signature');
 		$id .= ':' . $this->getState('filter.block');
@@ -166,7 +171,7 @@ class KunenaAdminModelUsers extends JModelList
 			else
 			{
 				$search = $db->Quote('%' . $db->escape($search, true) . '%');
-				$query->where('(a.username LIKE ' . $search . ' OR a.name LIKE ' . $search . ' OR a.email LIKE ' . $search . ')');
+				$query->where('(a.username LIKE ' . $search . ' OR a.name LIKE ' . $search . ' OR a.email LIKE ' . $search . ' OR ku.ip LIKE ' . $search . ' OR a.id LIKE ' . $search . ')');
 			}
 		}
 
@@ -195,6 +200,15 @@ class KunenaAdminModelUsers extends JModelList
 		{
 			$email = $db->Quote('%' . $db->escape($email, true) . '%');
 			$query->where('a.email LIKE ' . $email);
+		}
+
+		// Filter by IP.
+		$ip = $this->getState('filter.ip');
+
+		if (!empty($ip))
+		{
+			$ip = $db->Quote('%' . $db->escape($ip, true) . '%');
+			$query->where('ku.ip LIKE ' . $ip);
 		}
 
 		// Filter by signature.
@@ -255,6 +269,9 @@ class KunenaAdminModelUsers extends JModelList
 				break;
 			case 'email':
 				$query->order('a.email ' . $direction);
+				break;
+			case 'ip':
+				$query->order('ku.ip ' . $direction);
 				break;
 			case 'rank':
 				$query->order('ku.rank ' . $direction);

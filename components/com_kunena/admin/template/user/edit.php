@@ -100,7 +100,7 @@ jQuery(function($) {
 										<div>
 											<?php echo JText::sprintf(
 	'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - Joomla\String\Stringhelper::strlen($this->user->signature)) . '" />'); ?>
+'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'); ?>
 										</div>
 									</fieldset>
 								</div>

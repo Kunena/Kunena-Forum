@@ -55,6 +55,11 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		$this->messageButtons = new JObject;
 		$this->message_closed = null;
 
+		if ($config->read_only)
+		{
+			return false;
+		}
+
 		if ($this->message->isAuthorised('reply'))
 		{
 			$this->quickreply = true;

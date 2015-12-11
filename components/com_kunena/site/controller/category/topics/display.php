@@ -127,7 +127,12 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			}
 		}
 
-		$this->topicActions = $this->model->getTopicActions();
+		$config = KunenaConfig::getInstance();
+		if (!$config->read_only)
+		{
+			$this->topicActions = $this->model->getTopicActions();
+		}
+
 		$this->actionMove = $this->model->getActionMove();
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);

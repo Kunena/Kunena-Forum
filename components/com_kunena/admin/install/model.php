@@ -774,6 +774,8 @@ class KunenaModelInstall extends JModelLegacy
 		$this->setAttachmentStatus();
 		$this->addStatus(JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true);
 
+		$cache = JCache::getInstance();
+		$cache->clean('kunena');
 		$action = $this->getAction();
 
 		if ($action == 'install' || $action == 'migrate')

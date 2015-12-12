@@ -46,7 +46,7 @@ class KunenaViewUser extends KunenaView
 		$userid               = JFactory::getApplication()->input->getInt('userid');
 		$this->usernamechange = JComponentHelper::getParams('com_users')->get('change_login_name', 1);
 
-		if ($userid && $this->me->userid != $userid)
+		if ($userid && $this->me->userid != $userid || $this->me->isAdmin())
 		{
 			$user = KunenaFactory::getUser($userid);
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice');
@@ -150,7 +150,7 @@ class KunenaViewUser extends KunenaView
 			$this->profile->save();
 		}
 
-		if ($this->profile->userid == $this->me->userid)
+		if ($this->profile->userid == $this->me->userid || $this->me->isAdmin())
 		{
 			if ($this->do != 'edit')
 			{
@@ -643,7 +643,8 @@ class KunenaViewUser extends KunenaView
 		$this->genders[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
-			'friendfeed', 'digg', 'yim', 'aim', 'gtalk', 'icq', 'msn', 'blogspot', 'flickr', 'bebo');
+				'friendfeed', 'digg', 'yim', 'aim', 'google', 'icq', 'microsoft', 'blogspot', 'flickr',
+				'bebo', 'instagram', 'qq', 'qzone', 'weibo', 'wechat', 'apple', 'vk', 'telegram');
 
 		echo $this->loadTemplateFile('profile');
 	}
@@ -888,27 +889,86 @@ class KunenaViewUser extends KunenaView
 	 */
 	protected function _prepareDocument($type)
 	{
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
 		if ($type == 'list')
 		{
 
 			$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
 			$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
 
-			$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . " ({$page}/{$pages})";
-			$this->setTitle($title);
-			$keywords = $this->config->board_title;
-			$this->setKeywords($keywords);
-			$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title;
-			$this->setDescription($description);
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . " ({$page}/{$pages})";
+				$this->setTitle($title);
+			}
+
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->config->board_title;
+				$this->setKeywords($keywords);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title;
+				$this->setDescription($description);
+			}
 		}
 		else
 		{
-			$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
-			$this->setTitle($title);
-			$keywords = $this->config->board_title . ', ' . $this->profile->getName();
-			$this->setKeywords($keywords);
-			$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(), $this->config->board_title, $this->profile->getName(), $this->config->board_title);
-			$this->setDescription($description);
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+				$this->setTitle($title);
+			}
+
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->config->board_title . ', ' . $this->profile->getName();
+				$this->setKeywords($keywords);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(), $this->config->board_title, $this->profile->getName(), $this->config->board_title);
+				$this->setDescription($description);
+			}
 		}
 	}
 }

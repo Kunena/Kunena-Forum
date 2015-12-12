@@ -111,10 +111,18 @@ class KunenaView extends JViewLegacy
 
 		$this->state = $this->get('State');
 		$this->ktemplate->initialize();
+		$menu = $this->app->getMenu();
+		$home = $menu->getItems('type', 'alias');
+		$juricurrent = JURI::current();
 
 		if (JFactory::getApplication()->isAdmin())
 		{
 			$this->displayLayout();
+		}
+		elseif ($home)
+		{
+			$this->document->addHeadLink( $juricurrent, 'canonical', 'rel', '' );
+			include JPATH_SITE .'/'. $this->ktemplate->getFile('html/display.php');
 		}
 		else
 		{
@@ -959,12 +967,12 @@ class KunenaView extends JViewLegacy
 		{
 			// TODO: allow translations/overrides
 			$lang = JFactory::getLanguage();
-			$length = Joomla\String\String::strlen($lang->getName());
+			$length = Joomla\String\StringHelper::strlen($lang->getName());
 			$length = 137 - $length;
 
-			if (Joomla\String\String::strlen($description) > $length)
+			if (Joomla\String\StringHelper::strlen($description) > $length)
 			{
-				$description = Joomla\String\String::substr($description, 0, $length) . '...';
+				$description = Joomla\String\StringHelper::substr($description, 0, $length) . '...';
 			}
 
 			$this->document->setMetadata('description', $description);

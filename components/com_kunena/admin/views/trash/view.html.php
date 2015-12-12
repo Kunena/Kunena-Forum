@@ -2,17 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Trash view for Kunena backend
+ *
+ * @since  K1.0
  */
 class KunenaAdminViewTrash extends KunenaView
 {
@@ -91,6 +93,7 @@ class KunenaAdminViewTrash extends KunenaView
 	}
 
 	/**
+	 *
 	 * @return array
 	 */
 	protected function getSortFields()
@@ -120,6 +123,7 @@ class KunenaAdminViewTrash extends KunenaView
 	}
 
 	/**
+	 *
 	 * @return array
 	 */
 	protected function getSortDirectionFields()

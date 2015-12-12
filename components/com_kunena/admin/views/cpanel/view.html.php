@@ -2,17 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * About view for Kunena cpanel
+ *
+ * @since  K1.X
  */
 class KunenaAdminViewCpanel extends KunenaView
 {
@@ -24,6 +26,8 @@ class KunenaAdminViewCpanel extends KunenaView
 		$help_url  = 'http://www.kunena.org/docs/Category:Installation';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_DASHBOARD'), 'dashboard');
+		JToolBarHelper::modal('kunena_changelog', 'icon icon-info', JText::_('Changelog'));
+		JToolBarHelper::link('http://www.kunena.org/forum', JText::_('Get Support'));
 
 		if (JFactory::getUser()->authorise('core.admin', 'com_kunena'))
 		{

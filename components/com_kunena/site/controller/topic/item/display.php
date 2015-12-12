@@ -103,11 +103,8 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			if ($this->message->thread != $this->topic->id
 				|| ($this->topic->category_id != $this->category->id && !isset($channels[$this->topic->category_id]))
-				|| ($mesid && $this->layout != 'threaded')
-)
+				|| ($mesid && $this->layout != 'threaded'))
 			{
-				while (@ob_end_clean()) {}
-
 				$this->app->redirect($this->message->getUrl(null, false));
 			}
 		}
@@ -123,7 +120,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		$this->messages = $finder
-			->order('time', $this->me->getMessageOrdering() == 'asc' ? 1 : -1)
+			->order('time', $this->me->getMessageOrdering() == 'asc' ? 1 : - 1)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();
@@ -344,6 +341,41 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
 
-		$this->setTitle($headerText);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->setTitle($headerText);
+		}
+
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$this->setKeywords($headerText);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$this->setDescription($headerText);
+		}
 	}
 }

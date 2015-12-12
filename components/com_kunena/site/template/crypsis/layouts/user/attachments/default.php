@@ -105,6 +105,7 @@ $attachments = $this->attachments;
 			<?php endif; ?>
 		</tbody>
 	</table>
-
-	<input class="btn pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>" />
+	<?php if ($attachments) : ?>
+		<input class="btn pull-right" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE'); ?>" />
+	<?php endif; ?>
 </form>

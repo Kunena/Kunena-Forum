@@ -2,23 +2,21 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator.Template
- * @subpackage    Config
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Config
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewConfig $this
 
-
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('behavior.tabstate');
-
 ?>
 
 <div id="kunena" class="admin override">
@@ -113,6 +111,11 @@ JHtml::_('behavior.tabstate');
 												<td colspan="2">
 													<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo $this->escape($this->config->offline_message) ?></textarea>
 												</td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_A_BOARD_READONLY') ?></td>
+												<td><?php echo $this->lists ['read_only'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_A_BOARD_READONLY_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT') ?>
@@ -796,10 +799,9 @@ JHtml::_('behavior.tabstate');
 												</td>
 												<td>
 													<?php
-													echo JText::sprintf(
-              'COM_KUNENA_A_IMGSIZE_DESC',
+													echo JText::sprintf('COM_KUNENA_A_IMGSIZE_DESC',
 														ini_get('post_max_size'), ini_get('upload_max_filesize'),
-			 function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
+														 function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
 													?>
 												</td>
 											</tr>
@@ -876,10 +878,9 @@ JHtml::_('behavior.tabstate');
 												</td>
 												<td>
 													<?php
-													echo JText::sprintf(
-			  'COM_KUNENA_A_FILESIZE_DESC',
+													echo JText::sprintf('COM_KUNENA_A_FILESIZE_DESC',
 														ini_get('post_max_size'), ini_get('upload_max_filesize'),
-			 function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
+															function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : '')
 													?>
 												</td>
 											</tr>
@@ -1024,19 +1025,6 @@ JHtml::_('behavior.tabstate');
 												</td>
 												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
 											</tr>
-											<?php /*
-										// TODO: If you uncomment this feature, please remove forced disable from the KunenaConfig class.
-										<tr>
-											<td><?php echo JText::_('COM_KUNENA_A_KEYWORDS') ?></td>
-											<td><?php echo $this->lists ['keywords'] ?></td>
-											<td><?php echo JText::_('COM_KUNENA_A_KEYWORDS_DESC') ?></td>
-										</tr>
-										<tr>
-											<td><?php echo JText::_('COM_KUNENA_A_USER_KEYWORDS') ?></td>
-											<td><?php echo $this->lists ['userkeywords'] ?></td>
-											<td><?php echo JText::_('COM_KUNENA_A_USER_KEYWORDS_DESC') ?></td>
-										</tr>
-										*/ ?>
 											</tbody>
 										</table>
 									</fieldset>

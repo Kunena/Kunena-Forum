@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -23,6 +23,7 @@ class KunenaViewInstall extends JViewLegacy
 	 * @param   string $tpl A template file to load.
 	 *
 	 * @return    mixed    JError object on failure, void on success.
+	 *
 	 * @throws    object    JError
 	 * @since    1.6
 	 */
@@ -45,7 +46,7 @@ class KunenaViewInstall extends JViewLegacy
 		$this->model->setAction(strtolower($version->action));
 		$this->model->setStep(0);
 
-		JRequest::setVar('hidemainmenu', 1);
+		JFactory::getApplication()->input->post->get('hidemainmenu', 1);
 
 		parent::display($tpl);
 	}
@@ -56,6 +57,7 @@ class KunenaViewInstall extends JViewLegacy
 	 * @access private
 	 *
 	 * @return null
+	 *
 	 **/
 	function setToolBar()
 	{
@@ -70,7 +72,7 @@ class KunenaViewInstall extends JViewLegacy
 	function displaySchema()
 	{
 		require_once KPATH_ADMIN . '/install/schema.php';
-		$schema = new KunenaModelSchema();
+		$schema = new KunenaModelSchema;
 		$create = $schema->getCreateSQL();
 		echo '<textarea cols="80" rows="50">';
 		echo $this->escape($schema->getSchema()->saveXML());
@@ -95,7 +97,7 @@ class KunenaViewInstall extends JViewLegacy
 	function displaySchemaDiff()
 	{
 		require_once KPATH_ADMIN . '/install/schema.php';
-		$schema = new KunenaModelSchema();
+		$schema = new KunenaModelSchema;
 		$diff   = $schema->getDiffSchema();
 		$sql    = $schema->getSchemaSQL($diff);
 		echo '<textarea cols="80" rows="20">';

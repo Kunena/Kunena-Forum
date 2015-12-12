@@ -2,17 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Template
+ * @package    Kunena.Template
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 class KunenaAdminTemplate
 {
-
+	/**
+	 *
+	 */
 	public function initialize()
 	{
 		$document = JFactory::getDocument();
@@ -20,6 +22,15 @@ class KunenaAdminTemplate
 		$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/styles.css');
 	}
 
+	/**
+	 * Get template paths.
+	 *
+	 * @param   string     $path
+	 *
+	 * @param   bool|false $fullpath
+	 *
+	 * @return array
+	 */
 	public function getTemplatePaths($path = '', $fullpath = false)
 	{
 		if ($path)
@@ -36,7 +47,7 @@ class KunenaAdminTemplate
 	/**
 	 * Renders an item in the pagination block
 	 *
-	 * @param   JPaginationObject $item The current pagination object
+	 * @param   JPaginationObject  $item  The current pagination object
 	 *
 	 * @return  string  HTML markup for active item
 	 *
@@ -68,7 +79,8 @@ class KunenaAdminTemplate
 		{
 			$limit = 'limitstart.value=' . (int) $item->base;
 
-			return '<li><a href="#" title="' . $item->text . '" onclick="document.adminForm.' . $item->prefix . $limit . '; Joomla.submitform();return false;">' . $display . '</a></li>';
+			return '<li><a href="#" title="' . $item->text . '" onclick="document.adminForm.' . $item->prefix . $limit . ';
+			 Joomla.submitform();return false;">' . $display . '</a></li>';
 		}
 
 		// Check if the item is the active (or current) page.

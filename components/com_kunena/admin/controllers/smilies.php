@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Smileys Controller
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminControllerSmilies extends KunenaController
 {
@@ -58,7 +58,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -140,7 +141,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array'); // File upload
+		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array');
+		// File upload
 		$format = JFactory::getApplication()->input->getCmd('format', 'html');
 
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), $format);
@@ -172,7 +174,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);

@@ -54,7 +54,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
-				enctype="multipart/form-data" name="postform" id="postform" class="form-inline">
+				enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
 				<input type="hidden" name="task" value="post" />
 				<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
 				<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
@@ -71,23 +71,36 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 				</div>
 
 				<div class="modal-body">
-					<div class="form-group">
-						<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
-						<input type="text" name="authorname" size="35" class="inputbox form-control col-md-12" maxlength="35" value="<?php
-						echo $this->escape($me->getName()); ?>" />
-					</div>
+					<?php if (!$me->exists()) : ?>
+						<div class="form-group">
+							<label class="col-md-12 control-label">
+								<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
+							</label>
+							<input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
+						</div>
+					<?php endif; ?>
+
+					<?php if ($config->askemail && !$me->exists()): ?>
+						<div class="form-group">
+							<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+							<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="35" value="" required />
+						</div>
+					<?php endif; ?>
 
 					<div class="form-group">
-						<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
-						<input type="text" id="subject" name="subject" size="35" class="inputbox form-control col-md-12"
-						       maxlength="<?php echo (int) $config->maxsubject; ?>"
-						       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
-						       value="<?php echo $message->displayField('subject'); ?>" />
+						<label for="kanonymous<?php echo intval($message->id); ?>">
+							<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
+						</label>
+						<input type="text" id="subject" name="subject" class="form-control"
+								maxlength="<?php echo (int) $config->maxsubject; ?>"
+								<?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+								value="<?php echo $message->displayField('subject'); ?>" />
 					</div>
-
 					<div class="form-group">
-						<label class="col-md-3 control-label"><?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?></label>
-						<textarea class="col-md-12 qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+						<label class="col-md-12 control-label">
+							<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
+						</label>
+						<textarea class="qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
 					</div>
 
 					<?php if ($topic->isAuthorised('subscribe')) : ?>
@@ -103,18 +116,22 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					</div>
 					<?php endif; ?>
 					<?php if ($me->exists() && $category->allow_anonymous) : ?>
+					<div class="control-group">
+						<div class="controls">
 						<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous"
 							value="1" class="kinputbox postinput form-control" <?php if ($category->post_anonymous) echo 'checked="checked"'; ?> />
 						<label for="kanonymous<?php echo intval($message->id); ?>">
 							<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
 						</label>
+						</div>
+					</div>
 					<?php endif; ?>
 					<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-default btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+					<br />
 				</div>
 				<?php if (!empty($this->captchaEnabled)) : ?>
 					<div class="control-group">
-						<label class="control-label"><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></label>
-							<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
+						<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
 					</div>
 				<?php endif; ?>
 				<div class="modal-footer">

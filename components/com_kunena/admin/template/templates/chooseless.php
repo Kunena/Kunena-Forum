@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Templates
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Templates
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -50,7 +50,7 @@ defined('_JEXEC') or die();
 							<?php echo $this->escape($file); ?>
 						</td>
 						<td>
-							<?php echo is_writable($this->dir . '/' . $file) ? '<font color="green"> ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($file)) . '</font>' : '<font color="red"> ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($file)) . '</font>' ?>
+							<?php echo is_writable($this->dir . '/' . $file) ? '<span style="color:green"> ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($file)) . '</span>' : '<span style="color:red"> ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($file)) . '</span>' ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

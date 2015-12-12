@@ -31,8 +31,6 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$queries[] = "TRUNCATE TABLE #__kunena_user_read";
 		$queries[] = "TRUNCATE TABLE #__kunena_user_topics";
 		$queries[] = "TRUNCATE TABLE #__kunena_thankyou";
-		$queries[] = "TRUNCATE TABLE #__kunena_keywords";
-		$queries[] = "TRUNCATE TABLE #__kunena_keywords_map";
 		$queries[] = "TRUNCATE TABLE #__kunena_polls_users";
 		$queries[] = "TRUNCATE TABLE #__kunena_polls_options";
 		$queries[] = "TRUNCATE TABLE #__kunena_polls";

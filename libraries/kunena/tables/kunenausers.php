@@ -166,10 +166,10 @@ class TableKunenaUsers extends KunenaTable
 	public $yim = null;
 
 	/**
-	 * MSN ID
+	 * Microsoft ID
 	 * @var string
 	 **/
-	public $msn = null;
+	public $microsoft = null;
 
 	/**
 	 * SKYPE ID
@@ -190,10 +190,10 @@ class TableKunenaUsers extends KunenaTable
 	public $facebook = null;
 
 	/**
-	 * GTALK ID
+	 * Google ID
 	 * @var string
 	 **/
-	public $gtalk = null;
+	public $google = null;
 
 	/**
 	 * MYSPACE ID
@@ -272,6 +272,54 @@ class TableKunenaUsers extends KunenaTable
 	 * @var string
 	 **/
 	public $status_text = null;
+
+	/**
+	 * Instagram
+	 * @var int
+	 **/
+	public $instagram = null;
+
+	/**
+	 * QQ
+	 * @var int
+	 **/
+	public $qq = null;
+
+	/**
+	 * Qzone
+	 * @var int
+	 **/
+	public $qzone = null;
+
+	/**
+	 * Weibo
+	 * @var int
+	 **/
+	public $weibo = null;
+
+	/**
+	 * Wechat
+	 * @var int
+	 **/
+	public $wechat = null;
+
+	/**
+	 * Apple
+	 * @var int
+	 **/
+	public $apple = null;
+
+	/**
+	 * Vk
+	 * @var int
+	 **/
+	public $vk = null;
+
+	/**
+	 * telegram
+	 * @var int
+	 **/
+	public $telegram = null;
 
 	/**
 	 * @param   string $db

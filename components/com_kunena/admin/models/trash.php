@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,7 +16,7 @@ jimport('joomla.application.component.model');
 /**
  * Trash Model for Kunena
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminModelTrash extends KunenaModel
 {
@@ -251,6 +251,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * Method to get all deleted topics.
 	 *
 	 * @return    array
+	 *
 	 * @since    1.6
 	 */
 	protected function _getTopics()
@@ -367,6 +368,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * Method to get select options to choose between topics and messages.
 	 *
 	 * @return    array
+	 *
 	 * @since    1.6
 	 */
 	public function getViewOptions()
@@ -382,6 +384,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * Method to get details on selected items.
 	 *
 	 * @return    array
+	 *
 	 * @since    1.6
 	 */
 	public function getPurgeItems()
@@ -407,6 +410,7 @@ class KunenaAdminModelTrash extends KunenaModel
 	 * Method to hash datas.
 	 *
 	 * @return    string Hashed value.
+	 *
 	 * @since    1.6
 	 */
 	public function getMd5()
@@ -416,6 +420,10 @@ class KunenaAdminModelTrash extends KunenaModel
 		return md5(serialize($ids));
 	}
 
+	/**
+	 * @return JPagination
+	 *
+	 */
 	public function getNavigation()
 	{
 		jimport('joomla.html.pagination');

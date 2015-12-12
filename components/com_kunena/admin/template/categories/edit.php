@@ -1,17 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Categories
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Categories
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewCategories $this
-
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -139,14 +138,16 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
 											</tr>
 											</thead>
-											<?php foreach ($this->options ['accesslists'] as $accesstype => $accesslist) { foreach ($accesslist as $accessinput) : ?>
-												<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
-													<td><?php echo $accessinput['title'] ?></td>
-													<td><?php echo $accessinput['input'] ?></td>
-													<td><?php echo $accessinput['desc'] ?></td>
-												</tr>
-											<?php endforeach;
-}; ?>
+											<?php foreach ($this->options ['accesslists'] as $accesstype => $accesslist)
+											{
+												foreach ($accesslist as $accessinput) : ?>
+													<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
+														<td><?php echo $accessinput['title'] ?></td>
+														<td><?php echo $accessinput['input'] ?></td>
+														<td><?php echo $accessinput['desc'] ?></td>
+													</tr>
+												<?php endforeach;
+											}; ?>
 										</table>
 									</fieldset>
 								</div>
@@ -242,7 +243,7 @@ JHtml::_('behavior.tabstate');
 													<td><?php echo $this->escape($ml->userid); ?></td>
 												</tr>
 											<?php endforeach;
-endif; ?>
+											endif; ?>
 											</tbody>
 										</table>
 									</fieldset>

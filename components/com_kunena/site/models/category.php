@@ -296,7 +296,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 			if ($this->total > 0)
 			{
-				// collect user ids for avatar prefetch when integrated
+				// Collect user ids for avatar prefetch when integrated
 				$userlist     = array();
 				$lastpostlist = array();
 
@@ -314,7 +314,6 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				}
 
 				KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
-				KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
 				$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts

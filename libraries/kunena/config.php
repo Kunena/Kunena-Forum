@@ -811,7 +811,6 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    integer  List category show moderators; select, boolean
 	 * @since  1.6.0
-	 * @deprecated K4.0 (not used in HMVC)
 	 */
 	public $listcat_show_moderators = 1;
 
@@ -904,18 +903,6 @@ class KunenaConfig extends JObject
 	 * @since  1.6.6
 	 */
 	public $captcha_post_limit = 0;
-
-	/**
-	 * @var    integer  Keyword; select, boolean
-	 * @since  2.0.0
-	 */
-	public $keywords = 1;
-
-	/**
-	 * @var    integer  User keywords; select, boolean
-	 * @since  2.0.0
-	 */
-	public $userkeywords = 0;
 
 	/**
 	 * @var    string  Image upload; select, selection
@@ -1129,6 +1116,12 @@ class KunenaConfig extends JObject
 	public $max_links = 6;
 
 	/**
+	 * @var    integer  Read Only State; select, boolean
+	 * @since  K5.0.0
+	 */
+	public $read_only = 0;
+
+	/**
 	 *
 	 */
 	public function __construct()
@@ -1168,10 +1161,6 @@ class KunenaConfig extends JObject
 	public function bind($properties)
 	{
 		$this->setProperties($properties);
-
-		// Disable some experimental features
-		$this->keywords = 0;
-		$this->userkeywords = 0;
 	}
 
 	/**

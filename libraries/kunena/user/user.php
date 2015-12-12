@@ -46,11 +46,11 @@ jimport ( 'joomla.utilities.date' );
  * @property	string	$icq
  * @property	string	$aim
  * @property	string	$yim
- * @property	string	$msn
+ * @property	string	$microsoft
  * @property	string	$skype
  * @property	string	$twitter
  * @property	string	$facebook
- * @property	string	$gtalk
+ * @property	string	$google
  * @property	string	$myspace
  * @property	string	$linkedin
  * @property	string	$delicious
@@ -60,7 +60,15 @@ jimport ( 'joomla.utilities.date' );
  * @property	string	$flickr
  * @property	string	$bebo
  * @property	int		$thankyou
-*/
+ * @property	string	$instagram
+ * @property	string	$qq
+ * @property	string	$qzone
+ * @property	string	$weibo
+ * @property	string	$wechat
+ * @property	string	$apple
+ * @property	string	$vk
+ * @property	string	$telegram
+ */
 class KunenaUser extends JObject
 {
 	// Global for every instance
@@ -198,7 +206,7 @@ class KunenaUser extends JObject
 				}
 				break;
 			case 'edit' :
-				if (!isset($this->registerDate) || !$this->isMyself())
+				if (!isset($this->registerDate) || !$this->isMyself() && !$user->isAdmin())
 				{
 					$exception = new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
 				}
@@ -1260,12 +1268,20 @@ class KunenaUser extends JObject
 			'skype' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_SKYPE' ), 'nourl' => '1' ),
 			'yim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_YIM' ), 'nourl' => '1' ),
 			'aim' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_AIM' ), 'nourl' => '1' ),
-			'gtalk' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_GTALK' ), 'nourl' => '1' ),
-			'msn' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MSN' ), 'nourl' => '1' ),
+			'google' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_GOOGLE' ), 'nourl' => '1' ),
+			'microsoft' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_MICROSOFT' ), 'nourl' => '1' ),
 			'icq' => array ('url' => 'http://www.icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_ICQ' ), 'nourl' => '0' ),
 			'blogspot' => array ('url' => 'http://##VALUE##.blogspot.com/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BLOGSPOT' ), 'nourl' => '0' ),
 			'flickr' => array ('url' => 'http://www.flickr.com/photos/##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_FLICKR' ), 'nourl' => '0' ),
-			'bebo' => array ('url' => 'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BEBO' ), 'nourl' => '0' )
+			'bebo' => array ('url' => 'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_BEBO' ), 'nourl' => '0' ),
+			'istagram' => array ('url' => 'https://www.instagram.com/##VALUE##/', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_INSTAGRAM' ), 'nourl' => '0' ),
+			'qq' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QQ' ), 'nourl' => '1' ),
+			'qzone' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_QZONE' ), 'nourl' => '1' ),
+			'weibo' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WEIBO' ), 'nourl' => '1' ),
+			'wechat' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_WECHAT' ), 'nourl' => '1' ),
+			'vk' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_VK' ), 'nourl' => '1' ),
+			'telegram' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_TELEGRAM' ), 'nourl' => '1' ),
+			'apple' => array ('url' => '##VALUE##', 'title' => JText::_ ( 'COM_KUNENA_MYPROFILE_APPLE' ), 'nourl' => '1' )
 		);
 
 		if (!isset($social [$name]))

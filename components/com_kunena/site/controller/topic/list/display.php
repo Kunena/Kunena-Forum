@@ -96,11 +96,45 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
 
-		$this->setTitle($headerText);
-		$keywords = $this->config->board_title;
-		$this->setKeywords($keywords);
-		$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title;
-		$this->setDescription($description);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->title = $this->headerText;
+			$this->setTitle($headerText);
+		}
+
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$keywords = $this->config->board_title;
+			$this->setKeywords($keywords);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title ;
+			$this->setDescription($description);
+		}
 	}
 
 	/**
@@ -161,13 +195,17 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	/**
 	 * Get Message Actions.
 	 *
+	 * @param array $messages
+	 * @param array $actions
+	 *
 	 * @return array
 	 */
-	protected function getMessageActions(
-	 array $messages,
-	 $actions = array('approve', 'undelete', 'delete', 'permdelete')
-	) {
-		if (!$actions) { return null; }
+	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'permdelete'))
+	{
+		if (!$actions)
+		{
+			return null;
+		}
 
 		$options = array();
 		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
@@ -193,12 +231,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			}
 		}
 
-		$actions = array_filter(
-   $actions, function ($item) {
-	return !empty($item);
-  });
+		$actions = array_filter($actions, function ($item) { return !empty($item); });
 
-		if (count($actions) == 1) { return null; }
+		if (count($actions) == 1)
+		{
+			return null;
+		}
 
 		return $actions;
 	}

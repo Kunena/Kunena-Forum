@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Cpanel Controller
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminControllerTools extends KunenaController
 {
@@ -79,7 +79,8 @@ class KunenaAdminControllerTools extends KunenaController
 			return;
 		}
 
-		$ids = JFactory::getApplication()->input->get('prune_forum', array(), 'post', 'array'); // Array of integers
+		$ids = JFactory::getApplication()->input->get('prune_forum', array(), 'post', 'array');
+		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
@@ -324,7 +325,7 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($state === null)
 		{
 			// First run: get last message id (if topics were created with <K2.0)
-			$state          = new StdClass();
+			$state          = new StdClass;
 			$state->step    = 0;
 			$state->start   = 0;
 			$state->current = 0;
@@ -371,6 +372,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * Perform recount on statistics in smaller chunks.
 	 *
 	 * @return void
+	 *
 	 * @throws Exception
 	 */
 	public function dorecount()
@@ -530,6 +532,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @param $ajax
 	 *
 	 * @return void
+	 *
 	 */
 	protected function setResponse($response, $ajax)
 	{
@@ -562,7 +565,7 @@ class KunenaAdminControllerTools extends KunenaController
 	public function trashmenu()
 	{
 		require_once(KPATH_ADMIN . '/install/model.php');
-		$installer = new KunenaModelInstall();
+		$installer = new KunenaModelInstall;
 		$installer->deleteMenu();
 		$installer->createMenu();
 
@@ -687,6 +690,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 * @param   bool $stop
 	 *
 	 * @return boolean
+	 *
 	 */
 	protected function checkTimeout($stop = false)
 	{

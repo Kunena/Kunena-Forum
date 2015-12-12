@@ -169,22 +169,6 @@ abstract class KunenaForumTopicHelper
 	}
 
 	/**
-	 * @param mixed $ids
-	 * @param mixed $user
-	 *
-	 * @return array
-	 */
-	static public function getKeywords($ids = false, $user = false)
-	{
-		if ($ids === false)
-		{
-			$ids = array_keys(self::$_instances);
-		}
-
-		return KunenaKeywordHelper::getByTopics($ids, $user);
-	}
-
-	/**
 	 * @param mixed $categories
 	 * @param int   $limitstart
 	 * @param int   $limit
@@ -246,27 +230,6 @@ abstract class KunenaForumTopicHelper
 		if (!empty($params['posted'])) $whereuser[] = 'ut.posts>0';
 		if (!empty($params['favorited'])) $whereuser[] = 'ut.favorite=1';
 		if (!empty($params['subscribed'])) $whereuser[] = 'ut.subscribed=1';
-
-		if ($config->keywords || $config->userkeywords)
-		{
-			$kwids = array();
-
-			if (!empty($params['keywords']))
-			{
-				$keywords = KunenaKeywordHelper::getByKeywords($params['keywords']);
-				foreach ($keywords as $keyword) {
-					$kwids[] = $keyword->id;
-				}
-				$kwids = implode(',', $kwids);
-			}
-
-			//TODO: add support for keywords (example:)
-			/* SELECT tt.*, COUNT(*) AS score FROM #__kunena_keywords_map AS km
-			INNER JOIN #__kunena_topics` AS tt ON km.topic_id=tt.id
-			WHERE km.keyword_id IN (1,2) AND km.user_id IN (0,62)
-			GROUP BY topic_id
-			ORDER BY score DESC, tt.last_post_time DESC */
-		}
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (".implode(' OR ',$whereuser).')' : '');

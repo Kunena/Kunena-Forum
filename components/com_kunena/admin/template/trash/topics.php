@@ -1,33 +1,35 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Trash
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Trash
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewTrash $this
 
-
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-//JHtml::_('formbehavior.chosen', 'select');
-
 ?>
 
 <script type="text/javascript">
-	Joomla.orderTable = function() {
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $this->listOrdering; ?>') {
+	Joomla.orderTable = function()
+	{
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
+
+		if (order != '<?php echo $this->listOrdering; ?>')
+		{
 			dirn = 'asc';
-		} else {
+		}
+		else
+		{
 			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
@@ -139,7 +141,7 @@ JHtml::_('dropdown.init');
 					</tfoot>
 					<?php
 					$i = 0;
-					if($this->pagination->total > 0) :
+					if ($this->pagination->total > 0) :
 					foreach ($this->trash_items as $id => $row) : ?>
 						<tr>
 							<td><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
@@ -156,12 +158,8 @@ JHtml::_('dropdown.init');
 							<td colspan="10">
 								<div class="well center filter-state">
 									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-										<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
-?>
-										<?php if($this->filterActive || $this->pagination->total > 0) : ?>
+										<?php if ($this->filterActive || $this->pagination->total > 0) : ?>
 										<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-										<?php else : ?>
-											<?php //Currently no default state, might change later. ?>
 										<?php endif; ?>
 									</span>
 								</div>

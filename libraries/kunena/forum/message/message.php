@@ -245,6 +245,12 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		$message->subject = $this->subject;
 		$message->ip = $_SERVER ["REMOTE_ADDR"];
 
+		// Add IP to user.
+		if (empty($user->ip))
+		{
+			$user->ip = $_SERVER ["REMOTE_ADDR"];
+		}
+
 		if ($topic->hold)
 		{
 			// If topic was unapproved or deleted, use the same state for the new message
@@ -574,6 +580,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
+		if (KunenaFactory::getConfig()->read_only)
+		{
+			// Special case to ignore authorisation.
+			if ($action != 'read')
+			{
+				return null;
+			}
+		}
+
 		return !$this->tryAuthorise($action, $user, false);
 	}
 

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Installer
- * @subpackage Template
+ * @package     Kunena.Installer
+ * @subpackage  Template
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 ?>
@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 		<div>
 			<div id="kunena-description"><?php echo JText::_('COM_KUNENA_INSTALL_PREPARING'); ?></div>
 			<div class="progress progress-striped active">
-				<div id="kunena-progress" class="bar" style="width: 0%;"></div>
+				<div id="kunena-progress" class="bar" style="width: 0;"></div>
 			</div>
 		</div>
 	</div>
@@ -87,9 +87,8 @@ window.kunenainstall = function() {
 			}
 		}
 	});
+};
 
-
-}
 jQuery( document ).ready(function() {
 	jQuery('#kunena-toggle').click(function(e) {
 		jQuery('#kunena-container').toggleClass('hidden');

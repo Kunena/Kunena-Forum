@@ -117,6 +117,14 @@
 		<wrap-selection />
 	</button>
 
+	<button tag="soundcloud" name="soundcloud" title="COM_KUNENA_LIB_BBCODE_SOUNDCLOUD" alt="COM_KUNENA_LIB_BBCODE_SOUNDCLOUD_ALT">
+		<wrap-selection />
+	</button>
+
+	<button tag="instagram" name="instagram" title="COM_KUNENA_LIB_BBCODE_INSTAGRAM" alt="COM_KUNENA_LIB_BBCODE_INSTAGRAM_ALT">
+		<wrap-selection />
+	</button>
+
 	<separator name="misc" />
 
 	<button name="help" title="COM_KUNENA_EDITOR_HELP" alt="COM_KUNENA_EDITOR_HELPLINE_HELP">

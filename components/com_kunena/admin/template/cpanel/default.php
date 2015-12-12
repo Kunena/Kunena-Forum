@@ -1,19 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage CPanel
+ * @package     Kunena.Administrator.Template
+ * @subpackage  CPanel
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
-
-// @var KunenaAdminViewCpanel $this
-
 ?>
-
 <div id="kunena" class="admin override">
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
@@ -104,18 +100,31 @@ defined('_JEXEC') or die();
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</dt>
 							<dd>&copy; 2008 - 2015 Kunena, All rights reserved.</dd>
-
 							<hr class="hr-condensed">
-
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_LABEL_LICENSE') ?>:</dt>
 							<dd>GNU General Public License</dd>
 							<hr class="hr-condensed">
 							<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_MOREINFO') ?>:</dt>
 							<dd><a href="http://www.kunena.org/terms-of-use" target="_blank">http://www.kunena.org/terms-of-use</a></dd>
+							<hr class="hr-condensed">
+							<dt><?php echo JText::_('Check Updates') ?>:</dt>
+							<dd><?php echo KunenaAdminControllerCpanel::onGetIcons();?></dd>
 						</dl>
 					</div>
 				</div>
 		</section>
+		<div tabindex="-1" class="modal hide fade" id="kunena_changelog" role="dialog">
+			<div class="modal-header">
+				<button class="close" type="button" data-dismiss="modal">×</button>
+				<h3>Changelog</h3>
+			</div>
+			<div class="modal-body">
+				<iframe src="http://www.jellekoksolutions.nl/docs2/en/basics/changelog" width="100%" height="400px" frameborder="0"></iframe>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal">Close</button>
+			</div>
+		</div>
 		<div class="pull-right small">
 			<?php echo KunenaVersion::getLongVersionHTML(); ?>
 		</div>

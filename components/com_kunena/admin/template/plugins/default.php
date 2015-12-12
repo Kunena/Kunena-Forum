@@ -20,9 +20,9 @@ $user = JFactory::getUser();
 <script type="text/javascript">
 	Joomla.orderTable = function()
 	{
-		table = document.getElementById("sortTable");
-		direction = document.getElementById("directionTable");
-		order = table.options[table.selectedIndex].value;
+		var table = document.getElementById("sortTable");
+		var direction = document.getElementById("directionTable");
+		var order = table.options[table.selectedIndex].value;
 		if (order != '<?php echo $this->listOrdering; ?>')
 		{
 			dirn = 'asc';
@@ -140,7 +140,7 @@ $user = JFactory::getUser();
 					<?php
 					$i = 0;
 					$k = 0;
-					if($this->pagination->total > 0) :
+					if ($this->pagination->total > 0) :
 					foreach ($this->items as $i => $item) :
 					$canEdit = $user->authorise('core.edit', 'com_plugins');
 					$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || $item->checked_out == 0;
@@ -184,12 +184,8 @@ $user = JFactory::getUser();
 							<td colspan="10">
 								<div class="well center filter-state">
 									<span><?php echo JText::_('COM_KUNENA_FILTERACTIVE'); ?>
-										<?php // <a href="#" onclick="document.getElements('.filter').set('value', '');this.form.submit();return false;"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></a>
-?>
 										<?php if($this->filterActive || $this->pagination->total > 0) : ?>
 											<button class="btn" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-										<?php else : ?>
-											<?php //Currently no default state, might change later. ?>
 										<?php endif; ?>
 									</span>
 								</div>

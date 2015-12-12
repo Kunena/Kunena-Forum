@@ -67,7 +67,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
 			{
-				$this->redirectBack();
+				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 
@@ -137,7 +137,6 @@ class KunenaControllerUser extends KunenaController
 	/**
 	 * @throws KunenaExceptionAuthorise
 	 *
-	 * @todo Allow moderators to save another users profile (without account info).
 	 */
 	public function save()
 	{
@@ -155,9 +154,15 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$errors = 0;
-
-		// Save Joomla user.
-		$this->user = JFactory::getUser();
+		$userid = JFactory::getApplication()->input->getInt('userid');
+		if (!$userid)
+		{
+			$this->user = JFactory::getUser();
+		}
+		else
+		{
+			$this->user = JFactory::getUser($userid);
+		}
 		$success    = $this->saveUser();
 
 		if (!$success)
@@ -189,25 +194,32 @@ class KunenaControllerUser extends KunenaController
 		// Save Kunena user.
 		$this->saveProfile();
 		$this->saveSettings();
-		$success = $this->me->save();
+		$success = $this->user->save();
 
 		if (!$success)
 		{
 			$errors++;
-			$this->app->enqueueMessage($this->me->getError(), 'error');
+			$this->app->enqueueMessage($this->user->getError(), 'error');
 		}
 
 		JPluginHelper::importPlugin('system');
 
 		$dispatcher = JEventDispatcher::getInstance();
-		$dispatcher->trigger('OnAfterKunenaProfileUpdate', array($this->me, $success));
+		$dispatcher->trigger('OnAfterKunenaProfileUpdate', array($this->user, $success));
 
 		if ($errors)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
 		}
 
-		$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
+		if ($this->profile->userid == $this->me->userid)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
+		}
+		else
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED_BY_MODERATOR'));
+		}
 
 		if ($return)
 		{
@@ -330,9 +342,9 @@ class KunenaControllerUser extends KunenaController
 			$user->icq          = '';
 			$user->aim          = '';
 			$user->yim          = '';
-			$user->msn          = '';
+			$user->microsoft    = '';
 			$user->skype        = '';
-			$user->gtalk        = '';
+			$user->google       = '';
 			$user->twitter      = '';
 			$user->facebook     = '';
 			$user->myspace      = '';
@@ -343,6 +355,14 @@ class KunenaControllerUser extends KunenaController
 			$user->blogspot     = '';
 			$user->flickr       = '';
 			$user->bebo         = '';
+			$user->instagram    = '';
+			$user->qq           = '';
+			$user->qzone        = '';
+			$user->weibo        = '';
+			$user->wechat       = '';
+			$user->apple        = '';
+			$user->vk           = '';
+			$user->telegram     = '';
 			$user->websitename  = '';
 			$user->websiteurl   = '';
 			$user->signature    = '';
@@ -688,12 +708,14 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveProfile()
 	{
+		$this->user = KunenaFactory::getUser(JFactory::getApplication()->input->getInt('userid', 0));
+
 		if (JFactory::getApplication()->input->get('signature', null) === null)
 		{
 			return;
 		}
 
-		$this->me->personalText = JFactory::getApplication()->input->getString('personaltext', '');
+		$this->user->personalText = JFactory::getApplication()->input->getString('personaltext', '');
 		$birthdate              = JFactory::getApplication()->input->getString('birthdate');
 
 		if (!$birthdate)
@@ -701,28 +723,36 @@ class KunenaControllerUser extends KunenaController
 			$birthdate = JFactory::getApplication()->input->getInt('birthdate1', '0000') . '-' . JFactory::getApplication()->input->getInt('birthdate2', '00') . '-' . JFactory::getApplication()->input->getInt('birthdate3', '00');
 		}
 
-		$this->me->birthdate   = $birthdate;
-		$this->me->location    = trim(JFactory::getApplication()->input->getString('location', ''));
-		$this->me->gender      = JFactory::getApplication()->input->getInt('gender', '');
-		$this->me->icq         = trim(JFactory::getApplication()->input->getString('icq', ''));
-		$this->me->aim         = trim(JFactory::getApplication()->input->getString('aim', ''));
-		$this->me->yim         = trim(JFactory::getApplication()->input->getString('yim', ''));
-		$this->me->msn         = trim(JFactory::getApplication()->input->getString('msn', ''));
-		$this->me->skype       = trim(JFactory::getApplication()->input->getString('skype', ''));
-		$this->me->gtalk       = trim(JFactory::getApplication()->input->getString('gtalk', ''));
-		$this->me->twitter     = trim(JFactory::getApplication()->input->getString('twitter', ''));
-		$this->me->facebook    = trim(JFactory::getApplication()->input->getString('facebook', ''));
-		$this->me->myspace     = trim(JFactory::getApplication()->input->getString('myspace', ''));
-		$this->me->linkedin    = trim(JFactory::getApplication()->input->getString('linkedin', ''));
-		$this->me->delicious   = trim(JFactory::getApplication()->input->getString('delicious', ''));
-		$this->me->friendfeed  = trim(JFactory::getApplication()->input->getString('friendfeed', ''));
-		$this->me->digg        = trim(JFactory::getApplication()->input->getString('digg', ''));
-		$this->me->blogspot    = trim(JFactory::getApplication()->input->getString('blogspot', ''));
-		$this->me->flickr      = trim(JFactory::getApplication()->input->getString('flickr', ''));
-		$this->me->bebo        = trim(JFactory::getApplication()->input->getString('bebo', ''));
-		$this->me->websitename = JFactory::getApplication()->input->getString('websitename', '');
-		$this->me->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
-		$this->me->signature   = JFactory::getApplication()->input->get('signature', '', 'post', 'string', 'raw'); // RAW input
+		$this->user->birthdate   = $birthdate;
+		$this->user->location    = trim(JFactory::getApplication()->input->getString('location', ''));
+		$this->user->gender      = JFactory::getApplication()->input->getInt('gender', '');
+		$this->user->icq         = trim(JFactory::getApplication()->input->getString('icq', ''));
+		$this->user->aim         = trim(JFactory::getApplication()->input->getString('aim', ''));
+		$this->user->yim         = trim(JFactory::getApplication()->input->getString('yim', ''));
+		$this->user->microsoft   = trim(JFactory::getApplication()->input->getString('microsoft', ''));
+		$this->user->skype       = trim(JFactory::getApplication()->input->getString('skype', ''));
+		$this->user->google      = trim(JFactory::getApplication()->input->getString('google', ''));
+		$this->user->twitter     = trim(JFactory::getApplication()->input->getString('twitter', ''));
+		$this->user->facebook    = trim(JFactory::getApplication()->input->getString('facebook', ''));
+		$this->user->myspace     = trim(JFactory::getApplication()->input->getString('myspace', ''));
+		$this->user->linkedin    = trim(JFactory::getApplication()->input->getString('linkedin', ''));
+		$this->user->delicious   = trim(JFactory::getApplication()->input->getString('delicious', ''));
+		$this->user->friendfeed  = trim(JFactory::getApplication()->input->getString('friendfeed', ''));
+		$this->user->digg        = trim(JFactory::getApplication()->input->getString('digg', ''));
+		$this->user->blogspot    = trim(JFactory::getApplication()->input->getString('blogspot', ''));
+		$this->user->flickr      = trim(JFactory::getApplication()->input->getString('flickr', ''));
+		$this->user->bebo        = trim(JFactory::getApplication()->input->getString('bebo', ''));
+		$this->user->instagram   = trim(JFactory::getApplication()->input->getString('instagram', ''));
+		$this->user->qq          = trim(JFactory::getApplication()->input->getString('qq', ''));
+		$this->user->qzone       = trim(JFactory::getApplication()->input->getString('qzone', ''));
+		$this->user->weibo       = trim(JFactory::getApplication()->input->getString('weibo', ''));
+		$this->user->wechat      = trim(JFactory::getApplication()->input->getString('wechat', ''));
+		$this->user->apple       = trim(JFactory::getApplication()->input->getString('apple', ''));
+		$this->user->vk          = trim(JFactory::getApplication()->input->getString('vk', ''));
+		$this->user->telegram    = trim(JFactory::getApplication()->input->getString('telegram', ''));
+		$this->user->websitename = JFactory::getApplication()->input->getString('websitename', '');
+		$this->user->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
+		$this->user->signature   = JFactory::getApplication()->input->get('signature', '', 'post', 'string', 'raw'); // RAW input
 	}
 
 	/**
@@ -769,7 +799,10 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($avatarFile['tmp_name']))
 		{
-			$this->deleteOldAvatars();
+			if ($avatarFile['size'] < intval(KunenaConfig::getInstance()->avatarsize) * 1024)
+			{
+				$this->deleteOldAvatars();
+			}
 
 			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
 
@@ -800,7 +833,6 @@ class KunenaControllerUser extends KunenaController
 			else
 			{
 				$this->me->avatar = $current_avatar;
-
 				return false;
 			}
 		}
@@ -821,16 +853,18 @@ class KunenaControllerUser extends KunenaController
 
 	protected function saveSettings()
 	{
+		$this->user = KunenaFactory::getUser(JFactory::getApplication()->input->getInt('userid', 0));
+
 		if ($this->app->input->get('hidemail', null) === null)
 		{
 			return;
 		}
 
-		$this->me->ordering     = $this->app->input->getInt('messageordering', '');
-		$this->me->hideEmail    = $this->app->input->getInt('hidemail', '');
-		$this->me->showOnline   = $this->app->input->getInt('showonline', '');
-		$this->me->canSubscribe = $this->app->input->getInt('cansubscribe', '');
-		$this->me->userListtime = $this->app->input->getInt('userlisttime', '');
+		$this->user->ordering     = $this->app->input->getInt('messageordering', '');
+		$this->user->hideEmail    = $this->app->input->getInt('hidemail', '');
+		$this->user->showOnline   = $this->app->input->getInt('showonline', '');
+		$this->user->canSubscribe = $this->app->input->getInt('cansubscribe', '');
+		$this->user->userListtime = $this->app->input->getInt('userlisttime', '');
 	}
 
 	public function delfile()

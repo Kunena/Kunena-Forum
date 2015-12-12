@@ -157,11 +157,11 @@ class KunenaBbcode extends NBBC_BBCode
 
 				if ($uri->isSSL())
 				{
-					return '<iframe width="425" height="344" src="https://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="https://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
 				}
 				else
 				{
-					return '<iframe width="425" height="344" src="http://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe>';
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="http://www.youtube.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
 				}
 			}
 		}
@@ -339,11 +339,11 @@ class KunenaBbcode extends NBBC_BBCode
 
 				// We have a full, complete, and properly-formatted URL, with protocol.
 				// Now we need to apply the $this->url_pattern template to turn it into HTML.
-				$params = Joomla\String\String::parse_url($url);
+				$params = JString::parse_url($url);
 
 				if (!$invalid && substr($url, 0, 7) == 'mailto:')
 				{
-					$email = Joomla\String\String::substr($url, 7);
+					$email = Joomla\String\StringHelper::substr($url, 7);
 
 					if ( $this->canCloakEmail($params) )
 					{
@@ -1008,6 +1008,24 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			'allow_in' => array('listitem', 'block', 'columns'),
 			'content' => BBCODE_REQUIRED,
 			'plain_content' => array(),
+		),
+
+		'soundcloud' => array(
+			'mode'     => BBCODE_MODE_LIBRARY,
+			'method'   => 'DoSoundcloud',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'class'    => 'block',
+			'allow'    => array('colortext' => '/^[\w\d.-_]*$/'),
+			'content'  => BBCODE_PROHIBIT,
+		),
+
+		'instagram' => array(
+			'mode'     => BBCODE_MODE_LIBRARY,
+			'method'   => 'DoInstagram',
+			'allow_in' => array('listitem', 'block', 'columns'),
+			'class'    => 'block',
+			'allow'    => array('colortext' => '/^[\w\d.-_]*$/'),
+			'content'  => BBCODE_PROHIBIT,
 		),
 	);
 
@@ -1967,7 +1985,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$vid_maxheight = 720; // max. display size
 		$vid_sizemax = 100; // max. display zoom in percent
 
-		$vid ["type"] = (isset ( $params ["type"] )) ? Joomla\String\String::strtolower ( $params ["type"] ) : '';
+		$vid ["type"] = (isset ( $params ["type"] )) ? Joomla\String\StringHelper::strtolower ( $params ["type"] ) : '';
 		$vid ["param"] = (isset ( $params ["param"] )) ? $params ["param"] : '';
 
 		if (! $vid ["type"])
@@ -1994,7 +2012,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			if ($vid_auto)
 			{
-				$vid ["type"] = Joomla\String\String::strtolower ( $vid_regs [1] );
+				$vid ["type"] = Joomla\String\StringHelper::strtolower ( $vid_regs [1] );
 
 				switch ($vid ["type"])
 				{
@@ -2017,7 +2035,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			'metacafe' => array ('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
-			'myspace' => array ('flash', 430, 346, 0, 0, 'http://lads.myspace.com/videos/vplayer.swf', 'VideoID=(\d*)', array (array (6, 'flashvars', 'm=%vcode%&v=2&type=video' ) ) ),
+			'myspace' => array ('iframe', 430, 346, 0, 0, 'http://media.myspace.com/play/video/%vcode%', '', array (array (6, 'wmode', 'transparent' ) ) ),
 
 			'rutube' => array ('flash', 400, 353, 0, 0, 'http://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)' ),
 
@@ -2171,7 +2189,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$vid_par3 = array ();
 		foreach ( $params as $vid_key => $vid_value )
 		{
-			if (in_array ( Joomla\String\String::strtolower ( $vid_key ), $vid_allowpar ))
+			if (in_array ( Joomla\String\StringHelper::strtolower ( $vid_key ), $vid_allowpar ))
 			{
 				array_push ( $vid_par3, array (6, $vid_key, $bbcode->HTMLEncode ( $vid_value ) ) );
 			}
@@ -2199,7 +2217,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 		}
 
-		$tag_new = '<object';
+		$tag_new = '<div class="embed-responsive embed-responsive-16by9"> <object';
 
 		foreach ( $vid_object as $vid_data )
 		{
@@ -2220,7 +2238,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$tag_new .= $vid_data;
 		}
 
-		$tag_new .= ' /></object>';
+		$tag_new .= ' /></object></div>';
 
 		return $tag_new;
 	}
@@ -2328,17 +2346,21 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$layout = KunenaLayout::factory('BBCode/Attachment')
 			->set('attachment', $attachment)
 			->set('canLink', $bbcode->autolink_disable == 0);
+		$config = KunenaConfig::getInstance();
+		$bbcode->parent->inline_attachments[$attachment->id] = $attachment;
 
 		if (!$attachment->exists() || !$attachment->getPath())
 		{
 			return (string) $layout->setLayout('deleted');
 		}
+		elseif (!$attachment->isAuthorised() && !$config->showimgforguest && $attachment->id != '0')
+		{
+			return null;
+		}
 		elseif (!$attachment->isAuthorised())
 		{
 			return (string) $layout->setLayout('unauthorised');
 		}
-
-		$bbcode->parent->inline_attachments[$attachment->id] = $attachment;
 
 		if ($displayImage && $attachment->isImage())
 		{
@@ -2874,6 +2896,46 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$ebay_item = $cache->call(array('KunenaBbcodeLibrary', 'getEbayItem'), $ItemID);
 
 		return $ebay_item;
+	}
+
+	/**
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
+	public function DoSoundcloud($bbcode, $action, $name, $default, $params, $content)
+	{
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
+
+		$config = KunenaFactory::getConfig();
+
+
+		$content = strip_tags($content);
+
+		return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+	}
+
+	/**
+	 * @param $content
+	 *
+	 * @return bool|string
+	 */
+	public function DoInstagram($bbcode, $action, $name, $default, $params, $content)
+	{
+		if ($action == BBCODE_CHECK)
+		{
+			return true;
+		}
+
+		$config = KunenaFactory::getConfig();
+
+		$content = strip_tags($content);
+
+
+		return '<iframe src="//instagram.com/p/'. $content .'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
 	}
 }
 

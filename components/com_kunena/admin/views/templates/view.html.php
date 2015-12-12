@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -115,7 +115,7 @@ class KunenaAdminViewTemplates extends KunenaView
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/css/custom.css';
 
-		if(!file_exists($file))
+		if (!file_exists($file))
 		{
 			$fp = fopen($file, "w");
 			fwrite($fp, "");

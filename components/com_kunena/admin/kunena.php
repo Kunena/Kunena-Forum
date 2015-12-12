@@ -2,18 +2,18 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
+ * @package    Kunena.Administrator
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright  (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // Access check.
 if (!JFactory::getUser()->authorise('core.manage', 'com_kunena'))
 {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 404);
 }
 
 // Check if installation hasn't been completed.
@@ -35,7 +35,7 @@ if ($app->input->getCmd('view') == 'install' || !class_exists('KunenaForum') || 
 	// Run installer instead..
 	require_once __DIR__ . '/install/controller.php';
 
-	$controller = new KunenaControllerInstall();
+	$controller = new KunenaControllerInstall;
 
 	// TODO: execute special task that checks what's wrong
 	$controller->execute($app->input->getCmd('task'));

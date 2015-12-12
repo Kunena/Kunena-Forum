@@ -466,7 +466,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	public function deleteAlias($alias)
 	{
 		// Do not delete valid alias.
-		if (Joomla\String\String::strtolower($this->alias) == Joomla\String\String::strtolower($alias))
+		if (Joomla\String\StringHelper::strtolower($this->alias) == Joomla\String\StringHelper::strtolower($alias))
 		{
 			return false;
 		}
@@ -721,6 +721,15 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
+		if (KunenaFactory::getConfig()->read_only)
+		{
+			// Special case to ignore authorisation.
+			if ($action != 'read')
+			{
+				return null;
+			}
+		}
+
 		return !$this->tryAuthorise($action, $user, false);
 	}
 
@@ -1228,7 +1237,6 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		// Delete messages
 		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
 		// TODO: delete attachments
-		// TODO: delete keywords
 		// Delete topics
 		$queries[] = "DELETE FROM #__kunena_topics WHERE category_id={$db->quote($this->id)}";
 

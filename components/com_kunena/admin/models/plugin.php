@@ -63,9 +63,10 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Method to get the record form.
 	 *
 	 * @param   array   $data     Data for the form.
-	 * @param   boolean $loadData True if the form is to load its own data (default case), false if not.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
 	 * @return  JForm    A JForm object on success, false on failure
+	 *
 	 * @since   1.6
 	 */
 	public function getForm($data = array(), $loadData = true)
@@ -117,6 +118,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return  mixed  The data for the form.
+	 *
 	 * @since   1.6
 	 */
 	protected function loadFormData()
@@ -137,7 +139,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Method to allow derived classes to preprocess the data.
 	 *
-	 * @param   string $context The context identifier.
+	 * @param   string  $context  The context identifier.
 	 * @param   mixed  &$data   The data to be processed. It gets altered directly.
 	 *
 	 * @return  void
@@ -163,7 +165,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	/**
 	 * Method to get a single record.
 	 *
-	 * @param   integer $pk The id of the primary key.
+	 * @param   integer  $pk  The id of the primary key.
 	 *
 	 * @return  mixed  Object on success, false on failure.
 	 */
@@ -234,6 +236,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return  void
+	 *
 	 * @since   1.6
 	 */
 	protected function populateState()
@@ -288,6 +291,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 		}
 
 		$formFile = KunenaPath::clean(JPATH_PLUGINS . '/' . $folder . '/' . $element . '/' . $element . '.xml');
+
 		if (!is_file($formFile))
 		{
 			throw new Exception(JText::sprintf('COM_PLUGINS_ERROR_FILE_NOT_FOUND', $element . '.xml'));
@@ -336,6 +340,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   object $table A record object.
 	 *
 	 * @return  array  An array of conditions to add to add to ordering queries.
+	 *
 	 * @since   1.6
 	 */
 	protected function getReorderConditions($table)
@@ -353,6 +358,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * @param   array $data The form data.
 	 *
 	 * @return  boolean  True on success.
+	 *
 	 * @since   1.6
 	 */
 	public function save($data)
@@ -370,6 +376,7 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Get the necessary data to load an item help screen.
 	 *
 	 * @return  object  An object with key, url, and local properties for loading the item help screen.
+	 *
 	 * @since   1.6
 	 */
 	public function getHelp()
@@ -381,6 +388,11 @@ class KunenaAdminModelPlugin extends JModelAdmin
 	 * Custom clean cache method, plugins are cached in 2 places for different clients
 	 *
 	 * @since   1.6
+	 *
+	 * @param null $group
+	 *
+	 * @param int  $client_id
+	 *
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{

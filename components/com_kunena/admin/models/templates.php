@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Models
+ * @package     Kunena.Administrator
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -17,7 +17,7 @@ jimport('joomla.html.pagination');
 /**
  * Templates Model for Kunena
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminModelTemplates extends JModelAdmin
 {
@@ -68,6 +68,11 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @see JModelForm::getForm()
+	 *
+	 * @param array $data
+	 * @param bool  $loadData
+	 *
+	 * @return bool|mixed
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -103,6 +108,10 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $data;
 	}
 
+	/**
+	 * @return array
+	 *
+	 */
 	function getTemplates()
 	{
 		//get template xml file info
@@ -126,6 +135,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return object
+	 *
 	 */
 	function getTotal()
 	{
@@ -134,6 +144,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return object
+	 *
 	 */
 	function getStart()
 	{
@@ -142,6 +153,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return boolean|stdClass
+	 *
 	 */
 	function getTemplatedetails()
 	{
@@ -159,6 +171,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return null|string
+	 *
 	 */
 	function getFileLessParsed()
 	{
@@ -178,6 +191,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return null|string
+	 *
 	 */
 	function getFileContentParsed()
 	{
@@ -197,6 +211,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return mixed
+	 *
 	 */
 	function getFTPcredentials()
 	{
@@ -214,6 +229,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 	 * @param   bool   $resetPage
 	 *
 	 * @return mixed|null
+	 *
 	 * @throws Exception
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
@@ -244,6 +260,7 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 	/**
 	 * @return mixed
+	 *
 	 */
 	public function getPagination()
 	{
@@ -281,5 +298,4 @@ class KunenaAdminModelTemplates extends JModelAdmin
 
 		return md5($this->context . ':' . $id);
 	}
-
 }

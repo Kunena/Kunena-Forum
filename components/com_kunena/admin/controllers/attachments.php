@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Attachments Controller
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminControllerAttachments extends KunenaController
 {
@@ -42,7 +42,8 @@ class KunenaAdminControllerAttachments extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (!$cid)

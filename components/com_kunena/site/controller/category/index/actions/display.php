@@ -48,9 +48,8 @@ class ComponentKunenaControllerCategoryIndexActionsDisplay extends KunenaControl
 		$this->categoryButtons = new JObject;
 
 		// Is user allowed to post new topic?
-		if ($this->category->getNewTopicCategory()->exists()) {
-			$this->categoryButtons->set(
-    'create',
+		if ($this->category->isAuthorised('topic.create')) {
+			$this->categoryButtons->set('create',
 				$this->getButton(sprintf($layout, 'create'), 'create', 'topic', 'communication', true)
 			);
 		}

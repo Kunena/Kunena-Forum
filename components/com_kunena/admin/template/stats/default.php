@@ -1,21 +1,24 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Stats
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Stats
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewStats $this
 
-
 $document = JFactory::getDocument();
 $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.css');
-if (JFactory::getLanguage()->isRTL()) { $document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css'); }
+
+if (JFactory::getLanguage()->isRTL())
+{
+	$document->addStyleSheet(JUri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+}
 ?>
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
@@ -32,10 +35,7 @@ if (JFactory::getLanguage()->isRTL()) { $document->addStyleSheet(JUri::base(true
 
 <table class="kadmin-stat">
 	<caption><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></caption>
-	<col class="col1" />
-	<col class="col2" />
-	<col class="col1" />
-	<col class="col2" />
+
 	<thead>
 	<tr>
 		<th><?php echo JText::_('COM_KUNENA_STATISTIC');?></th>
@@ -86,10 +86,6 @@ $k = 0;
 <?php foreach ($this->top as $top) : ?>
 <h2><?php echo $top[0]->title ?></h2>
 <table class="kadmin-stat">
-	<col class="col1" style="width:1%;" />
-	<col class="col2" />
-	<col class="col2" style="width:40%;" />
-	<col class="col2" style="width:10%;" />
 	<tbody>
 		<tr>
 			<th>#</th>

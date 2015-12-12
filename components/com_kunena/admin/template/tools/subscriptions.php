@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage SyncUsers
+ * @package     Kunena.Administrator.Template
+ * @subpackage  SyncUsers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -20,8 +20,8 @@ defined('_JEXEC') or die();
 			<div class="sidebar-nav"><?php include KPATH_ADMIN . '/template/common/menu.php'; ?></div>
 		</div>
 	</div>
-	<div id="j-main-container" class="span10">
 
+	<div id="j-main-container" class="span10">
 		<div class="kadmin-functitle icon-config"><?php echo JText::_('Subscriptions'); ?></div>
 			<table class="adminform">
 				<tr>
@@ -65,7 +65,6 @@ defined('_JEXEC') or die();
 				<?php endforeach ?>
 			</table>
 		</div>
-	</div>
 
 	<div class="pull-right small">
 		<?php echo KunenaVersion::getLongVersionHTML(); ?>

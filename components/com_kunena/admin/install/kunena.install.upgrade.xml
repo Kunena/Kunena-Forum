@@ -219,10 +219,10 @@
 			</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD KEY `currvisit` ( `currvisit` )</query>
 			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
-			<phpfile name="1.6.0-2010-05-30_attachments"></phpfile>
-			<phpfile name="1.6.0-2010-05-30_configuration"></phpfile>
-			<phpfile name="1.6.0-2010-05-30_polls"></phpfile>
-			<phpfile name="1.6.0-2010-05-30_timezone"></phpfile>
+			<phpfile name="1.6.0-2010-05-30_attachments"/>
+			<phpfile name="1.6.0-2010-05-30_configuration"/>
+			<phpfile name="1.6.0-2010-05-30_polls"/>
+			<phpfile name="1.6.0-2010-05-30_timezone"/>
 		</version>
 		<version version="1.6.0-ALPHA2"
 		         versiondate="2010-06-21"
@@ -449,7 +449,7 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `alias` varchar(255) NOT NULL AFTER
 				`name`;
 			</query>
-			<phpfile name="2.0.0-2011-12-14_aliases"></phpfile>
+			<phpfile name="2.0.0-2011-12-14_aliases"/>
 		</version>
 		<version version="2.0.0-DEV8"
 		         versiondate="2011-12-18"
@@ -482,7 +482,7 @@
 		<version version="2.0.0-DEV15"
 		         versiondate="2012-04-13"
 		         versionname="Internal">
-			<phpfile name="2.0.0-2012-04-13_menu"></phpfile>
+			<phpfile name="2.0.0-2012-04-13_menu"/>
 		</version>
 		<version version="2.0.0-BETA1"
 		         versiondate="2012-04-24"
@@ -495,18 +495,18 @@
 				default 'joomla.level' AFTER `locked`;
 			</query>
 			<query>UPDATE `#__kunena_categories` SET accesstype='joomla.group' WHERE accesstype='none';</query>
-			<phpfile name="2.0.0-2012-05-30_configuration"></phpfile>
+			<phpfile name="2.0.0-2012-05-30_configuration"/>
 		</version>
 		<version version="2.0.0-RC2"
 		         versiondate="2012-06-10"
 		         versionname="E-Prime">
-			<phpfile name="2.0.0-2012-06-10_pubwrite"></phpfile>
+			<phpfile name="2.0.0-2012-06-10_pubwrite"/>
 		</version>
 		<version version="2.0.0-RC3-DEV2"
 		         versiondate="2012-06-10"
 		         versionname="Internal">
 			<query>UPDATE `#__kunena_sessions` SET `allowed` = 'na';</query>
-			<phpfile name="2.0.0-2012-06-10_newindication"></phpfile>
+			<phpfile name="2.0.0-2012-06-10_newindication"/>
 		</version>
 		<version version="2.0.0-RC3-DEV3"
 		         versiondate="2012-06-17"
@@ -665,6 +665,33 @@
 		         versiondate="2015-07-19"
 		         versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE COLUMN `canSubscribe` `canSubscribe` tinyint(1) NOT NULL default '-1'</query>
+		</version>
+		<version version="4.0.7-DEV2"
+		         versiondate="2015-10-16"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE COLUMN `iconset` `iconset` varchar(255) NOT NULL default 'default'</query>
+			<query mode="silenterror">UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset=''</query>
+		</version>
+		<version version="5.0.0-ALPHA2"
+		         versiondate="2015-12-02"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE COLUMN `msn` `microsoft` varchar(50) NULL</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE COLUMN `gtalk` `google` varchar(50) NULL</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users`
+				ADD `telegram` VARCHAR( 50 ) NULL AFTER `microsoft` ,
+				ADD `vk` VARCHAR( 50 ) NULL AFTER `telegram` ,
+				ADD `instagram` VARCHAR( 50 ) NULL AFTER `digg` ,
+				ADD `qq` VARCHAR( 50 ) NULL AFTER `instagram` ,
+				ADD `qzone` VARCHAR( 50 ) NULL AFTER `qq` ,
+				ADD `weibo` VARCHAR( 50 ) NULL AFTER `qzone` ,
+				ADD `wechat` VARCHAR( 50 ) NULL AFTER `weibo` ,
+				ADD `apple` VARCHAR( 50 ) NULL AFTER `wechat` ;
+			</query>
+		</version>
+		<version version="5.0.0-ALPHA3"
+		         versiondate="2015-12-09"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `ip` VARCHAR( 13 ) NOT NULL AFTER `thankyou`;</query>
 		</version>
 		<version version="@kunenaversion@"
 		         versiondate="@kunenaversiondate@"

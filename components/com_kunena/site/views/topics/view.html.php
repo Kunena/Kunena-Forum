@@ -397,6 +397,13 @@ class KunenaViewTopics extends KunenaView
 		$total    = intval(($this->total - 1) / $limit) + 1;
 		$pagesTxt = "{$page}/{$total}";
 
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params;
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
 		if ($type == 'default')
 		{
 			switch ($this->state->get('list.mode'))
@@ -424,15 +431,39 @@ class KunenaViewTopics extends KunenaView
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
 			}
 
-			$this->title = $this->headerText;
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$this->title = $this->headerText;
+				$title = "{$this->title} ({$pagesTxt})";
+				$this->setTitle($title);
+			}
 
-			$title = "{$this->title} ({$pagesTxt})";
-			$this->setTitle($title);
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+				$this->setKeywords($keywords);
+			}
 
-			// TODO: add keywords
-
-			$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
-			$this->setDescription($description);
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+				$this->setDescription($description);
+			}
 		}
 		elseif ($type == 'user')
 		{
@@ -457,15 +488,39 @@ class KunenaViewTopics extends KunenaView
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 			}
 
-			$this->title = $this->headerText;
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$this->title = $this->headerText;
+				$title = "{$this->title} ({$pagesTxt})";
+				$this->setTitle($title);
+			}
 
-			$title = "{$this->title} ({$pagesTxt})";
-			$this->setTitle($title);
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+				$this->setKeywords($keywords);
+			}
 
-			// TODO: add keywords
-
-			$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
-			$this->setDescription($description);
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+				$this->setDescription($description);
+			}
 		}
 		elseif ($type == 'posts')
 		{
@@ -488,15 +543,39 @@ class KunenaViewTopics extends KunenaView
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 			}
 
-			$this->title = $this->headerText;
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$this->title = $this->headerText;
+				$title = "{$this->title} ({$pagesTxt})";
+				$this->setTitle($title);
+			}
 
-			$title = "{$this->title} ({$pagesTxt})";
-			$this->setTitle($title);
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+				$this->setKeywords($keywords);
+			}
 
-			// TODO: add keywords
-
-			$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
-			$this->setDescription($description);
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+				$this->setDescription($description);
+			}
 		}
 	}
 }

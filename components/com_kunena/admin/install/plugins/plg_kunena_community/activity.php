@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @copyright (C) 2013 - 2014 iJoomla, Inc. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
@@ -24,7 +24,7 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	public function onAfterPost($message)
 	{
-		if (\Joomla\String\String::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 			CFactory::load('libraries', 'userpoints');
 			CUserPoints::assignPoint('com_kunena.thread.new');
 		}
@@ -62,7 +62,7 @@ class KunenaActivityCommunity extends KunenaActivity
 
 	public function onAfterReply($message)
 	{
-		if (\Joomla\String\String::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 			CFactory::load('libraries', 'userpoints');
 			CUserPoints::assignPoint('com_kunena.thread.reply');
 		}

@@ -104,7 +104,7 @@ jQuery(document).ready(function (){
 		var videowidth = jQuery('#modal-video-width').val();
 		var videoheight = jQuery('#modal-video-height').val();
 		var videosize = jQuery('#modal-video-size').val();
-		var kvideoproviderlist = jQuery("#kvideoprovider-list-modal option:selected").val(); 
+		var kvideoproviderlist = jQuery("#kvideoprovider-list-modal option:selected").val();
 
 		var width = '425';
 		var height = '344';
@@ -137,7 +137,7 @@ jQuery(document).ready(function (){
 				{ openWith:'[video '+size+' '+width+' '+height+' type='+kvideoproviderlist+']'+providerid,
 				closeWith:'[/video]' }
 			);
-			return false;  
+			return false;
 		}
 	});
 
@@ -213,5 +213,13 @@ jQuery(document).ready(function (){
 
 	if (!kunena_showdividertag) {
 		jQuery('.markItUpSeparator').remove();
+	}
+
+	if (!kunena_showinstagramtag) {
+		jQuery('.instagrambutton').remove();
+	}
+
+	if (!kunena_showsoundcloudtag) {
+		jQuery('.soundcloudbutton').remove();
 	}
 });

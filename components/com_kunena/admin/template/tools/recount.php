@@ -1,17 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage SyncUsers
+ * @package     Kunena.Administrator.Template
+ * @subpackage  SyncUsers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewTools $this
-
 
 JText::script('COM_KUNENA_MODAL_CLOSE');
 JText::script('COM_KUNENA_AJAXMODAL_START_HEADER');
@@ -156,7 +155,7 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 					$this.find('.recount-close').removeAttr('disabled');
 				}
 			});
-		}
+		};
 
 		$(document).on('click.bs.ajaxmodal.data-api', '[data-toggle="ajaxmodal"]', function (e) {
 			// Reset modal.
@@ -179,7 +178,6 @@ JText::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 				.one('hide', function () {
 					$this.is(':visible') && $this.focus()
 				});
-
 
 			data.format ='json';
 			$target.doRecount(href, data);

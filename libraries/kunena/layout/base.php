@@ -115,7 +115,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		foreach ($this->includePaths as $path)
 		{
 			$file = $path . '/' . $this->layout . '.php';
-;
 
 			if (!is_file($file))
 			{
@@ -204,13 +203,16 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	/**
 	 * Set/override debug mode.
 	 *
-	 * @param   bool $value
+	 * @param array $data
 	 *
-	 * @return  KunenaLayoutBase  Instance of $this to allow chaining.
+	 * @return KunenaLayoutBase Instance of $this to allow chaining.
+	 * @internal param bool $value
+	 *
+	 * @internal param bool $value
 	 */
-	public function debug($value)
+	public function debug($data = array())
 	{
-		$this->debug = (bool) $value;
+		$this->debug = (bool) $data;
 
 		return $this;
 	}
@@ -234,8 +236,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 			}
 
 			if (isset($caller['class']) && isset($caller['function'])
-				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__
-)
+				&& $caller['function'] == '__toString' && $caller['class'] == __CLASS__)
 			{
 				break;
 			}

@@ -5,14 +5,13 @@
  * @package       Kunena.Administrator.Template
  * @subpackage    Users
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright     (C) 2008 - 2015 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // @var KunenaAdminViewUser $this
-
 
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
@@ -101,7 +100,7 @@ jQuery(function($) {
 										<div>
 											<?php echo JText::sprintf(
 	'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
-'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - \Joomla\String\String::strlen($this->user->signature)) . '" />'); ?>
+'<input id="current_count" class="span1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxsig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'); ?>
 										</div>
 									</fieldset>
 								</div>

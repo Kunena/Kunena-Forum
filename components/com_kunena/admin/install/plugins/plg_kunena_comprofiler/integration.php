@@ -6,8 +6,8 @@
  * @subpackage    Comprofiler
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -43,7 +43,10 @@ class KunenaIntegrationComprofiler
 	 * Triggers CB events
 	 *
 	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
-	 **/
+	 *
+	 * @param $event
+	 * @param $params
+	 */
 	public static function trigger($event, &$params)
 	{
 		global $_PLUGINS;

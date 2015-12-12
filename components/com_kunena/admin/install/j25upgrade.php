@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Installer
+ * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright  (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -40,8 +40,9 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	/**
 	 * Check if Kunena migration is supported.
 	 *
-	 * @return    boolean
-	 * @since    1.6.4
+	 * @return   boolean
+	 *
+	 * @since   1.6.4
 	 */
 	protected function detectExtension()
 	{
@@ -53,13 +54,14 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * Get tables to be migrated.
 	 *
 	 * @return    array    List of tables without prefix
+	 *
 	 * @since    1.6.4
 	 */
 	protected function getCopyTables()
 	{
 		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 		require_once KPATH_ADMIN . '/install/schema.php';
-		$schema = new KunenaModelSchema();
+		$schema = new KunenaModelSchema;
 		$tables = $schema->getSchemaTables('');
 
 		return array_values($tables);
@@ -78,6 +80,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * @param   string $table
 	 *
 	 * @return    boolean Ready (true/false)
+	 *
 	 * @since    1.6.4
 	 * @throws    Exception
 	 */
@@ -95,6 +98,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 		foreach ($rows as &$row)
 		{
 			$row['params'] = $this->convertParams($row['params']);
+
 			if (!isset($row['accesstype']) || $row['accesstype'] == 'joomla.group')
 			{
 				if ($row['admin_access'] != 0)
@@ -143,6 +147,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * @param   object $object A reference to the parameters as an object.
 	 *
 	 * @return    void
+	 *
 	 * @since    0.4.
 	 * @throws    Exception
 	 */
@@ -163,6 +168,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * @param $list
 	 *
 	 * @return array
+	 *
 	 */
 	protected function mapUserGroups($list)
 	{
@@ -196,6 +202,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 	 * which allows you to continue import by reading $this->state before continuing.
 	 *
 	 * @return    boolean Ready (true/false)
+	 *
 	 * @since    1.6.4
 	 * @throws    Exception
 	 */
@@ -256,6 +263,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions
 			}
 
 			$update = false;
+
 			switch ($menuitem->query['view'])
 			{
 				case 'home':

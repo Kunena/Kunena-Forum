@@ -2,17 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Views
+ * @package     Kunena.Administrator
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * About view for Kunena ranks backend
+ *
+ * @since  K1.X
  */
 class KunenaAdminViewRanks extends KunenaView
 {
@@ -54,13 +56,9 @@ class KunenaAdminViewRanks extends KunenaView
 
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
-
-		//TODO: Implement flag to hide options, personal preference option.
-		//if($this->filterActive || $this->pagination->total > 0) {
 		JToolBarHelper::editList();
 		JToolBarHelper::divider();
 		JToolBarHelper::deleteList();
-		//}
 		JToolBarHelper::spacer();
 		$help_url  = 'http://www.kunena.org/docs/Ranks_management';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);

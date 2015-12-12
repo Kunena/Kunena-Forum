@@ -46,6 +46,7 @@ defined('_JEXEC') or die();
  * @property int $last_post_id
  * @property int $last_post_time
  * @property string $params
+ * @property string $allow_ratings
  */
 class KunenaForumCategory extends KunenaDatabaseObject
 {

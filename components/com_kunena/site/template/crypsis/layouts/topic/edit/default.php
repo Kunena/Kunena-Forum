@@ -59,7 +59,7 @@ if ($this->config->pollenabled)
 
 $this->addStyleSheet('css/bootstrap-datepicker.css');
 $this->addScript('bootstrap-datepicker.js ');
-
+$this->addScript('js/rating.js');
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');

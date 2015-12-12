@@ -196,6 +196,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo $this->options ['category_iconset']; ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED'); ?>:</td>
+												<td><?php echo $this->options ['allow_ratings']; ?></td>
+												<td><?php echo JText::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED_DESC'); ?></td>
+											</tr>
 										</table>
 									</fieldset>
 								</div>

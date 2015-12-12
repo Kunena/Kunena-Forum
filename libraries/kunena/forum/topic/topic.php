@@ -68,6 +68,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			'subscribe' => array('Read'),
 			'sticky' => array('Read'),
 			'lock' => array('Read'),
+			'rate' => array('Read', 'Unlocked'),
 			'poll.read' => array('Read', 'Poll'),
 			'poll.create' => array('Own'),
 			'poll.edit' => array('Read','Own','NoVotes'),

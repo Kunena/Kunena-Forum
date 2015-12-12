@@ -91,7 +91,7 @@ class KunenaViewTopic extends KunenaView
 
 		$catid = $this->app->input->getInt('catid', 0);
 
-		$category = KunenaForumCategoryHelper::get($catid);
+		$category         = KunenaForumCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
 
 		if (empty($category_iconset))
@@ -115,17 +115,17 @@ class KunenaViewTopic extends KunenaView
 		{
 			$xml = simplexml_load_file($xmlfile);
 
-			foreach($xml->icons as $icons)
+			foreach ($xml->icons as $icons)
 			{
-				$type = (string) $icons->attributes()->type;
-				$width = (int) $icons->attributes()->width;
+				$type   = (string) $icons->attributes()->type;
+				$width  = (int) $icons->attributes()->width;
 				$height = (int) $icons->attributes()->height;
 
-				foreach($icons->icon as $icon)
+				foreach ($icons->icon as $icon)
 				{
 					$attributes = $icon->attributes();
-					$icon = new stdClass();
-					$icon->id = (int) $attributes->id;
+					$icon       = new stdClass();
+					$icon->id   = (int) $attributes->id;
 					$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
 					$icon->name = (string) $attributes->name;
 
@@ -134,18 +134,18 @@ class KunenaViewTopic extends KunenaView
 						$icon->id = $icon->type . '_' . $icon->name;
 					}
 
-					$icon->iconset = $category_iconset;
+					$icon->iconset   = $category_iconset;
 					$icon->published = (int) $attributes->published;
-					$icon->title = (string) $attributes->title;
-					$icon->b2 = (string) $attributes->b2;
-					$icon->b3  = (string) $attributes->b3;
-					$icon->fa  = (string) $attributes->fa;
-					$icon->filename = (string) $attributes->src;
-					$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
-					$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
-					$icon->path = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
-					$icon->relpath = $template->getTopicIconPath("{$icon->filename}", false, $category_iconset);
-					$topicIcons[] = $icon;
+					$icon->title     = (string) $attributes->title;
+					$icon->b2        = (string) $attributes->b2;
+					$icon->b3        = (string) $attributes->b3;
+					$icon->fa        = (string) $attributes->fa;
+					$icon->filename  = (string) $attributes->src;
+					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
+					$icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;
+					$icon->path      = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
+					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false, $category_iconset);
+					$topicIcons[]    = $icon;
 				}
 			}
 		}
@@ -155,5 +155,35 @@ class KunenaViewTopic extends KunenaView
 		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
 		echo json_encode($topicIcons);
+	}
+
+	/**
+	 * @param null $tpl
+	 */
+	function displayRate($tpl = null)
+	{
+		$starid   = $this->app->input->get('starid', 0, 'int');
+		$topicid  = $this->app->input->get('topicid', 0, 'int');
+		$response = array();
+
+		if ($this->me->exists() || $this->config->ratingenabled)
+		{
+			$rate        = KunenaForumTopicRateHelper::get($topicid);
+			$rate->stars = $starid;
+
+			$topic = KunenaForumTopicHelper::get($topicid);
+
+			$activityIntegration = KunenaFactory::getActivityIntegration();
+			if (!$rate->save($this->me))
+			{
+				$rate->getError();
+			}
+			$activityIntegration->onAfterRate($this->me->userid, $topic);
+		}
+
+		// Set the MIME type and header for JSON output.
+		$this->document->setMimeEncoding('application/json');
+
+		echo json_encode($response);
 	}
 }

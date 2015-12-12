@@ -26,6 +26,7 @@ $this->addStyleSheet('css/atwho.css');
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addScript('js/topic.js');
+$this->addScript('js/rating.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social = $this->ktemplate->params->get('socialshare');
@@ -41,6 +42,7 @@ $social = $this->ktemplate->params->get('socialshare');
 <h3>
 	<?php echo $topic->getIcon($topic->getCategory()->iconset); ?>
 	<?php echo $topic->displayField('subject'); ?>
+	<?php echo $this->subLayout('Topic/Item/Rating')->set('id', $topic->id); ?>
 </h3>
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>

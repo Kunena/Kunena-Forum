@@ -76,7 +76,9 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) {}
+		while (@ob_end_clean())
+		{
+		}
 
 		echo json_encode($list);
 
@@ -114,7 +116,9 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) {}
+		while (@ob_end_clean())
+		{
+		}
 
 		echo json_encode($success);
 
@@ -250,9 +254,7 @@ class KunenaControllerTopic extends KunenaController
 				$response->mime     = $attachment->filetype;
 				$response->filename = $attachment->filename_real;
 			}
-		}
-
-		catch (Exception $response)
+		} catch (Exception $response)
 		{
 			$upload->cleanup();
 
@@ -266,7 +268,9 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 
-		while (@ob_end_clean()) {}
+		while (@ob_end_clean())
+		{
+		}
 
 		echo $upload->ajaxResponse($response);
 
@@ -347,7 +351,7 @@ class KunenaControllerTopic extends KunenaController
 		// set dynamic template information
 		foreach ($templates as $tmpl)
 		{
-			if(KunenaTemplateHelper::isDefault($tmpl->directory))
+			if (KunenaTemplateHelper::isDefault($tmpl->directory))
 			{
 				$template = $tmpl;
 			}
@@ -381,7 +385,8 @@ class KunenaControllerTopic extends KunenaController
 						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
 					}
 
-					if (!$res[0]) {
+					if (!$res[0])
+					{
 						$this->setRedirectBack();
 
 						return;
@@ -862,18 +867,20 @@ class KunenaControllerTopic extends KunenaController
 		preg_match_all('/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', $text, $ebay_matches);
 
 		$ignore = false;
-		foreach($ebay_matches as $match)
+		foreach ($ebay_matches as $match)
 		{
-			if (!empty($match)) {
+			if (!empty($match))
+			{
 				$ignore = true;
 			}
 		}
 
 		preg_match_all('/<div id=\"kunena_twitter_widget\"(.*?)>(.*?)<\/div>/s', $text, $twitter_matches);
 
-		foreach($twitter_matches as $match)
+		foreach ($twitter_matches as $match)
 		{
-			if (!empty($match)) {
+			if (!empty($match))
+			{
 				$ignore = true;
 			}
 		}
@@ -882,14 +889,15 @@ class KunenaControllerTopic extends KunenaController
 		{
 			preg_match_all('@\(((https?://)?([-\\w]+\\.[-\\w\\.]+)+\\w(:\\d+)?(/([-\\w/_\\.]*(\\?\\S+)?)?)*)\)@', $text, $matches);
 
-			if(empty($matches[0]))
+			if (empty($matches[0]))
 			{
 				preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
 			}
 
 			$countlink = count($matches[0]);
 
-			if (!$topic->authorise('approve') && $countlink >= $this->config->max_links + 1) {
+			if (!$topic->authorise('approve') && $countlink >= $this->config->max_links + 1)
+			{
 				return false;
 			}
 		}
@@ -975,6 +983,48 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$this->setRedirect($message->getUrl($category->exists() ? $category->id : $message->catid, false));
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function rate()
+	{
+		if (!JRequest::checkToken('get'))
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->redirectBack();
+		}
+
+		$topic = KunenaForumTopicHelper::get($this->id);
+
+		if (!$topic->authorise('rate'))
+		{
+			$this->app->enqueueMessage($topic->getError());
+			$this->redirectBack();
+		}
+
+		$rate                = KunenaForumTopicRateHelper::get($this->id);
+		$activityIntegration = KunenaFactory::getActivityIntegration();
+
+		if (!$rate->save($this->me) && JFactory::getApplication()->input->get('type') != 'ajax')
+		{
+			$this->app->enqueueMessage($rate->getError());
+			$this->redirectBack();
+		}
+
+		$activityIntegration->onAfterRate($this->me->userid, $topic);
+
+		$this->app->enqueueMessage(JText::_('COM_KUNENA_RATE_SUCESS'));
+
+		if (JFactory::getApplication()->input->get('type') != 'ajax')
+		{
+			$this->redirectBack();
+		}
+
+		echo KunenaForumTopicRateHelper::getSelected($this->id);
+
+		JFactory::getApplication()->close();
 	}
 
 	/**
@@ -1664,9 +1714,7 @@ class KunenaControllerTopic extends KunenaController
 				{
 					$body = trim($layout->render());
 					$mail->setBody($body);
-				}
-
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					// TODO: Deprecated in K4.0, remove in K5.0
 					$mailmessage = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})";

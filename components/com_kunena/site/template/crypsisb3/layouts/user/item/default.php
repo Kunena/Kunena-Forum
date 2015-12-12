@@ -17,11 +17,11 @@ $tabs = $this->getTabs();
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
 
-	<?php if ($this->profile->isAuthorised('edit')) : ?>
-	<?php echo $this->profile->getLink(
-	'<i class="glyphicon glyphicon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
-	JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn btn-default pull-right'
-); ?>
+	<?php if ($this->profile->isAuthorised('edit') || $this->me->isAdmin()) : ?>
+		<?php echo $this->profile->getLink(
+		'<i class="glyphicon glyphicon-edit"></i> ' . JText::_('COM_KUNENA_EDIT'),
+		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn btn-default pull-right'
+	); ?>
 	<?php endif; ?>
 
 </h3>

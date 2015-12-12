@@ -46,7 +46,7 @@ class KunenaViewUser extends KunenaView
 		$userid               = JFactory::getApplication()->input->getInt('userid');
 		$this->usernamechange = JComponentHelper::getParams('com_users')->get('change_login_name', 1);
 
-		if ($userid && $this->me->userid != $userid)
+		if ($userid && $this->me->userid != $userid || $this->me->isAdmin())
 		{
 			$user = KunenaFactory::getUser($userid);
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice');
@@ -150,7 +150,7 @@ class KunenaViewUser extends KunenaView
 			$this->profile->save();
 		}
 
-		if ($this->profile->userid == $this->me->userid)
+		if ($this->profile->userid == $this->me->userid || $this->me->isAdmin())
 		{
 			if ($this->do != 'edit')
 			{

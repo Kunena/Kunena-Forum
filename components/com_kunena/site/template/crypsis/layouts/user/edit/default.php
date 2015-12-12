@@ -9,6 +9,8 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
+$this->profile = KunenaFactory::getUser($this->user->id);
+$this->me = KunenaUserHelper::getMyself();
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->profile->getName()); ?>
@@ -26,21 +28,25 @@ defined('_JEXEC') or die;
 
 	<div class="tabs">
 		<ul id="KunenaUserEdit" class="nav nav-tabs">
+			<?php if ($this->profile->userid == $this->me->userid): ?>
 			<li class="active">
 				<a href="#home" data-toggle="tab">
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER'); ?>
 				</a>
 			</li>
-			<li>
+			<?php endif; ?>
+			<li <?php if ($this->profile->userid != $this->me->userid) { echo 'class="active"'; }?>>
 				<a href="#editprofile" data-toggle="tab">
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE'); ?>
 				</a>
 			</li>
+			<?php if ($this->profile->userid == $this->me->userid): ?>
 			<li>
 				<a href="#editavatar" data-toggle="tab">
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR'); ?>
 				</a>
 			</li>
+			<?php endif; ?>
 			<li>
 				<a href="#editsettings" data-toggle="tab">
 					<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS'); ?>
@@ -49,15 +55,19 @@ defined('_JEXEC') or die;
 		</ul>
 
 		<div id="KunenaUserEdit" class="tab-content">
+			<?php if ($this->profile->userid == $this->me->userid): ?>
 			<div class="tab-pane fade in active" id="home">
 				<?php echo $this->subRequest('User/Edit/User'); ?>
 			</div>
-			<div class="tab-pane fade" id="editprofile">
+			<?php endif; ?>
+			<div class="tab-pane fade <?php if ($this->profile->userid != $this->me->userid) { echo 'in active'; }?>" id="editprofile">
 				<?php echo $this->subRequest('User/Edit/Profile'); ?>
 			</div>
+			<?php if ($this->profile->userid == $this->me->userid): ?>
 			<div class="tab-pane fade" id="editavatar">
 				<?php echo $this->subRequest('User/Edit/Avatar'); ?>
 			</div>
+			<?php endif; ?>
 			<div class="tab-pane fade" id="editsettings">
 				<?php echo $this->subRequest('User/Edit/Settings'); ?>
 			</div>

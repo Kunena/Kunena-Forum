@@ -1,7 +1,0 @@
-I WANT TO INSTALL JOOMLA
-
-I am "Administrator"
-I install joomla removing installation folder ""
-I do administrator login ""
-I set error reporting to development ""
-

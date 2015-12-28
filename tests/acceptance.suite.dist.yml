@@ -18,27 +18,27 @@ modules:
         - AcceptanceHelper
     config:
         JoomlaBrowser:
-            url: 'http://localhost/tests/joomla-cms3'     # the url that points to the joomla installation at /tests/system/joomla-cms
+            url: 'http://localhost/tests/kunena'              # the url that points to the joomla installation at /tests/system/joomla-cms
             browser: 'firefox'
             window_size: 1024x768
             capabilities:
               unexpectedAlertBehaviour: 'accept'
-            username: 'admin'                      # UserName for the Administrator
-            password: 'admin'                      # Password for the Administrator
-            database host: 'localhost'             # place where the Application is Hosted #server Address
-            database user: 'root'                  # MySQL Server user ID, usually root
-            database password: ''                  # MySQL Server password, usually empty or root
-            database name: 'test_weblinks'         # DB Name, at the Server
-            database type: 'mysqli'                # type in lowercase one of the options: MySQL\MySQLi\PDO
-            database prefix: 'jos_'                # DB Prefix for tables
-            install sample data: 'no'              # Do you want to Download the Sample Data Along with Joomla Installation, then keep it Yes
-            sample data: 'Default English (GB) Sample Data'    # Default Sample Data
-            admin email: 'admin@mydomain.com'      # email Id of the Admin
-            language: 'English (United Kingdom)'   # Language in which you want the Application to be Installed
+            username: 'admin'                                           # UserName for the Administrator
+            password: 'admin'                                           # Password for the Administrator
+            database host: 'localhost'                                  # place where the Application is Hosted #server Address
+            database user: 'root'                                       # MySQL Server user ID, usually root
+            database password: ''                                       # MySQL Server password, usually empty or root
+            database name: 'kunena'                                     # DB Name, at the Server
+            database type: 'mysqli'                                     # type in lowercase one of the options: MySQL\MySQLi\PDO
+            database prefix: 'prefix_'                                  # DB Prefix for tables
+            install sample data: 'no'                                   # Do you want to Download the Sample Data Along with Joomla Installation, then keep it Yes
+            sample data: 'Default English (GB) Sample Data'             # Default Sample Data
+            admin email: 'admin@mydomain.com'                           # Email Id of the Admin
+            language: 'English (United Kingdom)'                        # Language in which you want the Application to be Installed
         AcceptanceHelper:
-            repo_folder: '/home/travis/build/joomla-extensions/weblinks/' # Path to the Extension repository. To be used by tests to install via Install from folder
-            counter_test_url: 'http://localhost/tests/joomla-cms3' # the url for the weblink item used to test hits counter
-            url: 'http://localhost/tests/joomla-cms3' # the url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
+            repo_folder: '/home/build/'                                 # Path to the Extension repository. To be used by tests to install via Install from folder
+            counter_test_url: 'http://localhost/tests/kunena/'          # The url for the weblink item used to test hits counter
+            url: 'http://localhost/tests/kunena/'                       # The url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
 error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"
 env:
     desktop: ~

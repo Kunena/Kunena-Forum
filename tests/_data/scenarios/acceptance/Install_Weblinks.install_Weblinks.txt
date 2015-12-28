@@ -1,8 +1,0 @@
-I WANT TO INSTALL WEBLINKS
-
-I do administrator login ""
-I comment('get weblinks repository folder from acceptance.suite.yml  "see _support/AcceptanceHelper.php)"
-I get configuration "repo_folder"
-I install extension from folder "$path . 'src/com_weblinks/"
-I do administrator logout ""
-

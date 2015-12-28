@@ -11,7 +11,6 @@
 # perform tests in browser using the WebDriver or PhpBrowser.
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
-
 class_name: AcceptanceTester
 modules:
     enabled:
@@ -29,7 +28,7 @@ modules:
             database host: 'localhost'             # place where the Application is Hosted #server Address
             database user: 'root'                  # MySQL Server user ID, usually root
             database password: ''                  # MySQL Server password, usually empty or root
-            database name: 'testjoomla'            # DB Name, at the Server
+            database name: 'test_weblinks'         # DB Name, at the Server
             database type: 'mysqli'                # type in lowercase one of the options: MySQL\MySQLi\PDO
             database prefix: 'jos_'                # DB Prefix for tables
             install sample data: 'no'              # Do you want to Download the Sample Data Along with Joomla Installation, then keep it Yes
@@ -37,5 +36,19 @@ modules:
             admin email: 'admin@mydomain.com'      # email Id of the Admin
             language: 'English (United Kingdom)'   # Language in which you want the Application to be Installed
         AcceptanceHelper:
-            repo_folder: '/home/travis/build/' # Path to the Extension to be installed via Install from folder
+            repo_folder: '/home/travis/build/joomla-extensions/weblinks/' # Path to the Extension repository. To be used by tests to install via Install from folder
+            counter_test_url: 'http://localhost/tests/joomla-cms3' # the url for the weblink item used to test hits counter
+            url: 'http://localhost/tests/joomla-cms3' # the url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
 error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"
+env:
+    desktop: ~
+    tablet:
+        modules:
+            config:
+                JoomlaBrowser:
+                    window_size: 768x1024
+    phone:
+        modules:
+            config:
+                JoomlaBrowser:
+                    window_size: 480x640

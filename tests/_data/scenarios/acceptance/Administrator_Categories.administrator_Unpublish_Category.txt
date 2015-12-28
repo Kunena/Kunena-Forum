@@ -1,0 +1,15 @@
+I WANT TO TEST UNPUBLISH A CATEGORY IN /ADMINISTRATOR/
+
+I am "Administrator"
+I do administrator login ""
+I am going to "Navigate to Categories page in /administrator/"
+I am on page "administrator/index.php?option=com_categories&extension=com_weblinks"
+I wait for text "Weblinks: Categories"," '60"," ['css' => 'h1']"
+I search for item "$this->categoryTitle"
+I check all results ""
+I am going to "try to unpublish a Weblinks Category"
+I click toolbar button "unpublish"
+I wait for element "['id' => 'system-message-container']"," '60"
+I expect to "See a success message after unpublishing the category"
+I see "1 category successfully unpublished"," ['id' => 'system-message-container']"
+

@@ -42,14 +42,14 @@ while getopts ":d" optname
 }
 
 sources=(
-	"components/com_kunena/admin"
-	"components/com_kunena/site"
-	"libraries/kunena"
-	"plugins/plg_quickicon_kunena"
-	"plugins/plg_system_kunena"
+	"src/administrator/components/com_kunena"
+	"src/components/com_kunena"
+	"src/libraries/kunena"
+	"src/plugins/plg_quickicon_kunena"
+	"src/plugins/plg_system_kunena"
 	"pkg_kunena.xml"
-	"libraries/kunena/kunena.xml"
-	"media/kunena/kunena_media.xml"
+	"src/libraries/kunena/kunena.xml"
+	"src/media/kunena/kunena_media.xml"
 )
 targets=(
 	"administrator/components/com_kunena"
@@ -78,13 +78,13 @@ do
 done;
 if ((!$OPT_DELETE)); then
 	echo "Copying media/kunena"
-	cp -r "$GIT_SOURCE/media/kunena" "$GIT_TARGET/media/kunena"
+	cp -r "$GIT_SOURCE/src/media/kunena" "$GIT_TARGET/media/kunena"
 else
 	if ((!OPT_DELETE_ALL)); then
-		rm -rf "$GIT_TARGET/media/kunena"
+		rm -rf "$GIT_TARGET/src/media/kunena"
 	fi
 	mkdir "$GIT_TARGET/administrator/components/com_kunena"
-	cp -r "$GIT_SOURCE/components/com_kunena/admin/kunena.xml" "$GIT_TARGET/administrator/components/com_kunena/kunena.xml"
+	cp -r "$GIT_SOURCE/src/administrator/components/com_kunena/kunena.xml" "$GIT_TARGET/administrator/components/com_kunena/kunena.xml"
 	echo "Removed development tree from your web site."
 	echo "Please install Kunena Package to fix your site!"
 fi

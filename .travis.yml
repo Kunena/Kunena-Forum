@@ -13,12 +13,9 @@ matrix:
     - php: 7.0
 before_script:
 - composer install --prefer-dist
-- composer update
 
 script:
-- php .travis/phppec.php components/ libraries/ plugins/
-- mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
-- mv tests/api.suite.dist.yml tests/api.suite.yml
+
 
 notifications:
   email: false

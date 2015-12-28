@@ -1,0 +1,16 @@
+I WANT TO TEST DELETING A CATEGORY IN /ADMINISTRATOR/
+
+I am "Administrator"
+I do administrator login ""
+I am going to "Navigate to Categories page in /administrator/"
+I am on page "administrator/index.php?option=com_categories&extension=com_weblinks"
+I wait for text "Weblinks: Categories"," '60"," ['css' => 'h1']"
+I set filter "Select Status"," 'Trashed"
+I search for item "$this->categoryTitle"
+I check all results ""
+I am going to "try to delete a Weblinks Category"
+I click toolbar button "Empty trash"
+I wait for element "['id' => 'system-message-container']"," '60"
+I expect to "see a success message after Deleting the category"
+I see "1 category successfully deleted."," ['id' => 'system-message-container']"
+

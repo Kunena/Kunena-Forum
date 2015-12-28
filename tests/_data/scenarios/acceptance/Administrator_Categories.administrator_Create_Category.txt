@@ -1,0 +1,17 @@
+I WANT TO TEST CREATE A CATEGORY IN /ADMINISTRATOR/
+
+I am "Administrator"
+I do administrator login ""
+I am going to "Navigate to Categories page in /administrator/ and create a Category"
+I am on page "administrator/index.php?option=com_categories&extension=com_weblinks"
+I wait for text "Weblinks: Categories"," '60"," ['css' => 'h1']"
+I expect to "see categories page"
+I check for php notices or warnings ""
+I am going to "try to save a category with a filled title"
+I click toolbar button "New"
+I wait for text "Category Manager: Add A New Weblinks Category"," '60"," ['css' => 'h1']"
+I fill field "['id' => 'jform_title']"," $this->categoryTitle"
+I click toolbar button "Save & Close"
+I expect to "see a success message after saving the category"
+I see "Category successfully saved"," ['id' => 'system-message-container']"
+

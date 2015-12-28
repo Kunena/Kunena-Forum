@@ -1,0 +1,15 @@
+I WANT TO TEST CATEGORY CREATION IN /ADMINISTRATOR/ WITHOUT TITLE FAILS
+
+I am "Administrator"
+I do administrator login ""
+I am going to "Navigate to Categories page in /administrator/"
+I am on page "administrator/index.php?option=com_categories&extension=com_weblinks"
+I wait for text "Weblinks: Categories"," '60"," ['css' => 'h1']"
+I expect to "see categories page"
+I am going to "try to save a category with empty title and it should fail"
+I click toolbar button "new"
+I wait for text "Category Manager: Add A New Weblinks Category"," '60"," ['css' => 'h1']"
+I click toolbar button "save"
+I expect to "see an error when trying to save a category without title"
+I see "Invalid field:  Title"," ['id' => 'system-message-container']"
+

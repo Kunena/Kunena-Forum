@@ -1352,6 +1352,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return '';
 		}
 
+		// Display nothing in subscription mails
+		if ( empty($bbcode->context) )
+		{
+			return '';
+		}
+
 		$me = KunenaUserHelper::getMyself();
 
 		$layout = KunenaLayout::factory('BBCode/Hidden');

@@ -1,9 +1,59 @@
+#Kunena
+.externalToolBuilders/build.kunena.2.0.launch
+components/com_kunena/site/template/**/params.ini
+components/com_kunena/site/template/crypsis/css/kunena.css
+
+# Builds
+build/tmp
+build
+releases
+dist/*
+
+# OSX
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# PHPStorm
+.idea
+
+# Sublime Text
+*.sublime*
+
+# Eclipse
 .buildpath
 .project
 .settings
-.externalToolBuilders/build.kunena.2.0.launch
-.idea/
-build/tmp
-components/com_kunena/site/template/**/params.ini
-components/com_kunena/site/template/crypsis/css/kunena.css
-Thumbs.db
+
+# Temp files
+*.tmp
+*.bak
+*.swp
+*~.nib
+*~
+
+# Phing
+build.properties
+phing-latest.phar
+
+# Github pages and Jekyll files
+/_site/
+/Gemfile
+/Gemfile.lock
+
+# composer
+composer.phar
+vendor/*
+
+# Test related files
+tests/kunena*
+tests/_output*
+selenium-server-standalone.jar
+codecept.phar
+selenium.log
+tests/cache

@@ -5,7 +5,7 @@
  * This CLI is used instead normal travis.yml execution to avoid error in travis build when
  * PHPMD exits with 2.
  *
- * @copyright  Copyright (C) 2008 - 2015 redCOMPONENT.com, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2008 - 2016 redCOMPONENT.com, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  *
  * @example: php .travis/phpmd.php component/ libraries/

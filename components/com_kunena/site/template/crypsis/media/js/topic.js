@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -40,7 +40,7 @@ jQuery(document).ready(function() {
 			content.next(".content").slideToggle(500);
 		}
 	});
-	
+
 	/* On moderate page display subject or field to enter manually the topic ID */
 	jQuery('#kmod_topics').change(function() {
 		var id_item_selected = jQuery(this).val();

@@ -1352,12 +1352,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return '';
 		}
 
-		// Display nothing in subscription mails
-		if ( empty($bbcode->context) )
-		{
-			return '';
-		}
-
 		$me = KunenaUserHelper::getMyself();
 
 		$layout = KunenaLayout::factory('BBCode/Hidden');
@@ -1397,6 +1391,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		// Display nothing in activity streams etc..
 		if (!empty($bbcode->parent->forceSecure)) {
+			return '';
+		}
+
+		// Display nothing in subscription mails
+		if ( !empty($bbcode->context) )
+		{
 			return '';
 		}
 

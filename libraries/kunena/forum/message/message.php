@@ -541,11 +541,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Display required field from message table
+	 *
 	 * @param string $field
+	 * @param boolean $html
+	 * @param string $context
 	 *
 	 * @return int|string
 	 */
-	public function displayField($field, $html = true)
+	public function displayField($field, $html = true, $context = '')
 	{
 		switch ($field)
 		{
@@ -555,7 +559,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
-				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
+				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this, 0, $context) : KunenaHtmlParser::stripBBCode
 					($this->message, $this->parent, $html);
 		}
 

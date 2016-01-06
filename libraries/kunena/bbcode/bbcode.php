@@ -1394,6 +1394,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return '';
 		}
 
+		// Display nothing in subscription mails
+		if ( !empty($bbcode->context) )
+		{
+			return '';
+		}
+
 		$me = KunenaUserHelper::getMyself();
 		$message = $this->getMessage();
 		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);

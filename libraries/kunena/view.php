@@ -114,6 +114,11 @@ class KunenaView extends JViewLegacy
 		{
 			$this->document->addHeadLink( $juricurrent, 'canonical', 'rel', '' );
 			include JPATH_SITE .'/'. $this->ktemplate->getFile('html/display.php');
+
+			if ($this->config->get('credits', 1))
+			{
+				$this->poweredBy();
+			}
 		}
 		else
 		{

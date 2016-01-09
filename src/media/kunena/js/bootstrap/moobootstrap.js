@@ -290,11 +290,7 @@ Element.implement({
     },
 
     isShown: function () {
-        if (this.dropdown_menu.isVisible() || this.element.hasClass('open')) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!(this.dropdown_menu.isVisible() || this.element.hasClass('open'));
     }
  });
 
@@ -1550,11 +1546,7 @@ window.addEvent('domready', function() {
 
         this.enabled = true;
 
-        if (this.checkbox.checked) {
-            this.state = true;
-        } else {
-            this.state = false;
-        }
+        this.state = !!this.checkbox.checked;
 
         this.displayButtons();
 

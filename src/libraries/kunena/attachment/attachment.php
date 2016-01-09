@@ -257,7 +257,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return string
-	 * @deprecated K4.0
+	 * @since K4.0
 	 */
 	public function getTextLink()
 	{
@@ -266,7 +266,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return string
-	 * @deprecated K4.0
+	 * @since K4.0
 	 */
 	public function getImageLink()
 	{
@@ -276,7 +276,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 	/**
 	 * @return string
-	 * @deprecated K4.0
+	 * @since K4.0
 	 */
 	public function getThumbnailLink()
 	{

@@ -28,11 +28,10 @@
 .datepicker-dropdown:before {
   content: '';
   display: inline-block;
-  border-left: 7px solid transparent;
+  border-top-width: 0;
   border-right: 7px solid transparent;
-  border-bottom: 7px solid #ccc;
-  border-top: 0;
-  border-bottom-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+  border-left: 7px solid transparent;
   position: absolute;
 }
 .datepicker-dropdown:after {

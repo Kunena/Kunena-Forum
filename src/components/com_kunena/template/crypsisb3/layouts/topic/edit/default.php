@@ -260,7 +260,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<button type="submit" class="btn btn-success" tabindex="8">
 				<i class="glyphicon glyphicon-edit glyphicon glyphicon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
-			<button type="reset" class="btn btn-default" onclick="javascript:window.history.back();" tabindex="9">
+			<button type="reset" class="btn btn-default" onclick="window.history.back();" tabindex="9">
 				<i class="glyphicon glyphicon-remove-circle"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>

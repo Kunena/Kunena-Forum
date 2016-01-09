@@ -138,7 +138,7 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase {
 		$access = KunenaAccess::getInstance();
 
 		$this->assertFalse($category->addModerator(0), "Check that guests cannot become moderators");
-		$this->assertFalse($category->addModerator(1, "Check that non-existing users cannot become moderators"));
+		$this->assertFalse($category->addModerator(1), "Check that non-existing users cannot become moderators");
 		$this->assertTrue($category->addModerator($admin), "Check that administrator can become moderator ({$category->getError()})");
 		$this->assertTrue((bool)$admin->moderator, "Check that becomes a moderator");
 		$mod = $access->getModeratorStatus ($admin);

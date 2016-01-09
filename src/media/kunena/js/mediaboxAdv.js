@@ -204,7 +204,7 @@ var Mediabox;
 			setup(true);
 			top = window.getScrollTop() + (window.getHeight()/2);
 			left = window.getScrollLeft() + (window.getWidth()/2);
-			
+
 			// Fix <IE10 center image
 			var cp = center.getStyle('padding-left').toInt();
 			if (isNaN(cp)) cp = 0;
@@ -213,7 +213,7 @@ var Mediabox;
 			var mp = media.getStyle('padding-left').toInt();
 			if (isNaN(mp)) mp = 0;
 			margin = cp+mm+mp;
-			
+
 			marginBottom = bottom.getStyle('margin-left').toInt()+bottom.getStyle('padding-left').toInt()+bottom.getStyle('margin-right').toInt()+bottom.getStyle('padding-right').toInt();
 
 /****/		center.setStyles({top: top, left: left, width: options.initialWidth, height: options.initialHeight, marginTop: -(options.initialHeight/2)-margin, marginLeft: -(options.initialWidth/2)-margin, display: ""});
@@ -267,7 +267,7 @@ var Mediabox;
 					if(filteredHrefs.indexOf(item.toString()) < 0) {
 						filteredLinks.include(filteredArray[index]);
 						filteredHrefs.include(filteredArray[index].toString());
-					};
+					}
 				});
 
 				return Mediabox.open(filteredLinks.map(linkMapper), filteredHrefs.indexOf(this.toString()), _options);
@@ -336,7 +336,9 @@ var Mediabox;
 					next();
 			}
 		}
-		if (options.keyboardStop) { return false; };
+		if (options.keyboardStop) {
+			return false;
+		}
 	}
 
 	function previous() {
@@ -898,9 +900,17 @@ var Mediabox;
 
 		mediaWidth = media.offsetWidth;
 		mediaHeight = media.offsetHeight+bottom.offsetHeight;
-		if (mediaHeight >= top+top) { mTop = -top } else { mTop = -(mediaHeight/2) };
-		if (mediaWidth >= left+left) { mLeft = -left } else { mLeft = -(mediaWidth/2) };
-/****/	if (options.resizeOpening) { fx.resize.start({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
+		if (mediaHeight >= top + top) {
+			mTop = -top
+		} else {
+			mTop = -(mediaHeight / 2)
+		}
+		if (mediaWidth >= left + left) {
+			mLeft = -left
+		} else {
+			mLeft = -(mediaWidth / 2)
+		}
+		/****/	if (options.resizeOpening) { fx.resize.start({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
 /****/	} else { center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin}); mediaAnimate(); }
 //		center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
 //		mediaAnimate();
@@ -953,7 +963,7 @@ Browser.Plugins.QuickTime = (function(){
 	} else {
 		try { var test = new ActiveXObject('QuickTime.QuickTime'); }
 		catch(e) {}
-		
+
 		if (test) { return true; }
 	}
 	return false;

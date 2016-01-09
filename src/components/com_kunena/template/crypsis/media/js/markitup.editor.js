@@ -146,4 +146,4 @@ bbcodeSettings = {
 								});
 							}});
 						}
-					},{separator:'|' },]};
+					},{separator:'|' }]};

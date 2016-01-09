@@ -1348,7 +1348,7 @@ Tab = new Class({
             element.addClass('active');
 
             if (transition) {
-                element[0].offsetWidth // reflow for transition
+                element[0].offsetWidth; // reflow for transition
                 element.addClass('in');
             } else {
                 element.removeClass('fade');
@@ -1911,7 +1911,7 @@ var Transition = function () {
             'OTransition'      : 'oTransitionEnd',
             'msTransition'     : 'MSTransitionEnd',
             'transition'       : 'transitionend'
-        }
+        };
         var name;
 
         for (name in transEndEventNames){
@@ -1926,7 +1926,7 @@ var Transition = function () {
         end: transitionEnd
     }
 
-}
+};
 /* =============================================================
  * bootstrap-typeahead.js v2.2.2
  * http://twitter.github.com/bootstrap/javascript.html#typeahead

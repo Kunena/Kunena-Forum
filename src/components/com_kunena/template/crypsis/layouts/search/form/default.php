@@ -151,7 +151,7 @@ $this->addScript('js/search.js');
 			<button type="submit" class="btn btn-primary">
 				<i class="icon-search icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
 			</button>
-			<button type="reset" class="btn" onclick="javascript:window.history.back();">
+			<button type="reset" class="btn" onclick="window.history.back();">
 				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>

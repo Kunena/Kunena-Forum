@@ -270,7 +270,6 @@ var Autocompleter = new Class({
 			styles.height = item.getCoordinates(this.choices).bottom;
 			this.overflown = true;
 		}
-		;
 		this.choices.setStyles(styles);
 		this.fix.show();
 		if (this.options.visibleChoices) {

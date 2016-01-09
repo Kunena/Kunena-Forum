@@ -267,7 +267,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<button type="submit" class="btn btn-success" tabindex="8">
 				<i class="icon-edit icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
-			<button type="reset" class="btn" onclick="javascript:window.history.back();" tabindex="10">
+			<button type="reset" class="btn" onclick="window.history.back();" tabindex="10">
 				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>

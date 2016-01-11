@@ -70,14 +70,12 @@ $this->addScript('poll.js');
 			</td>
 		</tr>
 
+		<?php if (!$this->me->exists()) : ?>
 		<tr>
 			<td colspan="4">
-
-				<?php if (!$this->me->exists()) : ?>
-
 				<?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
 
-				<?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title) : ?>
+				<?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title && $this->topic->isAuthorised('reply')) : ?>
 
 				<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>>">
 					<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
@@ -111,10 +109,9 @@ $this->addScript('poll.js');
 						</div>
 					</div>
 				</div>
-				<?php endif; ?>
-
 			</td>
 		</tr>
+		<?php endif; ?>
 	</tfoot>
 </table>
 </div>

@@ -432,7 +432,7 @@ class KunenaViewTopic extends KunenaView
 		$this->category = $this->get('Category');
 		$this->topic    = $this->get('Topic');
 
-		if (!$this->topic->authorise('poll.vote'))
+		if (!$this->topic->authorise('poll.vote') && !$this->topic->authorise('reply') )
 		{
 			$this->setError($this->topic->getError());
 		}
@@ -639,13 +639,13 @@ class KunenaViewTopic extends KunenaView
 			}
 		}
 
-		if ($this->voted || !$this->topic->authorise('poll.vote', null, true))
+		if (!$this->voted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
 		{
-			echo $this->loadTemplateFile("pollresults");
+			echo $this->loadTemplateFile("poll");
 		}
 		else
 		{
-			echo $this->loadTemplateFile("poll");
+			echo $this->loadTemplateFile("pollresults");
 		}
 	}
 

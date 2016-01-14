@@ -49,6 +49,11 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		$this->template = KunenaFactory::getTemplate();
 		$this->topicButtons = new JObject;
 
+		if ($this->config->read_only)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+		}
+
 		if ($this->topic->isAuthorised('reply'))
 		{
 			// Add Reply topic button.

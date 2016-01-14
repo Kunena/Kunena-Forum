@@ -55,6 +55,12 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			}
 		}
 
+
+		if ($this->config->read_only)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+		}
+
 		$arrayanynomousbox = implode(',', $arrayanynomousbox);
 		$arraypollcatid = implode(',', $arraypollcatid);
 

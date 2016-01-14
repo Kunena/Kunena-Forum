@@ -49,6 +49,11 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
+		if ($this->config->read_only)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+		}
+
 		// Run onKunenaPrepare event.
 		$params = new JRegistry;
 		$params->set('ksource', 'kunena');

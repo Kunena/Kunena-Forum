@@ -64,6 +64,11 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			$this->topic = $this->message->getTopic();
 		}
 
+		if ($this->config->read_only)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+		}
+
 		$this->category = $this->topic->getCategory();
 
 		$this->uri = "index.php?option=com_kunena&view=topic&layout=moderate"

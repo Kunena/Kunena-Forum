@@ -43,6 +43,11 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
 
+		if ($this->config->read_only)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+		}
+
 		if (!$mesid)
 		{
 			$this->topic = KunenaForumTopicHelper::get($id);

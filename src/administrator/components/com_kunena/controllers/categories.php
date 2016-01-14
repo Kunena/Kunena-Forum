@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Controllers
  *
- * @copyright     (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright     (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -694,7 +694,7 @@ class KunenaAdminControllerCategories extends KunenaController
 				continue;
 			}
 
-			if (!$category->tryAuthorise('admin'))
+			if (!$category->authorise('admin'))
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
 			}

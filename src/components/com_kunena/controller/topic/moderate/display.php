@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -62,6 +62,11 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			$this->message = KunenaForumMessageHelper::get($mesid);
 			$this->message->tryAuthorise('move');
 			$this->topic = $this->message->getTopic();
+		}
+
+		if ($this->config->read_only)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
 		$this->category = $this->topic->getCategory();

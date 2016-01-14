@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Blue_Eagle
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -37,6 +37,6 @@ window.onload=function(){
 	// MooTools domready event not fired
 	if (kmt_domready != true) {
 		alert('Kunena: MooTools domready event was never fired!');
-		return;
+
 	}
 };

@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Crypsis
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
 					//because we're potentially getting entirely different results from the api
 					NameObjs = {};
 					UserNames = [];
-					
+
 					jQuery.each( data, function( index, item ){
 
 						//for each iteration of this loop the "item" argument contains
@@ -50,7 +50,7 @@ jQuery(document).ready(function() {
 			}
 			,highlighter: function( item ){
 				var user = NameObjs[ item ];
-				
+
 				return '<div class="bond">'
 					+'<img src="' + user.photo + '" title="" />'
 					+'<br/><strong>' + user.name + '</strong>'

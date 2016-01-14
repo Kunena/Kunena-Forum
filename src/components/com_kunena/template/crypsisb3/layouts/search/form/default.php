@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Search
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -173,7 +173,7 @@ $this->addScript('js/search.js');
 			<button type="submit" class="btn btn-primary">
 				<i class="glyphicon glyphicon-search glyphicon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
 			</button>
-			<button type="reset" class="btn btn-default" onclick="javascript:window.history.back();">
+			<button type="reset" class="btn btn-default" onclick="window.history.back();">
 				<i class="glyphicon glyphicon-remove-sign"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>

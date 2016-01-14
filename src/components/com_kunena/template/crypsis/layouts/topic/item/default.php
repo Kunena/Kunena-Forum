@@ -94,3 +94,4 @@ foreach ($this->messages as $id => $message)
 <?php endif; ?>
 
 <div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
+<div class="clearfix"></div>

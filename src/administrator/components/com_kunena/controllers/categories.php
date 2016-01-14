@@ -694,7 +694,7 @@ class KunenaAdminControllerCategories extends KunenaController
 				continue;
 			}
 
-			if (!$category->tryAuthorise('admin'))
+			if (!$category->authorise('admin'))
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
 			}

@@ -1,20 +1,22 @@
 <?php
 /**
  * Kunena plugin - Easyblog integration
-
- * @version	0.0.1 (2016-01-10)
- * @author	Ruud van Lent | Onlinecommunityhub
- * @copyright	Copyright Ruud van Lent (2016)
- * @link	https://onlinecommunityhub.nl
- * @license	GNU/GPL version 3 or later
+ *
+ * @version      0.0.1 (2016-01-10)
+ * @author       Ruud van Lent | Onlinecommunityhub
+ * @copyright    Copyright Ruud van Lent (2016)
+ * @link         https://onlinecommunityhub.nl
+ * @license      GNU/GPL version 3 or later
  */
 
-defined ( '_JEXEC' ) or die ();
+defined('_JEXEC') or die ();
 
-class KunenaProfileEasyblog extends KunenaProfile {
+class KunenaProfileEasyblog extends KunenaProfile
+{
 	protected $params = null;
 
-	public function __construct($params) {
+	public function __construct($params)
+	{
 		$this->params = $params;
 	}
 
@@ -31,17 +33,23 @@ class KunenaProfileEasyblog extends KunenaProfile {
 		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list' . $action, $xhtml);
 	}
 
-	public function getProfileURL($userid, $task='', $xhtml = true) {
+	public function getProfileURL($userid, $task = '', $xhtml = true)
+	{
 		//Make sure that user profile exist.
-		if (!$userid) {
+		if (!$userid)
+		{
 			return false;
 		}
+
 		return JRoute::_('index.php?option=com_easyblog&view=blogger&layout=listings&id=' . $userid, false);
 	}
 
-	public function showProfile($view, &$params) {}
+	public function showProfile($view, &$params)
+	{
+	}
 
-	public function getEditProfileURL($userid, $xhtml = true) {
+	public function getEditProfileURL($userid, $xhtml = true)
+	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
 }

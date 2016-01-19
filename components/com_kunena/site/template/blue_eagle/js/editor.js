@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Blue_Eagle
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -648,11 +648,11 @@ var __attachment_limit = 0;
 
 function setLimitOnEdit() {
 	var attachs_available = $$('li.kattachment-old');
-	
+
 	if (attachs_available.length > 0) {
 		__attachment_limit = attachs_available.length;
 	}
-	
+
 	if (__attachment_limit == config_attachment_limit || __attachment_limit > config_attachment_limit) {
 		document.id('kattachment-id').setStyle('display', 'none');
 	}

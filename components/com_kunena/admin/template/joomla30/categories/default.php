@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template.Joomla30
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -80,13 +80,14 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 					</select>
 				</div>
+				<!-- TODO: not implemented
 				<div class="btn-group pull-right">
-					<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+					<label for="sortTable" class="element-invisible"><?php //echo JText::_('JGLOBAL_SORT_BY');?></label>
 					<select name="levellimit" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-						<option value=""><?php echo JText::_('JOPTION_SELECT_MAX_LEVELS');?></option>
-						<?php echo JHtml::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
+						<option value=""><?php //echo JText::_('JOPTION_SELECT_MAX_LEVELS');?></option>
+						<?php //echo JHtml::_('select.options', $this->levelFields, 'value', 'text', $this->filterLevels);?>
 					</select>
-				</div>
+				</div>-->
 				<div class="clearfix"></div>
 			</div>
 

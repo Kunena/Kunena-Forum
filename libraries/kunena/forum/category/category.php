@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -92,8 +92,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			'topic.poll.vote'=>array('Read', 'NotBanned', 'Unlocked', 'Poll', 'Vote'),
 			'topic.post.read'=>array('Read'),
 			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
-			'topic.post.thankyou' =>array('Read', 'NotBanned'),
-			'topic.post.unthankyou' =>array('Read', 'NotBanned'),
+			'topic.post.thankyou' =>array('Read', 'NotBanned'), 'Unlocked',
+			'topic.post.unthankyou' =>array('Read', 'NotBanned'), 'Unlocked',
 			'topic.post.edit'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.post.approve'=>array('Read', 'NotBanned', 'Moderate'),
@@ -101,7 +101,8 @@ class KunenaForumCategory extends KunenaDatabaseObject
 			'topic.post.undelete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.post.permdelete'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.post.attachment.read'=>array('Read'),
-			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
+			'topic.post.attachment.createimage'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
+			'topic.post.attachment.createfile'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
 			'topic.post.attachment.delete'=>array('NotBanned'),
 			// TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
 		);
@@ -473,7 +474,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getState()
 	{
@@ -701,7 +702,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -719,7 +720,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -809,7 +810,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{

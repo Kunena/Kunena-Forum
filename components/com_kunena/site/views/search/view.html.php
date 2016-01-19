@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -152,7 +152,7 @@ class KunenaViewSearch extends KunenaView
 			$this->category     = $this->message->getCategory();
 			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 			$ressubject         = KunenaHtmlParser::parseText($this->message->subject);
-			$resmessage         = $this->parse($this->message->message, 500);
+			$resmessage         = $this->parse($this->message->message, 500, $this->message);
 
 			$profile          = KunenaFactory::getUser((int) $this->message->userid);
 			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');
@@ -164,8 +164,8 @@ class KunenaViewSearch extends KunenaView
 					continue;
 				}
 
-				$ressubject = preg_replace("/" . preg_quote($searchword, '/') . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
 				// FIXME: enable highlighting, but only after we can be sure that we do not break html
+				//$ressubject = preg_replace("/" . preg_quote($searchword, '/') . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
 				//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
 
@@ -211,8 +211,41 @@ class KunenaViewSearch extends KunenaView
 
 	protected function _prepareDocument()
 	{
-		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params;
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
 
-		// TODO: set keywords and description
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+		}
+
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$this->setKeywords(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$this->setDescription(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+		}
 	}
 }

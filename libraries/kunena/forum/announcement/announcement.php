@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Announcement
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -170,7 +170,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			case 'sdescription':
 				return KunenaHtmlParser::parseBBCode($this->sdescription);
 			case 'description':
-				return KunenaHtmlParser::parseBBCode($this->description ? $this->description : $this->sdescription);
+				return KunenaHtmlParser::parseBBCode($this->description);
 			case 'created_by':
 				return $this->getAuthor()->getLink();
 			case 'created':
@@ -215,7 +215,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -233,7 +233,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -295,7 +295,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function authorise($action='read', $user = null, $silent = false)
 	{

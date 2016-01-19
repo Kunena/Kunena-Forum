@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -15,6 +15,19 @@ $this->getBBcodesEnabled();
 
 // Kunena bbcode editor
 ?>
+<div class="control-group">
+	<label class="control-label"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
+	<div class="controls">
+		<ul id="tabs_kunena_editor" class="nav nav-tabs">
+			<li><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
+			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
+		</ul>
+		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+	</div>
+
+	<!-- Hidden preview placeholder -->
+	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
+</div>
 
 <!-- Bootstrap modal to be used with bbcode editor -->
 <div id="modal-map" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -89,13 +102,13 @@ $this->getBBcodesEnabled();
 		<?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
 		?>
-		<select id="kvideoprovider-modal"
+		<select id="kvideoprovider-list-modal"
 			name="provider" class="kbutton">
 			<?php
 				$vid_provider = array ('', 'Bofunk', 'Break', 'Clipfish', 'DivX,divx]http://', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'MediaPlayer,mediaplayer]http://', 'Metacafe', 'MySpace', 'QuickTime,quicktime]http://', 'RealPlayer,realplayer]http://', 'RuTube', 'Sapo', 'Streetfire', 'Veoh', 'Videojug', 'Vimeo', 'Wideo.fr', 'YouTube' );
 					foreach ( $vid_provider as $vid_type ) {
 						$vid_type = explode ( ',', $vid_type );
-							echo '<option value = "' . (! empty ( $vid_type [1] ) ? $this->escape($vid_type [1]) : JString::strtolower ( $this->escape($vid_type [0]) ) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
+							echo '<option value = "' . (! empty ( $vid_type [1] ) ? $this->escape($vid_type [1]) : Joomla\String\String::strtolower ( $this->escape($vid_type [0]) ) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
 					}
 				?>
 		</select>
@@ -147,7 +160,7 @@ $this->getBBcodesEnabled();
 					if($this->poll->exists()) {
 						$x = 1;
 						foreach ($this->poll->getOptions() as $poll_option) {
-							echo '<div class="polloption">Option '.$x.' <input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'")" /></div>';
+							echo '<div class="polloption"><label>Option '.$x.'</label><input type="text" size="100" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" /></div>';
 							$x++;
 						}
 					}
@@ -158,7 +171,7 @@ $this->getBBcodesEnabled();
 			</div>
 	</div>
 	<div class="modal-footer">
-		<button id="poll-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
+		<button id="poll-settings-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>
 		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
 	</div>
 </div>
@@ -188,22 +201,3 @@ $this->getBBcodesEnabled();
 		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $this->config->disemoticons ?>" />
 	</div>
 </div>
-<div class="control-group">
-	<label class="control-label"><?php echo (JText::_('COM_KUNENA_MESSAGE')) ; ?></label>
-	<div class="controls">
-		<textarea class="span12" name="message" id="kbbcode-message" rows="12" tabindex="3" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
-	</div>
-	<!-- Hidden preview placeholder -->
-	<div class="controls" id="kbbcode-preview" style="display: none;"></div>
-</div>
-
-<?php if ($this->message->exists()) : ?>
-
-	<div class="control-group">
-		<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
-
-		<div class="controls">
-			<textarea class="input-xxlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
-		</div>
-	</div>
-<?php endif; ?>

@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -61,7 +61,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
 			{
-				$this->redirectBack();
+				throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 			}
 		}
 
@@ -727,11 +727,14 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($avatarFile['tmp_name']))
 		{
-			$this->deleteOldAvatars();
+			if ($avatarFile['size'] < intval(KunenaConfig::getInstance()->avatarsize) * 1024)
+			{
+				$this->deleteOldAvatars();
+			}
 
 			$upload = KunenaUpload::getInstance(array('gif, jpeg, jpg, png'));
 
-			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid);
+			$uploaded = $upload->upload($avatarFile, KPATH_MEDIA . '/avatars/users/avatar' . $this->me->userid, 'avatar');
 
 			if (!empty($uploaded))
 			{
@@ -758,7 +761,6 @@ class KunenaControllerUser extends KunenaController
 			else
 			{
 				$this->me->avatar = $current_avatar;
-
 				return false;
 			}
 		}
@@ -864,9 +866,25 @@ class KunenaControllerUser extends KunenaController
 			foreach ($cid as $id)
 			{
 				$attachment = KunenaAttachmentHelper::get($id);
+				$message = $attachment->getMessage();
+				$attachments = array($attachment->id, 1);
+				$attach = array();
+				$removeList = array_keys(array_diff_key($attachments, $attach));
+				JArrayHelper::toInteger($removeList);
+				$message->removeAttachments($removeList);
+
+				$topic = $message->getTopic();
 
 				if ($attachment->isAuthorised('delete') && $attachment->delete())
 				{
+					$message->save();
+
+					if ( $topic->attachments > 0 )
+					{
+						$topic->attachments = $topic->attachments - 1;
+						$topic->save(false);
+					}
+
 					$number++;
 				}
 			}

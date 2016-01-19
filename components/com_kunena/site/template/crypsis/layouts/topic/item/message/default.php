@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -16,7 +16,7 @@ $direction = $template->params->get('avatarPosition');
 if ($direction === "left") : ?>
 	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
 		<div class="span2 hidden-phone">
-			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter); ?>
+			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 		<div class="span10">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
@@ -32,7 +32,7 @@ if ($direction === "left") : ?>
 			<?php echo $this->subLayout('Message/Edit')->set('message', $this->message)->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickreply'); ?>
 		</div>
 		<div class="span2 hidden-phone">
-			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter); ?>
+			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 		</div>
 	</div>
 <?php elseif ($direction === "top") : ?>

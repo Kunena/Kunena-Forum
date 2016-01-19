@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -228,7 +228,7 @@ class KunenaDatabaseQuery
 				$this->_type = null;
 				$this->_select = null;
 				$this->_delete = null;
-				$this->_udpate = null;
+				$this->_update = null;
 				$this->_insert = null;
 				$this->_from = null;
 				$this->_join = null;

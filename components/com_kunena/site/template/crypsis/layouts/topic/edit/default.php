@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            http://www.kunena.org
  **/
@@ -36,6 +36,11 @@ $this->addScript('js/upload.main.js');
 $this->addStyleSheet('css/fileupload.css');
 
 $this->addScript('js/markitup.js');
+
+$editor = KunenaBbcodeEditor::getInstance();
+$editor->initialize();
+
+$this->addScript('js/markitup.editor.js');
 $this->addScript('js/markitup.set.js');
 
 $this->k = 0;
@@ -57,7 +62,18 @@ if ($this->config->pollenabled)
 $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addStyleSheet('css/atwho.css');
-$this->addScript('js/edit.js');
+
+$this->ktemplate = KunenaFactory::getTemplate();
+$topicicontype = $this->ktemplate->params->get('topicicontype');
+if ($topicicontype == 'B2'){
+	$this->addScript('js/editb2.js');
+}
+elseif ($topicicontype == 'fa') {
+	$this->addScript('js/editfa.js');
+}
+else {
+	$this->addScript('js/edit.js');
+}
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
@@ -68,6 +84,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
+		<input id="kurl_topicons_request" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicicons&format=raw', false); ?>" />
 		<input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
 		<input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
 		<?php if ($this->message->exists()) : ?>
@@ -82,6 +99,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php endif; ?>
 		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
 			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
+		<?php endif; ?>
+		<?php if ($this->message->getTopic()->first_post_id==$this->message->id && $this->message->getTopic()->getPoll()->id): ?>
+			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>" />
 		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
 		<input type="hidden" id="kunena_upload_files_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . JSession::getFormToken() . '=1', false) ?>" />
@@ -118,10 +138,11 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php endif; ?>
 						<div class="control-group" id="kanynomous-check-name"
 							<?php if ($this->me->userid && !$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
-							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
+							<div class="alert alert-info"><?php echo JText::_('COM_KUNENA_GEN_GUEST'); ?></div>
 
+							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></label>
 							<div class="controls">
-								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" value="<?php echo $this->escape($this->message->name); ?>" required />
+								<input type="text" id="kauthorname" name="authorname" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>" class="input-xlarge" maxlength="35" tabindex="4" value="<?php echo $this->escape($this->message->name); ?>" required />
 							</div>
 						</div>
 						<?php if ($this->config->askemail && !$this->me->userid) : ?>
@@ -129,7 +150,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></label>
 
 								<div class="controls">
-									<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xlarge" maxlength="35" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
+									<input type="text" id="email" name="email" size="35" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="input-xlarge" maxlength="35" tabindex="5" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" required />
 									<br />
 									<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
 								</div>
@@ -139,21 +160,29 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 
 							<div class="controls">
-								<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->message->subject); ?>" tabindex="1" required />
+								<input class="span12" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" <?php if (!$this->config->allow_change_subject && $this->message->parent): ?>disabled<?php endif; ?> value="<?php echo $this->escape($this->message->subject); ?>" required />
+								<?php if (!$this->config->allow_change_subject && $this->topic->exists()): ?>
+									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
+								<?php endif; ?>
 							</div>
 						</div>
 						<?php if (!empty($this->topicIcons)) : ?>
 							<div class="control-group">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></label>
-
-								<div class="controls controls-select">
-									<?php foreach ($this->topicIcons as $id => $icon): ?>
-										<span class="kiconsel">
+								<div id="iconset_inject" class="controls controls-select">
+									<div id="iconset_topic_list">
+										<?php foreach ($this->topicIcons as $id => $icon): ?>
 										<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-										<label class="radio inline" for="radio<?php echo $icon->id ?>"><img src="<?php echo $this->template->getTopicIconIndexPath($icon->id, true); ?>" alt="" border="0" />
-										</label>
-									</span>
-									<?php endforeach; ?>
+										<?php if ($this->config->topicicons && $topicicontype == 'B2') : ?>
+											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span class="icon icon-<?php echo $icon->b2; ?> icon-topic" aria-hidden="true"></span>
+										<?php elseif ($this->config->topicicons && $topicicontype == 'fa') : ?>
+											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
+										<?php else : ?>
+											<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+										<?php endif; ?>
+											</label>
+										<?php endforeach; ?>
+									</div>
 								</div>
 							</div>
 						<?php endif; ?>
@@ -161,6 +190,15 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						// Show bbcode editor
 						echo $this->subLayout('Topic/Edit/Editor')->setProperties($this->getProperties());
 						?>
+						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
+							<div class="control-group" id="modified_reason">
+								<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
+
+								<div class="controls">
+									<textarea class="input-xlarge" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>"></textarea>
+								</div>
+							</div>
+						<?php endif; ?>
 						<?php if ($this->allowedExtensions) : ?>
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>
@@ -212,7 +250,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
 
 								<div class="controls">
-									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe || $this->subscriptionschecked == 0 && $this->me->canSubscribe)
+									<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1 && $this->me->canSubscribe != 0 || $this->subscriptionschecked == 0 && $this->me->canSubscribe == 1)
 									{
 										echo 'checked="checked"';
 									} ?> />
@@ -233,13 +271,10 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		</div>
 		<div class="center">
-			<button type="submit" class="btn btn-success" tabindex="4">
+			<button type="submit" class="btn btn-success" tabindex="8">
 				<i class="icon-edit icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
-			<button id="kbutton-preview" name="preview" type="button" class="btn" tabindex="5">
-				<i class="icon-eye-open"></i><?php echo(' ' . JText::_('COM_KUNENA_PREVIEW') . ' '); ?>
-			</button>
-			<button type="reset" class="btn" onclick="javascript:window.history.back();" tabindex="6">
+			<button type="reset" class="btn" onclick="javascript:window.history.back();" tabindex="10">
 				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>

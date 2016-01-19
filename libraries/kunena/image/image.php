@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  Image
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -114,9 +114,16 @@ class KunenaImage extends KunenaCompatImage
 
 		if ($this->isTransparent())
 		{
-			// Get the transparent color values for the current image.
-			$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
-			$color = imageColorAllocateAlpha($handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
+			$trnprt_indx = imagecolortransparent($this->handle);
+
+			if ($trnprt_indx >= 0 && $trnprt_indx < imagecolorstotal($this->handle))  {
+				// Get the transparent color values for the current image.
+				$rgba = imageColorsForIndex($this->handle, imagecolortransparent($this->handle));
+				$color = imageColorAllocateAlpha($handle, $rgba['red'], $rgba['green'], $rgba['blue'], $rgba['alpha']);
+			}
+			else {
+				$color = imageColorAllocateAlpha($handle, 255, 255, 255, 127);
+			}
 
 			// Set the transparent color values for the new image.
 			imagecolortransparent($handle, $color);

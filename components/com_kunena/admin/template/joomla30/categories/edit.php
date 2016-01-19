@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -194,8 +194,7 @@ if (version_compare(JVERSION, '3.2', '>'))
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
-												<td><?php echo JText::_('COM_KUNENA_FEATURE_NOT_AVAILABLE_IN_BETA');?></td>
-												<!--<td>--><?php //echo $this->options ['category_iconset']; ?><!--</td>-->
+												<td><?php echo $this->options ['category_iconset']; ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 											</tr>
 										</table>

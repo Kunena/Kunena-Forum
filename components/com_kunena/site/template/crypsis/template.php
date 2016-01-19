@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Template
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * Crypsis template.
  *
- * @since  K3.1
+ * @since  K4.0
  */
 class KunenaTemplateCrypsis extends KunenaTemplate
 {
@@ -71,7 +71,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 	public function loadLanguage()
 	{
 		$lang = JFactory::getLanguage();
-		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
+		KunenaFactory::loadLanguage('kunena_tmpl_crypsis');
 
 		foreach (array_reverse($this->default) as $template)
 		{
@@ -102,8 +102,19 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
-		// Load template colors settings
+		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css';
+		if (file_exists($filename))
+		{
+			$this->addStyleSheet ( 'custom.css' );
+		}
+
 		$this->ktemplate = KunenaFactory::getTemplate();
+		$fontawesome = $this->ktemplate->params->get('fontawesome');
+		if ($fontawesome) : ?>
+			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<?php endif;
+
+		// Load template colors settings
 		$styles = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
@@ -111,6 +122,8 @@ EOF;
 		if ($iconcolor) {
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] i,
+		.layout#kunena .glyphicon-topic,
+		.layout#kunena h3 i,
 		.layout#kunena #kwho i.icon-users,
 		.layout#kunena#kstats i.icon-bars { color: {$iconcolor}; }
 EOF;
@@ -121,6 +134,9 @@ EOF;
 			$styles .= <<<EOF
 		.layout#kunena [class*="category"] .icon-knewchar { color: {$iconcolornew} !important; }
 		.layout#kunena sup.knewchar { color: {$iconcolornew} !important; }
+		.layout#kunena .topic-item-unread { border-left-color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread .icon { color: {$iconcolornew} !important;}
+		.layout#kunena .topic-item-unread i.fa { color: {$iconcolornew} !important;}
 EOF;
 		}
 

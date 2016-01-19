@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Category
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            http://www.kunena.org
  **/
@@ -17,7 +17,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 
 <?php if ($this->category->headerdesc) : ?>
 	<div class="alert alert-info kfrontend">
-		<a class="close" data-dismiss="alert" href="#">&times;</a>
+		<a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
 	</div>
 <?php endif; ?>
@@ -52,12 +52,13 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 	<div>
 		<ul class="inline">
 			<?php if ($categoryActions) : ?>
-				<li class="hidden-phone">
+				<li>
 					<?php echo implode($categoryActions); ?>
 				</li>
 			<?php endif; ?>
 		</ul>
 	</div>
+	<?php if ($this->topics) : ?>
 	<table class="table table-bordered">
 		<thead>
 		<tr>
@@ -73,7 +74,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 			<td class="span2 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_REPLIES'); ?> / <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?>
 			</td>
-			<td class="span3">
+			<td class="span3 hidden-phone">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST'); ?>
 			</td>
 			<?php if (!empty($this->topicActions)) : ?>
@@ -86,8 +87,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 		</tr>
 		</thead>
 		<?php endif; ?>
-		<?php if ($this->topics) :
-
+		<?php
 			/** @var KunenaForumTopic $previous */
 			$previous = null;
 
@@ -103,6 +103,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 			}
 		?>
 		<tfoot>
+		<?php if ($this->topics) : ?>
 		<tr>
 			<td class="center hidden-phone">
 				<a id="forumbottom"> </a>
@@ -140,6 +141,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 				</div>
 			</td>
 		</tr>
+		<?php endif; ?>
 		</tfoot>
 		<?php endif; ?>
 	</table>

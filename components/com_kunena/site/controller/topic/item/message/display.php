@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerTopicItemMessageDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerDisplay
 {
@@ -62,11 +62,20 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
-				JPluginHelper::importPlugin('captcha');
-				$dispatcher = JDispatcher::getInstance();
-				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+				$plugin = JPluginHelper::getPlugin('captcha');
+				$params = new JRegistry($plugin[0]->params);
 
-				$this->captchaEnabled = $result[0];
+				$captcha_pubkey = $params->get('public_key');
+				$catcha_privkey = $params->get('private_key');
+
+				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+				{
+					JPluginHelper::importPlugin('captcha');
+					$dispatcher = JDispatcher::getInstance();
+					$result = $dispatcher->trigger('onInit', "dynamic_recaptcha_{$this->message->id}");
+
+					$this->captchaEnabled = $result[0];
+				}
 			}
 		}
 

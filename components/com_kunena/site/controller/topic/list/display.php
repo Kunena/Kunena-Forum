@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerTopicListDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControllerDisplay
 {
@@ -95,7 +95,45 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
 
-		$this->setTitle($headerText);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->title = $this->headerText;
+			$this->setTitle($headerText);
+		}
+
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$keywords = $this->config->board_title;
+			$this->setKeywords($keywords);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title ;
+			$this->setDescription($description);
+		}
 	}
 
 	/**

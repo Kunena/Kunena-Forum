@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  User
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -152,7 +152,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -170,7 +170,7 @@ class KunenaUser extends JObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -411,7 +411,14 @@ class KunenaUser extends JObject
 			$default = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
 		}
 
-		return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
+		if ( $this->exists() )
+		{
+			return $this->ordering != '0' ? ($this->ordering == '1' ? 'desc' : 'asc') : $default;
+		}
+		else
+		{
+			return $default == 'asc' ? 'asc' : 'desc';
+		}
 	}
 
 	/**
@@ -537,14 +544,15 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 */
-	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null)
+	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0)
 	{
 		if (!$name)
 		{
 			$name = $this->getName();
 		}
 
-		$key = "{$name}.{$title}.{$rel}";
+		$key = "{$name}.{$title}.{$rel}.{$catid}";
+
 		if (empty($this->_link[$key]))
 		{
 			if (!$title)
@@ -552,8 +560,8 @@ class KunenaUser extends JObject
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}
 
-			$class = !is_null($class) ? $class : $this->getType(0, 'class');
-			$link = $this->getURL (true, $task);
+			$class = !is_null($class) ? $class : $this->getType($catid, 'class');
+			$link = $this->getURL(true, $task);
 
 			if (! empty ( $link ))
 			{
@@ -580,6 +588,13 @@ class KunenaUser extends JObject
 		if (!$this->userid || !$this->registerDate)
 		{
 			return;
+		}
+
+		$config = KunenaConfig::getInstance();
+		$me = KunenaUserHelper::getMyself();
+		if (!$config->pubprofile && !$me->exists())
+		{
+			return false;
 		}
 
 		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, $task, $xhtml );
@@ -646,7 +661,7 @@ class KunenaUser extends JObject
 			$type = 'user';
 		}
 
-		// Deprecated in 3.1
+		// Deprecated in K4.0
 		if ($code === 'class')
 		{
 			$userClasses = KunenaFactory::getTemplate()->getUserClasses();
@@ -980,7 +995,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  URL.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getPrivateMsgLink()
 	{
@@ -1013,7 +1028,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  Cloaked email address or empty string.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getEmailLink()
 	{
@@ -1038,7 +1053,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  URL to the website.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getWebsiteURL()
 	{
@@ -1057,7 +1072,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  Name to the website or the URL if the name isn't set.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getWebsiteName()
 	{
@@ -1071,7 +1086,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  Link to the website.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getWebsiteLink()
 	{
@@ -1096,7 +1111,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string  One of: male, female or unknown.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getGender($translate = true)
 	{
@@ -1120,7 +1135,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getPersonalText()
 	{
@@ -1137,7 +1152,7 @@ class KunenaUser extends JObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getSignature()
 	{
@@ -1321,7 +1336,7 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * Check if captcha is allowed
+	 * Check if captcha is allowed for guests users or registered users
 	 *
 	 * @return boolean
 	 */
@@ -1329,20 +1344,20 @@ class KunenaUser extends JObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ( $this->isModerator() )
+		if ( !$this->exists() && $config->captcha == 1 )
 		{
-			return false;
+			return true;
 		}
 
-		if ( $this->exists() && $config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+		if ( $this->exists() && !$this->isModerator() && $config->captcha >= 0)
 		{
-			return true;
+			if ($config->captcha_post_limit > 0 && $this->posts < $config->captcha_post_limit)
+			{
+				return true;
+			}
 		}
-		else if ( !$this->exists() && $config->captcha )
-		{
-			return true;
-		}
-		else
+
+		if ( $config->captcha == '-1' )
 		{
 			return false;
 		}

@@ -3,7 +3,7 @@
  * Kunena Package
  * @package Kunena.Package
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,13 +27,10 @@ class Pkg_KunenaInstallerScript {
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'3.4' => '3.4.0',
+			'3.4' => '3.4.1',
 			'3.3' => '3.3.6',
-			'3.2' => '3.2.7',
-			'3.1' => '3.1.5',
-			'3.0' => '3.0.4',
 			'2.5' => '2.5.28',
-			'0' => '3.3.6' // Preferred version
+			'0' => '3.4.1' // Preferred version
 		)
 	);
 	/**
@@ -99,7 +96,7 @@ class Pkg_KunenaInstallerScript {
 		$app = JFactory::getApplication();
 		if (version_compare(JVERSION, '3.0', '>')) {
 			$modal = <<<EOS
-<div id="kunena-modal" class="modal hide fade"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
+<div id="kunena-modal" class="modal hide fade" style="width:34%;margin-left:-20%;top:25%;"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
 EOS;
 
 		} else {

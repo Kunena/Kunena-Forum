@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -375,7 +375,7 @@ class KunenaModelSearch extends KunenaModel
 		// Turn internal state into URL, but ignore default values
 		$defaults = array('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
 		                  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-		                  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0);
+		                  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0);
 
 		$url_params = '';
 		$state      = $this->getState();
@@ -391,7 +391,7 @@ class KunenaModelSearch extends KunenaModel
 
 			$param = $paramparts[1];
 
-			if ($param == 'catids')
+			if ($param == 'catids' || $param == 'ids')
 			{
 				$value = implode(' ', $value);
 			}

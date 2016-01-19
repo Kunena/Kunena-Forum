@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Message
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControllerDisplay
 {
@@ -56,14 +56,22 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 		if ($this->message->isAuthorised('reply'))
 		{
-			if ($me->canDoCaptcha())
+			if (version_compare(JVERSION, '3.4', '<') && $me->canDoCaptcha())
 			{
 				$this->quickreply = false;
+			}
+			elseif (version_compare(JVERSION, '3.4', '>') && $me->canDoCaptcha())
+			{
+				$this->quickreply = true;
 			}
 			else
 			{
 				$this->quickreply = true;
 			}
+		}
+		else
+		{
+			$this->quickreply = false;
 		}
 
 		// Reply / Quote
@@ -92,12 +100,11 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				($me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED'): ' ');
 		}
 
-		if (!$me->exists() && !$this->message_closed || !$me->exists() && !$this->topic->locked) {
-			JHtml::_('behavior.modal');
-			$login = KunenaLogin::getInstance();
-			$logintext =  '<a class="modal" href="' . $login->getLoginURL() . '&tmpl=component"> ' . JText::_('JLOGIN'). '</a>';
+		$login = KunenaLogin::getInstance();
+		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() && !$this->message->hold || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled() && !$me->userid && !$this->message->hold) {
+			$logintext =  '<a class="btn-link" href="#klogin" rel="nofollow"> ' . JText::_('JLOGIN'). '</a>';
 			if ($login->getRegistrationUrl()) {
-				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="modal" href="' . $login->getRegistrationURL() . '&tmpl=component">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
+				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="' . $login->getRegistrationUrl() . '">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
 			}
 			else {
 				$register = '';

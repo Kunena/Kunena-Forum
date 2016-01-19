@@ -1,0 +1,24 @@
+sudo: false
+language: php
+env: TRAVIS_PUBLIC_REPOSITORY=true
+php:
+- 5.4
+- 5.5
+- 5.6
+- 7.0
+matrix:
+  allow_failures:
+    - php: 5.5
+    - php: 5.6
+    - php: 7.0
+before_script:
+- composer install --prefer-dist
+- composer update
+
+script:
+- php .travis/phppec.php components/ libraries/ plugins/
+- mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
+- mv tests/api.suite.dist.yml tests/api.suite.yml
+
+notifications:
+  email: false

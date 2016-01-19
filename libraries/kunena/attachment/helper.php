@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Attachment
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -113,6 +113,29 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
+	 * Get the number of the attachments in the message
+	 *
+	 * @param string $ids
+	 * @return KunenaAttachment[]
+	 */
+	static public function getNumberAttachments($ids = false)
+	{
+		$ids = array($ids);
+
+		self::loadByMessage($ids);
+
+		$list = array ();
+		foreach ( $ids as $id )
+		{
+			if (!empty(self::$_messages [$id]))
+			{
+				$list = self::$_messages [$id];
+			}
+		}
+		return $list;
+	}
+
+	/**
 	 * @param bool|array|int   $ids
 	 * @param string $authorise
 	 *
@@ -181,7 +204,7 @@ abstract class KunenaAttachmentHelper
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public static function getAvailableFilename($folder, $basename, $extension, $protected = null)
 	{
@@ -437,7 +460,7 @@ abstract class KunenaAttachmentHelper
 	 */
 	public static function shortenFilename($filename, $front = 10, $back = 8, $filler = '...')
 	{
-		$len = strlen($filename);
+		$len = mb_strlen($filename);
 		if ($len>($front+strlen($filler)+$back))
 		{
 			$output=substr($filename,0,$front).$filler.substr($filename,$len-$back,$back);

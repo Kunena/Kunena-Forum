@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.User
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerUserEditSettingsDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaControllerUserEditDisplay
 {
@@ -37,7 +37,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 		$options[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
 		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
-		$item->field = JHtml::_('select.genericlist', $options, 'messageordering', 'class="kinputbox" size="1"',
+		$item->field = JHtml::_('select.genericlist', $options, 'messageordering', 'class="kinputbox form-control" size="1"',
 			'value', 'text', $this->escape($this->profile->ordering), 'kmessageordering');
 		$this->settings[] = $item;
 
@@ -47,7 +47,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$options = array();
 		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$item->field = JHtml::_('select.genericlist', $options, 'hidemail', 'class="kinputbox" size="1"', 'value',
+		$item->field = JHtml::_('select.genericlist', $options, 'hidemail', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->hideEmail), 'khidemail');
 		$this->settings[] = $item;
 
@@ -57,7 +57,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$options = array();
 		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$item->field = JHtml::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value',
+		$item->field = JHtml::_('select.genericlist', $options, 'showonline', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->showOnline), 'kshowonline');
 		$this->settings[] = $item;
 
@@ -65,9 +65,10 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$item->name = 'cansubscribe';
 		$item->label = JText::_('COM_KUNENA_USER_CANSUBSCRIBE');
 		$options = array();
+		$options[] = JHtml::_('select.option', -1, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$item->field = JHtml::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox" size="1"', 'value',
+		$item->field = JHtml::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->canSubscribe), 'kcansubscribe');
 		$this->settings[] = $item;
 
@@ -86,7 +87,7 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 		$options[] = JHtml::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
 		$options[] = JHtml::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
 		$options[] = JHtml::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
-		$item->field = JHtml::_('select.genericlist', $options, 'userlisttime', 'class="kinputbox" size="1"', 'value',
+		$item->field = JHtml::_('select.genericlist', $options, 'userlisttime', 'class="kinputbox form-control" size="1"', 'value',
 			'text', $this->escape($this->profile->userListtime), 'kuserlisttime');
 		$this->settings[] = $item;
 
@@ -100,7 +101,42 @@ class ComponentKunenaControllerUserEditSettingsDisplay extends ComponentKunenaCo
 	 */
 	protected function prepareDocument()
 	{
-		$this->setTitle($this->headerText);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->setTitle($this->headerText);
+		}
+
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$this->setKeywords($this->headerText);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$this->setDescription($this->headerText);
+		}
 	}
 
 	/**

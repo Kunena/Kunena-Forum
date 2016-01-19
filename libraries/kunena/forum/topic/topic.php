@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -75,8 +75,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			'poll.delete'=>array('Read','Own', 'Poll'),
 			'poll.vote'=>array('Read', 'Poll', 'Vote'),
 			'post.read'=>array('Read'),
-			'post.thankyou'=>array('Read','NotMoved'),
-			'post.unthankyou'=>array('Read'),
+			'post.thankyou'=>array('Read','NotMoved','Unlocked'),
+			'post.unthankyou'=>array('Read','Unlocked'),
 			'post.reply'=>array('Read','NotHold','NotMoved','Unlocked'),
 			'post.edit'=>array('Read','Unlocked'),
 			'post.move'=>array('Read'),
@@ -85,7 +85,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			'post.undelete'=>array('Read'),
 			'post.permdelete'=>array('Read'),
 			'post.attachment.read'=>array('Read'),
-			'post.attachment.create'=>array('Unlocked'),
+			'post.attachment.createimage'=>array('Unlocked'),
+			'post.attachment.createfile'=>array('Unlocked'),
 			'post.attachment.delete'=>array(),
 			 // TODO: In the future we might want to restrict this: array('Read','Unlocked'),
 		);
@@ -486,7 +487,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  RuntimeException  If there is a redirect loop on moved_id.
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getTopic()
 	{
@@ -529,9 +530,9 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	/**
 	 * @return string
 	 */
-	public function getIcon()
+	public function getIcon($category_icon = '')
 	{
-		return KunenaFactory::getTemplate()->getTopicIcon($this);
+		return KunenaFactory::getTemplate()->getTopicIcon($this, $category_icon);
 	}
 
 	/**
@@ -594,7 +595,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getState() {
 		switch ($this->hold)
@@ -872,7 +873,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -890,7 +891,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -960,7 +961,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{

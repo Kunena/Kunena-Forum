@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -143,9 +143,25 @@ class KunenaAdminModelTemplates extends JModelAdmin
 		return $details;
 	}
 
+	function getFileLessParsed()
+	{
+		$template = $this->app->getUserState('kunena.templatename');
+		$filename = $this->app->getUserState('kunena.editless.filename');
+
+		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/less/' . $filename);
+		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
+
+		if ($content === false)
+		{
+			return null;
+		}
+
+		return $content;
+	}
+
 	function getFileContentParsed()
 	{
-		$template = $this->app->getUserState('kunena.edit.template');
+		$template = $this->app->getUserState('kunena.templatename');
 		$filename = $this->app->getUserState('kunena.editcss.filename');
 		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/css/' . $filename);
 

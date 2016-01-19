@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -188,7 +188,7 @@ abstract class KunenaForum
 		}
 
 		// Development version support.
-		if ($version == '3.1') {
+		if ($version == '4.0') {
 			return true;
 		}
 

@@ -3,7 +3,7 @@
 * Kunena Component
 * @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -26,6 +26,10 @@ if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 $template->addScript ( 'js/default.js' );
 
 $rtl = JFactory::getLanguage()->isRTL();
+if ($rtl) {
+	$template->addStyleSheet ( 'css/kunena.forum.rtl.css');
+}
+
 $skinner = $template->params->get('enableSkinner', 0);
 
 if (is_file(JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css")) {

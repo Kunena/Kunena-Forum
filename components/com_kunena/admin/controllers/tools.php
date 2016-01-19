@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Controllers
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -691,7 +691,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @since 3.1.0
+	 * @since K4.0
 	 */
 	public function cancel()
 	{
@@ -703,7 +703,7 @@ class KunenaAdminControllerTools extends KunenaController
 	 *
 	 * @return void
 	 *
-	 * @since 3.1.0
+	 * @since K4.0
 	 */
 	public function uninstall()
 	{

@@ -5,7 +5,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Widget
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -32,15 +32,13 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 		<div class="dropdown-menu" id="nav-menu">
 
 			<div class="center">
+				<p><strong><?php echo $this->me->getLink(null, null, 'nofollow', '', null); ?></strong></p>
 				<a href="<?php echo $this->me->getURL(); ?>">
 					<?php echo $this->me->getAvatarImage('img-polaroid', 128, 128); ?>
 				</a>
 				<p>
-					<strong><?php echo $this->escape($this->me->getName()); ?></strong>
-				</p>
-				<p>
 					<i class="icon-clock"></i>
-					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat', 'ago'); ?>
+					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
 				</p>
 			</div>
 			<div class="divider"></div>
@@ -91,7 +89,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				<?php JHtml::_('bootstrap.modal', 'statusText'); ?>
 				<a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
 					<i class="icon-pencil green"></i>
-					<?php echo JText::_('Status Text') ?>
+					<?php echo JText::_('COM_KUNENA_STATUS') ?>
 				</a>
 			</div>
 			<div class="divider"></div>
@@ -131,6 +129,9 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 				</div>
 			<?php endif ?>
 			<div class="divider"></div>
+
+			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout'); ?>
+
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
 				<div>
 					<button class="btn btn-link" name="submit" type="submit">

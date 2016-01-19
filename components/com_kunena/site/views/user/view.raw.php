@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -49,12 +49,12 @@ class KunenaViewUser extends KunenaView
 	 *
 	 * @param   string $tpl The name of the template file to parse; automatically searches through the template paths.
 	 *
-	 * @since 3.1
+	 * @since K4.0
 	 * @return JSon
 	 */
 	public function displayListMention($tpl = null)
 	{
-		$response['names'] = array();
+		$response = array();
 
 		if ($this->me->exists())
 		{
@@ -62,11 +62,13 @@ class KunenaViewUser extends KunenaView
 
 			foreach ($users as $user)
 			{
-				$name['id']       = $user->id;
-				$name['name']     = $user->name;
-				$name['username'] = $user->username;
+				$user_obj = new stdClass();
 
-				$response['names'][] = $name;
+				$user_obj->id = $user->id;
+				$user_obj->photo = $user->getAvatarURL();
+				$user_obj->name = $user->username;
+
+				$response[] = $user_obj;
 			}
 		}
 

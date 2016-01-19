@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerTopicPollDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 {
@@ -58,9 +58,10 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		{
 			// Authorise forced vote.
 			$this->topic->tryAuthorise('poll.vote');
+			$this->topic->tryAuthorise('reply');
 			$this->name = 'Topic/Poll/Vote';
 		}
-		elseif (!$this->voted && $this->topic->isAuthorised('poll.vote'))
+		elseif (!$this->voted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
 		{
 			$this->name = 'Topic/Poll/Vote';
 		}
@@ -112,6 +113,41 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$this->setTitle(JText::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->setTitle(JText::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+		}
+
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$this->setKeywords(JText::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$this->setDescription(JText::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaHtmlParser::parseText($this->poll->title));
+		}
 	}
 }

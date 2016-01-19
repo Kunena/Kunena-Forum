@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -102,10 +102,23 @@ class KunenaView extends JViewLegacy
 
 		$this->state = $this->get ( 'State' );
 		$this->ktemplate->initialize();
+		$menu = $this->app->getMenu();
+		$home = $menu->getItems('type', 'alias');
+		$juricurrent = JURI::current();
 
 		if (JFactory::getApplication()->isAdmin())
 		{
 			$this->displayLayout();
+		}
+		elseif ($home)
+		{
+			$this->document->addHeadLink( $juricurrent, 'canonical', 'rel', '' );
+			include JPATH_SITE .'/'. $this->ktemplate->getFile('html/display.php');
+
+			if ($this->config->get('credits', 1))
+			{
+				$this->poweredBy();
+			}
 		}
 		else
 		{
@@ -282,9 +295,18 @@ class KunenaView extends JViewLegacy
 		return $html;
 	}
 
-	public function parse($text, $len=0)
+	public function parse($text, $len=0, $parent)
 	{
-		return KunenaHtmlParser::parseBBCode($text, $this, $len);
+		if ($this instanceof KunenaViewSearch)
+		{
+			$parent_object = $parent;
+		}
+		else
+		{
+			$parent_object = $this;
+		}
+
+		return KunenaHtmlParser::parseBBCode($text, $parent_object, $len);
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null)

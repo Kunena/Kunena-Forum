@@ -5,7 +5,7 @@
  * @package       Kunena.Site
  * @subpackage    Views
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -48,6 +48,11 @@ class KunenaViewUser extends KunenaView
 
 	function displayList($tpl = null)
 	{
+		if ($this->config->userlist_allowed && JFactory::getUser()->guest)
+		{
+			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
+		}
+
 		$this->total = $this->get('Total');
 		$this->count = $this->get('Count');
 		$this->users = $this->get('Items');
@@ -120,20 +125,15 @@ class KunenaViewUser extends KunenaView
 		{
 			if ($this->do != 'edit')
 			{
-				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_EDIT') . ' &raquo;', JText::_('COM_KUNENA_EDIT') . ' &raquo;', 'nofollow', 'edit');
+				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_EDIT') . ' &raquo;', JText::_('COM_KUNENA_EDIT') . ' &raquo;', 'nofollow', 'edit','');
 			}
 			else
 			{
-				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow');
+				$this->editlink = $this->profile->getLink(JText::_('COM_KUNENA_BACK') . ' &raquo;', JText::_('COM_KUNENA_BACK') . ' &raquo;', 'nofollow','','');
 			}
 		}
 
 		$this->name = $this->user->username;
-
-		if ($this->config->userlist_name)
-		{
-			$this->name = $this->profile->getName() . ($this->me->isModerator() ? ' (' . $this->name . ')' : '');
-		}
 
 		if ($this->config->showuserstats)
 		{
@@ -658,6 +658,7 @@ class KunenaViewUser extends KunenaView
 		$item->name       = 'cansubscribe';
 		$item->label      = JText::_('COM_KUNENA_USER_CANSUBSCRIBE');
 		$options          = array();
+		$options[]        = JHtml::_('select.option', -1, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 		$options[]        = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$options[]        = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field      = JHtml::_('select.genericlist', $options, 'cansubscribe', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->canSubscribe), 'kcansubscribe');
@@ -773,24 +774,86 @@ class KunenaViewUser extends KunenaView
 
 	protected function _prepareDocument($type)
 	{
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
 		if ($type == 'list')
 		{
 
 			$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
 			$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
 
-			$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . " ({$page}/{$pages})";
-			$this->setTitle($title);
-			// TODO: set keywords and description
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = JText::_('COM_KUNENA_VIEW_USER_LIST') . " ({$page}/{$pages})";
+				$this->setTitle($title);
+			}
 
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->config->board_title;
+				$this->setKeywords($keywords);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = JText::_('COM_KUNENA_VIEW_USER_LIST') . ': ' . $this->config->board_title;
+				$this->setDescription($description);
+			}
 		}
-		elseif ($type == 'common')
+		else
 		{
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+				$this->setTitle($title);
+			}
 
-			$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
-			$this->setTitle($title);
-			// TODO: set keywords and description
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->config->board_title . ', ' . $this->profile->getName();
+				$this->setKeywords($keywords);
+			}
 
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(), $this->config->board_title, $this->profile->getName(), $this->config->board_title);
+				$this->setDescription($description);
+			}
 		}
 	}
 }

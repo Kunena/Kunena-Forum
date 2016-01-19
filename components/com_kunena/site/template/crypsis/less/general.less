@@ -2,7 +2,7 @@
 * Kunena Component
 * @package Kunena.Template.Crypsis
 *
-* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -156,10 +156,27 @@ img {
 }
 
 .topic-starter {
+	 background    : rgba(229, 229, 229, 0.4);
+	 display       : inline-block;
+	 height        : 15px;
+	 border-radius : 0 0 4px 4px;
+	 white-space   : nowrap;
+	 padding-top   : 4px;
+	 border        : 1px solid #ddd;
+	 border-top    : 0 none;
+	 padding-left  : 8px;
+	 padding-right : 8px;
+	 color          : #3a87ad;
+	 line-height    : 1em;
+	 font-size      : 10px;
+	 font-weight    : bold;
+	 text-transform : uppercase;
+}
+
+.topic-moderator {
 	background    : rgba(229, 229, 229, 0.4);
 	display       : inline-block;
 	height        : 15px;
-	line-height   : 0.8em;
 	border-radius : 0 0 4px 4px;
 	white-space   : nowrap;
 	padding-top   : 4px;
@@ -167,15 +184,11 @@ img {
 	border-top    : 0 none;
 	padding-left  : 8px;
 	padding-right : 8px;
-
-	&.topic-starter:after {
-		content        : "Topic Author";
-		color          : #3a87ad;
-		line-height    : 1em;
-		font-size      : 10px;
-		font-weight    : bold;
-		text-transform : uppercase;
-	}
+	color          : red;
+	line-height    : 1em;
+	font-size      : 10px;
+	font-weight    : bold;
+	text-transform : uppercase;
 }
 
 hr {
@@ -196,7 +209,10 @@ hr {
 	line-height : 20px;
 }
 
-ul li {
+.unstyled,
+.inline li,
+#kstats li,
+.profilebox li {
 	list-style : none;
 }
 
@@ -371,8 +387,9 @@ form {
 	border-radius : 5px;
 }
 
-ul, ol {
+.profilebox {
 	padding : 0;
+	margin-top : -5px;
 }
 
 .dl-horizontal dt {
@@ -495,10 +512,6 @@ table .well {
 	.btn-link {
 		margin-left : -120px;
 	}
-}
-
-.profilebox {
-	margin-top : -5px;
 }
 
 .profile-horizontal-top {
@@ -743,9 +756,6 @@ input[type=radio]:checked + label {
 	border-radius : 4px;
 }
 
-label img {
-	pointer-events : none;
-}
 
 input[type=radio] {
 	display : none;
@@ -759,7 +769,7 @@ div#kstats .well {
 #editavatar input[type=radio],
 #poll-vote input[type=radio],
 #search input[type=radio] {
-	display : block;
+	display : inline-block;
 }
 
 ul.inline span.kicon {
@@ -804,4 +814,84 @@ div.pagination a.disabled:hover {
 
 .btn .caret {
 	margin-bottom: 0 !important;
+}
+
+.knav-collapse.collapse {
+	height: auto;
+}
+
+.knav-collapse > .nav {
+	display:none
+}
+.knav-collapse.collapse.in > .nav {
+	display: inline-block;
+}
+
+.btn-toolbar .btn.btn-small:before,
+#search .btn.btn-small:before {
+	content: "×";
+	font-size: 14px;
+}
+
+.btn-toolbar .btn.btn-small.collapsed:before,
+#search .btn.btn-small.collapsed:before {
+	content: "";
+	font-family: "icomoon";
+	font-size: 8px;
+}
+
+.filter-time {
+	padding-top: 15px;
+}
+
+.moved,
+.message-unapproved .badger-left,
+.unapproved,
+.category-stickymsg,
+.deleted {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+form#postform div.control-group {
+	margin-left: 10px
+}
+
+#modified_reason {
+	margin-top: -60px;
+	padding-bottom: 50px;
+}
+
+#kbbcode-poll-options .polloption {
+	padding: 5px 0;
+}
+
+.modal-body,
+.modal {
+	overflow-y:auto;
+	max-height:90%;
+}
+
+.icon-topic {
+	font-size  : 24px;
+	margin-top : 10px;
+}
+
+#kmoderate-mode-selected,
+#kmoderate-mode-newer {
+	display: inline-block;
+}
+
+.profile-horizontal-bottom li,
+.profile-horizontal-top li,
+.thumbnails li,
+.profile-expand li{
+	list-style: none;
+}
+
+.profile-expand ul {
+	padding: 0;
+}
+
+div.kmsgtext-article > p > img {
+	max-width:100px;
 }

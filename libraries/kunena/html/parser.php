@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage HTML
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -82,7 +82,7 @@ abstract class KunenaHtmlParser
 		return $txt;
 	}
 
-	public static function parseBBCode($txt, $parent = null, $len = 0)
+	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '')
 	{
 		if (!$txt)
 		{
@@ -94,6 +94,7 @@ abstract class KunenaHtmlParser
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
+		$bbcode->context = $context;
 		$bbcode->SetPlainMode(false);
 		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent ( $txt );

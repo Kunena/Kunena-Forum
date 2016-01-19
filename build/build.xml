@@ -5,7 +5,7 @@
 
   @package		Kunena
   @subpackage	com_kunena
-  @copyright	Copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+  @copyright	Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
   				portions (C) 2007 MjazTools. All rights reserved.
   @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
   @link			http://www.kunena.org
@@ -45,6 +45,7 @@
 		<mkdir dir="${tmp_dir}" />
 		<mkdir dir="${tmp_dir}/languages_extra" />
 		<mkdir dir="${tmp_dir}/languages_extra/language" />
+		<mkdir dir="${tmp_dir}/crypsisb3" />
 		<mkdir dir="${build_dir}" />
 		<mkdir dir="${package_dir}" />
 		<mkdir dir="${package_dir}/archive" />
@@ -66,7 +67,7 @@
 		-->
 		<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
 			<classpath>
-				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.7.jar" />
+				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.8.jar" />
 				<pathelement path="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
 			</classpath>
 		</taskdef>
@@ -106,9 +107,6 @@
 		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
 			<fileset dir="${project_dir}/libraries/kunena"/>
 		</copy>
-        <copy todir="${tmp_dir}/packages/plg_content_kunena" overwrite="true">
-            <fileset dir="${project_dir}/plugins/plg_content_kunena"/>
-        </copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
 			<fileset dir="${project_dir}/plugins/plg_system_kunena"/>
 		</copy>
@@ -146,11 +144,6 @@
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
-        <copy todir="${tmp_dir}/packages/plg_content_kunena" overwrite="true" filtering="true">
-            <fileset dir="${project_dir}/plugins/plg_content_kunena">
-                <include name="**/*.xml"/>
-            </fileset>
-        </copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/plugins/plg_system_kunena">
 				<include name="**/*.xml"/>
@@ -201,14 +194,35 @@
 
 		<!-- Readme -->
 		<copy file="${project_dir}/README.md" tofile="${package_dir}/README.txt" overwrite="true" filtering="true" />
+
+		<!-- Put template crypsis boostrap 3 in his own package -->
+		<copy todir="${tmp_dir}/crypsisb3" overwrite="true">
+			<fileset dir="${project_dir}/${kunena.site}/template/crypsisb3">
+				<exclude name="**/*.md"/>
+			</fileset>
+		</copy>
+
+		<copy file="${project_dir}/${kunena.site}/template/crypsisb3/README.md" tofile="${tmp_dir}/crypsisb3/README.txt" overwrite="true" filtering="true" />
+
+		<copy todir="${tmp_dir}/crypsisb3" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}/${kunena.site}/template/crypsisb3">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+
+		<delete dir="${tmp_dir}/packages/com_kunena/site/template/crypsisb3" />
 	</target>
 
 	<target name="minify" depends="build">
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/com_kunena/site" todir="${tmp_dir}/packages/com_kunena/site">
+			<exclude name="**/*-min.js" />
+			<exclude name="**/*-min.css" />
 			<include name="**/*.js" />
 			<include name="**/*.css" />
 		</yui-compressor>
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/packages/kunena_media/js" todir="${tmp_dir}/packages/kunena_media/js">
+			<exclude name="**/*-min.js" />
+			<exclude name="**/*-min.css" />
 			<include name="**/*.js" />
 		</yui-compressor>
 	</target>
@@ -339,13 +353,13 @@
 		<language tag="zh-TW" />
 
 		<archive destfile="${build_dir}/packages/plg_system_kunena${str.version}" basedir="${tmp_dir}/packages/plg_system_kunena" />
-		<archive destfile="${build_dir}/packages/plg_content_kunena${str.version}" basedir="${tmp_dir}/packages/plg_content_kunena" />
 		<archive destfile="${build_dir}/packages/plg_quickicon_kunena${str.version}" basedir="${tmp_dir}/packages/plg_quickicon_kunena" />
 		<archive destfile="${build_dir}/packages/lib_kunena${str.version}" basedir="${tmp_dir}/packages/lib_kunena" />
 		<archive destfile="${build_dir}/packages/com_kunena${str.version}" basedir="${tmp_dir}/packages/com_kunena" />
 		<archive destfile="${build_dir}/packages/kunena_media${str.version}" basedir="${tmp_dir}/packages/kunena_media" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
+		<archive destfile="${package_dir}/tmpl_kunena_crypsisb3${str.fileversion}" basedir="${tmp_dir}/crypsisb3" />
 	</target>
 
 	<target name="info" depends="copy">

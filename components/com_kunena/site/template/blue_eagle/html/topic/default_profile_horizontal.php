@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -44,7 +44,7 @@ defined ( '_JEXEC' ) or die ();
 		</li>
 		<?php endif; ?>
 		<li class="kpost-username">
-			<?php echo $this->profile->getLink() ?>
+			<?php echo $this->profile->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id) ?>
 		</li>
 		<?php if (!empty($this->usertype)) : ?>
 		<li class="kpost-usertype">

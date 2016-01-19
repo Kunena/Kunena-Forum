@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,8 +33,8 @@ class pkg_kunena_languagesInstallerScript {
 		$app = JFactory::getApplication();
 
 		// Do not install if Kunena doesn't exist.
-		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1')) {
-			$app->enqueueMessage(sprintf ( 'Kunena %s has not been installed, aborting!', '3.1' ), 'notice');
+		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0')) {
+			$app->enqueueMessage(sprintf ( 'Kunena %s has not been installed, aborting!', '4.0' ), 'notice');
 			return false;
 		}
 		if (KunenaForum::isDev()) {

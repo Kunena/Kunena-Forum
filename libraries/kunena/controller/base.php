@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Controller
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,7 +33,7 @@ abstract class KunenaControllerBase implements Serializable
 	 * Options object.
 	 *
 	 * @var    JRegistry
-	 * @since  3.1
+	 * @since  K4.0
 	 */
 	protected $options = null;
 
@@ -63,7 +63,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  KunenaControllerBase  Instance of $this to allow chaining.
 	 *
-	 * @since   3.1
+	 * @since   K4.0
 	 */
 	public function setOptions($options = null)
 	{
@@ -90,7 +90,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  JRegistry  Object with the options.
 	 *
-	 * @since   3.1
+	 * @since   K4.0
 	 */
 	public function getOptions()
 	{
@@ -108,7 +108,7 @@ abstract class KunenaControllerBase implements Serializable
 	 *
 	 * @return  KunenaControllerBase  Instance of $this to allow chaining.
 	 *
-	 * @since   3.1
+	 * @since   K4.0
 	 */
 	public function resetOptions()
 	{

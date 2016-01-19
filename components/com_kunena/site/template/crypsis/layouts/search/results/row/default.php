@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Search
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -22,8 +22,8 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 <div id="kunena_search_results" class="row-fluid">
 	<div class="span2 center">
 		<ul class="unstyled center profilebox">
-			<li><strong><?php echo $author->getLink(); ?></strong></li>
-			<li><?php echo $author->getLink($author->getAvatarImage('img-polaroid', 128, 128)); ?></li>
+			<li><strong><?php echo $author->getLink(null, null, 'nofollow', '', null, $topic->getCategory()->id); ?></strong></li>
+			<li><?php echo $author->getLink($author->getAvatarImage('img-polaroid', 'post')); ?></li>
 		</ul>
 	</div>
 

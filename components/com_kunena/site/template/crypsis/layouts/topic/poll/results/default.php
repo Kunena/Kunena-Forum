@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -68,14 +68,12 @@ $this->addScript('poll.js');
 			</td>
 		</tr>
 
+		<?php if (!$this->me->exists()) : ?>
 		<tr>
 			<td colspan="4">
-
-				<?php if (!$this->me->exists()) : ?>
-
 				<?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
 
-				<?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title) : ?>
+				<?php elseif ($this->topic->isAuthorised('poll.vote') && $this->show_title && $this->topic->isAuthorised('reply')) : ?>
 
 				<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=vote&catid={$this->category->id}&id={$this->topic->id}"); ?>>">
 					<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
@@ -105,10 +103,9 @@ $this->addScript('poll.js');
 						</a>
 					</div>
 				</div>
-				<?php endif; ?>
-
 			</td>
 		</tr>
+		<?php endif; ?>
 	</tfoot>
 </table>
 </div>

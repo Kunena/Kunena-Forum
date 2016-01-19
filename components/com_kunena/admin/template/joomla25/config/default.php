@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Config
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -348,6 +348,11 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo $this->lists ['searchtime'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_CFG_SEARCH_TIME_DESC') ?></td>
 													</tr>
+													<tr>
+														<td><?php echo JText::_('COM_KUNENA_ALLOW_CHANGE_SUBJECT_REPLIES_LABEL') ?></td>
+														<td><?php echo $this->lists ['allow_change_subject'] ?></td>
+														<td><?php echo JText::_('COM_KUNENA_ALLOW_CHANGE_SUBJECT_REPLIES_DESC') ?></td>
+													</tr>
 												</tbody>
 											</table>
 										</fieldset>
@@ -468,11 +473,6 @@ defined ( '_JEXEC' ) or die ();
 														<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE') ?></td>
 														<td><?php echo $this->lists ['show_imgfiles_manage_profile'] ?></td>
 														<td><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?></td>
-													</tr>
-													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
-														<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT') ?></td>
@@ -640,9 +640,9 @@ defined ( '_JEXEC' ) or die ();
 												</thead>
 												<tbody>
 													<tr>
-														<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS') ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_TITLE') ?></td>
 														<td><?php echo $this->lists ['captcha'] ?></td>
-														<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS_DESC') ?></td>
+														<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_DESC') ?></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT') ?></td>

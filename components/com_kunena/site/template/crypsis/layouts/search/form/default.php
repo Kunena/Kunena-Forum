@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Search
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -18,12 +18,7 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
-// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('js/caret.js');
-$this->addScript('js/atwho.js');
-$this->addStyleSheet('css/atwho.css');
 $this->addScript('js/search.js');
-
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post">
@@ -33,13 +28,17 @@ $this->addScript('js/search.js');
 	<?php endif; ?>
 	<?php echo JHtml::_( 'form.token' ); ?>
 
-	<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#search">&times;</div>
+	<div class="btn-toolbar pull-right">
+		<div class="btn-group">
+			<div class="btn btn-small" data-toggle="collapse" data-target="#search"></div>
+		</div>
+	</div>
 	<h2>
 		<?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
 	</h2>
 
 	<div class="collapse in" id="search">
-		<div class="well">
+	<div class="well">
 			<div class="row-fluid">
 				<fieldset class="span6">
 					<legend>
@@ -59,7 +58,7 @@ $this->addScript('js/search.js');
 					</legend>
 					<label>
 						<?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
-						<input id="kusersearch" type="text" name="searchuser"
+						<input id="kusersearch" data-provide="typeahead" type="text" name="searchuser" autocomplete="off"
 						       value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" />
 					</label>
 
@@ -72,7 +71,7 @@ $this->addScript('js/search.js');
 			</div>
 		</div>
 
-		<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#search-options">&times;</div>
+		<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#search-options"></div>
 		<h3>
 			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h3>
@@ -149,9 +148,12 @@ $this->addScript('js/search.js');
 		</div>
 
 		<div class="center">
-			<input class="btn btn-primary" type="submit" value="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>" />
-			<input class="btn" type="reset" value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>"
-			       onclick="window.history.back();" />
+			<button type="submit" class="btn btn-primary">
+				<i class="icon-search icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
+			</button>
+			<button type="reset" class="btn" onclick="javascript:window.history.back();">
+				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+			</button>
 		</div>
 	</div>
 </form>

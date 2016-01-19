@@ -4,14 +4,14 @@
  *
  * @package       Kunena.Site
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
 // Display offline message if Kunena hasn't been fully installed.
-if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.1') || !KunenaForum::installed())
+if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
 {
 	$lang = JFactory::getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');

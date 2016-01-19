@@ -4,7 +4,7 @@
  * @package     Kunena.Framework
  * @subpackage  User
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -15,7 +15,7 @@ KunenaUserHelper::initialize();
 /**
  * Class KunenaUserHelper
  *
- * @since  K3.1
+ * @since  K4.0
  */
 abstract class KunenaUserHelper
 {
@@ -357,7 +357,7 @@ abstract class KunenaUserHelper
 	 * @param bool|string   $yes
 	 * @param string $no
 	 *
-	 * @deprecated 3.1.0  Please use getsStatus instead.
+	 * @deprecated K4.0.0  Please use getsStatus instead.
 	 *
 	 * @return bool|string
 	 */

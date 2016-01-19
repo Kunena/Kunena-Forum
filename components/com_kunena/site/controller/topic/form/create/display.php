@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerTopicFormCreateDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDisplay
 {
@@ -37,12 +37,6 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaFactory::getTemplate();
-
-		// Get topic icons if they are enabled.
-		if ($this->config->topicicons)
-		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
-		}
 
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$arrayanynomousbox = array();
@@ -72,15 +66,31 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 
-		if ( $this->message->isAuthorised('reply') && $this->me->canDoCaptcha())
+		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
+
+		// Get topic icons if they are enabled.
+		if ($this->config->topicicons)
+		{
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0, $this->topic->getCategory()->iconset);
+		}
+
+		if ( $this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
 			{
-				JPluginHelper::importPlugin('captcha');
-				$dispatcher = JDispatcher::getInstance();
-				$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+				$plugin = JPluginHelper::getPlugin('captcha');
+				$params = new JRegistry($plugin[0]->params);
+				$captcha_pubkey = $params->get('public_key');
+				$catcha_privkey = $params->get('private_key');
 
-				$this->captchaEnabled = $result[0];
+				if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+				{
+					JPluginHelper::importPlugin('captcha');
+					$dispatcher = JDispatcher::getInstance();
+					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+
+					$this->captchaEnabled = $result[0];
+				}
 			}
 		}
 		else
@@ -99,7 +109,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		if ($this->config->pickup_category)
 		{
 			$options[] = JHtml::_('select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text');
-			$selected = 0;
+			$selected = '';
 		}
 
 		if ($saved)
@@ -117,7 +127,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		);
 
 		$this->selectcatlist = JHtml::_('kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
-			'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
+			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->action = 'post';
 
@@ -146,7 +156,42 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	 */
 	protected function prepareDocument()
 	{
-		$this->setTitle($this->headerText);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->setTitle($this->headerText);
+		}
+
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$this->setKeywords($this->headerText);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$this->setDescription($this->headerText);
+		}
 	}
 
 	/**

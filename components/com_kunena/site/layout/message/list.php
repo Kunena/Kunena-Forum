@@ -5,7 +5,7 @@
  * @package         Kunena.Site
  * @subpackage      Layout.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * KunenaLayoutMessageList
  *
- * @since  3.1
+ * @since  K4.0
  *
  */
 class KunenaLayoutMessageList extends KunenaLayout
@@ -27,7 +27,7 @@ class KunenaLayoutMessageList extends KunenaLayout
 	 *
 	 * @return void
 	 */
-	public function displayTimeFilter($id = 'filter-time', $attrib = 'class= "filter" onchange="this.form.submit()"')
+	public function displayTimeFilter($id = 'filter-time', $attrib = 'class="form-control filter" onchange="this.form.submit()"')
 	{
 		if (!isset($this->state))
 		{

@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Widget
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerWidgetMenuDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 {
@@ -64,7 +64,7 @@ class ComponentKunenaControllerWidgetMenuDisplay extends KunenaControllerDisplay
 		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
 		$this->path = isset($this->active) ? $this->active->tree : array();
 		$this->showAll = $parameters->get('showAllChildren');
-		$this->class_sfx = htmlspecialchars($parameters->get('class_sfx'), ENT_COMPAT, 'UTF-8');
+		$this->class_sfx = htmlspecialchars($parameters->get('pageclass_sfx'), ENT_COMPAT, 'UTF-8');
 
 		return true;
 	}

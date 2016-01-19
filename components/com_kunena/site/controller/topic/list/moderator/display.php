@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerTopicListDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunenaControllerTopicListDisplay
 {
@@ -82,7 +82,6 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 		$this->actions = $this->getTopicActions($this->topics, $actions);
 
-		// TODO <-
-		$this->headerText = JText::_('Topics Needing Attention');
+		$this->headerText = JText::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
 	}
 }

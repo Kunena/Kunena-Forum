@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Search
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerSearchResultsDisplay
  *
- * @since  3.1
+ * @since  K4.0
  */
 class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisplay
 {
@@ -71,6 +71,44 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
+
+
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+		}
+
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ', '. $this->searchwords;
+			$this->setKeywords($keywords);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title ;
+			$this->setDescription($description);
+		}
 	}
 }

@@ -5,7 +5,7 @@
  * @package         Kunena.Site
  * @subpackage      Layout.Search
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * KunenaLayoutSearchForm
  *
- * @since  3.1
+ * @since  K4.0
  *
  */
 class KunenaLayoutSearchForm extends KunenaLayout
@@ -27,7 +27,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 */
-	public function displayModeList($id, $attributes = '')
+	public function displayModeList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
 		$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS'));
@@ -43,7 +43,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 */
-	public function displayDateList($id, $attributes = '')
+	public function displayDateList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
 		$options[] = JHtml::_('select.option', 'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT'));
@@ -66,7 +66,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 */
-	public function displayBeforeAfterList($id, $attributes = '')
+	public function displayBeforeAfterList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
 		$options[] = JHtml::_('select.option', 'after', JText::_('COM_KUNENA_SEARCH_DATE_NEWER'));
@@ -82,7 +82,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 */
-	public function displaySortByList($id, $attributes = '')
+	public function displaySortByList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
 		$options[] = JHtml::_('select.option', 'title', JText::_('COM_KUNENA_SEARCH_SORTBY_TITLE'));
@@ -106,7 +106,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 */
-	public function displayOrderList($id, $attributes = '')
+	public function displayOrderList($id, $attributes = 'class="form-control"')
 	{
 		$options   = array();
 		$options[] = JHtml::_('select.option', 'inc', JText::_('COM_KUNENA_SEARCH_SORTBY_INC'));
@@ -122,7 +122,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 */
-	public function displayLimitList($id, $attributes = '')
+	public function displayLimitList($id, $attributes = 'class="form-control"')
 	{
 		// Limit value list
 		$options   = array();
@@ -141,7 +141,7 @@ class KunenaLayoutSearchForm extends KunenaLayout
 	 *
 	 * @return void
 	 */
-	public function displayCategoryList($id, $attributes = '')
+	public function displayCategoryList($id, $attributes = 'class="form-control"')
 	{
 		// Category select list
 		$options   = array();

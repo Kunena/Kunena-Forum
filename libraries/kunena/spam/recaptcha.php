@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -90,7 +90,10 @@ class KunenaSpamRecaptcha
 		// FIXME: we need a better logic for trusted users
 		if ($me->exists() && !$me->isModerator() && $me->posts < $config->captcha_post_limit)
 		{
-			return true;
+			if ( !empty($this->publickey) &&   !empty($this->privatekey))
+			{
+				return true;
+			}
 		}
 
 		// Captcha is disabled

@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Category
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  * @var KunenaForumTopic $topic
  */
 $topic = $this->category->getLastTopic();
-$avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage() : null;
+$avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage('img-thumbnail', 'thumb') : null;
 ?>
 
 <tr>
@@ -58,7 +58,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage() : n
 	<?php if ($this->checkbox) : ?>
 	<td class="center">
 		<label>
-			<input type="checkbox" name="categories[<?php echo (int) $this->category->id?>]" value="1" />
+			<input type="checkbox" class="kcatcheckall" name="categories[<?php echo (int) $this->category->id?>]" value="1" />
 		</label>
 	</td>
 	<?php endif; ?>

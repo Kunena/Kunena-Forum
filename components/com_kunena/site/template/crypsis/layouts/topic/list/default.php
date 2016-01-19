@@ -4,7 +4,7 @@
  * @package     Kunena.Template.Crypsis
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -15,17 +15,19 @@ $colspan = !empty($this->actions) ? 4 : 3;
 ?>
 <div class="row-fluid">
 	<div class="span12">
-		<h2>
-			<?php echo $this->escape($this->headerText); ?>
-			<small class="hidden-phone">
-				(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
-			</small>
+		<div class="pull-left">
+			<h2>
+				<?php echo $this->escape($this->headerText); ?>
+				<small class="hidden-sm">
+					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
+				</small>
 
-			<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-		</h2>
+				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+			</h2>
+		</div>
 
-		<div id="filter-time">
-			<div class="filter-sel pull-right">
+		<div class="filter-time pull-right">
+			<div class="filter-sel">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					method="post" target="_self" class="form-inline hidden-phone">
 					<div>
@@ -59,7 +61,7 @@ $colspan = !empty($this->actions) ? 4 : 3;
 					<i class="icon-arrow-down hasTooltip"></i>
 				</a>
 			</td>
-			<td class="span<?php echo $cols ?>">
+			<td class="span<?php echo $cols ?>" id="recent-list">
 				<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>
 			</td>
 			<td class="span2 hidden-phone">
@@ -84,9 +86,12 @@ $colspan = !empty($this->actions) ? 4 : 3;
 				<a href="#forumtop" rel="nofollow">
 					<i class="icon-arrow-up hasTooltip"></i>
 				</a>
-				<?php // FIXME: $this->displayCategoryActions() ?>
 			</td>
+			<?php if (empty($this->actions)) : ?>
+			<td colspan="<?php echo $colspan; ?>" class="hidden-phone">
+			<?php else : ?>
 			<td colspan="<?php echo $colspan; ?>">
+			<?php endif; ?>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
 				<div class="input-append">
 					<?php if (!empty($this->topics) && !empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, 'btn btn-primary', 'follow'); ?>

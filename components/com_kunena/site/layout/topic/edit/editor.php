@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Layout.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * KunenaLayoutTopicEditEditor
  *
- * @since  3.1
+ * @since  K4.0
  *
  */
 class KunenaLayoutTopicEditEditor extends KunenaLayout
@@ -51,7 +51,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 				$options[] = JHTML::_('select.option', substr($file,0,-4), substr($file,0,-4));
 			}
 
-			$list = JHTML::_('select.genericlist', $options, 'kcodetype"', 'class="kbutton" ' , 'value', 'text', '-1' );
+			$list = JHTML::_('select.genericlist', $options, 'kcodetype', 'class="kbutton form-control"' , 'value', 'text', '-1' );
 
 			return $list;
 		}

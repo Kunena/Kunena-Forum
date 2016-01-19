@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -71,7 +71,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		'undelete'=>array('Read'),
 		'permdelete'=>array('Read'),
 		'attachment.read'=>array('Read'),
-		'attachment.create'=>array('Read','Own'),
+		'attachment.createimage'=>array('Read','AttachmentsImage'),
+		'attachment.createfile'=>array('Read','AttachmentsFile'),
 		'attachment.delete'=>array(),
 		// TODO: In the future we might want to restrict this: array('Read','EditTime'),
 	);
@@ -147,7 +148,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return string
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function getState()
 	{
@@ -540,11 +541,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Display required field from message table
+	 *
 	 * @param string $field
+	 * @param boolean $html
+	 * @param string $context
 	 *
 	 * @return int|string
 	 */
-	public function displayField($field, $html = true)
+	public function displayField($field, $html = true, $context = '')
 	{
 		switch ($field)
 		{
@@ -554,7 +559,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
 				// FIXME: add context to BBCode parser (and fix logic in the parser)
-				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
+				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this, 0, $context) : KunenaHtmlParser::stripBBCode
 					($this->message, $this->parent, $html);
 		}
 
@@ -569,7 +574,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 *
 	 * @return bool
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function isAuthorised($action='read', KunenaUser $user = null)
 	{
@@ -587,7 +592,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @throws KunenaExceptionAuthorise
 	 * @throws InvalidArgumentException
 	 *
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
 	{
@@ -656,7 +661,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * @param bool   $silent
 	 *
 	 * @return bool
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function authorise($action = 'read', $user = null, $silent = false)
 	{
@@ -757,7 +762,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Currently only orphan attachments can be added.
 	 *
 	 * @param array $ids
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function addAttachments(array $ids)
 	{
@@ -768,7 +773,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Remove listed attachments from the message.
 	 *
 	 * @param array $ids
-	 * @since 3.1
+	 * @since  K4.0
 	 */
 	public function removeAttachments(array $ids)
 	{
@@ -779,7 +784,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	 * Remove listed attachments from the message.
 	 *
 	 * @param bool|int|array $ids
-	 * @deprecated 3.1
+	 * @deprecated K4.0
 	 */
 	public function removeAttachment($ids)
 	{
@@ -793,6 +798,37 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 
 		$this->removeAttachments($ids);
+	}
+
+	/**
+	 * Get the number of attachments into a message
+	 *
+	 * @return array
+	 */
+	public function getNbAttachments()
+	{
+		$attachments = KunenaAttachmentHelper::getNumberAttachments($this->id);
+
+		$attachs = new StdClass();
+		$attachs->image = 0;
+		$attachs->file = 0;
+		$attachs->total = 0;
+
+		foreach($attachments as $attach)
+		{
+			if ($attach->isImage())
+			{
+				$attachs->image = $attachs->image+1;
+			}
+			else
+			{
+				$attachs->file = $attachs->file+1;
+			}
+
+      $attachs->total = $attachs->total+1;
+		}
+
+		return $attachs;
 	}
 
 	/**
@@ -845,7 +881,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			}
 
 			$attachment->mesid = $this->id;
-			$exception = $attachment->tryAuthorise('create', null, false);
+
+			if ($attachment->IsImage())
+			{
+				$exception = $attachment->tryAuthorise('createimage', null, false);
+			}
+			else
+			{
+				$exception = $attachment->tryAuthorise('createfile', null, false);
+			}
 
 			if ($exception)
 			{
@@ -1390,6 +1434,88 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Check if user has the right to upload image attachment
+	 *
+	 * @param KunenaUser $user
+	 * @return KunenaExceptionAuthorise|NULL
+	 */
+	protected function authoriseAttachmentsImage(KunenaUser $user)
+	{
+		if (empty(KunenaFactory::getConfig()->image_upload))
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
+		}
+
+		if (KunenaFactory::getConfig()->image_upload=='admin'  )
+		{
+			if (!$user->isAdmin())
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_ADMINISTRATORS'), 403);
+			}
+		}
+
+		if (KunenaFactory::getConfig()->image_upload=='registered')
+		{
+			if (!$user->userid )
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_REGISTERED_USERS'), 403);
+			}
+		}
+
+		if (KunenaFactory::getConfig()->image_upload=='moderator')
+		{
+			$category = $this->getCategory();
+			if (!$user->isModerator($category))
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_MODERATORS'), 403);
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Check if user has the right to upload file attachment
+	 *
+	 * @param KunenaUser $user
+	 * @return KunenaExceptionAuthorise|NULL
+	 */
+	protected function authoriseAttachmentsFile(KunenaUser $user)
+	{
+		if (empty(KunenaFactory::getConfig()->file_upload) )
+		{
+			return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_NOT_ALLOWED'), 403);
+		}
+
+		if (KunenaFactory::getConfig()->file_upload=='admin')
+		{
+			if (!$user->isAdmin())
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_ADMINISTRATORS'), 403);
+			}
+		}
+
+		if(KunenaFactory::getConfig()->file_upload=='registered' )
+		{
+			if (!$user->userid )
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_REGISTERED_USERS'), 403);
+			}
+		}
+
+		if (KunenaFactory::getConfig()->file_upload=='moderator' )
+		{
+			$category = $this->getCategory();
+			if (!$user->isModerator($category))
+			{
+				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_MODERATORS'), 403);
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * @return int
 	 */
 	protected function delta()
@@ -1432,7 +1558,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		}
 		catch (Exception $e)
 		{
-			// TODO: Deprecated in 3.1, remove in 4.0
+			// TODO: Deprecated in K4.0, remove in K5.0
 			// Clean up the message for review.
 			$message = KunenaHtmlParser::stripBBCode($this->message, 0, false);
 

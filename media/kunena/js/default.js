@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Template.Blue_Eagle
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,28 +13,28 @@
 var KunenaTabs = new Class({
 	Implements: [Options, Events],
 
-	options : {
-		display: 0,
-		onActive: function(title, description) {
+	options: {
+		display            : 0,
+		onActive           : function(title, description) {
 			description.setStyle('display', 'block');
 			title.addClass('open').removeClass('closed');
 		},
-		onBackground: function(title, description){
+		onBackground       : function(title, description) {
 			description.setStyle('display', 'none');
 			title.addClass('closed').removeClass('open');
 		},
-		titleSelector: 'dt',
+		titleSelector      : 'dt',
 		descriptionSelector: 'dd'
 	},
 
-	initialize: function(dlist, options){
+	initialize: function(dlist, options) {
 		this.setOptions(options);
 		this.dlist = document.id(dlist);
 		this.titles = this.dlist.getChildren(this.options.titleSelector);
 		this.descriptions = this.dlist.getChildren(this.options.descriptionSelector);
 		this.content = new Element('div').inject(this.dlist, 'after').addClass('current');
 
-		for (var i = 0, l = this.titles.length; i < l; i++){
+		for (var i = 0, l = this.titles.length; i < l; i++) {
 			var title = this.titles[i];
 			var description = this.descriptions[i];
 			title.setStyle('cursor', 'pointer');
@@ -42,13 +42,13 @@ var KunenaTabs = new Class({
 			description.inject(this.content);
 		}
 
-		if (this.options.display!=null) this.display(this.options.display);
+		if (this.options.display != null) this.display(this.options.display);
 
 		if (this.options.initialize) this.options.initialize.call(this);
 	},
 
 	hideAllBut: function(but) {
-		for (var i = 0, l = this.titles.length; i < l; i++){
+		for (var i = 0, l = this.titles.length; i < l; i++) {
 			if (i != but) this.fireEvent('onBackground', [this.titles[i], this.descriptions[i]]);
 		}
 	},
@@ -66,57 +66,58 @@ var KunenaTabs = new Class({
  *
  * http://digitarald.de/project/autocompleter/
  *
- * @version		1.1.2
+ * @version        1.1.2
  *
- * @license		MIT-style license
- * @author		Harald Kirschner <mail [at] digitarald.de>
- * @copyright	Author
+ * @license        MIT-style license
+ * @author        Harald Kirschner <mail [at] digitarald.de>
+ * @copyright    Author
  */
 
 var Autocompleter = new Class({
 
 	Implements: [Options, Events],
 
-	options: {/*
-		onOver: $empty,
-		onSelect: $empty,
-		onSelection: $empty,
-		onShow: $empty,
-		onHide: $empty,
-		onBlur: $empty,
-		onFocus: $empty,*/
-		minLength: 1,
-		markQuery: true,
-		width: 'inherit',
-		maxChoices: 10,
-		injectChoice: null,
-		customChoices: null,
-		emptyChoices: null,
-		visibleChoices: true,
-		className: 'autocompleter-choices',
-		zIndex: 42,
-		delay: 400,
+	options: {
+		/*
+		 onOver: $empty,
+		 onSelect: $empty,
+		 onSelection: $empty,
+		 onShow: $empty,
+		 onHide: $empty,
+		 onBlur: $empty,
+		 onFocus: $empty,*/
+		minLength      : 1,
+		markQuery      : true,
+		width          : 'inherit',
+		maxChoices     : 10,
+		injectChoice   : null,
+		customChoices  : null,
+		emptyChoices   : null,
+		visibleChoices : true,
+		className      : 'autocompleter-choices',
+		zIndex         : 42,
+		delay          : 400,
 		observerOptions: {},
-		fxOptions: {},
+		fxOptions      : {},
 
-		autoSubmit: false,
-		overflow: false,
+		autoSubmit    : false,
+		overflow      : false,
 		overflowMargin: 25,
-		selectFirst: false,
-		filter: null,
-		filterCase: false,
-		filterSubset: false,
-		forceSelect: false,
-		selectMode: true,
-		choicesMatch: null,
+		selectFirst   : false,
+		filter        : null,
+		filterCase    : false,
+		filterSubset  : false,
+		forceSelect   : false,
+		selectMode    : true,
+		choicesMatch  : null,
 
-		multiple: false,
-		separator: ', ',
+		multiple      : false,
+		separator     : ', ',
 		separatorSplit: /\s*[,;]\s*/,
-		autoTrim: false,
-		allowDupes: false,
+		autoTrim      : false,
+		allowDupes    : false,
 
-		cache: true,
+		cache   : true,
 		relative: false
 	},
 
@@ -146,7 +147,7 @@ var Autocompleter = new Class({
 			this.choices = this.options.customChoices;
 		} else {
 			this.choices = new Element('ul', {
-				'class': this.options.className,
+				'class' : this.options.className,
 				'styles': {
 					'zIndex': this.options.zIndex
 				}
@@ -163,7 +164,7 @@ var Autocompleter = new Class({
 		}
 		this.fx = (!this.options.fxOptions) ? null : new Fx.Tween(this.choices, Object.merge({
 			'property': 'opacity',
-			'link': 'cancel',
+			'link'    : 'cancel',
 			'duration': 200
 		}, this.options.fxOptions)).addEvent('onStart', Chain.prototype.clearChain).set(0);
 		this.element.setProperty('autocomplete', 'off')
@@ -195,15 +196,17 @@ var Autocompleter = new Class({
 						return !!(this.options.autoSubmit);
 					}
 					break;
-				case 'up': case 'down':
+				case 'up':
+				case 'down':
 					if (!this.prefetch() && this.queryValue !== null) {
 						var up = (e.key == 'up');
 						this.choiceOver((this.selected || this.choices)[
 							(this.selected) ? ((up) ? 'getPrevious' : 'getNext') : ((up) ? 'getLast' : 'getFirst')
-						](this.options.choicesMatch), true);
+							](this.options.choicesMatch), true);
 					}
 					return false;
-				case 'esc': case 'tab':
+				case 'esc':
+				case 'tab':
 					this.hideChoices(true);
 					break;
 			}
@@ -245,8 +248,8 @@ var Autocompleter = new Class({
 		if (this.fix) {
 			var pos = this.element.getCoordinates(this.relative), width = this.options.width || 'auto';
 			this.choices.setStyles({
-				'left': pos.left,
-				'top': pos.bottom,
+				'left' : pos.left,
+				'top'  : pos.bottom,
 				'width': (width === true || width == 'inherit') ? pos.width : width
 			});
 		}
@@ -266,13 +269,14 @@ var Autocompleter = new Class({
 			styles.overflowY = 'scroll';
 			styles.height = item.getCoordinates(this.choices).bottom;
 			this.overflown = true;
-		};
+		}
+		;
 		this.choices.setStyles(styles);
 		this.fix.show();
 		if (this.options.visibleChoices) {
 			var scroll = document.getScroll(),
-			size = document.getSize(),
-			coords = this.choices.getCoordinates();
+				size = document.getSize(),
+				coords = this.choices.getCoordinates();
 			if (coords.right > scroll.x + size.x) scroll.x = coords.right - size.x;
 			if (coords.bottom > scroll.y + size.y) scroll.y = coords.bottom - size.y;
 			window.scrollTo(Math.min(scroll.x, coords.left), Math.min(scroll.y, coords.top));
@@ -292,7 +296,7 @@ var Autocompleter = new Class({
 		this.visible = false;
 		if (this.selected) this.selected.removeClass('autocompleter-selected');
 		this.observer.clear();
-		var hide = function(){
+		var hide = function() {
 			this.choices.setStyle('display', 'none');
 			this.fix.hide();
 		}.bind(this);
@@ -328,12 +332,13 @@ var Autocompleter = new Class({
 	},
 
 	fetchCached: function() {
-		return false;
 		if (!this.options.cache
 			|| !this.cached
 			|| !this.cached.length
 			|| this.cached.length >= this.options.maxChoices
-			|| this.queryValue) return false;
+			|| this.queryValue) {
+			return false;
+		}
 		this.update(this.filter(this.cached));
 		return true;
 	},
@@ -346,11 +351,11 @@ var Autocompleter = new Class({
 			(this.options.emptyChoices || this.hideChoices).call(this);
 		} else {
 			if (this.options.maxChoices < tokens.length && !this.options.overflow) tokens.length = this.options.maxChoices;
-			tokens.each(this.options.injectChoice || function(token){
-				var choice = new Element('li', {'html': this.markQueryValue(token)});
-				choice.inputValue = token;
-				this.addChoiceEvents(choice).inject(this.choices);
-			}, this);
+			tokens.each(this.options.injectChoice || function(token) {
+					var choice = new Element('li', {'html': this.markQueryValue(token)});
+					choice.inputValue = token;
+					this.addChoiceEvents(choice).inject(this.choices);
+				}, this);
 			this.showChoices();
 		}
 	},
@@ -391,8 +396,8 @@ var Autocompleter = new Class({
 	 * Marks the queried word in the given string with <span class="autocompleter-queried">*</span>
 	 * Call this i.e. from your custom parseChoices, same for addChoiceEvents
 	 *
-	 * @param		{String} Text
-	 * @return		{String} Text
+	 * @param        {String} Text
+	 * @return        {String} Text
 	 */
 	markQueryValue: function(str) {
 		return (!this.options.markQuery || !this.queryValue) ? str
@@ -404,13 +409,13 @@ var Autocompleter = new Class({
 	 *
 	 * Appends the needed event handlers for a choice-entry to the given element.
 	 *
-	 * @param		{Element} Choice entry
-	 * @return		{Element} Choice entry
+	 * @param        {Element} Choice entry
+	 * @return        {Element} Choice entry
 	 */
 	addChoiceEvents: function(el) {
 		return el.addEvents({
 			'mouseover': this.choiceOver.bind(this, el),
-			'click': this.choiceSelect.bind(this, el)
+			'click'    : this.choiceSelect.bind(this, el)
 		});
 	}
 });
@@ -423,13 +428,13 @@ var OverlayFix = new Class({
 			this.relative = this.element.getOffsetParent();
 			this.fix = new Element('iframe', {
 				'frameborder': '0',
-				'scrolling': 'no',
-				'src': 'javascript:false;',
-				'styles': {
+				'scrolling'  : 'no',
+				'src'        : 'javascript:false;',
+				'styles'     : {
 					'position': 'absolute',
-					'border': 'none',
-					'display': 'none',
-					'filter': 'progid:DXImageTransform.Microsoft.Alpha(opacity=0)'
+					'border'  : 'none',
+					'display' : 'none',
+					'filter'  : 'progid:DXImageTransform.Microsoft.Alpha(opacity=0)'
 				}
 			}).inject(this.element, 'after');
 		}
@@ -442,7 +447,7 @@ var OverlayFix = new Class({
 			delete coords.bottom;
 			this.fix.setStyles(Object.append(coords, {
 				'display': '',
-				'zIndex': (this.element.getStyle('zIndex') || 1) - 1
+				'zIndex' : (this.element.getStyle('zIndex') || 1) - 1
 			}));
 		}
 		return this;
@@ -509,11 +514,11 @@ Autocompleter.Base = Autocompleter;
  *
  * http://digitarald.de/project/autocompleter/
  *
- * @version		1.1.2
+ * @version        1.1.2
  *
- * @license		MIT-style license
- * @author		Harald Kirschner <mail [at] digitarald.de>
- * @copyright	Author
+ * @license        MIT-style license
+ * @author        Harald Kirschner <mail [at] digitarald.de>
+ * @copyright    Author
  */
 
 Autocompleter.Local = new Class({
@@ -522,7 +527,7 @@ Autocompleter.Local = new Class({
 
 	options: {
 		minLength: 0,
-		delay: 200
+		delay    : 200
 	},
 
 	initialize: function(element, tokens, options) {
@@ -541,29 +546,30 @@ Autocompleter.Local = new Class({
  *
  * http://digitarald.de/project/autocompleter/
  *
- * @version		1.1.2
+ * @version        1.1.2
  *
- * @license		MIT-style license
- * @author		Harald Kirschner <mail [at] digitarald.de>
- * @copyright	Author
+ * @license        MIT-style license
+ * @author        Harald Kirschner <mail [at] digitarald.de>
+ * @copyright    Author
  */
 
 Autocompleter.Request = new Class({
 
 	Extends: Autocompleter,
 
-	options: {/*
-		indicator: null,
-		indicatorClass: null,
-		onRequest: $empty,
-		onComplete: $empty,*/
-		postData: {},
+	options: {
+		/*
+		 indicator: null,
+		 indicatorClass: null,
+		 onRequest: $empty,
+		 onComplete: $empty,*/
+		postData   : {},
 		ajaxOptions: {},
-		postVar: 'value'
+		postVar    : 'value'
 
 	},
 
-	query: function(){
+	query: function() {
 		var data = Object.clone(this.options.postData) || {};
 		data[this.options.postVar] = this.queryValue;
 		var indicator = document.id(this.options.indicator);
@@ -592,13 +598,13 @@ Autocompleter.Request = new Class({
 Autocompleter.Request.JSON = new Class({
 	Extends: Autocompleter.Request,
 
-	secure: false,
+	secure    : false,
 	initialize: function(el, url, options) {
 		this.parent(el, options);
 		this.request = new Request.JSON(Object.merge({
 			'secure': false,
-			'url': url,
-			'link': 'cancel'
+			'url'   : url,
+			'link'  : 'cancel'
 		}, this.options.ajaxOptions)).addEvent('onComplete', this.queryResponse.bind(this));
 	},
 
@@ -612,8 +618,8 @@ Autocompleter.Request.JSON = new Class({
 /* compatibility */
 
 Autocompleter.Ajax = {
-	Base: Autocompleter.Request,
-	Json: Autocompleter.Request.JSON,
+	Base : Autocompleter.Request,
+	Json : Autocompleter.Request.JSON,
 	Xhtml: Autocompleter.Request.HTML
 };
 
@@ -622,11 +628,11 @@ Autocompleter.Ajax = {
  *
  * - Additional code from clientside.cnet.com
  *
- * @version		1.1
+ * @version        1.1
  *
- * @license		MIT-style license
- * @author		Harald Kirschner <mail [at] digitarald.de>
- * @copyright	Author
+ * @license        MIT-style license
+ * @author        Harald Kirschner <mail [at] digitarald.de>
+ * @copyright    Author
  */
 var Observer = new Class({
 
@@ -634,10 +640,10 @@ var Observer = new Class({
 
 	options: {
 		periodical: false,
-		delay: 1000
+		delay     : 1000
 	},
 
-	initialize: function(el, onFired, options){
+	initialize: function(el, onFired, options) {
 		this.element = document.id(el) || $$(el);
 		this.addEvent('onFired', onFired);
 		this.setOptions(options);
@@ -668,13 +674,13 @@ var Observer = new Class({
 		return this;
 	},
 
-	pause: function(){
+	pause: function() {
 		if (this.timer) clearInterval(this.timer);
 		else this.element.removeEvent('keyup', this.bound);
 		return this.clear();
 	},
 
-	resume: function(){
+	resume: function() {
 		this.value = this.element.get('value');
 		if (this.options.periodical) this.timer = this.changed.periodical(this.options.periodical, this);
 		else this.element.addEvent('keyup', this.bound);
@@ -687,98 +693,98 @@ var $equals = function(obj1, obj2) {
 	return (obj1 == obj2 || JSON.encode(obj1) == JSON.encode(obj2));
 };
 
-function kRequestShowTopics(catid, select, list)
-{
+function kRequestShowTopics(catid, select, list) {
 	select.set('value', 0).fireEvent('change', select);
 	var first = select.getFirst().clone();
 	select.empty().grab(first);
 	list.each(function(item) {
-		var option = new Element('option', {'value':item.id, 'html':item.subject});
+		var option = new Element('option', {'value': item.id, 'html': item.subject});
 		select.grab(option);
 	});
 }
 
-function kRequestGetTopics(el)
-{
+function kRequestGetTopics(el) {
 	var catid = el.get("value");
 	var select = document.id('kmod_topics');
-	request = new Request.JSON({secure: false, url: kunena_url_ajax,
-	onSuccess: function(response){
-		kRequestShowTopics(catid, select, response.topiclist);
-		}}).post({'catid': catid});
+	request = new Request.JSON({
+		secure   : false, url: kunena_url_ajax,
+		onSuccess: function(response) {
+			kRequestShowTopics(catid, select, response.topiclist);
+		}
+	}).post({'catid': catid});
 }
 
 function kunenaSelectUsernameView(kobj, kuser) {
 	var kform = kobj.getParent('form');
 	if (kobj.get('checked')) {
-		kform.getElement('input[name=authorname]').removeProperty('disabled').setStyle('display','inline').set('value',kunena_anonymous_name);
+		kform.getElement('input[name=authorname]').removeProperty('disabled').setStyle('display', 'inline').set('value', kunena_anonymous_name);
 	} else {
-		kform.getElement('input[name=authorname]').set('disabled', 'disabled').setStyle('display','none').set('value',kuser);
+		kform.getElement('input[name=authorname]').set('disabled', 'disabled').setStyle('display', 'none').set('value', kuser);
 	}
 }
 
-function kunenatableOrdering( order, dir, task, form ) {
-	var form=document.getElementById(form);
-	form.filter_order.value=order;
-	form.filter_order_Dir.value=dir;
-	form.submit( task );
+function kunenatableOrdering(order, dir, task, form) {
+	var form = document.getElementById(form);
+	form.filter_order.value = order;
+	form.filter_order_Dir.value = dir;
+	form.submit(task);
 }
 
 //----------------- New Mootools based behaviors ----------------------
 
-window.addEvent('domready', function(){
+window.addEvent('domready', function() {
 	/* Quick reply */
-	$$('.kqreply').each(function(el){
-		el.addEvent('click', function(e){
+	$$('.kqreply').each(function(el) {
+		el.addEvent('click', function(e) {
 			//prevent to load the page when click is detected on a button
 			e.stop();
 			var kreply = this.get('id');
-			var kstate = document.id(kreply+'_form').getStyle('display');
+			var kstate = document.id(kreply + '_form').getStyle('display');
 			$$('.kreply-form').setStyle('display', 'none');
-			document.id(kreply+'_form').setStyle('display', 'block');
-			if (document.id(kreply+'_form').getElement('input[name=anonymous]')) {
-				var kuser = document.id(kreply+'_form').getElement('input[name=authorname]').get('value');
-				kunenaSelectUsernameView(document.id(kreply+'_form').getElement('input[name=anonymous]'), kuser);
-				document.id(kreply+'_form').getElement('input[name=anonymous]').addEvent('click', function(e) {
+			document.id(kreply + '_form').setStyle('display', 'block');
+			if (document.id(kreply + '_form').getElement('input[name=anonymous]')) {
+				var kuser = document.id(kreply + '_form').getElement('input[name=authorname]').get('value');
+				kunenaSelectUsernameView(document.id(kreply + '_form').getElement('input[name=anonymous]'), kuser);
+				document.id(kreply + '_form').getElement('input[name=anonymous]').addEvent('click', function(e) {
 					kunenaSelectUsernameView(this, kuser);
 				});
 			}
 		});
 	});
 
-	$$('.kreply-cancel').addEvent('click', function(e){
+	$$('.kreply-cancel').addEvent('click', function(e) {
 		$$('.kreply-form').setStyle('display', 'none');
 	});
 
 	/* Logic for bulkactions */
-	$$('input.kcheckall').addEvent('click', function(e){
-		this.getParent('form').getElements('input.kcheck').each(function(el){
-			if(el.get('checked')==false){
-				el.set('checked',true);
-				el.set('value','1');
+	$$('input.kcheckall').addEvent('click', function(e) {
+		this.getParent('form').getElements('input.kcheck').each(function(el) {
+			if (el.get('checked') == false) {
+				el.set('checked', true);
+				el.set('value', '1');
 			} else {
-				el.set('value','0');
-				el.set('checked',false);
+				el.set('value', '0');
+				el.set('checked', false);
 			}
 		});
 	});
 
-	$$('select.kchecktask').addEvent('change', function(e){
+	$$('select.kchecktask').addEvent('change', function(e) {
 		ktarget = this.getSiblings('select[name=target]');
-		if(this.get('value') == 'move'){
+		if (this.get('value') == 'move') {
 			ktarget.removeProperty('disabled');
 		} else {
-			ktarget.setProperty('disabled','disabled');
+			ktarget.setProperty('disabled', 'disabled');
 		}
 	});
 
-	if(document.id('kmod_categories') != undefined){
-		document.id('kmod_categories').addEvent('change', function(e){
+	if (document.id('kmod_categories') != undefined) {
+		document.id('kmod_categories').addEvent('change', function(e) {
 			kRequestGetTopics(this);
 		});
 	}
-	if(document.id('kmod_topics') != undefined){
-		document.id('kmod_topics').addEvent('change', function(e){
+	if (document.id('kmod_topics') != undefined) {
+		document.id('kmod_topics').addEvent('change', function(e) {
 			id = this.get('value');
 			if (id != 0) {
 				targetid = this.get('value');
@@ -801,25 +807,25 @@ window.addEvent('domready', function(){
 	var KCookie = new Hash.Cookie('kunena_toggler', {path: '/', duration: 0});
 
 	// Setup the behavior for all kunena toggler elements.
-	$$('a.ktoggler').each(function(link){
+	$$('a.ktoggler').each(function(link) {
 		// Auto-hide if the cookie is set.
 		if (KCookie.get(link.getProperty('rel'))) {
 			link.removeClass('close').addClass('open');
-			link.set('title',kunena_toggler_open);
+			link.set('title', kunena_toggler_open);
 			document.id(link.getProperty('rel')).setStyle('display', 'none');
 		}
 
 		// Add the onclick event.
-		link.addEvent('click', function(){
+		link.addEvent('click', function() {
 			if (this.hasClass('close')) {
 				this.removeClass('close').addClass('open');
-				link.set('title',kunena_toggler_open);
+				link.set('title', kunena_toggler_open);
 				document.id(this.getProperty('rel')).setStyle('display', 'none');
 				KCookie.set(this.getProperty('rel'), 1);
 			}
 			else {
 				this.removeClass('open').addClass('close');
-				link.set('title',kunena_toggler_close);
+				link.set('title', kunena_toggler_close);
 				document.id(this.getProperty('rel')).setStyle('display', '');
 				KCookie.erase(this.getProperty('rel'));
 			}
@@ -827,48 +833,48 @@ window.addEvent('domready', function(){
 	});
 
 	// Set autocompleter to off
-	$$('.kautocomplete-off').each(function(){
+	$$('.kautocomplete-off').each(function() {
 		this.setProperty('autocompleter', 'off');
 	});
-	if(document.id('kpassword') != undefined && document.id('kpassword2') != undefined){
+	if (document.id('kpassword') != undefined && document.id('kpassword2') != undefined) {
 		document.id('kpassword').setProperty('autocompleter', 'off');
 		document.id('kpassword2').setProperty('autocompleter', 'off');
 	}
 
-	if(document.id('kpoll-moreusers') != undefined){
-		document.id('kpoll-moreusers').addEvent('click', function(){
+	if (document.id('kpoll-moreusers') != undefined) {
+		document.id('kpoll-moreusers').addEvent('click', function() {
 			var displaytype = document.id('kpoll-moreusers-div').getStyle('display');
-			if ( displaytype == 'none' ) document.id('kpoll-moreusers-div').setStyle('display');
+			if (displaytype == 'none') document.id('kpoll-moreusers-div').setStyle('display');
 			else document.id('kpoll-moreusers-div').setStyle('display', 'none');
 		});
 	}
 
-	if ( document.id('kchecbox-all') != undefined ) {
-		document.id('kchecbox-all').addEvent('click', function(){
-			if ( document.id('kchecbox-all').getProperty('checked') == false ) {
-				$$('.kmoderate-topic-checkbox').each(function(box){
+	if (document.id('kchecbox-all') != undefined) {
+		document.id('kchecbox-all').addEvent('click', function() {
+			if (document.id('kchecbox-all').getProperty('checked') == false) {
+				$$('.kmoderate-topic-checkbox').each(function(box) {
 					box.removeProperty('checked');
 				});
 			} else {
-				$$('.kmoderate-topic-checkbox').each(function(box){
+				$$('.kmoderate-topic-checkbox').each(function(box) {
 					box.setProperty('checked', 'checked');
 				});
 			}
 		});
 	}
 
-	if ( document.id('kmoderate-select') != undefined ) {
-		document.id('kmoderate-select').addEvent('click', function(){
-			if ( document.id('kmoderate-select').getSelected().get('value') == 'move' ) {
+	if (document.id('kmoderate-select') != undefined) {
+		document.id('kmoderate-select').addEvent('click', function() {
+			if (document.id('kmoderate-select').getSelected().get('value') == 'move') {
 				document.id('kcategorytarget').setStyle('display');
 			}
 		});
 	}
 
-	if ( document.id('avatar_category_select') != undefined ) {
-		document.id('avatar_category_select').addEvent('change', function(e){
+	if (document.id('avatar_category_select') != undefined) {
+		document.id('avatar_category_select').addEvent('change', function(e) {
 			// we getting the name of gallery selected in drop-down by user
-			var avatar_selected= document.id('avatar_category_select').getSelected();
+			var avatar_selected = document.id('avatar_category_select').getSelected();
 
 			var td_avatar = document.id('kgallery_avatar_list');
 
@@ -876,22 +882,35 @@ window.addEvent('domready', function(){
 			document.id('kgallery_avatar_list').empty();
 			// we getting from hidden input the url of kunena image gallery
 			var url_gallery_main = document.id('Kunena_Image_Gallery_URL').get('value');
-			var id_to_select = document.id('Kunena_'+avatar_selected.get('value'));
+			var id_to_select = document.id('Kunena_' + avatar_selected.get('value'));
 			var name_to_select = id_to_select.getProperty('name');
 			// Convert JSON to object
 			var image_object = JSON.decode(id_to_select.get('value'));
 
 			// Re-create all HTML items with avatars images from gallery selected by user
-			for(var i = 0, len = image_object.length; i < len; ++i) {
-				var SpanElement  = new Element('span');
+			for (var i = 0, len = image_object.length; i < len; ++i) {
+				var SpanElement = new Element('span');
 				var LabelElement = new Element('label');
-				LabelElement.setProperty('for','kavatar'+i);
-				if ( name_to_select != 'default' ) {
-					var ImageElement = new Element('img', {src: url_gallery_main+'/'+name_to_select+'/'+image_object[i], alt: ''});
-					var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+name_to_select+'/'+image_object[i]});
+				LabelElement.setProperty('for', 'kavatar' + i);
+				if (name_to_select != 'default') {
+					var ImageElement = new Element('img', {
+						src: url_gallery_main + '/' + name_to_select + '/' + image_object[i],
+						alt: ''
+					});
+					var InputElement = new Element('input', {
+						id   : 'kavatar' + i,
+						type : 'radio',
+						name : 'avatar',
+						value: 'gallery/' + name_to_select + '/' + image_object[i]
+					});
 				} else {
-					var ImageElement = new Element('img', {src: url_gallery_main+'/'+image_object[i], alt: ''});
-					var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+image_object[i]});
+					var ImageElement = new Element('img', {src: url_gallery_main + '/' + image_object[i], alt: ''});
+					var InputElement = new Element('input', {
+						id   : 'kavatar' + i,
+						type : 'radio',
+						name : 'avatar',
+						value: 'gallery/' + image_object[i]
+					});
 				}
 				SpanElement.inject(td_avatar);
 				LabelElement.inject(SpanElement);
@@ -901,11 +920,11 @@ window.addEvent('domready', function(){
 		});
 	}
 
-	$$('.kspoiler').each(function(el){
+	$$('.kspoiler').each(function(el) {
 		var contentElement = el.getElement('.kspoiler-content');
 		var expandElement = el.getElement('.kspoiler-expand');
 		var hideElement = el.getElement('.kspoiler-hide');
-		el.getElement('.kspoiler-header').addEvent('click', function(e){
+		el.getElement('.kspoiler-header').addEvent('click', function(e) {
 			if (contentElement.style.display == "none") {
 				contentElement.setStyle('display');
 				expandElement.setStyle('display', 'none');
@@ -919,5 +938,7 @@ window.addEvent('domready', function(){
 	});
 
 	/* For profile tabs */
-	$$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); });
+	$$('dl.tabs').each(function(tabs) {
+		new KunenaTabs(tabs);
+	});
 });

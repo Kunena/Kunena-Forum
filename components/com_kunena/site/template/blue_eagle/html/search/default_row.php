@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Search
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 								<td rowspan="2" valign="top" class="kprofile-left kresultauthor">
 									<ul class="kpost-profile">
 										<li class="kpost-username">
-											<?php echo $this->message->getAuthor()->getLink() ?>
+											<?php echo $this->message->getAuthor()->getLink(null, null, 'nofollow', '', null, $this->topic->getCategory()->id) ?>
 										</li>
 										<li>
 											<?php
@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
 											?>
 
 											<span class="kavatar">
-											<?php echo $this->message->getAuthor()->getLink( $this->useravatar ) ?>
+											<?php echo $this->message->getAuthor()->getLink($this->useravatar, null, 'nofollow', '', null, $this->topic->getCategory()->id) ?>
 											</span>
 
 											<?php

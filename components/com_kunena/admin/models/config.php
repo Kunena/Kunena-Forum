@@ -5,7 +5,7 @@
  * @package       Kunena.Administrator
  * @subpackage    Models
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
@@ -164,7 +164,13 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['userlist_lastvisitdate'] = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_lastvisitdate', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_lastvisitdate);
 		$lists ['userlist_userhits']      = JHtml::_('select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $this->config->userlist_userhits);
 		$lists ['reportmsg']              = JHtml::_('select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $this->config->reportmsg);
-		$lists ['captcha']                = JHtml::_('select.genericlist', $yesno, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $this->config->captcha);
+
+		$captcha = array();
+		$captcha[] = JHtml::_('select.option', '-1', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_NOBODY'));
+		$captcha[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_REGISTERED_USERS'));
+		$captcha[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_GUESTS_REGISTERED_USERS'));
+
+		$lists ['captcha']                = JHtml::_('select.genericlist', $captcha, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $this->config->captcha);
 		$lists ['mailfull']               = JHtml::_('select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailfull);
 		// New for 1.0.5
 		$lists ['showspoilertag']   = JHtml::_('select.genericlist', $yesno, 'cfg_showspoilertag', 'class="inputbox" size="1"', 'value', 'text', $this->config->showspoilertag);
@@ -382,7 +388,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists ['access_component'] = JHtml::_('select.genericlist', $yesno, 'cfg_access_component', 'class="inputbox" size="1"', 'value', 'text', $this->config->access_component);
 		$lists ['componentUrl']     = preg_replace('|/+|', '/', JUri::root() . ($this->config->get('sef_rewrite') ? '' : 'index.php') . ($this->config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
 
-		// Added new options into Kunena 3.1.0
+		// Added new options into Kunena 4.0.0
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('version')->from('#__kunena_version')->order('id');
@@ -451,6 +457,8 @@ class KunenaAdminModelConfig extends KunenaModel
 		$useredit[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_YES'));
 		$useredit[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
 		$lists['useredit'] = JHtml::_('select.genericlist', $useredit, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $this->config->useredit);
+
+		$lists ['allow_change_subject'] = JHtml::_('select.genericlist', $yesno, 'cfg_allow_change_subject', 'class="inputbox" size="1"', 'value', 'text', $this->config->allow_change_subject);
 
 		return $lists;
 	}

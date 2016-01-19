@@ -4,7 +4,7 @@
  * @package     Kunena.Site
  * @subpackage  Controller.Credits
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
  *
- * @since  3.1
+ * @since  4.0
  */
 class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 {
@@ -28,7 +28,7 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	public $thanks;
 
 	/**
-	 * Prapare credits display.
+	 * Prepare credits display.
 	 *
 	 * @return void
 	 */
@@ -58,14 +58,6 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 				'url' => 'http://www.kunena.org/forum/user/151-mortti',
 				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
 			array(
-				'name' => 'Joe Collins',
-				'url' => 'http://www.kunena.org/forum/user/26335-jiminimonka',
-				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
-			array(
-				'name' => 'Oliver Ratzesberger',
-				'url' => 'http://www.kunena.org/forum/user/64-fxstein',
-				'title' => JText::_('COM_KUNENA_CREDITS_FOUNDER')),
-			array(
 				'name' => 'Matias Griese',
 				'url' => 'http://www.kunena.org/forum/user/63-matias',
 				'title' => JText::_('COM_KUNENA_CREDITS_DEVELOPMENT')),
@@ -74,10 +66,9 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 				'url' => 'http://www.kunena.org/forum/user/10809-coder4life',
 				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_DESIGN'), JText::_('COM_KUNENA_CREDITS_DEVELOPMENT'))),
 			array(
-				'name' => 'Sven Schultschik ',
-				'url' => 'http://www.kunena.org/forum/user/2171-svanschu',
-				'title' => JText::_('COM_KUNENA_CREDITS_LANGUAGES')),
-
+				'name' => 'Oliver Ratzesberger',
+				'url' => 'http://www.kunena.org/forum/user/64-fxstein',
+				'title' => JText::_('COM_KUNENA_CREDITS_FOUNDER')),
 		);
 		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'http://www.kunena.org',
@@ -91,15 +82,46 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
-		$this->setTitle($title, true);
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive(); // get the active item
+		$params = $menu_item->params; // get the params
+		$params_title = $params->get('page_title');
+		$params_keywords = $params->get('menu-meta_keywords');
+		$params_description = $params->get('menu-description');
 
-		$keywords = 'kunena forum, kunena, forum, joomla, joomla extension, joomla component';
-		$this->setKeywords($keywords);
+		if (!empty($params_title))
+		{
+			$title = $params->get('page_title');
+			$this->setTitle($title);
+		}
+		else
+		{
+			$title = JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT');
+			$this->setTitle($title);
+		}
 
-		// TODO: translate at some point...
-		$description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. "
+		if (!empty($params_keywords))
+		{
+			$keywords = $params->get('menu-meta_keywords');
+			$this->setKeywords($keywords);
+		}
+		else
+		{
+			$keywords = 'kunena forum, kunena, forum, joomla, joomla extension, joomla component';
+			$this->setKeywords($keywords);
+		}
+
+		if (!empty($params_description))
+		{
+			$description = $params->get('menu-meta_description');
+			$this->setDescription($description);
+		}
+		else
+		{
+			// TODO: translate at some point...
+			$description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. "
 			. "For more information, please visit www.kunena.org.';
-		$this->setDescription($description);
+			$this->setDescription($description);
+		}
 	}
 }

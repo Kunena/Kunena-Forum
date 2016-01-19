@@ -4,7 +4,7 @@
  * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -112,7 +112,7 @@ defined ( '_JEXEC' ) or die ();
 				if($this->poll->exists()) {
 					$x = 1;
 					foreach ($this->poll->getOptions() as $poll_option) {
-						echo '<div class="polloption">Option '.$x.' <input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" onmouseover="document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION', true).'\')" /></div>';
+						echo '<div class="polloption">Option '.$x.' <input type="text" size="100" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" onmouseover="document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION', true).'\')" /></div>';
 						$x++;
 					}
 				}
@@ -243,7 +243,7 @@ defined ( '_JEXEC' ) or die ();
 
 		<!-- Hidden preview placeholder -->
 		<div id="kbbcode-preview" style="display: none;"></div>
-		<?php if ($this->message->exists()) : ?>
+		<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
 		<div class="clr"> </div>
 		<fieldset>
 			<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>

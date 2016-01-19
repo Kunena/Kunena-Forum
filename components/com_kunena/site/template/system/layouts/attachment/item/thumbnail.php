@@ -4,7 +4,7 @@
 * @package Kunena.Template.Crypsis
 * @subpackage BBCode
 *
-* @copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -19,5 +19,7 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' rel="lightbox[
 $attributesImg = ' style="max-height: '. (int) $config->thumbheight . 'px;"';
 ?>
 <a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0,7); ?>"<?php echo $attributesLink; ?>>
+<?php if ($attachment->isImage()) : ?>
 	<img src="<?php echo $attachment->getUrl(true); ?>"<?php echo $attributesImg; ?> alt="" />
+<?php endif; ?>
 </a>

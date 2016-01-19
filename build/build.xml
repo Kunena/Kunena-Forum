@@ -5,7 +5,7 @@
 
   @package		Kunena
   @subpackage	com_kunena
-  @copyright	Copyright (C) 2008 - 2015 Kunena Team. All rights reserved.
+  @copyright	Copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
   				portions (C) 2007 MjazTools. All rights reserved.
   @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
   @link			http://www.kunena.org
@@ -35,9 +35,9 @@
 		<not><isset property="build_dir" /></not>
 	</condition>
 	<property file="build.config.ini" />
-	<property name="kunena.site" value="components/com_kunena/site" />
-	<property name="kunena.admin" value="components/com_kunena/admin" />
-	<property name="kunena.media" value="media/kunena" />
+	<property name="kunena.site" value="src/components/com_kunena" />
+	<property name="kunena.admin" value="src/administrator/components/com_kunena" />
+	<property name="kunena.media" value="src/media/kunena" />
 
 	<target name="dist" depends="mkdir,archive_old,init,build,minify,copy,info,cleanup" />
 
@@ -105,17 +105,17 @@
 		</condition>
 
 		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
-			<fileset dir="${project_dir}/libraries/kunena"/>
+			<fileset dir="${project_dir}/src/libraries/kunena"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
-			<fileset dir="${project_dir}/plugins/plg_system_kunena"/>
+			<fileset dir="${project_dir}/src/plugins/plg_system_kunena"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
-			<fileset dir="${project_dir}/plugins/plg_quickicon_kunena"/>
+			<fileset dir="${project_dir}/src/plugins/plg_quickicon_kunena"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
-			<fileset dir="${project_dir}/media/kunena">
-				<exclude name="${project_dir}/media/kunena/external/**"/>
+			<fileset dir="${project_dir}/src/media/kunena">
+				<exclude name="${project_dir}/src/media/kunena/external/**"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena">
@@ -139,23 +139,23 @@
 
 		<!-- Add version information to all xml files and forum.php -->
 		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true" filtering="true">
-			<fileset dir="${project_dir}/libraries/kunena">
+			<fileset dir="${project_dir}/src/libraries/kunena">
 				<include name="forum/forum.php"/>
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true" filtering="true">
-			<fileset dir="${project_dir}/plugins/plg_system_kunena">
+			<fileset dir="${project_dir}/src/plugins/plg_system_kunena">
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true" filtering="true">
-			<fileset dir="${project_dir}/plugins/plg_quickicon_kunena">
+			<fileset dir="${project_dir}/src/plugins/plg_quickicon_kunena">
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true" filtering="true">
-			<fileset dir="${project_dir}/media/kunena">
+			<fileset dir="${project_dir}/src/media/kunena">
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
@@ -173,8 +173,8 @@
 		</copy>
 
 		<!-- Move files needed by the installer -->
-		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/install.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/src/pkg_kunena.xml" todir="${build_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/src/install.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.md" tofile="${build_dir}/README.txt" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/LICENSE.txt" tofile="${build_dir}/LICENSE.txt" overwrite="true" filtering="true" />

@@ -1,0 +1,262 @@
+/**
+* Kunena Component
+* @package Kunena.Template.Crypsis
+*
+* @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/
+
+/* Smartphones Mini */
+@media (max-width: 320px) {
+	#postform .btn {
+		width: 60%;
+		margin-bottom: 10px;
+	}
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+	.knav-collapse {
+		-webkit-transform: translate3d(0, 0, 0);
+	}
+
+	.pagination  ul > li > a, .pagination ul > li > span {
+		display: none;
+	}
+
+	[class*="badger"] {
+		padding: 30% 19px 14px;
+	}
+
+	.form-search {
+		padding-bottom: 0;
+	}
+
+	.msgfooter {
+		width: 85%;
+	}
+
+	.pull-right,
+	span > form {
+		float: none;
+	}
+
+	.table td.span1, .table th.span1 {
+		width: 0;
+	}
+
+	div.navbar > div > div.visible-phone.hidden-tablet > ul.nav.navbar-nav.pull-left > a > i {
+		cursor: pointer;
+		vertical-align: super;
+	}
+
+	#postform > div > div > div > fieldset > div > div {
+		margin-left: -8px;
+	}
+
+	.last-post-message {
+		padding-left: 5px;
+	}
+
+	#postcatid {
+		width: 100%;
+	}
+
+	.input-xxlarge {
+		width: 94%;
+	}
+
+	.kfile-input-textbox {
+		width: 52%;
+	}
+
+	.kattachment-remove,
+	.kattachment-insert {
+		margin-left: 15px;
+		margin-top: 10px;
+	}
+
+	.input-append input {
+		width: 60%;
+	}
+
+	form#ktopicsform input,
+	#login-remember {
+		width: auto;
+	}
+
+	.modal {
+		position: static;
+	}
+
+	ul.breadcrumb {
+		display:none;
+	}
+}
+
+/* Smartphones to Tablets */
+@media (max-width: 959px) {
+	select {
+		width: 80%;
+	}
+
+	li.dropdown {
+		float: right;
+		padding: 5px;
+	}
+
+	a.dropdown-toggle,
+	i.icon-large {
+		color: inherit;
+	}
+
+	.navbar .nav {
+		width: 100%;
+		padding-top: 10px;
+	}
+
+	.controls {
+		margin-left: 0 !important;
+	}
+
+	.mobile-user {
+		margin-top: -40px !important;
+	}
+
+	// COLLAPSIBLE NAVBAR
+	// ------------------
+	// Nav collapse clears brand
+	.knav-collapse {
+		clear: both;
+		float: none;
+	}
+
+	// Block-level the nav
+	.knav-collapse .nav {
+		float: none;
+	}
+
+	.knav-collapse .nav > li {
+		float: none;
+	}
+
+	.knav-collapse .nav > li > a {
+		margin-bottom: 2px;
+	}
+
+	.knav-collapse .nav > .divider-vertical {
+		display: none;
+	}
+
+	.knav-collapse .nav .nav-header {
+		text-shadow: none;
+	}
+
+	// Nav and dropdown links in navbar
+	.knav-collapse .nav > li > a,
+	.knav-collapse .dropdown-menu a {
+		padding: 9px 15px;
+		font-weight: bold;
+		border-radius:3px;
+	}
+
+	// Buttons
+	.knav-collapse .btn {
+		padding: 4px 10px 4px;
+		font-weight: normal;
+	}
+
+	.knav-collapse .dropdown-menu li + li a {
+		margin-bottom: 2px;
+	}
+
+	// Buttons in the navbar
+	.knav-collapse.in .btn-group {
+		margin-top: 5px;
+		padding: 0;
+	}
+
+	// Dropdowns in the navbar
+	.knav-collapse .dropdown-menu {
+		position: static;
+		top: auto;
+		left: auto;
+		float: none;
+		display: none;
+		max-width: none;
+		margin: 0 15px;
+		padding: 0;
+		background-color: transparent;
+		border: none;
+		border-radius:0;
+		box-shadow:none;
+	}
+
+	.knav-collapse .open > .dropdown-menu {
+		display: block;
+	}
+
+	.knav-collapse .dropdown-menu:before,
+	.knav-collapse .dropdown-menu:after {
+		display: none;
+	}
+
+	.knav-collapse .dropdown-menu .divider {
+		display: none;
+	}
+
+	.knav-collapse .nav > li > .dropdown-menu {
+		&:before,
+		&:after {
+			display: none;
+		}
+	}
+
+	// Navbar button
+	.navbar .btn-navbar {
+		display: block;
+	}
+
+	a.modal {
+		position: static;
+	}
+}
+
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 959px) {
+
+}
+
+/* Desktop */
+@media (min-width: 960px)  {
+	.navbar .nav {
+		margin-bottom: -1px;
+	}
+
+	a.dropdown-toggle,
+	i.icon-large {
+		color: inherit;
+	}
+
+	ul.pull-right {
+		margin: 0;
+	}
+
+	#recent-list {
+		width: 53%;
+	}
+}
+
+/* Large Display */
+@media (min-width: 1200px) {
+
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	label img {
+		pointer-events : none;
+	}
+}
+

@@ -1,0 +1,73 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator.Joomla25
+ *
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+
+.jgrid span.state {
+	float:right;
+}
+div.header {
+	/* TODO: override left rule */
+	padding-right: 148px !important;
+}
+
+/* Small icons  */
+
+/* Large icons */
+div.kadmin-functitle.icon-cpanel { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-config { background-position: right center;margin-right: 5px;margin-top: 5px; }
+
+div.kadmin-functitle.icon-profiles { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-smilies{ background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-ranks { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-files { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-images { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-editcss { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-prune { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-syncusers { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-trash { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-stats { background-position: right center;margin-right: 5px;margin-top: 5px; }
+
+div.kadmin-functitle.icon-support { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-template { background-position: right center;margin-right: 5px;margin-top: 5px; }
+div.kadmin-functitle.icon-purgerestatements { background-position: right center;margin-right: 5px;margin-top: 5px; }
+
+.left 	{ text-align: right; }
+.right 	{ text-align: left; }
+
+#kadmin-menu a {
+	/* TODO: override left rule */
+	border-right: 1px solid #ccc;
+}
+
+.kadmin-functitle {
+	text-align: right;
+}
+
+.krow0 td {
+	text-align: right;
+}
+.krow1 td {
+	text-align: right;
+}
+
+div.tpl-thumbnail img {
+	float: right;
+}
+
+table.kadmin-stat th {
+	text-align: right;
+}
+table.kadmin-stat td {
+	text-align: right;
+}
+table.kadmin-stat caption {
+	text-align: right;
+}
+div.col {
+	float: right;
+}

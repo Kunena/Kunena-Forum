@@ -1,0 +1,14 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator.Joomla30
+ *
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+
+#kunena.admin.override #dashboard-icons .btn {
+	background-image: none;
+	border-color: transparent;
+	box-shadow: none;
+}

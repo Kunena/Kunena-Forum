@@ -1,0 +1,40 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator.Joomla25
+ *
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+
+.kadmin-welcome h3 {
+	margin: 0;
+	padding: 0;
+}
+
+table.thisform tr.row0 {
+	background-color: #F7F8F9;
+}
+table.thisform tr.row1 {
+	background-color: #eeeeee;
+}
+table.thisform th {
+	font-size: 15px;
+	font-weight: normal;
+	font-variant: small-caps;
+	padding: 6px 4px 2px;
+	text-align: left;
+	height: 25px;
+	color: #666666;
+	background: url(../images/background.gif) repeat;
+}
+table.thisform td {
+	padding: 3px;
+	text-align: left;
+}
+div.icon a {
+	text-decoration: none;
+}
+div.icon-container {
+	float: left;
+}

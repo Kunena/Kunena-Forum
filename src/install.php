@@ -22,6 +22,7 @@ class Pkg_KunenaInstallerScript {
 			'7.0' => '7.0.0',
 			'5.6' => '5.6.8',
 			'5.5' => '5.5.13',
+			'5.4' => '5.4.13',
 			'0' => '5.4.35' // Preferred version
 		),
 		'MySQL' => array (

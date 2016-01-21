@@ -649,122 +649,125 @@ class KunenaViewCategory extends KunenaView
 	{
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
-		$params_description = $params->get('menu-description');
 
-		if ($type == 'default')
+		if ($menu_item)
 		{
-			$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
-			$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
+			$params             = $menu_item->params; // get the params
+			$params_title       = $params->get('page_title');
+			$params_keywords    = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-description');
 
-			$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
+			if ($type == 'default')
+			{
+				$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
+				$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})";
-				$this->setTitle($title);
-			}
+				$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
 
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->escape(JText::_('COM_KUNENA_CATEGORIES') . ", {$this->parentCategory->name}, {$this->category->name}, {$this->config->board_title}");
-				$this->setKeywords($keywords);
-			}
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})";
+					$this->setTitle($title);
+				}
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$description = $this->escape("{$this->parentCategory->name} - {$this->category->name} ({$page}/{$pages}) - {$this->config->board_title}");
-				$this->setDescription($description);
-			}
-		}
-		elseif ($type == 'list')
-		{
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
-				$this->setTitle($title);
-			}
+				if (!empty($params_keywords))
+				{
+					$keywords = $params->get('menu-meta_keywords');
+					$this->setKeywords($keywords);
+				}
+				else
+				{
+					$keywords = $this->escape(JText::_('COM_KUNENA_CATEGORIES') . ", {$this->parentCategory->name}, {$this->category->name}, {$this->config->board_title}");
+					$this->setKeywords($keywords);
+				}
 
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$description = $this->escape("{$this->parentCategory->name} - {$this->category->name} ({$page}/{$pages}) - {$this->config->board_title}");
+					$this->setDescription($description);
+				}
 			}
-			else
+			elseif ($type == 'list')
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES');
-				$this->setKeywords($keywords);
-			}
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
+					$this->setTitle($title);
+				}
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$description = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title);
-				$this->setDescription($description);
-			}
-		}
-		elseif ($type == 'user')
-		{
+				if (!empty($params_keywords))
+				{
+					$keywords = $params->get('menu-meta_keywords');
+					$this->setKeywords($keywords);
+				}
+				else
+				{
+					$keywords = JText::_('COM_KUNENA_CATEGORIES');
+					$this->setKeywords($keywords);
+				}
 
-			$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$description = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title);
+					$this->setDescription($description);
+				}
+			}
+			elseif ($type == 'user')
+			{
+				$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
-				$this->setTitle($title);
-			}
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
+					$this->setTitle($title);
+				}
 
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES');
-				$this->setKeywords($keywords);
-			}
+				if (!empty($params_keywords))
+				{
+					$keywords = $params->get('menu-meta_keywords');
+					$this->setKeywords($keywords);
+				}
+				else
+				{
+					$keywords = JText::_('COM_KUNENA_CATEGORIES');
+					$this->setKeywords($keywords);
+				}
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$description = (JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title);
-				$this->setDescription($description);
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$description = (JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title);
+					$this->setDescription($description);
+				}
 			}
 		}
 	}

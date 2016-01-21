@@ -101,5 +101,5 @@ foreach ($this->messages as $id => $message)
 <?php if ($this->ktemplate->params->get('writeaccess')) : ?>
 	<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
 <?php endif; ?>
-
+<div class="clearfix"></div>
 <div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>

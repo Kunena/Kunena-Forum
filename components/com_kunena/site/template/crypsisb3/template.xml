@@ -2,8 +2,8 @@
 <!DOCTYPE kinstall>
 <kinstall type="kunena-template" version="4.0" method="upgrade">
 	<name>Crypsisb3</name>
-	<creationDate>2016-01-12</creationDate>
-	<version>4.0.8</version>
+	<creationDate>2016-01-21</creationDate>
+	<version>4.0.9</version>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>

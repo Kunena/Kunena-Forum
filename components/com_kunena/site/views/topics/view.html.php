@@ -355,180 +355,190 @@ class KunenaViewTopics extends KunenaView
 
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params;
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
-		$params_description = $params->get('menu-description');
 
-		if ($type == 'default')
+		if ($menu_item)
 		{
+			$params = $menu_item->params;
 
-			switch ($this->state->get('list.mode'))
-			{
-				case 'topics' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
-					break;
-				case 'sticky' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
-					break;
-				case 'locked' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
-					break;
-				case 'noreplies' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
-					break;
-				case 'unapproved' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
-					break;
-				case 'deleted' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
-					break;
-				case 'replies' :
-				default :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
-			}
+			$params_title = $params->get('page_title');
+			$params_keywords = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-description');
 
-			if (!empty($params_title))
+			if ($type == 'default')
 			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->title = $this->headerText;
-				$title = "{$this->title} ({$pagesTxt})";
-				$this->setTitle($title);
-			}
 
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
-				$this->setKeywords($keywords);
-			}
+				switch ($this->state->get('list.mode'))
+				{
+					case 'topics' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+						break;
+					case 'sticky' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+						break;
+					case 'locked' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+						break;
+					case 'noreplies' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+						break;
+					case 'unapproved' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+						break;
+					case 'deleted' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+						break;
+					case 'replies' :
+					default :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
+				}
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
-				$this->setDescription($description);
-			}
-		}
-		elseif ($type == 'user')
-		{
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$this->title = $this->headerText;
+					$title = "{$this->title} ({$pagesTxt})";
+					$this->setTitle($title);
+				}
 
-			switch ($this->state->get('list.mode'))
-			{
-				case 'posted' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
-					break;
-				case 'started' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
-					break;
-				case 'favorites' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
-					break;
-				case 'subscriptions' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
-					break;
-				case 'plugin' :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
-					break;
-				default :
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
-			}
+				if (!empty($params_keywords))
+				{
+					$keywords = $params->get('menu-meta_keywords');
+					$this->setKeywords($keywords);
+				}
+				else
+				{
+					$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+					$this->setKeywords($keywords);
+				}
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+					$this->setDescription($description);
+				}
 			}
-			else
+			elseif ($type == 'user')
 			{
-				$this->title = $this->headerText;
-				$title = "{$this->title} ({$pagesTxt})";
-				$this->setTitle($title);
-			}
 
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
-				$this->setKeywords($keywords);
-			}
+				switch ($this->state->get('list.mode'))
+				{
+					case 'posted' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
+						break;
+					case 'started' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
+						break;
+					case 'favorites' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+						break;
+					case 'subscriptions' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+						break;
+					case 'plugin' :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
+						break;
+					default :
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+				}
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
-				$this->setDescription($description);
-			}
-		}
-		elseif ($type == 'posts')
-		{
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$this->title = $this->headerText;
+					$title = "{$this->title} ({$pagesTxt})";
+					$this->setTitle($title);
+				}
 
-			switch ($this->state->get('list.mode'))
-			{
-				case 'unapproved':
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
-					break;
-				case 'deleted':
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
-					break;
-				case 'mythanks':
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
-					break;
-				case 'thankyou':
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
-					break;
-				case 'recent':
-				default:
-					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
-			}
+				if (!empty($params_keywords))
+				{
+					$keywords = $params->get('menu-meta_keywords');
+					$this->setKeywords($keywords);
+				}
+				else
+				{
+					$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+					$this->setKeywords($keywords);
+				}
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+					$this->setDescription($description);
+				}
 			}
-			else
+			elseif ($type == 'posts')
 			{
-				$this->title = $this->headerText;
-				$title = "{$this->title} ({$pagesTxt})";
-				$this->setTitle($title);
-			}
 
-			if (!empty($params_keywords))
-			{
-				$keywords = $params->get('menu-meta_keywords');
-				$this->setKeywords($keywords);
-			}
-			else
-			{
-				$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
-				$this->setKeywords($keywords);
-			}
+				switch ($this->state->get('list.mode'))
+				{
+					case 'unapproved':
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+						break;
+					case 'deleted':
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+						break;
+					case 'mythanks':
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+						break;
+					case 'thankyou':
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+						break;
+					case 'recent':
+					default:
+						$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+				}
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
+				if (!empty($params_title))
+				{
+					$title = $params->get('page_title');
+					$this->setTitle($title);
+				}
+				else
+				{
+					$this->title = $this->headerText;
+					$title = "{$this->title} ({$pagesTxt})";
+					$this->setTitle($title);
+				}
+
+				if (!empty($params_keywords))
+				{
+					$keywords = $params->get('menu-meta_keywords');
+					$this->setKeywords($keywords);
+				}
+				else
+				{
+					$keywords = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+					$this->setKeywords($keywords);
+				}
+
+				if (!empty($params_description))
+				{
+					$description = $params->get('menu-meta_description');
+					$this->setDescription($description);
+				}
+				else
+				{
+					$description = $this->headerText . $this->escape(" ({$pagesTxt}) - {$this->config->board_title}");
+					$this->setDescription($description);
+				}
 			}
 			else
 			{

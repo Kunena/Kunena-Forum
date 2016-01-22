@@ -62,7 +62,7 @@ class KunenaViewTopic extends KunenaView
 		elseif ($this->state->get('item.id') != $this->topic->id
 			|| ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id]))
 			|| ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid'))
-)
+		)
 		{
 			// We need to redirect: message has been moved or we have permalink
 			$mesid = $this->state->get('item.mesid');
@@ -77,7 +77,9 @@ class KunenaViewTopic extends KunenaView
 			// Redirect to correct location (no redirect in embedded mode).
 			if (empty($this->embedded) && $message->exists())
 			{
-				while (@ob_end_clean()) {}
+				while (@ob_end_clean())
+				{
+				}
 
 				$this->app->redirect($message->getUrl(null, false));
 			}
@@ -105,7 +107,9 @@ class KunenaViewTopic extends KunenaView
 		// If page does not exist, redirect to the last page (no redirect in embedded mode).
 		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start'))
 		{
-			while (@ob_end_clean()) {}
+			while (@ob_end_clean())
+			{
+			}
 
 			$this->app->redirect($this->topic->getUrl(null, false, (int) (($this->total - 1) / $this->state->get('list.limit'))));
 		}
@@ -164,7 +168,9 @@ class KunenaViewTopic extends KunenaView
 
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
-		while (@ob_end_clean()) {}
+		while (@ob_end_clean())
+		{
+		}
 
 		$this->app->redirect($topic->getUrl($category, false, $message));
 	}
@@ -959,9 +965,9 @@ class KunenaViewTopic extends KunenaView
 	 */
 	function getMessageActions()
 	{
-		$catid = $this->state->get('item.catid');
-		$id    = $this->topic->id;
-		$mesid = $this->message->id;
+		$catid        = $this->state->get('item.catid');
+		$id           = $this->topic->id;
+		$mesid        = $this->message->id;
 		$targetuserid = $this->me->userid;
 
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . JSession::getFormToken() . '=1';
@@ -1028,8 +1034,8 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param      $id
-	 * @param      $message
+	 * @param        $id
+	 * @param        $message
 	 * @param   null $template
 	 */
 	function displayMessage($id, $message, $template = null)
@@ -1080,7 +1086,7 @@ class KunenaViewTopic extends KunenaView
 					$thankyous = $message->thankyou;
 				}
 
-				if ($this->message->authorise('unthankyou') &&  $this->me->isModerator($this->message->getCategory()))
+				if ($this->message->authorise('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 				{
 					$canUnthankyou = true;
 				}
@@ -1098,7 +1104,7 @@ class KunenaViewTopic extends KunenaView
 
 				$loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
 
-				$thankyou_delete  = '';
+				$thankyou_delete = '';
 
 				foreach ($loaded_users as $userid => $user)
 				{
@@ -1465,11 +1471,11 @@ class KunenaViewTopic extends KunenaView
 	 */
 	protected function _prepareDocument($type)
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
+		$app                = JFactory::getApplication();
+		$menu_item          = $app->getMenu()->getActive(); // get the active item
+		$params             = $menu_item->params; // get the params
+		$params_title       = $params->get('page_title');
+		$params_keywords    = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
 
 		if ($type == 'default')
@@ -1626,9 +1632,9 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param      $do
+	 * @param        $do
 	 * @param   null $id
-	 * @param      $catid
+	 * @param        $catid
 	 *
 	 * @return boolean
 	 */
@@ -1646,8 +1652,8 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * @param        $anker
-	 * @param        $name
+	 * @param          $anker
+	 * @param          $name
 	 * @param   string $rel
 	 * @param   string $class
 	 *
@@ -1656,5 +1662,20 @@ class KunenaViewTopic extends KunenaView
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '')
 	{
 		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
+	}
+
+	/**
+	 * @return bool
+	 */
+	function displayRating()
+	{
+		if (!$this->me->userid || !$this->config->ratingenabled || !$this->category->allow_ratings)
+		{
+			return false;
+		}
+
+		$this->rating = $this->get('Rating');
+
+		echo $this->loadTemplateFile('rating');
 	}
 }

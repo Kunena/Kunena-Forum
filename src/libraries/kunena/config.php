@@ -1122,6 +1122,12 @@ class KunenaConfig extends JObject
 	public $read_only = 0;
 
 	/**
+	 * @var    integer  Rating integration; select, boolean
+	 * @since  K5.0.0
+	 */
+	public $ratingenabled = 0;
+
+	/**
 	 *
 	 */
 	public function __construct()

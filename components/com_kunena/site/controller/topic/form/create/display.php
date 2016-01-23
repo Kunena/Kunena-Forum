@@ -164,7 +164,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 			$params             = $menu_item->params; // get the params
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
-			$params_description = $params->get('menu-meta-description');
+			$params_description = $params->get('menu-meta_description');
 
 			if (!empty($params_title))
 			{

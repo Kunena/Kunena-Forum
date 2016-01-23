@@ -112,7 +112,7 @@ class KunenaView extends JViewLegacy
 		}
 		elseif ($home)
 		{
-			$this->document->addHeadLink( $juricurrent, 'canonical', 'rel', '' );
+			$this->document->addHeadLink( $juricurrent, 'canonical', 'rel');
 			include JPATH_SITE .'/'. $this->ktemplate->getFile('html/display.php');
 
 			if ($this->config->get('credits', 1))
@@ -122,7 +122,7 @@ class KunenaView extends JViewLegacy
 		}
 		else
 		{
-			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
+			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel');
 			include JPATH_SITE .'/'. $this->ktemplate->getFile('html/display.php');
 
 			if ($this->config->get('credits', 1))

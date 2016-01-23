@@ -284,11 +284,11 @@ if (version_compare(JVERSION, '3.2', '>'))
 												<td><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS_DESC') ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_LEGACY') ?></td>
 												<td>
 													<input type="text" name="cfg_catimagepath" value="<?php echo $this->escape($this->config->catimagepath) ?>" />
 												</td>
-												<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_DESC') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_LEGACY_DESC') ?></td>
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST') ?></td>

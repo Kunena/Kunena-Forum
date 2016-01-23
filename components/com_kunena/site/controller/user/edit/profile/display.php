@@ -62,7 +62,7 @@ class ComponentKunenaControllerUserEditProfileDisplay extends ComponentKunenaCon
 			$params             = $menu_item->params; // get the params
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
-			$params_description = $params->get('menu-description');
+			$params_description = $params->get('menu-meta-description');
 
 			if (!empty($params_title))
 			{

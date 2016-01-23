@@ -218,7 +218,7 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 
 		// Remove base and add canonical link.
 		$this->document->setBase('');
-		$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
+		$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel');
 
 		// Initialize breadcrumb.
 		$this->breadcrumb = $this->app->getPathway();

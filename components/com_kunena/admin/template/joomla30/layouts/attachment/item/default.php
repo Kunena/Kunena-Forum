@@ -6,32 +6,21 @@
  *
  * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @link https://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 /** @var KunenaAttachment $attachment */
 $attachment = $this->attachment;
+$config = KunenaFactory::getConfig();
 
-if ($attachment->protected)
+if ($config->access_component)
 {
-	$url_href = $attachment->getUrl();
-}
-else
-{
-	$url_href = JUri::root() . $attachment->getUrl();
-}
-
 ?>
-<a href="<?php echo $url_href; ?>" title="<?php echo $attachment->getFilename(); ?>">
-	<?php
-	if ($attachment->isImage() && !$attachment->protected)
+<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getFilename(); ?>">
+	<?php if ($attachment->isImage())
 	{
 		echo '<img src="' . JUri::root() . $attachment->getUrl(true) . ' " height="40" width="40" />';
-	}
-	elseif ($attachment->isImage() && $attachment->protected)
-	{
-		echo '<img src="' . $attachment->getUrl(true) . ' " height="40" width="40" />';
 	}
 	else
 	{
@@ -39,3 +28,16 @@ else
 	}
 	?>
 </a>
+<?php
+}
+else
+{
+	if ($attachment->isImage())
+	{
+		echo '<i class="icon-picture icon-big"></i>';
+	}
+	else
+	{
+		echo '<i class="icon-flag-2 icon-big"></i>';
+	}
+} ?>

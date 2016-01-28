@@ -1418,16 +1418,16 @@
         },
         {
             "name": "joomla-projects/selenium-server-standalone",
-            "version": "v2.47.1",
+            "version": "v2.49.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/selenium-server-standalone.git",
-                "reference": "ee9d37f7bab058c010a9109803e23d6198329d22"
+                "reference": "972c7ea46146a687bca00a3566af079c2dc9f823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/selenium-server-standalone/zipball/ee9d37f7bab058c010a9109803e23d6198329d22",
-                "reference": "ee9d37f7bab058c010a9109803e23d6198329d22",
+                "url": "https://api.github.com/repos/joomla-projects/selenium-server-standalone/zipball/972c7ea46146a687bca00a3566af079c2dc9f823",
+                "reference": "972c7ea46146a687bca00a3566af079c2dc9f823",
                 "shasum": ""
             },
             "bin": [

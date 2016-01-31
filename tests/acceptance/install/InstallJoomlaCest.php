@@ -22,7 +22,7 @@ class InstallJoomlaCest
 		$I->am('Administrator');
 		$I->installJoomlaRemovingInstallationFolder();
 		$I->doAdministratorLogin();
-		$I->disablestatistics();
+		//$I->disablestatistics();
 		$I->setErrorReportingToDevelopment();
 	}
 

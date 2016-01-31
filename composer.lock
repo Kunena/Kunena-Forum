@@ -3739,16 +3739,16 @@
         },
          {
                     "name": "phing/phing",
-                    "version": "2.4.13",
+                    "version": "2.13.0",
                     "source": {
                         "type": "git",
                         "url": "https://github.com/phingofficial/phing",
-                        "reference": "2.4.13"
+                        "reference": "2.13.0"
                     },
                     "dist": {
                         "type": "zip",
-                        "url": "https://github.com/phingofficial/phing/archive/2.4.13.zip",
-                        "reference": "2.4.13",
+                        "url": "https://github.com/phingofficial/phing/archive/2.13.0.zip",
+                        "reference": "2.13.0",
                         "shasum": ""
                     },
                     "require": {
@@ -3787,7 +3787,7 @@
                         "task",
                         "tool"
                     ],
-                    "time": "2012-11-20 06:49:06"
+                    "time": "2015-12-04 01:45:06"
                 }
     ],
     "aliases": [],

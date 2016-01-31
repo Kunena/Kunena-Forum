@@ -23,7 +23,7 @@ class InstallKunenaCest
 		$I->doAdministratorLogin();
 		$I->comment('Im going to install kunena by the url installer');
 		$url = $I->getConfiguration('url');
-		$I->installExtensionFromUrl($url . "/pkg-kunena-5.0.zip");
+		$I->installExtensionFromUrl($url . "/pkg_kunena_v5.0.zip");
 		$I->comment('Bug on install, use the kunena installer');
 		$I->amOnPage('administrator/index.php?option=com_kunena');
 		$I->wait(10);

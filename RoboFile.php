@@ -304,19 +304,13 @@ class RoboFile extends \Robo\Tasks
 
 		$this->_copyDir('tests/cache', $this->cmsPath);
 
-		// Optionally change owner to fix permissions issues
-		if (!empty($this->configuration->localUser) && !$this->isWindows())
-		{
-			$this->_exec('chown -R ' . $this->configuration->localUser . ' ' . $this->cmsPath);
-		}
-
 		// Copy current package
 		if (!file_exists('dist/pkg_kunena_v5.0.zip'))
 		{
 			$this->build(true);
 		}
 
-		$this->_copy('dist/pkg-kunena-5.0.zip', $this->cmsPath . "/pkg-kunena-5.0.zip");
+		$this->_copy('dist/pkg_kunena_v5.0.zip', $this->cmsPath . "/pkg_kunena_v5.0.zip");
 
 		$this->say('Joomla CMS site created at ' . $this->cmsPath);
 

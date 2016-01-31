@@ -46,7 +46,6 @@ phing-latest.phar
 /Gemfile.lock
 
 # composer
-composer.phar
 vendor/*
 
 # Test related files

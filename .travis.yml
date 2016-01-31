@@ -37,7 +37,6 @@ before_script:
 - composer install
 - vendor/bin/phing -f build/phing/build.xml
 
-
 script:
 # Build
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml

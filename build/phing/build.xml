@@ -350,7 +350,7 @@
 
 		<!-- Zip the created Zips for packages -->
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/pkg_kunena_v${xml.version}_${version.date}" />
+			<property name="destination.file" value="dist/pkg_kunena_v5.0" />
 			<property name="base.directory" value="${build_dir}/distribution/" />
 		</phingcall>
 	</target>

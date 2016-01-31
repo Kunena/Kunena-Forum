@@ -38,12 +38,14 @@
 	<condition property="cache_dir" value="dist/cache">
 		<not><isset property="cache_dir" /></not>
 	</condition>
-
 	<condition property="package_dir" value="dist/package">
 		<not><isset property="package_dir" /></not>
 	</condition>
+	<condition property="base.directory" value="dist">
+		<not><isset property="base.directory" /></not>
+	</condition>
 
-	<xmlproperty file="${project_dir}/pkg_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+	<xmlproperty file="pkg_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 	<tstamp>
 		<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
 	</tstamp>
@@ -82,17 +84,13 @@
 		</replacetokens>
 	</filterchain>
 
-	<property name="kunena.admin" value="../src/administrator/components/com_kunena/" />
-	<property name="kunena.libraries" value="../src/libraries/kunena" />
-	<property name="kunena.media" value="../src/media/kunena" />
-	<property name="kunena.plugins" value="../src/plugins" />
-	<property name="kunena.site" value="../src/components/com_kunena/" />
-	<!--<property name="kunena.layouts" value="layouts/kunena" />-->
+	<property name="kunena.admin" value="src/administrator/components/com_kunena/" />
+	<property name="kunena.libraries" value="src/libraries/kunena" />
+	<property name="kunena.media" value="src/media/kunena" />
+	<property name="kunena.plugins" value="src/plugins" />
+	<property name="kunena.site" value="src/components/com_kunena/" />
 
-
-
-	<target name="dist" depends="init,mkdir,old,info,build,build-components,build-layouts,build-libraries,build-media,build-plugins,build-language,package,cleanup,postflight" />
-
+	<target name="dist" depends="init,mkdir,old,info,build,build-components,build-libraries,build-media,build-plugins,build-language,package,cleanup,postflight" />
 
 	<target name="init">
 		<echo message="Hello, welcome to ${phing.project.name} build tool!" />
@@ -148,43 +146,36 @@
 	<target name="build">
 		<echo message="Building Installer.." />
 		<!-- Move files needed by the installer -->
-		<copy file="${project_dir}/pkg_kunena.xml" todir="${build_dir}/distribution" overwrite="true">
+		<copy file="pkg_kunena.xml" todir="${build_dir}/distribution" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
 		<copy file="${project_dir}/install.php" todir="${build_dir}/distribution" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
-		<copy file="${project_dir}/../COPYRIGHT.php" todir="${build_dir}/distribution" overwrite="true">
+		<copy file="COPYRIGHT.php" todir="${build_dir}/distribution" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
-		<copy file="${project_dir}/../README.md" tofile="${build_dir}/distribution/README.txt" overwrite="true">
+		<copy file="README.md" tofile="${build_dir}/distribution/README.txt" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
-		<copy file="${project_dir}/../LICENSE.txt" tofile="${build_dir}/distribution/LICENSE.txt" overwrite="true">
+		<copy file="LICENSE.txt" tofile="${build_dir}/distribution/LICENSE.txt" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
-		<!--copy todir="${build_dir}/install" overwrite="true">
-			<fileset dir="${project_dir}/kunena.admin/install" />
-		</copy-->
 
-		<!-- Rename component entry files so that they replace the installer files just before the end of the installation process. -->
-		<!--move todir="${build_dir}/archive" includeEmptyDirs="no">
-			<fileset dir="${tmp_dir}/archive" />
-		</move-->
 
 		<!-- Language pack -->
-		<copy file="${project_dir}/${kunena.admin}/language/all/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true">
+		<copy file="${kunena.admin}/language/all/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
-		<copy file="${project_dir}/${kunena.admin}/language/all/pkg_kunena_languages.xml" tofile="${tmp_dir}/languages_extra/pkg_kunena_languages.xml" overwrite="true">
+		<copy file="${kunena.admin}/language/all/pkg_kunena_languages.xml" tofile="${tmp_dir}/languages_extra/pkg_kunena_languages.xml" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
-		<copy file="${project_dir}/${kunena.admin}/language/all/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true">
+		<copy file="${kunena.admin}/language/all/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
 
 		<!-- Readme For Package Directory-->
-		<copy file="${project_dir}/../README.md" tofile="${package_dir}/README.txt" overwrite="true">
+		<copy file="README.md" tofile="${package_dir}/README.txt" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
 
@@ -195,12 +186,12 @@
 		<echo message="Building Components..." />
 
 		<copy todir="${tmp_dir}/packages/com_kunena">
-			<fileset dir="${project_dir}/${kunena.admin}">
+			<fileset dir="${kunena.admin}">
 				<exclude name="language/**"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena/site">
-			<fileset dir="${project_dir}/${kunena.site}">
+			<fileset dir="${kunena.site}">
 				<exclude name="language/**"/>
 				<exclude name="template/**/params.ini"/>
 			</fileset>
@@ -208,32 +199,20 @@
 		<!-- Add version information to all xml files and forum.php -->
 		<copy todir="${tmp_dir}/packages/com_kunena" overwrite="true">
 			<filterchain refid="filter"/>
-			<fileset dir="${project_dir}/${kunena.admin}">
+			<fileset dir="${kunena.admin}">
 				<include name="**/*.xml"/>
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena/site" overwrite="true">
 			<filterchain refid="filter"/>
-			<fileset dir="${project_dir}/${kunena.site}">
+			<fileset dir="${kunena.site}">
 				<include name="**/*.xml"/>
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
 
 		<echo message="Building Components...DONE!" />
-	</target>
-
-	<target name="build-layouts" depends="build">
-		<!--<copy todir="${tmp_dir}/packages/kunena_layouts" overwrite="true">
-			<fileset dir="${project_dir}/layouts/kunena"/>
-		</copy>-->
-		<!--<copy todir="${tmp_dir}/packages/kunena_layouts" overwrite="true">
-			<filterchain refid="filter"/>
-			<fileset dir="${project_dir}/layouts/kunena">
-				<include name="**/*.xml"/>
-			</fileset>
-		</copy>-->
 	</target>
 
 	<target name="build-libraries" depends="build">
@@ -243,7 +222,7 @@
 		</copy>
 		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
 			<filterchain refid="filter"/>
-			<fileset dir="${project_dir}/${kunena.libraries}">
+			<fileset dir="${kunena.libraries}">
 				<include name="forum/forum.php"/>
 				<include name="**/*.xml"/>
 			</fileset>
@@ -253,12 +232,12 @@
 	<target name="build-media" depends="build">
 		<echo message="Building Media.." />
 		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
-			<fileset dir="${project_dir}/${kunena.media}"/>
+			<fileset dir="${kunena.media}"/>
 		</copy>
 		<!-- Add version information to all xml files and forum.php -->
 		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
 			<filterchain refid="filter"/>
-			<fileset dir="${project_dir}/${kunena.media}">
+			<fileset dir="${kunena.media}">
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
@@ -268,10 +247,10 @@
 	<target name="build-plugins" depends="build">
 		<echo message="Building Plugins.." />
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
-			<fileset dir="${project_dir}/${kunena.plugins}/plg_system_kunena"/>
+			<fileset dir="${kunena.plugins}/plg_system_kunena"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
-			<fileset dir="${project_dir}/${kunena.plugins}/plg_quickicon_kunena"/>
+			<fileset dir="${kunena.plugins}/plg_quickicon_kunena"/>
 		</copy>
 		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
 			<filterchain refid="filter"/>
@@ -298,7 +277,7 @@
 		<foreach param="tag" target="language-process">
 			<!-- mapper is needed to return one part of the string, in this case part of directory name -->
 			<mapper type="glob" from="com_kunena_*.xml" to="*"/>
-			<fileset dir="${project_dir}/${kunena.admin}/language/all/manifests">
+			<fileset dir="${kunena.admin}/language/all/manifests">
 				<include name="*.xml"/>
 			</fileset>
 		</foreach>
@@ -306,18 +285,18 @@
 	</target>
 
 	<target name="language-process">
-		<copy file="${project_dir}/${kunena.admin}/language/all/manifests/com_kunena_${tag}.xml" todir="${tmp_dir}/languages/${tag}" overwrite="true">
+		<copy file="${kunena.admin}/language/all/manifests/com_kunena_${tag}.xml" todir="${tmp_dir}/languages/${tag}" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
 		<copy todir="${tmp_dir}/languages/${tag}/admin" includeemptydirs="false" overwrite="true">
 			<mapper type="flatten" />
-			<fileset dir="${project_dir}/${kunena.admin}">
+			<fileset dir="${kunena.admin}">
 				<include name="**/${tag}.*.ini"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/languages/${tag}/site" includeemptydirs="false" overwrite="true">
 			<mapper type="flatten" />
-			<fileset dir="${project_dir}/${kunena.site}">
+			<fileset dir="${kunena.site}">
 				<include name="**/${tag}.*.ini"/>
 			</fileset>
 		</copy>
@@ -385,8 +364,6 @@
 	<target name="postflight">
 		<echo message="Congratulations, build should of finished without error!" />
 	</target>
-
-
 
 	<target name="archive">
 		<zip destfile="${destination.file}.zip">

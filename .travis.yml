@@ -35,10 +35,11 @@ before_script:
 - sleep 3 # give fluxbox some time to start
 # Composer
 - composer install
+- vendor/bin/phing -f build/phing/build.xml
+
 
 script:
 # Build
-- vendor/bin/phing -f build/phing/build.xml
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess
 

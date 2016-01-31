@@ -18,4 +18,4 @@
  * and use the build tool for those that are familiar composer,
  * however it is recommended to use the PEAR package instead.
  **/
-require_once "vendor/phing/phing/bin";
+require_once "vendor/bin/phing";

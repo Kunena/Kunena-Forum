@@ -38,7 +38,7 @@ before_script:
 
 script:
 # Build
-- vendor\bin\phing -f build/phing/build.xml
+- vendor/bin/phing -f build/phing/build.xml
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess
 

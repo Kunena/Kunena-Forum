@@ -22,9 +22,8 @@ class InstallJoomlaCest
 		$I->am('Administrator');
 		$I->installJoomlaRemovingInstallationFolder();
 		$I->doAdministratorLogin();
-		$I->setErrorReportingToDevelopment();
-		$I->wait(10);
 		$I->disablestatistics();
+		$I->setErrorReportingToDevelopment();
 	}
 
 	/**

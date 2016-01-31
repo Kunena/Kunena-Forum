@@ -39,8 +39,7 @@ before_script:
 
 script:
 # Build
-- mv jbuild.dist.ini jbuild.ini
-- vendor/bin/robo build
+- phing -f ../../../../build/phing/build.xml
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess
 

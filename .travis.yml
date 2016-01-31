@@ -5,8 +5,7 @@ php:
 - 7.0
 matrix:
   allow_failures:
-    - php: 5.6
-    - php: 7.0
+    - php: 5.5
 before_script:
 - sudo apt-get update -qq
 - sudo apt-get install -y --force-yes apache2 libapache2-mod-fastcgi php5-curl php5-mysql php5-intl php5-gd > /dev/null
@@ -39,7 +38,7 @@ before_script:
 
 script:
 # Build
-- phing -f ../../../../build/phing/build.xml
+- vendor\bin\phing -f build/phing/build.xml
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess
 

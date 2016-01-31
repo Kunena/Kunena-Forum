@@ -39,8 +39,9 @@ class InstallJoomlaCest
 	{
 		$I->doAdministratorLogin();
 		$I->comment('get Kunena repository folder from acceptance.suite.yml (see _support/AcceptanceHelper.php)');
-
-		$I->installExtensionFromUrl('C:\wamp64\www\kunena\src\pkg_kunena_v5.0.0-ALPHA3_2015-12-15.zip');
+		// URL where the package file to install is located (mostly the same as joomla-cms)
+		$url = $I->getConfiguration('url');
+		$I->installExtensionFromUrl($url . "/pkg_kunena_v5.0.zip");
 		$I->doAdministratorLogout();
 	}
 }

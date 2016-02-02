@@ -36,6 +36,7 @@ before_script:
 # Composer
 - composer install
 - vendor/bin/phing -f build/phing/build.xml
+- vendor/bin/phing -f build/phing/build.xml
 
 script:
 # Build

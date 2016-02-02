@@ -357,8 +357,11 @@
 
 	<target name="cleanup">
 		<delete dir="${cache_dir}" />
-		<delete dir="${tmp_dir}" />
-		<delete dir="${build_dir}" />
+		<delete dir="${build_dir}/archive" />
+		<delete dir="${build_dir}/documentation" />
+		<delete dir="${build_dir}/packages" />
+		<delete file="${build_dir}/README.txt" />
+		<delete dir="dist/tmp" />
 	</target>
 
 	<target name="postflight">

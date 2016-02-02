@@ -36,7 +36,7 @@ modules:
             admin email: 'admin@mydomain.com'                           # Email Id of the Admin
             language: 'English (United Kingdom)'                        # Language in which you want the Application to be Installed
         AcceptanceHelper:
-            repo_folder: '/home/travis/build/Kunena/Kunena-Forum/dist/package/distribution/' # Path to the Extension repository. To be used by tests to install via Install from folder
+            repo_folder: '/home/travis/build/Kunena/Kunena-Forum/dist/package/distribution' # Path to the Extension repository. To be used by tests to install via Install from folder
             counter_test_url: 'http://localhost/tests/kunena/'          # The url for the weblink item used to test hits counter
             url: 'http://localhost/tests/kunena/'                       # The url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
 error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"

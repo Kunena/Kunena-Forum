@@ -118,7 +118,7 @@
 
 
 	<target name="old">
-		<echo message="Moving old items to a new direcotry..." />
+		<echo message="Moving old items to a new directory..." />
 
 		<move todir="${package_dir}/archive" preservelastmodified="false" includeemptydirs="false">
 			<fileset dir="${package_dir}">
@@ -357,11 +357,11 @@
 
 	<target name="cleanup">
 		<delete dir="${cache_dir}" />
-		<delete dir="${build_dir}/archive" />
-		<delete dir="${build_dir}/documentation" />
-		<delete dir="${build_dir}/packages" />
-		<delete file="${build_dir}/README.txt" />
+		<delete dir="dist/package/archive" />
+		<delete dir="dist/package/documentation" />
+		<delete dir="dist/package/packages" />
 		<delete dir="dist/tmp" />
+		<delete file="dist/package/README.txt" />
 	</target>
 
 	<target name="postflight">

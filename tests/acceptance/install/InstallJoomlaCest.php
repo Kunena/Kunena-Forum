@@ -39,9 +39,8 @@ class InstallJoomlaCest
 	{
 		$I->doAdministratorLogin();
 		$I->comment('Im going to install kunena by the url installer');
-		$url = $I->getConfiguration('url');
-		$I->installExtensionFromUrl($url . "/pkg_kunena_v5.0.zip");
-		$I->wait(10);
+		$url = $I->getConfiguration('repo_folder');
+		$I->installExtensionFromFolder($url);
 		$I->comment('Bug on install, use the kunena installer');
 		$I->amOnPage('administrator/index.php?option=com_kunena');
 		$I->wait(10);

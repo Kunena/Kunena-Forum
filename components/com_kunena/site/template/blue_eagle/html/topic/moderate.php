@@ -95,7 +95,7 @@ kunena_url_ajax= ".json_encode(KunenaRoute::_("index.php?option=com_kunena&view=
 
 				<div id="kmod_subject">
 					<?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
-					<input type="text" name="subject" value="<?php echo $this->escape( !isset($this->message) ? $this->topic->subject : $this->message->subject ); ?>" />
+					<input type="text" name="subject" value="<?php echo $this->escape( !isset($this->message) ? $this->topic->subject : $this->message->subject ); ?>" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" />
 				</div>
 				<div>
 					<input type="checkbox" name="changesubject" value="1" />

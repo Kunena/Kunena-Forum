@@ -54,4 +54,4 @@ if ($direction === "left") : ?>
 
 <?php endif; ?>
 
-<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_msg_' . $this->location); ?>
+<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_msg_' . $this->message->replynum); ?>

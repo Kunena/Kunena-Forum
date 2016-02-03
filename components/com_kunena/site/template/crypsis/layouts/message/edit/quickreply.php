@@ -31,6 +31,29 @@ $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 /** @var KunenaUser  $me  Current user. */
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
+// Fixme: can't get the controller working on this
+if ($me->canDoCaptcha() )
+{
+	if (JPluginHelper::isEnabled('captcha'))
+	{
+		$plugin = JPluginHelper::getPlugin('captcha');
+		$params = new JRegistry($plugin[0]->params);
+
+		$captcha_pubkey = $params->get('public_key');
+		$catcha_privkey = $params->get('private_key');
+
+		if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+		{
+			JPluginHelper::importPlugin('captcha');
+			$dispatcher = JDispatcher::getInstance();
+			$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_' . $this->message->id);
+			$output = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id, 'class="controls"'));
+			$this->quickcaptchaDisplay = $output[0];
+			$this->quickcaptchaEnabled = $result[0];
+		}
+	}
+}
+
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addStyleSheet('css/atwho.css');
 $this->addScript('js/caret.js');
@@ -117,9 +140,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<?php endif; ?>
 			<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 		</div>
-		<?php if (!empty($this->captchaEnabled)) : ?>
+		<?php if (!empty($this->quickcaptchaEnabled)) : ?>
 			<div class="control-group">
-				<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
+				<?php echo $this->quickcaptchaDisplay;?>
 			</div>
 		<?php endif; ?>
 		<div class="modal-footer">

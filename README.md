@@ -11,7 +11,7 @@
 *Kunena* 4.0 requires
 
     Joomla! 3.4: version 3.4.1 or greater (>= 3.4.3 recommended)
-    PHP: version 5.3.1 or greater (>= 5.4.31 recommended)
+    PHP: version 5.3.1 or greater (>= 5.4.31 recommended) PHP7 Not Supported until Kunena 5.0!
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
@@ -28,7 +28,7 @@ In addition we recommend the following PHP settings:
 
     * Mootools 1.4+ compatible template (Blue Eagle Template)
     * Bootstrap 2 compatible template (Crypsis Template)
-    * Upgraded to latest versions all extensions that claim to integrate with Kunena 2.0 or 3.0
+    * Upgraded to latest versions all extensions that claim to integrate with Kunena
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 
 

@@ -279,7 +279,7 @@ class KunenaBbcode extends NBBC_BBCode
 			}
 
 			$url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
-			if (strpos($this->escape($this->url), '/index.php') !== 0)
+			if (strpos($url, '/index.php') !== 0)
 			{
 				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
 			}
@@ -1163,7 +1163,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// TODO: Remove in Kunena 4.0
 		$target = ' target="' . htmlspecialchars($target, ENT_COMPAT, 'UTF-8') . '"';
 
-		if (strpos($this->escape($this->url), '/index.php') !== 0)
+		if (strpos($url, '/index.php') !== 0)
 		{
 			return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
 		}

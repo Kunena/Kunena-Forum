@@ -119,7 +119,7 @@ defined('_JEXEC') or die();
 				<h3>Changelog</h3>
 			</div>
 			<div class="modal-body">
-				<iframe src="http://www.jellekoksolutions.nl/docs2/en/basics/changelog" width="100%" height="400px" frameborder="0"></iframe>
+				<iframe src="https://www.kunena.org/docs/en/changelog" width="100%" height="400px" frameborder="0"></iframe>
 			</div>
 			<div class="modal-footer">
 				<button class="btn" data-dismiss="modal">Close</button>

@@ -62,6 +62,7 @@ $this->addScript('js/search.js');
 					</div>
 				</fieldset>
 
+				<?php if (!$this->config->pubprofile && !JFactory::getUser()->guest || $this->config->pubprofile) : ?>
 				<fieldset class="col-md-6">
 					<legend>
 						<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
@@ -78,6 +79,7 @@ $this->addScript('js/search.js');
 							<?php if ($this->state->get('query.exactname')) echo $this->checked; ?> />
 					</label>
 				</fieldset>
+				<?php endif; ?>
 			</div>
 		</div>
 

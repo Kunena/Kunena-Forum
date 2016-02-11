@@ -43,6 +43,7 @@ window.addEvent('domready', function() {
 					</fieldset>
 				</td>
 				<td class="kcol">
+					<?php if (!$this->config->pubprofile && !JFactory::getUser()->guest || $this->config->pubprofile) : ?>
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
 						<label class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
@@ -60,6 +61,7 @@ window.addEvent('domready', function() {
 							<input type="checkbox" name="exactname" value="1" <?php if ($this->state->get('query.exactname')) echo $this->checked; ?> />
 						</label>
 					</fieldset>
+					<?php endif; ?>
 				</td>
 			</tr>
 			<tr>

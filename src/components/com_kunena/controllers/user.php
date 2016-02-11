@@ -629,14 +629,15 @@ class KunenaControllerUser extends KunenaController
 		$this->setRedirectBack();
 	}
 
-	// Mostly copied from Joomla 1.5
 	/**
+	 *
 	 * @return boolean
+	 *
 	 * @throws Exception
 	 */
 	protected function saveUser()
 	{
-		// we only allow users to edit few fields
+		// We only allow users to edit few fields
 		$allow = array('name', 'email', 'password', 'password2', 'params');
 
 		if (JComponentHelper::getParams('com_users')->get('change_login_name', 1))
@@ -644,10 +645,10 @@ class KunenaControllerUser extends KunenaController
 			$allow[] = 'username';
 		}
 
-		//clean request
-		$post              = JFactory::getApplication()->input->get('post');
-		$post['password']  = JFactory::getApplication()->input->get('password', '', 'post', 'string', 'raw'); // RAW input
-		$post['password2'] = JFactory::getApplication()->input->get('password2', '', 'post', 'string', 'raw'); // RAW input
+		// Clean request
+		$post              = JRequest::get('post');
+		$post['password']  = JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
+		$post['password2'] = JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
 
 		if (empty($post['password']) || empty($post['password2']))
 		{
@@ -694,7 +695,7 @@ class KunenaControllerUser extends KunenaController
 		$session = JFactory::getSession();
 		$session->set('user', $this->user);
 
-		// update session if username has been changed
+		// Update session if username has been changed
 		if ($username && $username != $this->user->username)
 		{
 			$table = JTable::getInstance('session', 'JTable');

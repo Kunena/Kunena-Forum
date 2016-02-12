@@ -144,9 +144,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-default btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 					<br />
 				</div>
-				<?php if (!empty($this->captchaEnabled)) : ?>
+				<?php if (!empty($this->quickcaptchaEnabled)) : ?>
 					<div class="control-group">
-						<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
+						<?php echo $this->quickcaptchaDisplay;?>
 					</div>
 				<?php endif; ?>
 				<div class="modal-footer">

@@ -89,8 +89,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 					$dispatcher = JDispatcher::getInstance();
 					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
 					$output = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"'));
-					$this->quickcaptchaDisplay = $output[0];
-					$this->quickcaptchaEnabled = $result[0];
+					$this->captchaDisplay = $output[0];
+					$this->captchaEnabled = $result[0];
 				}
 			}
 		}

@@ -38,6 +38,7 @@ Desktop.ini
 
 # Phing
 phing-latest.phar
+RoboFile.ini
 
 # Github pages and Jekyll files
 /_site/

@@ -19,7 +19,7 @@ class RoboFile extends \Robo\Tasks
 {
 	// Load tasks from composer, see composer.json
 	use \joomla_projects\robo\loadTasks;
-	use \JBuild\Tasks\loadTasks;
+	use \Joomla\Jorobo\Tasks\loadTasks;
 
 	/**
 	 * File extension for executables
@@ -311,12 +311,12 @@ class RoboFile extends \Robo\Tasks
 		}
 
 		// Copy current package
-		if (!file_exists('dist/pkg-kunena-5.0.0.zip'))
+		if (!file_exists('dist/pkg_kunena_v5.0.zip'))
 		{
 			$this->build(true);
 		}
 
-		$this->_copy('dist/pkg-kunena-5.0.0.zip', $this->cmsPath . "/pkg-kunena-5.0.0.zip");
+		$this->_copy('dist/pkg_kunena_v5.0.zip', $this->cmsPath . "/pkg_kunena_v5.0.zip");
 
 		$this->say('Joomla CMS site created at ' . $this->cmsPath);
 
@@ -484,9 +484,9 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function build($params = ['dev' => false])
 	{
-		if (!file_exists('jbuild.ini'))
+		if (!file_exists('jorobo.ini'))
 		{
-			$this->_copy('jbuild.dist.ini', 'jbuild.ini');
+			$this->_copy('jorobo.dist.ini', 'jorobo.ini');
 		}
 
 		$this->taskBuild($params)->run();

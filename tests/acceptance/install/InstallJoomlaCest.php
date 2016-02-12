@@ -22,9 +22,8 @@ class InstallJoomlaCest
 		$I->am('Administrator');
 		$I->installJoomlaRemovingInstallationFolder();
 		$I->doAdministratorLogin();
-		$I->setErrorReportingToDevelopment();
-		$I->wait(10);
 		$I->disablestatistics();
+		$I->setErrorReportingToDevelopment();
 	}
 
 	/**
@@ -39,9 +38,15 @@ class InstallJoomlaCest
 	public function installKunena(\AcceptanceTester $I)
 	{
 		$I->doAdministratorLogin();
-		$I->comment('get Kunena repository folder from acceptance.suite.yml (see _support/AcceptanceHelper.php)');
-
-		$I->installExtensionFromUrl('C:\wamp64\www\kunena\src\pkg_kunena_v5.0.0-ALPHA3_2015-12-15.zip');
+		$I->comment('Im going to install kunena by the url installer');
+		$url = $I->getConfiguration('repo_folder');
+		$I->installExtensionFromFolder($url);
+		$I->comment('Bug on install, use the kunena installer');
+		$I->amOnPage('administrator/index.php?option=com_kunena');
+		$I->wait(10);
+		$I->comment('Close the installer');
+		$I->amOnPage('administrator/index.php?option=com_kunena');
+		$I->wait(1);
 		$I->doAdministratorLogout();
 	}
 }

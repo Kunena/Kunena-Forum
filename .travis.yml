@@ -3,9 +3,10 @@ php:
 - 5.5
 - 5.6
 - 7.0
+addons:
+   firefox: "44.0"
 matrix:
   allow_failures:
-    - php: 5.6
     - php: 7.0
 before_script:
 - sudo apt-get update -qq
@@ -39,8 +40,6 @@ before_script:
 
 script:
 # Build
-- mv jbuild.dist.ini jbuild.ini
-- vendor/bin/robo build
+- vendor/bin/phing -f build/phing/build.xml
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess
-

@@ -5,7 +5,6 @@ components/com_kunena/site/template/crypsis/css/kunena.css
 
 # Builds
 build/tmp
-build
 releases
 dist/*
 
@@ -38,7 +37,6 @@ Desktop.ini
 *~
 
 # Phing
-build.properties
 phing-latest.phar
 
 # Github pages and Jekyll files

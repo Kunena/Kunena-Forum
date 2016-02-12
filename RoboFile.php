@@ -80,7 +80,7 @@ class RoboFile extends \Robo\Tasks
 	 *          - 'env': set a specific environment to get configuration from
 	 * @return mixed
 	 */
-	public function runTests($opts = ['use-htaccess' => false, 'env' => 'desktop'])
+	public function runTests($opts = ['use-htaccess' => true, 'env' => 'desktop'])
 	{
 		$this->createTestingSite($opts['use-htaccess']);
 
@@ -268,7 +268,7 @@ class RoboFile extends \Robo\Tasks
 	 *
 	 * @param   bool  $use_htaccess  (1/0) Rename and enable embedded Joomla .htaccess file
 	 */
-	public function createTestingSite($use_htaccess = false)
+	public function createTestingSite($use_htaccess = true)
 	{
 		if (!empty($this->configuration->skipClone))
 		{
@@ -304,19 +304,13 @@ class RoboFile extends \Robo\Tasks
 
 		$this->_copyDir('tests/cache', $this->cmsPath);
 
-		// Optionally change owner to fix permissions issues
-		if (!empty($this->configuration->localUser) && !$this->isWindows())
-		{
-			$this->_exec('chown -R ' . $this->configuration->localUser . ' ' . $this->cmsPath);
-		}
-
 		// Copy current package
-		if (!file_exists('dist/pkg-kunena-5.0.0.zip'))
+		if (!file_exists('dist/pkg_kunena_v5.0.zip'))
 		{
 			$this->build(true);
 		}
 
-		$this->_copy('dist/pkg-kunena-5.0.0.zip', $this->cmsPath . "/pkg-kunena-5.0.0.zip");
+		$this->_copy('dist/pkg_kunena_v5.0.zip', $this->cmsPath . "/pkg_kunena_v5.0.zip");
 
 		$this->say('Joomla CMS site created at ' . $this->cmsPath);
 
@@ -484,11 +478,6 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function build($params = ['dev' => false])
 	{
-		if (!file_exists('jbuild.ini'))
-		{
-			$this->_copy('jbuild.dist.ini', 'jbuild.ini');
-		}
-
-		$this->taskBuild($params)->run();
+		return '';
 	}
 }

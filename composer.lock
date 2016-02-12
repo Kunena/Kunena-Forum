@@ -3736,7 +3736,59 @@
                 "templating"
             ],
             "time": "2015-10-29 23:29:01"
-        }
+        },
+         {
+                    "name": "phing/phing",
+                    "version": "2.13.0",
+                    "source": {
+                        "type": "git",
+                        "url": "https://github.com/phingofficial/phing",
+                        "reference": "2.13.0"
+                    },
+                    "dist": {
+                        "type": "zip",
+                        "url": "https://github.com/phingofficial/phing/archive/2.13.0.zip",
+                        "reference": "2.13.0",
+                        "shasum": ""
+                    },
+                    "require": {
+                        "php": ">=5.2.0"
+                    },
+                    "bin": [
+                        "bin/phing"
+                    ],
+                    "type": "library",
+                    "autoload": {
+                        "classmap": [
+                            "classes/phing/"
+                        ]
+                    },
+                    "notification-url": "https://packagist.org/downloads/",
+                    "include-path": [
+                        "classes"
+                    ],
+                    "license": [
+                        "LGPL3"
+                    ],
+                    "authors": [
+                        {
+                            "name": "Michiel Rook",
+                            "email": "mrook@php.net"
+                        },
+                        {
+                            "name": "Phing Community",
+                            "homepage": "http://www.phing.info/trac/wiki/Development/Contributors"
+                        }
+                    ],
+                    "description": "PHing Is Not GNU make; it's a PHP project build system or build tool based on Apache Ant.",
+                    "homepage": "http://www.phing.info/",
+                    "keywords": [
+                        "build",
+                        "task",
+                        "tool"
+                    ],
+                    "time": "2015-12-04 01:45:06"
+                }
     ],
     "aliases": [],
     "minimum-stability": "stable",

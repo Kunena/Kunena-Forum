@@ -5,7 +5,6 @@ php:
 - 7.0
 matrix:
   allow_failures:
-    - php: 5.6
     - php: 7.0
 before_script:
 - sudo apt-get update -qq
@@ -36,11 +35,10 @@ before_script:
 - sleep 3 # give fluxbox some time to start
 # Composer
 - composer install
+- vendor/bin/phing -f build/phing/build.xml
+- vendor/bin/phing -f build/phing/build.xml
 
 script:
 # Build
-- mv jbuild.dist.ini jbuild.ini
-- vendor/bin/robo build
 - mv tests/acceptance.suite.dist.yml tests/acceptance.suite.yml
 - vendor/bin/robo run:tests --use-htaccess
-

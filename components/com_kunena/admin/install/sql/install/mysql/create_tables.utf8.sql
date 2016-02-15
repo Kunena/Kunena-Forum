@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
 
 CREATE TABLE IF NOT EXISTS `#__kunena_messages_text` (
 	`mesid` int(11) NOT NULL default '0',
-	`message` text NOT NULL,
+	`message` mediumtext NOT NULL,
 	PRIMARY KEY (mesid) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_polls` (

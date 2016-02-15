@@ -7,7 +7,7 @@
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -18,7 +18,7 @@ class KunenaAdminViewCpanel extends KunenaView
 {
 	function displayDefault()
 	{
-		$help_url  = 'http://www.kunena.org/docs/Category:Installation';
+		$help_url  = 'https://www.kunena.org/docs/Category:Installation';
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 
 		if (version_compare(JVERSION, '3', '>'))

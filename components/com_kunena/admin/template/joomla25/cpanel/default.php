@@ -6,7 +6,7 @@
  *
  * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @link https://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
@@ -85,7 +85,7 @@ defined ( '_JEXEC' ) or die ();
 									<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_DATE') ?>:</dt>
 									<dd><?php echo KunenaForum::versionDate(); ?></dd>
 									<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_AUTHOR') ?>:</dt>
-									<dd><a href="http://www.kunena.org/team" target="_blank">Kunena Team</a></dd>
+									<dd><a href="https://www.kunena.org/team" target="_blank">Kunena Team</a></dd>
 									<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</dt>
 									<dd>&copy; 2008 - 2016 Kunena, All rights reserved.</dd>
 									<dt><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_LABEL_LICENSE') ?>:</dt>

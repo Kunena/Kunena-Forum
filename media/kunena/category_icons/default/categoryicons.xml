@@ -6,11 +6,11 @@
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>Kunena@kunena.org</authorEmail>
-	<authorUrl>http://www.kunena.org</authorUrl>
+	<authorUrl>https://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPL</license>
 	<description>System category icons for Kunena</description>
-	
+
 	<icons type="user" width="48" height="48">
 		<icon id="0" name="default" published="1" title="COM_KUNENA_ICON_DEFAULT" src="user/default.png" />
 	</icons>

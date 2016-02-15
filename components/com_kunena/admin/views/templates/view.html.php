@@ -7,7 +7,7 @@
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -154,7 +154,7 @@ class KunenaAdminViewTemplates extends KunenaView
 			JToolBarHelper::custom('chooseless', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 			JToolBarHelper::divider();
 		}
-		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		$help_url  = 'https://www.kunena.org/docs/Changing_Templates_-_the_Basics';
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
@@ -172,7 +172,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::back();
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		$help_url  = 'https://www.kunena.org/docs/Changing_Templates_-_the_Basics';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 	}
 
@@ -194,7 +194,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Changing_Templates_-_the_Basics';
+		$help_url  = 'https://www.kunena.org/docs/Changing_Templates_-_the_Basics';
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 

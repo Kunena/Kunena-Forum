@@ -7,7 +7,7 @@
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -107,7 +107,7 @@ class KunenaAdminViewCategories extends KunenaView
 
 		JToolBarHelper::cancel();
 		JToolbarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
+		$help_url  = 'https://www.kunena.org/docs/en/setup/sections-categories';
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 
@@ -139,7 +139,7 @@ class KunenaAdminViewCategories extends KunenaView
 		JToolBarHelper::deleteList();
 		//}
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Sections,_Categories,_sub-Categories_(Part_1)';
+		$help_url  = 'https://www.kunena.org/docs/en/setup/sections-categories';
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 

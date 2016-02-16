@@ -7,7 +7,7 @@
  *
  * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @link          https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -60,7 +60,7 @@ class KunenaAdminViewSmilies extends KunenaView
 		JToolBarHelper::deleteList();
 		//}
 		JToolBarHelper::spacer();
-		$help_url  = 'http://www.kunena.org/docs/Smiley_management';
+		$help_url  = 'https://www.kunena.org/docs/Smiley_management';
 		JToolBarHelper::help( 'COM_KUNENA', false, $help_url );
 	}
 

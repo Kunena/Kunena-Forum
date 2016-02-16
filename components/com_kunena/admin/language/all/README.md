@@ -8,7 +8,7 @@ We recommend that you install the most recent language package every time you ha
 Kunena distribution package itself includes translations for installation, which will be used during installation process.
 
 You can find the most recent language list from here:
-http://www.kunena.org/download
+https://www.kunena.org/download
 
 Installing languages
 ====================

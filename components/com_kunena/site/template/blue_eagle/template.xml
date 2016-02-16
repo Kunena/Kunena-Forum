@@ -6,7 +6,7 @@
 	<version>@kunenaversion@</version>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>
-	<authorUrl>http://www.kunena.org</authorUrl>
+	<authorUrl>https://www.kunena.org</authorUrl>
 	<copyright>Kunena Team</copyright>
 	<license>GNU/GPL</license>
 	<description>COM_KUNENA_TEMPLATE_BLUE_EAGLE3_DESC</description>
@@ -15,7 +15,7 @@
 		<field name="displayMenu" type="list" default="1"
 			label="COM_KUNENA_TEMPLATE_DISPLAY_MENU"
 			description="COM_KUNENA_TEMPLATE_DISPLAY_MENU_DESC"
-					
+
 		>
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
@@ -24,7 +24,7 @@
 		<field name="avatarPosition" type="list" default="left"
 			label="COM_KUNENA_TEMPLATE_PROFILE_POSITION"
 			description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC"
-					
+
 		>
 			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
 			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
@@ -35,7 +35,7 @@
 		<field name="buttonIconset" type="list" default="default"
 			label="COM_KUNENA_TEMPLATE_BUTTON_SET"
 			description="COM_KUNENA_TEMPLATE_BUTTON_SET_DESC"
-					
+
 		>
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 			<option value="bluebird">COM_KUNENA_TEMPLATE_BUTTON_SET_BLUEBIRD</option>
@@ -54,7 +54,7 @@
 		<field name="editorIconset" type="list" default="default"
 			label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET"
 			description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC"
-					
+
 		>
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</field>
@@ -64,59 +64,59 @@
 			description="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND_DESC"
 		/>
 
-		<field name="announcementHeadercolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_HEADER_BACKGROUND" 
+		<field name="announcementHeadercolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_HEADER_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
-		
-		<field name="announcementBoxbgcolor" type="text" default="" 
+
+		<field name="announcementBoxbgcolor" type="text" default=""
 			label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_BOX_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
-		
-		<field name="frontstatsHeadercolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" 
-			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" 
+
+		<field name="frontstatsHeadercolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND"
+			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
-		
-		<field name="whoisonlineHeadercolor" type="text" default="" 
+
+		<field name="whoisonlineHeadercolor" type="text" default=""
 			label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND"
 			description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC"
 		/>
 
-		<field name="inactiveTabcolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR" 
-			description="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR_DESC" 
+		<field name="inactiveTabcolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR"
+			description="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR_DESC"
 		/>
-		
-		<field name="activeTabcolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR" 
-			description="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR_DESC" 
+
+		<field name="activeTabcolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR"
+			description="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR_DESC"
 		/>
-		
-		<field name="hoverTabcolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR" 
-			description="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR_DESC" 
+
+		<field name="hoverTabcolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR"
+			description="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR_DESC"
 		/>
-		
-		<field name="topBordercolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR" 
-			description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC" 
+
+		<field name="topBordercolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR"
+			description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC"
 		/>
-		
-		<field name="inactiveFontcolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" 
-			description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" 
+
+		<field name="inactiveFontcolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR"
+			description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC"
 		/>
-		
-		<field name="activeFontcolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" 
+
+		<field name="activeFontcolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR"
 			description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC"
 		/>
-		
-		<field name="toggleButtoncolor" type="text" default="" 
-			label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" 
-			description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" 
+
+		<field name="toggleButtoncolor" type="text" default=""
+			label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR"
+			description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC"
 		/>
 
 		<!--
@@ -134,16 +134,16 @@
 		<field name="paginationTextcolor" type="color" default="#eee" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR_DESC" />
 		<field name="paginationTexthovercolor" type="color" default="#eee" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR_DESC" />-->
 
-		<field name="enableSkinner" type="list" default="0" 
-			label="COM_KUNENA_TEMPLATE_SKINNER" 
+		<field name="enableSkinner" type="list" default="0"
+			label="COM_KUNENA_TEMPLATE_SKINNER"
 			description="COM_KUNENA_TEMPLATE_SKINNER_DESC"
 		>
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
-		
-		<field name="loadResponsiveCSS" type="list" default="1" 
-			label="COM_KUNENA_TEMPLATE_LOAD_RESPONSIVE_CSS" 
+
+		<field name="loadResponsiveCSS" type="list" default="1"
+			label="COM_KUNENA_TEMPLATE_LOAD_RESPONSIVE_CSS"
 			description="COM_KUNENA_TEMPLATE_LOAD_RESPONSIVE_CSS_DESC"
 		>
 			<option value="0">COM_KUNENA_NO</option>
@@ -166,7 +166,7 @@
 		<field name="avatarSizeYPost" type="hidden" default="144" />
 		<field name="avatarSizeXProfile" type="hidden" default="200" />
 		<field name="avatarSizeYProfile" type="hidden" default="200" />
-		
+
 		<field name="lastPostSubjectLength" type="text" default="20" label="COM_KUNENA_TEMPLATE_LAST_POST_SUBJECT_LENGTH" description="COM_KUNENA_TEMPLATE_LAST_POST_SUBJECT_LENGTH_DESC" />
 	</config>
 </kinstall>

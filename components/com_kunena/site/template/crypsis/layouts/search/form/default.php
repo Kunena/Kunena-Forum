@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -52,6 +52,7 @@ $this->addScript('js/search.js');
 					<?php $this->displayModeList('mode'); ?>
 				</fieldset>
 
+				<?php if (!$this->config->pubprofile && !JFactory::getUser()->guest || $this->config->pubprofile) : ?>
 				<fieldset class="span6">
 					<legend>
 						<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
@@ -68,6 +69,7 @@ $this->addScript('js/search.js');
 							<?php if ($this->state->get('query.exactname')) echo $this->checked; ?> />
 					</label>
 				</fieldset>
+				<?php endif; ?>
 			</div>
 		</div>
 

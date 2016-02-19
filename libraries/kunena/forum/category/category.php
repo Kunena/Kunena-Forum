@@ -222,7 +222,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 	{
 		$this->buildInfo();
 
-		return $this->parent_id == 0 || (!$this->numTopics && $this->locked && empty($this->_channels['none']));
+		return $this->parent_id == 0;
 	}
 
 	/**

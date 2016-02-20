@@ -2,8 +2,8 @@
 <!DOCTYPE extension>
 <extension version="2.5" type="file">
 	<name>kunena_tmpl_crypsis</name>
-	<version>@kunenaversiondate@</version>
-	<creationDate>@kunenaversion@</creationDate>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>

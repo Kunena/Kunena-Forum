@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension version="2.5" type="file">
-	<name>kunena_tmpl_crypsis</name>
-	<version>@kunenaversion@</version>
-	<creationDate>@kunenaversiondate@</creationDate>
+<extension version="2.5" type="file" method="upgrade">
+	<name>kunena_tmpl_crypsisb3</name>
+	<version>5.0.0-ALPHA3</version>
+	<creationDate>2016-02-19</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>

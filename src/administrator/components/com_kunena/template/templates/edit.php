@@ -82,9 +82,9 @@ JHtml::_('dropdown.init');
 											</tr>
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION'); ?>:</td>
-												<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/images/template_thumbnail.png';
+												<td><?php $path = KPATH_SITE . '/template/' . $this->templatename . '/assets/images/template_thumbnail.png';
 													if (is_file($path)) : ?>
-														<div><img src ="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/images/template_thumbnail.png" alt="" /></div>
+														<div><img src ="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/assets/images/template_thumbnail.png" alt="" /></div>
 													<?php endif; ?>
 													<div><?php echo JText::_($this->details->description); ?></div>
 												</td>

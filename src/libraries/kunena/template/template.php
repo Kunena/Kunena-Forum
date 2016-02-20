@@ -109,16 +109,16 @@ class KunenaTemplate extends JObject
 		$this->default = array_unique($this->default);
 
 		// Find configuration file.
-		$this->xml_path = KPATH_SITE . "/template/{$name}/config.xml";
+		$this->xml_path = KPATH_SITE . "/template/{$name}/config/config.xml";
 
 		if (!is_file($this->xml_path))
 		{
 			// Configuration file was not found - legacy template support.
-			$this->xml_path = KPATH_SITE . "/template/{$name}/template.xml";
+			$this->xml_path = KPATH_SITE . "/template/{$name}/config/template.xml";
 		}
 
 		// TODO: move configuration out of filesystem (keep on legacy).
-		$ini     = KPATH_SITE . "/template/{$name}/params.ini";
+		$ini     = KPATH_SITE . "/template/{$name}/config/params.ini";
 		$content = '';
 		$format  = 'INI';
 
@@ -170,11 +170,11 @@ class KunenaTemplate extends JObject
 	public function getConfigXml()
 	{
 		// Find configuration file.
-		$this->xml_path = KPATH_SITE . "/template/{$this->name}/config.xml";
+		$this->xml_path = KPATH_SITE . "/template/{$this->name}/config/config.xml";
 
 		if (!is_file($this->xml_path))
 		{
-			$this->xml_path = KPATH_SITE . "/template/{$this->name}/template.xml";
+			$this->xml_path = KPATH_SITE . "/template/{$this->name}/config/template.xml";
 
 			return false;
 		}
@@ -1502,11 +1502,11 @@ HTML;
 			$templatename = $name;
 			$classname    = "KunenaTemplate{$templatename}";
 
-			if (!is_file(KPATH_SITE . "/template/{$templatename}/template.xml")
-				&& !is_file(KPATH_SITE . "/template/{$templatename}/config.xml")
+			if (!is_file(KPATH_SITE . "/template/{$templatename}/config/template.xml")
+				&& !is_file(KPATH_SITE . "/template/{$templatename}/config/config.xml")
 			)
 			{
-				// If template xml doesn't exist, raise warning and use blue eagle instead
+				// If template xml doesn't exist, raise warning and use Crypsis instead
 				$file         = JPATH_THEMES . "/{$app->getTemplate()}/html/com_kunena/template.php";
 				$templatename = 'crypsis';
 				$classname    = "KunenaTemplate{$templatename}";

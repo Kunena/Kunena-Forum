@@ -51,7 +51,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		$template           = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 
-		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/params.ini';
+		$this->templatefile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
 		if (!JFile::exists($this->templatefile))
 		{
@@ -75,7 +75,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->templatename = $this->app->getUserState('kunena.templatename');
 		jimport('joomla.filesystem.folder');
 
-		$file = KPATH_SITE . '/template/' . $this->templatename . '/less/custom.less';
+		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/custom.less';
 
 		if (!file_exists($file))
 		{
@@ -84,7 +84,7 @@ class KunenaAdminViewTemplates extends KunenaView
 			fclose($fp);
 		}
 
-		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/less';
+		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/assets/less';
 		$this->files = JFolder::files($this->dir, '\.less$', false, false);
 
 		$this->display();
@@ -100,7 +100,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->filename     = $this->app->getUserState('kunena.editless.filename');
 		$this->content      = $this->get('FileLessParsed');
 
-		$this->less_path     = KPATH_SITE . '/template/' . $this->templatename . '/less/' . $this->filename;
+		$this->less_path     = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/' . $this->filename;
 		$this->ftp          = $this->get('FTPcredentials');
 		$this->display();
 	}
@@ -113,7 +113,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->setToolBarChoosecss();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
 
-		$file = KPATH_SITE . '/template/' . $this->templatename . '/css/custom.css';
+		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/custom.css';
 
 		if (!file_exists($file))
 		{
@@ -122,7 +122,7 @@ class KunenaAdminViewTemplates extends KunenaView
 			fclose($fp);
 		}
 
-		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/css';
+		$this->dir          = KPATH_SITE . '/template/' . $this->templatename . '/assets/css';
 		jimport('joomla.filesystem.folder');
 		$this->files = JFolder::files($this->dir, '\.css$', false, false);
 		$this->display();
@@ -137,7 +137,7 @@ class KunenaAdminViewTemplates extends KunenaView
 		$this->templatename = $this->app->getUserState('kunena.templatename');
 		$this->filename     = $this->app->getUserState('kunena.editcss.filename');
 		$this->content      = $this->get('FileContentParsed');
-		$this->css_path     = KPATH_SITE . '/template/' . $this->templatename . '/css/' . $this->filename;
+		$this->css_path     = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
 		$this->ftp          = $this->get('FTPcredentials');
 		$this->display();
 	}

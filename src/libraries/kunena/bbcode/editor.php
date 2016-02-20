@@ -217,7 +217,7 @@ class KunenaBbcodeEditor
 		$js .=	']};';
 
 		// Write the js elements into editor.markitup.js file
-		file_put_contents(KPATH_SITE . '/template/crypsis/media/js/markitup.editor.js', $js);
+		file_put_contents(KPATH_SITE . '/template/crypsis/assets/js/markitup.editor.js', $js);
 	}
 
 	/**

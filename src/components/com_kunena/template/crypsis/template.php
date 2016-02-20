@@ -102,7 +102,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$this->compileLess('crypsis.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
-		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css';
+		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css';
 		if (file_exists($filename))
 		{
 			$this->addStyleSheet('custom.css');

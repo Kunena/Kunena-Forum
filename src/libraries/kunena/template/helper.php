@@ -91,12 +91,12 @@ abstract class KunenaTemplateHelper
 			$templateBaseDir = KPATH_SITE . '/template';
 		}
 
-		if(!is_file($templateBaseDir . '/' . $templateDir . '/template.xml'))
+		if(!is_file($templateBaseDir . '/' . $templateDir . '/config/template.xml'))
 		{
 			return false;
 		}
 
-		$data = self::parseKunenaInstallFile($templateBaseDir . '/' . $templateDir . '/template.xml');
+		$data = self::parseKunenaInstallFile($templateBaseDir . '/' . $templateDir . '/config/template.xml');
 
 		if (!$data || $data->type != 'kunena-template')
 		{

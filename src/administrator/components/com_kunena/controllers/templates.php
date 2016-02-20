@@ -174,7 +174,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 									KunenaFile::delete($tmp_kunena . $template->sourcedir . '/params.ini');
 								}
 
-								KunenaFile::move($dest . $template->directory . '/params.ini', $tmp_kunena . $template->sourcedir . '/params.ini');
+								KunenaFile::move($dest . $template->directory . '/config/params.ini', $tmp_kunena . $template->sourcedir . '/params.ini');
 							}
 
 							KunenaFolder::delete($dest . $template->directory);
@@ -289,7 +289,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		$tBaseDir = KunenaPath::clean(KPATH_SITE . '/template');
 
-		if (!is_dir($tBaseDir . '/' . $templatename . '/less'))
+		if (!is_dir($tBaseDir . '/' . $templatename . '/assets/less'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_LESS'), 'warning');
 
@@ -361,7 +361,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $templatename . '/less/' . $filename;
+		$file = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -401,7 +401,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $templatename . '/less/' . $filename;
+		$file = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -464,7 +464,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $templatename . '/css/' . $filename;
+		$file = KPATH_SITE . '/template/' . $templatename . '/assets/css/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -503,7 +503,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 			return;
 		}
 
-		$file = KPATH_SITE . '/template/' . $templatename . '/css/' . $filename;
+		$file = KPATH_SITE . '/template/' . $templatename . '/assets/css/' . $filename;
 		$return = KunenaFile::write($file, $filecontent);
 
 		if ($return)
@@ -595,7 +595,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		// Set FTP credentials, if given
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp  = JClientHelper::getCredentials('ftp');
-		$file = KPATH_SITE . '/template/' . $template . '/params.ini';
+		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (count($params))
 		{

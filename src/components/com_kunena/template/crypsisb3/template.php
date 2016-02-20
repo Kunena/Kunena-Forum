@@ -94,7 +94,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		$this->addScript('main.js');
 
 		// Compile CSS from LESS files.
-		$this->compileLess('crypsisb3.less', 'kunena.css');
+		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css';

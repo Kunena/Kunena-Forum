@@ -330,6 +330,13 @@ HTML;
 		return $class . ($class_sfx ? " {$class}.{$class_sfx}" : '');
 	}
 
+	/**
+	 * Legacy method to load mootools library from Joomla! and debug.js
+	 *
+	 * @deprecated deprecated since Kunena 4.0
+	 *
+	 * @return void
+	 */
 	public function loadMootools()
 	{
 		JHtml::_('behavior.framework', true);

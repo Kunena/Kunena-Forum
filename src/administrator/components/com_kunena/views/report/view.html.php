@@ -24,6 +24,9 @@ class KunenaAdminViewReport extends KunenaView
 	function displayDefault()
 	{
 		$this->systemreport = $this->get('SystemReport');
+
+		$this->systemreport_anonymous = $this->get('SystemReportAnonymous');
+
 		JToolBarHelper::title(JText::_('COM_KUNENA'), 'tools');
 
 		JToolBarHelper::back();

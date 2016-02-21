@@ -20,118 +20,143 @@ jimport('joomla.application.component.model');
  **/
 class KunenaAdminModelReport extends KunenaModel
 {
+	protected $jconfig_smtpuser = null;
+	protected $jconfig_ftp = null;
+	protected $jconfig_sef = null;
+	protected $jconfig_sef_rewrite = null;
+	protected $htaccess = null;
+	protected $register_globals = null;
+	protected $safe_mode = null;
+	protected $mbstring = null;
+	protected $gd_info = null;
+	protected $gd_support = null;
+	protected $maxExecTime = null;
+	protected $maxExecMem = null;
+	protected $fileuploads = null;
+	protected $kunenaVersionInfo = null;
+	protected $ktemplate = null;
+	protected $ktemplatedetails = null;
+	protected $jtemplatedetails = null;
+	protected $joomlamenudetails = null;
+	protected $collation = null;
+	protected $kconfigsettings = null;
+	protected $joomlalanguages = null;
+	protected $plgtext = null;
+	protected $modtext = null;
+	protected $thirdpartytext = null;
+	protected $seftext = null;
+	protected $integration_settings = null;
 
 	/**
-	 * Method to generate all the reportconfiguration.
+	 * Initialize data to generate configuration report
 	 *
-	 * @return    string
-	 * @since    1.6
+	 * @since 5.0
+	 *
+	 * @return void
 	 */
-	public function getSystemReport()
+	protected function getReportData()
 	{
-		$kunena_db = JFactory::getDBO();
-
 		if (!$this->app->get('smtpuser'))
 		{
-			$jconfig_smtpuser = 'Empty';
+			$this->jconfig_smtpuser = 'Empty';
 		}
 		else
 		{
-			$jconfig_smtpuser = $this->app->get('smtpuser');
+			$this->jconfig_smtpuser = $this->app->get('smtpuser');
 		}
 
 		if ($this->app->get('ftp_enable'))
 		{
-			$jconfig_ftp = 'Enabled';
+			$this->jconfig_ftp = 'Enabled';
 		}
 		else
 		{
-			$jconfig_ftp = 'Disabled';
+			$this->jconfig_ftp = 'Disabled';
 		}
 
 		if ($this->app->get('sef'))
 		{
-			$jconfig_sef = 'Enabled';
+			$this->jconfig_sef = 'Enabled';
 		}
 		else
 		{
-			$jconfig_sef = 'Disabled';
+			$this->jconfig_sef = 'Disabled';
 		}
 
 		if ($this->app->get('sef_rewrite'))
 		{
-			$jconfig_sef_rewrite = 'Enabled';
+			$this->jconfig_sef_rewrite = 'Enabled';
 		}
 		else
 		{
-			$jconfig_sef_rewrite = 'Disabled';
+			$this->jconfig_sef_rewrite = 'Disabled';
 		}
 
 		if (is_file(JPATH_ROOT . '/.htaccess'))
 		{
-			$htaccess = 'Exists';
+			$this->htaccess = 'Exists';
 		}
 		else
 		{
-			$htaccess = 'Missing';
+			$this->htaccess = 'Missing';
 		}
 
 		if (ini_get('register_globals'))
 		{
-			$register_globals = '[u]register_globals:[/u] [color=#FF0000]On[/color]';
+			$this->register_globals = '[u]register_globals:[/u] [color=#FF0000]On[/color]';
 		}
 		else
 		{
-			$register_globals = '[u]register_globals:[/u] Off';
+			$this->register_globals = '[u]register_globals:[/u] Off';
 		}
 
 		if (ini_get('safe_mode'))
 		{
-			$safe_mode = '[u]safe_mode:[/u] [color=#FF0000]On[/color]';
+			$this->safe_mode = '[u]safe_mode:[/u] [color=#FF0000]On[/color]';
 		}
 		else
 		{
-			$safe_mode = '[u]safe_mode:[/u] Off';
+			$this->safe_mode = '[u]safe_mode:[/u] Off';
 		}
 
 		if (extension_loaded('mbstring'))
 		{
-			$mbstring = '[u]mbstring:[/u] Enabled';
+			$this->mbstring = '[u]mbstring:[/u] Enabled';
 		}
 		else
 		{
-			$mbstring = '[u]mbstring:[/u] [color=#FF0000]Not installed[/color]';
+			$this->mbstring = '[u]mbstring:[/u] [color=#FF0000]Not installed[/color]';
 		}
 
 		if (extension_loaded('gd'))
 		{
 			$gd_info    = gd_info();
-			$gd_support = '[u]GD:[/u] ' . $gd_info['GD Version'];
+			$this->gd_support = '[u]GD:[/u] ' . $gd_info['GD Version'];
 		}
 		else
 		{
-			$gd_support = '[u]GD:[/u] [color=#FF0000]Not installed[/color]';
+			$this->gd_support = '[u]GD:[/u] [color=#FF0000]Not installed[/color]';
 		}
 
-		$maxExecTime       = ini_get('max_execution_time');
-		$maxExecMem        = ini_get('memory_limit');
-		$fileuploads       = ini_get('upload_max_filesize');
-		$kunenaVersionInfo = KunenaVersion::getVersionHTML();
+		$this->maxExecTime       = ini_get('max_execution_time');
+		$this->maxExecMem        = ini_get('memory_limit');
+		$this->fileuploads       = ini_get('upload_max_filesize');
+		$this->kunenaVersionInfo = KunenaVersion::getVersionHTML();
 
 		// Get Kunena default template
 		$ktemplate        = KunenaFactory::getTemplate();
-		$ktemplatedetails = $ktemplate->getTemplateDetails();
+		$this->ktemplatedetails = $ktemplate->getTemplateDetails();
 
-		$jtemplatedetails = $this->_getJoomlaTemplate();
+		$this->jtemplatedetails = $this->_getJoomlaTemplate();
 
-		$joomlamenudetails = $this->_getJoomlaMenuDetails();
+		$this->joomlamenudetails = $this->_getJoomlaMenuDetails();
 
-		$collation = $this->_getTablesCollation();
+		$this->collation = $this->_getTablesCollation();
 
-		$kconfigsettings = $this->_getKunenaConfiguration();
+		$this->kconfigsettings = $this->_getKunenaConfiguration();
 
 		// Get Joomla! languages installed
-		$joomlalanguages = $this->_getJoomlaLanguagesInstalled();
+		$this->joomlalanguages = $this->_getJoomlaLanguagesInstalled();
 
 		// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
 		$plg['jfirephp']           = $this->getExtensionVersion('system/jfirephp', 'System - JFirePHP');
@@ -152,11 +177,11 @@ class KunenaAdminModelReport extends KunenaModel
 
 		if (!empty($plg))
 		{
-			$plgtext = '[quote][b]Plugins:[/b] ' . implode(' | ', $plg) . ' [/quote]';
+			$this->plgtext = '[quote][b]Plugins:[/b] ' . implode(' | ', $plg) . ' [/quote]';
 		}
 		else
 		{
-			$plgtext = '[quote][b]Plugins:[/b] None [/quote]';
+			$this->plgtext = '[quote][b]Plugins:[/b] None [/quote]';
 		}
 
 		$mod                 = array();
@@ -175,11 +200,11 @@ class KunenaAdminModelReport extends KunenaModel
 
 		if (!empty($mod))
 		{
-			$modtext = '[quote][b]Modules:[/b] ' . implode(' | ', $mod) . ' [/quote]';
+			$this->modtext = '[quote][b]Modules:[/b] ' . implode(' | ', $mod) . ' [/quote]';
 		}
 		else
 		{
-			$modtext = '[quote][b]Modules:[/b] None [/quote]';
+			$this->modtext = '[quote][b]Modules:[/b] None [/quote]';
 		}
 
 		$thirdparty              = array();
@@ -198,11 +223,11 @@ class KunenaAdminModelReport extends KunenaModel
 
 		if (!empty($thirdparty))
 		{
-			$thirdpartytext = '[quote][b]Third-party components:[/b] ' . implode(' | ', $thirdparty) . ' [/quote]';
+			$this->thirdpartytext = '[quote][b]Third-party components:[/b] ' . implode(' | ', $thirdparty) . ' [/quote]';
 		}
 		else
 		{
-			$thirdpartytext = '[quote][b]Third-party components:[/b] None [/quote]';
+			$this->thirdpartytext = '[quote][b]Third-party components:[/b] None [/quote]';
 		}
 
 		$sef             = array();
@@ -220,25 +245,63 @@ class KunenaAdminModelReport extends KunenaModel
 
 		if (!empty($sef))
 		{
-			$seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
+			$this->seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
 		}
 		else
 		{
-			$seftext = '[quote][b]Third-party SEF components:[/b] None [/quote]';
+			$this->seftext = '[quote][b]Third-party SEF components:[/b] None [/quote]';
 		}
 
 		// Get integration settings
-		$integration_settings = $this->getIntegrationSettings();
+		$this->integration_settings = $this->getIntegrationSettings();
+	}
+
+	/**
+	 * Method to generate the report configuration with anonymous data
+	 *
+	 * @since 5.0
+	 *
+	 * @return string
+	 */
+	public function getSystemReportAnonymous()
+	{
+		$kunena_db = JFactory::getDBO();
+
+		$this->getReportData();
+
+		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . '[b]PHP version:[/b] ' . phpversion() . ' | ' . $this->safe_mode . ' | ' . $this->register_globals . ' | ' . $this->mbstring
+				. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . JUri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
+						. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
+	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
+			    . ' | [b]PHP environment:[/b] [u]Max execution time:[/u] ' . $this->maxExecTime . ' seconds | [u]Max execution memory:[/u] '
+			    		. $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplatedetails->name . ' | [u]author:[/u] ' . $this->jtemplatedetails->author . ' | [u]version:[/u] ' . $this->jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplatedetails->name . ' | [u]author:[/u] ' . $this->ktemplatedetails->author . ' | [u]version:[/u] ' . $this->ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplatedetails->creationDate . ' [/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
+	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
+
+		return $report;
+	}
+
+	/**
+	 * Method to generate all the report configuration.
+	 *
+	 * @return    string
+	 * @since    1.6
+	 */
+	public function getSystemReport()
+	{
+		$kunena_db = JFactory::getDBO();
+
+		$this->getReportData();
 
 		$report = '[confidential][b]Joomla! version:[/b] ' . JVERSION . ' [b]Platform:[/b] ' . $_SERVER['SERVER_SOFTWARE'] . ' ('
-			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $safe_mode . ' | ' . $register_globals . ' | ' . $mbstring
-			. ' | ' . $gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . JUri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $collation . '
-		[/quote][quote][b]Joomla! SEF:[/b] ' . $jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
-			. $jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $jconfig_ftp . ' |
-	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]Mail from:[/b] ' . $this->app->get('mailfrom') . ' | [b]From name:[/b] ' . $this->app->get('fromname') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $htaccess
-			. ' | [b]PHP environment:[/b] [u]Max execution time:[/u] ' . $maxExecTime . ' seconds | [u]Max execution memory:[/u] '
-			. $maxExecMem . ' | [u]Max file upload:[/u] ' . $fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $jtemplatedetails->name . ' | [u]author:[/u] ' . $jtemplatedetails->author . ' | [u]version:[/u] ' . $jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $ktemplatedetails->name . ' | [u]author:[/u] ' . $ktemplatedetails->author . ' | [u]version:[/u] ' . $ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $ktemplatedetails->creationDate . ' [/quote][quote] [b]Kunena version detailed:[/b] ' . $kunenaVersionInfo . '
-	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $joomlalanguages . '[/spoiler][/quote]' . $thirdpartytext . ' ' . $seftext . ' ' . $plgtext . ' ' . $modtext;
+			. $_SERVER['SERVER_NAME'] . ') [b]PHP version:[/b] ' . phpversion() . ' | ' . $this->safe_mode . ' | ' . $this->register_globals . ' | ' . $this->mbstring
+			. ' | ' . $this->gd_support . ' | [b]MySQL version:[/b] ' . $kunena_db->getVersion() . ' | [b]Base URL:[/b]' . JUri::root() . '[/confidential][quote][b]Database collation check:[/b] ' . $this->collation . '
+		[/quote][quote][b]Joomla! SEF:[/b] ' . $this->jconfig_sef . ' | [b]Joomla! SEF rewrite:[/b] '
+			. $this->jconfig_sef_rewrite . ' | [b]FTP layer:[/b] ' . $this->jconfig_ftp . ' |
+	    [confidential][b]Mailer:[/b] ' . $this->app->get('mailer') . ' | [b]Mail from:[/b] ' . $this->app->get('mailfrom') . ' | [b]From name:[/b] ' . $this->app->get('fromname') . ' | [b]SMTP Secure:[/b] ' . $this->app->get('smtpsecure') . ' | [b]SMTP Port:[/b] ' . $this->app->get('smtpport') . ' | [b]SMTP User:[/b] ' . $this->jconfig_smtpuser . ' | [b]SMTP Host:[/b] ' . $this->app->get('smtphost') . ' [/confidential] [b]htaccess:[/b] ' . $this->htaccess
+			. ' | [b]PHP environment:[/b] [u]Max execution time:[/u] ' . $this->maxExecTime . ' seconds | [u]Max execution memory:[/u] '
+			. $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileuploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlamenudetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplatedetails->name . ' | [u]author:[/u] ' . $this->jtemplatedetails->author . ' | [u]version:[/u] ' . $this->jtemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplatedetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplatedetails->name . ' | [u]author:[/u] ' . $this->ktemplatedetails->author . ' | [u]version:[/u] ' . $this->ktemplatedetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplatedetails->creationDate . ' [/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
+	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigsettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integration_settings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlalanguages . '[/spoiler][/quote]' . $this->thirdpartytext . ' ' . $this->seftext . ' ' . $this->plgtext . ' ' . $this->modtext;
 
 		return $report;
 	}

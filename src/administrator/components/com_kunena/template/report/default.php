@@ -16,8 +16,27 @@ $document = JFactory::getDocument();
 $document->addScriptDeclaration(
 	"
 window.addEvent('domready', function(){
-	$('link_sel_all_complete').addEvent('click', function(e){
+	$('link_sel_all').addEvent('click', function(e){
 		$('report_final').select();
+		try {
+	var successful = document.execCommand('copy');
+	var msg = successful ? 'successful' : 'unsuccessful';
+	console.log('Copying text command was ' + msg);
+	}
+	catch (err)
+	{
+	console.log('Oops, unable to copy');
+	}
+	});
+});
+"
+);
+
+$document->addScriptDeclaration(
+	"
+window.addEvent('domready', function(){
+	$('link_sel_all_complete').addEvent('click', function(e){
+		$('report_final_anonymous').select();
 		try {
 	var successful = document.execCommand('copy');
 	var msg = successful ? 'successful' : 'unsuccessful';
@@ -53,7 +72,7 @@ JHtml::_('behavior.multiselect');
 						<td>
 							<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE_DESC'); ?></p>
 							<p>
-								<a href="#" id="link_sel_all_complete" name="link_sel_all" type="button" class="btn btn-small btn-primary"><i class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
+								<a href="#" id="link_sel_all" name="link_sel_all" type="button" class="btn btn-small btn-primary"><i class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
 							</p>
 							<textarea id="report_final" class="input-block-level" name="report_final" cols="80" rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 						</td>
@@ -67,9 +86,9 @@ JHtml::_('behavior.multiselect');
 						<td>
 							<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS_DESC'); ?></p>
 							<p>
-								<a href="#" id="link_sel_all_anonymous" name="link_sel_all" type="button" class="btn btn-small btn-primary"><i class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
+								<a href="#" id="link_sel_all_complete" name="link_sel_all_complete" type="button" class="btn btn-small btn-primary"><i class="icon icon-signup"></i><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a>
 							</p>
-							<textarea id="report_final" class="input-block-level" name="report_final" cols="80" rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
+							<textarea id="report_final_anonymous" class="input-block-level" name="report_final_anonymous" cols="80" rows="15"><?php echo $this->escape($this->systemreport_anonymous); ?></textarea>
 						</td>
 					</tr>
 				</table>

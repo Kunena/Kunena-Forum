@@ -393,20 +393,6 @@ HTML;
 	}
 
 	/**
-	 *
-	 */
-	public function loadMootools()
-	{
-		JHtml::_('behavior.framework', true);
-
-		if (JDEBUG || KunenaFactory::getConfig()->debug)
-		{
-			// Debugging Mootools issues
-			$this->addScript('debug.js');
-		}
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getStyleVariables()

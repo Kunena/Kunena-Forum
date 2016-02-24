@@ -16,9 +16,9 @@ defined('JPATH_BASE') or die;
 jimport('joomla.filesystem.file');
 
 /**
- * Class to manipulate an image.
+ * Deprecated class placeholder. Class to manipulate an image. Derived from JXtended JImage class Copyright (C) 2008 - 2009 JXtended, LLC. All rights reserved.
  *
- * Derived from JXtended JImage class Copyright (C) 2008 - 2009 JXtended, LLC. All rights reserved..
+ * @deprecated Kunena 4.0.x
  */
 class CKunenaImage
 {

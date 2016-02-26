@@ -740,12 +740,20 @@ class KunenaModelSchema extends JModelLegacy
 						}
 					}
 					$collation = $this->db->getCollation();
-					if (!strstr($collation, 'utf8'))
+					if (strstr($collation, 'utf8mb4'))
+					{
+						$collation = 'utf8mb4_general_ci';
+						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8mb4 COLLATE {$collation};";
+					}
+					if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 					{
 						$collation = 'utf8_general_ci';
 					}
-					$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
-					break;
+					if (!strstr($collation, 'utf8mb4'))
+					{
+						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
+					}
+				break;
 				default:
 					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
 			}

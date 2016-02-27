@@ -620,7 +620,7 @@ HTML;
 
 		if (!isset($this->filecache[$filepath]))
 		{
-			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE . "/template/crypsis/{$file}";
+			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE . "/template/{$this->name}/{$file}";
 			foreach ($this->default as $template)
 			{
 				if ($template == $ignore)

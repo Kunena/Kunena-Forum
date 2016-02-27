@@ -435,7 +435,7 @@ HTML;
 		if (!preg_match('|https?://|', $filename))
 		{
 			$filename     = preg_replace('|^css/|u', '', $filename);
-			$filemin      = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'media/kunena/css');
+			$filemin      = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name);
 			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
 
 			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
@@ -555,7 +555,7 @@ HTML;
 				$filename = preg_replace('/\.js$/u', '-min.js', $filename);
 			}
 
-			$filename = $this->getFile($filename, true, $this->pathTypes['js'], 'media/kunena/js', 'default');
+			$filename = $this->getFile($filename, true, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name, 'default');
 		}
 
 		return JFactory::getDocument()->addScript($filename);

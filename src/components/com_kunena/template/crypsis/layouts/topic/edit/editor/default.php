@@ -150,8 +150,10 @@ $this->getBBcodesEnabled();
 				<i id="kbutton-poll-rem" class="icon-minus btn btn-small"
 					alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-				<div class="input-append date">
-					<input type="text" class="span12" name="poll_time_to_live" data-date-format="mm/dd/yyyy"><span class="add-on"><i class="icon-grid-view-2 "></i></span>
+				<div id="datepoll-container" class="span5 col-md-5">
+					<div class="input-append date">
+						<input type="text" class="span12" name="poll_time_to_live" data-date-format="mm/dd/yyyy"><span class="add-on"><i class="icon-grid-view-2 "></i></span>
+					</div>
 				</div>
 				<div id="kpoll-alert-error" class="alert" style="display:none;">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>

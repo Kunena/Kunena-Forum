@@ -175,7 +175,7 @@ jQuery(document).ready(function () {
 
 	if (jQuery.fn.datepicker != undefined) {
 		// Load datepicker for poll
-		jQuery('.input-append.date').datepicker({
+		jQuery('#datepoll-container .input-append.date').datepicker({
 			orientation: "top auto"
 		});
 	}

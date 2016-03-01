@@ -4,7 +4,7 @@
 	<table name="kunena_aliases">
 		<field primary_key="yes"
 		       name="alias"
-		       type="varchar(255)"
+		       type="varchar(190)"
 		       null="0"/>
 		<field name="type"
 		       type="varchar(10)"

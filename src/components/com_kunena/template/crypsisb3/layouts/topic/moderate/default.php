@@ -16,7 +16,7 @@ $this->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '" . KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw") . "';
 // ]]>");
 
-$this->addScript('js/topic.js');
+$this->addScript('assets/js/topic.js');
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
 ?>

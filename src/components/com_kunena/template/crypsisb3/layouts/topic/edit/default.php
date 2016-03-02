@@ -61,6 +61,9 @@ $this->addScript('assets/js/caret.js');
 $this->addScript('assets/js/atwho.js');
 $this->addStyleSheet('assets/css/atwho.css');
 
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
+
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
 

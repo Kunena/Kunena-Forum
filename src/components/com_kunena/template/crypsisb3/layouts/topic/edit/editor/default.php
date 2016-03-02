@@ -177,8 +177,13 @@ $this->getBBcodesEnabled();
 						alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
 					<br>
 					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-					<div class="input-append date">
-						<input type="text" class="col-md-12" name="poll_time_to_live" data-date-format="mm/dd/yyyy"><span class="add-on"><i class="icon-grid-view-2 "></i></span>
+					<div id="datepoll-container" class="col-md-5">
+						<div class="input-append date">
+							<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-th"></i>
+							</span>
+						</div>
 					</div>
 					<br>
 					<div id="kpoll-alert-error" class="alert alert-notice" style="display:none;">

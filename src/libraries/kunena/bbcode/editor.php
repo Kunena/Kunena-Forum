@@ -24,10 +24,12 @@ class KunenaBbcodeEditor
 
 	/**
 	 * @param   array $config
+	 *
 	 */
 	function __construct($config = array())
 	{
 		$this->config = $config;
+		$this->template = KunenaFactory::getTemplate();
 	}
 
 	/**
@@ -217,7 +219,7 @@ class KunenaBbcodeEditor
 		$js .=	']};';
 
 		// Write the js elements into editor.markitup.js file
-		file_put_contents(KPATH_SITE . '/template/crypsis/assets/js/markitup.editor.js', $js);
+		file_put_contents(KPATH_SITE . '/template/' . $this->template->name . '/assets/js/markitup.editor.js', $js);
 	}
 
 	/**

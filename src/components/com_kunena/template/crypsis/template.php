@@ -96,7 +96,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		JHtml::_('bootstrap.modal');
 
 		// Load JavaScript.
-		$this->addScript('main.js');
+		$this->addScript('assets/js/main.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsis.less', 'kunena.css');
@@ -105,7 +105,7 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		$filename = JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css';
 		if (file_exists($filename))
 		{
-			$this->addStyleSheet('custom.css');
+			$this->addStyleSheet('assets/css/custom.css');
 		}
 
 		$this->ktemplate = KunenaFactory::getTemplate();

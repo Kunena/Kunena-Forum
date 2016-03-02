@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 // TODO: Hide KunenaHtmlParser::parseText()
-$this->addScript('poll.js');
+$this->addScript('assets/js/poll.js');
 ?>
 
 <?php if ($this->show_title) : ?>

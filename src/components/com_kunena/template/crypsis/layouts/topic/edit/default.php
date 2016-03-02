@@ -25,22 +25,22 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 
 JHtml::_('jquery.ui');
-$this->addScript('js/load-image.min.js');
-$this->addScript('js/canvas-to-blob.min.js');
-$this->addScript('js/jquery.iframe-transport.js');
-$this->addScript('js/jquery.fileupload.js');
-$this->addScript('js/jquery.fileupload-process.js');
-$this->addScript('js/jquery.fileupload-image.js');
-$this->addScript('js/upload.main.js');
-$this->addStyleSheet('css/fileupload.css');
+$this->addScript('assets/js/load-image.min.js');
+$this->addScript('assets/js/canvas-to-blob.min.js');
+$this->addScript('assets/js/jquery.iframe-transport.js');
+$this->addScript('assets/js/jquery.fileupload.js');
+$this->addScript('assets/js/jquery.fileupload-process.js');
+$this->addScript('assets/js/jquery.fileupload-image.js');
+$this->addScript('assets/js/upload.main.js');
+$this->addStyleSheet('assets/css/fileupload.css');
 
-$this->addScript('js/markitup.js');
+$this->addScript('assets/js/markitup.js');
 
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize();
 
-$this->addScript('js/markitup.editor.js');
-$this->addScript('js/markitup.set.js');
+$this->addScript('assets/js/markitup.editor.js');
+$this->addScript('assets/js/markitup.set.js');
 
 $this->k = 0;
 
@@ -54,33 +54,33 @@ if ($this->config->pollenabled)
 {
 	JText::script('COM_KUNENA_POLL_OPTION_NAME');
 	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-	$this->addScript('poll.js');
+	$this->addScript('assets/js/poll.js');
 }
 
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('js/caret.js');
-$this->addScript('js/atwho.js');
-$this->addStyleSheet('css/atwho.css');
+$this->addScript('assets/js/caret.js');
+$this->addScript('assets/js/atwho.js');
+$this->addStyleSheet('assets/css/atwho.css');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
 
 if ($topicicontype == 'B2') {
-	$this->addScript('js/editb2.js');
+	$this->addScript('assets/js/editb2.js');
 }
 elseif ($topicicontype == 'fa') {
-	$this->addScript('js/editfa.js');
+	$this->addScript('assets/js/editfa.js');
 }
 else {
-	$this->addScript('js/edit.js');
+	$this->addScript('assets/js/edit.js');
 }
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
-	$this->addScript('js/sisyphus.js');
+	$this->addScript('assets/js/sisyphus.js');
 }
 ?>
 

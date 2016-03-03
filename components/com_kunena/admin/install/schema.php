@@ -748,9 +748,11 @@ class KunenaModelSchema extends JModelLegacy
 					if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 					{
 						$collation = 'utf8_general_ci';
+					}
+					if (stripos($collation, 'utf8_')){
 						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
 					}
-				break;
+					break;
 				default:
 					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
 			}

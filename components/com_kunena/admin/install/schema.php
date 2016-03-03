@@ -100,7 +100,7 @@ class KunenaModelSchema extends JModelLegacy
 			$this->upgradeschema = $this->createSchema();
 		}
 
-		 // $this->getSchemaFromFile($input);
+		// $this->getSchemaFromFile($input);
 		return $this->upgradeschema;
 	}
 
@@ -742,14 +742,9 @@ class KunenaModelSchema extends JModelLegacy
 					$collation = $this->db->getCollation();
 					if (strstr($collation, 'utf8mb4'))
 					{
-						$collation = 'utf8mb4_general_ci';
 						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8mb4 COLLATE {$collation};";
 					}
-					if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
-					{
-						$collation = 'utf8_general_ci';
-					}
-					if (stripos($collation, 'utf8_')){
+					else {
 						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
 					}
 					break;

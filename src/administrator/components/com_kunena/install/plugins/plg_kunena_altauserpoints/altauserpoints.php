@@ -2,51 +2,98 @@
 /**
  * Kunena Plugin
  *
- * @package       Kunena.Plugins
- * @subpackage    AltaUserPoints
+ * @package     Kunena.Plugins
+ * @subpackage  AltaUserPoints
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
-class KunenaAvatarAltaUserPoints extends KunenaAvatar
+/**
+ * plgKunenaAltaUserPoints class to handle integration with AltaUserPoints
+ *
+ * @since  5.0
+ */
+class plgKunenaAltaUserPoints extends JPlugin
 {
-	protected $params = null;
-
-	public function __construct($params)
+	/**
+	 * Constructor of plgKunenaAltaUserPoints class
+	 *
+	 * @param   object  &$subject  The object to observe
+	 * @param   array   $config    An optional associative array of configuration settings.
+	 */
+	public function __construct(&$subject, $config)
 	{
-		$this->params = $params;
-	}
-
-	public function getEditURL()
-	{
-		return JRoute::_('index.php?option=com_altauserpoints&view=account');
-	}
-
-	public function _getURL($user, $sizex, $sizey)
-	{
-		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');
-	}
-
-	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
-	{
-		$user = KunenaFactory::getUser($user);
-		$size = $this->getSize($sizex, $sizey);
-		if ($size->y > 100)
+		// Do not load if Kunena version is not supported or Kunena is offline
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('4.0') && KunenaForum::installed()))
 		{
-			$avatar = AltaUserPointsHelper::getAupAvatar($user->userid, 0, 100 * (float) $size->x / (float) $size->y, '100');
-		}
-		else
-		{
-			$avatar = AltaUserPointsHelper::getAupAvatar($user->userid, 0, $size->x, $size->y);
-		}
-		if (!$avatar)
-		{
-			$avatar = '<img border="0" width="100" height="100" alt="" src="' . JUri::root() . 'components/com_altauserpoints/assets/images/avatars/generic_gravatar_grey.png">';
+			return;
 		}
 
-		return $avatar;
+		$aup = JPATH_SITE . '/components/com_altauserpoints/helper.php';
+
+		if (!file_exists($aup))
+		{
+			return;
+		}
+
+		require_once $aup;
+
+		parent::__construct($subject, $config);
+
+		$this->loadLanguage('plg_kunena_altauserpoints.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_altauserpoints.sys', KPATH_ADMIN);
+	}
+
+	/**
+	 * Get Kunena avatar integration object.
+	 *
+	 * @return KunenaAvatar
+	 */
+	public function onKunenaGetAvatar()
+	{
+		if (!$this->params->get('avatar', 1))
+		{
+			return null;
+		}
+
+		require_once __DIR__ . "/avatar.php";
+
+		return new KunenaAvatarAltaUserPoints($this->params);
+	}
+
+	/**
+	 * Get Kunena profile integration object.
+	 *
+	 * @return KunenaProfile
+	 */
+	public function onKunenaGetProfile()
+	{
+		if (!$this->params->get('profile', 1))
+		{
+			return null;
+		}
+
+		require_once __DIR__ . "/profile.php";
+
+		return new KunenaProfileAltaUserPoints($this->params);
+	}
+
+	/**
+	 * Get Kunena activity stream integration object.
+	 *
+	 * @return KunenaActivity
+	 */
+	public function onKunenaGetActivity()
+	{
+		if (!$this->params->get('activity', 1))
+		{
+			return null;
+		}
+
+		require_once __DIR__ . "/activity.php";
+
+		return new KunenaActivityAltaUserPoints($this->params);
 	}
 }

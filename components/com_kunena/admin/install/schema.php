@@ -740,6 +740,12 @@ class KunenaModelSchema extends JModelLegacy
 						}
 					}
 					$collation = $this->db->getCollation();
+
+					if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
+					{
+						$collation = 'utf8_general_ci';
+					}
+
 					if (strstr($collation, 'utf8mb4'))
 					{
 						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8mb4 COLLATE {$collation};";

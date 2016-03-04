@@ -5,13 +5,18 @@
  * @package       Kunena.Plugins
  * @subpackage    AltaUserPoints
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 jimport('joomla.utilities.string');
 
+/**
+ * KunenaActivityAltaUserPoints class to handle activity integration with AltaUserPoints
+ *
+ * @since  5.0
+ */
 class KunenaActivityAltaUserPoints extends KunenaActivity
 {
 	protected $params = null;
@@ -38,7 +43,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 		{
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
 			$referreid     = AltaUserPointsHelper::getReferreid($message->userid);
-			if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+			if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 			{
 				if ($this->_checkRuleEnabled('plgaup_kunena_topic_create'))
 				{
@@ -58,7 +63,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 		{
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
 			$referreid     = AltaUserPointsHelper::getReferreid($message->userid);
-			if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+			if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 			{
 				if ($this->_checkRuleEnabled('plgaup_kunena_topic_reply'))
 				{

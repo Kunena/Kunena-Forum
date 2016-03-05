@@ -2144,9 +2144,17 @@ class KunenaModelInstall extends JModelLegacy
 
 		$collation = $this->db->getCollation();
 
-		if (!strstr($collation, 'utf8'))
+		if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 		{
 			$collation = 'utf8_general_ci';
+		}
+
+		if (strstr($collation, 'utf8mb4'))
+		{
+			$str = 'utf8mb4';
+		}
+		else {
+			$str = 'utf8';
 		}
 
 		if (!$create)
@@ -2158,7 +2166,7 @@ class KunenaModelInstall extends JModelLegacy
 		$create = preg_replace('/(DEFAULT )?CHARSET=[\w\d]+/', '', $create);
 		$create = preg_replace('/COLLATE [\w\d_]+/', '', $create);
 		$create = preg_replace('/TYPE\s*=?/', 'ENGINE=', $create);
-		$create .= " DEFAULT CHARACTER SET utf8 COLLATE {$collation}";
+		$create .= " DEFAULT CHARACTER SET {$str} COLLATE {$collation}";
 		$query = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
 		$this->db->setQuery($query);
 		$this->db->query();
@@ -2211,9 +2219,18 @@ class KunenaModelInstall extends JModelLegacy
 
 		$collation = $this->db->getCollation();
 
-		if (!strstr($collation, 'utf8'))
+		if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 		{
 			$collation = 'utf8_general_ci';
+		}
+
+		if (strstr($collation, 'utf8mb4'))
+		{
+			$str = 'utf8mb4';
+		}
+		else
+		{
+			$str = 'utf8';
 		}
 
 		$query = "CREATE TABLE IF NOT EXISTS `" . $this->db->getPrefix() . "kunena_version` (
@@ -2225,7 +2242,7 @@ class KunenaModelInstall extends JModelLegacy
 		`versionname` varchar(40) DEFAULT NULL,
 		`state` varchar(32) NOT NULL,
 		PRIMARY KEY (`id`)
-		) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
+		) DEFAULT CHARACTER SET {$str} COLLATE {$collation};";
 		$this->db->setQuery($query);
 		$this->db->query();
 

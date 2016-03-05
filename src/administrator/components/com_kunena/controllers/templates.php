@@ -117,6 +117,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$tmp_kunena = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
 		$file = $this->app->input->files->get('install_package', null, 'raw');
+
 		if (!JSession::checkToken('post'))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -265,6 +266,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		if (is_dir($tpl))
 		{
 			$retval = KunenaFolder::delete($tpl);
+
 			// Clear all cache, just in case.
 			KunenaCacheHelper::clearAll();
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id));
@@ -370,7 +372,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+				. JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
 		}
 	}
 
@@ -395,7 +398,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 
 		if (!$templatename)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+				. JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -411,7 +415,8 @@ class KunenaAdminControllerTemplates extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+				. JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseless&id=' . $templatename, false));
 		}
 	}

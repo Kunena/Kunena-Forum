@@ -44,6 +44,7 @@ class KunenaAdminControllerTools extends KunenaController
 
 		$fix    = JFactory::getApplication()->input->getCmd('fix');
 		$delete = JFactory::getApplication()->input->getCmd('delete');
+
 		if ($fix)
 		{
 			$success = KunenaForumDiagnostics::fix($fix);
@@ -80,7 +81,6 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 
 		$ids = JFactory::getApplication()->input->get('prune_forum', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($ids, false, 'admin');
@@ -169,11 +169,13 @@ class KunenaAdminControllerTools extends KunenaController
 
 		if ($trashdelete)
 		{
-			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
+			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
+				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
 		}
 		else
 		{
-			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
+			$this->app->enqueueMessage("" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " "
+				. JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS'));
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -202,7 +204,7 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($useradd)
 		{
 			$db->setQuery(
-    "INSERT INTO #__kunena_users (userid, showOnline)
+					"INSERT INTO #__kunena_users (userid, showOnline)
 					SELECT a.id AS userid, 1 AS showOnline
 					FROM #__users AS a
 					LEFT JOIN #__kunena_users AS b ON b.userid=a.id
@@ -220,7 +222,7 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdel)
 		{
 			$db->setQuery(
-    "DELETE a
+					"DELETE a
 					FROM #__kunena_users AS a
 					LEFT JOIN #__users AS b ON a.userid=b.id
 					WHERE b.username IS NULL");
@@ -237,14 +239,14 @@ class KunenaAdminControllerTools extends KunenaController
 		if ($userdellife)
 		{
 			$db->setQuery(
-    "DELETE a
+			"DELETE a
 			FROM #__kunena_users AS a
 			LEFT JOIN #__users AS b ON a.userid=b.id
 			WHERE banned='0000-00-00 00:00:00'");
 			$db->execute();
 
 			$db->setQuery(
-    "DELETE a
+			"DELETE a
 			FROM #__users AS a
 			WHERE block='1'");
 			$db->execute();
@@ -335,6 +337,7 @@ class KunenaAdminControllerTools extends KunenaController
 			$query = $db->getQuery(true);
 			$query->select('MAX(thread)')->from('#__kunena_messages');
 			$db->setQuery($query);
+
 			// Topic count
 			$state->maxId = (int) $db->loadResult();
 			$state->total = $state->maxId * 2 + 10000;
@@ -550,7 +553,10 @@ class KunenaAdminControllerTools extends KunenaController
 		}
 		else
 		{
-			while (@ob_end_clean()) {}
+			while (@ob_end_clean())
+			{
+
+			}
 
 			header('Content-type: application/json');
 			echo json_encode($response);

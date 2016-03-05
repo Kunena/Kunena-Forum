@@ -59,10 +59,10 @@ class KunenaAdminControllerSmilies extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
+
 		if (!$id)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_SMILEYS_SELECTED'), 'notice');
@@ -97,7 +97,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 		if (!$smileyid)
 		{
 			$db->setQuery(
-    "INSERT INTO #__kunena_smileys SET
+					"INSERT INTO #__kunena_smileys SET
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}");
@@ -111,7 +111,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 		else
 		{
 			$db->setQuery(
-    "UPDATE #__kunena_smileys SET
+				"UPDATE #__kunena_smileys SET
 					code={$db->quote($smiley_code)},
 					location={$db->quote($smiley_location)},
 					emoticonbar={$db->quote($smiley_emoticonbar)}
@@ -142,10 +142,12 @@ class KunenaAdminControllerSmilies extends KunenaController
 		}
 
 		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array');
+
 		// File upload
 		$format = JFactory::getApplication()->input->getCmd('format', 'html');
 
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), $format);
+
 		if ($upload)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'));
@@ -175,7 +177,6 @@ class KunenaAdminControllerSmilies extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);

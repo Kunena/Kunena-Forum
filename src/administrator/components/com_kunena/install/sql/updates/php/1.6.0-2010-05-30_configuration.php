@@ -4,13 +4,18 @@
  *
  * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // Kunena 1.6.0: Convert deprecated configuration options
+/**
+ * @param $parent
+ *
+ * @return array
+ */
 function kunena_160_2010_05_30_configuration($parent)
 {
 	$config = KunenaFactory::getConfig();
@@ -20,6 +25,7 @@ function kunena_160_2010_05_30_configuration($parent)
 
 	// Keep integration settings
 	$integration = array('jomsocial' => 'jomsocial', 'cb' => 'communitybuilder', 'uddeim' => 'uddeim', 'aup' => 'alphauserpoints', 'none' => 'none');
+
 	if (!$config->get('allowavatar'))
 	{
 		$config->set('allowavatar', 1);

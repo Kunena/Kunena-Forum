@@ -131,8 +131,10 @@ class Com_KunenaInstallerScript
 			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
 			$this->deleteFolder($adminPath, $ignoreAdmin);
 			$this->deleteFolder($sitePath, $ignoreSite);
-			// Remove Blue Eagle template on K4.1
+
+			// Remove Blue Eagle template on K5.0
 			$this->deleteFolder($sitePath . '/template/blue_eagle');
+
 			// TODO: delete also en-GB files!
 		}
 
@@ -288,8 +290,7 @@ class Com_KunenaInstallerScript
 
 		// Do not install over Git repository (K1.6+).
 		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
-			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())
-)
+			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev()))
 		{
 			$app->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
 

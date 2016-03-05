@@ -1,64 +1,85 @@
 <?php
 /**
-* @package		EasySocial
-* @copyright	Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* EasySocial is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-defined( '_JEXEC' ) or die( 'Unauthorized Access' );
+ * @package        EasySocial
+ * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
+ * @license        GNU/GPL, see LICENSE.php
+ * EasySocial is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die('Unauthorized Access');
 
 class KunenaActivityEasySocial extends KunenaActivity
 {
 	protected $params = null;
 
+	/**
+	 * KunenaActivityEasySocial constructor.
+	 *
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
-	public function assignBadge( $command , $message , $target = null )
+	/**
+	 * @param      $command
+	 * @param      $message
+	 * @param null $target
+	 *
+	 * @return mixed
+	 */
+	public function assignBadge($command, $message, $target = null)
 	{
-		$user 	= FD::user( $target );
-		$badge 	= FD::badges();
+		$user  = FD::user($target);
+		$badge = FD::badges();
 
-		return $badge->log( 'com_kunena' , $command , $user->id , $user->id );
+		return $badge->log('com_kunena', $command, $user->id, $user->id);
 	}
 
-	public function assignPoints( $command , $target = null )
+	/**
+	 * @param      $command
+	 * @param null $target
+	 *
+	 * @return mixed
+	 */
+	public function assignPoints($command, $target = null)
 	{
-		$user 	= FD::user( $target );
+		$user = FD::user($target);
 
 		$points = FD::points();
 
-		return $points->assign( $command , 'com_kunena' , $user->id );
+		return $points->assign($command, 'com_kunena', $user->id);
 	}
 
+	/**
+	 * @param $message
+	 */
 	public function onAfterPost($message)
 	{
-		if (Joomla\String\String::strlen($message->message) > $this->params->get('activity_points_limit', 0))
+		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
-			$this->assignPoints( 'thread.new' );
+			$this->assignPoints('thread.new');
 		}
 
-		if(Joomla\String\String::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
+		if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_badge_limit', 0))
 		{
-			$this->assignBadge( 'thread.new' , JText::_( 'PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE' ) );
+			$this->assignBadge('thread.new', JText::_('PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE'));
 		}
 
-		$stream 	= FD::stream();
+		$stream = FD::stream();
 
-		$tmpl 	= $stream->getTemplate();
+		$tmpl = $stream->getTemplate();
 
-		$tmpl->setActor( $message->userid , SOCIAL_TYPE_USER );
-		$tmpl->setContext( $message->thread , 'kunena' );
-		$tmpl->setVerb( 'create' );
-		$tmpl->setAccess( 'core.view' );
+		$tmpl->setActor($message->userid, SOCIAL_TYPE_USER);
+		$tmpl->setContext($message->thread, 'kunena');
+		$tmpl->setVerb('create');
+		$tmpl->setAccess('core.view');
 
-		$stream->add( $tmpl );
+		$stream->add($tmpl);
 	}
 
 	/**
@@ -76,20 +97,22 @@ class KunenaActivityEasySocial extends KunenaActivity
 		$length = JString::strlen($message->message);
 
 		// Assign points for replying a thread
-		if ($length > $this->params->get('activity_points_limit', 0)) {
+		if ($length > $this->params->get('activity_points_limit', 0))
+		{
 			$this->assignPoints('thread.reply');
 		}
 
 		// Assign badge for replying to a thread
-		if ($length > $this->params->get('activity_badge_limit', 0)) {
+		if ($length > $this->params->get('activity_badge_limit', 0))
+		{
 			$this->assignBadge('thread.reply', JText::_('PLG_KUNENA_EASYSOCIAL_BADGE_REPLY_TITLE'));
 		}
 
 		$stream = FD::stream();
-		$tmpl = $stream->getTemplate();
-		$tmpl->setActor($message->userid, SOCIAL_TYPE_USER );
-		$tmpl->setContext($message->id , 'kunena' );
-		$tmpl->setVerb('reply' );
+		$tmpl   = $stream->getTemplate();
+		$tmpl->setActor($message->userid, SOCIAL_TYPE_USER);
+		$tmpl->setContext($message->id, 'kunena');
+		$tmpl->setVerb('reply');
 		$tmpl->setAccess('core.view');
 
 		// Add into stream
@@ -98,19 +121,20 @@ class KunenaActivityEasySocial extends KunenaActivity
 		// Get a list of subscribers
 		$recipients = $this->getSubscribers($message);
 
-		if (!$recipients) {
+		if (!$recipients)
+		{
 			return;
 		}
 
 		$permalink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getPermaUrl(null);
 
 		$options = array(
-			'uid' => $message->id,
+			'uid'      => $message->id,
 			'actor_id' => $message->userid,
-			'title' => '',
-			'type' => 'post',
-			'url' => $permalink,
-			'image' => ''
+			'title'    => '',
+			'type'     => 'post',
+			'url'      => $permalink,
+			'image'    => ''
 		);
 
 		// Add notifications in EasySocial
@@ -132,83 +156,110 @@ class KunenaActivityEasySocial extends KunenaActivity
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ($message->hold > 1) {
+		if ($message->hold > 1)
+		{
 			return false;
-		} elseif ($message->hold == 1) {
-			$mailsubs = 0;
-			$mailmods = $config->mailmod >= 0;
+		}
+		elseif ($message->hold == 1)
+		{
+			$mailsubs   = 0;
+			$mailmods   = $config->mailmod >= 0;
 			$mailadmins = $config->mailadmin >= 0;
-		} else {
-			$mailsubs = (bool) $config->allowsubscriptions;
-			$mailmods = $config->mailmod >= 1;
+		}
+		else
+		{
+			$mailsubs   = (bool) $config->allowsubscriptions;
+			$mailmods   = $config->mailmod >= 1;
 			$mailadmins = $config->mailadmin >= 1;
 		}
 
 		$once = false;
-		if ($mailsubs) {
-			if (!$message->parent) {
+
+		if ($mailsubs)
+		{
+			if (!$message->parent)
+			{
 				// New topic: Send email only to category subscribers
 				$mailsubs = $config->category_subscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
-				$once = $config->category_subscriptions == 'topic';
-			} elseif ($config->category_subscriptions != 'post') {
+				$once     = $config->category_subscriptions == 'topic';
+			}
+			elseif ($config->category_subscriptions != 'post')
+			{
 				// Existing topic: Send email only to topic subscribers
 				$mailsubs = $config->topic_subscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
-				$once = $config->topic_subscriptions == 'first';
-			} else {
+				$once     = $config->topic_subscriptions == 'first';
+			}
+			else
+			{
 				// Existing topic: Send email to both category and topic subscribers
 				$mailsubs = $config->topic_subscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
+
 				// FIXME: category subcription can override topic
 				$once = $config->topic_subscriptions == 'first';
 			}
 		}
 
-		//get all subscribers, moderators and admins who will get the email
-		$me = KunenaUserHelper::get();
-		$acl = KunenaAccess::getInstance();
+		// Get all subscribers, moderators and admins who will get the email
+		$me          = KunenaUserHelper::get();
+		$acl         = KunenaAccess::getInstance();
 		$subscribers = $acl->getSubscribers($message->catid, $message->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
 
-		if (!$subscribers) {
+		if (!$subscribers)
+		{
 			return false;
 		}
 
 		$result = array();
 
-		foreach ($subscribers as $subscriber) {
-			if ($subscriber->id) {
+		foreach ($subscribers as $subscriber)
+		{
+			if ($subscriber->id)
+			{
 				$result[] = $subscriber->id;
 			}
 		}
+
 		return $result;
 	}
 
-	public function onAfterThankyou( $actor , $target , $message)
+	/**
+	 * @param int $actor
+	 * @param int $target
+	 * @param int $message
+	 */
+	public function onAfterThankyou($actor, $target, $message)
 	{
 		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
-			$this->assignPoints( 'thread.thanks' , $target );
+			$this->assignPoints('thread.thanks', $target);
 		}
 
-		$this->assignBadge( 'thread.thanks' , JText::_( 'PLG_KUNENA_EASYSOCIAL_BADGE_THANKED_TITLE' ) , $target );
+		$this->assignBadge('thread.thanks', JText::_('PLG_KUNENA_EASYSOCIAL_BADGE_THANKED_TITLE'), $target);
 
-		$tmpl 		= FD::stream()->getTemplate();
+		$tmpl = FD::stream()->getTemplate();
 
-		$tmpl->setActor( $actor , SOCIAL_TYPE_USER );
-		$tmpl->setTarget( $target );
-		$tmpl->setContext( $message->id , 'kunena' );
-		$tmpl->setVerb( 'thanked' );
-		$tmpl->setAccess( 'core.view' );
+		$tmpl->setActor($actor, SOCIAL_TYPE_USER);
+		$tmpl->setTarget($target);
+		$tmpl->setContext($message->id, 'kunena');
+		$tmpl->setVerb('thanked');
+		$tmpl->setAccess('core.view');
 
-		FD::stream()->add( $tmpl );
+		FD::stream()->add($tmpl);
 	}
 
-	public function onBeforeDeleteTopic( $target )
+	/**
+	 * @param $target
+	 */
+	public function onBeforeDeleteTopic($target)
 	{
-		FD::stream()->delete( $target->id , 'thread.new' );
+		FD::stream()->delete($target->id, 'thread.new');
 	}
 
-	public function onAfterDeleteTopic( $topic )
+	/**
+	 * @param $topic
+	 */
+	public function onAfterDeleteTopic($topic)
 	{
-		FD::stream()->delete( $topic->id , 'thread.new' );
+		FD::stream()->delete($topic->id, 'thread.new');
 	}
-
 }

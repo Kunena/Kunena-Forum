@@ -4,50 +4,68 @@
  *
  * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // Kunena 1.6.0: Convert attachments table to support new multi file attachments
+/**
+ * @param $parent
+ *
+ * @return array
+ * @throws KunenaInstallerException
+ */
 function kunena_160_2010_05_30_attachments($parent)
 {
 	$db = JFactory::getDbo();
 
 	// First check if attachments table has legacy field
 	$fields = $db->getTableColumns('#__kunena_attachments');
+
 	if (!isset($fields ['filelocation']))
 	{
 		// Already converted, there is nothing to do
 		return null;
 	}
 
-	//Import filesystem libraries.
+	// Import filesystem libraries.
 	jimport('joomla.filesystem.folder');
 
 	$query = "DROP TABLE IF EXISTS `#__kunena_attachments_bak`";
 	$db->setQuery($query);
 	$db->execute();
+
 	if ($db->getErrorNum())
 	{
 		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
 	}
 
-	// Attachments table has filelocation - assume we have to convert attachments
-	// hash and size ommited -> NULL
+	// Attachments table has file location - assume we have to convert attachments
+	// Hash and size commited -> NULL
 	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";
 	$db->setQuery($query);
 	$db->execute();
+
 	if ($db->getErrorNum())
 	{
 		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
 	}
 
 	$collation = $db->getCollation();
-	if (!strstr($collation, 'utf8'))
+
+	if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 	{
 		$collation = 'utf8_general_ci';
+	}
+
+	if (strstr($collation, 'utf8mb4'))
+	{
+		$str = 'utf8mb4';
+	}
+	else {
+		$str = 'utf8';
 	}
 
 	$query = "CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
@@ -63,9 +81,11 @@ function kunena_160_2010_05_30_attachments($parent)
 					KEY `mesid` (`mesid`),
 					KEY `userid` (`userid`),
 					KEY `hash` (`hash`),
-					KEY `filename` (`filename`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
+					KEY `filename` (`filename`) ) DEFAULT CHARACTER SET {$str} COLLATE {$collation};";
+
 	$db->setQuery($query);
 	$db->execute();
+
 	if ($db->getErrorNum())
 	{
 		throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());

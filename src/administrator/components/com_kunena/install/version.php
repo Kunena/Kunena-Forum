@@ -113,7 +113,7 @@ class KunenaVersion
 
 		if (!isset($version) || !is_object($version) || !isset($version->state))
 		{
-			$version        = new stdClass();
+			$version        = new stdClass;
 			$version->state = '';
 		}
 		elseif (!empty($version->state))
@@ -159,7 +159,6 @@ class KunenaVersion
 	{
 		return self::getVersionHTML() . ' | ' . self::getCopyrightHTML();
 	}
-
 }
 
 class KunenaVersionException extends Exception

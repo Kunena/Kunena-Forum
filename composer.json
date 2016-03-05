@@ -10,7 +10,7 @@
         "joomla-projects/joomla-browser": "v3.4.8.2",
         "codegyre/robo": "~0.5",
         "joomla-projects/robo": "dev-master",
-        "joomla-projects/selenium-server-standalone": "v2.51.0",
+        "joomla-projects/selenium-server-standalone": "v2.52.0",
         "fzaninotto/faker": "^1.5",
         "joomla-projects/jorobo": "0.2",
         "phing/phing": "2.*"

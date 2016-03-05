@@ -9,7 +9,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.kunena.org
  **/
-defined('_JEXEC') or die();
+defined('_JEXEC') or die ();
 jimport('joomla.utilities.string');
 
 /**
@@ -153,7 +153,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 	 *
 	 * @return string
 	 */
-	protected function escape($var)
+	function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}

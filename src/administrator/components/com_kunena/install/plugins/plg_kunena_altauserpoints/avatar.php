@@ -11,11 +11,6 @@
  **/
 defined('_JEXEC') or die ();
 
-/**
- * KunenaActivityAltaUserPoints class to handle avatar integration with AltaUserPoints
- *
- * @since  5.0
- */
 class KunenaAvatarAltaUserPoints extends KunenaAvatar
 {
 	protected $params = null;

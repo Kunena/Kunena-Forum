@@ -36,5 +36,4 @@ class KunenaAdminControllerReport extends KunenaController
 	{
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
-
 }

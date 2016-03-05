@@ -296,12 +296,12 @@ class KunenaAdminModelCategories extends KunenaModel
 		$catList    = array();
 		$catList [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_TOPLEVEL'));
 
-		// make a standard yes/no list
+		// Make a standard yes/no list
 		$published    = array();
 		$published [] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_PUBLISHED'));
 		$published [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_UNPUBLISHED'));
 
-		// make a standard yes/no list
+		// Make a standard yes/no list
 		$yesno    = array();
 		$yesno [] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
 		$yesno [] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
@@ -365,7 +365,9 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$topicicons = array ();
 		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
-		foreach($topiciconslist as $icon) {
+
+		foreach ($topiciconslist as $icon)
+		{
 			$topicicons[] = JHtml::_('select.option', $icon, $icon);
 		}
 

@@ -15,15 +15,28 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 {
 	protected $params = null;
 
+	/**
+	 * KunenaPrivateComprofiler constructor.
+	 *
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param $userid
+	 */
 	protected function getURL($userid)
 	{
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return string
+	 */
 	public function showIcon($userid)
 	{
 		global $_CB_framework, $_CB_PMS;
@@ -39,7 +52,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		outputCbTemplate($_CB_framework->getUi());
 		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
 		$url = 'index.php?option=com_comprofiler&task=userProfile&user=' . $userid . getCBprofileItemid();
-		$html        = '<a href="' . $url . '" title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="kicon-profile kicon-profile-pm" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '"></span></a>';
+		$html        = '<a href="' . $url . '" title="' .
+			JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 
 		if (count($resultArray) > 0)
 		{
@@ -57,6 +71,13 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		return $html;
 	}
 
+	/**
+	 * @param        $userid
+	 * @param string $class
+	 * @param string $icon
+	 *
+	 * @return string
+	 */
 	public function shownewIcon($userid, $class='btn btn-small', $icon='icon icon-comments-2')
 	{
 		global $_CB_framework, $_CB_PMS;
@@ -70,19 +91,26 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		}
 
 		$url = 'index.php?option=com_comprofiler&task=userProfile&user=' . $userid . getCBprofileItemid();
-		$html        = '<a class="' . $class . '" href="' . $url . '" title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
+		$html        = '<a class="' . $class . '" href="' . $url . '" title="' .
+			JText::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
 
 		if ($userid == $myid)
 		{
 			$this->pmCount = $this->getUnreadCount($myid);
 			$text = $this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX');
 			$url = $this->getInboxURL();
+
 			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
 		}
 
 		return $html;
 	}
 
+	/**
+	 * @param $text
+	 *
+	 * @return null|string
+	 */
 	public function getInboxLink($text)
 	{
 		if (!$text)
@@ -91,6 +119,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		}
 
 		$userid = $this->getCBUserid();
+
 		if ($userid === null)
 		{
 			return null;
@@ -101,11 +130,15 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		return '<a href="' . cbSef('index.php?option=com_comprofiler&task=userProfile&user=' . $userid . $itemid) . '" rel="follow">' . $text . '</a>';
 	}
 
+	/**
+	 * @return null
+	 */
 	protected function getCBUserid()
 	{
 		global $_CB_framework;
 
 		$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
+
 		if (file_exists($cbpath))
 		{
 			require_once($cbpath);
@@ -118,6 +151,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		$userid = $_CB_framework->myId();
 
 		$cbUser = CBuser::getInstance((int) $userid);
+
 		if ($cbUser === null)
 		{
 			return null;
@@ -126,9 +160,13 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		return $userid;
 	}
 
+	/**
+	 * @return null|string
+	 */
 	public function getInboxURL()
 	{
 		$userid = $this->getCBUserid();
+
 		if ($userid === null)
 		{
 			return null;

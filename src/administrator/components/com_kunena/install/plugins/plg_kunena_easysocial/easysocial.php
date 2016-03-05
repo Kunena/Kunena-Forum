@@ -36,6 +36,12 @@ class plgKunenaEasySocial extends JPlugin
 		return true;
 	}
 
+	/**
+	 * plgKunenaEasySocial constructor.
+	 *
+	 * @param $subject
+	 * @param $config
+	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline

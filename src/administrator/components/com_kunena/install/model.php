@@ -84,16 +84,22 @@ class KunenaModelInstall extends JModelLegacy
 
 		// TODO: move to migration
 		$this->_fbVersions = array(
-			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.4', 'date' => '2007-12-23', 'table' => 'fb_sessions', 'column' => 'currvisit'),
-			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04', 'table' => 'fb_categories', 'column' => 'headerdesc'),
-			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.2', 'date' => '2007-08-03', 'table' => 'fb_users', 'column' => 'rank'),
-			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.1', 'date' => '2007-05-20', 'table' => 'fb_users', 'column' => 'uhits'),
-			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_messages'),
+			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.4', 'date' => '2007-12-23',
+				'table' => 'fb_sessions', 'column' => 'currvisit'),
+			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04',
+				'table' => 'fb_categories', 'column' => 'headerdesc'),
+			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.2', 'date' => '2007-08-03',
+				'table' => 'fb_users', 'column' => 'rank'),
+			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.1', 'date' => '2007-05-20',
+				'table' => 'fb_users', 'column' => 'uhits'),
+			array('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15',
+				'table' => 'fb_messages'),
 			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null));
 
 		// TODO: move to migration
 		$this->_sbVersions = array(
-			array('component' => 'JoomlaBoard', 'prefix' => 'sb_', 'version' => 'v1.0.5', 'date' => '0000-00-00', 'table' => 'sb_messages'),
+			array('component' => 'JoomlaBoard', 'prefix' => 'sb_', 'version' => 'v1.0.5', 'date' => '0000-00-00',
+				'table' => 'sb_messages'),
 			array('component' => null, 'prefix' => null, 'version' => null, 'date' => null));
 
 		$this->steps = array(
@@ -107,6 +113,7 @@ class KunenaModelInstall extends JModelLegacy
 
 	/**
 	 * Initialise Kunena, run from Joomla installer.
+	 *
 	 */
 	public function install()
 	{
@@ -130,6 +137,7 @@ class KunenaModelInstall extends JModelLegacy
 
 		// Uninstall all plugins.
 		$this->uninstallPlugin('kunena', 'alphauserpoints');
+		$this->uninstallPlugin('kunena', 'altauserpoints');
 		$this->uninstallPlugin('kunena', 'community');
 		$this->uninstallPlugin('kunena', 'comprofiler');
 		$this->uninstallPlugin('kunena', 'easyprofile');
@@ -149,6 +157,7 @@ class KunenaModelInstall extends JModelLegacy
 		if (class_exists('KunenaMenuFix'))
 		{
 			$items = KunenaMenuFix::getAll();
+
 			foreach ($items as $item)
 			{
 				KunenaMenuFix::delete($item->id);
@@ -169,6 +178,12 @@ class KunenaModelInstall extends JModelLegacy
 		return true;
 	}
 
+	/**
+	 * Get model
+	 *
+	 * @return $this
+	 *
+	 */
 	public function getModel()
 	{
 		return $this;
@@ -177,8 +192,8 @@ class KunenaModelInstall extends JModelLegacy
 	/**
 	 * Overridden method to get model state variables.
 	 *
-	 * @param    string $property Optional parameter name.
-	 * @param    mixed  $default  The default value to use if no state property exists by name.
+	 * @param     string    $property   Optional parameter name.
+	 * @param     mixed     $default    The default value to use if no state property exists by name.
 	 *
 	 * @return    object    The property where specified, the state object where omitted.
 	 *
@@ -186,7 +201,7 @@ class KunenaModelInstall extends JModelLegacy
 	 */
 	public function getState($property = null, $default = null)
 	{
-		// if the model state is uninitialized lets set some values we will need from the request.
+		// If the model state is uninitialized lets set some values we will need from the request.
 		if ($this->__state_set === false)
 		{
 			$app = JFactory::getApplication();
@@ -211,6 +226,8 @@ class KunenaModelInstall extends JModelLegacy
 	}
 
 	/**
+	 * Get Status
+	 *
 	 * @return object
 	 *
 	 */
@@ -220,6 +237,8 @@ class KunenaModelInstall extends JModelLegacy
 	}
 
 	/**
+	 * Get Action
+	 *
 	 * @return object
 	 *
 	 */
@@ -247,6 +266,8 @@ class KunenaModelInstall extends JModelLegacy
 	}
 
 	/**
+	 * Get version
+	 *
 	 * @return object
 	 *
 	 */
@@ -256,9 +277,12 @@ class KunenaModelInstall extends JModelLegacy
 	}
 
 	/**
+	 * Set Action
+	 *
 	 * @param $action
 	 *
 	 * @throws Exception
+	 *
 	 */
 	public function setAction($action)
 	{
@@ -339,9 +363,11 @@ class KunenaModelInstall extends JModelLegacy
 	function getInstallError()
 	{
 		$status = $this->getState('status', array());
+
 		foreach ($status as $cur)
 		{
 			$error = !$cur['success'];
+
 			if ($error)
 			{
 				return $cur['task'] . ' ... ' . ($cur['success'] > 0 ? 'SUCCESS' : 'FAILED');
@@ -416,6 +442,12 @@ class KunenaModelInstall extends JModelLegacy
 	}
 
 	// TODO: move to migration (exists in 2.0)
+	/**
+	 * @param        $tag
+	 * @param   string    $name
+	 *
+	 * @return bool
+	 */
 	function installLanguage($tag, $name = '')
 	{
 		$exists       = false;
@@ -438,10 +470,13 @@ class KunenaModelInstall extends JModelLegacy
 			if (is_dir($installdir))
 			{
 				$exists = $success;
+
 				// Older versions installed language files into main folders
+
 				// Those files need to be removed to bring language up to date!
 				jimport('joomla.filesystem.folder');
 				$files = JFolder::files($installdir, '\.ini$');
+
 				foreach ($files as $filename)
 				{
 					if (is_file(JPATH_SITE . "/language/{$tag}/{$filename}"))
@@ -456,6 +491,7 @@ class KunenaModelInstall extends JModelLegacy
 				}
 			}
 		}
+
 		if ($exists && $name)
 		{
 			$this->addStatus(JText::sprintf('COM_KUNENA_INSTALL_LANGUAGE', $name), $success);
@@ -465,8 +501,8 @@ class KunenaModelInstall extends JModelLegacy
 	}
 
 	/**
-	 * @param $group
-	 * @param $element
+	 * @param   $group
+	 * @param   $element
 	 *
 	 * @return mixed
 	 *
@@ -633,7 +669,7 @@ class KunenaModelInstall extends JModelLegacy
 
 		if ($moduleid)
 		{
-			$installer = new JInstaller ();
+			$installer = new JInstaller;
 			$installer->uninstall('module', $moduleid);
 		}
 	}
@@ -919,6 +955,7 @@ class KunenaModelInstall extends JModelLegacy
 		// TODO: Complete smart search support
 		//$this->installPlugin('plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
 		$this->installPlugin('plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
+		$this->installPlugin('plugins/plg_kunena_altauserpoints', 'kunena', 'altauserpoints', false, 1);
 		$this->installPlugin('plugins/plg_kunena_community', 'kunena', 'community', false, 2);
 		$this->installPlugin('plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 3);
 		$this->installPlugin('plugins/plg_kunena_easyprofile', 'kunena', 'easyprofile', false, 4);
@@ -1035,7 +1072,7 @@ class KunenaModelInstall extends JModelLegacy
 
 		// Clean cache, just in case
 		KunenaMenuHelper::cleanCache();
-		/** @var JCache|JCacheController $cache */
+		/** @var JCache | JCacheController $cache */
 		$cache = JFactory::getCache();
 		$cache->clean('com_kunena');
 
@@ -1261,6 +1298,7 @@ class KunenaModelInstall extends JModelLegacy
 		{
 			// If we have already upgraded to this version, continue to the next one
 			$vernum = (string) $version['version'];
+
 			if (!empty($state[$vernum]))
 			{
 				continue;
@@ -1358,8 +1396,7 @@ class KunenaModelInstall extends JModelLegacy
 					{
 						$success = true;
 					}
-				}
-				catch (Exception $e)
+				} catch (Exception $e)
 				{
 					$success = false;
 				}
@@ -2383,7 +2420,7 @@ class KunenaModelInstall extends JModelLegacy
 				if (!isset ($fields [$table] [$detect ['column']]))
 				{
 					$found = 0;
-				} // Sorry, no match
+				}
 			}
 
 			if ($found)
@@ -2395,7 +2432,7 @@ class KunenaModelInstall extends JModelLegacy
 		return array();
 	}
 
-	// helper function to migrate table
+	// Helper function to migrate table
 	// TODO: move to migration
 	/**
 	 * @param $oldprefix
@@ -2414,7 +2451,7 @@ class KunenaModelInstall extends JModelLegacy
 		if ($oldtable == $newtable || !isset ($oldtables [$oldtable]) || isset ($tables [$newtable]))
 		{
 			return null;
-		} // Nothing to migrate
+		}
 
 		// Make identical copy from the table with new name
 		$create = $this->db->getTableCreate($this->db->getPrefix() . $oldtable);
@@ -2422,9 +2459,18 @@ class KunenaModelInstall extends JModelLegacy
 
 		$collation = $this->db->getCollation();
 
-		if (!strstr($collation, 'utf8'))
+		if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 		{
 			$collation = 'utf8_general_ci';
+		}
+
+		if (strstr($collation, 'utf8mb4'))
+		{
+			$str = 'utf8mb4';
+		}
+		else
+		{
+			$str = 'utf8';
 		}
 
 		if (!$create)
@@ -2436,7 +2482,7 @@ class KunenaModelInstall extends JModelLegacy
 		$create = preg_replace('/(DEFAULT )?CHARSET=[\w\d]+/', '', $create);
 		$create = preg_replace('/COLLATE [\w\d_]+/', '', $create);
 		$create = preg_replace('/TYPE\s*=?/', 'ENGINE=', $create);
-		$create .= " DEFAULT CHARACTER SET utf8 COLLATE {$collation}";
+		$create .= " DEFAULT CHARACTER SET {$str} COLLATE {$collation}";
 		$query = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
 		$this->db->setQuery($query);
 		$this->db->execute();
@@ -2500,9 +2546,18 @@ class KunenaModelInstall extends JModelLegacy
 
 		$collation = $this->db->getCollation();
 
-		if (!strstr($collation, 'utf8'))
+		if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 		{
 			$collation = 'utf8_general_ci';
+		}
+
+		if (strstr($collation, 'utf8mb4'))
+		{
+			$str = 'utf8mb4';
+		}
+		else
+		{
+			$str = 'utf8';
 		}
 
 		$query = "CREATE TABLE IF NOT EXISTS `" . $this->db->getPrefix() . "kunena_version` (
@@ -2514,7 +2569,7 @@ class KunenaModelInstall extends JModelLegacy
 		`versionname` varchar(40) DEFAULT NULL,
 		`state` varchar(32) NOT NULL,
 		PRIMARY KEY (`id`)
-		) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
+		) DEFAULT CHARACTER SET {$str} COLLATE {$collation};";
 		$this->db->setQuery($query);
 		$this->db->execute();
 

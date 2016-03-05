@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright     (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          https://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Backend Config Controller
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminControllerConfig extends KunenaController
 {
@@ -53,12 +53,13 @@ class KunenaAdminControllerConfig extends KunenaController
 
 		$properties = $this->config->getProperties();
 
-		//Todo: fix depricated value
+		// Todo: fix depricated value
 		foreach (JRequest::get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue)
 		{
 			if (Joomla\String\StringHelper::strpos($postsetting, 'cfg_') === 0)
 			{
-				//remove cfg_ and force lower case
+				// Remove cfg_ and force lower case
+
 				if (is_array($postvalue))
 				{
 					$postvalue = implode(',', $postvalue);

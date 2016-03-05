@@ -2480,8 +2480,14 @@ class KunenaModelInstall extends JModelLegacy
 
 		$create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);
 		$create = preg_replace('/(DEFAULT )?CHARSET=[\w\d]+/', '', $create);
-		$create = preg_replace('/COLLATE [\w\d_]+/', '', $create);
-		$create = preg_replace('/TYPE\s*=?/', 'ENGINE=', $create);
+		if (strstr($collation, 'utf8mb4'))
+		{
+			$create .= ' ENGINE=InnoDB';
+		}
+		else
+		{
+			$create = preg_replace('/TYPE\s*=?/', 'ENGINE=', $create);
+		}
 		$create .= " DEFAULT CHARACTER SET {$str} COLLATE {$collation}";
 		$query = preg_replace('/' . $this->db->getPrefix() . $oldtable . '/', $this->db->getPrefix() . $newtable, $create);
 		$this->db->setQuery($query);

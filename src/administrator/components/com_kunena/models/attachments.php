@@ -161,7 +161,7 @@ class KunenaAdminModelAttachments extends JModelList
 		$query->select('m.name AS user_title');
 		$query->join('LEFT', '#__kunena_messages AS m ON m.id = a.mesid');
 
-		//$query->join('LEFT', '#__kunena_messages AS u ON u.userid = a.userid');
+		// $query->join('LEFT', '#__kunena_messages AS u ON u.userid = a.userid');
 
 		$filter = $this->getState('filter.title');
 

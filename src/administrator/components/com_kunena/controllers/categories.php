@@ -2,26 +2,28 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Administrator
- * @subpackage    Controllers
+ * @package     Kunena.Administrator
+ * @subpackage  Controllers
  *
- * @copyright     (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          https://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Categories Controller
  *
- * @since 2.0
+ * @since  2.0
  */
 class KunenaAdminControllerCategories extends KunenaController
 {
 	protected $baseurl = null;
+
 	protected $baseurl2 = null;
 
 	/**
+	 *
 	 * @param   array $config
 	 */
 	public function __construct($config = array())
@@ -37,7 +39,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function lock()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 1);
@@ -50,7 +51,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function unlock()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 0);
@@ -63,7 +63,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function review()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 1);
@@ -76,7 +75,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function unreview()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 0);
@@ -89,7 +87,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function allow_anonymous()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 1);
@@ -102,7 +99,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function deny_anonymous()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_anonymous', 0);
@@ -115,7 +111,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function allow_polls()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 1);
@@ -128,7 +123,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function deny_polls()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allow_polls', 0);
@@ -141,7 +135,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function publish()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 1);
@@ -154,7 +147,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function unpublish()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 0);
@@ -177,7 +169,6 @@ class KunenaAdminControllerCategories extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -200,10 +191,10 @@ class KunenaAdminControllerCategories extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
+
 		if (!$id)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
@@ -223,6 +214,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	function apply()
 	{
 		$category = $this->_save();
+
 		if ($category->exists())
 		{
 			$this->setRedirect(KunenaRoute::_($this->baseurl2 . "&layout=edit&catid={$category->id}", false));
@@ -309,7 +301,9 @@ class KunenaAdminControllerCategories extends KunenaController
 		{
 			// Nobody can change id or statistics
 			$ignore = array('option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliases_all');
+
 			// User needs to be admin in parent (both new and old) in order to move category, parent_id=0 needs global admin rights
+
 			if (!$this->me->isAdmin($parent) || ($category->exists() && !$this->me->isAdmin($category->getParent())))
 			{
 				$ignore             = array_merge($ignore, array('parent_id', 'ordering'));
@@ -320,6 +314,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			if (!$this->me->isAdmin())
 			{
 				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'channels', 'class_sfx', 'params');
+
 				if (!$category->exists() || $parent->id != $category->parent_id)
 				{
 					// If category didn't exist or is moved, copy access and class_sfx from parent
@@ -342,7 +337,11 @@ class KunenaAdminControllerCategories extends KunenaController
 			if ($aliases)
 			{
 				$aliases = array_diff($aliases, JFactory::getApplication()->input->get('aliases', array(), 'post', 'array'));
-				foreach ($aliases as $alias) { $category->deleteAlias($alias); }
+
+				foreach ($aliases as $alias)
+				{
+					$category->deleteAlias($alias);
+				}
 			}
 
 			// Update read access
@@ -399,7 +398,7 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
@@ -414,6 +413,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$name  = null;
 
 		$categories = KunenaForumCategoryHelper::getCategories($cid);
+
 		foreach ($categories as $category)
 		{
 			if (!$category->tryAuthorise('admin'))
@@ -469,6 +469,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$id = JFactory::getApplication()->input->getInt('catid', 0);
 
 		$category = KunenaForumCategoryHelper::get($id);
+
 		if (!$category->tryAuthorise('admin'))
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
@@ -501,10 +502,8 @@ class KunenaAdminControllerCategories extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 		$order = JFactory::getApplication()->input->get('order', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($order);
 
 		if (empty($cid))
@@ -518,6 +517,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$success = false;
 
 		$categories = KunenaForumCategoryHelper::getCategories($cid);
+
 		foreach ($categories as $category)
 		{
 			if (!isset($order [$category->id]) || $category->get('ordering') == $order [$category->id])
@@ -576,6 +576,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 		// Get the model
 		$model = $this->getModel('categories');
+
 		// Save the ordering
 		$return = $model->saveorder($pks, $order);
 
@@ -594,7 +595,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function orderup()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), -1);
@@ -607,7 +607,6 @@ class KunenaAdminControllerCategories extends KunenaController
 	function orderdown()
 	{
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), 1);
@@ -687,6 +686,7 @@ class KunenaAdminControllerCategories extends KunenaController
 		$name  = null;
 
 		$categories = KunenaForumCategoryHelper::getCategories($cid);
+
 		foreach ($categories as $category)
 		{
 			if ($category->get($variable) == $value)
@@ -744,8 +744,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	{
 		while (KunenaForumCategoryHelper::getAlias($category_id, $alias))
 		{
-			$name  =  Joomla\String\StringHelper::increment($name);
-			$alias =  Joomla\String\StringHelper::increment($alias, 'dash');
+			$name  = Joomla\String\StringHelper::increment($name);
+			$alias = Joomla\String\StringHelper::increment($alias, 'dash');
 		}
 
 		return array($name, $alias);

@@ -4,7 +4,7 @@
  *
  * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
@@ -20,7 +20,7 @@ jimport('joomla.application.component.model');
 /**
  * Install Model for Kunena
  *
- * @since   1.6
+ * @since  K1.6
  */
 class KunenaModelSchema extends JModelLegacy
 {
@@ -67,7 +67,7 @@ class KunenaModelSchema extends JModelLegacy
 	 */
 	public function getState($property = null, $default = null)
 	{
-		// if the model state is uninitialized lets set some values we will need from the request.
+		// If the model state is uninitialized lets set some values we will need from the request.
 		if ($this->__state_set === false)
 		{
 			$this->__state_set = true;
@@ -129,7 +129,7 @@ class KunenaModelSchema extends JModelLegacy
 			$this->upgradeschema = $this->createSchema();
 		}
 
-		 // $this->getSchemaFromFile($input);
+		// $this->getSchemaFromFile($input);
 		return $this->upgradeschema;
 	}
 
@@ -165,8 +165,10 @@ class KunenaModelSchema extends JModelLegacy
 			$this->usingschema = $using;
 			$this->upgradeSchema($from, $using);
 			$this->diffschema = $this->getSchemaDiff($from, $to);
-			//echo "<pre>",htmlentities($this->fromschema->saveXML()),"</pre>";
-			//echo "<pre>",htmlentities($this->toschema->saveXML()),"</pre>";
+
+			// Echo "<pre>",htmlentities($this->fromschema->saveXML()),"</pre>";
+
+			// Echo "<pre>",htmlentities($this->toschema->saveXML()),"</pre>";
 			$this->sql = null;
 		}
 
@@ -452,10 +454,11 @@ class KunenaModelSchema extends JModelLegacy
 						$keyNode->setAttribute("unique", (bool) !$row->Non_unique);
 					}
 
-					//if ($row->Comment != '') $keyNode->setAttribute("comment", $row->Comment);
+					// If ($row->Comment != '') $keyNode->setAttribute("comment", $row->Comment);
 				}
 
 				$columns = $keyNode->getAttribute('columns');
+
 				if (!empty($columns))
 				{
 					$columns .= ',';
@@ -481,13 +484,14 @@ class KunenaModelSchema extends JModelLegacy
 	{
 		$old = $this->getDOMDocument($old);
 		$new = $this->getDOMDocument($new);
+
 		if (!$old || !$new)
 		{
 			return null;
 		}
 
-		//$old->validate();
-		//$new->validate();
+		// $old->validate();
+		// $new->validate();
 		$schema     = $this->createSchema();
 		$schemaNode = $schema->documentElement;
 		$schemaNode->setAttribute('type', 'diff');
@@ -519,21 +523,24 @@ class KunenaModelSchema extends JModelLegacy
 	protected function listAllNodes($nodeLists)
 	{
 		$list = array();
-		foreach ($nodeLists as $k => $nl) { foreach ($nl as $n)
+
+		foreach ($nodeLists as $k => $nl)
 		{
-			if ($n instanceof DOMAttr)
+			foreach ($nl as $n)
 			{
-				$list[$n->name][$k] = $n;
-			}
-			else
-			{
-				if ($n instanceof DOMElement)
+				if ($n instanceof DOMAttr)
 				{
-					$list[$n->tagName][$n->getAttribute('name')][$k] = $n;
+					$list[$n->name][$k] = $n;
+				}
+				else
+				{
+					if ($n instanceof DOMElement)
+					{
+						$list[$n->tagName][$n->getAttribute('name')][$k] = $n;
+					}
 				}
 			}
 		}
-	}
 
 		return $list;
 	}
@@ -662,7 +669,11 @@ class KunenaModelSchema extends JModelLegacy
 		if (count($childNodes) || $action)
 		{
 			$node = $schema->importNode($loc['new'], false);
-			foreach ($loc['new']->attributes as $attribute) { $node->setAttribute($attribute->name, $attribute->value); }
+
+			foreach ($loc['new']->attributes as $attribute)
+			{
+				$node->setAttribute($attribute->name, $attribute->value);
+			}
 
 			if ($loc['old']->hasAttribute('from'))
 			{
@@ -856,12 +867,19 @@ class KunenaModelSchema extends JModelLegacy
 					}
 
 					$collation = $this->db->getCollation();
-					if (!strstr($collation, 'utf8'))
+					if (!strstr($collation, 'utf8') && !strstr($collation, 'utf8mb4'))
 					{
 						$collation = 'utf8_general_ci';
 					}
 
-					$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
+					if (strstr($collation, 'utf8mb4'))
+					{
+						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8mb4 COLLATE {$collation};";
+					}
+					else
+					{
+						$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
+					}
 					break;
 				default:
 					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
@@ -950,8 +968,8 @@ class KunenaModelSchema extends JModelLegacy
 			return;
 		}
 
-		//$dbschema->validate();
-		//$upgrade->validate();
+		// $dbschema->validate();
+		// $upgrade->validate();
 
 		$this->upgradeNewAction($dbschema, $upgrade->documentElement);
 	}

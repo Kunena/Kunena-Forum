@@ -263,7 +263,7 @@ class KunenaControllerInstall extends JControllerLegacy
 	 */
 	static public function errorHandler($errno, $errstr, $errfile, $errline)
 	{
-		//self::error('', "Fatal Error: $errstr in $errfile on line $errline");
+		// Self::error('', "Fatal Error: $errstr in $errfile on line $errline");
 		switch ($errno)
 		{
 			case E_ERROR:

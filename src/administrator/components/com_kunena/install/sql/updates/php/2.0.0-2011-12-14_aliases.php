@@ -4,13 +4,18 @@
  *
  * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
+/**
+ * @param $parent
+ *
+ * @return array
+ */
 function kunena_200_2011_12_14_aliases($parent)
 {
 	$config = KunenaFactory::getConfig();
@@ -36,10 +41,12 @@ function kunena_200_2011_12_14_aliases($parent)
 
 	$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 	$aliasLit   = $aliasUtf = array();
+
 	// Create SEF: id
 	foreach ($categories as $category)
 	{
 		kCreateCategoryAlias($category, $category->id);
+
 		// Create SEF names
 		$aliasUtf[$category->id] = kStringURLSafe($category->name);
 		$aliasLit[$category->id] = JFilterOutput::stringURLSafe($category->name);
@@ -52,9 +59,11 @@ function kunena_200_2011_12_14_aliases($parent)
 	foreach ($categories as $id => $category)
 	{
 		$created = false;
+
 		if ($config->get('sefutf8'))
 		{
 			$name = $aliasUtf[$category->id];
+
 			if (!empty($name))
 			{
 				$created = kCreateCategoryAlias($category, "{$id}-{$name}", 1);
@@ -62,6 +71,7 @@ function kunena_200_2011_12_14_aliases($parent)
 		}
 
 		$name = $aliasLit[$category->id];
+
 		if (!empty($name))
 		{
 			kCreateCategoryAlias($category, "{$id}-{$name}", !$created);
@@ -74,10 +84,12 @@ function kunena_200_2011_12_14_aliases($parent)
 		foreach ($categories as $category)
 		{
 			$created = false;
+
 			if ($config->get('sefutf8'))
 			{
 				$name = $aliasUtf[$category->id];
 				$keys = array_keys($aliasUtf, $name);
+
 				if (!empty($name))
 				{
 					$created = kCreateCategoryAlias($category, $name, count($keys) == 1);
@@ -86,6 +98,7 @@ function kunena_200_2011_12_14_aliases($parent)
 
 			$name = $aliasLit[$category->id];
 			$keys = array_keys($aliasLit, $name);
+
 			if (!empty($name))
 			{
 				kCreateCategoryAlias($category, $name, !$created && count($keys) == 1);
@@ -96,6 +109,14 @@ function kunena_200_2011_12_14_aliases($parent)
 	return array('action' => '', 'name' => JText::_('COM_KUNENA_INSTALL_200_ALIASES'), 'success' => true);
 }
 
+/**
+ * @param     $type
+ * @param     $item
+ * @param     $alias
+ * @param int $state
+ *
+ * @return bool
+ */
 function kCreateAlias($type, $item, $alias, $state = 0)
 {
 	$state = (int) $state;
@@ -103,6 +124,7 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
 	$db->setQuery($query);
 	$success = $db->execute() && $db->getAffectedRows();
+
 	if ($success && $state)
 	{
 		// There can be only one primary alias
@@ -114,6 +136,13 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 	return $success;
 }
 
+/**
+ * @param     $category
+ * @param     $alias
+ * @param int $state
+ *
+ * @return bool
+ */
 function kCreateCategoryAlias($category, $alias, $state = 0)
 {
 	$state = (int) $state;
@@ -121,6 +150,7 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
 	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
 	$db->setQuery($query);
 	$success = $db->execute() && $db->getAffectedRows();
+
 	if ($success && $state)
 	{
 		// Update primary alias into category table
@@ -132,6 +162,11 @@ function kCreateCategoryAlias($category, $alias, $state = 0)
 	return $success;
 }
 
+/**
+ * @param $str
+ *
+ * @return string
+ */
 function kStringURLSafe($str)
 {
 	return Joomla\String\StringHelper::trim(preg_replace(array('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u'), array('-', ''), $str));

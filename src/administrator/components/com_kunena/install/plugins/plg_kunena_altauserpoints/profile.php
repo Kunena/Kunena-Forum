@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package       Kunena.Plugins
- * @subpackage    AltaUserPoints
+ * @package     Kunena.Plugins
+ * @subpackage  AltaUserPoints
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -15,11 +15,22 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 {
 	protected $params = null;
 
+	/**
+	 * KunenaProfileAltaUserPoints constructor.
+	 *
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @param string $action
+	 * @param bool   $xhtml
+	 *
+	 * @return bool
+	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -33,6 +44,13 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 		return AltaUserPointsHelper::getAupUsersURL();
 	}
 
+	/**
+	 * @param        $user
+	 * @param string $task
+	 * @param bool   $xhtml
+	 *
+	 * @return bool
+	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 		if ($user == 0)
@@ -54,6 +72,11 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 		return JRoute::_('index.php?option=com_altauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml);
 	}
 
+	/**
+	 * @param int $limit
+	 *
+	 * @return array|bool
+	 */
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
@@ -76,10 +99,20 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 		return $top;
 	}
 
+	/**
+	 * @param $view
+	 * @param $params
+	 */
 	public function showProfile($view, &$params)
 	{
 	}
 
+	/**
+	 * @param      $userid
+	 * @param bool $xhtml
+	 *
+	 * @return bool
+	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, '', $xhtml);

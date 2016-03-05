@@ -4,7 +4,7 @@
  *
  * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
@@ -16,12 +16,16 @@ class KunenaMigratorJoomlaboard
 		array('version' => '1.0', 'date' => '0000-00-00', 'table' => 'sb_messages', 'column' => 'id'),
 	);
 
+	/**
+	 * @return KunenaMigratorJoomlaboard|null
+	 */
 	public static function getInstance()
 	{
 		static $instance = null;
+
 		if (!$instance)
 		{
-			$instance = new KunenaMigratorJoomlaboard();
+			$instance = new KunenaMigratorJoomlaboard;
 		}
 
 		return $instance;

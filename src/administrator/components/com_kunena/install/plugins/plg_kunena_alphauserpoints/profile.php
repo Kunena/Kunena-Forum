@@ -11,6 +11,11 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * KunenaActivityAlphaUserPoints class to handle integration with AlphaUserPoints
+ *
+ * @deprecated  5.0
+ */
 class KunenaProfileAlphaUserPoints extends KunenaProfile
 {
 	protected $params = null;
@@ -30,6 +35,8 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	 * @param bool   $xhtml
 	 *
 	 * @return bool
+	 *
+	 * @deprecated  5.0
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -50,6 +57,8 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	 * @param bool   $xhtml
 	 *
 	 * @return bool
+	 *
+	 * @deprecated  5.0
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
@@ -76,6 +85,8 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	 * @param int $limit
 	 *
 	 * @return array
+	 *
+	 * @deprecated  5.0
 	 */
 	public function _getTopHits($limit = 0)
 	{
@@ -95,6 +106,8 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	/**
 	 * @param $view
 	 * @param $params
+	 *
+	 * @deprecated  5.0
 	 */
 	public function showProfile($view, &$params)
 	{
@@ -105,6 +118,8 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	 * @param bool $xhtml
 	 *
 	 * @return bool
+	 *
+	 * @deprecated  5.0
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{

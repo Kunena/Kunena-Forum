@@ -11,6 +11,11 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * KunenaActivityAlphaUserPoints class to handle integration with AlphaUserPoints
+ *
+ * @deprecated  5.0
+ */
 class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 {
 	protected $params = null;
@@ -19,6 +24,8 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 * KunenaAvatarAlphaUserPoints constructor.
 	 *
 	 * @param $params
+	 *
+	 * @deprecated  5.0
 	 */
 	public function __construct($params)
 	{
@@ -27,6 +34,8 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 
 	/**
 	 * @return mixed
+	 *
+	 * @deprecated  5.0
 	 */
 	public function getEditURL()
 	{
@@ -37,6 +46,8 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 * @param $user
 	 * @param $sizex
 	 * @param $sizey
+	 *
+	 * @deprecated  5.0
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
@@ -50,6 +61,8 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 * @param int    $sizey
 	 *
 	 * @return string
+	 *
+	 * @deprecated  5.0
 	 */
 	public function getLink($user, $class = '', $sizex = 90, $sizey = 90)
 	{

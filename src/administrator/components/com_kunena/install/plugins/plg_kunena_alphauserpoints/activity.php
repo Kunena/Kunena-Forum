@@ -5,7 +5,7 @@
  * @package     Kunena.Plugins
  * @subpackage  AlphaUserPoints
  *
- * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        https://www.kunena.org
  **/
@@ -13,6 +13,11 @@ defined('_JEXEC') or die();
 
 jimport('joomla.utilities.string');
 
+/**
+ * KunenaActivityAlphaUserPoints class to handle activity integration with AlphaUserPoints
+ *
+ * @deprecated  5.0
+ */
 class KunenaActivityAlphaUserPoints extends KunenaActivity
 {
 	protected $params = null;
@@ -21,6 +26,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * KunenaActivityAlphaUserPoints constructor.
 	 *
 	 * @param $params
+	 *
+	 * @deprecated  5.0
 	 */
 	public function __construct($params)
 	{
@@ -29,6 +36,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 	/**
 	 * @return mixed
+	 *
+	 * @deprecated  5.0
 	 */
 	protected function _getAUPversion()
 	{
@@ -40,6 +49,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param string $spc
 	 *
 	 * @return mixed
+	 *
+	 * @deprecated  5.0
 	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
 	{
@@ -50,6 +61,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return bool
+	 *
+	 * @deprecated  5.0
 	 */
 	public function onAfterPost($message)
 	{
@@ -74,6 +87,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
+	 * @deprecated  5.0
 	 */
 	public function onAfterReply($message)
 	{
@@ -96,6 +111,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 	/**
 	 * @param $message
+	 *
+	 * @deprecated  5.0
 	 */
 	public function onAfterDelete($message)
 	{
@@ -118,6 +135,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param int $actor
 	 * @param int $target
 	 * @param int $message
+	 *
+	 * @deprecated  5.0
 	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
@@ -154,6 +173,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $var
 	 *
 	 * @return string
+	 *
+	 * @deprecated  5.0
 	 */
 	function escape($var)
 	{
@@ -164,6 +185,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $userid
 	 *
 	 * @return array|bool
+	 *
+	 * @deprecated  5.0
 	 */
 	public function getUserMedals($userid)
 	{
@@ -192,6 +215,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param int $userid
 	 *
 	 * @return bool
+	 *
+	 * @deprecated  5.0
 	 */
 	public function getUserPoints($userid)
 	{
@@ -213,6 +238,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $message
 	 *
 	 * @return bool
+	 *
+	 * @deprecated  5.0
 	 */
 	private function _checkPermissions($message)
 	{
@@ -244,6 +271,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $ruleName
 	 *
 	 * @return bool
+	 *
+	 * @deprecated  5.0
 	 */
 	private function _checkRuleEnabled($ruleName)
 	{
@@ -256,6 +285,8 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 	 * @param $ruleName
 	 *
 	 * @return null
+	 *
+	 * @deprecated  5.0
 	 */
 	private function _getPointsOnThankyou($ruleName)
 	{

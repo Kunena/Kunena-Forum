@@ -11,6 +11,11 @@
  **/
 defined('_JEXEC') or die ();
 
+/**
+ * KunenaActivityAltaUserPoints class to handle profile integration with AltaUserPoints
+ *
+ * @since  5.0
+ */
 class KunenaProfileAltaUserPoints extends KunenaProfile
 {
 	protected $params = null;
@@ -80,11 +85,13 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	public function _getTopHits($limit = 0)
 	{
 		$db    = JFactory::getDBO();
-		$query = "SELECT a.userid AS id, a.profileviews AS count
-            FROM #__alpha_userpoints AS a
-            INNER JOIN #__users AS u ON u.id=a.userid
-            WHERE a.profileviews>0
-            ORDER BY a.profileviews DESC";
+		$query = $db->getQuery(true)
+			->select($db->quoteName(array('u.*', 'ju.username', 'ju.email', 'ju.lastvisitDate'), array(null, null, 'last_login')))
+			->from('#__alpha_userpoints AS a')
+			->innerJoin('#__users AS u ON u.id=a.userid')
+			->where('a.profileviews>0')
+			->order('a.profileviews DESC');
+
 		$db->setQuery($query, 0, $limit);
 
 		try

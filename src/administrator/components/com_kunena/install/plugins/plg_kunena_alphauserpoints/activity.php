@@ -2,12 +2,12 @@
 /**
  * Kunena Plugin
  *
- * @package       Kunena.Plugins
- * @subpackage    AlphaUserPoints
+ * @package     Kunena.Plugins
+ * @subpackage  AlphaUserPoints
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright   (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -17,21 +17,40 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 {
 	protected $params = null;
 
+	/**
+	 * KunenaActivityAlphaUserPoints constructor.
+	 *
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	protected function _getAUPversion()
 	{
 		return AlphaUserPointsHelper::getAupVersion();
 	}
 
+	/**
+	 * @param        $plugin_function
+	 * @param string $spc
+	 *
+	 * @return mixed
+	 */
 	protected function _buildKeyreference($plugin_function, $spc = '')
 	{
 		return AlphaUserPointsHelper::buildKeyreference($plugin_function, $spc);
 	}
 
+	/**
+	 * @param $message
+	 *
+	 * @return bool
+	 */
 	public function onAfterPost($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -39,6 +58,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		{
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
 			$referreid     = AlphaUserPointsHelper::getReferreid($message->userid);
+
 			if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 			{
 				if ($this->_checkRuleEnabled('plgaup_kunena_topic_create'))
@@ -52,6 +72,9 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return true;
 	}
 
+	/**
+	 * @param $message
+	 */
 	public function onAfterReply($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
@@ -59,6 +82,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		{
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
 			$referreid     = AlphaUserPointsHelper::getReferreid($message->userid);
+
 			if (Joomla\String\StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 			{
 				if ($this->_checkRuleEnabled('plgaup_kunena_topic_reply'))
@@ -70,12 +94,16 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param $message
+	 */
 	public function onAfterDelete($message)
 	{
 		// Check for permisions of the current category - activity only if public or registered
 		if ($this->_checkPermissions($message))
 		{
 			$aupid = AlphaUserPointsHelper::getAnyUserReferreID($message->userid);
+
 			if ($aupid)
 			{
 				if ($this->_checkRuleEnabled('plgaup_kunena_message_delete'))
@@ -86,10 +114,16 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param int $actor
+	 * @param int $target
+	 * @param int $message
+	 */
 	public function onAfterThankyou($actor, $target, $message)
 	{
 		$infoTargetUser = JText::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
 		$infoRootUser   = JText::_('COM_KUNENA_THANKYOU_SAID_TO') . ': ' . KunenaFactory::getUser($target)->username;
+
 		if ($this->_checkPermissions($message))
 		{
 			$aupactor  = AlphaUserPointsHelper::getAnyUserReferreID($actor);
@@ -101,13 +135,13 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 			if ($usertargetpoints && $this->_checkRuleEnabled($ruleName))
 			{
-				// for target user
+				// For target user
 				if ($auptarget)
 				{
 					AlphaUserPointsHelper::newpoints($ruleName, $auptarget, '', $infoTargetUser, $usertargetpoints);
 				}
 
-				// for who has gived the thank you
+				// For who has gived the thank you
 				if ($aupactor)
 				{
 					AlphaUserPointsHelper::newpoints($ruleName, $aupactor, '', $infoRootUser);
@@ -116,11 +150,21 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		}
 	}
 
+	/**
+	 * @param $var
+	 *
+	 * @return string
+	 */
 	function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
+	/**
+	 * @param $userid
+	 *
+	 * @return array|bool
+	 */
 	public function getUserMedals($userid)
 	{
 		if ($userid == 0)
@@ -135,6 +179,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 
 		$aupmedals = AlphaUserPointsHelper::getUserMedals('', $userid);
 		$medals    = array();
+
 		foreach ($aupmedals as $medal)
 		{
 			$medals [] = '<img src="' . _AUP_MEDALS_LIVE_PATH . $this->escape($medal->icon) . '" alt="' . $this->escape($medal->rank) . '" title="' . $this->escape($medal->rank) . '" />';
@@ -143,6 +188,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return $medals;
 	}
 
+	/**
+	 * @param int $userid
+	 *
+	 * @return bool
+	 */
 	public function getUserPoints($userid)
 	{
 		if ($userid == 0)
@@ -159,6 +209,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return $userpoints;
 	}
 
+	/**
+	 * @param $message
+	 *
+	 * @return bool
+	 */
 	private function _checkPermissions($message)
 	{
 		$category   = $message->getCategory();
@@ -185,6 +240,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return false;
 	}
 
+	/**
+	 * @param $ruleName
+	 *
+	 * @return bool
+	 */
 	private function _checkRuleEnabled($ruleName)
 	{
 		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);
@@ -192,6 +252,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity
 		return !empty($ruleEnabled[0]->published);
 	}
 
+	/**
+	 * @param $ruleName
+	 *
+	 * @return null
+	 */
 	private function _getPointsOnThankyou($ruleName)
 	{
 		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);

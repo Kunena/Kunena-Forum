@@ -2,13 +2,13 @@
 /**
  * Kunena Menu Module
  *
- * @package       Kunena.Modules
- * @subpackage    Menu
+ * @package     Kunena.Modules
+ * @subpackage  Menu
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       https://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -29,6 +29,7 @@ defined('_JEXEC') or die();
 		elseif ($item->type == 'alias')
 		{
 			$aliasToId = $item->params->get('aliasoptions');
+
 			if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1])
 			{
 				$class .= ' active';
@@ -48,6 +49,7 @@ defined('_JEXEC') or die();
 		$flink = ' href="' . htmlspecialchars($item->flink) . '" ';
 		$class = $item->anchor_css ? ' class="' . $item->anchor_css . '" ' : '';
 		$title = $item->anchor_title ? ' title="' . $item->anchor_title . '" ' : '';
+
 		if ($item->menu_image)
 		{
 			$menu_text = $item->params->get('menu_text', 1);
@@ -102,5 +104,6 @@ defined('_JEXEC') or die();
 			// The next item is on the same level.
 			echo '</li>';
 		}
+
 	endforeach;
 	?></ul>

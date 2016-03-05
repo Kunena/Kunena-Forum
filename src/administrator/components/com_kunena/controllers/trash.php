@@ -43,7 +43,6 @@ class KunenaAdminControllerTrash extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');
@@ -58,11 +57,13 @@ class KunenaAdminControllerTrash extends KunenaController
 		{
 			$ids  = (array) $this->app->getUserState('com_kunena.purge');
 			$type = (string) $this->app->getUserState('com_kunena.type');
+
 			if ($md5 == md5(serialize($ids)))
 			{
 				if ($type == 'topics')
 				{
 					$topics = KunenaForumTopicHelper::getTopics($ids, 'none');
+
 					foreach ($topics as $topic)
 					{
 						$success = $topic->delete();
@@ -78,9 +79,11 @@ class KunenaAdminControllerTrash extends KunenaController
 				elseif ($type == 'messages')
 				{
 					$messages = KunenaForumMessageHelper::getMessages($ids, 'none');
+
 					foreach ($messages as $message)
 					{
 						$success = $message->delete();
+
 						if (!$success)
 						{
 							$this->app->enqueueMessage($message->getError());
@@ -97,6 +100,7 @@ class KunenaAdminControllerTrash extends KunenaController
 
 			$this->app->setUserState('com_kunena.purge', null);
 			$this->app->setUserState('com_kunena.type', null);
+
 			if ($type == 'messages')
 			{
 				$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
@@ -133,7 +137,6 @@ class KunenaAdminControllerTrash extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$type = JFactory::getApplication()->input->getCmd('type', 'topics', 'post');

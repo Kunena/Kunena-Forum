@@ -1,18 +1,25 @@
 <?php
 /**
- * Kunena plugin - Easyblog integration
+ * Kunena Plugin
  *
- * @version      0.0.1 (2016-01-10)
- * @author       Ruud van Lent | Onlinecommunityhub
- * @copyright    Copyright Ruud van Lent (2016)
- * @link         https://onlinecommunityhub.nl
- * @license      GNU/GPL version 3 or later
- */
+ * @package     Kunena.Plugins
+ * @subpackage  Easyblog
+ *
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
+ **/
 
 defined('_JEXEC') or die ();
 
 class plgKunenaEasyblog extends JPlugin
 {
+	/**
+	 * plgKunenaEasyblog constructor.
+	 *
+	 * @param $subject
+	 * @param $config
+	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline

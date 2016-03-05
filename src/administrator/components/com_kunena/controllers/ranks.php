@@ -59,7 +59,6 @@ class KunenaAdminControllerRanks extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -179,7 +178,6 @@ class KunenaAdminControllerRanks extends KunenaController
 		}
 
 		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
-		// Array of integers
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$cids = implode(',', $cid);

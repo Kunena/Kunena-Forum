@@ -134,7 +134,7 @@ class KunenaGravatar
 	 * Set the default image to use for avatars.
 	 *
 	 * @param   mixed $image - The default image to use. Use boolean false for the gravatar default, a string containing
-	 *                     a valid image URL, or a string specifying a recognized gravatar "default".
+	 *                       a valid image URL, or a string specifying a recognized gravatar "default".
 	 *
 	 * @return \emberlabs\GravatarLib\Gravatar - Provides a fluent interface.
 	 *

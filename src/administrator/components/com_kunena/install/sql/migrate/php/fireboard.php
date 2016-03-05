@@ -4,7 +4,7 @@
  *
  * @package    Kunena.Installer
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       https://www.kunena.org
  **/
@@ -20,12 +20,16 @@ class KunenaMigratorFireboard
 		array('version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_messages', 'column' => 'id'),
 	);
 
+	/**
+	 * @return KunenaMigratorFireboard|null
+	 */
 	public static function getInstance()
 	{
 		static $instance = null;
+
 		if (!$instance)
 		{
-			$instance = new KunenaMigratorFireboard();
+			$instance = new KunenaMigratorFireboard;
 		}
 
 		return $instance;

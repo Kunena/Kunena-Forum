@@ -59,6 +59,7 @@ class KunenaAdminControllerCpanel extends KunenaController
 	}
 
 	/**
+	 *
 	 * Display Kunena updates on dashboard
 	 *
 	 *
@@ -130,10 +131,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 			// Already in the latest release
 			$icon = 'media/kunena/images/icons/icon-48-kupdate-good-white.png';
 			$link = '#';
-
 		}
 
 		return '<a href="' . $link . '"><img src="' . JUri::root() . $icon . '"/></a>';
-
 	}
 }

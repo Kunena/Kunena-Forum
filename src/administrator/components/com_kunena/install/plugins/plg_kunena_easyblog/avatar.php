@@ -1,34 +1,47 @@
 <?php
 /**
- * Kunena plugin - Easyblog integration
+ * Kunena Plugin
  *
- * @version      0.0.1 (2016-01-10)
- * @author       Ruud van Lent | Onlinecommunityhub
- * @copyright    Copyright Ruud van Lent (2016)
- * @link         https://onlinecommunityhub.nl
- * @license      GNU/GPL version 3 or later
- */
-
+ * @package     Kunena.Plugins
+ * @subpackage  Easyblog
+ *
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
+ **/
 defined('_JEXEC') or die ();
 
 class KunenaAvatarEasyblog extends KunenaAvatar
 {
 	protected $params = null;
 
+	/**
+	 * KunenaAvatarEasyblog constructor.
+	 *
+	 * @param $params
+	 */
 	public function __construct($params)
 	{
 		$this->params = $params;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getEditURL()
 	{
-		//vervangen met easyblog url
 		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
 	}
 
+	/**
+	 * @param $user
+	 * @param $sizex
+	 * @param $sizey
+	 *
+	 * @return string
+	 */
 	public function _getURL($user, $sizex, $sizey)
 	{
-
 		if (!$user->userid == 0)
 		{
 			$user   = KunenaFactory::getUser($user->userid);

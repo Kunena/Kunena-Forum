@@ -456,7 +456,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	private function runPhpmd()
 	{
-		return $this->_exec('phpmd' . $this->extension . ' ' . __DIR__ . '/src xml cleancode,codesize,controversial,design,naming,unusedcode');
+		return $this->_exec('phpmd' . ' .\\src xml cleancode,codesize,controversial,design,naming,unusedcode');
 	}
 
 	/**
@@ -464,7 +464,12 @@ class RoboFile extends \Robo\Tasks
 	 */
 	private function runPhpcs()
 	{
-		$this->_exec('phpcs' . $this->extension . ' ' . __DIR__ . '/src');
+		if (!file_exists('logs'))
+		{
+			mkdir('logs', 0777, true);
+		}
+
+		$this->_exec('phpcs' . ' -s --report-full=logs\\full.txt --report-summary=logs\\summary.txt --standard=Joomla .\\src');
 	}
 
 	/**
@@ -472,7 +477,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	private function runPhpcpd()
 	{
-		$this->_exec('phpcpd' . $this->extension . ' ' . __DIR__ . '/src');
+		$this->_exec('phpcpd' . ' .\\src');
 	}
 
 	/**

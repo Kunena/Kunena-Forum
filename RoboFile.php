@@ -456,7 +456,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	private function runPhpmd()
 	{
-		return $this->_exec('phpmd' . ' .\\src xml cleancode,codesize,controversial,design,naming,unusedcode');
+		return $this->_exec('phpmd' . ' src xml cleancode,codesize,controversial,design,naming,unusedcode');
 	}
 
 	/**
@@ -469,7 +469,14 @@ class RoboFile extends \Robo\Tasks
 			mkdir('logs', 0777, true);
 		}
 
-		$this->_exec('phpcs' . ' -s --report-full=logs\\full.txt --report-summary=logs\\summary.txt --standard=Joomla .\\src');
+		if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN')
+		{
+			$this->_exec('phpcs' . ' -s --report-full=logs/full.txt --report-summary=logs/summary.txt --standard=Joomla src');
+		}
+		else
+		{
+			$this->_exec('phpcs' . ' -s --report-full=logs\\full.txt --report-summary=logs\\summary.txt --standard=Joomla .\\src');
+		}
 	}
 
 	/**
@@ -477,7 +484,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	private function runPhpcpd()
 	{
-		$this->_exec('phpcpd' . ' .\\src');
+		$this->_exec('phpcpd' . ' src');
 	}
 
 	/**

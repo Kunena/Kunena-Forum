@@ -11,8 +11,24 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * KunenaActivityAlphaUserPoints class to handle integration with AlphaUserPoints
+ *
+ * @since 2.0
+ *
+ * @deprecated  5.0
+ */
 class plgKunenaAlphaUserPoints extends JPlugin
 {
+
+	/**
+	 * plgKunenaAlphaUserPoints constructor.
+	 *
+	 * @param $subject
+	 * @param $config
+	 *
+	 * @deprecated  5.0
+	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
@@ -38,6 +54,8 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return KunenaAvatar
+	 *
+	 * @deprecated  5.0
 	 */
 	public function onKunenaGetAvatar()
 	{
@@ -55,6 +73,8 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * Get Kunena profile integration object.
 	 *
 	 * @return KunenaProfile
+	 *
+	 * @deprecated  5.0
 	 */
 	public function onKunenaGetProfile()
 	{
@@ -72,6 +92,8 @@ class plgKunenaAlphaUserPoints extends JPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return KunenaActivity
+	 *
+	 * @deprecated  5.0
 	 */
 	public function onKunenaGetActivity()
 	{

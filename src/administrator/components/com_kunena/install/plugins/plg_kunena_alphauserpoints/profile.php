@@ -10,6 +10,11 @@
  **/
 defined('_JEXEC') or die();
 
+/**
+ * KunenaActivityAlphaUserPoints class to handle integration with AlphaUserPoints
+ *
+ * @deprecated  5.0
+ */
 class KunenaProfileAlphaUserPoints extends KunenaProfile
 {
 	protected $params = null;
@@ -19,6 +24,14 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		$this->params = $params;
 	}
 
+	/**
+	 * @param string $action
+	 * @param bool   $xhtml
+	 *
+	 * @return bool
+	 *
+	 * @deprecated  5.0
+	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
@@ -28,6 +41,15 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		return AlphaUserPointsHelper::getAupUsersURL();
 	}
 
+	/**
+	 * @param        $user
+	 * @param string $task
+	 * @param bool   $xhtml
+	 *
+	 * @return bool
+	 *
+	 * @deprecated  5.0
+	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
 		if ($user == 0) {
@@ -43,7 +65,14 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		return JRoute::_('index.php?option=com_alphauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml);
 	}
 
-	public function _getTopHits($limit=0)
+	/**
+	 * @param int $limit
+	 *
+	 * @return array
+	 *
+	 * @deprecated  5.0
+	 */
+	public function _getTopHits($limit = 0)
 	{
 		$db = JFactory::getDBO();
 		$query = "SELECT a.userid AS id, a.profileviews AS count
@@ -57,9 +86,23 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		return $top;
 	}
 
+	/**
+	 * @param $view
+	 * @param $params
+	 *
+	 * @deprecated  5.0
+	 */
 	public function showProfile($view, &$params)
 {}
 
+	/**
+	 * @param      $userid
+	 * @param bool $xhtml
+	 *
+	 * @return bool
+	 *
+	 * @deprecated  5.0
+	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
 		return $this->getProfileURL($userid, '', $xhtml);

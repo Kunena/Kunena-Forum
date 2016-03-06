@@ -76,7 +76,9 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 					JPluginHelper::importPlugin('captcha');
 					$dispatcher = JEventDispatcher::getInstance();
 					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
-
+					$output = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
+						. $captcha_pubkey . '" data-theme="light"'));
+					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];
 				}
 			}

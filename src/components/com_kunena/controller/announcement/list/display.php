@@ -70,7 +70,7 @@ class ComponentKunenaControllerAnnouncementListDisplay extends KunenaControllerD
 			$params             = $menu_item->params;
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
-			$params_description = $params->get('menu-description');
+			$params_description = $params->get('menu-meta_description');
 
 			if (!empty($params_title))
 			{

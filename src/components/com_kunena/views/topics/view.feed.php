@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -27,15 +27,15 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		KunenaHtmlParser::$relative = false;
-		/*
-		// TODO: caching (this is from old code)
-		$cache = JFactory::getCache( 'com_kunena_rss' );
-		if ( $this->caching ) {
-			$cache->setCaching( 1 );
-			$cache->setLifeTime( $this->caching );
+
+		$cache = JFactory::getCache('com_kunena_rss');
+
+		if ($this->caching)
+		{
+			$cache->setCaching(1);
+			$cache->setLifeTime($this->caching);
 		}
-		$data = $cache->call( array( 'CKunenaRSSData', 'fetch' ), $this->type, $this->incl_cat, $this->excl_cat, $this->limit, $this->timelimit );
-		*/
+
 		$this->layout = 'default';
 		$this->params = $this->state->get('params');
 		$this->topics = $this->get('Topics');
@@ -270,7 +270,7 @@ class KunenaViewTopics extends KunenaView
 		}
 
 		// Assign values to feed item
-		$item              = new JFeedItem();
+		$item              = new JFeedItem;
 		$item->title       = $title;
 		$item->link        = $url;
 		$item->description = $description;

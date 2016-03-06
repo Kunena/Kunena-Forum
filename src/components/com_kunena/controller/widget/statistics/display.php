@@ -47,6 +47,7 @@ class ComponentKunenaControllerWidgetStatisticsDisplay extends KunenaControllerD
 
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsUrl = KunenaFactory::getProfile()->getStatisticsURL();
+
 		return true;
 	}
 }

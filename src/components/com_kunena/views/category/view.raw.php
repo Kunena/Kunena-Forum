@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -40,7 +40,7 @@ class KunenaViewCategory extends KunenaView
 
 				foreach ($topics as $topic)
 				{
-					$item                    = new StdClass();
+					$item                    = new StdClass;
 					$item->id                = $topic->id;
 					$item->subject           = $topic->subject;
 					$response['topiclist'][] = $item;

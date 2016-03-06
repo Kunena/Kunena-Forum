@@ -106,7 +106,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		if (!$this->topic->category_id)
 		{
-			throw new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError()), $this->me->exists() ? 403 : 401);
+			throw new KunenaExceptionAuthorise(JText::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
+				$this->topic->getError()), $this->me->exists() ? 403 : 401);
 		}
 
 		$options = array();
@@ -133,8 +134,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 		);
 
 		$this->selectcatlist = JHtml::_(
-   'kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
-	'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
+			'kunenaforum.categorylist', 'catid', $catid, $options, $cat_params,
+			'class="form-control inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->action = 'post';
 
@@ -164,8 +165,8 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	protected function prepareDocument()
 	{
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$menu_item   = $app->getMenu()->getActive();
+		$params = $menu_item->params;
 		$params_title = $params->get('page_title');
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
@@ -209,8 +210,7 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 	protected function canSubscribe()
 	{
 		if (! $this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled'
-)
+			|| $this->config->topic_subscriptions == 'disabled')
 		{
 			return false;
 		}

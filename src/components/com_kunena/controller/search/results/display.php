@@ -72,12 +72,11 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 	protected function prepareDocument()
 	{
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$menu_item   = $app->getMenu()->getActive();
+		$params = $menu_item->params;
 		$params_title = $params->get('page_title');
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
-
 
 		if (!empty($params_title))
 		{
@@ -96,7 +95,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		}
 		else
 		{
-			$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ', '. $this->searchwords;
+			$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ', ' . $this->searchwords;
 			$this->setKeywords($keywords);
 		}
 
@@ -107,7 +106,7 @@ class ComponentKunenaControllerSearchResultsDisplay extends KunenaControllerDisp
 		}
 		else
 		{
-			$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title ;
+			$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
 			$this->setDescription($description);
 		}
 	}

@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Topics Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerTopics extends KunenaController
 {
@@ -42,7 +42,7 @@ class KunenaControllerTopics extends KunenaController
 		}
 
 		$message = '';
-		$ids     = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids     = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -90,7 +90,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -136,7 +136,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -182,7 +182,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$message = '';
@@ -229,7 +229,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -283,7 +283,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -313,7 +313,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$topics = KunenaForumTopicHelper::getTopics($ids);
@@ -343,7 +343,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -390,7 +390,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -436,7 +436,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;
@@ -482,7 +482,7 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array')); // Array of integer keys
+		$ids = array_keys(JFactory::getApplication()->input->get('posts', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($ids);
 
 		$success  = 0;

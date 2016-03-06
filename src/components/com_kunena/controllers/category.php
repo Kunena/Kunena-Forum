@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,7 +16,7 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
 /**
  * Kunena Category Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerCategory extends KunenaAdminControllerCategories
 {
@@ -172,10 +172,11 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories
 		$catid  = JFactory::getApplication()->input->getInt('catid', 0);
 		$catids = $catid
 			? array($catid)
-			: array_keys(JFactory::getApplication()->input->get('categories', array(), 'post', 'array')); // Array or integer keys
+			: array_keys(JFactory::getApplication()->input->get('categories', array(), 'post', 'array'));
 		Joomla\Utilities\ArrayHelper::toInteger($catids);
 
 		$categories = KunenaForumCategoryHelper::getCategories($catids);
+
 		foreach ($categories as $category)
 		{
 			if (!$category->authorise('read'))

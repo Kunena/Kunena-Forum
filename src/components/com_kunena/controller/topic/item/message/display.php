@@ -58,6 +58,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		$this->captchaEnabled = false;
+
 		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
 			if (JPluginHelper::isEnabled('captcha'))
@@ -129,10 +130,11 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 			}
 		}
 
-		if ($this->config->reportmsg && $this->me->exists()) {
-			if ($this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator()) {
-				$this->reportMessageLink = JHTML::_(
-     'kunenaforum.link',
+		if ($this->config->reportmsg && $this->me->exists())
+		{
+			if ($this->config->user_report && $this->me->userid == $this->message->userid && !$this->me->isModerator())
+			{
+				$this->reportMessageLink = JHTML::_('kunenaforum.link',
 					'index.php?option=com_kunena&view=topic&layout=report&catid='
 					. intval($this->category->id) . '&id=' . intval($this->message->thread)
 					. '&mesid=' . intval($this->message->id),
@@ -144,8 +146,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 
 		// Show admins the IP address of the user.
 		if ($this->category->isAuthorised('admin')
-			|| ($this->category->isAuthorised('moderate') && !$this->config->hide_ip)
-)
+			|| ($this->category->isAuthorised('moderate') && !$this->config->hide_ip))
 		{
 			if (!empty($this->message->ip))
 			{

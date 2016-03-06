@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Announcements Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerAnnouncement extends KunenaController
 {
@@ -41,12 +41,13 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
+
 			if ($announcement->published == 1)
 			{
 				continue;
@@ -79,7 +80,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
@@ -111,7 +112,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function edit()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
@@ -132,7 +133,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', (array) JFactory::getApplication()->input->getInt('id'), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', (array) JFactory::getApplication()->input->getInt('id'), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
@@ -165,7 +166,7 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$now                    = new JDate();
+		$now                    = new JDate;
 		$fields                 = array();
 		$fields['title']        = JFactory::getApplication()->input->getString('title', '', 'post', 'raw');
 		$fields['description']  = JFactory::getApplication()->input->getString('description', '', 'post', 'raw');

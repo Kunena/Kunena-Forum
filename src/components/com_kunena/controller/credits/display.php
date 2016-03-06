@@ -71,9 +71,9 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 				'title' => JText::_('COM_KUNENA_CREDITS_FOUNDER')),
 		);
 		$this->thanks = JText::sprintf(
-   'COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
+			'COM_KUNENA_CREDITS_THANKS', 'http://www.kunena.org/team#special_thanks',
 			'https://www.transifex.com/projects/p/Kunena', 'http://www.kunena.org',
-	'https://github.com/Kunena/Kunena-Forum/graphs/contributors');
+			'https://github.com/Kunena/Kunena-Forum/graphs/contributors');
 	}
 
 	/**
@@ -84,8 +84,8 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 	protected function prepareDocument()
 	{
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$menu_item   = $app->getMenu()->getActive();
+		$params = $menu_item->params;
 		$params_title = $params->get('page_title');
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
@@ -119,7 +119,6 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 		}
 		else
 		{
-			// TODO: translate at some point...
 			$description = 'Kunena is the ideal forum extension for Joomla. It\'s free and fully integrated. "
 			. "For more information, please visit www.kunena.org.';
 			$this->setDescription($description);

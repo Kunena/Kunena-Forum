@@ -2,25 +2,28 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Models
+ * @package     Kunena.Site
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Topic Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelTopic extends KunenaModel
 {
 	protected $topics = false;
+
 	protected $messages = false;
+
 	protected $items = false;
+
 	protected $topic = false;
 
 	/**
@@ -62,8 +65,8 @@ class KunenaModelTopic extends KunenaModel
 
 		$this->setState('list.limit', $value);
 
-		//$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
-		//$this->setState ( 'list.ordering', $value );
+		// $value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
+		// $this->setState ( 'list.ordering', $value );
 
 		$value = $this->getInt('limitstart', 0);
 
@@ -139,8 +142,9 @@ class KunenaModelTopic extends KunenaModel
 				}
 
 				// If topic doesn't exist, check if there's a message with the same id
+
 				/*
- if (! $topic->exists()) {
+				if (! $topic->exists()) {
 					$message = KunenaForumMessageHelper::get($this->getState ( 'item.id'));
 					if ($message->exists()) {
 						$topic = KunenaForumTopicHelper::get($message->thread);
@@ -163,9 +167,8 @@ class KunenaModelTopic extends KunenaModel
 		{
 			$layout         = $this->getState('layout');
 			$threaded       = ($layout == 'indented' || $layout == 'threaded');
-			$this->messages = KunenaForumMessageHelper::getMessagesByTopic(
-    $this->getState('item.id'),
-	$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded);
+			$this->messages = KunenaForumMessageHelper::getMessagesByTopic($this->getState('item.id'),
+				$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded);
 
 			// Get thankyous for all messages in the page
 			$thankyous = KunenaForumMessageThankyouHelper::getByMessage($this->messages);

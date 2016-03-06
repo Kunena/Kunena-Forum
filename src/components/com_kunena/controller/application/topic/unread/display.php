@@ -49,7 +49,9 @@ class ComponentKunenaControllerApplicationTopicUnreadDisplay extends KunenaContr
 		$message = KunenaForumMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
 		$message->tryAuthorise();
 
-		while (@ob_end_clean()) {}
+		while (@ob_end_clean())
+		{
+		}
 
 		$this->app->redirect($topic->getUrl($category, false, $message));
 	}

@@ -72,7 +72,6 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
-
 			$this->messageButtons->set('reply',
 				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', null, true)
 			);
@@ -96,19 +95,29 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		$login = KunenaLogin::getInstance();
-		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() && !$this->message->hold && !$config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled() && !$me->userid && !$this->message->hold && !$config->read_only) {
-			$logintext =  '<a class="btn-link" href="#klogin" rel="nofollow"> ' . JText::_('JLOGIN'). '</a>';
-			if ($login->getRegistrationUrl()) {
-				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') .' <a class="btn-link" href="' . $login->getRegistrationUrl() . '">'. JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
+
+		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() && !$this->message->hold
+			&& !$config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
+			&& !$me->userid && !$this->message->hold && !$config->read_only)
+		{
+			$logintext =  '<a class="btn-link" href="#klogin" rel="nofollow"> ' . JText::_('JLOGIN') . '</a>';
+
+			if ($login->getRegistrationUrl())
+			{
+				$register =  ' ' . JText::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="' . $login->getRegistrationUrl()
+					. '">' . JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') . '</a>';
 			}
-			else {
+			else
+			{
 				$register = '';
 			}
-			echo '<p>'. JText::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register).'</p>';
+
+			echo '<p>' . JText::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register) . '</p>';
 		}
 
 		// Thank you.
-		if (isset($this->message->thankyou)) {
+		if (isset($this->message->thankyou))
+		{
 			if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
 			{
 				$this->messageButtons->set('thankyou',
@@ -121,7 +130,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('unthankyou',
-				$this->getButton(sprintf($task, 'unthankyou&userid='.$me->userid), 'unthankyou', 'message', 'user', null, false)
+				$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', null, false)
 			);
 		}
 
@@ -207,6 +216,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
 	{
 		return KunenaLayout::factory('Widget/Button')
-			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope, 'type' => $type, 'id' => $id, 'normal' => $normal, 'icon' => ''));
+			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
+			                      'type' => $type, 'id' => $id, 'normal' => $normal, 'icon' => ''));
 	}
 }

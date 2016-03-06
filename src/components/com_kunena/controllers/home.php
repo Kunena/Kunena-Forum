@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Home Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerHome extends KunenaController
 {
@@ -36,7 +36,6 @@ class KunenaControllerHome extends KunenaController
 		{
 			JFactory::getApplication()->input->get('view', 'category');
 			JFactory::getApplication()->input->get('layout', 'list');
-			//JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 		}
 		else
 		{
@@ -101,7 +100,6 @@ class KunenaControllerHome extends KunenaController
 	 */
 	protected function _getDefaultMenuItem($menu, $active, $visited = array())
 	{
-
 		if (empty($active->query ['defaultmenu']) || $active->id == $active->query ['defaultmenu'])
 		{
 			// There is no highlighted menu item

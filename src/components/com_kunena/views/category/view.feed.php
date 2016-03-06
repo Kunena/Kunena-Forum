@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -44,7 +44,7 @@ class KunenaViewCategory extends KunenaView
 		$this->document->setDescription($metaDesc);
 
 		// Create image for feed
-		$image                 = new JFeedImage();
+		$image                 = new JFeedImage;
 		$image->title          = $this->document->getTitle();
 		$image->url            = $this->ktemplate->getImagePath('icons/rss.png');
 		$image->description    = $this->document->getDescription();
@@ -97,7 +97,7 @@ class KunenaViewCategory extends KunenaView
 		}
 
 		// Assign values to feed item
-		$item              = new JFeedItem();
+		$item              = new JFeedItem;
 		$item->title       = $title;
 		$item->link        = $url;
 		$item->description = $description;

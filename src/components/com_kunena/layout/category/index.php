@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Site
- * @subpackage      Layout.Category.Index
+ * @package     Kunena.Site
+ * @subpackage  Layout.Category.Index
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            http://www.kunena.org
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -45,6 +45,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	{
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
+
 		if ($category->getNewCount())
 		{
 			if (!empty($category->icon))
@@ -80,6 +81,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	{
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
+
 		if ($subcategory->getNewCount())
 		{
 			if (!empty($subcategory->icon))

@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -67,11 +67,11 @@ class KunenaViewUser extends KunenaView
 
 			foreach ($users as $user)
 			{
-				$user_obj = new stdClass();
+				$user_obj = new stdClass;
 
-				$user_obj->id = $user->id;
+				$user_obj->id    = $user->id;
 				$user_obj->photo = $user->getAvatarURL();
-				$user_obj->name = $user->username;
+				$user_obj->name  = $user->username;
 
 				$response[] = $user_obj;
 			}

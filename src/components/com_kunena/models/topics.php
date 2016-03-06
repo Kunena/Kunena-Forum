@@ -2,26 +2,30 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Models
+ * @package     Kunena.Site
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Topics Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelTopics extends KunenaModel
 {
 	protected $topics = false;
+
 	protected $messages = false;
+
 	protected $total = 0;
+
 	protected $topicActions = false;
+
 	protected $actionMove = false;
 
 	/**
@@ -158,11 +162,11 @@ class KunenaModelTopics extends KunenaModel
 
 		$this->setState('list.limit', $value);
 
-		//$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
-		//$this->setState ( 'list.ordering', $value );
+		// $value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
+		// $this->setState ( 'list.ordering', $value );
 
 		$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_start", 'limitstart', 0, 'int');
-		//$value = $this->getInt ( 'limitstart', 0 );
+		// $value = $this->getInt ( 'limitstart', 0 );
 		$this->setState('list.start', $value);
 
 		$value = $this->getUserStateFromRequest("com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_direction", 'filter_order_Dir', 'desc', 'word');
@@ -328,6 +332,7 @@ class KunenaModelTopics extends KunenaModel
 		$posts         = false;
 		$favorites     = false;
 		$subscriptions = false;
+
 		// Set order by
 		$orderby = "tt.last_post_time DESC";
 
@@ -378,6 +383,7 @@ class KunenaModelTopics extends KunenaModel
 
 		$start = $this->getState('list.start');
 		$limit = $this->getState('list.limit');
+
 		// Time will be calculated inside KunenaForumMessageHelper::getLatestMessages()
 		$time = $this->getState('list.time');
 
@@ -428,7 +434,7 @@ class KunenaModelTopics extends KunenaModel
 	{
 		if ($this->total > 0)
 		{
-			// collect user ids for avatar prefetch when integrated
+			// Collect user ids for avatar prefetch when integrated
 			$lastpostlist = array();
 
 			foreach ($this->topics as $topic)

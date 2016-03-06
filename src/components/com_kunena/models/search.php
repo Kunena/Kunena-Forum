@@ -2,24 +2,26 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Models
+ * @package     Kunena.Site
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Search Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelSearch extends KunenaModel
 {
 	protected $error = null;
+
 	protected $total = false;
+
 	protected $messages = false;
 
 	/**
@@ -80,12 +82,12 @@ class KunenaModelSearch extends KunenaModel
 
 		if (isset($_POST ['query']) || isset($_POST ['searchword']))
 		{
-			$value = JFactory::getApplication()->input->get('catids', array(0), 'post', 'array'); // Array of integers
+			$value = JFactory::getApplication()->input->get('catids', array(0), 'post', 'array');
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 		}
 		else
 		{
-			$value = JFactory::getApplication()->input->getString('catids', '0', 'get'); // String of integers
+			$value = JFactory::getApplication()->input->getString('catids', '0', 'get');
 			$value = explode(' ', $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 		}
@@ -97,6 +99,7 @@ class KunenaModelSearch extends KunenaModel
 		{
 			$value = JFactory::getApplication()->input->get('ids', array(0), 'post', 'array');
 			Joomla\Utilities\ArrayHelper::toInteger($value);
+
 			if ($value[0] > 0)
 			{
 				$this->setState('query.ids', $value);
@@ -107,6 +110,7 @@ class KunenaModelSearch extends KunenaModel
 			$value = JFactory::getApplication()->input->getString('ids', '0', 'get');
 			$value = explode(' ', $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
+
 			if ($value[0] > 0)
 			{
 				$this->setState('query.ids', $value);
@@ -173,8 +177,9 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-		//User searching
+		// User searching
 		$username = $this->getState('query.searchuser');
+
 		if ($username)
 		{
 			if ($this->getState('query.exactname') == '1')
@@ -203,7 +208,7 @@ class KunenaModelSearch extends KunenaModel
 			case '90' :
 			case '180' :
 			case '365' :
-				$time = time() - 86400 * intval($this->getState('query.searchdate')); //24*3600
+				$time = time() - 86400 * intval($this->getState('query.searchdate'));
 				break;
 			default :
 				$time = time() - 86400 * 365;
@@ -283,7 +288,7 @@ class KunenaModelSearch extends KunenaModel
 			$this->getResults();
 		}
 
-		// if there are no forums to search in, set error and return
+		// If there are no forums to search in, set error and return
 
 		if ($this->total == 0)
 		{
@@ -305,6 +310,7 @@ class KunenaModelSearch extends KunenaModel
 		$searchwords  = preg_split($splitPattern, $this->getState('searchwords'), 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 
 		$result = array();
+
 		foreach ($searchwords as $word)
 		{
 			// Do not accept one letter strings
@@ -336,7 +342,7 @@ class KunenaModelSearch extends KunenaModel
 			return array();
 		}
 
-		// get results
+		// Get results
 
 		$hold = $this->getState('query.show');
 
@@ -381,6 +387,7 @@ class KunenaModelSearch extends KunenaModel
 		if ($topicids)
 		{
 			$topics = KunenaForumTopicHelper::getTopics($topicids);
+
 			foreach ($topics as $topic)
 			{
 				$userids[$topic->first_post_userid] = $topic->first_post_userid;
@@ -405,8 +412,8 @@ class KunenaModelSearch extends KunenaModel
 	{
 		// Turn internal state into URL, but ignore default values
 		$defaults = array('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
-		                  'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-		                  'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0);
+							'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
+							'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0);
 
 		$url_params = '';
 		$state      = $this->getState();

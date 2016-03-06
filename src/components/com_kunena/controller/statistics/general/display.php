@@ -58,8 +58,8 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 	protected function prepareDocument()
 	{
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$menu_item   = $app->getMenu()->getActive();
+		$params = $menu_item->params;
 		$params_title = $params->get('page_title');
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
@@ -92,7 +92,7 @@ class ComponentKunenaControllerStatisticsGeneralDisplay extends KunenaController
 		}
 		else
 		{
-			$description = JText::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title ;
+			$description = JText::_('COM_KUNENA_STAT_FORUMSTATS') . ': ' . $this->config->board_title;
 			$this->setDescription($description);
 		}
 	}

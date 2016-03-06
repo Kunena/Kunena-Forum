@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Models
+ * @package     Kunena.Site
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -21,9 +21,13 @@ require_once KPATH_ADMIN . '/models/categories.php';
 class KunenaModelCategory extends KunenaAdminModelCategories
 {
 	protected $topics = false;
+
 	protected $pending = array();
+
 	protected $items = false;
+
 	protected $topicActions = false;
+
 	protected $actionMove = false;
 
 	/**
@@ -61,8 +65,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 
 		$this->setState('list.limit', $value);
 
-		//$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
-		//$this->setState ( 'list.ordering', $value );
+		// $value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
+		// $this->setState ( 'list.ordering', $value );
 
 		$value = $this->getUserStateFromRequest("com_kunena.category{$catid}_{$format}_list_start", 'limitstart', 0, 'int');
 		$this->setState('list.start', $value);
@@ -199,12 +203,13 @@ class KunenaModelCategory extends KunenaAdminModelCategories
 				$catlist = implode(',', $modcats);
 				$db      = JFactory::getDBO();
 				$db->setQuery(
-     "SELECT catid, COUNT(*) AS count
+				"SELECT catid, COUNT(*) AS count
 				FROM #__kunena_messages
 				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid");
 				$pending = $db->loadAssocList();
 				KunenaError::checkDatabaseError();
+
 				foreach ($pending as $item)
 				{
 					if ($item ['count'])

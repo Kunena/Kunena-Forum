@@ -325,7 +325,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @param   string $type
 	 *
 	 * @return mixed
-	 * @internal param $filename
 	 */
 	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{

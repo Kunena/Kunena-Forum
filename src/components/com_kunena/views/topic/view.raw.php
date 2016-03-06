@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Views
+ * @package     Kunena.Site
+ * @subpackage  Views
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -23,7 +23,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	function displayEdit($tpl = null)
 	{
-		$body     = JFactory::getApplication()->input->get('body', '', 'post', 'string', 'raw'); // RAW input
+		$body     = JFactory::getApplication()->input->get('body', '', 'post', 'string', 'raw');
 		$response = array();
 
 		if ($this->me->exists() || $this->config->pubwrite)
@@ -91,7 +91,7 @@ class KunenaViewTopic extends KunenaView
 
 		$catid = $this->app->input->getInt('catid', 0);
 
-		$category = KunenaForumCategoryHelper::get($catid);
+		$category         = KunenaForumCategoryHelper::get($catid);
 		$category_iconset = $category->iconset;
 
 		if (empty($category_iconset))
@@ -115,17 +115,17 @@ class KunenaViewTopic extends KunenaView
 		{
 			$xml = simplexml_load_file($xmlfile);
 
-			foreach($xml->icons as $icons)
+			foreach ($xml->icons as $icons)
 			{
-				$type = (string) $icons->attributes()->type;
-				$width = (int) $icons->attributes()->width;
+				$type   = (string) $icons->attributes()->type;
+				$width  = (int) $icons->attributes()->width;
 				$height = (int) $icons->attributes()->height;
 
-				foreach($icons->icon as $icon)
+				foreach ($icons->icon as $icon)
 				{
 					$attributes = $icon->attributes();
-					$icon = new stdClass();
-					$icon->id = (int) $attributes->id;
+					$icon       = new stdClass;
+					$icon->id   = (int) $attributes->id;
 					$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
 					$icon->name = (string) $attributes->name;
 
@@ -134,18 +134,18 @@ class KunenaViewTopic extends KunenaView
 						$icon->id = $icon->type . '_' . $icon->name;
 					}
 
-					$icon->iconset = $category_iconset;
+					$icon->iconset   = $category_iconset;
 					$icon->published = (int) $attributes->published;
-					$icon->title = (string) $attributes->title;
-					$icon->b2 = (string) $attributes->b2;
-					$icon->b3  = (string) $attributes->b3;
-					$icon->fa  = (string) $attributes->fa;
-					$icon->filename = (string) $attributes->src;
-					$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
-					$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
-					$icon->path = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
-					$icon->relpath = $template->getTopicIconPath("{$icon->filename}", false, $category_iconset);
-					$topicIcons[] = $icon;
+					$icon->title     = (string) $attributes->title;
+					$icon->b2        = (string) $attributes->b2;
+					$icon->b3        = (string) $attributes->b3;
+					$icon->fa        = (string) $attributes->fa;
+					$icon->filename  = (string) $attributes->src;
+					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
+					$icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;
+					$icon->path      = JURI::root() . 'media/kunena/topic_icons/' . $category_iconset . '/' . $icon->filename;
+					$icon->relpath   = $template->getTopicIconPath("{$icon->filename}", false, $category_iconset);
+					$topicIcons[]    = $icon;
 				}
 			}
 		}

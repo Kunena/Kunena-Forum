@@ -67,7 +67,6 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 		$topicIds = array_keys($this->topics);
 		KunenaForumTopicHelper::getUserTopics($topicIds);
-		// KunenaForumTopicHelper::getKeywords($topicIds);
 
 		$mesIds += KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
@@ -97,8 +96,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
 
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$menu_item   = $app->getMenu()->getActive();
+		$params = $menu_item->params;
 		$params_title = $params->get('page_title');
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
@@ -132,7 +131,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		}
 		else
 		{
-			$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title ;
+			$description = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->config->board_title;
 			$this->setDescription($description);
 		}
 	}
@@ -142,11 +141,12 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 *
 	 * @return array
 	 */
-	protected function getTopicActions(
-	 array $topics,
-	 $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete')
-	) {
-		if (!$actions) { return null; }
+	protected function getTopicActions(array $topics, $actions = array('delete', 'approve', 'undelete', 'move', 'permdelete'))
+	{
+		if (!$actions)
+		{
+			return null;
+		}
 
 		$options = array();
 		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
@@ -171,7 +171,8 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 					continue;
 				}
 
-				switch ($action) {
+				switch ($action)
+				{
 					case 'unsubscribe':
 					case 'unfavorite':
 						$actions[$action] = isset($options[$action]) ? $options[$action] : false;
@@ -182,12 +183,15 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			}
 		}
 
-		$actions = array_filter(
-   $actions, function ($item) {
-	return !empty($item);
-  });
+		$actions = array_filter($actions, function ($item)
+		{
+			return !empty($item);
+		});
 
-		if (count($actions) == 1) { return null; }
+		if (count($actions) == 1)
+		{
+			return null;
+		}
 
 		return $actions;
 	}
@@ -231,7 +235,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			}
 		}
 
-		$actions = array_filter($actions, function ($item) { return !empty($item); });
+		$actions = array_filter($actions, function ($item)
+		{
+			return !empty($item);
+		});
 
 		if (count($actions) == 1)
 		{

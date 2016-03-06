@@ -19,7 +19,6 @@ class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControll
 {
 	protected $name = 'Category/Description';
 
-
 	/**
 	 * Prepare category display.
 	 *
@@ -37,7 +36,5 @@ class ComponentKunenaControllerCategoryDescriptionDisplay extends KunenaControll
 
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		$this->category->tryAuthorise();
-
 	}
-
 }

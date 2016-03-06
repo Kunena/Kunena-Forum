@@ -44,11 +44,13 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		$reverse = !$params->get('topics_catselection', 1);
 
 		// Make sure that category list is an array.
-		if (!is_array($categoryIds)) {
+		if (!is_array($categoryIds))
+		{
 			$categoryIds = explode(',', $categoryIds);
 		}
 
-		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds)) {
+		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds))
+		{
 			$categoryIds = false;
 		}
 

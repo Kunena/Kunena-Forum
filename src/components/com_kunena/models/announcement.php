@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Models
+ * @package     Kunena.Site
+ * @subpackage  Models
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Announcement Model for Kunena
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaModelAnnouncement extends KunenaModel
 {
@@ -109,6 +109,7 @@ class KunenaModelAnnouncement extends KunenaModel
 	{
 		$actions = array();
 		$user    = KunenaUserHelper::getMyself();
+
 		if ($user->isModerator())
 		{
 			$actions[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));

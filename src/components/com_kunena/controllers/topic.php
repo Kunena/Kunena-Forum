@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2014 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Topic Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerTopic extends KunenaController
 {
@@ -76,7 +76,10 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) {}
+
+		while (@ob_end_clean())
+		{
+		}
 
 		echo json_encode($list);
 
@@ -114,7 +117,10 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: no-store, no-cache, must-revalidate");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		while (@ob_end_clean()) {}
+
+		while (@ob_end_clean())
+		{
+		}
 
 		echo json_encode($success);
 
@@ -266,7 +272,9 @@ class KunenaControllerTopic extends KunenaController
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 
-		while (@ob_end_clean()) {}
+		while (@ob_end_clean())
+		{
+		}
 
 		echo $upload->ajaxResponse($response);
 
@@ -283,12 +291,12 @@ class KunenaControllerTopic extends KunenaController
 			'catid'             => $this->catid,
 			'name'              => JFactory::getApplication()->input->getString('authorname', $this->me->getName()),
 			'email'             => JFactory::getApplication()->input->getString('email', null),
-			'subject'           => JFactory::getApplication()->input->get('subject', null, 'POST', 'string', 'raw'), // RAW input
-			'message'           => JFactory::getApplication()->input->get('message', null, 'POST', 'string', 'raw'), // RAW input
+			'subject'           => JFactory::getApplication()->input->get('subject', null, 'POST', 'string', 'raw'),
+			'message'           => JFactory::getApplication()->input->get('message', null, 'POST', 'string', 'raw'),
 			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', null),
 			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', ''),
-			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'), // Array of key => string
+			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
 			'tags'              => JFactory::getApplication()->input->getString('tags', null),
 			'mytags'            => JFactory::getApplication()->input->getString('mytags', null),
@@ -344,10 +352,10 @@ class KunenaControllerTopic extends KunenaController
 
 		$templates = KunenaTemplateHelper::parseXmlFiles();
 
-		// set dynamic template information
+		// Set dynamic template information
 		foreach ($templates as $tmpl)
 		{
-			if(KunenaTemplateHelper::isDefault($tmpl->directory))
+			if (KunenaTemplateHelper::isDefault($tmpl->directory))
 			{
 				$template = $tmpl;
 			}
@@ -381,7 +389,8 @@ class KunenaControllerTopic extends KunenaController
 						$res = $dispatcher->trigger('onCheckAnswer', $this->app->input->getString('recaptcha_response_field'));
 					}
 
-					if (!$res[0]) {
+					if (!$res[0])
+					{
 						$this->setRedirectBack();
 
 						return;
@@ -566,7 +575,8 @@ class KunenaControllerTopic extends KunenaController
 
 		$message->sendNotification();
 
-		//now try adding any new subscriptions if asked for by the poster
+		// Now try adding any new subscriptions if asked for by the poster
+
 		$usertopic = $topic->getUserTopic();
 
 		if ($fields['subscribe'] && !$usertopic->subscribed)
@@ -622,13 +632,13 @@ class KunenaControllerTopic extends KunenaController
 		$fields  = array(
 			'name'              => JFactory::getApplication()->input->getString('authorname', $message->name),
 			'email'             => JFactory::getApplication()->input->getString('email', $message->email),
-			'subject'           => JFactory::getApplication()->input->get('subject', $message->subject, 'POST', 'string', 'raw'), // RAW input
-			'message'           => JFactory::getApplication()->input->get('message', $message->message, 'POST', 'string', 'raw'), // RAW input
+			'subject'           => JFactory::getApplication()->input->get('subject', $message->subject, 'POST', 'string', 'raw'),
+			'message'           => JFactory::getApplication()->input->get('message', $message->message, 'POST', 'string', 'raw'),
 			'modified_reason'   => JFactory::getApplication()->input->getString('modified_reason', $message->modified_reason),
 			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', $topic->icon_id),
 			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', null),
-			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'), // Array of key => string
+			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
 			'tags'              => JFactory::getApplication()->input->getString('tags', null),
 			'mytags'            => JFactory::getApplication()->input->getString('mytags', null)
@@ -862,18 +872,21 @@ class KunenaControllerTopic extends KunenaController
 		preg_match_all('/<div class=\"kunena_ebay_widget\"(.*?)>(.*?)<\/div>/s', $text, $ebay_matches);
 
 		$ignore = false;
-		foreach($ebay_matches as $match)
+
+		foreach ($ebay_matches as $match)
 		{
-			if (!empty($match)) {
+			if (!empty($match))
+			{
 				$ignore = true;
 			}
 		}
 
 		preg_match_all('/<div id=\"kunena_twitter_widget\"(.*?)>(.*?)<\/div>/s', $text, $twitter_matches);
 
-		foreach($twitter_matches as $match)
+		foreach ($twitter_matches as $match)
 		{
-			if (!empty($match)) {
+			if (!empty($match))
+			{
 				$ignore = true;
 			}
 		}
@@ -882,14 +895,15 @@ class KunenaControllerTopic extends KunenaController
 		{
 			preg_match_all('@\(((https?://)?([-\\w]+\\.[-\\w\\.]+)+\\w(:\\d+)?(/([-\\w/_\\.]*(\\?\\S+)?)?)*)\)@', $text, $matches);
 
-			if(empty($matches[0]))
+			if (empty($matches[0]))
 			{
 				preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
 			}
 
 			$countlink = count($matches[0]);
 
-			if (!$topic->authorise('approve') && $countlink >= $this->config->max_links + 1) {
+			if (!$topic->authorise('approve') && $countlink >= $this->config->max_links + 1)
+			{
 				return false;
 			}
 		}
@@ -931,6 +945,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$message = KunenaForumMessageHelper::get($this->mesid);
+
 		if (!$message->authorise($type))
 		{
 			$this->app->enqueueMessage($message->getError());
@@ -1283,7 +1298,6 @@ class KunenaControllerTopic extends KunenaController
 			if ($target instanceof KunenaForumMessage && $target->getTopic()->authorise('read'))
 			{
 				$target = $target->getTopic();
-				// TODO: need to get closest message
 				$target = KunenaForumMessageHelper::get($target->last_post_id);
 			}
 			else
@@ -1414,6 +1428,7 @@ class KunenaControllerTopic extends KunenaController
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'));
+
 			// Only email if message wasn't modified by the author before approval
 			// TODO: this is just a workaround for #1862, we need to find better solution.
 
@@ -1688,6 +1703,7 @@ class KunenaControllerTopic extends KunenaController
 				}
 
 				$receivers = array();
+
 				foreach ($emailToList as $emailTo)
 				{
 					if (!$emailTo->email || !JMailHelper::isEmailAddress($emailTo->email))

@@ -119,7 +119,9 @@ class ComponentKunenaControllerApplicationAttachmentDefaultDisplay extends Kunen
 		}
 
 		// Close all output buffers, just in case.
-		while(@ob_end_clean()) {}
+		while (@ob_end_clean())
+		{
+		}
 
 		// Handle 304 Not Modified
 		if (isset($_SERVER['HTTP_IF_NONE_MATCH']))

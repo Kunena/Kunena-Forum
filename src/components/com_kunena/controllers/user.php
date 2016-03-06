@@ -2,19 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
- * @subpackage    Controllers
+ * @package     Kunena.Site
+ * @subpackage  Controllers
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena User Controller
  *
- * @since        2.0
+ * @since  2.0
  */
 class KunenaControllerUser extends KunenaController
 {
@@ -63,6 +63,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		$layout = JFactory::getApplication()->input->getCmd('layout', 'default');
+
 		if ($layout == 'list')
 		{
 			if (KunenaFactory::getConfig()->userlist_allowed && JFactory::getUser()->guest)
@@ -155,6 +156,7 @@ class KunenaControllerUser extends KunenaController
 
 		$errors = 0;
 		$userid = JFactory::getApplication()->input->getInt('userid');
+
 		if (!$userid)
 		{
 			$this->user = JFactory::getUser();
@@ -163,6 +165,7 @@ class KunenaControllerUser extends KunenaController
 		{
 			$this->user = JFactory::getUser($userid);
 		}
+
 		$success    = $this->saveUser();
 
 		if (!$success)
@@ -321,6 +324,7 @@ class KunenaControllerUser extends KunenaController
 		if (!empty($DelAvatar) || !empty($DelProfileInfo))
 		{
 			$avatar_deleted = '';
+
 			// Delete avatar from file system
 			if (is_file(JPATH_ROOT . '/media/kunena/avatars/' . $user->avatar) && !stristr($user->avatar, 'gallery/'))
 			{
@@ -430,7 +434,7 @@ class KunenaControllerUser extends KunenaController
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64')); // Internal URI
+		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64'));
 
 		if (!$error && $return && JURI::isInternal($return))
 		{
@@ -464,7 +468,7 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64')); // Internal URI
+		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64'));
 
 		if ($return && JURI::isInternal($return))
 		{
@@ -556,7 +560,9 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$karma_delay = '14400'; // 14400 seconds = 6 hours
+		// 14400 seconds = 6 hours
+		$karma_delay = '14400';
+
 		$userid      = JFactory::getApplication()->input->getInt('userid', 0);
 
 		$target = KunenaFactory::getUser($userid);
@@ -647,8 +653,8 @@ class KunenaControllerUser extends KunenaController
 
 		// Clean request
 		$post              = JRequest::get('post');
-		$post['password']  = JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
-		$post['password2'] = JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW); // RAW input
+		$post['password']  = JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$post['password2'] = JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 		if (empty($post['password']) || empty($post['password2']))
 		{
@@ -721,7 +727,8 @@ class KunenaControllerUser extends KunenaController
 
 		if (!$birthdate)
 		{
-			$birthdate = JFactory::getApplication()->input->getInt('birthdate1', '0000') . '-' . JFactory::getApplication()->input->getInt('birthdate2', '00') . '-' . JFactory::getApplication()->input->getInt('birthdate3', '00');
+			$birthdate = JFactory::getApplication()->input->getInt('birthdate1', '0000')
+				. '-' . JFactory::getApplication()->input->getInt('birthdate2', '00') . '-' . JFactory::getApplication()->input->getInt('birthdate3', '00');
 		}
 
 		$this->user->birthdate   = $birthdate;
@@ -753,7 +760,7 @@ class KunenaControllerUser extends KunenaController
 		$this->user->telegram    = trim(JFactory::getApplication()->input->getString('telegram', ''));
 		$this->user->websitename = JFactory::getApplication()->input->getString('websitename', '');
 		$this->user->websiteurl  = JFactory::getApplication()->input->getString('websiteurl', '');
-		$this->user->signature   = JFactory::getApplication()->input->get('signature', '', 'post', 'string', 'raw'); // RAW input
+		$this->user->signature   = JFactory::getApplication()->input->get('signature', '', 'post', 'string', 'raw');
 	}
 
 	/**
@@ -825,7 +832,8 @@ class KunenaControllerUser extends KunenaController
 						$quality = $this->config->avatarquality;
 					}
 
-					$resized = KunenaImageHelper::version($uploaded->destination, KPATH_MEDIA . '/avatars/users', 'avatar' . $this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop);
+					$resized = KunenaImageHelper::version($uploaded->destination, KPATH_MEDIA . '/avatars/users', 'avatar' .
+						$this->me->userid . '.' . $uploaded->ext, 200, 200, $quality, KunenaImage::SCALE_INSIDE, $this->config->avatarcrop);
 				}
 
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_PROFILE_AVATAR_UPLOADED'));
@@ -834,6 +842,7 @@ class KunenaControllerUser extends KunenaController
 			else
 			{
 				$this->me->avatar = $current_avatar;
+
 				return false;
 			}
 		}
@@ -878,7 +887,7 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array'); // Array of integers
+		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		if (!empty($cid))

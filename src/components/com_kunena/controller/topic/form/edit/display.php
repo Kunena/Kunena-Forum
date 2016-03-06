@@ -72,8 +72,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		// Get poll.
 		if ($this->message->parent == 0
-			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit')
-)
+			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit'))
 		{
 			$this->poll = $this->topic->getPoll();
 		}
@@ -104,8 +103,8 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	protected function prepareDocument()
 	{
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$menu_item   = $app->getMenu()->getActive();
+		$params = $menu_item->params;
 		$params_title = $params->get('page_title');
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');
@@ -149,8 +148,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 	protected function canSubscribe()
 	{
 		if (!$this->me->userid || !$this->config->allowsubscriptions
-			|| $this->config->topic_subscriptions == 'disabled'
-)
+			|| $this->config->topic_subscriptions == 'disabled')
 		{
 			return false;
 		}

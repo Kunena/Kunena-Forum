@@ -2,12 +2,12 @@
 /**
  * Kunena QuickIcon Plugin
  *
- * @package       Kunena.Plugins
- * @subpackage    QuickIcon
+ * @package     Kunena.Plugins
+ * @subpackage  QuickIcon
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
  */
 class plgQuickiconKunena extends JPlugin
 {
-
 	public function __construct(& $subject, $config)
 	{
 		// Do not load if Kunena version is not supported or KunenaForum isn't detected
@@ -64,9 +63,10 @@ class plgQuickiconKunena extends JPlugin
 
 			if ($list)
 			{
-				$updateInfo          = new stdClass();
+				$updateInfo          = new stdClass;
 				$updateInfo->addons  = 0;
 				$updateInfo->version = 0;
+
 				foreach ($list as $item)
 				{
 					if ($item->element == 'pkg_kunena')

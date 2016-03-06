@@ -131,6 +131,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 		}
 
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
+
 		switch ($this->state->get('list.mode'))
 		{
 			case 'topics' :

@@ -43,7 +43,6 @@ class ComponentKunenaControllerApplicationHomeDefaultDisplay extends KunenaContr
 		{
 			$this->input->set('view', 'category');
 			$this->input->set('layout', 'list');
-			// throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), 500);
 		}
 		else
 		{

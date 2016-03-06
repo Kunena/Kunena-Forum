@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
+ * @package    Kunena.Site
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -59,10 +59,12 @@ KunenaError::initialize();
 
 // Initialize session.
 $ksession = KunenaFactory::getSession(true);
+
 if ($ksession->userid > 0)
 {
 	// Create user if it does not exist
 	$kuser = KunenaUserHelper::getMyself();
+
 	if (!$kuser->exists())
 	{
 		$kuser->save();
@@ -87,6 +89,7 @@ JPluginHelper::importPlugin('kunena');
 
 // Get HMVC controller and if exists, execute it.
 $controller = KunenaControllerApplication::getInstance($view, $subview, $task, $input, $app);
+
 if ($controller)
 {
 	KunenaRoute::cacheLoad();
@@ -110,6 +113,7 @@ else
 {
 	// Legacy URL support.
 	$uri = KunenaRoute::current(true);
+
 	if ($uri)
 	{
 		// FIXME: using wrong Itemid
@@ -133,16 +137,17 @@ KunenaError::cleanup();
 
 // Display profiler information.
 $kunena_time = $kunena_profiler->stop('Total Time');
+
 if (KUNENA_PROFILER)
 {
 	echo '<div class="kprofiler">';
 	echo "<h3>Kunena Profile Information</h3>";
+
 	foreach ($kunena_profiler->getAll() as $item)
 	{
-		//if ($item->getTotalTime()<($kunena_time->getTotalTime()/20)) continue;
-		//if ($item->getTotalTime()<0.002 && $item->calls < 20) continue;
 		echo sprintf("Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>", $item->name, $item->getInternalTime(),
 			$item->getTotalTime(), $item->calls);
 	}
+
 	echo '</div>';
 }

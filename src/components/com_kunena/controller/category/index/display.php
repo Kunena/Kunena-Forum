@@ -58,6 +58,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		$sectionIds = array();
 
 		$this->more[$catid] = 0;
+
 		foreach ($sections as $key => $category)
 		{
 			$this->categories[$category->id] = array();
@@ -110,8 +111,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			if ($catid || $category->params->get('display.index.parent', 3) > 1)
 			{
 				if ($catid
-					|| ($category->getParent()->params->get('display.index.children', 3) > 2
-						&& $category->params->get('display.index.children', 3) > 2))
+					|| ($category->getParent()->params->get('display.index.children', 3) > 2 && $category->params->get('display.index.children', 3) > 2))
 				{
 					$categoryIds[] = $category->id;
 				}
@@ -138,7 +138,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			$this->categories[$category->parent_id][] = $category;
 
 			$rssURL = $category->getRSSUrl();
-			if ( !empty($rssURL) )
+
+			if (!empty($rssURL))
 			{
 				$category->rssURL = $category->getRSSUrl();
 			}
@@ -243,8 +244,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	protected function prepareDocument()
 	{
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$menu_item   = $app->getMenu()->getActive();
+		$params = $menu_item->params;
 		$params_title = $params->get('page_title');
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');

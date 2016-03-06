@@ -2,11 +2,11 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Site
+ * @package    Kunena.Site
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 
 /*
@@ -34,8 +34,7 @@ require_once JPATH_BASE . '/includes/defines.php';
 
 // Installation check, and check on removal of the install directory.
 if (!file_exists(JPATH_CONFIGURATION . '/configuration.php')
-	|| (filesize(JPATH_CONFIGURATION . '/configuration.php') < 10)
-)
+	|| (filesize(JPATH_CONFIGURATION . '/configuration.php') < 10))
 {
 	echo 'No configuration file found and no installation code available. Exiting...';
 
@@ -61,7 +60,9 @@ require_once JPATH_BASE . '/includes/framework.php';
 class KunenaApplication extends JApplicationWeb
 {
 	protected $_name = 'site';
+
 	protected $_clientId = 0;
+
 	protected $userstate = array();
 
 	/**
@@ -160,6 +161,7 @@ class KunenaApplication extends JApplicationWeb
 		$segment = array_shift($segments);
 		$this->input->set('id', (int) $segment);
 		$segment = array_shift($segments);
+
 		if ($segment == 'thumb')
 		{
 			$this->input->set('thumb', 1);
@@ -167,7 +169,7 @@ class KunenaApplication extends JApplicationWeb
 
 		$this->input->set('format', 'raw');
 
-		$controller = new ComponentKunenaControllerApplicationAttachmentDefaultDisplay();
+		$controller = new ComponentKunenaControllerApplicationAttachmentDefaultDisplay;
 		echo $controller->execute();
 	}
 
@@ -207,7 +209,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 
 	/**
-	 * @param      $name
+	 * @param        $name
 	 * @param   null $default
 	 *
 	 * @return null
@@ -218,7 +220,7 @@ class KunenaApplication extends JApplicationWeb
 	}
 }
 
-$app = new KunenaApplication();
+$app = new KunenaApplication;
 
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 

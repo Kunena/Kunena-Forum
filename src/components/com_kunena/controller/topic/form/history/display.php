@@ -34,8 +34,7 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 
 		$this->topic = KunenaForumTopicHelper::get($id);
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic(
-			$this->topic, 0, (int) $this->config->historylimit, 'DESC'
-		);
+			$this->topic, 0, (int) $this->config->historylimit, 'DESC');
 
 		$this->replycount = $this->topic->getReplies();
 		$this->historycount = count($this->history);
@@ -75,8 +74,8 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 	protected function prepareDocument()
 	{
 		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive(); // get the active item
-		$params = $menu_item->params; // get the params
+		$menu_item   = $app->getMenu()->getActive();
+		$params = $menu_item->params;
 		$params_title = $params->get('page_title');
 		$params_keywords = $params->get('menu-meta_keywords');
 		$params_description = $params->get('menu-description');

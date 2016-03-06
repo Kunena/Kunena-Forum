@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
 	`last_post_id` int(11) NOT NULL default '0',
 	`last_post_time` int(11) NOT NULL default '0',
 	`params` text NOT NULL,
+	`allow_ratings` tinyint(4) NOT NULL default '0',
 	PRIMARY KEY (id),
 	KEY `parent_id` (parent_id),
 	KEY `category_access` (accesstype,access),
@@ -307,6 +308,13 @@ CREATE TABLE IF NOT EXISTS `#__kunena_ranks` (
 	`rank_special` tinyint(1) unsigned NOT NULL default '0',
 	`rank_image` varchar(255) NOT NULL default '',
 	PRIMARY KEY (rank_id) ) DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_rate` (
+	`topicid` int(11) NULL,
+	`userid` int(11) NULL,
+	`rate` mediumint(8) unsigned NOT NULL default '0',
+	`time`  DATETIME NOT NULL,
+	UNIQUE KEY  `topicid` (topicid,userid) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_sessions` (
 	`userid` int(11) NOT NULL default '0',

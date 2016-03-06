@@ -156,4 +156,37 @@ class KunenaViewTopic extends KunenaView
 
 		echo json_encode($topicIcons);
 	}
+
+	/**
+	 * Save rate for user logged in by JSON call
+	 *
+	 * @param null $tpl
+	 */
+	public function displayRate($tpl = null)
+	{
+		$starid   = $this->app->input->get('starid', 0, 'int');
+		$topicid  = $this->app->input->get('topicid', 0, 'int');
+		$response = array();
+
+		if ($this->me->exists() || $this->config->ratingenabled)
+		{
+			$rate        = KunenaForumTopicRateHelper::get($topicid);
+			$rate->stars = $starid;
+
+			$topic = KunenaForumTopicHelper::get($topicid);
+
+			$activityIntegration = KunenaFactory::getActivityIntegration();
+			if (!$rate->save($this->me))
+			{
+				echo 'error '.$rate->getError();
+			}
+			$activityIntegration->onAfterRate($this->me->userid, $topic);
+		}
+
+		// Set the MIME type and header for JSON output.
+		$this->document->setMimeEncoding('application/json');
+		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+
+		echo json_encode($response);
+	}
 }

@@ -27,6 +27,8 @@ $this->addScript('js/caret.js');
 $this->addScript('js/atwho.js');
 $this->addScript('js/topic.js');
 
+$this->addScript('assets/js/rating.js');
+
 $this->ktemplate = KunenaFactory::getTemplate();
 $social = $this->ktemplate->params->get('socialshare');
 ?>
@@ -61,6 +63,8 @@ $social = $this->ktemplate->params->get('socialshare');
 <?php if ($social) : ?>
 	<div><?php echo $this->subLayout('Widget/Social'); ?></div>
 <?php endif; ?>
+
+<div><?php echo $this->subRequest('Topic/Item/Rating')->set('id', $topic->id); ?></div>
 
 <?php
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');

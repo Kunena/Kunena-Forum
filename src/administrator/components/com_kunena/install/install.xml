@@ -250,6 +250,10 @@
 		<field name="params"
 		       type="text"
 		       null="0"/>
+		<field name="allow_ratings"
+			   type="tinyint(4)"
+			   null="0"
+			   default="0"/>
 
 		<key name="PRIMARY"
 		     unique="1"
@@ -577,6 +581,25 @@
 		<key name="PRIMARY"
 		     unique="1"
 		     columns="rank_id"/>
+	</table>
+	<table name="kunena_rate">
+		<field primary_key="yes"
+		       name="topic_id"
+		       type="int(11)"
+		       null="0"/>
+		<field name="user_id"
+		       type="int(11)"
+		       null="0"/>
+		<field name="rate"
+		       type="mediumint(8) unsigned"
+		       null="0"
+		       default="0"/>
+		<field name="time"
+		       type="DATETIME"
+		       null="0"/>
+		<key name="PRIMARY"
+		     unique="1"
+		     columns="topic_id"/>
 	</table>
 	<table name="kunena_sessions">
 		<field primary_key="yes"

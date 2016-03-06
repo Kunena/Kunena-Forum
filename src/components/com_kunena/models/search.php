@@ -53,8 +53,11 @@ class KunenaModelSearch extends KunenaModel
 		$value = JFactory::getApplication()->input->getInt('starteronly', 0);
 		$this->setState('query.starteronly', $value);
 
-		$value = JFactory::getApplication()->input->getInt('exactname', 0);
-		$this->setState('query.exactname', $value);
+		if (!$this->config->pubprofile && !JFactory::getUser()->guest || $this->config->pubprofile)
+		{
+			$value = JFactory::getApplication()->input->getInt('exactname', 0);
+			$this->setState('query.exactname', $value);
+		}
 
 		$value = JFactory::getApplication()->input->getInt('replyless', 0);
 		$this->setState('query.replyless', $value);
@@ -177,18 +180,21 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-		// User searching
-		$username = $this->getState('query.searchuser');
-
-		if ($username)
+		if (!$this->config->pubprofile && !JFactory::getUser()->guest || $this->config->pubprofile)
 		{
-			if ($this->getState('query.exactname') == '1')
+			// User searching
+			$username = $this->getState('query.searchuser');
+
+			if ($username)
 			{
-				$querystrings [] = "m.name LIKE '" . $db->escape($username) . "'";
-			}
-			else
-			{
-				$querystrings [] = "m.name LIKE '%" . $db->escape($username) . "%'";
+				if ($this->getState('query.exactname') == '1')
+				{
+					$querystrings [] = "m.name LIKE '" . $db->escape($username) . "'";
+				}
+				else
+				{
+					$querystrings [] = "m.name LIKE '%" . $db->escape($username) . "%'";
+				}
 			}
 		}
 

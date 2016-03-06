@@ -1416,12 +1416,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return '';
 		}
 
-		// Display nothing in subscription mails
-		if (empty($bbcode->context))
-		{
-			return '';
-		}
-
 		$me = KunenaUserHelper::getMyself();
 
 		$layout = KunenaLayout::factory('BBCode/Hidden');
@@ -1470,7 +1464,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Display nothing in activity streams etc..
-		if (!empty($bbcode->parent->forceSecure)) {
+		if (!empty($bbcode->parent->forceSecure))
+		{
+			return '';
+		}
+
+		// Display nothing in subscription mails
+		if (empty($bbcode->context))
+		{
 			return '';
 		}
 
@@ -1478,7 +1479,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$message = $this->getMessage();
 		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 
-		if ( isset($bbcode->parent->message->userid))
+		if (isset($bbcode->parent->message->userid))
 		{
 			$message_userid = $bbcode->parent->message->userid;
 		}

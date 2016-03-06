@@ -992,6 +992,8 @@ HTML;
 	/**
 	 * @param KunenaForumTopic $topic
 	 *
+	 * @param string           $category_iconset
+	 *
 	 * @return string
 	 */
 	public function getTopicIcon($topic, $category_iconset = '')
@@ -1456,7 +1458,7 @@ HTML;
 	/**
 	 * Set the category iconset value
 	 *
-	 * @return void
+	 * @param string $iconset
 	 */
 	public function setCategoryIconset($iconset = '/default')
 	{

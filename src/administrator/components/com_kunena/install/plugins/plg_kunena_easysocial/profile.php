@@ -91,6 +91,8 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 	/**
 	 * @param int $limit
+	 *
+	 * @return array|void
 	 */
 	public function _getTopHits($limit = 0)
 	{

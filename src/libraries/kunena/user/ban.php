@@ -34,10 +34,12 @@ class KunenaUserBan extends JObject
 	const ACTIVE = 1;
 
 	/**
-	* Constructor
-  *
-  * @access	protected
-  */
+	 * Constructor
+	 *
+	 * @access    protected
+	 *
+	 * @param null $identifier
+	 */
 	public function __construct($identifier = null)
 	{
 		if (self::$_now === null)

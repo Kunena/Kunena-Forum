@@ -96,9 +96,13 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param      $txt
+	 * @param        $txt
 	 * @param   null $parent
 	 * @param   int  $len
+	 *
+	 * @param string $context
+	 *
+	 * @return mixed|void
 	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '')
 	{
@@ -123,8 +127,10 @@ abstract class KunenaHtmlParser
 	}
 
 	/**
-	 * @param     $txt
+	 * @param       $txt
 	 * @param   int $len
+	 *
+	 * @return mixed|void
 	 */
 	public static function plainBBCode($txt, $len = 0)
 	{

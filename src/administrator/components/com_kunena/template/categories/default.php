@@ -244,7 +244,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								<span class="sortable-handler hasTooltip <?php echo $disableClassName; ?>" title="<?php echo $disabledLabel; ?>">
 								<i class="icon-menu"></i>
 							</span>
-								<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $orderkey; ?>" />
+								<input type="text" style="display:none;" name="order[]" size="5" value="<?php echo $orderkey; ?>" />
 							<?php else : ?>
 								<span class="sortable-handler inactive" >
 								<i class="icon-menu"></i>

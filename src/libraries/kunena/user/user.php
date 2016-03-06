@@ -170,14 +170,12 @@ class KunenaUser extends JObject
 	/**
 	 * Throws an exception if user isn't authorised to do the action.
 	 *
-	 * @param string      $action
-	 * @param KunenaUser  $user
-	 * @param bool        $throw
+	 * @param string     $action
+	 * @param KunenaUser $user
+	 * @param bool       $throw
 	 *
 	 * @return KunenaExceptionAuthorise|null
-	 * @throws KunenaExceptionAuthorise
-	 * @throws InvalidArgumentException
-	 *
+	 * @throws null
 	 * @since  K4.0
 	 */
 	public function tryAuthorise($action='read', KunenaUser $user = null, $throw = true)
@@ -544,11 +542,13 @@ class KunenaUser extends JObject
 	}
 
 	/**
-	 * @param null|string   $name
-	 * @param null|string   $title
-	 * @param string $rel
-	 * @param string $task
-	 * @param string $class
+	 * @param null|string $name
+	 * @param null|string $title
+	 * @param string      $rel
+	 * @param string      $task
+	 * @param string      $class
+	 *
+	 * @param int         $catid
 	 *
 	 * @return string
 	 */

@@ -58,9 +58,10 @@ class ComponentKunenaControllerTopicPollDisplay extends KunenaControllerDisplay
 		{
 			// Authorise forced vote.
 			$this->topic->tryAuthorise('poll.vote');
+			$this->topic->tryAuthorise('reply');
 			$this->name = 'Topic/Poll/Vote';
 		}
-		elseif (!$this->voted && $this->topic->isAuthorised('poll.vote'))
+		elseif (!$this->voted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
 		{
 			$this->name = 'Topic/Poll/Vote';
 		}

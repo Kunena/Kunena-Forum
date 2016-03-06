@@ -1481,7 +1481,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (KunenaFactory::getConfig()->image_upload=='moderator')
 		{
-			if (!$user->isModerator())
+			$category = $this->getCategory();
+			if (!$user->isModerator($category))
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_MODERATORS'), 403);
 			}
@@ -1521,7 +1522,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (KunenaFactory::getConfig()->file_upload=='moderator' )
 		{
-			if (!$user->isModerator())
+			$category = $this->getCategory();
+			if (!$user->isModerator($category))
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_MODERATORS'), 403);
 			}

@@ -865,6 +865,10 @@ abstract class KunenaTableObject
 
 	/**
 	 * @internal
+	 *
+	 * @param JDatabaseQuery $query
+	 *
+	 * @return array
 	 */
 	static public function &loadInstances(JDatabaseQuery $query)
 	{
@@ -884,9 +888,10 @@ abstract class KunenaTableObject
 	 * Returns all keys and their values as an array.
 	 *
 	 * @param   array|string $fields
+	 * @param bool           $throw
+	 *
 	 * @return array
 	 * @since  K4.0
-	 * @throws UnexpectedValueException
 	 */
 	protected function getKeyValues($fields = null, $throw = true)
 	{

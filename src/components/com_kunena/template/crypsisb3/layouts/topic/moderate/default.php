@@ -113,7 +113,7 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 								'select.genericlist', $this->getTopicOptions(), 'targettopic', 'class="form-control"', 'value', 'text', 0, 'kmod_topics'
 							); ?> </div>
 					</div>
-					<div class="control-group" id="kmod_targetid" style="display: none">
+					<div class="control-group" id="kmod_targetid" style="display: none;">
 						<label class="control-label" for="modtopicslist"> <?php echo JText::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
 
 						<div class="controls">
@@ -133,10 +133,10 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 						<div class="control-group">
 							<div class="controls">
 								<label class="checkbox">
-									<input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked" value="selected" style="display: inline-block" />
+									<input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked" value="selected" style="display: inline-block;" />
 									<?php echo JText::_('COM_KUNENA_MODERATION_MOVE_SELECTED'); ?> </label>
 								<label class="checkbox">
-									<input id="kmoderate-mode-newer" type="radio" name="mode" value="newer" style="display: inline-block" />
+									<input id="kmoderate-mode-newer" type="radio" name="mode" value="newer" style="display: inline-block;" />
 									<?php echo JText::sprintf('COM_KUNENA_MODERATION_MOVE_NEWER', $this->escape($this->replies)); ?> </label>
 							</div>
 						</div>

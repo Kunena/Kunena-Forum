@@ -22,10 +22,9 @@ class KunenaLayoutMessageList extends KunenaLayout
 	/**
 	 * Method to display the time filter
 	 *
-	 * @param   int     $id      The HTML id for the select list
-	 * @param   string  $attrib  The extras attributes for the select list
+	 * @param int|string $id     The HTML id for the select list
+	 * @param   string   $attrib The extras attributes for the select list
 	 *
-	 * @return void
 	 */
 	public function displayTimeFilter($id = 'filter-time', $attrib = 'class="form-control filter" onchange="this.form.submit()"')
 	{

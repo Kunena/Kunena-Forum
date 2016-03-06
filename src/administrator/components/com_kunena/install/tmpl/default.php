@@ -10,7 +10,7 @@
  **/
 defined('_JEXEC') or die();
 ?>
-<div id="kunena" style="max-width:530px">
+<div id="kunena" style="max-width:530px;">
 	<div id="kunena-install">
 		<h2><?php echo JText::_('COM_KUNENA_INSTALL_PLEASE_WAIT'); ?></h2>
 		<div>

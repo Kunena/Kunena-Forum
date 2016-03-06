@@ -486,6 +486,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	}
 
 	/**
+	 * @param string $category_icon
+	 *
 	 * @return string
 	 */
 	public function getIcon($category_icon = '')
@@ -822,6 +824,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 
 	/**
 	 * @deprecated
+	 *
+	 * @param null $user
+	 *
+	 * @return bool
 	 */
 	public function markNew($user = null)
 	{

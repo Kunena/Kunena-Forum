@@ -16,4 +16,4 @@ defined('_JEXEC') or die;
 
 $colortext = isset($this->params['colortext']) ? $this->params['colortext'] : '#ffffff';
 ?>
-<pre style="font-family:monospace;background-color:#444444;color:<?php echo $colortext; ?>"><?php echo $this->content; ?></pre>
+<pre style="font-family:monospace;background-color:#444444;color:<?php echo $colortext; ?>;"><?php echo $this->content; ?></pre>

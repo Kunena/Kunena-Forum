@@ -100,9 +100,12 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @param $text
+	 * @param        $userid
+	 * @param string $class
+	 * @param string $icon
 	 *
 	 * @return string
+	 * @internal param $text
 	 */
 	public function shownewIcon($userid, $class='btn btn-small', $icon='icon icon-comments-2')
 	{

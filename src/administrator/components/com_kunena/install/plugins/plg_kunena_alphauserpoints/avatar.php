@@ -48,6 +48,7 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	 * @param $sizey
 	 *
 	 * @deprecated  5.0
+	 * @return string|void
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{

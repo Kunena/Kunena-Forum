@@ -222,6 +222,9 @@ class lessc
 	 *
 	 * See lessc::compileProp()
 	 *
+	 * @param $block
+	 *
+	 * @throws exception
 	 */
 	protected function compileBlock($block)
 	{
@@ -1620,6 +1623,10 @@ class lessc
 	/**
 	 * Converts a hsl array into a color value in rgb.
 	 * Expects H to be in range of 0 to 360, S and L in 0 to 100
+	 *
+	 * @param $color
+	 *
+	 * @return array
 	 */
 	protected function toRGB($color)
 	{
@@ -1669,6 +1676,10 @@ class lessc
 	/**
 	 * Convert the rgb, rgba, hsl color literals of function type
 	 * as returned by the parser into values of color type.
+	 *
+	 * @param $func
+	 *
+	 * @return bool
 	 */
 	protected function funcToColor($func)
 	{
@@ -2573,6 +2584,10 @@ class lessc
 
 	/**
 	 * Uses the current value of $this->count to show line and line number
+	 *
+	 * @param null $msg
+	 *
+	 * @throws exception
 	 */
 	protected function throwError($msg = null) {
 		if ($this->sourceLoc >= 0) {
@@ -3071,7 +3086,12 @@ class lessc_parser {
 
 	/**
 	 * Attempt to consume an expression.
+	 *
 	 * @link http://en.wikipedia.org/wiki/Operator-precedence_parser#Pseudo-code
+	 *
+	 * @param $out
+	 *
+	 * @return bool
 	 */
 	protected function expression(&$out) {
 		if ($this->value($lhs)) {
@@ -3096,6 +3116,11 @@ class lessc_parser {
 
 	/**
 	 * recursively parse infix equation with $lhs at precedence $minP
+	 *
+	 * @param $lhs
+	 * @param $minP
+	 *
+	 * @return array
 	 */
 	protected function expHelper($lhs, $minP) {
 		$this->inExp = true;
@@ -3819,6 +3844,10 @@ class lessc_parser {
 	/**
 	 * Consume an assignment operator
 	 * Can optionally take a name that will be set to the current property name
+	 *
+	 * @param null $name
+	 *
+	 * @return bool
 	 */
 	protected function assign($name = null) {
 		if ($name) $this->currentProperty = $name;

@@ -27,6 +27,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 	/**
 	 * @param $userid
+	 *
+	 * @return string|void
 	 */
 	protected function getURL($userid)
 	{

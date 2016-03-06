@@ -37,6 +37,8 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 * @param $user
 	 * @param $sizex
 	 * @param $sizey
+	 *
+	 * @return string|void
 	 */
 	public function _getURL($user, $sizex, $sizey)
 	{

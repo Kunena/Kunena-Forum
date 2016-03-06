@@ -386,6 +386,8 @@ class KunenaBbcode extends NBBC_BBCode
 	}
 
 	/**
+	 * @param $params
+	 *
 	 * @return bool
 	 */
 	public function canCloakEmail(&$params)
@@ -2921,6 +2923,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	}
 
 	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
 	 * @param $content
 	 *
 	 * @return bool|string
@@ -2941,6 +2948,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	}
 
 	/**
+	 * @param $bbcode
+	 * @param $action
+	 * @param $name
+	 * @param $default
+	 * @param $params
 	 * @param $content
 	 *
 	 * @return bool|string

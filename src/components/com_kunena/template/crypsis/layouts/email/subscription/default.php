@@ -118,12 +118,12 @@ $more = ($this->once ?
 	<!-- WRAPPER -->
 	<!-- Set wrapper width (twice) -->
 	<table border="0" cellpadding="0" cellspacing="0" align="center"
-		style="border-collapse: collapse; border-spacing: 0; padding: 0; width: 100%; background-color: #f0f0f0" class="wrapper">
+		style="border-collapse: collapse; border-spacing: 0; padding: 0; width: 100%; background-color: #f0f0f0;" class="wrapper">
 
 		<tr>
-			<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
-			padding-top: 20px;background-color: #F0F0F0;
-			padding-bottom: 20px;">
+			<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
+			background-color: #F0F0F0;
+			padding: 20px 6.25%;">
 
 				<!-- LOGO -->
 				<!-- Image text color should be opposite to background color. Set your url, image src, alt and title. Alt text should fit the image size. Real image size should be x2. URL format: http://domain.com/?utm_source={{Campaign-Source}}&utm_medium=email&utm_content=logo&utm_campaign={{Campaign-Name}} -->
@@ -149,16 +149,15 @@ $more = ($this->once ?
 
 					<!-- HEADER -->
 					<tr>
-						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
-			padding-top: 25px;color: #999999;font-family: sans-serif;" class="header">
+						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
+			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;" class="header">
 							<?php echo $msg1 . " " . $config->board_title; ?>
 						</td>
 					</tr>
 
 					<!-- HERO IMAGE -->
 					<tr>
-						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;
-			padding-top: 20px;" class="hero"><a target="_blank" style="text-decoration: none;"
+						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;" class="hero"><a target="_blank" style="text-decoration: none;"
 								href="#"><img border="0" vspace="0" hspace="0"
 									src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/hero-wide.png"
 									alt="Please enable images to view this content" title="Hero Image"
@@ -171,8 +170,8 @@ $more = ($this->once ?
 
 					<!-- PARAGRAPH -->
 					<tr>
-						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%; font-size: 17px;
-			padding-top: 25px;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
+						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
+			padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
 							<div>
 								<p><?php echo JText::_('COM_KUNENA_MESSAGE_SUBJECT') . " : " . $subject; ?></p>
 								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
@@ -197,9 +196,8 @@ $more = ($this->once ?
 
 					<!-- BUTTON -->
 					<tr>
-						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
-			padding-top: 25px;
-			padding-bottom: 5px;" class="button"><a
+						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
+			padding: 25px 6.25% 5px;" class="button"><a
 								href="<?php echo $this->messageUrl; ?>" target="_blank" style="text-decoration: underline;">
 								<table border="0" cellpadding="0" cellspacing="0" align="center" style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;">
 									<tr>
@@ -229,14 +227,14 @@ $more = ($this->once ?
 
 					<!-- SOCIAL NETWORKS -->
 					<tr>
-						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
-			padding-top: 25px;" class="social-icons">
+						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
+			padding: 25px 6.25% 0;" class="social-icons">
 							<table
 								width="256" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse; border-spacing: 0; padding: 0;">
 								<tr>
 
 									<!-- ICON 1 -->
-									<td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; padding-right: 10px; border-collapse: collapse; border-spacing: 0;">
+									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">
 										<a target="_blank"
 											href="#"
 											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
@@ -247,7 +245,7 @@ $more = ($this->once ?
 									</td>
 
 									<!-- ICON 2 -->
-									<td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; padding-right: 10px; border-collapse: collapse; border-spacing: 0;">
+									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">
 										<a target="_blank"
 											href="#"
 											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
@@ -258,7 +256,7 @@ $more = ($this->once ?
 									</td>
 
 									<!-- ICON 3 -->
-									<td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; padding-right: 10px; border-collapse: collapse; border-spacing: 0;">
+									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">
 										<a target="_blank"
 											href="#"
 											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
@@ -269,7 +267,7 @@ $more = ($this->once ?
 									</td>
 
 									<!-- ICON 4 -->
-									<td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; padding-right: 10px; border-collapse: collapse; border-spacing: 0;">
+									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">
 										<a target="_blank"
 											href="#"
 											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
@@ -286,8 +284,8 @@ $more = ($this->once ?
 
 					<!-- FOOTER -->
 					<tr>
-						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%; font-size: 13px; font-weight: 400; line-height: 150%;
-			padding-top: 20px;padding-bottom: 20px;color: #999999;font-family: sans-serif;" class="footer">
+						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 13px; font-weight: 400; line-height: 150%;
+			padding: 20px 6.25%;color: #999999;font-family: sans-serif;" class="footer">
 							<?php echo JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br />
 							<?php echo $msg2; ?>
 						</td>

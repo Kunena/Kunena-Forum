@@ -30,7 +30,7 @@ $form = $this->form;
 		<p><?php echo $description ?></p>
 		<div class="control-group">
 			<div class="controls">
-				<textarea <?php echo $name ?> style="resize: none; text-align: left" class="input-block-level" rows="3" maxlength="255"><?php echo $data; ?></textarea>
+				<textarea <?php echo $name ?> style="resize: none; text-align: left;" class="input-block-level" rows="3" maxlength="255"><?php echo $data; ?></textarea>
 			</div>
 		</div>
 	</div>

@@ -65,7 +65,10 @@ class KunenaActivity
 	public function onAfterEdit($message)
 {}
 
-	/** TODO: Looks like these aren't fully working.. */
+	/** TODO: Looks like these aren't fully working..
+	 *
+	 * @param $message
+	 */
 	public function onAfterDelete($message)
 {}
 

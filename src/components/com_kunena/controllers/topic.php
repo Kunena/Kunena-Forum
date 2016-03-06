@@ -865,7 +865,10 @@ class KunenaControllerTopic extends KunenaController
 	/**
 	 * Check in the text the max links
 	 *
-	 * @return void;
+	 * @param $text
+	 * @param $topic
+	 *
+	 * @return bool
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{

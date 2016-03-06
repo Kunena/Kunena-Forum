@@ -150,9 +150,11 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 	 * @param   string              $title    The title of the link
 	 * @param   string              $class    The class attribute of the link
 	 *
-	 * @see KunenaLayout::getLastPostLink()
+	 * @param int                   $length
 	 *
 	 * @return string
+	 * @see KunenaLayout::getLastPostLink()
+	 *
 	 */
 	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 20)
 	{

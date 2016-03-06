@@ -85,6 +85,7 @@ class KunenaAdminViewTools extends KunenaView
 	{
 		$this->legacy    = KunenaMenuFix::getLegacy();
 		$this->invalid   = KunenaMenuFix::getInvalid();
+		$this->conflicts = KunenaMenuFix::getConflicts();
 
 		$this->setToolBarMenu();
 		$this->display();

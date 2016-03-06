@@ -51,43 +51,47 @@ class ComponentKunenaControllerSearchFormDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
-		$params = $menu_item->params;
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
-		$params_description = $params->get('menu-description');
+		$app       = JFactory::getApplication();
+		$menu_item = $app->getMenu()->getActive();
 
-		if (!empty($params_title))
+		if ($menu_item)
 		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
-		}
+			$params             = $menu_item->params;
+			$params_title       = $params->get('page_title');
+			$params_keywords    = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-description');
 
-		if (!empty($params_keywords))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH');
-			$this->setKeywords($keywords);
-		}
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+			}
 
-		if (!empty($params_description))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
-			$this->setDescription($description);
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->config->board_title . ', ' . JText::_('COM_KUNENA_SEARCH_ADVSEARCH');
+				$this->setKeywords($keywords);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = JText::_('COM_KUNENA_SEARCH_ADVSEARCH') . ': ' . $this->config->board_title;
+				$this->setDescription($description);
+			}
 		}
 	}
 }

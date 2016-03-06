@@ -134,39 +134,43 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 	{
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
-		$params = $menu_item->params;
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
-		$params_description = $params->get('menu-description');
 
-		if (!empty($params_title))
+		if ($menu_item)
 		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$this->setTitle($this->title);
-		}
+			$params             = $menu_item->params;
+			$params_title       = $params->get('page_title');
+			$params_keywords    = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-description');
 
-		if (!empty($params_keywords))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$this->setKeywords($this->title);
-		}
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$this->setTitle($this->title);
+			}
 
-		if (!empty($params_description))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			$this->setDescription($this->title);
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$this->setKeywords($this->title);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$this->setDescription($this->title);
+			}
 		}
 	}
 }

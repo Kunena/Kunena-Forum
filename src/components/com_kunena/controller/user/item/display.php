@@ -86,45 +86,49 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
+		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
-		$params = $menu_item->params;
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
-		$params_description = $params->get('menu-description');
 
-		if (!empty($params_title))
+		if ($menu_item)
 		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
-			$this->setTitle($title);
-		}
+			$params             = $menu_item->params;
+			$params_title       = $params->get('page_title');
+			$params_keywords    = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-meta_description');
 
-		if (!empty($params_keywords))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$keywords = $this->config->board_title . ', ' . $this->profile->getName();
-			$this->setKeywords($keywords);
-		}
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+				$this->setTitle($title);
+			}
 
-		if (!empty($params_description))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
-				$this->config->board_title, $this->profile->getName(), $this->config->board_title);
-			$this->setDescription($description);
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->config->board_title . ', ' . $this->profile->getName();
+				$this->setKeywords($keywords);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = JText::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
+					$this->config->board_title, $this->profile->getName(), $this->config->board_title);
+				$this->setDescription($description);
+			}
 		}
 	}
 }

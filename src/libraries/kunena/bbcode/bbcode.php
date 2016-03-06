@@ -279,7 +279,15 @@ class KunenaBbcode extends NBBC_BBCode
 			}
 
 			$url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
-			return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+
+			if (strpos($url, '/index.php') !== 0)
+			{
+				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+			}
+			else
+			{
+				return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\">{$text}</a>";
+			}
 		}
 
 		// Auto-linking has been disabled.
@@ -1180,7 +1188,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// TODO: Remove in Kunena 4.0
 		$target = ' target="' . htmlspecialchars($target, ENT_COMPAT, 'UTF-8') . '"';
 
-		return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
+		if (strpos($url, '/index.php') !== 0)
+		{
+			return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
+		}
+		else
+		{
+			return '<a href="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
+		}
 	}
 
 	// Format a [size] tag by producing a <span> with a style with a different font-size.
@@ -1464,7 +1479,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Display nothing in activity streams etc..
-		if (!empty($bbcode->parent->forceSecure)) {
+		if (!empty($bbcode->parent->forceSecure))
+		{
+			return '';
+		}
+
+		// Display nothing in subscription mails
+		if (empty($bbcode->context))
+		{
 			return '';
 		}
 
@@ -1472,7 +1494,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$message = $this->getMessage();
 		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
 
-		if ( isset($bbcode->parent->message->userid))
+		if (isset($bbcode->parent->message->userid))
 		{
 			$message_userid = $bbcode->parent->message->userid;
 		}

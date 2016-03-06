@@ -53,8 +53,11 @@ class KunenaModelSearch extends KunenaModel
 		$value = JFactory::getApplication()->input->getInt('starteronly', 0);
 		$this->setState('query.starteronly', $value);
 
-		$value = JFactory::getApplication()->input->getInt('exactname', 0);
-		$this->setState('query.exactname', $value);
+		if (!$this->config->pubprofile && !JFactory::getUser()->guest || $this->config->pubprofile)
+		{
+			$value = JFactory::getApplication()->input->getInt('exactname', 0);
+			$this->setState('query.exactname', $value);
+		}
 
 		$value = JFactory::getApplication()->input->getInt('replyless', 0);
 		$this->setState('query.replyless', $value);
@@ -177,18 +180,21 @@ class KunenaModelSearch extends KunenaModel
 			}
 		}
 
-		// User searching
-		$username = $this->getState('query.searchuser');
-
-		if ($username)
+		if (!$this->config->pubprofile && !JFactory::getUser()->guest || $this->config->pubprofile)
 		{
-			if ($this->getState('query.exactname') == '1')
+			// User searching
+			$username = $this->getState('query.searchuser');
+
+			if ($username)
 			{
-				$querystrings [] = "m.name LIKE '" . $db->escape($username) . "'";
-			}
-			else
-			{
-				$querystrings [] = "m.name LIKE '%" . $db->escape($username) . "%'";
+				if ($this->getState('query.exactname') == '1')
+				{
+					$querystrings [] = "m.name LIKE '" . $db->escape($username) . "'";
+				}
+				else
+				{
+					$querystrings [] = "m.name LIKE '%" . $db->escape($username) . "%'";
+				}
 			}
 		}
 
@@ -413,7 +419,7 @@ class KunenaModelSearch extends KunenaModel
 		// Turn internal state into URL, but ignore default values
 		$defaults = array('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
 							'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-							'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0);
+							'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0);
 
 		$url_params = '';
 		$state      = $this->getState();
@@ -429,7 +435,7 @@ class KunenaModelSearch extends KunenaModel
 
 			$param = $paramparts[1];
 
-			if ($param == 'catids')
+			if ($param == 'catids' || $param == 'ids')
 			{
 				$value = implode(' ', $value);
 			}

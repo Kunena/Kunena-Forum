@@ -62,7 +62,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		foreach ($sections as $key => $category)
 		{
 			$this->categories[$category->id] = array();
-			$this->more[$category->id] = 0;
+			$this->more[$category->id]       = 0;
 
 			// Display only categories which are supposed to show up.
 			if ($catid || $category->params->get('display.index.parent', 3) > 0)
@@ -91,7 +91,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		}
 
 		$this->sections = $sections;
-		$categories = KunenaForumCategoryHelper::getChildren($sectionIds);
+		$categories     = KunenaForumCategoryHelper::getChildren($sectionIds);
 
 		if (empty($categories))
 		{
@@ -99,9 +99,9 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		}
 
 		$categoryIds = array();
-		$topicIds = array();
-		$userIds = array();
-		$postIds = array();
+		$topicIds    = array();
+		$userIds     = array();
+		$postIds     = array();
 
 		foreach ($categories as $key => $category)
 		{
@@ -111,7 +111,8 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			if ($catid || $category->params->get('display.index.parent', 3) > 1)
 			{
 				if ($catid
-					|| ($category->getParent()->params->get('display.index.children', 3) > 2 && $category->params->get('display.index.children', 3) > 2))
+					|| ($category->getParent()->params->get('display.index.children', 3) > 2 && $category->params->get('display.index.children', 3) > 2)
+				)
 				{
 					$categoryIds[] = $category->id;
 				}
@@ -167,7 +168,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		foreach ($topics as $topic)
 		{
 			$userIds[$topic->last_post_userid] = $topic->last_post_userid;
-			$postIds[$topic->id] = $topic->last_post_id;
+			$postIds[$topic->id]               = $topic->last_post_id;
 		}
 
 		KunenaUserHelper::loadUsers($userIds);
@@ -182,7 +183,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			KunenaForumCategoryHelper::getNewTopics(array_keys($categories + $subcategories));
 
 			// Get categories which are moderated by current user.
-			$access = KunenaAccess::getInstance();
+			$access   = KunenaAccess::getInstance();
 			$moderate = $access->getAdminStatus($this->me) + $access->getModeratorStatus($this->me);
 
 			if (!empty($moderate[0]))
@@ -200,7 +201,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			{
 				// Get pending messages.
 				$catlist = implode(',', array_keys($moderate));
-				$db = JFactory::getDbo();
+				$db      = JFactory::getDbo();
 				$db->setQuery(
 					"SELECT catid, COUNT(*) AS count
 					FROM #__kunena_messages
@@ -243,44 +244,48 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	 */
 	protected function prepareDocument()
 	{
-		$app = JFactory::getApplication();
-		$menu_item   = $app->getMenu()->getActive();
-		$params = $menu_item->params;
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
-		$params_description = $params->get('menu-description');
+		$app       = JFactory::getApplication();
+		$menu_item = $app->getMenu()->getActive();
 
-		if (!empty($params_title))
+		if ($menu_item)
 		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
-			$this->setTitle($title);
-		}
+			$params             = $menu_item->params;
+			$params_title       = $params->get('page_title');
+			$params_keywords    = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-meta_description');
 
-		if (!empty($params_keywords))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$keywords = JText::_('COM_KUNENA_CATEGORIES');
-			$this->setKeywords($keywords);
-		}
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
+				$this->setTitle($title);
+			}
 
-		if (!empty($params_description))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			$description = JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title;
-			$this->setDescription($description);
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = JText::_('COM_KUNENA_CATEGORIES');
+				$this->setKeywords($keywords);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title;
+				$this->setDescription($description);
+			}
 		}
 	}
 }

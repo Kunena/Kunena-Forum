@@ -250,7 +250,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php if (!empty($this->captchaEnabled)) : ?>
 						<div class="control-group">
 							<div class="controls">
-								<div id="dynamic_recaptcha_1"> </div>
+								<?php echo $this->captchaDisplay;?>
 							</div>
 						</div>
 						<?php endif; ?>

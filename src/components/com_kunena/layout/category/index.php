@@ -43,8 +43,11 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 	 */
 	public function getCategoryIcon($category)
 	{
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
+		$template = KunenaFactory::getTemplate();
+		$catimagepath = $template->params->get('DefaultCategoryicon');
+
+		$path = JPATH_ROOT . '/media/kunena/' . $catimagepath . '/';
+		$uri  = JUri::root(true) . '/media/kunena/' . $catimagepath . '/';
 
 		if ($category->getNewCount())
 		{
@@ -54,7 +57,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			}
 			else
 			{
-				return '<i class="' . $defaultcategoryicon . ' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return '<i class="' . $catimagepath . ' icon-big icon-knewchar" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
 			}
 		}
 		else
@@ -65,7 +68,7 @@ class KunenaLayoutCategoryIndex extends KunenaLayout
 			}
 			else
 			{
-				return '<i class="' . $defaultcategoryicon . ' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
+				return '<i class="' . $catimagepath . ' icon-big" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"> </i>';
 			}
 		}
 	}

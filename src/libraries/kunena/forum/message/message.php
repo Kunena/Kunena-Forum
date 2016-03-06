@@ -547,11 +547,15 @@ class KunenaForumMessage extends KunenaDatabaseObject
 	}
 
 	/**
+	 * Display required field from message table
+	 *
 	 * @param string $field
+	 * @param boolean $html
+	 * @param string $context
 	 *
 	 * @return int|string
 	 */
-	public function displayField($field, $html = true)
+	public function displayField($field, $html = true, $context = '')
 	{
 		switch ($field)
 		{
@@ -560,8 +564,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 			case 'subject':
 				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
-				// FIXME: add context to BBCode parser (and fix logic in the parser)
-				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this) : KunenaHtmlParser::stripBBCode
+				return $html ? KunenaHtmlParser::parseBBCode($this->message, $this, 0, $context) : KunenaHtmlParser::stripBBCode
 					($this->message, $this->parent, $html);
 		}
 
@@ -1478,7 +1481,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (KunenaFactory::getConfig()->image_upload=='moderator')
 		{
-			if (!$user->isModerator())
+			$category = $this->getCategory();
+			if (!$user->isModerator($category))
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_IMAGE_ONLY_FOR_MODERATORS'), 403);
 			}
@@ -1518,7 +1522,8 @@ class KunenaForumMessage extends KunenaDatabaseObject
 
 		if (KunenaFactory::getConfig()->file_upload=='moderator' )
 		{
-			if (!$user->isModerator())
+			$category = $this->getCategory();
+			if (!$user->isModerator($category))
 			{
 				return new KunenaExceptionAuthorise(JText::_('COM_KUNENA_POST_ATTACHMENTS_FILE_ONLY_FOR_MODERATORS'), 403);
 			}

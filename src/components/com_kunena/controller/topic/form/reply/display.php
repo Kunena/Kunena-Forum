@@ -76,7 +76,9 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 					JPluginHelper::importPlugin('captcha');
 					$dispatcher = JEventDispatcher::getInstance();
 					$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
-
+					$output = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class="controls g-recaptcha" data-sitekey="'
+						. $captcha_pubkey . '" data-theme="light"'));
+					$this->captchaDisplay = $output[0];
 					$this->captchaEnabled = $result[0];
 				}
 			}
@@ -127,39 +129,43 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 	{
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
-		$params = $menu_item->params;
-		$params_title = $params->get('page_title');
-		$params_keywords = $params->get('menu-meta_keywords');
-		$params_description = $params->get('menu-description');
 
-		if (!empty($params_title))
+		if ($menu_item)
 		{
-			$title = $params->get('page_title');
-			$this->setTitle($title);
-		}
-		else
-		{
-			$this->setTitle($this->headerText);
-		}
+			$params             = $menu_item->params;
+			$params_title       = $params->get('page_title');
+			$params_keywords    = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-meta_description');
 
-		if (!empty($params_keywords))
-		{
-			$keywords = $params->get('menu-meta_keywords');
-			$this->setKeywords($keywords);
-		}
-		else
-		{
-			$this->setKeywords($this->headerText);
-		}
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$this->setTitle($this->headerText);
+			}
 
-		if (!empty($params_description))
-		{
-			$description = $params->get('menu-meta_description');
-			$this->setDescription($description);
-		}
-		else
-		{
-			$this->setDescription($this->headerText);
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$this->setKeywords($this->headerText);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$this->setDescription($this->headerText);
+			}
 		}
 	}
 

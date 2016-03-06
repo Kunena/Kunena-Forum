@@ -14,7 +14,13 @@ defined('_JEXEC') or die;
 
 // Display URL.
 $target = ' target="' . $this->escape($this->target) . '"';
+if (strpos($this->escape($this->url), '/index.php') !== 0)
+{
+	$rel = 'rel="nofollow"';
+} else {
+	$rel = '';
+}
 ?>
-<a href="<?php echo $this->escape($this->url); ?>" class="bbcode_url" rel="nofollow"<?php echo $target; ?>>
+<a href="<?php echo $this->escape($this->url); ?>" class="bbcode_url" <?php echo $rel . $target; ?>>
 	<?php echo $this->content; ?>
 </a>

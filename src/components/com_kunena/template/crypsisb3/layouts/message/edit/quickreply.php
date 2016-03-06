@@ -48,6 +48,30 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
 	$this->addScript('assets/js/sisyphus.js');
 }
+
+// Fixme: can't get the controller working on this
+if ($me->canDoCaptcha() )
+{
+	if (JPluginHelper::isEnabled('captcha'))
+	{
+		$plugin = JPluginHelper::getPlugin('captcha');
+		$params = new JRegistry($plugin[0]->params);
+
+		$captcha_pubkey = $params->get('public_key');
+		$catcha_privkey = $params->get('private_key');
+
+		if (!empty($captcha_pubkey) && !empty($catcha_privkey))
+		{
+			JPluginHelper::importPlugin('captcha');
+			$dispatcher = JDispatcher::getInstance();
+			$result = $dispatcher->trigger('onInit', 'dynamic_recaptcha_' . $this->message->id);
+			$output = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_' . $this->message->id,
+				'class="controls g-recaptcha" data-sitekey="' . $captcha_pubkey . '" data-theme="light"'));
+			$this->quickcaptchaDisplay = $output[0];
+			$this->quickcaptchaEnabled = $result[0];
+		}
+	}
+}
 ?>
 
 <div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
@@ -129,9 +153,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					<a href="index.php?option=com_kunena&view=topic&layout=reply&catid=<?php echo $message->catid;?>&id=<?php echo $message->thread;?>&mesid=<?php echo $message->id;?>&Itemid=<?php echo KunenaRoute::getItemID();?>" role="button" class="btn btn-default btn-small btn-link pull-right" rel="nofollow"><?php echo JText::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 					<br />
 				</div>
-				<?php if (!empty($this->captchaEnabled)) : ?>
+				<?php if (!empty($this->quickcaptchaEnabled)) : ?>
 					<div class="control-group">
-						<div class="controls"> <div id="dynamic_recaptcha_<?php echo $this->message->id; ?>"> </div> </div>
+						<?php echo $this->quickcaptchaDisplay;?>
 					</div>
 				<?php endif; ?>
 				<div class="modal-footer">

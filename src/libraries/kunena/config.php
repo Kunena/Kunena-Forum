@@ -120,6 +120,7 @@ class KunenaConfig extends JObject
 
 	/**
 	 * @var    string  Category image path; input, text
+	 * @deprecated 4.0
 	 * @since  1.0.0
 	 */
 	public $catimagepath = 'category_images';

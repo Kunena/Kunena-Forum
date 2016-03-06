@@ -100,7 +100,7 @@ abstract class KunenaHtmlParser
 	 * @param   null $parent
 	 * @param   int  $len
 	 */
-	public static function parseBBCode($txt, $parent = null, $len = 0)
+	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '')
 	{
 		if (!$txt)
 		{
@@ -112,6 +112,7 @@ abstract class KunenaHtmlParser
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
+		$bbcode->context = $context;
 		$bbcode->SetPlainMode(false);
 		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent($txt);

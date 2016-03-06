@@ -34,7 +34,7 @@ $more = ($this->once ?
 
 <p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
 
-<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
+<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE', true, 'subscription'); ?>:
 <hr />
 <div><?php echo $this->message->displayField('message'); ?></div>
 <hr />

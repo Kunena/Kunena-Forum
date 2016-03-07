@@ -9,37 +9,31 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Forum Topic Rate Class
+ *
+ * @since 5.0
  */
 class KunenaForumTopicRate extends JObject
 {
-	protected $topicid = 0;
-
+	protected $_exists = false;
+	protected $_db = null;
+	public $topic_id = 0;
 	public $stars = 0;
-
-  public $userid = null;
-
-  public $time = null;
-
+	public $userid = null;
+	public $time = null;
 	protected $users = array();
 
 	/**
-	 *
-	 * @access    protected
-	 *
-	 * @param   mixed|null  $id
-	 *
-	 * @throws Exception
+	 * @param   int $identifier
 	 */
-	public function __construct($object)
+	public function __construct($identifier = 0)
 	{
-    $this->topicid    = (int) $object->topicid;
-		$this->stars = (int) $object->rate;
-    $this->userid = (int) $object->userid;
-    $this->time = $object->time;
+		// Always load the topic -- if rate does not exist: fill empty data
+		$this->_db = JFactory::getDBO();
+		$this->load($identifier);
 	}
 
 	/**
@@ -118,7 +112,7 @@ class KunenaForumTopicRate extends JObject
 		$time  = JFactory::getDate();
 		$query = $db->getQuery(true);
 		$query->insert('#__kunena_rate')
-			->set('topicid=' . $db->quote($this->topicid))
+			->set('topic_id=' . $db->quote($this->topicid))
 			->set("userid={$db->quote($user->userid)}")
 			->set("rate={$db->quote($this->stars)}")
 			->set("time={$db->quote($time->toSQL())}");
@@ -149,5 +143,49 @@ class KunenaForumTopicRate extends JObject
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Method to get the rate table object.
+	 *
+	 * @param   string $type		Polls table name to be used.
+	 * @param   string $prefix	Polls table prefix to be used.
+	 *
+	 * @return KunenaTable|TableKunenaRate
+	 */
+	public function getTable($type = 'KunenaRate', $prefix = 'Table')
+	{
+		static $tabletype = null;
+
+		//Set a custom table type is defined
+		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix'])
+		{
+			$tabletype ['name'] = $type;
+			$tabletype ['prefix'] = $prefix;
+		}
+
+		// Create the user table object
+		return JTable::getInstance($tabletype ['name'], $tabletype ['prefix']);
+	}
+
+	/**
+	 * Method to load a KunenaForumTopicPoll object by id.
+	 *
+	 * @param   int $id	The poll id to be loaded.
+	 *
+	 * @return boolean
+	 */
+	public function load($id)
+	{
+		// Create the table object
+		$table = $this->getTable();
+
+		// Load the KunenaTable object based on id
+		$this->_exists = $table->load($id);
+
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties($table->getProperties());
+
+		return $this->_exists;
 	}
 }

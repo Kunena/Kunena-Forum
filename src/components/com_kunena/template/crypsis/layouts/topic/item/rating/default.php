@@ -34,6 +34,6 @@ defined('_JEXEC') or die ();
 		{
 			echo ' checked="checked" ';
 		} ?>/><label for="star1" title="COM_KUNENA_TOPIC_RATING_SUCKS">1 star</label>
-		<input type="hidden" id="krating_submit_url" name="url" value="<?php echo 'index.php?option=com_kunena&view=topic&layout=rate&topicid=' . $this->id . '&format=raw'; ?>" />
+		<input type="hidden" id="krating_submit_url" name="url" value="<?php echo 'index.php?option=com_kunena&view=topic&layout=rate&topicid=' . $this->topicid . '&format=raw'; ?>" />
 	</form>
 </div>

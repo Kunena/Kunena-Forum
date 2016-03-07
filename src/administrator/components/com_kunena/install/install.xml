@@ -587,7 +587,7 @@
 		       name="topic_id"
 		       type="int(11)"
 		       null="0"/>
-		<field name="user_id"
+		<field name="userid"
 		       type="int(11)"
 		       null="0"/>
 		<field name="rate"

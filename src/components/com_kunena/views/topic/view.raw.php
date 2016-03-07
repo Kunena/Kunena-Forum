@@ -172,15 +172,21 @@ class KunenaViewTopic extends KunenaView
 		{
 			$rate        = KunenaForumTopicRateHelper::get($topicid);
 			$rate->stars = $starid;
+			$rate->topic_id = $topicid;
 
 			$topic = KunenaForumTopicHelper::get($topicid);
 
 			$activityIntegration = KunenaFactory::getActivityIntegration();
 			if (!$rate->save($this->me))
 			{
-				echo 'error '.$rate->getError();
+				$response = $rate->getError();
 			}
-			$activityIntegration->onAfterRate($this->me->userid, $topic);
+			else
+			{
+				$activityIntegration->onAfterRate($this->me->userid, $topic);
+
+				$response = 'The star has been successfully saved';
+			}
 		}
 
 		// Set the MIME type and header for JSON output.

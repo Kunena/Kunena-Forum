@@ -17,10 +17,10 @@ jQuery(document).ready(function() {
 					dataType: "json",
 					url: jQuery('#krating_submit_url').val(),
 					data: 'starid=' + ratelevel 
-				}).done(function() {
-					console.log( "second success" );
-				}).fail(function() {
-					console.log( "error" );
+				}).done(function(response) {
+					jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Success</h4>'+response+'</div>').appendTo('#system-message-container');
+				}).fail(function(reponse) {
+					jQuery('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>'+reponse+'</div>').appendTo('#system-message-container');
 				});
 			});
 		});

@@ -5,14 +5,16 @@
  * @package     Kunena.Framework
  * @subpackage  Forum.Topic
  *
- * @copyright   (C) 2008 - 2015 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link        http://www.kunena.org
  **/
-defined('_JEXEC') or die ();
+defined('_JEXEC') or die();
 
 /**
  * Kunena Forum Topic Rate Helper Class
+ *
+ * @since 5.0
  */
 abstract class KunenaForumTopicRateHelper
 {
@@ -23,10 +25,10 @@ abstract class KunenaForumTopicRateHelper
 	 *
 	 * @access    public
 	 *
-	 * @param    identifier        The topic to load - Can be only an integer.
+	 * @param    identifier        The rate object to load - Can be only an integer.
 	 *
 	 * @return    KunenaForumTopicRate        The rate object.
-	 * @since     2.0
+	 * @since     5.0
 	 */
 	static public function get($identifier = null, $reload = false)
 	{
@@ -39,68 +41,15 @@ abstract class KunenaForumTopicRateHelper
 
 		if ($id < 1)
 		{
-			return;
+			return new KunenaForumTopicRate();
 		}
 
-		if ($reload || empty (self::$_instances [$id]))
+		if ($reload || empty(self::$_instances [$id]))
 		{
-			unset(self::$_instances [$id]);
-			self::loadTopics(array($id));
+			self::$_instances [$id] = new KunenaForumTopicRate($id);
 		}
 
 		return self::$_instances [$id];
-	}
-
-	/**
-	 * Load users who have rate listed topics
-	 *
-	 * @param array $ids List of topics IDs
-	 */
-	static protected function loadTopics($ids)
-	{
-		foreach ($ids as $i => $id)
-		{
-			$id = intval($id);
-
-			if (!$id || isset(self::$_instances [$id]))
-			{
-				unset($ids[$i]);
-			}
-		}
-
-		if (empty($ids))
-		{
-			return;
-		}
-
-		$idlist = implode(',', $ids);
-
-		$db    = JFactory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select("*")
-			->from("#__kunena_rate")
-			->where("topicid IN ({$idlist})");
-		$db->setQuery($query);
-		$results = (array) $db->loadAssocList ('topicid');
-		KunenaError::checkDatabaseError();
-
-		foreach ($ids as $id)
-		{
-			if (isset($results[$id]))
-			{
-				$result = Joomla\Utilities\ArrayHelper::toObject($results[$id]);
-
-				$instance = new KunenaForumTopicRate ($result);
- 				$instance->exists(true);
- 				self::$_instances [$id] = $instance;
-			}
-			else
-			{
-				self::$_instances [$id] = null;
-			}
-		}
-
-		unset ($results);
 	}
 
 	/**
@@ -114,7 +63,7 @@ abstract class KunenaForumTopicRateHelper
 		$query = $db->getQuery(true);
 		$query->select("(SUM(rate)/COUNT(rate)) as selected")
 			->from('#__kunena_rate')
-			->where('topicid = ' . $db->escape($id));
+			->where('topic_id = ' . $db->escape($id));
 		$db->setQuery($query);
 
 		return round($db->loadResult());

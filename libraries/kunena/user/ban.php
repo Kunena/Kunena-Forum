@@ -546,6 +546,11 @@ class KunenaUserBan extends JObject
 			return false;
 		}
 
+		// Logout the user before to ban him.
+		$user = JFactory::getUser($this->userid);
+		$app = JFactory::getApplication ();
+		$app->logout((int) $this->userid);
+
 		if (!$this->id)
 		{
 			// If we have new ban, add creation date and user if they do not exist
@@ -584,7 +589,6 @@ class KunenaUserBan extends JObject
 		if ($this->userid)
 		{
 			// Change user block also in Joomla
-			$user = JFactory::getUser($this->userid);
 
 			if (!$user)
 			{
@@ -609,15 +613,6 @@ class KunenaUserBan extends JObject
 			$profile = KunenaFactory::getUser($this->userid);
 			$profile->banned = $this->expiration;
 			$profile->save(true);
-
-			if ($block)
-			{
-				// Logout blocked user
-				$app = JFactory::getApplication ();
-				$options = array();
-				$options['clientid'][] = 0; // site
-				$app->logout( (int) $this->userid, $options);
-			}
 		}
 
 		//Store the ban data in the database

@@ -42,6 +42,10 @@ class KunenaLayoutAnnouncementEdit extends KunenaLayout
 				return '<textarea name="description" ' . $attributes . '>' . $this->escape($this->announcement->description) . '</textarea>';
 			case 'created':
 				return JHtml::_('calendar', $this->escape($this->announcement->created), 'created', $id);
+			case 'publish_up':
+				return JHtml::_('calendar', $this->escape($this->announcement->publish_up), 'publish_up', $id);
+			case 'publish_down':
+				return JHtml::_('calendar', $this->escape($this->announcement->publish_down), 'publish_down', $id);
 			case 'showdate':
 				$options   = array();
 				$options[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_NO'));

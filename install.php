@@ -121,7 +121,7 @@ EOS;
 		$pass  = $this->checkVersion('PHP', phpversion());
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion ());
-		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli'));
+		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli', 'pdomysql'));
 		$pass &= $this->checkExtensions($this->extensions);
 		$pass &= $this->checkKunena($version);
 		return $pass;

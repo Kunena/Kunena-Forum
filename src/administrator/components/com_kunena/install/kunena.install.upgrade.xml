@@ -698,8 +698,8 @@
 				versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `ip` VARCHAR( 13 ) NOT NULL AFTER `thankyou`;</query>
 		</version>
-		<version version="5.0.0-ALPHA4"
-				versiondate="2016-03-06"
+		<version version="5.0.0-ALPHA5"
+				versiondate="2016-03-18"
 				versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `allow_ratings` tinyint(4) NOT NULL default '0' AFTER `last_post_time`;</query>
 		</version>

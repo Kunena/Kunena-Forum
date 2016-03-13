@@ -158,6 +158,32 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
+	 * Load rate for the topic
+	 */
+	public function displayGetrate()
+	{
+		$topicid  = $this->app->input->get('topic_id', 0, 'int');
+		$response = array();
+
+		if ( $user->id ==0 )
+		{
+			$response = 0;
+		}
+		else
+		{
+			$rating = KunenaForumTopicRate::getInstance($topicid);
+
+			$response = $rating->getTopicUserRate();
+		}
+
+		// Set the MIME type and header for JSON output.
+		$this->document->setMimeEncoding('application/json');
+		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+
+		echo json_encode($response);
+	}
+
+	/**
 	 * Save rate for user logged in by JSON call
 	 *
 	 * @param null $tpl

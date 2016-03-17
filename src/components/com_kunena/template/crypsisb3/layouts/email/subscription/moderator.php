@@ -52,8 +52,8 @@ $more = ($this->once ?
 			}
 
 			table, td {
-				mso-table-lspace: 0pt;
-				mso-table-rspace: 0pt;
+				mso-table-lspace: 0;
+				mso-table-rspace: 0;
 				border-collapse: collapse !important;
 				border-spacing: 0;
 			}

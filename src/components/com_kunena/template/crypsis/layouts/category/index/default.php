@@ -29,7 +29,7 @@ foreach ($this->sections as $section) :
 		</div>
 
 		<h2>
-			<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
+			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, 'hasTooltip');	?>
 			<small class="hidden-phone nowrap">(<?php echo JText::plural(
     'COM_KUNENA_X_TOPICS',
 	$this->formatLargeNumber($section->getTopics())); ?>)
@@ -76,22 +76,22 @@ foreach ($this->sections as $section) :
 							<td class="span8">
 								<div>
 									<h3>
-										<?php echo $this->getCategoryLink($category); ?>
+										<?php echo $this->getCategoryLink($category, null, null, 'hasTooltip'); ?>
 										<small class="hidden-phone nowrap">
 											(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
-													<sup class="knewchar"> (<?php echo $new . JText::_('COM_KUNENA_A_GEN_NEWCHAR') ?>)</sup>
+													<sup class="knewchar"> (<?php echo $new . JText::_('COM_KUNENA_A_GEN_NEWCHAR'); ?>)</sup>
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
-													<span class="icon-lock" title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY') ?>"></span>
+													<span class="icon-lock hasTooltip" data-original-title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY'); ?>"></span>
 												<?php endif; ?>
 												<?php if ($category->review) : ?>
-													<span class="icon-shield" title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED') ?>"></span>
+													<span class="icon-shield hasTooltip" data-original-title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED'); ?>"></span>
 												<?php endif; ?>
 												<?php if (!empty($category->rssURL)) : ?>
-													<a href="<?php echo $category->rssURL ?>" rel="follow">
-														 <span class="icon-feed" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>">
+													<a href="<?php echo $category->rssURL ?>" class="hasTooltip" rel="follow" data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
+														 <span class="icon-feed" >
 														 </span>
 													</a>
 												<?php endif; ?>
@@ -174,7 +174,7 @@ foreach ($this->sections as $section) :
 												</div>
 											<?php endif; ?>
 											<div class="span9">
-												<span><?php echo $this->getLastPostLink($category) ?></span>
+												<span><?php echo $this->getLastPostLink($category, null, null, 'hasTooltip') ?></span>
 												<br>
 												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, 'nofollow', '', null, $category->id)); ?></span>
 												<br>

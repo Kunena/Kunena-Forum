@@ -85,7 +85,7 @@ class KunenaForumTopicRate extends JObject
 	public function save($user)
 	{
 		$user  = KunenaFactory::getUser($user);
-		$topic = KunenaForumTopicHelper::get($this->topicid);
+		$topic = KunenaForumTopicHelper::get($this->topic_id);
 
 		if (!$user->exists())
 		{
@@ -112,7 +112,7 @@ class KunenaForumTopicRate extends JObject
 		$time  = JFactory::getDate();
 		$query = $db->getQuery(true);
 		$query->insert('#__kunena_rate')
-			->set('topic_id=' . $db->quote($this->topicid))
+			->set('topic_id=' . $db->quote($this->topic_id))
 			->set("userid={$db->quote($user->userid)}")
 			->set("rate={$db->quote($this->stars)}")
 			->set("time={$db->quote($time->toSQL())}");

@@ -162,6 +162,8 @@ class KunenaViewTopic extends KunenaView
 	 */
 	public function displayGetrate()
 	{
+		$user = JFactory::getUser();
+
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
 
@@ -191,7 +193,7 @@ class KunenaViewTopic extends KunenaView
 	public function displayRate($tpl = null)
 	{
 		$starid   = $this->app->input->get('starid', 0, 'int');
-		$topicid  = $this->app->input->get('topicid', 0, 'int');
+		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 		$response = array();
 
 		if ($this->me->exists() || $this->config->ratingenabled)

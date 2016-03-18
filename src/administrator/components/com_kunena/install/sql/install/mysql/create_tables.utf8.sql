@@ -310,11 +310,12 @@ CREATE TABLE IF NOT EXISTS `#__kunena_ranks` (
 	PRIMARY KEY (rank_id) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_rate` (
-	`topic_id` int(11) NULL,
+	`id` int(11) NOT NULL auto_increment,
+  `topic_id` int(11) NULL,
 	`userid` int(11) NULL,
 	`rate` mediumint(8) unsigned NOT NULL default '0',
 	`time`  DATETIME NOT NULL,
-	UNIQUE KEY  `topicid` (topicid,userid) ) DEFAULT CHARACTER SET utf8;
+	PRIMARY KEY (id) ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_sessions` (
 	`userid` int(11) NOT NULL default '0',

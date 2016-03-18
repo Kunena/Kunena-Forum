@@ -1,0 +1,30 @@
+/* -----------------------------------------------------------------------------
+
+  COMPENENTS - RATING
+  
+----------------------------------------------------------------------------- */
+.c-rating {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.c-rating__item {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 24px;
+      -ms-flex: 0 0 24px;
+          flex: 0 0 24px;
+  height: 24px;
+  background: url("../img/stars.svg");
+  background-position: 0 0;
+  cursor: pointer;
+}
+
+.c-rating__item:hover,
+.c-rating__item.is-active {
+  background-position: -24px 0;
+}

@@ -201,10 +201,12 @@ if (!empty($this->spacing)) : ?>
 	<?php endif; ?>
 
 	<?php
-	if (!empty($this->position)) {
+	if (!empty($this->position))
+	{
 		echo $this->subLayout('Widget/Module')
 			->set('position', $this->position)
 			->set('cols', $cols)
-			->setLayout('table_row'); }
+			->setLayout('table_row');
+	}
 	?>
 </tr>

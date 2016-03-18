@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_announcement` (
 	`description` text NOT NULL,
 	`created` datetime NOT NULL default '0000-00-00 00:00:00',
 	`published` tinyint(1) NOT NULL default '0',
+	`publish_up` datetime NOT NULL default '0000-00-00 00:00:00',
+	`publish_down` datetime NOT NULL default '0000-00-00 00:00:00',
 	`ordering` tinyint(4) NOT NULL default '0',
 	`showdate` tinyint(1) NOT NULL default '1',
 	PRIMARY KEY (id) ) DEFAULT CHARACTER SET utf8;

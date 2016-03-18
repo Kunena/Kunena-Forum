@@ -95,7 +95,9 @@ abstract class KunenaForumAnnouncementHelper
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true)
 	{
 		$db = JFactory::getDBO();
-		$where = $filter ? "WHERE published=1" : '';
+		$date = JFactory::getDate();
+
+		$where = $filter ? "WHERE published=1 AND publish_up < " . $db->quote($date->toSql()) . " AND publish_down > " . $db->quote($date->toSql()) : '';
 		$query = "SELECT * FROM #__kunena_announcement {$where} ORDER BY created DESC";
 		$db->setQuery($query, $start, $limit);
 		$results = (array) $db->loadAssocList();
@@ -129,8 +131,9 @@ abstract class KunenaForumAnnouncementHelper
 	static public function getCount($filter = true)
 	{
 		$db = JFactory::getDBO();
-		$where = $filter ? "WHERE published=1" : '';
+		$date = JFactory::getDate();
 
+		$where = $filter ? "WHERE published=1 AND publish_up < " . $db->quote($date->toSql()) . " AND publish_down > " . $db->quote($date->toSql()) : '';
 		$query = "SELECT COUNT(*) FROM #__kunena_announcement {$where}";
 		$db->setQuery($query);
 		$total = (int) $db->loadResult();

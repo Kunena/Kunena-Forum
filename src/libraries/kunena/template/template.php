@@ -1344,7 +1344,7 @@ HTML;
 	 */
 	public function getTemplateDetails()
 	{
-		$xml = simplexml_load_file(KPATH_SITE . "/template/{$this->name}/template.xml");
+		$xml = simplexml_load_file(KPATH_SITE . "/template/{$this->name}/config/template.xml");
 
 		return $xml;
 	}

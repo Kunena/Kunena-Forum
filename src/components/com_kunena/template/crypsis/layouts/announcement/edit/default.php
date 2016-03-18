@@ -60,6 +60,24 @@ defined('_JEXEC') or die;
 		</div>
 
 		<div class="control-group">
+			<label class="control-label" for="ann-date2">
+				<?php echo JText::_('COM_KUNENA_ANN_DATE_UP'); ?>
+			</label>
+			<div class="controls" id="ann-date2">
+				<?php echo $this->displayInput('publish_up', '', 'publish_up'); ?>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="ann-date3">
+				<?php echo JText::_('COM_KUNENA_ANN_DATE_DOWN'); ?>
+			</label>
+			<div class="controls" id="ann-date3">
+				<?php echo $this->displayInput('publish_down', '', 'publish_down'); ?>
+			</div>
+		</div>
+
+		<div class="control-group">
 			<label class="control-label" for="ann-showdate">
 				<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE'); ?>
 			</label>

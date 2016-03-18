@@ -698,6 +698,12 @@
 				versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `ip` VARCHAR( 13 ) NOT NULL AFTER `thankyou`;</query>
 		</version>
+		<version version="5.0.0-ALPHA4"
+				versiondate="2016-03-09"
+				versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `publish_up` datetime NOT NULL default '0000-00-00 00:00:00' AFTER `published`</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `publish_down` datetime NOT NULL default '0000-00-00 00:00:00' AFTER `publish_up`</query>
+		</version>	
 		<version version="5.0.0-ALPHA5"
 				versiondate="2016-03-18"
 				versionname="Internal">

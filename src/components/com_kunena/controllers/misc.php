@@ -37,7 +37,7 @@ class KunenaControllerMisc extends KunenaController
 		{
 			$name = KunenaPath::clean($name);
 
-			if (!is_readable(KPATH_SITE . "/template/{$name}/template.xml"))
+			if (!is_readable(KPATH_SITE . "/template/{$name}/config/template.xml"))
 			{
 				$name = 'blue_eagle';
 			}

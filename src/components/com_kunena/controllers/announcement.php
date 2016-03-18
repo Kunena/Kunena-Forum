@@ -47,8 +47,8 @@ class KunenaControllerAnnouncement extends KunenaController
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
-
-			if ($announcement->published == 1)
+			$date_today = JFactory::getDate();
+			if ($announcement->published == 1 && $announcement->publish_up > $date_today)
 			{
 				continue;
 			}
@@ -86,8 +86,8 @@ class KunenaControllerAnnouncement extends KunenaController
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
-
-			if ($announcement->published == 0)
+			$date_today = JFactory::getDate();
+			if ($announcement->published == 0 && $announcement->publish_down > $date_today)
 			{
 				continue;
 			}
@@ -172,6 +172,8 @@ class KunenaControllerAnnouncement extends KunenaController
 		$fields['description']  = JFactory::getApplication()->input->getString('description', '', 'post', 'raw');
 		$fields['sdescription'] = JFactory::getApplication()->input->getString('sdescription', '', 'post', 'raw');
 		$fields['created']      = JFactory::getApplication()->input->getString('created', $now->toSql());
+		$fields['publish_up']   = JFactory::getApplication()->input->getString('publish_up', $now->toSql());
+		$fields['publish_down'] = JFactory::getApplication()->input->getString('publish_down', $now->toSql());
 		$fields['published']    = JFactory::getApplication()->input->getInt('published', 1);
 		$fields['showdate']     = JFactory::getApplication()->input->getInt('showdate', 1);
 

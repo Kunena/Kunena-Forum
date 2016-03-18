@@ -176,6 +176,12 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			case 'created':
 				if (!$mode) { $mode = 'date_today'; }
 				return $this->getCreationDate()->toKunena($mode);
+			case 'publish_up':
+				if (!$mode) { $mode = 'date_today'; }
+				return $this->getCreationDate()->toKunena($mode);
+			case 'publish_down':
+				if (!$mode) { $mode = 'date_today'; }
+				return $this->getCreationDate()->toKunena($mode);
 		}
 
 		return '';

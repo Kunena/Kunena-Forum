@@ -25,7 +25,7 @@ if ($config->lightbox == 1)
 		$this->addStyleSheet('css/fancybox-black.css');
 	}
 
-	$this->addScript('js/fancybox.js');
+	$this->addScript('assets/js/fancybox.js');
 	JFactory::getDocument()->addScriptDeclaration('
 				jQuery(document).ready(function() {
 					jQuery(".fancybox-button").fancybox({

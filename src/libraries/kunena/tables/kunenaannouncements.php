@@ -23,6 +23,8 @@ class TableKunenaAnnouncements extends KunenaTable
 	public $sdescription = null;
 	public $description = null;
 	public $created = null;
+	public $publish_up = null;
+	public $publish_down = null;
 	public $published = null;
 	public $ordering = null;
 	public $showdate = null;
@@ -56,6 +58,16 @@ class TableKunenaAnnouncements extends KunenaTable
 		if (!$this->created)
 		{
 			$this->created = JFactory::getDate()->toSql();
+		}
+
+		if (!$this->publish_up)
+		{
+			$this->publish_up = '';
+		}
+
+		if (!$this->publish_down)
+		{
+			$this->publish_down = '';
 		}
 
 		$this->title = trim($this->title);

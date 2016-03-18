@@ -58,10 +58,10 @@ if (!empty($this->spacing)) : ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt;?>">
 	<?php if ($topic->unread) : ?>
 	<td class="hidden-phone center topic-item-unread">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset),null,'hasTooltip'); ?>
 	<?php else :  ?>
 	<td class="hidden-phone span1 center">
-		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset)); ?>
+		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset),null,'hasTooltip'); ?>
 	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols?>">
@@ -152,7 +152,7 @@ if (!empty($this->spacing)) : ?>
 				<?php endif; ?>
 				<div class="span9">
 					<span><?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
-						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
+						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', 'hasTooltip', $category->id);?>
 					</span>
 					<br>
 					<span><?php echo $topic->getLastPostTime()->toKunena('config_post_dateformat'); ?></span>

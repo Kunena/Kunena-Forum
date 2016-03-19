@@ -21,7 +21,7 @@ $normal = !empty($this->normal) ? 'btn-small' : 'btn';
 $icon = $this->icon;
 ?>
 
-<a <?php echo $id; ?> class="<?php echo $normal . $primary . $success; ?>" href="<?php echo $this->url; ?>" rel="nofollow"
+<a <?php echo $id; ?> class="<?php echo $normal . $primary . $success; ?> hasTooltip" href="<?php echo $this->url; ?>" rel="nofollow"
 	title="<?php echo $title; ?>" name="<?php echo $this->name; ?>">
 	<?php if (!empty($icon)) : ?>
 	<i class="<?php echo $icon;?>"></i>

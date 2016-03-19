@@ -24,12 +24,12 @@ JText::script('COM_KUNENA_RATE_LOGIN');
 JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
 JText::script('COM_KUNENA_RATE_ALLREADY');
 
-$this->addStyleSheet('css/atwho.css');
+$this->addStyleSheet('assets/css/atwho.css');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('js/caret.js');
-$this->addScript('js/atwho.js');
-$this->addScript('js/topic.js');
+$this->addScript('assets/js/caret.js');
+$this->addScript('assets/js/atwho.js');
+$this->addScript('assets/js/topic.js');
 
 $this->addStyleSheet('assets/css/rating.style.css');
 $this->addStyleSheet('assets/css/rating.css');

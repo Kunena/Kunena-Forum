@@ -609,7 +609,7 @@ class KunenaAdminModelReport extends KunenaModel
 	 */
 	public function getIntegrationSettings()
 	{
-		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
+		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
 		$plugin_final = array();
 
 		foreach ($plugins_list as $name => $desc)

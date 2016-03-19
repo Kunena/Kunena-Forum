@@ -59,9 +59,9 @@ jQuery(document).ready(function () {
 	});
 
 	/* To enabled emojis in kunena textera feature like on github */
-	if (jQuery('#kemojis_allowed').val()) {
+	if (jQuery('#kemojis_allowed').val()==1) {
 		var item = '';
-		if (jQuery('#kbbcode-message').length > 0) {
+		if (jQuery('#kbbcode-message').length > 0 && jQuery('.qreply').length == 0) {
 			item = '#kbbcode-message';
 		} else if (jQuery('.qreply').length > 0) {
 			item = '.qreply';
@@ -69,10 +69,11 @@ jQuery(document).ready(function () {
 
 		if (item != undefined) {
 			jQuery(item).atwho({
-				at       : ":",
-				tpl      : "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
+				at              : ":",
+				displayTpl      : "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
+				insertTpl       : ':${name}:',
 				callbacks: {
-					remote_filter: function (query, callback) {
+					remoteFilter: function (query, callback) {
 						if (query.length > 0) {
 							jQuery.ajax({
 								url    : jQuery("#kurl_emojis").val(),

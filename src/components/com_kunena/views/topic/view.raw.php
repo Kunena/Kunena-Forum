@@ -169,7 +169,7 @@ class KunenaViewTopic extends KunenaView
 
 		if ( $user->id ==0 )
 		{
-			$response = 0;
+			$response = KunenaForumTopicRateHelper::getSelected($topicid);
 		}
 		else
 		{

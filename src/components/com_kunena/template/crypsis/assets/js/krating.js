@@ -8,10 +8,10 @@
  **/
 
 jQuery(document).ready(function() {
-	// SHOP ELEMENT
-	var shop = document.querySelector('#krating');
+	// Krating element
+	var krating = document.querySelector('#krating');
 
-	// INITIALIZE
+	// Initialize
 	(function init() {
 		var topic_id = jQuery("#topic_id").val();
 		
@@ -24,33 +24,20 @@ jQuery(document).ready(function() {
 			}).fail(function(reponse) {
 			
 			});
-	})();
-	// BUILD SHOP ITEM
-	function buildShopItem(data) {
-		var shopItem = document.createElement('div');
-		var html = '<div class="c-shop-item__img"></div>' +
-			'<div class="c-shop-item__details">' +
-				'<h3 class="c-shop-item__title">' + data.title + '</h3>' +
-				'<p class="c-shop-item__description">' + data.description + '</p>' +
-				'<ul class="c-rating"></ul>' +
-			'</div>';
-		shopItem.classList.add('c-shop-item');
-		shopItem.innerHTML = html;
-		shop.appendChild(shopItem);
-		return shopItem;
-	}
-
+	})(); 
+  
+	// Build krating item
 	function buildItem(){
-		var shopItem = document.createElement('div');
+		var ratingItem = document.createElement('div');
 		var html = '<ul class="c-rating"></ul>';
-		shopItem.innerHTML = html;
-		shop.appendChild(shopItem);
-		return shopItem;
+		ratingItem.innerHTML = html;
+		krating.appendChild(ratingItem);
+		return ratingItem;
 	}
 
-	// ADD RATING WIDGET
-	function addRatingWidget(shopItem, rate, topicid) {
-		var ratingElement = shopItem.querySelector('.c-rating');
+	// Add krating widget
+	function addRatingWidget(ratingItem, rate, topicid) {
+		var ratingElement = ratingItem.querySelector('.c-rating');
 		var currentRating = rate;
 		var maxRating = 5;
 		var callback = function(rating) {
@@ -59,7 +46,7 @@ jQuery(document).ready(function() {
 				url: jQuery('#krating_submit_url').val(),
 				data: 'starid=' + rating + '&topic_id=' + topicid  
 				}).done(function(response) {
-					jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Success</h4>'+response+'</div>').appendTo('#system-message-container');
+					jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Success</h4>'+Joomla.JText._(response)+'</div>').appendTo('#system-message-container');
 				}).fail(function(reponse) {
 					jQuery('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>'+reponse+'</div>').appendTo('#system-message-container');
 				});  

@@ -201,6 +201,6 @@ $this->getBBcodesEnabled();
 <div class="control-group">
 	<div class="controls">
 		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
-		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $this->config->disemoticons ?>" />
+		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disemoticons ? 0 : 1 ?>" />
 	</div>
 </div>

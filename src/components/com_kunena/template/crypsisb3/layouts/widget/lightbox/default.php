@@ -19,13 +19,13 @@ if ($config->lightbox == 1)
 
 	if ($template->params->get('lightboxColor') == 'white')
 	{
-		$this->addStyleSheet('css/fancybox-white.css');
+		$this->addStyleSheet('assets/css/fancybox.white.css');
 	}
 	else  {
-		$this->addStyleSheet('css/fancybox-black.css');
+		$this->addStyleSheet('assets/css/fancybox.black.css');
 	}
 
-	$this->addScript('js/fancybox.js');
+	$this->addScript('assets/js/fancybox.js');
 	JFactory::getDocument()->addScriptDeclaration('
 				jQuery(document).ready(function() {
 					jQuery(".fancybox-button").fancybox({

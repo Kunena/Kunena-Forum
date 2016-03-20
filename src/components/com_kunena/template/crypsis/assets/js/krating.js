@@ -15,17 +15,19 @@ jQuery(document).ready(function() {
 	(function init() {
 		var topic_id = jQuery("#topic_id").val();
 		
-		jQuery.ajax({
-			 dataType: "json",
-			 url: 'index.php?option=com_kunena&view=topic&layout=getrate&format=raw',
-			 data: 'topic_id=' + topic_id 
+		if (jQuery('#krating').length > 0) {
+			jQuery.ajax({
+				 dataType: "json",
+				 url: 'index.php?option=com_kunena&view=topic&layout=getrate&format=raw',
+				 data: 'topic_id=' + topic_id 
 			}).done(function(response) {
 				addRatingWidget(buildItem(), response, topic_id);
 			}).fail(function(reponse) {
 			
 			});
+		}
 	})(); 
-  
+
 	// Build krating item
 	function buildItem(){
 		var ratingItem = document.createElement('div');
@@ -46,7 +48,14 @@ jQuery(document).ready(function() {
 				url: jQuery('#krating_submit_url').val(),
 				data: 'starid=' + rating + '&topic_id=' + topicid  
 				}).done(function(response) {
-					jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Success</h4>'+Joomla.JText._(response)+'</div>').appendTo('#system-message-container');
+					if (response.success)
+					{
+						jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Success</h4>'+Joomla.JText._(response.message)+'</div>').appendTo('#system-message-container');
+					}
+					else
+					{
+						jQuery('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>'+Joomla.JText._(response.message)+'</div>').appendTo('#system-message-container');
+					}
 				}).fail(function(reponse) {
 					jQuery('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Warning!</h4>'+reponse+'</div>').appendTo('#system-message-container');
 				});  

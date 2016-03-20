@@ -32,12 +32,5 @@ class ComponentKunenaControllerTopicItemRatingDisplay extends KunenaControllerDi
 	protected function before()
 	{
 		parent::before();
-
-		$id = $this->input->getInt('id');
-
-    $this->topicid = $id;
-		$rating = KunenaForumTopicRate::getInstance($id);
-
-    $this->rating = $rating->getTopicUserRate();
 	}
 }

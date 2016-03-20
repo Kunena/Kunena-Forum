@@ -158,7 +158,7 @@ class KunenaViewTopic extends KunenaView
 	}
 
 	/**
-	 * Load rate for the topic
+	 * Load global rate for the topic
 	 */
 	public function displayGetrate()
 	{
@@ -202,25 +202,13 @@ class KunenaViewTopic extends KunenaView
 			$rate->stars = $starid;
 			$rate->topic_id = $topicid;
 
-			$topic = KunenaForumTopicHelper::get($topicid);
-
-			$activityIntegration = KunenaFactory::getActivityIntegration();
-			if (!$rate->save($this->me))
-			{
-				$response = $rate->getError();
-			}
-			else
-			{
-				$activityIntegration->onAfterRate($this->me->userid, $topic);
-
-				$response = 'The star has been successfully saved';
-			}
+			$response = $rate->save($this->me);
 		}
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
 
-		echo json_encode($response);
+		echo $response;
 	}
 }

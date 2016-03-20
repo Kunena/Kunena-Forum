@@ -53,6 +53,8 @@ abstract class KunenaForumTopicRateHelper
 	}
 
 	/**
+	 * Return sum of all rates gived to a topics by all users
+	 *
 	 * @param $id
 	 *
 	 * @return float

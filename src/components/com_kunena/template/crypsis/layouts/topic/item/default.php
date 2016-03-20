@@ -23,6 +23,7 @@ var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS') . '";
 JText::script('COM_KUNENA_RATE_LOGIN');
 JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
 JText::script('COM_KUNENA_RATE_ALLREADY');
+JText::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
 
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 
@@ -72,9 +73,7 @@ $social = $this->ktemplate->params->get('socialshare');
 	<div><?php echo $this->subLayout('Widget/Social'); ?></div>
 <?php endif; ?>
 
-<input id="topic_id" type="hidden" value="<?php echo $topic->id ?>" /">
-<input type="hidden" id="krating_submit_url" name="url" value="<?php echo 'index.php?option=com_kunena&view=topic&layout=rate&topic_id=' . $this->topicid . '&format=raw'; ?>" />
-<div id="krating"></div>
+<div><?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config); ?></div>
 
 <?php
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');

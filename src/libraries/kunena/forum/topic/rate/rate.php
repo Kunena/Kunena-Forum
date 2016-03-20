@@ -73,6 +73,34 @@ class KunenaForumTopicRate extends JObject
 	}
 
 	/**
+	 * Get the users to check which one are already rated the topic
+	 *
+	 * @param   int $start
+	 * @param   int $limit
+	 *
+	 * @return array
+	 */
+	public function getUsers($start = 0, $limit = 0)
+	{
+		/*if ($this->users === false)
+			{  */
+		$query = $this->_db->getQuery(true);
+		$query->select('*')->from($this->_db->quoteName('#__kunena_rate'))->where($this->_db->quoteName('topic_id') . '=' . $this->_db->Quote($this->topic_id));
+		$this->_db->setQuery($query, $start, $limit);
+		$users = (array) $this->_db->loadObjectList();
+
+		KunenaError::checkDatabaseError();
+
+		foreach($users as $user)
+		{
+		$this->_add($user->userid, $user->time);
+		}
+			//}
+
+			//return $this->users;
+		}
+
+	/**
 	 * Perform insert the rate into table
 	 *
 	 * @param $user
@@ -87,47 +115,54 @@ class KunenaForumTopicRate extends JObject
 		$user  = KunenaFactory::getUser($user);
 		$topic = KunenaForumTopicHelper::get($this->topic_id);
 
+		$this->getUsers();
+
 		if (!$user->exists())
 		{
-			$this->setError(JText::_('COM_KUNENA_RATE_LOGIN'));
+			$exception = new RuntimeException(JText::_('COM_KUNENA_RATE_LOGIN'), 500);
 
-			return false;
+			return new JResponseJson($exception);
 		}
 
 		if ($user->userid == $topic->first_post_userid)
 		{
-			$this->setError(JText::_('COM_KUNENA_RATE_NOT_YOURSELF'));
+			$exception = new RuntimeException(JText::_('COM_KUNENA_RATE_NOT_YOURSELF'), 500);
 
-			return false;
+			return new JResponseJson($exception);
 		}
 
 		if ($this->exists($user->userid))
 		{
-			$this->setError(JText::_('COM_KUNENA_RATE_ALLREADY'));
+			$exception = new RuntimeException(JText::_('COM_KUNENA_RATE_ALLREADY'), 500);
 
-			return false;
+			return new JResponseJson($exception);
 		}
 
-		$db    = JFactory::getDBO();
 		$time  = JFactory::getDate();
-		$query = $db->getQuery(true);
+		$query = $this->_db->getQuery(true);
 		$query->insert('#__kunena_rate')
-			->set('topic_id=' . $db->quote($this->topic_id))
-			->set("userid={$db->quote($user->userid)}")
-			->set("rate={$db->quote($this->stars)}")
-			->set("time={$db->quote($time->toSQL())}");
-		$db->setQuery($query);
-		$db->execute();
+			->set('topic_id=' . $this->_db->quote($this->topic_id))
+			->set("userid={$this->_db->quote($user->userid)}")
+			->set("rate={$this->_db->quote($this->stars)}")
+			->set("time={$this->_db->quote($time->toSQL())}");
+		$this->_db->setQuery($query);
 
-		// Check for an error message.
-		if ($db->getErrorNum())
+		try
 		{
-			$this->setError($db->getErrorMsg());
+			$this->_db->execute();
+			$activityIntegration = KunenaFactory::getActivityIntegration();
 
-			return false;
+			$topic = KunenaForumTopicHelper::get($this->topic_id);
+			$activityIntegration->onAfterRate($user->userid, $topic);
+
+			$response = new JResponseJson(null, JText::_('COM_KUNENA_RATE_SUCCESSFULLY_SAVED'));
+		}
+		catch(Exception $e)
+		{
+			$response = new JResponseJson($e);
 		}
 
-		return true;
+		return $response;
 	}
 
 	/**
@@ -139,7 +174,7 @@ class KunenaForumTopicRate extends JObject
 
 		if ( $this->userid == $me->userid )
 		{
-			return $this->stars;
+			return $this->rate;
 		}
 
 		return 0;

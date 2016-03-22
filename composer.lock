@@ -799,16 +799,16 @@
         },
         {
             "name": "joomla-projects/selenium-server-standalone",
-            "version": "v2.52.0",
+            "version": "v2.53.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/selenium-server-standalone.git",
-                "reference": "17b4bb3fd087ded32fe2d9342b8573a75f56460c"
+                "reference": "53ad2802c0756863fe02c4a8204d3a985853e226"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/selenium-server-standalone/zipball/17b4bb3fd087ded32fe2d9342b8573a75f56460c",
-                "reference": "17b4bb3fd087ded32fe2d9342b8573a75f56460c",
+                "url": "https://api.github.com/repos/joomla-projects/selenium-server-standalone/zipball/53ad2802c0756863fe02c4a8204d3a985853e226",
+                "reference": "53ad2802c0756863fe02c4a8204d3a985853e226",
                 "shasum": ""
             },
             "bin": [
@@ -831,7 +831,7 @@
                 "selenium",
                 "testing"
             ],
-            "time": "2016-02-16 11:07:51"
+            "time": "2016-02-21 11:07:51"
         },
         {
             "name": "joomla/compat",

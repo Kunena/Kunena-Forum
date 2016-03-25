@@ -225,6 +225,15 @@
 						start="[hide]"
 						end="[/hide]"/>
 	</button>
+	<button tag="confidential"
+	        name="confidential"
+	        title="COM_KUNENA_EDITOR_CONFIDENTIAL"
+	        alt="COM_KUNENA_EDITOR_HELPLINE_CONFIDENTIAL">
+		<wrap-selection class="confidentialbutton"
+		                name="confidential"
+		                start="[confidential]"
+		                end="[/confidential]"/>
+	</button>
 
 	<separator name="embeding"/>
 

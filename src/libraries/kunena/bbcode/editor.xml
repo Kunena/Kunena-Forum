@@ -88,6 +88,9 @@
 	<button tag="hide" name="hide" title="COM_KUNENA_EDITOR_HIDE" alt="COM_KUNENA_EDITOR_HELPLINE_HIDE">
 		<wrap-selection />
 	</button>
+	<button tag="confidential" name="confidential" title="COM_KUNENA_EDITOR_CONFIDENTIAL" alt="COM_KUNENA_EDITOR_HELPLINE_CONFIDENTIAL">
+		<wrap-selection />
+	</button>
 
 	<separator name="embeding" />
 

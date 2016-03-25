@@ -261,20 +261,13 @@ a:focus,
 	border-radius : 4px;
 }
 
-.horizontal-message-top .kmsg {
-	padding-top  : 40px;
-	min-height   : 140px;
-	padding-left : 10px;
-}
-
 .horizontal-message-bottom .kmsg {
 	margin-top   : 50px;
-	min-height   : 140px;
 	padding-left : 10px;
 }
 
 .horizontal-message .kmessage {
-	padding : 10px;
+	padding : 30px 10px 0;
 }
 
 [class*="horizontal-message-top"] {
@@ -286,10 +279,12 @@ a:focus,
 	position      : absolute;
 	top           : 0;
 	font-weight   : bold;
-	padding       : 8px 12px;
-	margin-top    : -10px;
+	padding       : 8px 12px !important;
+	margin-top    : -10px !important;
 	border-right  : 1px solid #ddd;
 	border-bottom : 1px solid #ddd;
+	border-top    : 0 !important;
+	border-left   : 0 !important;
 }
 
 [class*="horizontal-message-bottom"] {
@@ -306,7 +301,7 @@ a:focus,
 	border-bottom : 1px solid #ddd;
 }
 
-[class*="badger"] {
+[class*="badger-left"] {
 	position      : relative;
 	margin        : 15px 0;
 	padding       : 39px 19px 0 14px;

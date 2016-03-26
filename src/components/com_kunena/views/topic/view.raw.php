@@ -156,4 +156,59 @@ class KunenaViewTopic extends KunenaView
 
 		echo json_encode($topicIcons);
 	}
+
+	/**
+	 * Load global rate for the topic
+	 */
+	public function displayGetrate()
+	{
+		$user = JFactory::getUser();
+
+		$topicid  = $this->app->input->get('topic_id', 0, 'int');
+		$response = array();
+
+		if ( $user->id ==0 )
+		{
+			$response = KunenaForumTopicRateHelper::getSelected($topicid);
+		}
+		else
+		{
+			$rating = KunenaForumTopicRate::getInstance($topicid);
+
+			$response = $rating->getTopicUserRate();
+		}
+
+		// Set the MIME type and header for JSON output.
+		$this->document->setMimeEncoding('application/json');
+		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+
+		echo json_encode($response);
+	}
+
+	/**
+	 * Save rate for user logged in by JSON call
+	 *
+	 * @param null $tpl
+	 */
+	public function displayRate($tpl = null)
+	{
+		$starid   = $this->app->input->get('starid', 0, 'int');
+		$topicid  = $this->app->input->get('topic_id', 0, 'int');
+		$response = array();
+
+		if ($this->me->exists() || $this->config->ratingenabled)
+		{
+			$rate        = KunenaForumTopicRateHelper::get($topicid);
+			$rate->stars = $starid;
+			$rate->topic_id = $topicid;
+
+			$response = $rate->save($this->me);
+		}
+
+		// Set the MIME type and header for JSON output.
+		$this->document->setMimeEncoding('application/json');
+		JResponse::setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
+
+		echo $response;
+	}
 }

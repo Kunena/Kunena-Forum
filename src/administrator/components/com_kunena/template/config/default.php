@@ -386,6 +386,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo $this->lists ['allow_change_subject'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_ALLOW_CHANGE_SUBJECT_REPLIES_DESC') ?></td>
 											</tr>
+											<tr align="center" valign="middle">
+												<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_ENABLED') ?></td>
+												<td align="left" valign="top" width="25%"><?php echo $this->lists ['ratingenabled'] ?></td>
+												<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_DESC') ?></td>
+											</tr>
 											</tbody>
 										</table>
 									</fieldset>

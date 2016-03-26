@@ -20,12 +20,23 @@ $this->addScriptDeclaration(
 var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS') . '";
 // ]]>');
 
+JText::script('COM_KUNENA_RATE_LOGIN');
+JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
+JText::script('COM_KUNENA_RATE_ALLREADY');
+JText::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
+
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addScript('assets/js/topic.js');
+
+$this->addStyleSheet('assets/css/rating.style.css');
+$this->addStyleSheet('assets/css/rating.css');
+$this->addScript('assets/js/rating.js');
+
+$this->addScript('assets/js/krating.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social = $this->ktemplate->params->get('socialshare');
@@ -61,6 +72,8 @@ $social = $this->ktemplate->params->get('socialshare');
 <?php if ($social) : ?>
 	<div><?php echo $this->subLayout('Widget/Social'); ?></div>
 <?php endif; ?>
+
+<div><?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config); ?></div>
 
 <?php
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');

@@ -128,6 +128,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 	`last_post_userid` int(11) NOT NULL default '0',
 	`last_post_message` text NULL,
 	`last_post_guest_name` tinytext NULL,
+	`rating` tinyint(6) NOT NULL default '0', 
 	`params` text NOT NULL,
 	PRIMARY KEY (id),
 	KEY `category_id` (category_id),

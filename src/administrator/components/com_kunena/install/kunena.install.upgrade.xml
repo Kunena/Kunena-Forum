@@ -709,6 +709,11 @@
 				versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `allow_ratings` tinyint(4) NOT NULL default '0' AFTER `last_post_time`;</query>
 		</version>
+		<version version="5.0.0-ALPHA6"
+				versiondate="2016-03-29"
+				versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD `rating` tinyint(6) NOT NULL default '0' AFTER `last_post_guest_name`;</query>
+		</version>
 		<version version="@kunenaversion@"
 				versiondate="@kunenaversiondate@"
 				versionname="@kunenaversionname@">

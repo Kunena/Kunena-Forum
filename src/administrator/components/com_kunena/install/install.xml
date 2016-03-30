@@ -370,6 +370,9 @@
 		<field name="last_post_guest_name"
 		       type="tinytext"
 		       null="1"/>
+		<field name="rating"
+		       type="tinyint"
+		       null="6"/>
 		<field name="params"
 		       type="text"
 		       null="0"/>

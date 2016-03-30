@@ -16,7 +16,6 @@ defined ( '_JEXEC' ) or die ();
 		<?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this) ?>
 	</div>
 </div>
-<div>
 <?php if (!empty($this->attachments)) : ?>
 <div class="kmsgattach">
 	<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
@@ -30,7 +29,6 @@ defined ( '_JEXEC' ) or die ();
 			</li>
 		<?php endforeach; ?>
 		</ul>
-	</div>
 </div>
 <?php elseif ($this->attachs->total > 0  && !$this->me->exists()):
 	if ($this->attachs->image > 0  && !$this->config->showimgforguest)

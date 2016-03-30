@@ -79,7 +79,7 @@ if (!empty($this->spacing)) : ?>
 			}
 			?>
 			<?php if ($config->ratingenabled && $category->allow_ratings) :
-				if ($this->topic->rating) : ?>
+				if (!empty($this->topic->rating)) : ?>
 				<div>
 					<ul class="c-rating">
 						<li class="c-rating__item is-active" data-index="0"></li>

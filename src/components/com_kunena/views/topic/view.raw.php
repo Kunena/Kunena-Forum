@@ -203,6 +203,12 @@ class KunenaViewTopic extends KunenaView
 			$rate->topic_id = $topicid;
 
 			$response = $rate->save($this->me);
+
+			$selected = KunenaForumTopicRateHelper::getSelected($topicid);
+
+			$topic = KunenaForumTopicHelper::get($topicid);
+			$topic->rating = $selected;
+			$topic->save();
 		}
 
 		// Set the MIME type and header for JSON output.

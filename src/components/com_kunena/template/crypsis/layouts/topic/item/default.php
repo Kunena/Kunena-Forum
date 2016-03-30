@@ -32,7 +32,6 @@ $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
 $this->addScript('assets/js/topic.js');
 
-$this->addStyleSheet('assets/css/rating.style.css');
 $this->addStyleSheet('assets/css/rating.css');
 $this->addScript('assets/js/rating.js');
 

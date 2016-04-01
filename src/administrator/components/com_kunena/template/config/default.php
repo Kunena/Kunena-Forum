@@ -648,6 +648,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo $this->lists ['teaser'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_TEASER_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_URL_SUBJECT') ?></td>
+												<td><?php echo $this->lists['url_subject_topic'] ?> </td>
+												<td><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_URL_SUBJECT_DESC') ?></td>
+											</tr>
 											</tbody>
 										</table>
 									</fieldset>

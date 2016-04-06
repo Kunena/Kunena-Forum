@@ -24,6 +24,8 @@ $avatar = $topic->getLastPostAuthor()->getAvatarImage('img-rounded', 'thumb');
 $config = KunenaFactory::getConfig();
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
+$userTopic = $topic->getUserTopic();
+
 
 if ($topic->ordering)
 {
@@ -58,40 +60,48 @@ if ($topic->moved_id > 0)
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
 	<?php if ($topic->unread) : ?>
 	<td class="hidden-phone center topic-item-unread">
-		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset)); ?>
+		<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset),null,'hasTooltip'); ?>
 	<?php else :  ?>
 	<td class="hidden-phone span1 center">
-		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset)); ?>
+		<?php echo $this->getTopicLink($topic, null, $topic->getIcon($topic->getCategory()->iconset),null,'hasTooltip'); ?>
 	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div>
 			<?php
-			if ($topic->unread) {
+			if ($topic->unread)
+			{
 				echo $this->getTopicLink(
-     $topic, 'unread', ($isReply ? JText::_('COM_KUNENA_RE') . ' ' : '') . $message->displayField('subject') . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread
-	. ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>');
+					$topic,  'unread',
+					$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
 			}
 			else
 			{
-				echo $this->getTopicLink(
-					$topic, $message, ($isReply ? JText::_('COM_KUNENA_RE') . ' ' : '') . $message->displayField('subject')
-				);
-			}
-
-			if ($topic->getUserTopic()->favorite) {
-				echo $this->getIcon('kfavoritestar', JText::_('COM_KUNENA_FAVORITE'));
-			}
-
-			if ($topic->locked != 0) {
-				echo $this->getIcon('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
+				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
 			?>
+		</div>
+		<div class="pull-right">
+			<?php if ($userTopic->favorite) : ?>
+				<i class="icon-star hasTooltip" title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"></i>
+			<?php endif; ?>
+
+			<?php if ($userTopic->posts) : ?>
+				<i class="icon-flag hasTooltip" title="<?php echo JText::_('COM_KUNENA_MYPOSTS'); ?>"></i>
+			<?php endif; ?>
+
+			<?php if ($topic->attachments) : ?>
+				<i class="icon-flag-2 hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
+			<?php endif; ?>
+
+			<?php if ($topic->poll_id) : ?>
+				<i class="icon-bars hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
+			<?php endif; ?>
 		</div>
 		<div>
 			<?php echo $topic->getAuthor()->getLink(null, null, 'nofollow', '', null, $category->id); ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
+			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(),null, null,'hasTooltip')); ?>
 		</div>
 	</td>
 	<td class="span2 hidden-phone">

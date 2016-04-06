@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
 
   COMPENENTS - RATING
-  
+
 ----------------------------------------------------------------------------- */
 .c-rating {
   display: -webkit-box;
@@ -19,7 +19,7 @@
       -ms-flex: 0 0 24px;
           flex: 0 0 24px;
   height: 24px;
-  background: url("../img/stars.svg");
+  background: url("../images/stars.svg");
   background-position: 0 0;
   cursor: pointer;
 }

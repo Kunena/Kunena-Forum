@@ -34,7 +34,7 @@ bbcodeSettings = {
 								});
 							}});
 						}
-					},{className: 'tablebutton',name: 'table',openWith: '[table]\n  [tr]\n   [td][/td]\n   [td][/td]\n  [/tr]',closeWith: '\n  [tr]\n   [td][/td]\n   [td][/td]\n [/tr]\n[/table] \n'},{className: 'spoilerbutton',name: 'Spoiler',openWith: '[spoiler]',closeWith: '[/spoiler]'},{className: 'hiddentextbutton',name: 'Hide',openWith: '[hide]',closeWith: '[/hide]'},{separator:'|' },{name:'picture', className: 'picturebutton', beforeInsert:function() {
+					},{className: 'tablebutton',name: 'table',openWith: '[table]\n  [tr]\n   [td][/td]\n   [td][/td]\n  [/tr]',closeWith: '\n  [tr]\n   [td][/td]\n   [td][/td]\n [/tr]\n[/table] \n'},{className: 'spoilerbutton',name: 'Spoiler',openWith: '[spoiler]',closeWith: '[/spoiler]'},{className: 'hiddentextbutton',name: 'Hide',openWith: '[hide]',closeWith: '[/hide]'},{className: 'confidentialbutton',name: 'confidential',openWith: '[confidential]',closeWith: '[/confidential]'},{separator:'|' },{name:'picture', className: 'picturebutton', beforeInsert:function() {
 						jQuery('#picture-modal-submit').click(function(event) {
 							event.preventDefault();
 
@@ -146,4 +146,4 @@ bbcodeSettings = {
 								});
 							}});
 						}
-					},{separator:'|' }]};
+					},{separator:'|' },]};

@@ -140,34 +140,42 @@ $this->getBBcodesEnabled();
 	</div>
 	<div class="modal-body">
 			<div id="kbbcode-poll-options">
-				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
-				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
-						maxlength="100" size="40"
-						value="<?php echo $this->escape($this->poll->title) ?>"
-				/>
-				<i id="kbutton-poll-add" class="icon-plus btn btn-small"
-					alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i>
-				<i id="kbutton-poll-rem" class="icon-minus btn btn-small"
-					alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
-				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-				<div id="datepoll-container" class="span5 col-md-5">
-					<div class="input-append date">
-						<input type="text" class="span12" name="poll_time_to_live" data-date-format="mm/dd/yyyy"><span class="add-on"><i class="icon-grid-view-2 "></i></span>
+				<div>
+					<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
+					<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
+							maxlength="100" size="40"
+							value="<?php echo $this->escape($this->poll->title) ?>" />
+					<i id="kbutton-poll-add" class="icon-plus btn btn-small"
+						alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i>
+					<i id="kbutton-poll-rem" class="icon-minus btn btn-small"
+						alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
+				</div>
+				<div>
+					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
+					<div id="datepoll-container" class="span5 col-md-5">
+						<div class="input-append date">
+							<input type="text" class="span12 kpoll-time-to-live-input" name="poll_time_to_live" data-date-format="mm/dd/yyyy"><span class="add-on"><i class="icon-grid-view-2 "></i></span>
+						</div>
 					</div>
 				</div>
+				<div class="clearfix"></div>
 				<div id="kpoll-alert-error" class="alert" style="display:none;">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
 				</div>
+				<div>
 					<?php
-					if($this->poll->exists()) {
+					if ($this->poll->exists())
+					{
 						$x = 1;
-						foreach ($this->poll->getOptions() as $poll_option) {
+
+						foreach ($this->poll->getOptions() as $poll_option)
+						{
 							echo '<div class="polloption"><label>Option ' . $x . '</label><input type="text" size="100" id="field_option' . $x . '" name="polloptionsID[' . $poll_option->id . ']" value="' . $poll_option->text . '" /></div>';
 							$x++;
 						}
-					}
-				?>
+					} ?>
+				</div>
 				<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $this->config->pollnboptions; ?>" />
 				<input type="hidden" name="number_total_options" id="numbertotal"
 					value="<?php echo !empty($this->polloptionstotal) ? $this->escape($this->polloptionstotal) : '' ?>" />

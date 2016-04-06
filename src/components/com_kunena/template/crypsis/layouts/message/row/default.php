@@ -80,6 +80,7 @@ if ($topic->moved_id > 0)
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
 			?>
+			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>

@@ -3,7 +3,7 @@
   COMPENENTS - RATING
 
 ----------------------------------------------------------------------------- */
-.c-rating {
+#kunena .c-rating {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -13,7 +13,7 @@
   padding: 0;
 }
 
-.c-rating__item {
+#kunena .c-rating__item {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 24px;
       -ms-flex: 0 0 24px;
@@ -24,7 +24,27 @@
   cursor: pointer;
 }
 
-.c-rating__item:hover,
-.c-rating__item.is-active {
+#kunena .c-rating__item:hover,
+#kunena .c-rating__item.is-active {
   background-position: -24px 0;
+}
+
+#ktopicsform .category .c-rating__item {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 14px;
+  -ms-flex: 0 0 14px;
+  flex: 0 0 14px;
+  height: 14px;
+  background: url("../images/stars.svg");
+  background-size: 200%;
+  background-position: 0 0;
+  cursor: pointer;
+}
+
+#ktopicsform .category .c-rating__item.is-active {
+  background-position: -14px 0;
+}
+
+#ktopicsform .category .c-rating__item .is-active:hover {
+  background-position: 0;
 }

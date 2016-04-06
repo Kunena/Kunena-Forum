@@ -46,7 +46,7 @@ $cols            = empty($this->checkbox) ? 7 : 6;
 </div>
 <?php endif; ?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post" id="ktopicsform">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHtml::_('form.token'); ?>
 	<div>

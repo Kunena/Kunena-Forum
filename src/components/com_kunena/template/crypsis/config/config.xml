@@ -50,6 +50,11 @@
 			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
 			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
 		</field>
+		<field name="whoisonlineName" type="list" default="default" label="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME" description="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_NAME</option>
+			<option value="avatar">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_AVATAR</option>
+			<option value="both">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_BOTH</option>
+		</field>
 		<field name="formRecover" type="list" default="0" label="COM_KUNENA_TEMPLATE_RECOVER" description="COM_KUNENA_TEMPLATE_RECOVER_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>

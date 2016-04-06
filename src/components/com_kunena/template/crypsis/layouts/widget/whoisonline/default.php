@@ -35,31 +35,20 @@ defined('_JEXEC') or die;
 			<span>
 				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 			</span>
-				<?php if (!empty($this->onlineList)) : ?>
-				<div>
-					<?php
-					foreach ($this->onlineList as $user)
-					{
-						$onlinelist[] = $user->getLink();
-					}
-					?>
-					<?php echo implode(', ', $onlinelist); ?>
-				</div>
-				<?php endif; ?>
+				<?php
+				$template = KunenaTemplate::getInstance();
+				$direction = $template->params->get('whoisonlineName');
 
-				<?php if (!empty($this->hiddenList)) : ?>
-				<div>
-					<span><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
-
-					<?php
-					foreach ($this->hiddenList as $user)
-					{
-						$hiddenlist[] = $user->getLink();
-					}
-					?>
-					<?php echo implode(', ', $hiddenlist); ?>
-				</div>
-				<?php endif; ?>
+				if ($direction == 'both') : ?>
+					<div><?php echo $this->setLayout('both'); ?></div>
+				<?php
+				elseif ($direction == 'avatar') : ?>
+					<div><?php echo $this->setLayout('avatar'); ?></div>
+				<?php else : ?>
+					<div><?php echo $this->setLayout('name'); ?></div>
+				<?php
+					endif;
+				?>
 
 				<?php if (!empty($this->onlineList)) : ?>
 				<div>

@@ -204,22 +204,9 @@ class KunenaTemplate extends JObject
 
 		foreach (array_reverse($this->default) as $template)
 		{
-			// Try to load language file for legacy templates
-			if ($lang->load('com_kunena.tpl_' . $template, JPATH_SITE)
-				|| $lang->load('com_kunena.tpl_' . $template, KPATH_SITE)
-				|| $lang->load('com_kunena.tpl_' . $template, KPATH_SITE . '/template/' . $template)
-			)
-			{
-				$lang->load('com_kunena.tpl_' . $template, JPATH_SITE)
-				|| $lang->load('com_kunena.tpl_' . $template, KPATH_SITE)
-				|| $lang->load('com_kunena.tpl_' . $template, KPATH_SITE . '/template/' . $template);
-			}
-			else
-			{
-				$lang->load('kunena_tmpl_' . $template, JPATH_SITE)
-				|| $lang->load('kunena_tmpl_' . $template, KPATH_SITE)
-				|| $lang->load('kunena_tmpl_' . $template, KPATH_SITE . '/template/' . $template);
-			}
+			$lang->load('kunena_tmpl_' . $template, JPATH_SITE)
+			|| $lang->load('kunena_tmpl_' . $template, KPATH_SITE)
+			|| $lang->load('kunena_tmpl_' . $template, KPATH_SITE . '/template/' . $template);
 		}
 	}
 
@@ -353,9 +340,11 @@ HTML;
 			{
 				$html .= '<li>...</li>';
 			}
+
 			$html .= '<li>' . $page['data'] . '</li>';
 			$last = $i;
 		}
+
 		$html .= '</ul>';
 
 		return $html;
@@ -686,48 +675,18 @@ HTML;
 
 		if ($config->topicicons)
 		{
-			if ($this->isHMVC())
+			$category_iconset = 'images/topic_icons/';
+			if (!file_exists($category_iconset))
 			{
-				$category_iconset = 'images/topic_icons/';
-				if (!file_exists($category_iconset))
-				{
-					$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
-				}
-			}
-			else
-			{
-				$category_iconset = 'images/topicicons/';
-				if (!file_exists($category_iconset))
-				{
-					$category_iconset = 'media/kunena/topicicons/default';
-					if (!file_exists($category_iconset))
-					{
-						$category_iconset = 'media/kunena/topic_icons/default';
-					}
-				}
+				$category_iconset = 'media/kunena/topic_icons' . $this->category_iconset;
 			}
 		}
 		else
 		{
-			if ($this->isHMVC())
+			$category_iconset = 'images/topic_icons';
+			if (!file_exists($category_iconset))
 			{
-				$category_iconset = 'images/topic_icons';
-				if (!file_exists($category_iconset))
-				{
-					$category_iconset = 'media/kunena/topic_icons';
-				}
-			}
-			else
-			{
-				$category_iconset = 'images/topicicons';
-				if (!file_exists($category_iconset))
-				{
-					$category_iconset = 'media/kunena/topicicons';
-					if (!file_exists($category_iconset))
-					{
-						$category_iconset = 'media/kunena/topic_icons';
-					}
-				}
+				$category_iconset = 'media/kunena/topic_icons';
 			}
 		}
 
@@ -771,14 +730,7 @@ HTML;
 	 */
 	public function getTopicIcons($all = false, $checked = 0)
 	{
-		if ($this->isHMVC())
-		{
-			$category_iconset = $this->category_iconset;
-		}
-		else
-		{
-			$category_iconset = 'default';
-		}
+		$category_iconset = $this->category_iconset;
 
 		if (empty($this->topicIcons))
 		{
@@ -1001,16 +953,9 @@ HTML;
 		$config = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
-		if ($this->isHMVC())
-		{
-			$topicicontype = $this->ktemplate->params->get('topicicontype');
-		}
-		else
-		{
-			$topicicontype = '0';
-		}
+		$topicicontype = $this->ktemplate->params->get('topicicontype');
 
-		if ($this->isHMVC() && !empty($category_iconset))
+		if (!empty($category_iconset))
 		{
 			$this->category_iconset = '/' . $category_iconset;
 		}

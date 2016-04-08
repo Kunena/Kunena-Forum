@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Message.Attachment
+ * @package     Kunena.Framework
+ * @subpackage  Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -40,8 +40,11 @@ class KunenaAttachment extends KunenaDatabaseObject
 	protected $_table = 'KunenaAttachments';
 
 	protected $path;
+
 	protected $width;
+
 	protected $height;
+
 	protected $shortname;
 
 	/**
@@ -50,6 +53,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	public $disabled = false;
 
 	protected static $_directory = 'media/kunena/attachments';
+
 	protected static $actions  = array(
 		'read' => array('Read'),
 		'createimage' => array(),
@@ -367,7 +371,11 @@ class KunenaAttachment extends KunenaDatabaseObject
 			{
 				$authFunction = 'authorise' . $function;
 				$exception = $this->$authFunction($user);
-				if ($exception) { break; }
+
+				if ($exception)
+				{
+					break;
+				}
 			}
 		}
 
@@ -446,8 +454,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$fileExt = JFile::getExt($fileInput['name']);
 		$fileNameWithExt = $fileInput['name'];
 
-		if (file_exists($uploadBasePath . $fileInput['name'])) {
-			for ($i = 2; file_exists($uploadBasePath . $fileNameWithoutExt . '.' . $fileExt); $i++) {
+		if (file_exists($uploadBasePath . $fileInput['name']))
+		{
+			for ($i = 2; file_exists($uploadBasePath . $fileNameWithoutExt . '.' . $fileExt); $i++)
+			{
 				$fileNameWithoutExt = $fileNameWithoutExt . "-$i";
 				$fileNameWithExt = $fileNameWithoutExt . '.' . $fileExt;
 			}
@@ -480,6 +490,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 				{
 					// Calculate quality for both JPG and PNG.
 					$quality = $config->imagequality;
+
 					if ($quality < 1 || $quality > 100)
 					{
 						$quality = 70;

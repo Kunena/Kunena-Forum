@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Topic
+ * @package     Kunena.Framework
+ * @subpackage  Forum.Topic
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,7 +16,9 @@ defined('_JEXEC') or die();
 class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 {
 	protected $table = '#__kunena_topics';
+
 	protected $hold = array(0);
+
 	protected $moved = null;
 
 	/**
@@ -27,19 +29,6 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		parent::__construct();
 
 		$this->limit = KunenaConfig::getInstance()->threads_per_page;
-	}
-
-	/**
-	 * @param $field
-	 * @param $operation
-	 * @param $value
-	 *
-	 * @return $this
-	 * @deprecated Use where() instead.
-	 */
-	public function filterBy($field, $operation, $value)
-	{
-		return $this->where($field, $operation, $value);
 	}
 
 	/**
@@ -76,6 +65,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	public function filterByCategories(array $categories)
 	{
 		$list = array();
+
 		foreach ($categories as $category)
 		{
 			if ($category instanceof KunenaForumCategory)
@@ -217,6 +207,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 	public function filterAnsweredBy(array $users, $negate = false)
 	{
 		$list = array();
+
 		foreach ($users as $user)
 		{
 			if ($user instanceof KunenaUser)
@@ -236,6 +227,7 @@ class KunenaForumTopicFinder extends KunenaDatabaseObjectFinder
 		if (empty($list))
 		{
 			$this->query->where('0');
+
 			return $this;
 		}
 

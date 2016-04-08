@@ -1,23 +1,27 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Template
+ * @package     Kunena.Framework
+ * @subpackage  Template
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 /**
  * Kunena Template Helper Class
+ *
+ * @since  K2.0
  */
 abstract class KunenaTemplateHelper
 {
 	protected static $_instances = array ();
 
 	/**
+	 * isDefault
+	 *
 	 * @param $template
 	 *
 	 * @return integer
@@ -31,6 +35,8 @@ abstract class KunenaTemplateHelper
 	}
 
 	/**
+	 *  parseXmlFiles
+	 *
 	 * @param   null $templateBaseDir
 	 *
 	 * @return array
@@ -61,12 +67,13 @@ abstract class KunenaTemplateHelper
 
 		$templateDirs = KunenaFolder::folders($templateBaseDir);
 		$rows = array();
+
 		// Check that the directory contains an xml file
 		foreach ($templateDirs as $templateDir)
 		{
 			$data = self::parseXmlFile($templateDir, $templateBaseDir);
 
-			if($data)
+			if ($data)
 			{
 				$rows[$templateDir] = $data;
 			}
@@ -91,7 +98,7 @@ abstract class KunenaTemplateHelper
 			$templateBaseDir = KPATH_SITE . '/template';
 		}
 
-		if(!is_file($templateBaseDir . '/' . $templateDir . '/config/template.xml'))
+		if (!is_file($templateBaseDir . '/' . $templateDir . '/config/template.xml'))
 		{
 			return false;
 		}
@@ -110,9 +117,11 @@ abstract class KunenaTemplateHelper
 	}
 
 	/**
-	 * @param $path
+	 * parseKunenaInstallFile
 	 *
-	 * @return boolean|stdClass
+	 * @param   $path
+	 *
+	 * @return bool|stdClass
 	 */
 	public static function parseKunenaInstallFile($path)
 	{
@@ -123,7 +132,7 @@ abstract class KunenaTemplateHelper
 			return false;
 		}
 
-		$data = new stdClass();
+		$data = new stdClass;
 		$data->name = (string) $xml->name;
 		$data->type = (string) $xml->attributes()->type;
 		$data->creationdate = (string) $xml->creationDate;
@@ -173,7 +182,7 @@ abstract class KunenaTemplateHelper
 	 */
 	public static function templateCanBeUsed($templatename)
 	{
-		if ($templatename == 'Crypsis' && version_compare(JVERSION, '3.0', '<'))
+		if ($templatename == 'Crypsis' || $templatename == 'Crypsisb3' )
 		{
 			return false;
 		}

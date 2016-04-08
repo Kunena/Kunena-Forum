@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage HTML
+ * @package     Kunena.Framework
+ * @subpackage  HTML
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 abstract class KunenaHtmlParser
 {
 	static $emoticons = null;
+
 	static $relative = true;
 
 	/**
@@ -50,24 +51,12 @@ abstract class KunenaHtmlParser
 
 		if ($emoticonbar == 0)
 		{
-			// don't sort when it's only for use in the emoticonbar
+			// Don't sort when it's only for use in the emoticonbar
 			array_multisort(array_keys($smileyArray), SORT_DESC, $smileyArray);
 			reset($smileyArray);
 		}
 
 		return $smileyArray;
-	}
-
-	/**
-	 * @deprecated 3.0.0
-	 *
-	 * @param $txt
-	 *
-	 * @return string
-	 */
-	public static function JSText($txt)
-	{
-		return JText::_($txt, true);
 	}
 
 	/**
@@ -186,16 +175,17 @@ abstract class KunenaHtmlParser
 	 */
 	public static function &prepareContent(&$content, $target='body')
 	{
-		$config = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
+		$config			= KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
 		$events			= (int) $config->get('jcontentevents', false);
 		$event_target	= (array) $config->get('jcontentevent_target', array('body'));
 
 		if ($events && in_array($target, $event_target))
 		{
-			$row = new stdClass();
+			$row = new stdClass;
 			$row->text =& $content;
+
 			// Run events
-			$params = new JRegistry();
+			$params = new JRegistry;
 			$params->set('ksource', 'kunena');
 
 			$dispatcher = JEventDispatcher::getInstance();

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Categories
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Categories
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -23,8 +23,6 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @var array
 	 */
 	protected $after = array();
-
-	protected $legacy;
 
 	/**
 	 * Append HTML after the layout content.
@@ -76,151 +74,6 @@ class KunenaLayout extends KunenaLayoutBase
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop("render layout '{$this->_name}'") : null;
 
 		return $output;
-	}
-
-	/**
-	 * @param   KunenaView $view
-	 *
-	 * @return $this
-	 */
-	public function setLegacy(KunenaView $view = null)
-	{
-		$this->legacy = $view;
-
-		return $this;
-	}
-
-	/**
-	 * Add legacy template support.
-	 *
-	 * @param $view
-	 * @param $layout
-	 * @param   null $template
-	 * @deprecated K4.0
-	 */
-	public function displayTemplateFile($view, $layout, $template = null)
-	{
-		list($layout, $template) = KunenaFactory::getTemplate()->mapLegacyView("{$view}/{$layout}_{$template}");
-		echo $this->subLayout($layout)->setLayout($template)->setLegacy($this->legacy);
-	}
-
-	/**
-	 * Add legacy template support. Overrides the parent class.
-	 *
-	 * @param $property
-	 * @return mixed
-	 * @throws InvalidArgumentException
-	 * @deprecated K4.0
-	 */
-	public function __get($property)
-	{
-		if (!array_key_exists($property, $this->closures))
-		{
-			if ($this->legacy)
-			{
-				if (isset($this->legacy->{$property}))
-				{
-					return $this->legacy->{$property};
-				}
-
-				$properties = $this->legacy->getProperties();
-
-				if (array_key_exists($property, $properties))
-				{
-					return $this->legacy->{$property};
-				}
-			}
-
-			if (JDEBUG)
-			{
-				throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
-			}
-			else
-			{
-				return null;
-			}
-		}
-
-		return $this->closures[$property]();
-	}
-
-	/**
-	 * Add legacy template support.
-	 *
-	 * @param $name
-	 * @param $arguments
-	 * @return mixed
-	 * @throws InvalidArgumentException
-	 * @deprecated K4.0
-	 */
-	public function __call($name, $arguments)
-	{
-		try
-		{
-			return parent::__call($name, $arguments);
-		}
-		catch (InvalidArgumentException $e)
-		{
-			$callable = array($this->legacy, $name);
-
-			if ($this->legacy && is_callable($callable))
-			{
-				return call_user_func_array($callable, $arguments);
-			}
-
-			throw $e;
-		}
-	}
-
-	/**
-	 * Add legacy template support.
-	 *
-	 * @param $property
-	 * @return boolean
-	 * @deprecated K4.0
-	 */
-	public function __isset($property)
-	{
-		return parent::__isset($property) || ($this->legacy && (isset($this->legacy->{$property})));
-	}
-
-	/**
-	 * Add legacy template support.
-	 *
-	 * @param   string  $property  The name of the property.
-	 * @param   mixed   $value     The value of the property to set.
-	 *
-	 * @return  KunenaLayout  Method supports chaining.
-	 */
-	public function set($property, $value = null)
-	{
-		$isFactory = is_object($value) && method_exists($value, '__invoke');
-
-		if ($isFactory)
-		{
-			$this->closures[$property] = $value;
-		}
-		elseif ($this->legacy)
-		{
-			$this->legacy->{$property} = $value;
-		}
-		else
-		{
-			$this->{$property} = $value;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Add legacy template support.
-	 *
-	 * @param   $path
-	 * @return  KunenaLayout
-	 */
-	public function subLayout($path)
-	{
-		return parent::subLayout($path)->setLegacy($this->legacy)->setLayout($this->layout);
 	}
 
 	/**
@@ -342,7 +195,8 @@ class KunenaLayout extends KunenaLayoutBase
 			}
 			else
 			{
-				switch ($action) {
+				switch ($action)
+				{
 					case 'first':
 						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
 						break;

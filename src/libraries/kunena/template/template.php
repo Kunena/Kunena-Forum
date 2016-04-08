@@ -2,12 +2,12 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Framework
- * @subpackage    Template
+ * @package     Kunena.Framework
+ * @subpackage  Template
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 
@@ -23,10 +23,13 @@ class KunenaTemplate extends JObject
 	protected static $_instances = array();
 
 	public $name = null;
+
 	public $params = null;
+
 	public $paramstime = false;
 
 	protected $pathTypes = array();
+
 	protected $pathTypeDefaults = array(
 		'avatars'       => 'media/avatars',
 		'emoticons'     => 'media/emoticons',
@@ -48,12 +51,19 @@ class KunenaTemplate extends JObject
 		'js'         => 'js',
 		'css'        => 'css'
 	);
+
 	protected $default = array();
+
 	protected $paths = array();
+
 	protected $css_compile = true;
+
 	protected $filecache = array();
+
 	protected $smileyPath = array();
+
 	protected $rankPath = array();
+
 	protected $userClasses = array(
 		'kuser-',
 		'admin'      => 'kuser-admin',
@@ -65,15 +75,23 @@ class KunenaTemplate extends JObject
 		'banned'     => 'kuser-banned',
 		'blocked'    => 'kuser-blocked'
 	);
+
 	public $topicIcons = array();
+
 	public $categoryIcons = array();
 
 	protected $stylesheets = array();
+
 	protected $style_variables = array();
+
 	protected $compiled_style_variables = null;
+
 	protected $scripts = array();
+
 	protected $xml = null;
+
 	protected $map;
+
 	protected $hmvc;
 
 	/**
@@ -86,7 +104,7 @@ class KunenaTemplate extends JObject
 	 *
 	 * @access    protected
 	 *
-	 * @param null $name
+	 * @param   null $name
 	 */
 	public function __construct($name = null)
 	{
@@ -100,7 +118,7 @@ class KunenaTemplate extends JObject
 		// Create template inheritance
 		if (!is_array($this->default))
 		{
-			$this->default = (array)$this->default;
+			$this->default = (array) $this->default;
 		}
 
 		array_unshift($this->default, $name);
@@ -126,6 +144,7 @@ class KunenaTemplate extends JObject
 		{
 			$this->paramstime = filemtime($ini);
 			$content          = file_get_contents($ini);
+
 			// Workaround a bug in previous versions (file may contain JSON).
 
 			if ($content && $content[0] == '{')
@@ -133,9 +152,10 @@ class KunenaTemplate extends JObject
 				$format = 'JSON';
 			}
 		}
+
 		$this->name = $name;
 
-		$this->params = new JRegistry();
+		$this->params = new JRegistry;
 		$this->params->loadString($content, $format);
 
 		// Load default values from configuration definition file.
@@ -147,7 +167,7 @@ class KunenaTemplate extends JObject
 			{
 				if (isset($node['name']) && isset($node['default']))
 				{
-					$this->params->def($node['name'], (string)$node['default']);
+					$this->params->def($node['name'], (string) $node['default']);
 				}
 			}
 			// Generate CSS variables for less compiler.
@@ -165,6 +185,8 @@ class KunenaTemplate extends JObject
 	}
 
 	/**
+	 * getconfigxml
+	 *
 	 * @return bool|mixed|string
 	 */
 	public function getConfigXml()
@@ -186,8 +208,7 @@ class KunenaTemplate extends JObject
 			// Update old template files to new format.
 			$xml = preg_replace(
 				array('|<params|', '|</params>|', '|<param\s+|', '|</param>|'),
-				array('<config', '</config>', '<field ', '</field>'),
-				$xml);
+				array('<config', '</config>', '<field ', '</field>'), $xml);
 		}
 
 		return $xml;

@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Announcement
+ * @package     Kunena.Framework
+ * @subpackage  Forum.Announcement
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -26,9 +26,13 @@ defined('_JEXEC') or die();
 class KunenaForumAnnouncement extends KunenaDatabaseObject
 {
 	protected $_table = 'KunenaAnnouncements';
+
 	protected $_date = null;
+
 	protected $_author = null;
+
 	protected $_authcache = null;
+
 	protected $_authfcache = null;
 
 	protected static $actions = array(
@@ -174,13 +178,25 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject
 			case 'created_by':
 				return $this->getAuthor()->getLink();
 			case 'created':
-				if (!$mode) { $mode = 'date_today'; }
+				if (!$mode)
+				{
+					$mode = 'date_today';
+				}
+
 				return $this->getCreationDate()->toKunena($mode);
 			case 'publish_up':
-				if (!$mode) { $mode = 'date_today'; }
+				if (!$mode)
+				{
+					$mode = 'date_today';
+				}
+
 				return $this->getCreationDate()->toKunena($mode);
 			case 'publish_down':
-				if (!$mode) { $mode = 'date_today'; }
+				if (!$mode)
+				{
+					$mode = 'date_today';
+				}
+
 				return $this->getCreationDate()->toKunena($mode);
 		}
 

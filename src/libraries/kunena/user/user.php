@@ -669,7 +669,6 @@ class KunenaUser extends JObject
 			$type = 'user';
 		}
 
-		// Deprecated in K4.0
 		if ($code === 'class')
 		{
 			$userClasses = KunenaFactory::getTemplate()->getUserClasses();

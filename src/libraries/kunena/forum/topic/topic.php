@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Topic
+ * @package     Kunena.Framework
+ * @subpackage  Forum.Topic
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -42,17 +42,27 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 * @var int
 	 */
 	public $id = null;
+
 	public $unread = 0;
+
 	public $lastread = 0;
 
 	protected $_table = 'KunenaTopics';
+
 	protected $_db = null;
+
 	protected $_authcache = array();
+
 	protected $_authccache = array();
+
 	protected $_authfcache = array();
+
 	protected $_hold = 1;
+
 	protected $_posts = 0;
+
 	protected $_pagination = null;
+
 	protected static $actions  = array(
 			'none' => array(),
 			'read' => array('Read'),
@@ -132,7 +142,8 @@ class KunenaForumTopic extends KunenaDatabaseObject
 	 */
 	function exists($exists = null)
 	{
-		if ($exists !== null) {
+		if ($exists !== null)
+		{
 			$this->_hold = $this->hold;
 			$this->_posts = $this->posts;
 		}
@@ -156,6 +167,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		if (!$usertopic->save())
 		{
 			$this->setError($usertopic->getError());
+
 			return false;
 		}
 
@@ -247,6 +259,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		if ($glue)
 		{
 			$keywords = array_keys($this->_keywords[$user]);
+
 			foreach ($keywords as &$keyword)
 			{
 				if (strpos($keyword, ' ') !== false)
@@ -274,7 +287,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		}
 
 		$this->hold = (int) $value;
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->update('#__kunena_messages')->set("hold={$this->hold}")
 			->where("thread={$this->id}")->where("hold={$this->_hold}");
 
@@ -611,7 +624,10 @@ class KunenaForumTopic extends KunenaDatabaseObject
 			}
 			elseif ((string) $action === (string) (int) $action)
 			{
-				if ($action > 0) { $uri->setVar('limitstart', $action * $limit); }
+				if ($action > 0)
+				{
+					$uri->setVar('limitstart', $action * $limit);
+				}
 			}
 			else
 			{
@@ -720,7 +736,7 @@ class KunenaForumTopic extends KunenaDatabaseObject
 		$user = KunenaUserHelper::get($user);
 		$category = $this->getCategory();
 
-		$message = new KunenaForumMessage();
+		$message = new KunenaForumMessage;
 		$message->setTopic($this);
 		$message->parent = $this->first_post_id;
 		$message->thread = $this->id;

@@ -27,11 +27,17 @@ abstract class KunenaUserHelper
 	 * @var array|KunenaUser[]
 	 */
 	protected static $_instances_name = array ();
+
 	protected static $_online = null;
+
 	protected static $_online_status = null;
+
 	protected static $_lastid = null;
+
 	protected static $_total = null;
+
 	protected static $_topposters = null;
+
 	protected static $_me = null;
 
 	/**
@@ -100,6 +106,7 @@ abstract class KunenaUserHelper
 		if ($id === 0)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
 			return new KunenaUser($id);
 		}
 		elseif ($reload || empty(self::$_instances [$id]))
@@ -112,6 +119,7 @@ abstract class KunenaUserHelper
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
 		return self::$_instances [$id];
 	}
 
@@ -166,6 +174,7 @@ abstract class KunenaUserHelper
 
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
+
 		foreach($userids as $userid)
 		{
 			// Ignore guests and imported users, which haven't been mapped to Joomla (id<0).
@@ -235,10 +244,23 @@ abstract class KunenaUserHelper
 		{
 			$db = JFactory::getDBO();
 			$config = KunenaFactory::getConfig();
-			if ($config->userlist_count_users == '1') { $where = '(block=0 OR activation="")'; }
-			elseif ($config->userlist_count_users == '2') $where = '(block=0 AND activation="")';
-			elseif ($config->userlist_count_users == '3') $where = 'block=0';
-			else { $where = '1'; }
+
+			if ($config->userlist_count_users == '1')
+			{
+				$where = '(block=0 OR activation="")';
+			}
+			elseif ($config->userlist_count_users == '2')
+			{
+				$where = '(block=0 AND activation="")';
+			}
+			elseif ($config->userlist_count_users == '3')
+			{
+				$where = 'block=0';
+			}
+			else
+			{
+				$where = '1';
+			}
 
 			$db->setQuery("SELECT COUNT(*), MAX(id) FROM #__users WHERE {$where}");
 			list (self::$_total, self::$_lastid) = $db->loadRow();
@@ -357,44 +379,6 @@ abstract class KunenaUserHelper
 		}
 
 		return $counts;
-	}
-
-	/**
-	 * @param   mixed  $user
-	 * @param   bool|string   $yes
-	 * @param   string $no
-	 *
-	 * @deprecated K4.0.0  Please use getsStatus instead.
-	 *
-	 * @return boolean|string
-	 */
-	public static function isOnline($user, $yes = false, $no = 'offline')
-	{
-		$user = self::get($user);
-
-		if (!$user->showOnline && !self::getMyself()->isModerator())
-		{
-			return $yes ? $no : false;
-		}
-
-		$online = false;
-
-		if (intval($user->userid) > 0)
-		{
-			if (self::$_online === null)
-			{
-				self::getOnlineUsers();
-			}
-
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - JFactory::getApplication()->get('lifetime', 15) * 60) : false;
-		}
-
-		if ($yes)
-		{
-			return $online ? $yes : $no;
-		}
-
-		return $online;
 	}
 
 	/**

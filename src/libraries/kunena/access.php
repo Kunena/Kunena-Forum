@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration
+ * @package     Kunena.Framework
+ * @subpackage  Integration
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -19,11 +19,15 @@ class KunenaAccess
 	const TOPIC_SUBSCRIPTION = 2;
 
 	protected static $instance = null;
+
 	protected $accesstypes = array('all' => array());
 
 	protected $adminsByCatid = null;
+
 	protected $adminsByUserid = null;
+
 	protected $moderatorsByCatid = null;
+
 	protected $moderatorsByUserid = null;
 
 	protected static $cacheKey = 'com_kunena.access.global.v1';
@@ -59,7 +63,6 @@ class KunenaAccess
 		{
 			// Load administrators and moderators from cache
 			$cache = JFactory::getCache('com_kunena', 'output');
-			// FIXME: Experimental caching.
 			$data = $cache->get(self::$cacheKey, 'com_kunena');
 
 			if ($data)
@@ -90,7 +93,7 @@ class KunenaAccess
 
 		if (!self::$instance)
 		{
-			self::$instance = new KunenaAccess();
+			self::$instance = new KunenaAccess;
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -281,35 +284,6 @@ window.addEvent('domready', function(){
 		}
 
 		return $list;
-	}
-
-	/**
-	 * Get group name in selected access type.
-	 *
-	 * @param   string	$accesstype	Access type.
-	 * @param   mixed		$id			Group id.
-	 * @return string|null
-	 *
-	 * @deprecated 3.0.1
-	 */
-	public function getGroupName($accesstype, $id)
-	{
-		if (!isset($this->accesstypes[$accesstype]))
-		{
-			return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
-		}
-
-		// @var KunenaAccess $access
-
-		foreach ($this->accesstypes[$accesstype] as $access)
-		{
-			if (method_exists($access, 'getGroupName'))
-			{
-				return $access->getGroupName($accesstype, $id);
-			}
-		}
-
-		return null;
 	}
 
 	/**

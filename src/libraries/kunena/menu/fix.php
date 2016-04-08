@@ -1,13 +1,13 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Forum.Menu
+ * @package     Kunena.Framework
+ * @subpackage  Forum.Menu
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @copyright   (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,12 +22,19 @@ abstract class KunenaMenuFix
 	 * @var array|StdClass[]
 	 */
 	public static $items = array();
+
 	public static $filtered = array();
+
 	public static $aliases = array();
+
 	public static $invalid = array();
+
 	public static $legacy = array();
+
 	public static $same = array();
+
 	public static $structure = null;
+
 	public static $parent = null;
 
 	/**
@@ -69,7 +76,7 @@ abstract class KunenaMenuFix
 			return false;
 		}
 
-		foreach(self::$items as &$item)
+		foreach (self::$items as &$item)
 		{
 			// Get parent information.
 			$parent_tree = array();
@@ -97,6 +104,7 @@ abstract class KunenaMenuFix
 	public static function getLegacy()
 	{
 		$items = array();
+
 		foreach (self::$legacy as $itemid)
 		{
 			$items[$itemid] = self::$items[$itemid];
@@ -111,6 +119,7 @@ abstract class KunenaMenuFix
 	public static function fixLegacy()
 	{
 		$errors = array();
+
 		foreach (self::$legacy as $itemid)
 		{
 			$item = self::$items[$itemid];
@@ -159,6 +168,7 @@ abstract class KunenaMenuFix
 	public static function getAll()
 	{
 		$items = array();
+
 		foreach (self::$filtered as $itemid => $targetid)
 		{
 			if ($targetid)
@@ -176,6 +186,7 @@ abstract class KunenaMenuFix
 	public static function getAliases()
 	{
 		$items = array();
+
 		foreach (self::$aliases as $itemid => $targetid)
 		{
 			$items[$itemid] = self::$items[$itemid];
@@ -190,20 +201,13 @@ abstract class KunenaMenuFix
 	public static function getInvalid()
 	{
 		$items = array();
+
 		foreach (self::$invalid as $itemid => $targetid)
 		{
 			$items[$itemid] = self::$items[$itemid];
 		}
 
 		return $items;
-	}
-
-	/**
-	 * @deprecated in Kunena 3.0
-	 */
-	public static function getConflicts()
-	{
-		return array();
 	}
 
 	/**
@@ -278,6 +282,7 @@ abstract class KunenaMenuFix
 		}
 
 		$id = $item->id;
+
 		if (!isset(self::$parent[$id]))
 		{
 			if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view']) && ($item->query['view'] == 'home' || $item->query['view'] == 'entrypage'))

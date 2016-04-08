@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Administrator.Template
- * @subpackage Categories
+ * @package     Kunena.Administrator.Template
+ * @subpackage  Categories
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -62,6 +62,7 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 	 * @var array
 	 */
 	protected $closures = array();
+
 	protected $debug;
 
 	/**
@@ -279,21 +280,6 @@ class KunenaLayoutBase extends KunenaCompatLayoutBase
 		}
 
 		return '<br />' . $error . '<br />';
-	}
-
-	/**
-	 * Load a template file.
-	 *
-	 * @param   string  $tpl  The name of the template source file.
-	 *
-	 * @return  string  The output of the the template file.
-	 *
-	 * @throws  Exception
-	 * @deprecated
-	 */
-	public function loadTemplate($tpl = null)
-	{
-		return $this->render("{$this->_name}_{$tpl}");
 	}
 
 	/**

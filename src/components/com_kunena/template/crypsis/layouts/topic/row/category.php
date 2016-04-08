@@ -19,7 +19,7 @@ $category = $topic->getCategory();
 $userTopic = $topic->getUserTopic();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage('img-rounded', 'thumb');
+$avatar = $author->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
@@ -77,7 +77,41 @@ if (!empty($this->spacing)) : ?>
 			{
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
-			?>
+
+			$labels = KunenaFactory::getTemplate()->params->get('labels');
+			if ($labels)
+			{
+			if ($this->topic->locked != 0)
+			{ ?>
+			<span class="label label-default">CLOSED</span>
+			<?php }
+
+			if ($this->topic->ordering != 0) { ?>
+				<span class="label label-info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						<span class="sr-only"></span>STICKY</span>
+			<?php }
+
+			if ($this->topic->icon_id == 1) { ?>
+				<span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						<span class="sr-only"></span>IMPORTANT</span>
+			<?php }
+
+			if ($this->topic->icon_id == 2) { ?>
+				<span class="label label-primary"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+						<span class="sr-only"></span>QUESTION</span>
+			<?php }
+
+			$str_counts = substr_count($this->topic->subject, 'solved');
+			if ($this->topic->icon_id == 8 || $str_counts) { ?>
+				<a href="#"><span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					   <span class="sr-only"></span>SOLVED</span></a>
+			<?php }
+
+			if ($this->topic->icon_id == 10) { ?>
+				<span class="label label-danger"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+						<span class="sr-only"></span>BUG</span>
+			<?php }
+			}?>
 			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
 		</div>
 		<div class="pull-right">

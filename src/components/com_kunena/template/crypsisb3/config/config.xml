@@ -62,6 +62,7 @@
 			<option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>
 			<option value="img-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>
 			<option value="img-thumbnail">COM_KUNENA_TEMPLATE_THUMBNAIL</option>
+			<option value="none">COM_KUNENA_TEMPLATE_NONE</option>
 		</field>
 		<field name="topicicontype" type="list" default="0" label="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS" description="COM_KUNENA_A_TEMPLATE_MANAGER_TOPICICONS_DESC">
 			<option value="0">COM_KUNENA_TEMPLATE_NORMAL</option>

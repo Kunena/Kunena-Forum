@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 // @var KunenaUser $user
 
 $user   = $this->user;
-$avatar = $user->getAvatarImage('img-polaroid', 'thumb');
+$avatar = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
 $show   = KunenaConfig::getInstance()->showuserstats;
 
 if ($show)
@@ -34,18 +34,16 @@ if ($show)
 			<li>
 				<?php echo $user->getLink($avatar); ?>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-					<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+					<span class="topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-starter-circle';};?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif;?>
 				<?php if (!$this->topic_starter && $user->isModerator()) : ?>
-					<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
+					<span class="<?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};?> topic-moderator"><?php echo JText::_('COM_KUNENA_TEAM_MEMBER') ?></span>
 				<?php endif;?>
 			</li>
 		<?php endif; ?>
 		<?php if ($user->exists()) : ?>
 			<li>
-				<span class="label label-<?php echo $user->isOnline('success', 'important') ?>">
-					<?php echo $user->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?>
-				</span>
+				<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
 			</li>
 		<?php endif; ?>
 	</ul>

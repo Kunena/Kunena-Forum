@@ -28,7 +28,15 @@ class KunenaTemplate extends JObject
 
 	public $paramstime = false;
 
-	protected $pathTypes = array();
+	protected $pathTypes = array(
+		'emoticons'     => 'media/emoticons',
+		'ranks'         => 'media/ranks',
+		'icons'         => 'media/icons',
+		'categoryicons' => 'media/category_icons',
+		'images'        => 'media/images',
+		'js'            => 'media/js',
+		'css'           => 'media/css'
+	);
 
 	protected $pathTypeDefaults = array(
 		'avatars'       => 'media/avatars',
@@ -65,15 +73,14 @@ class KunenaTemplate extends JObject
 	protected $rankPath = array();
 
 	protected $userClasses = array(
-		'kuser-',
-		'admin'      => 'kuser-admin',
-		'localadmin' => 'kuser-admin',
-		'globalmod'  => 'kuser-globalmod',
-		'moderator'  => 'kuser-moderator',
-		'user'       => 'kuser-user',
-		'guest'      => 'kuser-guest',
-		'banned'     => 'kuser-banned',
-		'blocked'    => 'kuser-blocked'
+		'kwho-',
+		'admin' => 'hasTooltip kwho-admin',
+		'globalmod' => 'hasTooltip kwho-globalmoderator',
+		'moderator' => 'hasTooltip kwho-moderator',
+		'user' => 'hasTooltip kwho-user',
+		'guest' => 'hasTooltip kwho-guest',
+		'banned' => 'hasTooltip kwho-banned',
+		'blocked' => 'hasTooltip kwho-blocked'
 	);
 
 	public $topicIcons = array();
@@ -445,7 +452,7 @@ HTML;
 		if (!preg_match('|https?://|', $filename))
 		{
 			$filename     = preg_replace('|^css/|u', '', $filename);
-			$filemin      = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name);
+			$filemin      = $filename = $this->getFile($filename, false, $this->pathTypes['css'], 'components/com_kunena/template/' . $this->name . '/assets');
 			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
 
 			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))

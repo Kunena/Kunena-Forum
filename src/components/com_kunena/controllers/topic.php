@@ -482,6 +482,16 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
+		$url_subject = $this->checkURLInSubject($message->subject);
+
+		if ($url_subject && $this->config->url_subject_topic)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_URL_IN_SUBJECT'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
 		// Make sure that message has visible content (text, images or objects) to be shown.
 		$text = KunenaHtmlParser::parseBBCode($message->message);
 
@@ -497,7 +507,6 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
-
 		$maxlinks = $this->checkMaxLinks($text, $topic);
 
 		if (!$maxlinks)
@@ -705,6 +714,16 @@ class KunenaControllerTopic extends KunenaController
 			}
 		}
 
+		$url_subject = $this->checkURLInSubject($message->subject);
+
+		if ($url_subject && $this->config->url_subject_topic)
+		{
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_URL_IN_SUBJECT'), 'error');
+			$this->setRedirectBack();
+
+			return;
+		}
+
 		// Set topic icon if permitted
 		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->authorise('edit', null, false))
 		{
@@ -860,6 +879,35 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		$this->setRedirect($message->getUrl($this->return, false));
+	}
+
+	/**
+	 * Check if title of topic or message contains URL to limit part of spam
+	 *
+	 * @param string $usbject
+	 *
+	 * @return boolean
+	 */
+	protected function checkURLInSubject($subject)
+	{
+		if ($this->config->url_subject_topic)
+		{
+			preg_match_all('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.\,]*(\?\S+)?)?)*)@', $subject, $matches);
+
+			$ignore = false;
+
+			foreach ($matches as $match)
+			{
+				if (!empty($match))
+				{
+					$ignore = true;
+				}
+			}
+
+			return $ignore;
+		}
+
+		return true;
 	}
 
 	/**

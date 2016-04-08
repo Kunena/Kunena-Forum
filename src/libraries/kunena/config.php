@@ -1129,6 +1129,12 @@ class KunenaConfig extends JObject
 	public $ratingenabled = 0;
 
 	/**
+	 * @var    integer  Allow to prevent posting if the subject of topic contains URL; select, boolean
+	 * @since  K5.0.0
+	 */
+	public $url_subject_topic = 0;
+
+	/**
 	 *
 	 */
 	public function __construct()

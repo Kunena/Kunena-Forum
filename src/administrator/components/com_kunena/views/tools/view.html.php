@@ -21,6 +21,9 @@ class KunenaAdminViewTools extends KunenaView
 	 */
 	function displayDefault()
 	{
+		$this->systemreport = $this->get('SystemReport');
+
+		$this->systemreport_anonymous = $this->get('SystemReportAnonymous');
 		$this->setToolBarDefault();
 		$this->display();
 	}

@@ -787,4 +787,11 @@ class KunenaAdminControllerTools extends KunenaController
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_FAILED'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
+	/**
+	 *
+	 */
+	function systemreport()
+	{
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
 }

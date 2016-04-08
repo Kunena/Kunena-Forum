@@ -25,8 +25,7 @@ defined('_JEXEC') or die();
 			<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_TOOLS_LABEL_FORUM_TOOLS') ?></div>
 			<hr class="hr-condensed">
 			<div id="dashboard-icons" class="btn-group">
-				<?php //TODO: Move report to tools, using old view. ?>
-				<a class="btn" href="index.php?option=com_kunena&view=report">
+				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=report">
 					<i class="icon-big icon-support" alt="<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM') ?>"></i><br />
 					<span><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></span>
 				</a>

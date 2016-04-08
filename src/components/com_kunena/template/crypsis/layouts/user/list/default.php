@@ -129,7 +129,7 @@ $this->addScript('assets/js/search.js');
 		// @var KunenaUser $user
 
 		foreach ($this->users as $user) :
-			$avatar = $config->userlist_avatar ? $user->getAvatarImage('img-polaroid', 'thumb') : null;
+			$avatar = $config->userlist_avatar ? $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 		?>
 			<tr>
 				<td class="span1 center">

@@ -50,6 +50,16 @@
 			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
 			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
 		</field>
+		<field name="avatarType" type="list" default="img-circle" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE" description="COM_KUNENA_TEMPLATE_PROFILETYPE_DESC">
+			<option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>
+			<option value="img-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>
+			<option value="img-polaroid">COM_KUNENA_TEMPLATE_THUMBNAIL</option>
+			<option value="none">COM_KUNENA_TEMPLATE_NONE</option>
+		</field>
+		<field name="labels" type="list" default="0" label="COM_KUNENA_TEMPLATE_LABELS" description="COM_KUNENA_TEMPLATE_LABELS_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 		<field name="whoisonlineName" type="list" default="default" label="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME" description="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_NAME</option>
 			<option value="avatar">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_AVATAR</option>
@@ -64,7 +74,7 @@
 			<option value="B2">COM_KUNENA_TEMPLATE_BOOTSTRAP2</option>
 			<option value="fa">COM_KUNENA_TEMPLATE_FONTAWESOME</option>
 		</field>
-		<field name="fontawesome" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME" description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_DESC">
+		<field name="fontawesome" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME" description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_DESC">
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>

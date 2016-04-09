@@ -83,6 +83,14 @@ class KunenaAdminControllerTrash extends KunenaController
 					foreach ($messages as $message)
 					{
 						$success = $message->delete();
+						$target = KunenaForumMessageHelper::get($message->id);
+						$topic  = KunenaForumTopicHelper::get($target->getTopic());
+
+						if ($topic->attachments > 0)
+						{
+							$topic->attachments = $topic->attachments - 1;
+							$topic->save(false);
+						}
 
 						if (!$success)
 						{

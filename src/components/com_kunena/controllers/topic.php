@@ -1416,6 +1416,12 @@ class KunenaControllerTopic extends KunenaController
 			// Delete message
 			$target = KunenaForumMessageHelper::get($this->mesid);
 			$topic  = KunenaForumTopicHelper::get($target->getTopic());
+
+			if ($topic->attachments > 0)
+			{
+				$topic->attachments = $topic->attachments - 1;
+				$topic->save(false);
+			}
 		}
 		else
 		{

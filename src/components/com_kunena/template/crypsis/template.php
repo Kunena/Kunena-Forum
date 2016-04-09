@@ -60,6 +60,15 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 		}
 
 		$this->ktemplate = KunenaFactory::getTemplate();
+		$bootstrap = $this->ktemplate->params->get('bootstrap');
+
+		if ($bootstrap) : ?>
+			<link rel="stylesheet" href="media\jui\css\bootstrap.min.css">
+			<link rel="stylesheet" href="media\jui\css\bootstrap-extended.css">
+			<link rel="stylesheet" href="media\jui\css\bootstrap-responsive.min.css">
+			<link rel="stylesheet" href="media\jui\css\icomoon.css">
+		<?php endif;
+
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
 
 		if ($fontawesome) : ?>

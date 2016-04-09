@@ -51,6 +51,7 @@ $social = $this->ktemplate->params->get('socialshare');
 <h3>
 	<?php echo $topic->getIcon($topic->getCategory()->iconset); ?>
 	<?php echo $topic->displayField('subject'); ?>
+	<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config); ?>
 </h3>
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
@@ -71,8 +72,6 @@ $social = $this->ktemplate->params->get('socialshare');
 <?php if ($social) : ?>
 	<div><?php echo $this->subLayout('Widget/Social'); ?></div>
 <?php endif; ?>
-
-<div><?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config); ?></div>
 
 <?php
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');

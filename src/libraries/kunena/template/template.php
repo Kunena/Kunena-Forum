@@ -244,6 +244,24 @@ class KunenaTemplate extends JObject
 	public function initialize()
 	{
 		$this->loadLanguage();
+		$config = KunenaFactory::getConfig ();
+		if ($config->sef)
+		{
+			$sef = '/forum';
+		}
+		else {
+			$sef = '/index.php?option=com_kunena';
+		}
+		?>
+		<script>
+			jQuery(document).ready(function() {
+				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'],  $sef) !== false){ echo "true"; } else echo "false";?>;
+				if (isForumActive){
+					jQuery('.current').addClass("active alias-parent-active");
+				}
+			});
+		</script>
+		<?php
 	}
 
 	/**

@@ -20,6 +20,10 @@
 			<option value="white">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_WHITE</option>
 			<option value="black">COM_KUNENA_TEMPLATE_LIGHTBOXCOLOR_BLACK</option>
 		</field>
+		<field name="bootstrap" type="list" default="0" label="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP" description="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
+		</field>
 		<field name="SubjectLengthMessage" type="text" default="80" label="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH" description="COM_KUNENA_TEMPLATE_SUBJECT_LENGTH_MESSAGE_LENGTH_DESC"/>
 	</fieldset>
 

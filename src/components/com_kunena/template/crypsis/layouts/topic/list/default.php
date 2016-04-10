@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 $cols = !empty($this->actions) ? 6 : 5;
 $colspan = !empty($this->actions) ? 4 : 3;
+$this->addStyleSheet('assets/css/rating.css');
 ?>
 <div class="row-fluid">
 	<div class="span12">

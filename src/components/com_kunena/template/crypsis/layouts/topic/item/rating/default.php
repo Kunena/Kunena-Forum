@@ -11,6 +11,8 @@
  **/
 
 defined('_JEXEC') or die ();
+$this->addStyleSheet('assets/css/rating.css');
+
 ?>
 
 <?php if ($this->category->allow_ratings && $this->config->ratingenabled): ?>

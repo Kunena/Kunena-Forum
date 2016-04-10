@@ -37,7 +37,7 @@ defined('_JEXEC') or die;
 
 	<table class="table table-striped table-bordered">
 
-		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
+		<?php if (!empty($this->actions) && !empty($this->categories) && !empty($this->embedded)) : ?>
 			<thead>
 				<tr>
 					<th colspan="3"></th>

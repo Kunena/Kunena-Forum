@@ -33,7 +33,6 @@ $config = KunenaFactory::getTemplate()->params;
 	if ($config->get('displayAnnouncement'))
 	{
 		echo $this->subRequest('Widget/Announcement');
-if ($config->get('displayMenu')) {}
 	}
 
 	if ($config->get('displayModule'))

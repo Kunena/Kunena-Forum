@@ -1,7 +1,7 @@
 #Kunena
 .externalToolBuilders/build.kunena.2.0.launch
-components/com_kunena/site/template/**/params.ini
-components/com_kunena/site/template/crypsis/css/kunena.css
+src/components/com_kunena/template/**/params.ini
+src/components/com_kunena/site/template/crypsis/css/kunena.css
 
 # Builds
 build/tmp

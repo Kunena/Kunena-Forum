@@ -19,6 +19,8 @@ $attachments = $message->getAttachments();
 $avatarname = $this->profile->getname();
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $config = KunenaConfig::getInstance();
+$subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+
 
 if ($config->ordering_system == 'mesid')
 {
@@ -41,11 +43,17 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 	<div class="profile-horizontal-top">
 		<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 	</div>
-	<div class="horizontal-message-top badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?>"
-		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . KunenaHtmlParser::parseText($message->displayField('subject'), $subjectlengthmessage); ?>">
-		<div class="kmessage">
-			<div class="horizontal-message-text">
-				<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
+	<div class="horizontal-message-top badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif;?> <?php if ($this->topic->icon_id == 8 && $this->thankyou) : ?> badger-solved <?php endif;?> message-<?php echo $this->message->getState(); ?>"
+		data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
+	<div class="kmessage">
+			<div class="kmessage">
+				<p class="kmsg">
+					<?php  if (!$this->me->userid && !$isReply) :
+						echo $message->displayField('message');
+					else:
+						echo (!$this->me->userid && $this->config->teaser) ? JText::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+					endif;?>
+				</p>
 			</div>
 
 			<?php if (!empty($attachments)) : ?>

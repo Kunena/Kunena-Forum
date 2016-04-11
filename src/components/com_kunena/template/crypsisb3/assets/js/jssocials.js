@@ -1,6 +1,6 @@
-/*! jssocials - v0.2.0 - 2015-05-17
+/*! jssocials - v1.2.1 - 2016-04-10
 * http://js-socials.com
-* Copyright (c) 2015 Artem Tabalin; Licensed MIT */
+* Copyright (c) 2016 Artem Tabalin; Licensed MIT */
 (function(window, $, undefined) {
 
     var JSSOCIALS = "JSSocials",
@@ -14,7 +14,7 @@
     };
 
     var IMG_SRC_REGEX = /(\.(jpeg|png|gif|bmp)$|^data:image\/(jpeg|png|gif|bmp);base64)/i;
-    var URL_PARAMS_REGEX = /(&?[a-zA-Z0-9]+=)\{([a-zA-Z0-9]+)\}/g;
+    var URL_PARAMS_REGEX = /(&?[a-zA-Z0-9]+=)?\{([a-zA-Z0-9]+)\}/g;
 
     var MEASURES = {
         "G": 1000000000,
@@ -22,7 +22,7 @@
         "K": 1000
     };
 
-    var shares = [];
+    var shares = {};
 
     function Socials(element, config) {
         var $element = $(element);
@@ -40,6 +40,7 @@
     Socials.prototype = {
         url: "",
         text: "",
+        shareIn: "blank",
 
         showLabel: function(screenWidth) {
             return (this.showCount === false) ?
@@ -77,7 +78,7 @@
 
         _initDefaults: function() {
             this.url = window.location.href;
-            this.text = $("meta[name=description]").attr("content") || $("title").text();
+            this.text = $.trim($("meta[name=description]").attr("content") || $("title").text());
         },
 
         _initShares: function() {
@@ -166,15 +167,35 @@
         },
 
         _createShareLink: function(share) {
-            var $result = $("<a>").addClass(this.shareLinkClass)
-                .attr({ href: this._getShareUrl(share), target: "_blank" })
+            var shareStrategy = this._getShareStrategy(share);
+
+            var $result = shareStrategy.call(share, {
+                shareUrl: this._getShareUrl(share)
+            });
+
+            $result.addClass(this.shareLinkClass)
                 .append(this._createShareLogo(share));
 
             if(this._showLabel) {
                 $result.append(this._createShareLabel(share));
             }
 
+            $.each(this.on || {}, function(event, handler) {
+                if($.isFunction(handler)) {
+                    $result.on(event, $.proxy(handler, share));
+                }
+            });
+
             return $result;
+        },
+
+        _getShareStrategy: function(share) {
+            var result = shareStrategies[share.shareIn || this.shareIn];
+
+            if(!result)
+                throw Error("Share strategy '" + this.shareIn + "' not found");
+
+            return result;
         },
 
         _getShareUrl: function(share) {
@@ -260,13 +281,40 @@
         _formatShareUrl: function(url, share) {
             return url.replace(URL_PARAMS_REGEX, function(match, key, field) {
                 var value = share[field] || "";
-                return value ? (key + window.encodeURIComponent(value)) : "";
+                return value ? (key || "") + window.encodeURIComponent(value) : "";
             });
         },
 
         _clear: function() {
             window.clearTimeout(this._resizeTimer);
             this._$element.empty();
+        },
+
+        _passOptionToShares: function(key, value) {
+            var shares = this.shares;
+
+            $.each(["url", "text"], function(_, optionName) {
+                if(optionName !== key)
+                    return;
+
+                $.each(shares, function(_, share) {
+                    share[key] = value;
+                });
+            });
+        },
+
+        _normalizeShare: function(share) {
+            if($.isNumeric(share)) {
+                return this.shares[share];
+            }
+
+            if(typeof share === "string") {
+                return $.grep(this.shares, function(s) {
+                    return s.share === share;
+                })[0];
+            }
+
+            return share;
         },
 
         refresh: function() {
@@ -288,9 +336,22 @@
             }
 
             this[key] = value;
+
+            this._passOptionToShares(key, value);
+
+            this.refresh();
+        },
+
+        shareOption: function(share, key, value) {
+            share = this._normalizeShare(share);
+
+            if(arguments.length === 2) {
+                return share[key];
+            }
+
+            share[key] = value;
             this.refresh();
         }
-
     };
 
 
@@ -337,13 +398,33 @@
         $.extend(component, config);
     };
 
+    var shareStrategies = {
+        popup: function(args) {
+            return $("<a>").attr("href", "#")
+                .on("click", function() {
+                    window.open(args.shareUrl, null, "width=600, height=400, location=0, menubar=0, resizeable=0, scrollbars=0, status=0, titlebar=0, toolbar=0");
+                    return false;
+                });
+        },
+
+        blank: function(args) {
+            return $("<a>").attr({ target: "_blank", href: args.shareUrl });
+        },
+
+        self: function(args) {
+            return $("<a>").attr({ target: "_self", href: args.shareUrl });
+        }
+    };
+
     window.jsSocials = {
         Socials: Socials,
         shares: shares,
+        shareStrategies: shareStrategies,
         setDefaults: setDefaults
     };
 
 }(window, jQuery));
+
 
 (function(window, $, jsSocials, undefined) {
 
@@ -352,18 +433,16 @@
         email: {
             label: "E-mail",
             logo: "fa fa-at",
-            shareUrl: "mailto:?subject={text}&body={url}",
-            countUrl: ""
+            shareUrl: "mailto:{to}?subject={text}&body={url}",
+            countUrl: "",
+            shareIn: "self"
         },
 
         twitter: {
             label: "Tweet",
             logo: "fa fa-twitter",
             shareUrl: "https://twitter.com/share?url={url}&text={text}&via={via}&hashtags={hashtags}",
-            countUrl: "https://cdn.api.twitter.com/1/urls/count.json?url={url}&callback=?",
-            getCount: function(data) {
-                return data.count;
-            }
+            countUrl: ""
         },
 
         facebook: {
@@ -380,7 +459,7 @@
 
         googleplus: {
             label: "+1",
-            logo: "fa fa-google-plus",
+            logo: "fa fa-google",
             shareUrl: "https://plus.google.com/share?url={url}",
             countUrl: function() {
                 return "https://cors-anywhere.herokuapp.com/https://plusone.google.com/_/+1/fastbutton?url="+ window.encodeURIComponent(this.url);
@@ -393,7 +472,7 @@
         linkedin: {
             label: "Share",
             logo: "fa fa-linkedin",
-            shareUrl: "https://www.linkedin.com/shareArticle?url={url}",
+            shareUrl: "https://www.linkedin.com/shareArticle?mini=true&url={url}",
             countUrl: "https://www.linkedin.com/countserv/count/share?format=jsonp&url={url}&callback=?",
             getCount: function(data) {
                 return data.count;
@@ -408,8 +487,34 @@
             getCount: function(data) {
                 return data.count;
             }
+        },
+
+        stumbleupon: {
+            label: "Share",
+            logo: "fa fa-stumbleupon",
+            shareUrl: "http://www.stumbleupon.com/submit?url={url}&title={title}",
+            countUrl:  "https://cors-anywhere.herokuapp.com/https://www.stumbleupon.com/services/1.01/badge.getinfo?url={url}",
+            getCount: function(data) {
+                return data.result.views;
+            }
+        },
+
+        whatsapp: {
+            label: "WhatsApp",
+            logo: "fa fa-whatsapp",
+            shareUrl: "whatsapp://send?text={url} {text}",
+            countUrl: "",
+            shareIn: "self"
+        },
+
+        line: {
+            label: "LINE",
+            logo: "fa fa-comment",
+            shareUrl: "http://line.me/R/msg/text/?{text} {url}",
+            countUrl: ""
         }
 
     });
 
 }(window, jQuery, window.jsSocials));
+

@@ -52,6 +52,33 @@
     .jssocials-share-email .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-email .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-email .jssocials-share-link:active .jssocials-share-label {
       color: #0e76e6; }
 
+.jssocials-share-whatsapp .jssocials-share-link {
+  color: #29a628; }
+  .jssocials-share-whatsapp .jssocials-share-link .jssocials-share-label {
+    color: #29a628; }
+  .jssocials-share-whatsapp .jssocials-share-link:hover, .jssocials-share-whatsapp .jssocials-share-link:focus, .jssocials-share-whatsapp .jssocials-share-link:active {
+    color: #1f7d1e; }
+    .jssocials-share-whatsapp .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-whatsapp .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-whatsapp .jssocials-share-link:active .jssocials-share-label {
+      color: #1f7d1e; }
+
+.jssocials-share-line .jssocials-share-link {
+  color: #25af00; }
+  .jssocials-share-line .jssocials-share-link .jssocials-share-label {
+    color: #25af00; }
+  .jssocials-share-line .jssocials-share-link:hover, .jssocials-share-line .jssocials-share-link:focus, .jssocials-share-line .jssocials-share-link:active {
+    color: #1a7c00; }
+    .jssocials-share-line .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-line .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-line .jssocials-share-link:active .jssocials-share-label {
+      color: #1a7c00; }
+
+.jssocials-share-stumbleupon .jssocials-share-link {
+  color: #eb4823; }
+  .jssocials-share-stumbleupon .jssocials-share-link .jssocials-share-label {
+    color: #eb4823; }
+  .jssocials-share-stumbleupon .jssocials-share-link:hover, .jssocials-share-stumbleupon .jssocials-share-link:focus, .jssocials-share-stumbleupon .jssocials-share-link:active {
+    color: #c93412; }
+    .jssocials-share-stumbleupon .jssocials-share-link:hover .jssocials-share-label, .jssocials-share-stumbleupon .jssocials-share-link:focus .jssocials-share-label, .jssocials-share-stumbleupon .jssocials-share-link:active .jssocials-share-label {
+      color: #c93412; }
+
 .jssocials-share-link {
   -webkit-transition: color 200ms ease-in-out;
           transition: color 200ms ease-in-out; }

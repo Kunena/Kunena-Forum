@@ -74,13 +74,13 @@ class KunenaTemplate extends JObject
 
 	protected $userClasses = array(
 		'kwho-',
-		'admin' => 'hasTooltip kwho-admin',
-		'globalmod' => 'hasTooltip kwho-globalmoderator',
-		'moderator' => 'hasTooltip kwho-moderator',
-		'user' => 'hasTooltip kwho-user',
-		'guest' => 'hasTooltip kwho-guest',
-		'banned' => 'hasTooltip kwho-banned',
-		'blocked' => 'hasTooltip kwho-blocked'
+		'admin' => 'kwho-admin',
+		'globalmod' => 'kwho-globalmoderator',
+		'moderator' => 'kwho-moderator',
+		'user' => 'kwho-user',
+		'guest' => 'kwho-guest',
+		'banned' => 'kwho-banned',
+		'blocked' => 'kwho-blocked'
 	);
 
 	public $topicIcons = array();

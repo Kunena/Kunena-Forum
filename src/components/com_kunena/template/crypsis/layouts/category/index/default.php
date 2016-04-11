@@ -76,7 +76,7 @@ foreach ($this->sections as $section) :
 							<td class="span8">
 								<div>
 									<h3>
-										<?php echo $this->getCategoryLink($category, null, null, 'hasTooltip'); ?>
+										<?php echo $this->getCategoryLink($category, null, null, null); ?>
 										<small class="hidden-phone nowrap">
 											(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
 											<span>
@@ -90,7 +90,7 @@ foreach ($this->sections as $section) :
 													<span class="icon-shield hasTooltip" data-original-title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED'); ?>"></span>
 												<?php endif; ?>
 												<?php if (!empty($category->rssURL)) : ?>
-													<a href="<?php echo $category->rssURL ?>" class="hasTooltip" rel="follow" data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
+													<a href="<?php echo $category->rssURL ?>" rel="follow" data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
 														 <span class="icon-feed" >
 														 </span>
 													</a>
@@ -111,7 +111,7 @@ foreach ($this->sections as $section) :
 
 										<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 											<li>
-												<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
+												<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($category, null, null, null) . '<small class="hidden-phone muted"> ('
 													. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 													. ')</small>';
 												if (($new = $subcategory->getNewCount()) > 0)
@@ -174,9 +174,9 @@ foreach ($this->sections as $section) :
 												</div>
 											<?php endif; ?>
 											<div class="span9">
-												<span><?php echo $this->getLastPostLink($category, null, null, 'hasTooltip') ?></span>
+												<span><?php echo $this->getLastPostLink($category, null, null, null) ?></span>
 												<br>
-												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, 'nofollow', '', null, $category->id)); ?></span>
+												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', 'nofollow', '', null, $category->id)); ?></span>
 												<br>
 												<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>

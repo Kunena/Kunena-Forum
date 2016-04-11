@@ -62,7 +62,7 @@ jQuery(document).ready(function() {
 	jQuery("#share").jsSocials({
 		showCount: true,
 		showLabel: true,
-		shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest"]
+		shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
 	});
 
 	jQuery('#kmod_categories').change(function() {

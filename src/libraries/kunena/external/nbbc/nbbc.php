@@ -110,7 +110,7 @@ class BBCodeLexer
 			. "| \\x0D\\x0A | \\x0A\\x0D | \\x0D | \\x0A"
 			. "| [\\x00-\\x09\\x0B-\\x0C\\x0E-\\x20]+(?=[\\x0D\\x0A{$b}]|-----|$)"
 			. "| (?<=[\\x0D\\x0A{$e}]|-----|^)[\\x00-\\x09\\x0B-\\x0C\\x0E-\\x20]+"
-			. " )/Dx";
+			. " )/D";
 		$this->input         = preg_split($this->pat_main, $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 		$this->pat_comment   = "/^ {$b} (?: -- | ' ) /Dx";
 		$this->pat_comment2  = "/^ {$b}!-- (?: [^-] | -[^-] | --[^{$e}] )* --{$e} $/Dx";

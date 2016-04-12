@@ -340,23 +340,6 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_COM_A_SHOW_TOPICS_FROM_LAST_TIME_DESC') ?></td>
 											</tr>
 											<tr>
-												<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_TYPE') ?></td>
-												<td><?php echo $this->lists ['show_session_type'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_TYPE_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_START_TIME') ?></td>
-												<td>
-													<input type="text" name="cfg_show_session_starttime" value="<?php echo $this->escape($this->config->show_session_starttime) ?>" />
-												</td>
-												<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?></td>
-											</tr>
-											<tr>
-												<td><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST') ?></td>
-												<td><?php echo $this->lists ['userlist_count_users'] ?></td>
-												<td><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST_DESC') ?></td>
-											</tr>
-											<tr>
 												<td><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT') ?></td>
 												<td><?php echo $this->lists ['topic_layout'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC') ?></td>
@@ -1194,6 +1177,18 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo $this->lists ['superadmin_userlist'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_TYPE') ?></td>
+												<td><?php echo $this->lists ['show_session_type'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_TYPE_DESC') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_START_TIME') ?></td>
+												<td>
+													<input type="text" name="cfg_show_session_starttime" value="<?php echo $this->escape($this->config->show_session_starttime) ?>" />
+												</td>
+												<td><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?></td>
+											</tr>
 											</tbody>
 										</table>
 									</fieldset>
@@ -1270,6 +1265,11 @@ JHtml::_('behavior.tabstate');
 													<input type="text" name="cfg_popthankscount" value="<?php echo $this->escape($this->config->popthankscount) ?>" />
 												</td>
 												<td><?php echo JText::_('COM_KUNENA_THANKSPOP') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST') ?></td>
+												<td><?php echo $this->lists ['userlist_count_users'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>

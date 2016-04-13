@@ -13,7 +13,8 @@ defined('_JEXEC') or die;
 <ul class="nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin">
-			<i class="icon-large icon-user"></i> <b class="caret"></b>
+			<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
+			<b class="caret"></b>
 		</a>
 
 		<div class="dropdown-menu" id="userdropdown">

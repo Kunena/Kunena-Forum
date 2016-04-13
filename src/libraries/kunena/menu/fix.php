@@ -210,6 +210,11 @@ abstract class KunenaMenuFix
 		return $items;
 	}
 
+	public static function getConflicts()
+	{
+		return array();
+	}
+
 	/**
 	 *
 	 */

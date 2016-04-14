@@ -834,8 +834,14 @@ class KunenaUser extends JObject
 			{
 				return null;
 			}
+
 			$url = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
-			return '<img src="' . $url . '" alt="" />';
+			$location = JUri::root() . 'media/kunena/ranks/' . $rank->rank_image;
+			$data = getimagesize($location);
+			$width = $data[0];
+			$height = $data[1];
+
+			return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" alt="" />';
 		}
 
 		return $rank;

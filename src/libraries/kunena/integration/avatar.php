@@ -157,7 +157,7 @@ class KunenaAvatar
 		}
 		else { $style = ''; }
 
-		$link = '<img' . $class . ' src="' . $avatar . '" alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" ' . $style . ' />';
+		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x  . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" ' . $style . ' />';
 
 		return $link;
 	}

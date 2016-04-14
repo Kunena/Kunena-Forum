@@ -26,7 +26,7 @@ if ($attachment->isImage())
 {
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0, 14); ?>"<?php echo $attributesLink; ?>>
-		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt=""  />
+		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight ;?>" height="<?php echo $config->thumbheight ;?>" alt=""  />
 	</a>
 <?php
 }

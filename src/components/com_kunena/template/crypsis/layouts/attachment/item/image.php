@@ -15,6 +15,11 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 
+$location = JUri::root() . $attachment->getUrl();
+$data = getimagesize($location);
+$width = $data[0];
+$height = $data[1];
+
 if (!$attachment->isImage())
 {
 	return;
@@ -29,5 +34,5 @@ $attributesImg  = ' style="max-height:' . (int) $config->imageheight . 'px;"';
 ?>
 
 <a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName(0, 7); ?>"<?php echo $attributesLink; ?>>
-	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> alt="" />
+	<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $width ;?>" height="<?php echo $height ;?>" alt="" />
 </a>

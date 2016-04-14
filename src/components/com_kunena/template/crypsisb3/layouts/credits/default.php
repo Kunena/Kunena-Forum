@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 
 <div class="well well-small" id="credits">
 	<div class="container-fluid pull-left">
-		<img src="<?php echo $this->logo; ?>" alt="Kunena" />
+		<img src="<?php echo $this->logo; ?>" width="48" height="48" alt="Kunena" />
 	</div>
 	<p class="intro">
 		<?php echo $this->intro; ?>

@@ -111,7 +111,7 @@ foreach ($this->sections as $section) :
 
 										<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 											<li>
-												<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($category, null, null, null) . '<small class="hidden-phone muted"> ('
+												<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
 													. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 													. ')</small>';
 												if (($new = $subcategory->getNewCount()) > 0)

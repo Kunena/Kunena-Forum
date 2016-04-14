@@ -416,7 +416,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 		foreach ($categories as $category)
 		{
-			if (!$category->tryAuthorise('admin'))
+			if (!$category->authorise('admin'))
 			{
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
 			}
@@ -470,7 +470,7 @@ class KunenaAdminControllerCategories extends KunenaController
 
 		$category = KunenaForumCategoryHelper::get($id);
 
-		if (!$category->tryAuthorise('admin'))
+		if (!$category->authorise('admin'))
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
 		}

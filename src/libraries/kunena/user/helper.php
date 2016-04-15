@@ -335,6 +335,77 @@ abstract class KunenaUserHelper
 
 		return self::$_online;
 	}
+	
+	/**
+	 * Method returns a list of users with their user groups.
+	 *
+	 * @param	array		$groupIds	List of Group Ids (null for all).
+	 * @param	array		$userIds	List of User Ids (null for all).
+	 * @param	boolean		$recursive	Recursively include all child groups (optional)
+	 *
+	 * @return  array  List of userid => array(group, group, ...).
+	 * @throws  BadMethodCallException  If first two parameters are both null.
+	 * 
+	 * @since 5.0
+	 */
+	public static function getGroupsForUsers(array $groupIds = null, array $userIds = null, $recursive = false)
+	{
+		// Check for bad calls.
+		if (is_null($userIds) && is_null($groupIds)) 
+		{
+			throw new BadMethodCallException(__CLASS__ . '::' . __FUNCTION__ . '(): Cannot load all groups for all users.');
+		}
+		
+		// Check if there's anything to load.
+		if ((is_array($groupIds) && empty($groupIds)) || (is_array($userIds) && empty($userIds)))
+		{
+			return array();
+		}
+		
+		$test = $recursive ? '>=' : '=';
+		// Find users and their groups.
+		$db = JFactory::getDbo();
+		$query	= $db->getQuery(true)
+		->select('m.*')
+		->from('#__usergroups AS ug1')
+		->join('INNER','#__usergroups AS ug2 ON ug2.lft'.$test.'ug1.lft AND ug1.rgt'.$test.'ug2.rgt')
+		->join('INNER','#__user_usergroup_map AS m ON ug2.id=m.group_id');
+		
+		if ($groupIds)
+		{
+			JArrayHelper::toInteger($groupIds);
+			$groupList = implode(',', $groupIds);
+			$query->where("ug1.id IN ({$groupList})");
+		}
+		
+		if ($userIds)
+		{
+			JArrayHelper::toInteger($userIds);
+			$userList = implode(',', $userIds);
+			$query->where("user_id IN ({$userList})");
+		}
+		
+		$db->setQuery($query);
+		$results = (array) $db->loadObjectList();
+		$list = array();
+		
+		// Make sure that we list all given users (if provided).
+		if ($userIds) 
+		{
+			foreach ($userIds as $userId)
+			{
+				$list[$userId] = array();
+			}
+		}
+		
+		// Fill up the user groups.
+		foreach ($results as $result)
+		{
+			$list[$result->user_id][$result->group_id] = $result->group_id;
+		}
+		
+		return $list;
+	}
 
 	/**
 	 * Get the number of users online

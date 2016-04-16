@@ -61,10 +61,6 @@
 		       type="datetime"
 		       null="0"
 		       default="0000-00-00 00:00:00"/>
-		<field name="ordering"
-		       type="tinyint(4)"
-		       null="0"
-		       default="0"/>
 		<field name="showdate"
 		       type="tinyint(1)"
 		       null="0"

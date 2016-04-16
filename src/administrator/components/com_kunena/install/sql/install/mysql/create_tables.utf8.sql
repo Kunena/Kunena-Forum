@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS `#__kunena_announcement` (
 	`published` tinyint(1) NOT NULL default '0',
 	`publish_up` datetime NOT NULL default '0000-00-00 00:00:00',
 	`publish_down` datetime NOT NULL default '0000-00-00 00:00:00',
-	`ordering` tinyint(4) NOT NULL default '0',
 	`showdate` tinyint(1) NOT NULL default '1',
 	PRIMARY KEY (id) ) DEFAULT CHARACTER SET utf8;
 
@@ -128,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics` (
 	`last_post_userid` int(11) NOT NULL default '0',
 	`last_post_message` text NULL,
 	`last_post_guest_name` tinytext NULL,
-	`rating` tinyint(6) NOT NULL default '0', 
+	`rating` tinyint(6) NOT NULL default '0',
 	`params` text NOT NULL,
 	PRIMARY KEY (id),
 	KEY `category_id` (category_id),

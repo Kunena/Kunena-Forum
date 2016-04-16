@@ -110,7 +110,8 @@ abstract class KunenaForumAnnouncementHelper
 		{
 			$query = $db->getQuery(true)
 				->select('*')
-				->from('#__kunena_announcement', 'ORDER BY created DESC')
+				->from('#__kunena_announcement')
+				->order('created DESC')
 				->where('(published = 1)')
 				->where('(publish_up = ' . $nullDate . ' OR publish_up < ' . $nowDate . ')')
 				->where('(publish_down = ' . $nullDate . ' OR publish_down > ' . $nowDate . ')');
@@ -119,7 +120,8 @@ abstract class KunenaForumAnnouncementHelper
 		{
 			$query = $db->getQuery(true)
 				->select('*')
-				->from('#__kunena_announcement', 'ORDER BY created DESC');
+				->from('#__kunena_announcement')
+				->order('created DESC');
 		}
 
 		$db->setQuery($query, $start, $limit);
@@ -164,7 +166,8 @@ abstract class KunenaForumAnnouncementHelper
 		{
 			$query = $db->getQuery(true)
 				->select('*')
-				->from('#__kunena_announcement', 'ORDER BY created DESC')
+				->from('#__kunena_announcement')
+				->order('created DESC')
 				->where('(published = 1)')
 				->where('(publish_up = ' . $nullDate . ' OR publish_up < ' . $nowDate . ')')
 				->where('(publish_down = ' . $nullDate . ' OR publish_down > ' . $nowDate . ')');
@@ -173,7 +176,8 @@ abstract class KunenaForumAnnouncementHelper
 		{
 			$query = $db->getQuery(true)
 				->select('*')
-				->from('#__kunena_announcement', 'ORDER BY created DESC');
+				->from('#__kunena_announcement')
+				->order('created DESC');
 		}
 
 		$db->setQuery($query);

@@ -32,6 +32,7 @@
 		<folder>image</folder>
 		<folder>integration</folder>
 		<folder>layout</folder>
+		<folder>log</folder>
 		<folder>menu</folder>
 		<folder>module</folder>
 		<folder>pagination</folder>

@@ -119,10 +119,11 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string        $field       Field name.
 	 * @param   string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
 	 * @param   string|array  $value       Value.
+	 * @param  bool          $escape      Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
 	 */
-	public function where($field, $operation, $value)
+	public function where($field, $operation, $value, $escape = true)
 	{
 		$operation = strtoupper($operation);
 		switch ($operation)
@@ -137,6 +138,11 @@ abstract class KunenaDatabaseObjectFinder
 			case 'BETWEEN':
 				list($a, $b) = (array) $value;
 				$this->query->where("{$this->db->quoteName($field)} BETWEEN {$this->db->quote($a)} AND {$this->db->quote($b)}");
+				break;
+			case 'LIKE':
+			case 'NOT LIKE':
+				$value = $escape ? $this->db->quote($value) : $value;
+				$this->query->where("{$this->db->quoteName($field)} {$operation} {$value}");
 				break;
 			case 'IN':
 			case 'NOT IN':

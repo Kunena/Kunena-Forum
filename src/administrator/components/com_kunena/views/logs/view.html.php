@@ -1,0 +1,122 @@
+<?php
+/**
+ * Kunena Component
+ * @package Kunena.Administrator
+ * @subpackage Views
+ *
+ * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined('_JEXEC') or die();
+
+/**
+ * Logs view for Kunena backend
+ * 
+ * @since 5.0
+ */
+class KunenaAdminViewLogs extends KunenaView
+{
+	public function displayDefault($tpl = null)
+	{
+		$this->items = $this->get('items');
+		$this->pagination = $this->get('Pagination');
+
+		$this->sortFields = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
+
+		$this->filterTypeFields = $this->getFilterTypeFields();
+		$this->filterOperationFields = $this->getFilterOperationFields();
+
+		$this->filterSearch = $this->escape($this->state->get('filter.search'));
+		$this->filterType	= $this->escape($this->state->get('filter.type'));
+		$this->filterUser	= $this->escape($this->state->get('filter.user'));
+		$this->filterCategory = $this->escape($this->state->get('filter.category'));
+		$this->filterTopic = $this->escape($this->state->get('filter.topic'));
+		$this->filterTargetUser = $this->escape($this->state->get('filter.target_user'));
+		$this->filterIp = $this->escape($this->state->get('filter.ip'));
+		$this->filterTimeStart = $this->escape($this->state->get('filter.time_start'));
+		$this->filterTimeStop = $this->escape($this->state->get('filter.time_stop'));
+		$this->filterOperation = $this->escape($this->state->get('filter.operation'));
+		$this->filterActive = $this->escape($this->state->get('filter.active'));
+		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
+		$this->listDirection = $this->escape($this->state->get('list.direction'));
+
+		$document = JFactory::getDocument();
+		$document->setTitle(JText::_('Forum Logs'));
+
+		$this->setToolbar();
+		$this->display();
+	}
+
+
+	protected function setToolbar()
+	{
+		// Set the titlebar text
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_LOG_MANAGER'), 'users' );
+	}
+
+	protected function getSortFields()
+	{
+		$sortFields = array();
+		// TODO: translate
+		$sortFields[] = JHtml::_('select.option', 'id', 'Id');
+		$sortFields[] = JHtml::_('select.option', 'type', 'Type (by id)');
+		$sortFields[] = JHtml::_('select.option', 'user', 'User (by id)');
+		$sortFields[] = JHtml::_('select.option', 'category', 'Category (by id)');
+		$sortFields[] = JHtml::_('select.option', 'topic', 'Topic (by id)');
+		$sortFields[] = JHtml::_('select.option', 'target_user', 'Target User (by id)');
+		$sortFields[] = JHtml::_('select.option', 'time', 'Time (by id)');
+
+		return $sortFields;
+	}
+
+	protected function getSortDirectionFields()
+	{
+		$sortDirection = array();
+//		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+//		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+		// TODO: remove it when J2.5 support is dropped
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+
+		return $sortDirection;
+	}
+
+	protected function getFilterTypeFields()
+	{
+		$filterFields = array();
+		$filterFields[] = JHtml::_('select.option', 1, 'MOD');
+		$filterFields[] = JHtml::_('select.option', 2, 'ACT');
+		$filterFields[] = JHtml::_('select.option', 3, 'ERR');
+		$filterFields[] = JHtml::_('select.option', 4, 'REP');
+
+		return $filterFields;
+	}
+
+	protected function getFilterOperationFields()
+	{
+		$filterFields = array();
+
+		$reflection = new ReflectionClass('KunenaLog');
+		$constants = $reflection->getConstants();
+		ksort($constants);
+
+		foreach ($constants as $key => $value)
+		{
+			if (strpos($key, 'LOG_') === 0)
+			{
+				$filterFields[] = JHtml::_('select.option', $key, JText::_("COM_KUNENA_{$value}"));
+			}
+		}
+
+		return $filterFields;
+	}
+
+	protected function getType($id)
+	{
+		static $types = array(1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP');
+
+		return isset($types[$id]) ? $types[$id] : '???';
+	}
+}

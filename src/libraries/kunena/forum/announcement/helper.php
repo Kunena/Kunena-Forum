@@ -113,8 +113,8 @@ abstract class KunenaForumAnnouncementHelper
 				->from('#__kunena_announcement')
 				->order('created DESC')
 				->where('(published = 1)')
-				->where('(publish_up = ' . $nullDate . ' OR publish_up < ' . $nowDate . ')')
-				->where('(publish_down = ' . $nullDate . ' OR publish_down > ' . $nowDate . ')');
+				->where('(publish_up = ' . $nullDate . ' OR publish_up >= ' . $nowDate . ')')
+				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
 		}
 		else
 		{
@@ -169,8 +169,8 @@ abstract class KunenaForumAnnouncementHelper
 				->from('#__kunena_announcement')
 				->order('created DESC')
 				->where('(published = 1)')
-				->where('(publish_up = ' . $nullDate . ' OR publish_up < ' . $nowDate . ')')
-				->where('(publish_down = ' . $nullDate . ' OR publish_down > ' . $nowDate . ')');
+				->where('(publish_up = ' . $nullDate . ' OR publish_up >= ' . $nowDate . ')')
+				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
 		}
 		else
 		{

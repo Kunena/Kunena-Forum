@@ -48,7 +48,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 			$date_today = JFactory::getDate();
-			if ($announcement->published == 1 && $announcement->publish_up > $date_today)
+			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
 			{
 				continue;
 			}
@@ -87,7 +87,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 			$date_today = JFactory::getDate();
-			if ($announcement->published == 0 && $announcement->publish_down > $date_today)
+			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
 			{
 				continue;
 			}

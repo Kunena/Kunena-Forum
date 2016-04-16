@@ -1020,7 +1020,16 @@ class KunenaControllerTopic extends KunenaController
 			}
 
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
-
+			
+			KunenaLog::log(
+				KunenaLog::TYPE_ACTION,
+				KunenaLog::LOG_POST_THANKYOU,
+				array('mesid' => $message->id),
+				$category,
+				$message->getTopic(),
+				$message->getAuthor()
+			);
+			
 			$activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
 		}
 		else
@@ -1036,7 +1045,16 @@ class KunenaControllerTopic extends KunenaController
 			}
 
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
-
+			
+			KunenaLog::log(
+				KunenaLog::TYPE_MODERATION,
+				KunenaLog::LOG_POST_UNTHANKYOU,
+				array('mesid' => $message->id, 'userid' => $userid),
+				$category,
+				$message->getTopic(),
+				$message->getAuthor()
+			);
+			
 			$activityIntegration->onAfterUnThankyou($this->me->userid, $userid, $message);
 		}
 

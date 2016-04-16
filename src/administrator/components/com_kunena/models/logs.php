@@ -94,9 +94,37 @@ class KunenaAdminModelLogs extends JModelList
 
 		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.operation', 'filter_operation', '', 'string');
 		$this->setState('filter.operation', $value);
+		
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.usertypes', 'filter_usertypes', '', 'string');
+		$this->setState('filter.usertypes', $value);
 
 		$this->setState('filter.active', !empty($filter_active));
-
+		
+		$group = array();
+		
+		if ($this->getUserStateFromRequest($this->context.'.group.type', 'group_type', false, 'bool'))
+			$group['type'] = 'a.type';
+		
+		if ($this->getUserStateFromRequest($this->context.'.group.user', 'group_user', false, 'bool'))
+			$group['user'] = 'a.user_id';
+		
+		if ($this->getUserStateFromRequest($this->context.'.group.category', 'group_category', false, 'bool'))
+			$group['category'] = 'a.category_id';
+		
+		if ($this->getUserStateFromRequest($this->context.'.group.topic', 'group_topic', false, 'bool'))
+			$group['topic'] = 'a.topic_id';
+		
+		if ($this->getUserStateFromRequest($this->context.'.group.target_user', 'group_target_user', false, 'bool'))
+			$group['target_user'] = 'a.target_user';
+		
+		if ($this->getUserStateFromRequest($this->context.'.group.ip', 'group_ip', false, 'bool'))
+			$group['ip'] = 'a.ip';
+		
+		if ($this->getUserStateFromRequest($this->context.'.group.operation', 'group_operation', false, 'bool'))
+			$group['operation'] = 'a.operation';
+		
+		$this->setState('group', $group);
+		
 		// List state information.
 		parent::populateState('id', 'desc');
 	}
@@ -125,6 +153,8 @@ class KunenaAdminModelLogs extends JModelList
 		$id	.= ':'.$this->getState('filter.time_start');
 		$id	.= ':'.$this->getState('filter.time_stop');
 		$id	.= ':'.$this->getState('filter.operation');
+		$id	.= ':'.$this->getState('filter.usertypes');
+		$id	.= ':'.json_encode($this->getState('group'));
 
 		return parent::getStoreId($id);
 	}
@@ -279,7 +309,50 @@ class KunenaAdminModelLogs extends JModelList
 			default:
 				$finder->order('id', $direction);
 		}
-
+		
+		$usertypes = $this->state->get('filter.usertypes');
+		// Filter by user type.
+		
+		if (is_numeric($usertypes))
+		{
+			$access = KunenaAccess::getInstance();
+		
+			switch ($usertypes)
+			{
+				case 0:
+					$finder->where('user_id', '=', 0);
+				break;
+				case 1:
+					$finder->where('user_id', '>', 0);
+				break;
+				case 2:
+					$finder->where('user_id', '>', 0);
+					$finder->where('user_id', 'NOT IN', array_keys($access->getAdmins() + $access->getModerators()));
+				break;
+				case 3:
+					$finder->where('user_id', 'IN', array_keys($access->getModerators()));
+				break;
+				case 4:
+					$finder->where('user_id', 'IN', array_keys($access->getAdmins()));
+				break;
+				case 5:
+					$finder->where('user_id', 'IN', array_keys($access->getAdmins() + $access->getModerators()));
+				break;
+			}
+		}
+				
+		$group = $this->getState('group');
+		
+		if ($group)
+		{
+			$finder->select('MAX(a.id) AS id, MAX(a.time) AS time, COUNT(*) AS count');
+		
+			foreach ($group as $field)
+			{
+				$finder->group($field);
+			}
+		}
+		
 		// Add the finder to the internal cache.
 		$this->cache[$store] = $finder;
 

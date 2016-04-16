@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
+JHtml::_('bootstrap.popover');
 
 $filterItem = $this->escape($this->state->get('item.id'));
 ?>
@@ -36,7 +37,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 <div id="kunena" class="admin override">
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
-		<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
+		<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
 	</div>
 </div>
 <div id="j-main-container" class="span10">
@@ -48,9 +49,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
 <?php echo JHtml::_('form.token'); ?>
 
 <div id="filter-bar" class="btn-toolbar">
-	<div class="filter-search btn-group pull-left">
-		<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
-		<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" value="<?php echo $this->filterSearch; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_INPUT_SEARCH'); ?>" />
+	<div class="btn-group pull-left">
+		<?php echo JHtml::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter input-small')); ?>
+		<?php echo JHtml::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter input-small')); ?>
 	</div>
 	<div class="btn-group pull-left">
 		<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?></button>
@@ -74,45 +75,58 @@ $filterItem = $this->escape($this->state->get('item.id'));
 			<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 		</select>
 	</div>
+	<div class="btn-group pull-right">
+		<label for="sortTable" class="element-invisible"><?php echo 'Filter users by:';?></label>
+		<select name="filter_usertypes" id="filter_usertypes" class="input-medium filter" onchange="Joomla.orderTable()">
+			<option value=""><?php echo 'All';?></option>
+			<?php echo JHtml::_('select.options', $this->filterUserFields, 'value', 'text', $this->filterUsertypes);?>
+		</select>
+	</div>
 	<div class="clearfix"></div>
 </div>
 
 <table class="table table-striped" id="logList">
 	<thead>
 		<tr>
-			<th class="nowrap center">
-				<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+			<th class="nowrap center" width="1%">
+				<?php echo !$this->group ? JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering) : 'Count'; ?>
 			</th>
-			<th class="nowrap center">
-				<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
-			</th>
-			<th class="nowrap">
-				<?php echo JHtml::_('grid.sort', 'Type', 'type', $this->listDirection, $this->listOrdering); ?>
-			</th>
-			<th class="nowrap">
-				<?php echo JHtml::_('grid.sort', 'User', 'user', $this->listDirection, $this->listOrdering); ?>
-			</th>
-			<th class="nowrap">
-				<?php echo JHTML::_('grid.sort', 'Category', 'category', $this->listDirection, $this->listOrdering); ?>
-			</th>
-			<th class="nowrap">
-				<?php echo JHtml::_('grid.sort', 'Topic', 'topic', $this->listDirection, $this->listOrdering); ?>
-			</th>
-			<th class="nowrap">
-				<?php echo JHtml::_('grid.sort', 'Target User', 'target_user', $this->listDirection, $this->listOrdering); ?>
-			</th>
-			<th class="nowrap center">
-				IP
-			</th>
-			<th class="nowrap center">
+			<th class="nowrap center" width="1%">
 				<?php echo JHtml::_('grid.sort', 'Time', 'time', $this->listDirection, $this->listOrdering); ?>
+			</th>
+			<th class="nowrap" width="1%">
+				<?php echo JHtml::_('grid.sort', 'Type', 'type', $this->listDirection, $this->listOrdering); ?>
+				<?php echo $this->getGroupCheckbox('type'); ?>
 			</th>
 			<th class="nowrap center">
 				Operation
+				<?php echo $this->getGroupCheckbox('operation'); ?>
 			</th>
+			<th class="nowrap">
+				<?php echo JHtml::_('grid.sort', 'User', 'user', $this->listDirection, $this->listOrdering); ?>
+				<?php echo $this->getGroupCheckbox('user'); ?>
+			</th>
+			<th class="nowrap">
+				<?php echo JHTML::_('grid.sort', 'Category', 'category', $this->listDirection, $this->listOrdering); ?>
+				<?php echo $this->getGroupCheckbox('category'); ?>
+			</th>
+			<th class="nowrap">
+				<?php echo JHtml::_('grid.sort', 'Topic', 'topic', $this->listDirection, $this->listOrdering); ?>
+				<?php echo $this->getGroupCheckbox('topic'); ?>
+			</th>
+			<th class="nowrap">
+				<?php echo JHtml::_('grid.sort', 'Target User', 'target_user', $this->listDirection, $this->listOrdering); ?>
+				<?php echo $this->getGroupCheckbox('target_user'); ?>
+			</th>
+			<th class="nowrap center">
+				IP
+				<?php echo $this->getGroupCheckbox('ip'); ?>
+			</th>
+			<?php if (!$this->group) : ?>
 			<th class="nowrap center">
 				Data
 			</th>
+			<?php endif; ?>
 		</tr>
 		<tr>
 			<td>
@@ -124,6 +138,13 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				<select name="filter_type" id="filter_type" class="select-filter filter" onchange="Joomla.orderTable()">
 					<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 					<?php echo JHtml::_('select.options', $this->filterTypeFields, 'value', 'text', $this->filterType); ?>
+				</select>
+			</td>
+			<td>
+				<label for="filter_operation" class="element-invisible"><?php echo 'Type';?></label>
+				<select name="filter_operation" id="filter_operation" class="filter" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+					<?php echo JHtml::_('select.options', $this->filterOperationFields, 'value', 'text', $this->filterOperation); ?>
 				</select>
 			</td>
 			<td>
@@ -146,19 +167,10 @@ $filterItem = $this->escape($this->state->get('item.id'));
 				<label for="filter_ip" class="element-invisible"><?php echo 'IP';?></label>
 				<input class="input-block-level input-filter filter" type="text" name="filter_ip" id="filter_ip" placeholder="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" value="<?php echo $this->filterIp; ?>" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>" />
 			</td>
-			<td class="center">
-				<?php echo JHtml::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter input-small')); ?>
-				<?php echo JHtml::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter input-small')); ?>
-			</td>
-			<td>
-				<label for="filter_operation" class="element-invisible"><?php echo 'Type';?></label>
-				<select name="filter_operation" id="filter_operation" class="filter" onchange="Joomla.orderTable()">
-					<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
-					<?php echo JHtml::_('select.options', $this->filterOperationFields, 'value', 'text', $this->filterOperation); ?>
-				</select>
-			</td>
+			<?php if (!$this->group) : ?>
 			<td>
 			</td>
+			<?php endif; ?>
 		</tr>
 	</thead>
 	<tfoot>
@@ -181,41 +193,40 @@ if($this->pagination->total > 0) :
 		?>
 		<tr>
 			<td class="center">
-				<?php echo JHtml::_('grid.id', $i, (int) $item->id); ?>
-			</td>
-			<td class="center">
-				<?php echo $this->escape($item->id); ?>
-			</td>
-			<td class="center">
-				<?php echo $this->escape($this->getType($item->type)); ?>
-			</td>
-			<td>
-				<?php echo $user->id ? $this->escape($user->username) . ' <small>(' . $this->escape($item->user_id) . ')</small>' : ''; ?>
-			</td>
-			<td>
-				<?php echo $category->exists() ? $category->displayField('name') . ' <small>(' . $this->escape($item->category_id) . ')</small>' : ''; ?>
-			</td>
-			<td>
-				<?php echo $topic->exists() ? $topic->displayField('subject') . ' <small>(' . $this->escape($item->topic_id) . ')</small>' : ''; ?>
-			</td>
-			<td>
-				<?php echo $target->id ? $this->escape($target->username) . ' <small>(' . $this->escape($item->target_user) . ')</small>' : ''; ?>
-			</td>
-			<td class="center">
-				<?php echo $this->escape($item->ip); ?>
+				<?php echo !$this->group ? $this->escape($item->id) : (int) $item->count; ?>
 			</td>
 			<td class="center">
 				<?php echo $date->toSql(); ?>
 			</td>
 			<td class="center">
-				<?php echo JText::_("COM_KUNENA_{$item->operation}"); ?>
+				<?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
 			</td>
+			<td class="center">
+				<?php echo !$this->group || isset($this->group['operation']) ? JText::_("COM_KUNENA_{$item->operation}") : ''; ?>
+			</td>
+			<td>
+				<?php echo !$this->group || isset($this->group['user']) ? ($user->id ? $this->escape($user->username) . ' <small>(' . $this->escape($item->user_id) . ')</small>' . '<br />' . $this->escape($user->name) : '') : ''; ?>
+			</td>
+			<td>
+				<?php echo !$this->group || isset($this->group['category']) ? ($category->exists() ? $category->displayField('name') . ' <small>(' . $this->escape($item->category_id) . ')</small>' : '') : ''; ?>
+			</td>
+			<td>
+				<?php echo !$this->group || isset($this->group['topic']) ? ($topic->exists() ? $topic->displayField('subject') . ' <small>(' . $this->escape($item->topic_id) . ')</small>' : '') : ''; ?>
+			</td>
+			<td>
+				<?php echo !$this->group || isset($this->group['target_user']) ? ($target->id ? $this->escape($target->username) . ' <small>(' . $this->escape($item->target_user) . ')</small>' . '<br />' . $this->escape($target->name) : '') : ''; ?>
+			</td>
+			<td class="center">
+				<?php echo !$this->group || isset($this->group['ip']) ? $this->escape($item->ip) : ''; ?>
+			</td>
+			<?php if (!$this->group) : ?>
 			<td>
 				<a class="btn hasPopover" title="Data" data-content="<?php echo
 				$this->escape("<pre>{$this->escape(json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))}</pre>"); ?>"
-				   href="#">Data</a>
+				   data-placement="left" href="#">Data</a>
 
 			</td>
+			<?php endif; ?>
 		</tr>
 		<?php
 		$i++;

@@ -54,11 +54,43 @@ class KunenaAdminViewLogs extends KunenaView
 		$this->display();
 	}
 
-
+	/**
+	 * Set the toolbar on log manager
+	 */
 	protected function setToolbar()
+	{
+		// Get the toolbar object instance
+		$bar = JToolBar::getInstance('toolbar');
+	
+		// Set the titlebar text
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_LOG_MANAGER'), 'users' );
+	
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('cleanentries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES');
+	}
+	
+	/**
+	 *
+	 */
+	function displayClean()
+	{
+		$this->setToolBarClean();
+		$this->display();
+	}
+	
+	/**
+	 *
+	 */
+	protected function setToolbarClean()
 	{
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_LOG_MANAGER'), 'users' );
+	
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+	
 	}
 	
 	protected function getFilterUserFields()

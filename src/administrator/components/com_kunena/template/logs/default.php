@@ -37,21 +37,21 @@ $filterItem = $this->escape($this->state->get('item.id'));
 <div id="kunena" class="admin override">
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
-		<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+		<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/common/menu.php'; ?></div>
 	</div>
 </div>
 <div id="j-main-container" class="span10">
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=logs'); ?>" method="post" name="adminForm" id="adminForm">
 <input type="hidden" name="task" value="" />
-<input type="hidden" name="boxchecked" value="0" />
+<input type="hidden" name="boxchecked" value="1" />
 <input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
 <input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>" />
 <?php echo JHtml::_('form.token'); ?>
 
 <div id="filter-bar" class="btn-toolbar">
 	<div class="btn-group pull-left">
-		<?php echo JHtml::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter input-small')); ?>
-		<?php echo JHtml::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter input-small')); ?>
+		<?php echo JHtml::calendar($this->filterTimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', array('class' => 'filter input-medium', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE'))); ?>
+		<?php echo JHtml::calendar($this->filterTimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', array('class' => 'filter input-medium', 'placeholder' => JText::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE'))); ?>
 	</div>
 	<div class="btn-group pull-left">
 		<button class="btn tip" type="submit" title="<?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?></button>
@@ -91,7 +91,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 			<th class="nowrap center" width="1%">
 				<?php echo !$this->group ? JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering) : 'Count'; ?>
 			</th>
-			<th class="nowrap center" width="1%">
+			<th class="nowrap center" width="1%" style="width: 130px;">
 				<?php echo JHtml::_('grid.sort', 'Time', 'time', $this->listDirection, $this->listOrdering); ?>
 			</th>
 			<th class="nowrap" width="1%">

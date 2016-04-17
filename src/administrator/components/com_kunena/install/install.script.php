@@ -17,11 +17,11 @@ class Com_KunenaInstallerScript
 {
 	protected $versions = array(
 		'PHP' => array (
-			'7.0' => '7.0.4',
+			'7.0' => '7.0.3',
 			'5.6' => '5.6.8',
 			'5.5' => '5.5.13',
 			'5.4' => '5.4.13',
-			'0' => '5.4.35' // Preferred version
+			'0' => '7.0.3' // Preferred version
 		),
 		'MySQL' => array (
 			'5.1' => '5.1',

@@ -60,6 +60,10 @@ defined('_JEXEC') or die();
 								<i class="icon-big icon-search" alt="<?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_LOG_MANAGER') ?></span>
 							</a>
+							<a class="btn" href="index.php?option=com_kunena&view=statistics">
+								<i class="icon-big icon-chart" alt="<?php echo JText::_('COM_KUNENA_MENU_STATISTICS') ?>"></i><br/>
+								<span><?php echo JText::_('COM_KUNENA_MENU_STATISTICS') ?></span>
+							</a>
 							<a class="btn" href="index.php?option=com_kunena&view=tools">
 								<i class="icon-big icon-tools" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>"></i><br/>
 								<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?></span>

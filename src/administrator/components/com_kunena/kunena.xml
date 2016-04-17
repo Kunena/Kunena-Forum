@@ -38,6 +38,7 @@
 			<menu view="config">COM_KUNENA_CONFIGURATION</menu>
 			<menu view="plugins">COM_KUNENA_PLUGIN_MANAGER</menu>
 			<menu view="logs">COM_KUNENA_LOG_MANAGER</menu>
+      <menu view="statistics">COM_KUNENA_MENU_STATISTICS</menu>
 			<menu view="tools">COM_KUNENA_FORUM_TOOLS</menu>
 			<menu view="trash">COM_KUNENA_TRASH_MANAGER</menu>
 		</submenu>

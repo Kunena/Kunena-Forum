@@ -133,6 +133,7 @@ abstract class KunenaDatabaseObjectFinder
 			case '<':
 			case '<=':
 			case '=':
+			case '!=':
 				$this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($value)}");
 				break;
 			case 'BETWEEN':

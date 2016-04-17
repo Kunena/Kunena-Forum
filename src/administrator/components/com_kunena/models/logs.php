@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 jimport('joomla.application.component.model');
 
 /**
- * Statistics Model for Kunena
+ * Logs Model for Kunena
  *
  * @since 5.0
  */

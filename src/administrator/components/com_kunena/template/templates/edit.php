@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package     Kunena.Administrator.Template.Joomla30
+ * @package     Kunena.Administrator.Template
  * @subpackage  Templates
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.

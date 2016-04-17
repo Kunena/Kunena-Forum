@@ -29,7 +29,7 @@
   background-position: -24px 0;
 }
 
-#ktopicsform .category .c-rating__item {
+#ktopicsform [class*='category'] .c-rating__item {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 14px;
   -ms-flex: 0 0 14px;
@@ -41,10 +41,10 @@
   cursor: pointer;
 }
 
-#ktopicsform .category .c-rating__item.is-active {
+#ktopicsform [class*='category'] .c-rating__item.is-active {
   background-position: -14px 0;
 }
 
-#ktopicsform .category .c-rating__item .is-active:hover {
+#ktopicsform [class*='category'] .c-rating__item .is-active:hover {
   background-position: 0;
 }

@@ -46,12 +46,38 @@ class ComponentKunenaControllerUserAttachmentsDisplay extends KunenaControllerDi
 		parent::before();
 
 		$userid = $this->input->getInt('userid');
-		$params = array('file' => '1', 'image' => '1', 'orderby' => 'desc', 'limit' => '30');
+		$start = $this->input->getInt('limitstart', 0);
+		$limit = $this->input->getInt('limit', 30);
 
 		$this->template = KunenaFactory::getTemplate();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->profile = KunenaUserHelper::get($userid);
-		$this->attachments = KunenaAttachmentHelper::getByUserid($this->profile, $params);
+		$this->moreUri = null;
+
+		$this->embedded = $this->getOptions()->get('embedded', false);
+
+		if ($this->embedded)
+		{
+			$this->moreUri = new JUri('index.php?option=com_kunena&view=user&layout=attachments&userid=' . $userid . '&limit=' . $limit);
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
+		}
+
+		$finder = new KunenaAttachmentFinder;
+		$finder->where('userid', '=', $userid);
+
+		$this->total = $finder->count();
+		$this->pagination = new KunenaPagination($this->total, $start, $limit);
+
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
+
+		$this->attachments = $finder
+			->order('id', -1)
+			->start($this->pagination->limitstart)
+			->limit($this->pagination->limit)
+			->find();
 
 		// Pre-load messages.
 		$messageIds = array();

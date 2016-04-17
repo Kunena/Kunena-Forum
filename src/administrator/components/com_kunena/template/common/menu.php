@@ -77,6 +77,13 @@ $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
 		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=plugins'); ?>">
 			<i class="icon-puzzle"></i> <?php echo JText::_('COM_KUNENA_PLUGIN_MANAGER'); ?>
 		</a></li>
+	<li<?php if ($view == 'logs')
+	{
+		echo ' class="active"';
+	}?>>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=logs'); ?>">
+			<i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_LOG_MANAGER'); ?>
+		</a></li>	
 	<li<?php if ($view == 'tools')
 	{
 		echo ' class="active"';

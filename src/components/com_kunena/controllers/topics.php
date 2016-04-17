@@ -71,6 +71,18 @@ class KunenaControllerTopics extends KunenaController
 
 		if ($message)
 		{
+			foreach ($topics as $topic)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_DESTROY,
+					array('topic_ids' => $ids),
+					$topic->getCategory(),
+					$topic,
+					null
+				);
+			}
+				
 			$this->app->enqueueMessage($message);
 		}
 
@@ -117,6 +129,18 @@ class KunenaControllerTopics extends KunenaController
 
 		if ($message)
 		{
+			foreach ($topics as $topic)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_DELETE,
+					array('topic_ids' => $ids),
+					$topic->getCategory(),
+					$topic,
+					null
+				);
+			}
+			
 			$this->app->enqueueMessage($message);
 		}
 
@@ -163,6 +187,18 @@ class KunenaControllerTopics extends KunenaController
 
 		if ($message)
 		{
+			foreach ($topics as $topic)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_UNDELETE,
+					array('topic_ids' => $ids),
+					$topic->getCategory(),
+					$topic,
+					null
+				);
+			}
+			
 			$this->app->enqueueMessage($message);
 		}
 
@@ -210,6 +246,18 @@ class KunenaControllerTopics extends KunenaController
 
 		if ($message)
 		{
+			foreach ($topics as $topic)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_APPROVE,
+					array('topic_ids' => $ids),
+					$topic->getCategory(),
+					$topic,
+					null
+				);
+			}
+			
 			$this->app->enqueueMessage($message);
 		}
 
@@ -264,6 +312,21 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!empty($message))
 		{
+			foreach ($topics as $topic)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_MODERATE,
+					array(
+						'move' => array('id' => $topic->id, 'mode' => 'topic'),
+						'target' => array('category_id' => $target->id)
+					),
+					$topic->getCategory(),
+					$topic,
+					null
+				);
+			}
+			
 			$this->app->enqueueMessage($message);
 		}
 
@@ -290,6 +353,18 @@ class KunenaControllerTopics extends KunenaController
 
 		if (KunenaForumTopicHelper::favorite(array_keys($topics), 0))
 		{
+			foreach($topics as $topic)
+			{
+				KunenaLog::log(
+					$this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_UNFAVORITE,
+					array('topic_ids' => $ids),
+					$topic->getCategory(),
+					$topic,
+					null
+				);
+			}
+			
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_UNFAVORITE_YES'));
 		}
 		else

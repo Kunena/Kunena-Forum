@@ -294,10 +294,12 @@ class KunenaControllerUser extends KunenaController
 			{
 				$this->app->logout($user->userid);
 				$message = JText::_('COM_KUNENA_USER_BLOCKED_DONE');
+				$log = KunenaLog::LOG_USER_BLOCK;
 			}
 			else
 			{
 				$message = JText::_('COM_KUNENA_USER_UNBLOCKED_DONE');
+				$log = KunenaLog::LOG_USER_UNBLOCK;
 			}
 		}
 		else
@@ -305,10 +307,12 @@ class KunenaControllerUser extends KunenaController
 			if ($ban->isEnabled())
 			{
 				$message = JText::_('COM_KUNENA_USER_BANNED_DONE');
+				$log = KunenaLog::LOG_USER_BAN;
 			}
 			else
 			{
 				$message = JText::_('COM_KUNENA_USER_UNBANNED_DONE');
+				$log = KunenaLog::LOG_USER_UNBAN;
 			}
 		}
 
@@ -318,6 +322,26 @@ class KunenaControllerUser extends KunenaController
 		}
 		else
 		{
+			KunenaLog::log(
+				KunenaLog::TYPE_MODERATION,
+				$log,
+				array(
+					'expiration' => $delban ? 'NOW' : $expiration,
+					'reason_private' => $reason_private,
+					'reason_public' => $reason_public,
+					'comment' => $comment,
+					'options' => array(
+						'resetProfile' => (bool) $DelProfileInfo,
+						'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
+						'deleteAvatar' => (bool) $DelAvatar || $DelProfileInfo,
+						'deletePosts' => (bool) $banDelPosts
+					)
+				),
+				null,
+				null,
+				$user
+			);
+			
 			$this->app->enqueueMessage($message);
 		}
 

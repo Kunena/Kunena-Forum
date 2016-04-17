@@ -22,7 +22,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 *
 	 */
-	function none()
+	public function none()
 	{
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_CONTROLLER_NO_TASK'));
 		$this->setRedirectBack();
@@ -31,7 +31,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function permdel()
+	public function permdel()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -92,7 +92,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function delete()
+	public function delete()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -150,7 +150,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function restore()
+	public function restore()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -267,7 +267,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function move()
+	public function move()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -336,7 +336,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function unfavorite()
+	public function unfavorite()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -378,7 +378,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function unsubscribe()
+	public function unsubscribe()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -501,7 +501,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function restore_posts()
+	public function restore_posts()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -547,7 +547,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function permdel_posts()
+	public function permdel_posts()
 	{
 		if (!JSession::checkToken('post'))
 		{

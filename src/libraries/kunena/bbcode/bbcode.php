@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage BBCode
+ * @package     Kunena.Framework
+ * @subpackage  BBCode
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
@@ -185,21 +185,7 @@ class KunenaBbcode extends NBBC_BBCode
 				if (isset($itemid))
 				{
 					// convert ebay item to embedded widget
-					$layout = KunenaLayout::factory('BBCode/eBay');
-
-					if ($layout->getPath())
-					{
-						$ebay = $this->defaults->getEbayItemFromCache($itemid);
-
-						return (string) $layout
-							->set('params', $params)
-							->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-							->set('pictureurl', $ebay->Item->PictureURL[0])
-							->set('status', $ebay->Item->ListingStatus)
-							->set('ack', $ebay->Ack)
-							->set('title', $ebay->Item->Title)
-							->setLayout('default');
-					}
+					KunenaBbcodeLibrary::renderEbayLayout($itemid);
 				}
 
 				return $this->defaults->getEbayItemFromCache($itemid);
@@ -210,20 +196,8 @@ class KunenaBbcode extends NBBC_BBCode
 			// FIXME: ebay search and seller listings are not supported.
 			if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw']))
 			{
-				// convert ebay search to embedded widget
-				$layout = KunenaLayout::factory('BBCode/eBay');
-
-				if ($layout->getPath())
-				{
-					return (string) $layout
-						->set('content', urlencode($query['_nkw']))
-						->set('params', null)
-						->set('width', 355)
-						->set('height', 300)
-						->set('language', $config->ebaylanguagecode)
-						->set('affiliate', $config->ebay_affiliate_id)
-						->setLayout('search');
-				}
+				// Convert ebay search to embedded widget
+				KunenaBbcodeLibrary::renderEbayLayout($itemid);
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebay_language . '&mode=search&query='
@@ -235,19 +209,8 @@ class KunenaBbcode extends NBBC_BBCode
 			if (strstr($params['host'], 'myworld.') && !empty($path[1]))
 			{
 				// convert seller listing to embedded widget
-				$layout = KunenaLayout::factory('BBCode/eBay');
 
-				if ($layout->getPath())
-				{
-					return (string) $layout
-						->set('content', urlencode($path[1]))
-						->set('params', null)
-						->set('width', 355)
-						->set('height', 355)
-						->set('language', $config->ebaylanguagecode)
-						->set('affiliate', $config->ebay_affiliate_id)
-						->setLayout('seller');
-				}
+				KunenaBbcodeLibrary::renderEbayLayout($itemid);
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="355"><param name="movie" value="http://togo.ebay.com/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
@@ -1665,22 +1628,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$width = (int) $config->rtewidth;
 		$height = (int) $config->rteheight;
 
-		$layout = KunenaLayout::factory('BBCode/eBay');
-
-		if ($layout->getPath())
-		{
-			$ebay = $this->getEbayItemFromCache($content);
-
-			return (string) $layout
-				->set('content', $content)
-				->set('params', $params)
-				->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-				->set('pictureurl', $ebay->Item->PictureURL[0])
-				->set('status', $ebay->Item->ListingStatus)
-				->set('ack', $ebay->Ack)
-				->set('title', $ebay->Item->Title)
-				->setLayout(is_numeric($content) ? 'default' : 'search');
-		}
+		return SELF::renderEbayLayout($content);
 	}
 
 	/**
@@ -2970,6 +2918,44 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 
 		return '<iframe src="//instagram.com/p/'. $content .'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+	}
+
+	/**
+	 * Render eBay layout from template
+	 */
+	public static function renderEbayLayout($ItemID)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (empty($config->ebay_api_key))
+		{
+			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
+
+			return false;
+		}
+		elseif (!is_numeric($ItemID))
+		{
+			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+
+			return false;
+		}
+
+		$layout = KunenaLayout::factory('BBCode/eBay');
+
+		if ($layout->getPath())
+		{
+			$ebay = SELF::getEbayItemFromCache($ItemID);
+
+			return (string) $layout
+				->set('content', $ItemID)
+				->set('params', $params)
+				->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
+				->set('pictureurl', $ebay->Item->PictureURL[0])
+				->set('status', $ebay->Item->ListingStatus)
+				->set('ack', $ebay->Ack)
+				->set('title', $ebay->Item->Title)
+				->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+		}
 	}
 }
 

@@ -155,12 +155,38 @@ jQuery(document).ready(function () {
 								value: value.id
 							});
 						}
-
-						var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
-						var label = jQuery('<label>', {
-							'class': 'radio inline',
-							'for'  : 'radio' + value.id
-						}).append(jQuery('<img>', {'src': value.path, 'border': '0', 'al': ''}));
+						
+						if (kunena_topicicontype=='fa') {
+							var span_object = jQuery('<li>', {'class': 'kiconsel'}).append(input);
+						} else {
+							var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
+						}
+						
+						if (kunena_topicicontype=='B2') {
+							var label = jQuery('<label>', {
+								'class': 'radio inline',
+								'for'  : 'radio' + value.id
+							}).append(jQuery('<span>', {
+								'class' : 'icon icon-topic icon-' + value.b2,
+								'border': '0',
+								'al'    : ''
+							}));
+						} else if(kunena_topicicontype=='fa') {
+							var label = jQuery('<label>', {
+								'class': 'radio inline',
+								'for'  : 'radio' + value.id
+							}).append(jQuery('<i>', {
+								'class' : 'fa glyphicon-topic fa-2x fa-' + value.fa,
+								'border': '0',
+								'al'    : ''
+							}));
+						} else {
+							var label = jQuery('<label>', {
+								'class': 'radio inline',
+								'for'  : 'radio' + value.id
+							}).append(jQuery('<img>', {'src': value.path, 'border': '0', 'al': ''}));
+						}
+						
 						span_object.append(label);
 
 						jQuery('#iconset_topic_list').append(span_object);

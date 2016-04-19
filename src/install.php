@@ -22,11 +22,12 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
-			'7.0' => '7.0.3',
+			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
 			'5.5' => '5.5.13',
 			'5.4' => '5.4.13',
-			'0'   => '7.0.3' // Preferred version
+			'5.3' => '5.3.10',
+			'0'   => '7.0.4' // Preferred version
 		),
 		'MySQL'   => array(
 			'5.1' => '5.1',

@@ -68,15 +68,9 @@ $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
 
-if ($topicicontype == 'B2') {
-	$this->addScript('assets/js/editb2.js');
-}
-elseif ($topicicontype == 'fa') {
-	$this->addScript('assets/js/editfa.js');
-}
-else {
-	$this->addScript('assets/js/edit.js');
-}
+$this->addScriptDeclaration("kunena_topicicontype = '" . $topicicontype . "';");
+
+$this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {

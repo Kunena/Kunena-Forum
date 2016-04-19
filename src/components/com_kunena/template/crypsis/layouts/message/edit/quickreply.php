@@ -42,6 +42,9 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
+
+$this->addScriptDeclaration("kunena_topicicontype = '';");
+
 $this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))

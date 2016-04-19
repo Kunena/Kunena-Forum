@@ -58,7 +58,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 	<?php if ($this->checkbox) : ?>
 	<td class="center">
 		<label>
-			<input type="checkbox" class="kcatcheckall" name="categories[<?php echo (int) $this->category->id?>]" value="1" />
+			<input type="checkbox" class="kcatcheck" name="categories[<?php echo (int) $this->category->id?>]" value="1" />
 		</label>
 	</td>
 	<?php endif; ?>

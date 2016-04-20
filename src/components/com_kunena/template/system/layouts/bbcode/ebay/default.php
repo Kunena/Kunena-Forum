@@ -30,6 +30,4 @@ defined('_JEXEC') or die;
 			<?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_LABEL_COMPLETED'); ?>
 		<?php endif; ?>
 	</div>
-<?php else: ?>
-	<b><?php echo JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID'); ?></b>
 <?php endif;

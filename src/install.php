@@ -22,11 +22,12 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
-			'7.0' => '7.0.3',
+			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
 			'5.5' => '5.5.13',
 			'5.4' => '5.4.13',
-			'0'   => '7.0.3' // Preferred version
+			'5.3' => '5.3.10',
+			'0'   => '7.0.4' // Preferred version
 		),
 		'MySQL'   => array(
 			'5.1' => '5.1',
@@ -140,7 +141,7 @@ EOS;
 	public function checkRequirements($version)
 	{
 		$db   = JFactory::getDbo();
-		$pass = $this->checkVersion('PHP', phpversion());
+		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
 		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli', 'pdomysql'));
@@ -151,6 +152,18 @@ EOS;
 	}
 
 	// Internal functions
+
+	/**
+	 *  On some hosting the PHP version given with the version of the packet in the distribution
+	 *
+	 *  @param  string $version The PHP version to clean
+	 */
+	protected function getCleanPhpVersion()
+	{
+		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
+
+		return $version;
+	}
 
 	protected function checkVersion($name, $version)
 	{

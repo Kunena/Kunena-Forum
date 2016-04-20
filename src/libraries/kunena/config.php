@@ -1133,6 +1133,12 @@ class KunenaConfig extends JObject
 	 * @since  K5.0.0
 	 */
 	public $url_subject_topic = 0;
+	
+	/**
+	 * @var integer Allow to enable log to save moderation actions
+	 * @since  K5.0.0
+	 */
+	public $log_moderation = 0;
 
 	/**
 	 *

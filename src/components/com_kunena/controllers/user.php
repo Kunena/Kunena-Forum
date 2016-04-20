@@ -322,25 +322,28 @@ class KunenaControllerUser extends KunenaController
 		}
 		else
 		{
-			KunenaLog::log(
-				KunenaLog::TYPE_MODERATION,
-				$log,
-				array(
-					'expiration' => $delban ? 'NOW' : $expiration,
-					'reason_private' => $reason_private,
-					'reason_public' => $reason_public,
-					'comment' => $comment,
-					'options' => array(
-						'resetProfile' => (bool) $DelProfileInfo,
-						'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
-						'deleteAvatar' => (bool) $DelAvatar || $DelProfileInfo,
-						'deletePosts' => (bool) $banDelPosts
-					)
-				),
-				null,
-				null,
-				$user
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					$log,
+					array(
+						'expiration' => $delban ? 'NOW' : $expiration,
+						'reason_private' => $reason_private,
+						'reason_public' => $reason_public,
+						'comment' => $comment,
+						'options' => array(
+							'resetProfile' => (bool) $DelProfileInfo,
+							'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
+							'deleteAvatar' => (bool) $DelAvatar || $DelProfileInfo,
+							'deletePosts' => (bool) $banDelPosts
+						)
+					),
+					null,
+					null,
+					$user
+				);
+			}
 			
 			$this->app->enqueueMessage($message);
 		}

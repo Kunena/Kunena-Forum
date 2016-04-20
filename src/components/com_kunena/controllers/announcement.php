@@ -60,7 +60,11 @@ class KunenaControllerAnnouncement extends KunenaController
 			}
 			else
 			{
-				KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, array('id' => $announcement->id));
+				if ($this->config->log_moderation)
+				{
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, array('id' => $announcement->id));
+				}
+				
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
 			}
 		}
@@ -101,7 +105,11 @@ class KunenaControllerAnnouncement extends KunenaController
 			}
 			else
 			{
-				KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, array('id' => $announcement->id));
+				if ($this->config->log_moderation)
+				{
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, array('id' => $announcement->id));
+				}
+				
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
 			}
 		}
@@ -148,7 +156,11 @@ class KunenaControllerAnnouncement extends KunenaController
 			}
 			else
 			{
-				KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, array('id' => $announcement->id));
+				if ($this->config->log_moderation)
+				{
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, array('id' => $announcement->id));
+				}
+				
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_ANN_DELETED'));
 			}
 		}
@@ -192,7 +204,11 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 		
-		KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, array('id' => $announcement->id));
+		if ($this->config->log_moderation)
+		{
+			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, array('id' => $announcement->id));
+		}
+		
 		$this->app->enqueueMessage(JText::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));
 		$this->setRedirect($announcement->getUrl('default', false));
 	}

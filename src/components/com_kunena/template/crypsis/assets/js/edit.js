@@ -155,13 +155,9 @@ jQuery(document).ready(function () {
 								value: value.id
 							});
 						}
-						
-						if (kunena_topicicontype=='fa') {
-							var span_object = jQuery('<li>', {'class': 'kiconsel'}).append(input);
-						} else {
-							var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
-						}
-						
+
+						var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
+
 						if (kunena_topicicontype=='B2') {
 							var label = jQuery('<label>', {
 								'class': 'radio inline',
@@ -186,7 +182,7 @@ jQuery(document).ready(function () {
 								'for'  : 'radio' + value.id
 							}).append(jQuery('<img>', {'src': value.path, 'border': '0', 'al': ''}));
 						}
-						
+
 						span_object.append(label);
 
 						jQuery('#iconset_topic_list').append(span_object);

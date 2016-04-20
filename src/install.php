@@ -141,7 +141,7 @@ EOS;
 	public function checkRequirements($version)
 	{
 		$db   = JFactory::getDbo();
-		$pass = $this->checkVersion('PHP', phpversion());
+		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
 		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli', 'pdomysql'));
@@ -152,6 +152,18 @@ EOS;
 	}
 
 	// Internal functions
+
+	/**
+	 *  On some hosting the PHP version given with the version of the packet in the distribution
+	 *
+	 *  @param  string $version The PHP version to clean
+	 */
+	protected function getCleanPhpVersion()
+	{
+		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
+
+		return $version;
+	}
 
 	protected function checkVersion($name, $version)
 	{

@@ -477,6 +477,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo $this->lists ['user_report'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_LOG_COLLECT_DATA') ?></td>
+												<td><?php echo $this->lists ['log_moderation'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_LOG_COLLECT_DATA_DESC') ?></td>
+											</tr>
 											</tbody>
 										</table>
 									</fieldset>

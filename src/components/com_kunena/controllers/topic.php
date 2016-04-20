@@ -409,7 +409,7 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 		
-		if ($this->me->isModerator($category)) 
+		if ($this->me->isModerator($category) && $this->config->log_moderation) 
 		{
 			KunenaLog::log(
 				KunenaLog::TYPE_ACTION,
@@ -804,14 +804,17 @@ class KunenaControllerTopic extends KunenaController
 		
 		$isMine = $this->me->userid == $message->userid;
 		
-		KunenaLog::log(
-			$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
-			KunenaLog::LOG_POST_EDIT,
-			array('mesid' => $message->id, 'reason' => $fields['modified_reason']),
-			$topic->getCategory(),
-			$topic,
-			!$isMine ? $message->getAuthor() : null
-		);
+		if ($this->config->log_moderation)
+		{
+			KunenaLog::log(
+				$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+				KunenaLog::LOG_POST_EDIT,
+				array('mesid' => $message->id, 'reason' => $fields['modified_reason']),
+				$topic->getCategory(),
+				$topic,
+				!$isMine ? $message->getAuthor() : null
+			);
+		}
 		
 		// Display possible warnings (upload failed etc)
 		foreach ($message->getErrors() as $warning)
@@ -1045,14 +1048,17 @@ class KunenaControllerTopic extends KunenaController
 
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
 			
-			KunenaLog::log(
-				KunenaLog::TYPE_ACTION,
-				KunenaLog::LOG_POST_THANKYOU,
-				array('mesid' => $message->id),
-				$category,
-				$message->getTopic(),
-				$message->getAuthor()
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_ACTION,
+					KunenaLog::LOG_POST_THANKYOU,
+					array('mesid' => $message->id),
+					$category,
+					$message->getTopic(),
+					$message->getAuthor()
+				);
+			}
 			
 			$activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
 		}
@@ -1070,14 +1076,17 @@ class KunenaControllerTopic extends KunenaController
 
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
 			
-			KunenaLog::log(
-				KunenaLog::TYPE_MODERATION,
-				KunenaLog::LOG_POST_UNTHANKYOU,
-				array('mesid' => $message->id, 'userid' => $userid),
-				$category,
-				$message->getTopic(),
-				$message->getAuthor()
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_POST_UNTHANKYOU,
+					array('mesid' => $message->id, 'userid' => $userid),
+					$category,
+					$message->getTopic(),
+					$message->getAuthor()
+				);
+			}
 			
 			$activityIntegration->onAfterUnThankyou($this->me->userid, $userid, $message);
 		}
@@ -1232,13 +1241,16 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_STICKY_SET'));
 			
-			KunenaLog::log(
-				KunenaLog::TYPE_MODERATION,
-				KunenaLog::LOG_TOPIC_STICKY,
-				array(),
-				$topic->getCategory(),
-				$topic
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_STICKY,
+					array(),
+					$topic->getCategory(),
+					$topic
+				);
+			}
 			
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1275,13 +1287,16 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_STICKY_UNSET'));
 			
-			KunenaLog::log(
-				KunenaLog::TYPE_MODERATION,
-				KunenaLog::LOG_TOPIC_UNSTICKY,
-				array(),
-				$topic->getCategory(),
-				$topic
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_UNSTICKY,
+					array(),
+					$topic->getCategory(),
+					$topic
+				);
+			}
 			
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1318,13 +1333,16 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_LOCK_SET'));
 			
-			KunenaLog::log(
-				KunenaLog::TYPE_MODERATION,
-				KunenaLog::LOG_TOPIC_LOCK,
-				array(),
-				$topic->getCategory(),
-				$topic
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_LOCK,
+					array(),
+					$topic->getCategory(),
+					$topic
+				);
+			}
 			
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1361,13 +1379,16 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_LOCK_UNSET'));
 			
-			KunenaLog::log(
-				KunenaLog::TYPE_MODERATION,
-				KunenaLog::LOG_TOPIC_UNLOCK,
-				array(),
-				$topic->getCategory(),
-				$topic
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_UNLOCK,
+					array(),
+					$topic->getCategory(),
+					$topic
+				);
+			}
 			
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1415,13 +1436,16 @@ class KunenaControllerTopic extends KunenaController
 		$category = $topic->getCategory();
 		if ($target->authorise('delete') && $target->publish($hold))
 		{
-			KunenaLog::log(
-				$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-				$log,
-				isset($message) ? array('mesid' => $message->id) : array(),
-				$category,
-				$topic
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+					$log,
+					isset($message) ? array('mesid' => $message->id) : array(),
+					$category,
+					$topic
+				);
+			}
 			
 			$this->app->enqueueMessage($msg);
 		}
@@ -1478,13 +1502,16 @@ class KunenaControllerTopic extends KunenaController
 		$category = $topic->getCategory();
 		if ($target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED))
 		{
-			KunenaLog::log(
-				$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-				$log,
-				isset($message) ? array('mesid' => $message->id) : array(),
-				$category,
-				$topic
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+					$log,
+					isset($message) ? array('mesid' => $message->id) : array(),
+					$category,
+					$topic
+				);
+			}
 			
 			$this->app->enqueueMessage($msg);
 		}
@@ -1533,13 +1560,16 @@ class KunenaControllerTopic extends KunenaController
 		$category = $topic->getCategory();
 		if ($target->authorise('permdelete') && $target->delete())
 		{
-			KunenaLog::log(
-				$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-				$log,
-				isset($message) ? array('mesid' => $message->id) : array(),
-				$category,
-				$topic
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+					$log,
+					isset($message) ? array('mesid' => $message->id) : array(),
+					$category,
+					$topic
+				);
+			}
 			
 			if ($topic->exists())
 			{
@@ -1598,14 +1628,17 @@ class KunenaControllerTopic extends KunenaController
 		$category = $topic->getCategory();
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED))
 		{
-			KunenaLog::log(
-					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-					$log,
-					array('mesid' => $message->id),
-					$category,
-					$topic,
-					$message->getAuthor()
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+						$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+						$log,
+						array('mesid' => $message->id),
+						$category,
+						$topic,
+						$message->getAuthor()
+				);
+			}
 			
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'));
 
@@ -1715,18 +1748,21 @@ class KunenaControllerTopic extends KunenaController
 				$error = $topic->getError();
 			}
 			
-			KunenaLog::log(
-				KunenaLog::TYPE_MODERATION,
-				$messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
-				array(
-					'move' => array('id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'),
-					'target' => array('category_id' => $targetCategory, 'topic_id' => $targetTopic),
-					'options' => array('emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow)
-				),
-				$topic->getCategory(),
-				$topic,
-				$message->getAuthor()
-			);
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					$messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
+					array(
+						'move' => array('id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'),
+						'target' => array('category_id' => $targetCategory, 'topic_id' => $targetTopic),
+						'options' => array('emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow)
+					),
+					$topic->getCategory(),
+					$topic,
+					$message->getAuthor()
+				);
+			}
 		}
 
 		if ($error)
@@ -1824,18 +1860,21 @@ class KunenaControllerTopic extends KunenaController
 			$template->reportMessage($message, $reason, $text);
 		}
 		
-		KunenaLog::log(
-			KunenaLog::TYPE_REPORT,
-			$log,
-			array(
-				'mesid' => $message->id,
-				'reason' => $reason,
-				'message' => $text
-			),
-			$topic->getCategory(),
-			$topic,
-			$message->getAuthor()
-		);
+		if ($this->config->log_moderation)
+		{
+			KunenaLog::log(
+				KunenaLog::TYPE_REPORT,
+				$log,
+				array(
+					'mesid' => $message->id,
+					'reason' => $reason,
+					'message' => $text
+				),
+				$topic->getCategory(),
+				$topic,
+				$message->getAuthor()
+			);
+		}
 		
 		// Load language file from the template.
 		KunenaFactory::getTemplate()->loadLanguage();
@@ -2007,14 +2046,17 @@ class KunenaControllerTopic extends KunenaController
 		$topic = KunenaForumTopicHelper::get($this->id);
 		$topic->resetvotes();
 		
-		KunenaLog::log(
-			KunenaLog::TYPE_MODERATION,
-			KunenaLog::LOG_POLL_MODERATE,
-			array(),
-			$topic->getCategory(),
-			$topic,
-			null
-		);
+		if ($this->config->log_moderation)
+		{
+			KunenaLog::log(
+				KunenaLog::TYPE_MODERATION,
+				KunenaLog::LOG_POLL_MODERATE,
+				array(),
+				$topic->getCategory(),
+				$topic,
+				null
+			);
+		}
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS'));
 		$this->setRedirect($topic->getUrl($this->return, false));

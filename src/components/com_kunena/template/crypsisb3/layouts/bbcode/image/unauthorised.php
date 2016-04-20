@@ -10,14 +10,10 @@
  * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
-
-$title    = $this->title;
-$url      = $this->url;
-$filename = $this->filename;
-$size     = $this->size;
 ?>
+
 <div class="kmsgattach">
 	<h4>
-		<?php echo $title; ?>
+		<?php echo $this->title; ?>
 	</h4>
 </div>

@@ -408,17 +408,6 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
-		
-		if ($this->me->isModerator($category) && $this->config->log_moderation) 
-		{
-			KunenaLog::log(
-				KunenaLog::TYPE_ACTION,
-				$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
-				array('mesid' => $message->id, 'parent_id' => $this->id),
-				$category,
-				$topic
-			);
-		}	
 
 		// Flood protection
 		if ($this->config->floodprotection && !$this->me->isModerator($category))
@@ -547,7 +536,18 @@ class KunenaControllerTopic extends KunenaController
 
 		// Save message
 		$success = $message->save();
-
+		
+		if ($this->me->isModerator($category) && $this->config->log_moderation)
+		{
+			KunenaLog::log(
+					KunenaLog::TYPE_ACTION,
+					$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
+					array('mesid' => $message->id, 'parent_id' => $this->id),
+					$category,
+					$topic
+					);
+		}
+		
 		if (!$success)
 		{
 			$this->app->enqueueMessage($message->getError(), 'error');

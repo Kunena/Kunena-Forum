@@ -57,6 +57,8 @@ if ($this->config->pollenabled)
 	$this->addScript('assets/js/poll.js');
 }
 
+$this->addScript('assets/js/pollcheck.js');
+
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 

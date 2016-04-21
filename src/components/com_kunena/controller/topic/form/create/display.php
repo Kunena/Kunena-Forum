@@ -49,9 +49,12 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 				$arrayanynomousbox[] = '"' . $category->id . '":' . $category->post_anonymous;
 			}
 
-			if (!$category->isSection() && $category->allow_polls)
+			if ($this->config->pollenabled)
 			{
-				$arraypollcatid[] = '"' . $category->id . '":1';
+				if (!$category->isSection() && $category->allow_polls)
+				{
+					$arraypollcatid[] = '"' . $category->id . '":1';
+				}
 			}
 		}
 

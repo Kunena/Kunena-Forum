@@ -84,20 +84,6 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	if ( typeof pollcategoriesid != 'undefined' && jQuery('#poll_exist_edit').length == 0 ) {
-		var catid = jQuery('#kcategory_poll').val();
-
-		if ( pollcategoriesid[catid] !== undefined ) {
-			jQuery('.pollbutton').show();
-		} else {
-			jQuery('.pollbutton').hide();
-		}
-	} else if ( jQuery('#poll_exist_edit').length > 0 ) {
-		jQuery('.pollbutton').show();
-	} else {
-		jQuery('.pollbutton').hide();
-	}
-
 	jQuery('#kpoll_go_results').click(function() {
 		if(jQuery('#poll-results').is(':visible')==true)
 		{

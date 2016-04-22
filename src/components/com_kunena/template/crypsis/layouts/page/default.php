@@ -45,18 +45,17 @@ $config = KunenaFactory::getTemplate()->params;
 
 	if ($config->get('displayBreadcrumb'))
 	{
-	echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
 	}
-
 
 	if ($config->get('displayModule'))
 	{
-	echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
+		echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
 	}
 
 	if ($config->get('displayFooter'))
 	{
-	echo $this->subLayout('Widget/Footer');
+		echo $this->subLayout('Widget/Footer');
 	}
 ?>
 </div>

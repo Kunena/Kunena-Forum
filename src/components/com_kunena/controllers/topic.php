@@ -313,11 +313,6 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
-		$template = KunenaFactory::getTemplate();
-
-		// Load language file from the template.
-		$template->loadLanguage();
-
 		if (!$this->id)
 		{
 			// Create topic
@@ -348,17 +343,6 @@ class KunenaControllerTopic extends KunenaController
 
 			list ($topic, $message) = $parent->newReply($fields);
 			$category = $topic->getCategory();
-		}
-
-		$templates = KunenaTemplateHelper::parseXmlFiles();
-
-		// Set dynamic template information
-		foreach ($templates as $tmpl)
-		{
-			if (KunenaTemplateHelper::isDefault($tmpl->directory))
-			{
-				$template = $tmpl;
-			}
 		}
 
 		if ($this->me->canDoCaptcha())

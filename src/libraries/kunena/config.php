@@ -1139,7 +1139,19 @@ class KunenaConfig extends JObject
 	 * @since  K5.0.0
 	 */
 	public $log_moderation = 0;
-
+	
+	/**
+	 * @var integer Define the number of caracters from start when shorthen attachments filemane
+	 * @since  K5.0.0
+	 */
+	public $attach_start = 0;
+	
+	/**
+	 * @var integer Define the number of caracters from end when shorthen attachments filemane
+	 * @since  K5.0.0
+	 */
+	public $attach_end = 14;
+	
 	/**
 	 *
 	 */

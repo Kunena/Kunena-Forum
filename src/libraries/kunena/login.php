@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration
+ * @package     Kunena.Framework
+ * @subpackage  Integration
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 class KunenaLogin
 {
 	protected static $instance = false;
+
 	/**
 	 * @var array|KunenaLogin[]
 	 */

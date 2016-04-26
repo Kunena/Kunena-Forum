@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 class KunenaAccess
 {
 	const CATEGORY_SUBSCRIPTION = 1;
+
 	const TOPIC_SUBSCRIPTION = 2;
 
 	protected static $instance = null;
@@ -515,6 +516,7 @@ window.addEvent('domready', function(){
 		{
 			$id = $user->userid;
 			$app = JFactory::getApplication();
+
 			// TODO: handle guests/bots with no userstate
 			$read[$id] = $app->getUserState("com_kunena.user{$id}_read");
 
@@ -625,7 +627,8 @@ window.addEvent('domready', function(){
 
 		$hold [0] = 0;
 
-		if ($this->isModerator($user, $catid)) {
+		if ($this->isModerator($user, $catid))
+		{
 			$hold [1] = 1;
 		}
 
@@ -718,6 +721,7 @@ window.addEvent('domready', function(){
 			}
 
 			$subslist = array_diff($allow, $deny);
+
 			// Category administrators and moderators override ACL
 			$subslist += array_intersect_key($adminlist, array_flip($subscribers));
 			$subslist += array_intersect_key($modlist, array_flip($subscribers));
@@ -741,7 +745,7 @@ window.addEvent('domready', function(){
 			$adminlist = array();
 		}
 
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->select('u.id, u.name, u.username, u.email');
 		$query->from('#__users AS u');
 		$query->where("u.block=0");
@@ -782,7 +786,7 @@ window.addEvent('domready', function(){
 
 		if (empty($excludeList))
 		{
-			// false, null, '', 0 and array(): get all subscribers
+			// False, null, '', 0 and array(): get all subscribers
 			$excludeList = array();
 		}
 		elseif (is_array($excludeList))

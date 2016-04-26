@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
+ * @package    Kunena.Framework
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  *
  * Based on FireBoard Component
- * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.bestofjoomla.com
+ * @copyright  (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.bestofjoomla.com
  **/
 
 // Do not allow direct linking
@@ -621,7 +621,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  Major version number
 	 * @since  1.6.0
 	 */
-	public $pollnboptions = 4; //For poll integration, set the number maximum of options, input, number
+	public $pollnboptions = 4;
 
 	/**
 	 * @var    integer  Pool allow one ore more time; select, boolean
@@ -1133,7 +1133,7 @@ class KunenaConfig extends JObject
 	 * @since  K5.0.0
 	 */
 	public $url_subject_topic = 0;
-	
+
 	/**
 	 * @var integer Allow to enable log to save moderation actions
 	 * @since  K5.0.0
@@ -1176,7 +1176,7 @@ class KunenaConfig extends JObject
 
 			if (!$instance)
 			{
-				$instance = new KunenaConfig();
+				$instance = new KunenaConfig;
 				$instance->load();
 			}
 
@@ -1221,7 +1221,7 @@ class KunenaConfig extends JObject
 	 */
 	public function reset()
 	{
-		$instance = new KunenaConfig();
+		$instance = new KunenaConfig;
 		$this->bind($instance->getProperties());
 	}
 

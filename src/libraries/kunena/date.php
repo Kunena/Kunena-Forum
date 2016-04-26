@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
+ * @package    Kunena.Framework
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -41,7 +41,7 @@ class KunenaDate extends JDate
 			'h' => array (JText::_('COM_KUNENA_DATE_HOUR'), JText::_('COM_KUNENA_DATE_HOURS') ),
 			'i' => array (JText::_('COM_KUNENA_DATE_MINUTE'), JText::_('COM_KUNENA_DATE_MINUTES') ) );
 
-		// we only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
+		// We only want to output two chunks of time here, eg: "x years, xx months" or "x days, xx hours"
 		$tick = 0;
 		$output = '';
 		$diff = $this->diff(new JDate);
@@ -164,8 +164,15 @@ class KunenaDate extends JDate
 		{
 			$app = JFactory::getApplication();
 			$my = JFactory::getUser();
-			if ($my->id) { $offset = $my->getParam('timezone', $app->get('offset', 'utc')); }
-			else { $offset = $app->get('offset', 'utc'); }
+
+			if ($my->id)
+			{
+				$offset = $my->getParam('timezone', $app->get('offset', 'utc'));
+			}
+			else
+			{
+				$offset = $app->get('offset', 'utc');
+			}
 		}
 
 		try

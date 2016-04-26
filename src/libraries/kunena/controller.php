@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
+ * @package    Kunena.Framework
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -17,7 +17,9 @@ jimport('joomla.application.component.helper');
 class KunenaController extends JControllerLegacy
 {
 	public $app = null;
+
 	public $me = null;
+
 	public $config = null;
 
 	/**
@@ -117,7 +119,7 @@ class KunenaController extends JControllerLegacy
 
 		if (class_exists($class))
 		{
-			$instance = new $class();
+			$instance = new $class;
 		}
 		else
 		{
@@ -142,6 +144,7 @@ class KunenaController extends JControllerLegacy
 		$this->task = $dot ? substr($task, $dot + 1) : $task;
 
 		$task = strtolower($this->task);
+
 		if (isset($this->taskMap[$this->task]))
 		{
 			$doTask = $this->taskMap[$this->task];
@@ -318,6 +321,7 @@ class KunenaController extends JControllerLegacy
 			// Load admin language files
 			KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 			KunenaFactory::loadLanguage('com_kunena.views', 'admin');
+
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena', 'admin');
 
@@ -336,6 +340,7 @@ class KunenaController extends JControllerLegacy
 			// Load site language files
 			KunenaFactory::loadLanguage('com_kunena.views');
 			KunenaFactory::loadLanguage('com_kunena.templates');
+
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena');
 

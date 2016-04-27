@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 	<?php echo JText::_('COM_KUNENA') . ' - ' . JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?>
 </h2>
 
-<div class="well well-small" id="credits">
+<div id="credits">
 	<div class="container-fluid pull-left">
 		<img src="<?php echo $this->logo; ?>" width="48" height="48" alt="Kunena" />
 	</div>

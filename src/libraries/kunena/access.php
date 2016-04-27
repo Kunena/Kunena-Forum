@@ -286,6 +286,33 @@ window.addEvent('domready', function(){
 
 		return $list;
 	}
+	
+	/**
+	 * Get group name in selected access type. Can be removed only when all the calls has been removed.
+	 *
+	 * @param string	$accesstype	Access type.
+	 * @param mixed		$id			Group id.
+	 * @return string|null
+	 *
+	 * @deprecated 3.0.1
+	 */
+	public function getGroupName($accesstype, $id)
+	{
+		if (!isset($this->accesstypes[$accesstype]))
+		{
+			return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
+		}
+		
+		/** @var KunenaAccess $access */
+		foreach ($this->accesstypes[$accesstype] as $access)
+		{
+			if (method_exists($access, 'getGroupName'))
+			{
+				return $access->getGroupName($accesstype, $id);
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Get category administrators.

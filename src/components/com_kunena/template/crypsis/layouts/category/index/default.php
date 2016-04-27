@@ -107,31 +107,34 @@ foreach ($this->sections as $section) :
 								<?php
 								// Display subcategories
 								if (!empty($this->categories[$category->id])) : ?>
-									<ul class="inline">
+									<div class="subcategories">
+										<ul class="inline">
 
-										<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
-											<li>
-												<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
-													. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
-													. ')</small>';
-												if (($new = $subcategory->getNewCount()) > 0)
-												{
-													echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
-												}
-												?>
-											</li>
-										<?php endforeach; ?>
+											<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
+												<li>
+													<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
+														. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
+														. ')</small>';
+													if (($new = $subcategory->getNewCount()) > 0)
+													{
+														echo '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
+													}
+													?>
+												</li>
+											<?php endforeach; ?>
 
-										<?php if (!empty($this->more[$category->id])) : ?>
-											<li>
-												<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE')); ?>
-												<small class="hidden-phone muted">
-													(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>)
-												</small>
-											</li>
-										<?php endif; ?>
+											<?php if (!empty($this->more[$category->id])) : ?>
+												<li>
+													<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE')); ?>
+													<small class="hidden-phone muted">
+														(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>)
+													</small>
+												</li>
+											<?php endif; ?>
 
-									</ul>
+										</ul>
+									</div>
+									<div class="clearfix"></div>
 								<?php endif; ?>
 
 								<?php if ($category->getmoderators() && KunenaConfig::getInstance()->listcat_show_moderators) : ?>

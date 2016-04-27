@@ -6,7 +6,7 @@
  *
  * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @link https://www.kunena.org
  *
  * Taken from Joomla Platform 11.1
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.

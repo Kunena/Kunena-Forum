@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -52,7 +52,7 @@ class KunenaAdminViewAttachments extends KunenaView
 	 */
 	protected function setToolbar()
 	{
-		$help_url  = 'http://www.kunena.org/docs/';
+		$help_url  = 'https://www.kunena.org/docs/';
 		JToolBarHelper::help('COM_KUNENA', false, $help_url);
 		JToolBarHelper::title(JText::_('COM_KUNENA') . ': ' . JText::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
 		JToolBarHelper::spacer();

@@ -14,13 +14,11 @@
 BBCODE BUTTONS
 -------------------------------------------------------------------- */
 
-table.kpostbuttonset {
-	tr {
-		td.kpostbuttons {
-			select.selectbox {
-				position : relative;
-				bottom   : 5px;
-			}
+tr {
+	td.kpostbuttons {
+		select.selectbox {
+			position : relative;
+			bottom   : 5px;
 		}
 	}
 }
@@ -172,12 +170,12 @@ table.kpostbuttonset {
 	background-image : url(../assets/images/emoticon.png);
 }
 
-.markItUp .clean a {
-	background-image : url(../assets/images/clean.png);
-}
-
 .markItUp .confidentialbutton a {
 	background-image : url(../assets/images/confidential.png);
+}
+
+.markItUp .clean a {
+	background-image : url(../assets/images/clean.png);
 }
 
 .markItUp .colors ul {
@@ -252,6 +250,10 @@ table.kpostbuttonset {
 	line-height : 18px;
 	overflow    : auto;
 	border      : 1px solid #e5e5e5;
+}
+
+.markItUpEditor a {
+	box-sizing  : content-box;
 }
 
 .markItUpPreviewFrame {
@@ -345,6 +347,7 @@ table.kpostbuttonset {
 	background-repeat : no-repeat;
 	padding           : 5px;
 	margin            : 0;
+	box-sizing        : content-box;
 }
 
 .markItUpHeader ul ul a {
@@ -425,6 +428,7 @@ li.markItUpButton ul {
 
 #kbbcode-preview {
 	height: auto !important;
+	margin-bottom: 35px;
 }
 
 #kshow_attach_form {
@@ -433,4 +437,8 @@ li.markItUpButton ul {
 
 #iconset_inject .inline:hover {
 	cursor : pointer;
+}
+
+.kpoll-time-to-live-input {
+	margin-left: -30px !important;
 }

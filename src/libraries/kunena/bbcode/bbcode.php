@@ -229,6 +229,19 @@ class KunenaBbcode extends NBBC_BBCode
 			}
 		}
 
+		if ($config->autolink)
+		{
+			$layout = KunenaLayout::factory('BBCode/URL');
+
+			if ($layout->getPath())
+			{
+				return (string) $layout
+					->set('content', $text)
+					->set('url', $url)
+					->set('target', $this->url_target);
+			}
+		}
+
 		// Auto-linking has been disabled.
 		return $text;
 	}

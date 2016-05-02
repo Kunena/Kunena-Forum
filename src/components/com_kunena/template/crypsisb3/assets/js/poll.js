@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 		newInput = document.createElement('input');
 		newInput.setAttribute('name', 'polloptionsID[new'+options+']');
 		newInput.setAttribute('id', 'field_option'+options);
-		newInput.setAttribute('class', 'inputbox form-control');
+		newInput.setAttribute('class', 'inputbox');
 		newInput.setAttribute('maxlength', '100');
 		newInput.setAttribute('type', 'text');
 		polldiv.append(newInput);
@@ -84,20 +84,6 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	if ( typeof pollcategoriesid != 'undefined' && jQuery('#poll_exist_edit').length == 0 ) {
-		var catid = jQuery('#kcategory_poll').val();
-
-		if ( pollcategoriesid[catid] !== undefined ) {
-			jQuery('.pollbutton').show();
-		} else {
-			jQuery('.pollbutton').hide();
-		}
-	} else if ( jQuery('#poll_exist_edit').length > 0 ) {
-		jQuery('.pollbutton').show();
-	} else {
-		jQuery('.pollbutton').hide();
-	}
-
 	jQuery('#kpoll_go_results').click(function() {
 		if(jQuery('#poll-results').is(':visible')==true)
 		{
@@ -125,5 +111,9 @@ jQuery(document).ready(function() {
 			jQuery('#kpoll_hide_results').show();
 			jQuery('#kpoll_go_results').hide();
 		}
+	});
+
+	jQuery('#kpoll-moreusers').click(function() {
+		jQuery('#kpoll-moreusers-div').show();
 	});
 });

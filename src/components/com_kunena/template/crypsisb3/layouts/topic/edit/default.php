@@ -27,6 +27,7 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
+$this->addScript('assets/js/pollcheck.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');
 $this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload.js');
@@ -57,25 +58,16 @@ if ($this->config->pollenabled)
 }
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('assets/js/caret.js');
-$this->addScript('assets/js/atwho.js');
-$this->addStyleSheet('assets/css/atwho.css');
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
+$this->addStyleSheet('assets/css/jquery.atwho.css');
 
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
-
-if ($topicicontype == 'B3') {
-	$this->addScript('assets/js/editb3.js');
-}
-elseif ($topicicontype == 'fa') {
-	$this->addScript('assets/js/editfa.js');
-}
-else {
-	$this->addScript('assets/js/edit.js');
-}
+$this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {

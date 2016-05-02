@@ -117,12 +117,6 @@ source_file = src/components/com_kunena/language/en-GB/en-GB.com_kunena.template
 source_lang = en-GB
 minimum_perc = 80
 
-[Kunena.site-com_kunena-tpl_blue_eagle]
-file_filter = src/components/com_kunena/language/<lang>/<lang>.com_kunena.tpl_blue_eagle.ini
-source_file = src/components/com_kunena/language/en-GB/en-GB.com_kunena.tpl_blue_eagle.ini
-source_lang = en-GB
-minimum_perc = 80
-
 [Kunena.site-com_kunena_tmpl_crypsis]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.kunena_tmpl_crypsis.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.kunena_tmpl_crypsis.ini

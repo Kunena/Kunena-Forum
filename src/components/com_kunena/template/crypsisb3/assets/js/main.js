@@ -52,6 +52,10 @@ jQuery(document).ready(function() {
 		jQuery("input.kcatcheckall:checkbox").not(this).prop('checked', this.checked);
 	});
 
+	jQuery("input.kcheckallcategories").click(function(){
+		jQuery("input.kcheckallcategory:checkbox").not(this).prop('checked', this.checked);
+	});
+
 	jQuery(document).ready(function() {
 		jQuery('[rel=popover]').popover();
 	});

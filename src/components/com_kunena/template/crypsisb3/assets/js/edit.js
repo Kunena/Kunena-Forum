@@ -157,10 +157,32 @@ jQuery(document).ready(function () {
 						}
 
 						var span_object = jQuery('<span>', {'class': 'kiconsel'}).append(input);
-						var label = jQuery('<label>', {
-							'class': 'radio inline',
-							'for'  : 'radio' + value.id
-						}).append(jQuery('<img>', {'src': value.path, 'border': '0', 'al': ''}));
+
+						if (kunena_topicicontype=='B3') {
+							var label = jQuery('<label>', {
+								'class': 'radio inline',
+								'for'  : 'radio' + value.id
+							}).append(jQuery('<span>', {
+								'class': 'glyphicon glyphicon-topic glyphicon-' + value.b3,
+								'border': '0',
+								'al'    : ''
+							}));
+						} else if(kunena_topicicontype=='fa') {
+							var label = jQuery('<label>', {
+								'class': 'radio inline',
+								'for'  : 'radio' + value.id
+							}).append(jQuery('<i>', {
+								'class' : 'fa glyphicon-topic fa-2x fa-' + value.fa,
+								'border': '0',
+								'al'    : ''
+							}));
+						} else {
+							var label = jQuery('<label>', {
+								'class': 'radio inline',
+								'for'  : 'radio' + value.id
+							}).append(jQuery('<img>', {'src': value.path, 'border': '0', 'al': ''}));
+						}
+
 						span_object.append(label);
 
 						jQuery('#iconset_topic_list').append(span_object);
@@ -173,7 +195,7 @@ jQuery(document).ready(function () {
 	if (jQuery.fn.datepicker != undefined) {
 		// Load datepicker for poll
 		jQuery('#datepoll-container .input-append.date').datepicker({
- 			orientation: "top auto"  			
- 		});
+			orientation: "top auto"
+		});
 	}
 });

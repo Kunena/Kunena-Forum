@@ -2917,7 +2917,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$content = strip_tags($content);
 
 
-		return '<iframe src="//instagram.com/p/'. $content .'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+		return '<iframe src="//instagram.com/p/'. $content .'/embed/" width="612" height="400" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
 	}
 
 	/**

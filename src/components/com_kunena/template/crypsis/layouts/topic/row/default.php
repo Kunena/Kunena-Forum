@@ -63,20 +63,22 @@ if (!empty($this->spacing)) : ?>
 	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols?>">
-		<div>
+		<div class="krow">
 			<?php
 			if ($topic->unread)
 			{
-				echo $this->getTopicLink(
-     $topic,  'unread',
-	$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
+				echo $this->getTopicLink($topic,  'unread', $topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .
+					' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
 			}
 			else
 			{
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
-
+			?>
+			<div class="pull-right"><?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?></div>
+			<?php
 			$labels = KunenaFactory::getTemplate()->params->get('labels');
+
 			if ($labels)
 			{
 				if ($this->topic->locked != 0)
@@ -110,7 +112,6 @@ if (!empty($this->spacing)) : ?>
 						<span class="sr-only"></span>BUG</span>
 				<?php }
 			}?>
-			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>

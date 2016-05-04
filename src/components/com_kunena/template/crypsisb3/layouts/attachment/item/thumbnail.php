@@ -23,18 +23,18 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' class="fancybo
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbheight . 'px;"';
 
 if ($attachment->isImage())
-{
+{ 
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
 		<img src="<?php echo $attachment->getUrl(); ?>"<?php echo $attributesImg; ?> width="<?php echo $config->thumbheight ;?>" height="<?php echo $config->thumbheight ;?>" alt=""  />
 	</a>
-	<?php
+<?php
 }
 else
 {
 	?>
 	<a href="<?php echo $attachment->getUrl(); ?>" title="<?php echo $attachment->getShortName($config->attach_start, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<i class="large-kicon glyphicon glyphicon-file"></i>
+		<i class="large-kicon icon-file"></i>
 	</a>
-	<?php
+<?php
 }

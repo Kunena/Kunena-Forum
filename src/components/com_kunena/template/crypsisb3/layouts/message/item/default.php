@@ -52,12 +52,15 @@ $list = array();
 	</div>
 
 	<?php if (!empty($attachments)) : ?>
-		<div class="kattach col-md-12">
+		<div class="kattach">
 			<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
 			<ul class="thumbnails">
 				<?php foreach ($attachments as $attachment) : ?>
 					<li class="col-md-3 center">
-						<div class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?> <?php echo $attachment->getLayout()->render('textlink'); ?> </div>
+						<div class="thumbnail">
+							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+							<?php echo $attachment->getLayout()->render('textlink'); ?>
+						</div>
 					</li>
 				<?php endforeach; ?>
 			</ul>

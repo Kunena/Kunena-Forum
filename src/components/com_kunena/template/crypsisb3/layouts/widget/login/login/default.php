@@ -12,9 +12,9 @@ defined('_JEXEC') or die;
 ?>
 <ul class="nav navbar-nav pull-right">
 	<li class="dropdown mobile-user">
-
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="klogin">
-			<i class="glyphicon glyphicon-large glyphicon-white glyphicon-user "></i> <b class="caret"></b>
+			<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
+			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu card card-container" id="userdropdownlogin" role="menu">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline form-signin">
@@ -43,7 +43,7 @@ defined('_JEXEC') or die;
 							<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
 						</label>
 					</div>
-					<button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+					<button class="btn btn-primary" type="submit">Sign in</button>
 					<?php if ($this->resetPasswordUrl) : ?>
 						<a href="<?php echo $this->resetPasswordUrl; ?>" rel="nofollow">
 							<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>

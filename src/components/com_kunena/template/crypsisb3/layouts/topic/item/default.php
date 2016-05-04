@@ -20,12 +20,15 @@ $this->addScriptDeclaration(
 var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS') . '";
 // ]]>');
 
-$this->addStyleSheet('assets/css/atwho.css');
-
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('assets/js/caret.js');
-$this->addScript('assets/js/atwho.js');
+$this->addStyleSheet('assets/css/jquery.atwho.css');
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
 $this->addScript('assets/js/topic.js');
+
+$this->addStyleSheet('assets/css/rating.css');
+$this->addScript('assets/js/rating.js');
+$this->addScript('assets/js/krating.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social = $this->ktemplate->params->get('socialshare');
@@ -49,6 +52,7 @@ $social = $this->ktemplate->params->get('socialshare');
 			<span class="sr-only"></span>
 		SOLVED</span>
 	<?php endif; ?>
+	<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config); ?>
 </h3>
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>

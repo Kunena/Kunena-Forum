@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  * @var KunenaForumTopic $topic
  */
 $topic = $this->category->getLastTopic();
-$avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage('img-thumbnail', 'thumb') : null;
+$avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 ?>
 
 <tr>
@@ -58,7 +58,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage('img-
 	<?php if ($this->checkbox) : ?>
 	<td class="center">
 		<label>
-			<input type="checkbox" class="kcatcheckall" name="categories[<?php echo (int) $this->category->id?>]" value="1" />
+			<input class="kcheckallcategory" type="checkbox" name="categories[<?php echo (int) $this->category->id?>]" value="1" />
 		</label>
 	</td>
 	<?php endif; ?>

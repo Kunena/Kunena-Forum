@@ -57,6 +57,12 @@ source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_alpha
 source_lang = en-GB
 minimum_perc = 80
 
+[Kunena.admin-plg_kunena_altauserpoints-sys]
+file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_altauserpoints.sys.ini
+source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_altauserpoints.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+
 [Kunena.admin-plg_kunena_community-sys]
 file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_community.sys.ini
 source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_community.sys.ini
@@ -66,6 +72,24 @@ minimum_perc = 80
 [Kunena.admin-plg_kunena_comprofiler-sys]
 file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_comprofiler.sys.ini
 source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_comprofiler.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+
+[Kunena.admin-plg_kunena_easyblog-sys]
+file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_easyblog.sys.ini
+source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_easyblog.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+
+[Kunena.admin-plg_kunena_easysocial-sys]
+file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_easysocial.sys.ini
+source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_easysocial.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+
+[Kunena.admin-plg_kunena_easyprofile-sys]
+file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_easyprofile.sys.ini
+source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_easyprofile.sys.ini
 source_lang = en-GB
 minimum_perc = 80
 

@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 /*
   @var KunenaLayout $this */
 // @var KunenaForumMessage $message
+$this->addStyleSheet('assets/css/rating.css');
 
 $message = $this->message;
 $author = $message->getAuthor();
@@ -77,6 +78,7 @@ if ($topic->moved_id > 0)
 				echo $this->getIcon('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
 			}
 			?>
+			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>
 		</div>
 		<div>
 			<?php echo $topic->getAuthor()->getLink(); ?>,

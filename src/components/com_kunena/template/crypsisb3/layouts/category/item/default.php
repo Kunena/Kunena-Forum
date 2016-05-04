@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 $categoryActions = $this->getCategoryActions();
 $cols = empty($this->checkbox) ? 5 : 6;
+$this->addStyleSheet('assets/css/rating.css');
 ?>
 
 <?php if ($this->category->headerdesc) : ?>

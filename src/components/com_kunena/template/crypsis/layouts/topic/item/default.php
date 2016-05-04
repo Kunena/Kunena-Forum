@@ -34,7 +34,6 @@ $this->addScript('assets/js/topic.js');
 
 $this->addStyleSheet('assets/css/rating.css');
 $this->addScript('assets/js/rating.js');
-
 $this->addScript('assets/js/krating.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();

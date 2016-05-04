@@ -830,15 +830,16 @@ div.pagination a.disabled:hover {
 
 .btn-toolbar .btn.btn-small:before,
 #search .btn.btn-small:before {
-	content   : "×";
+	content: "\e259";
 	font-size : 14px;
+	font-family: "Glyphicons Halflings";
 }
 
 .btn-toolbar .btn.btn-small.collapsed:before,
 #search .btn.btn-small.collapsed:before {
-	content     : "";
-	font-family : "icomoon";
-	font-size   : 8px;
+	content: "\e260";
+	font-family: "Glyphicons Halflings";
+	font-size : 14px;
 }
 
 .center {
@@ -1086,4 +1087,61 @@ div.moderators {
 
 .pagination-small ul {
 	padding: 0;
+}
+
+.thumbnail img {
+	display: inline-block;
+}
+
+.thumbnail a {
+	text-decoration: none;
+}
+
+.breadcrumb > .active + li::before {
+	content: "/\00a0";
+}
+
+.breadcrumb .divider {
+	display: inline-block;
+}
+
+.navbar .nav > li > a {
+	padding: 11px 8px 11px;
+}
+
+.dropdown-toggle img.green {
+	margin-top: 0 !important;
+	-webkit-box-shadow: 0 0 0 2px green, 0 0 0 4px #ccc, 0 2px 5px 4px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 0 0 2px green, 0 0 0 4px #ccc, 0 2px 5px 4px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 0px 2px green, 0px 0px 0px 4px #ccc, 0px 2px 5px 4px rgba(0,0,0,0.1);
+}
+
+.dropdown-toggle img.yellow {
+	margin-top: 0 !important;
+	-webkit-box-shadow: 0 0 0 2px yellow, 0 0 0 4px #ccc, 0 2px 5px 4px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 0 0 2px yellow, 0 0 0 4px #ccc, 0 2px 5px 4px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 0px 2px yellow, 0px 0px 0px 4px #ccc, 0px 2px 5px 4px rgba(0,0,0,0.1);
+}
+
+.dropdown-toggle img.red {
+	margin-top: 0 !important;
+	-webkit-box-shadow: 0 0 0 2px red, 0 0 0 4px #ccc, 0 2px 5px 4px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 0 0 2px red, 0 0 0 4px #ccc, 0 2px 5px 4px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 0px 2px red, 0px 0px 0px 4px #ccc, 0px 2px 5px 4px rgba(0,0,0,0.1);
+}
+
+.dropdown-toggle img.grey {
+	margin-top: 0 !important;
+	-webkit-box-shadow: 0 0 0 2px grey, 0 0 0 4px #ccc, 0 2px 5px 4px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 0 0 2px grey, 0 0 0 4px #ccc, 0 2px 5px 4px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 0px 2px grey, 0px 0px 0px 4px #ccc, 0px 2px 5px 4px rgba(0,0,0,0.1);
+}
+
+.dropdown-toggle img.none {
+	margin-top: 0 !important;
+	box-shadow: 0 0 0 1px #d4d4d4, 0 0 0 0 #fff, 0 1px 1px rgba(0,0,0,0.1);
+}
+
+#search select#mode {
+	margin-left: 0;
 }

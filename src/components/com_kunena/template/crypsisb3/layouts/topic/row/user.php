@@ -128,6 +128,7 @@ if (!empty($this->spacing)) : ?>
 					BUG</span>
 				<?php }
 			}?>
+			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>

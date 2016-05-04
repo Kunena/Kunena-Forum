@@ -99,7 +99,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<?php if (!empty($this->announcementsUrl)) : ?>
 				<div>
 					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
-						<i class="glyphicon glyphicon-pencil"></i>
+						<i class="glyphicon glyphicon-bullhorn"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>
 				</div>

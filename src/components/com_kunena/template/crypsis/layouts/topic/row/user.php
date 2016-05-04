@@ -62,20 +62,58 @@ if (!empty($this->spacing)) : ?>
 	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols; ?>">
-		<div>
+		<div class="krow">
 			<?php
 			if ($topic->unread)
 			{
-				echo $this->getTopicLink(
-     $topic,  'unread',
-	$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
+				echo $this->getTopicLink($topic,  'unread', $topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .
+					' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
 			}
 			else
 			{
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
 			?>
+			<div class="pull-right"><?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?></div>
+			<?php
+			$labels = KunenaFactory::getTemplate()->params->get('labels');
+
+			if ($labels)
+			{
+				if ($this->topic->locked != 0)
+				{ ?>
+					<span class="label label-default">CLOSED</span>
+				<?php }
+
+				if ($this->topic->ordering != 0) { ?>
+					<span class="label label-info"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							<span class="sr-only"></span>STICKY</span>
+				<?php }
+
+				if ($this->topic->icon_id == 1) { ?>
+					<span class="label label-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							<span class="sr-only"></span>IMPORTANT</span>
+				<?php }
+
+				if ($this->topic->icon_id == 2) { ?>
+					<span class="label label-primary"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+							<span class="sr-only"></span>QUESTION</span>
+				<?php }
+
+				$str_counts = substr_count($this->topic->subject, 'solved');
+				if ($this->topic->icon_id == 8 || $str_counts) { ?>
+					<a href="#"><span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+						   <span class="sr-only"></span>SOLVED</span></a>
+				<?php }
+
+				if ($this->topic->icon_id == 10) { ?>
+					<span class="label label-danger"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+							<span class="sr-only"></span>BUG</span>
+				<?php }
+			}?>
 		</div>
+
+
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
 				<i class="icon-star hasTooltip" title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"></i>

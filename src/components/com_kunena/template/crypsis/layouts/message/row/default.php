@@ -68,7 +68,7 @@ if ($topic->moved_id > 0)
 	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols?>">
-		<div>
+		<div class="krow">
 			<?php
 			if ($topic->unread)
 			{
@@ -81,7 +81,7 @@ if ($topic->moved_id > 0)
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
 			?>
-			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>
+			<div class="pull-right"><?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?></div>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>

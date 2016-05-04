@@ -37,7 +37,7 @@ abstract class JHtmlKunenaGrid
 	 * @internal param string $text An optional text to display
 	 * @since    3.0
 	 */
-	public static function action($i, $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img='', $checkbox = 'cb')
+	public static function action($i, $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img = '', $checkbox = 'cb')
 	{
 		if (is_array($prefix))
 		{
@@ -54,13 +54,63 @@ abstract class JHtmlKunenaGrid
 		}
 
 		$active = $task == 'publish' ? 'active' : '';
+		$ktemplate = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
 
-		if ($bootstrap)
+		if ($bootstrap && $topicicontype == 'B2')
 		{
 			$html[] = '<a class="btn btn-micro ' . $active . '" ';
 			$html[] = ' href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
 			$html[] = ' title="' . $title . '">';
 			$html[] = '<i class="icon-' . $class . '">';
+			$html[] = '</i>';
+			$html[] = '</a>';
+		}
+		elseif ($bootstrap && $topicicontype == 'B3')
+		{
+			if ($class == 'publish')
+			{
+				$class = 'ok';
+			}
+			elseif ($class == 'unpublish')
+			{
+				$class = 'remove';
+			}
+			elseif ($class == 'delete')
+			{
+				$class = 'trash';
+			}
+
+			$html[] = '<a class="btn btn-default btn-xs ' . $active . '" ';
+			$html[] = ' href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
+			$html[] = ' title="' . $title . '">';
+			$html[] = '<i class="glyphicon glyphicon-' . $class . '">';
+			$html[] = '</i>';
+			$html[] = '</a>';
+		}
+		elseif ($bootstrap && $topicicontype == 'fa')
+		{
+			if ($class == 'publish')
+			{
+				$class = 'check';
+			}
+			elseif ($class == 'unpublish')
+			{
+				$class = 'times';
+			}
+			elseif ($class == 'edit')
+			{
+				$class = 'pencil';
+			}
+			elseif ($class == 'delete')
+			{
+				$class = 'trash';
+			}
+
+			$html[] = '<a class="btn btn-default btn-xs ' . $active . '" ';
+			$html[] = ' href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
+			$html[] = ' title="' . $title . '">';
+			$html[] = '<i class="fa fa-' . $class . '" aria-hidden="true">';
 			$html[] = '</i>';
 			$html[] = '</a>';
 		}

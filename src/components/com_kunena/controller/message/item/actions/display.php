@@ -120,9 +120,33 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
 			{
-				$this->messageButtons->set('thankyou',
-					$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false)
-				);
+				$ktemplate = KunenaFactory::getTemplate();
+				$topicicontype = $ktemplate->params->get('topicicontype');
+
+				if ($topicicontype == 'B2')
+				{
+					$this->messageButtons->set('thankyou',
+						$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false, 'icon-thumbs-up')
+					);
+				}
+				elseif ($topicicontype == 'B3')
+				{
+					$this->messageButtons->set('thankyou',
+						$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false, 'glyphicon glyphicon-thumbs-up')
+					);
+				}
+				elseif ($topicicontype == 'fa')
+				{
+					$this->messageButtons->set('thankyou',
+						$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false, 'fa fa-thumbs-up')
+					);
+				}
+				else
+				{
+					$this->messageButtons->set('thankyou',
+						$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', null, false)
+					);
+				}
 			}
 		}
 
@@ -213,10 +237,10 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 	 *
 	 * @return  string
 	 */
-	public function getButton($url, $name, $scope, $type, $id = null, $normal = true)
+	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(array('url' => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-			                      'type' => $type, 'id' => $id, 'normal' => $normal, 'icon' => ''));
+			                      'type' => $type, 'id' => $id, 'normal' => $normal, 'icon' => $icon));
 	}
 }

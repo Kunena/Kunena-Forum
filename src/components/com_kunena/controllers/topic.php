@@ -559,7 +559,8 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$poll                 = $topic->getPoll();
 				$poll->title          = $poll_title;
-				$poll->polltimetolive = $fields['poll_time_to_live'];
+				$polltimetolive = new JDate($fields['poll_time_to_live']);
+				$poll->polltimetolive  = $polltimetolive->toSql();
 				$poll->setOptions($poll_options);
 
 				if (!$poll->save())
@@ -817,7 +818,8 @@ class KunenaControllerTopic extends KunenaController
 			if (!empty($poll_options) && !empty($poll_title))
 			{
 				$poll->title          = $poll_title;
-				$poll->polltimetolive = $fields['poll_time_to_live'];
+				$polltimetolive = new JDate($fields['poll_time_to_live']);
+				$poll->polltimetolive  = $polltimetolive->toSql();
 				$poll->setOptions($poll_options);
 
 				if (!$topic->poll_id)

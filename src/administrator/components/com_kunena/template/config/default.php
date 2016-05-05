@@ -385,7 +385,7 @@ JHtml::_('behavior.tabstate');
 												<td>
 													<input type="text" name="cfg_attach_end" class="ksm-field" value="<?php echo $this->escape($this->config->attach_end) ?>" />
 												</td>
-												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_START_DESC') ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_END_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>

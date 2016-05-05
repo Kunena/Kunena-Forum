@@ -368,4 +368,37 @@ class KunenaView extends JViewLegacy
 
 		return $output;
 	}
+	
+	/**
+	 * Method to display title in page
+	 * 
+	 * @param unknown $title
+	 * @throws LogicException
+	 */
+	public function setTitle($title)
+	{
+		if ($this->inLayout)
+		{
+			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+		}
+		if (!$this->state->get('embedded'))
+		{
+			// Check for empty title and add site name if param is set
+			$title = strip_tags($title);
+			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
+			{
+				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+			}
+			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
+			{
+				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
+			}
+			else
+			{
+				// TODO: allow translations/overrides (also above)
+				$title = KunenaFactory::getConfig()->board_title .': '. $title;
+			}
+			$this->document->setTitle($title);
+		}
+	}
 }

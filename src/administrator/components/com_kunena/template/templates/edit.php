@@ -45,7 +45,7 @@ JHtml::_('dropdown.init');
 										<a href="#tab_basic" data-toggle="tab">
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_BASIC'); ?> </a>
 									</li>
-									<?php if ($this->details->version >= '4.0' && $this->details->name !== 'Blue Eagle') : ?>
+									<?php if ($this->details->version >= '4.0') : ?>
 									<li>
 										<a href="#tab_features" data-toggle="tab">
 											<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FEATURES'); ?> </a>

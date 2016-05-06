@@ -302,6 +302,10 @@
 		       type="int(11)"
 		       null="0"
 		       default="0"/>
+		<field name="label_id"
+		       type="int(11)"
+		       null="0"
+		       default="0"/>
 		<field name="locked"
 		       type="tinyint(4)"
 		       null="0"

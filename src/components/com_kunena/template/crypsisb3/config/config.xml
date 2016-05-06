@@ -48,8 +48,9 @@
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
 		<field name="labels" type="list" default="0" label="COM_KUNENA_TEMPLATE_LABELS" description="COM_KUNENA_TEMPLATE_LABELS_DESC">
-			<option value="0">COM_KUNENA_NO</option>
-			<option value="1">COM_KUNENA_YES</option>
+			<option value="0">COM_KUNENA_DISABLED</option>
+			<option value="1">COM_KUNENA_ENABLED_TOPIC</option>
+			<option value="2">COM_KUNENA_ENABLED_LABEL</option>
 		</field>
 		<field name="avatarType" type="list" default="img-rounded" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE" description="COM_KUNENA_TEMPLATE_PROFILETYPE_DESC">
 			<option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>

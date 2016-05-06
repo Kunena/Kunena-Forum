@@ -994,211 +994,38 @@ HTML;
 	 *
 	 * @return string
 	 */
-	public function getTopicIcon($topic, $category_iconset = '')
+	public function getTopicIcon($topic)
 	{
-		$config = KunenaFactory::getConfig();
+		$config          = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		$topicicontype = $this->ktemplate->params->get('topicicontype');
 
-		if (!empty($category_iconset))
-		{
-			$this->category_iconset = '/' . $category_iconset;
-		}
-		else
-		{
-			if ($config->topicicons)
-			{
-				$this->category_iconset = '/default';
-			}
-		}
+		$category_iconset = $topic->getCategory()->iconset;
 
 		if ($config->topicicons)
 		{
-			if ($topic->icon_id == 5 || $topic->ordering)
+			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/topicicons.xml';
+			$xml = simplexml_load_file($xmlfile);
+			$icon = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
+
+			if ($topicicontype == 'B2')
 			{
-				if ($topicicontype == 'B2' || $topicicontype == 'B3')
-				{
-					$icon = 'pushpin';
-				}
-				else
-				{
-					if ($topicicontype == 'fa')
-					{
-						$icon = 'thumb-tack';
-					}
-				}
+				return '<span class="icon-topic icon icon-' . $icon . '"></span>';
 			}
-			elseif ($topic->icon_id == 1)
+			elseif ($topicicontype == 'B3')
 			{
-				if ($topicicontype == 'B2')
-				{
-					$icon = 'notification-circle';
-				}
-				else
-				{
-					if ($topicicontype == 'B3')
-					{
-						$icon = 'exclamation-sign';
-					}
-					else
-					{
-						if ($topicicontype == 'fa')
-						{
-							$icon = 'exclamation-circle';
-						}
-					}
-				}
+				return '<span class="icon-topic glyphicon glyphicon-' . $icon . '"></span>';
 			}
-			elseif ($topic->icon_id == 2)
+			elseif ($topicicontype == 'fa')
 			{
-				if ($topicicontype == 'B2' || $topicicontype == 'B3')
-				{
-					$icon = 'question-sign';
-				}
-				else
-				{
-					if ($topicicontype == 'fa')
-					{
-						$icon = 'question-circle';
-					}
-				}
-			}
-			elseif ($topic->icon_id == 3)
-			{
-				if ($topicicontype == 'B2' || $topicicontype == 'B3')
-				{
-					$icon = 'lamp';
-				}
-				else
-				{
-					if ($topicicontype == 'fa')
-					{
-						$icon = 'lightbulb-o';
-					}
-				}
-			}
-			elseif ($topic->icon_id == 4)
-			{
-				$icon = 'heart';
-			}
-			elseif ($topic->icon_id == 5)
-			{
-				$icon = 'heart';
-			}
-			elseif ($topic->icon_id == 6)
-			{
-				$icon = 'heart';
-			}
-			elseif ($topic->icon_id == 7)
-			{
-				$icon = 'heart';
-			}
-			elseif ($topic->icon_id == 8)
-			{
-				if ($topicicontype == 'B2' || $topicicontype == 'B3')
-				{
-					$icon = 'ok';
-				}
-				else
-				{
-					if ($topicicontype == 'fa')
-					{
-						$icon = 'check';
-					}
-				}
-			}
-			elseif ($topic->icon_id == 9)
-			{
-				if ($topicicontype == 'B3')
-				{
-					$icon = 'resize-small';
-				}
-				else
-				{
-					if ($topicicontype == 'B2')
-					{
-						$icon = 'contract';
-					}
-					else
-					{
-						if ($topicicontype == 'fa')
-						{
-							$icon = 'compress';
-						}
-					}
-				}
-			}
-			elseif ($topic->icon_id == 10)
-			{
-				if ($topicicontype == 'B3' || $topicicontype == 'B2')
-				{
-					$icon = 'remove';
-				}
-				else
-				{
-					if ($topicicontype == 'fa')
-					{
-						$icon = 'times';
-					}
-				}
-			}
-			elseif ($topic->locked)
-			{
-				if ($topicicontype == 'B2')
-				{
-					$icon = 'locked';
-				}
-				else
-				{
-					if ($topicicontype == 'B3' || $topicicontype == 'fa')
-					{
-						$icon = 'lock';
-					}
-				}
-			}
-			elseif ($topic->icon_id == 5 || $topic->ordering && $topic->locked)
-			{
-				$icon = 'pushpin';
+				return '<i class="fa fa-' . $icon . ' fa-2x"></i>';
 			}
 			else
 			{
-				$icon = 'file';
-			}
+				$iconurl = $this->getTopicIconPath("{$category_iconset}/{$icon}", true);
 
-			if ($topicicontype == '0' || !$topicicontype)
-			{
-				// TODO: use xml file instead
-				if ($topic->moved_id)
-				{
-					$icon = 'system_moved';
-				}
-				elseif ($topic->hold == 2 || $topic->hold == 3)
-				{
-					$icon = 'system_deleted';
-				}
-				elseif ($topic->hold == 1)
-				{
-					$icon = 'system_unapproved';
-				}
-				elseif ($topic->ordering && $topic->locked)
-				{
-					$icon = 'system_sticky_locked';
-				}
-				elseif ($topic->ordering)
-				{
-					$icon = 'system_sticky';
-				}
-				elseif ($topic->locked)
-				{
-					$icon = 'system_locked';
-				}
-				else
-				{
-					$icon = $topic->icon_id;
-				}
-
-				$iconurl = $this->getTopicIconIndexPath($icon, true);
+				return '<img src="' . $iconurl . '" alt="Topic-icon" />';
 			}
 		}
 		else
@@ -1246,47 +1073,41 @@ HTML;
 			}
 
 			$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
-		}
 
-		if ($topicicontype == 'B2')
-		{
-			if ($config->topicicons)
-			{
-				$html = '<span class="icon icon-' . $icon . ' icon-topic" aria-hidden="true"></span>';
-			}
-			else
-			{
-				$html = '<img src="' . $iconurl . '" alt="emo" />';
-			}
+			return '<img src="' . $iconurl . '" alt="Topic-icon" />';
 		}
-		elseif ($topicicontype == 'B3')
-		{
-			if ($config->topicicons)
-			{
-				$html = '<span class="glyphicon glyphicon-' . $icon . ' glyphicon-topic" aria-hidden="true"></span>';
-			}
-			else
-			{
-				$html = '<img src="' . $iconurl . '" alt="emo" />';
-			}
-		}
-		elseif ($topicicontype == 'fa')
-		{
-			if ($config->topicicons)
-			{
-				$html = '<i class="fa fa-' . $icon . ' fa-2x"></i>';
-			}
-			else
-			{
-				$html = '<img src="' . $iconurl . '" alt="emo" />';
-			}
-		}
-		elseif ($topicicontype == '0' || !$topicicontype)
-		{
-			$html = '<img src="' . $iconurl . '" alt="emo" />';
-		}
+	}
 
-		return $html;
+	public function get_xml_icon($src, $id = 0, $style = 'src')
+	{
+		if (isset($src->icons))
+		{
+			$icon       = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+			$attributes = $icon[0]->attributes();
+			$icon       = new stdClass;
+			$icon->id   = (int) $attributes->id;
+			$icon->b2   = (string) $attributes->b2;
+			$icon->b3   = (string) $attributes->b3;
+			$icon->fa   = (string) $attributes->fa;
+			$icon->src  = (string) $attributes->src;
+
+			if ($style == 'B2')
+			{
+				return $icon->b2;
+			}
+			elseif ($style == 'B3')
+			{
+				return $icon->b2;
+			}
+			elseif ($style == 'fa')
+			{
+				return $icon->fa;
+			}
+			else
+			{
+				return $icon->src;
+			}
+		}
 	}
 
 	/**

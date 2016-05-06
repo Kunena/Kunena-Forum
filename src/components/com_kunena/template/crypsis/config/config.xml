@@ -54,8 +54,9 @@
 			<option value="none">COM_KUNENA_TEMPLATE_NONE</option>
 		</field>
 		<field name="labels" type="list" default="0" label="COM_KUNENA_TEMPLATE_LABELS" description="COM_KUNENA_TEMPLATE_LABELS_DESC">
-			<option value="0">COM_KUNENA_NO</option>
-			<option value="1">COM_KUNENA_YES</option>
+			<option value="0">COM_KUNENA_DISABLED</option>
+			<option value="1">COM_KUNENA_ENABLED_TOPIC</option>
+			<option value="2">COM_KUNENA_ENABLED_LABEL</option>
 		</field>
 		<field name="whoisonlineName" type="list" default="default" label="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME" description="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_NAME</option>

@@ -48,9 +48,10 @@ $social = $this->ktemplate->params->get('socialshare');
 <?php endif; ?>
 
 <h3>
-	<?php echo $topic->getIcon($topic->getCategory()->iconset); ?>
-	<?php echo $topic->displayField('subject'); ?>
-	<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config); ?>
+	<?php echo $topic->getIcon($topic->getCategory()->iconset);?>
+	<?php echo $topic->displayField('subject');?>
+	<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config);?>
+	<?php echo $this->ktemplate->getTopicLabel($topic);?>
 </h3>
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>

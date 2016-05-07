@@ -1006,24 +1006,30 @@ HTML;
 		if ($config->topicicons)
 		{
 			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/topicicons.xml';
+
+			if (!file_exists($xmlfile))
+			{
+				$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
+			}
+
 			$xml = simplexml_load_file($xmlfile);
 			$icon = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 
 			if ($topicicontype == 'B2')
 			{
-				return '<span class="icon-topic icon icon-' . $icon . '"></span>';
+				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
 			}
 			elseif ($topicicontype == 'B3')
 			{
-				return '<span class="icon-topic glyphicon glyphicon-' . $icon . '"></span>';
+				return '<span class="icon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
 			elseif ($topicicontype == 'fa')
 			{
-				return '<i class="fa fa-' . $icon . ' fa-2x"></i>';
+				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
 			}
 			else
 			{
-				$iconurl = $this->getTopicIconPath("{$category_iconset}/{$icon}", true);
+				$iconurl = $this->getTopicIconPath("{$category_iconset}/{$icon->src}", true);
 
 				return '<img src="' . $iconurl . '" alt="Topic-icon" />';
 			}
@@ -1072,7 +1078,7 @@ HTML;
 				$icon .= '_new';
 			}
 
-			$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
+			$iconurl = $this->getTopicIconPath("system/{$icon->src}.png", true);
 
 			return '<img src="' . $iconurl . '" alt="Topic-icon" />';
 		}
@@ -1091,22 +1097,7 @@ HTML;
 			$icon->fa   = (string) $attributes->fa;
 			$icon->src  = (string) $attributes->src;
 
-			if ($style == 'B2')
-			{
-				return $icon->b2;
-			}
-			elseif ($style == 'B3')
-			{
-				return $icon->b2;
-			}
-			elseif ($style == 'fa')
-			{
-				return $icon->fa;
-			}
-			else
-			{
-				return $icon->src;
-			}
+			return $icon;
 		}
 	}
 
@@ -1342,5 +1333,57 @@ HTML;
 		}
 
 		return self::$_instances [$name];
+	}
+
+	public function getTopicLabel($topic)
+	{
+		$this->ktemplate = KunenaFactory::getTemplate();
+
+		$topicicontype   = $this->ktemplate->params->get('topicicontype');
+		$topiclabels     = $this->ktemplate->params->get('labels');
+
+		if ($topiclabels != 0)
+		{
+			$xmlfile = JPATH_ROOT . '/components/com_kunena/template/' . $this->name . '/config/labels.xml';
+
+			if (!file_exists($xmlfile))
+			{
+				$xmlfile = JPATH_ROOT . '/media/kunena/labels/labels.xml';
+			}
+
+			$xml     = simplexml_load_file($xmlfile);
+
+			if ($topiclabels == 1)
+			{
+				$id = $topic->icon_id;
+			}
+			else
+			{
+				$id = $topic->label_id;
+			}
+
+			$icon = $this->get_xml_label($xml, $id, $topicicontype);
+
+			return $icon;
+		}
+	}
+
+	public function get_xml_label($src, $id = 0, $style = 'src')
+	{
+		if (isset($src->labels))
+		{
+			$label       = $src->xpath('/kunena-topiclabels/labels/label[@id=' . $id . ']');
+			$attributes = $label[0]->attributes();
+			$label       = new stdClass;
+			$label->id   = (int) $attributes->id;
+			$label->b2   = (string) $attributes->b2;
+			$label->b3   = (string) $attributes->b3;
+			$label->fa   = (string) $attributes->fa;
+			$label->src  = (string) $attributes->src;
+			$label->name = (string) $attributes->name;
+			$label->labeltype = (string) $attributes->labeltype;
+
+			return $label;
+		}
 	}
 }

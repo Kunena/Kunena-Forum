@@ -17,9 +17,10 @@ defined('_JEXEC') or die;
 $topic = $this->topic;
 $category = $topic->getCategory();
 $userTopic = $topic->getUserTopic();
+$template = KunenaFactory::getTemplate();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+$avatar = $author->getAvatarImage($template->params->get('avatarType'), 'post');
 $config = KunenaConfig::getInstance();
 $cols = empty($this->checkbox) ? 5 : 6;
 $txt   = '';
@@ -66,8 +67,12 @@ if (!empty($this->spacing)) : ?>
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div class="krow">
-			<?php echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default'); ?>
 			<?php
+			if ($template->params->get('labels') != 0)
+			{
+				echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+			}
+
 			if ($topic->unread)
 			{
 				echo $this->getTopicLink($topic,  'unread', $topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .

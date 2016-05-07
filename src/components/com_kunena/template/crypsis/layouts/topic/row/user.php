@@ -15,10 +15,11 @@ defined('_JEXEC') or die;
 // @var KunenaForumTopic $topic
 
 $topic = $this->topic;
+$template = KunenaFactory::getTemplate();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+$avatar = $author->getAvatarImage($template->params->get('avatarType'), 'post');
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
@@ -63,8 +64,12 @@ if (!empty($this->spacing)) : ?>
 	</td>
 	<td class="span<?php echo $cols; ?>">
 		<div class="krow">
-			<?php echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default'); ?>
 			<?php
+			if ($template->params->get('labels') != 0)
+			{
+				echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+			}
+
 			if ($topic->unread)
 			{
 				echo $this->getTopicLink($topic,  'unread', $topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .

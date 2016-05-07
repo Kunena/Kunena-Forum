@@ -42,7 +42,12 @@ $social = $this->ktemplate->params->get('socialshare');
 
 <h3>
 	<?php echo $topic->getIcon($topic->getCategory()->iconset);?>
-	<?php echo $this->subLayout('Widget/Label')->set('topic', $topic)->setLayout('default'); ?>
+	<?php
+	if ($this->ktemplate->params->get('labels') != 0)
+	{
+		echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+	}
+	?>
 	<?php echo $topic->displayField('subject');?>
 	<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config);?>
 </h3>

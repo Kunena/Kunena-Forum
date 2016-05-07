@@ -22,7 +22,7 @@
 		<!-- icon id="7" name="smile" published="1" title="COM_KUNENA_ICON_SMILE" src="user/smile.png" / -->
 		<icon id="9" name="merged" published="1" b2="contract" b3="resize-small" fa="compress" title="COM_KUNENA_ICON_MERGED" src="user/merged.png" />
 		<icon id="10" name="cross" published="1" b2="remove" b3="remove" fa="times" title="COM_KUNENA_ICON_CROSS" src="user/cross.png" />
-		<icon id="8" name="solved" published="1" b2="ok" b3="ok" fa="checked" title="COM_KUNENA_ICON_SOLVED" src="user/solved.png" />
+		<icon id="8" name="solved" published="1" b2="ok" b3="ok" fa="check" title="COM_KUNENA_ICON_SOLVED" src="user/solved.png" />
 	</icons>
 
 	<icons type="system" width="48" height="48">

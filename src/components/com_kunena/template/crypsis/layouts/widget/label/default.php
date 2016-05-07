@@ -23,6 +23,10 @@ elseif ($topicicontype == 'fa')
 {
 	$icons = '<i class="fa fa-' . $icon->fa . '" aria-hidden="true"></i>';
 }
+else
+{
+	$icons = '';
+}
 ?>
 <span <?php echo $class; ?> >
 	<?php if ($topicicontype !== 0) :?>

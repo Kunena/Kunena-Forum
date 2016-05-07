@@ -1025,7 +1025,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'fa')
 			{
-				return '<i class="fa fa-' . $icon . ' fa-2x"></i>';
+				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
 			}
 			else
 			{
@@ -1362,23 +1362,9 @@ HTML;
 				$id = $topic->label_id;
 			}
 
-			$icon    = $this->get_xml_label($xml, $id, $topicicontype);
+			$icon = $this->get_xml_label($xml, $id, $topicicontype);
 
-			if ($topicicontype == 'B2')
-			{
-				return '<span class="label label-' . $icon->labeltype . '"><span class="icon icon-' . $icon->b2 . '" aria-hidden="true"></span>
-					<span class="sr-only"></span>' . JText::_($icon->name) . '</span>';
-			}
-			elseif ($topicicontype == 'B3')
-			{
-				return '<span class="label label-' . $icon->labeltype . '"><span class="glyphicon glyphicon-' . $icon->b3 . '" aria-hidden="true"></span>
-					<span class="sr-only"></span>' . JText::_($icon->name) . '</span>';
-			}
-			else
-			{
-				return '<span class="label label-' . $icon->labeltype . '"><i class="fa fa-' . $icon->fa . '" aria-hidden="true"></span>
-					<span class="sr-only"></span>' . JText::_($icon->name) . '</span>';
-			}
+			return $icon;
 		}
 	}
 

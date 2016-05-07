@@ -24,7 +24,6 @@ $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
 $txt   = '';
-$this->ktemplate = KunenaFactory::getTemplate();
 
 if ($this->topic->ordering)
 {
@@ -65,6 +64,7 @@ if (!empty($this->spacing)) : ?>
 	</td>
 	<td class="span<?php echo $cols?>">
 		<div class="krow">
+			<?php echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default'); ?>
 			<?php
 			if ($topic->unread)
 			{
@@ -77,7 +77,6 @@ if (!empty($this->spacing)) : ?>
 			}
 			?>
 			<div class="pull-right"><?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?></div>
-			<?php echo $this->ktemplate->getTopicLabel($topic); ?>
 		</div>
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>

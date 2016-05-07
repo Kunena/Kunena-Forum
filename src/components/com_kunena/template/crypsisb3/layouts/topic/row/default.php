@@ -65,6 +65,8 @@ if (!empty($this->spacing)) : ?>
 	<?php endif;?>
 	<td class="col-md-<?php echo $cols?>">
 		<div>
+			<?php echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default'); ?>
+
 			<?php
 			if ($topic->unread)
 			{
@@ -76,7 +78,6 @@ if (!empty($this->spacing)) : ?>
 			{
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
-			echo $this->ktemplate->getTopicLabel($topic);
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
 		</div>
 		<div class="pull-right">

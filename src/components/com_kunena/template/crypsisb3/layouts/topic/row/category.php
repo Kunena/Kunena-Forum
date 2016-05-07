@@ -64,9 +64,12 @@ if (!empty($this->spacing)) : ?>
 	<?php endif;?>
 	<td class="col-md-<?php echo $cols?>">
 		<div>
-			<?php echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default'); ?>
-
 			<?php
+			if ($this->ktemplate->params->get('labels') != 0)
+			{
+				echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+			}
+
 			if ($topic->unread)
 			{
 				echo $this->getTopicLink(

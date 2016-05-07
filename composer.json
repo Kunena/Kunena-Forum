@@ -7,12 +7,12 @@
     },
     "require-dev": {
         "codeception/codeception": "~2.1",
-        "joomla-projects/joomla-browser": "v3.4.8.2",
+        "joomla-projects/joomla-browser": "v3.5.1.0",
         "codegyre/robo": "~0.5",
         "joomla-projects/robo": "dev-master",
         "joomla-projects/selenium-server-standalone": "dev-master",
         "fzaninotto/faker": "^1.5",
-        "joomla-projects/jorobo": "0.2",
+        "joomla-projects/jorobo": "0.3",
         "phing/phing": "2.*"
     }
 }

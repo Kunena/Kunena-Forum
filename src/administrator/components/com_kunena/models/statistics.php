@@ -62,7 +62,7 @@ class KunenaAdminModelStatistics extends JModelList
 		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.user', 'filter_user', '', 'string');
 		$this->setState('filter.user', $value);
 
-		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.time_start', 'filter_time_start', $month->format('Y-M-d'), 'string');
+		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.time_start', 'filter_time_start', $month->format('Y-m-d'), 'string');
 		$this->setState('filter.time_start', $value);
 
 		$filter_active .= $value = $this->getUserStateFromRequest($this->context.'.filter.time_stop', 'filter_time_stop', '', 'string');

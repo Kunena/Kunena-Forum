@@ -1034,58 +1034,83 @@ HTML;
 		}
 		else
 		{
-			$icon = 'normal';
+			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/systemicons.xml';
+
+			if (!file_exists($xmlfile))
+			{
+				$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/systemicons.xml';
+			}
+
+			$iconid = 0;
+
 			if ($topic->posts < 2)
 			{
-				$icon = 'unanswered';
+				$iconid = 6;
 			}
 
 			if ($topic->ordering)
 			{
-				$icon = 'sticky';
+				$iconid = 3;
 			}
 
-			//if ($topic->myfavorite) $icon = 'favorite';
 			if ($topic->locked)
 			{
-				$icon = 'locked';
+				$iconid = 4;
 			}
 
 			if ($topic->ordering && $topic->locked)
 			{
-				$icon = 'sticky_and_locked';
-			}
-
-			if ($topic->hold == 1)
-			{
-				$icon = 'unapproved';
-			}
-
-			if ($topic->hold == 2)
-			{
-				$icon = 'deleted';
+				$iconid = 7;
 			}
 
 			if ($topic->moved_id)
 			{
-				$icon = 'moved';
+				$iconid = 5;
 			}
 
-			if (!empty($topic->unread))
+			if ($topic->hold == 1)
 			{
-				$icon .= '_new';
+				$iconid = 1;
 			}
 
-			$file = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/system/normal.png';
-
-			if (!file_exists($file))
+			if ($topic->hold == 2)
 			{
-				$category_iconset = 'default';
+				$iconid = 2;
 			}
 
-			$iconurl = $this->getTopicIconPath("{$category_iconset}/system/{$icon}.png", true);
+			if ($topic->hold == 3)
+			{
+				$iconid = 2;
+			}
 
-			return '<img src="' . $iconurl . '" alt="" />';
+			$xml  = simplexml_load_file($xmlfile);
+			$icon = $this->get_xml_systemicon($xml, $iconid, $topicicontype);
+
+			if ($topicicontype == 'B2')
+			{
+				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
+			}
+			elseif ($topicicontype == 'B3')
+			{
+				return '<span class="icon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
+			}
+			elseif ($topicicontype == 'fa')
+			{
+				return '<i class="fa fa-' . $icon->fa . ' fa-2x"></i>';
+			}
+			else
+			{
+				$file = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/system/normal.png';
+
+				if (!file_exists($file))
+				{
+					$category_iconset = 'default';
+				}
+
+				$iconurl = $this->getTopicIconPath("{$category_iconset}/system/{$icon->src}", true);
+
+				return '<img src="' . $iconurl . '" alt="" />';
+			}
 		}
 	}
 
@@ -1094,6 +1119,23 @@ HTML;
 		if (isset($src->icons))
 		{
 			$icon       = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+			$attributes = $icon[0]->attributes();
+			$icon       = new stdClass;
+			$icon->id   = (int) $attributes->id;
+			$icon->b2   = (string) $attributes->b2;
+			$icon->b3   = (string) $attributes->b3;
+			$icon->fa   = (string) $attributes->fa;
+			$icon->src  = (string) $attributes->src;
+
+			return $icon;
+		}
+	}
+
+	public function get_xml_systemicon($src, $id = 0, $style = 'src')
+	{
+		if (isset($src->icons))
+		{
+			$icon       = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;

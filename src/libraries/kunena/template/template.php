@@ -996,11 +996,9 @@ HTML;
 	 */
 	public function getTopicIcon($topic)
 	{
-		$config          = KunenaFactory::getConfig();
-		$this->ktemplate = KunenaFactory::getTemplate();
-
-		$topicicontype = $this->ktemplate->params->get('topicicontype');
-
+		$config           = KunenaFactory::getConfig();
+		$this->ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $this->ktemplate->params->get('topicicontype');
 		$category_iconset = $topic->getCategory()->iconset;
 
 		if ($config->topicicons)
@@ -1078,9 +1076,16 @@ HTML;
 				$icon .= '_new';
 			}
 
-			$iconurl = $this->getTopicIconPath("system/{$icon->src}.png", true);
+			$file = JPATH_ROOT . '/media/kunena/topic_icons/' . $category_iconset . '/system/normal.png';
 
-			return '<img src="' . $iconurl . '" alt="Topic-icon" />';
+			if (!file_exists($file))
+			{
+				$category_iconset = 'default';
+			}
+
+			$iconurl = $this->getTopicIconPath("{$category_iconset}/system/{$icon}.png", true);
+
+			return '<img src="' . $iconurl . '" alt="" />';
 		}
 	}
 

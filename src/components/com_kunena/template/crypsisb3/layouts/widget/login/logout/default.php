@@ -29,7 +29,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu" id="nav-menu userdropdownlogout" role="menu">
+		<div class="dropdown-menu dropdown-menu-right" id="nav-menu userdropdownlogout" role="menu">
 
 			<div class="center">
 				<p><strong><?php echo $this->me->getLink(null, null, 'nofollow', '', null); ?></strong></p>

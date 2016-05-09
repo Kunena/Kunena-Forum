@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 			<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
 			<b class="caret"></b>
 		</a>
-		<ul class="dropdown-menu card card-container" id="userdropdownlogin" role="menu">
+		<ul class="dropdown-menu card card-container dropdown-menu-right" id="userdropdownlogin" role="menu">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline form-signin">
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="login" />

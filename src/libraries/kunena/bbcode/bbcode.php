@@ -1721,7 +1721,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					if (!empty($article->fulltext))
 					{
 						$article->text = $article->introtext. ' '. $article->fulltext;
-						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
+
+						if (!empty($article->fulltext))
+						{
+							$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
+						}
+						else {
+							$link = '';
+						}
+
 						break;
 					}
 				// continue to intro if fulltext is empty
@@ -1729,7 +1737,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					if (!empty($article->introtext))
 					{
 						$article->text = $article->introtext;
-						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE').'</a>';
+
+						if (!empty($article->fulltext))
+						{
+							$link = '<a href="'.$url.'"class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE').'</a>';
+						}
+						else
+						{
+							$link = '';
+						}
+
 						break;
 					}
 				// continue to link if introtext is empty

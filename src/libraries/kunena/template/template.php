@@ -1019,7 +1019,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'B3')
 			{
-				return '<span class="icon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
+				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -1092,7 +1092,7 @@ HTML;
 			}
 			elseif ($topicicontype == 'B3')
 			{
-				return '<span class="icon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
+				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
 			elseif ($topicicontype == 'fa')
 			{

@@ -170,7 +170,14 @@ class KunenaBbcodeEditor
 	 */
 	public function initialize()
 	{
-		$this->initializeHMVC();
+		$template = KunenaFactory::getTemplate();
+
+		$this->isHMVC = $template->isHmvc();
+
+		if ($this->isHMVC)
+		{
+			$this->initializeHMVC();
+		}
 	}
 
 	/**

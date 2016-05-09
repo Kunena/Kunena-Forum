@@ -18,10 +18,14 @@ defined('_JEXEC') or die;
 		<span class="badge badge-info"><?php echo (int) $this->pagination->total; ?></span>
 
 		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
-			<div class="input-append pull-right">
-				<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
-					'kchecktask'); ?>
-				<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+			<div class="form-group">
+				<div class="input-append pull-right">
+					<div class="input-group-btn">
+						<?php echo JHtml::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
+							'kchecktask'); ?>
+						<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+					</div>
+				</div>
 			</div>
 		<?php endif; ?>
 

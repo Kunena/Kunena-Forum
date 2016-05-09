@@ -116,6 +116,23 @@ abstract class JHtmlKunenaGrid
 		}
 		else
 		{
+			if ($task == 'publish')
+			{
+				$img = '<img src="media/kunena/images/unpublish.png"/>';
+			}
+			elseif ($task == 'unpublish')
+			{
+				$img = '<img src="media/kunena/images/tick.png"/>';
+			}
+			elseif ($task == 'edit')
+			{
+				$img = '<img src="media/kunena/images/edit.png"/>';
+			}
+			elseif ($task == 'delete')
+			{
+				$img = '<img src="media/kunena/images/delete.png"/>';
+			}
+
 			$html[] = '<a class="grid_' . $task . ' hasTip" alt="' . $alt . '"';
 			$html[] = ' href="#" onclick="return listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
 			$html[] = 'title="' . $title . '">';

@@ -150,14 +150,7 @@ class KunenaAvatar
 			$class = ' class="' . $class . '"';
 		}
 
-		// Style is needed to resize avatar for JomSocial and other integration that do not have automatic resizing
-		if (!$this->resize)
-		{
-			$style = 'style="max-width: ' . $size->x . 'px; max-height: ' . $size->y . 'px"';
-		}
-		else { $style = ''; }
-
-		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x  . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" ' . $style . ' />';
+		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x  . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
 
 		return $link;
 	}

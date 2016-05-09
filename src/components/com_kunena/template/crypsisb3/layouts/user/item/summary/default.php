@@ -35,7 +35,7 @@ if ($this->config->showuserstats)
 	$rankTitle = $profile->getRank(0, 'title');
 }
 ?>
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<?php if ($avatar) : ?>

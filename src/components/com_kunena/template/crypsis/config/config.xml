@@ -47,7 +47,7 @@
 			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
 			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
 		</field>
-		<field name="avatarType" type="list" default="img-circle" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE" description="COM_KUNENA_TEMPLATE_PROFILETYPE_DESC">
+		<field name="avatarType" type="list" default="img-circle" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE" description="COM_KUNENA_TEMPLATE_PROFILE_TYPE_DESC">
 			<option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>
 			<option value="img-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>
 			<option value="img-polaroid">COM_KUNENA_TEMPLATE_THUMBNAIL</option>

@@ -172,7 +172,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						?>
 
 						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
-						<div class="control-group">
+						<div class="control-group" id="modified_reason">
 							<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 
 							<div class="controls">

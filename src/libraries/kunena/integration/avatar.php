@@ -135,7 +135,7 @@ class KunenaAvatar
 	 *
 	 * @return string|void
 	 */
-	public function getLink($user, $class='', $sizex = 90, $sizey = 90)
+	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
 		$size = $this->getSize($sizex, $sizey);
 		$avatar = $this->getURL($user, $size->x, $size->y);
@@ -145,7 +145,11 @@ class KunenaAvatar
 			return;
 		}
 
-		if ($class)
+		if ($class == 'none')
+		{
+			$class = ' class="kavatar"';
+		}
+		elseif ($class)
 		{
 			$class = ' class="' . $class . '"';
 		}

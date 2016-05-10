@@ -57,9 +57,12 @@
 		<langfiles>
 			<lang>com_kunena</lang>
 			<lang>plg_kunena_alphauserpoints</lang>
-      <lang>plg_kunena_altauserpoints</lang>
+			<lang>plg_kunena_altauserpoints</lang>
 			<lang>plg_kunena_community</lang>
 			<lang>plg_kunena_comprofiler</lang>
+			<lang>plg_kunena_easyblog</lang>
+			<lang>plg_kunena_easyprofile</lang>
+			<lang>plg_kunena_easysocial</lang>
 			<lang>plg_kunena_gravatar</lang>
 			<lang>plg_kunena_joomla</lang>
 			<lang>plg_kunena_kunena</lang>

@@ -13,7 +13,9 @@ defined('_JEXEC') or die;
 $config = $this->config;
 
 $cols = 1;
-
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
+$this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/search.js');
 ?>
 <h2>

@@ -16,14 +16,21 @@ class KunenaView extends JViewLegacy
 {
 
 	public $document = null;
+
 	public $app = null;
+
 	public $me = null;
+
 	public $config = null;
+
 	public $embedded = false;
+
 	public $templatefiles = array();
+
 	public $teaser = null;
 
 	protected $inLayout = 0;
+
 	protected $_row = 0;
 
 	/**
@@ -169,6 +176,49 @@ class KunenaView extends JViewLegacy
 		return $contents;
 	}
 
+	public function displayModulePosition($position)
+	{
+		echo $this->getModulePosition($position);
+	}
+
+	public function isModulePosition($position)
+	{
+		$document = JFactory::getDocument();
+
+		return method_exists($document, 'countModules') ? $document->countModules ( $position ) : 0;
+	}
+
+	public function getModulePosition($position)
+	{
+		$html = '';
+		$document = JFactory::getDocument();
+
+		if (method_exists($document, 'countModules') && $document->countModules($position ))
+		{
+			$renderer = $document->loadRenderer ( 'modules' );
+			$options = array ('style' => 'xhtml' );
+			$html .= '<div class="'.$position.'">';
+			$html .= $renderer->render ( $position, $options, null );
+			$html .= '</div>';
+		}
+
+		return $html;
+	}
+
+	public function parse($text, $len=0, $parent)
+	{
+		if ($this instanceof KunenaViewSearch)
+		{
+			$parent_object = $parent;
+		}
+		else
+		{
+			$parent_object = $this;
+		}
+
+		return KunenaHtmlParser::parseBBCode($text, $parent_object, $len);
+	}
+
 	/**
 	 * Render new layout if available, otherwise continue to the old logic.
 	 *
@@ -193,6 +243,7 @@ class KunenaView extends JViewLegacy
 		{
 			// Support legacy embedded views.
 			$file = isset($tpl) ? $this->getLayout() . '_' . $tpl : $this->getLayout();
+
 			foreach ($this->_path['template'] as $path)
 			{
 				$found = !strstr($path, '/com_kunena/') && is_file($path . $file . '.php');
@@ -208,9 +259,11 @@ class KunenaView extends JViewLegacy
 
 		// Support new layouts.
 		$hmvc = KunenaLayout::factory($layout);
+
 		if ($hmvc->getPath())
 		{
 			$this->inLayout++;
+
 			if ($hmvcParams)
 			{
 				$hmvc->setProperties($hmvcParams);
@@ -368,10 +421,71 @@ class KunenaView extends JViewLegacy
 
 		return $output;
 	}
-	
+
+	public function getTemplateMD5()
+	{
+		return md5(serialize($this->_path['template']).'-'.$this->ktemplate->name);
+	}
+
+	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
+	{
+		if (!$content)
+		{
+			$content = $this->escape($category->name);
+		}
+
+		if ($title === null)
+		{
+			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+		}
+
+		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
+	}
+
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
+	{
+		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
+
+		if (!$content)
+		{
+			$content = KunenaHtmlParser::parseText($topic->subject);
+		}
+
+		$rel = 'follow';
+
+		if ($title === null)
+		{
+			$rel = 'nofollow';
+
+			if ($action instanceof KunenaForumMessage)
+			{
+				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
+			}
+			else
+			{
+				switch ($action)
+				{
+					case 'first':
+						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
+						break;
+					case 'last':
+						$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
+						break;
+					case 'unread':
+						$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
+						break;
+					default:
+						$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
+				}
+			}
+		}
+
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
+	}
+
 	/**
 	 * Method to display title in page
-	 * 
+	 *
 	 * @param unknown $title
 	 * @throws LogicException
 	 */
@@ -381,10 +495,12 @@ class KunenaView extends JViewLegacy
 		{
 			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
 		}
+
 		if (!$this->state->get('embedded'))
 		{
 			// Check for empty title and add site name if param is set
 			$title = strip_tags($title);
+
 			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
 			{
 				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
@@ -398,6 +514,7 @@ class KunenaView extends JViewLegacy
 				// TODO: allow translations/overrides (also above)
 				$title = KunenaFactory::getConfig()->board_title .': '. $title;
 			}
+
 			$this->document->setTitle($title);
 		}
 	}

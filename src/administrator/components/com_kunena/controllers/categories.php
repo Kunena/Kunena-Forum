@@ -250,7 +250,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 */
 	function save2copy()
 	{
-		$post = JFactory::getApplication()->input->get('post', JREQUEST_ALLOWRAW);
+		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
 
 		list($title, $alias) = $this->_generateNewTitle($post['catid'], $post['alias'], $post['name']);
 		$_POST['name']  = $title;

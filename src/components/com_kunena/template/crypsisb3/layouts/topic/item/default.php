@@ -20,6 +20,11 @@ $this->addScriptDeclaration(
 var kunena_anonymous_name = "' . JText::_('COM_KUNENA_USERNAME_ANONYMOUS') . '";
 // ]]>');
 
+JText::script('COM_KUNENA_RATE_LOGIN');
+JText::script('COM_KUNENA_RATE_NOT_YOURSELF');
+JText::script('COM_KUNENA_RATE_ALLREADY');
+JText::script('COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
+
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');

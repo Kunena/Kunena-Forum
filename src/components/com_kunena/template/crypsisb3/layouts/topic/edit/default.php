@@ -67,6 +67,8 @@ $this->addScript('assets/js/bootstrap.datepicker.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
+$this->addScriptDeclaration("kunena_topicicontype = '" . $topicicontype . "';");
+
 $this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))

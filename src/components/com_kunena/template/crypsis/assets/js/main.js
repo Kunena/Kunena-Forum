@@ -74,8 +74,8 @@ jQuery(document).ready(function() {
 			 url: 'index.php?option=com_kunena&view=user&layout=galleryimages&format=raw',
 			 data: 'gallery_name=' + gallery_selected 
 		}).done(function(response) {
-			  jQuery.each(response, function( key, value ) {
-				  gallery_list.append('<li class="span2"><input id="radio'+gallery_selected+'/'+value+'" type="radio" value="gallery/'+gallery_selected+'/'+value+'" name="avatar"><label class=" radio thumbnail" for="radio'+gallery_selected+'/'+value+'"><img alt="" src="/media/kunena/avatars/gallery/'+gallery_selected+'/'+value+'"></label></li>');
+       jQuery.each(response, function( key, value ) {
+				  gallery_list.append('<li class="span2"><input id="radio'+gallery_selected+'/'+value.filename+'" type="radio" value="gallery/'+gallery_selected+'/'+value.filename+'" name="avatar"><label class=" radio thumbnail" for="radio'+gallery_selected+'/'+value.filename+'"><img alt="" src="'+value.url+'"></label></li>');
 			  });
 		}).fail(function(response) {
 			

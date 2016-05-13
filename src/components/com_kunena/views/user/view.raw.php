@@ -99,9 +99,13 @@ class KunenaViewUser extends KunenaView
 		jimport( 'joomla.filesystem.folder' );
 	
 		$list_files = JFolder::files(JPATH_BASE . '/media/kunena/avatars/gallery/' . $gallery_name);
-	
-		$response =  $list_files;
-	
+	  
+		foreach($list_files as $key => $file)
+		{
+			$response[$key]['filename'] = $file;
+			$response[$key]['url'] = JUri::root() . 'media/kunena/avatars/gallery/' . $gallery_name . '/' . $file;
+		}
+	  
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
 		JFactory::getApplication()->sendHeaders('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');

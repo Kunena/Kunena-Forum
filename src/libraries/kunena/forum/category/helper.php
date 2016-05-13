@@ -814,13 +814,6 @@ abstract class KunenaForumCategoryHelper
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery($query);
 		$instances = (array) $db->loadObjectList('id', 'KunenaForumCategory');
-
-		foreach ($instances as &$instance)
-		{
-			$instance = new KunenaForumCategory(array('id'=>$instance->id));
-			$instance->load();
-		}
-
 		KunenaError::checkDatabaseError();
 
 		// TODO: remove this by adding level into table

@@ -160,7 +160,7 @@ $more = ($this->once ?
 						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;" class="hero"><a target="_blank" style="text-decoration: none;"
 								href="#"><img border="0" vspace="0" hspace="0"
 									src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/hero-wide.png"
-									alt="Please enable images to view this content" title="Hero Image"
+									alt="Please enable images to view this content" title="Forum"
 									width="560" style="
 			width: 100%;
 			max-width: 560px;
@@ -225,62 +225,62 @@ $more = ($this->once ?
 					width="560" style="border-collapse: collapse; border-spacing: 0; padding: 0; width: inherit;
 	max-width: 560px;" class="wrapper">
 
-					<!-- SOCIAL NETWORKS -->
-					<tr>
-						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;
-			padding: 25px 6.25% 0;" class="social-icons">
-							<table
-								width="256" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse; border-spacing: 0; padding: 0;">
-								<tr>
-
-									<!-- ICON 1 -->
-									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">
-										<a target="_blank"
-											href="#"
-											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
-					color: #000000;"
-												alt="F" title="Facebook"
-												width="44" height="44"
-												src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/facebook.png"></a>
-									</td>
-
-									<!-- ICON 2 -->
-									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">
-										<a target="_blank"
-											href="#"
-											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
-					color: #000000;"
-												alt="T" title="Twitter"
-												width="44" height="44"
-												src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/twitter.png"></a>
-									</td>
-
-									<!-- ICON 3 -->
-									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">
-										<a target="_blank"
-											href="#"
-											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
-					color: #000000;"
-												alt="G" title="Google Plus"
-												width="44" height="44"
-												src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/googleplus.png"></a>
-									</td>
-
-									<!-- ICON 4 -->
-									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">
-										<a target="_blank"
-											href="#"
-											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
-					color: #000000;"
-												alt="I" title="Instagram"
-												width="44" height="44"
-												src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/instagram.png"></a>
-									</td>
-
-								</tr>
-							</table>
-						</td>
-					</tr>
+<!--					<!-- SOCIAL NETWORKS -->-->
+<!--					<tr>-->
+<!--						<td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%;-->
+<!--			padding: 25px 6.25% 0;" class="social-icons">-->
+<!--							<table-->
+<!--								width="256" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse; border-spacing: 0; padding: 0;">-->
+<!--								<tr>-->
+<!---->
+<!--									<!-- ICON 1 -->-->
+<!--									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">-->
+<!--										<a target="_blank"-->
+<!--											href="#"-->
+<!--											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;-->
+<!--					color: #000000;"-->
+<!--												alt="F" title="Facebook"-->
+<!--												width="44" height="44"-->
+<!--												src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/facebook.png"></a>-->
+<!--									</td>-->
+<!---->
+<!--									<!-- ICON 2 -->-->
+<!--									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">-->
+<!--										<a target="_blank"-->
+<!--											href="#"-->
+<!--											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;-->
+<!--					color: #000000;"-->
+<!--												alt="T" title="Twitter"-->
+<!--												width="44" height="44"-->
+<!--												src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/twitter.png"></a>-->
+<!--									</td>-->
+<!---->
+<!--									<!-- ICON 3 -->-->
+<!--									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">-->
+<!--										<a target="_blank"-->
+<!--											href="#"-->
+<!--											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;-->
+<!--					color: #000000;"-->
+<!--												alt="G" title="Google Plus"-->
+<!--												width="44" height="44"-->
+<!--												src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/googleplus.png"></a>-->
+<!--									</td>-->
+<!---->
+<!--									<!-- ICON 4 -->-->
+<!--									<td align="center" valign="middle" style="margin: 0; padding: 0 10px;border-collapse: collapse; border-spacing: 0;">-->
+<!--										<a target="_blank"-->
+<!--											href="#"-->
+<!--											style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;-->
+<!--					color: #000000;"-->
+<!--												alt="I" title="Instagram"-->
+<!--												width="44" height="44"-->
+<!--												src="https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.0/src/media/kunena/email/instagram.png"></a>-->
+<!--									</td>-->
+<!---->
+<!--								</tr>-->
+<!--							</table>-->
+<!--						</td>-->
+<!--					</tr>-->
 
 					<!-- FOOTER -->
 					<tr>

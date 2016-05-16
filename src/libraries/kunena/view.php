@@ -176,6 +176,68 @@ class KunenaView extends JViewLegacy
 		return $contents;
 	}
 
+	public function displayError($messages = array(), $code = 404)
+	{
+		if ($this->inLayout)
+		{
+			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+		}
+
+		$title = JText::_('COM_KUNENA_ACCESS_DENIED');
+
+		switch ((int) $code)
+		{
+			case 400:
+				JResponse::setHeader('Status', '400 Bad Request', true);
+				break;
+			case 401:
+				JResponse::setHeader('Status', '401 Unauthorized', true);
+				break;
+			case 403:
+				JResponse::setHeader('Status', '403 Forbidden', true);
+				break;
+			case 404:
+				JResponse::setHeader('Status', '404 Not Found', true);
+				break;
+			case 410:
+				JResponse::setHeader('Status', '410 Gone', true);
+				break;
+			case 500:
+				JResponse::setHeader('Status', '500 Internal Server Error', true);
+				break;
+			case 503:
+				JResponse::setHeader('Status', '503 Service Temporarily Unavailable', true);
+				break;
+			default:
+		}
+
+		$output = '';
+
+		foreach ($messages as $message)
+		{
+			$output .= "<p>{$message}</p>";
+		}
+
+		$this->common->setLayout('default');
+		$this->common->header = $title;
+		$this->common->body = $output;
+		$this->common->html = true;
+		$this->common->display();
+
+		$this->setTitle($title);
+	}
+
+	public function displayNoAccess($errors = array())
+	{
+		if ($this->inLayout)
+		{
+			throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+		}
+
+		// Backward compatibility
+		$this->displayError($errors, 200);
+	}
+
 	public function displayModulePosition($position)
 	{
 		echo $this->getModulePosition($position);

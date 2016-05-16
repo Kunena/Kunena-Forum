@@ -272,7 +272,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES');
+				$keywords = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
 				$this->setKeywords($keywords);
 			}
 
@@ -283,7 +283,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title;
+				$description = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 		}

@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
 ?>
 <h2>
 	<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:
@@ -55,7 +57,9 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>
 			</label>
 			<div class="controls" id="ann-date">
-				<?php echo $this->displayInput('created', '', 'addcreated'); ?>
+				<div class="input-append date">
+					<?php echo $this->displayInput('created', '<span class="add-on"><i class="icon-grid-view-2 "></i></span>', 'created'); ?>
+				</div>
 			</div>
 		</div>
 
@@ -64,7 +68,9 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_DATE_UP'); ?>
 			</label>
 			<div class="controls" id="ann-date2">
-				<?php echo $this->displayInput('publish_up', '', 'publish_up'); ?>
+				<div class="input-append date">
+					<?php echo $this->displayInput('publish_up', '<span class="add-on"><i class="icon-grid-view-2 "></i></span>', 'publish_up'); ?>
+				</div>
 			</div>
 		</div>
 
@@ -73,7 +79,9 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_ANN_DATE_DOWN'); ?>
 			</label>
 			<div class="controls" id="ann-date3">
-				<?php echo $this->displayInput('publish_down', '', 'publish_down'); ?>
+				<div class="input-append date">
+					<?php echo $this->displayInput('publish_down', '<span class="add-on"><i class="icon-grid-view-2 "></i></span>', 'publish_down'); ?>
+				</div>
 			</div>
 		</div>
 

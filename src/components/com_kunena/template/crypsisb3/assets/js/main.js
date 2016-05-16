@@ -81,5 +81,20 @@ jQuery(document).ready(function() {
 			
 		});
 	});	
+	
+	if (jQuery.fn.datepicker != undefined) {
+		// Load datepicker for announcement
+		jQuery('#ann-date .input-append.date').datepicker({
+			orientation: "top auto"
+		});
+		
+		jQuery('#ann-date2 .input-append.date').datepicker({
+			orientation: "top auto"
+		});
+		
+		jQuery('#ann-date3 .input-append.date').datepicker({
+			orientation: "top auto"
+		});
+	}
 });
 

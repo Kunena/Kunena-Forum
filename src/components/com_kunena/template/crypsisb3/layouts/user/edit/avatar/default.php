@@ -61,13 +61,13 @@ defined('_JEXEC') or die;
 			<div>
 				<?php echo JHtml::_(
 	'select.genericlist', $this->galleryOptions, 'gallery', '', 'value', 'text',
-	$this->gallery, 'avatar_category_select'
+	$this->gallery, 'avatar_gallery_select'
 ); ?>
 			</div>
 			<?php endif; ?>
 
 			<?php if ($this->galleryImages) : ?>
-			<ul class="thumbnails">
+			<ul id="gallery_list" class="thumbnails">
 
 				<?php foreach ($this->galleryImages as $image) : ?>
 				<li class="col-md-2">

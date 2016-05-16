@@ -59,19 +59,22 @@ class KunenaTemplateCrypsis extends KunenaTemplate
 
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$bootstrap = $this->ktemplate->params->get('bootstrap');
+		$doc = JFactory::getDocument();
 
-		if ($bootstrap) : ?>
-			<link rel="stylesheet" href="media\jui\css\bootstrap.min.css">
-			<link rel="stylesheet" href="media\jui\css\bootstrap-extended.css">
-			<link rel="stylesheet" href="media\jui\css\bootstrap-responsive.min.css">
-			<link rel="stylesheet" href="media\jui\css\icomoon.css">
-		<?php endif;
+		if ($bootstrap)
+		{
+			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap.min.css');
+			$doc->addStyleSheet(JUri::base(true). '/media/jui/css/bootstrap-extended.css');
+			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/bootstrap-responsive.min.css');
+			$doc->addStyleSheet(JUri::base(true) . '/media/jui/css/icomoon.css');
+		}
 
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
 
-		if ($fontawesome) : ?>
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<?php endif;
+		if ($fontawesome)
+		{
+			$doc->addStyleSheet("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+		}
 
 		// Load template colors settings
 		$styles = <<<EOF

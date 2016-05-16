@@ -105,14 +105,18 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		if ($fontawesome) : ?>
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<?php endif;
+		$doc = JFactory::getDocument();
+
+		if ($fontawesome)
+		{
+			$doc->addStyleSheet("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+		}
 
 		$icons = $this->ktemplate->params->get('icons');
-		if ($icons) : ?>
-			<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-		<?php endif;
+		if ($icons)
+		{
+			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+		}
 
 		// Load template colors settings
 		$styles = <<<EOF

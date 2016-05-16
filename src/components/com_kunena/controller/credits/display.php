@@ -54,17 +54,9 @@ class ComponentKunenaControllerCreditsDisplay extends KunenaControllerDisplay
 				'url'   => 'https://www.kunena.org/forum/user/2198-rich',
 				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
 			array(
-				'name'  => 'Sami Haaranen',
-				'url'   => 'https://www.kunena.org/forum/user/151-mortti',
-				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_MODERATION'), JText::_('COM_KUNENA_CREDITS_TESTING'))),
-			array(
 				'name'  => 'Matias Griese',
 				'url'   => 'https://www.kunena.org/forum/user/63-matias',
 				'title' => JText::_('COM_KUNENA_CREDITS_DEVELOPMENT')),
-			array(
-				'name'  => 'Joshua Weiss',
-				'url'   => 'https://www.kunena.org/forum/user/10809-coder4life',
-				'title' => JText::sprintf('COM_KUNENA_CREDITS_X_AND_Y', JText::_('COM_KUNENA_CREDITS_DESIGN'), JText::_('COM_KUNENA_CREDITS_DEVELOPMENT'))),
 			array(
 				'name'  => 'Oliver Ratzesberger',
 				'url'   => 'https://www.kunena.org/forum/user/64-fxstein',

@@ -109,6 +109,11 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		<?php endif;
 
+		$icons = $this->ktemplate->params->get('icons');
+		if ($icons) : ?>
+			<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+		<?php endif;
+
 		// Load template colors settings
 		$styles = <<<EOF
 		/* Kunena Custom CSS */

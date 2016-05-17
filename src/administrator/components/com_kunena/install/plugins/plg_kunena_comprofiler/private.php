@@ -53,7 +53,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		outputCbTemplate($_CB_framework->getUi());
 		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
-		$url = $_CB_framework->userProfileUrl( $userid );
+		$url = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a href="' . $url . '" title="' .
 			JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 
@@ -92,7 +92,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return '';
 		}
 
-		$url = $_CB_framework->userProfileUrl( $userid );
+		$url = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a class="' . $class . '" href="' . $url . '" title="' .
 			JText::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . JText::_('COM_KUNENA_PM_WRITE') . '</a>';
 
@@ -129,7 +129,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return null;
 		}
 
-		return '<a href="' . $_CB_framework->userProfileUrl( $userid ) . '" rel="follow">' . $text . '</a>';
+		return '<a href="' . $_CB_framework->userProfileUrl($userid) . '" rel="follow">' . $text . '</a>';
 	}
 
 	/**
@@ -176,6 +176,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 			return null;
 		}
 
-		return $_CB_framework->userProfileUrl( $userid );
+		return $_CB_framework->userProfileUrl($userid);
 	}
 }

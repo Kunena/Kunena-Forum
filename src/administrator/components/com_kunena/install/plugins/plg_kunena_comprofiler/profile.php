@@ -61,7 +61,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 			return false;
 		}
 
-		return $_CB_framework->userProfilesListUrl( null, $xhtml );
+		return $_CB_framework->userProfilesListUrl(null, $xhtml);
 	}
 
 	/**
@@ -90,7 +90,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 			return false;
 		}
 
-		return $_CB_framework->userProfileUrl( $user->userid, $xhtml );
+		return $_CB_framework->userProfileUrl($user->userid, $xhtml);
 	}
 
 	/**
@@ -150,6 +150,6 @@ class KunenaProfileComprofiler extends KunenaProfile
 	{
 		global $_CB_framework;
 
-		return $_CB_framework->userProfileEditUrl( null, $xhtml );
+		return $_CB_framework->userProfileEditUrl(null, $xhtml);
 	}
 }

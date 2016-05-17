@@ -47,6 +47,10 @@ class KunenaAccessComprofiler
 	{
 		static $accesstypes = array('communitybuilder');
 
+		$params = array('accesstypes' => &$accesstypes);
+
+		KunenaIntegrationComprofiler::trigger('getAccessTypes', $params);
+
 		return $accesstypes;
 	}
 
@@ -72,7 +76,12 @@ class KunenaAccessComprofiler
 			return $this->groups;
 		}
 
-		return null;
+		$name   = null;
+		$params = array('accesstype' => $accesstype, 'id' => $id, 'name' => &$name);
+
+		KunenaIntegrationComprofiler::trigger('getGroupName', $params);
+
+		return $name;
 	}
 
 	/**
@@ -117,6 +126,10 @@ class KunenaAccessComprofiler
 			);
 		}
 
+		$params = array('accesstype' => $accesstype, 'category' => $category, 'html' => &$html);
+
+		KunenaIntegrationComprofiler::trigger('getAccessOptions', $params);
+
 		return $html;
 	}
 
@@ -139,6 +152,26 @@ class KunenaAccessComprofiler
 		KunenaIntegrationComprofiler::trigger('loadCategoryRoles', $params);
 
 		return $roles;
+	}
+
+	/**
+	 * Authorise user actions in a category.
+	 *
+	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param int                 $userid
+	 *
+	 * @return array
+	 */
+	public function getAuthoriseActions( KunenaForumCategory $category, $userid )
+	{
+		$actions = array();
+		$params  = array('category' => $category, 'userid' => $userid, 'actions' => &$actions);
+
+		KunenaIntegrationComprofiler::trigger('getAuthoriseActions', $params);
+
+		return $actions;
 	}
 
 	/**
@@ -192,12 +225,9 @@ class KunenaAccessComprofiler
 		}
 
 		$category = $topic->getCategory();
+		$params   = array('category' => $category, 'topic' => $topic, 'userids' => $userids, 'allow' => &$allow, 'deny' => &$deny);
 
-		if ($category->accesstype == 'communitybuilder')
-		{
-			$params = array('category' => $category, 'topic' => $topic, 'userids' => $userids, 'allow' => &$allow, 'deny' => &$deny);
-			KunenaIntegrationComprofiler::trigger('authoriseUsers', $params);
-		}
+		KunenaIntegrationComprofiler::trigger('authoriseUsers', $params);
 
 		return array($allow, $deny);
 	}

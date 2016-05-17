@@ -38,7 +38,9 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	 */
 	public function getEditURL()
 	{
-		return cbSef('index.php?option=com_comprofiler&task=userAvatar' . getCBprofileItemid());
+		global $_CB_framework;
+
+		return $_CB_framework->userProfileEditUrl();
 	}
 
 	/**

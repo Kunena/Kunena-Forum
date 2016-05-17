@@ -85,7 +85,7 @@ class KunenaLoginComprofiler
 	{
 		global $_CB_framework;
 
-		return $_CB_framework->viewUrl( 'login' );
+		return $_CB_framework->viewUrl('login');
 	}
 
 	/**
@@ -95,7 +95,7 @@ class KunenaLoginComprofiler
 	{
 		global $_CB_framework;
 
-		return $_CB_framework->viewUrl( 'logout' );
+		return $_CB_framework->viewUrl('logout');
 	}
 
 	/**
@@ -110,7 +110,7 @@ class KunenaLoginComprofiler
 		if ($ueConfig['reg_admin_allowcbregistration'] == 1
 			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration')))
 		{
-			return $_CB_framework->viewUrl( 'registers' );
+			return $_CB_framework->viewUrl('registers');
 		}
 
 		return null;
@@ -123,7 +123,7 @@ class KunenaLoginComprofiler
 	{
 		global $_CB_framework;
 
-		return $_CB_framework->viewUrl( 'lostpassword' );
+		return $_CB_framework->viewUrl('lostpassword');
 	}
 
 	/**
@@ -133,6 +133,6 @@ class KunenaLoginComprofiler
 	{
 		global $_CB_framework;
 
-		return $_CB_framework->viewUrl( 'lostpassword' );
+		return $_CB_framework->viewUrl('lostpassword');
 	}
 }

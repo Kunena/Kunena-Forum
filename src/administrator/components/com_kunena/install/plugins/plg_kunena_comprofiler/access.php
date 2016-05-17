@@ -47,9 +47,9 @@ class KunenaAccessComprofiler
 	{
 		static $accesstypes = array('communitybuilder');
 
-		$params		=	array( 'accesstypes' => &$accesstypes );
+		$params = array('accesstypes' => &$accesstypes);
 
-		KunenaIntegrationComprofiler::trigger( 'getAccessTypes', $params );
+		KunenaIntegrationComprofiler::trigger('getAccessTypes', $params);
 
 		return $accesstypes;
 	}
@@ -76,10 +76,10 @@ class KunenaAccessComprofiler
 			return $this->groups;
 		}
 
-		$name		=	null;
-		$params		=	array( 'accesstype' => $accesstype, 'id' => $id, 'name' => &$name );
+		$name   = null;
+		$params = array('accesstype' => $accesstype, 'id' => $id, 'name' => &$name);
 
-		KunenaIntegrationComprofiler::trigger( 'getGroupName', $params );
+		KunenaIntegrationComprofiler::trigger('getGroupName', $params);
 
 		return $name;
 	}
@@ -126,9 +126,9 @@ class KunenaAccessComprofiler
 			);
 		}
 
-		$params		=	array( 'accesstype' => $accesstype, 'category' => $category, 'html' => &$html );
+		$params = array('accesstype' => $accesstype, 'category' => $category, 'html' => &$html);
 
-		KunenaIntegrationComprofiler::trigger( 'getAccessOptions', $params );
+		KunenaIntegrationComprofiler::trigger('getAccessOptions', $params);
 
 		return $html;
 	}
@@ -166,10 +166,10 @@ class KunenaAccessComprofiler
 	 */
 	public function getAuthoriseActions( KunenaForumCategory $category, $userid )
 	{
-		$actions	=	array();
-		$params		=	array( 'category' => $category, 'userid' => $userid, 'actions' => &$actions );
+		$actions = array();
+		$params  = array('category' => $category, 'userid' => $userid, 'actions' => &$actions);
 
-		KunenaIntegrationComprofiler::trigger( 'getAuthoriseActions', $params );
+		KunenaIntegrationComprofiler::trigger('getAuthoriseActions', $params);
 
 		return $actions;
 	}
@@ -224,10 +224,10 @@ class KunenaAccessComprofiler
 			return array($allow, $deny);
 		}
 
-		$category	=	$topic->getCategory();
-		$params		=	array( 'category' => $category, 'topic' => $topic, 'userids' => $userids, 'allow' => &$allow, 'deny' => &$deny );
+		$category = $topic->getCategory();
+		$params   = array('category' => $category, 'topic' => $topic, 'userids' => $userids, 'allow' => &$allow, 'deny' => &$deny);
 
-		KunenaIntegrationComprofiler::trigger( 'authoriseUsers', $params );
+		KunenaIntegrationComprofiler::trigger('authoriseUsers', $params);
 
 		return array($allow, $deny);
 	}

@@ -34,7 +34,7 @@ class plgKunenaComprofiler extends JPlugin
 		$app = JFactory::getApplication();
 
 		// Do not load if CommunityBuilder is not installed
-		if ( ( ! file_exists( JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php' ) ) || ( ! file_exists( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php' ) ) )
+		if ((!file_exists( JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
 		{
 			return;
 		}

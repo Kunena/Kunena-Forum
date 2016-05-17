@@ -159,9 +159,6 @@
 	<fieldset name="avatar">
 		<field name="avatarSizeX" default="40"/>
 		<field name="avatarSizeY"  default="90"/>
-		<field name="templatebyText" default=""/>
-		<field name="templatebyName"  default=""/>
-		<field name="templatebyLink"  default=""/>
 		<!-- Required avatar sizes -->
 		<field name="avatarSizeXThumb"  default="36"/>
 		<field name="avatarSizeYThumb"  default="36"/>
@@ -173,5 +170,11 @@
 		<field name="avatarSizeYPost"  default="144"/>
 		<field name="avatarSizeXProfile"  default="200"/>
 		<field name="avatarSizeYProfile"  default="200"/>
+	</fieldset>
+
+	<fieldset name="template">
+		<field name="templatebyText" default=""/>
+		<field name="templatebyName"  default=""/>
+		<field name="templatebyLink"  default=""/>
 	</fieldset>
 </config>

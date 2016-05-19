@@ -1178,6 +1178,66 @@ class KunenaUser extends JObject
 	}
 
 	/**
+	 * Render user sidebar.
+	 *
+	 * @param KunenaLayout $layout
+	 *
+	 * @return string
+	 *
+	 * @since  K5.0
+	 */
+	public function getSideProfile($layout)
+	{
+		$config = KunenaFactory::getConfig();
+
+		$view                  = clone $layout;
+		$view->config          = $config;
+		$view->userkarma_title = $view->userkarma_minus = $view->userkarma_plus = '';
+
+		if ($view->config->showkarma && $this->userid)
+		{
+			$view->userkarma_title = JText::_('COM_KUNENA_KARMA') . ': ' . $this->karma;
+
+			if ($view->me->userid && $view->me->userid != $this->userid)
+			{
+				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+			}
+		}
+
+		$view->userkarma = "{$view->userkarma_title} {$view->userkarma_minus} {$view->userkarma_plus}";
+
+		if ($view->config->showuserstats)
+		{
+			$view->userrankimage = $this->getRank($layout->category->id, 'image');
+			$view->userranktitle = $this->getRank($layout->category->id, 'title');
+			$view->userposts     = $this->posts;
+			$view->userthankyou  = $this->thankyou;
+			$activityIntegration = KunenaFactory::getActivityIntegration();
+			$view->userpoints    = $activityIntegration->getUserPoints($this->userid);
+			$view->usermedals    = $activityIntegration->getUserMedals($this->userid);
+		}
+		else
+		{
+			$view->userrankimage = null;
+			$view->userranktitle = null;
+			$view->userposts     = null;
+			$view->userthankyou  = null;
+			$view->userpoints    = null;
+			$view->usermedals    = null;
+		}
+
+		$view->personalText = $this->getPersonalText();
+
+		$params = new \Joomla\Registry\Registry();
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'topic');
+		$params->set('kunena_layout', $layout->getLayout());
+
+		return KunenaFactory::getProfile()->showProfile($view, $params);
+	}
+
+	/**
 	 * @param string $name
 	 *
 	 * @return string

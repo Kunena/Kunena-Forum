@@ -59,41 +59,44 @@ jQuery(document).ready(function() {
 	jQuery(document).ready(function() {
 		jQuery('[rel=popover]').popover();
 	});
-	
+
 	jQuery('#avatar_gallery_select').change(function() {
 		var gallery_selected = jQuery("select#avatar_gallery_select").val();
 
 		var gallery_list = jQuery('#gallery_list');
-		
+
 		// We remove avatar which exist in td tag to allow us to put new one items
 		gallery_list.empty();
-		
+
 		// Get the list of images from the gallery selected drop-down above
 	 jQuery.ajax({
 			 dataType: "json",
 			 url: 'index.php?option=com_kunena&view=user&layout=galleryimages&format=raw',
-			 data: 'gallery_name=' + gallery_selected 
+			 data: 'gallery_name=' + gallery_selected
 		}).done(function(response) {
        jQuery.each(response, function( key, value ) {
 				  gallery_list.append('<li class="span2"><input id="radio'+gallery_selected+'/'+value.filename+'" type="radio" value="gallery/'+gallery_selected+'/'+value.filename+'" name="avatar"><label class=" radio thumbnail" for="radio'+gallery_selected+'/'+value.filename+'"><img alt="" src="'+value.url+'"></label></li>');
 			  });
 		}).fail(function(response) {
-			
+
 		});
-	});	
-	
+	});
+
 	if (jQuery.fn.datepicker != undefined) {
 		// Load datepicker for announcement
 		jQuery('#ann-date .input-append.date').datepicker({
-			orientation: "top auto"
+			orientation: "top auto",
+			format: "yyyy-mm-dd"
 		});
-		
+
 		jQuery('#ann-date2 .input-append.date').datepicker({
-			orientation: "top auto"
+			orientation: "top auto",
+			format: "yyyy-mm-dd"
 		});
-		
+
 		jQuery('#ann-date3 .input-append.date').datepicker({
-			orientation: "top auto"
+			orientation: "top auto",
+			format: "yyyy-mm-dd"
 		});
 	}
 });

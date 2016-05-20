@@ -1178,6 +1178,34 @@ class KunenaUser extends JObject
 	}
 
 	/**
+	 * Render user karma.
+	 *
+	 * @return string
+	 *
+	 * @since  K5.0
+	 */
+	public function getKarma()
+	{
+		$karma = '';
+
+		if ($this->userid)
+		{
+			$config = KunenaConfig::getInstance();
+			$me = KunenaUserHelper::getMyself();
+
+			$karma = $this->karma;
+
+			if ($config->showkarma && $me->userid && $me->userid != $this->userid)
+			{
+				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-minus icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-plus icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+			}
+		}
+
+		return $karma;
+	}
+
+	/**
 	 * Render user sidebar.
 	 *
 	 * @param KunenaLayout $layout
@@ -1200,8 +1228,8 @@ class KunenaUser extends JObject
 
 			if ($view->me->userid && $view->me->userid != $this->userid)
 			{
-				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
-				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-minus icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', '<span class="kkarma-plus icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
 			}
 		}
 

@@ -87,6 +87,15 @@ $this->addScript('assets/js/search.js');
 				</th>
 				<?php endif; ?>
 
+				<?php if ($config->userlist_karma) : $cols++; ?>
+				<th class="span1 center hidden-phone">
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
+				</th>
+				<?php endif; ?>
+
 				<?php if ($config->userlist_email) : $cols++; ?>
 				<th class="span1 hidden-phone">
 					<?php echo JHtml::_(
@@ -162,6 +171,12 @@ $this->addScript('assets/js/search.js');
 				</td>
 				<?php endif; ?>
 
+				<?php if ($config->userlist_karma) : ?>
+				<td class="span1 center hidden-phone">
+					<?php echo (int) $user->karma; ?>
+				</td>
+				<?php endif; ?>
+
 				<?php if ($config->userlist_email) : ?>
 				<td class="span1 hidden-phone">
 					<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
@@ -195,7 +210,7 @@ $this->addScript('assets/js/search.js');
 				<i class="icon-arrow-up hasTooltip"></i>
 			</a>
 		</td>
-		<td colspan="7" class="hidden-phone">
+		<td colspan="8" class="hidden-phone">
 		</td>
 		</tfoot>
 

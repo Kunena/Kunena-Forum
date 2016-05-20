@@ -81,7 +81,7 @@ foreach ($this->sections as $section) :
 											(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
 											<span>
 												<?php if (($new = $category->getNewCount()) > 0) : ?>
-													<sup class="knewchar"> (<?php echo $new . JText::_('COM_KUNENA_A_GEN_NEWCHAR'); ?>)</sup>
+													<sup class="knewchar"> (<?php echo $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR'); ?>)</sup>
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
 													<span class="icon-lock hasTooltip" data-original-title="<?php echo JText::_('COM_KUNENA_LOCKED_CATEGORY'); ?>"></span>

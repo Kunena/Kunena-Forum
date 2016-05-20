@@ -836,7 +836,7 @@ class KunenaUser extends JObject
 			}
 
 			$url = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
-			$location = JUri::root() . 'media/kunena/ranks/' . $rank->rank_image;
+			$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
 			$data = getimagesize($location);
 			$width = $data[0];
 			$height = $data[1];

@@ -31,6 +31,7 @@ $medals = $activityIntegration->getUserMedals($profile->userid);
 
 if ($this->config->showuserstats)
 {
+	$showKarma = KunenaConfig::getInstance()->showkarma;
 	$rankImage = $profile->getRank(0, 'image');
 	$rankTitle = $profile->getRank(0, 'title');
 }
@@ -99,6 +100,12 @@ if ($this->config->showuserstats)
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
 								<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
+							</li>
+							<?php endif; ?>
+							<?php if (!empty($showKarma) && !empty($profile->karma)) : ?>
+							<li>
+								<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
+								<span> <?php echo JText::sprintf((int) $profile->karma); ?> </span>
 							</li>
 							<?php endif; ?>
 							<?php if (!empty($profile->uhits)) : ?>

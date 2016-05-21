@@ -20,6 +20,11 @@ $show   = KunenaConfig::getInstance()->showuserstats;
 
 if ($show)
 {
+	if (KunenaConfig::getInstance()->showkarma)
+	{
+		$karma = $user->getKarma();
+	}
+
 	$rankImage    = $user->getRank($this->category_id, 'image');
 	$rankTitle    = $user->getRank($this->category_id, 'title');
 	$personalText = $user->getPersonalText();
@@ -78,6 +83,13 @@ if ($show)
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_POSTS'); ?> </strong>
 		<span> <?php echo JText::sprintf((int) $user->posts); ?> </span>
+	</li>
+	<?php endif; ?>
+
+	<?php if (!empty($karma)) : ?>
+	<li>
+		<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
+		<span> <?php echo $karma; ?> </span>
 	</li>
 	<?php endif; ?>
 

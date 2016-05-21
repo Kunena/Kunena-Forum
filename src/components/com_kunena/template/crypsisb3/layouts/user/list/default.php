@@ -88,6 +88,15 @@ $this->addScript('assets/js/search.js');
 				</th>
 				<?php endif; ?>
 
+				<?php if ($config->userlist_karma) : $cols++; ?>
+				<th class="col-md-1 center hidden-xs">
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
+				</th>
+				<?php endif; ?>
+
 				<?php if ($config->userlist_email) : $cols++; ?>
 				<th class="col-md-1 hidden-xs">
 					<?php echo JHtml::_(
@@ -163,6 +172,12 @@ $this->addScript('assets/js/search.js');
 				</td>
 				<?php endif; ?>
 
+				<?php if ($config->userlist_karma) : ?>
+				<td class="col-md-1 center hidden-xs">
+					<?php echo (int) $user->karma; ?>
+				</td>
+				<?php endif; ?>
+
 				<?php if ($config->userlist_email) : ?>
 				<td class="col-md-1 hidden-xs">
 					<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
@@ -196,7 +211,7 @@ $this->addScript('assets/js/search.js');
 				<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
 			</a>
 		</td>
-		<td colspan="7" class="hidden-xs">
+		<td colspan="8" class="hidden-xs">
 		</td>
 		</tfoot>
 

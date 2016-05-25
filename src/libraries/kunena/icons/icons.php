@@ -27,12 +27,15 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
+			return '<span class="fa fa-arrow-down hasTooltip"></span>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
+			return '<i class="icon icon-arrow-down hasTooltip"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
+			return '<i class="glyphicon glyphicon-arrow-down hasTooltip"></i>';
 		}
 	}
 
@@ -46,12 +49,15 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
+			return '<span class="fa fa-arrow-up hasTooltip"></span>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
+			return '<i class="icon icon-arrow-up hasTooltip"></i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
+			return '<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>';
 		}
 	}
 }

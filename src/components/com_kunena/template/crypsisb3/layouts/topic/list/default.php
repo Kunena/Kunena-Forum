@@ -57,7 +57,7 @@ $this->addStyleSheet('assets/css/rating.css');
 			<td class="col-md-1 center hidden-xs">
 				<a id="forumtop"> </a>
 				<a href="#forumbottom">
-					<i class="glyphicon glyphicon-arrow-down hasTooltip "></i>
+					<?php echo KunenaIcons::arrowdown(); ?>
 				</a>
 			</td>
 			<td class="col-md-<?php echo $cols ?>" id="recent-list">
@@ -83,7 +83,7 @@ $this->addStyleSheet('assets/css/rating.css');
 			<td class="center hidden-xs">
 				<a id="forumbottom"> </a>
 				<a href="#forumtop" rel="nofollow">
-					<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
+					<?php echo KunenaIcons::arrowup(); ?>
 				</a>
 			</td>
 			<?php if (empty($this->actions)) : ?>

@@ -20,12 +20,20 @@ jimport('joomla.filesystem.archive');
  */
 class KunenaAdminControllerTemplates extends KunenaController
 {
+	/**
+	 * @var null|string
+	 */
 	protected $baseurl = null;
 
+	/**
+	 * @var array
+	 */
 	protected $locked = array('crypsis');
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
 	 */
 	public function __construct($config = array())
 	{
@@ -34,7 +42,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Publish
 	 */
 	function publish()
 	{
@@ -63,7 +71,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Add
 	 */
 	function add()
 	{
@@ -79,7 +87,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Edit
 	 */
 	function edit()
 	{
@@ -109,7 +117,9 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
+	 * Install
 	 *
+	 * @return boolean
 	 */
 	public function install()
 	{
@@ -217,7 +227,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Uninstall
 	 */
 	function uninstall()
 	{
@@ -281,7 +291,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Choose less
 	 */
 	function chooseless()
 	{
@@ -302,7 +312,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Edit Less
 	 */
 	function editless()
 	{
@@ -324,7 +334,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Choose Css
 	 */
 	function choosecss()
 	{
@@ -337,7 +347,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Apply less
 	 */
 	function applyless()
 	{
@@ -378,7 +388,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Save Less
 	 */
 	function saveless()
 	{
@@ -422,7 +432,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Edit Css
 	 */
 	function editcss()
 	{
@@ -444,7 +454,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Apply Css
 	 */
 	function applycss()
 	{
@@ -483,7 +493,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Save Css
 	 */
 	function savecss()
 	{
@@ -524,7 +534,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Apply
 	 */
 	function apply()
 	{
@@ -555,7 +565,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 *
+	 * Save
 	 */
 	function save()
 	{
@@ -588,10 +598,10 @@ class KunenaAdminControllerTemplates extends KunenaController
 	/**
 	 * Method to save param.ini file on filesystem.
 	 *
-	 * @param   string $template The name of the template.
+	 * @param   string  $template  The name of the template.
 	 *
 	 *
-	 * @since    3.0.0
+	 * @since  3.0.0
 	 */
 	protected function _saveParamFile($template)
 	{

@@ -21,7 +21,9 @@ class KunenaAdminControllerTrash extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
 	 */
 	public function __construct($config = array())
 	{
@@ -30,6 +32,8 @@ class KunenaAdminControllerTrash extends KunenaController
 	}
 
 	/**
+	 * Purge
+	 *
 	 * @throws Exception
 	 */
 	function purge()
@@ -132,6 +136,8 @@ class KunenaAdminControllerTrash extends KunenaController
 	}
 
 	/**
+	 * Restore
+	 *
 	 * @throws Exception
 	 */
 	function restore()
@@ -212,7 +218,6 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * Method to redirect user on cancel on purge page
 	 *
 	 * @return void
-	 *
 	 */
 	public function cancel()
 	{

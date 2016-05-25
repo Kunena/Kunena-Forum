@@ -21,7 +21,9 @@ class KunenaAdminControllerRanks extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
 	 */
 	public function __construct($config = array())
 	{
@@ -30,7 +32,7 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
-	 *
+	 * Add
 	 */
 	function add()
 	{
@@ -46,6 +48,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Edit
+	 *
 	 * @throws Exception
 	 */
 	function edit()
@@ -77,6 +81,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Save
+	 *
 	 * @throws Exception
 	 */
 	function save()
@@ -132,6 +138,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Rank upload
+	 *
 	 * @throws Exception
 	 */
 	function rankupload()
@@ -145,6 +153,7 @@ class KunenaAdminControllerRanks extends KunenaController
 		}
 
 		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array');
+
 		// File upload
 		$format = JFactory::getApplication()->input->getCmd('format', 'html');
 
@@ -163,6 +172,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @throws Exception
 	 */
 	function remove()

@@ -21,7 +21,9 @@ class KunenaAdminControllerSmilies extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
 	 */
 	public function __construct($config = array())
 	{
@@ -30,7 +32,7 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
-	 *
+	 * Add
 	 */
 	function add()
 	{
@@ -46,6 +48,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Edit
+	 *
 	 * @throws Exception
 	 */
 	function edit()
@@ -75,6 +79,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Save
+	 *
 	 * @throws Exception
 	 */
 	function save()
@@ -129,6 +135,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Smiley upload
+	 *
 	 * @throws Exception
 	 */
 	function smileyupload()
@@ -161,6 +169,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @throws Exception
 	 */
 	function remove()

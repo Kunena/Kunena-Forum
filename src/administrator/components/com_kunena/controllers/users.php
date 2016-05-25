@@ -21,7 +21,9 @@ class KunenaAdminControllerUsers extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  construct
 	 */
 	public function __construct($config = array())
 	{
@@ -30,7 +32,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Edit
+	 *
 	 * @throws Exception
+	 *
+	 * @return bool
 	 */
 	public function edit()
 	{
@@ -60,6 +66,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Save
+	 *
 	 * @throws Exception
 	 */
 	public function save()
@@ -134,7 +142,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Apply
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function apply()
 	{
@@ -205,7 +217,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Trash menu
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function trashusermessages()
 	{
@@ -245,7 +261,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Move
+	 *
 	 * @throws Exception
+	 *
+	 * @return  void
 	 */
 	public function move()
 	{
@@ -274,7 +294,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Move Messages
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function movemessages()
 	{
@@ -338,7 +362,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Logout
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function logout()
 	{
@@ -369,6 +397,13 @@ class KunenaAdminControllerUsers extends KunenaController
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * Remove
+	 *
+	 * @throws Exception
+	 *
+	 * @return void
+	 */
 	public function remove()
 	{
 		if (!JSession::checkToken('post'))
@@ -442,7 +477,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Ban
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function ban()
 	{
@@ -496,6 +535,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Unban
+	 *
 	 * @throws Exception
 	 */
 	function unban()
@@ -550,7 +591,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Block
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function block()
 	{
@@ -604,7 +649,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Unblock
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function unblock()
 	{
@@ -658,7 +707,11 @@ class KunenaAdminControllerUsers extends KunenaController
 	}
 
 	/**
+	 * Batch Moderators
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function batch_moderators()
 	{
@@ -777,7 +830,6 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @since 4.0.0
 	 *
 	 * @return void
-	 *
 	 */
 	public function removetopicsubscriptions()
 	{

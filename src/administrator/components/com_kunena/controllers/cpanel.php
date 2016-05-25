@@ -18,10 +18,15 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerCpanel extends KunenaController
 {
+	/**
+	 * @var null|string
+	 */
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  construct
 	 */
 	public function __construct($config = array())
 	{
@@ -30,8 +35,10 @@ class KunenaAdminControllerCpanel extends KunenaController
 	}
 
 	/**
-	 * @param   bool $cachable
-	 * @param   bool $urlparams
+	 * Display
+	 *
+	 * @param   bool  $cachable   cachable
+	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return JControllerLegacy|void
 	 */
@@ -59,9 +66,9 @@ class KunenaAdminControllerCpanel extends KunenaController
 	}
 
 	/**
+	 * On get icons
 	 *
 	 * Display Kunena updates on dashboard
-	 *
 	 *
 	 * @return array|null
 	 */

@@ -18,10 +18,15 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerTools extends KunenaController
 {
+	/**
+	 * @var null|string
+	 */
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
 	 */
 	public function __construct($config = array())
 	{
@@ -30,7 +35,7 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
-	 *
+	 * Diagnotics
 	 */
 	function diagnostics()
 	{
@@ -68,6 +73,8 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
+	 * Prune
+	 *
 	 * @throws Exception
 	 */
 	function prune()
@@ -182,7 +189,7 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
-	 *
+	 * Sync Users
 	 */
 	function syncusers()
 	{
@@ -531,8 +538,8 @@ class KunenaAdminControllerTools extends KunenaController
 	/**
 	 * Set proper response for both AJAX and traditional calls.
 	 *
-	 * @param $response
-	 * @param $ajax
+	 * @param   $response
+	 * @param   $ajax
 	 *
 	 * @return void
 	 *
@@ -566,7 +573,9 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
+	 * Trash Menu
 	 *
+	 * @return void
 	 */
 	public function trashmenu()
 	{
@@ -580,7 +589,9 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
+	 * Fix Legacy
 	 *
+	 * @return void
 	 */
 	public function fixlegacy()
 	{
@@ -608,7 +619,9 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
+	 * Purge restatements
 	 *
+	 * @return  void
 	 */
 	public function purgeReStatements()
 	{
@@ -651,7 +664,11 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
+	 * Clean ip
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function cleanupIP()
 	{
@@ -693,10 +710,11 @@ class KunenaAdminControllerTools extends KunenaController
 	}
 
 	/**
-	 * @param   bool $stop
+	 * Check timeout
+	 *
+	 * @param   bool  $stop  stop
 	 *
 	 * @return boolean
-	 *
 	 */
 	protected function checkTimeout($stop = false)
 	{
@@ -787,8 +805,9 @@ class KunenaAdminControllerTools extends KunenaController
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_FAILED'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
+
 	/**
-	 *
+	 * System Report
 	 */
 	function systemreport()
 	{

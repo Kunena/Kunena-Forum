@@ -18,13 +18,20 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerCategories extends KunenaController
 {
+	/**
+	 * @var null|string
+	 */
 	protected $baseurl = null;
 
+	/**
+	 * @var null|string
+	 */
 	protected $baseurl2 = null;
 
 	/**
+	 * Constructor
 	 *
-	 * @param   array $config
+	 * @param   array  $config  config
 	 */
 	public function __construct($config = array())
 	{
@@ -34,7 +41,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Lock
+	 *
 	 * @throws Exception
+	 *
+	 * @return  void
 	 */
 	function lock()
 	{
@@ -46,7 +57,11 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Unlock
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	function unlock()
 	{
@@ -58,6 +73,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Review
+	 *
 	 * @throws Exception
 	 */
 	function review()
@@ -70,6 +87,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Unreview
+	 *
 	 * @throws Exception
 	 */
 	function unreview()
@@ -82,6 +101,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Allow Anonymous
+	 *
 	 * @throws Exception
 	 */
 	function allow_anonymous()
@@ -94,6 +115,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Deny Anonymous
+	 *
 	 * @throws Exception
 	 */
 	function deny_anonymous()
@@ -106,6 +129,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Allow Polls
+	 *
 	 * @throws Exception
 	 */
 	function allow_polls()
@@ -118,6 +143,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Deny Polls
+	 *
 	 * @throws Exception
 	 */
 	function deny_polls()
@@ -130,6 +157,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Publish
+	 *
 	 * @throws Exception
 	 */
 	function publish()
@@ -142,6 +171,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Unpublish
+	 *
 	 * @throws Exception
 	 */
 	function unpublish()
@@ -154,6 +185,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Add
+	 *
 	 * @throws Exception
 	 */
 	function add()
@@ -176,6 +209,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Edit
+	 *
 	 * @throws Exception
 	 */
 	function edit()
@@ -209,7 +244,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
-	 *
+	 * Apply
 	 */
 	function apply()
 	{
@@ -226,7 +261,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
-	 *
+	 * Save2new
 	 */
 	function save2new()
 	{
@@ -235,7 +270,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
-	 *
+	 * Save
 	 */
 	function save()
 	{
@@ -262,6 +297,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return KunenaForumCategory
 	 */
 	protected function _save()
@@ -384,6 +421,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Remove
+	 *
 	 * @throws Exception
 	 */
 	function remove()
@@ -452,6 +491,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Cancel
+	 *
 	 * @throws Exception
 	 */
 	function cancel()
@@ -487,6 +528,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Save order
+	 *
 	 * @throws Exception
 	 */
 	function saveorder()
@@ -590,6 +633,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Order Up
+	 *
 	 * @throws Exception
 	 */
 	function orderup()
@@ -602,6 +647,8 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
+	 * Order Down
+	 *
 	 * @throws Exception
 	 */
 	function orderdown()
@@ -614,8 +661,14 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
-	 * @param $id
-	 * @param $direction
+	 * Order Up Down
+	 *
+	 * @param   integer  $id         id
+	 * @param   integer  $direction  direction
+	 *
+	 * @throws null
+	 *
+	 * @return  void
 	 */
 	protected function orderUpDown($id, $direction)
 	{
@@ -660,9 +713,13 @@ class KunenaAdminControllerCategories extends KunenaController
 	}
 
 	/**
-	 * @param $cid
-	 * @param $variable
-	 * @param $value
+	 * Set variable
+	 *
+	 * @param   integer  $cid       id
+	 * @param   string   $variable  variable
+	 * @param   string   $value     value
+	 *
+	 * @return void
 	 */
 	protected function setVariable($cid, $variable, $value)
 	{
@@ -732,9 +789,9 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to change the title & alias.
 	 *
-	 * @param   integer $category_id The id of the category.
-	 * @param   string  $alias       The alias.
-	 * @param   string  $name        The name.
+	 * @param   integer  $category_id  The id of the category.
+	 * @param   string   $alias        The alias.
+	 * @param   string   $name         The name.
 	 *
 	 * @return    array  Contains the modified title and alias.
 	 *
@@ -758,6 +815,7 @@ class KunenaAdminControllerCategories extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @since 2.0
 	 */
 	public function archive()
 	{
@@ -773,9 +831,9 @@ class KunenaAdminControllerCategories extends KunenaController
 	/**
 	 * Method to put in trash one or multiple categories
 	 *
-	 * @since K4.0
-	 *
 	 * @return void
+	 *
+	 * @since K4.0
 	 *
 	 */
 	public function trash()

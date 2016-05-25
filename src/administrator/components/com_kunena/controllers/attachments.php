@@ -18,11 +18,18 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerAttachments extends KunenaController
 {
+	/**
+	 *
+	 * @var null|string
+	 */
 	protected $baseurl = null;
 
 	/**
+	 * Constructor
 	 *
 	 * @param   array  $config  Construct
+	 *
+	 * @since 2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -31,10 +38,13 @@ class KunenaAdminControllerAttachments extends KunenaController
 	}
 
 	/**
+	 * Delete
+	 *
 	 * @throws Exception
 	 *
 	 * @return redirect
 	 *
+	 * @since 2.0
 	 */
 	public function delete()
 	{

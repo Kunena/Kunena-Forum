@@ -18,10 +18,20 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerConfig extends KunenaController
 {
+	/**
+	 * @var null|string
+	 */
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * @var string
+	 */
+	protected $kunenabaseurl = null;
+
+	/**
+	 * Construct
+	 *
+	 * @param   array  $config  config
 	 */
 	public function __construct($config = array())
 	{
@@ -31,7 +41,9 @@ class KunenaAdminControllerConfig extends KunenaController
 	}
 
 	/**
+	 * Apply
 	 *
+	 * Return void
 	 */
 	function apply()
 	{
@@ -39,7 +51,11 @@ class KunenaAdminControllerConfig extends KunenaController
 	}
 
 	/**
-	 * @param   null $url
+	 * Save
+	 *
+	 * @param   null  $url  url
+	 *
+	 * Return void
 	 */
 	function save($url = null)
 	{
@@ -91,7 +107,9 @@ class KunenaAdminControllerConfig extends KunenaController
 	}
 
 	/**
+	 * Set default
 	 *
+	 * @return void
 	 */
 	function setdefault()
 	{

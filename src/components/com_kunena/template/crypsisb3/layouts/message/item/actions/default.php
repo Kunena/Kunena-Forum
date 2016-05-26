@@ -50,6 +50,7 @@ $config = KunenaConfig::getInstance();
 
 	<?php echo $this->messageButtons->get('thankyou'); ?>
 	<?php echo $this->messageButtons->get('unthankyou'); ?>
+	<div class="pull-right"><?php echo $this->messageButtons->get('report'); ?></div>
 </div>
 
 <?php else : ?>

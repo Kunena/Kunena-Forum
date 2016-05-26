@@ -78,9 +78,33 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 
 			if ($me->exists())
 			{
-				$this->messageButtons->set('quickreply',
-					$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")
-				);
+				$ktemplate = KunenaFactory::getTemplate();
+				$topicicontype = $ktemplate->params->get('topicicontype');
+
+				if ($topicicontype == 'B2')
+				{
+					$this->messageButtons->set('quickreply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", false, 'icon icon-pencil')
+					);
+				}
+				elseif ($topicicontype == 'B3')
+				{
+					$this->messageButtons->set('quickreply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", false, 'glyphicon glyphicon-pencil')
+					);
+				}
+				elseif ($topicicontype == 'fa')
+				{
+					$this->messageButtons->set('quickreply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}", false, 'fa fa-pencil')
+					);
+				}
+				else
+				{
+					$this->messageButtons->set('quickreply',
+						$this->getButton(sprintf($layout, 'reply'), 'quickreply', 'message', 'communication', "kreply{$mesid}")
+					);
+				}
 			}
 
 			$this->messageButtons->set('quote',
@@ -161,9 +185,30 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		// Report this.
 		if (KunenaFactory::getConfig()->reportmsg && $me->exists())
 		{
-			$this->messageButtons->set('report',
-				$this->getButton(sprintf($layout, 'report'), 'report', 'message', 'user')
-			);
+			$ktemplate = KunenaFactory::getTemplate();
+			$topicicontype = $ktemplate->params->get('topicicontype');
+
+			if ($topicicontype == 'B2')
+			{
+				$icon = 'icon icon-exclamation';
+			}
+			elseif ($topicicontype == 'B3')
+			{
+				$icon = 'glyphicon glyphicon-exclamation-sign';
+			}
+			elseif ($topicicontype == 'fa')
+			{
+				$icon = 'fa fa-exclamation';
+			}
+			else
+			{
+				$icon = '';
+			}
+
+			echo KunenaLayout::factory('Widget/Button')
+				->setProperties(array('url' => '#report'. $mesid .'', 'name' => 'report', 'scope' => 'message',
+				                      'type' => 'user', 'id' => $id, 'normal' => '', 'icon' => $icon,
+				                      'modal' => 'modal', 'pullright' => 'pullright'));
 		}
 
 		// Moderation and own post actions.

@@ -84,17 +84,17 @@ jQuery(document).ready(function() {
 
 	if (jQuery.fn.datepicker != undefined) {
 		// Load datepicker for announcement
-		jQuery('#ann-date .input-append.date').datepicker({
+		jQuery('#ann-date .input-group.date').datepicker({
 			orientation: "top auto",
 			format: "yyyy-mm-dd"
 		});
 
-		jQuery('#ann-date2 .input-append.date').datepicker({
+		jQuery('#ann-date2 .input-group.date').datepicker({
 			orientation: "top auto",
 			format: "yyyy-mm-dd"
 		});
 
-		jQuery('#ann-date3 .input-append.date').datepicker({
+		jQuery('#ann-date3 .input-group.date').datepicker({
 			orientation: "top auto",
 			format: "yyyy-mm-dd"
 		});

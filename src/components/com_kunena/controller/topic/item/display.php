@@ -336,6 +336,13 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('og:type', 'article', 'property');
+		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
+		$doc->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
+		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime(), 'property');
+		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
+
 		$page = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
@@ -364,6 +371,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
+				$doc->setMetaData('article:tag', $keywords, 'property');
 			}
 			else
 			{

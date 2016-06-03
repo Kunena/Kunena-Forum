@@ -1433,4 +1433,19 @@ HTML;
 			return $label;
 		}
 	}
+
+	public function borderless()
+	{
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$borderless   = $this->ktemplate->params->get('borderless');
+
+		if ($borderless)
+		{
+			return '';
+		}
+		else
+		{
+			return 'table-bordered';
+		}
+	}
 }

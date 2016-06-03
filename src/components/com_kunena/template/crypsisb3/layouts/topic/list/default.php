@@ -51,7 +51,7 @@ $this->addStyleSheet('assets/css/rating.css');
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post" name="ktopicsform" id="ktopicsform">
 	<?php echo JHtml::_('form.token'); ?>
-	<table class="table table-bordered">
+	<table class="table <?php echo KunenaTemplate::getInstance()->borderless();?>">
 		<thead>
 		<tr>
 			<td class="col-md-1 center hidden-xs">

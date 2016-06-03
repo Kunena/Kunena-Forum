@@ -60,7 +60,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		</ul>
 	</div>
 	<?php if ($this->topics) : ?>
-	<table class="table table-bordered">
+	<table class="table <?php echo KunenaTemplate::getInstance()->borderless();?>">
 		<thead>
 		<tr>
 			<td class="span1 center hidden-phone">

@@ -131,7 +131,7 @@ class KunenaLayoutCategoryItem extends KunenaLayout
 							->setProperties(array('url' => $url,'name' => 'unsubscribe','scope' => 'category','type' => 'user','icon' => 'glyphicon glyphicon-bookmark'));
 					}
 				}
-				if ($url && $topicicontype == 'fa')
+				elseif ($url && $topicicontype == 'fa')
 				{
 					if (!$subscribed)
 					{

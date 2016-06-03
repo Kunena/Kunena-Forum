@@ -13,17 +13,21 @@ defined('_JEXEC') or die();
 
 /**
  * Class KunenaIcons
+ * 
+ * @since 5.0
  *
  */
 class KunenaIcons
 {
 	/**
-	 *
+	 * Return the arrow down icon
+	 * 
+	 * @return string
 	 */
-	public function arrowdown()
+	static public function arrowdown()
 	{
-		$this->ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $this->ktemplate->params->get('topicicontype');
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{
@@ -40,12 +44,14 @@ class KunenaIcons
 	}
 
 	/**
-	 *
+	 * Return the arrwo up icon
+	 * 
+	 * @return string
 	 */
-	public function arrowup()
+	static public function arrowup()
 	{
-		$this->ktemplate  = KunenaFactory::getTemplate();
-		$topicicontype    = $this->ktemplate->params->get('topicicontype');
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
 
 		if ($topicicontype == 'fa')
 		{

@@ -28,7 +28,9 @@ defined('_JEXEC') or die;
 	</h2>
 	<div class="row collapse in" id="kstats">
 	<div class="well-small">
-		<ul class="unstyled col-md-1 btn-link"><i class="glyphicon glyphicon-stats glyphicon-super"></i></ul>
+		<ul class="unstyled col-md-1 btn-link">
+			<?php echo KunenaIcons::stats(); ?>
+		</ul>
 		<ul class="unstyled col-md-3">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:

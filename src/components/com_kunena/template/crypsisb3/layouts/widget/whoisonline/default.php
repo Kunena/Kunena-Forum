@@ -30,7 +30,9 @@ defined('_JEXEC') or die;
 
 	<div class="row collapse in" id="kwho">
 		<div class="well-small">
-			<ul class="unstyled col-md-1 btn-link"><i class="glyphicon glyphicon-user glyphicon-super"></i></ul>
+			<ul class="unstyled col-md-1 btn-link">
+				<?php echo KunenaIcons::members(); ?>
+			</ul>
 			<ul class="unstyled col-md-11">
 			<span>
 				<?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>

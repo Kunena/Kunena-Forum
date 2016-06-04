@@ -62,7 +62,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		</ul>
 	</div>
 	<?php if ($this->topics) : ?>
-	<table class="table <?php echo KunenaTemplate::getInstance()->borderless();?>">
+	<table class="table<?php echo KunenaTemplate::getInstance()->borderless();?>">
 		<thead>
 		<tr>
 			<td class="col-md-1 center hidden-xs">

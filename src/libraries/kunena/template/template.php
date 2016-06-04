@@ -1445,7 +1445,7 @@ HTML;
 		}
 		else
 		{
-			return 'table-bordered';
+			return ' table-bordered';
 		}
 	}
 }

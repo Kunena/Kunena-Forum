@@ -39,7 +39,7 @@ foreach ($this->sections as $section) :
 
 
 		<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
-			<table class="table <?php echo KunenaTemplate::getInstance()->borderless();?>">
+			<table class="table<?php echo KunenaTemplate::getInstance()->borderless();?>">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-xs">
 					<tr>

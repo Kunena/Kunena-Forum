@@ -1450,7 +1450,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Display nothing in subscription mails
-		if (empty($bbcode->context))
+		if (!empty($bbcode->context))
 		{
 			return '';
 		}

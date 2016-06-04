@@ -34,7 +34,7 @@ defined('_JEXEC') or die;
 		<?php endif; ?>
 	</h3>
 
-	<table class="table table-striped <?php echo KunenaTemplate::getInstance()->borderless();?>">
+	<table class="table table-striped<?php echo KunenaTemplate::getInstance()->borderless();?>">
 
 		<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
 			<thead>

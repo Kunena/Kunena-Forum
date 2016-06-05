@@ -97,7 +97,7 @@ if (!empty($this->spacing)) : ?>
 				<i class="icon-flag-2 hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
 			<?php endif; ?>
 
-			<?php if ($this->topic->poll_id) : ?>
+			<?php if ($this->topic->poll_id && $category->allow_polls) : ?>
 				<i class="icon-bars hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
 			<?php endif; ?>
 		</div>

@@ -96,7 +96,7 @@ if (!empty($this->spacing)) : ?>
 				<i class="glyphicon glyphicon-paperclip hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
 			<?php endif; ?>
 
-			<?php if ($this->topic->poll_id) : ?>
+			<?php if ($this->topic->poll_id && $category->allow_polls) : ?>
 				<i class="glyphicon glyphicon-stats hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
 			<?php endif; ?>
 		</div>

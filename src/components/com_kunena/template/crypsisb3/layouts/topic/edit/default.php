@@ -36,12 +36,6 @@ $this->addScript('assets/js/jquery.fileupload-image.js');
 $this->addScript('assets/js/upload.main.js');
 $this->addStyleSheet('assets/css/fileupload.css');
 
-$this->addScript('assets/js/markitup.js');
-$editor = KunenaBbcodeEditor::getInstance();
-$editor->initialize();
-$this->addScript('assets/js/markitup.editor.js');
-$this->addScript('assets/js/markitup.set.js');
-
 $this->k = 0;
 
 $this->addScriptDeclaration("kunena_upload_files_rem = '" . KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . JSession::getFormToken() . '=1', false) . "';");
@@ -56,14 +50,6 @@ if ($this->config->pollenabled)
 	JText::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
 	$this->addScript('assets/js/poll.js');
 }
-
-// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('assets/js/jquery.caret.js');
-$this->addScript('assets/js/jquery.atwho.js');
-$this->addStyleSheet('assets/css/jquery.atwho.css');
-
-$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
-$this->addScript('assets/js/bootstrap.datepicker.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
@@ -168,10 +154,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php
-						// Show bbcode editor
-						echo $this->subLayout('Topic/Edit/Editor')->setProperties($this->getProperties());
-						?>
+
+						<?php echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config); ?>
 
 						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
 						<div class="control-group" id="modified_reason">
@@ -285,3 +269,4 @@ if ($this->config->showhistory && $this->topic->exists())
 {
 	echo $this->subRequest('Topic/Form/History', new JInput(array('id' => $this->topic->id)));
 }
+?>

@@ -53,6 +53,8 @@ if ($this->config->pollenabled)
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
+$editor = $this->ktemplate->params->get('editor');
+
 $this->addScriptDeclaration("kunena_topicicontype = '" . $topicicontype . "';");
 
 $this->addScript('assets/js/edit.js');
@@ -62,7 +64,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	$this->addScript('assets/js/sisyphus.js');
 }
 ?>
-
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-horizontal form-validate" role="form"
 		id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
 		<input type="hidden" name="view" value="topic" />
@@ -155,7 +156,14 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 
-						<?php echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config); ?>
+						<?php if ($editor == 1)
+						{
+							echo $this->subLayout('Widget/Editor')->setLayout('wysibb')->set('message', $this->message)->set('config', $this->config);
+						}
+						else
+						{
+							echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config);
+						}?>
 
 						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
 						<div class="control-group" id="modified_reason">

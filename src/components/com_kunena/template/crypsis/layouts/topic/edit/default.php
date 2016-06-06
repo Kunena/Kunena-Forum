@@ -55,6 +55,7 @@ $this->addScript('assets/js/pollcheck.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
+$editor = $this->ktemplate->params->get('editor');
 
 $this->addScriptDeclaration("kunena_topicicontype = '" . $topicicontype . "';");
 
@@ -171,7 +172,16 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config); ?>
+
+						<?php if ($editor == 1)
+						{
+							echo $this->subLayout('Widget/Editor')->setLayout('wysibb')->set('message', $this->message)->set('config', $this->config);
+						}
+						else
+						{
+							echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('message', $this->message)->set('config', $this->config);
+						}?>
+
 						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
 							<div class="control-group" id="modified_reason">
 								<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>

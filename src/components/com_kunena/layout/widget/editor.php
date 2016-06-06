@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package     Kunena.Site
- * @subpackage  Layout.Topic
+ * @subpackage  Layout.widget
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @since  K4.0
  *
  */
-class KunenaLayoutTopicEditEditor extends KunenaLayout
+class KunenaLayoutWidgetEditor extends KunenaLayout
 {
 	/**
 	 * Get geshi code types.
@@ -25,7 +25,9 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 */
 	public function getCodeTypes()
 	{
-		if (!$this->config->highlightcode)
+		$templatesettings = KunenaFactory::getTemplate()->params;
+
+		if (!$templatesettings->get('highlightcode'))
 		{
 			return null;
 		}
@@ -66,9 +68,10 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	 */
 	public function getBBcodesEnabled()
 	{
-		$templatesettings = KunenaFactory::getTemplate()->params;
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$templatesettings = $this->ktemplate->params;
 
-		if ($this->config->showvideotag && $templatesettings->get('video'))
+		if ($templatesettings->get('showvideotag') && $templatesettings->get('video'))
 		{
 			$this->addScriptDeclaration("kunena_showvideotag=1;");
 		}
@@ -77,7 +80,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showvideotag=0;");
 		}
 
-		if (!$this->config->disemoticons && $templatesettings->get('emoticons'))
+		if ($templatesettings->get('disemoticons') && $templatesettings->get('emoticons'))
 		{
 			$this->addScriptDeclaration("kunena_disemoticons=1;");
 		}
@@ -86,7 +89,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_disemoticons=0;");
 		}
 
-		if ($this->config->showebaytag && $templatesettings->get('ebay'))
+		if ($templatesettings->get('showebaytag') && $templatesettings->get('ebay'))
 		{
 			$this->addScriptDeclaration("kunena_showebaytag=1;");
 		}
@@ -131,7 +134,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showlinktag=0;");
 		}
 
-		if ($this->config->image_upload != "" && $templatesettings->get('picture'))
+		if ($templatesettings->get('image_upload != ""') && $templatesettings->get('picture'))
 		{
 			$this->addScriptDeclaration("kunena_showpicturetag=1;");
 		}

@@ -2157,7 +2157,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$vid_allowpar = array ('flashvars', 'wmode', 'bgcolor', 'quality' );
 				break;
 			case 'iframe' :
-				return '<iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe>';
+				if ($vid ["type"] == 'youtube' )
+				{
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" frameborder="0" width="425" height="344"  allowfullscreen></iframe></div>';
+				}
+				else
+				{
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe></div>';
+				}
 				break;
 			case 'mediaplayer' :
 				$vid_par1 = array (array (1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95' ), array (1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab' ), array (4, 'type', 'application/x-mplayer2' ), array (4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/' ), array (6, 'src', $vid_source ), array (6, 'autostart', 'false' ), array (6, 'autosize', 'true' ), array (5, 'width', $vid_width ), array (5, 'height', $vid_height ) );

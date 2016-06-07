@@ -75,6 +75,10 @@ if ($me->canDoCaptcha() )
 		}
 	}
 }
+
+$this->config = KunenaFactory::getConfig();
+$this->ktemplate = KunenaFactory::getTemplate();
+$editor = $this->ktemplate->params->get('editor');
 ?>
 
 <div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
@@ -126,7 +130,14 @@ if ($me->canDoCaptcha() )
 				<label>
 					<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
 				</label>
-				<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
+				<?php if ($editor == 1)
+				{
+					echo $this->subLayout('Widget/Editor')->setLayout('wysibb_quick')->set('message', $this->message)->set('config', $this->config);
+				}
+				else
+				{
+					echo '<textarea class="span12 qreply" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>';
+				}?>
 			</div>
 
 			<?php if ($topic->isAuthorised('subscribe')) : ?>

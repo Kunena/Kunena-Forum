@@ -83,7 +83,7 @@ $this->addScript('assets/js/search.js');
 			</div>
 		</div>
 
-		<button class="btn btn-default btn-small pull-right  <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#search-options" aria-expanded="false" aria-controls="search-options"></button>
+		<button type="button" class="btn btn-default btn-small pull-right  <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#search-options" aria-expanded="false" aria-controls="search-options"></button>
 		<h3>
 			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
 		</h3>

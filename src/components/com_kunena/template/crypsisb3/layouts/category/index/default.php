@@ -25,7 +25,7 @@ foreach ($this->sections as $section) :
 
 			<div class="btn-toolbar pull-right">
 				<?php if (count($this->sections) > 0) : ?>
-					<button class="btn btn-default btn-small" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
+					<button class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
 				<?php endif; ?>
 			</div>
 

@@ -137,6 +137,25 @@ class Com_KunenaInstallerScript
 			$this->deleteFolder($sitePath . '/template/blue_eagle');
 
 			// TODO: delete also en-GB files!
+
+		}
+
+		// Remove old system directory
+		if (is_file(JPATH_ROOT . '/media/kunena/topic_icons/system/topicicons.xml'))
+		{
+			$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
+			$foldernew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/system';
+			JFolder::copy($folder, $foldernew);
+			JFolder::delete($folder);
+
+			$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
+			$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
+			JFile::copy($file, $filenew);
+
+			$db    = JFactory::getDBO();
+			$query = "UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset='system'";
+			$db->setQuery($query);
+			$db->execute();
 		}
 
 		// Prepare installation.
@@ -182,19 +201,19 @@ class Com_KunenaInstallerScript
 	}
 
 	// Internal functions
-	
+
 	/**
 	 * On some hosting the PHP version given with the version of the packet in the distribution
-	 * 
+	 *
 	 * @param string $version The PHP version to clean
 	 */
 	protected function getCleanPhpVersion()
 	{
 		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
-		
+
 		return $version;
 	}
-	
+
 	/**
 	 * @param $name
 	 * @param $version

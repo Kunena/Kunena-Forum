@@ -175,8 +175,10 @@ foreach ($this->sections as $section) :
 												<div class="span3">
 													<?php echo $author->getLink($avatar); ?>
 												</div>
+												<div class="span9">
+											<?php else : ?>
+												<div class="span12">
 											<?php endif; ?>
-											<div class="span9">
 												<span><?php echo $this->getLastPostLink($category, null, null, null) ?></span>
 												<br>
 												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', 'nofollow', '', null, $category->id)); ?></span>

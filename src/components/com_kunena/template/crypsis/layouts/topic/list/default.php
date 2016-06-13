@@ -39,6 +39,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		</div>
 	</div>
 </div>
+<?php  echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist); ?>
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 	->set('catid', 'all')

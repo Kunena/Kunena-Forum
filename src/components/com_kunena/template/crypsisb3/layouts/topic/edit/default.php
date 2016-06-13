@@ -230,7 +230,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php if ($this->message->userid) : ?>
 						<div class="control-group" id="kanynomous-check" <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
-							<div class="controls"">
+							<div class="controls">
 								<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->post_anonymous)
 								{
 									echo 'checked="checked"';

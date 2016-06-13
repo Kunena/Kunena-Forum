@@ -1119,6 +1119,12 @@ HTML;
 		if (isset($src->icons))
 		{
 			$icon       = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+
+			if (!$icon)
+			{
+				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+			}
+
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
@@ -1136,6 +1142,12 @@ HTML;
 		if (isset($src->icons))
 		{
 			$icon       = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
+
+			if (!$icon)
+			{
+				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+			}
+
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
@@ -1420,6 +1432,12 @@ HTML;
 		if (isset($src->labels))
 		{
 			$label       = $src->xpath('/kunena-topiclabels/labels/label[@id=' . $id . ']');
+
+			if (!$label)
+			{
+				$label   = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
+			}
+
 			$attributes = $label[0]->attributes();
 			$label       = new stdClass;
 			$label->id   = (int) $attributes->id;

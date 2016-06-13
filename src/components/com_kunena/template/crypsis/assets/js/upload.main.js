@@ -3,9 +3,9 @@ jQuery(function ($) {
 
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
-		var value = jQuery('#kbbcode-message').val();
+		var value = $('#kbbcode-message').val();
 
-		jQuery('#kbbcode-message').val(value + ' [attachment=' + attachid + ']' + filename + '[/attachment]');
+		$('#kbbcode-message').val(value + ' [attachment=' + attachid + ']' + filename + '[/attachment]');
 
 		if (button != undefined) {
 			button.removeClass('btn-primary');
@@ -17,21 +17,21 @@ jQuery(function ($) {
 	var fileCount = null;
 	var filesedit = null;
 
-	jQuery('#remove-all').on('click', function (e) {
+	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
 
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) == false) {
 			$(filesedit).each(function (index, file) {
-				if (jQuery('#kattachs-' + file.id).length == 0) {
-					jQuery('#kattach-list').append('<input id="kattachs-' + file.id + '" type="hidden" name="attachments[' + file.id + ']" value="1" />');
+				if ($('#kattachs-' + file.id).length == 0) {
+					$('#kattach-list').append('<input id="kattachs-' + file.id + '" type="hidden" name="attachments[' + file.id + ']" value="1" />');
 				}
 
-				if (jQuery('#kattach-' + file.id).length > 0) {
-					jQuery('#kattach-' + file.id).remove();
+				if ($('#kattach-' + file.id).length > 0) {
+					$('#kattach-' + file.id).remove();
 				}
 
-				jQuery.ajax({
+				$.ajax({
 					url    : kunena_upload_files_rem + '&fil_id=' + file.id,
 					type   : 'DELETE',
 					success: function (result) {
@@ -43,7 +43,7 @@ jQuery(function ($) {
 			filesedit = null;
 		}
 
-		var child = jQuery('#kattach-list').find('input');
+		var child = $('#kattach-list').find('input');
 
 		child.each(function (i, el) {
 			var elem = $(el);
@@ -51,15 +51,15 @@ jQuery(function ($) {
 			if (!elem.attr('id').match("[a-z]{8}")) {
 				var fileid = elem.attr('id').match("[0-9]{2}");
 
-				if (jQuery('#kattachs-' + fileid).length == 0) {
-					jQuery('#kattach-list').append('<input id="kattachs-' + fileid + '" type="hidden" name="attachments[' + fileid + ']" value="1" />');
+				if ($('#kattachs-' + fileid).length == 0) {
+					$('#kattach-list').append('<input id="kattachs-' + fileid + '" type="hidden" name="attachments[' + fileid + ']" value="1" />');
 				}
 
-				if (jQuery('#kattach-' + fileid).length > 0) {
-					jQuery('#kattach-' + fileid).remove();
+				if ($('#kattach-' + fileid).length > 0) {
+					$('#kattach-' + fileid).remove();
 				}
 
-				jQuery.ajax({
+				$.ajax({
 					url    : kunena_upload_files_rem + '&fil_id=' + fileid,
 					type   : 'DELETE',
 					success: function (result) {
@@ -72,7 +72,7 @@ jQuery(function ($) {
 		fileCount = 0;
 	});
 
-	jQuery('#insert-all').on('click', function (e) {
+	$('#insert-all').on('click', function (e) {
 		e.preventDefault();
 
 		// Inserting items from edit if they are present
@@ -83,7 +83,7 @@ jQuery(function ($) {
 		}
 		filesedit = null;
 
-		var child = jQuery('#kattach-list').find('input');
+		var child = $('#kattach-list').find('input');
 
 		child.each(function (i, el) {
 			var elem = $(el);
@@ -94,9 +94,9 @@ jQuery(function ($) {
 
 				insertInMessage(attachid, filename);
 
-				jQuery('#insert-all').removeClass('btn-primary');
-				jQuery('#insert-all').addClass('btn-success');
-				jQuery('#insert-all').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
+				$('#insert-all').removeClass('btn-primary');
+				$('#insert-all').addClass('btn-success');
+				$('#insert-all').html('<i class="icon-upload"></i>' + Joomla.JText._('COM_KUNENA_EDITOR_IN_MESSAGE'));
 			}
 		});
 	});
@@ -144,18 +144,18 @@ jQuery(function ($) {
 				}
 			}
 
-			if (jQuery('#kattachs-' + file_id).length == 0) {
-				jQuery('#kattach-list').append('<input id="kattachs-' + file_id + '" type="hidden" name="attachments[' + file_id + ']" value="1" />');
+			if ($('#kattachs-' + file_id).length == 0) {
+				$('#kattach-list').append('<input id="kattachs-' + file_id + '" type="hidden" name="attachments[' + file_id + ']" value="1" />');
 			}
 
-			if (jQuery('#kattach-' + file_id).length > 0) {
-				jQuery('#kattach-' + file_id).remove();
+			if ($('#kattach-' + file_id).length > 0) {
+				$('#kattach-' + file_id).remove();
 			}
 
 			fileCount = fileCount - 1;
 
 			// Ajax Request to delete the file from filesystem
-			jQuery.ajax({
+			$.ajax({
 				url    : kunena_upload_files_rem + '&fil_id=' + file_id,
 				type: 'DELETE',
 				success: function (result) {
@@ -165,7 +165,7 @@ jQuery(function ($) {
 		});
 
 	$('#fileupload').fileupload({
-		url               : jQuery('#kunena_upload_files_url').val(),
+		url               : $('#kunena_upload_files_url').val(),
 		dataType          : 'json',
 		autoUpload        : true,
 		// Enable image resizing, except for Android and Opera,
@@ -180,7 +180,7 @@ jQuery(function ($) {
 			var params = {};
 			$.each(data.files, function (index, file) {
 				params = {
-					'catid'   : jQuery('#kunena_upload').val(),
+					'catid'   : $('#kunena_upload').val(),
 					'filename': file.name,
 					'size'    : file.size,
 					'mime'    : file.type
@@ -261,8 +261,8 @@ jQuery(function ($) {
 
 		if (data.result.success == true) {
 			// The attachment has been right uploaded, so now we need to put into input hidden to added to message
-			jQuery('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
-			jQuery('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
+			$('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />');
+			$('#kattach-list').append('<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
 
 			data.uploaded = true;
 

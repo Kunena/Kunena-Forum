@@ -7,18 +7,18 @@
 * @link https://www.kunena.org
 **/
 
-jQuery(document).ready(function() {
-	if ( typeof pollcategoriesid != 'undefined' && jQuery('#poll_exist_edit').length == 0 ) {
-		var catid = jQuery('#kcategory_poll').val();
+jQuery(document).ready(function($) {
+	if ( typeof pollcategoriesid != 'undefined' && $('#poll_exist_edit').length == 0 ) {
+		var catid = $('#kcategory_poll').val();
 
 		if ( pollcategoriesid[catid] !== undefined ) {
-			jQuery('.pollbutton').show();
+			$('.pollbutton').show();
 		} else {
-			jQuery('.pollbutton').hide();
+			$('.pollbutton').hide();
 		}
-	} else if ( jQuery('#poll_exist_edit').length > 0 ) {
-		jQuery('.pollbutton').show();
+	} else if ( $('#poll_exist_edit').length > 0 ) {
+		$('.pollbutton').show();
 	} else {
-		jQuery('.pollbutton').hide();
+		$('.pollbutton').hide();
 	}
 });

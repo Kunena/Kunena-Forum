@@ -27,7 +27,7 @@ function kPreviewHelper(previewActive) {
 	}
 }
 
-$(document).ready(function ($) {
+jQuery(document).ready(function ($) {
 	$('#tabs_kunena_editor a:first').tab('show');
 
 	$('#tabs_kunena_editor a:last').click(function (e) {

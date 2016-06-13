@@ -7,19 +7,19 @@
  * @link https://www.kunena.org
  **/
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
 
 	/* Provide autocomplete user list in search form and in user list */
-	if ( jQuery( '#kurl_users' ).length > 0 ) {
-		var users_url = jQuery( '#kurl_users' ).val();
+	if ( $( '#kurl_users' ).length > 0 ) {
+		var users_url = $( '#kurl_users' ).val();
 
 		var NameObjs = {};
 		var UserNames = [];
 
-		jQuery("#kusersearch").typeahead({
+		$("#kusersearch").typeahead({
 			source: function ( query, process ) {
 
-			jQuery.ajax({
+			$.ajax({
 				url: users_url
 				,cache: false
 				,success: function(data){
@@ -28,7 +28,7 @@ jQuery(document).ready(function() {
 					NameObjs = {};
 					UserNames = [];
 
-					jQuery.each( data, function( index, item ){
+					$.each( data, function( index, item ){
 
 						//for each iteration of this loop the "item" argument contains
 						//1 user object from the array in our json, such as:
@@ -60,8 +60,8 @@ jQuery(document).ready(function() {
 	}
 
 	/* Hide search form when there are search results found */
-	if ( jQuery('#kunena_search_results').is(':visible') ) {
-		jQuery('#search').collapse("hide");
+	if ( $('#kunena_search_results').is(':visible') ) {
+		$('#search').collapse("hide");
 	}
 });
 

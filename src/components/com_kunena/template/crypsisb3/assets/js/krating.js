@@ -7,7 +7,7 @@
  * @link        https://www.kunena.org
  **/
 
-$(document).ready(function($) {
+jQuery(document).ready(function($) {
 	// Krating element
 	var krating = document.querySelector('#krating');
 

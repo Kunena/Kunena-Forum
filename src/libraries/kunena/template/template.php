@@ -1254,7 +1254,7 @@ HTML;
 			list($type, $q, $values) = $arg;
 			$value = reset($values);
 
-			return "url({$q}{$class->getFile($value, true, 'media', 'media/kunena')}{$q})";
+			return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
 		});
 		$less->setVariables($this->style_variables);
 		$newCache = $less->cachedCompile($cache);

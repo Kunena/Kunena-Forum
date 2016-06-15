@@ -86,13 +86,13 @@ if ($show)
 			</li>
 			<?php endif; ?>
 
-			<?php if (!empty($karma)) : ?>
+			<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_KARMA') . ': ' . $karma; ?>
 			</li>
 			<?php endif; ?>
 
-			<?php if ($show && isset($user->thankyou)) : ?>
+			<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
 			</li>

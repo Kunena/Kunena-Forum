@@ -46,7 +46,7 @@ abstract class KunenaHtmlParser
 		foreach ($smilies as $smiley)
 		{
 			// We load all smileys in array, so we can sort them
-			$smileyArray [$smiley->code] = JUri::root(true) . '/' . $template->getSmileyPath($smiley->file);
+			$smileyArray [$smiley->code] = $template->getSmileyPath($smiley->file);
 		}
 
 		if ($emoticonbar == 0)

@@ -102,7 +102,7 @@ if ($this->config->showuserstats)
 								<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
 							</li>
 							<?php endif; ?>
-							<?php if (!empty($showKarma) && !empty($profile->karma)) : ?>
+							<?php if (!empty($showKarma) && !empty($profile->karma) && KunenaConfig::getInstance()->showkarma) : ?>
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
 								<span> <?php echo JText::sprintf((int) $profile->karma); ?> </span>
@@ -114,7 +114,7 @@ if ($this->config->showuserstats)
 								<span> <?php echo JText::sprintf((int) $profile->uhits); ?> </span>
 							</li>
 							<?php endif; ?>
-							<?php if (!empty($profile->thankyou)) : ?>
+							<?php if (!empty($profile->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 								<span> <?php echo JText::sprintf((int) $profile->thankyou); ?> </span>

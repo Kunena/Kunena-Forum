@@ -34,6 +34,7 @@ $list = array();
 ?>
 
 <small class="text-muted pull-right hidden-xs">
+	<span class="ip"> <?php echo $this->ipLink; ?> </span>
 	<span class="glyphicon glyphicon-time"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
@@ -100,7 +101,7 @@ $list = array();
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid) : ?>
 			<div class="row">
-				<div class="col-md-9">
+				<div class="col-md-12">
 					<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
@@ -111,9 +112,6 @@ $list = array();
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-3">
-					<p class="ip"> <?php echo $this->ipLink; ?> </p>
 				</div>
 			</div>
 		<?php endif; ?>

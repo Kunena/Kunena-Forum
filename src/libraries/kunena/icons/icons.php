@@ -212,7 +212,35 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<span class="glyphicon glyphicon-remove-sign"></span>';
+			return '<i class="icon icon-remove-sign"></i>';
+		}
+	}
+
+	/**
+	 * Return the ip icon
+	 *
+	 * @return string
+	 */
+	static public function ip()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-compass"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i class="icon icon-compass"></i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-compass"></span>';
+		}
+		else
+		{
+			return '<i class="icon icon-compass"></i>';
 		}
 	}
 }

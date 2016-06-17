@@ -1572,57 +1572,9 @@ class KunenaForumMessage extends KunenaDatabaseObject
 		try
 		{
 			$msg = trim($layout->render($subscription ? 'default' : 'moderator'));
-
 		}
 		catch (Exception $e)
 		{
-			// TODO: Deprecated in K4.0, remove in K5.0
-			// Clean up the message for review.
-			$message = KunenaHtmlParser::stripBBCode($this->message, 0, false);
-
-			$config = KunenaFactory::getConfig();
-
-			if ($subscription)
-			{
-				$msg1 = $this->get ( 'parent' ) ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT' );
-				$msg2 = $this->get ( 'parent' ) ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT' );
-			}
-			else
-			{
-				$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD1' );
-				$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD2' );
-			}
-
-			$msg = $msg1 . " " . $config->board_title . "\n\n";
-			// DO NOT REMOVE EXTRA SPACE, JMailHelper::cleanBody() removes "Subject:" from the message body
-			$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . " : " . $subject . "\n";
-			$msg .= JText::_ ( 'COM_KUNENA_CATEGORY' ) . " : " . $this->getCategory()->name . "\n";
-			$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $this->getAuthor()->getName('???', false) . "\n\n";
-			$msg .= "URL : $url\n\n";
-
-			if ($config->mailfull == 1)
-			{
-				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE' ) . " :\n-----\n";
-				$msg .= $message;
-				$msg .= "\n-----\n\n";
-			}
-
-			$msg .= $msg2 . "\n";
-
-			if ($subscription && $once)
-			{
-				if ($this->parent)
-				{
-					$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' ) . "\n";
-				}
-				else
-				{
-					$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE' ) . "\n";
-				}
-			}
-
-			$msg .= "\n";
-			$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
 		}
 
 		$mail->setBody($msg);

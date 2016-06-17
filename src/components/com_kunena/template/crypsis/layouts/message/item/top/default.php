@@ -34,6 +34,8 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 ?>
 
 <small class="text-muted pull-right hidden-phone">
+	<?php echo KunenaIcons::ip();?>
+	<span class="ip"> <?php echo $this->ipLink; ?> </span>
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
@@ -78,7 +80,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 
 			<?php if (!empty($this->reportMessageLink)) : ?>
 				<div class="row">
-					<div class="span9">
+					<div class="span12">
 						<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="icon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
 						<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 							<div class="modal-header">
@@ -86,9 +88,6 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 								<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 							</div>
 						</div>
-					</div>
-					<div class="span3">
-						<p class="ip"> <?php echo $this->ipLink; ?> </p>
 					</div>
 				</div>
 			<?php endif; ?>

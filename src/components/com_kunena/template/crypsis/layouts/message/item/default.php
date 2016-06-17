@@ -32,6 +32,8 @@ $list = array();
 ?>
 
 <small class="text-muted pull-right hidden-phone">
+	<?php echo KunenaIcons::ip();?>
+	<span class="ip"> <?php echo $this->ipLink; ?> </span>
 	<span class="icon icon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
@@ -93,16 +95,13 @@ $list = array();
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid) : ?>
 			<div class="row">
-				<div class="span9">
+				<div class="span12">
 					<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 						</div>
 					</div>
-				</div>
-				<div class="span3">
-					<p class="ip"> <?php echo $this->ipLink; ?> </p>
 				</div>
 			</div>
 		<?php endif; ?>

@@ -26,6 +26,11 @@
 			<option value="0">COM_KUNENA_NO</option>
 			<option value="1">COM_KUNENA_YES</option>
 		</field>
+		<field name="quick" type="list" default="0" label="COM_KUNENA_TEMPLATE_QUICKREPLY" description="COM_KUNENA_TEMPLATE_QUICKREPLY_DESC">
+			<option value="0">COM_KUNENA_TEMPLATE_DEFAULT</option>
+			<option value="1">COM_KUNENA_TEMPLATE_QUICKREPLY_MODAL</option>
+			<option value="2">COM_KUNENA_TEMPLATE_QUICKREPLY_ALWAYS</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="features">

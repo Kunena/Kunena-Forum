@@ -10,11 +10,6 @@
  **/
 defined('_JEXEC') or die;
 
-// @var KunenaLayout $this
-
-
-// @var KunenaForumMessage  $message  Message to reply to.
-
 $message = $this->message;
 
 if (!$message->isAuthorised('reply'))
@@ -22,21 +17,11 @@ if (!$message->isAuthorised('reply'))
 	return;
 }
 
-// @var KunenaUser  $author  Author of the message.
-
-$author = isset($this->author) ? $this->author : $message->getAuthor();
-// @var KunenaForumTopic  $topic Topic of the message.
-
-$topic = isset($this->topic) ? $this->topic : $message->getTopic();
-// @var KunenaForumCategory  $category  Category of the message.
-
+$author   = isset($this->author) ? $this->author : $message->getAuthor();
+$topic    = isset($this->topic) ? $this->topic : $message->getTopic();
 $category = isset($this->category) ? $this->category : $message->getCategory();
-// @var KunenaConfig  $config  Kunena configuration.
-
-$config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
-// @var KunenaUser  $me  Current user.
-
-$me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+$config   = isset($this->config) ? $this->config : KunenaFactory::getConfig();
+$me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
 $this->addScript('assets/js/edit.js');
 
@@ -68,22 +53,13 @@ if ($me->canDoCaptcha() )
 		}
 	}
 }
-
-$template = KunenaTemplate::getInstance();
-$quick = $template->params->get('quick');
 ?>
 
-<?php if ($quick == 1) : ?>
-<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
-<?php elseif ($quick == 0) : ?>
-<div class="col-md-12 kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:100%; z-index: 1;">
-<?php endif;?>
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+<div class="kreply col-md-12 well" id="kreply<?php echo $message->displayField('id'); ?>_form" style="display: inline-block">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
 				enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
 				<input type="hidden" name="task" value="post" />
-				<input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
+				<input type="hidden" name="parentid" value="<?php echo $topic->last_post_id; ?>" />
 				<input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
 				<?php if (!$config->allow_change_subject) : ?>
 					<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
@@ -91,7 +67,6 @@ $quick = $template->params->get('quick');
 				<?php echo JHtml::_('form.token'); ?>
 
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
 					<h3>
 						<?php echo JText::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
 					</h3>
@@ -174,6 +149,4 @@ $quick = $template->params->get('quick');
 				<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
 				<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disemoticons ?>" />
 			</form>
-		</div>
-	</div>
 </div>

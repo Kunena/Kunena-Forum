@@ -13,15 +13,16 @@ defined('_JEXEC') or die;
 $config = KunenaConfig::getInstance();
 $this->ktemplate = KunenaFactory::getTemplate();
 $fullactions = $this->ktemplate->params->get('fullactions');
+$quick = $this->ktemplate->params->get('quick');
 ?>
 
 <?php if (!$fullactions) : ?>
 
 <?php if (empty($this->message_closed)) : ?>
 <div class="kmessagepadding">
-	<?php if($this->quickreply) : ?>
+	<?php if($this->quickreply && $quick != 2) : ?>
 		<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
-		   data-toggle="modal" rel="nofollow"><i class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+			data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow"><i class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 		</a>
 	<?php endif; ?>
 
@@ -59,7 +60,7 @@ $fullactions = $this->ktemplate->params->get('fullactions');
 
 	<?php if (empty($this->message_closed)) : ?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
-			<?php if($this->quickreply) : ?>
+			<?php if($this->quickreply  && $quick != 2) : ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn openmodal"
 					data-toggle="modal" rel="nofollow"><i class="icon-undo"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>

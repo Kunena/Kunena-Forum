@@ -226,6 +226,11 @@ class KunenaIcons
 		$ktemplate  = KunenaFactory::getTemplate();
 		$topicicontype    = $ktemplate->params->get('topicicontype');
 
+		if (!KunenaUserHelper::getMyself()->isModerator())
+		{
+			return;
+		}
+
 		if ($topicicontype == 'fa')
 		{
 			return '<i class="fa fa-compass"></i>';

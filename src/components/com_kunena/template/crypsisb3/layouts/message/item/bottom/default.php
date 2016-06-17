@@ -29,6 +29,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 ?>
 
 <small class="text-muted pull-right hidden-xs">
+	<?php echo KunenaIcons::ip();?>
 	<span class="ip"> <?php echo $this->ipLink; ?> </span>
 	<span class="icon glyphicon glyphicon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>

@@ -755,9 +755,10 @@ select#postcatid {
 
 input[type=radio] + label {
 	display          : inline-block;
-	margin           : -2px;
-	padding          : 4px 12px;
 	background-color : transparent;
+	border           : 1px solid rgba(0, 0, 0, 0);
+	margin           : -2px -3px;
+	padding          : 4px 12px;
 }
 
 input[type=radio]:checked + label {
@@ -765,7 +766,6 @@ input[type=radio]:checked + label {
 	border        : 1px solid rgba(0, 0, 0, 0.2);
 	border-radius : 4px;
 }
-
 
 input[type=radio] {
 	display : none;

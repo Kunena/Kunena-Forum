@@ -202,23 +202,23 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>
 								<div class="controls">
-									<button class="btn" id="kshow_attach_form" type="button"><i class="icon-flag-2 icon-white"></i> <?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
+									<button class="btn" id="kshow_attach_form" type="button"><?php echo KunenaIcons::attach() . ' ' . JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
 									<div id="kattach_form" style="display: none;">
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
 										<!-- The fileinput-button span is used to style the file input field as button -->
 										<span class="btn btn-primary fileinput-button">
-											<i class="icon-plus"></i>
+											<?php echo KunenaIcons::plus();?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
 											<!-- The file input field used as target for the file upload widget -->
 											<input id="fileupload" type="file" name="file" multiple>
 										</span>
 										<button id="insert-all" class="btn btn-primary" type="submit">
-											<i class="icon-upload"></i>
+											<?php echo KunenaIcons::upload();?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
 										</button>
 										<button id="remove-all" class="btn btn-danger" type="submit">
-											<i class="icon-cancel"></i>
+											<?php echo KunenaIcons::cancel();?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
 										</button>
 										<!-- The container for the uploaded files -->
@@ -259,10 +259,12 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		</div>
 		<div class="center">
 			<button type="submit" class="btn btn-success" tabindex="8">
-				<i class="icon-edit icon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+				<?php echo KunenaIcons::save();?>
+				<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
 			<button type="reset" class="btn" onclick="window.history.back();" tabindex="10">
-				<i class="icon-cancel"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo KunenaIcons::cancel();?>
+				<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>
 		<?php

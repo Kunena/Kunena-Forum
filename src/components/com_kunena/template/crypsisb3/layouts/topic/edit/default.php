@@ -187,14 +187,14 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>
 								<div class="controls">
-									<button class="btn btn-default" id="kshow_attach_form" type="button"><i class="glyphicon glyphicon-paperclip"></i> <?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
+									<button class="btn btn-default" id="kshow_attach_form" type="button"><?php echo KunenaIcons::attach() . ' ' . JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
 									<div id="kattach_form" style="display: none;">
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
 
 										<!-- The fileinput-button span is used to style the file input field as button -->
 										<span class="btn btn-primary fileinput-button">
-											<i class="glyphicon glyphicon-plus"></i>
+											<?php echo KunenaIcons::plus();?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
 											<!-- The file input field used as target for the file upload widget -->
 											<input id="fileupload" type="file" name="file" multiple>
@@ -255,10 +255,12 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		</div>
 		<div class="center">
 			<button type="submit" class="btn btn-success" tabindex="8">
-				<i class="glyphicon glyphicon-edit glyphicon glyphicon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+				<?php echo KunenaIcons::save();?>
+				<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
 			<button type="reset" class="btn btn-default" onclick="window.history.back();" tabindex="9">
-				<i class="glyphicon glyphicon-remove-circle"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo KunenaIcons::cancel();?>
+				<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>
 		<?php

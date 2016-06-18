@@ -108,6 +108,16 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	$('#replyquick').click(function () {
+		var name = '#' + $(this).attr('data-related');
+		if ($(name).is(":visible")) {
+			$(name).hide();
+		}
+		else {
+			$(name).show();
+		}
+	});
+
 	// Load topic icons by ajax request
 	$('#postcatid').change(function () {
 		var catid = $('select#postcatid option').filter(':selected').val();

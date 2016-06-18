@@ -556,4 +556,68 @@ class KunenaIcons
 			return '<i class="large-kicon icon icon-trash"></i>';
 		}
 	}
+
+	/**
+	 * Return the poll add icon
+	 *
+	 * @return string
+	 */
+	static public function poll_add()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i id="kbutton-poll-add" class="fa fa-plus btn btn-xs btn-small btn-default"
+						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
+						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"
+						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+		else
+		{
+			return '<i id="kbutton-poll-add" class="icon icon-plus btn btn-small"
+						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+	}
+
+	/**
+	 * Return the poll rem icon
+	 *
+	 * @return string
+	 */
+	static public function poll_rem()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i id="kbutton-poll-add" class="fa fa-minus btn btn-xs btn-small btn-default"
+						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<i id="kbutton-poll-add" class="icon icon-minus btn btn-small"
+						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<i id="kbutton-poll-add" class="glyphicon glyphicon-minus btn btn-xs btn-default"
+						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+		else
+		{
+			return '<i id="kbutton-poll-add" class="icon icon-minus btn btn-small"
+						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
+		}
+	}
 }

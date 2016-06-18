@@ -171,10 +171,8 @@ $this->getBBcodesEnabled();
 						maxlength="100" size="40"
 						value="<?php echo $this->escape($this->poll->title) ?>"
 						/>
-					<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i>
-					<i id="kbutton-poll-rem" class="glyphicon glyphicon-minus btn btn-xs btn-default"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
+					<?php echo KunenaIcons::poll_add();?>
+					<?php echo KunenaIcons::poll_rem();?>
 					<br>
 					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 					<div id="datepoll-container" class="col-md-5">

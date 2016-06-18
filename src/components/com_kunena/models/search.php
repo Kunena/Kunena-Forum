@@ -97,7 +97,6 @@ class KunenaModelSearch extends KunenaModel
 
 		$this->setState('query.catids', $value);
 
-		// FIXME: support search topic
 		if (isset($_POST ['q']) || isset($_POST ['searchword']))
 		{
 			$value = JFactory::getApplication()->input->get('ids', array(0), 'post', 'array');
@@ -111,7 +110,6 @@ class KunenaModelSearch extends KunenaModel
 		else
 		{
 			$value = JFactory::getApplication()->input->getString('ids', '0', 'get');
-			$value = explode(' ', $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)

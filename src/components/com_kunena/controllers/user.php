@@ -215,7 +215,7 @@ class KunenaControllerUser extends KunenaController
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
 		}
 
-		if ($this->profile->userid == $this->me->userid)
+		if ($this->user->userid == $this->me->userid)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
 		}
@@ -344,7 +344,7 @@ class KunenaControllerUser extends KunenaController
 					$user
 				);
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 

@@ -169,14 +169,14 @@ if ($this->config->showuserstats)
 								<?php echo $private->shownewIcon($profile->userid); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><i class="icon-mail"></i></a>
+								<a class="btn btn-small" href="mailto:<?php echo $profile->email; ?>"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i> <?php echo $websiteName ?></a>
+								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?> <?php echo $websiteName ?></a>
 							<?php elseif(empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><i class="icon-bookmark"></i> <?php echo $websiteURL ?></a>
+								<a class="btn btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?> <?php echo $websiteURL ?></a>
 							<?php elseif(!empty($websiteName) && $websiteURL == 'http://') : ?>
-								<button class="btn btn-small"><i class="icon-bookmark"></i> <?php echo $websiteName ?></button>
+								<button class="btn btn-small"><?php echo KunenaIcons::bookmark(); ?> <?php echo $websiteName ?></button>
 							<?php endif; ?>
 						</div>
 					</div>

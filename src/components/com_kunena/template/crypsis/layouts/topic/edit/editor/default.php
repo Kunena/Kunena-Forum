@@ -145,10 +145,8 @@ $this->getBBcodesEnabled();
 					<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 							maxlength="100" size="40"
 							value="<?php echo $this->escape($this->poll->title) ?>" />
-					<i id="kbutton-poll-add" class="icon-plus btn btn-small"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i>
-					<i id="kbutton-poll-rem" class="icon-minus btn btn-small"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
+					<?php echo KunenaIcons::poll_add();?>
+					<?php echo KunenaIcons::poll_rem();?>
 				</div>
 				<div>
 					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>

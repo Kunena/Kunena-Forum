@@ -46,7 +46,7 @@ $this->addScript('assets/js/search.js');
 				<th class="span1 center hidden-phone">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
-						<i class="icon-arrow-down"></i>
+						<?php echo KunenaIcons::arrowdown();?>
 					</a>
 				</th>
 
@@ -207,7 +207,7 @@ $this->addScript('assets/js/search.js');
 		<td class="span1 center hidden-phone">
 			<a id="forumbottom"> </a>
 			<a href="#forumtop">
-				<i class="icon-arrow-up hasTooltip"></i>
+				<?php echo KunenaIcons::arrowup();?>
 			</a>
 		</td>
 		<td colspan="8" class="hidden-phone">

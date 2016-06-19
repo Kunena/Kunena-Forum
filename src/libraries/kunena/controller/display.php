@@ -255,7 +255,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			// Obey Joomla configuration.
 			if ($this->app->get('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $this->config->board_title . ' - ' . $title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title . ' - ' . $this->config->board_title);
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
@@ -263,7 +263,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 			else
 			{
-				$title = KunenaFactory::getConfig()->board_title . ' - ' . $title;
+				$title = $title . ' - ' . KunenaFactory::getConfig()->board_title;
 			}
 		}
 

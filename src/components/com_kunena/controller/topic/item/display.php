@@ -142,7 +142,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->userTopic = $this->topic->getUserTopic();
 		$this->quickReply = ($this->topic->isAuthorised('reply') && $this->me->exists());
 
-		$this->headerText = JText::_('COM_KUNENA_TOPIC') . ' ' . html_entity_decode($this->topic->displayField('subject'));
+		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
 	}
 
 	/**

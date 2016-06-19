@@ -71,7 +71,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		$this->category->tryAuthorise();
 
-		$this->headerText = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
+		$this->headerText = $this->category->name;
 
 		$topic_ordering = $this->category->topic_ordering;
 
@@ -170,7 +170,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', "{$parentText} / {$categoryText}{$pagesText}");
+				$title = JText::sprintf("{$categoryText}");
 				$this->setTitle($title);
 			}
 

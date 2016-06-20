@@ -205,7 +205,7 @@ $more = ($this->once ?
 											bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
 												href="<?php echo $this->messageUrl; ?>">
-												Read more
+												<?php echo JText::_('COM_KUNENA_READMORE'); ?>
 											</a>
 										</td>
 									</tr>

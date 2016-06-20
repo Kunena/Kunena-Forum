@@ -40,7 +40,7 @@ if ($show)
 	<li>
 		<?php echo $user->getLink($avatar); ?>
 		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-				<span class="topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-starter-circle';};?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+				<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-starter-circle';};?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 		<?php endif;?>
 		<?php /*if ($user->isModerator()) : */?><!--
 			<span class="<?php /*if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};*/?> topic-moderator"><?php /*echo JText::_('COM_KUNENA_TEAM_MEMBER') */?></span>

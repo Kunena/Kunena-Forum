@@ -68,7 +68,7 @@ if ($me->canDoCaptcha() )
 
 				<div class="modal-header">
 					<h3>
-						<?php echo JText::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
+						<?php echo JText::sprintf('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY', $author->getLink()); ?>
 					</h3>
 				</div>
 

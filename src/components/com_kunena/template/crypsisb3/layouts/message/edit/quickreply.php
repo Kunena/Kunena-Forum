@@ -75,12 +75,14 @@ $quick = $template->params->get('quick');
 
 <?php if ($quick == 1) : ?>
 <div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+
 <?php elseif ($quick == 0) : ?>
 <div class="col-md-12 qreplyform" id="kreply<?php echo $message->displayField('id'); ?>_form"  style="position: relative; top: 10px; left: -20px; right: -10px; width:100%; z-index: 1;display: none">
-<?php endif;?>
-
 	<div class="panel panel-default">
 		<div class="panel-body">
+<?php endif;?>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post"
 				enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
 				<input type="hidden" name="task" value="post" />

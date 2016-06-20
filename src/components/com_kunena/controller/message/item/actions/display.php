@@ -327,6 +327,13 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 					);
 				}
 			}
+
+			if ($this->message->isAuthorised('delete'))
+			{
+				$this->messageButtons->set('delete',
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', null, $button)
+				);
+			}
 		}
 		elseif ($this->message->hold == 2 || $this->message->hold == 3)
 		{

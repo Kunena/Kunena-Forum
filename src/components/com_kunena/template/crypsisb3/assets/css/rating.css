@@ -10,10 +10,6 @@
   top: 4px;
 }
 
-#ktopicsform [class*='category'] #krating-top {
-  float: right;
-}
-
 #kunena .c-rating {
   display: -webkit-box;
   display: -webkit-flex;

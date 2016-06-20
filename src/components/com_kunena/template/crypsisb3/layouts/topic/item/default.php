@@ -37,6 +37,7 @@ $this->addScript('assets/js/krating.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social = $this->ktemplate->params->get('socialshare');
+$quick = $this->ktemplate->params->get('quick');
 ?>
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">
@@ -87,6 +88,13 @@ foreach ($this->messages as $id => $message)
 	echo $this->subRequest('Topic/Item/Message')
 		->set('mesid', $message->id)
 		->set('location', $id);
+}
+
+if ($quick == 2)
+{
+	echo $this->subLayout('Message/Edit')
+		->set('message', $this->message)
+		->setLayout('full');
 }
 ?>
 

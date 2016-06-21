@@ -259,7 +259,14 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 			elseif ($this->app->get('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+				if ($this->config->board_title == $this->app->get('sitename'))
+				{
+					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title);
+				}
+				else
+				{
+					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+				}
 			}
 			else
 			{

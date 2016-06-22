@@ -64,7 +64,12 @@ endif; ?>
 
 	<?php if (empty($this->message_closed)) : ?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
-			<?php if($this->quickreply && $quick != 2) : ?>
+			<?php if ($this->quickreply && $quick == 0) : ?>
+				<a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default" id="replyquick"
+					rel="nofollow"><i class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+				</a>
+			<?php endif; ?>
+			<?php if ($this->quickreply && $quick == 1) : ?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default openmodal"
 					data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form" rel="nofollow"><i class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>

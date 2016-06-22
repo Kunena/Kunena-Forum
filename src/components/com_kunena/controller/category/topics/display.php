@@ -149,7 +149,16 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	{
 		$page         = $this->pagination->pagesCurrent;
 		$pages        = $this->pagination->pagesTotal;
-		$pagesText    = $page > 1 ? " ({$page}/{$pages})" : '';
+
+		if ($pages > 1)
+		{
+			$pagesText = " ({$page}/{$pages})";
+		}
+		else
+		{
+			$pagesText = '';
+		}
+
 		$parentText   = $this->category->getParent()->displayField('name');
 		$categoryText = $this->category->displayField('name');
 
@@ -170,7 +179,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			}
 			else
 			{
-				$title = JText::sprintf("{$categoryText}");
+				$title = JText::sprintf("{$categoryText}{$pagesText}");
 				$this->setTitle($title);
 			}
 

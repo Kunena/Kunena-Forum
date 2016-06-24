@@ -48,7 +48,7 @@ $quick = $this->ktemplate->params->get('quick');
 </div>
 <?php endif; ?>
 
-<h3>
+<h1>
 	<?php echo $topic->getIcon($topic->getCategory()->iconset);?>
 	<?php
 	if ($this->ktemplate->params->get('labels') != 0)
@@ -58,7 +58,7 @@ $quick = $this->ktemplate->params->get('quick');
 	?>
 	<?php echo $topic->displayField('subject');?>
 	<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config);?>
-</h3>
+</h1>
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
@@ -67,12 +67,14 @@ $quick = $this->ktemplate->params->get('quick');
 	->set('pagination', $this->pagination)
 	->set('display', true); ?>
 </div>
-<div class="pull-right">
+
+<h2 class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 	->set('id', $topic->id)
 	->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
 	->setLayout('topic'); ?>
-</div>
+</h2>
+
 <div class="clearfix"></div>
 
 <?php if ($social) : ?>
@@ -104,6 +106,7 @@ if ($quick == 2)
 	->set('pagination', $this->pagination)
 	->set('display', true); ?>
 </div>
+
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 	->set('id', $topic->id)
@@ -118,4 +121,5 @@ if ($quick == 2)
 <?php endif; ?>
 
 <div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
+
 <div class="clearfix"></div>

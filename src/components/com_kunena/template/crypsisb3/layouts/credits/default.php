@@ -11,14 +11,14 @@
 defined('_JEXEC') or die;
 ?>
 
-<h3>
+<h1>
 	<?php echo JText::_('COM_KUNENA') . ' - ' . JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?>
-</h3>
+</h1>
 
 <div class="well well-small" id="credits">
-	<div class="container-fluid pull-left">
+	<h2 class="container-fluid pull-left">
 		<img src="<?php echo $this->logo; ?>" width="48" height="48" alt="Kunena" />
-	</div>
+	</h2>
 	<p class="intro">
 		<?php echo $this->intro; ?>
 	</p>

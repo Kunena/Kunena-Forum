@@ -17,23 +17,23 @@ $this->addStyleSheet('assets/css/rating.css');
 <div class="row">
 	<div class="col-md-12">
 		<div class="pull-left">
-			<h3>
+			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs">
 					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-			</h3>
+			</h1>
 		</div>
 
 		<div class="pull-right" id="filter-time">
-			<div class="filter-sel pull-right">
+			<h2 class="filter-sel pull-right">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					method="post" target="_self" class="form-inline hidden-xs">
 						<?php $this->displayTimeFilter('sel'); ?>
 				</form>
-			</div>
+			</h2>
 		</div>
 	</div>
 </div>

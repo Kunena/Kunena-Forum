@@ -10,5 +10,5 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<h2><?php echo $this->header; ?></h2>
+<h1><?php echo $this->header; ?></h1>
 <div class="well well-small"><?php echo $this->body; ?></div>

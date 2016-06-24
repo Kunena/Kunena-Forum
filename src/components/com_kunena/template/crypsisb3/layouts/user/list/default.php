@@ -19,15 +19,15 @@ $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/search.js');
 ?>
-<h2>
+<h1>
 	<?php echo JText::_('COM_KUNENA_MEMBERS'); ?>
-</h2>
+</h1>
 
-<div class="pull-right">
+<h2 class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 	->set('state', $this->state->get('list.search'))
 	->setLayout('user'); ?>
-</div>
+</h2>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')

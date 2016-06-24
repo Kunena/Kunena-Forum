@@ -103,14 +103,14 @@ $filterItem = $this->escape($this->state->get('item.id'));
 						<th width="5%" class="nowrap center">
 							<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
 						</th>
-						<th class="nowrap">
+						<th width="1%" class="nowrap">
 							<?php echo JText::_('COM_KUNENA_GO'); ?>
 						</th>
-						<th class="nowrap">
+						<th width="51%" class="nowrap">
 							<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
 						</th>
-						<th width="24%" class="nowrap center hidden-phone">
-							<?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
+						<th width="20%" class="nowrap center hidden-phone">
+							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
 						</th>
 						<th width="5%" class="nowrap center">
 							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>

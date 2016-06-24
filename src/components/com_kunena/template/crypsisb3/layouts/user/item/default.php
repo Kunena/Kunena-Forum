@@ -13,18 +13,19 @@ defined('_JEXEC') or die;
 $tabs = $this->getTabs();
 ?>
 
-<h3>
+<h1 class="pull-left">
 	<?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
+</h1>
 
+<h2 class="pull-right">
 	<?php if ($this->profile->isAuthorised('edit') || $this->me->isAdmin()) : ?>
 		<?php echo $this->profile->getLink(
 			KunenaIcons::edit() . ' ' . JText::_('COM_KUNENA_EDIT'),
-		JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn btn-default pull-right'
-	); ?>
+			JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit', 'btn btn-default'
+		); ?>
 	<?php endif; ?>
-
-</h3>
+</h2>
 
 <?php
 echo $this->subLayout('User/Item/Summary')

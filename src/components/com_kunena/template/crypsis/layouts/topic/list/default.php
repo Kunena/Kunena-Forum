@@ -17,25 +17,25 @@ $this->addStyleSheet('assets/css/rating.css');
 <div class="row-fluid">
 	<div class="span12">
 		<div class="pull-left">
-			<h2>
+			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-sm">
 					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-			</h2>
+			</h1>
 		</div>
 
 		<div class="filter-time pull-right">
-			<div class="filter-sel">
+			<h2 class="filter-sel">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					method="post" target="_self" class="form-inline hidden-phone">
 					<div>
 						<?php $this->displayTimeFilter('sel'); ?>
 					</div>
 				</form>
-			</div>
+			</h2>
 		</div>
 	</div>
 </div>

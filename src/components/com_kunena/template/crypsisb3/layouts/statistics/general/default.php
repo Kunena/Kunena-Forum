@@ -10,8 +10,10 @@
  **/
 defined('_JEXEC') or die;
 ?>
-<div>
-
+<div class="statistics">
+<h1>
+	<?php echo JText::_('COM_KUNENA_STATISTICS');?>
+</h1>
 	<?php foreach ($this->top as $top) : ?>
 		<h3>
 			<?php echo $top[0]->title; ?>
@@ -47,9 +49,9 @@ defined('_JEXEC') or die;
 		</table>
 	<?php endforeach; ?>
 	<?php if ($this->config->showgenstats) : ?>
-		<h2>
+		<h3>
 			<?php echo JText::_('COM_KUNENA_STATISTICS'); ?>
-		</h2>
+		</h3>
 
 		<div class="well well-small">
 			<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:

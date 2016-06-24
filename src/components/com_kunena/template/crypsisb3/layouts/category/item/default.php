@@ -19,10 +19,10 @@ $this->addStyleSheet('assets/css/rating.css');
 <?php if ($this->category->headerdesc) : ?>
 	<div class="clearfix"></div>
 	<br>
-	<div class="alert alert-info">
+	<h1 class="alert alert-info">
 		<a class="close" data-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
-	</div>
+	</h1>
 <?php endif; ?>
 
 <?php if (!$this->category->isSection()) : ?>
@@ -30,15 +30,11 @@ $this->addStyleSheet('assets/css/rating.css');
 <?php if (!empty($this->topics)) : ?>
 <div class="row">
 	<div class="col-md-12">
-		<h3>
-			<?php echo $this->escape($this->headerText); ?>
-		</h3>
-
-		<div class="pull-right">
+		<h2 class="pull-right">
 			<?php echo $this->subLayout('Widget/Search')
 	->set('catid', $this->category->id)
 	->setLayout('topic'); ?>
-		</div>
+		</h2>
 
 		<div class="pull-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')

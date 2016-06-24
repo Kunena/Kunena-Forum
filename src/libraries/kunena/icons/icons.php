@@ -212,7 +212,7 @@ class KunenaIcons
 		}
 		else
 		{
-			return '<i class="icon icon-remove-sign"></i>';
+			return '<i class="icon icon-cancel"></i>';
 		}
 	}
 

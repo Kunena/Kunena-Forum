@@ -16,7 +16,10 @@
 
 defined('_JEXEC') or die;
 
-echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+if ($this->config->enableforumjump)
+{
+	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+}
 
 $mmm = 0;
 

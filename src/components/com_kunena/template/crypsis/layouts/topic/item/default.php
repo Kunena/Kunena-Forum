@@ -107,7 +107,12 @@ foreach ($this->messages as $id => $message)
 
 <?php if ($this->ktemplate->params->get('writeaccess')) : ?>
 <div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
-<?php endif; ?>
+<?php endif; 
+
+if ($this->config->enableforumjump)
+{
+	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+}?>
 
 <div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
 <div class="clearfix"></div>

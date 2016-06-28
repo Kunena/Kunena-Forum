@@ -150,14 +150,8 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$page         = $this->pagination->pagesCurrent;
 		$pages        = $this->pagination->pagesTotal;
 
-		if ($pages > 1)
-		{
-			$pagesText = " ({$page}/{$pages})";
-		}
-		else
-		{
-			$pagesText = '';
-		}
+		$pagesText = ($pages > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+
 
 		$parentText   = $this->category->getParent()->displayField('name');
 		$categoryText = $this->category->displayField('name');

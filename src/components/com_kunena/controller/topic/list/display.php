@@ -93,7 +93,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	{
 		$page = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;
-		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
+		$headerText = $this->headerText . ($total > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();

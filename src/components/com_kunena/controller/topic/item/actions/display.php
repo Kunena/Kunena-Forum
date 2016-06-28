@@ -49,6 +49,11 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		$this->template = KunenaFactory::getTemplate();
 		$this->topicButtons = new JObject;
 
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$fullactions = $this->ktemplate->params->get('fullactions');
+
+		$button = $fullactions ? true : false;
+
 		if ($this->config->read_only)
 		{
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
@@ -57,39 +62,85 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 		if ($this->topic->isAuthorised('reply'))
 		{
 			// Add Reply topic button.
-			$this->topicButtons->set('reply',
-				$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication')
-			);
+
+			if ($fullactions)
+			{
+				$this->topicButtons->set('reply',
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication')
+				);
+			}
+			else
+			{
+				$this->topicButtons->set('reply',
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button)
+				);
+			}
 		}
 
 		if ($userTopic->subscribed)
 		{
 			// User can always remove existing subscription.
-			$this->topicButtons->set('subscribe',
-				$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user')
-			);
+			if ($fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user')
+				);
+			}
+			else
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button)
+				);
+			}
 		}
 		elseif ($this->topic->isAuthorised('subscribe'))
 		{
 			// Add subscribe topic button.
-			$this->topicButtons->set('subscribe',
-				$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user')
-			);
+			if ($fullactions)
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user')
+				);
+			}
+			else
+			{
+				$this->topicButtons->set('subscribe',
+					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button)
+				);
+			}
 		}
 
 		if ($userTopic->favorite)
 		{
 			// User can always remove existing favorite.
-			$this->topicButtons->set('favorite',
-				$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user')
-			);
+			if ($fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user')
+				);
+			}
+			else
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button)
+				);
+			}
 		}
 		elseif ($this->topic->isAuthorised('favorite'))
 		{
 			// Add favorite topic button.
-			$this->topicButtons->set('favorite',
-				$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user')
-			);
+			if ($fullactions)
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user')
+				);
+			}
+			else
+			{
+				$this->topicButtons->set('favorite',
+					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button)
+				);
+			}
 		}
 
 		if ($this->topic->getCategory()->isAuthorised('moderate'))
@@ -101,9 +152,11 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			$this->topicButtons->set('sticky',
 				$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation')
 			);
+
 			$this->topicButtons->set('lock',
 				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation')
 			);
+
 			$this->topicButtons->set('moderate',
 				$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation')
 			);
@@ -137,21 +190,21 @@ class ComponentKunenaControllerTopicItemActionsDisplay extends KunenaControllerD
 			if ($this->layout != 'default')
 			{
 				$this->topicButtons->set('flat',
-					$this->getButton(sprintf($url, 'flat'), 'flat', 'layout', 'user')
+					$this->getButton(sprintf($url, 'flat'), 'flat', 'layout', 'user', false, $button)
 				);
 			}
 
 			if ($this->layout != 'threaded')
 			{
 				$this->topicButtons->set('threaded',
-					$this->getButton(sprintf($url, 'threaded'), 'threaded', 'layout', 'user')
+					$this->getButton(sprintf($url, 'threaded'), 'threaded', 'layout', 'user', false, $button)
 				);
 			}
 
 			if ($this->layout != 'indented')
 			{
 				$this->topicButtons->set('indented',
-					$this->getButton(sprintf($url, 'indented'), 'indented', 'layout', 'user')
+					$this->getButton(sprintf($url, 'indented'), 'indented', 'layout', 'user', false, $button)
 				);
 			}
 		}

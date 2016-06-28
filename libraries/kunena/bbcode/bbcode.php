@@ -185,10 +185,10 @@ class KunenaBbcode extends NBBC_BBCode
 				if (isset($itemid))
 				{
 					// convert ebay item to embedded widget
-					KunenaBbcodeLibrary::renderEbayLayout($itemid);
+					return KunenaBbcodeLibrary::renderEbayLayout($itemid);
 				}
 
-				return $this->defaults->getEbayItemFromCache($itemid);
+				return;
 			}
 
 			parse_str($params['query'], $query);
@@ -2721,7 +2721,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 *
 	 * @return string
 	 */
-	public function getEbayItemFromCache($ItemID)
+	public static function getEbayItemFromCache($ItemID)
 	{
 		$cache = JFactory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
@@ -2759,7 +2759,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			return (string) $layout
 			->set('content', $ItemID)
-			->set('params', $params)
+			//->set('params', $params)
 			->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
 			->set('pictureurl', $ebay->Item->PictureURL[0])
 			->set('status', $ebay->Item->ListingStatus)

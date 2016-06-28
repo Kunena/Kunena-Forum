@@ -2,7 +2,7 @@
 <!DOCTYPE extension>
 <extension version="2.5" type="file" method="upgrade">
 	<name>kunena_tmpl_crypsisb3</name>
-	<version>4.0.11</version>
+	<version>4.0.12</version>
 	<creationDate>2016-06-05</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>

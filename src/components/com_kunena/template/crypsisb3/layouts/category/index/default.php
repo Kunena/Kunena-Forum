@@ -16,6 +16,11 @@
 
 defined('_JEXEC') or die;
 
+if ($this->config->enableforumjump)
+{
+	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+}
+
 $mmm = 0;
 
 foreach ($this->sections as $section) :

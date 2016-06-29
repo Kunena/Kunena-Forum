@@ -34,8 +34,10 @@ $list = array();
 ?>
 
 <small class="text-muted pull-right hidden-xs">
+	<?php if ($this->ipLink) : ?>
 	<?php echo KunenaIcons::ip();?>
 	<span class="ip"> <?php echo $this->ipLink; ?> </span>
+	<?php endif;?>
 	<span class="glyphicon glyphicon-time"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>

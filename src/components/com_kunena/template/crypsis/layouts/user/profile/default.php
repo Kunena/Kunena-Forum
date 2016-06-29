@@ -112,10 +112,25 @@ if ($show)
 
 			<li>
 				<?php echo $user->profileIcon('gender'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('birthdate'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('location'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('website'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('private'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('email'); ?>
 			</li>
 			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofilemore'); ?>

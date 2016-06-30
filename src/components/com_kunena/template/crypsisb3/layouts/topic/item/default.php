@@ -115,5 +115,10 @@ if ($quick == 2)
 <?php if ($this->ktemplate->params->get('writeaccess')) : ?>
 	<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
 <?php endif; ?>
+<?php
+if ($this->config->enableforumjump)
+{
+	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+} ?>
 <div class="clearfix"></div>
 <div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>

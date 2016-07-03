@@ -1036,6 +1036,13 @@ JHtml::_('behavior.tabstate');
 												</td>
 												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY') ?></td>
+												<td>
+													<input type="text" name="cfg_google_map_api_key" value="<?php echo $this->escape($this->config->google_map_api_key) ?>" />
+												</td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY_DESC') ?></td>
+											</tr>
 											</tbody>
 										</table>
 									</fieldset>

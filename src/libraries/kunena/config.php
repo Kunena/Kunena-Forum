@@ -1153,6 +1153,12 @@ class KunenaConfig extends JObject
 	public $attach_end = 14;
 	
 	/**
+	 * @var string Define the google maps API key
+	 * @since  K5.0.0
+	 */
+	public $google_map_api_key = '';
+	
+	/**
 	 *
 	 */
 	public function __construct()

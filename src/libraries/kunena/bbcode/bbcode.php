@@ -1479,14 +1479,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					->set('content', $content)
 					->set('params', $params);
 			}
-
-			// TODO: Remove in Kunena 4.0
-			// Display but highlight the fact that it is hidden from everyone except admins and mods
-			return '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
 		}
 		else
 		{
-			return '';
+			return '<br />' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '<br />';
 		}
 	}
 

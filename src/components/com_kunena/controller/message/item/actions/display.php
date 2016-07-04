@@ -214,11 +214,15 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		}
 
 		// Unthank you
-		if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
+
+		if (KunenaFactory::getConfig()->showthankyou)
 		{
-			$this->messageButtons->set('unthankyou',
-				$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false)
-			);
+			if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
+			{
+				$this->messageButtons->set('unthankyou',
+					$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false)
+				);
+			}
 		}
 
 		// Report this.

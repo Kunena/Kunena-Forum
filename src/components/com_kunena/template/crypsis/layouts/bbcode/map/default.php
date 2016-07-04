@@ -17,6 +17,14 @@ defined('_JEXEC') or die;
 static $id;
 $params = $this->params;
 
+// Set google map API key if it filled in Kunena configuration
+$map_key = '';
+
+if (!empty($this->config->google_map_api_key))
+{
+	$map_key = '&key=' . $this->config->google_map_api_key;
+}
+
 // Load JavaScript API.
 if (!isset($id))
 {
@@ -24,11 +32,11 @@ if (!isset($id))
 
 	if ($uri->isSSL())
 	{
-		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp&signed_in=true');
+		$this->addScript('https://maps.google.com/maps/api/js?v=3.exp&signed_in=true' . $map_key);
 	}
 	else
 	{
-		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true');
+		$this->addScript('http://maps.google.com/maps/api/js?v=3.exp&signed_in=true' . $map_key);
 	}
 
 	$id = 0;

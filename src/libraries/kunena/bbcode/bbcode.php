@@ -1479,14 +1479,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					->set('content', $content)
 					->set('params', $params);
 			}
-
-			// TODO: Remove in Kunena 4.0
-			// Display but highlight the fact that it is hidden from everyone except admins and mods
-			return '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
 		}
 		else
 		{
-			return '';
+			return '<br />' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '<br />';
 		}
 	}
 
@@ -1522,78 +1518,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$layout = KunenaLayout::factory('BBCode/Map');
 
-		$kunena_config = KunenaFactory::getConfig();
-		
 		if ($layout->getPath())
 		{
 			return (string) $layout
 				->set('content', $content)
 				->set('mapid', $this->mapid)
-				->set('params', $params)
-				->set('config', $kunena_config);
+				->set('params', $params);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		static $id = false;
-		static $sensor = true;
-
-		if ($id === false) {
-			$document->addScript('https://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
-			$id = 0;
-		}
-
-		$id ++;
-		$mapid = 'kgooglemap' . $id;
-
-		$map_type = isset($params ['type']) ? strtoupper($params ["type"]): 'ROADMAP';
-		$map_typeId = array('HYBRID','ROADMAP','SATELLITE','TERRAIN');
-
-		if (!in_array($map_type, $map_typeId))
-		{
-			$map_type = 'ROADMAP';
-		}
-
-		$map_zoom = isset($params ['zoom']) ? (int) $params ['zoom']: 10;
-		$map_control = isset($params ['control']) ? (int) $params ['control'] : 0;
-
-		$document->addScriptDeclaration("
-		// <![CDATA[
-			var geocoder;
-			var $mapid;
-
-			window.addEvent('domready', function() {
-				geocoder = new google.maps.Geocoder();
-			var latlng = new google.maps.LatLng(37.333586,-121.894684);
-			var myOptions = {
-				zoom: $map_zoom,
-				disableDefaultUI: $map_control,
-				center: latlng,
-				mapTypeId: google.maps.MapTypeId.$map_type
-			};
-			$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
-
-			var address = ".json_encode($content).";
-			if (geocoder) {
-				geocoder.geocode( { 'address': address}, function(results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					$mapid.setCenter(results[0].geometry.location);
-					var marker = new google.maps.Marker({
-						position: results[0].geometry.location,
-				 		map: $mapid
-					});
-				} else {
-					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode(addslashes($content))."</i></strong></p>';
-					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
-						infowindow$mapid.open($mapid);
-				}
-				});
-			}
-			});
-
-		// ]]>"
-		);
-
-		return '<div id="'.$mapid.'" class="kgooglemap">'.JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE', true).'</div>';
 	}
 
 	/**

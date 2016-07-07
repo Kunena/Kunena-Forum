@@ -203,8 +203,8 @@ jQuery(document).ready(function ($) {
 
 	if ($.fn.datepicker != undefined) {
 		// Load datepicker for poll
-		$('#datepoll-container .input-append.date').datepicker({
-			orientation: "top auto"
+		$('#datepoll-container .input-group.date').datepicker({
+			orientation: "bottom auto"
 		});
 	}
 });

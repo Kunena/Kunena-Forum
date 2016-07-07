@@ -166,24 +166,28 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-body">
 				<div id="kbbcode-poll-options">
+					<div class="input-group col-md-12" style="padding: 0">
 					<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
-					<input type="text" class="inputbox form-control" name="poll_title" id="kpoll-title"
+					<input type="text" class="inputbox form-control col-md-12" name="poll_title" id="kpoll-title"
 						maxlength="100" size="40"
 						value="<?php echo $this->escape($this->poll->title) ?>"
 						/>
+					</div>
+					<div class="clearfix"></div>
 					<?php echo KunenaIcons::poll_add();?>
 					<?php echo KunenaIcons::poll_rem();?>
-					<br>
-					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-					<div id="datepoll-container" class="col-md-5">
-						<div class="input-append date">
+					<div class="clearfix"></div>
+					<div id="datepoll-container">
+						<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
+						<div class="input-group date">
 							<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy" value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
 							<span class="input-group-addon">
 								<i class="glyphicon glyphicon-th"></i>
 							</span>
 						</div>
 					</div>
-					<br>
+					<div class="clearfix"></div>
+					<br />
 					<div id="kpoll-alert-error" class="alert alert-notice" style="display:none;">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
 						<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>

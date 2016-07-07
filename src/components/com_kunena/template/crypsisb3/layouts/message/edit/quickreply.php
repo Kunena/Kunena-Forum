@@ -94,7 +94,7 @@ $quick = $template->params->get('quick');
 				<?php echo JHtml::_('form.token'); ?>
 
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					<button type="button" class="close kreply-cancel" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
 					<h3>
 						<?php echo JText::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
 					</h3>
@@ -103,7 +103,7 @@ $quick = $template->params->get('quick');
 				<div class="modal-body">
 					<?php if (!$me->exists()) : ?>
 						<div class="form-group">
-							<label class="col-md-12 control-label">
+							<label class="col-md-12 control-label" style="padding:0;">
 								<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
 							</label>
 							<input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
@@ -118,7 +118,7 @@ $quick = $template->params->get('quick');
 					<?php endif; ?>
 
 					<div class="form-group">
-						<label for="kanonymous<?php echo intval($message->id); ?>">
+						<label for="kanonymous<?php echo intval($message->id); ?>" class="col-md-12 control-label" style="padding:0;">
 							<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 						</label>
 						<input type="text" id="subject" name="subject" class="form-control"
@@ -127,7 +127,7 @@ $quick = $template->params->get('quick');
 								value="<?php echo $message->displayField('subject'); ?>" />
 					</div>
 					<div class="form-group">
-						<label class="col-md-12 control-label">
+						<label class="col-md-12 control-label" style="padding:0;">
 							<?php echo JText::_('COM_KUNENA_MESSAGE'); ?>:
 						</label>
 						<textarea class="qreply form-control" id="kbbcode-message" name="message" rows="6" cols="60"></textarea>
@@ -136,12 +136,12 @@ $quick = $template->params->get('quick');
 					<?php if ($topic->isAuthorised('subscribe')) : ?>
 					<div class="clearfix"></div>
 					<div class="control-group">
-						<div class="controls">
+						<div id="mesubscribe">
 							<input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1)
 							{
 								echo 'checked="checked"';
 							} ?> />
-							<label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+							<label class="string optional col-md-12 control-label" style="padding:0;" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 						</div>
 					</div>
 					<?php endif; ?>
@@ -170,7 +170,7 @@ $quick = $template->params->get('quick');
 					       value="<?php echo JText::_('COM_KUNENA_SUBMIT'); ?>"
 					       title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT')); ?>" />
 					<?php //TODO: remove data on cancel. ?>
-					<input type="reset" name="reset" class="btn btn-default"
+					<input type="reset" name="reset" class="btn btn-default kreply-cancel"
 						value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
 						title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" data-dismiss="modal" aria-hidden="true" />
 				</div>

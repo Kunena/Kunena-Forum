@@ -86,11 +86,15 @@ echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
 echo $this->subRequest('Topic/Poll')->set('id', $topic->id);
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
 
+$count = 1;
 foreach ($this->messages as $id => $message)
 {
 	echo $this->subRequest('Topic/Item/Message')
 		->set('mesid', $message->id)
 		->set('location', $id);
+
+	echo $this->subLayout('Widget/Module')
+		->set('position', 'kunena_msg_row_' . $count++);
 }
 
 if ($quick == 2)
@@ -118,7 +122,7 @@ if ($quick == 2)
 
 <?php if ($this->ktemplate->params->get('writeaccess')) : ?>
 <div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
-<?php endif; 
+<?php endif;
 
 if ($this->config->enableforumjump)
 {

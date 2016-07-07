@@ -20,7 +20,7 @@ $quick = $this->ktemplate->params->get('quick');
 	<?php if (empty($this->message_closed)) : ?>
 		<div class="kmessagepadding">
 			<?php if ($this->quickreply && $quick == 0) : ?>
-				<a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default" id="replyquick"
+				<a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default Kreplyclick"
 					  rel="nofollow"><i class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>
@@ -65,7 +65,7 @@ endif; ?>
 	<?php if (empty($this->message_closed)) : ?>
 		<div class="btn-toolbar btn-marging kmessagepadding">
 			<?php if ($this->quickreply && $quick == 0) : ?>
-				<a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default" id="replyquick"
+				<a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button" class="btn btn-default Kreplyclick"
 					rel="nofollow"><i class="glyphicon glyphicon-share-alt"></i> <?php echo JText::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>
 			<?php endif; ?>

@@ -108,7 +108,7 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$('#replyquick').click(function () {
+	$('.Kreplyclick').click(function () {
 		var name = '#' + $(this).attr('data-related');
 		if ($(name).is(":visible")) {
 			$(name).hide();
@@ -116,6 +116,10 @@ jQuery(document).ready(function ($) {
 		else {
 			$(name).show();
 		}
+	});
+
+	$('.kreply-cancel').click(function () {
+		$('.qreplyform').hide();
 	});
 
 	// Load topic icons by ajax request

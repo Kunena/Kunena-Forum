@@ -27,7 +27,6 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
-$this->addScript('assets/js/pollcheck.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');
 $this->addScript('assets/js/jquery.iframe-transport.js');
 $this->addScript('assets/js/jquery.fileupload.js');
@@ -49,6 +48,7 @@ $this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('
 $this->addScriptDeclaration("kunena_upload_files_maxfiles = '" . $this->config->attachment_limit . "';");
 
 // If polls are enabled, load also poll JavaScript.
+$this->addScript('assets/js/pollcheck.js');
 
 if ($this->config->pollenabled)
 {
@@ -96,7 +96,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
 			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 		<?php endif; ?>
-		<?php if ($this->message->getTopic()->getPoll()->id) : ?>
+		<?php if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id) : ?>
 			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>" />
 		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />

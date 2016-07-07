@@ -126,12 +126,19 @@ $this->addStyleSheet('assets/css/rating.css');
 				<td colspan="4" class="center"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
 			</tr>
 		<?php else : ?>
+			<?php $counter = 2; ?>
+
 			<?php foreach ($this->topics as $i => $topic)
 			{
 				echo $this->subLayout('Topic/Row')
 					->set('topic', $topic)
 					->set('position', 'kunena_topic_' . $i)
 					->set('checkbox', !empty($this->actions));
+
+				echo $this->subLayout('Widget/Module')
+					->set('position', 'kunena_topic_' . $counter++)
+					->set('cols', $cols)
+					->setLayout('table_row');
 			} ?>
 		<?php endif; ?>
 		</tbody>

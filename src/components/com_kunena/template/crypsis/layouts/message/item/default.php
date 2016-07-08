@@ -52,42 +52,6 @@ $list = array();
 			endif;?>
 		</p>
 	</div>
-	<?php if (!empty($attachments)) : ?>
-		<div class="kattach">
-			<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
-			<ul class="thumbnails">
-				<?php foreach ($attachments as $attachment) : ?>
-					<li class="span3 center">
-						<div class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?> <?php echo $attachment->getLayout()->render('textlink'); ?> </div>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	<?php elseif ($attachs->total > 0  && !$this->me->exists()) :
-		if ($attachs->image > 0 && !$this->config->showimgforguest)
-		{
-			if ($attachs->image > 1)
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
-			}
-			else
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
-			}
-		}
-
-		if ($attachs->file > 0 && !$this->config->showfileforguest)
-		{
-			if ($attachs->file > 1)
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
-			}
-			else
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
-			}
-		}
-	endif; ?>
 	<?php if ($signature) : ?>
 		<div class="ksig">
 			<hr>
@@ -105,7 +69,42 @@ $list = array();
 		<?php endif; ?>
 	<?php endif; ?>
 </div>
+<?php if (!empty($attachments)) : ?>
+	<div class="kattach">
+		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+		<ul class="thumbnails">
+			<?php foreach ($attachments as $attachment) : ?>
+				<li class="span3 center">
+					<div class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?> <?php echo $attachment->getLayout()->render('textlink'); ?> </div>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+<?php elseif ($attachs->total > 0  && !$this->me->exists()) :
+	if ($attachs->image > 0 && !$this->config->showimgforguest)
+	{
+		if ($attachs->image > 1)
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+		}
+		else
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+		}
+	}
 
+	if ($attachs->file > 0 && !$this->config->showfileforguest)
+	{
+		if ($attachs->file > 1)
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+		}
+		else
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+		}
+	}
+endif; ?>
 <?php if ($message->modified_by && $this->config->editmarkup) :
 $dateshown = $datehover = '';
 if ($message->modified_time) {

@@ -39,7 +39,7 @@ $this->addStyleSheet('assets/css/rating.css');
 </div>
 
 <?php
-	if ($this->config->enableforumjump && !$this->embedded)
+	if ($this->config->enableforumjump && !$this->embedded && $this->topics)
 	{
 		echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 	} ?>

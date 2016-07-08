@@ -65,6 +65,7 @@ jQuery(document).ready(function ($) {
 			showLabel: true,
 			shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
 		});
+		$('.jssocials-share-whatsapp').addClass('visible-xs-block');
 	}
 
 	$('#kmod_categories').change(function () {

@@ -3,9 +3,9 @@
 <extension type="package" version="3.4" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>5.0.0-RC4-DEV</version>
-	<versionname>Internal</versionname>
-	<creationDate>2016-06-21</creationDate>
+	<version>5.0.0-RC4</version>
+	<versionname>RC4</versionname>
+	<creationDate>2016-07-08</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>

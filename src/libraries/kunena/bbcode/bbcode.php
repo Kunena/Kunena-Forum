@@ -2870,12 +2870,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$config = KunenaFactory::getConfig();
-
 		$content = strip_tags($content);
 
 
-		return '<iframe src="//instagram.com/p/'. $content .'/embed/" width="612" height="400" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+		return '<div class="embed-container"><iframe src="//instagram.com/p/'. $content .'/embed/"  frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>';
 	}
 
 	/**

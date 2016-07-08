@@ -1518,12 +1518,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$layout = KunenaLayout::factory('BBCode/Map');
 
+		$kunena_config =  KunenaFactory::getConfig();
+
 		if ($layout->getPath())
 		{
 			return (string) $layout
 				->set('content', $content)
 				->set('mapid', $this->mapid)
-				->set('params', $params);
+				->set('params', $params)
+				->set('config', $kunena_config);
 		}
 	}
 

@@ -329,7 +329,7 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if (stripos($type, 'image/') !== true)
+				if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0)
 				{
 					if (!$this->checkFileSizeFileAttachment($size))
 					{
@@ -337,7 +337,7 @@ class KunenaUpload
 					}
 				}
 
-				if (stripos($type, 'image/') !== false)
+				if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 				{
 					if (!$this->checkFileSizeImageAttachment($size))
 					{

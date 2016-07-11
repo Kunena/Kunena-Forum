@@ -557,7 +557,16 @@ class KunenaUpload
 		$file = new stdClass;
 		$file->ext = JFile::getExt($fileInput['name']);
 		$file->size = $fileInput['size'];
-		$file->tmp_name = $fileInput['tmp_name'];
+		
+		if ($type != 'attachment')
+		{
+			$file->tmp_name = $fileInput['tmp_name'];
+		}
+		else
+		{
+			$file->tmp_name = JFile::makeSafe($fileInput['tmp_name']);
+		}
+		
 		$file->error = $fileInput['error'];
 		$file->destination = $destination . '.' . $file->ext;
 		$file->success = false;

@@ -16,7 +16,42 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('behavior.tabstate');
-
+JFactory::getDocument()->addScriptDeclaration('
+window.addEvent("domready", function(){
+var box = $("aliascheck");
+var cun = document.id("jform_aliases");
+$(cun).addEvent("blur", function(){
+    if ($(cun).value.length > 0){
+        var url = "index.php?option=com_kunena&view=categories&format=raw&task=chkAliases&alias="+$(cun).value;
+        box.style.display = "inline-block";
+        box.set("html", " Check in progress...");
+        var a = new Request.JSON({
+            url: url,
+            onComplete: function(response){
+                 box.set("html", response);
+                 if (response){
+                   var el = $(box);
+                   (function(){
+                   el.className = "invalid icon icon-remove";
+                   el.set("html", " Please choose other aliasname");
+                   cun.className = "inputbox invalid-border";
+                 }).delay(100);
+                 }
+                 else {
+                 var el = $(box);
+                 (function(){
+                   el.className = "valid icon icon-ok";
+                   el.set("html", "");
+                   cun.className = "inputbox";
+                 }).delay(100);
+                 }
+            }
+        });
+        a.get();
+      }
+    });
+   });
+');
 ?>
 
 <div id="kunena" class="admin override">
@@ -86,11 +121,9 @@ JHtml::_('behavior.tabstate');
 											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 												<td>
-													<input class="inputbox" type="text" name="alias" size="80" value="<?php echo $this->escape($this->category->alias); ?>" />
+													<input class="inputbox" id="jform_aliases" type="text" name="alias" size="80" value="<?php echo $this->escape($this->category->alias); ?>" />
 													<?php if ($this->options ['aliases']) : ?>
-													<div>
-														<?php echo $this->options ['aliases']; ?>
-													</div>
+														<?php echo '<span id="aliascheck">' . $this->options ['aliases'] . '</span>'; ?>
 													<?php endif ?>
 												</td>
 											</tr>

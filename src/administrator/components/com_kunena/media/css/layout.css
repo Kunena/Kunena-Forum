@@ -224,3 +224,17 @@ dt {
 	border-bottom: 1px solid #eee;
 	padding-bottom: 15px;
 }
+
+.valid {
+	color: green;
+	width: 300px !important;
+}
+
+.invalid {
+	color: red;
+	width: 300px !important;
+}
+
+.invalid-border {
+	border-color: red !important;
+}

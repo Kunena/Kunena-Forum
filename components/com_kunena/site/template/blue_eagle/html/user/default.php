@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 
 <div class="kblock k-profile">
 	<div class="kheader">
-		<h2><span class="k-name"><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?></span>
+		<h2><span class="k-name"><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->profile->getLink();?></span>
 		<?php if (!empty($this->editlink)) echo '<span class="kheadbtn kright">'.$this->editlink.'</span>';?></h2>
 	</div>
 	<div class="kcontainer">

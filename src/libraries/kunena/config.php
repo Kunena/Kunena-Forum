@@ -1159,6 +1159,12 @@ class KunenaConfig extends JObject
 	public $google_map_api_key = '';
 	
 	/**
+	 * @var integer Allow to remove utf8 characters from filename of attachments
+	 * @since  K5.0.0
+	 */
+	public $attachment_utf8 = 1;
+	
+	/**
 	 *
 	 */
 	public function __construct()

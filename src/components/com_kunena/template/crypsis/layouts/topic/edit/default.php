@@ -24,6 +24,21 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
 
+JText::script('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL');
+JText::script('COM_KUNENA_EDITOR_SIZE_VERY_SMALL');
+JText::script('COM_KUNENA_EDITOR_SIZE_SMALL');
+JText::script('COM_KUNENA_EDITOR_SIZE_NORMAL');
+JText::script('COM_KUNENA_EDITOR_SIZE_BIG');
+JText::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
+JText::script('COM_KUNENA_EDITOR_COLOR_BLACK');
+JText::script('COM_KUNENA_EDITOR_COLOR_ORANGE');
+JText::script('COM_KUNENA_EDITOR_COLOR_RED');
+JText::script('COM_KUNENA_EDITOR_COLOR_BLUE');
+JText::script('COM_KUNENA_EDITOR_COLOR_PURPLE');
+JText::script('COM_KUNENA_EDITOR_COLOR_GREEN');
+JText::script('COM_KUNENA_EDITOR_COLOR_WHITE');
+JText::script('COM_KUNENA_EDITOR_COLOR_GRAY');
+
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
 $this->addScript('assets/js/canvas-to-blob.min.js');

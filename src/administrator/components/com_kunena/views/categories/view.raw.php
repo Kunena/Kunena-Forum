@@ -16,25 +16,24 @@ defined('_JEXEC') or die();
  *
  * @since  K5.0
  */
-class KunenaAdminViewCategory extends KunenaView
+class KunenaAdminViewCategories extends KunenaView
 {
-	public function chkAliases()
+	public function displayChkAliases()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$aliases = $jinput->get('aliases', array(), 'post', 'array');
-
+		$alias = $this->app->input->get('alias', null, 'string');
+       
 		$db = JFactory::getDbo();
-		$query = 'SELECT id FROM #__kunena_categories WHERE alias = ' . $aliases;
+		$query = 'SELECT id FROM #__kunena_categories WHERE alias = ' . $db->quote($alias);
 		$db->setQuery($query);
 		$result = $db->loadObject();
 
 		if ($result)
 		{
-			$response['msg']  = 'false';
+			$response['msg']  = 0;
 		}
 		else
 		{
-			$response['msg']  = 'true';
+			$response['msg']  = 1;
 		}
 
 		echo json_encode($response);

@@ -355,7 +355,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 		$templatename = array_shift($template['cid']);
 
 		$filename    = $this->app->input->get('filename', '', 'post', 'cmd');
-		$filecontent = $this->app->input->get('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$filecontent = $this->app->input->post->get('filecontent', '', 'raw');
 
 		if (!JSession::checkToken('post'))
 		{

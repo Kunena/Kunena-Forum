@@ -23,7 +23,7 @@ class KunenaViewTopic extends KunenaView
 	 */
 	function displayEdit($tpl = null)
 	{
-		$body     = JFactory::getApplication()->input->get('body', '', 'post', 'string', 'raw');
+		$body     = JFactory::getApplication()->input->post->get('body', '', 'raw');
 		$response = array();
 
 		if ($this->me->exists() || $this->config->pubwrite)

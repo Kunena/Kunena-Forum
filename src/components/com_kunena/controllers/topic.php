@@ -289,16 +289,16 @@ class KunenaControllerTopic extends KunenaController
 		$this->id = JFactory::getApplication()->input->getInt('parentid', 0);
 		$fields   = array(
 			'catid'             => $this->catid,
-			'name'              => JRequest::getString('authorname', $this->me->getName()),
-			'email'             => JRequest::getString('email', null),
-			'subject'           => JRequest::getVar('subject', null, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
-			'message'           => JRequest::getVar('message', null, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
-			'icon_id'           => JRequest::getInt('topic_emoticon', null),
-			'anonymous'         => JRequest::getInt('anonymous', 0),
-			'poll_title'        => JRequest::getString('poll_title', ''),
-			'poll_options'      => JRequest::getVar('polloptionsID', array(), 'post', 'array'), // Array of key => string
-			'poll_time_to_live' => JRequest::getString('poll_time_to_live', 0),
-			'subscribe'         => JRequest::getInt('subscribeMe', 0)
+			'name'              => JFactory::getApplication()->input->getString('authorname', $this->me->getName()),
+			'email'             => JFactory::getApplication()->input->getString('email', null),
+			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
+			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', null),
+			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
+			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', ''),
+			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
+			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
+			'subscribe'         => JFactory::getApplication()->input->getInt('subscribeMe', 0)
 		);
 
 		$this->app->setUserState('com_kunena.postfields', $fields);
@@ -640,16 +640,16 @@ class KunenaControllerTopic extends KunenaController
 		$message = KunenaForumMessageHelper::get($this->id);
 		$topic   = $message->getTopic();
 		$fields  = array(
-			'name'              => JRequest::getString('authorname', $message->name),
-			'email'             => JRequest::getString('email', $message->email),
-			'subject'           => JRequest::getVar('subject', $message->subject, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
-			'message'           => JRequest::getVar('message', $message->message, 'POST', 'string', JREQUEST_ALLOWRAW), // RAW input
-			'modified_reason'   => JRequest::getString('modified_reason', $message->modified_reason),
-			'icon_id'           => JRequest::getInt('topic_emoticon', $topic->icon_id),
-			'anonymous'         => JRequest::getInt('anonymous', 0),
-			'poll_title'        => JRequest::getString('poll_title', null),
-			'poll_options'      => JRequest::getVar('polloptionsID', array(), 'post', 'array'), // Array of key => string
-			'poll_time_to_live' => JRequest::getString('poll_time_to_live', 0),
+			'name'              => JFactory::getApplication()->input->getString('authorname', $message->name),
+			'email'             => JFactory::getApplication()->input->getString('email', $message->email),
+			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
+			'modified_reason'   => JFactory::getApplication()->input->getString('modified_reason', $message->modified_reason),
+			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', $topic->icon_id),
+			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
+			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', null),
+			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
+			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0)
 		);
 
 		if (!JSession::checkToken('post'))

@@ -12,7 +12,7 @@
 defined('_JEXEC') or die();
 
 JHtml::_('behavior.tooltip');
-JHTML::_('behavior.formvalidator');
+JHtml::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
@@ -39,6 +39,16 @@ JText::script('COM_KUNENA_EDITOR_COLOR_PURPLE');
 JText::script('COM_KUNENA_EDITOR_COLOR_GREEN');
 JText::script('COM_KUNENA_EDITOR_COLOR_WHITE');
 JText::script('COM_KUNENA_EDITOR_COLOR_GRAY');
+JText::script('COM_KUNENA_EDITOR_BOLD');
+JText::script('COM_KUNENA_EDITOR_COLORS');
+JText::script('COM_KUNENA_EDITOR_UNORDERED_LIST');
+JText::script('COM_KUNENA_EDITOR_TABLE');
+JText::script('COM_KUNENA_EDITOR_LINK');
+JText::script('COM_KUNENA_EDITOR_EBAY');
+JText::script('COM_KUNENA_EDITOR_VIDEO_PROVIDER_URL');
+JText::script('COM_KUNENA_EDITOR_MAP');
+JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
+JText::script('COM_KUNENA_EDITOR_TWEET');
 
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');

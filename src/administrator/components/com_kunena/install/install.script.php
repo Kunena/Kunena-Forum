@@ -132,14 +132,32 @@ class Com_KunenaInstallerScript
 			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
 			$this->deleteFolder($adminPath, $ignoreAdmin);
 			$this->deleteFolder($sitePath, $ignoreSite);
-
-			// Remove Blue Eagle template on K5.0
-			$this->deleteFolder($sitePath . '/template/blue_eagle');
-
-			// TODO: delete also en-GB files!
-
 		}
+		
+		// Remove Blue Eagle template on K5.0
+		$this->deleteFolder($sitePath . '/template/blue_eagle');
+		
+		// Delete languages files related to blue eagle in en-gb and others languages
+		$kunena_language_folders = JFolder::folders($sitePath . '/language');
+		
+		foreach($kunena_language_folders as $folder)
+		{
+			if ( JFile::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			{
+				JFile::delete($sitePath . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+			}
+		}
+		
+		$language_folders = JFolder::folders(JPATH_ROOT . '/language');
 
+		foreach($language_folders as $folder)
+		{
+			if ( JFile::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			{
+				JFile::delete(JPATH_ROOT . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+			}
+		}
+		
 		// Remove old system directory
 		if (is_file(JPATH_ROOT . '/media/kunena/topic_icons/system/topicicons.xml'))
 		{

@@ -298,8 +298,6 @@ class KunenaControllerTopic extends KunenaController
 			'poll_title'        => JRequest::getString('poll_title', ''),
 			'poll_options'      => JRequest::getVar('polloptionsID', array(), 'post', 'array'), // Array of key => string
 			'poll_time_to_live' => JRequest::getString('poll_time_to_live', 0),
-			'tags'              => JRequest::getString('tags', null),
-			'mytags'            => JRequest::getString('mytags', null),
 			'subscribe'         => JRequest::getInt('subscribeMe', 0)
 		);
 
@@ -652,8 +650,6 @@ class KunenaControllerTopic extends KunenaController
 			'poll_title'        => JRequest::getString('poll_title', null),
 			'poll_options'      => JRequest::getVar('polloptionsID', array(), 'post', 'array'), // Array of key => string
 			'poll_time_to_live' => JRequest::getString('poll_time_to_live', 0),
-			'tags'              => JRequest::getString('tags', null),
-			'mytags'            => JRequest::getString('mytags', null)
 		);
 
 		if (!JSession::checkToken('post'))

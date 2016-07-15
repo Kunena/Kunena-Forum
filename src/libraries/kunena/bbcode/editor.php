@@ -414,12 +414,12 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					if ($action['name'] == "Size")
 					{
 						$js = "{className: '" . $action['class'] . "', name:'" . $action['name'] . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',	dropMenu :[
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL'), openWith:'[size=1]', 	closeWith:'[/size]' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_VERY_SMALL'), openWith:'[size=2]', 	closeWith:'[/size]' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_SMALL'), openWith:'[size=3]', closeWith:'[/size]' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_NORMAL'), openWith:'[size=4]', closeWith:'[/size]' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_BIG'), openWith:'[size=5]', closeWith:'[/size]' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER'), openWith:'[size=6]', closeWith:'[/size]' }
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL') . "', openWith:'[size=1]', 	closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_VERY_SMALL') . "', openWith:'[size=2]', 	closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_SMALL') . "', openWith:'[size=3]', closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_NORMAL') . "', openWith:'[size=4]', closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_BIG') . "', openWith:'[size=5]', closeWith:'[/size]' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER') . "', openWith:'[size=6]', closeWith:'[/size]' }
 						]}";
 					}
 					elseif ($action['name'] == "videodropdownbutton")
@@ -440,7 +440,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 									});
 								}});
 							} },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO_PROVIDER_URL'), className: 'videoURLbutton', beforeInsert:function() {
+						{name: '" . JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER_URL') . "', className: 'videoURLbutton', beforeInsert:function() {
 							jQuery('#videourlprovider-modal-submit').click(function(event) {
 								event.preventDefault();
 
@@ -461,16 +461,16 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement
 					elseif ($action['name'] == "Colors")
 					{
 						$js = "{className: '" . $action['class'] . "', name:'" . $action['name'] . "', key:'" . $action['key'] . "', openWith:'" . $action['start'] . "', closeWith:'" . $action['end'] . "',dropMenu: [
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_BLACK'),	openWith:'[color=black]', 	closeWith:'[/color]', className:'col1-1' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_ORANGE'),	openWith:'[color=orange]', 	closeWith:'[/color]', className:'col1-2' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_RED'), 	openWith:'[color=red]', 	closeWith:'[/color]', className:'col1-3' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_BLACK') . "',	openWith:'[color=black]', 	closeWith:'[/color]', className:'col1-1' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_ORANGE') . "',	openWith:'[color=orange]', 	closeWith:'[/color]', className:'col1-2' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_RED') . "', 	openWith:'[color=red]', 	closeWith:'[/color]', className:'col1-3' },
 
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_BLUE'), 	openWith:'[color=blue]', 	closeWith:'[/color]', className:'col2-1' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_PURPLE'), openWith:'[color=purple]', 	closeWith:'[/color]', className:'col2-2' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_GREEN'), 	openWith:'[color=green]', 	closeWith:'[/color]', className:'col2-3' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_BLUE') . "', 	openWith:'[color=blue]', 	closeWith:'[/color]', className:'col2-1' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_PURPLE') . "', openWith:'[color=purple]', 	closeWith:'[/color]', className:'col2-2' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_GREEN') . "', 	openWith:'[color=green]', 	closeWith:'[/color]', className:'col2-3' },
 
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_WHITE'), 	openWith:'[color=white]', 	closeWith:'[/color]', className:'col3-1' },
-						{name: Joomla.JText._('COM_KUNENA_EDITOR_COLOR_GRAY'), 	openWith:'[color=gray]', 	closeWith:'[/color]', className:'col3-2' }
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_WHITE') . "', 	openWith:'[color=white]', 	closeWith:'[/color]', className:'col3-1' },
+						{name: '" . JText::_('COM_KUNENA_EDITOR_COLOR_GRAY') . "', 	openWith:'[color=gray]', 	closeWith:'[/color]', className:'col3-2' }
 						]}";
 					}
 					break;

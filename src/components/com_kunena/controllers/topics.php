@@ -49,7 +49,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -113,7 +114,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -174,7 +176,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -235,7 +238,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -469,7 +473,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -516,7 +520,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -562,7 +566,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -608,7 +612,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{

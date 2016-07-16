@@ -138,7 +138,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 	</table>
 </form>
 
-<div class="pull-left">
+<div class="pagination pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 	->set('pagination', $this->pagination->setDisplayedPages(4))
 	->set('display', true); ?>
@@ -149,3 +149,4 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
 
+<div class="clearfix"></div>

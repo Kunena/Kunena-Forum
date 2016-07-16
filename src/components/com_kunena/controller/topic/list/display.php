@@ -224,7 +224,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 	 *
 	 * @return array
 	 */
-	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'permdelete'))
+	protected function getMessageActions(array $messages, $actions = array('approve', 'undelete', 'delete', 'move', 'permdelete'))
 	{
 		if (!$actions)
 		{
@@ -235,6 +235,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 		$options['none'] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$options['approve'] = JHtml::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
 		$options['delete'] = JHtml::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		$options['move'] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 		$options['permdelete'] = JHtml::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 		$options['undelete'] = JHtml::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 

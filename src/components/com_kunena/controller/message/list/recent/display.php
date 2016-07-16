@@ -154,7 +154,7 @@ class ComponentKunenaControllerMessageListRecentDisplay extends ComponentKunenaC
 		{
 			case 'unapproved':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
-				$actions = array('approve', 'delete', 'permdelete');
+				$actions = array('approve', 'delete', 'move', 'permdelete');
 				break;
 			case 'deleted':
 				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');

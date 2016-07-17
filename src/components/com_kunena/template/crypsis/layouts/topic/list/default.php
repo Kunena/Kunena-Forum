@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 
 $cols = !empty($this->actions) ? 6 : 5;
 $colspan = !empty($this->actions) ? 4 : 3;
+$view = JFactory::getApplication()->input->getWord('view');
+
 $this->addStyleSheet('assets/css/rating.css');
 ?>
 <div class="row-fluid">
@@ -27,6 +29,7 @@ $this->addStyleSheet('assets/css/rating.css');
 			</h1>
 		</div>
 
+		<?php if ($view != 'user') : ?>
 		<div class="filter-time pull-right">
 			<h2 class="filter-sel">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
@@ -37,6 +40,7 @@ $this->addStyleSheet('assets/css/rating.css');
 				</form>
 			</h2>
 		</div>
+		<?php endif; ?>
 	</div>
 </div>
 <?php

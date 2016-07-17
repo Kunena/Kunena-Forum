@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
+$view = JFactory::getApplication()->input->getWord('view');
 
 ?>
 
@@ -29,6 +30,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 			</h1>
 		</div>
 
+		<?php if ($view != 'user') : ?>
 		<h2 class="filter-time pull-right">
 			<div class="filter-sel">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
@@ -39,6 +41,7 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 				</form>
 			</div>
 		</h2>
+		<?php endif; ?>
 	</div>
 </div>
 

@@ -999,6 +999,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_A_AUTOEMBEDEBAY_DESC') ?></td>
 											</tr>
 											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD') ?></td>
+												<td><?php echo $this->lists ['autoembedsoundcloud'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD_DESC') ?></td>
+											</tr>
+											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE') ?></td>
 												<td><?php echo $this->lists ['highlightcode'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE_DESC') ?></td>

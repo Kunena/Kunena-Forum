@@ -1165,6 +1165,12 @@ class KunenaConfig extends JObject
 	public $attachment_utf8 = 1;
 	
 	/**
+	 * @var integer Allow to auto-embded soundcloud item when you put just the URL in a message
+	 * @since  K5.0.0
+	 */
+	public $autoembedsoundcloud = 1;
+	
+	/**
 	 *
 	 */
 	public function __construct()

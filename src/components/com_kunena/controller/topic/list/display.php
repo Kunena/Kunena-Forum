@@ -120,7 +120,7 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 
 			if (!empty($params_title))
 			{
-				$title = $params->get('page_title');
+				$title = $params->get('page_title') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setTitle($title);
 			}
 			else

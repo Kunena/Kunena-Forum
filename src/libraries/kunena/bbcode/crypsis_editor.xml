@@ -2,50 +2,50 @@
 <!DOCTYPE bbcode-editor>
 <bbcode-editor>
 	<button tag="b"
-			name="Bold"
+			name="COM_KUNENA_EDITOR_BOLD"
 			title="COM_KUNENA_EDITOR_BOLD"
 			alt="COM_KUNENA_EDITOR_HELPLINE_BOLD">
-		<wrap-selection name="Bold"
+		<wrap-selection name="COM_KUNENA_EDITOR_BOLD"
 						key="B"
 						class="boldbutton"
 						start="[b]"
 						end="[/b]"/>
 	</button>
 	<button tag="i"
-			name="Italic"
+			name="COM_KUNENA_EDITOR_ITALIC"
 			class="italicbutton"
 			title="COM_KUNENA_EDITOR_ITALIC"
 			alt="COM_KUNENA_EDITOR_HELPLINE_ITALIC">
-		<wrap-selection name="Italic"
+		<wrap-selection name="COM_KUNENA_EDITOR_ITALIC"
 						key="I"
 						class="italicbutton"
 						start="[i]"
 						end="[/i]"/>
 	</button>
 	<button tag="u"
-			name="Underline"
+			name="COM_KUNENA_EDITOR_UNDERL"
 			class="underlinebutton"
 			title="COM_KUNENA_EDITOR_UNDERL"
 			alt="COM_KUNENA_EDITOR_HELPLINE_UNDERL">
-		<wrap-selection name="Underline"
+		<wrap-selection name="COM_KUNENA_EDITOR_UNDERL"
 						key="U"
 						class="underlinebutton"
 						start="[u]"
 						end="[/u]"/>
 	</button>
 	<button tag="strike"
-			name="Stroke"
+			name="COM_KUNENA_EDITOR_STRIKE"
 			class="strokebutton"
 			title="COM_KUNENA_EDITOR_STRIKE"
 			alt="COM_KUNENA_EDITOR_HELPLINE_STRIKE">
-		<wrap-selection name="Stroke"
+		<wrap-selection name="COM_KUNENA_EDITOR_STRIKE"
 						key="T"
 						class="strokebutton"
 						start="[strike]"
 						end="[/strike]"/>
 	</button>
 	<button tag="sub"
-			name="Subscript"
+			name="COM_KUNENA_EDITOR_SUB"
 			class="subscriptbutton"
 			title="COM_KUNENA_EDITOR_SUB"
 			alt="COM_KUNENA_EDITOR_HELPLINE_SUB">

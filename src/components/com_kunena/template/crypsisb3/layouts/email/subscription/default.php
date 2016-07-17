@@ -163,7 +163,7 @@ $more = ($this->once ?
 								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
 								<p><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
-								<p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
+								<p>URL : <a href="<?php echo $this->message->getUrl(null, false); ?>"><b><?php echo $this->message->getUrl(null, false); ?></b></a></p>
 							</div>
 
 							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:
@@ -188,7 +188,7 @@ $more = ($this->once ?
 										<td align="center" valign="middle" style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
 											bgcolor="#0072C6"><a target="_blank" style="text-decoration: underline;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-												href="<?php echo $this->messageUrl; ?>">
+												href="<?php echo $this->message->getUrl(null, false); ?>">
 												<?php echo JText::_('COM_KUNENA_READMORE'); ?>
 											</a>
 										</td>
@@ -237,7 +237,7 @@ $alt                 = <<<EOS
 {$this->text('COM_KUNENA_CATEGORY')} : {$this->message->getCategory()->name}
 {$this->text('COM_KUNENA_VIEW_POSTED')} : {$author->getName('???', false)}
 
-URL : {$this->messageUrl}
+URL : {$this->message->getUrl(null, false)}
 
 {$full}{$msg2}{$more}
 

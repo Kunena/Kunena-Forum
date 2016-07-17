@@ -143,9 +143,11 @@ $view = JFactory::getApplication()->input->getWord('view');
 	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4))->set('display', true); ?>
 </div>
 
+<?php if ($view != 'user') : ?>
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 	method="post" target="_self" class="timefilter pull-right">
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
+<?php endif; ?>
 
 <div class="clearfix"></div>

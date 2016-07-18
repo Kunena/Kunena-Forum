@@ -41,11 +41,11 @@ if ($show)
 				<?php echo $user->getLink($avatar); ?>
 			</li>
 				<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-					<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+					<span class="hidden-sm hidden-md topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif;?>
-				<?php if (!$this->topic_starter && $user->isModerator()) : ?>
-					<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
-				<?php endif;?>
+				<?php /*if (!$this->topic_starter && $user->isModerator()) : */?><!--
+					<span class="topic-moderator"><?php /*echo JText::_('COM_KUNENA_MODERATOR') */?></span>
+				--><?php /*endif;*/?>
 
 		<?php endif; ?>
 		<?php if ($user->exists()) : ?>
@@ -86,14 +86,14 @@ if ($show)
 	</li>
 	<?php endif; ?>
 
-	<?php if (!empty($karma)) : ?>
+	<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma) : ?>
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
 		<span> <?php echo $karma; ?> </span>
 	</li>
 	<?php endif; ?>
 
-	<?php if ($show && isset($user->thankyou)) : ?>
+	<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 	<li>
 		<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 		<span> <?php echo JText::sprintf((int) $user->thankyou); ?> </span>

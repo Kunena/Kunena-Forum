@@ -60,7 +60,7 @@ class ComponentKunenaControllerAnnouncementItemDisplay extends KunenaControllerD
 			}
 			else
 			{
-				$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
+				$this->setTitle($this->announcement->title);
 			}
 
 			if (!empty($params_keywords))

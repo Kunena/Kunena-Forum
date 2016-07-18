@@ -760,6 +760,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo $this->lists ['attachment_protection'] ?></td>
 												<td><?php echo JText::sprintf('COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC', JUri::root(false) . 'media/kunena/attachments/image.png') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_ATTACHMENT_FILENAME_UTF8') ?></td>
+												<td><?php echo $this->lists ['attachment_utf8'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_ATTACHMENT_FILENAME_UTF8_DESC') ?></td>
+											</tr>
 											</tbody>
 										</table>
 									</fieldset>
@@ -994,6 +999,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_A_AUTOEMBEDEBAY_DESC') ?></td>
 											</tr>
 											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD') ?></td>
+												<td><?php echo $this->lists ['autoembedsoundcloud'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD_DESC') ?></td>
+											</tr>
+											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE') ?></td>
 												<td><?php echo $this->lists ['highlightcode'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE_DESC') ?></td>
@@ -1035,6 +1045,13 @@ JHtml::_('behavior.tabstate');
 													<input type="text" name="cfg_twitter_consumer_secret" value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>" />
 												</td>
 												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY') ?></td>
+												<td>
+													<input type="text" name="cfg_google_map_api_key" value="<?php echo $this->escape($this->config->google_map_api_key) ?>" />
+												</td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>

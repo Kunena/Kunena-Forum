@@ -161,10 +161,8 @@ $this->getBBcodesEnabled();
 					<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 							maxlength="100" size="40"
 							value="<?php echo $this->escape($this->poll->title) ?>" />
-					<i id="kbutton-poll-add" class="icon-plus btn btn-small"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i>
-					<i id="kbutton-poll-rem" class="icon-minus btn btn-small"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
+					<?php echo KunenaIcons::poll_add();?>
+					<?php echo KunenaIcons::poll_rem();?>
 				</div>
 				<div>
 					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
@@ -212,7 +210,10 @@ $this->getBBcodesEnabled();
 		<p><div id="smilie"><?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 			foreach ($emoticons as $emo_code => $emo_url) {
-				echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="20" height="20" alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+				$data = getimagesize(JPATH_ROOT . '/' . $emo_url);
+				$width = $data[0];
+				$height = $data[1];
+				echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="' . $width .'" height="' . $height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
 			}
 			?>
 			</div></p>

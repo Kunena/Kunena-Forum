@@ -23,8 +23,9 @@ class KunenaViewTopics extends KunenaView
 	{
 		if (!$this->config->enablerss)
 		{
-			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
+			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
+
 
 		KunenaHtmlParser::$relative = false;
 
@@ -81,7 +82,7 @@ class KunenaViewTopics extends KunenaView
 	{
 		if (!$this->config->enablerss)
 		{
-			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
+			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout = 'user';
@@ -122,7 +123,7 @@ class KunenaViewTopics extends KunenaView
 	{
 		if (!$this->config->enablerss)
 		{
-			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
+			return new JException(JText::_('COM_KUNENA_RSS_DISABLED'), 401);
 		}
 
 		$this->layout   = 'posts';

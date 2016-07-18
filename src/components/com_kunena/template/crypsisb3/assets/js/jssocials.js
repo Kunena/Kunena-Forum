@@ -446,7 +446,7 @@
         },
 
         facebook: {
-            label: "Like",
+            label: "Share",
             logo: "fa fa-facebook",
             shareUrl: "https://facebook.com/sharer/sharer.php?u={url}",
             countUrl: function() {
@@ -458,7 +458,7 @@
         },
 
         googleplus: {
-            label: "+1",
+            label: "Share",
             logo: "fa fa-google",
             shareUrl: "https://plus.google.com/share?url={url}",
             countUrl: function() {

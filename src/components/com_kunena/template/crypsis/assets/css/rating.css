@@ -3,6 +3,17 @@
   COMPENENTS - RATING
 
 ----------------------------------------------------------------------------- */
+#krating {
+  display: inline-block;
+  left: 4px;
+  position: relative;
+  top: 4px;
+}
+
+#ktopicsform [class*='category'] #krating-top {
+  float: right;
+}
+
 #kunena .c-rating {
   display: -webkit-box;
   display: -webkit-flex;
@@ -19,6 +30,7 @@
       -ms-flex: 0 0 24px;
           flex: 0 0 24px;
   height: 24px;
+  width: 24px;
   background: url("../images/stars.svg");
   background-position: 0 0;
   cursor: pointer;
@@ -35,6 +47,7 @@
   -ms-flex: 0 0 14px;
   flex: 0 0 14px;
   height: 14px;
+  width: 14px;
   background: url("../images/stars.svg");
   background-size: 200%;
   background-position: 0 0;

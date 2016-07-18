@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#kstats"></div>
+			<div class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#kstats"></div>
 		</div>
 	</div>
 	<h2 class="btn-link">

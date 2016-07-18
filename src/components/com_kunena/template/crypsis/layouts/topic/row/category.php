@@ -155,8 +155,10 @@ if (!empty($this->spacing)) : ?>
 					<div class="span3">
 						<?php echo $author->getLink($avatar, null, 'nofollow', '', null, $category->id); ?>
 					</div>
+					<div class="span9">
+				<?php else : ?>
+					<div class="span12">
 				<?php endif; ?>
-				<div class="span9">
 					<span><?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
 						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', 'hasTooltip', $category->id);?>
 					</span>
@@ -174,12 +176,4 @@ if (!empty($this->spacing)) : ?>
 			</label>
 		</td>
 	<?php endif; ?>
-
-	<?php
-	if (!empty($this->position)) {
-		echo $this->subLayout('Widget/Module')
-			->set('position', $this->position)
-			->set('cols', $cols)
-			->setLayout('table_row'); }
-	?>
 </tr>

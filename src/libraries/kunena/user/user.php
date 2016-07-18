@@ -1358,12 +1358,12 @@ class KunenaUser extends JObject
 				}
 				if ($this->websiteurl)
 				{
-					return '<a href="' . $this->escape ( $url ) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . $this->escape ( $websitename ) . '"></span></a>';
+					return '<a href="' . $this->escape($url) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . $this->escape ( $websitename ) . '"></span></a>';
 				}
 				break;
 			case 'private' :
 				$pms = KunenaFactory::getPrivateMessaging ();
-				return $pms->showIcon ( $this->userid );
+				return $pms->showIcon($this->userid);
 				break;
 			case 'email' :
 				// TODO: show email

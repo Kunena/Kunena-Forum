@@ -40,11 +40,11 @@ if ($show)
 	<li>
 		<?php echo $user->getLink($avatar); ?>
 		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-				<span class="topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-starter-circle';};?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+				<span class="hidden-phone topic-starter <?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-starter-circle';};?>"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 		<?php endif;?>
-		<?php if ($user->isModerator()) : ?>
-			<span class="<?php if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};?> topic-moderator"><?php echo JText::_('COM_KUNENA_TEAM_MEMBER') ?></span>
-		<?php endif;?>
+		<?php /*if ($user->isModerator()) : */?><!--
+			<span class="<?php /*if (KunenaFactory::getTemplate()->params->get('avatarType') == 'img-circle') {echo 'topic-moderator-circle';};*/?> topic-moderator"><?php /*echo JText::_('COM_KUNENA_TEAM_MEMBER') */?></span>
+		--><?php /*endif;*/?>
 	</li>
 	<?php endif; ?>
 
@@ -86,13 +86,13 @@ if ($show)
 			</li>
 			<?php endif; ?>
 
-			<?php if (!empty($karma)) : ?>
+			<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_KARMA') . ': ' . $karma; ?>
 			</li>
 			<?php endif; ?>
 
-			<?php if ($show && isset($user->thankyou)) : ?>
+			<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
 			</li>
@@ -112,10 +112,25 @@ if ($show)
 
 			<li>
 				<?php echo $user->profileIcon('gender'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('birthdate'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('location'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('website'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('private'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('email'); ?>
 			</li>
 			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofilemore'); ?>

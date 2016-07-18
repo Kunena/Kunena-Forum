@@ -102,7 +102,7 @@ if ($this->config->showuserstats)
 								<span> <?php echo JText::sprintf((int) $profile->posts); ?> </span>
 							</li>
 							<?php endif; ?>
-							<?php if (!empty($showKarma) && !empty($profile->karma)) : ?>
+							<?php if (!empty($showKarma) && !empty($profile->karma) && KunenaConfig::getInstance()->showkarma) : ?>
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_KARMA'); ?>:</strong>
 								<span> <?php echo JText::sprintf((int) $profile->karma); ?> </span>
@@ -114,7 +114,7 @@ if ($this->config->showuserstats)
 								<span> <?php echo JText::sprintf((int) $profile->uhits); ?> </span>
 							</li>
 							<?php endif; ?>
-							<?php if (!empty($profile->thankyou)) : ?>
+							<?php if (!empty($profile->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 							<li>
 								<strong> <?php echo JText::_('COM_KUNENA_THANK_YOU_RECEIVED'); ?>:</strong>
 								<span> <?php echo JText::sprintf((int) $profile->thankyou); ?> </span>
@@ -170,14 +170,14 @@ if ($this->config->showuserstats)
 								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-xs', 'glyphicon glyphicon-comments-2'); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>"><i class="glyphicon glyphicon-envelope"></i></a>
+								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><i class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteName ?></a>
+								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></a>
 							<?php elseif(empty($websiteName) && $websiteURL != 'http://') : ?>
-								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><i class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteURL ?></a>
+								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteURL ?></a>
 							<?php elseif(!empty($websiteName) && $websiteURL == 'http://') : ?>
-								<button class="btn btn-default btn-small"><i class="glyphicon glyphicon-bookmark"></i> <?php echo $websiteName ?></button>
+								<button class="btn btn-default btn-small"><?php echo KunenaIcons::bookmark(); ?> <?php echo $websiteName ?></button>
 							<?php endif; ?>
 						</div>
 					</div>

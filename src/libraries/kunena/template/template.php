@@ -254,10 +254,11 @@ class KunenaTemplate extends JObject
 		}
 		?>
 		<script>
-			jQuery(document).ready(function() {
+			jQuery(document).ready(function($) {
 				var isForumActive = <?php if (strpos($_SERVER['REQUEST_URI'],  $sef) !== false){ echo "true"; } else echo "false";?>;
 				if (isForumActive){
-					jQuery('.current').addClass("active alias-parent-active");
+					$('.current').addClass("active alias-parent-active");
+					$('.alias-parent-active').addClass("active alias-parent-active");
 				}
 			});
 		</script>
@@ -1119,6 +1120,12 @@ HTML;
 		if (isset($src->icons))
 		{
 			$icon       = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+
+			if (!$icon)
+			{
+				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+			}
+
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
@@ -1136,6 +1143,12 @@ HTML;
 		if (isset($src->icons))
 		{
 			$icon       = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
+
+			if (!$icon)
+			{
+				$icon   = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+			}
+
 			$attributes = $icon[0]->attributes();
 			$icon       = new stdClass;
 			$icon->id   = (int) $attributes->id;
@@ -1242,7 +1255,7 @@ HTML;
 			list($type, $q, $values) = $arg;
 			$value = reset($values);
 
-			return "url({$q}{$class->getFile($value, true, 'media', 'media/kunena')}{$q})";
+			return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
 		});
 		$less->setVariables($this->style_variables);
 		$newCache = $less->cachedCompile($cache);
@@ -1420,6 +1433,12 @@ HTML;
 		if (isset($src->labels))
 		{
 			$label       = $src->xpath('/kunena-topiclabels/labels/label[@id=' . $id . ']');
+
+			if (!$label)
+			{
+				$label   = $src->xpath('/kunena-topiclabels/labels/label[@id=0]');
+			}
+
 			$attributes = $label[0]->attributes();
 			$label       = new stdClass;
 			$label->id   = (int) $attributes->id;

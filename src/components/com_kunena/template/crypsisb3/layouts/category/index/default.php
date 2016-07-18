@@ -16,6 +16,11 @@
 
 defined('_JEXEC') or die;
 
+if ($this->config->enableforumjump)
+{
+	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+}
+
 $mmm = 0;
 
 foreach ($this->sections as $section) :
@@ -23,19 +28,19 @@ foreach ($this->sections as $section) :
 	?>
 	<div class="kfrontend">
 
-			<div class="btn-toolbar pull-right">
+			<h2 class="btn-toolbar pull-right">
 				<?php if (count($this->sections) > 0) : ?>
-					<button class="btn btn-default btn-small" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
+					<button class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
 				<?php endif; ?>
-			</div>
+			</h2>
 
-			<h2 class="btn-link">
+			<h1 class="btn-link">
 				<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
 				<small class="hidden-xs nowrap">(<?php echo JText::plural(
      'COM_KUNENA_X_TOPICS',
 	$this->formatLargeNumber($section->getTopics())); ?>)
 				</small>
-			</h2>
+			</h1>
 
 
 		<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
@@ -177,8 +182,10 @@ foreach ($this->sections as $section) :
 												<div class="col-md-3">
 													<?php echo $author->getLink($avatar); ?>
 												</div>
+												<div class="col-md-9">
+											<?php else : ?>
+												<div class="col-md-12">
 											<?php endif; ?>
-											<div class="col-md-9">
 												<span><?php echo $this->getLastPostLink($category) ?></span>
 												<br>
 												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?></span>

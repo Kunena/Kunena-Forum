@@ -187,7 +187,16 @@ class KunenaAdminControllerTrash extends KunenaController
 
 			foreach ($topics as $target)
 			{
-				if ($target->publish(KunenaForum::PUBLISHED))
+				if ($target->getState() == KunenaForum::UNAPPROVED)
+				{
+					$status = KunenaForum::UNAPPROVED;
+				}
+				else
+				{
+					$status = KunenaForum::PUBLISHED;
+				}
+
+				if ($target->publish($status))
 				{
 					$nb_items++;
 				}

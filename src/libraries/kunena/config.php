@@ -1153,6 +1153,24 @@ class KunenaConfig extends JObject
 	public $attach_end = 14;
 	
 	/**
+	 * @var string Define the google maps API key
+	 * @since  K5.0.0
+	 */
+	public $google_map_api_key = '';
+	
+	/**
+	 * @var integer Allow to remove utf8 characters from filename of attachments
+	 * @since  K5.0.0
+	 */
+	public $attachment_utf8 = 1;
+	
+	/**
+	 * @var integer Allow to auto-embded soundcloud item when you put just the URL in a message
+	 * @since  K5.0.0
+	 */
+	public $autoembedsoundcloud = 1;
+	
+	/**
 	 *
 	 */
 	public function __construct()

@@ -128,9 +128,8 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 				$this->output->setLayout('unauthorized');
 				$this->document->setTitle($e->getResponseStatus());
 
-				$this->content = KunenaLayout::factory('Widget/Custom')
-					->set('header', $e->getResponseStatus())
-					->set('body', $e->getMessage());
+				$this->content = KunenaLayout::factory('Widget/Error')
+					->set('header', $e->getResponseStatus());
 			}
 			catch (Exception $e)
 			{

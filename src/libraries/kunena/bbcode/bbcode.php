@@ -135,7 +135,18 @@ class KunenaBbcode extends NBBC_BBCode
 		{
 			$params['path'] = '';
 		}
-
+		
+		if ($config->autoembedsoundcloud && empty($this->parent->forceMinimal) && isset($params['host']))
+		{
+			parse_str($params['query'], $query);
+			$path = explode('/', $params['path']);
+			        
+			if (strstr($params['host'], 'soundcloud.') && !empty($path[1]) )
+			{
+				return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $params['url'] . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+			}
+		}
+		
 		if ($config->autoembedyoutube && empty($this->parent->forceMinimal) && isset($params['host']))
 		{
 			// convert youtube links to embedded player
@@ -185,10 +196,10 @@ class KunenaBbcode extends NBBC_BBCode
 				if (isset($itemid))
 				{
 					// convert ebay item to embedded widget
-					KunenaBbcodeLibrary::renderEbayLayout($itemid);
+					return KunenaBbcodeLibrary::renderEbayLayout($itemid);
 				}
 
-				return $this->defaults->getEbayItemFromCache($itemid);
+				return;
 			}
 
 			parse_str($params['query'], $query);
@@ -986,10 +997,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		'soundcloud' => array(
 			'mode'     => BBCODE_MODE_LIBRARY,
 			'method'   => 'DoSoundcloud',
+			'class' => 'block',
 			'allow_in' => array('listitem', 'block', 'columns'),
-			'class'    => 'block',
-			'allow'    => array('colortext' => '/^[\w\d.-_]*$/'),
-			'content'  => BBCODE_PROHIBIT,
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "[soundcloud]",
+			'plain_end' => "",
+			'plain_content' => array(),
 		),
 
 		'instagram' => array(
@@ -1479,14 +1492,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					->set('content', $content)
 					->set('params', $params);
 			}
-
-			// TODO: Remove in Kunena 4.0
-			// Display but highlight the fact that it is hidden from everyone except admins and mods
-			return '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
 		}
 		else
 		{
-			return '';
+			return '<br />' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '<br />';
 		}
 	}
 
@@ -1522,75 +1531,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$layout = KunenaLayout::factory('BBCode/Map');
 
+		$kunena_config =  KunenaFactory::getConfig();
+
 		if ($layout->getPath())
 		{
 			return (string) $layout
 				->set('content', $content)
 				->set('mapid', $this->mapid)
-				->set('params', $params);
+				->set('params', $params)
+				->set('config', $kunena_config);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		static $id = false;
-		static $sensor = true;
-
-		if ($id === false) {
-			$document->addScript('https://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
-			$id = 0;
-		}
-
-		$id ++;
-		$mapid = 'kgooglemap' . $id;
-
-		$map_type = isset($params ['type']) ? strtoupper($params ["type"]): 'ROADMAP';
-		$map_typeId = array('HYBRID','ROADMAP','SATELLITE','TERRAIN');
-
-		if (!in_array($map_type, $map_typeId))
-		{
-			$map_type = 'ROADMAP';
-		}
-
-		$map_zoom = isset($params ['zoom']) ? (int) $params ['zoom']: 10;
-		$map_control = isset($params ['control']) ? (int) $params ['control'] : 0;
-
-		$document->addScriptDeclaration("
-		// <![CDATA[
-			var geocoder;
-			var $mapid;
-
-			window.addEvent('domready', function() {
-				geocoder = new google.maps.Geocoder();
-			var latlng = new google.maps.LatLng(37.333586,-121.894684);
-			var myOptions = {
-				zoom: $map_zoom,
-				disableDefaultUI: $map_control,
-				center: latlng,
-				mapTypeId: google.maps.MapTypeId.$map_type
-			};
-			$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
-
-			var address = ".json_encode($content).";
-			if (geocoder) {
-				geocoder.geocode( { 'address': address}, function(results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					$mapid.setCenter(results[0].geometry.location);
-					var marker = new google.maps.Marker({
-						position: results[0].geometry.location,
-				 		map: $mapid
-					});
-				} else {
-					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode(addslashes($content))."</i></strong></p>';
-					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
-						infowindow$mapid.open($mapid);
-				}
-				});
-			}
-			});
-
-		// ]]>"
-		);
-
-		return '<div id="'.$mapid.'" class="kgooglemap">'.JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE', true).'</div>';
 	}
 
 	/**
@@ -2884,7 +2834,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 *
 	 * @return string
 	 */
-	public function getEbayItemFromCache($ItemID)
+	public static function getEbayItemFromCache($ItemID)
 	{
 		$cache = JFactory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
@@ -2911,8 +2861,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$config = KunenaFactory::getConfig();
-
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal))
+		{
+			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+		}
 
 		$content = strip_tags($content);
 
@@ -2935,13 +2888,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			return true;
 		}
-
-		$config = KunenaFactory::getConfig();
-
+		
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal))
+		{
+			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+		}
+		
 		$content = strip_tags($content);
 
-
-		return '<iframe src="//instagram.com/p/'. $content .'/embed/" width="612" height="400" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+		return '<div class="embed-container"><iframe src="//instagram.com/p/'. $content .'/embed/"  frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>';
 	}
 
 	/**
@@ -2972,7 +2928,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			return (string) $layout
 				->set('content', $ItemID)
-				->set('params', $params)
+				//->set('params', $params)
 				->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
 				->set('pictureurl', $ebay->Item->PictureURL[0])
 				->set('status', $ebay->Item->ListingStatus)
@@ -2982,4 +2938,3 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 	}
 }
-

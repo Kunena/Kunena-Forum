@@ -37,6 +37,7 @@ $this->addScript('assets/js/krating.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $social = $this->ktemplate->params->get('socialshare');
+$quick = $this->ktemplate->params->get('quick');
 ?>
 <?php if ($this->category->headerdesc) : ?>
 <div class="alert alert-info">
@@ -45,7 +46,7 @@ $social = $this->ktemplate->params->get('socialshare');
 </div>
 <?php endif; ?>
 
-<h3>
+<h1>
 	<?php echo $topic->getIcon($topic->getCategory()->iconset);?>
 	<?php
 	if ($this->ktemplate->params->get('labels') != 0)
@@ -55,7 +56,7 @@ $social = $this->ktemplate->params->get('socialshare');
 	?>
 	<?php echo $topic->displayField('subject');?>
 	<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topicid', $topic->id)->set('config', $this->config);?>
-</h3>
+</h1>
 
 <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
@@ -64,12 +65,12 @@ $social = $this->ktemplate->params->get('socialshare');
 	->set('pagination', $this->pagination)
 	->set('display', true); ?>
 </div>
-<div class="pull-right">
+<h2 class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 	->set('id', $topic->id)
 	->set('title', JText::_('COM_KUNENA_SEARCH_TOPIC'))
 	->setLayout('topic'); ?>
-</div>
+</h2>
 
 <div class="clearfix"></div>
 
@@ -82,11 +83,22 @@ echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
 echo $this->subRequest('Topic/Poll')->set('id', $topic->id);
 echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
 
+$count = 1;
 foreach ($this->messages as $id => $message)
 {
 	echo $this->subRequest('Topic/Item/Message')
 		->set('mesid', $message->id)
 		->set('location', $id);
+
+	echo $this->subLayout('Widget/Module')
+		->set('position', 'kunena_msg_row_' . $count++);
+}
+
+if ($quick == 2)
+{
+	echo $this->subLayout('Message/Edit')
+		->set('message', $this->message)
+		->setLayout('full');
 }
 ?>
 
@@ -107,5 +119,10 @@ foreach ($this->messages as $id => $message)
 <?php if ($this->ktemplate->params->get('writeaccess')) : ?>
 	<div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
 <?php endif; ?>
+<?php
+if ($this->config->enableforumjump)
+{
+	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+} ?>
 <div class="clearfix"></div>
 <div class="pull-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>

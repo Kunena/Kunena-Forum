@@ -329,7 +329,7 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if (stripos($type, 'image/') !== true)
+				if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0)
 				{
 					if (!$this->checkFileSizeFileAttachment($size))
 					{
@@ -337,7 +337,7 @@ class KunenaUpload
 					}
 				}
 
-				if (stripos($type, 'image/') !== false)
+				if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 				{
 					if (!$this->checkFileSizeImageAttachment($size))
 					{
@@ -557,7 +557,17 @@ class KunenaUpload
 		$file = new stdClass;
 		$file->ext = JFile::getExt($fileInput['name']);
 		$file->size = $fileInput['size'];
-		$file->tmp_name = $fileInput['tmp_name'];
+		$config = KunenaFactory::getConfig();
+		
+		if ($type != 'attachment' && $config->attachment_utf8)
+		{
+			$file->tmp_name = $fileInput['tmp_name'];
+		}
+		else
+		{
+			$file->tmp_name = JFile::makeSafe($fileInput['tmp_name']);
+		}
+		
 		$file->error = $fileInput['error'];
 		$file->destination = $destination . '.' . $file->ext;
 		$file->success = false;

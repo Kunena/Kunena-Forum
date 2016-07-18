@@ -29,6 +29,10 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 ?>
 
 <small class="text-muted pull-right hidden-xs">
+	<?php if ($this->ipLink) : ?>
+		<?php echo KunenaIcons::ip();?>
+		<span class="ip"> <?php echo $this->ipLink; ?> </span>
+	<?php endif;?>
 	<span class="icon glyphicon glyphicon-clock"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
@@ -41,43 +45,66 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 			<div class="horizontal-message-text">
 				<p class="kmsg"> <?php echo $message->displayField('message'); ?> </p>
 			</div>
-
-			<?php if (!empty($attachments)) : ?>
-				<div class="kattach">
-					<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
-					<ul class="thumbnails">
-						<?php foreach ($attachments as $attachment) : ?>
-							<li class="col-md-3" style=" text-align: center;">
-								<div class="thumbnail"> <?php echo $attachment->getLayout()->render('thumbnail'); ?> <?php echo $attachment->getLayout()->render('textlink'); ?> </div>
-							</li>
-						<?php endforeach; ?>
-					</ul>
-				</div>
-			<?php endif; ?>
 			<?php if ($signature) : ?>
 				<div class="ksig">
 					<hr>
 					<span class="ksignature"><?php echo $signature; ?></span>
 				</div>
 			<?php endif ?>
-			<?php if (!empty($this->reportMessageLink)) : ?>
-				<div class="row">
-					<div class="col-md-10">
-						<a href="#report<?php echo $this->message->id; ?>" role="button" class="btn-link report" data-toggle="modal" data-backdrop="false"><i class="glyphicon glyphicon-warning"></i> <?php echo JText::_('COM_KUNENA_REPORT') ?></a>
-						<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-								<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
-							</div>
+
+			<?php if ($this->config->reportmsg && $this->me->exists()) :
+				if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid) : ?>
+					<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 						</div>
 					</div>
-					<div class="col-md-2">
-						<p class="ip"> <?php echo $this->ipLink; ?> </p>
-					</div>
-				</div>
+				<?php endif; ?>
 			<?php endif; ?>
 		</div>
 	</div>
+	<?php if (!empty($attachments)) : ?>
+		<div class="kattach">
+			<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+			<ul class="thumbnails">
+				<?php foreach ($attachments as $attachment) : ?>
+					<li class="col-md-3 center">
+						<div class="thumbnail">
+							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+							<?php echo $attachment->getLayout()->render('textlink'); ?>
+						</div>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+	<?php elseif ($attachs->total > 0  && !$this->me->exists()) :
+
+		if ($attachs->image > 0 && !$this->config->showimgforguest)
+		{
+			if ($attachs->image > 1)
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+			}
+		}
+
+		if ($attachs->file > 0 && !$this->config->showfileforguest)
+		{
+			if ($attachs->file > 1)
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+			}
+			else
+			{
+				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+			}
+		}
+	endif; ?>
 	<div class="profile-horizontal-bottom">
 	<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
 </div>

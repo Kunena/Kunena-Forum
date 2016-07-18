@@ -77,7 +77,7 @@ $attachments = $this->attachments;
 							<?php if ($canDelete) { echo JHtml::_('grid.id', $i, intval($attachment->id)); } ?>
 						</td>
 						<td class="center">
-							<?php echo $attachment->isImage()	? '<i class="large-kicon glyphicon glyphicon-picture"></i>' : '<i class="large-kicon glyphicon glyphicon-file"></i>'; ?>
+							<?php echo $attachment->isImage() ? KunenaIcons::picture() : KunenaIcons::file(); ?>
 						</td>
 						<td>
 							<?php echo $attachment->getShortName(10, 5); ?>
@@ -95,7 +95,7 @@ $attachments = $this->attachments;
 
 							<?php if ($canDelete) : ?>
 								<a class="center" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile');">
-									<i class="glyphicon glyphicon-remove hasTooltip"><?php JText::_('COM_KUNENA_ADMIN_POLLS'); ?></i>
+									<?php echo KunenaIcons::delete();?>
 								</a>
 							<?php endif; ?>
 

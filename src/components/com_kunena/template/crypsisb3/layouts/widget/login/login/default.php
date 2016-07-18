@@ -24,7 +24,7 @@ defined('_JEXEC') or die;
 
 				<div class="center">
 					<a href="#" class="thumbnail">
-					<i class="glyphicon glyphicon-super glyphicon-user "></i>
+						<?php echo KunenaIcons::members(); ?>
 				 </a>
 				</div>
 					<input id="login-username" type="text" name="username" class="form-control input-sm" tabindex="1"

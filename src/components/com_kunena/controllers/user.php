@@ -215,7 +215,7 @@ class KunenaControllerUser extends KunenaController
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
 		}
 
-		if ($this->profile->userid == $this->me->userid)
+		if ($this->user->userid == $this->me->userid)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
 		}
@@ -344,7 +344,7 @@ class KunenaControllerUser extends KunenaController
 					$user
 				);
 			}
-			
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -452,10 +452,10 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$username  = JFactory::getApplication()->input->getString('username', '', 'POST');
-		$password  = JFactory::getApplication()->input->getString('password', '', 'POST', 'raw');
-		$remember  = JFactory::getApplication()->input->getBool('remember', false, 'POST');
-		$secretkey = JFactory::getApplication()->input->getString('secretkey', null, 'POST');
+		$username  = JFactory::getApplication()->input->post->get('username', '');
+		$password  = JFactory::getApplication()->input->post->get('password', '', 'raw');
+		$remember  = JFactory::getApplication()->input->post->get('remember', false);
+		$secretkey  = JFactory::getApplication()->input->post->get('secretkey', null);
 
 		$login = KunenaLogin::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);

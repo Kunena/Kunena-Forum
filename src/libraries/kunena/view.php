@@ -565,16 +565,22 @@ class KunenaView extends JViewLegacy
 
 			if ($this->app->getCfg('sitename_pagetitles', 0) == 1)
 			{
-				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $title . ' - ' .$this->config->board_title);
 			}
 			elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2)
 			{
-				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
+				if ($this->config->board_title == $this->app->get('sitename'))
+				{
+					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title);
+				}
+				else
+				{
+					$title = JText::sprintf('JPAGETITLE', $title . ' - ' . $this->config->board_title, $this->app->get('sitename'));
+				}
 			}
 			else
 			{
-				// TODO: allow translations/overrides (also above)
-				$title = KunenaFactory::getConfig()->board_title .': '. $title;
+				$title = $title . ' - ' . KunenaFactory::getConfig()->board_title;
 			}
 
 			$this->document->setTitle($title);

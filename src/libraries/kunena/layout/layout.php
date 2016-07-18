@@ -176,7 +176,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -191,23 +191,23 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			if ($action instanceof KunenaForumMessage)
 			{
-				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
+				$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
+						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
 						break;
 					case 'last':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
+						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->last_post_message), $this->escape($topic->subject));
 						break;
 					case 'unread':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
+						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
 						break;
 					default:
-						$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
+						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
 				}
 			}
 		}
@@ -248,7 +248,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
+			$title = JText::sprintf(KunenaHtmlParser::stripBBCode($this->escape($category->getLastTopic()->last_post_message), $this->escape($category->getLastTopic()->subject)));
 		}
 
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');

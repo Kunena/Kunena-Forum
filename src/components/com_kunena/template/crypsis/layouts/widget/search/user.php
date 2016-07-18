@@ -28,6 +28,6 @@ $state = $this->state;
 				   value="<?php echo $this->escape($state); ?>" placeholder="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
 		</label>
 
-		<button type="submit" class="btn"><span class="icon icon-search"></span></button>
+		<button type="submit" class="btn"><?php echo KunenaIcons::search();?></button>
 	</div>
 </form>

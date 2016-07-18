@@ -132,11 +132,48 @@ class Com_KunenaInstallerScript
 			static $ignoreSite = array('index.html', 'kunena.php', 'router.php', 'template', 'COPYRIGHT.php', 'CHANGELOG.php');
 			$this->deleteFolder($adminPath, $ignoreAdmin);
 			$this->deleteFolder($sitePath, $ignoreSite);
+		}
+		
+		// Remove Blue Eagle template on K5.0
+		$this->deleteFolder($sitePath . '/template/blue_eagle');
+		
+		// Delete languages files related to blue eagle in en-gb and others languages
+		$kunena_language_folders = JFolder::folders($sitePath . '/language');
+		
+		foreach($kunena_language_folders as $folder)
+		{
+			if ( JFile::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			{
+				JFile::delete($sitePath . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+			}
+		}
+		
+		$language_folders = JFolder::folders(JPATH_ROOT . '/language');
 
-			// Remove Blue Eagle template on K5.0
-			$this->deleteFolder($sitePath . '/template/blue_eagle');
+		foreach($language_folders as $folder)
+		{
+			if ( JFile::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			{
+				JFile::delete(JPATH_ROOT . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+			}
+		}
+		
+		// Remove old system directory
+		if (is_file(JPATH_ROOT . '/media/kunena/topic_icons/system/topicicons.xml'))
+		{
+			$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
+			$foldernew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/system';
+			JFolder::copy($folder, $foldernew);
+			JFolder::delete($folder);
 
-			// TODO: delete also en-GB files!
+			$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
+			$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
+			JFile::copy($file, $filenew);
+
+			$db    = JFactory::getDBO();
+			$query = "UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset='system'";
+			$db->setQuery($query);
+			$db->execute();
 		}
 
 		// Prepare installation.
@@ -182,19 +219,19 @@ class Com_KunenaInstallerScript
 	}
 
 	// Internal functions
-	
+
 	/**
 	 * On some hosting the PHP version given with the version of the packet in the distribution
-	 * 
+	 *
 	 * @param string $version The PHP version to clean
 	 */
 	protected function getCleanPhpVersion()
 	{
 		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
-		
+
 		return $version;
 	}
-	
+
 	/**
 	 * @param $name
 	 * @param $version

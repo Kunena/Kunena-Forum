@@ -34,12 +34,16 @@ $list = array();
 ?>
 
 <small class="text-muted pull-right hidden-xs">
+	<?php if ($this->ipLink) : ?>
+	<?php echo KunenaIcons::ip();?>
+	<span class="ip"> <?php echo $this->ipLink; ?> </span>
+	<?php endif;?>
 	<span class="glyphicon glyphicon-time"></span>
 	<?php echo $message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 	<a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>">#<?php echo $this->numLink; ?></a>
 </small>
 
-<div class="badger-left badger-info <?php if ($this->topic->icon_id == 8) : ?> badger-solved <?php endif;?> message-<?php echo $this->message->getState(); ?>"
+<div class="badger-left badger-info message-<?php echo $this->message->getState(); ?>"
 	 data-badger="<?php echo (!$isReply) ? $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_CREATED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage) : $this->escape($avatarname) . ' ' . JText::_('COM_KUNENA_MESSAGE_REPLIED') . ' ' . substr($message->displayField('subject'), 0, $subjectlengthmessage); ?>">
 	<div class="kmessage">
 		<p class="kmsg">
@@ -50,47 +54,6 @@ $list = array();
 			endif;?>
 		</p>
 	</div>
-
-	<?php if (!empty($attachments)) : ?>
-		<div class="kattach">
-			<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
-			<ul class="thumbnails">
-				<?php foreach ($attachments as $attachment) : ?>
-					<li class="col-md-3 center">
-						<div class="thumbnail">
-							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
-							<?php echo $attachment->getLayout()->render('textlink'); ?>
-						</div>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	<?php elseif ($attachs->total > 0  && !$this->me->exists()) :
-
-		if ($attachs->image > 0 && !$this->config->showimgforguest)
-		{
-			if ($attachs->image > 1)
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
-			}
-			else
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
-			}
-		}
-
-		if ($attachs->file > 0 && !$this->config->showfileforguest)
-		{
-			if ($attachs->file > 1)
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
-			}
-			else
-			{
-				echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
-			}
-		}
-	endif; ?>
 	<?php if ($signature) : ?>
 		<div class="ksig">
 			<hr>
@@ -99,26 +62,56 @@ $list = array();
 	<?php endif ?>
 	<?php if ($this->config->reportmsg && $this->me->exists()) :
 		if ($this->me->isModerator() || $this->config->user_report || $this->me->userid !== $this->message->userid) : ?>
-			<div class="row">
-				<div class="col-md-9">
-					<div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-									<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<p class="ip"> <?php echo $this->ipLink; ?> </p>
+			<div id="report<?php echo $this->message->id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>
 				</div>
 			</div>
 		<?php endif; ?>
 	<?php endif; ?>
 </div>
+<?php if (!empty($attachments)) : ?>
+	<div class="kattach">
+		<h5> <?php echo JText::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+		<ul class="thumbnails">
+			<?php foreach ($attachments as $attachment) : ?>
+				<li class="col-md-3 center">
+					<div class="thumbnail">
+						<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+						<?php echo $attachment->getLayout()->render('textlink'); ?>
+					</div>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<div class="clearfix"></div>
+<?php elseif ($attachs->total > 0  && !$this->me->exists()) :
+
+	if ($attachs->image > 0 && !$this->config->showimgforguest)
+	{
+		if ($attachs->image > 1)
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+		}
+		else
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+		}
+	}
+
+	if ($attachs->file > 0 && !$this->config->showfileforguest)
+	{
+		if ($attachs->file > 1)
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+		}
+		else
+		{
+			echo KunenaLayout::factory('BBCode/Image')->set('title', JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+		}
+	}
+endif; ?>
 
 <?php if ($message->modified_by && $this->config->editmarkup) :
 	$dateshown = $datehover = '';

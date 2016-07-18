@@ -12,31 +12,42 @@ defined('_JEXEC') or die;
 
 $cols = !empty($this->actions) ? 6 : 7;
 $colspan = !empty($this->actions) ? 4 : 3;
+$view = JFactory::getApplication()->input->getWord('view');
+
 $this->addStyleSheet('assets/css/rating.css');
 ?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="pull-left">
-			<h3>
+			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-xs">
 					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-			</h3>
+			</h1>
 		</div>
 
+		<?php if ($view != 'user') : ?>
 		<div class="pull-right" id="filter-time">
-			<div class="filter-sel pull-right">
+			<h2 class="filter-sel pull-right">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					method="post" target="_self" class="form-inline hidden-xs">
 						<?php $this->displayTimeFilter('sel'); ?>
 				</form>
-			</div>
+			</h2>
 		</div>
+		<?php endif; ?>
 	</div>
 </div>
+
+<?php
+	if ($this->config->enableforumjump && !$this->embedded && $this->topics)
+	{
+		echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+	} ?>
+
 <div class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 	->set('catid', 'all')
@@ -119,12 +130,19 @@ $this->addStyleSheet('assets/css/rating.css');
 				<td colspan="4" class="center"><?php echo JText::_('COM_KUNENA_VIEW_NO_TOPICS') ?></td>
 			</tr>
 		<?php else : ?>
+			<?php $counter = 2; ?>
+
 			<?php foreach ($this->topics as $i => $topic)
 			{
 				echo $this->subLayout('Topic/Row')
 					->set('topic', $topic)
 					->set('position', 'kunena_topic_' . $i)
 					->set('checkbox', !empty($this->actions));
+
+				echo $this->subLayout('Widget/Module')
+					->set('position', 'kunena_topic_' . $counter++)
+					->set('cols', $cols)
+					->setLayout('table_row');
 			} ?>
 		<?php endif; ?>
 		</tbody>

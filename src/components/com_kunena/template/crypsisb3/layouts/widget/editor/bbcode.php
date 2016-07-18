@@ -168,29 +168,30 @@ $this->getBBcodesEnabled();
 	</div>
 </div>
 <?php if (!$this->message->parent && isset($this->poll)) : ?>
-	<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
-				</div>
-				<div class="modal-body">
-					<div id="kbbcode-poll-options">
-						<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
-						<input type="text" class="inputbox form-control" name="poll_title" id="kpoll-title"
-							maxlength="100" size="40"
-							value="<?php echo $this->escape($this->poll->title) ?>"
+<div id="modal-poll-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
+			</div>
+			<div class="modal-body">
+				<div id="kbbcode-poll-options">
+					<div class="input-group col-md-12" style="padding: 0">
+					<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
+					<input type="text" class="inputbox form-control col-md-12" name="poll_title" id="kpoll-title"
+						maxlength="100" size="40"
+						value="<?php echo $this->escape($this->poll->title) ?>"
 						/>
-						<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"
-							alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i>
-						<i id="kbutton-poll-rem" class="glyphicon glyphicon-minus btn btn-xs btn-default"
-							alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
-						<br>
+					</div>
+					<div class="clearfix"></div>
+					<?php echo KunenaIcons::poll_add();?>
+					<?php echo KunenaIcons::poll_rem();?>
+					<div class="clearfix"></div>
+					<div id="datepoll-container">
 						<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-						<div id="datepoll-container" class="col-md-5">
-							<div class="input-append date">
-								<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy" value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
+						<div class="input-group date">
+							<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy" value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
 							<span class="input-group-addon">
 								<i class="glyphicon glyphicon-th"></i>
 							</span>
@@ -234,7 +235,10 @@ $this->getBBcodesEnabled();
 				<div id="smilie"><?php
 					$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 					foreach ($emoticons as $emo_code => $emo_url) {
-						echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="20" height="20" alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+						$data = getimagesize(JPATH_ROOT . '/' . $emo_url);
+						$width = $data[0];
+						$height = $data[1];
+						echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="' . $width .'" height="' . $height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
 					}
 					?>
 				</div>

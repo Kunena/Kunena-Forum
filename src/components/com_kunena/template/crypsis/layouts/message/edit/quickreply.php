@@ -79,9 +79,16 @@ if ($me->canDoCaptcha() )
 $this->config = KunenaFactory::getConfig();
 $this->ktemplate = KunenaFactory::getTemplate();
 $editor = $this->ktemplate->params->get('editor');
+$template = KunenaTemplate::getInstance();
+$quick = $template->params->get('quick');
+
 ?>
 
-<div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
+<?php if ($quick == 1) : ?>
+<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;">
+<?php elseif ($quick == 0) : ?>
+<div class="kreply-form col-md-12" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
+<?php endif;?>
 	<div class="modal-header">
 		<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>

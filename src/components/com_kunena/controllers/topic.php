@@ -65,7 +65,7 @@ class KunenaControllerTopic extends KunenaController
 			$object->folder  = $attach->folder;
 			$object->caption = $attach->caption;
 			$object->type    = $attach->filetype;
-			$object->path    = $attach->getUrl();
+			$object->path    = JURI::root(true) . '/' . $attach->getUrl();
 			$object->image   = $attach->isImage();
 			$list['files'][] = $object;
 		}
@@ -291,15 +291,13 @@ class KunenaControllerTopic extends KunenaController
 			'catid'             => $this->catid,
 			'name'              => JFactory::getApplication()->input->getString('authorname', $this->me->getName()),
 			'email'             => JFactory::getApplication()->input->getString('email', null),
-			'subject'           => JFactory::getApplication()->input->get('subject', null, 'POST', 'string', 'raw'),
-			'message'           => JFactory::getApplication()->input->get('message', null, 'POST', 'string', 'raw'),
+			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
 			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', null),
 			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', ''),
 			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
-			'tags'              => JFactory::getApplication()->input->getString('tags', null),
-			'mytags'            => JFactory::getApplication()->input->getString('mytags', null),
 			'subscribe'         => JFactory::getApplication()->input->getInt('subscribeMe', 0)
 		);
 
@@ -644,16 +642,14 @@ class KunenaControllerTopic extends KunenaController
 		$fields  = array(
 			'name'              => JFactory::getApplication()->input->getString('authorname', $message->name),
 			'email'             => JFactory::getApplication()->input->getString('email', $message->email),
-			'subject'           => JFactory::getApplication()->input->get('subject', $message->subject, 'POST', 'string', 'raw'),
-			'message'           => JFactory::getApplication()->input->get('message', $message->message, 'POST', 'string', 'raw'),
+			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
 			'modified_reason'   => JFactory::getApplication()->input->getString('modified_reason', $message->modified_reason),
 			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', $topic->icon_id),
 			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', null),
 			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
-			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
-			'tags'              => JFactory::getApplication()->input->getString('tags', null),
-			'mytags'            => JFactory::getApplication()->input->getString('mytags', null)
+			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0)
 		);
 
 		if (!JSession::checkToken('post'))

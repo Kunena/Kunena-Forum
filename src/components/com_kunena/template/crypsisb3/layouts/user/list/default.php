@@ -19,15 +19,15 @@ $this->addScript('assets/js/jquery.atwho.js');
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/search.js');
 ?>
-<h2>
+<h1>
 	<?php echo JText::_('COM_KUNENA_MEMBERS'); ?>
-</h2>
+</h1>
 
-<div class="pull-right">
+<h2 class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 	->set('state', $this->state->get('list.search'))
 	->setLayout('user'); ?>
-</div>
+</h2>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
@@ -47,7 +47,7 @@ $this->addScript('assets/js/search.js');
 				<th class="col-md-1 center hidden-xs">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
-						<i class="glyphicon glyphicon-arrow-down"></i>
+						<?php echo KunenaIcons::arrowdown();?>
 					</a>
 				</th>
 
@@ -208,7 +208,7 @@ $this->addScript('assets/js/search.js');
 		<td class="col-md-1 center hidden-xs">
 			<a id="forumbottom"> </a>
 			<a href="#forumtop">
-				<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
+				<?php echo KunenaIcons::arrowup();?>
 			</a>
 		</td>
 		<td colspan="8" class="hidden-xs">

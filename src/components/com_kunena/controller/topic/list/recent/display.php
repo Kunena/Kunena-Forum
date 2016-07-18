@@ -264,7 +264,7 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title;
+				$description = JText::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');;
 				$this->setDescription($description);
 			}
 		}

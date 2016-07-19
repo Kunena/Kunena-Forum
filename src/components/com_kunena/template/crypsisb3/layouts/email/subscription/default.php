@@ -34,7 +34,6 @@ $more = ($this->once ?
 		<meta name="format-detection" content="telephone=no" />
 
 		<style>
-			/* Reset styles */
 			body {
 				margin: 0;
 				padding: 0;
@@ -82,7 +81,6 @@ $more = ($this->once ?
 				line-height: 100%;
 			}
 
-			/* Rounded corners for advanced mail clients only */
 			@media all and (min-width: 560px) {
 				.container {
 					border-radius: 8px;
@@ -92,7 +90,6 @@ $more = ($this->once ?
 				}
 			}
 
-			/* Set color for auto links (addresses, dates, etc.) */
 			a, a:hover {
 				color: #127DB3;
 			}
@@ -220,7 +217,6 @@ $more = ($this->once ?
 	</body>
 </html>
 <?php
-// Email as plain text:
 
 $full = !$config->mailfull ? '' : <<<EOS
 {$this->text('COM_KUNENA_MESSAGE')}

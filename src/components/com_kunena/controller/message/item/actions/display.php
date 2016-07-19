@@ -163,7 +163,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			&& !$config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
 			&& !$me->userid && !$this->message->hold && !$config->read_only)
 		{
-			$logintext =  '<a class="btn-link" href="#klogin" rel="nofollow"> ' . JText::_('JLOGIN') . '</a>';
+			$logintext =  '<a class="btn-link" href="#klogin" id="login-link" rel="nofollow"> ' . JText::_('JLOGIN') . '</a>';
 
 			if ($login->getRegistrationUrl())
 			{

@@ -43,6 +43,31 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	$('[id^="login-link"]').click(function() {
+		$(this).ready(function () {
+			if ($('#userdropdown').is(":visible")) {
+				$('#userdropdown').css('visibility', 'hidden');
+				$('#userdropdown').css('display', 'none');
+			}
+			else {
+				$('#userdropdown').css('display', 'inline-block');
+				$('#userdropdown').css('visibility', 'visible');
+			}
+		});
+	});
+
+	$(document).ready(function() {
+		if ($('#userdropdown').is(":visible")) {
+			$(document).click(function() {
+				$("#userdropdown").hide('slow');
+			});
+		}
+	});
+
+	$('#userdropdown').click(function(e){
+		e.stopPropagation();
+	});
+
 	/* On moderate page display subject or field to enter manually the topic ID */
 	$('#kmod_topics').change(function () {
 		var id_item_selected = $(this).val();

@@ -169,45 +169,35 @@ img {
 	border-radius : 4px;
 }
 
-.topic-starter-circle {
-	padding-top   : 24px !important;
-	margin-top    : -20px !important;
-}
-
+.topic-starter-circle,
 .topic-moderator-circle {
-	padding-top   : 24px !important;
+	padding-top   : 30px !important;
 	margin-top    : -20px !important;
 }
 
 .topic-starter {
-	 background    : rgba(229, 229, 229, 0.4);
-	 display       : inline-block;
-	 height        : 15px;
-	 border-radius : 0 0 4px 4px;
-	 white-space   : nowrap;
-	 padding-top   : 4px;
-	 border        : 1px solid #ddd;
-	 border-top    : 0 none;
-	 padding-left  : 8px;
-	 padding-right : 8px;
-	 color          : #3a87ad;
-	 line-height    : 1em;
-	 font-size      : 10px;
-	 font-weight    : bold;
-	 text-transform : uppercase;
+	display        : inline-block;
+	height         : auto;
+	border-radius  : 0 0 4px 4px;
+	white-space    : nowrap;
+	border         : 1px solid #ddd;
+	border-top     : 0 none;
+	padding        : 4px 8px 10px;
+	color          : #3a87ad;
+	line-height    : 1em;
+	font-size      : 10px;
+	font-weight    : bold;
+	text-transform : uppercase;
 }
 
 .topic-moderator {
-	background    : rgba(229, 229, 229, 0.4);
-	display       : inline-block;
-	height        : 15px;
-	border-radius : 0 0 4px 4px;
-	white-space   : nowrap;
-	padding-top   : 4px;
-	border        : 1px solid #ddd;
-	border-top    : 0 none;
-	padding-left  : 8px;
-	padding-right : 8px;
+	display        : inline-block;
+	height         : auto;
+	border-radius  : 0 0 4px 4px;
+	white-space    : nowrap;
+	border         : 1px solid #ddd;
+	border-top     : 0 none;
+	padding        : 4px 8px 10px;
 	color          : red;
 	line-height    : 1em;
 	font-size      : 10px;
@@ -235,9 +225,15 @@ hr {
 
 .unstyled,
 .inline li,
-#kstats li,
+#kstats li {
+	list-style : none;
+}
+
 .profilebox li {
 	list-style : none;
+	padding: 0;
+	margin: 0;
+	line-height: 1.4em;
 }
 
 .topictitle {

@@ -135,18 +135,18 @@ class KunenaBbcode extends NBBC_BBCode
 		{
 			$params['path'] = '';
 		}
-		
+
 		if ($config->autoembedsoundcloud && empty($this->parent->forceMinimal) && isset($params['host']))
 		{
 			parse_str($params['query'], $query);
 			$path = explode('/', $params['path']);
-			        
+
 			if (strstr($params['host'], 'soundcloud.') && !empty($path[1]) )
 			{
 				return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $params['url'] . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
 			}
 		}
-		
+
 		if ($config->autoembedyoutube && empty($this->parent->forceMinimal) && isset($params['host']))
 		{
 			// convert youtube links to embedded player
@@ -160,6 +160,10 @@ class KunenaBbcode extends NBBC_BBCode
 			elseif ($params['host'] == 'youtu.be' && !empty($path[1]))
 			{
 				$video = $path[1];
+			}
+			elseif (strstr($params['host'], '.youtube.') && !empty($path[1]) && $path[1]=='embed')
+			{
+				$video = $path[2];
 			}
 
 			if (isset($video))
@@ -2888,13 +2892,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			return true;
 		}
-		
+
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
 		{
 			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
 		}
-		
+
 		$content = strip_tags($content);
 
 		return '<div class="embed-container"><iframe src="//instagram.com/p/'. $content .'/embed/"  frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>';

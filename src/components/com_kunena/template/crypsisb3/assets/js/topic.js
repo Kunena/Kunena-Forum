@@ -46,22 +46,19 @@ jQuery(document).ready(function ($) {
 	$('[id^="login-link"]').click(function() {
 		$(this).ready(function () {
 			if ($('#userdropdown').is(":visible")) {
-				$('#userdropdown').css('visibility', 'hidden');
-				$('#userdropdown').css('display', 'none');
+				$(this).addClass('kdelay');
 			}
 			else {
 				$('#userdropdown').css('display', 'inline-block');
-				$('#userdropdown').css('visibility', 'visible');
+				$('#userdropdown').css('visibility', 'visible').delay(500).queue(function () {
+					$(this).addClass('kdelay');
+				});
 			}
 		});
 	});
 
-	$(document).ready(function() {
-		if ($('#userdropdown').is(":visible")) {
-			$(document).click(function() {
-				$("#userdropdown").hide('slow');
-			});
-		}
+	$(document).click(function() {
+		$('.kdelay').css('display', 'none').removeClass('kdelay');
 	});
 
 	$('#userdropdown').click(function(e){

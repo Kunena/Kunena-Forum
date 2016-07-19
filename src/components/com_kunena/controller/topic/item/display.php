@@ -367,19 +367,10 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
-			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($headerText);
-			}
+			$this->setTitle($headerText);
 
 			if (!empty($params_keywords))
 			{

@@ -367,19 +367,9 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
-			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
-			$params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($headerText);
-			}
+			$this->setTitle($headerText);
 
 			if (!empty($params_keywords))
 			{
@@ -392,14 +382,16 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 				$this->setKeywords($headerText);
 			}
 
-			if (!empty($params_description))
+
+			if ($total > 1 && $page > 1)
 			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
+				$small = substr($this->topic->first_post_message, 0, 140);
+				$this->setDescription($small . " - " . JText::_('COM_KUNENA_PAGES') . " {$page}");
 			}
 			else
 			{
-				$this->setDescription($headerText);
+				$small = substr($this->topic->first_post_message, 0, 160);
+				$this->setDescription($small);
 			}
 		}
 	}

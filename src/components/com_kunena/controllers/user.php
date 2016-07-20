@@ -409,11 +409,11 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($banDelPosts))
 		{
-			$params = array('starttime' => '-1', 'user' => $user->userid, 'mode' => 'unapproved');
+			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
 
 			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
 
-			$parmas_recent = array('starttime' => '-1', 'user' => $user->userid);
+			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
 
 			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 

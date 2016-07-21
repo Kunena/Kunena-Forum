@@ -138,13 +138,16 @@ class Com_KunenaInstallerScript
 		$this->deleteFolder($sitePath . '/template/blue_eagle');
 		
 		// Delete languages files related to blue eagle in en-gb and others languages
-		$kunena_language_folders = JFolder::folders($sitePath . '/language');
-		
-		foreach($kunena_language_folders as $folder)
+		if (JFolder::exists($sitePath . '/language'))
 		{
-			if ( JFile::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+			$kunena_language_folders = JFolder::folders($sitePath . '/language');
+			
+			foreach($kunena_language_folders as $folder)
 			{
-				JFile::delete($sitePath . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+				if ( JFile::exists($sitePath . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
+				{
+					JFile::delete($sitePath . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+				}
 			}
 		}
 		

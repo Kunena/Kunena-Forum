@@ -385,12 +385,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 			if ($total > 1 && $page > 1)
 			{
-				$small = substr($this->topic->first_post_message, 0, 140);
+				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 140);
 				$this->setDescription($small . " - " . JText::_('COM_KUNENA_PAGES') . " {$page}");
 			}
 			else
 			{
-				$small = substr($this->topic->first_post_message, 0, 160);
+				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 160);
 				$this->setDescription($small);
 			}
 		}

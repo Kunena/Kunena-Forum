@@ -22,6 +22,56 @@ class KunenaUpload
 	protected $filename;
 
 	/**
+	 * Correct Image Orientation
+	 *
+	 * @since  K5.0
+	 *
+	 * @param   $filename
+	 */
+	function correctImageOrientation($filename)
+	{
+		$testForJpg = getimagesize($filename);
+
+		if ($testForJpg[2] == 2)
+		{
+			if (function_exists('exif_read_data'))
+			{
+				$deg  = 0;
+				$exif = exif_read_data($filename);
+
+				if ($exif && isset($exif['Orientation']))
+				{
+					$orientation = $exif['Orientation'];
+
+					if ($orientation != 1)
+					{
+						$img = imagecreatefromjpeg($filename);
+
+						switch ($orientation)
+						{
+							case 3:
+							case 4: $deg = 180;
+									break;
+							case 5:
+							case 6: $deg = 270;
+									break;
+							case 7:
+							case 8: $deg = 90;
+									break;
+						}
+					}
+				}
+
+				if ($deg > 0)
+				{
+					$img = imagerotate($img, $deg, 0);
+					imagejpeg($img, $filename, 95);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Get new instance of upload class.
 	 *
 	 * @param  array  $extensions  List of allowed file extensions.
@@ -344,6 +394,11 @@ class KunenaUpload
 						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
+
+				// Get filename from stream
+				$meta_data = stream_get_meta_data($out);
+				$filename  = $meta_data['uri'];
+				$this->correctImageOrientation($filename);
 			}
 		}
 		catch (Exception $exception)
@@ -558,7 +613,7 @@ class KunenaUpload
 		$file->ext = JFile::getExt($fileInput['name']);
 		$file->size = $fileInput['size'];
 		$config = KunenaFactory::getConfig();
-		
+
 		if ($type != 'attachment' && $config->attachment_utf8)
 		{
 			$file->tmp_name = $fileInput['tmp_name'];
@@ -567,7 +622,7 @@ class KunenaUpload
 		{
 			$file->tmp_name = JFile::makeSafe($fileInput['tmp_name']);
 		}
-		
+
 		$file->error = $fileInput['error'];
 		$file->destination = $destination . '.' . $file->ext;
 		$file->success = false;
@@ -648,6 +703,7 @@ class KunenaUpload
 			}
 		}
 
+		$this->correctImageOrientation($file->tmp_name);
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))
 		{

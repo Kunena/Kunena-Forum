@@ -159,7 +159,7 @@ class KunenaLayout extends KunenaLayoutBase
 			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
 		}
 
-		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
+		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $this->escape($title), $class, 'follow');
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -212,7 +212,7 @@ class KunenaLayout extends KunenaLayoutBase
 			}
 		}
 
-		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, 'nofollow');
+		$link = JHtml::_('kunenaforum.link', $url, $content, $this->escape($title), $class, 'nofollow');
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -248,9 +248,9 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = KunenaHtmlParser::stripBBCode($category->getLastTopic()->last_post_message, 200, false);
+			$title = KunenaHtmlParser::stripBBCode($this->escape($category->getLastTopic()->last_post_message), $this->escape($category->getLastTopic()->subject));
 		}
 
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		return JHtml::_('kunenaforum.link', $uri, $content, $this->escape($title), $class, 'nofollow');
 	}
 }

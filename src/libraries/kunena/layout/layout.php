@@ -191,23 +191,23 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			if ($action instanceof KunenaForumMessage)
 			{
-				$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
+				$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 0, false);
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 0, false);
 						break;
 					case 'last':
-						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->last_post_message), $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 0, false);
 						break;
 					case 'unread':
-						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 0, false);
 						break;
 					default:
-						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 0, false);
 				}
 			}
 		}

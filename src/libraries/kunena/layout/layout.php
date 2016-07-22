@@ -248,7 +248,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = KunenaHtmlParser::stripBBCode($this->escape($category->getLastTopic()->last_post_message), $this->escape($category->getLastTopic()->subject));
+			$title = KunenaHtmlParser::stripBBCode($category->getLastTopic()->last_post_message, 200, false);
 		}
 
 		return JHtml::_('kunenaforum.link', $uri, $content, $this->escape($title), $class, 'nofollow');

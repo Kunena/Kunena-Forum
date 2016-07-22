@@ -1763,7 +1763,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_MOVE'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'));
 		}
 
 		if ($targetobject)

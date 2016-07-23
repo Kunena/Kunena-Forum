@@ -24,6 +24,8 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * Construct
 	 *
 	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -35,8 +37,12 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * Purge
 	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function purge()
+	public function purge()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -139,8 +145,12 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * Restore
 	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function restore()
+	public function restore()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -227,6 +237,8 @@ class KunenaAdminControllerTrash extends KunenaController
 	 * Method to redirect user on cancel on purge page
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function cancel()
 	{

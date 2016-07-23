@@ -24,6 +24,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * Construct
 	 *
 	 * @param   array  $config  construct
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -37,6 +39,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return bool
+	 *
+	 * @since    2.0
 	 */
 	public function edit()
 	{
@@ -69,6 +73,10 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * Save
 	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function save()
 	{
@@ -147,6 +155,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function apply()
 	{
@@ -222,6 +232,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function trashusermessages()
 	{
@@ -266,6 +278,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return  void
+	 *
+	 * @since    2.0
 	 */
 	public function move()
 	{
@@ -299,6 +313,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function movemessages()
 	{
@@ -367,6 +383,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function logout()
 	{
@@ -403,6 +421,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function remove()
 	{
@@ -482,6 +502,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function ban()
 	{
@@ -538,8 +560,12 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * Unban
 	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function unban()
+	public function unban()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -596,6 +622,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function block()
 	{
@@ -654,6 +682,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function unblock()
 	{
@@ -712,6 +742,8 @@ class KunenaAdminControllerUsers extends KunenaController
 	 * @throws Exception
 	 *
 	 * @return void
+	 *
+	 * @since    2.0
 	 */
 	public function batch_moderators()
 	{
@@ -798,7 +830,7 @@ class KunenaAdminControllerUsers extends KunenaController
 			return;
 		}
 
-		$db     = JFactory::getDBO();
+		$db     = JFactory::getDbo();
 		$cid = $this->app->input->get('cid', array(), 'array');
 
 		if (!empty($cid))

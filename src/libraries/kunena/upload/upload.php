@@ -49,14 +49,37 @@ class KunenaUpload
 
 						switch ($orientation)
 						{
-							case 3:
-							case 4: $deg = 180;
+							case 1: // nothing
+									$deg  = 0;
+									$flip = 0;
 									break;
-							case 5:
-							case 6: $deg = 270;
+							case 2: // horizontal flip
+									$deg  = 0;
+									$flip = 1;
+								break;
+							case 3: // 180 rotate left
+									$deg  = 180;
+									$flip = 0;
 									break;
-							case 7:
-							case 8: $deg = 90;
+							case 4: // vertical flip
+									$deg  = 0;
+									$flip = 2;
+									break;
+							case 5: // vertical flip + 90 rotate
+									$deg  = 90;
+									$flip = 2;
+									break;
+							case 6: // 270 rotate left
+									$deg  = 270;
+									$flip = 0;
+									break;
+							case 7: // horizontal flip + 90 rotate
+									$deg  = 90;
+									$flip = 1;
+									break;
+							case 8: // 90 rotate left
+									$deg  = 90;
+									$flip = 0;
 									break;
 						}
 					}
@@ -65,8 +88,21 @@ class KunenaUpload
 				if ($deg > 0)
 				{
 					$img = imagerotate($img, $deg, 0);
-					imagejpeg($img, $filename, 95);
 				}
+
+				if ($flip != 0)
+				{
+					if ($flip == 1)
+					{
+						imageflip($img, IMG_FLIP_HORIZONTAL);
+					}
+					else
+					{
+						imageflip($img, IMG_FLIP_VERTICAL);
+					}
+				}
+
+				imagejpeg($img, $filename, 95);
 			}
 		}
 	}

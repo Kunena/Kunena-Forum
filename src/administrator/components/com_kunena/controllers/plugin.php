@@ -26,6 +26,8 @@ class KunenaAdminControllerPlugin extends KunenaController
 	 * @param   array  $config  config
 	 *
 	 * @throws Exception
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -47,9 +49,9 @@ class KunenaAdminControllerPlugin extends KunenaController
 	/**
 	 * Method to get a model object, loading it if required.
 	 *
-	 * @param   string $name   The model name. Optional.
-	 * @param   string $prefix The class prefix. Optional.
-	 * @param   array  $config Configuration array for model. Optional.
+	 * @param   string  $name    The model name.  Optional.
+	 * @param   string  $prefix  The class prefix.  Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
 	 *
 	 * @return  object  The model.
 	 *

@@ -20,6 +20,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 {
 	/**
 	 * @var null|string
+	 *
+	 * @since    2.0.0-BETA2
 	 */
 	protected $baseurl = null;
 
@@ -27,6 +29,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 * Construct
 	 *
 	 * @param   array  $config  construct
+	 *
+	 * @since    2.0.0-BETA2
 	 */
 	public function __construct($config = array())
 	{
@@ -41,6 +45,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 * @param   bool  $urlparams  urlparams
 	 *
 	 * @return JControllerLegacy|void
+	 *
+	 * @since    2.0.0-BETA2
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -71,6 +77,8 @@ class KunenaAdminControllerCpanel extends KunenaController
 	 * Display Kunena updates on dashboard
 	 *
 	 * @return array|null
+	 *
+	 * @since    2.0.0-BETA2
 	 */
 	public static function onGetIcons()
 	{

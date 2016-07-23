@@ -20,6 +20,8 @@ class KunenaAdminControllerAttachments extends KunenaController
 {
 	/**
 	 *
+	 * @since    2.0.0-BETA2
+	 *
 	 * @var null|string
 	 */
 	protected $baseurl = null;
@@ -42,7 +44,7 @@ class KunenaAdminControllerAttachments extends KunenaController
 	 *
 	 * @throws Exception
 	 *
-	 * @return redirect
+	 * @return void
 	 *
 	 * @since 2.0
 	 */

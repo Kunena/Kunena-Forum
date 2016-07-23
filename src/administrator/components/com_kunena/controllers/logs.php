@@ -19,6 +19,8 @@ class KunenaAdminControllerLogs extends KunenaController
 {
 	/**
 	 * @var null|string
+	 *
+	 * @since    5.0
 	 */
 	protected $baseurl = null;
 
@@ -26,6 +28,8 @@ class KunenaAdminControllerLogs extends KunenaController
 	 * Construct
 	 *
 	 * @param   array  $config  config
+	 *
+	 * @since    5.0
 	 */
 	public function __construct($config = array())
 	{
@@ -47,6 +51,8 @@ class KunenaAdminControllerLogs extends KunenaController
 
 	/**
 	 * Clean
+	 *
+	 * @return void
 	 *
 	 * @since  K5.0
 	 *
@@ -85,7 +91,7 @@ class KunenaAdminControllerLogs extends KunenaController
 
 		$num_rows = $db->getAffectedRows();
 
-		if ( $num_rows > 0 )
+		if ($num_rows > 0)
 		{
 			$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_LOG_ENTRIES_DELETED', $num_rows));
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

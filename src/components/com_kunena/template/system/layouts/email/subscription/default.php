@@ -160,7 +160,7 @@ $more = ($this->once ?
 								<p><?php echo JText::_('COM_KUNENA_CATEGORY') . " : " . $this->message->getCategory()->name; ?></p>
 								<p><?php echo JText::_('COM_KUNENA_VIEW_POSTED') . " : " . $author->getName('???', false); ?></p>
 
-								<p>URL : <a href="<?php echo $this->messageUrl; ?>"><b><?php echo $this->messageUrl; ?></b></a></p>
+								<p>URL : <a href="<?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?>"><b><?php echo JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false); ?></b></a></p>
 							</div>
 
 							<?php if ($config->mailfull == 1) : echo JText::_('COM_KUNENA_MESSAGE'); ?>:

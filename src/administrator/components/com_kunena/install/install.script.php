@@ -135,7 +135,11 @@ class Com_KunenaInstallerScript
 		}
 
 		// Remove Blue Eagle template on K5.0
-		$this->deleteKfolder($sitePath . '/template/blue_eagle');
+		$oldblue = $sitePath . '/template/blue_eagle';
+		if (is_dir($oldblue))
+		{
+			$this->deleteKfolder($sitePath . '/template/blue_eagle');
+		}
 
 		// Delete languages files related to blue eagle in en-gb and others languages
 		if (JFolder::exists($sitePath . '/language'))

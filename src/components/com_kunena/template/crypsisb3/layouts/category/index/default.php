@@ -98,8 +98,7 @@ foreach ($this->sections as $section) :
 												<?php endif; ?>
 												<?php if (!empty($category->rssURL)) : ?>
 													<a href="<?php echo $category->rssURL ?>" rel="follow">
-														 <span class="glyphicon glyphicon-feed" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>">
-														 </span>
+														 <?php echo KunenaIcons::rss(); ?>
 													</a>
 												<?php endif; ?>
 											</span>

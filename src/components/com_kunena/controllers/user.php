@@ -465,7 +465,7 @@ class KunenaControllerUser extends KunenaController
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode($app->input->post->get('return', '', 'BASE64'));
+		$return = base64_decode($input->post->get('return', '', 'BASE64'));
 
 		if (!$error && $return && JURI::isInternal($return))
 		{

@@ -381,12 +381,14 @@ class KunenaAdminControllerCategories extends KunenaController
 			return;
 		}
 
-		$post       = JRequest::get('post', JREQUEST_ALLOWRAW);
-		$accesstype = strtr(JFactory::getApplication()->input->getCmd('accesstype', 'joomla.level'), '.', '-');
+		$app        = JFactory::getApplication();
+		$input      = $app->input;
+		$post       = $app->input->post->getArray();
+		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');
 
-		$post['access'] = JFactory::getApplication()->input->getInt("access-{$accesstype}", JFactory::getApplication()->input->getInt('access', null));
-		$post['params'] = JFactory::getApplication()->input->get("params-{$accesstype}", array(), 'post', 'array');
-		$post['params'] += JFactory::getApplication()->input->get("params", array(), 'post', 'array');
+		$post['access'] = $input->getInt("access-{$accesstype}", $input->getInt('access', null));
+		$post['params'] = $input->get("params-{$accesstype}", array(), 'post', 'array');
+		$post['params'] += $input->get("params", array(), 'post', 'array');
 		$success = false;
 
 		$category = KunenaForumCategoryHelper::get(intval($post ['catid']));
@@ -437,11 +439,11 @@ class KunenaAdminControllerCategories extends KunenaController
 			}
 
 			$success = $category->save();
-			$aliases = explode(',', JFactory::getApplication()->get('aliases_all'));
+			$aliases = explode(',', $app->get('aliases_all'));
 
 			if ($aliases)
 			{
-				$aliases = array_diff($aliases, JFactory::getApplication()->input->post->get('aliases', array(), 'array'));
+				$aliases = array_diff($aliases, $input->post->get('aliases', array(), 'array'));
 
 				foreach ($aliases as $alias)
 				{

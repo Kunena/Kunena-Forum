@@ -452,16 +452,20 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$username  = JFactory::getApplication()->input->post->get('username', '');
-		$password  = JFactory::getApplication()->input->post->get('password', '', 'raw');
-		$remember  = JFactory::getApplication()->input->post->get('remember', false);
-		$secretkey  = JFactory::getApplication()->input->post->get('secretkey', null);
+		$app    = JFactory::getApplication();
+		$input  = $app->input;
+		$method = $input->getMethod();
+
+		$username  = $input->$method->get('username', '', 'USERNAME');
+		$password  = $input->$method->get('password', '', 'RAW');
+		$remember  = $this->input->getBool('remember', false);
+		$secretkey  = $input->$method->get('secretkey', '', 'RAW');
 
 		$login = KunenaLogin::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64'));
+		$return = base64_decode($input->post->get('return', '', 'BASE64'));
 
 		if (!$error && $return && JURI::isInternal($return))
 		{

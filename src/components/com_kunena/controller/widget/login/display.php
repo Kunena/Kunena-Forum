@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDisplay
 {
-	protected $name = 'Widget/Credits';
+	protected $name = 'Widget/Login';
 
 	public $me;
 

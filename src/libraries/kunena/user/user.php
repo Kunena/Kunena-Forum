@@ -1298,6 +1298,10 @@ class KunenaUser extends JObject
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', $layout->getLayout());
 
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher->trigger('onKunenaSidebar');
+
 		return KunenaFactory::getProfile()->showProfile($view, $params);
 	}
 

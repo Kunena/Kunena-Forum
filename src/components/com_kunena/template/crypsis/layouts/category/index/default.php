@@ -23,9 +23,13 @@ if ($this->config->enableforumjump)
 
 $mmm = 0;
 
+echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
+
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
 	?>
+	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm); ?>
+
 	<div class="kfrontend">
 		<h2 class="btn-toolbar pull-right">
 			<?php if (count($this->sections) > 0) : ?>
@@ -221,3 +225,5 @@ foreach ($this->sections as $section) :
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 	<!-- Finish: Category Module Position -->
 <?php endforeach;
+
+echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');

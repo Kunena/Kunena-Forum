@@ -23,25 +23,28 @@ if ($this->config->enableforumjump)
 
 $mmm = 0;
 
+echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
+
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
 	?>
+
+	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm); ?>
+
 	<div class="kfrontend">
+		<h2 class="btn-toolbar pull-right">
+			<?php if (count($this->sections) > 0) : ?>
+				<button class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
+			<?php endif; ?>
+		</h2>
 
-			<h2 class="btn-toolbar pull-right">
-				<?php if (count($this->sections) > 0) : ?>
-					<button class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
-				<?php endif; ?>
-			</h2>
-
-			<h1 class="btn-link">
-				<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
-				<small class="hidden-xs nowrap">(<?php echo JText::plural(
+		<h1 class="btn-link">
+			<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
+			<small class="hidden-xs nowrap">(<?php echo JText::plural(
      'COM_KUNENA_X_TOPICS',
 	$this->formatLargeNumber($section->getTopics())); ?>)
-				</small>
-			</h1>
-
+			</small>
+		</h1>
 
 		<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
 			<table class="table<?php echo KunenaTemplate::getInstance()->borderless();?>">
@@ -223,3 +226,5 @@ foreach ($this->sections as $section) :
 	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
 	<!-- Finish: Category Module Position -->
 <?php endforeach;
+
+echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');

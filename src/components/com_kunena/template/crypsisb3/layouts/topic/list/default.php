@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 $cols = !empty($this->actions) ? 6 : 7;
 $colspan = !empty($this->actions) ? 4 : 3;
 $view = JFactory::getApplication()->input->getWord('view');
+$this->ktemplate = KunenaFactory::getTemplate();
 
 $this->addStyleSheet('assets/css/rating.css');
 ?>
@@ -139,10 +140,13 @@ $this->addStyleSheet('assets/css/rating.css');
 					->set('position', 'kunena_topic_' . $i)
 					->set('checkbox', !empty($this->actions));
 
-				echo $this->subLayout('Widget/Module')
-					->set('position', 'kunena_topic_' . $counter++)
-					->set('cols', $cols)
-					->setLayout('table_row');
+				if ($this->ktemplate->params->get('displayModule'))
+				{
+					echo $this->subLayout('Widget/Module')
+						->set('position', 'kunena_topic_' . $counter++)
+						->set('cols', $cols)
+						->setLayout('table_row');
+				}
 			} ?>
 		<?php endif; ?>
 		</tbody>

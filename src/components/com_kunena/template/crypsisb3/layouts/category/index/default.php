@@ -22,14 +22,20 @@ if ($this->config->enableforumjump)
 }
 
 $mmm = 0;
+$config = KunenaFactory::getTemplate()->params;
 
-echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
+if ($config->get('displayModule'))
+{
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
+}
 
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
-	?>
 
-	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm); ?>
+	if ($config->get('displayModule'))
+	{
+		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
+	} ?>
 
 	<div class="kfrontend">
 		<h2 class="btn-toolbar pull-right">
@@ -223,8 +229,15 @@ foreach ($this->sections as $section) :
 		</div>
 	</div>
 	<!-- Begin: Category Module Position -->
-	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
+	<?php
+	if ($config->get('displayModule'))
+	{
+		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm);
+	} ?>
 	<!-- Finish: Category Module Position -->
 <?php endforeach;
 
-echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');
+if ($config->get('displayModule'))
+{
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');
+}

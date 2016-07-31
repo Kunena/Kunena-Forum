@@ -227,14 +227,24 @@ class KunenaAdminModelTrash extends KunenaModel
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
-		$total = (int) $db->loadResult();
-		$this->setState('list.total', $total);
-
-		if (KunenaError::checkDatabaseError() || !$total)
+		
+		try
 		{
+			$total = (int) $db->loadResult();
+			$this->setState('list.total', $total);
+			
+			if (!$total)
+			{
+				return array();
+			}
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 			return array();
 		}
-
+		
 		// If out of range, use last page
 		if ($this->getState('list.limit') && $total < $this->getState('list.start'))
 		{
@@ -344,11 +354,21 @@ class KunenaAdminModelTrash extends KunenaModel
 		$cquery = clone $query;
 		$cquery->clear('select')->clear('order')->select('COUNT(*)');
 		$db->setQuery($cquery);
-		$total = (int) $db->loadResult();
-		$this->setState('list.total', $total);
-
-		if (KunenaError::checkDatabaseError() || !$total)
+		
+		try
 		{
+			$total = (int) $db->loadResult();
+			$this->setState('list.total', $total);
+			
+			if (!$total)
+			{
+				return array();
+			}
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 			return array();
 		}
 

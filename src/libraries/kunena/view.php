@@ -380,7 +380,7 @@ class KunenaView extends JViewLegacy
 
 		if (!is_file($file))
 		{
-			JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file), 500);
 		}
 
 		ob_start();
@@ -473,15 +473,15 @@ class KunenaView extends JViewLegacy
 				$output = trim($output);
 				$output = "\n<!-- START {$templatefile} -->\n{$output}\n<!-- END {$templatefile} -->\n";
 			}
+			
+			return $output;
 		}
 		else
 		{
-			$output = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file));
+			KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName() . '/' . $file), 500);
 		}
-
-		KUNENA_PROFILER ? $this->profiler->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-		return $output;
 	}
 
 	public function getTemplateMD5()

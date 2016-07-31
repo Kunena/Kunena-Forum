@@ -67,10 +67,15 @@ class KunenaAdminModelUser extends KunenaModel
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery("SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1");
-		$subslist = (array) $db->loadObjectList();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$subslist = (array) $db->loadObjectList();
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+		
 			return array();
 		}
 
@@ -114,10 +119,15 @@ class KunenaAdminModelUser extends KunenaModel
 		$userid = $this->getState($this->getName() . '.id');
 
 		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip");
-		$iplist = implode("','", (array) $db->loadColumn());
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$iplist = implode("','", (array) $db->loadColumn());
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+		
 			return array();
 		}
 
@@ -127,10 +137,15 @@ class KunenaAdminModelUser extends KunenaModel
 		{
 			$iplist = "'{$iplist}'";
 			$db->setQuery("SELECT m.ip,m.userid,u.username,COUNT(*) as mescnt FROM #__kunena_messages AS m INNER JOIN #__users AS u ON m.userid=u.id WHERE m.ip IN ({$iplist}) GROUP BY m.userid,m.ip");
-			$list = (array) $db->loadObjectlist();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try
 			{
+				$list = (array) $db->loadObjectlist();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+		
 				return array();
 			}
 		}
@@ -185,10 +200,15 @@ class KunenaAdminModelUser extends KunenaModel
 		$user = $this->getUser();
 		//grab all special ranks
 		$db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_special = '1'");
-		$specialRanks = (array) $db->loadObjectList();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
+			$specialRanks = (array) $db->loadObjectList();
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+		
 			return array();
 		}
 
@@ -231,11 +251,16 @@ class KunenaAdminModelUser extends KunenaModel
 
 		$userids = implode(',', $userids);
 		$db->setQuery("SELECT id,username FROM #__users WHERE id IN(" . $userids . ")");
-		$userids = (array) $db->loadObjectList();
-
-		if (KunenaError::checkDatabaseError())
+		
+		try
 		{
-			return array();
+			$userids = (array) $db->loadObjectList();
+		}
+		catch (RuntimeException $e)
+		{
+			JFactory::getApplication()->enqueueMessage($e->getMessage());
+		
+			return;
 		}
 
 		return $userids;

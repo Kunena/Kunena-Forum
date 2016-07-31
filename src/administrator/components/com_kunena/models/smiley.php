@@ -58,9 +58,15 @@ class KunenaAdminModelSmiley extends KunenaModel
 			$db->setQuery("SELECT * FROM #__kunena_smileys WHERE id={$db->quote($id)}");
 			$selected = $db->loadObject();
 
-			if (KunenaError::checkDatabaseError())
+			try
 			{
-				return null;
+				$selected = $db->loadObject();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+			
+				return;
 			}
 
 			return $selected;

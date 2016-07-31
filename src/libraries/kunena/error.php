@@ -101,6 +101,10 @@ abstract class KunenaError
 	}
 
 	/**
+	 * Return the error in the database query (deprecated use exception in queries instead)
+	 * 
+	 * @deprecated
+	 * 
 	 * @return boolean
 	 * @throws Exception
 	 */

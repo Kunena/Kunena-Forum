@@ -9,6 +9,10 @@
  * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
+
+$this->addStyleSheet('assets/css/bootstrap.datepicker.css');
+$this->addScript('assets/js/bootstrap.datepicker.js');
+$this->addScript('assets/js/profile.js');
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -33,17 +37,12 @@ defined('_JEXEC') or die;
 					<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
 				</label>
 			</td>
-			<?php list ($birthYear, $birthMonth, $birthDay) = explode('-', $this->profile->birthdate); ?>
 			<td>
-				<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE')
-					. '::' . JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC'); ?>">
-					<input id="birthdate" class="span2" type="text" size="4" maxlength="4"  name="birthdate1"
-					       value="<?php echo $this->escape($birthYear); ?>" />
-					<input class="span1" type="text" size="2" maxlength="2" name="birthdate2"
-					       value="<?php echo $this->escape($birthMonth); ?>" />
-					<input class="span1" type="text" size="2" maxlength="2" name="birthdate3"
-					       value="<?php echo $this->escape($birthDay); ?>" />
-				</span>
+				<div id="birthdate">
+					<div class="input-append date">
+						<input type="text" name="birthdate" data-date-format="mm/dd/yyyy" value="<?php echo $this->profile->birthdate == '0001-01-01' ? JFactory::getDate()->format('m/d/Y') : $this->profile->birthdate; ?>"> <span class="add-on"><i class="icon-grid-view-2 "></i></span>
+					</div>
+				</div>
 			</td>
 		</tr>
 		<tr>

@@ -230,6 +230,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    integer  Max subject; input, number
 	 * @since  1.0.0
+	 * @depricated K5.0
 	 */
 	public $maxsubject = 50;
 
@@ -1139,37 +1140,37 @@ class KunenaConfig extends JObject
 	 * @since  K5.0.0
 	 */
 	public $log_moderation = 0;
-	
+
 	/**
 	 * @var integer Define the number of caracters from start when shorthen attachments filemane
 	 * @since  K5.0.0
 	 */
 	public $attach_start = 0;
-	
+
 	/**
 	 * @var integer Define the number of caracters from end when shorthen attachments filemane
 	 * @since  K5.0.0
 	 */
 	public $attach_end = 14;
-	
+
 	/**
 	 * @var string Define the google maps API key
 	 * @since  K5.0.0
 	 */
 	public $google_map_api_key = '';
-	
+
 	/**
 	 * @var integer Allow to remove utf8 characters from filename of attachments
 	 * @since  K5.0.0
 	 */
 	public $attachment_utf8 = 1;
-	
+
 	/**
 	 * @var integer Allow to auto-embded soundcloud item when you put just the URL in a message
 	 * @since  K5.0.0
 	 */
 	public $autoembedsoundcloud = 1;
-	
+
 	/**
 	 *
 	 */

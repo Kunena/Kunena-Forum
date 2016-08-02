@@ -126,7 +126,7 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 						<div class="controls">
 							<input type="text" class="form-control" name="subject"  id="ktitle_moderate_subject" value="<?php echo !isset($this->message)
 								? $this->topic->displayField('subject')
-								: $this->message->displayField('subject'); ?>" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>"/>
+								: $this->message->displayField('subject'); ?>" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>"/>
 						</div>
 					</div>
 					<?php if (!empty($this->replies)) : ?>

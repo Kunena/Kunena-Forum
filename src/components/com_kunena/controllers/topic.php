@@ -898,7 +898,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Redirect edit first message when category is under review
-		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id)
+		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id && !$this->me->isModerator())
 		{
 			$this->setRedirect($message->getCategory()->getUrl($this->return, false));
 		}

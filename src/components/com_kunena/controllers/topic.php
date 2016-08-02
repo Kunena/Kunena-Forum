@@ -897,7 +897,15 @@ class KunenaControllerTopic extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_MODERATED'));
 		}
 
-		$this->setRedirect($message->getUrl($this->return, false));
+		// Redirect edit first message when category is under review
+		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id)
+		{
+			$this->setRedirect($message->getCategory()->getUrl($this->return, false));
+		}
+		else
+		{
+			$this->setRedirect($message->getUrl($this->return, false));
+		}
 	}
 
 	/**

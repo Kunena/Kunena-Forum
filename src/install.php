@@ -314,7 +314,7 @@ EOS;
 		$list = (array) $db->loadColumn();
 
 		$query = $db->getQuery(true)
-			->set($db->quoteName('name') . '=' . $db->quote('Kunena 4.0 Update Site'))
+			->set($db->quoteName('name') . '=' . $db->quote('Kunena 5.0 Update Site'))
 			->set($db->quoteName('type') . '=' . $db->quote('collection'))
 			->set($db->quoteName('location') . '=' . $db->quote('http://update.kunena.org/5.0/list.xml'))
 			->set($db->quoteName('enabled') . '=1')

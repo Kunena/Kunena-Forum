@@ -20,6 +20,7 @@ jQuery(function ($) {
 				if (document.selection) {
 					//For browsers like Internet Explorer
 					this.focus();
+					//noinspection JSUnresolvedVariable
 					sel = document.selection.createRange();
 					sel.text = myValue;
 					this.focus();

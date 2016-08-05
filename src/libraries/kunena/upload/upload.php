@@ -30,7 +30,7 @@ class KunenaUpload
 	 */
 	function correctImageOrientation($filename)
 	{
-		$testForJpg = getimagesize($filename);
+		$testForJpg = @getimagesize($filename);
 
 		if ($testForJpg[2] == 2)
 		{

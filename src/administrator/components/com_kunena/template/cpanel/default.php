@@ -131,20 +131,5 @@ defined('_JEXEC') or die();
 					</div>
 				</div>
 		</section>
-		<div tabindex="-1" class="modal hide fade" id="kunena_changelog" role="dialog">
-			<div class="modal-header">
-				<button class="close" type="button" data-dismiss="modal">×</button>
-				<h3>Changelog</h3>
-			</div>
-			<div class="modal-body">
-				<iframe src="https://www.kunena.org/docs/en/changelog" width="100%" height="400px" frameborder="0"></iframe>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-		<div class="pull-right small">
-			<?php echo KunenaVersion::getLongVersionHTML(); ?>
-		</div>
 	</div>
 </div>

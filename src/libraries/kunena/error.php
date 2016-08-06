@@ -136,6 +136,10 @@ abstract class KunenaError
 	}
 
 	/**
+	 * Get the last error message from database
+	 * 
+	 * @deprecated
+	 * 
 	 * @return string
 	 */
 	public static function getDatabaseError()

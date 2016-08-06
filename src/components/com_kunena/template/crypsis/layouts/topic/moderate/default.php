@@ -19,6 +19,7 @@ kunena_url_ajax= '" . KunenaRoute::_("index.php?option=com_kunena&view=category&
 $this->addScript('assets/js/topic.js');
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
+$labels = $this->ktemplate->params->get('labels');
 ?>
 <h2> <?php echo !isset($this->message)
 		? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC')
@@ -72,6 +73,23 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 						<?php endif; ?>
 							</label>
 						<?php endforeach; ?>
+					</div>
+					<br>
+				<?php elseif ($labels && !$this->config->topicicons) : ?>
+					<div><strong><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong></div>
+					<br>
+					<div class="kmoderate-topicicons">
+						<?php foreach ($this->topicIcons as $id => $icon): ?>
+						<input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+						<?php if ($topicicontype == 'B2') : ?>
+						<label class="radio inline" for="radio<?php echo $icon->id; ?>"><span class="label label-<?php echo $icon->name; ?>"><span class="icon icon-<?php echo $icon->b2; ?>" aria-hidden="true"></span><span class="sr-only"></span><?php echo $icon->name; ?></span>
+							<?php elseif ( $topicicontype == 'fa') : ?>
+							<label class="radio inline" for="radio<?php echo $icon->id; ?>"><i class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
+								<?php else : ?>
+								<label class="radio inline" for="radio<?php echo $icon->id; ?>"><img src="<?php echo $icon->relpath; ?>" alt="" border="0" />
+									<?php endif; ?>
+								</label>
+								<?php endforeach; ?>
 					</div>
 					<br>
 				<?php endif; ?>

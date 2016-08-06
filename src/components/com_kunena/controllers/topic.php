@@ -898,7 +898,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 
 		// Redirect edit first message when category is under review
-		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id)
+		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id && !$this->me->isModerator())
 		{
 			$this->setRedirect($message->getCategory()->getUrl($this->return, false));
 		}
@@ -919,7 +919,7 @@ class KunenaControllerTopic extends KunenaController
 	{
 		if ($this->config->url_subject_topic)
 		{
-			preg_match_all('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.\,]*(\?\S+)?)?)*)@', $subject, $matches);
+			preg_match_all('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $subject, $matches);
 
 			$ignore = false;
 

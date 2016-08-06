@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 $message = $this->message;
+$template = KunenaTemplate::getInstance();
 
 if (!$message->isAuthorised('reply'))
 {

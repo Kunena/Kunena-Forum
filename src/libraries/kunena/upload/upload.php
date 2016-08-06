@@ -30,14 +30,16 @@ class KunenaUpload
 	 */
 	function correctImageOrientation($filename)
 	{
-		$testForJpg = getimagesize($filename);
+		$testForJpg = @getimagesize($filename);
 
 		if ($testForJpg[2] == 2)
 		{
 			if (function_exists('exif_read_data'))
 			{
 				$deg  = 0;
-				$exif = exif_read_data($filename);
+				$exif = @exif_read_data($filename);
+				$flip = '';
+				$img  = '';
 
 				if ($exif && isset($exif['Orientation']))
 				{
@@ -45,7 +47,7 @@ class KunenaUpload
 
 					if ($orientation != 1)
 					{
-						$img = imagecreatefromjpeg($filename);
+						$img = @imagecreatefromjpeg($filename);
 
 						switch ($orientation)
 						{
@@ -87,22 +89,22 @@ class KunenaUpload
 
 				if ($deg > 0)
 				{
-					$img = imagerotate($img, $deg, 0);
+					$img = @imagerotate($img, $deg, 0);
 				}
 
 				if ($flip != 0)
 				{
 					if ($flip == 1)
 					{
-						imageflip($img, IMG_FLIP_HORIZONTAL);
+						@imageflip($img, IMG_FLIP_HORIZONTAL);
 					}
 					else
 					{
-						imageflip($img, IMG_FLIP_VERTICAL);
+						@imageflip($img, IMG_FLIP_VERTICAL);
 					}
 				}
 
-				imagejpeg($img, $filename, 95);
+				@imagejpeg($img, $filename, 95);
 			}
 		}
 	}

@@ -104,6 +104,34 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the user icon
+	 *
+	 * @return string
+	 */
+	static public function user()
+	{
+		$ktemplate  = KunenaFactory::getTemplate();
+		$topicicontype    = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-user" aria-hidden="true"></i>';
+		}
+		elseif ($topicicontype == 'B2')
+		{
+			return '<span class="icon icon-user"></span>';
+		}
+		elseif ($topicicontype == 'B3')
+		{
+			return '<span class="glyphicon glyphicon-user"></span>';
+		}
+		else
+		{
+			return '<span class="icon icon-user"></span>';
+		}
+	}
+
+	/**
 	 * Return the stats icon
 	 *
 	 * @return string

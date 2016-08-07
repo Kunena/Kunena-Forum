@@ -71,7 +71,7 @@ abstract class KunenaMenuFix
 
 		if (!(self::$items = $db->loadObjectList('id')))
 		{
-			JError::raiseWarning(500, JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()));
+			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()), 500);
 
 			return false;
 		}

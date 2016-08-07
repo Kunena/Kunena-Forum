@@ -97,7 +97,7 @@ class KunenaController extends JControllerLegacy
 		}
 		else
 		{
-			JError::raiseError(404, JText::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)));
+			throw new Exception(JText::sprintf('COM_KUNENA_INVALID_CONTROLLER', ucfirst($view)), 404);
 		}
 
 		// Set the name for the controller and instantiate it.
@@ -123,7 +123,7 @@ class KunenaController extends JControllerLegacy
 		}
 		else
 		{
-			JError::raiseError(404, JText::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class));
+			throw new Exception(JText::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
 		}
 
 		return $instance;

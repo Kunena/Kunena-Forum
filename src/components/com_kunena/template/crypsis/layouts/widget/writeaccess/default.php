@@ -21,7 +21,7 @@ $config = KunenaFactory::getConfig();
 	</div>
 
 	<h3 class="btn-link">
-		Forum Access	<?php //echo JText::_('COM_KUNENA_WRITEACCESS'); ?>
+		<?php echo JText::_('COM_KUNENA_WRITEACCESS'); ?>
 	</h3>
 
 	<div class="row-fluid collapse in" id="writeaccess">

@@ -163,7 +163,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 			&& !$config->read_only || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
 			&& !$me->userid && !$this->message->hold && !$config->read_only)
 		{
-			$logintext =  '<a class="btn-link" href="#klogin" rel="nofollow"> ' . JText::_('JLOGIN') . '</a>';
+			$logintext =  '<a class="btn-link" href="#klogin" id="login-link" rel="nofollow"> ' . JText::_('JLOGIN') . '</a>';
 
 			if ($login->getRegistrationUrl())
 			{
@@ -312,7 +312,7 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				if ($topicicontype == 'B2' && !$fullactions)
 				{
 					$this->messageButtons->set('publish',
-						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'icon icon-ok-circle'));
+						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'icon icon-checkmark-circle'));
 				}
 				elseif ($topicicontype == 'B3' && !$fullactions)
 				{
@@ -332,7 +332,22 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 				}
 			}
 
-			if ($this->message->isAuthorised('delete'))
+			if ($topicicontype == 'B2' && !$fullactions)
+			{
+				$this->messageButtons->set('delete',
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'icon icon-trash'));
+			}
+			elseif ($topicicontype == 'B3' && !$fullactions)
+			{
+				$this->messageButtons->set('delete',
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'glyphicon glyphicon-trash'));
+			}
+			elseif ($topicicontype == 'fa' && !$fullactions)
+			{
+				$this->messageButtons->set('delete',
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'fa fa-trash'));
+			}
+			else
 			{
 				$this->messageButtons->set('delete',
 					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button)
@@ -343,16 +358,58 @@ class ComponentKunenaControllerMessageItemActionsDisplay extends KunenaControlle
 		{
 			if ($this->message->isAuthorised('undelete'))
 			{
-				$this->messageButtons->set('undelete',
-					$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button)
-				);
+				if ($topicicontype == 'B2' && !$fullactions)
+				{
+					$this->messageButtons->set('undelete',
+						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'icon icon-checkmark-circle')
+					);
+				}
+				elseif ($topicicontype == 'B3' && !$fullactions)
+				{
+					$this->messageButtons->set('undelete',
+						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'glyphicon glyphicon-ok-circle')
+					);
+				}
+				elseif ($topicicontype == 'fa' && !$fullactions)
+				{
+					$this->messageButtons->set('undelete',
+						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'fa fa-check-circle-o')
+					);
+				}
+				else
+				{
+					$this->messageButtons->set('undelete',
+						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button)
+					);
+				}
 			}
 
 			if ($this->message->isAuthorised('permdelete'))
 			{
-				$this->messageButtons->set('permdelete',
-					$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button)
-				);
+				if ($topicicontype == 'B2' && !$fullactions)
+				{
+					$this->messageButtons->set('permdelete',
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button, 'icon icon-notification-circle')
+					);
+				}
+				elseif ($topicicontype == 'B3' && !$fullactions)
+				{
+					$this->messageButtons->set('permdelete',
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button, 'glyphicon glyphicon-exclamation-sign')
+					);
+				}
+				elseif ($topicicontype == 'fa' && !$fullactions)
+				{
+					$this->messageButtons->set('permdelete',
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button, 'fa fa-exclamation')
+					);
+				}
+				else
+				{
+					$this->messageButtons->set('permdelete',
+						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent', 'permdelete', $button)
+					);
+				}
 			}
 		}
 		elseif ($this->message->isAuthorised('delete'))

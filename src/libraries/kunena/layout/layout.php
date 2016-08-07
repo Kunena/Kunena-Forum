@@ -156,7 +156,13 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $category->name);
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
+			}
 		}
 
 		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
@@ -191,24 +197,30 @@ class KunenaLayout extends KunenaLayoutBase
 		{
 			if ($action instanceof KunenaForumMessage)
 			{
-				$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
+				$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 						break;
 					case 'last':
-						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->last_post_message), $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
 						break;
 					case 'unread':
-						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
 						break;
 					default:
-						$title = JText::sprintf(KunenaHtmlParser::stripBBCode($topic->first_post_message), $this->escape($topic->subject));
+						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
 				}
+			}
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
 			}
 		}
 
@@ -248,7 +260,13 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = JText::sprintf(KunenaHtmlParser::stripBBCode($this->escape($category->getLastTopic()->last_post_message), $this->escape($category->getLastTopic()->subject)));
+			$title = KunenaHtmlParser::stripBBCode($lastTopic->last_post_message, 200, false);
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
+			}
 		}
 
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');

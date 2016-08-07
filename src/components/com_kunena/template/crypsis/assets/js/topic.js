@@ -30,6 +30,28 @@ jQuery(document).ready(function ($) {
 		$(boxToOpen).css('visibility', 'visible');
 	});
 
+	$('[id^="login-link"]').click(function() {
+		$(this).ready(function () {
+			if ($('#userdropdown').is(":visible")) {
+				$(this).addClass('kdelay');
+			}
+			else {
+				$('#userdropdown').css('display', 'inline-block');
+				$('#userdropdown').css('visibility', 'visible').delay(500).queue(function () {
+					$(this).addClass('kdelay');
+				});
+			}
+		});
+	});
+
+	$(document).click(function() {
+			$('.kdelay').css('display', 'none').removeClass('kdelay');
+	});
+
+	$('#userdropdown').click(function(e){
+		e.stopPropagation();
+	});
+
 	/* Button to show more info on profilebox */
 	$(".heading").click(function () {
 		if (!$(this).hasClass('heading-less')) {

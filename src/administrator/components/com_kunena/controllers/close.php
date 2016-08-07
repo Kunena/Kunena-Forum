@@ -19,6 +19,8 @@ defined('_JEXEC') or die();
 class KunenaAdminControllerClose extends KunenaController
 {
 	/**
+	 *
+	 * @since    2.0.0-BETA2
 	 * @var null|string
 	 */
 	protected $baseurl = null;
@@ -27,6 +29,9 @@ class KunenaAdminControllerClose extends KunenaController
 	 * Construct
 	 *
 	 * @param   array  $config  config
+	 *
+	 * @since    2.0.0-BETA2
+	 *
 	 */
 	public function __construct($config = array())
 	{

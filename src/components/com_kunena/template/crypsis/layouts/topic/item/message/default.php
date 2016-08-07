@@ -16,11 +16,11 @@ $sideProfile = $this->profile->getSideProfile($this);
 $quick = $template->params->get('quick');
 
 if ($direction === "left") : ?>
-	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
+	<div class="row-fluid message>">
 		<div class="span2 hidden-phone">
 			<?php echo ($sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)); ?>
 		</div>
-		<div class="span10">
+		<div class="span10  message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php if ($quick != 2) :?>
@@ -29,8 +29,8 @@ if ($direction === "left") : ?>
 		</div>
 	</div>
 <?php elseif ($direction === "right") : ?>
-	<div class="row-fluid message message-<?php echo $this->message->getState(); ?>">
-		<div class="span10">
+	<div class="row-fluid message">
+		<div class="span10 message-<?php echo $this->message->getState(); ?>">
 			<?php echo $this->subLayout('Message/Item')->setProperties($this->getProperties()); ?>
 			<?php echo $this->subRequest('Message/Item/Actions')->set('mesid', $this->message->id); ?>
 			<?php if ($quick != 2) :?>

@@ -409,11 +409,11 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($banDelPosts))
 		{
-			$params = array('starttime' => '-1', 'user' => $user->userid, 'mode' => 'unapproved');
+			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
 
 			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
 
-			$parmas_recent = array('starttime' => '-1', 'user' => $user->userid);
+			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
 
 			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
@@ -452,16 +452,20 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$username  = JFactory::getApplication()->input->post->get('username', '');
-		$password  = JFactory::getApplication()->input->post->get('password', '', 'raw');
-		$remember  = JFactory::getApplication()->input->post->get('remember', false);
-		$secretkey  = JFactory::getApplication()->input->post->get('secretkey', null);
+		$app    = JFactory::getApplication();
+		$input  = $app->input;
+		$method = $input->getMethod();
+
+		$username  = $input->$method->get('username', '', 'USERNAME');
+		$password  = $input->$method->get('password', '', 'RAW');
+		$remember  = $this->input->getBool('remember', false);
+		$secretkey  = $input->$method->get('secretkey', '', 'RAW');
 
 		$login = KunenaLogin::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64'));
+		$return = base64_decode($input->post->get('return', '', 'BASE64'));
 
 		if (!$error && $return && JURI::isInternal($return))
 		{

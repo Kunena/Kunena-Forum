@@ -64,7 +64,7 @@ class KunenaControllerHome extends KunenaController
 
 			if (!$default)
 			{
-				JError::raiseError(500, JText::_('COM_KUNENA_NO_ACCESS'));
+				throw new Exception(JText::_('COM_KUNENA_NO_ACCESS'), 500);
 			}
 
 			// Add query variables from shown menu item

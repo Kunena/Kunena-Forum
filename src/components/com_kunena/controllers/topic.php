@@ -897,7 +897,15 @@ class KunenaControllerTopic extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_MODERATED'));
 		}
 
-		$this->setRedirect($message->getUrl($this->return, false));
+		// Redirect edit first message when category is under review
+		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id && !$this->me->isModerator())
+		{
+			$this->setRedirect($message->getCategory()->getUrl($this->return, false));
+		}
+		else
+		{
+			$this->setRedirect($message->getUrl($this->return, false));
+		}
 	}
 
 	/**
@@ -911,7 +919,7 @@ class KunenaControllerTopic extends KunenaController
 	{
 		if ($this->config->url_subject_topic)
 		{
-			preg_match_all('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.\,]*(\?\S+)?)?)*)@', $subject, $matches);
+			preg_match_all('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $subject, $matches);
 
 			$ignore = false;
 
@@ -1763,7 +1771,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_MOVE'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'));
 		}
 
 		if ($targetobject)

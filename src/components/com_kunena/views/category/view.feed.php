@@ -23,7 +23,7 @@ class KunenaViewCategory extends KunenaView
 	{
 		if (!$this->config->enablerss)
 		{
-			JError::raiseError(404, JText::_('COM_KUNENA_RSS_DISABLED'));
+			throw new Exception(JText::_('COM_KUNENA_RSS_DISABLED'), 500);
 		}
 
 		KunenaHtmlParser::$relative = false;
@@ -32,7 +32,7 @@ class KunenaViewCategory extends KunenaView
 
 		if (!$this->category->authorise('read'))
 		{
-			JError::raiseError(404, $this->category->getError());
+			throw new Exception($this->category->getError(), 404);
 		}
 
 		$this->topics = $this->get('Topics');

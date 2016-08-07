@@ -82,9 +82,17 @@ $quick = $this->ktemplate->params->get('quick');
 <?php endif; ?>
 
 <?php
-echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
+if ($this->ktemplate->params->get('displayModule'))
+{
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
+}
+
 echo $this->subRequest('Topic/Poll')->set('id', $topic->id);
-echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
+
+if ($this->ktemplate->params->get('displayModule'))
+{
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
+}
 
 $count = 1;
 foreach ($this->messages as $id => $message)
@@ -93,8 +101,11 @@ foreach ($this->messages as $id => $message)
 		->set('mesid', $message->id)
 		->set('location', $id);
 
-	echo $this->subLayout('Widget/Module')
-		->set('position', 'kunena_msg_row_' . $count++);
+	if ($this->ktemplate->params->get('displayModule'))
+	{
+		echo $this->subLayout('Widget/Module')
+			->set('position', 'kunena_msg_row_' . $count++);
+	}
 }
 
 if ($quick == 2)

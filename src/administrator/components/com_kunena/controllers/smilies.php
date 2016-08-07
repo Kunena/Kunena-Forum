@@ -24,6 +24,8 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * Construct
 	 *
 	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -33,8 +35,12 @@ class KunenaAdminControllerSmilies extends KunenaController
 
 	/**
 	 * Add
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function add()
+	public function add()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -50,9 +56,12 @@ class KunenaAdminControllerSmilies extends KunenaController
 	/**
 	 * Edit
 	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 * @throws Exception
 	 */
-	function edit()
+	public function edit()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -82,10 +91,14 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * Save
 	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function save()
+	public function save()
 	{
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		if (!JSession::checkToken('post'))
 		{
@@ -138,8 +151,12 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * Smiley upload
 	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function smileyupload()
+	public function smileyupload()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -172,11 +189,15 @@ class KunenaAdminControllerSmilies extends KunenaController
 	 * Remove
 	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function remove()
+	public function remove()
 	{
 		jimport('joomla.utilities.arrayhelper');
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		if (!JSession::checkToken('post'))
 		{

@@ -153,7 +153,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<div class="form-group">
 							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 							<div class="col-md-10">
-								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
+								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
 								<?php if (!$this->config->allow_change_subject  && $this->topic->exists()): ?>
 									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 								<?php endif; ?>

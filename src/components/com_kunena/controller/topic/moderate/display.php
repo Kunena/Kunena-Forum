@@ -78,13 +78,9 @@ class ComponentKunenaControllerTopicModerateDisplay extends KunenaControllerDisp
 			JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
 			JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
 
-		// Load topic icons if available.
-		if ($this->config->topicicons)
-		{
-			$this->template = KunenaTemplate::getInstance();
-			$this->template->setCategoryIconset();
-			$this->topicIcons = $this->template->getTopicIcons(false);
-		}
+		$this->template = KunenaTemplate::getInstance();
+		$this->template->setCategoryIconset();
+		$this->topicIcons = $this->template->getTopicIcons(false);
 
 		// Have a link to moderate user as well.
 		if (isset($this->message))

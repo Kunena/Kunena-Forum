@@ -129,9 +129,9 @@ $quick = $template->params->get('quick');
 					<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 				</label>
 				<input type="text" id="subject" name="subject" class="inputbox span12"
-				       maxlength="<?php echo (int) $config->maxsubject; ?>"
-				       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
-				       value="<?php echo $message->displayField('subject'); ?>" />
+						maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
+						<?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
+						value="<?php echo $message->displayField('subject'); ?>" />
 			</div>
 			<div class="controls">
 				<label>

@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 <ul class="nav navbar-nav pull-right">
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="klogin">
-			<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20); ?>
-			<b class="caret"></b>
+			<?php echo KunenaIcons::user();?>
+			<span class="login-text"><?php echo JText::_('JLOGIN');?></span>
 		</a>
 		<ul class="dropdown-menu card card-container dropdown-menu-right" id="userdropdownlogin" role="menu">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline form-signin">

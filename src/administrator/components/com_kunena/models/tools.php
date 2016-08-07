@@ -274,6 +274,7 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel
 
 		$thirdparty              = array();
 		$thirdparty['aup']       = $this->getExtensionVersion('com_alphauserpoints', 'AlphaUserPoints');
+		$thirdparty['alup']       = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
 		$thirdparty['cb']        = $this->getExtensionVersion('com_comprofiler', 'CommunityBuilder');
 		$thirdparty['jomsocial'] = $this->getExtensionVersion('com_community', 'Jomsocial');
 		$thirdparty['uddeim']    = $this->getExtensionVersion('com_uddeim', 'UddeIM');

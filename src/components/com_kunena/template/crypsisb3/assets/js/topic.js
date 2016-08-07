@@ -43,6 +43,28 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	$('[id^="login-link"]').click(function() {
+		$(this).ready(function () {
+			if ($('#userdropdown').is(":visible")) {
+				$(this).addClass('kdelay');
+			}
+			else {
+				$('#userdropdown').css('display', 'inline-block');
+				$('#userdropdown').css('visibility', 'visible').delay(500).queue(function () {
+					$(this).addClass('kdelay');
+				});
+			}
+		});
+	});
+
+	$(document).click(function() {
+		$('.kdelay').css('display', 'none').removeClass('kdelay');
+	});
+
+	$('#userdropdown').click(function(e){
+		e.stopPropagation();
+	});
+
 	/* On moderate page display subject or field to enter manually the topic ID */
 	$('#kmod_topics').change(function () {
 		var id_item_selected = $(this).val();

@@ -24,6 +24,8 @@ class KunenaAdminControllerRanks extends KunenaController
 	 * Construct
 	 *
 	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -33,8 +35,12 @@ class KunenaAdminControllerRanks extends KunenaController
 
 	/**
 	 * Add
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function add()
+	public function add()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -50,9 +56,13 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Edit
 	 *
+	 * @return void
+	 *
 	 * @throws Exception
+	 *
+	 * @since    2.0
 	 */
-	function edit()
+	public function edit()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -83,11 +93,15 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Save
 	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 *
 	 * @throws Exception
 	 */
-	function save()
+	public function save()
 	{
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		if (!JSession::checkToken('post'))
 		{
@@ -140,9 +154,13 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Rank upload
 	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 *
 	 * @throws Exception
 	 */
-	function rankupload()
+	public function rankupload()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -174,11 +192,15 @@ class KunenaAdminControllerRanks extends KunenaController
 	/**
 	 * Remove
 	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 *
 	 * @throws Exception
 	 */
-	function remove()
+	public function remove()
 	{
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		if (!JSession::checkToken('post'))
 		{

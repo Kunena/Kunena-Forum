@@ -39,6 +39,12 @@ switch ($status)
 		break;
 }
 
+if (!$user->showOnline)
+{
+	$label = JText::_("COM_KUNENA_OFFLINE");
+	$state = "default";
+}
+
 echo $this->subLayout('Widget/Label')
 	->set('label', $label)
 	->set('description', $status_text)

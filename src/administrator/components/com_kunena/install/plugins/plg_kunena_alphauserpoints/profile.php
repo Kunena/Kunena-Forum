@@ -97,8 +97,15 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 			WHERE a.profileviews>0
 			ORDER BY a.profileviews DESC";
 		$db->setQuery($query, 0, $limit);
-		$top = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$top = (array) $db->loadObjectList();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError();
+		}
 
 		return $top;
 	}

@@ -124,10 +124,15 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 		}
@@ -139,10 +144,15 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}
 				WHERE rank_id={$db->quote($rankid)}");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+			
 				return;
 			}
 		}
@@ -218,10 +228,15 @@ class KunenaAdminControllerRanks extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 		}

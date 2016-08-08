@@ -99,6 +99,31 @@ abstract class KunenaError
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'notice');
 		}
 	}
+	
+	/**
+	  * Return different error if it's an admin or a simple user
+	  *
+	  * @return string
+	  *
+	  * @since 5.0
+	  */
+	public static function displayDatabaseError()
+	{
+		$app = JFactory::getApplication();
+	
+		if (JFactory::getApplication()->isAdmin())
+		{
+			$app->enqueueMessage($db->getErrorMsg(), 'error');
+		}
+		elseif (self::$debug || self::$admin)
+		{
+			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.org/">www.kunena.org</a>'), 'error');
+		}
+		else
+		{
+			$app->enqueueMessage('Kunena ' . JText::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
+		}
+	}
 
 	/**
 	 * Return the error in the database query (deprecated use exception in queries instead)

@@ -16,7 +16,7 @@ $sideProfile = $this->profile->getSideProfile($this);
 $quick = $template->params->get('quick');
 
 if ($direction === "left") : ?>
-	<div class="row-fluid message>">
+	<div class="row-fluid message">
 		<div class="span2 hidden-phone">
 			<?php echo ($sideProfile ? $sideProfile : $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('default')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)); ?>
 		</div>

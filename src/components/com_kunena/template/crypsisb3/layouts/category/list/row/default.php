@@ -22,7 +22,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		<h3>
 			<?php echo $this->getCategoryLink($this->category); ?>
 			<small class="hidden-xs">
-				(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->category->getTopics())); ?>)
+				(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>)
 			</small>
 		</h3>
 	</td>

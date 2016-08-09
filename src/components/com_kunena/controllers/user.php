@@ -683,10 +683,9 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Clean request
-		$post              = JRequest::get('post');
-		$post['password']  = JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
-		$post['password2'] = JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
-
+		$post_password = $this->app->input->post->get('password', '','raw');
+		$post_password2 = $this->app->input->post->get('password2', '','raw');
+		
 		if (empty($post['password']) || empty($post['password2']))
 		{
 			unset($post['password'], $post['password2']);

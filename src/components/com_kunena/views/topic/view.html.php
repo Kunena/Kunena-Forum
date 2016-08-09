@@ -341,7 +341,7 @@ class KunenaViewTopic extends KunenaView
 
 		$dispatcher->trigger('onKunenaPrepare', array('kunena.topic', &$this->topic, &$params, 0));
 
-		$quote          = (bool) JRequest::getBool('quote', false);
+		$quote          = (bool) $this->app->input->getBool('quote', false);
 		$this->category = $this->topic->getCategory();
 
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false))

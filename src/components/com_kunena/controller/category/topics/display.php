@@ -183,15 +183,18 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
+				$description = substr($description, 0, 160) . '...';
 				$this->setDescription($description);
 			}
 			elseif (!empty($categorydesc))
 			{
+				$categorydesc = substr($categorydesc, 0, 160) . '...';
 				$this->setDescription($categorydesc);
 			}
 			else
 			{
 				$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
+				$description = substr($description, 0, 160) . '...';
 				$this->setDescription($description);
 			}
 		}

@@ -155,6 +155,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$parentText   = $this->category->getParent()->displayField('name');
 		$categoryText = $this->category->displayField('name');
+		$categorydesc = $this->category->description;
 
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
@@ -183,6 +184,10 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			{
 				$description = $params->get('menu-meta_description');
 				$this->setDescription($description);
+			}
+			elseif (!empty($categorydesc))
+			{
+				$this->setDescription($categorydesc);
 			}
 			else
 			{

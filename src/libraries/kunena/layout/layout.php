@@ -195,8 +195,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$plugin = JPluginHelper::getPlugin('content', 'emailcloak');
-			$params = new JRegistry($plugin->params);
+			$cloak = JPluginHelper::isEnabled('content', 'emailcloak');
 
 			$first = $topic->first_post_message;
 			$first = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $first);
@@ -214,7 +213,7 @@ class KunenaLayout extends KunenaLayoutBase
 
 			if ($action instanceof KunenaForumMessage)
 			{
-				if ($params->get('mode', 1))
+				if ($cloak)
 				{
 					$title = KunenaHtmlParser::parseText($first, 200, false);
 				}
@@ -228,7 +227,7 @@ class KunenaLayout extends KunenaLayoutBase
 				switch ($action)
 				{
 					case 'first':
-						if ($params->get('mode', 1))
+						if ($cloak)
 						{
 							$title = KunenaHtmlParser::parseText($first, 200, false);
 						}
@@ -238,7 +237,7 @@ class KunenaLayout extends KunenaLayoutBase
 						}
 						break;
 					case 'last':
-						if ($params->get('mode', 1))
+						if ($cloak)
 						{
 							$title = KunenaHtmlParser::parseText($last, 200, false);
 						}
@@ -248,7 +247,7 @@ class KunenaLayout extends KunenaLayoutBase
 						}
 						break;
 					case 'unread':
-						if ($params->get('mode', 1))
+						if ($cloak)
 						{
 							$title = KunenaHtmlParser::parseText($last, 200, false);
 						}
@@ -258,7 +257,7 @@ class KunenaLayout extends KunenaLayoutBase
 						}
 						break;
 					default:
-						if ($params->get('mode', 1))
+						if ($cloak)
 						{
 							$title = KunenaHtmlParser::parseText($first, 200, false);
 						}

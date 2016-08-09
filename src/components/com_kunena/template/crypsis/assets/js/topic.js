@@ -85,7 +85,38 @@ jQuery(document).ready(function ($) {
 		$("#share").jsSocials({
 			showCount: true,
 			showLabel: true,
-			shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+			shares: [
+			{
+				share: "email",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
+			}, 
+			{
+				share: "twitter",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
+			}, 
+			{
+				share: "facebook",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL') 
+			}, 
+			{
+				share: "googleplus",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_GOOGLEPLUS_LABEL') 
+			}, 
+			{
+				share: "linkedin",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL') 
+			}, {
+				share: "pinterest",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_PINTEREST_LABEL') 
+			}, 
+			{
+				share: "stumbleupon",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL') 
+			}, 
+			{
+				share: "whatsapp",           
+				label: Joomla.JText._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL') 
+			}]
 		});
 		$('.jssocials-share-whatsapp').addClass('visible-phone');
 	}

@@ -195,25 +195,77 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
+			$plugin = JPluginHelper::getPlugin('content', 'emailcloak');
+			$params = new JRegistry($plugin->params);
+
+			$first = $topic->first_post_message;
+			$first = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $first);
+			$first = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $first);
+			$first = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $first);
+			$first = preg_replace('/\[code\](.*?)\[\/code]/s', '', $first);
+			$first = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $first);
+
+			$last = $topic->last_post_message;
+			$last = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $last);
+			$last = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $last);
+			$last = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $last);
+			$last = preg_replace('/\[code\](.*?)\[\/code]/s', '', $last);
+			$last = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $last);
+
 			if ($action instanceof KunenaForumMessage)
 			{
-				$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+				if ($params->get('mode', 1))
+				{
+					$title = KunenaHtmlParser::parseText($first, 200, false);
+				}
+				else
+				{
+					$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+				}
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						if ($params->get('mode', 1))
+						{
+							$title = KunenaHtmlParser::parseText($first, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						}
 						break;
 					case 'last':
-						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						if ($params->get('mode', 1))
+						{
+							$title = KunenaHtmlParser::parseText($last, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						}
 						break;
 					case 'unread':
-						$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						if ($params->get('mode', 1))
+						{
+							$title = KunenaHtmlParser::parseText($last, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						}
 						break;
 					default:
-						$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						if ($params->get('mode', 1))
+						{
+							$title = KunenaHtmlParser::parseText($first, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						}
 				}
 			}
 

@@ -155,6 +155,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 
 		$parentText   = $this->category->getParent()->displayField('name');
 		$categoryText = $this->category->displayField('name');
+		$categorydesc = $this->category->description;
 
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
@@ -182,11 +183,18 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
+				$description = substr($description, 0, 140) . '... ' . $pagesText;
 				$this->setDescription($description);
+			}
+			elseif (!empty($categorydesc))
+			{
+				$categorydesc = substr($categorydesc, 0, 140) . '... ' . $pagesText;
+				$this->setDescription($categorydesc);
 			}
 			else
 			{
 				$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
+				$description = substr($description, 0, 140) . '...';
 				$this->setDescription($description);
 			}
 		}

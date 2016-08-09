@@ -45,10 +45,8 @@ foreach ($this->sections as $section) :
 		</h2>
 
 		<h1 class="btn-link">
-			<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
-			<small class="hidden-xs nowrap">(<?php echo JText::plural(
-     'COM_KUNENA_X_TOPICS',
-	$this->formatLargeNumber($section->getTopics())); ?>)
+			<?php echo $this->getCategoryLink($section, $this->escape($section->name));	?>
+			<small class="hidden-xs nowrap">(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)
 			</small>
 		</h1>
 

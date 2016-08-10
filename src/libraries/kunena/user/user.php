@@ -569,6 +569,12 @@ class KunenaUser extends JObject
 			}
 
 			$class = !is_null($class) ? $class : $this->getType($catid, 'class');
+
+			if (!empty($class) && $class != 'btn' )
+			{
+				$class = $class . ' ' . $this->getType($catid, 'class');
+			}
+
 			$link = $this->getURL(true, $task);
 
 			if (! empty ( $link ))

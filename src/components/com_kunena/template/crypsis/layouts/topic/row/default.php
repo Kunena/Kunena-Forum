@@ -22,7 +22,6 @@ $author = $topic->getLastPostAuthor();
 $avatar = $author->getAvatarImage($template->params->get('avatarType'), 'post');
 $category = $this->topic->getCategory();
 $cols = empty($this->checkbox) ? 5 : 6;
-$category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
 $txt   = '';
 

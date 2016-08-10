@@ -140,6 +140,12 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 
 		$this->prepareMessages($mesid);
 
+		if ($this->topic->unread)
+		{
+			$doc = JFactory::getDocument();
+			$doc->setMetaData('robots', 'noindex, nofollow');
+		}
+
 		// Run events.
 		$params = new JRegistry;
 		$params->set('ksource', 'kunena');

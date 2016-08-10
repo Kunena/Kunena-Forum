@@ -262,7 +262,7 @@ class KunenaAdminModelCategories extends KunenaModel
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = JFactory::getDBO();
 				$db->setQuery("SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering");
-				
+
 				try
 				{
 					$sections = $db->loadObjectList();
@@ -270,10 +270,10 @@ class KunenaAdminModelCategories extends KunenaModel
 				catch (RuntimeException $e)
 				{
 					JFactory::getApplication()->enqueueMessage($e->getMessage());
-						
+
 					return;
 				}
-				
+
 				$category->parent_id     = $this->getState('item.parent_id');
 				$category->published     = 0;
 				$category->ordering      = 9999;
@@ -376,13 +376,21 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		$topicicons = array ();
 		$topiciconslist = KunenaFolder::folders(JPATH_ROOT . '/media/kunena/topic_icons');
-
 		foreach ($topiciconslist as $icon)
 		{
 			$topicicons[] = JHtml::_('select.option', $icon, $icon);
 		}
 
-		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $category->iconset);
+		if (empty($category->iconset))
+		{
+			$value = KunenaTemplate::getInstance()->params->get('editorIconset');
+		}
+		else
+		{
+			$value = $category->iconset;
+		}
+
+		$lists ['category_iconset'] = JHtml::_('select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $value);
 
 		return $lists;
 	}

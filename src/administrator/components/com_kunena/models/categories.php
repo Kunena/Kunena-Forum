@@ -383,7 +383,7 @@ class KunenaAdminModelCategories extends KunenaModel
 
 		if (empty($category->iconset))
 		{
-			$value = KunenaTemplate::getInstance()->params->get('editorIconset');
+			$value = KunenaTemplate::getInstance()->params->get('DefaultIconset');
 		}
 		else
 		{

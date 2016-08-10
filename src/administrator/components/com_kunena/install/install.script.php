@@ -266,8 +266,9 @@ class Com_KunenaInstallerScript
 		// Remove old system directory
 		if (is_file(JPATH_ROOT . '/media/kunena/topic_icons/system/topicicons.xml'))
 		{
+			JFolder::create(JPATH_ROOT . '/media/kunena/archive/topic_icons');
 			$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
-			$foldernew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/system';
+			$foldernew = JPATH_ROOT . '/media/kunena/archive/topic_icons/system';
 			JFolder::copy($folder, $foldernew);
 			JFolder::delete($folder);
 

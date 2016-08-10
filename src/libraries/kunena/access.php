@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 class KunenaAccess
 {
 	const CATEGORY_SUBSCRIPTION = 1;
+
 	const TOPIC_SUBSCRIPTION = 2;
 
 	protected static $instance = null;
@@ -285,6 +286,33 @@ window.addEvent('domready', function(){
 
 		return $list;
 	}
+	
+	/**
+	 * Get group name in selected access type. Can be removed only when all the calls has been removed.
+	 *
+	 * @param string	$accesstype	Access type.
+	 * @param mixed		$id			Group id.
+	 * @return string|null
+	 *
+	 * @deprecated 3.0.1
+	 */
+	public function getGroupName($accesstype, $id)
+	{
+		if (!isset($this->accesstypes[$accesstype]))
+		{
+			return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
+		}
+		
+		/** @var KunenaAccess $access */
+		foreach ($this->accesstypes[$accesstype] as $access)
+		{
+			if (method_exists($access, 'getGroupName'))
+			{
+				return $access->getGroupName($accesstype, $id);
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Get category administrators.
@@ -515,6 +543,7 @@ window.addEvent('domready', function(){
 		{
 			$id = $user->userid;
 			$app = JFactory::getApplication();
+
 			// TODO: handle guests/bots with no userstate
 			$read[$id] = $app->getUserState("com_kunena.user{$id}_read");
 
@@ -625,7 +654,8 @@ window.addEvent('domready', function(){
 
 		$hold [0] = 0;
 
-		if ($this->isModerator($user, $catid)) {
+		if ($this->isModerator($user, $catid))
+		{
 			$hold [1] = 1;
 		}
 
@@ -718,6 +748,7 @@ window.addEvent('domready', function(){
 			}
 
 			$subslist = array_diff($allow, $deny);
+
 			// Category administrators and moderators override ACL
 			$subslist += array_intersect_key($adminlist, array_flip($subscribers));
 			$subslist += array_intersect_key($modlist, array_flip($subscribers));
@@ -741,7 +772,7 @@ window.addEvent('domready', function(){
 			$adminlist = array();
 		}
 
-		$query = new KunenaDatabaseQuery();
+		$query = new KunenaDatabaseQuery;
 		$query->select('u.id, u.name, u.username, u.email');
 		$query->from('#__users AS u');
 		$query->where("u.block=0");
@@ -782,7 +813,7 @@ window.addEvent('domready', function(){
 
 		if (empty($excludeList))
 		{
-			// false, null, '', 0 and array(): get all subscribers
+			// False, null, '', 0 and array(): get all subscribers
 			$excludeList = array();
 		}
 		elseif (is_array($excludeList))

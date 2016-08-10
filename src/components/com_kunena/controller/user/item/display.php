@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -86,6 +86,22 @@ class ComponentKunenaControllerUserItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('profile:username', $this->profile->getName(), 'property');
+
+		if ($this->profile->getGender() == 1)
+		{
+			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'), 'property');
+		}
+		elseif ($this->profile->getGender() == 2)
+		{
+			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'), 'property');
+		}
+		else
+		{
+			$doc->setMetaData('profile:gender', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'), 'property');
+		}
+
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 

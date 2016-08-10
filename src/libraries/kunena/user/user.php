@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined ('_JEXEC') or die ();
 
@@ -836,7 +836,7 @@ class KunenaUser extends JObject
 			}
 
 			$url = KunenaTemplate::getInstance()->getRankPath($rank->rank_image, true);
-			$location = JUri::root() . 'media/kunena/ranks/' . $rank->rank_image;
+			$location = JPATH_SITE . '/media/kunena/ranks/' . $rank->rank_image;
 			$data = getimagesize($location);
 			$width = $data[0];
 			$height = $data[1];
@@ -1178,6 +1178,134 @@ class KunenaUser extends JObject
 	}
 
 	/**
+	 * Render user karma.
+	 *
+	 * @return string
+	 *
+	 * @since  K5.0
+	 */
+	public function getKarma()
+	{
+		$karma = '';
+
+		if ($this->userid)
+		{
+			$config = KunenaConfig::getInstance();
+			$me = KunenaUserHelper::getMyself();
+
+			$karma = $this->karma;
+
+			if ($config->showkarma && $me->userid && $me->userid != $this->userid)
+			{
+				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
+
+				if ($topicicontype == 'B3')
+				{
+					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+				elseif ($topicicontype == 'fa')
+				{
+					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
+					$karmaPlusIcon = '<i class="fa fa-plus-circle" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
+				}
+				else
+				{
+					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon = '<span class="icon-karma icon icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+
+				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaMinusIcon);
+				$karma .= ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaPlusIcon);
+			}
+		}
+
+		return $karma;
+	}
+
+	/**
+	 * Render user sidebar.
+	 *
+	 * @param KunenaLayout $layout
+	 *
+	 * @return string
+	 *
+	 * @since  K5.0
+	 */
+	public function getSideProfile($layout)
+	{
+		$config = KunenaFactory::getConfig();
+
+		$view                  = clone $layout;
+		$view->config          = $config;
+		$view->userkarma_title = $view->userkarma_minus = $view->userkarma_plus = '';
+
+		if ($view->config->showkarma && $this->userid)
+		{
+			$view->userkarma_title = JText::_('COM_KUNENA_KARMA') . ': ' . $this->karma;
+
+			if ($view->me->userid && $view->me->userid != $this->userid)
+			{
+				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
+
+				if ($topicicontype == 'B3')
+				{
+					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+				elseif ($topicicontype == 'fa')
+				{
+					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
+					$karmaPlusIcon = '<i class="fa fa-plus-circle" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
+				}
+				else
+				{
+					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon = '<span class="icon-karma icon icon-plus text-success" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+				}
+
+				$view->userkarma_minus = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaMinusIcon);
+				$view->userkarma_plus  = ' ' . JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . JSession::getFormToken() . '=1', $karmaPlusIcon);
+			}
+		}
+
+		$view->userkarma = "{$view->userkarma_title} {$view->userkarma_minus} {$view->userkarma_plus}";
+
+		if ($view->config->showuserstats)
+		{
+			$view->userrankimage = $this->getRank($layout->category->id, 'image');
+			$view->userranktitle = $this->getRank($layout->category->id, 'title');
+			$view->userposts     = $this->posts;
+			$view->userthankyou  = $this->thankyou;
+			$activityIntegration = KunenaFactory::getActivityIntegration();
+			$view->userpoints    = $activityIntegration->getUserPoints($this->userid);
+			$view->usermedals    = $activityIntegration->getUserMedals($this->userid);
+		}
+		else
+		{
+			$view->userrankimage = null;
+			$view->userranktitle = null;
+			$view->userposts     = null;
+			$view->userthankyou  = null;
+			$view->userpoints    = null;
+			$view->usermedals    = null;
+		}
+
+		$view->personalText = $this->getPersonalText();
+
+		$params = new \Joomla\Registry\Registry();
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'topic');
+		$params->set('kunena_layout', $layout->getLayout());
+
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher = JEventDispatcher::getInstance();
+		$dispatcher->trigger('onKunenaSidebar');
+
+		return KunenaFactory::getProfile()->showProfile($view, $params);
+	}
+
+	/**
 	 * @param string $name
 	 *
 	 * @return string
@@ -1234,12 +1362,12 @@ class KunenaUser extends JObject
 				}
 				if ($this->websiteurl)
 				{
-					return '<a href="' . $this->escape ( $url ) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . $this->escape ( $websitename ) . '"></span></a>';
+					return '<a href="' . $this->escape($url) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . $this->escape ( $websitename ) . '"></span></a>';
 				}
 				break;
 			case 'private' :
 				$pms = KunenaFactory::getPrivateMessaging ();
-				return $pms->showIcon ( $this->userid );
+				return $pms->showIcon($this->userid);
 				break;
 			case 'email' :
 				// TODO: show email

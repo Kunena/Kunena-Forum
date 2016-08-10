@@ -257,6 +257,7 @@ class KunenaAdminModelConfig extends KunenaModel
 		$showlightbox[]     = JHtml::_('select.option', 2, JText::_('COM_KUNENA_A_LIGHTBOX_NO_JS'));
 		$lists ['lightbox'] = JHtml::_('select.genericlist', $showlightbox, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $this->config->lightbox);
 
+		$timesel[] = JHtml::_('select.option', -1, JText::_('COM_KUNENA_SHOW_SELECT_ALL'));
 		$timesel[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
 		$timesel[] = JHtml::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
 		$timesel[] = JHtml::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));
@@ -456,7 +457,13 @@ class KunenaAdminModelConfig extends KunenaModel
 		$lists['ratingenabled'] = JHTML::_('select.genericlist', $yesno, 'cfg_ratingenabled', 'class="inputbox" size="1"', 'value', 'text', $this->config->ratingenabled);
 
 		$lists ['url_subject_topic'] = JHtml::_('select.genericlist', $yesno, 'cfg_url_subject_topic', 'class="inputbox" size="1"', 'value', 'text', $this->config->url_subject_topic);
-
+		
+		$lists ['log_moderation'] = JHtml::_('select.genericlist', $yesno, 'cfg_log_moderation', 'class="inputbox" size="1"', 'value', 'text', $this->config->log_moderation);
+		
+		$lists ['attachment_utf8'] = JHtml::_('select.genericlist', $yesno, 'cfg_attachment_utf8', 'class="inputbox" size="1"', 'value', 'text', $this->config->attachment_utf8);
+		
+		$lists ['autoembedsoundcloud']    = JHtml::_('select.genericlist', $yesno, 'cfg_autoembedsoundcloud', 'class="inputbox" size="1"', 'value', 'text', $this->config->autoembedsoundcloud);
+		
 		return $lists;
 	}
 }

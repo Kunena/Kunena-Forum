@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -46,6 +46,20 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 		// Get sections to display.
 		$catid = $this->input->getInt('catid', 0);
 
+
+		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		/*$cache   = JFactory::getCache('com_kunena', 'output');
+		
+		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
+		{
+		return;
+		}*/
+		
+		$options            = array();
+		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+		
 		if ($catid)
 		{
 			$sections = KunenaForumCategoryHelper::getCategories($catid);
@@ -272,7 +286,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES');
+				$keywords = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT');
 				$this->setKeywords($keywords);
 			}
 
@@ -283,7 +297,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title;
+				$description = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
 				$this->setDescription($description);
 			}
 		}

@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -30,6 +30,6 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 
 	<div class="input-append">
 		<input class="input-medium search-query" type="text" name="query" value="" placeholder="<?php echo JText::_('COM_KUNENA_MENU_SEARCH'); ?>" />
-		<button class="btn btn-default" type="submit"><span class="icon icon-search"></span></button>
+		<button class="btn btn-default" type="submit"><?php echo KunenaIcons::search();?></button>
 	</div>
 </form>

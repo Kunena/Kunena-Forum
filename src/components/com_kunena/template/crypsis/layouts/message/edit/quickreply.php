@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -42,6 +42,9 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 $this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/jquery.caret.js');
 $this->addScript('assets/js/jquery.atwho.js');
+
+$this->addScriptDeclaration("kunena_topicicontype = '';");
+
 $this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
@@ -72,9 +75,16 @@ if ($me->canDoCaptcha() )
 		}
 	}
 }
+$template = KunenaTemplate::getInstance();
+$quick = $template->params->get('quick');
+
 ?>
 
-<div class="kreply-form" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
+<?php if ($quick == 1) : ?>
+<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display:none;">
+<?php elseif ($quick == 0) : ?>
+<div class="kreply-form col-md-12" id="kreply<?php echo $message->displayField('id'); ?>_form" data-backdrop="false" style="position: relative; top: 10px; left: -20px; right: -10px; width:auto; z-index: 1;">
+<?php endif;?>
 	<div class="modal-header">
 		<button type="reset" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>
@@ -115,7 +125,7 @@ if ($me->canDoCaptcha() )
 					<?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?>:
 				</label>
 				<input type="text" id="subject" name="subject" class="inputbox span12"
-				       maxlength="<?php echo (int) $config->maxsubject; ?>"
+				       maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>"
 				       <?php if (!$config->allow_change_subject): ?>disabled<?php endif; ?>
 				       value="<?php echo $message->displayField('subject'); ?>" />
 			</div>

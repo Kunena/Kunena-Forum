@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -156,7 +156,13 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+			$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $category->name);
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
+			}
 		}
 
 		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
@@ -176,7 +182,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = null)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -189,26 +195,83 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
+			$cloak = JPluginHelper::isEnabled('content', 'emailcloak');
+
+			$first = $topic->first_post_message;
+			$first = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $first);
+			$first = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $first);
+			$first = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $first);
+			$first = preg_replace('/\[code\](.*?)\[\/code]/s', '', $first);
+			$first = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $first);
+
+			$last = $topic->last_post_message;
+			$last = preg_replace('/\[confidential\](.*?)\[\/confidential\]/s', '', $last);
+			$last = preg_replace('/\[hide\](.*?)\[\/hide\]/s', '', $last);
+			$last = preg_replace('/\[spoiler\](.*?)\[\/spoiler\]/s', '', $last);
+			$last = preg_replace('/\[code\](.*?)\[\/code]/s', '', $last);
+			$last = preg_replace('/\[attachment(.*?)\](.*?)\[\/attachment]/s', '', $last);
+
 			if ($action instanceof KunenaForumMessage)
 			{
-				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
+				if ($cloak)
+				{
+					$title = KunenaHtmlParser::parseText($first, 200, false);
+				}
+				else
+				{
+					$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+				}
 			}
 			else
 			{
 				switch ($action)
 				{
 					case 'first':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
+						if ($cloak)
+						{
+							$title = KunenaHtmlParser::parseText($first, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						}
 						break;
 					case 'last':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
+						if ($cloak)
+						{
+							$title = KunenaHtmlParser::parseText($last, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						}
 						break;
 					case 'unread':
-						$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
+						if ($cloak)
+						{
+							$title = KunenaHtmlParser::parseText($last, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->last_post_message, 200, false);
+						}
 						break;
 					default:
-						$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
+						if ($cloak)
+						{
+							$title = KunenaHtmlParser::parseText($first, 200, false);
+						}
+						else
+						{
+							$title = KunenaHtmlParser::stripBBCode($topic->first_post_message, 200, false);
+						}
 				}
+			}
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
 			}
 		}
 
@@ -248,7 +311,13 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($title === null)
 		{
-			$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
+			$title = KunenaHtmlParser::stripBBCode($lastTopic->last_post_message, 200, false);
+
+			if (strpos($class, 'hasTooltip') !== false)
+			{
+				// Tooltips will decode HTML and we don't want the HTML to be parsed
+				$title = $this->escape($title);
+			}
 		}
 
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');

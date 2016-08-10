@@ -374,6 +374,19 @@ JHtml::_('behavior.tabstate');
 												<td align="left" valign="top" width="25%"><?php echo $this->lists ['ratingenabled'] ?></td>
 												<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CONFIGURATION_RATING_DESC') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_START') ?></td>
+												<td>
+													<input type="text" name="cfg_attach_start" class="ksm-field" value="<?php echo $this->escape($this->config->attach_start) ?>" />
+												</td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_START_DESC') ?></td>
+											</tr><tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_END') ?></td>
+												<td>
+													<input type="text" name="cfg_attach_end" class="ksm-field" value="<?php echo $this->escape($this->config->attach_end) ?>" />
+												</td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTHEN_NAME_END_DESC') ?></td>
+											</tr>
 											</tbody>
 										</table>
 									</fieldset>
@@ -476,6 +489,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT') ?></td>
 												<td><?php echo $this->lists ['user_report'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT_DESC') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_LOG_COLLECT_DATA') ?></td>
+												<td><?php echo $this->lists ['log_moderation'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_LOG_COLLECT_DATA_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>
@@ -742,6 +760,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo $this->lists ['attachment_protection'] ?></td>
 												<td><?php echo JText::sprintf('COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC', JUri::root(false) . 'media/kunena/attachments/image.png') ?></td>
 											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_ATTACHMENT_FILENAME_UTF8') ?></td>
+												<td><?php echo $this->lists ['attachment_utf8'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_ATTACHMENT_FILENAME_UTF8_DESC') ?></td>
+											</tr>
 											</tbody>
 										</table>
 									</fieldset>
@@ -976,6 +999,11 @@ JHtml::_('behavior.tabstate');
 												<td><?php echo JText::_('COM_KUNENA_A_AUTOEMBEDEBAY_DESC') ?></td>
 											</tr>
 											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD') ?></td>
+												<td><?php echo $this->lists ['autoembedsoundcloud'] ?></td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD_DESC') ?></td>
+											</tr>
+											<tr>
 												<td><?php echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE') ?></td>
 												<td><?php echo $this->lists ['highlightcode'] ?></td>
 												<td><?php echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE_DESC') ?></td>
@@ -1017,6 +1045,13 @@ JHtml::_('behavior.tabstate');
 													<input type="text" name="cfg_twitter_consumer_secret" value="<?php echo $this->escape($this->config->twitter_consumer_secret) ?>" />
 												</td>
 												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
+											</tr>
+											<tr>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY') ?></td>
+												<td>
+													<input type="text" name="cfg_google_map_api_key" value="<?php echo $this->escape($this->config->google_map_api_key) ?>" />
+												</td>
+												<td><?php echo JText::_('COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY_DESC') ?></td>
 											</tr>
 											</tbody>
 										</table>

@@ -6,7 +6,7 @@
  *
  * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -135,7 +135,7 @@ class KunenaAvatar
 	 *
 	 * @return string|void
 	 */
-	public function getLink($user, $class='', $sizex = 90, $sizey = 90)
+	public function getLink($user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
 		$size = $this->getSize($sizex, $sizey);
 		$avatar = $this->getURL($user, $size->x, $size->y);
@@ -145,19 +145,16 @@ class KunenaAvatar
 			return;
 		}
 
-		if ($class)
+		if ($class == 'none')
+		{
+			$class = ' class="kavatar"';
+		}
+		elseif ($class)
 		{
 			$class = ' class="' . $class . '"';
 		}
 
-		// Style is needed to resize avatar for JomSocial and other integration that do not have automatic resizing
-		if (!$this->resize)
-		{
-			$style = 'style="max-width: ' . $size->x . 'px; max-height: ' . $size->y . 'px"';
-		}
-		else { $style = ''; }
-
-		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x  . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" ' . $style . ' />';
+		$link = '<img' . $class . ' src="' . $avatar . '" width="' . $size->x  . '" height="' . $size->y . '"  alt="' . JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
 
 		return $link;
 	}

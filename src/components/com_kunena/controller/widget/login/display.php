@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  */
 class ComponentKunenaControllerWidgetLoginDisplay extends KunenaControllerDisplay
 {
-	protected $name = 'Widget/Credits';
+	protected $name = 'Widget/Login';
 
 	public $me;
 

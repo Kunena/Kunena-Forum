@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -14,20 +14,20 @@ $config = $this->config;
 
 $cols = 1;
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('assets/js/caret.js');
-$this->addScript('assets/js/atwho.js');
-$this->addStyleSheet('assets/css/atwho.css');
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
+$this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/search.js');
 ?>
-<h2>
+<h1>
 	<?php echo JText::_('COM_KUNENA_MEMBERS'); ?>
-</h2>
+</h1>
 
-<div class="pull-right">
+<h2 class="pull-right">
 	<?php echo $this->subLayout('Widget/Search')
 	->set('state', $this->state->get('list.search'))
 	->setLayout('user'); ?>
-</div>
+</h2>
 
 <div class="pull-left">
 	<?php echo $this->subLayout('Widget/Pagination/List')
@@ -47,7 +47,7 @@ $this->addScript('assets/js/search.js');
 				<th class="col-md-1 center hidden-xs">
 					<a id="forumtop"> </a>
 					<a href="#forumbottom">
-						<i class="glyphicon glyphicon-arrow-down"></i>
+						<?php echo KunenaIcons::arrowdown();?>
 					</a>
 				</th>
 
@@ -83,6 +83,15 @@ $this->addScript('assets/js/search.js');
 				<th class="col-md-1 center hidden-xs">
 					<?php echo JHtml::_(
 	'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts',
+	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
+'kuserlist-form'); ?>
+				</th>
+				<?php endif; ?>
+
+				<?php if ($config->userlist_karma) : $cols++; ?>
+				<th class="col-md-1 center hidden-xs">
+					<?php echo JHtml::_(
+	'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma',
 	$this->state->get('list.direction'), $this->state->get('list.ordering'), '', '',
 'kuserlist-form'); ?>
 				</th>
@@ -163,6 +172,12 @@ $this->addScript('assets/js/search.js');
 				</td>
 				<?php endif; ?>
 
+				<?php if ($config->userlist_karma) : ?>
+				<td class="col-md-1 center hidden-xs">
+					<?php echo (int) $user->karma; ?>
+				</td>
+				<?php endif; ?>
+
 				<?php if ($config->userlist_email) : ?>
 				<td class="col-md-1 hidden-xs">
 					<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
@@ -193,10 +208,10 @@ $this->addScript('assets/js/search.js');
 		<td class="col-md-1 center hidden-xs">
 			<a id="forumbottom"> </a>
 			<a href="#forumtop">
-				<i class="glyphicon glyphicon-arrow-up hasTooltip"></i>
+				<?php echo KunenaIcons::arrowup();?>
 			</a>
 		</td>
-		<td colspan="7" class="hidden-xs">
+		<td colspan="8" class="hidden-xs">
 		</td>
 		</tfoot>
 

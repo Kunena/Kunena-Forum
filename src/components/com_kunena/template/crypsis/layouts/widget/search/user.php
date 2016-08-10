@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -28,6 +28,6 @@ $state = $this->state;
 				   value="<?php echo $this->escape($state); ?>" placeholder="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
 		</label>
 
-		<button type="submit" class="btn"><span class="icon icon-search"></span></button>
+		<button type="submit" class="btn"><?php echo KunenaIcons::search();?></button>
 	</div>
 </form>

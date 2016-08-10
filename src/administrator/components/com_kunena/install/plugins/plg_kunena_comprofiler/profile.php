@@ -51,6 +51,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
+		global $_CB_framework;
+
 		$config = KunenaFactory::getConfig();
 		$my     = JFactory::getUser();
 
@@ -59,7 +61,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 			return false;
 		}
 
-		return cbSef('index.php?option=com_comprofiler&amp;task=usersList', $xhtml);
+		return $_CB_framework->userProfilesListUrl(null, $xhtml);
 	}
 
 	/**
@@ -71,6 +73,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true)
 	{
+		global $_CB_framework;
+
 		$user = KunenaFactory::getUser($user);
 
 		if ($user->userid == 0)
@@ -86,7 +90,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 			return false;
 		}
 
-		return cbSef('index.php?option=com_comprofiler&task=userProfile&user=' . $user->userid . getCBprofileItemid(), $xhtml);
+		return $_CB_framework->userProfileUrl($user->userid, $xhtml);
 	}
 
 	/**
@@ -130,8 +134,15 @@ class KunenaProfileComprofiler extends KunenaProfile
 			WHERE cu.hits>0
 			ORDER BY cu.hits DESC";
 		$db->setQuery($query, 0, $limit);
-		$top = (array) $db->loadObjectList();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$top = (array) $db->loadObjectList();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError();
+		}
 
 		return $top;
 	}
@@ -144,6 +155,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 */
 	public function getEditProfileURL($userid, $xhtml = true)
 	{
-		return cbSef('index.php?option=com_comprofiler&task=userDetails' . getCBprofileItemid(), $xhtml);
+		global $_CB_framework;
+
+		return $_CB_framework->userProfileEditUrl(null, $xhtml);
 	}
 }

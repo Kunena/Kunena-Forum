@@ -4,7 +4,7 @@
 *
 * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
+* @link https://www.kunena.org
 **/
 
 .red {
@@ -48,9 +48,23 @@ input[type='checkbox']:focus {
 	outline : 0 !important;
 }
 
+h1 {
+	font-size: 22px;
+	line-height: 24px;
+}
+
+h1 small {
+	font-size: 16.25px;
+}
+
 h2 {
-	padding-bottom : 2%;
-	margin-bottom  : 10px;
+	font-size: 20px;
+	padding-top: 0;
+	margin-top: 0;
+}
+
+h3 {
+	font-size: 18px;
 }
 
 .kgooglemap {
@@ -155,45 +169,35 @@ img {
 	border-radius : 4px;
 }
 
-.topic-starter-circle {
-	padding-top   : 24px !important;
-	margin-top    : -20px !important;
-}
-
+.topic-starter-circle,
 .topic-moderator-circle {
-	padding-top   : 24px !important;
+	padding-top   : 30px !important;
 	margin-top    : -20px !important;
 }
 
 .topic-starter {
-	 background    : rgba(229, 229, 229, 0.4);
-	 display       : inline-block;
-	 height        : 15px;
-	 border-radius : 0 0 4px 4px;
-	 white-space   : nowrap;
-	 padding-top   : 4px;
-	 border        : 1px solid #ddd;
-	 border-top    : 0 none;
-	 padding-left  : 8px;
-	 padding-right : 8px;
-	 color          : #3a87ad;
-	 line-height    : 1em;
-	 font-size      : 10px;
-	 font-weight    : bold;
-	 text-transform : uppercase;
+	display        : inline-block;
+	height         : auto;
+	border-radius  : 0 0 4px 4px;
+	white-space    : nowrap;
+	border         : 1px solid #ddd;
+	border-top     : 0 none;
+	padding        : 4px 8px 10px;
+	color          : #3a87ad;
+	line-height    : 1em;
+	font-size      : 10px;
+	font-weight    : bold;
+	text-transform : uppercase;
 }
 
 .topic-moderator {
-	background    : rgba(229, 229, 229, 0.4);
-	display       : inline-block;
-	height        : 15px;
-	border-radius : 0 0 4px 4px;
-	white-space   : nowrap;
-	padding-top   : 4px;
-	border        : 1px solid #ddd;
-	border-top    : 0 none;
-	padding-left  : 8px;
-	padding-right : 8px;
+	display        : inline-block;
+	height         : auto;
+	border-radius  : 0 0 4px 4px;
+	white-space    : nowrap;
+	border         : 1px solid #ddd;
+	border-top     : 0 none;
+	padding        : 4px 8px 10px;
 	color          : red;
 	line-height    : 1em;
 	font-size      : 10px;
@@ -221,9 +225,15 @@ hr {
 
 .unstyled,
 .inline li,
-#kstats li,
+#kstats li {
+	list-style : none;
+}
+
 .profilebox li {
 	list-style : none;
+	padding: 0;
+	margin: 0;
+	line-height: 1.4em;
 }
 
 .topictitle {
@@ -383,6 +393,7 @@ form {
 	height    : 100%;
 	margin    : 20px 0;
 	word-wrap : break-word;
+	font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .input-xxlarge {
@@ -484,9 +495,9 @@ select#mode {
 
 .message-deleted {
 	background-color : rgba(0, 0, 0, 0.1);
-	padding          : 8px;
 	margin-bottom    : 15px;
 	border-radius    : 5px;
+	padding          : 19px 19px 8px 14px;
 }
 
 .input-append {
@@ -721,7 +732,10 @@ select#postcatid {
 	width : 100%;
 }
 
+.fa-big,
 .icon-big {
+	margin-top: 20px;
+	margin-left: 5px;
 	font-size : 32px;
 }
 
@@ -732,8 +746,7 @@ select#postcatid {
 }
 
 .ip {
-	margin : 0 0 10px;
-	width  : 150px;
+	padding-right: 10px;
 }
 
 .report {
@@ -742,14 +755,20 @@ select#postcatid {
 }
 
 .intro {
-	margin : 0 0 10px 60px;
+	margin : 0 0 30px 60px;
+	padding-top: 7px;
+}
+
+#credits {
+	padding-bottom: 20px;
 }
 
 input[type=radio] + label {
 	display          : inline-block;
-	margin           : -2px;
-	padding          : 4px 12px;
 	background-color : transparent;
+	border           : 1px solid rgba(0, 0, 0, 0);
+	margin           : -2px -3px;
+	padding          : 4px 12px;
 }
 
 input[type=radio]:checked + label {
@@ -757,7 +776,6 @@ input[type=radio]:checked + label {
 	border        : 1px solid rgba(0, 0, 0, 0.2);
 	border-radius : 4px;
 }
-
 
 input[type=radio] {
 	display : none;
@@ -793,7 +811,7 @@ ul.inline i {
 }
 
 .dropdown-menu {
-	min-width : 160px;
+	min-width : 220px;
 }
 
 #search [class*='span'] {
@@ -876,6 +894,7 @@ form#postform div.control-group {
 .icon-topic {
 	font-size  : 24px;
 	margin-top : 10px;
+	margin-right: 10px;
 }
 
 #kmoderate-mode-selected,
@@ -888,6 +907,15 @@ form#postform div.control-group {
 .thumbnails li,
 .profile-expand li{
 	list-style: none;
+}
+
+.thumbnails li {
+	margin: 0;
+	padding: 0;
+	width: 23%;
+	padding-right: 2%;
+	float: left;
+	display: inline-block;
 }
 
 .profile-expand ul {
@@ -978,4 +1006,91 @@ div.krating > label:active {
 .dropdown-toggle img.none {
 	margin-top: 0 !important;
 	box-shadow: 0 0 0 1px #d4d4d4, 0 0 0 0 #fff, 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.thumbnail a {
+	text-decoration: none;
+}
+
+.span3 .img-circle {
+	width: 80%;
+}
+
+.span3 .img-polaroid {
+	width: 70%;
+}
+
+.profilebox.unstyled {
+	margin-left: 4px;
+}
+
+.btn-toolbar .btn.fa:before,
+#search .btn.fa:before {
+	content: "\f106";
+	font-size : 14px;
+}
+
+.btn-toolbar .btn.fa.collapsed:before,
+#search .btn.fa.collapsed:before {
+	content: "\f107";
+	font-size : 14px;
+}
+
+.btn-toolbar .btn.b3:before,
+#search .btn.b3:before {
+	content: "\e260";
+	font-size : 14px;
+	font-family: "Glyphicons Halflings";
+}
+
+.btn-toolbar .btn.b3.collapsed:before,
+#search .btn.b3.collapsed:before {
+	content: "\e259";
+	font-family: "Glyphicons Halflings";
+	font-size : 14px;
+}
+
+.btn-toolbar .btn.b2:before,
+#search .btn.b2:before {
+	background-position: -288px -120px;
+	font-size : 14px;
+}
+
+.btn-toolbar .btn.b2.collapsed:before,
+#search .btn.b2.collapsed:before {
+	background-position: -313px -119px;
+	font-size : 14px;
+}
+
+.kmsgimage {
+	display: inline-block;
+}
+
+.kmsgimage img {
+	width: 100%;
+}
+
+.embed-container {
+	position: relative;
+	padding-bottom: 120%;
+	height: 0;
+	overflow: hidden;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.kmessagepadding {
+	padding-bottom: 20px;
+}
+
+#poll-results {
+	padding-bottom: 40px;
 }

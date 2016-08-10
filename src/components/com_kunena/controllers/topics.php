@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,7 +22,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 *
 	 */
-	function none()
+	public function none()
 	{
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_CONTROLLER_NO_TASK'));
 		$this->setRedirectBack();
@@ -31,7 +31,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function permdel()
+	public function permdel()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -49,7 +49,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -71,6 +72,21 @@ class KunenaControllerTopics extends KunenaController
 
 		if ($message)
 		{
+			if ($this->config->log_moderation)
+			{
+				foreach ($topics as $topic)
+				{
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_DESTROY,
+						array('topic_ids' => $ids),
+						$topic->getCategory(),
+						$topic,
+						null
+					);
+				}
+			}
+				
 			$this->app->enqueueMessage($message);
 		}
 
@@ -80,7 +96,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function delete()
+	public function delete()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -98,7 +114,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -117,6 +134,21 @@ class KunenaControllerTopics extends KunenaController
 
 		if ($message)
 		{
+			if ($this->config->log_moderation)
+			{
+				foreach ($topics as $topic)
+				{
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_DELETE,
+						array('topic_ids' => $ids),
+						$topic->getCategory(),
+						$topic,
+						null
+					);
+				}
+			}
+			
 			$this->app->enqueueMessage($message);
 		}
 
@@ -126,7 +158,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function restore()
+	public function restore()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -144,7 +176,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -163,6 +196,21 @@ class KunenaControllerTopics extends KunenaController
 
 		if ($message)
 		{
+			if ($this->config->log_moderation)
+			{
+				foreach ($topics as $topic)
+				{
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_UNDELETE,
+						array('topic_ids' => $ids),
+						$topic->getCategory(),
+						$topic,
+						null
+					);
+				}
+			}
+			
 			$this->app->enqueueMessage($message);
 		}
 
@@ -190,7 +238,8 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$topics)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
@@ -210,6 +259,21 @@ class KunenaControllerTopics extends KunenaController
 
 		if ($message)
 		{
+			if ($this->config->log_moderation)
+			{
+				foreach ($topics as $topic)
+				{
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_APPROVE,
+						array('topic_ids' => $ids),
+						$topic->getCategory(),
+						$topic,
+						null
+					);
+				}
+			}
+			
 			$this->app->enqueueMessage($message);
 		}
 
@@ -219,7 +283,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function move()
+	public function move()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -229,18 +293,24 @@ class KunenaControllerTopics extends KunenaController
 			return;
 		}
 
-		$ids = array_keys(JFactory::getApplication()->input->get('topics', array(), 'post', 'array'));
-		Joomla\Utilities\ArrayHelper::toInteger($ids);
+		$topics_ids = array_keys($this->app->input->get('topics', array(), 'post', 'array'));
+		Joomla\Utilities\ArrayHelper::toInteger($topics_ids);
 
-		$topics = KunenaForumTopicHelper::getTopics($ids);
+		$topics = KunenaForumTopicHelper::getTopics($topics_ids);
 
-		if (!$topics)
+		$messages_ids = array_keys($this->app->input->get('posts', array(), 'post', 'array'));
+		Joomla\Utilities\ArrayHelper::toInteger($messages_ids);
+
+		$messages = KunenaForumMessageHelper::getMessages($messages_ids);
+
+		if (!$topics && !$messages)
 		{
-			$message = JText::_('COM_KUNENA_NO_TOPICS_SELECTED');
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_OR_TOPICS_SELECTED'), 'notice');
+			$this->setRedirectBack();
 		}
 		else
 		{
-			$target = KunenaForumCategoryHelper::get(JFactory::getApplication()->input->getInt('target', 0));
+			$target = KunenaForumCategoryHelper::get($this->app->input->getInt('target', 0));
 
 			if (!$target->authorise('read'))
 			{
@@ -248,22 +318,59 @@ class KunenaControllerTopics extends KunenaController
 			}
 			else
 			{
-				foreach ($topics as $topic)
+				if ($topics)
 				{
-					if ($topic->authorise('move') && $topic->move($target))
+					foreach ($topics as $topic)
 					{
-						$message = JText::_('COM_KUNENA_POST_SUCCESS_MOVE');
+						if ($topic->authorise('move') && $topic->move($target))
+						{
+							$message = JText::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
+						}
+						else
+						{
+							$this->app->enqueueMessage($topic->getError(), 'notice');
+						}
 					}
-					else
+				} 
+				else
+				{
+					foreach ($messages as $message)
 					{
-						$this->app->enqueueMessage($topic->getError(), 'notice');
-					}
+						$topic = $message->getTopic();
+
+						if ($message->authorise('move') && $topic->move($target, $message->id))
+  						{
+  							$message = JText::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
+  						}
+  						else
+  						{
+  							$this->app->enqueueMessage($message->getError(), 'notice');
+  						}
+  					}
 				}
 			}
 		}
 
 		if (!empty($message))
 		{
+			if ($this->config->log_moderation)
+			{
+				foreach ($topics as $topic)
+				{
+					KunenaLog::log(
+						KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_MODERATE,
+						array(
+							'move' => array('id' => $topic->id, 'mode' => 'topic'),
+							'target' => array('category_id' => $target->id)
+						),
+						$topic->getCategory(),
+						$topic,
+						null
+					);
+				}
+			}
+			
 			$this->app->enqueueMessage($message);
 		}
 
@@ -273,7 +380,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function unfavorite()
+	public function unfavorite()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -290,6 +397,21 @@ class KunenaControllerTopics extends KunenaController
 
 		if (KunenaForumTopicHelper::favorite(array_keys($topics), 0))
 		{
+			if ($this->config->log_moderation)
+			{
+				foreach($topics as $topic)
+				{
+					KunenaLog::log(
+						$this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+						KunenaLog::LOG_TOPIC_UNFAVORITE,
+						array('topic_ids' => $ids),
+						$topic->getCategory(),
+						$topic,
+						null
+					);
+				}
+			}
+			
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_USER_UNFAVORITE_YES'));
 		}
 		else
@@ -303,7 +425,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function unsubscribe()
+	public function unsubscribe()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -351,7 +473,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -398,7 +520,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -426,7 +548,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function restore_posts()
+	public function restore_posts()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -444,7 +566,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{
@@ -472,7 +594,7 @@ class KunenaControllerTopics extends KunenaController
 	/**
 	 * @throws Exception
 	 */
-	function permdel_posts()
+	public function permdel_posts()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -490,7 +612,7 @@ class KunenaControllerTopics extends KunenaController
 
 		if (!$messages)
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
 		}
 		else
 		{

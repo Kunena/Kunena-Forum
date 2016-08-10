@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -215,7 +215,7 @@ class KunenaControllerUser extends KunenaController
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);
 		}
 
-		if ($this->profile->userid == $this->me->userid)
+		if ($this->user->userid == $this->me->userid)
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_PROFILE_SAVED'));
 		}
@@ -294,10 +294,12 @@ class KunenaControllerUser extends KunenaController
 			{
 				$this->app->logout($user->userid);
 				$message = JText::_('COM_KUNENA_USER_BLOCKED_DONE');
+				$log = KunenaLog::LOG_USER_BLOCK;
 			}
 			else
 			{
 				$message = JText::_('COM_KUNENA_USER_UNBLOCKED_DONE');
+				$log = KunenaLog::LOG_USER_UNBLOCK;
 			}
 		}
 		else
@@ -305,10 +307,12 @@ class KunenaControllerUser extends KunenaController
 			if ($ban->isEnabled())
 			{
 				$message = JText::_('COM_KUNENA_USER_BANNED_DONE');
+				$log = KunenaLog::LOG_USER_BAN;
 			}
 			else
 			{
 				$message = JText::_('COM_KUNENA_USER_UNBANNED_DONE');
+				$log = KunenaLog::LOG_USER_UNBAN;
 			}
 		}
 
@@ -318,6 +322,29 @@ class KunenaControllerUser extends KunenaController
 		}
 		else
 		{
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					$log,
+					array(
+						'expiration' => $delban ? 'NOW' : $expiration,
+						'reason_private' => $reason_private,
+						'reason_public' => $reason_public,
+						'comment' => $comment,
+						'options' => array(
+							'resetProfile' => (bool) $DelProfileInfo,
+							'resetSignature' => (bool) $DelSignature || $DelProfileInfo,
+							'deleteAvatar' => (bool) $DelAvatar || $DelProfileInfo,
+							'deletePosts' => (bool) $banDelPosts
+						)
+					),
+					null,
+					null,
+					$user
+				);
+			}
+
 			$this->app->enqueueMessage($message);
 		}
 
@@ -382,11 +409,11 @@ class KunenaControllerUser extends KunenaController
 
 		if (!empty($banDelPosts))
 		{
-			$params = array('starttime' => '-1', 'user' => $user->userid, 'mode' => 'unapproved');
+			$params = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid, 'mode' => 'unapproved');
 
 			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $params);
 
-			$parmas_recent = array('starttime' => '-1', 'user' => $user->userid);
+			$parmas_recent = array('starttime' => '-1', 'nolimit' => -1, 'user' => $user->userid);
 
 			list($total, $messages_recent) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, $parmas_recent);
 
@@ -425,16 +452,20 @@ class KunenaControllerUser extends KunenaController
 			return;
 		}
 
-		$username  = JFactory::getApplication()->input->getString('username', '', 'POST');
-		$password  = JFactory::getApplication()->input->getString('password', '', 'POST', 'raw');
-		$remember  = JFactory::getApplication()->input->getBool('remember', false, 'POST');
-		$secretkey = JFactory::getApplication()->input->getString('secretkey', null, 'POST');
+		$app    = JFactory::getApplication();
+		$input  = $app->input;
+		$method = $input->getMethod();
+
+		$username  = $input->$method->get('username', '', 'USERNAME');
+		$password  = $input->$method->get('password', '', 'RAW');
+		$remember  = $this->input->getBool('remember', false);
+		$secretkey  = $input->$method->get('secretkey', '', 'RAW');
 
 		$login = KunenaLogin::getInstance();
 		$error = $login->loginUser($username, $password, $remember, $secretkey);
 
 		// Get the return url from the request and validate that it is internal.
-		$return = base64_decode(JFactory::getApplication()->input->get('return', '', 'method', 'base64'));
+		$return = base64_decode($input->post->get('return', '', 'BASE64'));
 
 		if (!$error && $return && JURI::isInternal($return))
 		{
@@ -652,10 +683,9 @@ class KunenaControllerUser extends KunenaController
 		}
 
 		// Clean request
-		$post              = JRequest::get('post');
-		$post['password']  = JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
-		$post['password2'] = JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
-
+		$post_password = $this->app->input->post->get('password', '','raw');
+		$post_password2 = $this->app->input->post->get('password2', '','raw');
+		
 		if (empty($post['password']) || empty($post['password2']))
 		{
 			unset($post['password'], $post['password2']);

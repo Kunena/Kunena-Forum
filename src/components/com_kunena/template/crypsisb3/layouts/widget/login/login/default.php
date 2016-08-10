@@ -6,17 +6,17 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
 <ul class="nav navbar-nav pull-right">
 	<li class="dropdown mobile-user">
-
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="klogin">
-			<i class="glyphicon glyphicon-large glyphicon-white glyphicon-user "></i> <b class="caret"></b>
+			<?php echo KunenaIcons::user();?>
+			<span class="login-text"><?php echo JText::_('JLOGIN');?></span>
 		</a>
-		<ul class="dropdown-menu card card-container" id="userdropdownlogin" role="menu">
+		<ul class="dropdown-menu card card-container dropdown-menu-right" id="userdropdownlogin" role="menu">
 			<form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline form-signin">
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="login" />
@@ -24,7 +24,7 @@ defined('_JEXEC') or die;
 
 				<div class="center">
 					<a href="#" class="thumbnail">
-					<i class="glyphicon glyphicon-super glyphicon-user "></i>
+						<?php echo KunenaIcons::members(); ?>
 				 </a>
 				</div>
 					<input id="login-username" type="text" name="username" class="form-control input-sm" tabindex="1"
@@ -43,7 +43,7 @@ defined('_JEXEC') or die;
 							<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
 						</label>
 					</div>
-					<button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+					<button class="btn btn-primary" type="submit">Sign in</button>
 					<?php if ($this->resetPasswordUrl) : ?>
 						<a href="<?php echo $this->resetPasswordUrl; ?>" rel="nofollow">
 							<?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>

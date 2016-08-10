@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
+ * @package    Kunena.Framework
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,9 +15,13 @@ defined('_JEXEC') or die();
 abstract class KunenaError
 {
 	static $enabled = 0;
+
 	static $handler = false;
+
 	static $debug = false;
+
 	static $admin = false;
+
 	static $format;
 
 	/**
@@ -30,6 +34,10 @@ abstract class KunenaError
 			self::$format = JFactory::getApplication()->input->getWord('format', 'html');
 			self::$debug = JDEBUG || KunenaFactory::getConfig()->debug;
 			self::$admin = JFactory::getApplication()->isAdmin();
+
+			// Make sure we are able to log fatal errors.
+			class_exists('KunenaLog');
+
 			register_shutdown_function(array('KunenaError', 'shutdownHandler'), self::$debug || self::$admin || KUNENA_PROFILER);
 
 			if (!self::$debug)
@@ -91,14 +99,44 @@ abstract class KunenaError
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'notice');
 		}
 	}
+	
+	/**
+	  * Return different error if it's an admin or a simple user
+	  *
+	  * @return string
+	  *
+	  * @since 5.0
+	  */
+	public static function displayDatabaseError()
+	{
+		$app = JFactory::getApplication();
+	
+		if (JFactory::getApplication()->isAdmin())
+		{
+			$app->enqueueMessage($db->getErrorMsg(), 'error');
+		}
+		elseif (self::$debug || self::$admin)
+		{
+			$app->enqueueMessage('Kunena ' . JText::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.org/">www.kunena.org</a>'), 'error');
+		}
+		else
+		{
+			$app->enqueueMessage('Kunena ' . JText::_('COM_KUNENA_INTERNAL_ERROR'), 'error');
+		}
+	}
 
 	/**
+	 * Return the error in the database query (deprecated use exception in queries instead)
+	 * 
+	 * @deprecated
+	 * 
 	 * @return boolean
 	 * @throws Exception
 	 */
 	public static function checkDatabaseError()
 	{
 		$db = JFactory::getDBO();
+
 		if ($db->getErrorNum())
 		{
 			$app = JFactory::getApplication();
@@ -123,6 +161,10 @@ abstract class KunenaError
 	}
 
 	/**
+	 * Get the last error message from database
+	 * 
+	 * @deprecated
+	 * 
 	 * @return string
 	 */
 	public static function getDatabaseError()
@@ -213,6 +255,8 @@ abstract class KunenaError
 
 		if ($error && in_array($error['type'], $types))
 		{
+			KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, $error);
+
 			if ($debug)
 			{
 				// Clean up file path (take also care of some symbolic links).
@@ -315,7 +359,7 @@ abstract class KunenaError
 
 				if (strpos($file, 'kunena') !== false)
 				{
-					echo '<p>For support click here: <a href="http://www.kunena.org/forum">Kunena Support</a></p>';
+					echo '<p>For support click here: <a href="https://www.kunena.org/forum">Kunena Support</a></p>';
 				}
 			}
 			else
@@ -329,5 +373,8 @@ abstract class KunenaError
 	</body>
 	</html>';
 		}
+
+		// Flush Kunena Logger if it was used.
+		KunenaLog::flush();
 	}
 }

@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -246,9 +246,16 @@ class KunenaAttachment extends KunenaDatabaseObject
 		$download = $inline ? '' : '&download=1';
 		$filename = urlencode($this->getFilename(false));
 
-		return KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
+		$url = KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
+		
+		if (JApplicationCms::getInstance('site')->get('sef_suffix'))
+		{
+			$url = preg_replace('/.html/', '', $url);
+		}
+		
+		return $url;
 	}
-
+	
 	/**
 	 * Get attachment layout.
 	 *

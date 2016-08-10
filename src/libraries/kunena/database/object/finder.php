@@ -6,7 +6,7 @@
  *
  * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @link https://www.kunena.org
  **/
 
 // no direct access
@@ -119,10 +119,11 @@ abstract class KunenaDatabaseObjectFinder
 	 * @param   string        $field       Field name.
 	 * @param   string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
 	 * @param   string|array  $value       Value.
+	 * @param  bool          $escape      Only works for LIKE / NOT LIKE.
 	 *
 	 * @return $this
 	 */
-	public function where($field, $operation, $value)
+	public function where($field, $operation, $value, $escape = true)
 	{
 		$operation = strtoupper($operation);
 		switch ($operation)
@@ -132,11 +133,17 @@ abstract class KunenaDatabaseObjectFinder
 			case '<':
 			case '<=':
 			case '=':
+			case '!=':
 				$this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($value)}");
 				break;
 			case 'BETWEEN':
 				list($a, $b) = (array) $value;
 				$this->query->where("{$this->db->quoteName($field)} BETWEEN {$this->db->quote($a)} AND {$this->db->quote($b)}");
+				break;
+			case 'LIKE':
+			case 'NOT LIKE':
+				$value = $escape ? $this->db->quote($value) : $value;
+				$this->query->where("{$this->db->quoteName($field)} {$operation} {$value}");
 				break;
 			case 'IN':
 			case 'NOT IN':
@@ -195,8 +202,19 @@ abstract class KunenaDatabaseObjectFinder
 	{
 		$query = clone $this->query;
 		$this->build($query);
-		$query->select('COUNT(*)');
-		$this->db->setQuery($query);
+		
+		if ($query->group)
+		{	
+			$countQuery = $this->db->getQuery(true);
+			$countQuery->select('COUNT(*)')->from("({$query}) AS c");
+			$this->db->setQuery($countQuery);
+		}
+		else
+		{
+			$query->clear('select')->select('COUNT(*)');
+			$this->db->setQuery($query);
+		}
+	
 		$count = (int) $this->db->loadResult();
 		KunenaError::checkDatabaseError();
 

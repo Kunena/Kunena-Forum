@@ -7,7 +7,7 @@
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @copyright   (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -71,7 +71,7 @@ abstract class KunenaMenuFix
 
 		if (!(self::$items = $db->loadObjectList('id')))
 		{
-			JError::raiseWarning(500, JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()));
+			throw new Exception(JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()), 500);
 
 			return false;
 		}

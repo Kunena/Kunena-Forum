@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -24,7 +24,7 @@ $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 	<div class="span2 center">
 		<ul class="unstyled center profilebox">
 			<li><strong><?php echo $author->getLink(null, null, 'nofollow', '', null, $topic->getCategory()->id); ?></strong></li>
-			<li><?php echo $author->getLink($author->getAvatarImage('img-polaroid', 'post')); ?></li>
+			<li><?php echo $author->getLink($author->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post')); ?></li>
 		</ul>
 	</div>
 

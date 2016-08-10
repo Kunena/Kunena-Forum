@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -23,6 +23,11 @@ $medals = $activityIntegration->getUserMedals($user->userid);
 
 if ($show)
 {
+	if (KunenaConfig::getInstance()->showkarma)
+	{
+		$karma = $user->getKarma();
+	}
+
 	$rankImage = $user->getRank($this->category_id, 'image');
 	$rankTitle = $user->getRank($this->category_id, 'title');
 	$personalText = $user->getPersonalText();
@@ -37,11 +42,11 @@ if ($show)
 	<li>
 		<?php echo $user->getLink($avatar); ?>
 		<?php if (isset($this->topic_starter) && $this->topic_starter) : ?>
-				<span class="topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+				<span class="hidden-sm hidden-md topic-starter"><?php echo JText::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 		<?php endif;?>
-		<?php if (!$this->topic_starter && $user->isModerator()) : ?>
-			<span class="topic-moderator"><?php echo JText::_('COM_KUNENA_MODERATOR') ?></span>
-		<?php endif;?>
+		<?php /*if (!$this->topic_starter && $user->isModerator()) : */?><!--
+			<span class="topic-moderator"><?php /*echo JText::_('COM_KUNENA_MODERATOR') */?></span>
+		--><?php /*endif;*/?>
 	</li>
 	<?php endif; ?>
 
@@ -83,7 +88,13 @@ if ($show)
 			</li>
 			<?php endif; ?>
 
-			<?php if ($show && isset($user->thankyou)) : ?>
+			<?php if (!empty($karma) && KunenaConfig::getInstance()->showkarma) : ?>
+			<li>
+				<?php echo JText::_('COM_KUNENA_KARMA') . ': ' . $karma; ?>
+			</li>
+			<?php endif; ?>
+
+			<?php if ($show && isset($user->thankyou) && KunenaConfig::getInstance()->showthankyou) : ?>
 			<li>
 				<?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
 			</li>
@@ -103,10 +114,25 @@ if ($show)
 
 			<li>
 				<?php echo $user->profileIcon('gender'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('birthdate'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('location'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('website'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('private'); ?>
+			</li>
+
+			<li>
 				<?php echo $user->profileIcon('email'); ?>
 			</li>
 			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofilemore'); ?>

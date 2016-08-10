@@ -21,7 +21,11 @@ class KunenaAdminControllerStats extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{

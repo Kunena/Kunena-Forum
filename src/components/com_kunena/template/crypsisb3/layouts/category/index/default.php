@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 
 /** @var KunenaForumCategory $section */
@@ -16,30 +16,42 @@
 
 defined('_JEXEC') or die;
 
+if ($this->config->enableforumjump)
+{
+	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
+}
+
 $mmm = 0;
+$config = KunenaFactory::getTemplate()->params;
+
+if ($config->get('displayModule'))
+{
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
+}
 
 foreach ($this->sections as $section) :
 	$markReadUrl = $section->getMarkReadUrl();
-	?>
+
+	if ($config->get('displayModule'))
+	{
+		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
+	} ?>
+
 	<div class="kfrontend">
+		<h2 class="btn-toolbar pull-right">
+			<?php if (count($this->sections) > 0) : ?>
+				<button class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
+			<?php endif; ?>
+		</h2>
 
-			<div class="btn-toolbar pull-right">
-				<?php if (count($this->sections) > 0) : ?>
-					<button class="btn btn-default btn-small" type="button" data-toggle="collapse" data-target="#section<?php echo $section->id; ?>" aria-expanded="false" aria-controls="section<?php echo $section->id; ?>"></button>
-				<?php endif; ?>
-			</div>
-
-			<h2 class="btn-link">
-				<?php	echo $this->getCategoryLink($section, $this->escape($section->name));	?>
-				<small class="hidden-xs nowrap">(<?php echo JText::plural(
-     'COM_KUNENA_X_TOPICS',
-	$this->formatLargeNumber($section->getTopics())); ?>)
-				</small>
-			</h2>
-
+		<h1 class="btn-link">
+			<?php echo $this->getCategoryLink($section, $this->escape($section->name));	?>
+			<small class="hidden-xs nowrap">(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)
+			</small>
+		</h1>
 
 		<div class="row-fluid collapse in section section<?php echo $this->escape($section->class_sfx); ?>" id="section<?php echo $section->id; ?>">
-			<table class="table table-bordered">
+			<table class="table<?php echo KunenaTemplate::getInstance()->borderless();?>">
 				<?php if (!empty($section->description)) : ?>
 					<thead class="hidden-xs">
 					<tr>
@@ -93,8 +105,7 @@ foreach ($this->sections as $section) :
 												<?php endif; ?>
 												<?php if (!empty($category->rssURL)) : ?>
 													<a href="<?php echo $category->rssURL ?>" rel="follow">
-														 <span class="glyphicon glyphicon-feed" title="<?php echo JText::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') ?>">
-														 </span>
+														 <?php echo KunenaIcons::rss(); ?>
 													</a>
 												<?php endif; ?>
 											</span>
@@ -177,8 +188,10 @@ foreach ($this->sections as $section) :
 												<div class="col-md-3">
 													<?php echo $author->getLink($avatar); ?>
 												</div>
+												<div class="col-md-9">
+											<?php else : ?>
+												<div class="col-md-12">
 											<?php endif; ?>
-											<div class="col-md-9">
 												<span><?php echo $this->getLastPostLink($category) ?></span>
 												<br>
 												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink()); ?></span>
@@ -214,6 +227,15 @@ foreach ($this->sections as $section) :
 		</div>
 	</div>
 	<!-- Begin: Category Module Position -->
-	<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm); ?>
+	<?php
+	if ($config->get('displayModule'))
+	{
+		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm);
+	} ?>
 	<!-- Finish: Category Module Position -->
 <?php endforeach;
+
+if ($config->get('displayModule'))
+{
+	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');
+}

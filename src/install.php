@@ -22,11 +22,12 @@ class Pkg_KunenaInstallerScript
 	 */
 	protected $versions = array(
 		'PHP'     => array(
-			'7.0' => '7.0.0',
+			'7.0' => '7.0.4',
 			'5.6' => '5.6.8',
-			'5.5' => '5.5.13',
+			'5.5' => '5.5.9',
 			'5.4' => '5.4.13',
-			'0'   => '5.4.35' // Preferred version
+			'5.3' => '5.3.10',
+			'0'   => '7.0.4' // Preferred version
 		),
 		'MySQL'   => array(
 			'5.1' => '5.1',
@@ -140,7 +141,7 @@ EOS;
 	public function checkRequirements($version)
 	{
 		$db   = JFactory::getDbo();
-		$pass = $this->checkVersion('PHP', phpversion());
+		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
 		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli', 'pdomysql'));
@@ -151,6 +152,18 @@ EOS;
 	}
 
 	// Internal functions
+
+	/**
+	 *  On some hosting the PHP version given with the version of the packet in the distribution
+	 *
+	 *  @param  string $version The PHP version to clean
+	 */
+	protected function getCleanPhpVersion()
+	{
+		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
+
+		return $version;
+	}
 
 	protected function checkVersion($name, $version)
 	{
@@ -295,15 +308,15 @@ EOS;
 		// Find all update sites.
 		$query = $db->getQuery(true)
 			->select($db->quoteName('update_site_id'))->from($db->quoteName('#__update_sites'))
-			->where($db->quoteName('location') . ' LIKE ' . $db->quote('http://update.kunena.org/%'))
+			->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'))
 			->order($db->quoteName('update_site_id') . ' ASC');
 		$db->setQuery($query);
 		$list = (array) $db->loadColumn();
 
 		$query = $db->getQuery(true)
-			->set($db->quoteName('name') . '=' . $db->quote('Kunena 4.0 Update Site'))
+			->set($db->quoteName('name') . '=' . $db->quote('Kunena 5.0 Update Site'))
 			->set($db->quoteName('type') . '=' . $db->quote('collection'))
-			->set($db->quoteName('location') . '=' . $db->quote('http://update.kunena.org/5.0/list.xml'))
+			->set($db->quoteName('location') . '=' . $db->quote('https://update.kunena.org/5.0/list.xml'))
 			->set($db->quoteName('enabled') . '=1')
 			->set($db->quoteName('last_check_timestamp') . '=0');
 

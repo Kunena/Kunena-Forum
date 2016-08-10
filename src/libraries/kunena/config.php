@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
+ * @package    Kunena.Framework
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       https://www.kunena.org
  *
  * Based on FireBoard Component
- * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.bestofjoomla.com
+ * @copyright  (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       http://www.bestofjoomla.com
  **/
 
 // Do not allow direct linking
@@ -230,6 +230,7 @@ class KunenaConfig extends JObject
 	/**
 	 * @var    integer  Max subject; input, number
 	 * @since  1.0.0
+	 * @depricated K5.0
 	 */
 	public $maxsubject = 50;
 
@@ -621,7 +622,7 @@ class KunenaConfig extends JObject
 	 * @var    integer  Major version number
 	 * @since  1.6.0
 	 */
-	public $pollnboptions = 4; //For poll integration, set the number maximum of options, input, number
+	public $pollnboptions = 4;
 
 	/**
 	 * @var    integer  Pool allow one ore more time; select, boolean
@@ -1135,6 +1136,42 @@ class KunenaConfig extends JObject
 	public $url_subject_topic = 0;
 
 	/**
+	 * @var integer Allow to enable log to save moderation actions
+	 * @since  K5.0.0
+	 */
+	public $log_moderation = 0;
+
+	/**
+	 * @var integer Define the number of caracters from start when shorthen attachments filemane
+	 * @since  K5.0.0
+	 */
+	public $attach_start = 0;
+
+	/**
+	 * @var integer Define the number of caracters from end when shorthen attachments filemane
+	 * @since  K5.0.0
+	 */
+	public $attach_end = 14;
+
+	/**
+	 * @var string Define the google maps API key
+	 * @since  K5.0.0
+	 */
+	public $google_map_api_key = '';
+
+	/**
+	 * @var integer Allow to remove utf8 characters from filename of attachments
+	 * @since  K5.0.0
+	 */
+	public $attachment_utf8 = 1;
+
+	/**
+	 * @var integer Allow to auto-embded soundcloud item when you put just the URL in a message
+	 * @since  K5.0.0
+	 */
+	public $autoembedsoundcloud = 1;
+
+	/**
 	 *
 	 */
 	public function __construct()
@@ -1158,7 +1195,7 @@ class KunenaConfig extends JObject
 
 			if (!$instance)
 			{
-				$instance = new KunenaConfig();
+				$instance = new KunenaConfig;
 				$instance->load();
 			}
 
@@ -1203,7 +1240,7 @@ class KunenaConfig extends JObject
 	 */
 	public function reset()
 	{
-		$instance = new KunenaConfig();
+		$instance = new KunenaConfig;
 		$this->bind($instance->getProperties());
 	}
 

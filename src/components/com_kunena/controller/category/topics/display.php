@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -71,7 +71,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$this->category = KunenaForumCategoryHelper::get($catid);
 		$this->category->tryAuthorise();
 
-		$this->headerText = JText::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
+		$this->headerText = $this->category->name;
 
 		$topic_ordering = $this->category->topic_ordering;
 
@@ -149,9 +149,13 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 	{
 		$page         = $this->pagination->pagesCurrent;
 		$pages        = $this->pagination->pagesTotal;
-		$pagesText    = $page > 1 ? " ({$page}/{$pages})" : '';
+
+		$pagesText = ($pages > 1  && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+
+
 		$parentText   = $this->category->getParent()->displayField('name');
 		$categoryText = $this->category->displayField('name');
+		$categorydesc = $this->category->description;
 
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
@@ -159,20 +163,11 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
-			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', "{$parentText} / {$categoryText}{$pagesText}");
-				$this->setTitle($title);
-			}
+			$title = JText::sprintf("{$categoryText}{$pagesText}");
+			$this->setTitle($title);
 
 			if (!empty($params_keywords))
 			{
@@ -188,11 +183,18 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			if (!empty($params_description))
 			{
 				$description = $params->get('menu-meta_description');
+				$description = substr($description, 0, 140) . '... ' . $pagesText;
 				$this->setDescription($description);
+			}
+			elseif (!empty($categorydesc))
+			{
+				$categorydesc = substr($categorydesc, 0, 140) . '... ' . $pagesText;
+				$this->setDescription($categorydesc);
 			}
 			else
 			{
 				$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
+				$description = substr($description, 0, 140) . '...';
 				$this->setDescription($description);
 			}
 		}

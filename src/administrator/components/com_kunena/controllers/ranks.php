@@ -21,7 +21,11 @@ class KunenaAdminControllerRanks extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -30,9 +34,13 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Add
 	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function add()
+	public function add()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -46,9 +54,15 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Edit
+	 *
+	 * @return void
+	 *
 	 * @throws Exception
+	 *
+	 * @since    2.0
 	 */
-	function edit()
+	public function edit()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -77,11 +91,17 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Save
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 *
 	 * @throws Exception
 	 */
-	function save()
+	public function save()
 	{
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		if (!JSession::checkToken('post'))
 		{
@@ -104,10 +124,15 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_image={$db->quote($rank_image)},
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 		}
@@ -119,10 +144,15 @@ class KunenaAdminControllerRanks extends KunenaController
 					rank_special={$db->quote($rank_special)},
 					rank_min={$db->quote($rank_min)}
 				WHERE rank_id={$db->quote($rankid)}");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+			
 				return;
 			}
 		}
@@ -132,9 +162,15 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Rank upload
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 *
 	 * @throws Exception
 	 */
-	function rankupload()
+	public function rankupload()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -145,6 +181,7 @@ class KunenaAdminControllerRanks extends KunenaController
 		}
 
 		$file   = JFactory::getApplication()->input->get('Filedata', null, 'files', 'array');
+
 		// File upload
 		$format = JFactory::getApplication()->input->getCmd('format', 'html');
 
@@ -163,11 +200,17 @@ class KunenaAdminControllerRanks extends KunenaController
 	}
 
 	/**
+	 * Remove
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
+	 *
 	 * @throws Exception
 	 */
-	function remove()
+	public function remove()
 	{
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 
 		if (!JSession::checkToken('post'))
 		{
@@ -185,10 +228,15 @@ class KunenaAdminControllerRanks extends KunenaController
 		if ($cids)
 		{
 			$db->setQuery("DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)");
-			$db->execute();
-
-			if (KunenaError::checkDatabaseError())
+			
+			try 
 			{
+				$db->execute();
+			}
+			catch (RuntimeException $e)
+			{
+				JFactory::getApplication()->enqueueMessage($e->getMessage());
+				
 				return;
 			}
 		}

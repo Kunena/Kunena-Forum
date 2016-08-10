@@ -6,7 +6,7 @@
  *
  * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -193,17 +193,17 @@ abstract class JHtmlKunenaForum
 		$list['href'] = (is_string($uri) && $uri[0] == '/') ? $uri : KunenaRoute::_($uri);
 		if ($title)
 		{
-			$list['title'] = $title;
+			$list['title'] = htmlspecialchars($title);
 		}
 
 		if ($class)
 		{
-			$list['class'] = $class;
+			$list['class'] = htmlspecialchars($class);
 		}
 
 		if ($rel)
 		{
-			$list['rel'] = $rel;
+			$list['rel'] = htmlspecialchars($rel);
 		}
 
 		if (is_array($attributes))

@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -36,7 +36,7 @@ $k = 0;
 					<li>
 						<?php
 						$profile    = KunenaFactory::getUser(intval($this->message->userid));
-						$useravatar = $profile->getAvatarImage('img-thumbnail', 'profile');
+						$useravatar = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 						if ($useravatar) :
 							echo $this->message->getAuthor()->getLink($useravatar);
 						endif;

@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 ?>
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 <div class="kfrontend">
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<div class="btn btn-default btn-small" data-toggle="collapse" data-target="#kstats"></div>
+			<div class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#kstats"></div>
 		</div>
 	</div>
 	<h2 class="btn-link">
@@ -28,7 +28,9 @@ defined('_JEXEC') or die;
 	</h2>
 	<div class="row collapse in" id="kstats">
 	<div class="well-small">
-		<ul class="unstyled col-md-1 btn-link"><i class="glyphicon glyphicon-stats glyphicon-super"></i></ul>
+		<ul class="unstyled col-md-1 btn-link">
+			<?php echo KunenaIcons::stats(); ?>
+		</ul>
 		<ul class="unstyled col-md-3">
 			<li>
 				<?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:

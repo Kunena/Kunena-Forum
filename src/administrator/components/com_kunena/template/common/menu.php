@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package     Kunena.Administrator.Template.Joomla30
+ * @package     Kunena.Administrator.Template
  * @subpackage  Common
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
@@ -77,6 +77,19 @@ $view = JFactory::getApplication()->input->getCmd('view', 'cpanel');
 		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=plugins'); ?>">
 			<i class="icon-puzzle"></i> <?php echo JText::_('COM_KUNENA_PLUGIN_MANAGER'); ?>
 		</a></li>
+	<li<?php if ($view == 'logs')
+	{
+		echo ' class="active"';
+	}?>>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=logs'); ?>">
+			<i class="icon-search"></i> <?php echo JText::_('COM_KUNENA_LOG_MANAGER'); ?>
+		</a></li>
+	<li<?php if ($view == 'statistics')
+		echo ' class="active"';
+	?>>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=statistics'); ?>">
+			<i class="icon-chart"></i> <?php echo JText::_('COM_KUNENA_MENU_STATISTICS'); ?>
+		</a></li>		
 	<li<?php if ($view == 'tools')
 	{
 		echo ' class="active"';

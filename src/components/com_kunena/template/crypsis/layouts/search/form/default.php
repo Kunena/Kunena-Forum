@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -33,9 +33,9 @@ $this->addScript('assets/js/search.js');
 			<div class="btn btn-small" data-toggle="collapse" data-target="#search"></div>
 		</div>
 	</div>
-	<h2>
+	<h1>
 		<?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
-	</h2>
+	</h1>
 
 	<div class="collapse in" id="search">
 	<div class="well">
@@ -74,9 +74,9 @@ $this->addScript('assets/js/search.js');
 		</div>
 
 		<div class="btn btn-small pull-right" data-toggle="collapse" data-target="#search-options"></div>
-		<h3>
+		<h2>
 			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
-		</h3>
+		</h2>
 
 		<div class="collapse in" id="search-options">
 			<div class="well">

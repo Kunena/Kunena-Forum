@@ -21,9 +21,13 @@ class KunenaAdminControllerPlugins extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
 	 *
 	 * @throws Exception
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -54,12 +58,15 @@ class KunenaAdminControllerPlugins extends KunenaController
 	}
 
 	/**
-	 * @param   string $name
-	 * @param   string $prefix
-	 * @param   array  $config
+	 * Getmodel
+	 *
+	 * @param   string  $name    name
+	 * @param   string  $prefix  prefix
+	 * @param   array   $config  config
 	 *
 	 * @return object
 	 *
+	 * @since    2.0
 	 */
 	public function getModel($name = '', $prefix = '', $config = array())
 	{

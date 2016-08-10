@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -41,14 +41,14 @@ class KunenaControllerAnnouncement extends KunenaController
 			return;
 		}
 
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = JFactory::getApplication()->input->post->get('cid', array(), 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		foreach ($cid as $id)
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 			$date_today = JFactory::getDate();
-			if ($announcement->published == 1 && $announcement->publish_up > $date_today)
+			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
 			{
 				continue;
 			}
@@ -60,6 +60,11 @@ class KunenaControllerAnnouncement extends KunenaController
 			}
 			else
 			{
+				if ($this->config->log_moderation)
+				{
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, array('id' => $announcement->id));
+				}
+
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
 			}
 		}
@@ -87,7 +92,7 @@ class KunenaControllerAnnouncement extends KunenaController
 		{
 			$announcement = KunenaForumAnnouncementHelper::get($id);
 			$date_today = JFactory::getDate();
-			if ($announcement->published == 0 && $announcement->publish_down > $date_today)
+			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
 			{
 				continue;
 			}
@@ -100,6 +105,11 @@ class KunenaControllerAnnouncement extends KunenaController
 			}
 			else
 			{
+				if ($this->config->log_moderation)
+				{
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, array('id' => $announcement->id));
+				}
+
 				$this->app->enqueueMessage(JText::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
 			}
 		}
@@ -112,7 +122,7 @@ class KunenaControllerAnnouncement extends KunenaController
 	 */
 	public function edit()
 	{
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'post', 'array');
+		$cid = JFactory::getApplication()->input->post->get('cid', array(), 'array');
 		Joomla\Utilities\ArrayHelper::toInteger($cid);
 
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
@@ -146,6 +156,11 @@ class KunenaControllerAnnouncement extends KunenaController
 			}
 			else
 			{
+				if ($this->config->log_moderation)
+				{
+					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_DELETE, array('id' => $announcement->id));
+				}
+
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_ANN_DELETED'));
 			}
 		}
@@ -187,6 +202,11 @@ class KunenaControllerAnnouncement extends KunenaController
 			$this->setRedirectBack();
 
 			return;
+		}
+
+		if ($this->config->log_moderation)
+		{
+			KunenaLog::log(KunenaLog::TYPE_MODERATION, $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT : KunenaLog::LOG_ANNOUNCEMENT_CREATE, array('id' => $announcement->id));
 		}
 
 		$this->app->enqueueMessage(JText::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));

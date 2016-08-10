@@ -18,10 +18,25 @@ defined('_JEXEC') or die();
  */
 class KunenaAdminControllerConfig extends KunenaController
 {
+	/**
+	 *
+	 * @since    2.0.0-BETA2
+	 * @var null|string
+	 */
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * @since    2.0.0-BETA2
+	 * @var string
+	 */
+	protected $kunenabaseurl = null;
+
+	/**
+	 * Construct
+	 *
+	 * @param   array  $config  config
+	 *
+	 * @since    2.0.0-BETA2
 	 */
 	public function __construct($config = array())
 	{
@@ -31,17 +46,27 @@ class KunenaAdminControllerConfig extends KunenaController
 	}
 
 	/**
+	 * Apply
 	 *
+	 * @return void
+	 *
+	 * @since    2.0.0-BETA2
 	 */
-	function apply()
+	public function apply()
 	{
 		$this->save($this->baseurl);
 	}
 
 	/**
-	 * @param   null $url
+	 * Save
+	 *
+	 * @param   null  $url  url
+	 *
+	 * @return void
+	 *
+	 * @since    2.0.0-BETA2
 	 */
-	function save($url = null)
+	public function save($url = null)
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -91,9 +116,13 @@ class KunenaAdminControllerConfig extends KunenaController
 	}
 
 	/**
+	 * Set default
 	 *
+	 * @return void
+	 *
+	 * @since    2.0.0-BETA2
 	 */
-	function setdefault()
+	public function setdefault()
 	{
 		if (!JSession::checkToken('post'))
 		{

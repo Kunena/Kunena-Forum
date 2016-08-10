@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -67,6 +67,20 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		}
 
 		$this->me = KunenaUserHelper::getMyself();
+
+		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$cache   = JFactory::getCache('com_kunena', 'output');
+
+		/*if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
+		 {
+		 return;
+		 }*/
+
+		$options            = array();
+		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
+		$cat_params         = array('sections' => 1, 'catid' => 0);
+		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+
 
 		// Load topic and message.
 		if ($mesid)
@@ -142,7 +156,7 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$this->userTopic = $this->topic->getUserTopic();
 		$this->quickReply = ($this->topic->isAuthorised('reply') && $this->me->exists());
 
-		$this->headerText = JText::_('COM_KUNENA_TOPIC') . ' ' . html_entity_decode($this->topic->displayField('subject'));
+		$this->headerText = html_entity_decode($this->topic->displayField('subject'));
 	}
 
 	/**
@@ -336,9 +350,16 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('og:type', 'article', 'property');
+		$doc->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
+		$doc->setMetaData('og:author', $this->topic->getAuthor()->username, 'property');
+		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime(), 'property');
+		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
+
 		$page = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;
-		$headerText = $this->headerText . ($total > 1 ? " ({$page}/{$total})" : '');
+		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$app = JFactory::getApplication();
 		$menu_item   = $app->getMenu()->getActive();
@@ -346,38 +367,31 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
-			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
-			$params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($headerText);
-			}
+			$this->setTitle($headerText);
 
 			if (!empty($params_keywords))
 			{
 				$keywords = $params->get('menu-meta_keywords');
 				$this->setKeywords($keywords);
+				$doc->setMetaData('article:tag', $keywords, 'property');
 			}
 			else
 			{
 				$this->setKeywords($headerText);
 			}
 
-			if (!empty($params_description))
+
+			if ($total > 1 && $page > 1)
 			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
+				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 140);
+				$this->setDescription($small . " - " . JText::_('COM_KUNENA_PAGES') . " {$page}");
 			}
 			else
 			{
-				$this->setDescription($headerText);
+				$small = substr(KunenaHtmlParser::stripBBCode($this->topic->first_post_message), 0, 160);
+				$this->setDescription($small);
 			}
 		}
 	}

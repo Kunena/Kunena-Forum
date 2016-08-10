@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -97,7 +97,6 @@ class KunenaModelSearch extends KunenaModel
 
 		$this->setState('query.catids', $value);
 
-		// FIXME: support search topic
 		if (isset($_POST ['q']) || isset($_POST ['searchword']))
 		{
 			$value = JFactory::getApplication()->input->get('ids', array(0), 'post', 'array');
@@ -111,7 +110,6 @@ class KunenaModelSearch extends KunenaModel
 		else
 		{
 			$value = JFactory::getApplication()->input->getString('ids', '0', 'get');
-			$value = explode(' ', $value);
 			Joomla\Utilities\ArrayHelper::toInteger($value);
 
 			if ($value[0] > 0)

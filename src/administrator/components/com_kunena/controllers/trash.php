@@ -21,7 +21,11 @@ class KunenaAdminControllerTrash extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @param   array $config
+	 * Construct
+	 *
+	 * @param   array  $config  config
+	 *
+	 * @since    2.0
 	 */
 	public function __construct($config = array())
 	{
@@ -30,9 +34,15 @@ class KunenaAdminControllerTrash extends KunenaController
 	}
 
 	/**
+	 * Purge
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function purge()
+	public function purge()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -132,9 +142,15 @@ class KunenaAdminControllerTrash extends KunenaController
 	}
 
 	/**
+	 * Restore
+	 *
 	 * @throws Exception
+	 *
+	 * @return void
+	 *
+	 * @since    2.0
 	 */
-	function restore()
+	public function restore()
 	{
 		if (!JSession::checkToken('post'))
 		{
@@ -181,7 +197,16 @@ class KunenaAdminControllerTrash extends KunenaController
 
 			foreach ($topics as $target)
 			{
-				if ($target->publish(KunenaForum::PUBLISHED))
+				if ($target->getState() == KunenaForum::UNAPPROVED)
+				{
+					$status = KunenaForum::UNAPPROVED;
+				}
+				else
+				{
+					$status = KunenaForum::PUBLISHED;
+				}
+
+				if ($target->publish($status))
 				{
 					$nb_items++;
 				}
@@ -213,6 +238,7 @@ class KunenaAdminControllerTrash extends KunenaController
 	 *
 	 * @return void
 	 *
+	 * @since    2.0
 	 */
 	public function cancel()
 	{

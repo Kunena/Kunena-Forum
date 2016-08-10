@@ -7,12 +7,12 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
 JHtml::_('behavior.tooltip');
-JHTML::_('behavior.formvalidator');
+JHtml::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 
 // Load scripts to handle fileupload process
@@ -24,6 +24,31 @@ JText::script('COM_KUNENA_UPLOADED_LABEL_UPLOAD_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_PROCESSING_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_ABORT_BUTTON');
 JText::script('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE');
+
+JText::script('COM_KUNENA_EDITOR_SIZE_VERY_VERY_SMALL');
+JText::script('COM_KUNENA_EDITOR_SIZE_VERY_SMALL');
+JText::script('COM_KUNENA_EDITOR_SIZE_SMALL');
+JText::script('COM_KUNENA_EDITOR_SIZE_NORMAL');
+JText::script('COM_KUNENA_EDITOR_SIZE_BIG');
+JText::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
+JText::script('COM_KUNENA_EDITOR_COLOR_BLACK');
+JText::script('COM_KUNENA_EDITOR_COLOR_ORANGE');
+JText::script('COM_KUNENA_EDITOR_COLOR_RED');
+JText::script('COM_KUNENA_EDITOR_COLOR_BLUE');
+JText::script('COM_KUNENA_EDITOR_COLOR_PURPLE');
+JText::script('COM_KUNENA_EDITOR_COLOR_GREEN');
+JText::script('COM_KUNENA_EDITOR_COLOR_WHITE');
+JText::script('COM_KUNENA_EDITOR_COLOR_GRAY');
+JText::script('COM_KUNENA_EDITOR_BOLD');
+JText::script('COM_KUNENA_EDITOR_COLORS');
+JText::script('COM_KUNENA_EDITOR_UNORDERED_LIST');
+JText::script('COM_KUNENA_EDITOR_TABLE');
+JText::script('COM_KUNENA_EDITOR_LINK');
+JText::script('COM_KUNENA_EDITOR_EBAY');
+JText::script('COM_KUNENA_EDITOR_VIDEO_PROVIDER_URL');
+JText::script('COM_KUNENA_EDITOR_MAP');
+JText::script('COM_KUNENA_EDITOR_POLL_SETTING');
+JText::script('COM_KUNENA_EDITOR_TWEET');
 
 JHtml::_('jquery.ui');
 $this->addScript('assets/js/load-image.min.js');
@@ -48,6 +73,7 @@ $this->addScriptDeclaration("kunena_upload_files_preload = '" . KunenaRoute::_('
 $this->addScriptDeclaration("kunena_upload_files_maxfiles = '" . $this->config->attachment_limit . "';");
 
 // If polls are enabled, load also poll JavaScript.
+$this->addScript('assets/js/pollcheck.js');
 
 if ($this->config->pollenabled)
 {
@@ -57,25 +83,18 @@ if ($this->config->pollenabled)
 }
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('assets/js/caret.js');
-$this->addScript('assets/js/atwho.js');
-$this->addStyleSheet('assets/css/atwho.css');
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
+$this->addStyleSheet('assets/css/jquery.atwho.css');
 
 $this->addStyleSheet('assets/css/bootstrap.datepicker.css');
 $this->addScript('assets/js/bootstrap.datepicker.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype = $this->ktemplate->params->get('topicicontype');
+$this->addScriptDeclaration("kunena_topicicontype = '" . $topicicontype . "';");
 
-if ($topicicontype == 'B3') {
-	$this->addScript('assets/js/editb3.js');
-}
-elseif ($topicicontype == 'fa') {
-	$this->addScript('assets/js/editfa.js');
-}
-else {
-	$this->addScript('assets/js/edit.js');
-}
+$this->addScript('assets/js/edit.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
@@ -102,7 +121,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<?php if ($this->category->id && $this->category->id != $this->message->catid) : ?>
 			<input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>" />
 		<?php endif; ?>
-		<?php if ($this->message->getTopic()->getPoll()->id) : ?>
+		<?php if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id) : ?>
 			<input type="hidden" id="poll_exist_edit" name="poll_exist_edit" value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>" />
 		<?php endif; ?>
 		<input type="hidden" id="kunena_upload" name="kunena_upload" value="<?php echo intval($this->message->catid) ?>" />
@@ -147,7 +166,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<div class="form-group">
 							<label class="control-label col-md-4"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></label>
 							<div class="col-md-10">
-								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
+								<input class="form-control" type="text" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>" name="subject" id="subject" maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>" required />
 								<?php if (!$this->config->allow_change_subject  && $this->topic->exists()): ?>
 									<input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />
 								<?php endif; ?>
@@ -180,7 +199,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						?>
 
 						<?php if ($this->message->exists() && $this->config->editmarkup) : ?>
-						<div class="control-group">
+						<div class="control-group" id="modified_reason">
 							<label class="control-label"><?php echo(JText::_('COM_KUNENA_EDITING_REASON')) ?></label>
 
 							<div class="controls">
@@ -193,14 +212,14 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">
 								<label class="control-label"></label>
 								<div class="controls">
-									<button class="btn btn-default" id="kshow_attach_form" type="button"><i class="glyphicon glyphicon-paperclip"></i> <?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
+									<button class="btn btn-default" id="kshow_attach_form" type="button"><?php echo KunenaIcons::attach() . ' ' . JText::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?></button>
 									<div id="kattach_form" style="display: none;">
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br /><br />
 										<span class="label label-info"><?php echo JText::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>: <?php echo $this->config->filesize != 0 ? round($this->config->filesize / 1024, 1) : $this->config->filesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo JText::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>: <?php echo $this->config->imagesize != 0 ? round($this->config->imagesize / 1024, 1) : $this->config->imagesize ?> <?php echo JText::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?></span><br /><br />
 
 										<!-- The fileinput-button span is used to style the file input field as button -->
 										<span class="btn btn-primary fileinput-button">
-											<i class="glyphicon glyphicon-plus"></i>
+											<?php echo KunenaIcons::plus();?>
 											<span><?php echo JText::_('COM_KUNENA_UPLOADED_LABEL_ADD_FILES_BUTTON') ?></span>
 											<!-- The file input field used as target for the file upload widget -->
 											<input id="fileupload" type="file" name="file" multiple>
@@ -236,7 +255,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php if ($this->message->userid) : ?>
 						<div class="control-group" id="kanynomous-check" <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 							<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
-							<div class="controls"">
+							<div class="controls">
 								<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->post_anonymous)
 								{
 									echo 'checked="checked"';
@@ -261,10 +280,12 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		</div>
 		<div class="center">
 			<button type="submit" class="btn btn-success" tabindex="8">
-				<i class="glyphicon glyphicon-edit glyphicon glyphicon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
+				<?php echo KunenaIcons::save();?>
+				<?php echo(' ' . JText::_('COM_KUNENA_SUBMIT') . ' '); ?>
 			</button>
 			<button type="reset" class="btn btn-default" onclick="window.history.back();" tabindex="9">
-				<i class="glyphicon glyphicon-remove-circle"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo KunenaIcons::cancel();?>
+				<?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>
 		<?php

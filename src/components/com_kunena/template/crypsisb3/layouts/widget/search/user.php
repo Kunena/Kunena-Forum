@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -26,7 +26,7 @@ $state = $this->state;
 		<div class="input-group-btn">
 			<input id="kusersearch" class="form-control input-medium search-query" type="text" name="search"
 				   value="<?php echo $this->escape($state); ?>" placeholder="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>"/>
-		<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+		<button type="submit" class="btn btn-default"><?php echo KunenaIcons::search();?></button>
 			</div>
 	</div>
 </form>

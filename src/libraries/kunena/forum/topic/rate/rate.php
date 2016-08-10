@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -119,21 +119,21 @@ class KunenaForumTopicRate extends JObject
 
 		if (!$user->exists())
 		{
-			$exception = new RuntimeException(JText::_('COM_KUNENA_RATE_LOGIN'), 500);
+			$exception = new RuntimeException('COM_KUNENA_RATE_LOGIN', 500);
 
 			return new JResponseJson($exception);
 		}
 
 		if ($user->userid == $topic->first_post_userid)
 		{
-			$exception = new RuntimeException(JText::_('COM_KUNENA_RATE_NOT_YOURSELF'), 500);
+			$exception = new RuntimeException('COM_KUNENA_RATE_NOT_YOURSELF', 500);
 
 			return new JResponseJson($exception);
 		}
 
 		if ($this->exists($user->userid))
 		{
-			$exception = new RuntimeException(JText::_('COM_KUNENA_RATE_ALLREADY'), 500);
+			$exception = new RuntimeException('COM_KUNENA_RATE_ALLREADY', 500);
 
 			return new JResponseJson($exception);
 		}
@@ -155,7 +155,7 @@ class KunenaForumTopicRate extends JObject
 			$topic = KunenaForumTopicHelper::get($this->topic_id);
 			$activityIntegration->onAfterRate($user->userid, $topic);
 
-			$response = new JResponseJson(null, JText::_('COM_KUNENA_RATE_SUCCESSFULLY_SAVED'));
+			$response = new JResponseJson(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
 		}
 		catch(Exception $e)
 		{

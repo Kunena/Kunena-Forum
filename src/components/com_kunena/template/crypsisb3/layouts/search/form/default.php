@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -19,9 +19,9 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('assets/js/caret.js');
-$this->addScript('assets/js/atwho.js');
-$this->addStyleSheet('assets/css/atwho.css');
+$this->addScript('assets/js/jquery.caret.js');
+$this->addScript('assets/js/jquery.atwho.js');
+$this->addStyleSheet('assets/css/jquery.atwho.css');
 $this->addScript('assets/js/search.js');
 
 ?>
@@ -35,12 +35,12 @@ $this->addScript('assets/js/search.js');
 
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group">
-			<button class="btn btn-default btn-small" type="button" data-toggle="collapse" data-target="#search" aria-expanded="false" aria-controls="search"></button>
+			<button class="btn btn-default btn-small <?php echo KunenaIcons::collapse();?>" type="button" data-toggle="collapse" data-target="#search" aria-expanded="false" aria-controls="search"></button>
 		</div>
 	</div>
-	<h3>
+	<h1>
 		<?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
-	</h3>
+	</h1>
 
 	<div class="collapse in" id="search">
 	<div class="well">
@@ -83,10 +83,10 @@ $this->addScript('assets/js/search.js');
 			</div>
 		</div>
 
-		<button class="btn btn-default btn-small pull-right" data-toggle="collapse" data-target="#search-options" aria-expanded="false" aria-controls="search-options"></button>
-		<h3>
+		<button type="button" class="btn btn-default btn-small pull-right  <?php echo KunenaIcons::collapse();?>" data-toggle="collapse" data-target="#search-options" aria-expanded="false" aria-controls="search-options"></button>
+		<h2>
 			<?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
-		</h3>
+		</h2>
 
 		<div class="collapse in" id="search-options">
 			<div class="well">
@@ -173,10 +173,10 @@ $this->addScript('assets/js/search.js');
 
 		<div class="center">
 			<button type="submit" class="btn btn-primary">
-				<i class="glyphicon glyphicon-search glyphicon-white"></i><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
+				<?php echo KunenaIcons::search();?><?php echo(' ' . JText::_('COM_KUNENA_SEARCH_SEND') . ' '); ?>
 			</button>
 			<button type="reset" class="btn btn-default" onclick="window.history.back();">
-				<i class="glyphicon glyphicon-remove-sign"></i><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
+				<?php echo KunenaIcons::cancel();?><?php echo(' ' . JText::_('COM_KUNENA_CANCEL') . ' '); ?>
 			</button>
 		</div>
 	</div>

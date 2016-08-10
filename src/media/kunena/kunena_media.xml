@@ -16,9 +16,11 @@
 			<folder>attachments</folder>
 			<folder>avatars</folder>
 			<folder>category_images</folder>
+			<folder>email</folder>
 			<folder>emoticons</folder>
 			<folder>images</folder>
 			<folder>js</folder>
+			<folder>labels</folder>
 			<folder>less</folder>
 			<folder>ranks</folder>
 			<folder>topic_icons</folder>

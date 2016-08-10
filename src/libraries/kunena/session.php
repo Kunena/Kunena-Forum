@@ -1,11 +1,11 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
+ * @package    Kunena.Framework
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -15,7 +15,9 @@ defined('_JEXEC') or die();
 class KunenaSession extends JObject
 {
 	protected $_exists = false;
+
 	protected $_sessiontimeout = false;
+
 	protected $allreadtime;
 
 	private static $_instance;
@@ -83,7 +85,7 @@ class KunenaSession extends JObject
 	{
 		static $tabletype = null;
 
-		//Set a custom table type is defined
+		// Set a custom table type is defined
 		if ($tabletype === null || $type != $tabletype['name'] || $prefix != $tabletype['prefix'])
 		{
 			$tabletype['name']		= $type;
@@ -149,7 +151,7 @@ class KunenaSession extends JObject
 			return false;
 		}
 
-		//are we creating a new user
+		// Are we creating a new user
 		$isnew = !$this->_exists;
 
 		// If we aren't allowed to create new users return
@@ -158,7 +160,7 @@ class KunenaSession extends JObject
 			return true;
 		}
 
-		//Store the user data in the database
+		// Store the user data in the database
 		if (!$result = $table->store())
 		{
 			$this->setError($table->getError());
@@ -172,6 +174,7 @@ class KunenaSession extends JObject
 
 		// Read indication has moved outside of the session table -- let's update it too.
 		$userCategory = KunenaForumCategoryUserHelper::get(0, $this->userid);
+
 		if ($userCategory->allreadtime != $this->allreadtime)
 		{
 			$userCategory->allreadtime = $this->allreadtime;
@@ -194,7 +197,9 @@ class KunenaSession extends JObject
 		$table	= $this->getTable();
 
 		$result = $table->delete($this->userid);
-		if (!$result) {
+
+		if (!$result)
+		{
 			$this->setError($table->getError());
 		}
 
@@ -214,7 +219,7 @@ class KunenaSession extends JObject
 	 */
 	public function isNewSession()
 	{
-		// perform session timeout check
+		// Perform session timeout check
 		$lifetime = max(intval(JFactory::getConfig()->get('config.lifetime')) * 60, intval(KunenaFactory::getConfig()->sessiontimeout));
 		$this->_sessiontimeout = ($this->currvisit + $lifetime < JFactory::getDate()->toUnix());
 

@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -65,7 +65,7 @@ class KunenaControllerTopic extends KunenaController
 			$object->folder  = $attach->folder;
 			$object->caption = $attach->caption;
 			$object->type    = $attach->filetype;
-			$object->path    = $attach->getUrl();
+			$object->path    = JURI::root(true) . '/' . $attach->getUrl();
 			$object->image   = $attach->isImage();
 			$list['files'][] = $object;
 		}
@@ -291,15 +291,13 @@ class KunenaControllerTopic extends KunenaController
 			'catid'             => $this->catid,
 			'name'              => JFactory::getApplication()->input->getString('authorname', $this->me->getName()),
 			'email'             => JFactory::getApplication()->input->getString('email', null),
-			'subject'           => JFactory::getApplication()->input->get('subject', null, 'POST', 'string', 'raw'),
-			'message'           => JFactory::getApplication()->input->get('message', null, 'POST', 'string', 'raw'),
+			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
 			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', null),
 			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', ''),
 			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
 			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
-			'tags'              => JFactory::getApplication()->input->getString('tags', null),
-			'mytags'            => JFactory::getApplication()->input->getString('mytags', null),
 			'subscribe'         => JFactory::getApplication()->input->getInt('subscribeMe', 0)
 		);
 
@@ -312,11 +310,6 @@ class KunenaControllerTopic extends KunenaController
 
 			return;
 		}
-
-		$template = KunenaFactory::getTemplate();
-
-		// Load language file from the template.
-		$template->loadLanguage();
 
 		if (!$this->id)
 		{
@@ -348,17 +341,6 @@ class KunenaControllerTopic extends KunenaController
 
 			list ($topic, $message) = $parent->newReply($fields);
 			$category = $topic->getCategory();
-		}
-
-		$templates = KunenaTemplateHelper::parseXmlFiles();
-
-		// Set dynamic template information
-		foreach ($templates as $tmpl)
-		{
-			if (KunenaTemplateHelper::isDefault($tmpl->directory))
-			{
-				$template = $tmpl;
-			}
 		}
 
 		if ($this->me->canDoCaptcha())
@@ -398,6 +380,8 @@ class KunenaControllerTopic extends KunenaController
 				}
 			}
 		}
+
+		$isNew = !$topic->exists();
 
 		// Redirect to full reply instead.
 		if (JFactory::getApplication()->input->getString('fullreply'))
@@ -535,6 +519,17 @@ class KunenaControllerTopic extends KunenaController
 		// Save message
 		$success = $message->save();
 
+		if ($this->me->isModerator($category) && $this->config->log_moderation)
+		{
+			KunenaLog::log(
+					KunenaLog::TYPE_ACTION,
+					$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
+					array('mesid' => $message->id, 'parent_id' => $this->id),
+					$category,
+					$topic
+					);
+		}
+
 		if (!$success)
 		{
 			$this->app->enqueueMessage($message->getError(), 'error');
@@ -562,7 +557,13 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$poll                 = $topic->getPoll();
 				$poll->title          = $poll_title;
-				$poll->polltimetolive = $fields['poll_time_to_live'];
+
+				if (!empty($fields['poll_time_to_live']))
+				{
+					$polltimetolive        = new JDate($fields['poll_time_to_live']);
+					$poll->polltimetolive = $polltimetolive->toSql();
+				}
+
 				$poll->setOptions($poll_options);
 
 				if (!$poll->save())
@@ -641,16 +642,14 @@ class KunenaControllerTopic extends KunenaController
 		$fields  = array(
 			'name'              => JFactory::getApplication()->input->getString('authorname', $message->name),
 			'email'             => JFactory::getApplication()->input->getString('email', $message->email),
-			'subject'           => JFactory::getApplication()->input->get('subject', $message->subject, 'POST', 'string', 'raw'),
-			'message'           => JFactory::getApplication()->input->get('message', $message->message, 'POST', 'string', 'raw'),
+			'subject'           => JFactory::getApplication()->input->post->get('subject', '', 'raw'),
+			'message'           => JFactory::getApplication()->input->post->get('message', '', 'raw'),
 			'modified_reason'   => JFactory::getApplication()->input->getString('modified_reason', $message->modified_reason),
 			'icon_id'           => JFactory::getApplication()->input->getInt('topic_emoticon', $topic->icon_id),
 			'anonymous'         => JFactory::getApplication()->input->getInt('anonymous', 0),
 			'poll_title'        => JFactory::getApplication()->input->getString('poll_title', null),
 			'poll_options'      => JFactory::getApplication()->input->get('polloptionsID', array(), 'post', 'array'),
-			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0),
-			'tags'              => JFactory::getApplication()->input->getString('tags', null),
-			'mytags'            => JFactory::getApplication()->input->getString('mytags', null)
+			'poll_time_to_live' => JFactory::getApplication()->input->getString('poll_time_to_live', 0)
 		);
 
 		if (!JSession::checkToken('post'))
@@ -789,6 +788,20 @@ class KunenaControllerTopic extends KunenaController
 			return;
 		}
 
+		$isMine = $this->me->userid == $message->userid;
+
+		if ($this->config->log_moderation)
+		{
+			KunenaLog::log(
+				$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+				KunenaLog::LOG_POST_EDIT,
+				array('mesid' => $message->id, 'reason' => $fields['modified_reason']),
+				$topic->getCategory(),
+				$topic,
+				!$isMine ? $message->getAuthor() : null
+			);
+		}
+
 		// Display possible warnings (upload failed etc)
 		foreach ($message->getErrors() as $warning)
 		{
@@ -805,8 +818,14 @@ class KunenaControllerTopic extends KunenaController
 
 			if (!empty($poll_options) && !empty($poll_title))
 			{
-				$poll->title          = $poll_title;
-				$poll->polltimetolive = $fields['poll_time_to_live'];
+				$poll->title           = $poll_title;
+
+				if (!empty($fields['poll_time_to_live']))
+				{
+					$polltimetolive        = new JDate($fields['poll_time_to_live']);
+					$poll->polltimetolive = $polltimetolive->toSql();
+				}
+
 				$poll->setOptions($poll_options);
 
 				if (!$topic->poll_id)
@@ -878,7 +897,15 @@ class KunenaControllerTopic extends KunenaController
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_GEN_MODERATED'));
 		}
 
-		$this->setRedirect($message->getUrl($this->return, false));
+		// Redirect edit first message when category is under review
+		if ($message->hold == 1 && $message->getCategory()->review && $topic->first_post_id == $message->id && !$this->me->isModerator())
+		{
+			$this->setRedirect($message->getCategory()->getUrl($this->return, false));
+		}
+		else
+		{
+			$this->setRedirect($message->getUrl($this->return, false));
+		}
 	}
 
 	/**
@@ -892,7 +919,7 @@ class KunenaControllerTopic extends KunenaController
 	{
 		if ($this->config->url_subject_topic)
 		{
-			preg_match_all('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.\,]*(\?\S+)?)?)*)@', $subject, $matches);
+			preg_match_all('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $subject, $matches);
 
 			$ignore = false;
 
@@ -1021,6 +1048,18 @@ class KunenaControllerTopic extends KunenaController
 
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
 
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_ACTION,
+					KunenaLog::LOG_POST_THANKYOU,
+					array('mesid' => $message->id),
+					$category,
+					$message->getTopic(),
+					$message->getAuthor()
+				);
+			}
+
 			$activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
 		}
 		else
@@ -1036,6 +1075,18 @@ class KunenaControllerTopic extends KunenaController
 			}
 
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
+
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_POST_UNTHANKYOU,
+					array('mesid' => $message->id, 'userid' => $userid),
+					$category,
+					$message->getTopic(),
+					$message->getAuthor()
+				);
+			}
 
 			$activityIntegration->onAfterUnThankyou($this->me->userid, $userid, $message);
 		}
@@ -1190,6 +1241,17 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_STICKY_SET'));
 
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_STICKY,
+					array(),
+					$topic->getCategory(),
+					$topic
+				);
+			}
+
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterSticky($topic, 1);
@@ -1224,6 +1286,17 @@ class KunenaControllerTopic extends KunenaController
 		elseif ($topic->sticky(0))
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_STICKY_UNSET'));
+
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_UNSTICKY,
+					array(),
+					$topic->getCategory(),
+					$topic
+				);
+			}
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1260,6 +1333,17 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_LOCK_SET'));
 
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_LOCK,
+					array(),
+					$topic->getCategory(),
+					$topic
+				);
+			}
+
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterLock($topic, 1);
@@ -1295,6 +1379,17 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_LOCK_UNSET'));
 
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					KunenaLog::LOG_TOPIC_UNLOCK,
+					array(),
+					$topic->getCategory(),
+					$topic
+				);
+			}
+
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterLock($topic, 0);
@@ -1323,20 +1418,35 @@ class KunenaControllerTopic extends KunenaController
 		if ($this->mesid)
 		{
 			// Delete message
-			$target = KunenaForumMessageHelper::get($this->mesid);
+			$message = $target = KunenaForumMessageHelper::get($this->mesid);
+			$topic = $message->getTopic();
+			$log = KunenaLog::LOG_POST_DELETE;
 			$hold   = KunenaForum::DELETED;
 			$msg    = JText::_('COM_KUNENA_POST_SUCCESS_DELETE');
 		}
 		else
 		{
 			// Delete topic
-			$target = KunenaForumTopicHelper::get($this->id);
+			$topic = $target = KunenaForumTopicHelper::get($this->id);
+			$log = KunenaLog::LOG_TOPIC_DELETE;
 			$hold   = KunenaForum::TOPIC_DELETED;
 			$msg    = JText::_('COM_KUNENA_TOPIC_SUCCESS_DELETE');
 		}
 
+		$category = $topic->getCategory();
 		if ($target->authorise('delete') && $target->publish($hold))
 		{
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+					$log,
+					isset($message) ? array('mesid' => $message->id) : array(),
+					$category,
+					$topic
+				);
+			}
+
 			$this->app->enqueueMessage($msg);
 		}
 		else
@@ -1376,18 +1486,33 @@ class KunenaControllerTopic extends KunenaController
 		if ($this->mesid)
 		{
 			// Undelete message
-			$target = KunenaForumMessageHelper::get($this->mesid);
+			$message = $target = KunenaForumMessageHelper::get($this->mesid);
+			$topic = $message->getTopic();
+			$log = KunenaLog::LOG_POST_UNDELETE;
 			$msg    = JText::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
 		}
 		else
 		{
 			// Undelete topic
-			$target = KunenaForumTopicHelper::get($this->id);
+			$topic = $target = KunenaForumTopicHelper::get($this->id);
+			$log = KunenaLog::LOG_TOPIC_UNDELETE;
 			$msg    = JText::_('COM_KUNENA_TOPIC_SUCCESS_UNDELETE');
 		}
 
+		$category = $topic->getCategory();
 		if ($target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED))
 		{
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+					$log,
+					isset($message) ? array('mesid' => $message->id) : array(),
+					$category,
+					$topic
+				);
+			}
+
 			$this->app->enqueueMessage($msg);
 		}
 		else
@@ -1414,7 +1539,9 @@ class KunenaControllerTopic extends KunenaController
 		if ($this->mesid)
 		{
 			// Delete message
-			$target = KunenaForumMessageHelper::get($this->mesid);
+			$message = $target = KunenaForumMessageHelper::get($this->mesid);
+			$topic = $message->getTopic();
+			$log = KunenaLog::LOG_POST_DESTROY;
 			$topic  = KunenaForumTopicHelper::get($target->getTopic());
 
 			if ($topic->attachments > 0)
@@ -1426,11 +1553,24 @@ class KunenaControllerTopic extends KunenaController
 		else
 		{
 			// Delete topic
-			$target = $topic = KunenaForumTopicHelper::get($this->id);
+			$topic = $target = KunenaForumTopicHelper::get($this->id);
+			$log = KunenaLog::LOG_TOPIC_DESTROY;
 		}
 
+		$category = $topic->getCategory();
 		if ($target->authorise('permdelete') && $target->delete())
 		{
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+					$log,
+					isset($message) ? array('mesid' => $message->id) : array(),
+					$category,
+					$topic
+				);
+			}
+
 			if ($topic->exists())
 			{
 				$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_DELETE'));
@@ -1474,16 +1614,32 @@ class KunenaControllerTopic extends KunenaController
 			// Approve message
 			$target  = KunenaForumMessageHelper::get($this->mesid);
 			$message = $target;
+			$log = KunenaLog::LOG_POST_APPROVE;
 		}
 		else
 		{
 			// Approve topic
 			$target  = KunenaForumTopicHelper::get($this->id);
 			$message = KunenaForumMessageHelper::get($target->first_post_id);
+			$log = KunenaLog::LOG_TOPIC_APPROVE;
 		}
 
+		$topic = $message->getTopic();
+		$category = $topic->getCategory();
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED))
 		{
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+						$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+						$log,
+						array('mesid' => $message->id),
+						$category,
+						$topic,
+						$message->getAuthor()
+				);
+			}
+
 			$this->app->enqueueMessage(JText::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'));
 
 			// Only email if message wasn't modified by the author before approval
@@ -1530,11 +1686,11 @@ class KunenaControllerTopic extends KunenaController
 		if ($messageId)
 		{
 			$message = $object = KunenaForumMessageHelper::get($messageId);
-			$topic   = $message->getTopic();
+			$topic = $message->getTopic();
 		}
 		else
 		{
-			$topic   = $object = KunenaForumTopicHelper::get($topicId);
+			$topic = $object = KunenaForumTopicHelper::get($topicId);
 			$message = KunenaForumMessageHelper::get($topic->first_post_id);
 		}
 
@@ -1591,6 +1747,22 @@ class KunenaControllerTopic extends KunenaController
 			{
 				$error = $topic->getError();
 			}
+
+			if ($this->config->log_moderation)
+			{
+				KunenaLog::log(
+					KunenaLog::TYPE_MODERATION,
+					$messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
+					array(
+						'move' => array('id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'),
+						'target' => array('category_id' => $targetCategory, 'topic_id' => $targetTopic),
+						'options' => array('emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow)
+					),
+					$topic->getCategory(),
+					$topic,
+					$message->getAuthor()
+				);
+			}
 		}
 
 		if ($error)
@@ -1599,7 +1771,7 @@ class KunenaControllerTopic extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(JText::_('COM_KUNENA_POST_SUCCESS_MOVE'));
+			$this->app->enqueueMessage(JText::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'));
 		}
 
 		if ($targetobject)
@@ -1657,11 +1829,13 @@ class KunenaControllerTopic extends KunenaController
 		{
 			$message = $target = KunenaForumMessageHelper::get($this->mesid);
 			$topic   = $target->getTopic();
+			$log = KunenaLog::LOG_POST_REPORT;
 		}
 		else
 		{
 			$topic   = $target = KunenaForumTopicHelper::get($this->id);
 			$message = KunenaForumMessageHelper::get($topic->first_post_id);
+			$log = KunenaLog::LOG_TOPIC_REPORT;
 		}
 
 		$messagetext = $message->message;
@@ -1684,6 +1858,22 @@ class KunenaControllerTopic extends KunenaController
 		if (method_exists($template, 'reportMessage'))
 		{
 			$template->reportMessage($message, $reason, $text);
+		}
+
+		if ($this->config->log_moderation)
+		{
+			KunenaLog::log(
+				KunenaLog::TYPE_REPORT,
+				$log,
+				array(
+					'mesid' => $message->id,
+					'reason' => $reason,
+					'message' => $text
+				),
+				$topic->getCategory(),
+				$topic,
+				$message->getAuthor()
+			);
 		}
 
 		// Load language file from the template.
@@ -1855,6 +2045,18 @@ class KunenaControllerTopic extends KunenaController
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		$topic->resetvotes();
+
+		if ($this->config->log_moderation)
+		{
+			KunenaLog::log(
+				KunenaLog::TYPE_MODERATION,
+				KunenaLog::LOG_POLL_MODERATE,
+				array(),
+				$topic->getCategory(),
+				$topic,
+				null
+			);
+		}
 
 		$this->app->enqueueMessage(JText::_('COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS'));
 		$this->setRedirect($topic->getUrl($this->return, false));

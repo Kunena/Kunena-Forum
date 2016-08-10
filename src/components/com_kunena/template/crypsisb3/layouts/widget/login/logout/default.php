@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -18,24 +18,25 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 	<li class="dropdown mobile-user">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			<?php if ($this->me->status == 0) : ?>
-				<i class="glyphicon glyphicon-large glyphicon glyphicon-user green"></i>
+				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' green', 20, 20); ?>
 			<?php elseif ($this->me->status == 1) : ?>
-				<i class="glyphicon glyphicon-large glyphicon glyphicon-user yellow"></i>
+				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' yellow', 20, 20); ?>
 			<?php elseif ($this->me->status == 2) : ?>
-				<i class="glyphicon glyphicon-large glyphicon glyphicon-user red "></i>
+				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' red', 20, 20); ?>
 			<?php elseif ($this->me->status == 3) : ?>
-				<i class="glyphicon glyphicon-large glyphicon glyphicon-user grey"></i>
+				<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' grey', 20, 20); ?>
 			<?php endif; ?>
 			<b class="caret"></b>
 		</a>
 
-		<div class="dropdown-menu" id="nav-menu userdropdownlogout" role="menu">
+		<div class="dropdown-menu dropdown-menu-right" id="nav-menu userdropdownlogout" role="menu">
 
 			<div class="center">
 				<p><strong><?php echo $this->me->getLink(null, null, 'nofollow', '', null); ?></strong></p>
 				<a href="<?php echo $this->me->getURL(); ?>">
-					<?php echo $this->me->getAvatarImage('img-thumbnail', 128, 128); ?>
+					<?php echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 128, 128); ?>
 				</a>
+				<p><?php echo $this->subLayout('User/Item/Status')->set('user', $this->me); ?></p>
 				<p>
 					<i class="glyphicon glyphicon-clock"></i>
 					<?php echo $this->me->getLastVisitDate()->toKunena('config_post_dateformat'); ?>
@@ -98,7 +99,7 @@ $markAllReadUrl = KunenaForumCategoryHelper::get()->getMarkReadUrl();
 			<?php if (!empty($this->announcementsUrl)) : ?>
 				<div>
 					<a href="<?php echo $this->announcementsUrl; ?>" class="btn btn-link">
-						<i class="glyphicon glyphicon-pencil"></i>
+						<i class="glyphicon glyphicon-bullhorn"></i>
 						<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>
 					</a>
 				</div>

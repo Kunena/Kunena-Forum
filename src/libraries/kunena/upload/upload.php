@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -20,6 +20,94 @@ class KunenaUpload
 	protected $validExtensions = array();
 
 	protected $filename;
+
+	/**
+	 * Correct Image Orientation
+	 *
+	 * @since  K5.0
+	 *
+	 * @param   $filename
+	 */
+	function correctImageOrientation($filename)
+	{
+		$testForJpg = @getimagesize($filename);
+
+		if ($testForJpg[2] == 2)
+		{
+			if (function_exists('exif_read_data'))
+			{
+				$deg  = 0;
+				$exif = @exif_read_data($filename);
+				$flip = '';
+				$img  = '';
+
+				if ($exif && isset($exif['Orientation']))
+				{
+					$orientation = $exif['Orientation'];
+
+					if ($orientation != 1)
+					{
+						$img = @imagecreatefromjpeg($filename);
+
+						switch ($orientation)
+						{
+							case 1: // nothing
+									$deg  = 0;
+									$flip = 0;
+									break;
+							case 2: // horizontal flip
+									$deg  = 0;
+									$flip = 1;
+								break;
+							case 3: // 180 rotate left
+									$deg  = 180;
+									$flip = 0;
+									break;
+							case 4: // vertical flip
+									$deg  = 0;
+									$flip = 2;
+									break;
+							case 5: // vertical flip + 90 rotate
+									$deg  = 90;
+									$flip = 2;
+									break;
+							case 6: // 270 rotate left
+									$deg  = 270;
+									$flip = 0;
+									break;
+							case 7: // horizontal flip + 90 rotate
+									$deg  = 90;
+									$flip = 1;
+									break;
+							case 8: // 90 rotate left
+									$deg  = 90;
+									$flip = 0;
+									break;
+						}
+					}
+				}
+
+				if ($deg > 0)
+				{
+					$img = @imagerotate($img, $deg, 0);
+				}
+
+				if ($flip != 0)
+				{
+					if ($flip == 1)
+					{
+						@imageflip($img, IMG_FLIP_HORIZONTAL);
+					}
+					else
+					{
+						@imageflip($img, IMG_FLIP_VERTICAL);
+					}
+				}
+
+				@imagejpeg($img, $filename, 95);
+			}
+		}
+	}
 
 	/**
 	 * Get new instance of upload class.
@@ -329,7 +417,7 @@ class KunenaUpload
 
 				$size += $bytes;
 
-				if (stripos($type, 'image/') !== true)
+				if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0)
 				{
 					if (!$this->checkFileSizeFileAttachment($size))
 					{
@@ -337,13 +425,18 @@ class KunenaUpload
 					}
 				}
 
-				if (stripos($type, 'image/') !== false)
+				if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 				{
 					if (!$this->checkFileSizeImageAttachment($size))
 					{
 						throw new RuntimeException(JText::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 					}
 				}
+
+				// Get filename from stream
+				$meta_data = stream_get_meta_data($out);
+				$filename  = $meta_data['uri'];
+				$this->correctImageOrientation($filename);
 			}
 		}
 		catch (Exception $exception)
@@ -557,7 +650,17 @@ class KunenaUpload
 		$file = new stdClass;
 		$file->ext = JFile::getExt($fileInput['name']);
 		$file->size = $fileInput['size'];
-		$file->tmp_name = $fileInput['tmp_name'];
+		$config = KunenaFactory::getConfig();
+
+		if ($type != 'attachment' && $config->attachment_utf8)
+		{
+			$file->tmp_name = $fileInput['tmp_name'];
+		}
+		else
+		{
+			$file->tmp_name = JFile::makeSafe($fileInput['tmp_name']);
+		}
+
 		$file->error = $fileInput['error'];
 		$file->destination = $destination . '.' . $file->ext;
 		$file->success = false;
@@ -638,6 +741,7 @@ class KunenaUpload
 			}
 		}
 
+		$this->correctImageOrientation($file->tmp_name);
 
 		if (!KunenaFile::copy($file->tmp_name, $file->destination))
 		{

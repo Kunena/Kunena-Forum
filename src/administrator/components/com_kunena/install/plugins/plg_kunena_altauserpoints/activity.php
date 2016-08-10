@@ -7,7 +7,7 @@
  *
  * @copyright  (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link       http://www.kunena.org
+ * @link       https://www.kunena.org
  **/
 defined('_JEXEC') or die ();
 jimport('joomla.utilities.string');
@@ -200,8 +200,15 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 
 		$_db = JFactory::getDBO();
 		$_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='" . (int) $userid . "'");
-		$userpoints = $_db->loadResult();
-		KunenaError::checkDatabaseError();
+		
+		try
+		{
+			$userpoints = $_db->loadResult();
+		}
+		catch (RuntimeException $e)
+		{
+			KunenaError::displayDatabaseError();
+		}
 
 		return $userpoints;
 	}

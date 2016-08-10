@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -49,9 +49,12 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 				$arrayanynomousbox[] = '"' . $category->id . '":' . $category->post_anonymous;
 			}
 
-			if (!$category->isSection() && $category->allow_polls)
+			if ($this->config->pollenabled)
 			{
-				$arraypollcatid[] = '"' . $category->id . '":1';
+				if (!$category->isSection() && $category->allow_polls)
+				{
+					$arraypollcatid[] = '"' . $category->id . '":1';
+				}
 			}
 		}
 

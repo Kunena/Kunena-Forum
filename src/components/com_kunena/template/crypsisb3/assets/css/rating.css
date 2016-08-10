@@ -1,0 +1,63 @@
+/* -----------------------------------------------------------------------------
+
+  COMPENENTS - RATING
+
+----------------------------------------------------------------------------- */
+#krating {
+  display: inline-block;
+  left: 4px;
+  position: relative;
+  top: 4px;
+}
+
+#ktopicsform [class*='category'] #krating-top {
+  float: right;
+}
+
+#kunena .c-rating {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#kunena .c-rating__item {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 24px;
+  -ms-flex: 0 0 24px;
+  flex: 0 0 24px;
+  height: 24px;
+  width: 24px;
+  background: url("../images/stars.svg");
+  background-position: 0 0;
+  cursor: pointer;
+}
+
+#kunena .c-rating__item:hover,
+#kunena .c-rating__item.is-active {
+  background-position: -24px 0;
+}
+
+#ktopicsform [class*='category'] .c-rating__item {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 14px;
+  -ms-flex: 0 0 14px;
+  flex: 0 0 14px;
+  height: 14px;
+  width: 14px;
+  background: url("../images/stars.svg");
+  background-size: 200%;
+  background-position: 0 0;
+  cursor: pointer;
+}
+
+#ktopicsform [class*='category'] .c-rating__item.is-active {
+  background-position: -14px 0;
+}
+
+#ktopicsform [class*='category'] .c-rating__item .is-active:hover {
+  background-position: 0;
+}

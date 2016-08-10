@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -18,7 +18,9 @@ $this->addStyleSheet('assets/css/rating.css');
 
 <?php if ($this->category->headerdesc) : ?>
 	<div class="alert alert-info kfrontend">
-		<a class="close" data-dismiss="alert" href="#"></a>
+		<h1>
+			<a class="close" data-dismiss="alert" href="#"></a>
+		</h1>
 		<?php echo $this->category->displayField('headerdesc'); ?>
 	</div>
 <?php endif; ?>
@@ -28,16 +30,11 @@ $this->addStyleSheet('assets/css/rating.css');
 <?php if (!empty($this->topics)) : ?>
 <div class="row-fluid">
 	<div class="span12">
-		<h2>
-			<?php echo $this->escape($this->headerText); ?>
-		</h2>
-
-		<div class="pull-right">
+		<h2 class="pull-right">
 			<?php echo $this->subLayout('Widget/Search')
 	->set('catid', $this->category->id)
 	->setLayout('topic'); ?>
-		</div>
-
+		</h2>
 		<div class="pull-left">
 			<?php echo $this->subLayout('Widget/Pagination/List')
 	->set('pagination', $this->pagination)
@@ -60,7 +57,7 @@ $this->addStyleSheet('assets/css/rating.css');
 		</ul>
 	</div>
 	<?php if ($this->topics) : ?>
-	<table class="table table-bordered">
+	<table class="table<?php echo KunenaTemplate::getInstance()->borderless();?>">
 		<thead>
 		<tr>
 			<td class="span1 center hidden-phone">

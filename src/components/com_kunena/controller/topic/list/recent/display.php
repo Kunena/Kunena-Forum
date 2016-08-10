@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -132,31 +132,141 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 		$actions = array('delete', 'approve', 'undelete', 'move', 'permdelete');
 
+		$params = JFactory::getApplication()->getMenu()->getActive()->params;
+		$title = $params->get('page_title');
+		$pageheading = $params->get('show_page_heading');
+
 		switch ($this->state->get('list.mode'))
 		{
 			case 'topics' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+				if (!empty($title) && $pageheading)
+				{
+					$this->headerText = $title;
+				}
+				else
+				{
+					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+				}
 				break;
 			case 'sticky' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+				if (!empty($title) && $pageheading)
+				{
+					$this->headerText = $title;
+				}
+				else
+				{
+					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+				}
 				break;
 			case 'locked' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+				if (!empty($title) && $pageheading)
+				{
+					$this->headerText = $title;
+				}
+				else
+				{
+					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+				}
 				break;
 			case 'noreplies' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+				if (!empty($title) && $pageheading)
+				{
+					$this->headerText = $title;
+				}
+				else
+				{
+					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+				}
 				break;
 			case 'unapproved' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+				if (!empty($title) && $pageheading)
+				{
+					$this->headerText = $title;
+				}
+				else
+				{
+					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+				}
 				break;
 			case 'deleted' :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+				if (!empty($title) && $pageheading)
+				{
+					$this->headerText = $title;
+				}
+				else
+				{
+					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+				}
 				break;
 			case 'replies' :
 			default :
-				$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
+				if (!empty($title) && $pageheading)
+				{
+					$this->headerText = $title;
+				}
+				else
+				{
+					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+				}
+				break;
 		}
 
 		$this->actions = $this->getTopicActions($this->topics, $actions);
+	}
+
+	/**
+	 * Prepare document.
+	 *
+	 * @return void
+	 */
+	protected function prepareDocument()
+	{
+		$page = $this->pagination->pagesCurrent;
+		$total = $this->pagination->pagesTotal;
+		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+
+		$app = JFactory::getApplication();
+		$menu_item   = $app->getMenu()->getActive();
+
+		if ($menu_item)
+		{
+			$params             = $menu_item->params;
+			$params_title       = $params->get('page_title');
+			$params_keywords    = $params->get('menu-meta_keywords');
+			$params_description = $params->get('menu-meta_description');
+
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title'). ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
+				$this->setTitle($title);
+			}
+			else
+			{
+				$this->title = $this->headerText;
+				$this->setTitle($headerText);
+			}
+
+			if (!empty($params_keywords))
+			{
+				$keywords = $params->get('menu-meta_keywords');
+				$this->setKeywords($keywords);
+			}
+			else
+			{
+				$keywords = $this->config->board_title;
+				$this->setKeywords($keywords);
+			}
+
+			if (!empty($params_description))
+			{
+				$description = $params->get('menu-meta_description');
+				$this->setDescription($description);
+			}
+			else
+			{
+				$description = JText::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');;
+				$this->setDescription($description);
+			}
+		}
 	}
 }

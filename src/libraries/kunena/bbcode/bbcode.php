@@ -1,12 +1,12 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Framework
- * @subpackage BBCode
+ * @package     Kunena.Framework
+ * @subpackage  BBCode
  *
- * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
@@ -136,6 +136,17 @@ class KunenaBbcode extends NBBC_BBCode
 			$params['path'] = '';
 		}
 
+		if ($config->autoembedsoundcloud && empty($this->parent->forceMinimal) && isset($params['host']))
+		{
+			parse_str($params['query'], $query);
+			$path = explode('/', $params['path']);
+
+			if (strstr($params['host'], 'soundcloud.') && !empty($path[1]) )
+			{
+				return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $params['url'] . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+			}
+		}
+
 		if ($config->autoembedyoutube && empty($this->parent->forceMinimal) && isset($params['host']))
 		{
 			// convert youtube links to embedded player
@@ -149,6 +160,10 @@ class KunenaBbcode extends NBBC_BBCode
 			elseif ($params['host'] == 'youtu.be' && !empty($path[1]))
 			{
 				$video = $path[1];
+			}
+			elseif (strstr($params['host'], '.youtube.') && !empty($path[1]) && $path[1]=='embed')
+			{
+				$video = $path[2];
 			}
 
 			if (isset($video))
@@ -185,24 +200,10 @@ class KunenaBbcode extends NBBC_BBCode
 				if (isset($itemid))
 				{
 					// convert ebay item to embedded widget
-					$layout = KunenaLayout::factory('BBCode/eBay');
-
-					if ($layout->getPath())
-					{
-						$ebay = $this->defaults->getEbayItemFromCache($itemid);
-
-						return (string) $layout
-							->set('params', $params)
-							->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-							->set('pictureurl', $ebay->Item->PictureURL[0])
-							->set('status', $ebay->Item->ListingStatus)
-							->set('ack', $ebay->Ack)
-							->set('title', $ebay->Item->Title)
-							->setLayout('default');
-					}
+					return KunenaBbcodeLibrary::renderEbayLayout($itemid);
 				}
 
-				return $this->defaults->getEbayItemFromCache($itemid);
+				return;
 			}
 
 			parse_str($params['query'], $query);
@@ -210,20 +211,8 @@ class KunenaBbcode extends NBBC_BBCode
 			// FIXME: ebay search and seller listings are not supported.
 			if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw']))
 			{
-				// convert ebay search to embedded widget
-				$layout = KunenaLayout::factory('BBCode/eBay');
-
-				if ($layout->getPath())
-				{
-					return (string) $layout
-						->set('content', urlencode($query['_nkw']))
-						->set('params', null)
-						->set('width', 355)
-						->set('height', 300)
-						->set('language', $config->ebaylanguagecode)
-						->set('affiliate', $config->ebay_affiliate_id)
-						->setLayout('search');
-				}
+				// Convert ebay search to embedded widget
+				KunenaBbcodeLibrary::renderEbayLayout($itemid);
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebay_language . '&mode=search&query='
@@ -235,19 +224,8 @@ class KunenaBbcode extends NBBC_BBCode
 			if (strstr($params['host'], 'myworld.') && !empty($path[1]))
 			{
 				// convert seller listing to embedded widget
-				$layout = KunenaLayout::factory('BBCode/eBay');
 
-				if ($layout->getPath())
-				{
-					return (string) $layout
-						->set('content', urlencode($path[1]))
-						->set('params', null)
-						->set('width', 355)
-						->set('height', 355)
-						->set('language', $config->ebaylanguagecode)
-						->set('affiliate', $config->ebay_affiliate_id)
-						->setLayout('seller');
-				}
+				KunenaBbcodeLibrary::renderEbayLayout($itemid);
 
 				// TODO: Remove in Kunena 4.0
 				return '<object width="355" height="355"><param name="movie" value="http://togo.ebay.com/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
@@ -1023,10 +1001,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		'soundcloud' => array(
 			'mode'     => BBCODE_MODE_LIBRARY,
 			'method'   => 'DoSoundcloud',
+			'class' => 'block',
 			'allow_in' => array('listitem', 'block', 'columns'),
-			'class'    => 'block',
-			'allow'    => array('colortext' => '/^[\w\d.-_]*$/'),
-			'content'  => BBCODE_PROHIBIT,
+			'content' => BBCODE_VERBATIM,
+			'plain_start' => "[soundcloud]",
+			'plain_end' => "",
+			'plain_content' => array(),
 		),
 
 		'instagram' => array(
@@ -1487,7 +1467,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Display nothing in subscription mails
-		if (empty($bbcode->context))
+		if (!empty($bbcode->context))
 		{
 			return '';
 		}
@@ -1516,14 +1496,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					->set('content', $content)
 					->set('params', $params);
 			}
-
-			// TODO: Remove in Kunena 4.0
-			// Display but highlight the fact that it is hidden from everyone except admins and mods
-			return '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
 		}
 		else
 		{
-			return '';
+			return '<br />' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '<br />';
 		}
 	}
 
@@ -1559,75 +1535,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$layout = KunenaLayout::factory('BBCode/Map');
 
+		$kunena_config =  KunenaFactory::getConfig();
+
 		if ($layout->getPath())
 		{
 			return (string) $layout
 				->set('content', $content)
 				->set('mapid', $this->mapid)
-				->set('params', $params);
+				->set('params', $params)
+				->set('config', $kunena_config);
 		}
-
-		// TODO: Remove in Kunena 4.0
-		static $id = false;
-		static $sensor = true;
-
-		if ($id === false) {
-			$document->addScript('https://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
-			$id = 0;
-		}
-
-		$id ++;
-		$mapid = 'kgooglemap' . $id;
-
-		$map_type = isset($params ['type']) ? strtoupper($params ["type"]): 'ROADMAP';
-		$map_typeId = array('HYBRID','ROADMAP','SATELLITE','TERRAIN');
-
-		if (!in_array($map_type, $map_typeId))
-		{
-			$map_type = 'ROADMAP';
-		}
-
-		$map_zoom = isset($params ['zoom']) ? (int) $params ['zoom']: 10;
-		$map_control = isset($params ['control']) ? (int) $params ['control'] : 0;
-
-		$document->addScriptDeclaration("
-		// <![CDATA[
-			var geocoder;
-			var $mapid;
-
-			window.addEvent('domready', function() {
-				geocoder = new google.maps.Geocoder();
-			var latlng = new google.maps.LatLng(37.333586,-121.894684);
-			var myOptions = {
-				zoom: $map_zoom,
-				disableDefaultUI: $map_control,
-				center: latlng,
-				mapTypeId: google.maps.MapTypeId.$map_type
-			};
-			$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
-
-			var address = ".json_encode($content).";
-			if (geocoder) {
-				geocoder.geocode( { 'address': address}, function(results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					$mapid.setCenter(results[0].geometry.location);
-					var marker = new google.maps.Marker({
-						position: results[0].geometry.location,
-				 		map: $mapid
-					});
-				} else {
-					var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true)." <i>".json_encode(addslashes($content))."</i></strong></p>';
-					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
-						infowindow$mapid.open($mapid);
-				}
-				});
-			}
-			});
-
-		// ]]>"
-		);
-
-		return '<div id="'.$mapid.'" class="kgooglemap">'.JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE', true).'</div>';
 	}
 
 	/**
@@ -1665,22 +1582,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$width = (int) $config->rtewidth;
 		$height = (int) $config->rteheight;
 
-		$layout = KunenaLayout::factory('BBCode/eBay');
-
-		if ($layout->getPath())
-		{
-			$ebay = $this->getEbayItemFromCache($content);
-
-			return (string) $layout
-				->set('content', $content)
-				->set('params', $params)
-				->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-				->set('pictureurl', $ebay->Item->PictureURL[0])
-				->set('status', $ebay->Item->ListingStatus)
-				->set('ack', $ebay->Ack)
-				->set('title', $ebay->Item->Title)
-				->setLayout(is_numeric($content) ? 'default' : 'search');
-		}
+		return SELF::renderEbayLayout($content);
 	}
 
 	/**
@@ -1773,7 +1675,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					if (!empty($article->fulltext))
 					{
 						$article->text = $article->introtext. ' '. $article->fulltext;
-						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
+
+						if (!empty($article->fulltext))
+						{
+							$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
+						}
+						else {
+							$link = '';
+						}
+
 						break;
 					}
 				// continue to intro if fulltext is empty
@@ -1781,7 +1691,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					if (!empty($article->introtext))
 					{
 						$article->text = $article->introtext;
-						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE').'</a>';
+
+						if (!empty($article->fulltext))
+						{
+							$link = '<a href="'.$url.'"class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE').'</a>';
+						}
+						else
+						{
+							$link = '';
+						}
+
 						break;
 					}
 				// continue to link if introtext is empty
@@ -2192,7 +2111,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$vid_allowpar = array ('flashvars', 'wmode', 'bgcolor', 'quality' );
 				break;
 			case 'iframe' :
-				return '<iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe>';
+				if ($vid ["type"] == 'youtube' )
+				{
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" frameborder="0" width="425" height="344"  allowfullscreen></iframe></div>';
+				}
+				else
+				{
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe></div>';
+				}
 				break;
 			case 'mediaplayer' :
 				$vid_par1 = array (array (1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95' ), array (1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab' ), array (4, 'type', 'application/x-mplayer2' ), array (4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/' ), array (6, 'src', $vid_source ), array (6, 'autostart', 'false' ), array (6, 'autosize', 'true' ), array (5, 'width', $vid_width ), array (5, 'height', $vid_height ) );
@@ -2912,7 +2838,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	 *
 	 * @return string
 	 */
-	public function getEbayItemFromCache($ItemID)
+	public static function getEbayItemFromCache($ItemID)
 	{
 		$cache = JFactory::getCache('Kunena_ebay_request');
 		$cache->setCaching(true);
@@ -2939,8 +2865,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$config = KunenaFactory::getConfig();
-
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal))
+		{
+			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+		}
 
 		$content = strip_tags($content);
 
@@ -2964,12 +2893,52 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		$config = KunenaFactory::getConfig();
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal))
+		{
+			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+		}
 
 		$content = strip_tags($content);
 
+		return '<div class="embed-container"><iframe src="//instagram.com/p/'. $content .'/embed/"  frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>';
+	}
 
-		return '<iframe src="//instagram.com/p/'. $content .'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+	/**
+	 * Render eBay layout from template
+	 */
+	public static function renderEbayLayout($ItemID)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (empty($config->ebay_api_key))
+		{
+			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
+
+			return false;
+		}
+		elseif (!is_numeric($ItemID))
+		{
+			echo '<b>' . JText::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+
+			return false;
+		}
+
+		$layout = KunenaLayout::factory('BBCode/eBay');
+
+		if ($layout->getPath())
+		{
+			$ebay = SELF::getEbayItemFromCache($ItemID);
+
+			return (string) $layout
+				->set('content', $ItemID)
+				//->set('params', $params)
+				->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
+				->set('pictureurl', $ebay->Item->PictureURL[0])
+				->set('status', $ebay->Item->ListingStatus)
+				->set('ack', $ebay->Ack)
+				->set('title', $ebay->Item->Title)
+				->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+		}
 	}
 }
-

@@ -6,7 +6,7 @@
  *
  * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -96,7 +96,7 @@ class KunenaPrivate
 		}
 
 		// We should offer the user a PM link
-		return '<a href="' . $url . '"' . $onclick . ' title="' . JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . JText::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
+		return '<a class="btn btn-small" href="' . $url . '"' . $onclick . ' title="' . JText::_('COM_KUNENA_VIEW_PMS') . '"><span class="icon icon-comments-2"></span></a>';
 	}
 
 	/**

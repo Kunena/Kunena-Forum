@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -22,7 +22,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 		<h3>
 			<?php echo $this->getCategoryLink($this->category); ?>
 			<small class="hidden-phone">
-				(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->category->getTopics())); ?>)
+				(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>)
 			</small>
 		</h3>
 	</td>
@@ -58,7 +58,7 @@ $avatar = $this->config->avataroncat ? $topic->getAuthor()->getAvatarImage(Kunen
 	<?php if ($this->checkbox) : ?>
 	<td class="center">
 		<label>
-			<input type="checkbox" class="kcatcheckall" name="categories[<?php echo (int) $this->category->id?>]" value="1" />
+			<input class="kcheckallcategory" type="checkbox" name="categories[<?php echo (int) $this->category->id?>]" value="1" />
 		</label>
 	</td>
 	<?php endif; ?>

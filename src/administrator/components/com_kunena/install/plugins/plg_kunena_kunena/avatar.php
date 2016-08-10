@@ -53,11 +53,11 @@ class KunenaAvatarKunena extends KunenaAvatar
 			// If avatar does not exist use default image.
 			if ($sizex <= 90)
 			{
-				$avatar = 's_nophoto.jpg';
+				$avatar = 's_nophoto.png';
 			}
 			else
 			{
-				$avatar = 'nophoto.jpg';
+				$avatar = 'nophoto.png';
 			}
 
 			// Search from the template.

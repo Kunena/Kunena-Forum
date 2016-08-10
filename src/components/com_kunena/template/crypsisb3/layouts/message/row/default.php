@@ -6,13 +6,14 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 /*
   @var KunenaLayout $this */
 // @var KunenaForumMessage $message
+$this->addStyleSheet('assets/css/rating.css');
 
 $message = $this->message;
 $author = $message->getAuthor();
@@ -77,11 +78,23 @@ if ($topic->moved_id > 0)
 				echo $this->getIcon('ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC'));
 			}
 			?>
+			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>
 		</div>
-		<div>
+		<div class="hidden-xs">
 			<?php echo $topic->getAuthor()->getLink(); ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
 			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory())); ?>
+			<div class="pull-right">
+				<?php /** TODO: New Feature - LABELS
+				<span class="label label-info">
+				<?php echo JText::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
+				</span>	*/ ?>
+				<?php if ($topic->locked != 0) : ?>
+					<span class="label label-important">
+						<i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED'); ?></i>
+					</span>
+				<?php endif; ?>
+			</div>
 		</div>
 	</td>
 	<td class="col-md-2 hidden-xs">

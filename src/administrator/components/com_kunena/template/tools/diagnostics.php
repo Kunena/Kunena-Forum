@@ -22,6 +22,12 @@ defined('_JEXEC') or die();
 	</div>
 	<div id="j-main-container" class="span10">
 
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="task" value="diagnostics" />
+			<?php echo JHtml::_('form.token'); ?>
+
+		</form>
+
 		<?php
 		if (!empty($task)) :
 			$rows = KunenaForumDiagnostics::getItems($task);
@@ -74,7 +80,7 @@ defined('_JEXEC') or die();
 				<td><?php echo $item ?></td>
 				<?php if ($count) : ?>
 				<td style="color:red;"><?php echo JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_TEST_FAILED') ?></td>
-				<td><a href="<?php echo KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&layout=diagnostics&test={$item}"); ?>"><?php echo JText::sprintf('COM_KUNENA_DIAGNOSTICS_LABEL_NUMBER_OF_ISSUES', "<b>{$count}</b>") ?></a></td>
+				<td><?php echo JText::sprintf('COM_KUNENA_DIAGNOSTICS_LABEL_NUMBER_OF_ISSUES', "<b>{$count}</b>") ?></td>
 				<td>
 					<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="' . KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&" . JSession::getFormToken() . '=1') . '">' . JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_FIX_ISSUES') . '</a>' : '' ?>
 					<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="' . KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&" . JSession::getFormToken() . '=1') . '">' . JText::_('COM_KUNENA_DIAGNOSTICS_LABEL_DELETE_BROKEN_ITEMS') . '</a>' : '' ?></td>

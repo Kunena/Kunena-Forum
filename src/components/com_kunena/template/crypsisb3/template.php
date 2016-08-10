@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -91,7 +91,7 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 		JHtml::_('bootstrap.tooltip', '[data-toggle="tooltip"]');
 		JHtml::_('jquery.framework');
 		JHtml::_('bootstrap.modal');
-		$this->addScript('main.js');
+		$this->addScript('assets/js/main.js');
 
 		// Compile CSS from LESS files.
 		$this->compileLess('assets/less/crypsisb3.less', 'kunena.css');
@@ -105,9 +105,18 @@ class KunenaTemplateCrypsisb3 extends KunenaTemplate
 
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$fontawesome = $this->ktemplate->params->get('fontawesome');
-		if ($fontawesome) : ?>
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<?php endif;
+		$doc = JFactory::getDocument();
+
+		if ($fontawesome)
+		{
+			$doc->addStyleSheet("//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css");
+		}
+
+		$icons = $this->ktemplate->params->get('icons');
+		if ($icons)
+		{
+			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+		}
 
 		// Load template colors settings
 		$styles = <<<EOF

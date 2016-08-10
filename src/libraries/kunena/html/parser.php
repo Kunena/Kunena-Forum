@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -46,7 +46,7 @@ abstract class KunenaHtmlParser
 		foreach ($smilies as $smiley)
 		{
 			// We load all smileys in array, so we can sort them
-			$smileyArray [$smiley->code] = JUri::root(true) . '/' . $template->getSmileyPath($smiley->file);
+			$smileyArray [$smiley->code] = $template->getSmileyPath($smiley->file);
 		}
 
 		if ($emoticonbar == 0)

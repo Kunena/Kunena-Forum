@@ -7,29 +7,31 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
 $colspan = !empty($this->actions) ? 4 : 3;
 $cols    = empty($this->checkbox) ? 4 : 5;
+$view = JFactory::getApplication()->input->getWord('view');
 
 ?>
 
 <div class="row-fluid">
 	<div class="span12">
 		<div class="pull-left">
-			<h2>
+			<h1>
 				<?php echo $this->escape($this->headerText); ?>
 				<small class="hidden-sm">
-					(<?php echo (JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($this->pagination->total))); ?>)
+					(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->pagination->total)); ?>)
 				</small>
 
 				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
-			</h2>
+			</h1>
 		</div>
 
-		<div class="filter-time pull-right">
+		<?php if ($view != 'user') : ?>
+		<h2 class="filter-time pull-right">
 			<div class="filter-sel">
 				<form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 					method="post" target="_self" class="form-inline hidden-phone">
@@ -38,7 +40,8 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 					</div>
 				</form>
 			</div>
-		</div>
+		</h2>
+		<?php endif; ?>
 	</div>
 </div>
 
@@ -140,9 +143,11 @@ $cols    = empty($this->checkbox) ? 4 : 5;
 	<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination->setDisplayedPages(4))->set('display', true); ?>
 </div>
 
+<?php if ($view != 'user') : ?>
 <form action="<?php echo $this->escape(JUri::getInstance()->toString()); ?>" id="timeselect" name="timeselect"
 	method="post" target="_self" class="timefilter pull-right">
 	<?php $this->displayTimeFilter('sel'); ?>
 </form>
+<?php endif; ?>
 
 <div class="clearfix"></div>

@@ -7,7 +7,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -22,7 +22,7 @@ $this->getBBcodesEnabled();
 			<li class="active"><a href="#write" data-toggle="tab"><?php echo JText::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
 			<li><a href="#preview" data-toggle="tab"><?php echo JText::_('COM_KUNENA_PREVIEW') ?></a></li>
 		</ul>
-		<textarea class="col-md-12 form-control" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="form-control" name="message" id="kbbcode-message" rows="12" tabindex="7" required="required" placeholder="<?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
 	</div>
 
 	<!-- Hidden preview placeholder -->
@@ -144,7 +144,7 @@ $this->getBBcodesEnabled();
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER') ?></h3>
+				<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
 			</div>
 			<div class="modal-body">
 				<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_URL_PROVIDER_URL') ?>: <input class="form-control" name="modal-video-urlprovider-input" id="modal-video-urlprovider-input" type="text" value="" /></p>
@@ -166,26 +166,28 @@ $this->getBBcodesEnabled();
 			</div>
 			<div class="modal-body">
 				<div id="kbbcode-poll-options">
+					<div class="input-group col-md-12" style="padding: 0">
 					<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
-					<input type="text" class="inputbox form-control" name="poll_title" id="kpoll-title"
+					<input type="text" class="inputbox form-control col-md-12" name="poll_title" id="kpoll-title"
 						maxlength="100" size="40"
 						value="<?php echo $this->escape($this->poll->title) ?>"
 						/>
-					<i id="kbutton-poll-add" class="glyphicon glyphicon-plus btn btn-xs btn-default"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>"> </i>
-					<i id="kbutton-poll-rem" class="glyphicon glyphicon-minus btn btn-xs btn-default"
-						alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>"> </i>
-					<br>
-					<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-					<div id="datepoll-container" class="col-md-5">
-						<div class="input-append date">
-							<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy">
+					</div>
+					<div class="clearfix"></div>
+					<?php echo KunenaIcons::poll_add();?>
+					<?php echo KunenaIcons::poll_rem();?>
+					<div class="clearfix"></div>
+					<div id="datepoll-container">
+						<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
+						<div class="input-group date">
+							<input type="text" class="form-control" name="poll_time_to_live" data-date-format="mm/dd/yyyy" value="<?php echo !empty($this->poll->polltimetolive) ? $this->poll->polltimetolive : '' ?>">
 							<span class="input-group-addon">
 								<i class="glyphicon glyphicon-th"></i>
 							</span>
 						</div>
 					</div>
-					<br>
+					<div class="clearfix"></div>
+					<br />
 					<div id="kpoll-alert-error" class="alert alert-notice" style="display:none;">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
 						<?php echo JText::sprintf('COM_KUNENA_ALERT_WARNING_X', JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW')) ?>
@@ -223,7 +225,10 @@ $this->getBBcodesEnabled();
 				<div id="smilie"><?php
 					$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 					foreach ($emoticons as $emo_code => $emo_url) {
-						echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="20" height="20" alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
+						$data = getimagesize(JPATH_ROOT . '/' . $emo_url);
+						$width = $data[0];
+						$height = $data[1];
+						echo '<img class="smileyimage" src="' . $emo_url . '" border="0" width="' . $width .'" height="' . $height . '"  alt="' . $emo_code . ' " title="' . $emo_code . ' " style="cursor:pointer"/> ';
 					}
 					?>
 				</div>

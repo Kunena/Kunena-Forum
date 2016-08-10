@@ -6,7 +6,7 @@
  *
  * @copyright (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.org
+ * @link https://www.kunena.org
  **/
 defined('_JEXEC') or die();
 
@@ -30,7 +30,7 @@ if (!defined('DS'))
 }
 
 // Default values
-define('KUNENA_TEMPLATE_DEFAULT', 'blue_eagle');
+define('KUNENA_TEMPLATE_DEFAULT', 'crypsis');
 
 // File system paths
 define('KUNENA_COMPONENT_RELPATH', 'components/' . KUNENA_COMPONENT_NAME);
@@ -90,56 +90,5 @@ define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
  */
 class CKunenaTools
 {
-	/**
-	 * @param $filename
-	 *
-	 * @return JDocument
-	 */
-	public static function addStyleSheet($filename)
-	{
-		$document = JFactory::getDocument();
-		$config = KunenaFactory::getConfig();
-		$template = KunenaFactory::getTemplate();
-
-		if ($template->name != 'default')
-		{
-			$filename = preg_replace('#/com_kunena/template/default#', '/com_kunena/template/blue_eagle', $filename);
-		}
-
-		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.css)$#', KUNENA_DIRECTURL . 'template/blue_eagle/css/\1', $filename);
-
-		if (JDEBUG || $config->debug || KunenaForum::isDev())
-		{
-			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace('/\-min\./u', '.', $filename);
-		}
-
-		return $document->addStyleSheet($filename);
-	}
-
-	/**
-	 * @param $filename
-	 *
-	 * @return JDocument
-	 */
-	public static function addScript($filename)
-	{
-		$document = JFactory::getDocument();
-		$config = KunenaFactory::getConfig();
-
-		// Replace edit.js and mediaboxAdv.js with the new version of the file
-		$filename = preg_replace('#^.*/(editor(-min)?.js)$#', KUNENA_DIRECTURL . 'template/blue_eagle/js/\1', $filename);
-		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.js)$#', JUri::root(true) . '/media/kunena/js/\1', $filename);
-		// Replace everything else that points to default template with media
-		$filename = preg_replace('#/components/com_kunena/template/default/js/#', '/media/kunena/js/', $filename);
-
-		if (JDEBUG || $config->debug || KunenaForum::isDev())
-		{
-			// If we are in debug more, make sure we load the unpacked javascript
-			$filename = preg_replace('/\-min\./u', '.', $filename);
-		}
-
-		return $document->addScript($filename);
-	}
-
+	
 }

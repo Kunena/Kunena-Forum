@@ -703,7 +703,7 @@
 				versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `publish_up` datetime NOT NULL default '0000-00-00 00:00:00' AFTER `published`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `publish_down` datetime NOT NULL default '0000-00-00 00:00:00' AFTER `publish_up`</query>
-		</version>	
+		</version>
 		<version version="5.0.0-ALPHA5"
 				versiondate="2016-03-18"
 				versionname="Internal">
@@ -713,6 +713,17 @@
 				versiondate="2016-03-29"
 				versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD `rating` tinyint(6) NOT NULL default '0' AFTER `last_post_guest_name`;</query>
+		</version>
+		<version version="5.0.0-BETA3-DEV2"
+		         versiondate="2016-05-06"
+		         versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD `label_id` int(11) NOT NULL default '0' AFTER `icon_id`;</query>
+		</version>
+		<version version="5.0.0"
+		         versiondate="2016-08-06"
+		         versionname="Internal">
+			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_keywords`;</query>
+			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_keywords_map`;</query>
 		</version>
 		<version version="@kunenaversion@"
 				versiondate="@kunenaversiondate@"

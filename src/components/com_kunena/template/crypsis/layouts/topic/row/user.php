@@ -6,7 +6,7 @@
  *
  * @copyright   (C) 2008 - 2016 Kunena Team. All rights reserved.
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link        http://www.kunena.org
+ * @link        https://www.kunena.org
  **/
 defined('_JEXEC') or die;
 
@@ -15,10 +15,11 @@ defined('_JEXEC') or die;
 // @var KunenaForumTopic $topic
 
 $topic = $this->topic;
+$template = KunenaFactory::getTemplate();
 $topicPages = $topic->getPagination(null, KunenaConfig::getInstance()->messages_per_page, 3);
 $userTopic = $topic->getUserTopic();
 $author = $topic->getLastPostAuthor();
-$avatar = $author->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
+$avatar = $author->getAvatarImage($template->params->get('avatarType'), 'post');
 $cols = empty($this->checkbox) ? 5 : 6;
 $category = $this->topic->getCategory();
 $config = KunenaConfig::getInstance();
@@ -62,20 +63,27 @@ if (!empty($this->spacing)) : ?>
 	<?php endif;?>
 	</td>
 	<td class="span<?php echo $cols; ?>">
-		<div>
+		<div class="krow">
 			<?php
+			if ($template->params->get('labels') != 0)
+			{
+				echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
+			}
+
 			if ($topic->unread)
 			{
-				echo $this->getTopicLink(
-     $topic,  'unread',
-	$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
+				echo $this->getTopicLink($topic,  'unread', $topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread .
+					' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip');
 			}
 			else
 			{
 				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
 			}
 			?>
+			<?php echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
 		</div>
+
+
 		<div class="pull-right">
 			<?php if ($userTopic->favorite) : ?>
 				<i class="icon-star hasTooltip" title="<?php echo JText::_('COM_KUNENA_FAVORITE'); ?>"></i>
@@ -89,7 +97,7 @@ if (!empty($this->spacing)) : ?>
 				<i class="icon-flag-2 hasTooltip" title="<?php echo JText::_('COM_KUNENA_ATTACH'); ?>"></i>
 			<?php endif; ?>
 
-			<?php if ($this->topic->poll_id) : ?>
+			<?php if ($this->topic->poll_id && $category->allow_polls) : ?>
 				<i class="icon-bars hasTooltip" title="<?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?>"></i>
 			<?php endif; ?>
 		</div>
@@ -144,8 +152,10 @@ if (!empty($this->spacing)) : ?>
 					<div class="span3">
 						<?php echo $author->getLink($avatar); ?>
 					</div>
+					<div class="span9">
+				<?php else : ?>
+					<div class="span12">
 				<?php endif; ?>
-				<div class="span9">
 					<span><?php echo $this->getTopicLink($this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST'), null, 'hasTooltip'); ?>
 						<?php echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, 'nofollow', '', null, $category->id);?>
 					</span>
@@ -163,12 +173,4 @@ if (!empty($this->spacing)) : ?>
 			</label>
 		</td>
 	<?php endif; ?>
-
-	<?php
-	if (!empty($this->position)) {
-		echo $this->subLayout('Widget/Module')
-			->set('position', $this->position)
-			->set('cols', $cols)
-			->setLayout('table_row'); }
-	?>
 </tr>

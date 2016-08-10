@@ -57,6 +57,12 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 		$this->profile = $this->message->getAuthor();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
+		if ($this->topic->unread)
+		{
+			$doc = JFactory::getDocument();
+			$doc->setMetaData('robots', 'noindex, nofollow');
+		}
+
 		$this->captchaEnabled = false;
 
 		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha())

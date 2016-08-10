@@ -255,25 +255,32 @@ class Com_KunenaInstallerScript
 
 		$language_folders = JFolder::folders(JPATH_ROOT . '/language');
 
-		foreach($language_folders as $folder)
+		foreach ($language_folders as $folder)
 		{
 			if ( JFile::exists(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini'))
 			{
-				JFile::delete(JPATH_ROOT . '/language/' .$folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
+				JFile::delete(JPATH_ROOT . '/language/' . $folder . '/' . $folder . '.com_kunena.tpl_blue_eagle.ini');
 			}
 		}
 
 		// Remove old system directory
 		if (is_file(JPATH_ROOT . '/media/kunena/topic_icons/system/topicicons.xml'))
 		{
-			$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
-			$foldernew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/system';
-			JFolder::copy($folder, $foldernew);
-			JFolder::delete($folder);
+			if (!is_file(JPATH_ROOT . '/media/kunena/archive/topic_icons/system/systemicons.xml'))
+			{
+				JFolder::create(JPATH_ROOT . '/media/kunena/archive/topic_icons');
+				$folder    = JPATH_ROOT . '/media/kunena/topic_icons/system';
+				$foldernew = JPATH_ROOT . '/media/kunena/archive/topic_icons/system';
+				JFolder::copy($folder, $foldernew);
+				JFolder::delete($folder);
+			}
 
-			$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
-			$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
-			JFile::copy($file, $filenew);
+			if (!is_file(JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml'))
+			{
+				$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
+				$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
+				JFile::copy($file, $filenew);
+			}
 
 			$db    = JFactory::getDBO();
 			$query = "UPDATE `#__kunena_categories` SET iconset='default' WHERE iconset='system'";

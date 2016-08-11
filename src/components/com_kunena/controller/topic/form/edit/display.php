@@ -142,6 +142,9 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 				$this->setDescription($this->headerText);
 			}
 		}
+
+		$robots = 'noindex, nofollow';
+		$this->setRobots($robots);
 	}
 
 	/**

@@ -167,6 +167,9 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 				$this->setDescription($this->headerText);
 			}
 		}
+
+		$robots = 'noindex, nofollow';
+		$this->setRobots($robots);
 	}
 
 	/**

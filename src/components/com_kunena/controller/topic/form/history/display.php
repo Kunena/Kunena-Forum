@@ -113,5 +113,8 @@ class ComponentKunenaControllerTopicFormHistoryDisplay extends KunenaControllerD
 				$this->setDescription($this->headerText);
 			}
 		}
+
+		$robots = 'noindex, nofollow';
+		$this->setRobots($robots);
 	}
 }

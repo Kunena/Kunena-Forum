@@ -277,6 +277,7 @@ class Com_KunenaInstallerScript
 
 			if (!is_file(JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml'))
 			{
+				JFolder::create(JPATH_ROOT . '/media/kunena/topic_icons/systemold');
 				$file    = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
 				$filenew = JPATH_ROOT . '/media/kunena/topic_icons/systemold/topicicons.xml';
 				JFile::copy($file, $filenew);

@@ -668,22 +668,22 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i id="kbutton-poll-add" class="fa fa-minus btn btn-xs btn-small btn-default"
+			return '<i id="kbutton-poll-rem" class="fa fa-minus btn btn-xs btn-small btn-default"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
 		}
 		elseif ($topicicontype == 'B2')
 		{
-			return '<i id="kbutton-poll-add" class="icon icon-minus btn btn-small"
+			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
 		}
 		elseif ($topicicontype == 'B3')
 		{
-			return '<i id="kbutton-poll-add" class="glyphicon glyphicon-minus btn btn-xs btn-default"
+			return '<i id="kbutton-poll-rem" class="glyphicon glyphicon-minus btn btn-xs btn-default"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
 		}
 		else
 		{
-			return '<i id="kbutton-poll-add" class="icon icon-minus btn btn-small"
+			return '<i id="kbutton-poll-rem" class="icon icon-minus btn btn-small"
 						alt="'. JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION') .'"> </i>';
 		}
 	}

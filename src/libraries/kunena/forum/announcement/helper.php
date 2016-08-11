@@ -113,7 +113,7 @@ abstract class KunenaForumAnnouncementHelper
 				->from('#__kunena_announcement')
 				->order('id DESC')
 				->where('(published = 1)')
-				->where('(publish_up = ' . $nullDate . ' OR publish_up >= ' . $nowDate . ')')
+				->where('(publish_up = ' . $nullDate . ' OR publish_up <= ' . $nowDate . ')')
 				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
 		}
 		else

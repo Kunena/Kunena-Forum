@@ -104,7 +104,7 @@ foreach ($this->sections as $section) :
 													<span class="icon-shield hasTooltip" data-original-title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED'); ?>"></span>
 												<?php endif; ?>
 												<?php if (!empty($category->rssURL)) : ?>
-													<a href="<?php echo $category->rssURL ?>" rel="follow" data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
+													<a href="<?php echo $category->rssURL ?>" rel="nofollow" data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
 														 <?php echo KunenaIcons::rss(); ?>
 													</a>
 												<?php endif; ?>

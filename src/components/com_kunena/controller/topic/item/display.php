@@ -363,6 +363,27 @@ class ComponentKunenaControllerTopicItemDisplay extends KunenaControllerDisplay
 		$doc->setMetaData('article:published_time', $this->topic->getFirstPostTime(), 'property');
 		$doc->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
 
+		$app = JFactory::getApplication('site');
+		$componentParams = $app->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
+
 		$page = $this->pagination->pagesCurrent;
 		$total = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');

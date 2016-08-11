@@ -78,7 +78,7 @@ if (!empty($this->spacing)) : ?>
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle');
+				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle', $category, true);
 			}
 
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>

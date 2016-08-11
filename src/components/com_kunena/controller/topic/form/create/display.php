@@ -209,6 +209,9 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 				$this->setDescription($this->headerText);
 			}
 		}
+
+		$robots = 'noindex, nofollow';
+		$this->setRobots($robots);
 	}
 
 	/**

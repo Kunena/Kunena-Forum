@@ -116,7 +116,7 @@ $quick = $template->params->get('quick');
 			<?php if ($config->askemail && !$me->exists()): ?>
 				<div class="controls">
 					<?php echo $config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-					<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox span12" maxlength="35" value="" required />
+					<input type="text" id="email" name="email" placeholder="<?php echo JText::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox span12" maxlength="45" value="" required />
 				</div>
 			<?php endif; ?>
 

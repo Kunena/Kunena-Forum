@@ -302,6 +302,6 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	protected function setRobots($robots)
 	{
-		$this->document->setMetaData('robots', $robots);
+		$this->document->setMetaData('robots', $robots, 'robots');
 	}
 }

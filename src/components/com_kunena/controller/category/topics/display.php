@@ -160,11 +160,34 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
 
+		$doc = JFactory::getDocument();
+		$config = JFactory::getApplication('site');
+		$componentParams = $config->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
+
 		if ($menu_item)
 		{
 			$params             = $menu_item->params;
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			$title = JText::sprintf("{$categoryText}{$pagesText}");
 			$this->setTitle($title);
@@ -196,6 +219,12 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 				$description = "{$parentText} - {$categoryText}{$pagesText} - {$this->config->board_title}";
 				$description = substr($description, 0, 140) . '...';
 				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

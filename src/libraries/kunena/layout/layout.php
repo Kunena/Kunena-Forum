@@ -145,7 +145,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null)
+	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null, $follow = true, $canonical = null)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -165,7 +165,25 @@ class KunenaLayout extends KunenaLayoutBase
 			}
 		}
 
-		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, 'follow');
+		if ($follow)
+		{
+			$rel = '';
+		}
+		else
+		{
+			$rel = 'nofollow';
+		}
+
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		$link = JHtml::_('kunenaforum.link', $category->getUrl(), $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -182,7 +200,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL, $follow = null)
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL, $follow = true, $canonical = false)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -277,14 +295,23 @@ class KunenaLayout extends KunenaLayoutBase
 
 		if ($follow)
 		{
-			$rel = 'follow';
+			$rel = '';
 		}
 		else
 		{
 			$rel = 'nofollow';
 		}
 
-		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, $rel);
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		$link = JHtml::_('kunenaforum.link', $url, $content, $title, $class, $con);
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -300,7 +327,7 @@ class KunenaLayout extends KunenaLayoutBase
 	 *
 	 * @return mixed
 	 */
-	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30)
+	public function getLastPostLink($category, $content = null, $title = null, $class = null, $length = 30, $follow = true, $canonical = null)
 	{
 		$lastTopic = $category->getLastTopic();
 		$channels = $category->getChannels();
@@ -329,6 +356,24 @@ class KunenaLayout extends KunenaLayoutBase
 			}
 		}
 
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		if ($follow)
+		{
+			$rel = '';
+		}
+		else
+		{
+			$rel = 'nofollow';
+		}
+
+		if ($canonical)
+		{
+			$con = 'canonical';
+		}
+		else
+		{
+			$con = $rel;
+		}
+
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $con);
 	}
 }

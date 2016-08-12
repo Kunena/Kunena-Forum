@@ -570,16 +570,31 @@ class KunenaUser extends JObject
 
 			$class = !is_null($class) ? $class : $this->getType($catid, 'class');
 
-			if (!empty($class) && $class != 'btn' )
+			if (!empty($class))
 			{
-				$class = $class . ' ' . $this->getType($catid, 'class');
+				if ($class == 'btn')
+				{
+					$class = $class;
+				}
+				elseif ($class == 'btn pull-right')
+				{
+					$class = $class;
+				}
+				elseif ($class == 'hasTooltip')
+				{
+					$class = $class . ' ' . $this->getType($catid, 'class');
+				}
+				else
+				{
+					$class = $this->getType($catid, 'class');
+				}
 			}
 
 			$link = $this->getURL(true, $task);
 
 			if (! empty ( $link ))
 			{
-				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
+				$this->_link[$key] = JHtml::_('kunenaforum.link', $link, $name, $title, $class, $rel);
 			}
 			else
 			{

@@ -2808,7 +2808,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (is_numeric($ItemID)  && $config->ebay_api_key)
+		if (is_numeric($ItemID)  && $config->ebay_api_key && ini_get('allow_url_fopen'))
 		{
 			$options = new JRegistry;
 
@@ -2929,16 +2929,19 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($layout->getPath())
 		{
 			$ebay = SELF::getEbayItemFromCache($ItemID);
-
-			return (string) $layout
-				->set('content', $ItemID)
-				//->set('params', $params)
-				->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-				->set('pictureurl', $ebay->Item->PictureURL[0])
-				->set('status', $ebay->Item->ListingStatus)
-				->set('ack', $ebay->Ack)
-				->set('title', $ebay->Item->Title)
-				->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+			
+			if (is_object($ebay))
+			{
+				return (string) $layout
+					->set('content', $ItemID)
+					//->set('params', $params)
+					->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
+					->set('pictureurl', $ebay->Item->PictureURL[0])
+					->set('status', $ebay->Item->ListingStatus)
+					->set('ack', $ebay->Ack)
+					->set('title', $ebay->Item->Title)
+					->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+			}
 		}
 	}
 }

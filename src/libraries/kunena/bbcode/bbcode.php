@@ -2872,8 +2872,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$content = strip_tags($content);
-
-		return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+		
+		if ( !empty($content) )
+		{
+			return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+		}
 	}
 
 	/**
@@ -2900,8 +2903,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$content = strip_tags($content);
-
-		return '<div class="embed-container"><iframe src="//instagram.com/p/'. $content .'/embed/"  frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>';
+		
+		if ( !empty($content) )
+		{
+			return '<div class="embed-container"><iframe src="//instagram.com/p/'. $content .'/embed/"  frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>';
+		}
 	}
 
 	/**

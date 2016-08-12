@@ -305,13 +305,13 @@ class KunenaControllerApplicationDisplay extends KunenaControllerDisplay
 		$credits = '<div style="text-align:center">';
 		$credits .= JHtml::_(
 	'kunenaforum.link', 'index.php?option=com_kunena&view=credits',
-			JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow',
+			JText::_('COM_KUNENA_POWEREDBY'), '', '', '',
 	array('style' => 'display: inline; visibility: visible; text-decoration: none;'));
-		$credits .= ' <a href="https://www.kunena.org" rel="follow"
+		$credits .= ' <a href="https://www.kunena.org"
 			target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'
 			. JText::_('COM_KUNENA') . '</a>';
 		if (trim($templateText)) {
-			$credits .= ' :: <a href ="' . $templateLink . '" rel="follow" target="_blank" style="text-decoration: none;">'
+			$credits .= ' :: <a href ="' . $templateLink . '" target="_blank" style="text-decoration: none;">'
 				. $templateText . ' ' . $templateName . '</a>';
 		}
 

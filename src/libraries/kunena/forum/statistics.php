@@ -268,7 +268,7 @@ class KunenaForumStatistics
 			{
 				$item = clone $item;
 				$item->count = $item->posts;
-				$item->link = JHtml::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
+				$item->link = JHtml::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
 		}
@@ -303,7 +303,7 @@ class KunenaForumStatistics
 			foreach ($this->topPosters as &$item)
 			{
 				$item = clone $item;
-				$item->link = KunenaUserHelper::get($item->id)->getLink();
+				$item->link = KunenaUserHelper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}
@@ -338,7 +338,7 @@ class KunenaForumStatistics
 			foreach ($this->topProfiles as &$item)
 			{
 				$item = clone $item;
-				$item->link = KunenaUserHelper::get($item->id)->getLink();
+				$item->link = KunenaUserHelper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}
@@ -384,7 +384,7 @@ class KunenaForumStatistics
 			{
 				$item = clone $item;
 				$item->count = $polls[$item->id]->count;
-				$item->link = JHtml::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
+				$item->link = JHtml::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject), null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}
@@ -426,7 +426,7 @@ class KunenaForumStatistics
 			foreach ($this->topThanks as &$item)
 			{
 				$item = clone $item;
-				$item->link = KunenaUserHelper::get($item->id)->getLink();
+				$item->link = KunenaUserHelper::get($item->id)->getLink(null, null, '');
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}

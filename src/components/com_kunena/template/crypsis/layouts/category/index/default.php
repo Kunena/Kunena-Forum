@@ -45,7 +45,7 @@ foreach ($this->sections as $section) :
 		</h2>
 
 		<h1>
-			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, 'hasTooltip');	?>
+			<?php echo $this->getCategoryLink($section, $this->escape($section->name), null, 'hasTooltip', true, false); ?>
 			<small class="hidden-phone nowrap">(<?php echo JText::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($section->getTopics())); ?>)
 			</small>
 		</h1>
@@ -85,12 +85,12 @@ foreach ($this->sections as $section) :
 					foreach ($this->categories[$section->id] as $category) : ?>
 						<tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
 							<td class="span1 center hidden-phone">
-								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), ''); ?>
+								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
 							</td>
 							<td class="span8">
 								<div>
 									<h3>
-										<?php echo $this->getCategoryLink($category, null, null, null); ?>
+										<?php echo $this->getCategoryLink($category, null, null, null, true, false); ?>
 										<small class="hidden-phone nowrap">
 											(<?php echo JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($category->getTopics())); ?>)
 											<span>
@@ -125,7 +125,7 @@ foreach ($this->sections as $section) :
 
 											<?php foreach ($this->categories[$category->id] as $subcategory) : ?>
 												<li>
-													<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '') . $this->getCategoryLink($subcategory) . '<small class="hidden-phone muted"> ('
+													<?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, null, true, false) . '<small class="hidden-phone muted"> ('
 														. JText::plural('COM_KUNENA_X_TOPICS', $this->formatLargeNumber($subcategory->getTopics()))
 														. ')</small>';
 													if (($new = $subcategory->getNewCount()) > 0)
@@ -138,7 +138,7 @@ foreach ($this->sections as $section) :
 
 											<?php if (!empty($this->more[$category->id])) : ?>
 												<li>
-													<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE')); ?>
+													<?php echo $this->getCategoryLink($category, JText::_('COM_KUNENA_SEE_MORE'), null, null, true, false); ?>
 													<small class="hidden-phone muted">
 														(<?php echo JText::sprintf('COM_KUNENA_X_HIDDEN', (int) $this->more[$category->id]); ?>)
 													</small>
@@ -158,7 +158,7 @@ foreach ($this->sections as $section) :
 										$modslist = array();
 										foreach ($category->getmoderators() as $moderator)
 										{
-											$modslist[] = KunenaFactory::getUser($moderator)->getLink();
+											$modslist[] = KunenaFactory::getUser($moderator)->getLink(null, null, '');
 										}
 
 										echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
@@ -192,9 +192,9 @@ foreach ($this->sections as $section) :
 											<?php else : ?>
 												<div class="span12">
 											<?php endif; ?>
-												<span><?php echo $this->getLastPostLink($category, null, null, null) ?></span>
+												<span><?php echo $this->getLastPostLink($category,null, null, null, null, true, false) ?></span>
 												<br>
-												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', 'nofollow', '', null, $category->id)); ?></span>
+												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', '', '', null, $category->id)); ?></span>
 												<br>
 												<span><?php echo $time->toKunena('config_post_dateformat'); ?></span>
 											</div>

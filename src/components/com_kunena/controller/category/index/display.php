@@ -49,17 +49,17 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 
 		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 		/*$cache   = JFactory::getCache('com_kunena', 'output');
-		
+
 		if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
 		{
 		return;
 		}*/
-		
+
 		$options            = array();
 		$options []         = JHtml::_('select.option', '0', JText::_('COM_KUNENA_FORUM_TOP'));
 		$cat_params         = array('sections' => 1, 'catid' => 0);
 		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
-		
+
 		if ($catid)
 		{
 			$sections = KunenaForumCategoryHelper::getCategories($catid);
@@ -260,6 +260,28 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 	{
 		$app       = JFactory::getApplication();
 		$menu_item = $app->getMenu()->getActive();
+		$doc = JFactory::getDocument();
+
+		$config = JFactory::getApplication('site');
+		$componentParams = $config->getParams('com_config');
+		$robots = $componentParams->get('robots');
+
+		if ($robots == '')
+		{
+			$doc->setMetaData('robots', 'index, follow');
+		}
+		elseif ($robots == 'noindex, follow')
+		{
+			$doc->setMetaData('robots', 'noindex, follow');
+		}
+		elseif ($robots == 'index, nofollow')
+		{
+			$doc->setMetaData('robots', 'index, nofollow');
+		}
+		else
+		{
+			$doc->setMetaData('robots', 'nofollow, noindex');
+		}
 
 		if ($menu_item)
 		{
@@ -267,6 +289,7 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			$params_title       = $params->get('page_title');
 			$params_keywords    = $params->get('menu-meta_keywords');
 			$params_description = $params->get('menu-meta_description');
+			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{
@@ -299,6 +322,12 @@ class ComponentKunenaControllerCategoryIndexDisplay extends KunenaControllerDisp
 			{
 				$description = JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') . ' - ' . $this->config->board_title;
 				$this->setDescription($description);
+			}
+
+			if (!empty($params_robots))
+			{
+				$robots = $params->get('robots');
+				$doc->setMetaData('robots', $robots);
 			}
 		}
 	}

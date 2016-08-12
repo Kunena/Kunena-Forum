@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 		foreach ($this->onlineList as $user)
 		{
 			$avatar       = $user->getAvatarImage();
-			$onlinelist[] = $user->getLink($avatar) . $user->getLink();
+			$onlinelist[] = $user->getLink($avatar, null, '') . $user->getLink();
 		}
 		?>
 		<?php echo implode(', ', $onlinelist); ?>
@@ -33,7 +33,7 @@ defined('_JEXEC') or die;
 		foreach ($this->hiddenList as $user)
 		{
 			$avatar       = $user->getAvatarImage();
-			$hiddenlist[] = $user->getLink($avatar) . $user->getLink();
+			$hiddenlist[] = $user->getLink($avatar, null, '') . $user->getLink();
 		}
 		?>
 		<?php echo implode(', ', $hiddenlist); ?>

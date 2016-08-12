@@ -157,7 +157,7 @@ class ComponentKunenaControllerTopicItemMessageDisplay extends KunenaControllerD
 			if (!empty($this->message->ip))
 			{
 				$this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip
-					. '" target="_blank"> IP: ' . $this->message->ip . '</a>';
+					. '" target="_blank" rel="nofollow"> IP: ' . $this->message->ip . '</a>';
 			}
 			else
 			{

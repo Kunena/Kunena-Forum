@@ -68,7 +68,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			}
 			else
 			{
-				$title = JText::_('COM_KUNENA_VIEW_CATEGORIES_USER');
+				$title = $this->config->board_title;
 				$this->setTitle($title);
 			}
 
@@ -79,7 +79,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			}
 			else
 			{
-				$keywords = JText::_('COM_KUNENA_CATEGORIES');
+				$keywords = $this->config->board_title;
 				$this->setKeywords($keywords);
 			}
 
@@ -90,7 +90,7 @@ class ComponentKunenaControllerApplicationMiscDefaultDisplay extends KunenaContr
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') . ' - ' . $this->config->board_title;
+				$description = $this->config->board_title;
 				$this->setDescription($description);
 			}
 

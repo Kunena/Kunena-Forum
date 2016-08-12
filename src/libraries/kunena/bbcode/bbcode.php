@@ -2896,17 +2896,31 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
-		// Display tag in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal))
-		{
-			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
-		}
-
-		$content = strip_tags($content);
-		
 		if ( !empty($content) )
 		{
-			return '<div class="embed-container"><iframe src="//instagram.com/p/'. $content .'/embed/"  frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>';
+
+			// Display tag in activity streams etc..
+			if (!empty($bbcode->parent->forceMinimal))
+			{
+				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+			}
+
+			$content = strip_tags($content);
+
+			$content = trim($content);
+
+			if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
+			{
+				// Add scheme to raw domain URLs.
+				$url = "http://{$content}";
+			}
+
+			$url_parsed = parse_url($url);
+
+			if ( $url_parsed['host'] == 'www.instagram.com' )
+			{
+				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0"></iframe></div>';
+			}	
 		}
 	}
 

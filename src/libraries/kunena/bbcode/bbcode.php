@@ -2865,6 +2865,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 		}
 
+		if ( !empty($content)  )
+		{
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
 		{
@@ -2872,10 +2874,22 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		$content = strip_tags($content);
-		
-		if ( !empty($content) )
+
+		$url = trim($content);
+
+		if (!preg_match('#^(/|https?:|ftp:)#ui', $url))
 		{
+				// Add scheme to raw domain URLs.
+				$url = "http://{$content}";
+			}
+  
+  			$url_parsed = parse_url($url);
+
+  
+			if ( $url_parsed['host'] == 'soundcloud.com' )
+			{
 			return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+			}
 		}
 	}
 
@@ -2909,16 +2923,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			$content = trim($content);
 
-			if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
+			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
 			{
-				// Add scheme to raw domain URLs.
-				$url = "http://{$content}";
-			}
-
-			$url_parsed = parse_url($url);
-
-			if ( $url_parsed['host'] == 'www.instagram.com' )
-			{
+        		if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
+        		{
+					// Add scheme to raw domain URLs.
+					$url = "http://{$content}";
+				}
+			
 				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0"></iframe></div>';
 			}	
 		}

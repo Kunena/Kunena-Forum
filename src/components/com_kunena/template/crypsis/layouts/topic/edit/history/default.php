@@ -31,14 +31,14 @@ $k = 0;
 			<div class="span2 center">
 				<ul class="unstyled center profilebox">
 					<li>
-						<strong><?php echo $this->message->getAuthor()->getLink() ?></strong>
+						<strong><?php echo $this->message->getAuthor()->getLink(null, null, '', '', null, $this->topic->getcategory()->id) ?></strong>
 					</li>
 					<li>
 						<?php
 						$profile    = KunenaFactory::getUser(intval($this->message->userid));
 						$useravatar = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 						if ($useravatar) :
-							echo $this->message->getAuthor()->getLink($useravatar);
+							echo $this->message->getAuthor()->getLink($useravatar, null, '', '', null, $this->topic->getcategory()->id);
 						endif;
 						?>
 					</li>
@@ -46,7 +46,7 @@ $k = 0;
 			</div>
 			<div class="span10">
 				<small class="text-muted pull-right hidden-phone" style="margin-top:-5px;">
-					<span class="icon icon-clock"></span> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?> <?php echo $this->getNumLink($this->message->id, $this->replycount--) ?>
+					<span class="icon icon-clock"></span> <?php echo $this->message->getTime()->toSpan('config_post_dateformat', 'config_post_dateformat_hover'); ?>
 				</small>
 				<div class="badger-left badger-info khistory" data-badger="<?php echo $this->message->displayField('subject'); ?>">
 					<div class="kmessage">

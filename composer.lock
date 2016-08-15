@@ -1978,6 +1978,58 @@
             "time": "2015-12-27 11:43:31"
         },
         {
+                    "name": "phing/phing",
+                    "version": "2.13.0",
+                    "source": {
+                        "type": "git",
+                        "url": "https://github.com/phingofficial/phing.git",
+                        "reference": "a5b10a50160c8a4744545aacb33ef158349e655c"
+                    },
+                    "dist": {
+                        "type": "zip",
+                        "url": "https://api.github.com/repos/phingofficial/phing/zipball/a5b10a50160c8a4744545aacb33ef158349e655c",
+                        "reference": "2.13.0",
+                        "shasum": ""
+                    },
+                    "require": {
+                        "php": ">=5.2.0"
+                    },
+                    "bin": [
+                        "bin/phing"
+                    ],
+                    "type": "library",
+                    "autoload": {
+                        "classmap": [
+                            "classes/phing/"
+                        ]
+                    },
+                    "notification-url": "https://packagist.org/downloads/",
+                    "include-path": [
+                        "classes"
+                    ],
+                    "license": [
+                        "LGPL3"
+                    ],
+                    "authors": [
+                        {
+                            "name": "Michiel Rook",
+                            "email": "mrook@php.net"
+                        },
+                        {
+                            "name": "Phing Community",
+                            "homepage": "http://www.phing.info/trac/wiki/Development/Contributors"
+                        }
+                    ],
+                    "description": "PHing Is Not GNU make; it's a PHP project build system or build tool based on Apache Ant.",
+                    "homepage": "http://www.phing.info/",
+                    "keywords": [
+                        "build",
+                        "task",
+                        "tool"
+                    ],
+                    "time": "2015-12-04 01:45:06"
+                },
+        {
             "name": "phpdocumentor/reflection-docblock",
             "version": "3.1.0",
             "source": {

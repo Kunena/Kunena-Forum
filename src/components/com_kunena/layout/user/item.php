@@ -204,8 +204,7 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$params = array(
 				'embedded' => 1,
 				'userid' => $this->profile->userid
-			);	
-			
+			);
 			$tab                 = new stdClass;
 			$tab->title          = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 			$tab->content        = $this->subRequest('User/Attachments', new JInput($params), $params);
@@ -239,6 +238,10 @@ class KunenaLayoutUserItem extends KunenaLayout
 			$tab->active     = false;
 			$tabs['banuser'] = $tab;
 		}
+
+		$dispatcher = JEventDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher->trigger('onKunenaUserTabs');
 
 		return $tabs;
 	}

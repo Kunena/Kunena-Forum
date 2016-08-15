@@ -1379,16 +1379,16 @@
         },
         {
             "name": "joomla-projects/jorobo",
-            "version": "0.4",
+            "version": "0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/jorobo.git",
-                "reference": "6f815a48d75418023c4de5cd79a8f1eb7150ee31"
+                "reference": "9d52b9f0d8b6b22f0574e40166fd6ebee479ab56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/jorobo/zipball/6f815a48d75418023c4de5cd79a8f1eb7150ee31",
-                "reference": "6f815a48d75418023c4de5cd79a8f1eb7150ee31",
+                "url": "https://api.github.com/repos/joomla-projects/jorobo/zipball/9d52b9f0d8b6b22f0574e40166fd6ebee479ab56",
+                "reference": "9d52b9f0d8b6b22f0574e40166fd6ebee479ab56",
                 "shasum": ""
             },
             "require": {

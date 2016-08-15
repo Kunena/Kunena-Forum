@@ -60,7 +60,7 @@ if ($this->config->showuserstats)
 									<span> <?php echo $this->escape($banInfo->reason_public); ?> </span>
 								</li>
 							<?php endif ?>
-							<?php if ($this->config->showuserstats) : ?>
+							<?php if ($this->config->showuserstats && $this->config->showranking) : ?>
 								<li>
 									<strong> <?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>:</strong>
 									<span>

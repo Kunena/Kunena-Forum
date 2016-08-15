@@ -584,6 +584,10 @@ class KunenaUser extends JObject
 				{
 					$class = $class;
 				}
+				elseif ($class == 'btn btn-default pull-right')
+				{
+					$class = $class;
+				}
 				elseif ($class == 'hasTooltip')
 				{
 					$class = $class . ' ' . $this->getType($catid, 'class');

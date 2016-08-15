@@ -576,6 +576,10 @@ class KunenaUser extends JObject
 				{
 					$class = $class;
 				}
+				elseif ($class == 'btn btn-default')
+				{
+					$class = $class;
+				}
 				elseif ($class == 'btn pull-right')
 				{
 					$class = $class;

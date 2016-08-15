@@ -192,7 +192,7 @@ foreach ($this->sections as $section) :
 											<?php else : ?>
 												<div class="span12">
 											<?php endif; ?>
-												<span><?php echo $this->getLastPostLink($category,null, null, null, null, true, false) ?></span>
+												<span><?php echo $this->getLastPostLink($category,null, null, null, null, false, true) ?></span>
 												<br>
 												<span><?php echo JText::sprintf('COM_KUNENA_BY_X', $author->getLink(null, '', '', '', null, $category->id)); ?></span>
 												<br>

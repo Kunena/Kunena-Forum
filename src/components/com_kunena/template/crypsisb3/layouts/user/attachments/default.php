@@ -86,7 +86,7 @@ $attachments = $this->attachments;
 							<?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 						</td>
 						<td>
-							<?php echo $this->getTopicLink($message->getTopic(), $message); ?>
+							<?php echo $this->getTopicLink($message->getTopic(), $message, null, null, '', null, false, true); ?>
 						</td>
 						<td class="center">
 							<?php echo $attachment->getLayout()->render('thumbnail'); ?>

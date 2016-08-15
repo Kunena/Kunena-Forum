@@ -66,6 +66,11 @@
 			<option value="1">COM_KUNENA_ENABLED_TOPIC</option>
 			<option value="2">COM_KUNENA_ENABLED_LABEL</option>
 		</field>
+		<field name="whoisonlineName" type="list" default="default" label="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME" description="COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_NAME</option>
+			<option value="avatar">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_AVATAR</option>
+			<option value="both">COM_KUNENA_TEMPLATE_WHOISONLINE_NAME_BOTH</option>
+		</field>
 		<field name="avatarType" type="list" default="img-rounded" label="COM_KUNENA_TEMPLATE_PROFILE_TYPE" description="COM_KUNENA_TEMPLATE_PROFILETYPE_DESC">
 			<option value="img-rounded">COM_KUNENA_TEMPLATE_ROUNDED</option>
 			<option value="img-circle">COM_KUNENA_TEMPLATE_CIRCLE</option>

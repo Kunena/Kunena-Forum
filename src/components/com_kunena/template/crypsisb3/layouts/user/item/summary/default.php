@@ -134,7 +134,7 @@ if ($this->config->showuserstats)
 								<span>
 									<?php if ($profile->location) : ?>
 										<a href="https://maps.google.com?q=<?php echo $this->escape($profile->location); ?>"
-										   target="_blank"><?php echo $this->escape($profile->location); ?></a>
+										   target="_blank" rel="nofollow"><?php echo $this->escape($profile->location); ?></a>
 									<?php else : ?>
 										<?php echo JText::_('COM_KUNENA_LOCATION_UNKNOWN'); ?>
 									<?php endif; ?>
@@ -170,7 +170,7 @@ if ($this->config->showuserstats)
 								<?php echo $private->shownewIcon($profile->userid, 'btn btn-default btn-xs', 'glyphicon glyphicon-comments-2'); ?>
 							<?php endif; ?>
 							<?php if ($email) : ?>
-								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>"><?php echo KunenaIcons::email(); ?></a>
+								<a class="btn btn-default" href="mailto:<?php echo $profile->email; ?>" rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
 							<?php endif; ?>
 							<?php if (!empty($websiteName) && $websiteURL != 'http://') : ?>
 								<a class="btn btn-default btn-small" href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::bookmark(); ?><?php echo $websiteName ?></a>

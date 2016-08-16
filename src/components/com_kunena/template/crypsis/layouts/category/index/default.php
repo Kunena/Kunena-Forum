@@ -103,8 +103,8 @@ foreach ($this->sections as $section) :
 												<?php if ($category->review) : ?>
 													<span class="icon-shield hasTooltip" data-original-title="<?php echo JText::_('COM_KUNENA_GEN_MODERATED'); ?>"></span>
 												<?php endif; ?>
-												<?php if (!empty($category->rssURL)) : ?>
-													<a href="<?php echo $category->rssURL ?>" rel="nofollow" data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
+												<?php if (KunenaFactory::getConfig()->enablerss) : ?>
+													<a href="<?php echo $this->getCategoryRSSURL($category->id); ?>" rel="alternate" type="application/rss+xml" data-original-title="<?php echo JText::_('COM_KUNENA_LISTCAT_RSS');?>">
 														 <?php echo KunenaIcons::rss(); ?>
 													</a>
 												<?php endif; ?>

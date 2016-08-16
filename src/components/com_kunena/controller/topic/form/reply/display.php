@@ -59,6 +59,27 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 			$this->topic = $parent->getTopic();
 		}
 
+		$doc = JFactory::getDocument();
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$canonicalUrl = $this->topic->getUrl();
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
+		}
+
+		$doc->addHeadLink($this->topic->getUrl(), 'canonical');
+
 		$this->category = $this->topic->getCategory();
 
 		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())

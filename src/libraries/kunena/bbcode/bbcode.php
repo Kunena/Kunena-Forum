@@ -1990,7 +1990,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 			'videojug' => array ('flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', '' ),
 
-			'vimeo' => array ('flash', 400, 321, 0, 0, 'http://www.vimeo.com/moogaloop.swf?clip_id=%vcode%&server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=', '\.com\/(\d*)', '' ),
+			'vimeo' => array ('iframe', 400, 321, 0, 0, 'https://player.vimeo.com/video/%vcode%?color=ff0179', '\.com\/(\d*)', '' ),
 
 			'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
@@ -2882,10 +2882,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				// Add scheme to raw domain URLs.
 				$url = "http://{$content}";
 			}
-  
+
   			$url_parsed = parse_url($url);
 
-  
+
 			if ( $url_parsed['host'] == 'soundcloud.com' )
 			{
 			return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
@@ -2930,9 +2930,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					// Add scheme to raw domain URLs.
 					$url = "http://{$content}";
 				}
-			
+
 				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0"></iframe></div>';
-			}	
+			}
 		}
 	}
 
@@ -2961,7 +2961,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($layout->getPath())
 		{
 			$ebay = SELF::getEbayItemFromCache($ItemID);
-			
+
 			if (is_object($ebay))
 			{
 				return (string) $layout

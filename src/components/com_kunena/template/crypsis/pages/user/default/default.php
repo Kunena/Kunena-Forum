@@ -14,7 +14,7 @@ $content = $this->execute('User/Item');
 
 $this->addBreadcrumb(
 	$content->headerText,
-	'index.php?option=com_kunena&view=user&layout=default'
+	'index.php?option=com_kunena&view=user&userid='. $content->user->id
 );
 
 echo $content;

@@ -54,6 +54,26 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 			throw new KunenaExceptionAuthorise(JText::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
+		$doc = JFactory::getDocument();
+		$doc->setMetaData('robots', 'nofollow, noindex');
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$canonicalUrl = $this->topic->getUrl();
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
+		}
+
 		// Run onKunenaPrepare event.
 		$params = new JRegistry;
 		$params->set('ksource', 'kunena');

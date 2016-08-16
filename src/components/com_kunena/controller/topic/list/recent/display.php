@@ -147,6 +147,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=topics';
 				break;
 			case 'sticky' :
 				if (!empty($title) && $pageheading)
@@ -157,6 +159,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=sticky';
 				break;
 			case 'locked' :
 				if (!empty($title) && $pageheading)
@@ -167,6 +171,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=locked';
 				break;
 			case 'noreplies' :
 				if (!empty($title) && $pageheading)
@@ -177,6 +183,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=noreplies';
 				break;
 			case 'unapproved' :
 				if (!empty($title) && $pageheading)
@@ -187,6 +195,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=unapproved';
 				break;
 			case 'deleted' :
 				if (!empty($title) && $pageheading)
@@ -197,6 +207,8 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
 				}
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=deleted';
 				break;
 			case 'replies' :
 			default :
@@ -208,7 +220,27 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 				{
 					$this->headerText = JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
 				}
-				break;
+
+				$canonicalUrl = 'index.php?option=com_kunena&view=topics&mode=replies';
+			break;
+		}
+
+		$doc = JFactory::getDocument();
+
+		foreach ($doc->_links as $key => $value)
+		{
+			if (is_array($value))
+			{
+				if (array_key_exists('relation', $value))
+				{
+					if ($value['relation'] == 'canonical')
+					{
+						$doc->_links[$canonicalUrl] = $value;
+						unset($doc->_links[$key]);
+						break;
+					}
+				}
+			}
 		}
 
 		$this->actions = $this->getTopicActions($this->topics, $actions);

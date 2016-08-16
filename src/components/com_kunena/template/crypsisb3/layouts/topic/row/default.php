@@ -75,11 +75,11 @@ if (!empty($this->spacing)) : ?>
 			{
 				echo $this->getTopicLink(
      $topic, 'unread',
-	$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', $topic->subject, 'hasTooltip', $category, true, true);
+	$topic->subject . '<sup class="knewchar" dir="ltr">(' . (int) $topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', null, 'hasTooltip', $category, true, true);
 			}
 			else
 			{
-				echo $this->getTopicLink($topic, null, null, $topic->subject, 'hasTooltip topictitle', $category, true, false);
+				echo $this->getTopicLink($topic, null, null, null, 'hasTooltip topictitle', $category, true, false);
 			}
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
 		</div>

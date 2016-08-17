@@ -68,8 +68,9 @@ $this->getBBcodesEnabled();
 		<h3 id="myModalLabel"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
 	</div>
 	<div class="modal-body">
-		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>: <input name="modal-picture-size" id="modal-picture-size" type="text" value="" />
-		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url" type="text" value="" /></p>
+		<p><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE') ?>: <input name="modal-picture-size" id="modal-picture-size" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_SIZE_PLACEHOLDER') ?>" />
+		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT') ?>: <input class="form-control" name="modal-picture-alt" id="modal-picture-alt" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_ALT_PLACEHOLDER') ?>" />
+		<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL') ?>: <input name="modal-picture-url" id="modal-picture-url" type="text" value="" placeholder="<?php echo JText::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS_URL_PLACEHOLDER') ?>" /></p>
 	</div>
 	<div class="modal-footer">
 		<button id="picture-modal-submit" class="btn btn-primary"><?php echo JText::_('COM_KUNENA_EDITOR_MODAL_ADD_LABEL') ?></button>

@@ -2452,6 +2452,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			->set('url', null)
 			->set('filename', null)
 			->set('size', isset($params['size']) ? $params['size'] : 0)
+			->set('alt', isset($params['alt']) ? $params['alt'] : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
 

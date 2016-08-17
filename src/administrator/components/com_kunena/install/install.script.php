@@ -159,74 +159,98 @@ class Com_KunenaInstallerScript
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less'))
 		{
 			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
-			if (!empty($file))
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/less/custom.less');
+
+			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsis/assets/less');
 				$src = $sitePath . '/template/crypsis/less/custom.less';
 				$dest = $sitePath . '/template/crypsis/assets/less/custom.less';
 				KunenaFile::copy($src, $dest);
 			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/less/custom.less');
 		}
 
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css'))
 		{
 			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
-			if (!empty($file))
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/assets/css/custom.css');
+
+			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsis/assets/css');
 				$src = $sitePath . '/template/crypsis/css/custom.css';
 				$dest = $sitePath . '/template/crypsis/assets/css/custom.css';
 				KunenaFile::copy($src, $dest);
 			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/css/custom.css');
 		}
 
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini'))
 		{
 			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
-			if (!empty($file))
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsis/config/params.ini');
+
+			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsis/config');
 				$src = $sitePath . '/template/crypsis/params.ini';
 				$dest = $sitePath . '/template/crypsis/config/params.ini';
 				KunenaFile::copy($src, $dest);
 			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsis/params.ini');
 		}
 
 		// Copy files to new dir for Crypsisb3
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less'))
 		{
 			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
-			if (!empty($file))
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/less/custom.less');
+
+			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsisb3/assets/less');
 				$src = $sitePath . '/template/crypsisb3/less/custom.less';
 				$dest = $sitePath . '/template/crypsisb3/assets/less/custom.less';
 				KunenaFile::copy($src, $dest);
 			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/less/custom.less');
 		}
 
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css'))
 		{
 			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
-			if (!empty($file))
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/assets/css/custom.css');
+
+			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsisb3/assets/css');
 				$src = $sitePath . '/template/crypsisb3/css/custom.css';
 				$dest = $sitePath . '/template/crypsisb3/assets/css/custom.css';
 				KunenaFile::copy($src, $dest);
 			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/css/custom.css');
 		}
 
 		if (is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini'))
 		{
 			$file = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
-			if (!empty($file))
+			$filenew = is_file(JPATH_SITE . '/components/com_kunena/template/crypsisb3/config/params.ini');
+
+			if (!empty($file) && !$filenew)
 			{
 				JFolder::create($sitePath . '/template/crypsisb3/config');
 				$src = $sitePath . '/template/crypsisb3/params.ini';
 				$dest = $sitePath . '/template/crypsisb3/config/params.ini';
 				KunenaFile::copy($src, $dest);
 			}
+
+			$this->deleteFile(JPATH_SITE . '/components/com_kunena/template/crypsisb3/params.ini');
 		}
 
 		// Remove old Crypsis files

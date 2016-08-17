@@ -103,7 +103,7 @@ if (!empty($this->spacing)) : ?>
 		</div>
 
 		<div class="hidden-phone">
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory())) ?>
+			<span class="ktopic-category"><?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory())) ?></span>
 			<br />
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?>
 			<div class="pull-right">

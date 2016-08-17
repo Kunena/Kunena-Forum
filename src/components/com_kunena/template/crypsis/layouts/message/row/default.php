@@ -101,9 +101,10 @@ if ($topic->moved_id > 0)
 			<?php endif; ?>
 		</div>
 		<div class="hidden-phone">
+			<span class="ktopic-category">
 			<?php echo $topic->getAuthor()->getLink(null, null, '', '', null, $category->id); ?>,
 			<?php echo $topic->getFirstPostTime()->toKunena('config_post_dateformat'); ?> <br />
-			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(),null, null,'hasTooltip')); ?>
+			<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(),null, null,'hasTooltip')); ?></span>
 			<div class="pull-right">
 				<?php /** TODO: New Feature - LABELS
 				<span class="label label-info">

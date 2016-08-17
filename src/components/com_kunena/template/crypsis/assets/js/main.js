@@ -34,6 +34,38 @@ jQuery(document).ready(function($) {
 		}
 	});
 
+	$(".last-post a").each(function(i){
+		len=$(this).text().length;
+		if(len>30)
+		{
+			$(this).text($(this).text().substr(0,30)+'...');
+		}
+	});
+
+	$(".ktopic-category a").each(function(i){
+		len=$(this).text().length;
+		if(len>30)
+		{
+			$(this).text($(this).text().substr(0,30)+'...');
+		}
+	});
+
+	$(".topictitle").each(function(i){
+		len=$(this).text().length;
+		if(len>30)
+		{
+			$(this).text($(this).text().substr(0,30)+'...');
+		}
+	});
+
+	$(".breadcrumb a").each(function(i){
+		len=$(this).text().length;
+		if(len>30)
+		{
+			$(this).text($(this).text().substr(0,30)+'...');
+		}
+	});
+
 	/* To check or uncheck boxes to select items */
 	$('input.kcheckall').click(function() {
 		$( '.kcheck' ).each(function( ) {

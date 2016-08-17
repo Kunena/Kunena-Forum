@@ -65,7 +65,16 @@ class KunenaControllerTopic extends KunenaController
 			$object->folder  = $attach->folder;
 			$object->caption = $attach->caption;
 			$object->type    = $attach->filetype;
-			$object->path    = JURI::root(true) . '/' . $attach->getUrl();
+			
+			if ($attach->protected)
+			{
+				$object->path    = $attach->getUrl();
+			}
+			else
+			{
+				$object->path    = JURI::root(true) . '/' . $attach->getUrl();
+			}
+			
 			$object->image   = $attach->isImage();
 			$list['files'][] = $object;
 		}

@@ -59,15 +59,21 @@ jQuery(document).ready(function ($){
 	$('#picture-modal-submit').click(function() {
 		var modalpictureurl = $('#modal-picture-url').val();
 		var modalpicturesize = $('#modal-picture-size').val();
+		var modalpicturealt = $('#modal-picture-alt').val();
 
 		var size = '';
 		if ( modalpicturesize.length > 0 ) {
 			size = 'size='+modalpicturesize;
 		}
-
+		
+		var alt = '';
+		if ( modalpicturealt.length > 0 ) {
+			alt = 'alt='+modalpicturealt;
+		}
+		
 		if ( modalpictureurl.length > 0 ) {
 			$.markItUp(
-				{ openWith:'[img '+size+']'+modalpictureurl,
+				{ openWith:'[img '+size+' '+alt+']'+modalpictureurl,
 				closeWith:'[/img]' }
 			);
 		return false;

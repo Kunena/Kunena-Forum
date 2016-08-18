@@ -1921,6 +1921,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		{
 			return '[video]';
 		}
+		
+		// Display nothing in subscription mails
+		if (!empty($bbcode->context))
+		{
+			return '';
+		}
 
 		$vid_minwidth = 200;
 		$vid_minheight = 44; // min. display size

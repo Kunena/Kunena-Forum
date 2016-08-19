@@ -23,14 +23,14 @@ class KunenaLayout extends KunenaLayoutBase
 	 * @var array
 	 */
 	protected $after = array();
-	
+
 	/**
 	 * Object KunenaView
-	 * 
+	 *
 	 * @var unknown
-	 */	
+	 */
 	protected $legacy;
-	
+
 	/**
 	 * Append HTML after the layout content.
 	 *
@@ -383,19 +383,19 @@ class KunenaLayout extends KunenaLayoutBase
 
 		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, $con);
 	}
-	
+
 	/**
 	 * Removing it only after removed usage of this method, because without it, it cause issue in discuss plugin
-	 * 
+	 *
 	 * @param KunenaView $view
-	 * 
+	 *
 	 * @since 4.0
-	 * 
+	 *
 	 * @deprecated 5.0
 	 */
 	public function setLegacy(KunenaView $view = null) {
 		$this->legacy = $view;
-	
+
 		return $this;
 	}
 }

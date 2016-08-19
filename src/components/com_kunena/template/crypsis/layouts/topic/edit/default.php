@@ -260,7 +260,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 						<?php if ($this->canSubscribe) : ?>
-							<div class="control-group">
+							<div class="control-group" id="kpost-subscribe">
 								<label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
 
 								<div class="controls">

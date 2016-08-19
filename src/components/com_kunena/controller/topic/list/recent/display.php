@@ -313,12 +313,12 @@ class ComponentKunenaControllerTopicListRecentDisplay extends ComponentKunenaCon
 
 			if (!empty($params_description))
 			{
-				$description = $params->get('menu-meta_description');
+				$description = $params->get('menu-meta_description') . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 			else
 			{
-				$description = JText::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');;
+				$description = JText::_('COM_KUNENA_ALL_DISCUSSIONS') . ': ' . $this->config->board_title . ($total > 1 && $page > 1 ? " - " . JText::_('COM_KUNENA_PAGES') . " {$page}" : '');
 				$this->setDescription($description);
 			}
 

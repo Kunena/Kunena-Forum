@@ -189,8 +189,16 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 			$params_description = $params->get('menu-meta_description');
 			$params_robots      = $params->get('robots');
 
-			$title = JText::sprintf("{$categoryText}{$pagesText}");
-			$this->setTitle($title);
+			if (!empty($params_title))
+			{
+				$title = $params->get('page_title') . $pagesText;
+				$this->setTitle($title);
+			}
+			else
+			{
+				$title = JText::sprintf("{$categoryText}{$pagesText}");
+				$this->setTitle($title);
+			}
 
 			if (!empty($params_keywords))
 			{

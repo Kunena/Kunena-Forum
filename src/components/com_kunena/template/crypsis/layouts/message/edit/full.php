@@ -87,7 +87,7 @@ if ($me->canDoCaptcha() )
 					<label>
 						<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
 					</label>
-					<input type="text" name="authorname" class="span12" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
+					<input type="text" name="authorname" class="span12" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
 				</div>
 			<?php endif; ?>
 

@@ -600,9 +600,18 @@ class KunenaUser extends JObject
 
 			$link = $this->getURL(true, $task);
 
-			if (! empty ( $link ))
+			if (!empty($rel))
 			{
-				$this->_link[$key] = JHtml::_('kunenaforum.link', $link, $name, $title, $class, $rel);
+				$rels = 'rel="' . $rel .'"';
+			}
+			else
+			{
+				$rels = '';
+			}
+
+			if (!empty($link))
+			{
+				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" {$rels}>{$name}</a>";
 			}
 			else
 			{

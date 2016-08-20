@@ -441,11 +441,11 @@ class KunenaAdminControllerCategories extends KunenaController
 			}
 
 			$success = $category->save();
-			$aliases = explode(',', $app->get('aliases_all'));
+			$aliases = explode(',', JRequest::getVar('aliases_all'));
 
 			if ($aliases)
 			{
-				$aliases = array_diff($aliases, $input->post->get('aliases', array(), 'array'));
+				$aliases = array_diff($aliases, JRequest::getVar('aliases', array(), 'post', 'array'));
 
 				foreach ($aliases as $alias)
 				{

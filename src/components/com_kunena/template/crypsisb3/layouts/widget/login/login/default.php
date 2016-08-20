@@ -33,13 +33,12 @@ defined('_JEXEC') or die;
 					size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" required/>
 				<?php $login = KunenaLogin::getInstance(); ?>
 				<?php if ($login->getTwoFactorMethods() > 1) : ?>
-						<input id="k-lgn-secretkey" type="text" name="secretkey" class="input-large" tabindex="3"
+						<input id="k-lgn-secretkey" type="text" name="secretkey" class="form-control input-lg" tabindex="3"
 							size="18" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>" />
-						<?php echo JText::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
 				<?php endif; ?>
 					<div id="remember" class="checkbox">
 						<label>
-							<input id="login-remember" type="checkbox" name="remember" class="inputbox" value="yes" />
+							<input id="login-remember" type="checkbox" name="remember" value="yes" />
 							<?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
 						</label>
 					</div>

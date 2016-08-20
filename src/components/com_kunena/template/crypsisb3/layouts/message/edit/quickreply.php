@@ -106,7 +106,7 @@ $quick = $template->params->get('quick');
 							<label class="col-md-12 control-label" style="padding:0;">
 								<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>:
 							</label>
-							<input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" />
+							<input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo JText::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
 						</div>
 					<?php endif; ?>
 

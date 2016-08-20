@@ -756,10 +756,11 @@ class KunenaControllerUser extends KunenaController
 		$this->user->personalText = JFactory::getApplication()->input->getString('personaltext', '');
 		$birthdate              = JFactory::getApplication()->input->getString('birthdate');
 
-		if (!$birthdate)
+		if ($birthdate)
 		{
-			$birthdate = JFactory::getApplication()->input->getInt('birthdate1', '0000')
-				. '-' . JFactory::getApplication()->input->getInt('birthdate2', '00') . '-' . JFactory::getApplication()->input->getInt('birthdate3', '00');
+			$date = JFactory::getDate($birthdate);
+
+			$birthdate = $date->format('Y-m-d');
 		}
 
 		$this->user->birthdate   = $birthdate;

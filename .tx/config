@@ -4,176 +4,177 @@ lang_map = af_ZA:af-ZA, ar:ar-AA, ar_SA:ar-SA, az_AZ:az-AZ, bg_BG:bg-BG, bs_BA:b
 type = INI
 
 [Kunena.admin-com_kunena-controllers]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.com_kunena.controllers.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.com_kunena.controllers.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.com_kunena.controllers.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.controllers.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-com_kunena]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.com_kunena.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.com_kunena.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.com_kunena.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-com_kunena-install]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.com_kunena.install.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.com_kunena.install.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.com_kunena.install.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.install.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-com_kunena-libraries]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.com_kunena.libraries.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.com_kunena.libraries.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.com_kunena.libraries.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.libraries.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-com_kunena-models]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.com_kunena.models.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.com_kunena.models.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.com_kunena.models.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.models.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-com_kunena-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.com_kunena.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.com_kunena.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.com_kunena.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-com_kunena-views]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.com_kunena.views.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.com_kunena.views.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.com_kunena.views.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.views.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_finder_kunena-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_finder_kunena.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_finder_kunena.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_finder_kunena.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_finder_kunena.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_alphauserpoints-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_alphauserpoints.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_alphauserpoints.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_alphauserpoints.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_alphauserpoints.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_altauserpoints-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_altauserpoints.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_altauserpoints.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_altauserpoints.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_altauserpoints.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_community-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_community.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_community.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_community.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_community.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_comprofiler-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_comprofiler.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_comprofiler.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_comprofiler.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_comprofiler.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_easyblog-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_easyblog.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_easyblog.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_easyblog.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_easyblog.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_easysocial-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_easysocial.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_easysocial.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_easysocial.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_easysocial.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_easyprofile-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_easyprofile.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_easyprofile.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_easyprofile.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_easyprofile.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_gravatar-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_gravatar.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_gravatar.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_gravatar.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_gravatar.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_joomla-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_joomla.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_joomla.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_joomla.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_joomla.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_kunena-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_kunena.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_kunena.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_kunena.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_kunena.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_kunena_uddeim-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_kunena_uddeim.sys.ini
-source_file = src/administrator/com_kunena/language/en-GB/en-GB.plg_kunena_uddeim.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_uddeim.sys.ini
+source_file = src/administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_uddeim.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.site-com_kunena-controllers]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.com_kunena.controllers.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.com_kunena.controllers.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.site-com_kunena]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.com_kunena.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.com_kunena.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.site-com_kunena-models]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.com_kunena.models.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.com_kunena.models.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.site-com_kunena-templates]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.com_kunena.templates.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.com_kunena.templates.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.site-com_kunena_tmpl_crypsis]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.kunena_tmpl_crypsis.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.kunena_tmpl_crypsis.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.site-com_kunena-views]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.com_kunena.views.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.com_kunena.views.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.site-mod_kunenamenu]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.mod_kunenamenu.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.mod_kunenamenu.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.site-mod_kunenamenu-sys]
 file_filter = src/components/com_kunena/language/<lang>/<lang>.mod_kunenamenu.sys.ini
 source_file = src/components/com_kunena/language/en-GB/en-GB.mod_kunenamenu.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_quickicon_kunena-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_quickicon_kunena.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_quickicon_kunena.sys.ini
 source_file = src/plugins/quickicon/kunena/language/en-GB/en-GB.plg_quickicon_kunena.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
 
 [Kunena.admin-plg_system_kunena-sys]
-file_filter = src/administrator/com_kunena/language/<lang>/<lang>.plg_system_kunena.sys.ini
+file_filter = src/administrator/components/com_kunena/language/<lang>/<lang>.plg_system_kunena.sys.ini
 source_file = src/plugins/system/kunena/language/en-GB/en-GB.plg_system_kunena.sys.ini
 source_lang = en-GB
-minimum_perc = 80
+minimum_perc = 0
+
 
